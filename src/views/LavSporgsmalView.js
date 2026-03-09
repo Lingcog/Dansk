@@ -81,6 +81,7 @@ export function renderLavSporgsmalView(container, navigateFn) {
     viewContainer.appendChild(topBar);
     viewContainer.appendChild(title);
     viewContainer.appendChild(subtitle);
+    viewContainer.appendChild(imageContainer);
     viewContainer.appendChild(consentContainer);
     viewContainer.appendChild(geminiBtnContainer);
 

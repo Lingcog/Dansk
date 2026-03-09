@@ -28,6 +28,12 @@ export function renderDagensOpgaveView(container, navigateFn) {
             titleKey: 'laerEtNytOrd',
             descKey: 'laerEtNytOrdDesc',
             action: () => navigateFn('word_learning')
+        },
+        {
+            icon: '⏰',
+            titleKey: 'traenTidsudtryk',
+            descKey: 'traenTidsudtrykDesc',
+            action: () => navigateFn('traen_tidsudtryk')
         }
     ];
 

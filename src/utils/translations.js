@@ -57,7 +57,10 @@ export const translations = {
     madlavningDesc: "Hvad kan du lide at lave af mad?",
     madlavningPadletDesc: "Del dine madoplevelser med klassen her.",
     rengoeringDesc: "Hvordan gør du rent?",
-    rengoeringPadletDesc: "Del dine tanker om rengøring med klassen."
+    rengoeringPadletDesc: "Del dine tanker om rengøring med klassen.",
+    traenTidsudtryk: "Træn tidsudtryk",
+    traenTidsudtrykDesc: "Hvordan bruger man forskellige tidsudtryk på dansk?",
+    traenTidsudtrykBtnText: "Åbn tidsudtryk øvelse"
   },
   en: {
     selectLanguage: "Select language",
@@ -117,7 +120,10 @@ export const translations = {
     madlavningDesc: "What kind of food do you like to cook?",
     madlavningPadletDesc: "Share your cooking experiences with the class here.",
     rengoeringDesc: "How do you clean?",
-    rengoeringPadletDesc: "Share your thoughts on cleaning with the class."
+    rengoeringPadletDesc: "Share your thoughts on cleaning with the class.",
+    traenTidsudtryk: "Practice time expressions",
+    traenTidsudtrykDesc: "How do you use different time expressions in Danish?",
+    traenTidsudtrykBtnText: "Open time expressions exercise"
   },
   ar: {
     selectLanguage: "اختر لغة",
@@ -177,6 +183,9 @@ export const translations = {
     madlavningDesc: "ما نوع الطعام الذي تحب طهيه؟",
     madlavningPadletDesc: "شارك تجارب الطبخ الخاصة بك مع الفصل هنا.",
     rengoeringDesc: "كيف تنظف؟",
-    rengoeringPadletDesc: "شارك أفكارك حول التنظيف مع الفصل."
+    rengoeringPadletDesc: "شارك أفكارك حول التنظيف مع الفصل.",
+    traenTidsudtryk: "تدريب تعبيرات الوقت",
+    traenTidsudtrykDesc: "كيف تستخدم تعبيرات الوقت المختلفة باللغة الدنماركية؟",
+    traenTidsudtrykBtnText: "افتح تمرين تعبيرات الوقت"
   }
 };

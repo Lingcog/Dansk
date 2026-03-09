@@ -13,6 +13,7 @@ import { renderDu1MinHverdagView } from './views/Du1MinHverdagView.js';
 import { renderTransportSprogskoleView } from './views/TransportSprogskoleView.js';
 import { renderMadlavningView } from './views/MadlavningView.js';
 import { renderRengoeringView } from './views/RengoeringView.js';
+import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { translations } from './utils/translations.js';
 
 // Application State
@@ -76,6 +77,9 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'du1_rengoering') {
     appState.currentView = 'du1_rengoering';
     renderRengoeringView(appDiv, navigate);
+  } else if (viewTarget === 'traen_tidsudtryk') {
+    appState.currentView = 'traen_tidsudtryk';
+    renderTraenTidsudtrykView(appDiv, navigate);
   }
 }
 

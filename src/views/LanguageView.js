@@ -1,0 +1,39 @@
+import { setLanguage, navigate, getTranslation } from '../main.js';
+
+export function renderLanguageView(container, navigateFn) {
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container';
+
+    const title = document.createElement('h1');
+    title.textContent = 'Træning i dansk';
+
+    const subtitle = document.createElement('p');
+    subtitle.className = 'subtitle';
+    subtitle.textContent = 'Vælg sprog / Select language';
+
+    const langList = document.createElement('div');
+    langList.className = 'lang-list';
+
+    const languages = [
+        { code: 'da', label: 'Dansk' },
+        { code: 'en', label: 'English' },
+        { code: 'ar', label: 'العربية' }
+    ];
+
+    languages.forEach(l => {
+        const btn = document.createElement('button');
+        btn.className = 'lang-btn';
+        btn.textContent = l.label;
+        btn.onclick = () => {
+            setLanguage(l.code);
+            navigateFn('main');
+        };
+        langList.appendChild(btn);
+    });
+
+    viewContainer.appendChild(title);
+    viewContainer.appendChild(subtitle);
+    viewContainer.appendChild(langList);
+
+    container.appendChild(viewContainer);
+}

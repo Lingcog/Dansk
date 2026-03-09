@@ -1,4 +1,4 @@
-import { getTranslation } from '../main.js';
+import { getTranslation, baseUrl } from '../main.js';
 
 export function renderLavSporgsmalView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -19,6 +19,25 @@ export function renderLavSporgsmalView(container, navigateFn) {
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
     subtitle.textContent = getTranslation('lavSporgsmalDesc');
+
+    // Image section
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'image-container';
+    imageContainer.style.width = '100%';
+    imageContainer.style.maxWidth = '600px';
+    imageContainer.style.margin = '2rem auto';
+    imageContainer.style.borderRadius = 'var(--border-radius)';
+    imageContainer.style.overflow = 'hidden';
+    imageContainer.style.boxShadow = 'var(--box-shadow)';
+
+    const img = document.createElement('img');
+    img.src = `${baseUrl}questions.png`;
+    img.alt = 'Spørgsmålsdannelse illustration';
+    img.style.width = '100%';
+    img.style.height = 'auto';
+    img.style.display = 'block';
+
+    imageContainer.appendChild(img);
 
     // Consent Checkbox area
     const consentContainer = document.createElement('div');

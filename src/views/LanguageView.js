@@ -17,7 +17,15 @@ export function renderLanguageView(container, navigateFn) {
     const languages = [
         { code: 'da', label: 'Dansk' },
         { code: 'en', label: 'English' },
-        { code: 'ar', label: 'العربية' }
+        { code: 'ar', label: 'العربية' },
+        { code: 'ur', label: 'اردو' },
+        { code: 'zh', label: '中文' },
+        { code: 'ru', label: 'Русский' },
+        { code: 'ne', label: 'नेपाली' },
+        { code: 'th', label: 'ไทย' },
+        { code: 'pt', label: 'Português' },
+        { code: 'vi', label: 'Tiếng Việt' },
+        { code: 'fa', label: 'فارسی' }
     ];
 
     languages.forEach(l => {

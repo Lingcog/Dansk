@@ -1,4 +1,5 @@
 import './style.css';
+export const baseUrl = import.meta.env.BASE_URL;
 import { renderLanguageView } from './views/LanguageView.js';
 import { renderMainView } from './views/MainView.js';
 import { renderNotesView } from './views/NotesView.js';

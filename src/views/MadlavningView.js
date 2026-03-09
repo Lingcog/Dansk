@@ -1,4 +1,4 @@
-import { getTranslation } from '../main.js';
+import { getTranslation, baseUrl } from '../main.js';
 
 export function renderMadlavningView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -42,7 +42,7 @@ export function renderMadlavningView(container, navigateFn) {
     const img = document.createElement('img');
     // Referencing the image 'mad' உட்கிரகிக்கப்பட்டSit sitting in the public folder
     // Checking exact filename via list_dir next
-    img.src = '/mad.png'; // Assuming .png based on previous interaction, will verify
+    img.src = `${baseUrl}mad.png`; // Assuming .png based on previous interaction, will verify
     img.alt = 'Madlavning illustration';
     img.style.width = '100%';
     img.style.height = 'auto';

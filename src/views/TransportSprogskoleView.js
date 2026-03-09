@@ -1,4 +1,4 @@
-import { getTranslation } from '../main.js';
+import { getTranslation, baseUrl } from '../main.js';
 
 export function renderTransportSprogskoleView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -41,7 +41,7 @@ export function renderTransportSprogskoleView(container, navigateFn) {
 
     const img = document.createElement('img');
     // Referencing the image sitting in the public folder
-    img.src = '/Gemini_Generated_Image_bnobabnobabnobab.png';
+    img.src = `${baseUrl}Gemini_Generated_Image_bnobabnobabnobab.png`;
     img.alt = 'Transport illustration';
     img.style.width = '100%';
     img.style.height = 'auto';

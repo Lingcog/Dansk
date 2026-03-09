@@ -1,4 +1,4 @@
-import { getTranslation } from '../main.js';
+import { getTranslation, baseUrl } from '../main.js';
 
 export function renderRengoeringView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -45,7 +45,7 @@ export function renderRengoeringView(container, navigateFn) {
         imgWrapper.style.boxShadow = 'var(--box-shadow)';
 
         const img = document.createElement('img');
-        img.src = `/${fileName}`;
+        img.src = `${baseUrl}${fileName}`;
         img.alt = 'Rengøring illustration';
         img.style.width = '100%';
         img.style.height = 'auto';

@@ -35,7 +35,7 @@ export function renderDu1MinHverdagView(container, navigateFn) {
         {
             icon: '🧹',
             titleKey: 'rengoering',
-            action: () => alert('Mock: Åbner ' + getTranslation('rengoering'))
+            action: () => navigateFn('du1_rengoering')
         }
     ];
 

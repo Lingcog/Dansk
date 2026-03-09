@@ -11,6 +11,7 @@ import { renderDu1Modul3View } from './views/Du1Modul3View.js';
 import { renderDu1MinHverdagView } from './views/Du1MinHverdagView.js';
 import { renderTransportSprogskoleView } from './views/TransportSprogskoleView.js';
 import { renderMadlavningView } from './views/MadlavningView.js';
+import { renderRengoeringView } from './views/RengoeringView.js';
 import { translations } from './utils/translations.js';
 
 // Application State
@@ -71,6 +72,9 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'du1_madlavning') {
     appState.currentView = 'du1_madlavning';
     renderMadlavningView(appDiv, navigate);
+  } else if (viewTarget === 'du1_rengoering') {
+    appState.currentView = 'du1_rengoering';
+    renderRengoeringView(appDiv, navigate);
   }
 }
 

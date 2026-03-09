@@ -53,7 +53,9 @@ export const translations = {
     rengoering: "Rengøring",
     transportDesc: "Hvordan kommer du i skole?",
     padletDesc: "Del med klassen, hvordan du kommer til sprogskolen i dag.",
-    padletBtnText: "Åbn Padlet"
+    padletBtnText: "Åbn Padlet",
+    madlavningDesc: "Hvad kan du lide at lave af mad?",
+    madlavningPadletDesc: "Del dine madoplevelser med klassen her."
   },
   en: {
     selectLanguage: "Select language",
@@ -109,7 +111,9 @@ export const translations = {
     rengoering: "Cleaning",
     transportDesc: "How do you get to school?",
     padletDesc: "Share with the class how you get to language school today.",
-    padletBtnText: "Open Padlet"
+    padletBtnText: "Open Padlet",
+    madlavningDesc: "What kind of food do you like to cook?",
+    madlavningPadletDesc: "Share your cooking experiences with the class here."
   },
   ar: {
     selectLanguage: "اختر لغة",
@@ -165,6 +169,8 @@ export const translations = {
     rengoering: "تنظيف",
     transportDesc: "كيف تذهب إلى المدرسة؟",
     padletDesc: "شارك مع الفصل كيف تذهب إلى مدرسة اللغة اليوم.",
-    padletBtnText: "افتح بادليت"
+    padletBtnText: "افتح بادليت",
+    madlavningDesc: "ما نوع الطعام الذي تحب طهيه؟",
+    madlavningPadletDesc: "شارك تجارب الطبخ الخاصة بك مع الفصل هنا."
   }
 };

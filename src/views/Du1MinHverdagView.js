@@ -30,7 +30,7 @@ export function renderDu1MinHverdagView(container, navigateFn) {
         {
             icon: '🍳',
             titleKey: 'madlavning',
-            action: () => alert('Mock: Åbner ' + getTranslation('madlavning'))
+            action: () => navigateFn('du1_madlavning')
         },
         {
             icon: '🧹',

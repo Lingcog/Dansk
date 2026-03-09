@@ -14,6 +14,7 @@ import { renderTransportSprogskoleView } from './views/TransportSprogskoleView.j
 import { renderMadlavningView } from './views/MadlavningView.js';
 import { renderRengoeringView } from './views/RengoeringView.js';
 import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
+import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { translations } from './utils/translations.js';
 
 // Application State
@@ -80,6 +81,9 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'traen_tidsudtryk') {
     appState.currentView = 'traen_tidsudtryk';
     renderTraenTidsudtrykView(appDiv, navigate);
+  } else if (viewTarget === 'lav_sporgsmal') {
+    appState.currentView = 'lav_sporgsmal';
+    renderLavSporgsmalView(appDiv, navigate);
   }
 }
 

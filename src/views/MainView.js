@@ -46,7 +46,7 @@ export function renderMainView(container, navigateFn) {
             icon: '💬',
             titleKey: 'lavSporgsmal',
             descKey: 'lavSporgsmalDesc',
-            action: () => alert('Mock: Gå til Lav spørgsmål')
+            action: () => navigateFn('lav_sporgsmal')
         },
         {
             icon: '🗣️',

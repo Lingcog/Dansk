@@ -1,6 +1,7 @@
 import { getLang, getTranslation, navigate, baseUrl } from '../main.js';
 
-export function renderOrdstillingView(container, navigateFn) {
+export function renderOrdstillingView(container, navigateFn, extraData = {}) {
+    const level = extraData.level || 'A1';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -10,13 +11,22 @@ export function renderOrdstillingView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back')}`;
-    backBtn.onclick = () => navigateFn('main');
+    backBtn.onclick = () => navigateFn('dagens_opgave');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
     const title = document.createElement('h1');
-    title.textContent = getTranslation('ordstilling');
+    title.textContent = getTranslation(level === 'A1' ? 'ordstillingLet' : 'ordstillingSvaer');
     viewContainer.appendChild(title);
+
+    const levelBadge = document.createElement('div');
+    levelBadge.style.textAlign = 'center';
+    levelBadge.style.marginBottom = '0.5rem';
+    levelBadge.style.fontSize = '1.2rem';
+    levelBadge.style.fontWeight = 'bold';
+    levelBadge.style.color = level === 'A1' ? '#4CAF50' : '#FF9800';
+    levelBadge.textContent = getTranslation(level === 'A1' ? 'levelA1' : 'levelA2');
+    viewContainer.appendChild(levelBadge);
 
     const desc = document.createElement('p');
     desc.className = 'subtitle';
@@ -24,17 +34,29 @@ export function renderOrdstillingView(container, navigateFn) {
     viewContainer.appendChild(desc);
 
     // Game State
-    const sentences = [
+    const sentencesA1 = [
         "Jeg hedder Mikael.",
-        "Hvad skal vi lave i dag?",
         "Jeg kommer fra Danmark.",
-        "Solen skinner altid i min have.",
         "Hvor gammel er du?",
-        "Jeg kan godt lide at lære dansk.",
-        "Vi ses i morgen på sprogskolen.",
-        "Kan du tale dansk?"
+        "Jeg bor i København.",
+        "Hvad laver du?",
+        "Jeg har en hund.",
+        "Min bil er rød.",
+        "Kaffen er varm."
     ];
 
+    const sentencesA2 = [
+        "Solen skinner altid i min have.",
+        "Jeg kan godt lide at lære dansk.",
+        "Vi ses i morgen på sprogskolen.",
+        "Kan du tale dansk og engelsk?",
+        "I går var jeg i biografen med min ven.",
+        "Jeg skal købe ind i supermarkedet nu.",
+        "Hvorfor kom du ikke til festen?",
+        "Det er vigtigt at øve sig hver dag."
+    ];
+
+    const sentences = level === 'A1' ? sentencesA1 : sentencesA2;
     let currentIdx = Math.floor(Math.random() * sentences.length);
     let originalSentence = sentences[currentIdx];
     let targetWords = originalSentence.split(' ');

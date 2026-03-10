@@ -16,6 +16,7 @@ import { renderRengoeringView } from './views/RengoeringView.js';
 import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { renderOrdstillingView } from './views/OrdstillingView.js';
+import { renderGrammatikView } from './views/GrammatikView.js';
 import { translations } from './utils/translations.js';
 
 // Application State
@@ -87,7 +88,10 @@ export function navigate(viewTarget, extraData = {}) {
     renderLavSporgsmalView(appDiv, navigate);
   } else if (viewTarget === 'ordstilling') {
     appState.currentView = 'ordstilling';
-    renderOrdstillingView(appDiv, navigate);
+    renderOrdstillingView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'traen_grammatik') {
+    appState.currentView = 'traen_grammatik';
+    renderGrammatikView(appDiv, navigate);
   }
 }
 

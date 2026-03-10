@@ -61,10 +61,10 @@ export function renderMainView(container, navigateFn) {
             action: () => navigateFn('skrive_hjaelp')
         },
         {
-            icon: '🧩',
-            titleKey: 'ordstilling',
-            descKey: 'ordstillingDesc',
-            action: () => navigateFn('ordstilling')
+            icon: '📖',
+            titleKey: 'traenGrammatik',
+            descKey: 'grammatikDesc',
+            action: () => navigateFn('traen_grammatik')
         }
     ];
 

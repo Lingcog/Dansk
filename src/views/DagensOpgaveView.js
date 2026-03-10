@@ -34,6 +34,18 @@ export function renderDagensOpgaveView(container, navigateFn) {
             titleKey: 'traenTidsudtryk',
             descKey: 'traenTidsudtrykDesc',
             action: () => navigateFn('traen_tidsudtryk')
+        },
+        {
+            icon: '🧩',
+            titleKey: 'ordstillingLet',
+            descKey: 'levelA1',
+            action: () => navigateFn('ordstilling', { level: 'A1' })
+        },
+        {
+            icon: '🧩',
+            titleKey: 'ordstillingSvaer',
+            descKey: 'levelA2',
+            action: () => navigateFn('ordstilling', { level: 'A2' })
         }
     ];
 

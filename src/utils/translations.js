@@ -57,7 +57,12 @@ export const translations = {
     rengoeringPadletDesc: "Del dine tanker om rengøring med klassen.",
     traenTidsudtryk: "Træn tidsudtryk",
     traenTidsudtrykDesc: "Hvordan bruger man forskellige tidsudtryk på dansk?",
-    traenTidsudtrykBtnText: "Åbn tidsudtryk øvelse"
+    traenTidsudtrykBtnText: "Åbn tidsudtryk øvelse",
+    ordstilling: "Ordstilling",
+    ordstillingDesc: "Ryk rundt på ordene og sæt dem i den rigtige rækkefølge.",
+    checkResult: "Tjek svar",
+    correctOrder: "Flot! Rækkefølgen er rigtig.",
+    wrongOrder: "Ikke helt rigtigt. Prøv igen!"
   },
   en: {
     selectLanguage: "Select language",
@@ -117,7 +122,12 @@ export const translations = {
     rengoeringPadletDesc: "Share your thoughts on cleaning with the class.",
     traenTidsudtryk: "Practice time expressions",
     traenTidsudtrykDesc: "How do you use different time expressions in Danish?",
-    traenTidsudtrykBtnText: "Open time expressions exercise"
+    traenTidsudtrykBtnText: "Open time expressions exercise",
+    ordstilling: "Word Order",
+    ordstillingDesc: "Rearrange the words and put them in the correct order.",
+    checkResult: "Check answer",
+    correctOrder: "Great! The order is correct.",
+    wrongOrder: "Not quite right. Try again!"
   },
   ar: {
     selectLanguage: "اختر لغة",
@@ -177,7 +187,12 @@ export const translations = {
     rengoeringPadletDesc: "شارك أفكارك حول التنظيف مع الفصل.",
     traenTidsudtryk: "تدريب تعبيرات الوقت",
     traenTidsudtrykDesc: "كيف تستخدم تعبيرات الوقت المختلفة باللغة الدنماركية؟",
-    traenTidsudtrykBtnText: "افتح تمرين تعبيرات الوقت"
+    traenTidsudtrykBtnText: "افتح تمرين تعبيرات الوقت",
+    ordstilling: "ترتيب الكلمات",
+    ordstillingDesc: "قم بإعادة ترتيب الكلمات ووضعها في الترتيب الصحيح.",
+    checkResult: "تحقق من الإجابة",
+    correctOrder: "رائع! الترتيب صحيح.",
+    wrongOrder: "ليس تماماً. حاول مرة أخرى!"
   },
   ur: {
     selectLanguage: "زبان منتخب کریں",
@@ -237,7 +252,12 @@ export const translations = {
     rengoeringPadletDesc: "صفائی کے بارے میں اپنے خیالات کلاس کے ساتھ شیئر کریں۔",
     traenTidsudtryk: "وقت کے اظہار کی مشق",
     traenTidsudtrykDesc: "دانش میں وقت کے مختلف اظہار کیسے استعمال ہوتے ہیں؟",
-    traenTidsudtrykBtnText: "وقت کے اظہار کی مشق کھولیں"
+    traenTidsudtrykBtnText: "وقت کے اظہار کی مشق کھولیں",
+    ordstilling: "الفاظ کی ترتیب",
+    ordstillingDesc: "الفاظ کو دوبارہ ترتیب دیں اور انہیں صحیح ترتیب میں رکھیں.",
+    checkResult: "جواب چیک کریں",
+    correctOrder: "بہت خوب! ترتیب درست ہے.",
+    wrongOrder: "بالکل درست نہیں. دوبارہ کوشش کریں!"
   },
   zh: {
     selectLanguage: "选择语言",
@@ -297,7 +317,12 @@ export const translations = {
     rengoeringPadletDesc: "与全班分享你对清洁的看法。",
     traenTidsudtryk: "练习时间表达",
     traenTidsudtrykDesc: "如何在丹麦语中使用不同的时间表达？",
-    traenTidsudtrykBtnText: "打开时间表达练习"
+    traenTidsudtrykBtnText: "打开时间表达练习",
+    ordstilling: "词序练习",
+    ordstillingDesc: "重新排列单词，并将它们按正确的顺序排列。",
+    checkResult: "检查答案",
+    correctOrder: "太棒了！顺序正确。",
+    wrongOrder: "不完全正确。再试一次！"
   },
   ru: {
     selectLanguage: "Выберите язык",
@@ -355,7 +380,12 @@ export const translations = {
     rengoeringPadletDesc: "Поделитесь своими мыслями об уборке с классом.",
     traenTidsudtryk: "Практика временных выражений",
     traenTidsudtrykDesc: "Как использовать различные временные выражения в датском?",
-    traenTidsudtrykBtnText: "Открыть упражнение"
+    traenTidsudtrykBtnText: "Открыть упражнение",
+    ordstilling: "Порядок слов",
+    ordstillingDesc: "Переставьте слова и расположите их в правильном порядке.",
+    checkResult: "Проверить ответ",
+    correctOrder: "Отлично! Порядок правильный.",
+    wrongOrder: "Не совсем верно. Попробуйте еще раз!"
   },
   ne: {
     selectLanguage: "भाषा छान्नुहोस्",
@@ -413,7 +443,12 @@ export const translations = {
     rengoeringPadletDesc: "सरसफाईको बारेमा आफ्नो विचार साझा गर्नुहोस्।",
     traenTidsudtryk: "समय अभिव्यक्ति अभ्यास",
     traenTidsudtrykDesc: "डेनिसमा विभिन्न समय अभिव्यक्तिहरू कसरी प्रयोग गर्ने?",
-    traenTidsudtrykBtnText: "समय अभिव्यक्ति अभ्यास खोल्नुहोस्"
+    traenTidsudtrykBtnText: "समय अभिव्यक्ति अभ्यास खोल्नुहोस्",
+    ordstilling: "शब्द क्रम",
+    ordstillingDesc: "शब्दहरूलाई पुन: व्यवस्थित गर्नुहोस् र तिनीहरूलाई सही क्रममा राख्नुहोस्।",
+    checkResult: "उत्तर जाँच गर्नुहोस्",
+    correctOrder: "उत्कृष्ट! क्रम सही छ।",
+    wrongOrder: "पुरै सही छैन। फेरि प्रयास गर्नुहोस्!"
   },
   th: {
     selectLanguage: "เลือกภาษา",
@@ -471,7 +506,12 @@ export const translations = {
     rengoeringPadletDesc: "แบ่งปันความคิดเรื่องการทำความสะอาดกับเพื่อนในห้อง",
     traenTidsudtryk: "ฝึกการบอกเวลา",
     traenTidsudtrykDesc: "วิธีการใช้สำนวนเกี่ยวกับเวลาในภาษาเดนมาร์ก",
-    traenTidsudtrykBtnText: "เปิดแบบฝึกหัดการบอกเวลา"
+    traenTidsudtrykBtnText: "เปิดแบบฝึกหัดการบอกเวลา",
+    ordstilling: "การเรียงลำดับคำ",
+    ordstillingDesc: "จัดเรียงคำใหม่และวางตามลำดับที่ถูกต้อง",
+    checkResult: "ตรวจคำตอบ",
+    correctOrder: "ยอดเยี่ยม! ลำดับถูกต้อง",
+    wrongOrder: "ยังไม่ถูกต้อง ลองอีกครั้ง!"
   },
   pt: {
     selectLanguage: "Escolher idioma",
@@ -529,7 +569,12 @@ export const translations = {
     rengoeringPadletDesc: "Partilhe os seus pensamentos sobre limpezas.",
     traenTidsudtryk: "Treino de expressões de tempo",
     traenTidsudtrykDesc: "Como usar diferentes expressões de tempo em dinamarquês?",
-    traenTidsudtrykBtnText: "Abrir exercício de expressões de tempo"
+    traenTidsudtrykBtnText: "Abrir exercício de expressões de tempo",
+    ordstilling: "Ordem das Palavras",
+    ordstillingDesc: "Reorganize as palavras e coloque-as na ordem correta.",
+    checkResult: "Verificar resposta",
+    correctOrder: "Excelente! A ordem está correta.",
+    wrongOrder: "Não está bem. Tente novamente!"
   },
   vi: {
     selectLanguage: "Chọn ngôn ngữ",
@@ -587,7 +632,12 @@ export const translations = {
     rengoeringPadletDesc: "Chia sẻ suy nghĩ của bạn về việc dọn dẹp với cả lớp.",
     traenTidsudtryk: "Luyện tập các cụm từ chỉ thời gian",
     traenTidsudtrykDesc: "Cách sử dụng các cụm từ chỉ thời gian khác nhau trong tiếng Đan Mạch?",
-    traenTidsudtrykBtnText: "Mở bài tập chỉ thời gian"
+    traenTidsudtrykBtnText: "Mở bài tập chỉ thời gian",
+    ordstilling: "Trật tự từ",
+    ordstillingDesc: "Sắp xếp lại các từ và đặt chúng theo đúng thứ tự.",
+    checkResult: "Kiểm tra đáp án",
+    correctOrder: "Tuyệt vời! Thứ tự đã đúng.",
+    wrongOrder: "Chưa hoàn toàn đúng. Thử lại nhé!"
   },
   fa: {
     selectLanguage: "انتخاب زبان",
@@ -645,7 +695,12 @@ export const translations = {
     rengoeringPadletDesc: "نظرات خود را درباره نظافت با کلاس در میان بگذارید.",
     traenTidsudtryk: "تمرین اصطلاحات زمانی",
     traenTidsudtrykDesc: "چطور از اصطلاحات زمانی مختلف در دانمارکی استفاده کنیم؟",
-    traenTidsudtrykBtnText: "باز کردن تمرین اصطلاحات زمانی"
+    traenTidsudtrykBtnText: "باز کردن تمرین اصطلاحات زمانی",
+    ordstilling: "ترتیب کلمات",
+    ordstillingDesc: "کلمات را دوباره ترتیب دهید و آن‌ها را در جای درست بگذارید.",
+    checkResult: "بررسی پاسخ",
+    correctOrder: "عالی! ترتیب درست است.",
+    wrongOrder: "کاملاً درست نیست. دوباره امتحان کنید!"
   },
   tr: {
     selectLanguage: "Dil seçin",
@@ -705,7 +760,12 @@ export const translations = {
     rengoeringPadletDesc: "Temizlikle ilgili düşüncelerinizi sınıfla paylaşın.",
     traenTidsudtryk: "Zaman ifadeleri çalışması",
     traenTidsudtrykDesc: "Dancada farklı zaman ifadeleri nasıl kullanılır?",
-    traenTidsudtrykBtnText: "Zaman ifadeleri egzersizini aç"
+    traenTidsudtrykBtnText: "Zaman ifadeleri egzersizini aç",
+    ordstilling: "Kelime Sıralaması",
+    ordstillingDesc: "Kelimeleri yeniden düzenleyin ve doğru sıraya koyun.",
+    checkResult: "Cevabı kontrol et",
+    correctOrder: "Harika! Sıralama doğru.",
+    wrongOrder: "Tam olarak doğru değil. Tekrar deneyin!"
   },
   es: {
     selectLanguage: "Seleccionar idioma",
@@ -765,6 +825,11 @@ export const translations = {
     rengoeringPadletDesc: "Comparte tus pensamientos sobre la limpieza con la clase.",
     traenTidsudtryk: "Entrenamiento de expresiones de tiempo",
     traenTidsudtrykDesc: "¿Cómo se usan las diferentes expresiones de tiempo en danés?",
-    traenTidsudtrykBtnText: "Abrir ejercicio de expresiones de tiempo"
+    traenTidsudtrykBtnText: "Abrir ejercicio de expresiones de tiempo",
+    ordstilling: "Orden de las palabras",
+    ordstillingDesc: "Reorganiza las palabras y ponlas en el orden correcto.",
+    checkResult: "Comprobar respuesta",
+    correctOrder: "¡Genial! El orden es correcto.",
+    wrongOrder: "No es correcto. ¡Inténtalo de nuevo!"
   }
 };

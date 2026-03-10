@@ -15,6 +15,7 @@ import { renderMadlavningView } from './views/MadlavningView.js';
 import { renderRengoeringView } from './views/RengoeringView.js';
 import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
+import { renderOrdstillingView } from './views/OrdstillingView.js';
 import { translations } from './utils/translations.js';
 
 // Application State
@@ -84,6 +85,9 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'lav_sporgsmal') {
     appState.currentView = 'lav_sporgsmal';
     renderLavSporgsmalView(appDiv, navigate);
+  } else if (viewTarget === 'ordstilling') {
+    appState.currentView = 'ordstilling';
+    renderOrdstillingView(appDiv, navigate);
   }
 }
 

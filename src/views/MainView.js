@@ -59,6 +59,12 @@ export function renderMainView(container, navigateFn) {
             titleKey: 'skriveHjaelp',
             descKey: 'skriveHjaelpDesc',
             action: () => navigateFn('skrive_hjaelp')
+        },
+        {
+            icon: '🧩',
+            titleKey: 'ordstilling',
+            descKey: 'ordstillingDesc',
+            action: () => navigateFn('ordstilling')
         }
     ];
 

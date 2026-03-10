@@ -25,7 +25,9 @@ export function renderLanguageView(container, navigateFn) {
         { code: 'th', label: 'ไทย' },
         { code: 'pt', label: 'Português' },
         { code: 'vi', label: 'Tiếng Việt' },
-        { code: 'fa', label: 'فارسی' }
+        { code: 'fa', label: 'فارسی' },
+        { code: 'tr', label: 'Türkçe' },
+        { code: 'es', label: 'Español' }
     ];
 
     languages.forEach(l => {

@@ -1,4 +1,4 @@
-import { getLanguage, getTranslation, navigate, baseUrl } from '../main.js';
+import { getLang, getTranslation, navigate, baseUrl } from '../main.js';
 
 export function renderOrdstillingView(container, navigateFn) {
     const viewContainer = document.createElement('div');

@@ -84,7 +84,11 @@ export const translations = {
     hintContext: "Læs hele teksten igen. Hvad passer bedst her?",
     hintName: "Her skal du bruge et ord om navne.",
     hintPlace: "Her skal du bruge et ord om steder.",
-    hintAction: "Dette ord beskriver en anden handling."
+    hintAction: "Dette ord beskriver en anden handling.",
+    hintAdj: "Tjek tillægsordet (beskrivelse af en ting).",
+    hintAdverb: "Tjek biordet (tid, sted eller måde).",
+    hintConj: "Tjek bindeordet (forbinder to sætninger).",
+    filled: "udfyldt"
   },
   en: {
     selectLanguage: "Select language",
@@ -171,7 +175,11 @@ export const translations = {
     hintContext: "Read the whole text again. What fits best here?",
     hintName: "You need a word for names here.",
     hintPlace: "You need a word for places here.",
-    hintAction: "This word describes a different action."
+    hintAction: "This word describes a different action.",
+    hintAdj: "Check the adjective (description of a thing).",
+    hintAdverb: "Check the adverb (time, place, or manner).",
+    hintConj: "Check the conjunction (connects two sentences).",
+    filled: "filled"
   },
   ar: {
     selectLanguage: "اختر لغة",
@@ -258,7 +266,11 @@ export const translations = {
     hintContext: "اقرأ النص بالكامل مرة أخرى. ما هو الأنسب هنا؟",
     hintName: "أنت بحاجة إلى كلمة للأسماء هنا.",
     hintPlace: "أنت بحاجة إلى كلمة للأماكن هنا.",
-    hintAction: "هذه الكلمة تصف فعلاً مختلفاً."
+    hintAction: "هذه الكلمة تصف فعلاً مختلفاً.",
+    hintAdj: "تحقق من الصفة (وصف لشيء ما).",
+    hintAdverb: "تحقق من الظرف (الزمان أو المكان أو الطريقة).",
+    hintConj: "تحقق من حرف العطف (يربط بين جملتين).",
+    filled: "تمت تعبئته"
   },
   ur: {
     selectLanguage: "زبان منتخب کریں",
@@ -345,7 +357,11 @@ export const translations = {
     hintContext: "پورا متن دوبارہ پڑھیں. یہاں سب سے بہتر کیا ہے؟",
     hintName: "آپ کو یہاں ناموں کے لیے ایک لفظ کی ضرورت ہے.",
     hintPlace: "آپ کو یہاں مقامات کے لیے ایک لفظ کی ضرورت ہے.",
-    hintAction: "یہ لفظ ایک مختلف عمل بیان کرتا ہے."
+    hintAction: "یہ لفظ ایک مختلف عمل بیان کرتا ہے.",
+    hintAdj: "صفت چیک کریں (کسی چیز کی وضاحت).",
+    hintAdverb: "متعلق فعل چیک کریں (وقت، جگہ یا طریقہ).",
+    hintConj: "حرف عطف چیک کریں (دو جملوں کو جوڑتا ہے).",
+    filled: "بھرا ہوا"
   },
   zh: {
     selectLanguage: "选择语言",
@@ -432,7 +448,11 @@ export const translations = {
     hintContext: "重新阅读全文。这里最适合什么？",
     hintName: "你需要一个关于名字的词。",
     hintPlace: "你需要一个关于地点的词。",
-    hintAction: "这个词描述的是另一种动作。"
+    hintAction: "这个词描述的是另一种动作。",
+    hintAdj: "检查形容词（描述事物的词）。",
+    hintAdverb: "检查副词（时间、地点或方式）。",
+    hintConj: "检查连词（连接两个句子）。",
+    filled: "已填写"
   },
   ru: {
     selectLanguage: "Выберите язык",
@@ -517,7 +537,11 @@ export const translations = {
     hintContext: "Прочитайте весь текст еще раз. Что здесь лучше всего подходит?",
     hintName: "Здесь нужно слово для имен.",
     hintPlace: "Здесь нужно слово для мест.",
-    hintAction: "Это слово описывает другое действие."
+    hintAction: "Это слово описывает другое действие.",
+    hintAdj: "Проверьте прилагательное (описание предмета).",
+    hintAdverb: "Проверьте наречие (время, место или образ действия).",
+    hintConj: "Проверьте союз (соединяет два предложения).",
+    filled: "заполнено"
   },
   ne: {
     selectLanguage: "भाषा छान्नुहोस्",
@@ -602,7 +626,11 @@ export const translations = {
     hintContext: "फेरि पूरा पाठ पढ्नुहोस्। यहाँ सबैभन्दा उपयुक्त के हुन्छ?",
     hintName: "तपाईंलाई यहाँ नामका लागि शब्द चाहिन्छ।",
     hintPlace: "तपाईंलाई यहाँ ठाउँका लागि शब्द चाहिन्छ।",
-    hintAction: "यो शब्दले अर्कै कार्यलाई वर्णन गर्दछ।"
+    hintAction: "यो शब्दले अर्कै कार्यलाई वर्णन गर्दछ।",
+    hintAdj: "विशेषण जाँच गर्नुहोस् (चीजको विवरण)।",
+    hintAdverb: "क्रियाविशेषण जाँच गर्नुहोस् (समय, स्थान वा तरिका)।",
+    hintConj: "संयोजक जाँच गर्नुहोस् (दुईवटा वाक्यहरू जोड्छ)।",
+    filled: "भरिएको"
   },
   th: {
     selectLanguage: "เลือกภาษา",
@@ -687,7 +715,11 @@ export const translations = {
     hintContext: "อ่านข้อความทั้งหมดอีกครั้ง อะไรเหมาะที่สุดตรงนี้?",
     hintName: "คุณต้องการคำเรียกชื่อตรงนี้",
     hintPlace: "คุณต้องการคำระบุสถานที่ตรงนี้",
-    hintAction: "คำนี้อธิบายการกระทำที่ต่างออกไป"
+    hintAction: "คำนี้อธิบายการกระทำที่ต่างออกไป",
+    hintAdj: "ตรวจสอบคำคุณศัพท์ (การบรรยายสิ่งของ)",
+    hintAdverb: "ตรวจสอบคำวิเศษณ์ (เวลา สถานที่ หรืออาการ)",
+    hintConj: "ตรวจสอบคำสันธาน (คำเชื่อมประโยค)",
+    filled: "เติมแล้ว"
   },
   pt: {
     selectLanguage: "Escolher idioma",
@@ -772,7 +804,11 @@ export const translations = {
     hintContext: "Leia todo o texto novamente. O que melhor se encaixa aqui?",
     hintName: "Você precisa de uma palavra para nomes aqui.",
     hintPlace: "Você precisa de uma palavra para locais aqui.",
-    hintAction: "Esta palavra descreve uma ação diferente."
+    hintAction: "Esta palavra descreve uma ação diferente.",
+    hintAdj: "Verifique o adjetivo (descrição de uma coisa).",
+    hintAdverb: "Verifique o advérbio (tempo, lugar ou modo).",
+    hintConj: "Verifique a conjunção (conecta duas frases).",
+    filled: "preenchido"
   },
   vi: {
     selectLanguage: "Chọn ngôn ngữ",

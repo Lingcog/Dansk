@@ -36,16 +36,16 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('traen_tidsudtryk')
         },
         {
-            icon: '🧩',
-            titleKey: 'ordstillingLet',
-            descKey: 'levelA1',
-            action: () => navigateFn('ordstilling', { level: 'A1' })
+            icon: '📖',
+            titleKey: 'traenGrammatik',
+            descKey: 'grammatikDesc',
+            action: () => navigateFn('traen_grammatik')
         },
         {
             icon: '🧩',
-            titleKey: 'ordstillingSvaer',
-            descKey: 'levelA2',
-            action: () => navigateFn('ordstilling', { level: 'A2' })
+            titleKey: 'ordstilling',
+            descKey: 'ordstillingDesc',
+            action: () => navigateFn('ordstilling')
         }
     ];
 

@@ -59,12 +59,6 @@ export function renderMainView(container, navigateFn) {
             titleKey: 'skriveHjaelp',
             descKey: 'skriveHjaelpDesc',
             action: () => navigateFn('skrive_hjaelp')
-        },
-        {
-            icon: '📖',
-            titleKey: 'traenGrammatik',
-            descKey: 'grammatikDesc',
-            action: () => navigateFn('traen_grammatik')
         }
     ];
 

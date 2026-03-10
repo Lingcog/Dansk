@@ -76,7 +76,15 @@ export const translations = {
     checkAnswers: "Tjek alle svar",
     allCorrect: "Fantastisk! Alle svar er korrekte.",
     someWrong: "Nogle af dine svar er ikke helt rigtige. Prøv igen!",
-    newExercise: "Næste tekst"
+    newExercise: "Næste tekst",
+    hintMean: "Dette ord giver ikke mening i sammenhængen.",
+    hintTense: "Tjek tiden. Er det nutid eller datid?",
+    hintForm: "Tjek ordets bøjning (f.eks. en/et eller ental/flertal).",
+    hintPerson: "Tjek hvem der gør noget (jeg, du, han/hun).",
+    hintContext: "Læs hele teksten igen. Hvad passer bedst her?",
+    hintName: "Her skal du bruge et ord om navne.",
+    hintPlace: "Her skal du bruge et ord om steder.",
+    hintAction: "Dette ord beskriver en anden handling."
   },
   en: {
     selectLanguage: "Select language",
@@ -155,7 +163,15 @@ export const translations = {
     checkAnswers: "Check all answers",
     allCorrect: "Fantastic! All answers are correct.",
     someWrong: "Some of your answers are not quite right. Try again!",
-    newExercise: "Next text"
+    newExercise: "Next text",
+    hintMean: "This word doesn't make sense in this context.",
+    hintTense: "Check the tense. Is it present or past?",
+    hintForm: "Check the word form (e.g., gender or singular/plural).",
+    hintPerson: "Check who is performing the action (I, you, he/she).",
+    hintContext: "Read the whole text again. What fits best here?",
+    hintName: "You need a word for names here.",
+    hintPlace: "You need a word for places here.",
+    hintAction: "This word describes a different action."
   },
   ar: {
     selectLanguage: "اختر لغة",
@@ -234,7 +250,15 @@ export const translations = {
     checkAnswers: "تحقق من جميع الإجابات",
     allCorrect: "رائع! جميع الإجابات صحيحة.",
     someWrong: "بعض إجاباتك ليست صحيحة تمامًا. حاول مرة أخرى!",
-    newExercise: "النص التالي"
+    newExercise: "النص التالي",
+    hintMean: "هذه الكلمة لا معنى لها في هذا السياق.",
+    hintTense: "تحقق من الزمن. هل هو مضارع أم ماضٍ؟",
+    hintForm: "تحقق من صيغة الكلمة (مثل الجنس أو المفرد/الجمع).",
+    hintPerson: "تحقق من يقوم بالفعل (أنا، أنت، هو/هي).",
+    hintContext: "اقرأ النص بالكامل مرة أخرى. ما هو الأنسب هنا؟",
+    hintName: "أنت بحاجة إلى كلمة للأسماء هنا.",
+    hintPlace: "أنت بحاجة إلى كلمة للأماكن هنا.",
+    hintAction: "هذه الكلمة تصف فعلاً مختلفاً."
   },
   ur: {
     selectLanguage: "زبان منتخب کریں",
@@ -313,7 +337,15 @@ export const translations = {
     checkAnswers: "تمام جوابات چیک کریں",
     allCorrect: "شاندار! تمام جوابات درست ہیں۔",
     someWrong: "آپ کے کچھ جوابات بالکل درست نہیں ہیں۔ دوبارہ کوشش کریں!",
-    newExercise: "اگلا متن"
+    newExercise: "اگلا متن",
+    hintMean: "اس تناظر میں یہ لفظ معنی نہیں رکھتا.",
+    hintTense: "زمانہ چیک کریں. کیا یہ حال ہے یا ماضی؟",
+    hintForm: "لفظ کی شکل چیک کریں (مثلاً جنس یا واحد/جمع).",
+    hintPerson: "چیک کریں کہ عمل کون کر رہا ہے (میں، آپ، وہ).",
+    hintContext: "پورا متن دوبارہ پڑھیں. یہاں سب سے بہتر کیا ہے؟",
+    hintName: "آپ کو یہاں ناموں کے لیے ایک لفظ کی ضرورت ہے.",
+    hintPlace: "آپ کو یہاں مقامات کے لیے ایک لفظ کی ضرورت ہے.",
+    hintAction: "یہ لفظ ایک مختلف عمل بیان کرتا ہے."
   },
   zh: {
     selectLanguage: "选择语言",
@@ -392,7 +424,15 @@ export const translations = {
     checkAnswers: "检查所有答案",
     allCorrect: "太棒了！所有答案都正确。",
     someWrong: "你的某些答案不完全正确。再试一次！",
-    newExercise: "下一篇"
+    newExercise: "下一篇",
+    hintMean: "这个词在这种语境下没有意义。",
+    hintTense: "检查时态。是现在时还是过去时？",
+    hintForm: "检查单词形式（例如：性别或单复数）。",
+    hintPerson: "检查谁在执行动作（我、你、他/她）。",
+    hintContext: "重新阅读全文。这里最适合什么？",
+    hintName: "你需要一个关于名字的词。",
+    hintPlace: "你需要一个关于地点的词。",
+    hintAction: "这个词描述的是另一种动作。"
   },
   ru: {
     selectLanguage: "Выберите язык",
@@ -469,7 +509,15 @@ export const translations = {
     checkAnswers: "Проверить все ответы",
     allCorrect: "Фантастика! Все ответы верны.",
     someWrong: "Некоторые ваши ответы не совсем верны. Попробуйте еще раз!",
-    newExercise: "Следующий текст"
+    newExercise: "Следующий текст",
+    hintMean: "Это слово не имеет смысла в данном контексте.",
+    hintTense: "Проверьте время. Это настоящее или прошедшее?",
+    hintForm: "Проверьте форму слова (например, род или число).",
+    hintPerson: "Проверьте, кто совершает действие (я, ты, он/она).",
+    hintContext: "Прочитайте весь текст еще раз. Что здесь лучше всего подходит?",
+    hintName: "Здесь нужно слово для имен.",
+    hintPlace: "Здесь нужно слово для мест.",
+    hintAction: "Это слово описывает другое действие."
   },
   ne: {
     selectLanguage: "भाषा छान्नुहोस्",
@@ -546,7 +594,15 @@ export const translations = {
     checkAnswers: "सबै उत्तरहरू जाँच गर्नुहोस्",
     allCorrect: "शानदार! सबै उत्तरहरू सही छन्।",
     someWrong: "तपाईका केही उत्तरहरू पूर्ण रूपमा सही छैनन्। फेरि प्रयास गर्नुहोस्!",
-    newExercise: "अर्को पाठ"
+    newExercise: "अर्को पाठ",
+    hintMean: "यो शब्द यस सन्दर्भमा अर्थहीन छ।",
+    hintTense: "काल जाँच गर्नुहोस्। यो वर्तमान हो कि भूत?",
+    hintForm: "शब्दको रूप जाँच गर्नुहोस् (जस्तै लिङ्ग वा एकवचन/बहुवचन)।",
+    hintPerson: "कार्य कसले गरिरहेको छ जाँच गर्नुहोस् (म, तिमी, उ/उनी)।",
+    hintContext: "फेरि पूरा पाठ पढ्नुहोस्। यहाँ सबैभन्दा उपयुक्त के हुन्छ?",
+    hintName: "तपाईंलाई यहाँ नामका लागि शब्द चाहिन्छ।",
+    hintPlace: "तपाईंलाई यहाँ ठाउँका लागि शब्द चाहिन्छ।",
+    hintAction: "यो शब्दले अर्कै कार्यलाई वर्णन गर्दछ।"
   },
   th: {
     selectLanguage: "เลือกภาษา",
@@ -623,7 +679,15 @@ export const translations = {
     checkAnswers: "ตรวจคำตอบทั้งหมด",
     allCorrect: "สุดยอด! ทุกคำตอบถูกต้อง",
     someWrong: "คำตอบบางคำไม่ค่อยถูกต้อง ลองอีกครั้ง!",
-    newExercise: "ข้อความถัดไป"
+    newExercise: "ข้อความถัดไป",
+    hintMean: "คำนี้ไม่มีความหมายในบริบทนี้",
+    hintTense: "ตรวจสอบกาล (Tense) เป็นปัจจุบันหรืออดีต?",
+    hintForm: "ตรวจสอบรูปของคำ (เช่น เพศ หรือ เอกพจน์/พหูพจน์)",
+    hintPerson: "ตรวจสอบว่าใครเป็นคนทำกริยานั้น (ฉัน, คุณ, เขา/เธอ)",
+    hintContext: "อ่านข้อความทั้งหมดอีกครั้ง อะไรเหมาะที่สุดตรงนี้?",
+    hintName: "คุณต้องการคำเรียกชื่อตรงนี้",
+    hintPlace: "คุณต้องการคำระบุสถานที่ตรงนี้",
+    hintAction: "คำนี้อธิบายการกระทำที่ต่างออกไป"
   },
   pt: {
     selectLanguage: "Escolher idioma",
@@ -700,7 +764,15 @@ export const translations = {
     checkAnswers: "Verificar todas as respostas",
     allCorrect: "Fantástico! Todas as respostas estão corretas.",
     someWrong: "Algumas das suas respostas não estão totalmente corretas. Tente novamente!",
-    newExercise: "Próximo texto"
+    newExercise: "Próximo texto",
+    hintMean: "Esta palavra não faz sentido neste contexto.",
+    hintTense: "Verifique o tempo verbal. É presente ou passado?",
+    hintForm: "Verifique a forma da palavra (ex: gênero ou singular/plural).",
+    hintPerson: "Verifique quem está realizando a ação (eu, você, ele/ela).",
+    hintContext: "Leia todo o texto novamente. O que melhor se encaixa aqui?",
+    hintName: "Você precisa de uma palavra para nomes aqui.",
+    hintPlace: "Você precisa de uma palavra para locais aqui.",
+    hintAction: "Esta palavra descreve uma ação diferente."
   },
   vi: {
     selectLanguage: "Chọn ngôn ngữ",
@@ -777,7 +849,15 @@ export const translations = {
     checkAnswers: "Kiểm tra tất cả đáp án",
     allCorrect: "Tuyệt vời! Tất cả đáp án đều đúng.",
     someWrong: "Một số câu trả lời của bạn chưa hoàn toàn đúng. Thử lại nhé!",
-    newExercise: "Văn bản tiếp theo"
+    newExercise: "Văn bản tiếp theo",
+    hintMean: "Từ này không có ý nghĩa trong ngữ cảnh này.",
+    hintTense: "Kiểm tra thì của động từ. Là hiện tại hay quá khứ?",
+    hintForm: "Kiểm tra hình thức của từ (ví dụ: giống hoặc số ít/số nhiều).",
+    hintPerson: "Kiểm tra ai là người thực hiện hành động (tôi, bạn, anh ấy/cô ấy).",
+    hintContext: "Đọc lại toàn bộ văn bản. Điều gì phù hợp nhất ở đây?",
+    hintName: "Bạn cần một từ cho tên ở đây.",
+    hintPlace: "Bạn cần một từ cho nơi chốn ở đây.",
+    hintAction: "Từ này mô tả một hành động khác."
   },
   fa: {
     selectLanguage: "انتخاب زبان",
@@ -854,7 +934,15 @@ export const translations = {
     checkAnswers: "بررسی تمام پاسخ‌ها",
     allCorrect: "عالی! تمام پاسخ‌ها درست هستند.",
     someWrong: "برخی از پاسخ‌های شما کاملاً درست نیستند. دوباره امتحان کنید!",
-    newExercise: "متن بعدی"
+    newExercise: "متن بعدی",
+    hintMean: "این کلمه در این متن معنایی ندارد.",
+    hintTense: "زمان فعل را بررسی کنید. حال است یا گذشته؟",
+    hintForm: "شکل کلمه را بررسی کنید (مثلاً جنسیت یا مفرد/جمع).",
+    hintPerson: "بررسی کنید چه کسی عمل را انجام می‌دهد (من، تو، او).",
+    hintContext: "دوباره کل متن را بخوانید. چه چیزی اینجا بهتر است؟",
+    hintName: "اینجا به کلمه‌ای برای نام‌ها نیاز دارید.",
+    hintPlace: "اینجا به کلمه‌ای برای مکان‌ها نیاز دارید.",
+    hintAction: "این کلمه عمل دیگری را توصیف می‌کند."
   },
   tr: {
     selectLanguage: "Dil seçin",
@@ -933,7 +1021,15 @@ export const translations = {
     checkAnswers: "Tüm cevapları kontrol et",
     allCorrect: "Harika! Tüm cevaplar doğru.",
     someWrong: "Bazı cevaplarınız tam olarak doğru değil. Tekrar deneyin!",
-    newExercise: "Sonraki metin"
+    newExercise: "Sonraki metin",
+    hintMean: "Bu kelime bu bağlamda mantıklı değil.",
+    hintTense: "Zamanı kontrol edin. Şimdiki zaman mı yoksa geçmiş zaman mı?",
+    hintForm: "Kelime biçimini kontrol edin (örneğin cinsiyet veya tekil/çoğul).",
+    hintPerson: "Eylemi kimin yaptığını kontrol edin (ben, sen, o).",
+    hintContext: "Tüm metni tekrar okuyun. Buraya en iyi ne uyar?",
+    hintName: "Burada isimler için bir kelimeye ihtiyacınız var.",
+    hintPlace: "Burada yerler için bir kelimeye ihtiyacınız var.",
+    hintAction: "Bu kelime farklı bir eylemi tanımlıyor."
   },
   es: {
     selectLanguage: "Seleccionar idioma",
@@ -1012,6 +1108,14 @@ export const translations = {
     checkAnswers: "Comprobar todas las respuestas",
     allCorrect: "¡Fantástico! Todas las respuestas son correctas.",
     someWrong: "Algunas de tus respuestas no son del todo correctas. ¡Inténtalo de nuevo!",
-    newExercise: "Siguiente texto"
+    newExercise: "Siguiente texto",
+    hintMean: "Esta palabra no tiene sentido en este contexto.",
+    hintTense: "Comprueba el tiempo verbal. ¿Es presente o pasado?",
+    hintForm: "Comprueba la forma de la palabra (p. ej., género o singular/plural).",
+    hintPerson: "Comprueba quién realiza la acción (yo, tú, él/ella).",
+    hintContext: "Lee todo el texto de nuevo. ¿Qué encaja mejor aquí?",
+    hintName: "Necesitas una palabra para nombres aquí.",
+    hintPlace: "Necesitas una palabra para lugares aquí.",
+    hintAction: "Esta palabra describe una acción diferente."
   }
 };

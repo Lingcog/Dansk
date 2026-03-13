@@ -248,7 +248,15 @@ export const translations = {
     verberIndreLiv: "Inner Life (see, think, know)",
     verberDatid: "Past Tense (irregular)",
     verberTider: "Past vs. Present Perfect (The Point & The Bridge)",
-    hintPronominer: "Check who is in focus or who owns something."
+    hintPronominer: "Check who is in focus or who owns something.",
+    howToBuildSentence: "How to build a sentence?",
+    howToBuildSentenceDesc: "Learn how words are anchored to reality.",
+    groundingIntro: "Without grammar, words float freely like balloons. We use grammar to anchor them to reality (HERE AND NOW).",
+    groundingStep1: "1. The Concept (Balloon): 'Dog' is just an idea. We don't know which dog.",
+    groundingStep2: "2. The Action: 'To eat' is just an idea. We don't know when.",
+    groundingStep3: "3. The Anchor: Use small words (determiners) and tense (inflection) to pull the balloons down.",
+    sentenceGround: "The ground of reality",
+    wellDone: "Well done! You have now built a sentence anchored in reality."
   },
   ar: {
     selectLanguage: "اختر لغة",

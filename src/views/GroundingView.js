@@ -29,7 +29,7 @@ export function renderGroundingView(container, navigateFn) {
     introArea.className = 'intro-area';
     introArea.innerHTML = `
         <div class="illustration-container">
-            <img src="${baseUrl}brain/a97bed4e-74ef-4e23-a7fc-7e243d6211a5/grounding_balloon_anchor_1773441786611.png" alt="Balloon and Anchor" class="grounding-img">
+            <img src="${baseUrl}images/grounding_balloon_anchor.png" alt="Balloon and Anchor" class="grounding-img">
         </div>
         <p class="grounding-text">${getTranslation('groundingIntro')}</p>
     `;

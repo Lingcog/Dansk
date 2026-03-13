@@ -1,4 +1,5 @@
-import { getTranslation, navigate } from '../main.js';
+import { navigate } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
 
 export function renderGrammatikView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -31,7 +32,8 @@ export function renderGrammatikView(container, navigateFn) {
     const levels = [
         { key: 'let', level: 'A1', icon: '🌱' },
         { key: 'mellemsvaer', level: 'A2', icon: '🌿' },
-        { key: 'svaer', level: 'B1', icon: '🌳' }
+        { key: 'svaer', level: 'B1', icon: '🌳' },
+        { key: 'modultest', level: 'modultest', icon: '🎓' }
     ];
 
     const grid = document.createElement('div');
@@ -63,7 +65,7 @@ export function renderGrammatikView(container, navigateFn) {
         gameArea.innerHTML = '';
 
         const levelTitle = document.createElement('h2');
-        levelTitle.textContent = getTranslation(level === 'A1' ? 'let' : level === 'A2' ? 'mellemsvaer' : 'svaer');
+        levelTitle.textContent = getTranslation(level === 'A1' ? 'let' : level === 'A2' ? 'mellemsvaer' : level === 'B1' ? 'svaer' : 'modultest');
         levelTitle.style.textAlign = 'center';
         gameArea.appendChild(levelTitle);
 
@@ -75,6 +77,18 @@ export function renderGrammatikView(container, navigateFn) {
             gameArea.appendChild(levelTitle);
 
             const ex = exerciseData[currentIdx];
+
+            // If Modultest, show word list above for reference
+            if (level === 'modultest') {
+                const wordList = document.createElement('div');
+                wordList.className = 'word-list-hint';
+                const allWords = ex.blanks.map(b => b.answer);
+                // Shuffle for the list too
+                const shuffledWords = [...allWords].sort(() => Math.random() - 0.5);
+                wordList.textContent = shuffledWords.join(', ');
+                gameArea.appendChild(wordList);
+            }
+
             const textContainer = document.createElement('div');
             textContainer.className = 'grammatik-text-container';
 
@@ -96,19 +110,19 @@ export function renderGrammatikView(container, navigateFn) {
                     defaultOpt.textContent = "...";
                     select.appendChild(defaultOpt);
 
-                    ex.blanks[idx].options.sort(() => Math.random() - 0.5).forEach(opt => {
+                    // Always shuffle options for Modultest explicitly, 
+                    // and also for others (as they were already shuffled in previous implementation)
+                    let opts = [...ex.blanks[idx].options];
+                    opts.sort(() => Math.random() - 0.5);
+
+                    opts.forEach(opt => {
                         const o = document.createElement('option');
                         o.value = opt;
                         o.textContent = opt;
                         select.appendChild(o);
                     });
 
-                    const hintDiv = document.createElement('div');
-                    hintDiv.className = 'select-hint';
-                    hintDiv.id = `hint-${idx}`;
-
                     wrapper.appendChild(select);
-                    wrapper.appendChild(hintDiv);
                     textContainer.appendChild(wrapper);
                 } else {
                     const span = document.createElement('span');
@@ -119,19 +133,15 @@ export function renderGrammatikView(container, navigateFn) {
 
             gameArea.appendChild(textContainer);
 
-            gameArea.appendChild(textContainer);
+            // Global hint area
+            const globalHintArea = document.createElement('div');
+            globalHintArea.className = 'global-hint-area';
+            gameArea.appendChild(globalHintArea);
 
             // Summary area for progress
             const summaryArea = document.createElement('div');
             summaryArea.className = 'grammatik-summary';
             gameArea.appendChild(summaryArea);
-
-            const feedback = document.createElement('div');
-            feedback.className = 'game-feedback';
-            gameArea.appendChild(feedback);
-
-            const controls = document.createElement('div');
-            controls.className = 'game-controls';
 
             function updateSummary() {
                 const selects = textContainer.querySelectorAll('select');
@@ -146,6 +156,7 @@ export function renderGrammatikView(container, navigateFn) {
                     summaryArea.classList.add('success');
                     checkBtn.style.display = 'none';
                     nextBtn.style.display = 'block';
+                    globalHintArea.style.display = 'none';
                 } else {
                     summaryArea.textContent = `${filled} / ${total} ${getTranslation('filled') || 'udfyldt'}`;
                     summaryArea.classList.remove('success');
@@ -156,28 +167,30 @@ export function renderGrammatikView(container, navigateFn) {
             textContainer.querySelectorAll('select').forEach(select => {
                 select.onchange = () => {
                     const idx = select.dataset.idx;
-                    const hintDiv = textContainer.querySelector(`#hint-${idx}`);
 
                     if (select.value === "") {
                         select.classList.remove('correct', 'wrong');
-                        hintDiv.style.display = 'none';
+                        globalHintArea.style.display = 'none';
                     } else if (select.value === ex.blanks[idx].answer) {
                         select.classList.add('correct');
                         select.classList.remove('wrong');
-                        hintDiv.textContent = '';
-                        hintDiv.style.display = 'none';
+                        globalHintArea.style.display = 'none';
                     } else {
                         select.classList.add('wrong');
                         select.classList.remove('correct');
-                        // Show hint
+                        // Show hint in global area
                         const selectedVal = select.value;
                         const hintKey = (ex.blanks[idx].hints && ex.blanks[idx].hints[selectedVal]) || 'hintContext';
-                        hintDiv.textContent = getTranslation(hintKey);
-                        hintDiv.style.display = 'block';
+                        globalHintArea.textContent = getTranslation(hintKey);
+                        globalHintArea.style.display = 'block';
+                        globalHintArea.className = 'global-hint-area error';
                     }
                     updateSummary();
                 };
             });
+
+            const controls = document.createElement('div');
+            controls.className = 'game-controls';
 
             const checkBtn = document.createElement('button');
             checkBtn.className = 'gemini-btn';
@@ -185,23 +198,29 @@ export function renderGrammatikView(container, navigateFn) {
             checkBtn.onclick = () => {
                 const selects = textContainer.querySelectorAll('select');
                 let allCorrect = true;
+                let firstErrorHint = '';
+
                 selects.forEach(s => {
                     const idx = s.dataset.idx;
-                    const hintDiv = textContainer.querySelector(`#hint-${idx}`);
-
                     if (s.value === ex.blanks[idx].answer) {
                         s.classList.add('correct');
                         s.classList.remove('wrong');
-                        hintDiv.style.display = 'none';
                     } else {
                         s.classList.add('wrong');
                         s.classList.remove('correct');
                         allCorrect = false;
-                        const hintKey = (ex.blanks[idx].hints && ex.blanks[idx].hints[s.value]) || 'hintContext';
-                        hintDiv.textContent = getTranslation(hintKey);
-                        hintDiv.style.display = 'block';
+                        if (!firstErrorHint) {
+                            const hintKey = (ex.blanks[idx].hints && ex.blanks[idx].hints[s.value]) || 'hintContext';
+                            firstErrorHint = getTranslation(hintKey);
+                        }
                     }
                 });
+
+                if (!allCorrect && firstErrorHint) {
+                    globalHintArea.textContent = firstErrorHint;
+                    globalHintArea.style.display = 'block';
+                    globalHintArea.className = 'global-hint-area error';
+                }
                 updateSummary();
             };
 
@@ -242,11 +261,8 @@ export function renderGrammatikView(container, navigateFn) {
                 box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
             }
             .select-wrapper {
-                display: inline-flex;
-                flex-direction: column;
-                align-items: center;
+                display: inline-block;
                 vertical-align: middle;
-                position: relative;
                 margin: 0 0.3rem;
             }
             .grammatik-select {
@@ -264,10 +280,6 @@ export function renderGrammatikView(container, navigateFn) {
                 min-width: 100px;
                 text-align-last: center;
             }
-            .grammatik-select:hover {
-                background: rgba(255, 255, 255, 0.12);
-                border-color: rgba(255, 255, 255, 0.3);
-            }
             .grammatik-select.correct {
                 border-color: #4CAF50;
                 background: rgba(76, 175, 80, 0.15);
@@ -278,38 +290,33 @@ export function renderGrammatikView(container, navigateFn) {
                 background: rgba(255, 82, 82, 0.15);
                 color: #FF8A80;
             }
-            .select-hint {
+            .global-hint-area {
                 display: none;
-                position: absolute;
-                bottom: 110%;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #FF5252;
-                color: white;
-                padding: 0.5rem 0.9rem;
-                border-radius: 12px;
-                font-size: 0.9rem;
-                line-height: 1.3;
-                width: 200px;
+                background: rgba(255, 82, 82, 0.1);
+                border: 1px solid rgba(255, 82, 82, 0.3);
+                color: #FF8A80;
+                padding: 1rem 1.5rem;
+                border-radius: 16px;
                 text-align: center;
-                z-index: 20;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-                pointer-events: none;
-                animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                margin: 1rem auto;
+                max-width: 80%;
+                font-size: 1.1rem;
+                font-weight: 500;
+                animation: slideUp 0.3s ease-out;
             }
-            @keyframes popIn {
-                from { transform: translateX(-50%) scale(0.8); opacity: 0; }
-                to { transform: translateX(-50%) scale(1); opacity: 1; }
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
             }
-            .select-hint::after {
-                content: '';
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                margin-left: -8px;
-                border-width: 8px;
-                border-style: solid;
-                border-color: #FF5252 transparent transparent transparent;
+            .word-list-hint {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 1rem;
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                font-style: italic;
+                color: var(--text-main);
+                border: 1px dashed rgba(255, 255, 255, 0.2);
             }
             .grammatik-summary {
                 text-align: center;
@@ -340,281 +347,72 @@ function getExercises(level) {
     if (level === 'A1') {
         return [
             {
-                text: "Jeg [blank_0] i København. Jeg har et [blank_1]. Her bor jeg sammen med min [blank_2]. Vi [blank_3] ofte mad sammen. Min kone er en god [blank_4].",
+                text: "Jeg [blank_0] i København. Jeg har en lille [blank_1]. Her bor jeg sammen med min [blank_2]. Vi [blank_3] ofte mad sammen i køkkenet. Min kone er en rigtig god [blank_4]. Om morgenen [blank_5] vi kaffe. Vi [blank_6] også en avis sammen. Det er en [blank_7] dag i dag. Vi er meget [blank_8] for vores liv.",
                 blanks: [
-                    {
-                        answer: "bor",
-                        options: ["bor", "spiser", "læser"],
-                        hints: { "spiser": "hintAction", "læser": "hintAction" }
-                    },
-                    {
-                        answer: "hus",
-                        options: ["hus", "bil", "bord"],
-                        hints: { "bil": "hintContext", "bord": "hintPlace" }
-                    },
-                    {
-                        answer: "kone",
-                        options: ["kone", "ven", "hund"],
-                        hints: { "ven": "hintContext", "hund": "hintContext" }
-                    },
-                    {
-                        answer: "laver",
-                        options: ["laver", "drikker", "køber"],
-                        hints: { "drikker": "hintAction", "køber": "hintMean" }
-                    },
-                    {
-                        answer: "kok",
-                        options: ["kok", "bog", "skole"],
-                        hints: { "bog": "hintContext", "skole": "hintPlace" }
-                    }
-                ]
-            },
-            {
-                text: "I skolen [blank_0] jeg dansk. Min [blank_1] er meget sød. Jeg har en [blank_2] i min taske. Vi [blank_3] tekster hver dag. Bagefter går jeg [blank_4].",
-                blanks: [
-                    {
-                        answer: "lærer",
-                        options: ["lærer", "sover", "danser"],
-                        hints: { "sover": "hintAction", "danser": "hintAction" }
-                    },
-                    {
-                        answer: "lærer",
-                        options: ["lærer", "elev", "skole"],
-                        hints: { "elev": "hintContext", "skole": "hintPlace" }
-                    },
-                    {
-                        answer: "bog",
-                        options: ["bog", "cykel", "hus"],
-                        hints: { "cykel": "hintContext", "hus": "hintPlace" }
-                    },
-                    {
-                        answer: "læser",
-                        options: ["læser", "spiser", "kører"],
-                        hints: { "spiser": "hintAction", "kører": "hintAction" }
-                    },
-                    {
-                        answer: "hjem",
-                        options: ["hjem", "bil", "kaffe"],
-                        hints: { "bil": "hintMean", "kaffe": "hintMean" }
-                    }
-                ]
-            },
-            {
-                text: "Min [blank_0] er blå. Jeg [blank_1] til arbejde hver morgen. Vejen er [blank_2]. Jeg [blank_3] på et kontor. Jeg kan godt lide mit [blank_4].",
-                blanks: [
-                    {
-                        answer: "bil",
-                        options: ["bil", "hat", "kop"],
-                        hints: { "hat": "hintContext", "kop": "hintContext" }
-                    },
-                    {
-                        answer: "kører",
-                        options: ["kører", "går", "flyver"],
-                        hints: { "går": "hintContext", "flyver": "hintMean" }
-                    },
-                    {
-                        answer: "lang",
-                        options: ["lang", "varm", "sød"],
-                        hints: { "varm": "hintContext", "sød": "hintMean" }
-                    },
-                    {
-                        answer: "arbejder",
-                        options: ["arbejder", "sover", "spiser"],
-                        hints: { "sover": "hintAction", "spiser": "hintAction" }
-                    },
-                    {
-                        answer: "job",
-                        options: ["job", "mad", "bord"],
-                        hints: { "mad": "hintMean", "bord": "hintPlace" }
-                    }
+                    { answer: "bor", options: ["bor", "spiser", "læser"], hints: { "spiser": "hintAction", "læser": "hintAction" } },
+                    { answer: "lejlighed", options: ["lejlighed", "bil", "bord"], hints: { "bil": "hintContext", "bord": "hintPlace" } },
+                    { answer: "kone", options: ["kone", "ven", "hund"], hints: { "ven": "hintContext", "hund": "hintContext" } },
+                    { answer: "laver", options: ["laver", "drikker", "køber"], hints: { "drikker": "hintAction", "køber": "hintMean" } },
+                    { answer: "kok", options: ["kok", "bog", "skole"], hints: { "bog": "hintContext", "skole": "hintPlace" } },
+                    { answer: "drikker", options: ["drikker", "spiser", "ser"], hints: { "spiser": "hintMean", "ser": "hintAction" } },
+                    { answer: "læser", options: ["læser", "hører", "går"], hints: { "hører": "hintContext", "går": "hintAction" } },
+                    { answer: "dejlig", options: ["dejlig", "sur", "kold"], hints: { "sur": "hintMean", "kold": "hintContext" } },
+                    { answer: "glade", options: ["glade", "trætte", "sure"], hints: { "trætte": "hintContext", "sure": "hintMean" } }
                 ]
             }
         ];
     } else if (level === 'A2') {
         return [
             {
-                text: "Det er [blank_0] vejr i dag. Solen skinner [blank_1], og vi [blank_2] en tur i skoven. Vi ser mange [blank_3] træer. Vi går [blank_4] for at nyde naturen.",
+                text: "Det er [blank_0] vejr i dag. Solen skinner [blank_1], og vi [blank_2] en tur i den grønne skov. Vi ser mange [blank_3] træer med friske blade. Vi går [blank_4] for at nyde den smukke natur. Fuglene [blank_5] lystigt i trætoppene. Det [blank_6] som om, at sommeren endelig er på vej. Vi [blank_7] os til at spise frokost i det fri bagefter. Det bliver en [blank_8] oplevelse for os alle.",
                 blanks: [
-                    {
-                        answer: "dejligt",
-                        options: ["dejligt", "langsomt", "aldrig"],
-                        hints: { "langsomt": "hintAdj", "aldrig": "hintAdverb" }
-                    },
-                    {
-                        answer: "kraftigt",
-                        options: ["kraftigt", "smukt", "ofte"],
-                        hints: { "smukt": "hintAdj", "ofte": "hintAdverb" }
-                    },
-                    {
-                        answer: "går",
-                        options: ["går", "gik", "gået"],
-                        hints: { "gik": "hintTense", "gået": "hintTense" }
-                    },
-                    {
-                        answer: "høje",
-                        options: ["høje", "høj", "højt"],
-                        hints: { "høj": "hintForm", "højt": "hintForm" }
-                    },
-                    {
-                        answer: "langsomt",
-                        options: ["langsomt", "langsom", "hurtig"],
-                        hints: { "langsom": "hintForm", "hurtig": "hintAdj" }
-                    }
-                ]
-            },
-            {
-                text: "Min bror [blank_0] altid i fitnesscentret. Han er meget [blank_1]. Han spiser [blank_2] sund mad, fordi han vil være [blank_3]. Hans [blank_4] er meget stærke.",
-                blanks: [
-                    {
-                        answer: "træner",
-                        options: ["træner", "trænede", "træne"],
-                        hints: { "trænede": "hintTense", "træne": "hintTense" }
-                    },
-                    {
-                        answer: "aktiv",
-                        options: ["aktiv", "aktivt", "aktive"],
-                        hints: { "aktivt": "hintForm", "aktive": "hintForm" }
-                    },
-                    {
-                        answer: "meget",
-                        options: ["meget", "mange", "lidt"],
-                        hints: { "mange": "hintForm", "lidt": "hintContext" }
-                    },
-                    {
-                        answer: "stærk",
-                        options: ["stærk", "stærkt", "stærke"],
-                        hints: { "stærkt": "hintForm", "stærke": "hintForm" }
-                    },
-                    {
-                        answer: "muskler",
-                        options: ["muskler", "muskel", "musklen"],
-                        hints: { "muskel": "hintForm", "musklen": "hintForm" }
-                    }
-                ]
-            },
-            {
-                text: "I går [blank_0] jeg en [blank_1] film. Den var [blank_2] spændende. Jeg [blank_3] desværre for [blank_4], så jeg så ikke starten.",
-                blanks: [
-                    {
-                        answer: "så",
-                        options: ["så", "ser", "set"],
-                        hints: { "ser": "hintTense", "set": "hintTense" }
-                    },
-                    {
-                        answer: "god",
-                        options: ["god", "godt", "gode"],
-                        hints: { "godt": "hintForm", "gode": "hintForm" }
-                    },
-                    {
-                        answer: "virkelig",
-                        options: ["virkelig", "virkelige", "virkeligt"],
-                        hints: { "virkelige": "hintForm", "virkeligt": "hintForm" }
-                    },
-                    {
-                        answer: "kom",
-                        options: ["kom", "kommer", "kommet"],
-                        hints: { "kommer": "hintTense", "kommet": "hintTense" }
-                    },
-                    {
-                        answer: "sent",
-                        options: ["sent", "sen", "sene"],
-                        hints: { "sen": "hintForm", "sene": "hintForm" }
-                    }
+                    { answer: "dejligt", options: ["dejligt", "langsomt", "aldrig"], hints: { "langsomt": "hintAdj", "aldrig": "hintAdverb" } },
+                    { answer: "kraftigt", options: ["kraftigt", "smukt", "ofte"], hints: { "smukt": "hintAdj", "ofte": "hintAdverb" } },
+                    { answer: "går", options: ["går", "gik", "gået"], hints: { "gik": "hintTense", "gået": "hintTense" } },
+                    { answer: "høje", options: ["høje", "høj", "højt"], hints: { "høj": "hintForm", "højt": "hintForm" } },
+                    { answer: "langsomt", options: ["langsomt", "langsom", "hurtig"], hints: { "langsom": "hintForm", "hurtig": "hintAdj" } },
+                    { answer: "synger", options: ["synger", "sang", "sunget"], hints: { "sang": "hintTense", "sunget": "hintTense" } },
+                    { answer: "føles", options: ["føles", "føler", "føltes"], hints: { "føler": "hintForm", "føltes": "hintTense" } },
+                    { answer: "glæder", options: ["glæder", "glædede", "glade"], hints: { "glædede": "hintTense", "glade": "hintForm" } },
+                    { answer: "fantastisk", options: ["fantastisk", "fantastiske", "fantastisket"], hints: { "fantastiske": "hintForm", "fantastisket": "hintMean" } }
                 ]
             }
         ];
-    } else { // B1
+    } else if (level === 'B1') {
         return [
             {
-                text: "Jeg tager bussen, [blank_0] min bil er gået i stykker. [blank_1] det regner, foretrækker jeg at køre. Det er [blank_2] irriterende, [blank_3] jeg har mange [blank_4] aftaler i dag.",
+                text: "Jeg tager ofte bussen på arbejde, [blank_0] min bil desværre er gået i stykker igen. Selvom det regner [blank_1], foretrækker jeg dog normalt at køre selv. Det er [blank_2] irriterende, da jeg har mange [blank_3] aftaler i løbet af i dag. Jeg [blank_4] dog planlægge min rute [blank_5], så jeg ikke kommer for sent. Heldigvis [blank_6] bussen lige uden for min dør. Hvis jeg [blank_7] mig lidt, kan jeg lige præcis nå den. Det [blank_8] meget tålmodighed at bruge offentlig transport hver eneste dag.",
                 blanks: [
-                    {
-                        answer: "fordi",
-                        options: ["fordi", "selvom", "men"],
-                        hints: { "selvom": "hintConj", "men": "hintConj" }
-                    },
-                    {
-                        answer: "Hvis",
-                        options: ["Hvis", "Da", "Fordi"],
-                        hints: { "Da": "hintConj", "Fordi": "hintConj" }
-                    },
-                    {
-                        answer: "temmelig",
-                        options: ["temmelig", "temmelige", "temmeligt"],
-                        hints: { "temmelige": "hintForm", "temmeligt": "hintForm" }
-                    },
-                    {
-                        answer: "da",
-                        options: ["da", "så", "efter"],
-                        hints: { "så": "hintConj", "efter": "hintMean" }
-                    },
-                    {
-                        answer: "vigtige",
-                        options: ["vigtige", "vigtig", "vigtigt"],
-                        hints: { "vigtig": "hintForm", "vigtigt": "hintForm" }
-                    }
+                    { answer: "fordi", options: ["fordi", "selvom", "men"], hints: { "selvom": "hintConj", "men": "hintConj" } },
+                    { answer: "kraftigt", options: ["kraftigt", "kraftig", "kraftige"], hints: { "kraftig": "hintForm", "kraftige": "hintForm" } },
+                    { answer: "temmelig", options: ["temmelig", "temmelige", "temmeligt"], hints: { "temmelige": "hintForm", "temmeligt": "hintForm" } },
+                    { answer: "vigtige", options: ["vigtige", "vigtig", "vigtigt"], hints: { "vigtig": "hintForm", "vigtigt": "hintForm" } },
+                    { answer: "må", options: ["må", "skal", "kan"], hints: { "skal": "hintContext", "kan": "hintContext" } },
+                    { answer: "omhyggeligt", options: ["omhyggeligt", "omhyggelig", "omhyggelige"], hints: { "omhyggelig": "hintForm", "omhyggelige": "hintForm" } },
+                    { answer: "holder", options: ["holder", "holdt", "holdt"], hints: { "holdt": "hintTense" } },
+                    { answer: "skynder", options: ["skynder", "skyndte", "skyndet"], hints: { "skyndte": "hintTense", "skyndet": "hintTense" } },
+                    { answer: "kræver", options: ["kræver", "krævede", "krævet"], hints: { "krævede": "hintTense", "krævet": "hintTense" } }
                 ]
-            },
+            }
+        ];
+    } else if (level === 'modultest') {
+        return [
             {
-                text: "[blank_0] jeg var barn, boede jeg i udlandet. Det har [blank_1] mig meget, [blank_2] det har givet mig en [blank_3] forståelse for [blank_4] kulturer.",
+                text: "Velkommen til den store [blank_0], hvor vi skal teste dit danske sprog. Denne tekst er [blank_1] end de andre, da den fylder ti linjer. Du skal læse hele teksten [blank_2] for at forstå sammenhængen rigtigt. Det er vigtigt at du [blank_3] dig om, før du vælger et ord. Der er mange [blank_4] i listen ovenover, som du kan bruge. Hvis du laver en [blank_5], kan du altid prøve igen her. Vi håber at du får alle svar [blank_6] i første forsøg. Det kræver meget [blank_7] at lære et nyt sprog helt perfekt. Men vi ved at du [blank_8] gøre det, hvis du øver dig meget. Rigtig god [blank_9] med denne svære modultest opgave!",
                 blanks: [
-                    {
-                        answer: "Da",
-                        options: ["Da", "Når", "Hvis"],
-                        hints: { "Når": "hintConj", "Hvis": "hintConj" }
-                    },
-                    {
-                        answer: "præget",
-                        options: ["præget", "præger", "præge"],
-                        hints: { "præger": "hintTense", "præge": "hintTense" }
-                    },
-                    {
-                        answer: "fordi",
-                        options: ["fordi", "men", "skønt"],
-                        hints: { "men": "hintConj", "skønt": "hintConj" }
-                    },
-                    {
-                        answer: "større",
-                        options: ["større", "stor", "størst"],
-                        hints: { "stor": "hintForm", "størst": "hintForm" }
-                    },
-                    {
-                        answer: "fremmede",
-                        options: ["fremmede", "fremmed", "fremmedt"],
-                        hints: { "fremmed": "hintForm", "fremmedt": "hintForm" }
-                    }
-                ]
-            },
-            {
-                text: "Vi skal nå projektet til tiden, [blank_0] vi bliver nødt til at arbejde [blank_1]. [blank_2] vi samarbejder [blank_3], kan vi løse de [blank_4] problemer.",
-                blanks: [
-                    {
-                        answer: "så",
-                        options: ["så", "fordi", "hvis"],
-                        hints: { "fordi": "hintConj", "hvis": "hintConj" }
-                    },
-                    {
-                        answer: "hurtigt",
-                        options: ["hurtigt", "hurtig", "hurtige"],
-                        hints: { "hurtig": "hintForm", "hurtige": "hintForm" }
-                    },
-                    {
-                        answer: "Hvis",
-                        options: ["Hvis", "Selvom", "Da"],
-                        hints: { "Selvom": "hintConj", "Da": "hintConj" }
-                    },
-                    {
-                        answer: "effektivt",
-                        options: ["effektivt", "effektiv", "effektive"],
-                        hints: { "effektiv": "hintForm", "effektive": "hintForm" }
-                    },
-                    {
-                        answer: "største",
-                        options: ["største", "stor", "større"],
-                        hints: { "stor": "hintForm", "større": "hintForm" }
-                    }
+                    { answer: "modultest", options: ["modultest", "eksamen", "prøve"] },
+                    { answer: "længere", options: ["længere", "kort", "sværere"] },
+                    { answer: "grundigt", options: ["grundigt", "hurtigt", "nemt"] },
+                    { answer: "umager", options: ["umager", "gør", "passer"] },
+                    { answer: "ord", options: ["ord", "tekster", "sætninger"] },
+                    { answer: "fejl", options: ["fejl", "kage", "pause"] },
+                    { answer: "rigtige", options: ["rigtige", "forkerte", "sjove"] },
+                    { answer: "arbejde", options: ["arbejde", "hygge", "mad"] },
+                    { answer: "kan", options: ["kan", "skal", "får"] },
+                    { answer: "fornøjelse", options: ["fornøjelse", "lykke", "held"] }
                 ]
             }
         ];
     }
+    return [];
 }

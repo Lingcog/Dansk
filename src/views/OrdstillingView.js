@@ -1,4 +1,5 @@
-import { getLang, getTranslation, navigate, baseUrl } from '../main.js';
+import { navigate, baseUrl } from '../main.js';
+import { getLang, getTranslation } from '../utils/i18n.js';
 
 export function renderOrdstillingView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -38,7 +39,7 @@ export function renderOrdstillingView(container, navigateFn) {
 
     const levels = [
         { key: 'let', level: 'A1', icon: '🌱' },
-        { key: 'svaer', level: 'A2', icon: '🌿' }
+        { key: 'mellemsvaer', level: 'A2', icon: '🌿' }
     ];
 
     const grid = document.createElement('div');
@@ -130,6 +131,12 @@ export function renderOrdstillingView(container, navigateFn) {
         function renderWords() {
             setupSentence();
             gameArea.innerHTML = '';
+
+            const illustration = document.createElement('img');
+            illustration.src = baseUrl + 'v2_master_diagram.png';
+            illustration.className = 'v2-illustration';
+            gameArea.appendChild(illustration);
+
             gameArea.appendChild(resultArea);
             gameArea.appendChild(wordPool);
             gameArea.appendChild(feedback);
@@ -197,6 +204,17 @@ export function renderOrdstillingView(container, navigateFn) {
             .game-feedback { font-size: 1.2rem; font-weight: 600; min-height: 1.5rem; transition: all 0.3s; text-align: center; margin-bottom: 1rem; }
             .game-feedback.success { color: #4CAF50; }
             .game-feedback.error { color: #FF5252; }
+            .v2-illustration {
+                width: 100%;
+                max-width: 600px;
+                height: auto;
+                border-radius: 16px;
+                margin-bottom: 2rem;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            }
         `;
         document.head.appendChild(styles);
     }

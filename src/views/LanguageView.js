@@ -1,4 +1,5 @@
-import { setLanguage, navigate, getTranslation } from '../main.js';
+import { navigate } from '../main.js';
+import { setLanguage, getTranslation } from '../utils/i18n.js';
 
 export function renderLanguageView(container, navigateFn) {
     const viewContainer = document.createElement('div');

@@ -1,57 +1,41 @@
 import { getTranslation } from '../utils/i18n.js';
 
-export function renderDagensOpgaveView(container, navigateFn) {
+export function renderDu2Mod5View(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
-    // Top bar with Back Button
+    // Top bar
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
-
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.textContent = '← ' + getTranslation('back');
-    backBtn.onclick = () => navigateFn('main');
+    backBtn.onclick = () => navigateFn('notes'); // Back to teaching notes
     topBar.appendChild(backBtn);
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = getTranslation('dagensOpgave');
+    title.textContent = getTranslation('du2mod5');
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = getTranslation('dagensOpgaveDesc');
+    subtitle.textContent = getTranslation('du1mod3Desc'); // Reusing "Vælg et emne at øve"
 
-    // Cards Data Wrapper
+    // Cards
     const cardsData = [
         {
-            icon: '🧠',
-            titleKey: 'laerEtNytOrd',
-            descKey: 'laerEtNytOrdDesc',
-            action: () => navigateFn('word_learning')
+            icon: '📧',
+            titleKey: 'emailLaan',
+            action: () => navigateFn('email_laan')
         },
         {
-            icon: '⏰',
-            titleKey: 'traenTidsudtryk',
-            descKey: 'traenTidsudtrykDesc',
-            action: () => navigateFn('traen_tidsudtryk')
+            icon: '👨‍👩‍👧‍👦',
+            titleKey: 'opdragelse',
+            action: () => navigateFn('opdragelse')
         },
         {
-            icon: '📖',
-            titleKey: 'traenGrammatik',
-            descKey: 'grammatikDesc',
-            action: () => navigateFn('traen_grammatik')
-        },
-        {
-            icon: '🧩',
-            titleKey: 'ordstilling',
-            descKey: 'ordstillingDesc',
-            action: () => navigateFn('ordstilling')
-        },
-        {
-            icon: '👥',
-            titleKey: 'hvilketOrd',
-            descKey: 'hvilketOrdDesc',
-            action: () => navigateFn('pronomen')
+            icon: '📢',
+            titleKey: 'enKlage',
+            action: () => navigateFn('en_klage')
         }
     ];
 
@@ -70,16 +54,9 @@ export function renderDagensOpgaveView(container, navigateFn) {
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
         cardTitle.textContent = getTranslation(data.titleKey);
+
         card.appendChild(icon);
         card.appendChild(cardTitle);
-
-        if (data.descKey) {
-            const cardDesc = document.createElement('div');
-            cardDesc.className = 'card-desc';
-            cardDesc.textContent = getTranslation(data.descKey);
-            card.appendChild(cardDesc);
-        }
-
         grid.appendChild(card);
     });
 

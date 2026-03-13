@@ -1,4 +1,4 @@
-import { getTranslation } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
 
 export function renderHverdagssamtaleView(container, navigateFn) {
     const viewContainer = document.createElement('div');

@@ -1,4 +1,4 @@
-import { getTranslation, baseUrl } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
 
 export function renderMadlavningView(container, navigateFn) {
     const viewContainer = document.createElement('div');

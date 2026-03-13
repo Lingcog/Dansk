@@ -1,4 +1,4 @@
-import { getTranslation } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
 
 export function renderMainView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -59,6 +59,12 @@ export function renderMainView(container, navigateFn) {
             titleKey: 'skriveHjaelp',
             descKey: 'skriveHjaelpDesc',
             action: () => navigateFn('skrive_hjaelp')
+        },
+        {
+            icon: '🏃',
+            titleKey: 'verbumLearning',
+            descKey: 'verbumLearningDesc',
+            action: () => navigateFn('verbum_learning')
         }
     ];
 

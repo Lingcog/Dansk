@@ -13,28 +13,19 @@ import { renderDu1MinHverdagView } from './views/Du1MinHverdagView.js';
 import { renderTransportSprogskoleView } from './views/TransportSprogskoleView.js';
 import { renderMadlavningView } from './views/MadlavningView.js';
 import { renderRengoeringView } from './views/RengoeringView.js';
+import { renderDu2Mod1View } from './views/Du2Mod1View.js';
+import { renderSmaaHistorierView } from './views/SmaaHistorierView.js';
+import { renderDu2Mod5View } from './views/Du2Mod5View.js';
+import { renderEmailLaanView } from './views/EmailLaanView.js';
+import { renderOpdragelseView } from './views/OpdragelseView.js';
+import { renderKlageView } from './views/KlageView.js';
 import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { renderOrdstillingView } from './views/OrdstillingView.js';
 import { renderGrammatikView } from './views/GrammatikView.js';
-import { translations } from './utils/translations.js';
-
-// Application State
-const appState = {
-  lang: localStorage.getItem('appLang') || null,
-  currentView: 'language', // 'language', 'main', 'notes'
-};
-
-// Language Getter
-export function getLang() {
-  return appState.lang || 'da';
-}
-
-export function getTranslation(key) {
-  const langObj = translations[getLang()];
-  if (langObj && langObj[key]) return langObj[key];
-  return translations['da'][key] || key;
-}
+import { renderPronomenView } from './views/PronomenView.js';
+import { VerbumLearningView } from './views/VerbumLearningView.js';
+import { appState, getLang, getTranslation, setLanguage } from './utils/i18n.js';
 
 // Router
 export function navigate(viewTarget, extraData = {}) {
@@ -68,6 +59,24 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'du1_modul3') {
     appState.currentView = 'du1_modul3';
     renderDu1Modul3View(appDiv, navigate);
+  } else if (viewTarget === 'du2_modul1') {
+    appState.currentView = 'du2_modul1';
+    renderDu2Mod1View(appDiv, navigate);
+  } else if (viewTarget === 'smaa_historier') {
+    appState.currentView = 'smaa_historier';
+    renderSmaaHistorierView(appDiv, navigate);
+  } else if (viewTarget === 'du2_modul5') {
+    appState.currentView = 'du2_modul5';
+    renderDu2Mod5View(appDiv, navigate);
+  } else if (viewTarget === 'email_laan') {
+    appState.currentView = 'email_laan';
+    renderEmailLaanView(appDiv, navigate);
+  } else if (viewTarget === 'opdragelse') {
+    appState.currentView = 'opdragelse';
+    renderOpdragelseView(appDiv, navigate);
+  } else if (viewTarget === 'en_klage') {
+    appState.currentView = 'en_klage';
+    renderKlageView(appDiv, navigate);
   } else if (viewTarget === 'du1_min_hverdag') {
     appState.currentView = 'du1_min_hverdag';
     renderDu1MinHverdagView(appDiv, navigate);
@@ -92,13 +101,14 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
     renderGrammatikView(appDiv, navigate);
+  } else if (viewTarget === 'pronomen') {
+    appState.currentView = 'pronomen';
+    renderPronomenView(appDiv, navigate);
+  } else if (viewTarget === 'verbum_learning') {
+    appState.currentView = 'verbum_learning';
+    const view = new VerbumLearningView(navigate, extraData?.categoryId);
+    appDiv.appendChild(view.render());
   }
-}
-
-// Initial setup
-export function setLanguage(langCode) {
-  appState.lang = langCode;
-  localStorage.setItem('appLang', langCode);
 }
 
 // Boot up

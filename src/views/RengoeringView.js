@@ -1,4 +1,4 @@
-import { getTranslation, baseUrl } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
 
 export function renderRengoeringView(container, navigateFn) {
     const viewContainer = document.createElement('div');

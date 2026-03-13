@@ -1,4 +1,4 @@
-import { getTranslation, getLang } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
 
 export function renderWordLearningView(container, navigateFn) {
   const viewContainer = document.createElement('div');

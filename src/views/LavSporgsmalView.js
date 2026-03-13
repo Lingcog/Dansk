@@ -1,4 +1,5 @@
-import { getTranslation, baseUrl } from '../main.js';
+import { getTranslation } from '../utils/i18n.js';
+import { baseUrl } from '../main.js';
 
 export function renderLavSporgsmalView(container, navigateFn) {
     const viewContainer = document.createElement('div');

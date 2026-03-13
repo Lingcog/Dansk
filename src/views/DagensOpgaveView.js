@@ -48,10 +48,16 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('ordstilling')
         },
         {
-            icon: '👥',
+            icon: '🫂',
             titleKey: 'hvilketOrd',
             descKey: 'hvilketOrdDesc',
             action: () => navigateFn('pronomen')
+        },
+        {
+            icon: '🏗️',
+            titleKey: 'howToBuildSentence',
+            descKey: 'howToBuildSentenceDesc',
+            action: () => navigateFn('grounding')
         }
     ];
 

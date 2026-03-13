@@ -120,7 +120,15 @@ export const translations = {
     verberIndreLiv: "Det indre liv (se, tænke, vide)",
     verberDatid: "Datid (uregelmæssige)",
     verberTider: "Datid vs. Førnutid (Punktet & Broen)",
-    hintPronominer: "Tjek hvem der er i fokus eller hvem der ejer noget."
+    hintPronominer: "Tjek hvem der er i fokus eller hvem der ejer noget.",
+    howToBuildSentence: "Hvordan bygger man en sætning?",
+    howToBuildSentenceDesc: "Lær hvordan ord ankres til virkeligheden.",
+    groundingIntro: "Uden grammatik svæver ord frit som balloner. Vi bruger grammatik til at ankre dem til virkeligheden (HER OG NU).",
+    groundingStep1: "1. Konceptet (Ballonen): 'Hund' er bare en idé. Vi ved ikke hvilken hund.",
+    groundingStep2: "2. Handlingen: 'At spise' er bare en idé. Vi ved ikke hvornår.",
+    groundingStep3: "3. Ankeret: Brug små ord (kendeord) og tid (bøjning) til at trække ballonerne ned.",
+    sentenceGround: "Virkelighedens jord",
+    wellDone: "Flot! Du har nu bygget en sætning, der er forankret i virkeligheden."
   },
   en: {
     selectLanguage: "Select language",

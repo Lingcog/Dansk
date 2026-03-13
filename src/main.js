@@ -24,6 +24,7 @@ import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { renderOrdstillingView } from './views/OrdstillingView.js';
 import { renderGrammatikView } from './views/GrammatikView.js';
 import { renderPronomenView } from './views/PronomenView.js';
+import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
 import { appState, getLang, getTranslation, setLanguage } from './utils/i18n.js';
 
@@ -108,6 +109,9 @@ export function navigate(viewTarget, extraData = {}) {
     appState.currentView = 'verbum_learning';
     const view = new VerbumLearningView(navigate, extraData?.categoryId);
     appDiv.appendChild(view.render());
+  } else if (viewTarget === 'grounding') {
+    appState.currentView = 'grounding';
+    renderGroundingView(appDiv, navigate);
   }
 }
 

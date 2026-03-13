@@ -1,6 +1,7 @@
 import { verbsData } from '../utils/verbsData.js';
 import { translations } from '../utils/translations.js';
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { baseUrl } from '../main.js';
 
 export class VerbumLearningView {
     constructor(navigateFn, categoryId = null) {
@@ -29,9 +30,9 @@ export class VerbumLearningView {
         const t = (key) => translations[lang]?.[key] || translations['da']?.[key] || key;
 
         container.innerHTML = `
-    < div class="top-bar" >
+      <div class="top-bar">
         <button class="back-btn" id="back-to-main">← ${getTranslation('back')}</button>
-      </div >
+      </div>
       <h1>${category.title}</h1>
       
       <div class="exercise-card">
@@ -72,7 +73,7 @@ export class VerbumLearningView {
 
         if (correctCount === 0) return "";
         if (correctCount === total) {
-            return `< span class="success" > ${getTranslation('allCorrect')}</span > `;
+            return `<span class="success">${getTranslation('allCorrect')}</span>`;
         }
         return `${correctCount} / ${total} ${getTranslation('filled') || 'korrekte'}`;
     }

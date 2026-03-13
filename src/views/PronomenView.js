@@ -276,29 +276,33 @@ export function renderPronomenView(container, navigateFn) {
                         select.appendChild(o);
                     });
 
-                    const hintDiv = document.createElement('div');
-                    hintDiv.className = 'select-hint';
-                    hintDiv.textContent = getTranslation('hintDerDet');
+                    const feedbackArea = document.createElement('div');
+                    feedbackArea.className = 'exercise-feedback';
 
                     const wrapper = document.createElement('span');
                     wrapper.className = 'select-wrapper';
                     wrapper.appendChild(select);
-                    wrapper.appendChild(hintDiv);
                     textContainer.appendChild(wrapper);
 
                     select.onchange = () => {
                         if (select.value === ex.answer) {
                             select.classList.add('correct');
                             select.classList.remove('wrong');
-                            hintDiv.style.display = 'none';
+                            feedbackArea.style.display = 'none';
                             checkBtn.disabled = false;
-                        } else {
+                        } else if (select.value !== "") {
                             select.classList.add('wrong');
                             select.classList.remove('correct');
-                            hintDiv.style.display = 'block';
+                            feedbackArea.textContent = getTranslation('hintDerDet');
+                            feedbackArea.style.display = 'block';
+                            checkBtn.disabled = true;
+                        } else {
+                            select.classList.remove('correct', 'wrong');
+                            feedbackArea.style.display = 'none';
                             checkBtn.disabled = true;
                         }
                     };
+                    content.appendChild(feedbackArea);
                 } else {
                     const span = document.createElement('span');
                     span.textContent = part;
@@ -390,12 +394,6 @@ export function renderPronomenView(container, navigateFn) {
                         select.appendChild(o);
                     });
 
-                    const hintDiv = document.createElement('div');
-                    hintDiv.className = 'select-hint';
-                    hintDiv.id = `hint-${idx}`;
-
-                    wrapper.appendChild(select);
-                    wrapper.appendChild(hintDiv);
                     textContainer.appendChild(wrapper);
                 } else {
                     const span = document.createElement('span');
@@ -406,6 +404,10 @@ export function renderPronomenView(container, navigateFn) {
 
             contentWrapper.appendChild(textContainer);
 
+            const feedbackArea = document.createElement('div');
+            feedbackArea.className = 'exercise-feedback';
+            contentWrapper.appendChild(feedbackArea);
+
             const controls = document.createElement('div');
             controls.className = 'game-controls';
 
@@ -415,26 +417,30 @@ export function renderPronomenView(container, navigateFn) {
             checkBtn.onclick = () => {
                 const selects = textContainer.querySelectorAll('select');
                 let allCorrect = true;
+                let firstErrorHint = '';
+
                 selects.forEach(s => {
                     const idx = s.dataset.idx;
-                    const hintDiv = textContainer.querySelector(`#hint-${idx}`);
-
                     if (s.value === ex.blanks[idx].answer) {
                         s.classList.add('correct');
                         s.classList.remove('wrong');
-                        hintDiv.style.display = 'none';
                     } else {
                         s.classList.add('wrong');
                         s.classList.remove('correct');
                         allCorrect = false;
-                        hintDiv.textContent = getTranslation('hintPronominer');
-                        hintDiv.style.display = 'block';
+                        if (!firstErrorHint) {
+                            firstErrorHint = getTranslation('hintPronominer');
+                        }
                     }
                 });
 
                 if (allCorrect) {
+                    feedbackArea.style.display = 'none';
                     checkBtn.style.display = 'none';
                     nextBtn.style.display = 'inline-block';
+                } else {
+                    feedbackArea.textContent = firstErrorHint;
+                    feedbackArea.style.display = 'block';
                 }
             };
 
@@ -475,48 +481,6 @@ export function renderPronomenView(container, navigateFn) {
                 box-shadow: 0 10px 30px rgba(0,0,0,0.4);
                 border: 2px solid rgba(255, 255, 255, 0.1);
             }
-            .pronomen-exercise-content {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                animation: fadeIn 0.5s ease-out;
-            }
-            .select-wrapper {
-                display: inline-flex;
-                flex-direction: column;
-                align-items: center;
-                vertical-align: middle;
-                position: relative;
-                margin: 0 0.3rem;
-            }
-            .select-hint {
-                display: none;
-                position: absolute;
-                bottom: 110%;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #FF5252;
-                color: white;
-                padding: 0.5rem 0.9rem;
-                border-radius: 12px;
-                font-size: 0.85rem;
-                line-height: 1.3;
-                width: 180px;
-                text-align: center;
-                z-index: 20;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-                pointer-events: none;
-            }
-            .select-hint::after {
-                content: '';
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                margin-left: -8px;
-                border-width: 8px;
-                border-style: solid;
-                border-color: #FF5252 transparent transparent transparent;
-            }
             .expl-slide {
                 text-align: center;
                 animation: fadeIn 0.5s ease-out;
@@ -544,6 +508,7 @@ export function renderPronomenView(container, navigateFn) {
                 margin-bottom: 1rem;
                 font-size: 0.9rem;
                 opacity: 0.8;
+                text-align: center;
             }
             @keyframes pulse {
                 0% { transform: scale(1); }

@@ -47,6 +47,8 @@ export class VerbumLearningView {
           ${this.currentPhase === 1 ? this.renderPhase1(exercise) : this.renderPhase2(exercise)}
         </div>
 
+        <div class="exercise-feedback" id="exercise-feedback"></div>
+
         <div class="grammatik-summary" id="grammatik-summary">
           ${this.getSummaryText(exercise)}
         </div>
@@ -169,16 +171,18 @@ export class VerbumLearningView {
             checkBtn.onclick = () => {
                 const exercise = verbsData[this.currentCategoryIndex].exercises[this.currentExerciseIndex];
                 let allCorrect = true;
+                let firstErrorHint = '';
 
                 if (this.currentPhase === 1) {
                     exercise.segments.forEach(s => {
                         if (s.type === 'gap') {
                             if (this.answers[s.id] === s.correct) {
                                 this.feedback[s.id] = 'correct';
-                                this.showHints[s.id] = false;
                             } else {
                                 this.feedback[s.id] = 'wrong';
-                                this.showHints[s.id] = !!this.answers[s.id]; // Only show if an answer was selected
+                                if (!firstErrorHint) {
+                                    firstErrorHint = getTranslation(s.explanation || 'hintAction');
+                                }
                                 allCorrect = false;
                             }
                         }
@@ -188,13 +192,22 @@ export class VerbumLearningView {
                         const taskId = `phase2-${i}`;
                         if (this.answers[taskId] === task.correct) {
                             this.feedback[taskId] = 'correct';
-                            this.showHints[taskId] = false;
                         } else {
                             this.feedback[taskId] = 'wrong';
-                            this.showHints[taskId] = !!this.answers[taskId];
+                            if (!firstErrorHint) {
+                                firstErrorHint = task.explanation || getTranslation('hintAction');
+                            }
                             allCorrect = false;
                         }
                     });
+                }
+
+                const fb = container.querySelector('#exercise-feedback');
+                if (allCorrect) {
+                    fb.style.display = 'none';
+                } else {
+                    fb.textContent = firstErrorHint;
+                    fb.style.display = 'block';
                 }
                 this.updateView();
             };
@@ -250,123 +263,6 @@ export class VerbumLearningView {
         if (oldView) {
             const newView = this.render();
             oldView.replaceWith(newView);
-        }
-    }
-
-    ensureStyles() {
-        if (!document.getElementById('verbum-learning-styles')) {
-            const styles = document.createElement('style');
-            styles.id = 'verbum-learning-styles';
-            styles.textContent = `
-                .verbum-learning-view .category-illustration {
-                    width: 100%;
-                    max-width: 500px;
-                    height: auto;
-                    border-radius: 20px;
-                    margin: 0 auto 2rem;
-                    display: block;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-                    border: 2px solid rgba(255, 255, 255, 0.1);
-                }
-                .verbum-learning-view .grammatik-text-container {
-                    background: rgba(255, 255, 255, 0.05);
-                    padding: 2rem;
-                    border-radius: 24px;
-                    line-height: 2.8;
-                    font-size: 1.2rem;
-                    margin: 1.5rem 0;
-                    color: var(--text-main);
-                    box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
-                    text-align: center;
-                }
-                .verbum-learning-view .select-wrapper {
-                    display: inline-flex;
-                    flex-direction: column;
-                    align-items: center;
-                    vertical-align: middle;
-                    position: relative;
-                    margin: 0 0.4rem;
-                }
-                .verbum-learning-view .grammatik-select {
-                    background: rgba(255, 255, 255, 0.08);
-                    color: var(--text-main);
-                    border: 2px solid rgba(255, 255, 255, 0.15);
-                    border-radius: 12px;
-                    padding: 0.1rem 0.6rem;
-                    font-size: 1.1rem;
-                    cursor: pointer;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    outline: none;
-                    appearance: none;
-                    -webkit-appearance: none;
-                    min-width: 100px;
-                    text-align-last: center;
-                }
-                .verbum-learning-view .grammatik-select.correct {
-                    border-color: #4CAF50;
-                    background: rgba(76, 175, 80, 0.15);
-                    color: #81C784;
-                }
-                .verbum-learning-view .grammatik-select.wrong {
-                    border-color: #FF5252;
-                    background: rgba(255, 82, 82, 0.15);
-                    color: #FF8A80;
-                }
-                .verbum-learning-view .select-hint {
-                    display: none;
-                    position: absolute;
-                    bottom: 120%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: #FF5252;
-                    color: white;
-                    padding: 0.5rem 0.9rem;
-                    border-radius: 12px;
-                    font-size: 0.85rem;
-                    line-height: 1.3;
-                    width: 200px;
-                    text-align: center;
-                    z-index: 20;
-                    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-                    pointer-events: none;
-                }
-                .verbum-learning-view .select-hint.visible {
-                    display: block;
-                    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                }
-                @keyframes popIn {
-                    from { transform: translateX(-50%) scale(0.5); opacity: 0; }
-                    to { transform: translateX(-50%) scale(1); opacity: 1; }
-                }
-                .verbum-learning-view .select-hint::after {
-                    content: '';
-                    position: absolute;
-                    top: 100%;
-                    left: 50%;
-                    margin-left: -8px;
-                    border-width: 8px;
-                    border-style: solid;
-                    border-color: #FF5252 transparent transparent transparent;
-                }
-                .verbum-learning-view .grammatik-summary {
-                    text-align: center;
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    margin: 1.5rem 0;
-                    min-height: 1.5rem;
-                }
-                .verbum-learning-view .grammatik-summary .success {
-                    color: #4CAF50;
-                    font-size: 1.3rem;
-                }
-                .verbum-learning-view .game-controls {
-                    display: flex;
-                    justify-content: center;
-                    margin-top: 1rem;
-                    gap: 1.5rem;
-                }
-            `;
-            document.head.appendChild(styles);
         }
     }
 }

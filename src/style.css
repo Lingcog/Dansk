@@ -218,6 +218,7 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
 /* Semantic Network Styles */
 .word-learning-container {
   display: flex;
@@ -258,7 +259,7 @@ footer a:hover {
   justify-content: center;
   align-items: center;
   z-index: 2;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -266,7 +267,7 @@ footer a:hover {
 
 .node:hover {
   transform: scale(1.1);
-  border-color: rgba(255,255,255,0.8);
+  border-color: rgba(255, 255, 255, 0.8);
   background: var(--card-hover);
 }
 
@@ -274,7 +275,7 @@ footer a:hover {
   width: 130px;
   height: 130px;
   background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255,255,255,0.5);
+  border-color: rgba(255, 255, 255, 0.5);
   z-index: 3;
 }
 
@@ -298,14 +299,45 @@ footer a:hover {
 }
 
 /* Positioning */
-.node.top { top: 0; left: 50%; transform: translateX(-50%); }
-.node.top:hover { transform: translateX(-50%) scale(1.1); }
-.node.bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
-.node.bottom:hover { transform: translateX(-50%) scale(1.1); }
-.node.left { left: 0; top: 50%; transform: translateY(-50%); }
-.node.left:hover { transform: translateY(-50%) scale(1.1); }
-.node.right { right: 0; top: 50%; transform: translateY(-50%); }
-.node.right:hover { transform: translateY(-50%) scale(1.1); }
+.node.top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.node.top:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.node.bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.node.bottom:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.node.left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.node.left:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.node.right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.node.right:hover {
+  transform: translateY(-50%) scale(1.1);
+}
 
 .word-explanation {
   background: var(--card-bg);
@@ -378,4 +410,91 @@ footer a:hover {
   color: rgba(255, 255, 255, 0.4);
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* Centralized Exercise Styles */
+.grammatik-text-container {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 24px;
+  line-height: 2.8;
+  font-size: 1.35rem;
+  /* Standardized size from VerbumLearningView */
+  margin: 1.5rem 0;
+  color: var(--text-main);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.select-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  position: relative;
+  margin: 0 0.4rem;
+}
+
+.grammatik-select {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 0.1rem 0.6rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 110px;
+  text-align-last: center;
+}
+
+.grammatik-select.correct {
+  border-color: #4CAF50;
+  background: rgba(76, 175, 80, 0.15);
+  color: #81C784;
+}
+
+.grammatik-select.wrong {
+  border-color: #FF5252;
+  background: rgba(255, 82, 82, 0.15);
+  color: #FF8A80;
+}
+
+.exercise-feedback {
+  background: rgba(255, 82, 82, 0.1);
+  border: 1px solid rgba(255, 82, 82, 0.3);
+  color: #FF8A80;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  margin: 1.5rem auto;
+  max-width: 80%;
+  font-size: 1.15rem;
+  font-weight: 500;
+  display: none;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.grammatik-summary {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.5rem 0;
+  min-height: 1.5rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.grammatik-summary .success {
+  color: #4CAF50;
+  font-size: 1.3rem;
+}
+
+.game-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1.5rem;
 }

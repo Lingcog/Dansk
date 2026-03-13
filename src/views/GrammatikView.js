@@ -133,10 +133,10 @@ export function renderGrammatikView(container, navigateFn) {
 
             gameArea.appendChild(textContainer);
 
-            // Global hint area
-            const globalHintArea = document.createElement('div');
-            globalHintArea.className = 'global-hint-area';
-            gameArea.appendChild(globalHintArea);
+            // Global feedback area
+            const feedbackArea = document.createElement('div');
+            feedbackArea.className = 'exercise-feedback';
+            gameArea.appendChild(feedbackArea);
 
             // Summary area for progress
             const summaryArea = document.createElement('div');
@@ -152,14 +152,12 @@ export function renderGrammatikView(container, navigateFn) {
                 if (filled === 0) {
                     summaryArea.textContent = "";
                 } else if (correct === total) {
-                    summaryArea.textContent = getTranslation('allCorrect');
-                    summaryArea.classList.add('success');
+                    summaryArea.innerHTML = `<span class="success">${getTranslation('allCorrect')}</span>`;
                     checkBtn.style.display = 'none';
                     nextBtn.style.display = 'block';
-                    globalHintArea.style.display = 'none';
+                    feedbackArea.style.display = 'none';
                 } else {
                     summaryArea.textContent = `${filled} / ${total} ${getTranslation('filled') || 'udfyldt'}`;
-                    summaryArea.classList.remove('success');
                 }
             }
 
@@ -170,20 +168,19 @@ export function renderGrammatikView(container, navigateFn) {
 
                     if (select.value === "") {
                         select.classList.remove('correct', 'wrong');
-                        globalHintArea.style.display = 'none';
+                        feedbackArea.style.display = 'none';
                     } else if (select.value === ex.blanks[idx].answer) {
                         select.classList.add('correct');
                         select.classList.remove('wrong');
-                        globalHintArea.style.display = 'none';
+                        feedbackArea.style.display = 'none';
                     } else {
                         select.classList.add('wrong');
                         select.classList.remove('correct');
-                        // Show hint in global area
+
                         const selectedVal = select.value;
                         const hintKey = (ex.blanks[idx].hints && ex.blanks[idx].hints[selectedVal]) || 'hintContext';
-                        globalHintArea.textContent = getTranslation(hintKey);
-                        globalHintArea.style.display = 'block';
-                        globalHintArea.className = 'global-hint-area error';
+                        feedbackArea.textContent = getTranslation(hintKey);
+                        feedbackArea.style.display = 'block';
                     }
                     updateSummary();
                 };
@@ -217,9 +214,10 @@ export function renderGrammatikView(container, navigateFn) {
                 });
 
                 if (!allCorrect && firstErrorHint) {
-                    globalHintArea.textContent = firstErrorHint;
-                    globalHintArea.style.display = 'block';
-                    globalHintArea.className = 'global-hint-area error';
+                    feedbackArea.textContent = firstErrorHint;
+                    feedbackArea.style.display = 'block';
+                } else if (allCorrect) {
+                    feedbackArea.style.display = 'none';
                 }
                 updateSummary();
             };
@@ -246,101 +244,6 @@ export function renderGrammatikView(container, navigateFn) {
     container.appendChild(viewContainer);
 
     // CSS
-    if (!document.getElementById('grammatik-styles')) {
-        const styles = document.createElement('style');
-        styles.id = 'grammatik-styles';
-        styles.textContent = `
-            .grammatik-text-container {
-                background: rgba(255, 255, 255, 0.05);
-                padding: 2.5rem;
-                border-radius: 24px;
-                line-height: 2.8;
-                font-size: 1.35rem;
-                margin: 1.5rem 0;
-                color: var(--text-main);
-                box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
-            }
-            .select-wrapper {
-                display: inline-block;
-                vertical-align: middle;
-                margin: 0 0.3rem;
-            }
-            .grammatik-select {
-                background: rgba(255, 255, 255, 0.08);
-                color: var(--text-main);
-                border: 2px solid rgba(255, 255, 255, 0.15);
-                border-radius: 12px;
-                padding: 0.1rem 0.6rem;
-                font-size: 1.2rem;
-                cursor: pointer;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                outline: none;
-                appearance: none;
-                -webkit-appearance: none;
-                min-width: 100px;
-                text-align-last: center;
-            }
-            .grammatik-select.correct {
-                border-color: #4CAF50;
-                background: rgba(76, 175, 80, 0.15);
-                color: #81C784;
-            }
-            .grammatik-select.wrong {
-                border-color: #FF5252;
-                background: rgba(255, 82, 82, 0.15);
-                color: #FF8A80;
-            }
-            .global-hint-area {
-                display: none;
-                background: rgba(255, 82, 82, 0.1);
-                border: 1px solid rgba(255, 82, 82, 0.3);
-                color: #FF8A80;
-                padding: 1rem 1.5rem;
-                border-radius: 16px;
-                text-align: center;
-                margin: 1rem auto;
-                max-width: 80%;
-                font-size: 1.1rem;
-                font-weight: 500;
-                animation: slideUp 0.3s ease-out;
-            }
-            @keyframes slideUp {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .word-list-hint {
-                background: rgba(255, 255, 255, 0.1);
-                padding: 1rem;
-                border-radius: 12px;
-                margin-bottom: 1.5rem;
-                text-align: center;
-                font-style: italic;
-                color: var(--text-main);
-                border: 1px dashed rgba(255, 255, 255, 0.2);
-            }
-            .grammatik-summary {
-                text-align: center;
-                font-size: 1.2rem;
-                font-weight: 600;
-                margin: 1rem 0;
-                min-height: 1.5rem;
-                color: rgba(255, 255, 255, 0.6);
-                transition: all 0.3s;
-            }
-            .grammatik-summary.success {
-                color: #4CAF50;
-                font-size: 1.4rem;
-                transform: scale(1.1);
-            }
-            .game-controls {
-                display: flex;
-                justify-content: center;
-                margin-top: 1rem;
-                gap: 1.5rem;
-            }
-        `;
-        document.head.appendChild(styles);
-    }
 }
 
 function getExercises(level) {

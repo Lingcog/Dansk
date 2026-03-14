@@ -141,7 +141,6 @@
                 <div class="drag-item" draggable="true" data-word="${l.nounAnchor}">${l.nounAnchor}</div>
                 <div class="drag-item" draggable="true" data-word="barn">barn</div>
                 <div class="drag-item" draggable="true" data-word="${l.verbAnchor}">${l.verbAnchor}</div>
-                <div class="drag-item" draggable="true" data-word="nu">nu</div>
             </div>
 
             <div class="drop-zone-container">
@@ -153,7 +152,7 @@
                 <button class="gemini-btn" id="check-btn">${t("checkResult")}</button>
             </div>
             <div class="exercise-feedback" id="step-feedback"></div>
-        `,i.appendChild(v);const D=v.querySelectorAll(".drag-item"),T=v.querySelector("#ground"),P=v.querySelector("#source");D.forEach(u=>{u.ondragstart=b=>{b.dataTransfer.setData("text/plain",u.dataset.word),u.classList.add("dragging")},u.ondragend=()=>u.classList.remove("dragging")}),T.ondragover=u=>u.preventDefault(),T.ondrop=u=>{u.preventDefault();const b=u.dataTransfer.getData("text/plain"),y=P.querySelector(`.drag-item[data-word="${b}"]`)||T.querySelector(`.drag-item[data-word="${b}"]`);if(y){const k=j(T,u.clientX);k==null?T.appendChild(y):T.insertBefore(y,k)}};function j(u,b){return[...u.querySelectorAll(".drag-item:not(.dragging)")].reduce((k,C)=>{const w=C.getBoundingClientRect(),E=b-w.left-w.width/2;return E<0&&E>k.offset?{offset:E,element:C}:k},{offset:Number.NEGATIVE_INFINITY}).element}P.ondragover=u=>u.preventDefault(),P.ondrop=u=>{u.preventDefault();const b=document.querySelector(".drag-item.dragging");b&&P.appendChild(b)};const _=v.querySelector("#check-btn"),A=v.querySelector("#step-feedback");_.onclick=()=>{const u=Array.from(T.children).map(y=>y.dataset.word).join(" "),b=`${l.nounAnchor} barn ${l.verbAnchor} nu`.toLowerCase();u.toLowerCase()===b?(A.textContent="Flot! Se tidslinjen nedenfor.",A.className="exercise-feedback success-text",A.style.display="block",_.disabled=!0,x(v),setTimeout(()=>{l.step=4,o()},4e3)):(A.textContent=t("wrongOrder"),A.className="exercise-feedback",A.style.display="block")}}function x(v){let D=v.querySelector(".timeline-container");D||(D=document.createElement("div"),D.className="timeline-container animate-in",v.appendChild(D)),D.innerHTML=`
+        `,i.appendChild(v);const D=v.querySelectorAll(".drag-item"),T=v.querySelector("#ground"),P=v.querySelector("#source");D.forEach(u=>{u.ondragstart=b=>{b.dataTransfer.setData("text/plain",u.dataset.word),u.classList.add("dragging")},u.ondragend=()=>u.classList.remove("dragging")}),T.ondragover=u=>u.preventDefault(),T.ondrop=u=>{u.preventDefault();const b=u.dataTransfer.getData("text/plain"),y=P.querySelector(`.drag-item[data-word="${b}"]`)||T.querySelector(`.drag-item[data-word="${b}"]`);if(y){const k=j(T,u.clientX);k==null?T.appendChild(y):T.insertBefore(y,k)}};function j(u,b){return[...u.querySelectorAll(".drag-item:not(.dragging)")].reduce((k,C)=>{const w=C.getBoundingClientRect(),E=b-w.left-w.width/2;return E<0&&E>k.offset?{offset:E,element:C}:k},{offset:Number.NEGATIVE_INFINITY}).element}P.ondragover=u=>u.preventDefault(),P.ondrop=u=>{u.preventDefault();const b=document.querySelector(".drag-item.dragging");b&&P.appendChild(b)};const _=v.querySelector("#check-btn"),A=v.querySelector("#step-feedback");_.onclick=()=>{const u=Array.from(T.children).map(y=>y.dataset.word).join(" "),b=`${l.nounAnchor} barn ${l.verbAnchor}`.toLowerCase();u.toLowerCase()===b?(A.textContent="Flot! Se tidslinjen nedenfor.",A.className="exercise-feedback success-text",A.style.display="block",_.disabled=!0,x(v),setTimeout(()=>{l.step=4,o()},5500)):(A.textContent=t("wrongOrder"),A.className="exercise-feedback",A.style.display="block")}}function x(v){let D=v.querySelector(".timeline-container");D||(D=document.createElement("div"),D.className="timeline-container animate-in",v.appendChild(D)),D.innerHTML=`
             <div class="timeline-wrapper">
                 <div class="timeline-line"></div>
                 <div class="timeline-points">
@@ -166,7 +165,7 @@
         `;const T=D.querySelector("#timeline-pointer");let P="50%";l.verbAnchor==="spiste"&&(P="15%"),l.verbAnchor==="skal spise"&&(P="85%"),setTimeout(()=>{T.style.left=P,T.classList.add("bouncing")},100)}function f(){const v=document.createElement("div");v.className="step-content final-step",v.innerHTML=`
             <div class="success-animation">🎉</div>
             <h2>${t("wellDone")}</h2>
-            <p class="final-sentence">${l.nounAnchor} barn ${l.verbAnchor} nu.</p>
+            <p class="final-sentence">${l.nounAnchor} barn ${l.verbAnchor}.</p>
             <button class="gemini-btn" id="finish-btn">Afslut</button>
         `,i.appendChild(v),v.querySelector("#finish-btn").onclick=()=>m("dagens_opgave")}if(o(),!document.getElementById("grounding-styles")){const v=document.createElement("style");v.id="grounding-styles",v.textContent=`
             .grounding-view .illustration-container {

@@ -1348,14 +1348,18 @@
                 transform: translateY(-2px);
             }
             .spotlight-btn {
-                background: #ffcc00;
-                color: #333;
-                box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-                border: none;
+                background: #ffcc00 !important;
+                color: #000 !important;
+                box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
+                border: 2px solid rgba(255, 255, 255, 0.5) !important;
+                font-size: 1.4rem !important;
+                font-weight: 800 !important;
+                letter-spacing: 0.5px;
             }
             .spotlight-btn:hover {
-                background: #ffdb4d;
-                box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+                background: #fff !important;
+                color: #000 !important;
+                box-shadow: 0 0 35px rgba(255, 255, 255, 0.6);
                 transform: translateY(-3px) scale(1.02);
             }
         `,document.head.appendChild(r)}u.appendChild(c)}const q="/Dansk/";function L(u,d={}){const e=document.querySelector("#app");if(e.innerHTML="",u==="language")H.currentView="language",X(e,L);else if(u==="main")H.currentView="main",ee(e,L);else if(u==="notes")H.currentView="notes",te(e,L);else if(u==="dagens_opgave")H.currentView="dagens_opgave",ne(e,L);else if(u==="word_learning")H.currentView="word_learning",ae(e,L);else if(u==="samtale_traening")H.currentView="samtale_traening",re(e,L);else if(u==="samtale_hverdag")H.currentView="samtale_hverdag",ie(e,L);else if(u==="skrive_hjaelp")H.currentView="skrive_hjaelp",oe(e,L);else if(u==="du1_modul3")H.currentView="du1_modul3",se(e,L);else if(u==="du2_modul1")H.currentView="du2_modul1",pe(e,L);else if(u==="smaa_historier")H.currentView="smaa_historier",ge(e,L);else if(u==="du2_modul5")H.currentView="du2_modul5",ue(e,L);else if(u==="email_laan")H.currentView="email_laan",he(e,L);else if(u==="opdragelse")H.currentView="opdragelse",be(e,L);else if(u==="en_klage")H.currentView="en_klage",ve(e,L);else if(u==="du1_min_hverdag")H.currentView="du1_min_hverdag",le(e,L);else if(u==="transport_sprogskole")H.currentView="transport_sprogskole",ce(e,L);else if(u==="du1_madlavning")H.currentView="du1_madlavning",de(e,L);else if(u==="du1_rengoering")H.currentView="du1_rengoering",me(e,L);else if(u==="traen_tidsudtryk")H.currentView="traen_tidsudtryk",ke(e,L);else if(u==="lav_sporgsmal")H.currentView="lav_sporgsmal",ye(e,L);else if(u==="ordstilling")H.currentView="ordstilling",xe(e,L);else if(u==="traen_grammatik")H.currentView="traen_grammatik",fe(e,L);else if(u==="pronomen")H.currentView="pronomen",we(e,L);else if(u==="verbum_learning"){H.currentView="verbum_learning";const c=new Te(L,d?.categoryId);e.appendChild(c.render())}else u==="grounding"?(H.currentView="grounding",De(e,L)):u==="bestemthed"?(H.currentView="bestemthed",Ne(e,L)):u==="modal_force"?(H.currentView="modal_force",Ae(e,L,d)):u==="adjective_bridge"&&(H.currentView="adjective_bridge",je(e,L,d))}document.addEventListener("DOMContentLoaded",()=>{H.lang?L("main"):L("language")});

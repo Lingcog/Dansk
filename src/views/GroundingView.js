@@ -162,11 +162,31 @@ export function renderGroundingView(container, navigateFn) {
         ground.ondrop = (e) => {
             e.preventDefault();
             const word = e.dataTransfer.getData('text/plain');
-            const draggedElement = document.querySelector(`.drag-item.dragging`);
+            const draggedElement = source.querySelector(`.drag-item[data-word="${word}"]`) || ground.querySelector(`.drag-item[data-word="${word}"]`);
+
             if (draggedElement) {
-                ground.appendChild(draggedElement);
+                // For proper sorting/reordering in the drop zone
+                const afterElement = getDragAfterElement(ground, e.clientX);
+                if (afterElement == null) {
+                    ground.appendChild(draggedElement);
+                } else {
+                    ground.insertBefore(draggedElement, afterElement);
+                }
             }
         };
+
+        function getDragAfterElement(container, x) {
+            const draggableElements = [...container.querySelectorAll('.drag-item:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = x - box.left - box.width / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
 
         source.ondragover = (e) => e.preventDefault();
         source.ondrop = (e) => {
@@ -185,13 +205,62 @@ export function renderGroundingView(container, navigateFn) {
             const expected = `${state.nounAnchor} barn ${state.verbAnchor} nu`.toLowerCase();
 
             if (result.toLowerCase() === expected) {
-                state.step = 4;
-                renderStep();
+                // Correct answer! Trigger celebration and timeline
+                feedback.textContent = 'Flot! Se tidslinjen nedenfor.';
+                feedback.className = 'exercise-feedback success-text';
+                feedback.style.display = 'block';
+                checkBtn.disabled = true;
+
+                showTimelineView(stepDiv);
+
+                setTimeout(() => {
+                    state.step = 4;
+                    renderStep();
+                }, 4000);
             } else {
                 feedback.textContent = getTranslation('wrongOrder');
+                feedback.className = 'exercise-feedback';
                 feedback.style.display = 'block';
             }
         };
+    }
+
+    function showTimelineView(parentDiv) {
+        let timelineContainer = parentDiv.querySelector('.timeline-container');
+        if (!timelineContainer) {
+            timelineContainer = document.createElement('div');
+            timelineContainer.className = 'timeline-container animate-in';
+            parentDiv.appendChild(timelineContainer);
+        }
+
+        timelineContainer.innerHTML = `
+            <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+                <div class="timeline-points">
+                    <div class="time-point" data-tense="past">Datid</div>
+                    <div class="time-point" data-tense="present">Nutid</div>
+                    <div class="time-point" data-tense="future">Fremtid</div>
+                </div>
+                <div class="timeline-pointer" id="timeline-pointer">📍</div>
+            </div>
+        `;
+
+        const pointer = timelineContainer.querySelector('#timeline-pointer');
+
+        // Position based on state.verbAnchor
+        // spiser (nu) -> present
+        // spiste (i går) -> past
+        // skal spise (senere) -> future
+
+        let targetPos = '50%'; // default present
+        if (state.verbAnchor === 'spiste') targetPos = '15%';
+        if (state.verbAnchor === 'skal spise') targetPos = '85%';
+
+        // Trigger animation
+        setTimeout(() => {
+            pointer.style.left = targetPos;
+            pointer.classList.add('bouncing');
+        }, 100);
     }
 
     function renderFinalStep() {
@@ -315,6 +384,86 @@ export function renderGroundingView(container, navigateFn) {
             @keyframes fadeIn {
                 from { opacity: 0; transform: translateY(10px); }
                 to { opacity: 1; transform: translateY(0); }
+            }
+            .success-text {
+                color: #4CAF50 !important;
+                font-weight: 700;
+                font-size: 1.5rem;
+            }
+            
+            /* Timeline Styles */
+            .timeline-container {
+                margin-top: 3rem;
+                padding: 2rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .timeline-wrapper {
+                position: relative;
+                padding: 40px 0;
+                width: 80%;
+                margin: 0 auto;
+            }
+            .timeline-line {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 2px;
+                transform: translateY(-50%);
+            }
+            .timeline-points {
+                display: flex;
+                justify-content: space-between;
+                position: relative;
+                z-index: 2;
+            }
+            .time-point {
+                font-size: 0.9rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                opacity: 0.6;
+                transition: opacity 0.3s;
+                position: relative;
+            }
+            .time-point::after {
+                content: '';
+                position: absolute;
+                bottom: -20px;
+                left: 50%;
+                width: 12px;
+                height: 12px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: translateX(-50%);
+            }
+            .timeline-pointer {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-size: 2rem;
+                transform: translate(-50%, -50px);
+                transition: left 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                z-index: 3;
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            }
+            .animate-in {
+                animation: slideUpFade 0.8s ease forwards;
+            }
+            @keyframes slideUpFade {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .bouncing {
+                animation: pointerBounce 2s infinite;
+            }
+            @keyframes pointerBounce {
+                0%, 100% { transform: translate(-50%, -50px); }
+                50% { transform: translate(-50%, -60px); }
             }
         `;
         document.head.appendChild(styles);

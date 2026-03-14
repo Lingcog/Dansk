@@ -205,17 +205,22 @@ export function renderGroundingView(container, navigateFn) {
 
             if (result.toLowerCase() === expected) {
                 // Correct answer! Trigger celebration and timeline
-                feedback.textContent = 'Flot! Se tidslinjen nedenfor.';
+                // Correct answer! Trigger chain of animations
+                feedback.textContent = 'Flot! Se animationen nedenfor.';
                 feedback.className = 'exercise-feedback success-text';
                 feedback.style.display = 'block';
                 checkBtn.disabled = true;
 
-                showTimelineView(stepDiv);
+                // Step 1: Focus Animation (5s)
+                showFocusAnimation(stepDiv, () => {
+                    // Step 2: Timeline Animation (5s)
+                    showTimelineView(stepDiv);
 
-                setTimeout(() => {
-                    state.step = 4;
-                    renderStep();
-                }, 5500); // 5 seconds for animation + small buffer
+                    setTimeout(() => {
+                        state.step = 4;
+                        renderStep();
+                    }, 5500);
+                });
             } else {
                 feedback.textContent = getTranslation('wrongOrder');
                 feedback.className = 'exercise-feedback';
@@ -224,7 +229,102 @@ export function renderGroundingView(container, navigateFn) {
         };
     }
 
+    function showFocusAnimation(parentDiv, callback) {
+        let focusContainer = parentDiv.querySelector('.focus-container');
+        if (!focusContainer) {
+            focusContainer = document.createElement('div');
+            focusContainer.className = 'focus-container animate-in';
+            parentDiv.appendChild(focusContainer);
+        }
+
+        const anchor = state.nounAnchor.toLowerCase();
+        let sceneHtml = '';
+        let sceneTitle = '';
+
+        if (anchor === 'mit') {
+            sceneTitle = 'Mit barn (Relation)';
+            sceneHtml = `
+                <div class="focus-scene relation-scene">
+                    <svg viewBox="0 0 200 100" class="focus-svg">
+                        <circle cx="60" cy="40" r="10" class="stickman-head"/>
+                        <line x1="60" y1="50" x2="60" y2="80" class="stickman-body"/>
+                        <line x1="60" y1="60" x2="80" y2="70" class="stickman-arm speaker-arm"/>
+                        <circle cx="100" cy="55" r="7" class="stickman-head child-head"/>
+                        <line x1="100" y1="62" x2="100" y2="85" class="stickman-body"/>
+                        <line x1="100" y1="70" x2="80" y2="70" class="stickman-arm child-arm"/>
+                        <path d="M 80 65 Q 85 55 90 65" class="relation-heart" />
+                    </svg>
+                </div>
+            `;
+        } else if (anchor === 'et') {
+            sceneTitle = 'Et barn (Ubestemt)';
+            sceneHtml = `
+                <div class="focus-scene indefinite-scene">
+                    <svg viewBox="0 0 200 100" class="focus-svg">
+                        <g class="faint-child" transform="translate(40,10)">
+                            <circle cx="0" cy="40" r="7" /> <line x1="0" y1="47" x2="0" y2="70" />
+                        </g>
+                        <g class="faint-child" transform="translate(160,10)">
+                            <circle cx="0" cy="40" r="7" /> <line x1="0" y1="47" x2="0" y2="70" />
+                        </g>
+                        <g class="highlight-child" transform="translate(100,0)">
+                            <circle cx="0" cy="40" r="7" /> <line x1="0" y1="47" x2="0" y2="70" />
+                            <circle cx="0" cy="55" r="30" class="spotlight-circle" />
+                        </g>
+                    </svg>
+                </div>
+            `;
+        } else if (anchor === 'det') {
+            sceneTitle = 'Det barn (Udpegning)';
+            sceneHtml = `
+                <div class="focus-scene distal-scene">
+                    <svg viewBox="0 0 200 100" class="focus-svg">
+                        <g class="speaker" transform="translate(40,0)">
+                            <circle cx="0" cy="40" r="10" /> <line x1="0" y1="50" x2="0" y2="80" />
+                            <line x1="0" y1="60" x2="40" y2="55" class="pointing-arm" />
+                        </g>
+                        <g class="child" transform="translate(150,15)">
+                            <circle cx="0" cy="40" r="7" /> <line x1="0" y1="47" x2="0" y2="70" />
+                            <path d="M -80 40 L -10 25" class="pointing-beam" />
+                        </g>
+                    </svg>
+                </div>
+            `;
+        } else if (anchor === 'dette') {
+            sceneTitle = 'Dette barn (Nærhed)';
+            sceneHtml = `
+                <div class="focus-scene proximal-scene">
+                    <svg viewBox="0 0 200 100" class="focus-svg">
+                        <circle cx="100" cy="60" r="45" class="here-now-circle" />
+                        <g class="speaker" transform="translate(85,5)">
+                            <circle cx="0" cy="40" r="10" /> <line x1="0" y1="50" x2="0" y2="80" />
+                        </g>
+                        <g class="child" transform="translate(115,15)">
+                            <circle cx="0" cy="40" r="7" /> <line x1="0" y1="47" x2="0" y2="70" />
+                        </g>
+                    </svg>
+                </div>
+            `;
+        }
+
+        focusContainer.innerHTML = `
+            <div class="focus-wrapper">
+                <h3>${sceneTitle}</h3>
+                ${sceneHtml}
+            </div>
+        `;
+
+        // Wait 5 seconds then call callback
+        setTimeout(callback, 5000);
+    }
+
     function showTimelineView(parentDiv) {
+        // Clear focus container or hide it
+        const focusContainer = parentDiv.querySelector('.focus-container');
+        if (focusContainer) {
+            focusContainer.style.opacity = '0.3';
+            focusContainer.style.transition = 'opacity 0.5s';
+        }
         let timelineContainer = parentDiv.querySelector('.timeline-container');
         if (!timelineContainer) {
             timelineContainer = document.createElement('div');
@@ -463,6 +563,64 @@ export function renderGroundingView(container, navigateFn) {
             @keyframes pointerBounce {
                 0%, 100% { transform: translate(-50%, -50px); }
                 50% { transform: translate(-50%, -60px); }
+            }
+
+            /* Focus Scene Styles */
+            .focus-container {
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .focus-wrapper h3 {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+                opacity: 0.8;
+                color: var(--accent-light, #ffeb3b);
+            }
+            .focus-svg {
+                width: 100%;
+                max-width: 400px;
+                height: auto;
+                stroke: white;
+                stroke-width: 3;
+                fill: none;
+                stroke-linecap: round;
+            }
+            .stickman-head { stroke-width: 3; }
+            .here-now-circle {
+                stroke: rgba(255, 235, 59, 0.3);
+                fill: rgba(255, 235, 59, 0.05);
+                stroke-dasharray: 4 4;
+                animation: rotateCircle 20s linear infinite;
+            }
+            .spotlight-circle {
+                stroke: rgba(255, 255, 255, 0.2);
+                fill: rgba(255, 255, 255, 0.05);
+                stroke-width: 1;
+            }
+            .faint-child { opacity: 0.2; }
+            .highlight-child { animation: pulseHighlight 2s infinite; }
+            .relation-heart {
+                stroke: #ff4081;
+                stroke-width: 2;
+                fill: rgba(255, 64, 129, 0.2);
+            }
+            .pointing-beam {
+                stroke: rgba(255, 255, 255, 0.3);
+                stroke-width: 15;
+                stroke-linecap: butt;
+                filter: blur(5px);
+            }
+            
+            @keyframes rotateCircle {
+                from { transform: rotate(0deg); transform-origin: center; }
+                to { transform: rotate(360deg); transform-origin: center; }
+            }
+            @keyframes pulseHighlight {
+                0%, 100% { opacity: 0.8; }
+                50% { opacity: 1; }
             }
         `;
         document.head.appendChild(styles);

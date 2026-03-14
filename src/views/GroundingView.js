@@ -29,7 +29,7 @@ export function renderGroundingView(container, navigateFn) {
     introArea.className = 'intro-area';
     introArea.innerHTML = `
         <div class="illustration-container">
-            <img src="${baseUrl}images/grounding_balloon_man.png" alt="Balloon and Anchor" class="grounding-img">
+            <img src="${baseUrl}images/grounding_balloon_child.png" alt="Balloon and Anchor" class="grounding-img">
         </div>
         <p class="grounding-text">${getTranslation('groundingIntro')}</p>
     `;
@@ -67,13 +67,14 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <h3>${getTranslation('groundingStep1')}</h3>
             <div class="grounding-interaction">
-                <span class="word-bubble">Mand</span>
+                <span class="word-bubble">Barn</span>
                 <span class="arrow">←</span>
                 <select class="grammatik-select" id="noun-select">
                     <option value="">Vælg anker...</option>
-                    <option value="Min">Min</option>
-                    <option value="En">En</option>
-                    <option value="Denne">Denne</option>
+                    <option value="Mit">Mit</option>
+                    <option value="Et">Et</option>
+                    <option value="Det">Det</option>
+                    <option value="Dette">Dette</option>
                 </select>
             </div>
             <div class="exercise-feedback" id="step-feedback"></div>
@@ -128,7 +129,7 @@ export function renderGroundingView(container, navigateFn) {
             
             <div class="drag-source" id="source">
                 <div class="drag-item" draggable="true" data-word="${state.nounAnchor}">${state.nounAnchor}</div>
-                <div class="drag-item" draggable="true" data-word="mand">mand</div>
+                <div class="drag-item" draggable="true" data-word="barn">barn</div>
                 <div class="drag-item" draggable="true" data-word="${state.verbAnchor}">${state.verbAnchor}</div>
                 <div class="drag-item" draggable="true" data-word="nu">nu</div>
             </div>
@@ -181,7 +182,7 @@ export function renderGroundingView(container, navigateFn) {
 
         checkBtn.onclick = () => {
             const result = Array.from(ground.children).map(c => c.dataset.word).join(' ');
-            const expected = `${state.nounAnchor} mand ${state.verbAnchor} nu`.toLowerCase();
+            const expected = `${state.nounAnchor} barn ${state.verbAnchor} nu`.toLowerCase();
 
             if (result.toLowerCase() === expected) {
                 state.step = 4;
@@ -199,7 +200,7 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <div class="success-animation">🎉</div>
             <h2>${getTranslation('wellDone')}</h2>
-            <p class="final-sentence">${state.nounAnchor} mand ${state.verbAnchor} nu.</p>
+            <p class="final-sentence">${state.nounAnchor} barn ${state.verbAnchor} nu.</p>
             <button class="gemini-btn" id="finish-btn">Afslut</button>
         `;
         exerciseContainer.appendChild(stepDiv);

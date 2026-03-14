@@ -1105,7 +1105,7 @@
                 <div class="force-explanation" id="adj-expl"></div>
 
                 <div class="navigation-controls" style="margin-top: 3rem;" id="agreement-nav">
-                    <button class="gemini-btn spotlight-btn" id="next-agreement-btn">Hvordan bøjer vi adjektiver? ↓</button>
+                    <button class="gemini-btn spotlight-btn" id="next-agreement-btn">Hvorfor bøjer vi adjektiver? ↓</button>
                 </div>
             </div>
 
@@ -1207,19 +1207,30 @@
                 border-radius: 10px !important;
             }
             .force-explanation {
-                background: rgba(255, 255, 255, 0.05);
-                padding: 2rem;
-                border-radius: 16px;
-                line-height: 1.6;
+                background: rgba(255, 255, 255, 0.08);
+                padding: 2.5rem;
+                border-radius: 20px;
+                line-height: 1.8;
+                font-size: 1.2rem;
                 text-align: left;
                 opacity: 0;
                 transform: translateY(10px);
                 transition: all 0.5s ease;
-                margin-top: 2rem;
+                margin: 2rem auto;
+                max-width: 600px;
+                border: 1px solid rgba(255,255,255,0.1);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             }
             .force-explanation.visible {
                 opacity: 1;
                 transform: translateY(0);
+            }
+            .agreement-notice {
+                font-size: 1.25rem;
+            }
+            .agreement-notice strong {
+                color: #4caf50;
+                font-size: 1.4rem;
             }
 
             /* Agreement Interaction Styles */

@@ -56,8 +56,6 @@ export function renderGroundingView(container, navigateFn) {
             renderVerbStep();
         } else if (state.step === 3) {
             renderSentenceStep();
-        } else {
-            renderFinalStep();
         }
     }
 
@@ -217,8 +215,7 @@ export function renderGroundingView(container, navigateFn) {
                     showTimelineView(stepDiv);
 
                     setTimeout(() => {
-                        state.step = 4;
-                        renderStep();
+                        showFinalCompletion(stepDiv);
                     }, 5500);
                 });
             } else {
@@ -372,18 +369,32 @@ export function renderGroundingView(container, navigateFn) {
         }, 100);
     }
 
-    function renderFinalStep() {
-        const stepDiv = document.createElement('div');
-        stepDiv.className = 'step-content final-step';
-        stepDiv.innerHTML = `
-            <div class="success-animation">🎉</div>
-            <h2>${getTranslation('wellDone')}</h2>
-            <p class="final-sentence">${state.nounAnchor} barn ${state.verbAnchor}.</p>
-            <button class="gemini-btn" id="finish-btn">Afslut</button>
-        `;
-        exerciseContainer.appendChild(stepDiv);
+    function showFinalCompletion(parentDiv) {
+        let finalContainer = parentDiv.querySelector('.final-completion-container');
+        if (!finalContainer) {
+            finalContainer = document.createElement('div');
+            finalContainer.className = 'final-completion-container animate-in';
+            parentDiv.appendChild(finalContainer);
+        }
 
-        stepDiv.querySelector('#finish-btn').onclick = () => navigateFn('dagens_opgave');
+        finalContainer.innerHTML = `
+            <div class="completion-box">
+                <div class="success-icon">✨</div>
+                <p class="success-msg">Flot! Du har nu bygget en sætning, der er forankret i virkeligheden.</p>
+                <div class="example-box">
+                    <span class="example-label">Eksempel:</span>
+                    <span class="example-text">${state.nounAnchor} barn ${state.verbAnchor}.</span>
+                </div>
+                <button class="gemini-btn" id="finish-btn">Afslut</button>
+            </div>
+        `;
+
+        finalContainer.querySelector('#finish-btn').onclick = () => navigateFn('dagens_opgave');
+
+        // Scroll to the final message
+        setTimeout(() => {
+            finalContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     }
 
     renderStep();
@@ -631,6 +642,43 @@ export function renderGroundingView(container, navigateFn) {
             @keyframes pulseHighlight {
                 0%, 100% { opacity: 0.8; }
                 50% { opacity: 1; }
+            }
+
+            /* Final Completion Styles */
+            .final-completion-container {
+                margin-top: 3rem;
+                padding: 2.5rem;
+                background: rgba(76, 175, 80, 0.1);
+                border-radius: 24px;
+                border: 2px solid rgba(76, 175, 80, 0.3);
+            }
+            .success-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+            .success-msg {
+                font-size: 1.3rem;
+                font-weight: 600;
+                margin-bottom: 1.5rem;
+                line-height: 1.5;
+            }
+            .example-box {
+                background: rgba(0,0,0,0.2);
+                padding: 1.5rem;
+                border-radius: 16px;
+                margin-bottom: 2rem;
+            }
+            .example-label {
+                display: block;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                opacity: 0.6;
+                margin-bottom: 0.5rem;
+            }
+            .example-text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: #fff;
             }
         `;
         document.head.appendChild(styles);

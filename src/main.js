@@ -27,6 +27,7 @@ import { renderPronomenView } from './views/PronomenView.js';
 import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
 import { renderBestemthedView } from './views/BestemthedView.js';
+import { renderModalForceView } from './views/ModalForceView.js';
 import { appState, getLang, getTranslation, setLanguage } from './utils/i18n.js';
 
 // Router
@@ -116,6 +117,9 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'bestemthed') {
     appState.currentView = 'bestemthed';
     renderBestemthedView(appDiv, navigate);
+  } else if (viewTarget === 'modal_force') {
+    appState.currentView = 'modal_force';
+    renderModalForceView(appDiv, navigate, extraData);
   }
 }
 

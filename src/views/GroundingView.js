@@ -388,7 +388,12 @@ export function renderGroundingView(container, navigateFn) {
 
                 <div class="recommendation-box">
                     <h4>Vil du øve mere?</h4>
+                    <p class="teaser-text">Sætningen er bygget... men hvem har egentlig kontrollen? Findes der en usynlig kraft mellem barnet og maden?</p>
                     <div class="recommendation-grid">
+                        <button class="rec-btn spotlight-btn" id="start-modal">
+                            <span class="rec-icon">✨</span>
+                            <span class="rec-label">Modalverber (Usynlig kraft)</span>
+                        </button>
                         <button class="rec-btn" id="rec-bestemthed">
                             <span class="rec-icon">🏷️</span>
                             <span class="rec-label">Bestemthed - En / et</span>
@@ -404,11 +409,12 @@ export function renderGroundingView(container, navigateFn) {
                     </div>
                 </div>
 
-                <button class="gemini-btn" id="finish-btn">Afslut</button>
+                <button class="gemini-btn outline-btn" id="finish-btn">Afslut og gå tilbage</button>
             </div>
         `;
 
         finalContainer.querySelector('#finish-btn').onclick = () => navigateFn('dagens_opgave');
+        finalContainer.querySelector('#start-modal').onclick = () => navigateFn('modal_force', state);
         finalContainer.querySelector('#rec-bestemthed').onclick = () => navigateFn('bestemthed');
         finalContainer.querySelector('#rec-pronomen').onclick = () => navigateFn('pronomen');
         finalContainer.querySelector('#rec-verber').onclick = () => navigateFn('verbum_learning', { categoryId: 'datid' });
@@ -748,6 +754,30 @@ export function renderGroundingView(container, navigateFn) {
             .rec-label {
                 font-weight: 600;
             }
+            .teaser-text {
+                font-size: 0.95rem;
+                opacity: 0.8;
+                font-style: italic;
+                margin-bottom: 1.5rem;
+                color: var(--accent-light, #ffeb3b);
+                border-left: 3px solid var(--accent-light, #ffeb3b);
+                padding-left: 1rem;
+            }
+            .spotlight-btn {
+                background: linear-gradient(135deg, rgba(255, 235, 59, 0.1), rgba(255, 235, 59, 0.2)) !important;
+                border: 1px solid rgba(255, 235, 255, 0.3) !important;
+                animation: subtleGlow 3s infinite alternate;
+            }
+            @keyframes subtleGlow {
+                from { box-shadow: 0 0 5px rgba(255, 235, 59, 0.1); }
+                to { box-shadow: 0 0 15px rgba(255, 235, 59, 0.2); }
+            }
+            .outline-btn {
+                background: transparent !important;
+                border: 1px solid rgba(255,255,255,0.2) !important;
+                opacity: 0.6;
+            }
+            .outline-btn:hover { opacity: 1; border-color: white !important; }
         `;
         document.head.appendChild(styles);
     }

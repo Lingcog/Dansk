@@ -1438,21 +1438,6 @@
             </div>
 
             <div class="bridge-exercise-area">
-                <div class="sentence-display">
-                    <span class="noun-anchor">${r}</span>
-                    <span class="adjective-part" id="sentence-adj">sødt</span>
-                    <span class="noun-part">${t}</span>
-                    <span class="verb-part" id="verb-display">${p}</span>
-                    <div class="adverb-drop-zone">
-                        <select id="adverb-select" class="premium-select">
-                            <option value="langsomt">langsomt</option>
-                            <option value="hurtigt">hurtigt</option>
-                            <option value="meget">meget</option>
-                            <option value="lidt">lidt</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div class="adverb-visual-section">
                     <div class="projector-container">
                         <div class="label">Projektør</div>
@@ -1472,6 +1457,21 @@
                             <div class="box-label">Adverbium</div>
                             <div class="box-word" id="active-adverb">langsomt</div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="sentence-display">
+                    <span class="noun-anchor">${r}</span>
+                    <span class="adjective-part" id="sentence-adj">sødt</span>
+                    <span class="noun-part">${t}</span>
+                    <span class="verb-part" id="verb-display">${p}</span>
+                    <div class="adverb-drop-zone">
+                        <select id="adverb-select" class="premium-select">
+                            <option value="langsomt">langsomt</option>
+                            <option value="hurtigt">hurtigt</option>
+                            <option value="meget">meget</option>
+                            <option value="lidt">lidt</option>
+                        </select>
                     </div>
                 </div>
 

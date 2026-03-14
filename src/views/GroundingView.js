@@ -131,7 +131,6 @@ export function renderGroundingView(container, navigateFn) {
                 <div class="drag-item" draggable="true" data-word="${state.nounAnchor}">${state.nounAnchor}</div>
                 <div class="drag-item" draggable="true" data-word="barn">barn</div>
                 <div class="drag-item" draggable="true" data-word="${state.verbAnchor}">${state.verbAnchor}</div>
-                <div class="drag-item" draggable="true" data-word="nu">nu</div>
             </div>
 
             <div class="drop-zone-container">
@@ -202,7 +201,7 @@ export function renderGroundingView(container, navigateFn) {
 
         checkBtn.onclick = () => {
             const result = Array.from(ground.children).map(c => c.dataset.word).join(' ');
-            const expected = `${state.nounAnchor} barn ${state.verbAnchor} nu`.toLowerCase();
+            const expected = `${state.nounAnchor} barn ${state.verbAnchor}`.toLowerCase();
 
             if (result.toLowerCase() === expected) {
                 // Correct answer! Trigger celebration and timeline
@@ -216,7 +215,7 @@ export function renderGroundingView(container, navigateFn) {
                 setTimeout(() => {
                     state.step = 4;
                     renderStep();
-                }, 4000);
+                }, 5500); // 5 seconds for animation + small buffer
             } else {
                 feedback.textContent = getTranslation('wrongOrder');
                 feedback.className = 'exercise-feedback';
@@ -269,7 +268,7 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <div class="success-animation">🎉</div>
             <h2>${getTranslation('wellDone')}</h2>
-            <p class="final-sentence">${state.nounAnchor} barn ${state.verbAnchor} nu.</p>
+            <p class="final-sentence">${state.nounAnchor} barn ${state.verbAnchor}.</p>
             <button class="gemini-btn" id="finish-btn">Afslut</button>
         `;
         exerciseContainer.appendChild(stepDiv);

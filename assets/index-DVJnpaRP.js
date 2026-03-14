@@ -1512,7 +1512,7 @@
                 justify-content: center;
                 align-items: center;
                 gap: 1rem;
-                font-size: 2.2rem;
+                font-size: 1.8rem;
                 font-weight: 700;
                 margin: 4rem 0;
                 padding: 2rem;

@@ -1158,7 +1158,7 @@
                 </div>
 
                 <div class="adverb-teaser animate-in" style="margin-top: 5rem; text-align: center; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 4rem;">
-                    <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffeb3b;">${t("adverbTeaser")}</h3>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffffff;">${t("adverbTeaser")}</h3>
                     <div class="navigation-controls">
                         <button class="gemini-btn spotlight-btn" id="next-adverb-btn">${t("nextStepAdverb")}</button>
                     </div>
@@ -1182,7 +1182,7 @@
                     <strong>${n.nounAnchor} ${f} barn...</strong><br>
                     ${t("adjectiveExpl")}
                 </div>
-            `,b.className="force-explanation visible";const w=a.querySelector("#adj-beam"),x=a.querySelector("#adj-target-circle"),j={sød:{beam:"rgba(255, 105, 180, 0.5)",circle:"rgba(255, 105, 180, 0.4)"},glad:{beam:"rgba(255, 235, 59, 0.6)",circle:"rgba(255, 235, 59, 0.5)"},træt:{beam:"rgba(100, 149, 237, 0.5)",circle:"rgba(100, 149, 237, 0.4)"}}[C]||{beam:"rgba(255, 255, 255, 0.4)",circle:"rgba(255, 255, 255, 0.2)"};w.style.fill=j.beam,x.style.fill=j.circle,x.setAttribute("r","40"),setTimeout(()=>x.setAttribute("r","35"),500)},k.onclick=()=>d("dagens_opgave");const T=a.querySelector("#adj-comp-link");T.onclick=y=>{y.preventDefault(),console.log("Navigate to Adjective Comparison")};const D=a.querySelector("#next-adverb-btn");D.onclick=()=>{d("adverb_bridge",{nounAnchor:appState.nounAnchor,selectedNoun:appState.selectedNoun,selectedVerb:appState.selectedVerb,isPlural:appState.isPlural})},E.onclick=()=>{const y=a.querySelector("#agreement-section");y.style.display="block",m(),E.style.display="none",setTimeout(()=>{y.scrollIntoView({behavior:"smooth",block:"start"})},50)}}function m(){const r=a.querySelector("#magnet-waves-svg"),u=a.querySelector("#magnet-noun-display"),b=a.querySelector("#adj-suffix"),k=a.querySelector(".stem"),E=a.querySelectorAll(".toggle-btn");let h="barn",v="ubestemt";function N(){const D=v==="bestemt"?"#4caf50":"rgba(255,255,255,0.5)",y=v==="bestemt"?"1.0":"0.4",C=v==="bestemt"?"4":"2";r.innerHTML=`
+            `,b.className="force-explanation visible";const w=a.querySelector("#adj-beam"),x=a.querySelector("#adj-target-circle"),j={sød:{beam:"rgba(255, 105, 180, 0.5)",circle:"rgba(255, 105, 180, 0.4)"},glad:{beam:"rgba(255, 235, 59, 0.6)",circle:"rgba(255, 235, 59, 0.5)"},træt:{beam:"rgba(100, 149, 237, 0.5)",circle:"rgba(100, 149, 237, 0.4)"}}[C]||{beam:"rgba(255, 255, 255, 0.4)",circle:"rgba(255, 255, 255, 0.2)"};w.style.fill=j.beam,x.style.fill=j.circle,x.setAttribute("r","40"),setTimeout(()=>x.setAttribute("r","35"),500)},k.onclick=()=>d("dagens_opgave");const T=a.querySelector("#adj-comp-link");T.onclick=y=>{y.preventDefault(),console.log("Navigate to Adjective Comparison")};const D=a.querySelector("#next-adverb-btn");D.onclick=()=>{d("adverb_bridge",{nounAnchor:n.nounAnchor,selectedNoun:n.selectedNoun||"barn",selectedVerb:n.selectedVerb||"spiser",isPlural:n.isPlural||!1})},E.onclick=()=>{const y=a.querySelector("#agreement-section");y.style.display="block",m(),E.style.display="none",setTimeout(()=>{y.scrollIntoView({behavior:"smooth",block:"start"})},50)}}function m(){const r=a.querySelector("#magnet-waves-svg"),u=a.querySelector("#magnet-noun-display"),b=a.querySelector("#adj-suffix"),k=a.querySelector(".stem"),E=a.querySelectorAll(".toggle-btn");let h="barn",v="ubestemt";function N(){const D=v==="bestemt"?"#4caf50":"rgba(255,255,255,0.5)",y=v==="bestemt"?"1.0":"0.4",C=v==="bestemt"?"4":"2";r.innerHTML=`
                 <svg viewBox="0 0 200 60" style="width: 100%; height: 60px;">
                     <path d="M 180 10 Q 100 10 20 10" fill="none" stroke="${D}" stroke-width="${C}" opacity="${y}" stroke-dasharray="10,5">
                         <animate attributeName="stroke-dashoffset" from="0" to="15" dur="1s" repeatCount="infinite" />
@@ -1475,7 +1475,7 @@
                 </div>
 
                 <div class="adverb-teaser animate-in" style="margin-top: 5rem; text-align: center; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 4rem;">
-                    <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffeb3b;">${t("adverbTeaserNext")}</h3>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffffff;">${t("adverbTeaserNext")}</h3>
                     <div class="navigation-controls">
                         <button class="gemini-btn spotlight-btn" id="next-conjunction-btn">${t("nextStepAfterAdverb")}</button>
                     </div>

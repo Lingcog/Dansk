@@ -788,8 +788,8 @@
                             <div class="word-display" id="modal-word-marker">skal</div>
                         </div>
                         <div class="time-toggle">
-                            <button class="toggle-btn active" data-time="nu">${t("nowLabel")}</button>
                             <button class="toggle-btn" data-time="da">${t("pastLabel")}</button>
+                            <button class="toggle-btn active" data-time="nu">${t("nowLabel")}</button>
                         </div>
                     </div>
 

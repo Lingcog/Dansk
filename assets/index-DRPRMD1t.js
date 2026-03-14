@@ -1466,7 +1466,7 @@
                     <span class="noun-part">${t}</span>
                     <span class="verb-part" id="verb-display">${p}</span>
                     <div class="adverb-drop-zone">
-                        <select id="adverb-select" class="premium-select">
+                        <select id="adverb-select" class="grammatik-select premium-select">
                             <option value="langsomt">langsomt</option>
                             <option value="hurtigt">hurtigt</option>
                             <option value="meget">meget</option>
@@ -1524,11 +1524,10 @@
                 min-width: 150px;
             }
             .premium-select {
-                background: #4caf50;
+                background: #4caf50 !important;
                 color: white;
-                border: none;
-                padding: 0.5rem 1rem;
-                border-radius: 10px;
+                padding: 0.4rem 0.8rem !important;
+                border-radius: 10px !important;
                 font-size: 1.5rem !important;
                 font-weight: 700;
                 cursor: pointer;

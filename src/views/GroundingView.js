@@ -181,7 +181,7 @@ export function renderGroundingView(container, navigateFn) {
 
         checkBtn.onclick = () => {
             const result = Array.from(ground.children).map(c => c.dataset.word).join(' ');
-            const expected = `${state.nounAnchor} hund ${state.verbAnchor} nu`.toLowerCase();
+            const expected = `${state.nounAnchor} mand ${state.verbAnchor} nu`.toLowerCase();
 
             if (result.toLowerCase() === expected) {
                 state.step = 4;
@@ -199,7 +199,7 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <div class="success-animation">🎉</div>
             <h2>${getTranslation('wellDone')}</h2>
-            <p class="final-sentence">${state.nounAnchor} hund ${state.verbAnchor} nu.</p>
+            <p class="final-sentence">${state.nounAnchor} mand ${state.verbAnchor} nu.</p>
             <button class="gemini-btn" id="finish-btn">Afslut</button>
         `;
         exerciseContainer.appendChild(stepDiv);

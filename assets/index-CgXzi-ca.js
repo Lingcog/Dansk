@@ -1529,7 +1529,7 @@
                 border: none;
                 padding: 0.5rem 1rem;
                 border-radius: 10px;
-                font-size: 1.8rem;
+                font-size: 1.5rem !important;
                 font-weight: 700;
                 cursor: pointer;
                 box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);

@@ -382,14 +382,36 @@ export function renderGroundingView(container, navigateFn) {
                 <div class="success-icon">✨</div>
                 <p class="success-msg">Flot! Du har nu bygget en sætning, der er forankret i virkeligheden.</p>
                 <div class="example-box">
-                    <span class="example-label">Eksempel:</span>
+                    <span class="example-label">Sætning:</span>
                     <span class="example-text">${state.nounAnchor} barn ${state.verbAnchor}.</span>
                 </div>
+
+                <div class="recommendation-box">
+                    <h4>Vil du øve mere?</h4>
+                    <div class="recommendation-grid">
+                        <button class="rec-btn" id="rec-bestemthed">
+                            <span class="rec-icon">🏷️</span>
+                            <span class="rec-label">Bestemthed - En / et</span>
+                        </button>
+                        <button class="rec-btn" id="rec-pronomen">
+                            <span class="rec-icon">👤</span>
+                            <span class="rec-label">Pronominer - Han/Ham/Hans</span>
+                        </button>
+                        <button class="rec-btn" id="rec-verber">
+                            <span class="rec-icon">⚡</span>
+                            <span class="rec-label">Verber - Går/gik/gået</span>
+                        </button>
+                    </div>
+                </div>
+
                 <button class="gemini-btn" id="finish-btn">Afslut</button>
             </div>
         `;
 
         finalContainer.querySelector('#finish-btn').onclick = () => navigateFn('dagens_opgave');
+        finalContainer.querySelector('#rec-bestemthed').onclick = () => navigateFn('bestemthed');
+        finalContainer.querySelector('#rec-pronomen').onclick = () => navigateFn('pronomen');
+        finalContainer.querySelector('#rec-verber').onclick = () => navigateFn('verbum_learning', { categoryId: 'datid' });
 
         // Scroll to the final message
         setTimeout(() => {
@@ -679,6 +701,52 @@ export function renderGroundingView(container, navigateFn) {
                 font-size: 1.8rem;
                 font-weight: 700;
                 color: #fff;
+            }
+
+            /* Recommendation Box Styles */
+            .recommendation-box {
+                margin: 2.5rem 0;
+                padding-top: 2rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                text-align: left;
+            }
+            .recommendation-box h4 {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+                opacity: 0.7;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .recommendation-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .rec-btn {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 1.2rem;
+                border-radius: 16px;
+                color: white;
+                cursor: pointer;
+                transition: all 0.2s;
+                width: 100%;
+                text-align: left;
+                font-size: 1.1rem;
+            }
+            .rec-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(5px);
+                border-color: rgba(255, 255, 255, 0.3);
+            }
+            .rec-icon {
+                font-size: 1.5rem;
+            }
+            .rec-label {
+                font-weight: 600;
             }
         `;
         document.head.appendChild(styles);

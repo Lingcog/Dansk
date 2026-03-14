@@ -26,6 +26,7 @@ import { renderGrammatikView } from './views/GrammatikView.js';
 import { renderPronomenView } from './views/PronomenView.js';
 import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
+import { renderBestemthedView } from './views/BestemthedView.js';
 import { appState, getLang, getTranslation, setLanguage } from './utils/i18n.js';
 
 // Router
@@ -112,6 +113,9 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);
+  } else if (viewTarget === 'bestemthed') {
+    appState.currentView = 'bestemthed';
+    renderBestemthedView(appDiv, navigate);
   }
 }
 

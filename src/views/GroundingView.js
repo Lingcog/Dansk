@@ -314,6 +314,11 @@ export function renderGroundingView(container, navigateFn) {
             </div>
         `;
 
+        // Smooth scroll to focus animation
+        setTimeout(() => {
+            focusContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+
         // Wait 5 seconds then call callback
         setTimeout(callback, 5000);
     }
@@ -343,6 +348,11 @@ export function renderGroundingView(container, navigateFn) {
                 <div class="timeline-pointer" id="timeline-pointer">📍</div>
             </div>
         `;
+
+        // Smooth scroll to timeline
+        setTimeout(() => {
+            timelineContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
 
         const pointer = timelineContainer.querySelector('#timeline-pointer');
 

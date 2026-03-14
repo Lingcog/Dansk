@@ -1654,55 +1654,62 @@
                                 </g>
 
                                 <!-- Main Activity Path -->
-                                <path id="flow-path" d="M 0 60 L 400 60" fill="none" stroke="#4caf50" stroke-width="4" marker-end="url(#arrowhead)" filter="url(#glow)" />
+                                <path id="flow-path" d="M 0 60 L 400 60" fill="none" stroke="#4caf50" stroke-width="4" filter="url(#glow)" />
                                 
-        <!-- moving arrow head -->
-        <g id="moving-arrow" opacity="0">
-            <polygon points="-10,-5 0,0 -10,5" fill="currentColor" />
-        </g>
-    </svg>
-</div>
-<div class="sentence-node" id="node-2">Sætning 2</div>
-</div>
-</div>
+                                <!-- Clock Icon (for Da/Når) -->
+                                <g id="clock-group" opacity="0">
+                                    <circle cx="0" cy="0" r="15" fill="none" stroke="white" stroke-width="2" />
+                                    <line x1="0" y1="0" x2="0" y2="-10" stroke="white" stroke-width="2" id="clock-hand-1" />
+                                    <line x1="0" y1="0" x2="7" y2="0" stroke="white" stroke-width="1" id="clock-hand-2" />
+                                </g>
 
-<div class="full-sentence-display">
-<div class="sentence-part-1">
-<span class="noun-anchor">${a}</span>
-<span class="adjective-part">${s}</span>
-<span class="noun-part">${t}</span>
-<span class="verb-part">${g}</span>
-<span class="adverb-part">${o}</span>
-</div>
+                                <!-- moving arrow head -->
+                                <g id="moving-arrow" opacity="0">
+                                    <polygon points="-10,-5 2,0 -10,5" fill="currentColor" />
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="sentence-node" id="node-2">Sætning 2</div>
+                    </div>
+                </div>
 
-<div class="conjunction-part">
-<span id="punctuation-before">,</span>
-<select id="conjunction-select" class="grammatik-select premium-select conj-select">
-    <option value="fordi">fordi</option>
-    <option value="når">når</option>
-    <option value="da">da</option>
-    <option value="selvom">selvom</option>
-    <option value="alligevel">alligevel</option>
-    <option value="men">men</option>
-    <option value="Derfor">Derfor</option>
-</select>
-</div>
+                <div class="full-sentence-display">
+                    <div class="sentence-part-1">
+                        <span class="noun-anchor">${a}</span>
+                        <span class="adjective-part">${s}</span>
+                        <span class="noun-part">${t}</span>
+                        <span class="verb-part">${g}</span>
+                        <span class="adverb-part">${o}</span>
+                    </div>
+                    
+                    <div class="conjunction-part">
+                        <span id="punctuation-before">,</span>
+                        <select id="conjunction-select" class="grammatik-select premium-select conj-select">
+                            <option value="fordi">fordi</option>
+                            <option value="når">når</option>
+                            <option value="da">da</option>
+                            <option value="selvom">selvom</option>
+                            <option value="alligevel">alligevel</option>
+                            <option value="men">men</option>
+                            <option value="Derfor">Derfor</option>
+                        </select>
+                    </div>
 
-<div class="sentence-part-2" id="second-sentence-text">
-${n("sentence2_fordi")}
-</div>
-</div>
+                    <div class="sentence-part-2" id="second-sentence-text">
+                        ${n("sentence2_fordi")}
+                    </div>
+                </div>
 
-<div class="force-explanation visible" id="conj-expl-box">
-${n("conjunctionExpl")}
-</div>
+                <div class="force-explanation visible" id="conj-expl-box">
+                    ${n("conjunctionExpl")}
+                </div>
 
-<div class="navigation-controls" style="margin-top: 4rem;">
-<button class="gemini-btn spotlight-btn" id="finish-btn">${n("nextStepAfterConjunction")}</button>
-</div>
-</div>
-</div>
-`;const r=p.querySelector("#back-to-adv"),c=p.querySelector("#finish-btn"),m=p.querySelector("#conjunction-select"),i=p.querySelector("#second-sentence-text"),u=p.querySelector("#punctuation-before"),b=p.querySelector("#flow-path"),x=p.querySelector("#conj-indicator"),N=p.querySelector("#clock-group"),h=p.querySelector("#timeline-base"),v=p.querySelector("#obstacle-group"),E=p.querySelector("#obs-part-1"),C=p.querySelector("#obs-part-2"),D=p.querySelector("#moving-arrow");function w(y){l=y,i.textContent=n(`sentence2_${y.toLowerCase()}`),x.textContent=y,N.style.opacity="0",h.style.opacity="0",v.style.opacity="0",D.style.opacity="0",E.setAttribute("y","30"),C.setAttribute("y","60"),b.style.opacity="1",b.style.strokeDasharray="none",b.classList.remove("animate-flow-lr","animate-flow-rl","animate-flow-break"),y==="Derfor"?(u.textContent=".",u.style.marginRight="1rem"):(u.textContent=",",u.style.marginRight="0.5rem");let f="#4caf50",T="M 50 60 L 350 60",k=!0;y==="fordi"?(f="#4caf50",T="M 50 60 L 350 60",b.classList.add("animate-flow-lr")):y==="Derfor"?(f="#4caf50",T="M 350 60 L 50 60",b.classList.add("animate-flow-rl")):y==="da"?(f="#2196f3",h.style.opacity="0.5",N.style.opacity="1",N.classList.add("animate-clock-past"),b.style.opacity="0",k=!1):y==="når"?(f="#2196f3",h.style.opacity="0.5",N.style.opacity="1",N.classList.add("animate-clock-future"),b.style.opacity="0",k=!1):y==="alligevel"?(f="#ff9800",v.style.opacity="1",b.classList.add("animate-flow-lr")):y==="selvom"?(f="#f44336",v.style.opacity="1",b.classList.add("animate-flow-break"),E.classList.add("animate-split-up"),C.classList.add("animate-split-down")):y==="men"&&(f="#f44336",T="M 50 60 Q 200 10 350 60",b.classList.add("animate-flow-lr")),b&&(b.setAttribute("d",T),b.setAttribute("stroke",f),b.style.animation="none",b.offsetHeight,b.style.animation=null),k&&D&&(D.style.opacity="1",D.style.color=f,D.innerHTML=`
+                <div class="navigation-controls" style="margin-top: 4rem;">
+                    <button class="gemini-btn spotlight-btn" id="finish-btn">${n("nextStepAfterConjunction")}</button>
+                </div>
+            </div>
+        </div>
+    `;const r=p.querySelector("#back-to-adv"),c=p.querySelector("#finish-btn"),m=p.querySelector("#conjunction-select"),i=p.querySelector("#second-sentence-text"),u=p.querySelector("#punctuation-before"),b=p.querySelector("#flow-path"),x=p.querySelector("#conj-indicator"),N=p.querySelector("#clock-group"),h=p.querySelector("#timeline-base"),v=p.querySelector("#obstacle-group"),E=p.querySelector("#obs-part-1"),C=p.querySelector("#obs-part-2"),D=p.querySelector("#moving-arrow");function w(y){l=y,i.textContent=n(`sentence2_${y.toLowerCase()}`),x.textContent=y,N.style.opacity="0",h.style.opacity="0",v.style.opacity="0",D.style.opacity="0",E.setAttribute("y","30"),C.setAttribute("y","60"),b.style.opacity="1",b.style.strokeDasharray="none",b.classList.remove("animate-flow-lr","animate-flow-rl","animate-flow-break"),y==="Derfor"?(u.textContent=".",u.style.marginRight="1rem"):(u.textContent=",",u.style.marginRight="0.5rem");let f="#4caf50",T="M 50 60 L 350 60",k=!0;y==="fordi"?(f="#4caf50",T="M 50 60 L 350 60",b.classList.add("animate-flow-lr")):y==="Derfor"?(f="#4caf50",T="M 350 60 L 50 60",b.classList.add("animate-flow-rl")):y==="da"?(f="#2196f3",h.style.opacity="0.5",N.style.opacity="1",N.classList.add("animate-clock-past"),b.style.opacity="0",k=!1):y==="når"?(f="#2196f3",h.style.opacity="0.5",N.style.opacity="1",N.classList.add("animate-clock-future"),b.style.opacity="0",k=!1):y==="alligevel"?(f="#ff9800",v.style.opacity="1",b.classList.add("animate-flow-lr")):y==="selvom"?(f="#f44336",v.style.opacity="1",b.classList.add("animate-flow-break"),E.classList.add("animate-split-up"),C.classList.add("animate-split-down")):y==="men"&&(f="#f44336",T="M 50 60 Q 200 10 350 60",b.classList.add("animate-flow-lr")),b&&(b.setAttribute("d",T),b.setAttribute("stroke",f),b.style.animation="none",b.offsetHeight,b.style.animation=null),k&&D&&(D.style.opacity="1",D.style.color=f,D.innerHTML=`
         <polygon points="-10,-5 0,0 -10,5" fill="currentColor" />
         <animateMotion dur="1.5s" repeatCount="infinite" path="${T}" rotate="auto" />
     `),x.style.background=f,x.classList.add("pulse"),setTimeout(()=>x.classList.remove("pulse"),500)}if(m.onchange=y=>{N.classList.remove("animate-clock-past","animate-clock-future"),E.classList.remove("animate-split-up"),C.classList.remove("animate-split-down"),w(y.target.value)},r.onclick=()=>d("adverb_bridge",{nounAnchor:a,selectedNoun:t,selectedVerb:g,selectedAdverb:o,adjectivePart:s}),c.onclick=()=>d("dagens_opgave"),w(l),!document.getElementById("conj-bridge-styles")){const y=document.createElement("style");y.id="conj-bridge-styles",y.textContent=`

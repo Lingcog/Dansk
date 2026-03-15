@@ -573,16 +573,12 @@
                 width: 90%;
                 margin: 0 auto;
             }
+            @media (max-width: 600px) {
+                .timeline-wrapper { width: 100%; padding: 25px 5px; }
+            }
             .timeline-line {
                 position: absolute;
                 top: 50%;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 2px;
-                transform: translateY(-50%);
-            }
                 left: 0;
                 right: 0;
                 height: 4px;
@@ -604,6 +600,9 @@
                 opacity: 0.6;
                 transition: opacity 0.3s;
                 position: relative;
+            }
+            @media (max-width: 600px) {
+                .time-point { font-size: 0.75rem; letter-spacing: 0.5px; }
             }
             .time-point::after {
                 content: '';

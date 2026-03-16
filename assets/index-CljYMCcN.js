@@ -833,14 +833,14 @@
           ${this.renderFooterButtons(e)}
         </div>
       </div>
-`,this.attachEventListeners(o),this.ensureStyles(),o}getSummaryText(o){const r=(this.currentPhase===1?o.segments.filter(c=>c.type==="gap"):o.phase2_tasks).length,t=Object.values(this.feedback).filter(c=>c==="correct").length;return t===0?"":t===r?`<span class="success">${n("allCorrect")}</span>`:`${t} / ${r} ${n("filled")||"korrekte"}`}renderPhase1(o){const e=[];let r=null;return o.segments.forEach(t=>{if(t.type==="text"){const c=t.content.match(/\*\*\[(.*?)\]\*\*/),i=t.content.match(/^(\d+\.)/m);if(c||i){r&&e.push(r),r={clue:c?c[1]:null,segments:[]};let l=t.content;c&&(l=l.replace(c[0],"")),l=l.replace(/^\s*\d+\.\s*/m,"").replace(/^Dansk:\s*/i,"").trim(),l&&r.segments.push({type:"text",content:l})}else r&&r.segments.push(t)}else r&&r.segments.push(t)}),r&&e.push(r),e.map((t,c)=>{const i=t.clue?`<div class="sent-clue">${t.clue}</div>`:"",l=t.segments.map(d=>{if(d.type==="text")return`<span class="text-part">${d.content.replace(/\\n/g,"<br>")}</span>`;{const a=this.feedback[d.id]==="correct",s=this.feedback[d.id]==="wrong";return`
+`,this.attachEventListeners(o),this.ensureStyles(),o}getSummaryText(o){const r=(this.currentPhase===1?o.segments.filter(c=>c.type==="gap"):o.phase2_tasks).length,t=Object.values(this.feedback).filter(c=>c==="correct").length;return t===0?"":t===r?`<span class="success">${n("allCorrect")}</span>`:`${t} / ${r} ${n("filled")||"korrekte"}`}renderPhase1(o){const e=[];let r=null;return o.segments.forEach(t=>{if(t.type==="text"){const c=t.content.match(/\*\*\[(.*?)\]\*\*/),i=t.content.match(/(\d+\.\s*)/);if(c||i){r&&e.push(r),r={clue:c?c[1]:null,segments:[]};let l=t.content;c&&(l=l.replace(c[0],"")),l=l.replace(/^\s*\d+\.\s*/gm,"").replace(/^Dansk:\s*/i,"").trim(),l&&r.segments.push({type:"text",content:l})}else r&&r.segments.push(t)}else r&&r.segments.push(t)}),r&&e.push(r),e.map((t,c)=>{const i=t.clue?`<div class="sent-clue">${t.clue}</div>`:"",l=t.segments.map(d=>{if(d.type==="text")return`<span class="text-part">${d.content.replace(/\\n/g," ").replace(/\s+/g," ")}</span>`;{const a=this.feedback[d.id]==="correct",s=this.feedback[d.id]==="wrong";return`
                         <span class="select-wrapper">
                             <select class="grammatik-select ${a?"correct":""} ${s?"wrong":""}" data-id="${d.id}" ${a?"disabled":""}>
                                 <option value="">...</option>
                                 ${d.options.map(g=>`<option value="${g}" ${this.answers[d.id]===g?"selected":""}>${g}</option>`).join("")}
                             </select>
                         </span>
-                    `}}).join("");return`
+                    `}}).join(" ");return`
                 <div class="sentence-row">
                     ${i}
                     <div class="sentence-content">
@@ -884,46 +884,61 @@
             }
             .sentence-row {
                 display: block;
-                padding: 1.2rem 0;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-                text-align: left;
+                padding: 1.5rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                text-align: center;
             }
             .sentence-row:last-child {
                 border-bottom: none;
             }
             .sent-clue {
                 display: block;
-                font-size: 0.9rem;
+                font-size: 1rem;
                 color: var(--text-muted);
-                opacity: 0.7;
+                opacity: 0.9;
                 font-style: italic;
-                margin-bottom: 0.3rem;
+                margin-bottom: 0.8rem;
                 font-weight: 400;
+                text-align: center;
             }
             .sentence-content {
                 display: block;
-                font-size: 1.4rem;
-                line-height: 1.5;
+                font-size: 1.5rem;
+                line-height: 2;
                 color: var(--text-main);
+                text-align: center;
             }
             .sentence-number {
                 font-weight: 700;
-                margin-right: 0.5rem;
-                color: var(--text-muted);
-                opacity: 0.8;
+                margin-right: 0.6rem;
+                color: #ffcc00;
+                font-size: 1.2rem;
             }
             .grammatik-text-container {
-                line-height: 1.4 !important;
+                line-height: normal !important;
                 padding: 1.5rem !important;
+                background: transparent !important;
+                box-shadow: none !important;
+            }
+            .text-part {
+                display: inline;
+                word-wrap: break-word;
             }
             .select-wrapper {
                 display: inline-block;
                 vertical-align: middle;
-                margin: 0 0.2rem;
+                margin: 0 0.4rem;
             }
             .grammatik-select {
-                min-width: 100px !important;
-                height: 2.2rem;
+                min-width: 110px !important;
+                height: 2.6rem;
+                font-size: 1.3rem !important;
+                margin: 0.2rem 0;
+            }
+            @media (max-width: 600px) {
+                .sentence-content { font-size: 1.25rem; }
+                .grammatik-select { min-width: 90px !important; height: 2.2rem; font-size: 1.15rem !important; }
+                .sentence-row { padding: 1.2rem 0; }
             }
             .phase2-item {
                 background: rgba(255,255,255,0.03);

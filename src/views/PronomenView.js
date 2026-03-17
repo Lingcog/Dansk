@@ -1,5 +1,6 @@
 import { baseUrl } from '../utils/config.js';
 import { getTranslation } from '../utils/i18n.js';
+import { pronomenData } from '../utils/pronomenData.js';
 
 import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
 
@@ -23,7 +24,7 @@ export function renderPronomenView(container, navigateFn) {
     const menuArea = document.createElement('div');
     const level1Area = document.createElement('div'); // Pronomen vs Verbum
     const level2Area = document.createElement('div'); // Sub-categories
-    const level3Area = document.createElement('div'); // Verb groups (Nutid)
+    const level3Area = document.createElement('div'); // Sets or Verb groups
     const gameArea = document.createElement('div');
 
     level2Area.style.display = 'none';
@@ -32,7 +33,9 @@ export function renderPronomenView(container, navigateFn) {
 
     // --- State Management ---
     let currentMainCategory = null; // 'pronomen' or 'verbum'
+    let currentSubCategory = null; // 'subjekt', 'objekt', 'possessiv'
     let currentLevel = 1; // 1, 2, or 3
+    let currentExercises = [];
 
     // --- Level 1: Main Categories ---
     const grid1 = document.createElement('div');
@@ -118,7 +121,8 @@ export function renderPronomenView(container, navigateFn) {
                 } else if (item.key.startsWith('verber')) {
                     navigateFn('verbum_learning', { categoryId: item.type, backView: 'pronomen' });
                 } else {
-                    startExercise(item);
+                    currentSubCategory = item.type;
+                    showPronomenSets(item.type, item.img);
                 }
             };
 
@@ -133,6 +137,36 @@ export function renderPronomenView(container, navigateFn) {
             card.appendChild(icon);
             card.appendChild(cardTitle);
             grid2.appendChild(card);
+        });
+    }
+
+    function showPronomenSets(categoryType, illustrationImg) {
+        currentLevel = 3;
+        level2Area.style.display = 'none';
+        level3Area.style.display = 'block';
+        grid3.innerHTML = '';
+        title.textContent = getTranslation('hanHamHans');
+
+        const sets = pronomenData[categoryType];
+        sets.forEach((set, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => {
+                currentExercises = set.exercises;
+                startExercise({ key: 'pronominer' + categoryType.charAt(0).toUpperCase() + categoryType.slice(1), type: categoryType, img: illustrationImg });
+            };
+
+            const icon = document.createElement('div');
+            icon.className = 'card-icon';
+            icon.textContent = '📝';
+
+            const cardTitle = document.createElement('div');
+            cardTitle.className = 'card-title';
+            cardTitle.textContent = `Sæt ${index + 1}`;
+
+            card.appendChild(icon);
+            card.appendChild(cardTitle);
+            grid3.appendChild(card);
         });
     }
 
@@ -380,17 +414,16 @@ export function renderPronomenView(container, navigateFn) {
         illustration.className = 'pronomen-illustration';
         gameArea.appendChild(illustration);
 
-        const exerciseData = getPronomenExercises(category.type);
-        let currentIdx = 0;
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'pronomen-exercise-content';
 
-        function renderCurrentExercise() {
-            const oldContent = gameArea.querySelectorAll('.pronomen-exercise-content');
-            oldContent.forEach(el => el.remove());
+        const exerciseList = document.createElement('div');
+        exerciseList.className = 'pronomen-list';
 
-            const contentWrapper = document.createElement('div');
-            contentWrapper.className = 'pronomen-exercise-content';
+        currentExercises.forEach((ex, exIdx) => {
+            const row = document.createElement('div');
+            row.className = 'pronomen-row';
 
-            const ex = exerciseData[currentIdx];
             const textContainer = document.createElement('div');
             textContainer.className = 'grammatik-text-container';
 
@@ -404,7 +437,8 @@ export function renderPronomenView(container, navigateFn) {
 
                     const select = document.createElement('select');
                     select.className = 'grammatik-select';
-                    select.dataset.idx = idx;
+                    select.dataset.exIdx = exIdx;
+                    select.dataset.blankIdx = idx;
 
                     const defaultOpt = document.createElement('option');
                     defaultOpt.value = "";
@@ -419,6 +453,7 @@ export function renderPronomenView(container, navigateFn) {
                         select.appendChild(o);
                     });
 
+                    wrapper.appendChild(select);
                     textContainer.appendChild(wrapper);
                 } else {
                     const span = document.createElement('span');
@@ -427,64 +462,72 @@ export function renderPronomenView(container, navigateFn) {
                 }
             });
 
-            contentWrapper.appendChild(textContainer);
+            const feedbackRow = document.createElement('div');
+            feedbackRow.className = 'exercise-feedback-row';
+            feedbackRow.style.display = 'none';
 
-            const feedbackArea = document.createElement('div');
-            feedbackArea.className = 'exercise-feedback';
-            contentWrapper.appendChild(feedbackArea);
+            row.appendChild(textContainer);
+            row.appendChild(feedbackRow);
+            exerciseList.appendChild(row);
+        });
 
-            const controls = document.createElement('div');
-            controls.className = 'game-controls';
+        contentWrapper.appendChild(exerciseList);
 
-            const checkBtn = document.createElement('button');
-            checkBtn.className = 'gemini-btn';
-            checkBtn.textContent = getTranslation('checkAnswers');
-            checkBtn.onclick = () => {
-                const selects = textContainer.querySelectorAll('select');
-                let allCorrect = true;
-                let firstErrorHint = '';
+        const resultSummary = document.createElement('div');
+        resultSummary.className = 'grammatik-summary';
+        resultSummary.style.display = 'none';
+        contentWrapper.appendChild(resultSummary);
 
-                selects.forEach(s => {
-                    const idx = s.dataset.idx;
-                    if (s.value === ex.blanks[idx].answer) {
-                        s.classList.add('correct');
-                        s.classList.remove('wrong');
-                    } else {
-                        s.classList.add('wrong');
-                        s.classList.remove('correct');
-                        allCorrect = false;
-                        if (!firstErrorHint) {
-                            firstErrorHint = getTranslation('hintPronominer');
-                        }
-                    }
-                });
+        const controls = document.createElement('div');
+        controls.className = 'game-controls';
 
-                if (allCorrect) {
-                    feedbackArea.style.display = 'none';
-                    checkBtn.style.display = 'none';
-                    nextBtn.style.display = 'inline-block';
+        const checkBtn = document.createElement('button');
+        checkBtn.className = 'gemini-btn';
+        checkBtn.textContent = getTranslation('checkAnswers');
+        checkBtn.onclick = () => {
+            const selects = exerciseList.querySelectorAll('select');
+            let allCorrect = true;
+            let correctCount = 0;
+
+            selects.forEach(s => {
+                const exIdx = s.dataset.exIdx;
+                const blankIdx = s.dataset.blankIdx;
+                const ex = currentExercises[exIdx];
+                const feedbackRow = s.closest('.pronomen-row').querySelector('.exercise-feedback-row');
+
+                if (s.value === ex.blanks[blankIdx].answer) {
+                    s.classList.add('correct');
+                    s.classList.remove('wrong');
+                    feedbackRow.style.display = 'none';
+                    correctCount++;
                 } else {
-                    feedbackArea.textContent = firstErrorHint;
-                    feedbackArea.style.display = 'block';
+                    s.classList.add('wrong');
+                    s.classList.remove('correct');
+                    allCorrect = false;
+
+                    // Specific hint
+                    let hintKey = 'hintPronominer';
+                    if (category.type === 'subjekt') hintKey = 'hintPronominerSubjekt';
+                    else if (category.type === 'objekt') hintKey = 'hintPronominerObjekt';
+                    else if (category.type === 'possessiv') hintKey = 'hintPronominerPossessiv';
+
+                    feedbackRow.textContent = getTranslation(hintKey);
+                    feedbackRow.style.display = 'block';
                 }
-            };
+            });
 
-            const nextBtn = document.createElement('button');
-            nextBtn.className = 'gemini-btn';
-            nextBtn.textContent = getTranslation('newExercise');
-            nextBtn.style.display = 'none';
-            nextBtn.onclick = () => {
-                currentIdx = (currentIdx + 1) % exerciseData.length;
-                renderCurrentExercise();
-            };
+            resultSummary.textContent = `${correctCount} / ${currentExercises.length} ${getTranslation('correct')}`;
+            resultSummary.style.display = 'block';
 
-            controls.appendChild(checkBtn);
-            controls.appendChild(nextBtn);
-            contentWrapper.appendChild(controls);
-            gameArea.appendChild(contentWrapper);
-        }
+            if (allCorrect) {
+                checkBtn.textContent = 'Flot klaret! 🎉';
+                checkBtn.disabled = true;
+            }
+        };
 
-        renderCurrentExercise();
+        controls.appendChild(checkBtn);
+        contentWrapper.appendChild(controls);
+        gameArea.appendChild(contentWrapper);
     }
 
     viewContainer.appendChild(menuArea);
@@ -550,34 +593,25 @@ export function renderPronomenView(container, navigateFn) {
                 50% { transform: scale(1.05); }
                 100% { transform: scale(1); }
             }
-            .pulse {
-                animation: pulse 2s infinite ease-in-out;
+            .pronomen-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            .pronomen-row {
+                background: rgba(255, 255, 255, 0.05);
+                padding: 1rem;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .exercise-feedback-row {
+                margin-top: 0.5rem;
+                color: #e74c3c;
+                font-size: 0.9rem;
+                font-style: italic;
             }
         `;
         document.head.appendChild(styles);
     }
-}
-
-function getPronomenExercises(type) {
-    if (type === 'subjekt') {
-        return [
-            { text: "Her er en mand. [blank_0] hedder Peter.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }] },
-            { text: "Mikael er lærer. [blank_0] bor i Aarhus.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }] },
-            { text: "Min far er gammel. [blank_0] er 80 år.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }] },
-            { text: "Drengen leger. [blank_0] er glad.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }] }
-        ];
-    } else if (type === 'objekt') {
-        return [
-            { text: "Jeg ser en mand. Jeg ser [blank_0].", blanks: [{ answer: "ham", options: ["han", "ham", "hans"] }] },
-            { text: "Peter er her. Jeg ringer til [blank_0].", blanks: [{ answer: "ham", options: ["han", "ham", "hans"] }] },
-            { text: "Mikael er træt. Vi hjælper [blank_0].", blanks: [{ answer: "ham", options: ["han", "ham", "hans"] }] }
-        ];
-    } else if (type === 'possessiv') {
-        return [
-            { text: "Her er Peter. [blank_0] bil er rød.", blanks: [{ answer: "Hans", options: ["Han", "Ham", "Hans"] }] },
-            { text: "Mikael har en hund. [blank_0] hund er stor.", blanks: [{ answer: "Hans", options: ["Han", "Ham", "Hans"] }] },
-            { text: "Min far er her. [blank_0] hus er gammelt.", blanks: [{ answer: "Hans", options: ["Han", "Ham", "Hans"] }] }
-        ];
-    }
-    return [];
 }

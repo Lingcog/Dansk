@@ -94,9 +94,6 @@ export function initAdverbChoiceExerciseView(container) {
                 </div>
  
                 <div class="adv-choice-controls">
-                    <button id="check-btn" class="cta-button" style="padding: 0.8rem 1.5rem;">
-                        ${getTranslation('checkAnswers')}
-                    </button>
                     ${currentSetIndex < 1 ? `
                         <button id="next-set-btn" class="secondary-button" style="display: none; padding: 0.8rem 1.5rem;">
                             ${getTranslation('newExercise')} <i class="fas fa-arrow-right"></i>
@@ -115,38 +112,35 @@ export function initAdverbChoiceExerciseView(container) {
             window.location.hash = '#/pronomen';
         });
 
-        const checkBtn = document.getElementById('check-btn');
-        const nextSetBtn = document.getElementById('next-set-btn');
-        const finalSuccess = document.getElementById('final-success');
+        const selects = container.querySelectorAll('.adverb-select-input');
 
-        checkBtn.addEventListener('click', () => {
-            const selects = container.querySelectorAll('.adverb-select-input');
-            let allCorrect = true;
-
-            selects.forEach((select, i) => {
+        selects.forEach((select, i) => {
+            select.addEventListener('change', () => {
                 const val = select.value;
-                const correct = questions[i].correct;
-                scores[i] = val === correct;
-                if (!scores[i]) allCorrect = false;
-            });
-
-            render(); // Refresh to show feedback
-
-            if (allCorrect) {
-                if (currentSetIndex < 1) {
-                    const btn = document.getElementById('next-set-btn');
-                    if (btn) btn.style.display = 'block';
-                    const cBtn = document.getElementById('check-btn');
-                    if (cBtn) cBtn.style.display = 'none';
+                if (val === "") {
+                    scores[i] = null;
                 } else {
-                    const s = document.getElementById('final-success');
-                    if (s) s.style.display = 'block';
-                    const cBtn = document.getElementById('check-btn');
-                    if (cBtn) cBtn.style.display = 'none';
+                    const correct = questions[i].correct;
+                    scores[i] = (val === correct);
                 }
-            }
+
+                render();
+
+                // Check if all correct to show next button
+                const allDone = scores.every(s => s === true);
+                if (allDone) {
+                    if (currentSetIndex < 1) {
+                        const btn = document.getElementById('next-set-btn');
+                        if (btn) btn.style.display = 'block';
+                    } else {
+                        const s = document.getElementById('final-success');
+                        if (s) s.style.display = 'block';
+                    }
+                }
+            });
         });
 
+        const nextSetBtn = document.getElementById('next-set-btn');
         if (nextSetBtn) {
             nextSetBtn.addEventListener('click', () => {
                 currentSetIndex++;

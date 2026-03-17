@@ -76,10 +76,7 @@ export class VerbumLearningView {
           ${this.getSummaryText(exercise)}
         </div>
 
-        <div class="game-controls">
-          <button class="gemini-btn" id="check-answers">${getTranslation('checkAnswers')}</button>
           ${this.renderFooterButtons(category)}
-        </div>
       </div>
 `;
 
@@ -235,70 +232,46 @@ export class VerbumLearningView {
         container.querySelectorAll('.grammatik-select').forEach(select => {
             select.onchange = (e) => {
                 const id = e.target.dataset.id || e.target.dataset.taskId;
-                this.answers[id] = e.target.value;
-                // Reset feedback and hint on change
-                delete this.feedback[id];
-                this.showHints[id] = false;
+                const val = e.target.value;
+                this.answers[id] = val;
+
+                const exercise = verbsData[this.currentCategoryIndex].exercises[this.currentExerciseIndex];
+                let correctVal = '';
+                let explanation = '';
+
+                if (this.currentPhase === 1) {
+                    const seg = exercise.segments.find(s => s.id === id);
+                    if (seg) {
+                        correctVal = seg.correct;
+                        explanation = getTranslation(seg.explanation || 'hintAction');
+                    }
+                } else {
+                    const taskIndex = parseInt(id.replace('phase2-', ''));
+                    const task = exercise.phase2_tasks[taskIndex];
+                    if (task) {
+                        correctVal = task.correct;
+                        let explKey = task.explanation ? 'verbExpl_' + this.normalize(task.explanation) : 'hintAction';
+                        const translatedExpl = getTranslation(explKey);
+                        explanation = (translatedExpl === explKey) ? (task.explanation || getTranslation('hintAction')) : translatedExpl;
+                    }
+                }
+
+                if (val === "") {
+                    delete this.feedback[id];
+                } else if (val === correctVal) {
+                    this.feedback[id] = 'correct';
+                } else {
+                    this.feedback[id] = 'wrong';
+                    const fb = container.querySelector('#exercise-feedback');
+                    fb.textContent = explanation;
+                    fb.style.display = 'block';
+                }
+
                 this.updateView();
             };
         });
 
-        const checkBtn = container.querySelector('#check-answers');
-        if (checkBtn) {
-            checkBtn.onclick = () => {
-                const exercise = verbsData[this.currentCategoryIndex].exercises[this.currentExerciseIndex];
-                let allCorrect = true;
-                let firstErrorHint = '';
-
-                if (this.currentPhase === 1) {
-                    exercise.segments.forEach(s => {
-                        if (s.type === 'gap') {
-                            if (this.answers[s.id] === s.correct) {
-                                this.feedback[s.id] = 'correct';
-                            } else {
-                                this.feedback[s.id] = 'wrong';
-                                if (!firstErrorHint) {
-                                    firstErrorHint = getTranslation(s.explanation || 'hintAction');
-                                }
-                                allCorrect = false;
-                            }
-                        }
-                    });
-                } else {
-                    exercise.phase2_tasks.forEach((task, i) => {
-                        const taskId = `phase2-${i}`;
-                        if (this.answers[taskId] === task.correct) {
-                            this.feedback[taskId] = 'correct';
-                        } else {
-                            this.feedback[taskId] = 'wrong';
-                            let explKey = task.explanation ? 'verbExpl_' + this.normalize(task.explanation) : 'hintAction';
-                            const translatedExpl = getTranslation(explKey);
-                            if (!firstErrorHint) {
-                                firstErrorHint = (translatedExpl === explKey) ? (task.explanation || getTranslation('hintAction')) : translatedExpl;
-                            }
-                            allCorrect = false;
-                        }
-                    });
-                }
-
-                const fb = container.querySelector('#exercise-feedback');
-                if (allCorrect) {
-                    fb.style.display = 'none';
-                } else {
-                    fb.textContent = firstErrorHint;
-                    fb.style.display = 'block';
-                }
-                this.updateView();
-            };
-
-            // Hide check button if all done
-            const exercise = verbsData[this.currentCategoryIndex].exercises[this.currentExerciseIndex];
-            const totalGaps = this.currentPhase === 1
-                ? exercise.segments.filter(s => s.type === 'gap').length
-                : exercise.phase2_tasks.length;
-            const correctCount = Object.values(this.feedback).filter(f => f === 'correct').length;
-            if (correctCount === totalGaps) checkBtn.style.display = 'none';
-        }
+        // Next buttons are handled in renderFooterButtons via checkBtn-less logic
 
         const nextPhaseBtn = container.querySelector('#next-phase');
         if (nextPhaseBtn) {

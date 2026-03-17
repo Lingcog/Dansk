@@ -104,22 +104,6 @@ export function renderOrdstillingView(container, navigateFn) {
         const controls = document.createElement('div');
         controls.className = 'game-controls';
 
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'gemini-btn';
-        checkBtn.textContent = getTranslation('checkResult');
-        checkBtn.onclick = () => {
-            const userSentence = userWords.join(' ');
-            if (userSentence === originalSentence) {
-                feedback.textContent = getTranslation('correctOrder');
-                feedback.className = 'game-feedback success';
-                checkBtn.style.display = 'none';
-                nextBtn.style.display = 'inline-block';
-            } else {
-                feedback.textContent = getTranslation('wrongOrder');
-                feedback.className = 'game-feedback error';
-            }
-        };
-
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
         nextBtn.textContent = getTranslation('next');
@@ -142,10 +126,8 @@ export function renderOrdstillingView(container, navigateFn) {
             gameArea.appendChild(wordPool);
             gameArea.appendChild(feedback);
             controls.innerHTML = '';
-            controls.appendChild(checkBtn);
             controls.appendChild(nextBtn);
             gameArea.appendChild(controls);
-            checkBtn.style.display = 'inline-block';
             nextBtn.style.display = 'none';
             feedback.textContent = '';
             updateUI();
@@ -180,6 +162,21 @@ export function renderOrdstillingView(container, navigateFn) {
                     };
                     resultArea.appendChild(chip);
                 });
+            }
+
+            // Automatic check
+            if (userWords.length > 0 && scrambledWords.length === 0) {
+                const userSentence = userWords.join(' ');
+                if (userSentence === originalSentence) {
+                    feedback.textContent = getTranslation('correctOrder');
+                    feedback.className = 'game-feedback success';
+                    nextBtn.style.display = 'inline-block';
+                } else {
+                    feedback.textContent = getTranslation('wrongOrder');
+                    feedback.className = 'game-feedback error';
+                }
+            } else {
+                feedback.textContent = '';
             }
         }
 

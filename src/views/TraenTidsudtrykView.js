@@ -105,37 +105,7 @@ export function renderTraenTidsudtrykView(container, navigateFn) {
         const controls = document.createElement('div');
         controls.className = 'game-controls';
 
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'gemini-btn';
-        checkBtn.textContent = getTranslation('checkAnswers');
-        checkBtn.onclick = () => {
-            const selects = textContainer.querySelectorAll('select');
-            let allCorrect = true;
-            let firstHint = '';
-
-            selects.forEach(s => {
-                const idx = s.dataset.idx;
-                if (s.value === ex.blanks[idx].answer) {
-                    s.classList.add('correct');
-                    s.classList.remove('wrong');
-                } else {
-                    s.classList.add('wrong');
-                    s.classList.remove('correct');
-                    allCorrect = false;
-                    if (!firstHint) firstHint = ex.blanks[idx].hint;
-                }
-            });
-
-            if (allCorrect) {
-                feedbackArea.style.display = 'none';
-                checkBtn.style.display = 'none';
-                nextBtn.style.display = 'inline-block';
-            } else {
-                feedbackArea.textContent = firstHint || getTranslation('hintContext');
-                feedbackArea.style.display = 'block';
-            }
-        };
-
+        const selects = textContainer.querySelectorAll('select');
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
         nextBtn.textContent = currentIdx < exerciseData.length - 1 ? getTranslation('next') : getTranslation('finish');
@@ -149,7 +119,31 @@ export function renderTraenTidsudtrykView(container, navigateFn) {
             }
         };
 
-        controls.appendChild(checkBtn);
+        selects.forEach(select => {
+            select.onchange = () => {
+                const idx = select.dataset.idx;
+                if (select.value === "") {
+                    select.classList.remove('correct', 'wrong');
+                    feedbackArea.style.display = 'none';
+                } else if (select.value === ex.blanks[idx].answer) {
+                    select.classList.add('correct');
+                    select.classList.remove('wrong');
+                    feedbackArea.style.display = 'none';
+                } else {
+                    select.classList.add('wrong');
+                    select.classList.remove('correct');
+                    feedbackArea.textContent = ex.blanks[idx].hint || getTranslation('hintContext');
+                    feedbackArea.style.display = 'block';
+                }
+
+                // Check if all correct to show next button
+                const allCorrect = Array.from(selects).every(s => s.classList.contains('correct'));
+                if (allCorrect) {
+                    nextBtn.style.display = 'inline-block';
+                }
+            };
+        });
+
         controls.appendChild(nextBtn);
         gameArea.appendChild(controls);
     }

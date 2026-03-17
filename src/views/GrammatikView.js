@@ -154,7 +154,6 @@ export function renderGrammatikView(container, navigateFn) {
                     summaryArea.textContent = "";
                 } else if (correct === total) {
                     summaryArea.innerHTML = `<span class="success">${getTranslation('allCorrect')}</span>`;
-                    checkBtn.style.display = 'none';
                     nextBtn.style.display = 'block';
                     feedbackArea.style.display = 'none';
                 } else {
@@ -187,42 +186,6 @@ export function renderGrammatikView(container, navigateFn) {
                 };
             });
 
-            const controls = document.createElement('div');
-            controls.className = 'game-controls';
-
-            const checkBtn = document.createElement('button');
-            checkBtn.className = 'gemini-btn';
-            checkBtn.textContent = getTranslation('checkAnswers');
-            checkBtn.onclick = () => {
-                const selects = textContainer.querySelectorAll('select');
-                let allCorrect = true;
-                let firstErrorHint = '';
-
-                selects.forEach(s => {
-                    const idx = s.dataset.idx;
-                    if (s.value === ex.blanks[idx].answer) {
-                        s.classList.add('correct');
-                        s.classList.remove('wrong');
-                    } else {
-                        s.classList.add('wrong');
-                        s.classList.remove('correct');
-                        allCorrect = false;
-                        if (!firstErrorHint) {
-                            const hintKey = (ex.blanks[idx].hints && ex.blanks[idx].hints[s.value]) || 'hintContext';
-                            firstErrorHint = getTranslation(hintKey);
-                        }
-                    }
-                });
-
-                if (!allCorrect && firstErrorHint) {
-                    feedbackArea.textContent = firstErrorHint;
-                    feedbackArea.style.display = 'block';
-                } else if (allCorrect) {
-                    feedbackArea.style.display = 'none';
-                }
-                updateSummary();
-            };
-
             const nextBtn = document.createElement('button');
             nextBtn.className = 'gemini-btn';
             nextBtn.textContent = getTranslation('newExercise');
@@ -232,7 +195,6 @@ export function renderGrammatikView(container, navigateFn) {
                 renderCurrentExercise();
             };
 
-            controls.appendChild(checkBtn);
             controls.appendChild(nextBtn);
             gameArea.appendChild(controls);
             updateSummary();

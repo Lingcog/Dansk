@@ -1,4 +1,5 @@
-import { navigate, baseUrl } from '../main.js';
+import { navigate } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 import { getLang, getTranslation } from '../utils/i18n.js';
 
 export function renderOrdstillingView(container, navigateFn) {
@@ -121,7 +122,7 @@ export function renderOrdstillingView(container, navigateFn) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
-        nextBtn.textContent = "Næste →";
+        nextBtn.textContent = getTranslation('next');
         nextBtn.style.display = 'none';
         nextBtn.onclick = () => {
             currentIdx = (currentIdx + 1) % sentences.length;
@@ -193,27 +194,42 @@ export function renderOrdstillingView(container, navigateFn) {
         const styles = document.createElement('style');
         styles.id = 'ordstilling-styles';
         styles.textContent = `
-            .ordstilling-game-area { display: flex; flex-direction: column; align-items: center; gap: 2rem; margin-top: 1rem; }
-            .result-sentence-area { width: 100%; min-height: 80px; background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 16px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.8rem; padding: 1rem; margin-bottom: 2rem; }
-            .result-placeholder { color: rgba(255, 255, 255, 0.3); font-size: 1.5rem; }
-            .word-pool { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; width: 100%; margin-bottom: 2rem; }
-            .word-chip { background: var(--card-bg); border: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-main); padding: 0.8rem 1.2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: 500; transition: all 0.2s; user-select: none; }
+            .ordstilling-game-area { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: 0.5rem; }
+            .result-sentence-area { width: 100%; min-height: 60px; background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 16px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; padding: 0.8rem; margin-bottom: 1.5rem; }
+            @media (max-width: 600px) {
+                .result-sentence-area { min-height: 50px; padding: 0.6rem; gap: 0.4rem; border-radius: 12px; }
+            }
+            .result-placeholder { color: rgba(255, 255, 255, 0.3); font-size: 1.2rem; }
+            .word-pool { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; width: 100%; margin-bottom: 1.5rem; }
+            @media (max-width: 600px) {
+                .word-pool { gap: 0.4rem; }
+            }
+            .word-chip { background: var(--card-bg); border: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-main); padding: 0.6rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: all 0.2s; user-select: none; }
+            @media (max-width: 600px) {
+                .word-chip { padding: 0.5rem 0.8rem; font-size: 0.95rem; border-radius: 8px; }
+            }
             .word-chip:hover { background: var(--card-hover); transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.5); }
             .result-chip { background: rgba(255, 255, 255, 0.15); border-color: var(--ring-color); }
             .game-controls { display: flex; gap: 1rem; justify-content: center; }
-            .game-feedback { font-size: 1.2rem; font-weight: 600; min-height: 1.5rem; transition: all 0.3s; text-align: center; margin-bottom: 1rem; }
+            .game-feedback { font-size: 1.1rem; font-weight: 600; min-height: 1.5rem; transition: all 0.3s; text-align: center; margin-bottom: 1rem; }
+            @media (max-width: 600px) {
+                .game-feedback { font-size: 1rem; }
+            }
             .game-feedback.success { color: #4CAF50; }
             .game-feedback.error { color: #FF5252; }
             .v2-illustration {
                 width: 100%;
-                max-width: 600px;
+                max-width: 500px;
                 height: auto;
                 border-radius: 16px;
-                margin-bottom: 2rem;
+                margin-bottom: 1.5rem;
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            }
+            @media (max-width: 600px) {
+                .v2-illustration { border-radius: 10px; margin-bottom: 1rem; }
             }
         `;
         document.head.appendChild(styles);

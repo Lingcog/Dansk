@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
-import { baseUrl } from '../main.js';
+import { navigate } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 
 export function renderLavSporgsmalView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -23,27 +24,18 @@ export function renderLavSporgsmalView(container, navigateFn) {
 
     // Image section
     const imageContainer = document.createElement('div');
-    imageContainer.className = 'image-container';
-    imageContainer.style.width = '100%';
-    imageContainer.style.maxWidth = '600px';
+    imageContainer.className = 'thematic-image-container';
     imageContainer.style.margin = '2rem auto';
-    imageContainer.style.borderRadius = 'var(--border-radius)';
-    imageContainer.style.overflow = 'hidden';
-    imageContainer.style.boxShadow = 'var(--box-shadow)';
 
     const img = document.createElement('img');
     img.src = `${baseUrl}questions.png`;
     img.alt = 'Spørgsmålsdannelse illustration';
-    img.style.width = '100%';
-    img.style.height = 'auto';
-    img.style.display = 'block';
 
     imageContainer.appendChild(img);
 
     // Consent Checkbox area
     const consentContainer = document.createElement('div');
     consentContainer.className = 'consent-container';
-    consentContainer.style.margin = '2rem auto';
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -60,7 +52,7 @@ export function renderLavSporgsmalView(container, navigateFn) {
 
     // Gemini Link Button
     const geminiBtnContainer = document.createElement('div');
-    geminiBtnContainer.style.textAlign = 'center';
+    geminiBtnContainer.className = 'gemini-btn-container';
 
     const geminiBtn = document.createElement('a');
     geminiBtn.href = "https://gemini.google.com/gem/1OKZRFhv_TlP2M32ApMHWsFVh4aCLHdNU?usp=sharing";

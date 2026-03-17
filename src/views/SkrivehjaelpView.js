@@ -23,7 +23,6 @@ export function renderSkrivehjaelpView(container, navigateFn) {
     // Consent Checkbox area
     const consentContainer = document.createElement('div');
     consentContainer.className = 'consent-container';
-    consentContainer.style.margin = '2rem auto';
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -40,7 +39,7 @@ export function renderSkrivehjaelpView(container, navigateFn) {
 
     // Gemini Link Button
     const geminiBtnContainer = document.createElement('div');
-    geminiBtnContainer.style.textAlign = 'center';
+    geminiBtnContainer.className = 'gemini-btn-container';
 
     const geminiBtn = document.createElement('a');
     geminiBtn.href = "https://gemini.google.com/gem/1Ke_Ges6JxMDC51hTM744lHSQm_fi9BhQ?usp=sharing";

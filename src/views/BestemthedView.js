@@ -1,5 +1,5 @@
 import { getTranslation } from '../utils/i18n.js';
-import { baseUrl } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 
 export function renderBestemthedView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -125,6 +125,9 @@ export function renderBestemthedView(container, navigateFn) {
                 width: 150px;
                 height: 150px;
             }
+            @media (max-width: 600px) {
+                .stickman-container { width: 120px; height: 120px; }
+            }
             .mini-stickman {
                 width: 100%;
                 height: 100%;
@@ -144,6 +147,9 @@ export function renderBestemthedView(container, navigateFn) {
                 box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                 animation: float 3s ease-in-out infinite;
             }
+            @media (max-width: 600px) {
+                .object-bubble { width: 50px; height: 50px; font-size: 2rem; right: -5px; }
+            }
             @keyframes float {
                 0%, 100% { transform: translateY(0); }
                 50% { transform: translateY(-10px); }
@@ -154,11 +160,17 @@ export function renderBestemthedView(container, navigateFn) {
                 margin: 2rem 0;
                 color: #fff;
             }
+            @media (max-width: 600px) {
+                .word-display { font-size: 1.8rem; margin: 1.5rem 0; }
+            }
             .options-grid {
                 display: flex;
                 gap: 1.5rem;
                 justify-content: center;
                 margin-bottom: 2rem;
+            }
+            @media (max-width: 600px) {
+                .options-grid { gap: 1rem; margin-bottom: 1.5rem; }
             }
             .option-btn {
                 background: rgba(255,255,255,0.1);
@@ -172,6 +184,9 @@ export function renderBestemthedView(container, navigateFn) {
                 transition: all 0.2s;
                 min-width: 120px;
             }
+            @media (max-width: 600px) {
+                .option-btn { padding: 1rem 2rem; font-size: 1.2rem; border-radius: 16px; min-width: 100px; }
+            }
             .option-btn:hover { background: rgba(255,255,255,0.2); }
             .option-btn.correct { background: #4CAF50; border-color: #4CAF50; }
             .option-btn.wrong { background: #F44336; border-color: #F44336; }
@@ -181,6 +196,9 @@ export function renderBestemthedView(container, navigateFn) {
                 font-size: 1.2rem;
                 font-weight: 600;
                 margin-top: 1rem;
+            }
+            @media (max-width: 600px) {
+                .feedback-area { font-size: 1rem; height: 25px; }
             }
             .feedback-area.success { color: #4CAF50; }
             .feedback-area.error { color: #F44336; }

@@ -29,7 +29,7 @@ export function renderKlageView(container, navigateFn) {
 
     const cardTitle = document.createElement('div');
     cardTitle.className = 'card-title';
-    cardTitle.textContent = getTranslation('enKlage') + ' (Padlet)';
+    cardTitle.textContent = getTranslation('enKlage') + ' (padlet)';
 
     card.appendChild(icon);
     card.appendChild(cardTitle);

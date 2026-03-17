@@ -1,5 +1,6 @@
 import './style.css';
-export const baseUrl = import.meta.env.BASE_URL;
+import { baseUrl } from './utils/config.js';
+export { baseUrl };
 import { renderLanguageView } from './views/LanguageView.js';
 import { renderMainView } from './views/MainView.js';
 import { renderNotesView } from './views/NotesView.js';
@@ -28,12 +29,26 @@ import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
 import { renderBestemthedView } from './views/BestemthedView.js';
 import { renderModalForceView } from './views/ModalForceView.js';
+import { renderAdjectiveBridgeView } from './views/AdjectiveBridgeView.js';
+import { renderAdverbBridgeView } from './views/AdverbBridgeView.js';
+import { renderConjunctionBridgeView } from './views/ConjunctionBridgeView.js';
+import { renderAdjectiveComparisonView } from './views/AdjectiveComparisonView.js';
+import { renderVerbumMenuView } from './views/VerbumMenuView.js';
 import { appState, getLang, getTranslation, setLanguage } from './utils/i18n.js';
 
 // Router
-export function navigate(viewTarget, extraData = {}) {
+export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   const appDiv = document.querySelector('#app');
   appDiv.innerHTML = ''; // Clear current view
+
+  if (!skipHashUpdate) {
+    let hash = '/' + viewTarget;
+    if (extraData && Object.keys(extraData).length > 0) {
+      const params = new URLSearchParams(extraData);
+      hash += '?' + params.toString();
+    }
+    window.location.hash = hash;
+  }
 
   if (viewTarget === 'language') {
     appState.currentView = 'language';
@@ -109,8 +124,11 @@ export function navigate(viewTarget, extraData = {}) {
     renderPronomenView(appDiv, navigate);
   } else if (viewTarget === 'verbum_learning') {
     appState.currentView = 'verbum_learning';
-    const view = new VerbumLearningView(navigate, extraData?.categoryId);
+    const view = new VerbumLearningView(navigate, extraData?.categoryId, extraData?.backView);
     appDiv.appendChild(view.render());
+  } else if (viewTarget === 'verbum_menu') {
+    appState.currentView = 'verbum_menu';
+    renderVerbumMenuView(appDiv, navigate);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);
@@ -120,14 +138,47 @@ export function navigate(viewTarget, extraData = {}) {
   } else if (viewTarget === 'modal_force') {
     appState.currentView = 'modal_force';
     renderModalForceView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'adjective_bridge') {
+    appState.currentView = 'adjective_bridge';
+    renderAdjectiveBridgeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'adverb_bridge') {
+    appState.currentView = 'adverb_bridge';
+    renderAdverbBridgeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'conjunction_bridge') {
+    appState.currentView = 'conjunction_bridge';
+    renderConjunctionBridgeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'adjective_comparison') {
+    appState.currentView = 'adjective_comparison';
+    renderAdjectiveComparisonView(appDiv, navigate);
+  }
+}
+
+// Handle routing from hash
+function handleRouting() {
+  const hashPart = window.location.hash.replace(/^#\/?/, '');
+  const [viewTarget, queryString] = hashPart.split('?');
+
+  const extraData = {};
+  if (queryString) {
+    const params = new URLSearchParams(queryString);
+    for (const [key, value] of params.entries()) {
+      extraData[key] = value;
+    }
+  }
+
+  if (viewTarget) {
+    navigate(viewTarget, extraData, true);
+  } else {
+    if (!appState.lang) {
+      navigate('language');
+    } else {
+      navigate('main');
+    }
   }
 }
 
 // Boot up
 document.addEventListener('DOMContentLoaded', () => {
-  if (!appState.lang) {
-    navigate('language');
-  } else {
-    navigate('main');
-  }
+  window.addEventListener('hashchange', handleRouting);
+  handleRouting();
 });

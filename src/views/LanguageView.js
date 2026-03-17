@@ -1,4 +1,5 @@
 import { navigate } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 import { setLanguage, getTranslation } from '../utils/i18n.js';
 
 export function renderLanguageView(container, navigateFn) {
@@ -18,6 +19,7 @@ export function renderLanguageView(container, navigateFn) {
     const languages = [
         { code: 'da', label: 'Dansk' },
         { code: 'en', label: 'English' },
+        { code: 'de', label: 'Deutsch' },
         { code: 'ar', label: 'العربية' },
         { code: 'ur', label: 'اردو' },
         { code: 'zh', label: '中文' },

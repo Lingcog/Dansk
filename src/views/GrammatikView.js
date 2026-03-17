@@ -1,4 +1,5 @@
 import { navigate } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 import { getTranslation } from '../utils/i18n.js';
 
 export function renderGrammatikView(container, navigateFn) {
@@ -157,7 +158,7 @@ export function renderGrammatikView(container, navigateFn) {
                     nextBtn.style.display = 'block';
                     feedbackArea.style.display = 'none';
                 } else {
-                    summaryArea.textContent = `${filled} / ${total} ${getTranslation('filled') || 'udfyldt'}`;
+                    summaryArea.textContent = getTranslation('filledProgress', { n: filled, total: total });
                 }
             }
 

@@ -42,6 +42,16 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('traen_grammatik')
         },
         {
+            icon: '🕰️',
+            titleKey: 'verberDatidRegelm',
+            action: () => navigateFn('verbum_learning', { categoryId: 'datid_regelm' })
+        },
+        {
+            icon: '🕰️',
+            titleKey: 'verberDatid',
+            action: () => navigateFn('verbum_learning', { categoryId: 'datid' })
+        },
+        {
             icon: '🧩',
             titleKey: 'ordstilling',
             descKey: 'ordstillingDesc',

@@ -64,7 +64,7 @@ export function renderMainView(container, navigateFn) {
             icon: '🏃',
             titleKey: 'verbumLearning',
             descKey: 'verbumLearningDesc',
-            action: () => navigateFn('verbum_learning')
+            action: () => navigateFn('verbum_menu')
         }
     ];
 

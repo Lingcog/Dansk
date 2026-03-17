@@ -1,5 +1,7 @@
-import { baseUrl } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 import { getTranslation } from '../utils/i18n.js';
+
+import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
 
 export function renderPronomenView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -61,9 +63,27 @@ export function renderPronomenView(container, navigateFn) {
     `;
     derErCard.onclick = () => startDerErExplanation();
 
+    const adjCompCard = document.createElement('div');
+    adjCompCard.className = 'card';
+    adjCompCard.innerHTML = `
+        <div class="card-icon">📈</div>
+        <div class="card-title">${getTranslation('soedSoedereSoedest')}</div>
+    `;
+    adjCompCard.onclick = () => navigateFn('adjective_comparison');
+
+    const adverbChoiceCard = document.createElement('div');
+    adverbChoiceCard.className = 'card';
+    adverbChoiceCard.innerHTML = `
+        <div class="card-icon">💨</div>
+        <div class="card-title">${getTranslation('advChoiceTitle')}</div>
+    `;
+    adverbChoiceCard.onclick = () => startAdverbChoiceExercise();
+
     grid1.appendChild(pronomenCard);
     grid1.appendChild(verbumCard);
     grid1.appendChild(derErCard);
+    grid1.appendChild(adjCompCard);
+    grid1.appendChild(adverbChoiceCard); // Add the new card
     level1Area.appendChild(grid1);
     menuArea.appendChild(level1Area);
 
@@ -86,9 +106,7 @@ export function renderPronomenView(container, navigateFn) {
             { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'pronominer_objekt.png' },
             { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'pronominer_possessiv.png' }
         ] : [
-            { key: 'verberM3', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
-            { key: 'verberDatid', type: 'datid', icon: '🕰️', img: 'verber_kategorier.png' },
-            { key: 'verberTider', type: 'tider', icon: '🌉', img: 'tider_guide.png' }
+            { key: 'verberM3', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' }
         ];
 
         items.forEach(item => {
@@ -96,9 +114,9 @@ export function renderPronomenView(container, navigateFn) {
             card.className = 'card';
             card.onclick = () => {
                 if (item.type === 'verber_nutid') {
-                    showLevel3();
+                    navigateFn('verbum_menu');
                 } else if (item.key.startsWith('verber')) {
-                    navigateFn('verbum_learning', { categoryId: item.type });
+                    navigateFn('verbum_learning', { categoryId: item.type, backView: 'pronomen' });
                 } else {
                     startExercise(item);
                 }
@@ -342,6 +360,13 @@ export function renderPronomenView(container, navigateFn) {
         renderStep();
     }
 
+    function startAdverbChoiceExercise() {
+        menuArea.style.display = 'none';
+        gameArea.style.display = 'block';
+        gameArea.innerHTML = '';
+        title.textContent = getTranslation('adverbChoice');
+        initAdverbChoiceExerciseView(gameArea);
+    }
 
     // --- Game Area (Pronomen Only) ---
     function startExercise(category) {
@@ -476,10 +501,13 @@ export function renderPronomenView(container, navigateFn) {
                 max-width: 500px;
                 height: auto;
                 border-radius: 20px;
-                margin: 0 auto 2.5rem;
+                margin: 0 auto 2rem;
                 display: block;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.4);
                 border: 2px solid rgba(255, 255, 255, 0.1);
+            }
+            @media (max-width: 600px) {
+                .pronomen-illustration { margin-bottom: 1.5rem; border-radius: 12px; }
             }
             .expl-slide {
                 text-align: center;
@@ -488,25 +516,32 @@ export function renderPronomenView(container, navigateFn) {
             .expl-bubble {
                 background: white;
                 color: #2c3e50;
-                padding: 1rem 1.5rem;
+                padding: 0.8rem 1.2rem;
                 border-radius: 20px;
                 display: inline-block;
                 font-weight: bold;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.2rem;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.1);
                 border: 2px solid #3498db;
+                font-size: 1.1rem;
+            }
+            @media (max-width: 600px) {
+                .expl-bubble { font-size: 1rem; padding: 0.6rem 1rem; }
             }
             .expl-text {
                 font-size: 1.1rem;
-                margin-bottom: 2rem;
+                margin-bottom: 1.5rem;
                 max-width: 400px;
                 margin-left: auto;
                 margin-right: auto;
                 color: #ecf0f1;
             }
+            @media (max-width: 600px) {
+                .expl-text { font-size: 0.95rem; margin-bottom: 1rem; }
+            }
             .exercise-progress {
-                margin-bottom: 1rem;
-                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+                font-size: 0.85rem;
                 opacity: 0.8;
                 text-align: center;
             }

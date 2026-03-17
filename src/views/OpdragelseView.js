@@ -29,7 +29,7 @@ export function renderOpdragelseView(container, navigateFn) {
 
     const cardTitle = document.createElement('div');
     cardTitle.className = 'card-title';
-    cardTitle.textContent = getTranslation('opdragelse') + ' (Padlet)';
+    cardTitle.textContent = getTranslation('opdragelse') + ' (padlet)';
 
     card.appendChild(icon);
     card.appendChild(cardTitle);

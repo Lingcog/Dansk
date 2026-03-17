@@ -29,7 +29,7 @@ export function renderEmailLaanView(container, navigateFn) {
 
     const cardTitle = document.createElement('div');
     cardTitle.className = 'card-title';
-    cardTitle.textContent = getTranslation('emailLaan') + ' (Padlet)';
+    cardTitle.textContent = getTranslation('emailLaan') + ' (padlet)';
 
     card.appendChild(icon);
     card.appendChild(cardTitle);

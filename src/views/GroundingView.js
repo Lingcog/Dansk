@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
-import { baseUrl } from '../main.js';
+import { navigate } from '../main.js';
+import { baseUrl } from '../utils/config.js';
 
 export function renderGroundingView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -68,7 +69,7 @@ export function renderGroundingView(container, navigateFn) {
                 <span class="word-bubble">Barn</span>
                 <span class="arrow">←</span>
                 <select class="grammatik-select" id="noun-select">
-                    <option value="">Vælg anker...</option>
+                    <option value="">${getTranslation('selectAnchor')}</option>
                     <option value="Mit">Mit</option>
                     <option value="Et">Et</option>
                     <option value="Det">Det</option>
@@ -98,10 +99,10 @@ export function renderGroundingView(container, navigateFn) {
                 <span class="word-bubble">At spise</span>
                 <span class="arrow">←</span>
                 <select class="grammatik-select" id="verb-select">
-                    <option value="">Vælg tid...</option>
-                    <option value="spiser">spiser (nu)</option>
-                    <option value="spiste">spiste (i går)</option>
-                    <option value="skal spise">skal spise (senere)</option>
+                    <option value="">${getTranslation('selectTense')}</option>
+                    <option value="spiser">spiser ${getTranslation('tenseNow')}</option>
+                    <option value="spiste">spiste ${getTranslation('tensePast')}</option>
+                    <option value="skal spise">skal spise ${getTranslation('tenseFuture')}</option>
                 </select>
             </div>
             <div class="exercise-feedback" id="step-feedback"></div>
@@ -123,7 +124,7 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.className = 'step-content';
         stepDiv.innerHTML = `
             <h3>${getTranslation('groundingStep3')}</h3>
-            <p>Træk ordene ned på jorden for at bygge din sætning.</p>
+            <p>${getTranslation('dragInstruction')}</p>
             
             <div class="drag-source" id="source">
                 <div class="drag-item" draggable="true" data-word="${state.nounAnchor}">${state.nounAnchor}</div>
@@ -154,6 +155,93 @@ export function renderGroundingView(container, navigateFn) {
             };
             item.ondragend = () => item.classList.remove('dragging');
         });
+
+        // Touch Support
+        let touchDraggedItem = null;
+        let touchOffsetX = 0;
+        let touchOffsetY = 0;
+        let initialSource = null;
+
+        items.forEach(item => {
+            item.ontouchstart = (e) => {
+                touchDraggedItem = item;
+                initialSource = item.parentElement;
+                const touch = e.touches[0];
+                const rect = item.getBoundingClientRect();
+                const containerRect = stepDiv.getBoundingClientRect();
+
+                // Calculate offset within the item
+                touchOffsetX = touch.clientX - rect.left;
+                touchOffsetY = touch.clientY - rect.top;
+
+                item.classList.add('dragging');
+                item.style.position = 'absolute';
+                item.style.zIndex = '2000';
+                item.style.width = rect.width + 'px';
+                item.style.pointerEvents = 'none';
+                item.style.transition = 'none'; // Disable transition during drag
+
+                // Ensure the item is relative to the step container for absolute positioning
+                stepDiv.style.position = 'relative';
+                stepDiv.appendChild(item); // Move to top-level container to avoid clips
+
+                updateTouchPosition(touch.clientX, touch.clientY);
+                e.preventDefault();
+            };
+
+            item.ontouchmove = (e) => {
+                if (!touchDraggedItem) return;
+                const touch = e.touches[0];
+                updateTouchPosition(touch.clientX, touch.clientY);
+                e.preventDefault();
+            };
+
+            item.ontouchend = (e) => {
+                if (!touchDraggedItem) return;
+                const touch = e.changedTouches[0];
+
+                // Reset styles
+                item.classList.remove('dragging');
+                item.style.position = '';
+                item.style.zIndex = '';
+                item.style.width = '';
+                item.style.top = '';
+                item.style.left = '';
+                item.style.pointerEvents = '';
+                item.style.transition = '';
+
+                // Determine drop target
+                const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                const dropZone = target?.closest('.drop-zone') || target?.closest('.drag-source');
+
+                if (dropZone) {
+                    if (dropZone.id === 'ground') {
+                        const afterElement = getDragAfterElement(ground, touch.clientX);
+                        if (afterElement == null) {
+                            ground.appendChild(item);
+                        } else {
+                            ground.insertBefore(item, afterElement);
+                        }
+                    } else {
+                        source.appendChild(item);
+                    }
+                } else {
+                    initialSource.appendChild(item);
+                }
+
+                touchDraggedItem = null;
+                e.preventDefault();
+            };
+        });
+
+        function updateTouchPosition(x, y) {
+            if (touchDraggedItem) {
+                const containerRect = stepDiv.getBoundingClientRect();
+                // Position relative to stepDiv
+                touchDraggedItem.style.left = (x - containerRect.left - touchOffsetX) + 'px';
+                touchDraggedItem.style.top = (y - containerRect.top - touchOffsetY) + 'px';
+            }
+        }
 
         ground.ondragover = (e) => e.preventDefault();
         ground.ondrop = (e) => {
@@ -204,7 +292,7 @@ export function renderGroundingView(container, navigateFn) {
             if (result.toLowerCase() === expected) {
                 // Correct answer! Trigger celebration and timeline
                 // Correct answer! Trigger chain of animations
-                feedback.textContent = 'Flot! Se animationen nedenfor.';
+                feedback.textContent = getTranslation('groundingSuccess');
                 feedback.className = 'exercise-feedback success-text';
                 feedback.style.display = 'block';
                 checkBtn.disabled = true;
@@ -239,7 +327,7 @@ export function renderGroundingView(container, navigateFn) {
         let sceneTitle = '';
 
         if (anchor === 'mit') {
-            sceneTitle = 'Mit barn (Relation)';
+            sceneTitle = getTranslation('groundingRelation');
             sceneHtml = `
                 <div class="focus-scene relation-scene">
                     <svg viewBox="0 0 200 100" class="focus-svg">
@@ -254,7 +342,7 @@ export function renderGroundingView(container, navigateFn) {
                 </div>
             `;
         } else if (anchor === 'et') {
-            sceneTitle = 'Et barn (Ubestemt)';
+            sceneTitle = getTranslation('groundingIndefinite');
             sceneHtml = `
                 <div class="focus-scene indefinite-scene">
                     <svg viewBox="0 0 200 100" class="focus-svg">
@@ -272,7 +360,7 @@ export function renderGroundingView(container, navigateFn) {
                 </div>
             `;
         } else if (anchor === 'det') {
-            sceneTitle = 'Det barn (Udpegning)';
+            sceneTitle = getTranslation('groundingDistal');
             sceneHtml = `
                 <div class="focus-scene distal-scene">
                     <svg viewBox="0 0 200 100" class="focus-svg">
@@ -288,7 +376,7 @@ export function renderGroundingView(container, navigateFn) {
                 </div>
             `;
         } else if (anchor === 'dette') {
-            sceneTitle = 'Dette barn (Nærhed)';
+            sceneTitle = getTranslation('groundingProximal');
             sceneHtml = `
                 <div class="focus-scene proximal-scene">
                     <svg viewBox="0 0 200 100" class="focus-svg">
@@ -338,9 +426,9 @@ export function renderGroundingView(container, navigateFn) {
             <div class="timeline-wrapper">
                 <div class="timeline-line"></div>
                 <div class="timeline-points">
-                    <div class="time-point" data-tense="past">Datid</div>
-                    <div class="time-point" data-tense="present">Nutid</div>
-                    <div class="time-point" data-tense="future">Fremtid</div>
+                    <div class="time-point" data-tense="past">${getTranslation('pastTense')}</div>
+                    <div class="time-point" data-tense="present">${getTranslation('presentTense')}</div>
+                    <div class="time-point" data-tense="future">${getTranslation('futureTense')}</div>
                 </div>
                 <div class="timeline-pointer" id="timeline-pointer">📍</div>
             </div>
@@ -380,36 +468,36 @@ export function renderGroundingView(container, navigateFn) {
         finalContainer.innerHTML = `
             <div class="completion-box">
                 <div class="success-icon">✨</div>
-                <p class="success-msg">Flot! Du har nu bygget en sætning, der er forankret i virkeligheden.</p>
+                <p class="success-msg">${getTranslation('groundingFinalMsg')}</p>
                 <div class="example-box">
-                    <span class="example-label">Sætning:</span>
+                    <span class="example-label">${getTranslation('sentenceLabel')}</span>
                     <span class="example-text">${state.nounAnchor} barn ${state.verbAnchor}.</span>
                 </div>
 
                 <div class="recommendation-box">
-                    <h4>Vil du øve mere?</h4>
-                    <p class="teaser-text">Sætningen er bygget... men hvem har egentlig kontrollen? Findes der en usynlig kraft mellem barnet og maden?</p>
+                    <h4>${getTranslation('modalTeaserTitle')}</h4>
+                    <p class="teaser-text">${getTranslation('modalTeaserText')}</p>
                     <div class="recommendation-grid">
                         <button class="rec-btn spotlight-btn" id="start-modal">
                             <span class="rec-icon">✨</span>
-                            <span class="rec-label">Modalverber (Usynlig kraft)</span>
+                            <span class="rec-label">${getTranslation('modalVerbLabel')}</span>
                         </button>
                         <button class="rec-btn" id="rec-bestemthed">
                             <span class="rec-icon">🏷️</span>
-                            <span class="rec-label">Bestemthed - En / et</span>
+                            <span class="rec-label">${getTranslation('bestemthedLabel')}</span>
                         </button>
                         <button class="rec-btn" id="rec-pronomen">
                             <span class="rec-icon">👤</span>
-                            <span class="rec-label">Pronominer - Han/Ham/Hans</span>
+                            <span class="rec-label">${getTranslation('pronomenLabel')}</span>
                         </button>
                         <button class="rec-btn" id="rec-verber">
                             <span class="rec-icon">⚡</span>
-                            <span class="rec-label">Verber - Går/gik/gået</span>
+                            <span class="rec-label">${getTranslation('verberLabel')}</span>
                         </button>
                     </div>
                 </div>
 
-                <button class="gemini-btn outline-btn" id="finish-btn">Afslut og gå tilbage</button>
+                <button class="gemini-btn outline-btn" id="finish-btn">${getTranslation('finishBtn')}</button>
             </div>
         `;
 
@@ -442,67 +530,88 @@ export function renderGroundingView(container, navigateFn) {
                 box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             }
             .grounding-text {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 text-align: center;
                 max-width: 600px;
-                margin: 0 auto 2rem;
-                line-height: 1.6;
+                margin: 0 auto 1.5rem;
+                line-height: 1.5;
                 opacity: 0.9;
+            }
+            @media (max-width: 600px) {
+                .grounding-text { font-size: 1rem; margin-bottom: 1rem; }
             }
             .step-content {
                 background: rgba(255, 255, 255, 0.05);
-                padding: 2.5rem;
+                padding: 2rem;
                 border-radius: 24px;
                 text-align: center;
                 animation: fadeIn 0.5s ease;
+            }
+            @media (max-width: 600px) {
+                .step-content { padding: 1.2rem; border-radius: 16px; }
             }
             .grounding-interaction {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 1.5rem;
-                margin: 2rem 0;
+                gap: 1.2rem;
+                margin: 1.5rem 0;
+            }
+            @media (max-width: 600px) {
+                .grounding-interaction { gap: 0.8rem; flex-wrap: wrap; }
             }
             .word-bubble {
                 background: var(--bg-deep-red);
-                padding: 1rem 2rem;
+                padding: 0.8rem 1.5rem;
                 border-radius: 50px;
                 font-weight: 700;
-                font-size: 1.5rem;
+                font-size: 1.35rem;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             }
+            @media (max-width: 600px) {
+                .word-bubble { font-size: 1.15rem; padding: 0.6rem 1.2rem; }
+            }
             .arrow {
-                font-size: 2rem;
+                font-size: 1.8rem;
                 opacity: 0.5;
             }
             .drag-source {
                 display: flex;
                 justify-content: center;
-                gap: 1rem;
-                margin: 2rem 0;
-                min-height: 60px;
-                padding: 1rem;
+                gap: 0.8rem;
+                margin: 1.5rem 0;
+                min-height: 50px;
+                padding: 0.8rem;
                 background: rgba(255,255,255,0.03);
                 border-radius: 12px;
+                flex-wrap: wrap;
             }
             .drag-item {
                 background: rgba(255, 255, 255, 0.1);
-                padding: 0.8rem 1.5rem;
+                padding: 0.6rem 1.2rem;
                 border-radius: 12px;
                 cursor: grab;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 border: 1px solid rgba(255,255,255,0.1);
-                transition: transform 0.2s;
+                transition: transform 0.2s, background 0.2s;
+                touch-action: none;
+                user-select: none;
+            }
+            @media (max-width: 600px) {
+                .drag-item { font-size: 1rem; padding: 0.5rem 1rem; }
             }
             .drag-item:active { cursor: grabbing; }
-            .drag-item.dragging { opacity: 0.5; }
+            .drag-item.dragging { 
+                opacity: 0.8; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            }
             
             .drop-zone-container {
-                margin: 3rem 0;
+                margin: 2.5rem 0;
                 position: relative;
             }
             .drop-zone {
-                min-height: 80px;
+                min-height: 70px;
                 background: rgba(0, 0, 0, 0.2);
                 border: 2px dashed rgba(255, 255, 255, 0.2);
                 border-radius: 16px;
@@ -510,24 +619,29 @@ export function renderGroundingView(container, navigateFn) {
                 align-items: center;
                 justify-content: center;
                 gap: 0.5rem;
-                padding: 1rem;
+                padding: 0.8rem;
+                flex-wrap: wrap;
             }
             .ground-label {
                 position: absolute;
-                bottom: -25px;
+                bottom: -22px;
                 left: 0;
                 right: 0;
                 text-align: center;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 opacity: 0.5;
             }
             .final-sentence {
-                font-size: 2rem;
+                font-size: 1.8rem;
                 font-weight: 700;
                 color: var(--text-light);
-                margin: 2rem 0;
+                margin: 1.5rem 0;
+                line-height: 1.3;
+            }
+            @media (max-width: 600px) {
+                .final-sentence { font-size: 1.4rem; }
             }
             @keyframes fadeIn {
                 from { opacity: 0; transform: translateY(10px); }
@@ -536,22 +650,31 @@ export function renderGroundingView(container, navigateFn) {
             .success-text {
                 color: #4CAF50 !important;
                 font-weight: 700;
-                font-size: 1.5rem;
+                font-size: 1.35rem;
+            }
+            @media (max-width: 600px) {
+                .success-text { font-size: 1.2rem; }
             }
             
             /* Timeline Styles */
             .timeline-container {
-                margin-top: 3rem;
-                padding: 2rem;
+                margin-top: 2rem;
+                padding: 1.5rem;
                 background: rgba(255, 255, 255, 0.05);
                 border-radius: 20px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }
+            @media (max-width: 600px) {
+                .timeline-container { padding: 1rem; }
+            }
             .timeline-wrapper {
                 position: relative;
-                padding: 40px 0;
-                width: 80%;
+                padding: 30px 0;
+                width: 90%;
                 margin: 0 auto;
+            }
+            @media (max-width: 600px) {
+                .timeline-wrapper { width: 100%; padding: 25px 5px; }
             }
             .timeline-line {
                 position: absolute;
@@ -577,6 +700,9 @@ export function renderGroundingView(container, navigateFn) {
                 opacity: 0.6;
                 transition: opacity 0.3s;
                 position: relative;
+            }
+            @media (max-width: 600px) {
+                .time-point { font-size: 0.75rem; letter-spacing: 0.5px; }
             }
             .time-point::after {
                 content: '';

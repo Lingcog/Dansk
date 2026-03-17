@@ -147,12 +147,13 @@ export function renderPronomenView(container, navigateFn) {
         grid3.innerHTML = '';
         title.textContent = getTranslation('hanHamHans');
 
-        const sets = pronomenData[categoryType];
+        const sets = [...pronomenData[categoryType]];
         sets.forEach((set, index) => {
             const card = document.createElement('div');
             card.className = 'card';
             card.onclick = () => {
-                currentExercises = set.exercises;
+                // Randomize exercises within the set
+                currentExercises = [...set.exercises].sort(() => Math.random() - 0.5);
                 startExercise({ key: 'pronominer' + categoryType.charAt(0).toUpperCase() + categoryType.slice(1), type: categoryType, img: illustrationImg });
             };
 
@@ -420,9 +421,17 @@ export function renderPronomenView(container, navigateFn) {
         const exerciseList = document.createElement('div');
         exerciseList.className = 'pronomen-list';
 
+        const totalTasks = currentExercises.length;
+        let solvedCount = 0;
+
         currentExercises.forEach((ex, exIdx) => {
             const row = document.createElement('div');
             row.className = 'pronomen-row';
+
+            const personBadge = document.createElement('div');
+            personBadge.className = 'person-badge';
+            personBadge.textContent = ex.person || "";
+            row.appendChild(personBadge);
 
             const textContainer = document.createElement('div');
             textContainer.className = 'grammatik-text-container';
@@ -453,8 +462,52 @@ export function renderPronomenView(container, navigateFn) {
                         select.appendChild(o);
                     });
 
+                    const feedbackRow = document.createElement('div');
+                    feedbackRow.className = 'exercise-feedback-row';
+                    feedbackRow.style.display = 'none';
+
+                    select.onchange = () => {
+                        const val = select.value;
+                        if (val === ex.blanks[idx].answer) {
+                            select.classList.add('correct');
+                            select.classList.remove('wrong');
+                            feedbackRow.style.display = 'none';
+                            if (!select.dataset.solved) {
+                                select.dataset.solved = "true";
+                                solvedCount++;
+                                updateSummary();
+                            }
+                        } else if (val !== "") {
+                            select.classList.add('wrong');
+                            select.classList.remove('correct');
+
+                            let hintKey = 'hintPronominer';
+                            if (category.type === 'subjekt') hintKey = 'hintPronominerSubjekt';
+                            else if (category.type === 'objekt') hintKey = 'hintPronominerObjekt';
+                            else if (category.type === 'possessiv') hintKey = 'hintPronominerPossessiv';
+
+                            feedbackRow.textContent = getTranslation(hintKey);
+                            feedbackRow.style.display = 'block';
+                            if (select.dataset.solved) {
+                                delete select.dataset.solved;
+                                solvedCount--;
+                                updateSummary();
+                            }
+                        } else {
+                            select.classList.remove('correct', 'wrong');
+                            feedbackRow.style.display = 'none';
+                            if (select.dataset.solved) {
+                                delete select.dataset.solved;
+                                solvedCount--;
+                                updateSummary();
+                            }
+                        }
+                    };
+
                     wrapper.appendChild(select);
                     textContainer.appendChild(wrapper);
+                    row.appendChild(textContainer);
+                    row.appendChild(feedbackRow);
                 } else {
                     const span = document.createElement('span');
                     span.textContent = part;
@@ -462,12 +515,6 @@ export function renderPronomenView(container, navigateFn) {
                 }
             });
 
-            const feedbackRow = document.createElement('div');
-            feedbackRow.className = 'exercise-feedback-row';
-            feedbackRow.style.display = 'none';
-
-            row.appendChild(textContainer);
-            row.appendChild(feedbackRow);
             exerciseList.appendChild(row);
         });
 
@@ -475,57 +522,31 @@ export function renderPronomenView(container, navigateFn) {
 
         const resultSummary = document.createElement('div');
         resultSummary.className = 'grammatik-summary';
-        resultSummary.style.display = 'none';
+        resultSummary.style.display = 'block';
         contentWrapper.appendChild(resultSummary);
 
         const controls = document.createElement('div');
         controls.className = 'game-controls';
 
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'gemini-btn';
-        checkBtn.textContent = getTranslation('checkAnswers');
-        checkBtn.onclick = () => {
-            const selects = exerciseList.querySelectorAll('select');
-            let allCorrect = true;
-            let correctCount = 0;
-
-            selects.forEach(s => {
-                const exIdx = s.dataset.exIdx;
-                const blankIdx = s.dataset.blankIdx;
-                const ex = currentExercises[exIdx];
-                const feedbackRow = s.closest('.pronomen-row').querySelector('.exercise-feedback-row');
-
-                if (s.value === ex.blanks[blankIdx].answer) {
-                    s.classList.add('correct');
-                    s.classList.remove('wrong');
-                    feedbackRow.style.display = 'none';
-                    correctCount++;
-                } else {
-                    s.classList.add('wrong');
-                    s.classList.remove('correct');
-                    allCorrect = false;
-
-                    // Specific hint
-                    let hintKey = 'hintPronominer';
-                    if (category.type === 'subjekt') hintKey = 'hintPronominerSubjekt';
-                    else if (category.type === 'objekt') hintKey = 'hintPronominerObjekt';
-                    else if (category.type === 'possessiv') hintKey = 'hintPronominerPossessiv';
-
-                    feedbackRow.textContent = getTranslation(hintKey);
-                    feedbackRow.style.display = 'block';
-                }
-            });
-
-            resultSummary.textContent = `${correctCount} / ${currentExercises.length} ${getTranslation('correct')}`;
-            resultSummary.style.display = 'block';
-
-            if (allCorrect) {
-                checkBtn.textContent = 'Flot klaret! 🎉';
-                checkBtn.disabled = true;
-            }
+        const finishBtn = document.createElement('button');
+        finishBtn.className = 'gemini-btn';
+        finishBtn.textContent = 'Færdig! 🎉';
+        finishBtn.style.display = 'none';
+        finishBtn.onclick = () => {
+            location.reload();
         };
 
-        controls.appendChild(checkBtn);
+        function updateSummary() {
+            resultSummary.textContent = `${solvedCount} / ${totalTasks} ${getTranslation('correct')}`;
+            if (solvedCount === totalTasks) {
+                finishBtn.style.display = 'inline-block';
+            } else {
+                finishBtn.style.display = 'none';
+            }
+        }
+
+        updateSummary();
+        controls.appendChild(finishBtn);
         contentWrapper.appendChild(controls);
         gameArea.appendChild(contentWrapper);
     }
@@ -592,6 +613,17 @@ export function renderPronomenView(container, navigateFn) {
                 0% { transform: scale(1); }
                 50% { transform: scale(1.05); }
                 100% { transform: scale(1); }
+            }
+            .person-badge {
+                display: inline-block;
+                background: rgba(52, 152, 219, 0.2);
+                color: #3498db;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
             .pronomen-list {
                 display: flex;

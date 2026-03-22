@@ -1055,6 +1055,17 @@
                 color: #fff !important;
                 border-radius: 12px !important;
                 padding: 0 1rem !important;
+                transition: all 0.3s ease;
+            }
+            .grammatik-select.correct {
+                background: rgba(76, 175, 80, 0.2) !important;
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+            }
+            .grammatik-select.wrong {
+                background: rgba(244, 67, 54, 0.2) !important;
+                border-color: #f44336 !important;
+                color: #f44336 !important;
             }
             @media (max-width: 600px) {
                 .sentence-content { font-size: 1.4rem; gap: 0.3rem 0.5rem; }

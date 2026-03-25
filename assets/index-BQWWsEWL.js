@@ -150,7 +150,7 @@
                 </p>
  
                 <div class="questions-list">
-                    ${c.map((a,i)=>{const o=a.sentence.split("____"),g=t[i]===null?"rgba(255,255,255,0.1)":t[i]?"#4CAF50":"#F44336";return`
+                    ${c.map((a,i)=>{const o=Array.isArray(a.sentence)?a.sentence:a.sentence.split("____"),g=t[i]===null?"rgba(255,255,255,0.1)":t[i]?"#4CAF50":"#F44336";return`
                             <div class="question-wrapper" style="margin-bottom: 2rem;">
                                 <div class="question-row">
                                     <span>${o[0]}</span>

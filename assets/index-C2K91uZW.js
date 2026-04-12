@@ -1735,12 +1735,12 @@
                     
                     <div class="adjective-interaction">
                         <div class="sentence-preview" id="adj-sentence-preview">
-                            <span class="sentence-part">${e("grounding"+a.nounAnchor+"Prefix")}</span>
+                            <span class="sentence-part">${a.nounAnchor}</span>
                             <select class="grammatik-select adj-select" id="adj-select">
                                 <option value="">???</option>
                                 <!-- Dynamic options inserted here -->
                             </select>
-                            <span class="sentence-part">${e("vocabChild").toLowerCase()} <span id="adj-modal-inherited">${a.selectedModal}</span> ${e("vocabEat")}</span>
+                            <span class="sentence-part">barn <span id="adj-modal-inherited">${a.selectedModal}</span> spise</span>
                         </div>
                     </div>
                 </div>
@@ -1825,7 +1825,7 @@
                     <strong>${a.nounAnchor} ${w} barn...</strong><br>
                     ${e("adjectiveExpl")}
                 </div>
-            `,u.className="force-explanation visible";const z=i.querySelector("#adj-beam"),H=i.querySelector("#adj-target-circle"),N={stor:{beam:"rgba(76, 175, 80, 0.5)",circle:"rgba(76, 175, 80, 0.4)"},træt:{beam:"rgba(100, 149, 237, 0.5)",circle:"rgba(100, 149, 237, 0.4)"},smuk:{beam:"rgba(255, 105, 180, 0.6)",circle:"rgba(255, 105, 180, 0.5)"}}[x]||{beam:"rgba(255, 255, 255, 0.4)",circle:"rgba(255, 255, 255, 0.2)"};z.style.fill=N.beam,H.style.fill=N.circle,H.setAttribute("r","40"),setTimeout(()=>H.setAttribute("r","35"),500)},k.onclick=()=>o("dagens_opgave");const C=i.querySelector("#adj-comp-link");C.onclick=j=>{j.preventDefault(),o("adjective_comparison")};const p=i.querySelector("#next-adverb-btn");p.onclick=()=>{o("adverb_bridge",{...a,selectedNoun:"barn",selectedVerb:e("vocabEat")})},y.onclick=()=>{const j=i.querySelector("#agreement-section");j.style.display="block",c(),y.style.display="none",setTimeout(()=>{j.scrollIntoView({behavior:"smooth",block:"start"})},50)}}function c(){const s=i.querySelector("#magnet-waves-svg"),d=i.querySelector("#magnet-noun-display"),u=i.querySelector("#adj-suffix"),k=i.querySelector(".stem"),y=i.querySelectorAll(".toggle-btn");let m="barn",v="ubestemt";function f(){const p=v==="bestemt"?"#4caf50":"rgba(255,255,255,0.5)",j=v==="bestemt"?"1.0":"0.4",x=v==="bestemt"?"4":"2";s.innerHTML=`
+            `,u.className="force-explanation visible";const z=i.querySelector("#adj-beam"),H=i.querySelector("#adj-target-circle"),N={stor:{beam:"rgba(76, 175, 80, 0.5)",circle:"rgba(76, 175, 80, 0.4)"},træt:{beam:"rgba(100, 149, 237, 0.5)",circle:"rgba(100, 149, 237, 0.4)"},smuk:{beam:"rgba(255, 105, 180, 0.6)",circle:"rgba(255, 105, 180, 0.5)"}}[x]||{beam:"rgba(255, 255, 255, 0.4)",circle:"rgba(255, 255, 255, 0.2)"};z.style.fill=N.beam,H.style.fill=N.circle,H.setAttribute("r","40"),setTimeout(()=>H.setAttribute("r","35"),500)},k.onclick=()=>o("dagens_opgave");const C=i.querySelector("#adj-comp-link");C.onclick=j=>{j.preventDefault(),o("adjective_comparison")};const p=i.querySelector("#next-adverb-btn");p.onclick=()=>{o("adverb_bridge",{...a,selectedNoun:"barn",selectedVerb:"spise"})},y.onclick=()=>{const j=i.querySelector("#agreement-section");j.style.display="block",c(),y.style.display="none",setTimeout(()=>{j.scrollIntoView({behavior:"smooth",block:"start"})},50)}}function c(){const s=i.querySelector("#magnet-waves-svg"),d=i.querySelector("#magnet-noun-display"),u=i.querySelector("#adj-suffix"),k=i.querySelector(".stem"),y=i.querySelectorAll(".toggle-btn");let m="barn",v="ubestemt";function f(){const p=v==="bestemt"?"#4caf50":"rgba(255,255,255,0.5)",j=v==="bestemt"?"1.0":"0.4",x=v==="bestemt"?"4":"2";s.innerHTML=`
                 <svg viewBox="0 0 200 60" style="width: 100%; height: 60px;">
                     <path d="M 180 10 Q 100 10 20 10" fill="none" stroke="${p}" stroke-width="${x}" opacity="${j}" stroke-dasharray="10,5">
                         <animate attributeName="stroke-dashoffset" from="0" to="15" dur="1s" repeatCount="infinite" />
@@ -1837,7 +1837,7 @@
                         <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="1.2s" repeatCount="infinite" />
                     </path>
                 </svg>
-            `}function C(){m==="barn"?(d.textContent=e("exampleBarn").split(" ")[0],k.textContent="stor",v==="bestemt"?(u.textContent="e",u.classList.add("active")):(u.textContent="t",u.classList.add("active"))):(d.textContent=e("exampleBil").split(" ")[0],k.textContent="hurtig",v==="bestemt"?(u.textContent="e",u.classList.add("active")):(u.textContent="",u.classList.remove("active"))),f()}y.forEach(p=>{p.onclick=()=>{p.parentElement.querySelectorAll(".toggle-btn").forEach(x=>x.classList.remove("active")),p.classList.add("active"),p.dataset.type&&(v=p.dataset.type),p.dataset.word&&(m=p.dataset.word),C()}}),C()}if(r(),!document.getElementById("adj-bridge-styles")){const s=document.createElement("style");s.id="adj-bridge-styles",s.textContent=`
+            `}function C(){m==="barn"?(d.textContent="Barn",k.textContent="stor",v==="bestemt"?(u.textContent="e",u.classList.add("active")):(u.textContent="t",u.classList.add("active"))):(d.textContent="Bil",k.textContent="hurtig",v==="bestemt"?(u.textContent="e",u.classList.add("active")):(u.textContent="",u.classList.remove("active"))),f()}y.forEach(p=>{p.onclick=()=>{p.parentElement.querySelectorAll(".toggle-btn").forEach(x=>x.classList.remove("active")),p.classList.add("active"),p.dataset.type&&(v=p.dataset.type),p.dataset.word&&(m=p.dataset.word),C()}}),C()}if(r(),!document.getElementById("adj-bridge-styles")){const s=document.createElement("style");s.id="adj-bridge-styles",s.textContent=`
             .adjective-bridge-view .adjective-visual {
                 display: flex;
                 align-items: center;
@@ -2163,9 +2163,9 @@
                 </div>
 
                 <div class="sentence-display">
-                    <span class="noun-anchor">${e("grounding"+t.nounAnchor+"Prefix")}</span>
+                    <span class="noun-anchor">${t.nounAnchor}</span>
                     <span class="adjective-part" id="sentence-adj">${t.adjectivePart}</span>
-                    <span class="noun-part">${e("vocabChild").toLowerCase()}</span>
+                    <span class="noun-part">barn</span>
                     <span class="verb-part" id="verb-display">${t.selectedModal?t.selectedModal+" "+t.selectedVerb:t.selectedVerb}</span>
                     <div class="adverb-drop-zone">
                         <select id="adverb-select" class="grammatik-select premium-select">
@@ -2427,9 +2427,9 @@
 
                 <div class="full-sentence-display">
                     <div class="sentence-part-1">
-                        <span class="noun-anchor">${e("grounding"+t.nounAnchor+"Prefix")}</span>
+                        <span class="noun-anchor">${t.nounAnchor}</span>
                         <span class="adjective-part">${t.adjectivePart}</span>
-                        <span class="noun-part">${e("vocabChild").toLowerCase()}</span>
+                        <span class="noun-part">barn</span>
                         <span class="verb-part">${t.selectedModal?t.selectedModal+" "+t.selectedVerb:t.selectedVerb}</span>
                         <span class="adverb-part">${t.selectedAdverb}</span>
                     </div>

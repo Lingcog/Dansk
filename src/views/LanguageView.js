@@ -30,13 +30,28 @@ export function renderLanguageView(container, navigateFn) {
         { code: 'vi', label: 'Tiếng Việt' },
         { code: 'fa', label: 'فارسی' },
         { code: 'tr', label: 'Türkçe' },
-        { code: 'es', label: 'Español' }
+        { code: 'es', label: 'Español' },
+        { code: 'uk', label: 'Українська', icon: 'ukraine.png' },
+        { code: 'ku', label: 'Kurdî', icon: 'kurdistan.png' },
+        { code: 'ps', label: 'پښتو', icon: 'afghanistan.png' }
     ];
 
     languages.forEach(l => {
         const btn = document.createElement('button');
         btn.className = 'lang-btn';
-        btn.textContent = l.label;
+
+        if (l.icon) {
+            const img = document.createElement('img');
+            img.src = `${baseUrl}images/flags/${l.icon}`;
+            img.className = 'lang-icon';
+            img.alt = l.label;
+            btn.appendChild(img);
+        }
+
+        const span = document.createElement('span');
+        span.textContent = l.label;
+        btn.appendChild(span);
+
         btn.onclick = () => {
             setLanguage(l.code);
             navigateFn('main');

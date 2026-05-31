@@ -1,12 +1,18 @@
 import { translations } from './translations.js';
+export { translations };
 
 export const appState = {
-    lang: localStorage.getItem('appLang') || null,
+    lang: null,
     currentView: 'language',
 };
 
 export function getLang() {
-    return appState.lang || 'da';
+    // Priority: 1. URL hash (#/en/...) 2. localStorage 3. Default (da)
+    const hashSegments = window.location.hash.split('/');
+    if (hashSegments.length > 1 && translations[hashSegments[1]]) {
+        return hashSegments[1];
+    }
+    return appState.lang || localStorage.getItem('appLang') || 'da';
 }
 
 export function getTranslation(key, params = {}) {

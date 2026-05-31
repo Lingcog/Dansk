@@ -25,7 +25,6 @@ export function renderLavSporgsmalView(container, navigateFn) {
     // Image section
     const imageContainer = document.createElement('div');
     imageContainer.className = 'thematic-image-container';
-    imageContainer.style.margin = '2rem auto';
 
     const img = document.createElement('img');
     img.src = `${baseUrl}questions.png`;

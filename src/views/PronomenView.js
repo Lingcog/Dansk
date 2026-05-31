@@ -3,10 +3,14 @@ import { getTranslation } from '../utils/i18n.js';
 import { pronomenData } from '../utils/pronomenData.js';
 
 import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
+import { initConjunctionChoiceExerciseView } from './ConjunctionChoiceExerciseView.js';
 
-export function renderPronomenView(container, navigateFn) {
+export function renderPronomenView(container, navigateFn, extraData) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
+
+    // handle initial deep linking if coming from grounding or elsewhere
+    const initialCategory = extraData?.category || null;
 
     // Top bar
     const topBar = document.createElement('div');
@@ -16,6 +20,16 @@ export function renderPronomenView(container, navigateFn) {
     backBtn.innerHTML = `← ${getTranslation('back')}`;
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    function renderStep() {
+        currentLevel = 1;
+        level1Area.style.display = 'block';
+        level2Area.style.display = 'none';
+        level3Area.style.display = 'none';
+        gameArea.style.display = 'none';
+        menuArea.style.display = 'block';
+        title.textContent = getTranslation('hvilketOrd');
+    }
 
     const title = document.createElement('h1');
     title.textContent = getTranslation('hvilketOrd');
@@ -48,7 +62,7 @@ export function renderPronomenView(container, navigateFn) {
         <div class="card-icon">👥</div>
         <div class="card-title">${getTranslation('hanHamHans')}</div>
     `;
-    pronomenCard.onclick = () => showLevel2('pronomen');
+    pronomenCard.onclick = () => navigateFn('pronomen', { subPath: 'p' });
 
     const verbumCard = document.createElement('div');
     verbumCard.className = 'card';
@@ -56,7 +70,7 @@ export function renderPronomenView(container, navigateFn) {
         <div class="card-icon">🏃</div>
         <div class="card-title">${getTranslation('gårGikGået')}</div>
     `;
-    verbumCard.onclick = () => showLevel2('verbum');
+    verbumCard.onclick = () => navigateFn('pronomen', { subPath: 'v' });
 
     const derErCard = document.createElement('div');
     derErCard.className = 'card';
@@ -64,7 +78,7 @@ export function renderPronomenView(container, navigateFn) {
         <div class="card-icon">🚪</div>
         <div class="card-title">${getTranslation('derErDetEr')}</div>
     `;
-    derErCard.onclick = () => startDerErExplanation();
+    derErCard.onclick = () => navigateFn('pronomen', { subPath: 'der_er_det_er' });
 
     const adjCompCard = document.createElement('div');
     adjCompCard.className = 'card';
@@ -72,7 +86,7 @@ export function renderPronomenView(container, navigateFn) {
         <div class="card-icon">📈</div>
         <div class="card-title">${getTranslation('soedSoedereSoedest')}</div>
     `;
-    adjCompCard.onclick = () => navigateFn('adjective_comparison');
+    adjCompCard.onclick = () => navigateFn('pronomen', { subPath: 'adjektiv_comparison' });
 
     const adverbChoiceCard = document.createElement('div');
     adverbChoiceCard.className = 'card';
@@ -80,14 +94,63 @@ export function renderPronomenView(container, navigateFn) {
         <div class="card-icon">💨</div>
         <div class="card-title">${getTranslation('advChoiceTitle')}</div>
     `;
-    adverbChoiceCard.onclick = () => startAdverbChoiceExercise();
+    adverbChoiceCard.onclick = () => navigateFn('adverbier');
+
+    const conjunctionChoiceCard = document.createElement('div');
+    conjunctionChoiceCard.className = 'card';
+    conjunctionChoiceCard.innerHTML = `
+        <div class="card-icon">🔗</div>
+        <div class="card-title">${getTranslation('conjunctionChoiceTitle')}</div>
+    `;
+    conjunctionChoiceCard.onclick = () => navigateFn('konjunktioner');
+
+    const bestemthedCard = document.createElement('div');
+    bestemthedCard.className = 'card';
+    bestemthedCard.innerHTML = `
+        <div class="card-icon">🏷️</div>
+        <div class="card-title">${getTranslation('bestemthedLabel')}</div>
+    `;
+    bestemthedCard.onclick = () => navigateFn('bestemthed');
 
     grid1.appendChild(pronomenCard);
     grid1.appendChild(verbumCard);
     grid1.appendChild(derErCard);
     grid1.appendChild(adjCompCard);
-    grid1.appendChild(adverbChoiceCard); // Add the new card
+    grid1.appendChild(adverbChoiceCard);
+    grid1.appendChild(conjunctionChoiceCard);
+    grid1.appendChild(bestemthedCard);
     level1Area.appendChild(grid1);
+
+    // --- Support Links ---
+    const supportArea = document.createElement('div');
+    supportArea.className = 'support-links';
+    supportArea.style.display = 'flex';
+    supportArea.style.justifyContent = 'center';
+    supportArea.style.flexWrap = 'wrap';
+    supportArea.style.gap = '1rem';
+    supportArea.style.marginTop = '3rem';
+    supportArea.style.paddingBottom = '2rem';
+
+    const kofiLink = document.createElement('a');
+    kofiLink.href = 'https://ko-fi.com/dansktraening';
+    kofiLink.target = '_blank';
+    kofiLink.className = 'gemini-btn';
+    kofiLink.style.textDecoration = 'none';
+    kofiLink.style.backgroundColor = '#ff5e5b';
+    kofiLink.textContent = '☕ Buy me a coffee';
+
+    const mpLink = document.createElement('a');
+    mpLink.href = 'https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in';
+    mpLink.target = '_blank';
+    mpLink.className = 'gemini-btn';
+    mpLink.style.textDecoration = 'none';
+    mpLink.style.backgroundColor = '#5a78ff';
+    mpLink.textContent = '📱 Støt med MobilePay';
+
+    supportArea.appendChild(kofiLink);
+    supportArea.appendChild(mpLink);
+    level1Area.appendChild(supportArea);
+
     menuArea.appendChild(level1Area);
 
     // --- Level 2: Sub-categories ---
@@ -102,27 +165,40 @@ export function renderPronomenView(container, navigateFn) {
         level1Area.style.display = 'none';
         level2Area.style.display = 'block';
         level3Area.style.display = 'none';
+        gameArea.style.display = 'none';
+        menuArea.style.display = 'block';
         grid2.innerHTML = '';
 
         const items = category === 'pronomen' ? [
             { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', img: 'pronominer_spotlight.png' },
             { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'pronominer_objekt.png' },
-            { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'pronominer_possessiv.png' }
+            { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'pronominer_possessiv.png' },
+            { key: 'pronominerRefleksiv', type: 'refleksiv', icon: '🔄', img: 'pronominer_refleksiv.png' }
         ] : [
-            { key: 'verberM3', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' }
+            { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
+            { key: 'verberDatidRegelm', type: 'datid_regelm', icon: '🕰️', img: 'verber_kategorier.png' },
+            { key: 'verberDatid', type: 'datid', icon: '🕰️', img: 'verber_kategorier.png' },
+            { key: 'verberTider', type: 'tider', icon: '🌉', img: 'verber_kategorier.png' }
         ];
 
         items.forEach(item => {
             const card = document.createElement('div');
             card.className = 'card';
             card.onclick = () => {
-                if (item.type === 'verber_nutid') {
-                    navigateFn('verbum_menu');
-                } else if (item.key.startsWith('verber')) {
-                    navigateFn('verbum_learning', { categoryId: item.type, backView: 'pronomen' });
+                if (category === 'pronomen') {
+                    const routeMap = {
+                        subjekt: 'pronominer_subjekt',
+                        objekt: 'pronominer_objekt',
+                        possessiv: 'pronominer_possessiv',
+                        refleksiv: 'pronominer_refleksiv'
+                    };
+                    navigateFn(routeMap[item.type] || 'pronomen');
                 } else {
-                    currentSubCategory = item.type;
-                    showPronomenSets(item.type, item.img);
+                    if (item.type === 'verber_nutid') {
+                        navigateFn('verbum_menu');
+                    } else {
+                        navigateFn('verbum_learning', { subPath: item.type, backView: 'pronomen' });
+                    }
                 }
             };
 
@@ -142,19 +218,28 @@ export function renderPronomenView(container, navigateFn) {
 
     function showPronomenSets(categoryType, illustrationImg) {
         currentLevel = 3;
+        level1Area.style.display = 'none';
         level2Area.style.display = 'none';
         level3Area.style.display = 'block';
+        gameArea.style.display = 'none';
+        menuArea.style.display = 'block';
         grid3.innerHTML = '';
+        illustrationContainer.innerHTML = '';
         title.textContent = getTranslation('hanHamHans');
+
+        if (illustrationImg) {
+            const illustration = document.createElement('img');
+            illustration.src = baseUrl + illustrationImg;
+            illustration.className = 'pronomen-illustration';
+            illustrationContainer.appendChild(illustration);
+        }
 
         const sets = [...pronomenData[categoryType]];
         sets.forEach((set, index) => {
             const card = document.createElement('div');
             card.className = 'card';
             card.onclick = () => {
-                // Randomize exercises within the set
-                currentExercises = [...set.exercises].sort(() => Math.random() - 0.5);
-                startExercise({ key: 'pronominer' + categoryType.charAt(0).toUpperCase() + categoryType.slice(1), type: categoryType, img: illustrationImg });
+                navigateFn('pronomen', { subPath: `p/${categoryType}/${set.id}` });
             };
 
             const icon = document.createElement('div');
@@ -172,6 +257,11 @@ export function renderPronomenView(container, navigateFn) {
     }
 
     // --- Level 3: Verb Groups (Nutid) ---
+    const illustrationContainer = document.createElement('div');
+    illustrationContainer.className = 'pronomen-illustration-container';
+    illustrationContainer.style.textAlign = 'center';
+    level3Area.appendChild(illustrationContainer);
+
     const grid3 = document.createElement('div');
     grid3.className = 'grid';
     level3Area.appendChild(grid3);
@@ -179,9 +269,13 @@ export function renderPronomenView(container, navigateFn) {
 
     function showLevel3() {
         currentLevel = 3;
+        level1Area.style.display = 'none';
         level2Area.style.display = 'none';
         level3Area.style.display = 'block';
+        gameArea.style.display = 'none';
+        menuArea.style.display = 'block';
         grid3.innerHTML = '';
+        illustrationContainer.innerHTML = '';
 
         const verbGroups = [
             { key: 'verberHjaelpe', type: 'hjaelpe', icon: '💡' },
@@ -195,7 +289,7 @@ export function renderPronomenView(container, navigateFn) {
         verbGroups.forEach(group => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.onclick = () => navigateFn('verbum_learning', { categoryId: group.type });
+            card.onclick = () => navigateFn('verbum_learning', { subPath: group.type, backView: 'pronomen' });
 
             const icon = document.createElement('div');
             icon.className = 'card-icon';
@@ -213,34 +307,22 @@ export function renderPronomenView(container, navigateFn) {
 
     // --- Back Button Logic ---
     backBtn.onclick = () => {
-        if (gameArea.style.display === 'block') {
-            gameArea.style.display = 'none';
-            menuArea.style.display = 'block';
-            if (currentLevel === 3) {
-                level3Area.style.display = 'block';
-                level2Area.style.display = 'none';
+        if (currentLevel === 3) {
+            // Check if we have a specific viewMode from props
+            if (extraData?.viewMode) {
+                navigateFn('pronomen');
             } else {
-                level2Area.style.display = 'block';
-                level3Area.style.display = 'none';
+                navigateFn('pronomen', { subPath: currentMainCategory === 'pronomen' ? 'p' : 'v' });
             }
-            title.textContent = getTranslation('hvilketOrd');
-        } else if (level3Area.style.display === 'block') {
-            level3Area.style.display = 'none';
-            level2Area.style.display = 'block';
-            currentLevel = 2;
-            title.textContent = getTranslation('hvilketOrd');
-        } else if (level2Area.style.display === 'block') {
-            level2Area.style.display = 'none';
-            level1Area.style.display = 'block';
-            currentLevel = 1;
-            currentMainCategory = null;
-            title.textContent = getTranslation('hvilketOrd');
+        } else if (currentLevel === 2) {
+            navigateFn('pronomen');
         } else {
             navigateFn('dagens_opgave');
         }
     };
 
     function startDerErExplanation() {
+        currentLevel = 2; // Treat as level 2 so back goes to Level 1 (pronomen menu)
         menuArea.style.display = 'none';
         gameArea.style.display = 'block';
         gameArea.innerHTML = '';
@@ -287,11 +369,111 @@ export function renderPronomenView(container, navigateFn) {
     function startDerErExercise() {
         gameArea.innerHTML = '';
         const exerciseData = [
-            { text: "Se! [blank_0] en hund i haven.", answer: "Der er", options: ["Der er", "Det er"] },
-            { text: "[blank_0] en stor hund. Se den!", answer: "Det er", options: ["Der er", "Det er"] },
-            { text: "Hvem banker på døren? [blank_0] nok min mor.", answer: "Det er", options: ["Der er", "Det er"] },
-            { text: "[blank_0] mange mennesker i toget i dag.", answer: "Der er", options: ["Der er", "Det er"] },
-            { text: "[blank_0] en dejlig kop kaffe, du har her.", answer: "Det er", options: ["Der er", "Det er"] }
+            {
+                text: "Se! [blank_0] en rød hund ude i haven.",
+                answer: "Der er",
+                options: ["Der er", "Det er"],
+                hints: { "Det er": "'Det er' peger på noget bestemt, vi kender. Her introducerer vi en ny hund." },
+                feedback: "Korrekt! 'Der er' bruges, når vi præsenterer eksistensen af noget nyt."
+            },
+            {
+                text: "Hvad er det for en lyd? [blank_0] bare naboens kat.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Vi skal identificere lyden (faktum). 'Der er' introducerer oftest nye ting på et sted." },
+                feedback: "Korrekt! 'Det er' forklarer og identificerer tingen (katten)."
+            },
+            {
+                text: "Hvem banker på døren? [blank_0] nok min mor.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Når man spørger 'hvem er', svarer man med identiteten ('Det er')." },
+                feedback: "Korrekt! Vi identificerer en bestemt person."
+            },
+            {
+                text: "[blank_0] mange spændende mennesker i toget i dag.",
+                answer: "Der er",
+                options: ["Der er", "Det er"],
+                hints: { "Det er": "Ordet mangler flertal, og vi præsenterer blot at noget befinder sig i toget." },
+                feedback: "Korrekt! 'Der er' beskriver antallet af noget på et sted."
+            },
+            {
+                text: "[blank_0] en dejlig kop kaffe, du har lavet her.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Vi ved allerede at koppen findes foran dig. Nu vurdere vi den." },
+                feedback: "Korrekt! 'Det er' bruges til at bedømme og pege på den specifikke kaffe."
+            },
+            {
+                text: "Hvad ligger der på bordet? [blank_0] min danske bog.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Spørgsmålet lyder 'hvad er det?'. Så svarer man for at pege på identiteten." },
+                feedback: "Korrekt! Identifikation af bogen."
+            },
+            {
+                text: "Åh nej, [blank_0] slet ingen mælk i vores køleskab.",
+                answer: "Der er",
+                options: ["Der er", "Det er"],
+                hints: { "Det er": "Vi peger ikke på noget. Vi snakker om, at noget mangler (eksistens)." },
+                feedback: "Korrekt! Eksistens (eller manglen på samme) tager altid 'Der er'."
+            },
+            {
+                text: "Hvem var det i telefonen? [blank_0] min gode chef.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Du skal fortælle identiteten på personen. Det gør man ikke med 'Der er'." },
+                feedback: "Korrekt! 'Det er' fortæller hvem det var."
+            },
+            {
+                text: "[blank_0] sikkert et spøgelse oppe i det gamle hus.",
+                answer: "Der er",
+                options: ["Der er", "Det er"],
+                hints: { "Det er": "Vi har ikke set et specifikt spøgelse. Vi gætter på, at et findes der." },
+                feedback: "Korrekt! 'Der er' markerer at noget befinder sig et bestemt sted."
+            },
+            {
+                text: "Er det din taske? Ja, [blank_0] min taske.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Kan kun være forkert her, for du svarer direkte på 'Er det...'." },
+                feedback: "Korrekt! Du bekræfter, hvilken taske vi taler om."
+            },
+            {
+                text: "Se skyerne! [blank_0] snart voldsomt regnvejr.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Når man taler om vejret, bruger vi oftest 'Det er' (det et koldt, det er regnvejr)." },
+                feedback: "Korrekt! Vejr og naturfænomener tager næsten altid 'Det er'."
+            },
+            {
+                text: "Pas på, [blank_0] en sur hund under din bil.",
+                answer: "Der er",
+                options: ["Der er", "Det er"],
+                hints: { "Det er": "Hunden introduceres for allerførste gang som en fare under bilen." },
+                feedback: "Korrekt! Noget uspecificeret findes på et sted ('Der er')."
+            },
+            {
+                text: "Hvem bankede? [blank_0] bare postbuddet med en pakke.",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Vi skal oplyse postbuddets identitet, så 'Der er' fungerer ikke." },
+                feedback: "Korrekt! 'Det er' identificerer."
+            },
+            {
+                text: "[blank_0] meget koldt herinde, kan du lukke vinduet?",
+                answer: "Det er",
+                options: ["Der er", "Det er"],
+                hints: { "Der er": "Vi taler om klima/temperatur. Temperaturen er ikke en fysisk ting." },
+                feedback: "Korrekt! 'Det er' bruges fast om vejr, tid og temperatur."
+            },
+            {
+                text: "På lørdag [blank_0] stor fodboldfest nede i byen.",
+                answer: "er der",
+                options: ["er der", "er det"],
+                hints: { "er det": "Festen findes sted/eksisterer lørdag, vi peger ikke på én fast genstand." },
+                feedback: "Korrekt! 'Der er' (omvendt til 'er der') markerer begivenhedens eksistens."
+            }
         ];
 
         let currentIdx = 0;
@@ -341,12 +523,20 @@ export function renderPronomenView(container, navigateFn) {
                         if (select.value === ex.answer) {
                             select.classList.add('correct');
                             select.classList.remove('wrong');
-                            feedbackArea.style.display = 'none';
+
+                            const feedbText = getTranslation(`derEr_ex${currentIdx}_feedback`) || ex.feedback;
+                            feedbackArea.innerHTML = `<span style="color: #4ade80;">✓</span> ${feedbText}`;
+
+                            feedbackArea.style.display = 'block';
                             checkBtn.disabled = false;
                         } else if (select.value !== "") {
                             select.classList.add('wrong');
                             select.classList.remove('correct');
-                            feedbackArea.textContent = getTranslation('hintDerDet');
+
+                            const safeOpt = select.value.replace(/[^a-zA-ZæøåÆØÅ]/g, '');
+                            const hintText = getTranslation(`derEr_ex${currentIdx}_hint_${safeOpt}`) || ex.hints[select.value] || "Prøv igen!";
+                            feedbackArea.innerHTML = `<span style="color: #e74c3c;">✗</span> ${hintText}`;
+
                             feedbackArea.style.display = 'block';
                             checkBtn.disabled = true;
                         } else {
@@ -396,11 +586,21 @@ export function renderPronomenView(container, navigateFn) {
     }
 
     function startAdverbChoiceExercise() {
+        currentLevel = 2;
         menuArea.style.display = 'none';
         gameArea.style.display = 'block';
         gameArea.innerHTML = '';
-        title.textContent = getTranslation('adverbChoice');
-        initAdverbChoiceExerciseView(gameArea);
+        title.textContent = getTranslation('advChoiceTitle');
+        initAdverbChoiceExerciseView(gameArea, navigateFn);
+    }
+
+    function startConjunctionChoiceExercise() {
+        currentLevel = 2;
+        menuArea.style.display = 'none';
+        gameArea.style.display = 'block';
+        gameArea.innerHTML = '';
+        title.textContent = getTranslation('conjunctionChoiceTitle');
+        initConjunctionChoiceExerciseView(gameArea, navigateFn);
     }
 
     // --- Game Area (Pronomen Only) ---
@@ -411,7 +611,7 @@ export function renderPronomenView(container, navigateFn) {
         title.textContent = getTranslation(category.key);
 
         const illustration = document.createElement('img');
-        illustration.src = baseUrl + category.img;
+        illustration.src = baseUrl + 'pronominer_guide.png';
         illustration.className = 'pronomen-illustration';
         gameArea.appendChild(illustration);
 
@@ -485,8 +685,10 @@ export function renderPronomenView(container, navigateFn) {
                             if (category.type === 'subjekt') hintKey = 'hintPronominerSubjekt';
                             else if (category.type === 'objekt') hintKey = 'hintPronominerObjekt';
                             else if (category.type === 'possessiv') hintKey = 'hintPronominerPossessiv';
+                            else if (category.type === 'refleksiv') hintKey = 'hintPronominerRefleksiv';
 
-                            feedbackRow.textContent = getTranslation(hintKey);
+                            const personInfo = ex.person ? ` (${ex.person})` : "";
+                            feedbackRow.textContent = getTranslation(hintKey) + personInfo;
                             feedbackRow.style.display = 'block';
                             if (select.dataset.solved) {
                                 delete select.dataset.solved;
@@ -561,9 +763,11 @@ export function renderPronomenView(container, navigateFn) {
         styles.id = 'pronomen-styles';
         styles.textContent = `
             .pronomen-illustration {
-                width: 100%;
-                max-width: 500px;
+                max-width: 100%;
+                width: auto;
                 height: auto;
+                max-height: 250px;
+                object-fit: contain;
                 border-radius: 20px;
                 margin: 0 auto 2rem;
                 display: block;
@@ -643,7 +847,75 @@ export function renderPronomenView(container, navigateFn) {
                 font-size: 0.9rem;
                 font-style: italic;
             }
+            .pronomen-illustration-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 2rem;
+                width: 100%;
+            }
+            .pronomen-illustration {
+                max-width: 100%;
+                max-height: 250px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
         `;
         document.head.appendChild(styles);
+    }
+
+    // --- Initial Routing & Segment Support ---
+    // Routing logic based on viewMode or subPath
+    const viewMode = extraData?.viewMode;
+    const subPath = extraData?.subPath || '';
+    const initialCategoryFromExtra = extraData?.category || initialCategory;
+
+    if (viewMode === 'subjekt') {
+        showPronomenSets('subjekt', 'pronominer_spotlight.png');
+    } else if (viewMode === 'objekt') {
+        showPronomenSets('objekt', 'pronominer_objekt.png');
+    } else if (viewMode === 'possessiv') {
+        showPronomenSets('possessiv', 'pronominer_possessiv.png');
+    } else if (viewMode === 'refleksiv') {
+        showPronomenSets('refleksiv', 'pronominer_refleksiv.png');
+    } else if (viewMode === 'adverbier') {
+        startAdverbChoiceExercise();
+    } else if (viewMode === 'konjunktioner') {
+        startConjunctionChoiceExercise();
+    } else if (viewMode === 'der_er_det_er') {
+        startDerErExplanation();
+    } else if (subPath === 'v' || subPath.startsWith('v/')) {
+        const parts = subPath.split('/');
+        if (parts.length > 1) {
+            const type = parts[1];
+            if (type === 'verber_nutid') {
+                navigateFn('verbum_menu', {}, true);
+            } else {
+                navigateFn('verbum_learning', { subPath: type, backView: 'pronomen' }, true);
+            }
+        } else {
+            showLevel2('verbum');
+        }
+    } else if (subPath === 'p' || subPath.startsWith('p/')) {
+        const parts = subPath.split('/');
+        if (parts.length > 2) {
+            const type = parts[1];
+            const setId = parts[2];
+            currentMainCategory = 'pronomen';
+            const set = pronomenData[type]?.find(s => s.id === setId);
+            if (set) {
+                currentExercises = set.exercises;
+                // e.g. type 'subjekt' -> key 'pronominerSubjekt'
+                const catKey = 'pronominer' + type.charAt(0).toUpperCase() + type.slice(1);
+                startExercise({ key: catKey, type: type });
+            } else {
+                showPronomenSets(type);
+            }
+        } else if (parts.length > 1) {
+            showPronomenSets(parts[1]);
+        } else {
+            showLevel2('pronomen');
+        }
+    } else {
+        renderStep();
     }
 }

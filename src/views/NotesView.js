@@ -21,35 +21,19 @@ export function renderNotesView(container, navigateFn) {
     subtitle.className = 'subtitle';
     subtitle.textContent = getTranslation('notesDesc');
 
-    const checkModuleAccess = (moduleId, targetNavigate, correctCode) => {
-        const savedCode = localStorage.getItem(`access_${moduleId}`);
-        if (savedCode === correctCode) {
-            navigateFn(targetNavigate);
-            return;
-        }
-
-        const input = prompt(getTranslation('enterPassword'));
-        if (input === correctCode) {
-            localStorage.setItem(`access_${moduleId}`, correctCode);
-            navigateFn(targetNavigate);
-        } else if (input !== null) {
-            alert('Forkert adgangskode / Incorrect password');
-        }
-    };
-
     // Cards Data Wrapper
     const cardsData = [
         {
             icon: '📓',
             titleKey: 'du1mod3',
             descKey: '',
-            action: () => checkModuleAccess('du1_mod3', 'du1_modul3', 'dansk103')
+            action: () => navigateFn('du1_modul3')
         },
         {
             icon: '📖',
             titleKey: 'du2mod1',
             descKey: '',
-            action: () => checkModuleAccess('du2_mod1', 'du2_modul1', 'dansk307')
+            action: () => navigateFn('du2_modul1')
         },
         {
             icon: '📂',

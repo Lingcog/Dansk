@@ -33,16 +33,13 @@ export function renderVerbumMenuView(container, navigateFn) {
         { key: 'verberBevaegelse', type: 'bevaegelse', icon: '🚶' },
         { key: 'verberHandling', type: 'handling', icon: '🛠️' },
         { key: 'verberInteraktion', type: 'interaktion', icon: '🗣️' },
-        { key: 'verberIndreLiv', type: 'indre_liv', icon: '🧠' },
-        { key: 'verberDatid', type: 'datid', icon: '⏳' },
-        { key: 'verberDatidRegelm', type: 'datid_regelm', icon: '📝' },
-        { key: 'verberTider', type: 'tider', icon: '🌉' }
+        { key: 'verberIndreLiv', type: 'indre_liv', icon: '🧠' }
     ];
 
     verbGroups.forEach(group => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.onclick = () => navigateFn('verbum_learning', { categoryId: group.type, backView: 'verbum_menu' });
+        card.onclick = () => navigateFn('verbum_learning', { subPath: group.type, backView: 'verbum_menu' });
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';

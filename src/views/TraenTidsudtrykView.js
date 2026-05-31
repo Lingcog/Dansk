@@ -1,5 +1,5 @@
 import { getTranslation } from '../utils/i18n.js';
-
+import { baseUrl } from '../utils/config.js';
 export function renderTraenTidsudtrykView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
@@ -23,24 +23,36 @@ export function renderTraenTidsudtrykView(container, navigateFn) {
     viewContainer.appendChild(title);
     viewContainer.appendChild(subtitle);
 
+    // Illustration
+    const imgContainer = document.createElement('div');
+    imgContainer.style.textAlign = 'center';
+    imgContainer.style.marginBottom = '20px';
+    const illustration = document.createElement('img');
+    illustration.src = baseUrl + 'tider_guide.png';
+    illustration.style.maxWidth = '100%';
+    illustration.style.borderRadius = '8px';
+    illustration.alt = 'Guide til tider';
+    imgContainer.appendChild(illustration);
+    viewContainer.appendChild(imgContainer);
+
     const exerciseData = [
         // 1-7: Position at the end
-        { text: "Jeg drak kaffe [blank_0].", blanks: [{ answer: "i morges", options: ["i morges", "i morgen", "nu"], hint: "Se på verbet 'drak'. Er det nutid eller datid?" }] },
-        { text: "Vi drikker vand [blank_0].", blanks: [{ answer: "nu", options: ["nu", "i går", "på torsdag"], hint: "Se på verbet 'drikker'. Er det nutid eller datid?" }] },
-        { text: "Han skal til lægen [blank_0].", blanks: [{ answer: "i morgen", options: ["i morgen", "i går", "nu"], hint: "Se på verbet 'skal'. Det indikerer noget, der sker senere." }] },
-        { text: "Hun var i biografen [blank_0].", blanks: [{ answer: "i går", options: ["i går", "nu", "i næste uge"], hint: "Se på verbet 'var'. Er det nutid eller datid?" }] },
-        { text: "De spiller fodbold [blank_0].", blanks: [{ answer: "om søndagen", options: ["om søndagen", "i går", "på fredag"], hint: "Her beskrives noget, man gør hver uge." }] },
-        { text: "Vi rejser til Spanien [blank_0].", blanks: [{ answer: "i næste uge", options: ["i næste uge", "nu", "i går"], hint: "Det er en plan for fremtiden." }] },
-        { text: "Jeg læste en bog [blank_0].", blanks: [{ answer: "i lørdags", options: ["i lørdags", "på søndag", "i morgen"], hint: "Se på verbet 'læste'. Er det nutid eller datid?" }] },
+        { text: "Jeg drak kaffe [blank_0].", blanks: [{ answer: "i morges", options: ["i morges", "i morgen", "nu"], hint: getTranslation('tidsudtryk_hint_nutiddatid_drak') }] },
+        { text: "Vi drikker vand [blank_0].", blanks: [{ answer: "nu", options: ["nu", "i går", "på torsdag"], hint: getTranslation('tidsudtryk_hint_nutiddatid_drikker') }] },
+        { text: "Han skal til lægen [blank_0].", blanks: [{ answer: "i morgen", options: ["i morgen", "i går", "nu"], hint: getTranslation('tidsudtryk_hint_fremtid_skal') }] },
+        { text: "Hun var i biografen [blank_0].", blanks: [{ answer: "i går", options: ["i går", "nu", "i næste uge"], hint: getTranslation('tidsudtryk_hint_nutiddatid_var') }] },
+        { text: "De spiller fodbold [blank_0].", blanks: [{ answer: "om søndagen", options: ["om søndagen", "i går", "på fredag"], hint: getTranslation('tidsudtryk_hint_vane_uger') }] },
+        { text: "Vi rejser til Spanien [blank_0].", blanks: [{ answer: "i næste uge", options: ["i næste uge", "nu", "i går"], hint: getTranslation('tidsudtryk_hint_plan_fremtid') }] },
+        { text: "Jeg læste en bog [blank_0].", blanks: [{ answer: "i lørdags", options: ["i lørdags", "på søndag", "i morgen"], hint: getTranslation('tidsudtryk_hint_nutiddatid_laeste') }] },
         // 8-15: Mixed position, inversion focus
-        { text: "[blank_0] drikker vi kaffe.", blanks: [{ answer: "Om morgenen", options: ["Om morgenen", "I går", "I morgen"], hint: "Vi gør det som en vane hver dag." }] },
-        { text: "[blank_0] var jeg træt.", blanks: [{ answer: "I går", options: ["I går", "Nu", "På mandag"], hint: "Se på verbet 'var'. Det er datid." }] },
-        { text: "Jeg køber ind [blank_0].", blanks: [{ answer: "i morgen", options: ["i morgen", "nu", "i går"], hint: "Her er tale om en plan for fremtiden." }] },
-        { text: "[blank_0] skal vi på ferie.", blanks: [{ answer: "I næste måned", options: ["I næste måned", "I går", "Nu"], hint: "Det er noget, der skal ske i fremtiden." }] },
-        { text: "Vi går en tur [blank_0].", blanks: [{ answer: "hver dag", options: ["hver dag", "i går", "i morgen"], hint: "Det er noget, vi gør fast." }] },
-        { text: "[blank_0] drak jeg en øl.", blanks: [{ answer: "I fredags", options: ["I fredags", "Nu", "På søndag"], hint: "Se på verbet 'drak'. Det er datid." }] },
-        { text: "[blank_0] skal hun til fest.", blanks: [{ answer: "På lørdag", options: ["På lørdag", "I går", "Nu"], hint: "Det er en plan for fremtiden." }] },
-        { text: "De ser fjernsyn [blank_0].", blanks: [{ answer: "nu", options: ["nu", "i går", "på torsdag"], hint: "Det foregår lige nu." }] }
+        { text: "[blank_0] drikker vi kaffe.", blanks: [{ answer: "Om morgenen", options: ["Om morgenen", "I går", "I morgen"], hint: getTranslation('tidsudtryk_hint_vane_hverdag') }] },
+        { text: "[blank_0] var jeg træt.", blanks: [{ answer: "I går", options: ["I går", "Nu", "På mandag"], hint: getTranslation('tidsudtryk_hint_datid_var') }] },
+        { text: "Jeg køber ind [blank_0].", blanks: [{ answer: "i morgen", options: ["i morgen", "nu", "i går"], hint: getTranslation('tidsudtryk_hint_taleomplan_fremtid') }] },
+        { text: "[blank_0] skal vi på ferie.", blanks: [{ answer: "I næste måned", options: ["I næste måned", "I går", "Nu"], hint: getTranslation('tidsudtryk_hint_noget_fremtid') }] },
+        { text: "Vi går en tur [blank_0].", blanks: [{ answer: "hver dag", options: ["hver dag", "i går", "i morgen"], hint: getTranslation('tidsudtryk_hint_fast_vane') }] },
+        { text: "[blank_0] drak jeg en øl.", blanks: [{ answer: "I fredags", options: ["I fredags", "Nu", "På søndag"], hint: getTranslation('tidsudtryk_hint_datid_drak') }] },
+        { text: "[blank_0] skal hun til fest.", blanks: [{ answer: "På lørdag", options: ["På lørdag", "I går", "Nu"], hint: getTranslation('tidsudtryk_hint_plan_fremtid') }] },
+        { text: "De ser fjernsyn [blank_0].", blanks: [{ answer: "nu", options: ["nu", "i går", "på torsdag"], hint: getTranslation('tidsudtryk_hint_nu') }] }
     ];
 
     let currentIdx = 0;

@@ -34,22 +34,35 @@ import { renderAdverbBridgeView } from './views/AdverbBridgeView.js';
 import { renderConjunctionBridgeView } from './views/ConjunctionBridgeView.js';
 import { renderAdjectiveComparisonView } from './views/AdjectiveComparisonView.js';
 import { renderVerbumMenuView } from './views/VerbumMenuView.js';
-import { appState, getLang, getTranslation, setLanguage } from './utils/i18n.js';
+import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
+import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
+import { renderDanskKulturView } from './views/DanskKulturView.js';
+import { appState, getLang, getTranslation, setLanguage, translations } from './utils/i18n.js';
 
 // Router
 export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   const appDiv = document.querySelector('#app');
   appDiv.innerHTML = ''; // Clear current view
 
+  const lang = appState.lang || getLang();
+
   if (!skipHashUpdate) {
-    let hash = '/' + viewTarget;
-    if (extraData && Object.keys(extraData).length > 0) {
-      const params = new URLSearchParams(extraData);
+    let hash = `#/${lang}/${viewTarget}`;
+    // handle nested paths from extraData.subPath if present
+    if (extraData.subPath) {
+      hash += `/${extraData.subPath}`;
+    }
+    // handle other params
+    const otherParams = { ...extraData };
+    delete otherParams.subPath;
+    if (Object.keys(otherParams).length > 0) {
+      const params = new URLSearchParams(otherParams);
       hash += '?' + params.toString();
     }
     window.location.hash = hash;
   }
 
+  // Define components that need extraData or segments
   if (viewTarget === 'language') {
     appState.currentView = 'language';
     renderLanguageView(appDiv, navigate);
@@ -65,12 +78,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'word_learning') {
     appState.currentView = 'word_learning';
     renderWordLearningView(appDiv, navigate);
+  } else if (viewTarget === 'dansk_kultur') {
+    appState.currentView = 'dansk_kultur';
+    renderDanskKulturView(appDiv, navigate);
   } else if (viewTarget === 'samtale_traening') {
     appState.currentView = 'samtale_traening';
     renderSamtaleTraeningView(appDiv, navigate);
   } else if (viewTarget === 'samtale_hverdag') {
     appState.currentView = 'samtale_hverdag';
-    renderHverdagssamtaleView(appDiv, navigate);
+    renderHverdagssamtaleView(appDiv, navigate, extraData);
   } else if (viewTarget === 'skrive_hjaelp') {
     appState.currentView = 'skrive_hjaelp';
     renderSkrivehjaelpView(appDiv, navigate);
@@ -118,13 +134,38 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderOrdstillingView(appDiv, navigate, extraData);
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
-    renderGrammatikView(appDiv, navigate);
+    renderGrammatikView(appDiv, navigate, extraData);
   } else if (viewTarget === 'pronomen') {
     appState.currentView = 'pronomen';
-    renderPronomenView(appDiv, navigate);
+    renderPronomenView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'verbum') {
+    appState.currentView = 'verbum';
+    renderPronomenView(appDiv, navigate, { category: 'verbum', ...extraData });
+  } else if (viewTarget === 'pronominer_subjekt') {
+    appState.currentView = 'pronominer_subjekt';
+    renderPronomenView(appDiv, navigate, { viewMode: 'subjekt', ...extraData });
+  } else if (viewTarget === 'pronominer_objekt') {
+    appState.currentView = 'pronominer_objekt';
+    renderPronomenView(appDiv, navigate, { viewMode: 'objekt', ...extraData });
+  } else if (viewTarget === 'pronominer_possessiv') {
+    appState.currentView = 'pronominer_possessiv';
+    renderPronomenView(appDiv, navigate, { viewMode: 'possessiv', ...extraData });
+  } else if (viewTarget === 'pronominer_refleksiv') {
+    appState.currentView = 'pronominer_refleksiv';
+    renderPronomenView(appDiv, navigate, { viewMode: 'refleksiv', ...extraData });
+  } else if (viewTarget === 'der_er_det_er') {
+    appState.currentView = 'der_er_det_er';
+    renderPronomenView(appDiv, navigate, { viewMode: 'der_er_det_er', ...extraData });
+  } else if (viewTarget === 'adverbier') {
+    appState.currentView = 'adverbier';
+    renderPronomenView(appDiv, navigate, { viewMode: 'adverbier', ...extraData });
+  } else if (viewTarget === 'konjunktioner') {
+    appState.currentView = 'konjunktioner';
+    renderPronomenView(appDiv, navigate, { viewMode: 'konjunktioner', ...extraData });
   } else if (viewTarget === 'verbum_learning') {
     appState.currentView = 'verbum_learning';
-    const view = new VerbumLearningView(navigate, extraData?.categoryId, extraData?.backView);
+    const categoryId = extraData.subPath || extraData.categoryId;
+    const view = new VerbumLearningView(navigate, categoryId, extraData?.backView);
     appDiv.appendChild(view.render());
   } else if (viewTarget === 'verbum_menu') {
     appState.currentView = 'verbum_menu';
@@ -150,13 +191,20 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'adjective_comparison') {
     appState.currentView = 'adjective_comparison';
     renderAdjectiveComparisonView(appDiv, navigate);
+  } else if (viewTarget === 'conjunction_choice') {
+    appState.currentView = 'conjunction_choice';
+    initConjunctionChoiceExerciseView(appDiv);
+  } else if (viewTarget === 'adverb_choice') {
+    appState.currentView = 'adverb_choice';
+    initAdverbChoiceExerciseView(appDiv);
   }
 }
 
 // Handle routing from hash
 function handleRouting() {
-  const hashPart = window.location.hash.replace(/^#\/?/, '');
-  const [viewTarget, queryString] = hashPart.split('?');
+  const hash = window.location.hash.replace(/^#\//, '');
+  const [pathPart, queryString] = hash.split('?');
+  const segments = pathPart.split('/').filter(s => s !== '');
 
   const extraData = {};
   if (queryString) {
@@ -166,14 +214,25 @@ function handleRouting() {
     }
   }
 
-  if (viewTarget) {
-    navigate(viewTarget, extraData, true);
-  } else {
-    if (!appState.lang) {
-      navigate('language');
+  // Segment 0: Language
+  // Segment 1: View Target
+  // Segment 2+: Sub-paths
+  const lang = segments[0];
+  const viewTarget = segments[1];
+  const subPath = segments.slice(2).join('/');
+
+  if (lang && translations[lang]) {
+    setLanguage(lang);
+    if (viewTarget) {
+      if (subPath) extraData.subPath = subPath;
+      navigate(viewTarget, extraData, true);
     } else {
-      navigate('main');
+      navigate('main', {}, false); // Redirect to #/da/main
     }
+  } else {
+    // Initial load: redirect to current lang or default
+    const currentLang = localStorage.getItem('appLang') || 'da';
+    window.location.hash = `#/${currentLang}/main`;
   }
 }
 

@@ -1,6 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 
-export function renderHverdagssamtaleView(container, navigateFn) {
+export function renderHverdagssamtaleView(container, navigateFn, extraData) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -15,10 +15,10 @@ export function renderHverdagssamtaleView(container, navigateFn) {
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = getTranslation('hverdagssamtale');
+    title.textContent = getTranslation(extraData?.titleKey || 'hverdagssamtale');
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = getTranslation('hverdagssamtaleDesc');
+    subtitle.textContent = getTranslation(extraData?.descKey || 'hverdagssamtaleDesc');
 
     // Consent Checkbox area
     const consentContainer = document.createElement('div');
@@ -42,7 +42,7 @@ export function renderHverdagssamtaleView(container, navigateFn) {
     geminiBtnContainer.className = 'gemini-btn-container';
 
     const geminiBtn = document.createElement('a');
-    geminiBtn.href = "https://gemini.google.com/gem/1SX-yUWDxh31wEL0RZ7BSacdDUvWGtn-8?usp=sharing";
+    geminiBtn.href = extraData?.link || "https://gemini.google.com/gem/1SX-yUWDxh31wEL0RZ7BSacdDUvWGtn-8?usp=sharing";
     geminiBtn.target = "_blank";
     geminiBtn.className = 'gemini-btn disabled';
     geminiBtn.textContent = getTranslation('samtaleBtnText');

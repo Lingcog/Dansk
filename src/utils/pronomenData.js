@@ -19,6 +19,25 @@ export const pronomenData = {
                 { text: "Barnet leger. [blank_0] er glad.", blanks: [{ answer: "Det", options: ["Den", "Det", "Dets"] }], person: "3. person ental (intetkøn)" },
                 { text: "Min bror er her. [blank_0] kommer fra København.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }], person: "3. person ental (maskulin)" }
             ]
+        },
+        {
+            id: 'subjekt_set3',
+            exercises: [
+                { text: "Hvem er den mand? [blank_0] er min far.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }], person: "3. person ental (maskulin)" },
+                { text: "Pigen synger. [blank_0] har en smuk stemme.", blanks: [{ answer: "Hun", options: ["Hun", "Hende", "Hendes"] }], person: "3. person ental (feminin)" },
+                { text: "[blank_0] elsker at læse. Jeg læser hver dag.", blanks: [{ answer: "Jeg", options: ["Jeg", "Mig", "Min"] }], person: "1. person ental" },
+                { text: "Hvor bor [blank_0]? Bor du i Odense?", blanks: [{ answer: "du", options: ["du", "dig", "din"] }], person: "2. person ental" },
+            ]
+        },
+        {
+            id: 'subjekt_set4',
+            exercises: [
+                { text: "Min far er kok. [blank_0] laver god mad.", blanks: [{ answer: "Han", options: ["Han", "Ham", "Hans"] }], person: "3. person ental (maskulin)" },
+                { text: "Solen skinner. [blank_0] er varm.", blanks: [{ answer: "Den", options: ["Den", "Det", "Dens"] }], person: "3. person ental (fælleskøn)" },
+                { text: "Vinduet er åbent. [blank_0] skal lukkes.", blanks: [{ answer: "Det", options: ["Den", "Det", "Dets"] }], person: "3. person ental (intetkøn)" },
+                { text: "I er søde. [blank_0] hjælper mig meget.", blanks: [{ answer: "I", options: ["I", "Jer", "Jeres"] }], person: "2. person flertal" },
+                { text: "Vi skal gå nu. [blank_0] kommer for sent.", blanks: [{ answer: "Vi", options: ["Vi", "Os", "Vores"] }], person: "1. person flertal" }
+            ]
         }
     ],
     objekt: [
@@ -28,7 +47,7 @@ export const pronomenData = {
                 { text: "Jeg ser en mand. Jeg ser [blank_0].", blanks: [{ answer: "ham", options: ["han", "ham", "hans"] }], person: "3. person ental (maskulin)" },
                 { text: "Jeg ser en kvinde. Jeg ser [blank_0].", blanks: [{ answer: "hende", options: ["hun", "hende", "hendes"] }], person: "3. person ental (feminin)" },
                 { text: "Ser du mig? Jeg vinker til [blank_0].", blanks: [{ answer: "dig", options: ["du", "dig", "din"] }], person: "2. person ental" },
-                { text: "Kan I hjælpe [blank_0]? Vi er fare vild.", blanks: [{ answer: "os", options: ["vi", "os", "vores"] }], person: "1. person flertal" },
+                { text: "Kan I hjælpe [blank_0]? Vi er faret vild.", blanks: [{ answer: "os", options: ["vi", "os", "vores"] }], person: "1. person flertal" },
                 { text: "Jeg kender [blank_0]. De er mine naboer.", blanks: [{ answer: "dem", options: ["De", "dem", "deres"] }], person: "3. person flertal" }
             ]
         },
@@ -40,6 +59,26 @@ export const pronomenData = {
                 { text: "Her er et æble. Vil du have [blank_0]?", blanks: [{ answer: "det", options: ["den", "det", "dets"] }], person: "3. person ental (intetkøn)" },
                 { text: "Han ser på [blank_0]. Jeg står lige her.", blanks: [{ answer: "mig", options: ["jeg", "mig", "min"] }], person: "1. person ental" },
                 { text: "Hvor er Maria? Jeg ringer til [blank_0].", blanks: [{ answer: "hende", options: ["hun", "hende", "hendes"] }], person: "3. person ental (feminin)" }
+            ]
+        },
+        {
+            id: 'objekt_set3',
+            exercises: [
+                { text: "Hunden er sulten. Giv [blank_0] mad.", blanks: [{ answer: "den", options: ["den", "det", "dens"] }], person: "3. person ental (fælleskøn)" },
+                { text: "Vi besøger [blank_0] i morgen. De bor i Berlin.", blanks: [{ answer: "dem", options: ["De", "dem", "deres"] }], person: "3. person flertal" },
+                { text: "Peter er sød. Jeg kan godt lide [blank_0].", blanks: [{ answer: "ham", options: ["han", "ham", "hans"] }], person: "3. person ental (maskulin)" },
+                { text: "Hvor er min bog? Jeg kan ikke finde [blank_0].", blanks: [{ answer: "den", options: ["den", "det", "dens"] }], person: "3. person ental (fælleskøn)" },
+                { text: "Læreren hjælper [blank_0]. Vi forstår det nu.", blanks: [{ answer: "os", options: ["vi", "os", "vores"] }], person: "1. person flertal" }
+            ]
+        },
+        {
+            id: 'objekt_set4',
+            exercises: [
+                { text: "Hvem ejer huset? Jeg kender [blank_0] ikke.", blanks: [{ answer: "dem", options: ["De", "dem", "deres"] }], person: "3. person flertal" },
+                { text: "Hvor er min telefon? Jeg leder efter [blank_0].", blanks: [{ answer: "den", options: ["den", "det", "dens"] }], person: "3. person ental (fælleskøn)" },
+                { text: "Du har fødselsdag. Vi fejrer [blank_0] i aften.", blanks: [{ answer: "dig", options: ["du", "dig", "din"] }], person: "2. person ental" },
+                { text: "Pigen fryser. Giv [blank_0] en jakke.", blanks: [{ answer: "hende", options: ["hun", "hende", "hendes"] }], person: "3. person ental (feminin)" },
+                { text: "Se den bil! Han køber [blank_0].", blanks: [{ answer: "den", options: ["den", "det", "dens"] }], person: "3. person ental (fælleskøn)" }
             ]
         }
     ],
@@ -62,6 +101,48 @@ export const pronomenData = {
                 { text: "Hunden har en kurv. Det er [blank_0] kurv.", blanks: [{ answer: "dens", options: ["den", "det", "dens"] }], person: "3. person ental (fælleskøn)" },
                 { text: "Barnet har et legetøj. Det er [blank_0] legetøj.", blanks: [{ answer: "dets", options: ["den", "det", "dets"] }], person: "3. person ental (intetkøn)" },
                 { text: "Min bror har en lejlighed. [blank_0] lejlighed er lille.", blanks: [{ answer: "Hans", options: ["Han", "Ham", "Hans"] }], person: "3. person ental (maskulin)" }
+            ]
+        },
+        {
+            id: 'possessiv_set3',
+            exercises: [
+                { text: "Pigen har en taske. [blank_0] taske er ny.", blanks: [{ answer: "Hendes", options: ["Hun", "Hende", "Hendes"] }], person: "3. person ental (feminin)" },
+                { text: "Vi ejer dette bord. Det er [blank_0] bord.", blanks: [{ answer: "vores", options: ["vi", "os", "vores"] }], person: "1. person flertal" },
+                { text: "Har du [blank_0] nøgler? Du glemte dem.", blanks: [{ answer: "dine", options: ["du", "dig", "dine"] }], person: "2. person ental" },
+                { text: "Byen er smuk. [blank_0] gader er gamle.", blanks: [{ answer: "Dens", options: ["Den", "Det", "Dens"] }], person: "3. person ental (fælleskøn)" },
+                { text: "De har to børn. [blank_0] børn går i skole.", blanks: [{ answer: "Deres", options: ["De", "Dem", "Deres"] }], person: "3. person flertal" }
+            ]
+        },
+        {
+            id: 'possessiv_set4',
+            exercises: [
+                { text: "Han har en hat. Det er [blank_0] hat.", blanks: [{ answer: "hans", options: ["han", "ham", "hans"] }], person: "3. person ental (maskulin)" },
+                { text: "Historien er god. [blank_0] slutning er spændende.", blanks: [{ answer: "Dens", options: ["Den", "Det", "Dens"] }], person: "3. person ental (fælleskøn)" },
+                { text: "Køkkenet er rent. [blank_0] vægge er hvide.", blanks: [{ answer: "Dets", options: ["Den", "Det", "Dets"] }], person: "3. person ental (intetkøn)" },
+                { text: "I har en hund. Er det [blank_0] hund?", blanks: [{ answer: "jeres", options: ["I", "jer", "jeres"] }], person: "2. person flertal" },
+                { text: "Jeg bor her. Dette er [blank_0] adresse.", blanks: [{ answer: "min", options: ["jeg", "mig", "min"] }], person: "1. person ental" }
+            ]
+        }
+    ],
+    refleksiv: [
+        {
+            id: 'refleksiv_set1',
+            exercises: [
+                { text: "Jeg vasker [blank_0] hver morgen.", blanks: [{ answer: "mig", options: ["jeg", "mig", "min"] }], person: "1. person ental" },
+                { text: "Han vasker [blank_0] med vand.", blanks: [{ answer: "sig", options: ["han", "ham", "sig"] }], person: "3. person ental" },
+                { text: "Vi glæder [blank_0] til jul.", blanks: [{ answer: "os", options: ["vi", "os", "vores"] }], person: "1. person flertal" },
+                { text: "De skynder [blank_0] til toget.", blanks: [{ answer: "sig", options: ["De", "dem", "sig"] }], person: "3. person flertal" },
+                { text: "Sætter du [blank_0] her?", blanks: [{ answer: "dig", options: ["du", "dig", "din"] }], person: "2. person ental" }
+            ]
+        },
+        {
+            id: 'refleksiv_set2',
+            exercises: [
+                { text: "Pigen spejler [blank_0].", blanks: [{ answer: "sig", options: ["hun", "hende", "sig"] }], person: "3. person ental (feminin)" },
+                { text: "I keder [blank_0] aldrig.", blanks: [{ answer: "jer", options: ["I", "jer", "jeres"] }], person: "2. person flertal" },
+                { text: "Jeg glæder [blank_0] til maden.", blanks: [{ answer: "mig", options: ["jeg", "mig", "sig"] }], person: "1. person ental" },
+                { text: "Hunden ryster [blank_0].", blanks: [{ answer: "sig", options: ["den", "det", "sig"] }], person: "3. person ental (fælleskøn)" },
+                { text: "Vi sætter [blank_0] på stolen.", blanks: [{ answer: "os", options: ["vi", "os", "vores"] }], person: "1. person flertal" }
             ]
         }
     ]

@@ -16,7 +16,7 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
 
     // Title & Intro
     const title = document.createElement('h1');
-    title.textContent = getTranslation('adjComparisonTitle');
+    title.textContent = "Stor / større / størst? (Adjektiver)";
     viewContainer.appendChild(title);
 
     const subtitle = document.createElement('p');
@@ -139,18 +139,32 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
 
     const practiceSets = [
         [
-            { text: "Jeg ser en [blank_0] fugl.", options: ["gul", "gult", "gule"], answer: "gul", feedback: getTranslation('adjFeedback1') },
-            { text: "Min bror er [blank_1] end mig.", options: ["høj", "højere", "højest"], answer: "højere", feedback: getTranslation('adjFeedback2') },
-            { text: "Det er det [blank_2] træ i skoven.", options: ["høj", "højere", "højeste"], answer: "højeste", feedback: getTranslation('adjFeedback3') },
-            { text: "Vi spiser [blank_3] æbler.", options: ["rød", "rødt", "røde"], answer: "røde", feedback: getTranslation('adjFeedback4') },
-            { text: "Det [blank_4] barn leger i haven.", options: ["glad", "gladt", "glade"], answer: "glade", feedback: getTranslation('adjFeedback5') }
+            { text: "Min hund er [blank_0] end din.", options: ["stor", "større", "størst"], answer: "større", hints: { "stor": "Husk at bruge komparativ (sammenligningsform) når der står 'end'.", "størst": "Vi sammenligner kun to hunde her." }, feedback: "Korrekt! Vi sammenligner to ting her." },
+            { text: "Det er et [blank_1] hus.", options: ["stor", "stort", "store"], answer: "stort", hints: { "stor": "Husk at 'et hus' er intetkøn (-t).", "store": "Huset er i ental her." }, feedback: "Korrekt! Intetkøn (et) får ofte -t på adjektivet." },
+            { text: "De [blank_2] børn leger i haven.", options: ["lille", "små", "mindre"], answer: "små", hints: { "lille": "Husk at 'børn' er flertal.", "mindre": "Her beskriver vi bare børnene, vi sammenligner ikke." }, feedback: "Korrekt! 'Små' er flertal af 'lille'." },
+            { text: "Kaffen er [blank_3] nu end før.", options: ["varm", "varmere", "varmest"], answer: "varmere", hints: { "varm": "Vi sammenligner temperaturen nu med før.", "varmest": "Der er kun tale om to tidspunkter." }, feedback: "Korrekt! Komparativ bruges ved sammenligning." },
+            { text: "Det er den [blank_4] blomst i haven.", options: ["smuk", "smukkere", "smukkeste"], answer: "smukkeste", hints: { "smuk": "Vi kigger på alle blomsterne i haven.", "smukkere": "Her er tale om den absolutte vinder (superlativ)." }, feedback: "Korrekt! Superlativ bruges om den højeste grad." }
         ],
         [
-            { text: "Huset er [blank_0] end bilen.", options: ["stor", "større", "størst"], answer: "større", feedback: getTranslation('adjFeedback6') },
-            { text: "Hun har et [blank_1] smil.", options: ["smuk", "smukt", "smukke"], answer: "smukt", feedback: getTranslation('adjFeedback7') },
-            { text: "Det er den [blank_2] dag i mit liv.", options: ["god", "bedre", "bedste"], answer: "bedste", feedback: getTranslation('adjFeedback8') },
-            { text: "De [blank_3] blomster dufter godt.", options: ["smuk", "smukt", "smukke"], answer: "smukke", feedback: getTranslation('adjFeedback9') },
-            { text: "Græsset er [blank_4].", options: ["grøn", "grønt", "grønne"], answer: "grønt", feedback: getTranslation('adjFeedback10') }
+            { text: "Bilen er [blank_0] end traktoren.", options: ["hurtig", "hurtigere", "hurtigst"], answer: "hurtigere", hints: { "hurtig": "To ting sammenlignes her.", "hurtigst": "Vi sammenligner kun to køretøjer." }, feedback: "Korrekt! Hurtigere er komparativ." },
+            { text: "Jeg har to [blank_1] æbler.", options: ["grøn", "grønt", "grønne"], answer: "grønne", hints: { "grøn": "Der er to æbler (flertal).", "grønt": "Æbler er i flertal her." }, feedback: "Korrekt! Flertal af adjektiver ender på -e." },
+            { text: "Det er en [blank_2] cykel.", options: ["dyr", "dyrt", "dyre"], answer: "dyr", hints: { "dyrt": "En cykel er fælleskøn (ingen -t).", "dyre": "Cyklen er i ental." }, feedback: "Korrekt! Fælleskøn (en) har ingen endelse her." },
+            { text: "Dette er det [blank_3] jeg ved.", options: ["god", "bedre", "bedste"], answer: "bedste", hints: { "god": "Vi taler om den højeste grad af kvalitet.", "bedre": "Vi sammenligner ikke med noget specifikt andet." }, feedback: "Korrekt! 'Bedste' er den højeste grad af 'god'." },
+            { text: "Hendes hår er [blank_4] end mit.", options: ["lang", "længere", "længst"], answer: "længere", hints: { "lang": "To personers hår sammenlignes.", "længst": "Vi sammenligner to ting." }, feedback: "Korrekt! 'Længere' er komparativ af 'lang'." }
+        ],
+        [
+            { text: "Rundetårn er [blank_0] end mit hus.", options: ["høj", "højere", "højest"], answer: "højere", hints: { "høj": "Husk komparativ når der sammenlignes med 'end'.", "højest": "Vi sammenligner to bygninger." }, feedback: "Korrekt! 'Højere' bruges ved sammenligning." },
+            { text: "Jeg har købt et [blank_1] fjernsyn.", options: ["ny", "nyt", "nye"], answer: "nyt", hints: { "ny": "'Et fjernsyn' er intetkøn (-t).", "nye": "Der er kun tale om ét fjernsyn." }, feedback: "Korrekt! Intetkøn (et) tager oftest -t." },
+            { text: "I dag er den [blank_2] dag på året.", options: ["kold", "koldere", "koldeste"], answer: "koldeste", hints: { "kold": "Vi taler om hele året, så det er den højeste grad.", "koldere": "Vi sammenligner ikke to dage, men udråber en vinder blandt alle." }, feedback: "Korrekt! Superlativ bruges om højeste grad." },
+            { text: "De [blank_3] mænd sidder på bænken.", options: ["gammel", "gammelt", "gamle"], answer: "gamle", hints: { "gammel": "Der er tale om flere mænd.", "gammelt": "Intetkøn bruges ikke ved personer i flertal." }, feedback: "Korrekt! Flertal ender oftest på -e." },
+            { text: "Min bror er [blank_4] end min søster.", options: ["sjov", "sjovere", "sjovest"], answer: "sjovere", hints: { "sjov": "To personer sammenlignes.", "sjovest": "Vi sammenligner kun to personer." }, feedback: "Korrekt! 'End' udløser komparativ." }
+        ],
+        [
+            { text: "Dette er det [blank_0] stykke kage.", options: ["lille", "mindre", "mindste"], answer: "mindste", hints: { "lille": "Vi snakker om kagen i forhold til alle andre stykker.", "mindre": "Vi sammenligner den med mere end én anden ting." }, feedback: "Korrekt! 'Mindste' er superlativ." },
+            { text: "Vandet i søen er meget [blank_1] i dag.", options: ["varm", "varmt", "varme"], answer: "varmt", hints: { "varm": "Vand er intetkøn (et vand/vandet).", "varme": "Det er ental (vandet)." }, feedback: "Korrekt! Intetkøn får -t." },
+            { text: "Dage er [blank_2] om sommeren end om vinteren.", options: ["lys", "lysere", "lysest"], answer: "lysere", hints: { "lys": "Vi sammenligner sommer og vinter.", "lysest": "Vi sammenligner to perioder." }, feedback: "Korrekt! Komparativ bruges ved sammenligning med 'end'." },
+            { text: "Hun har den [blank_3] kjole på til festen.", options: ["flot", "flottere", "flotteste"], answer: "flotteste", hints: { "flot": "Hun overgår alle de andre kjoler.", "flottere": "Der er mere end to kjoler at sammenligne med." }, feedback: "Korrekt! Bestemt form af superlativ ender på -e." },
+            { text: "Bogen er [blank_4] end hæftet.", options: ["tung", "tungere", "tungest"], answer: "tungere", hints: { "tung": "Vi sammenligner to ting.", "tungest": "Vi sammenligner kun bog og hæfte." }, feedback: "Korrekt! 'Tungere' er komparativ." }
         ]
     ];
 
@@ -183,10 +197,18 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
                 const ex = set[idx];
                 const feedbackEl = document.getElementById(`feedback-${idx}`);
 
+                const absoluteIdx = (currentSetIndex * 5) + parseInt(idx);
+
                 if (select.value === ex.answer) {
                     select.classList.add('correct');
                     select.classList.remove('wrong');
-                    feedbackEl.textContent = ex.feedback;
+
+                    const feedbackText = getTranslation(`adj_${absoluteIdx}_feedback`) || ex.feedback;
+                    feedbackEl.textContent = "✓ " + feedbackText;
+
+                    feedbackEl.style.color = '#4CAF50';
+                    feedbackEl.style.borderLeftColor = '#4CAF50';
+                    feedbackEl.style.background = 'rgba(76, 175, 80, 0.1)';
                     feedbackEl.style.display = 'block';
                 } else if (select.value === "") {
                     select.classList.remove('correct', 'wrong');
@@ -194,7 +216,15 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
                 } else {
                     select.classList.add('wrong');
                     select.classList.remove('correct');
-                    feedbackEl.style.display = 'none';
+
+                    const safeOpt = select.value.replace(/[^a-zA-ZæøåÆØÅ]/g, '');
+                    const hintText = getTranslation(`adj_${absoluteIdx}_hint_${safeOpt}`) || ex.hints[select.value] || "Prøv igen. Tænk på om det er ental/flertal eller sammenligning.";
+                    feedbackEl.textContent = "⚠ " + hintText;
+
+                    feedbackEl.style.color = '#e74c3c';
+                    feedbackEl.style.borderLeftColor = '#e74c3c';
+                    feedbackEl.style.background = 'rgba(231, 76, 60, 0.1)';
+                    feedbackEl.style.display = 'block';
                 }
 
                 updateSummary(selects);

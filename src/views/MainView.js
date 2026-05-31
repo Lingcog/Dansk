@@ -31,17 +31,12 @@ export function renderMainView(container, navigateFn) {
             action: () => navigateFn('dagens_opgave') // Navigates to DagensOpgaveView
         },
         {
-            icon: '🎓',
-            titleKey: 'modulTest',
-            descKey: 'modulTestDesc',
-            action: () => alert('Mock: Gå til Træning til modultest')
+            icon: '🧠',
+            titleKey: 'laerNyeOrd',
+            descKey: 'laerEtNytOrdDesc',
+            action: () => navigateFn('word_learning')
         },
-        {
-            icon: '📘',
-            titleKey: 'notes',
-            descKey: 'notesDesc',
-            action: () => navigateFn('notes') // Navigates to NotesView
-        },
+
         {
             icon: '💬',
             titleKey: 'lavSporgsmal',
@@ -61,10 +56,10 @@ export function renderMainView(container, navigateFn) {
             action: () => navigateFn('skrive_hjaelp')
         },
         {
-            icon: '🏃',
-            titleKey: 'verbumLearning',
-            descKey: 'verbumLearningDesc',
-            action: () => navigateFn('verbum_menu')
+            icon: '🏰',
+            titleKey: 'laerDanskKultur',
+            descKey: 'laerDanskKulturDesc',
+            action: () => navigateFn('dansk_kultur')
         }
     ];
 

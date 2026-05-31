@@ -15,6 +15,14 @@ export class VerbumLearningView {
         this.answers = {};
         this.feedback = {}; // { 'id': 'correct' | 'wrong' }
         this.showHints = {}; // { 'id': true | false }
+        this.shuffledOptions = {}; // Ensure options only shuffle once per rendering cycle
+    }
+
+    getShuffledOptions(id, originalOptions) {
+        if (!this.shuffledOptions[id]) {
+            this.shuffledOptions[id] = [...originalOptions].sort(() => Math.random() - 0.5);
+        }
+        return this.shuffledOptions[id];
     }
 
     normalize(text) {
@@ -52,6 +60,8 @@ export class VerbumLearningView {
         const translatedTitle = getTranslation(titleKey);
         const finalTitle = (translatedTitle === titleKey) ? exercise.title : translatedTitle;
 
+        const illustration = category.id === 'tider' ? 'tider_illustration.png' : 'verber_kategorier.png';
+
         container.innerHTML = `
       <div class="top-bar">
         <button class="back-btn" id="back-to-main">← ${getTranslation('back')}</button>
@@ -59,7 +69,7 @@ export class VerbumLearningView {
       <h1>${this.getCategoryTitle(category)}</h1>
       
       <div class="exercise-card">
-        <img src="${baseUrl}verber_kategorier.png" class="category-illustration" alt="Category Illustration">
+        <img src="${baseUrl}${illustration}" class="category-illustration" alt="Category Illustration">
         
         <div class="exercise-header">
           <h2 style="text-align: center;">${finalTitle}</h2>
@@ -83,6 +93,19 @@ export class VerbumLearningView {
         this.attachEventListeners(container);
         this.ensureStyles();
         return container;
+    }
+
+    getDefinitionForVerb(verb) {
+        if (!verb) return null;
+        for (const cat of verbsData) {
+            if (!cat.exercises) continue;
+            for (const ex of cat.exercises) {
+                if (!ex.phase2_tasks) continue;
+                const task = ex.phase2_tasks.find(t => t.correct.toLowerCase() === verb.toLowerCase());
+                if (task) return task.definition;
+            }
+        }
+        return null;
     }
 
     getSummaryText(exercise) {
@@ -142,20 +165,18 @@ export class VerbumLearningView {
                     let clean = seg.content.replace(clueMatch ? clueMatch[0] : '', '')
                         .replace(/\\n/g, ' ')
                         .replace(/\d+\.\s+/g, '') // Remove numbers like "1. "
-                        .replace(/Dansk:\s*/gi, '') // Remove "Dansk: "
                         .replace(/\s+/g, ' ')
                         .trim();
 
-                    const labelHtml = seg.content.match(/Dansk:/i) ? `<span class="sentence-label">${getTranslation('danishLabel')}:</span> ` : '';
-                    return clean ? `${labelHtml}<span class="text-part">${clean}</span>` : '';
+                    return clean ? `<span class="text-part">${clean}</span>` : '';
                 } else {
-                    const isCorrect = this.feedback[seg.id] === 'correct';
-                    const isWrong = this.feedback[seg.id] === 'wrong';
+                    const isCorrect = this.feedback[seg.id]?.status === 'correct';
+                    const isWrong = this.feedback[seg.id]?.status === 'wrong';
                     return `
                         <span class="select-wrapper">
                             <select class="grammatik-select ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}" data-id="${seg.id}" ${isCorrect ? 'disabled' : ''}>
                                 <option value="">...</option>
-                                ${seg.options.map(opt => `<option value="${opt}" ${this.answers[seg.id] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                                ${this.getShuffledOptions(seg.id, seg.options).map(opt => `<option value="${opt}" ${this.answers[seg.id] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
                             </select>
                         </span>
                     `;
@@ -166,6 +187,9 @@ export class VerbumLearningView {
             const translatedClue = clueKey ? getTranslation(clueKey) : clue;
             const clueHtml = translatedClue ? `<div class="sent-clue">${translatedClue}</div>` : '';
 
+            const feedback = this.feedback[item.segments.find(s => s.type === 'gap')?.id];
+            const feedbackHtml = (feedback && feedback.message) ? `<div class="item-feedback ${feedback.status}">${feedback.message}</div>` : '';
+
             return `
                 <div class="sentence-row">
                     ${clueHtml}
@@ -173,6 +197,7 @@ export class VerbumLearningView {
                         <span class="sentence-number">${idx + 1}.</span>
                         ${segmentsHtml}
                     </div>
+                    ${feedbackHtml}
                 </div>
             `;
         }).join('');
@@ -181,22 +206,28 @@ export class VerbumLearningView {
     renderPhase2(exercise) {
         return exercise.phase2_tasks.map((task, index) => {
             const taskId = `phase2-${index}`;
-            const isCorrect = this.feedback[taskId] === 'correct';
-            const isWrong = this.feedback[taskId] === 'wrong';
+            const isCorrect = this.feedback[taskId]?.status === 'correct';
+            const isWrong = this.feedback[taskId]?.status === 'wrong';
 
             const defKey = 'verbDef_' + this.normalize(task.definition);
             const translatedDef = getTranslation(defKey);
             const finalDef = (translatedDef === defKey) ? task.definition : translatedDef;
 
+            const feedback = this.feedback[taskId];
+            const feedbackHtml = (feedback && feedback.message) ? `<div class="item-feedback ${feedback.status}">${feedback.message}</div>` : '';
+
             return `
                 <div class="phase2-item">
                     <p class="definition"><strong>${index + 1}.</strong> ${finalDef}</p>
-                    <span class="select-wrapper">
-                        <select class="grammatik-select ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}" data-task-id="${taskId}" ${isCorrect ? 'disabled' : ''}>
-                            <option value="">...</option>
-                            ${task.options.map(opt => `<option value="${opt}" ${this.answers[taskId] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
-                        </select>
-                    </span>
+                    <div class="phase2-interaction">
+                        <span class="select-wrapper">
+                            <select class="grammatik-select ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}" data-task-id="${taskId}" ${isCorrect ? 'disabled' : ''}>
+                                <option value="">...</option>
+                                ${this.getShuffledOptions(taskId, task.options).map(opt => `<option value="${opt}" ${this.answers[taskId] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                            </select>
+                        </span>
+                        ${feedbackHtml}
+                    </div>
                 </div>
             `;
         }).join('');
@@ -208,10 +239,10 @@ export class VerbumLearningView {
             ? exercise.segments.filter(s => s.type === 'gap').length
             : exercise.phase2_tasks.length;
 
-        const correctCount = Object.values(this.feedback).filter(f => f === 'correct').length;
-        const allDone = correctCount === totalGaps;
+        const correctCount = Object.values(this.feedback).filter(f => f.status === 'correct').length;
+        const allCorrect = correctCount === totalGaps;
 
-        if (!allDone) return '';
+        if (!allCorrect) return '';
 
         const isLastExercise = this.currentExerciseIndex === category.exercises.length - 1;
 
@@ -230,7 +261,7 @@ export class VerbumLearningView {
         };
 
         container.querySelectorAll('.grammatik-select').forEach(select => {
-            select.onchange = (e) => {
+            select.oninput = (e) => {
                 const id = e.target.dataset.id || e.target.dataset.taskId;
                 const val = e.target.value;
                 this.answers[id] = val;
@@ -240,7 +271,7 @@ export class VerbumLearningView {
                 let explanation = '';
 
                 if (this.currentPhase === 1) {
-                    const seg = exercise.segments.find(s => s.id === id);
+                    const seg = exercise.segments.find(s => String(s.id) === String(id));
                     if (seg) {
                         correctVal = seg.correct;
                         explanation = getTranslation(seg.explanation || 'hintAction');
@@ -259,19 +290,34 @@ export class VerbumLearningView {
                 if (val === "") {
                     delete this.feedback[id];
                 } else if (val === correctVal) {
-                    this.feedback[id] = 'correct';
+                    const def = this.getDefinitionForVerb(val);
+                    let msg = "";
+                    if (def) {
+                        const defKey = 'verbDef_' + this.normalize(def);
+                        const translatedDef = getTranslation(defKey);
+                        const finalDef = (translatedDef === defKey) ? def : translatedDef;
+                        msg = `<strong>${val}</strong>: ${finalDef}`;
+                    } else {
+                        msg = "Korrekt!";
+                    }
+                    this.feedback[id] = { status: 'correct', message: msg };
                 } else {
-                    this.feedback[id] = 'wrong';
-                    const fb = container.querySelector('#exercise-feedback');
-                    fb.textContent = explanation;
-                    fb.style.display = 'block';
+                    const def = this.getDefinitionForVerb(val);
+                    let msg = "";
+                    if (def) {
+                        const defKey = 'verbDef_' + this.normalize(def);
+                        const translatedDef = getTranslation(defKey);
+                        const finalDef = (translatedDef === defKey) ? def : translatedDef;
+                        msg = `<strong>${val}</strong>: ${finalDef}`;
+                    } else {
+                        msg = explanation;
+                    }
+                    this.feedback[id] = { status: 'wrong', message: msg };
                 }
 
                 this.updateView();
             };
         });
-
-        // Next buttons are handled in renderFooterButtons via checkBtn-less logic
 
         const nextPhaseBtn = container.querySelector('#next-phase');
         if (nextPhaseBtn) {
@@ -280,6 +326,7 @@ export class VerbumLearningView {
                 this.answers = {};
                 this.feedback = {};
                 this.showHints = {};
+                this.shuffledOptions = {};
                 this.updateView();
             };
         }
@@ -292,6 +339,7 @@ export class VerbumLearningView {
                 this.answers = {};
                 this.feedback = {};
                 this.showHints = {};
+                this.shuffledOptions = {};
                 this.updateView();
             };
         }
@@ -305,6 +353,7 @@ export class VerbumLearningView {
                 this.answers = {};
                 this.feedback = {};
                 this.showHints = {};
+                this.shuffledOptions = {};
                 this.updateView();
             };
         }
@@ -396,6 +445,17 @@ export class VerbumLearningView {
                 color: #fff !important;
                 border-radius: 12px !important;
                 padding: 0 1rem !important;
+                transition: all 0.3s ease;
+            }
+            .grammatik-select.correct {
+                background: rgba(76, 175, 80, 0.2) !important;
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+            }
+            .grammatik-select.wrong {
+                background: rgba(244, 67, 54, 0.2) !important;
+                border-color: #f44336 !important;
+                color: #f44336 !important;
             }
             @media (max-width: 600px) {
                 .sentence-content { font-size: 1.4rem; gap: 0.3rem 0.5rem; }
@@ -413,12 +473,38 @@ export class VerbumLearningView {
                 border: 1px solid rgba(255, 255, 255, 0.05);
             }
             .sentence-label {
-                color: #ffcc00;
-                font-weight: 600;
-                margin-right: 0.5rem;
-                font-size: 0.9em;
-                text-transform: uppercase;
-                opacity: 0.8;
+                display: none;
+            }
+            .item-feedback {
+                color: #ff9800;
+                font-size: 1.1rem;
+                margin-top: 0.8rem;
+                font-weight: 500;
+                animation: feedback-slide 0.3s ease-out;
+            }
+            .item-feedback.wrong {
+                color: #f44336;
+            }
+            .item-feedback.correct {
+                color: #4caf50;
+            }
+            @keyframes feedback-slide {
+                from { opacity: 0; transform: translateY(-5px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .phase2-interaction {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            @media (max-width: 600px) {
+                .item-feedback { font-size: 0.95rem; }
+            }
+            .grammatik-summary .success {
+                color: #4caf50;
+                font-weight: bold;
+                font-size: 1.2rem;
             }
         `;
         document.head.appendChild(styles);

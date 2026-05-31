@@ -1,9 +1,15 @@
 import { getTranslation, appState } from '../utils/i18n.js';
 
 export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
-    const nounAnchor = extraData.nounAnchor || appState.nounAnchor || 'Et';
-    const selectedNoun = extraData.selectedNoun || appState.selectedNoun || 'barn';
-    const selectedVerb = extraData.selectedVerb || appState.selectedVerb || 'spiser';
+    const state = {
+        nounAnchor: extraData.nounAnchor || 'Et',
+        selectedNoun: extraData.selectedNoun || 'barn',
+        selectedVerb: extraData.selectedVerb || 'spiser',
+        selectedModal: extraData.selectedModal || '',
+        verbAnchor: extraData.verbAnchor || 'spiser',
+        selectedAdjective: extraData.selectedAdjective || '',
+        adjectivePart: extraData.adjectivePart || ''
+    };
 
     // Default adverb choice
     let selectedAdverb = 'langsomt';
@@ -26,7 +32,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                     <div class="handling-container">
                         <div class="handling-box" id="verb-box">
                             <div class="box-label">${getTranslation('handlingLabel')}</div>
-                            <div class="box-word">${selectedVerb}</div>
+                            <div class="box-word">${state.selectedModal ? state.selectedModal + ' ' : ''}${state.selectedVerb}</div>
                         </div>
                         
                         <!-- Dynamic Waves Container -->
@@ -34,22 +40,22 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
                         <div class="adverb-box" id="active-adv-box">
                             <div class="box-label">${getTranslation('adverb')}</div>
-                            <div class="box-word" id="active-adverb">${getTranslation('advLangsomt')}</div>
+                            <div class="box-word" id="active-adverb">langsomt</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="sentence-display">
-                    <span class="noun-anchor">${nounAnchor}</span>
-                    <span class="adjective-part" id="sentence-adj">stort</span>
-                    <span class="noun-part">${selectedNoun}</span>
-                    <span class="verb-part" id="verb-display">${selectedVerb}</span>
+                    <span class="noun-anchor">${state.nounAnchor}</span>
+                    <span class="adjective-part" id="sentence-adj">${state.adjectivePart}</span>
+                    <span class="noun-part">barn</span>
+                    <span class="verb-part" id="verb-display">${state.selectedModal ? state.selectedModal + ' ' + state.selectedVerb : state.selectedVerb}</span>
                     <div class="adverb-drop-zone">
                         <select id="adverb-select" class="grammatik-select premium-select">
-                            <option value="langsomt">${getTranslation('advLangsomt')}</option>
-                            <option value="hurtigt">${getTranslation('advHurtigt')}</option>
-                            <option value="meget">${getTranslation('advMeget')}</option>
-                            <option value="lidt">${getTranslation('advLidt')}</option>
+                            <option value="langsomt">langsomt</option>
+                            <option value="hurtigt">hurtigt</option>
+                            <option value="meget">meget</option>
+                            <option value="lidt">lidt</option>
                         </select>
                     </div>
                 </div>
@@ -62,6 +68,15 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                     <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffffff;">${getTranslation('adverbTeaserNext')}</h3>
                     <div class="navigation-controls">
                         <button class="gemini-btn spotlight-btn" id="next-conjunction-btn">${getTranslation('nextStepAfterAdverb')}</button>
+                    </div>
+
+                    <div class="practice-teaser" style="margin-top: 3rem; padding: 1.5rem; background: rgba(76, 175, 80, 0.05); border-radius: 15px; border: 1px solid rgba(76, 175, 80, 0.1);">
+                        <p style="color: var(--text-secondary); margin-bottom: 0.8rem; font-size: 1rem;">
+                            ${getTranslation('practiceMoreTitle')}
+                        </p>
+                        <a href="javascript:void(0)" id="adverb-practice-link" style="color: #4caf50; font-weight: 800; text-decoration: none; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <i class="fas fa-pen-fancy"></i> ${getTranslation('adverbPracticeLink')}
+                        </a>
                     </div>
                 </div>
 
@@ -89,13 +104,15 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         </svg>
     `;
 
-    // Inflect adjective for the display based on nounAnchor
-    const inflectAdj = (anchor) => {
-        if (anchor === 'Et') return 'stort';
-        if (anchor === 'Det' || anchor === 'Mit') return 'store';
-        return 'stort';
-    };
-    sentenceAdj.textContent = inflectAdj(nounAnchor);
+    // Inflect adjective for the display based on nounAnchor if not provided
+    if (!state.adjectivePart) {
+        const inflectAdj = (anchor) => {
+            if (anchor === 'Et') return 'stort';
+            if (anchor === 'Det' || anchor === 'Mit') return 'store';
+            return 'stort';
+        };
+        sentenceAdj.textContent = inflectAdj(state.nounAnchor);
+    }
 
     function updateWaves(adverb) {
         let speed = "1.5s";
@@ -157,7 +174,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
     advSelect.onchange = (e) => {
         selectedAdverb = e.target.value;
-        activeAdvDisplay.textContent = getTranslation('adv' + selectedAdverb.charAt(0).toUpperCase() + selectedAdverb.slice(1));
+        activeAdvDisplay.textContent = selectedAdverb;
         updateWaves(selectedAdverb);
 
         // Pulse effect
@@ -165,17 +182,20 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         setTimeout(() => activeAdvDisplay.parentElement.classList.remove('pulse'), 500);
     };
 
-    backBtn.onclick = () => navigateFn('adjective_bridge');
+    backBtn.onclick = () => navigateFn('adjective_bridge', state);
     finishBtn.onclick = () => navigateFn('dagens_opgave');
 
     const nextConjBtn = container.querySelector('#next-conjunction-btn');
     nextConjBtn.onclick = () => navigateFn('conjunction_bridge', {
-        nounAnchor,
-        selectedNoun,
-        selectedVerb,
+        ...state,
         selectedAdverb,
         adjectivePart: sentenceAdj.textContent
     });
+
+    const practiceLink = container.querySelector('#adverb-practice-link');
+    if (practiceLink) {
+        practiceLink.onclick = () => navigateFn('adverb_choice');
+    }
 
     // Initial wave state
     updateWaves(selectedAdverb);
@@ -291,6 +311,18 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             .box-word {
                 font-size: 1.5rem;
                 font-weight: 800;
+            }
+            .spotlight-btn {
+                background: #ffcc00 !important;
+                color: #333 !important;
+                border: none !important;
+                box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+                transition: all 0.3s ease;
+            }
+            .spotlight-btn:hover {
+                background: #e6b800 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
             }
             @media (max-width: 600px) {
                 .box-word { font-size: 1.1rem; }

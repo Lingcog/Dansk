@@ -66,14 +66,14 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <h3>${getTranslation('groundingStep1')}</h3>
             <div class="grounding-interaction">
-                <span class="word-bubble">Barn</span>
+                <span class="word-bubble">barn</span> <span style="opacity: 0.7; font-size: 0.9em; margin-left: 0.5rem;">(${getTranslation('vocabChild')})</span>
                 <span class="arrow">←</span>
                 <select class="grammatik-select" id="noun-select">
                     <option value="">${getTranslation('selectAnchor')}</option>
-                    <option value="Mit">Mit</option>
-                    <option value="Et">Et</option>
-                    <option value="Det">Det</option>
-                    <option value="Dette">Dette</option>
+                    <option value="Mit">Mit - ${getTranslation('groundingRelationPrefix')}</option>
+                    <option value="Et">Et - ${getTranslation('groundingIndefinitePrefix')}</option>
+                    <option value="Det">Det - ${getTranslation('groundingDistalPrefix')}</option>
+                    <option value="Dette">Dette - ${getTranslation('groundingProximalPrefix')}</option>
                 </select>
             </div>
             <div class="exercise-feedback" id="step-feedback"></div>
@@ -96,13 +96,13 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <h3>${getTranslation('groundingStep2')}</h3>
             <div class="grounding-interaction">
-                <span class="word-bubble">At spise</span>
+                <span class="word-bubble">at spise</span> <span style="opacity: 0.7; font-size: 0.9em; margin-left: 0.5rem;">(${getTranslation('vocabToEat')})</span>
                 <span class="arrow">←</span>
                 <select class="grammatik-select" id="verb-select">
                     <option value="">${getTranslation('selectTense')}</option>
-                    <option value="spiser">spiser ${getTranslation('tenseNow')}</option>
-                    <option value="spiste">spiste ${getTranslation('tensePast')}</option>
-                    <option value="skal spise">skal spise ${getTranslation('tenseFuture')}</option>
+                    <option value="spiser">spiser - ${getTranslation('vocabEats')} (${getTranslation('tenseNow')})</option>
+                    <option value="spiste">spiste - ${getTranslation('vocabAte')} (${getTranslation('tensePast')})</option>
+                    <option value="skal spise">skal spise - ${getTranslation('vocabWillEat')} (${getTranslation('tenseFuture')})</option>
                 </select>
             </div>
             <div class="exercise-feedback" id="step-feedback"></div>
@@ -322,11 +322,11 @@ export function renderGroundingView(container, navigateFn) {
             parentDiv.appendChild(focusContainer);
         }
 
-        const anchor = state.nounAnchor.toLowerCase();
+        const anchor = state.nounAnchor;
         let sceneHtml = '';
         let sceneTitle = '';
 
-        if (anchor === 'mit') {
+        if (anchor === 'Mit') {
             sceneTitle = getTranslation('groundingRelation');
             sceneHtml = `
                 <div class="focus-scene relation-scene">
@@ -341,7 +341,7 @@ export function renderGroundingView(container, navigateFn) {
                     </svg>
                 </div>
             `;
-        } else if (anchor === 'et') {
+        } else if (anchor === 'Et') {
             sceneTitle = getTranslation('groundingIndefinite');
             sceneHtml = `
                 <div class="focus-scene indefinite-scene">
@@ -359,7 +359,7 @@ export function renderGroundingView(container, navigateFn) {
                     </svg>
                 </div>
             `;
-        } else if (anchor === 'det') {
+        } else if (anchor === 'Det') {
             sceneTitle = getTranslation('groundingDistal');
             sceneHtml = `
                 <div class="focus-scene distal-scene">
@@ -375,7 +375,7 @@ export function renderGroundingView(container, navigateFn) {
                     </svg>
                 </div>
             `;
-        } else if (anchor === 'dette') {
+        } else if (anchor === 'Dette') {
             sceneTitle = getTranslation('groundingProximal');
             sceneHtml = `
                 <div class="focus-scene proximal-scene">
@@ -474,14 +474,22 @@ export function renderGroundingView(container, navigateFn) {
                     <span class="example-text">${state.nounAnchor} barn ${state.verbAnchor}.</span>
                 </div>
 
+                <!-- Strategic Modal Teaser (New Home for the modal logic) -->
+                <div class="modal-teaser-new" style="margin: 2.5rem 0; padding: 2rem; background: rgba(255, 235, 59, 0.05); border-radius: 20px; border: 1px solid rgba(255, 235, 59, 0.2); text-align: center;">
+                    <p class="teaser-text" style="font-size: 1.15rem; margin-bottom: 2rem; color: #fff; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
+                        ${getTranslation('modalTeaserText')}
+                    </p>
+                    <button class="gemini-btn spotlight-btn" id="start-modal" style="width: 100%; max-width: 400px; padding: 1.2rem; font-size: 1.25rem; margin: 0 auto; display: block;">
+                        ${getTranslation('nextStepModalVerbs')}
+                    </button>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7; color: var(--accent-light);">
+                        ${getTranslation('modalVerbLabel')}
+                    </div>
+                </div>
+
                 <div class="recommendation-box">
                     <h4>${getTranslation('modalTeaserTitle')}</h4>
-                    <p class="teaser-text">${getTranslation('modalTeaserText')}</p>
                     <div class="recommendation-grid">
-                        <button class="rec-btn spotlight-btn" id="start-modal">
-                            <span class="rec-icon">✨</span>
-                            <span class="rec-label">${getTranslation('modalVerbLabel')}</span>
-                        </button>
                         <button class="rec-btn" id="rec-bestemthed">
                             <span class="rec-icon">🏷️</span>
                             <span class="rec-label">${getTranslation('bestemthedLabel')}</span>
@@ -504,13 +512,20 @@ export function renderGroundingView(container, navigateFn) {
         finalContainer.querySelector('#finish-btn').onclick = () => navigateFn('dagens_opgave');
         finalContainer.querySelector('#start-modal').onclick = () => navigateFn('modal_force', state);
         finalContainer.querySelector('#rec-bestemthed').onclick = () => navigateFn('bestemthed');
-        finalContainer.querySelector('#rec-pronomen').onclick = () => navigateFn('pronomen');
-        finalContainer.querySelector('#rec-verber').onclick = () => navigateFn('verbum_learning', { categoryId: 'datid' });
+        finalContainer.querySelector('#rec-pronomen').onclick = () => navigateFn('pronomen', { category: 'pronomen' });
+        finalContainer.querySelector('#rec-verber').onclick = () => navigateFn('verbum');
 
         // Scroll to the final message
         setTimeout(() => {
             finalContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
+    }
+
+    function getVerbTranslation(verb) {
+        if (verb === 'spiser') return getTranslation('vocabEats');
+        if (verb === 'spiste') return getTranslation('vocabAte');
+        if (verb === 'skal spise') return getTranslation('vocabWillEat');
+        return verb;
     }
 
     renderStep();
@@ -890,9 +905,15 @@ export function renderGroundingView(container, navigateFn) {
                 padding-left: 1rem;
             }
             .spotlight-btn {
-                background: linear-gradient(135deg, rgba(255, 235, 59, 0.1), rgba(255, 235, 59, 0.2)) !important;
-                border: 1px solid rgba(255, 235, 255, 0.3) !important;
-                animation: subtleGlow 3s infinite alternate;
+                background: #ffcc00 !important;
+                color: #333 !important;
+                border: none !important;
+                box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+                animation: spotlightPulse 2s infinite alternate;
+            }
+            @keyframes spotlightPulse {
+                from { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3); }
+                to { transform: scale(1.02); box-shadow: 0 6px 25px rgba(255, 204, 0, 0.5); }
             }
             @keyframes subtleGlow {
                 from { box-shadow: 0 0 5px rgba(255, 235, 59, 0.1); }

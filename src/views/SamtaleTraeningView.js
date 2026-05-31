@@ -30,12 +30,20 @@ export function renderSamtaleTraeningView(container, navigateFn) {
         {
             icon: '🏠',
             titleKey: 'samtaleBolig',
-            action: () => alert('Mock: Åbner ' + getTranslation('samtaleBolig'))
+            action: () => navigateFn('samtale_hverdag', {
+                titleKey: 'samtaleBolig',
+                descKey: 'samtaleBolig',
+                link: 'https://gemini.google.com/gem/1S-rFXMb-s7rdtNJJgyKAGlSrNocTWQha?usp=sharing'
+            })
         },
         {
             icon: '💼',
             titleKey: 'samtaleArbejde',
-            action: () => alert('Mock: Åbner ' + getTranslation('samtaleArbejde'))
+            action: () => navigateFn('samtale_hverdag', {
+                titleKey: 'samtaleArbejde',
+                descKey: 'samtaleArbejde',
+                link: 'https://gemini.google.com/gem/17cCj0Z3vbZH-jKYwje5PLJWpdD5xIRu7?usp=sharing'
+            })
         }
     ];
 

@@ -13,6 +13,48 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         selectedModal: inheritedState.selectedModal || '',
     };
 
+    function getVerbTranslation(verb) {
+        if (verb === 'spiser') return getTranslation('vocabEats');
+        if (verb === 'spiste') return getTranslation('vocabAte');
+        if (verb === 'skal spise') return getTranslation('vocabWillEat');
+        return verb;
+    }
+
+    function getModalTranslation(modal) {
+        if (!modal) return '???';
+        const modalKeys = {
+            'skal': 'vocabSkal',
+            'må': 'vocabMaa',
+            'vil': 'vocabVil',
+            'kan': 'vocabKan'
+        };
+        return modal + ' (' + getTranslation(modalKeys[modal] || modal).toLowerCase() + ')';
+    }
+
+    function getModalPastTranslation(modal) {
+        if (!modal) return '';
+        const base = getBaseModal(modal);
+        const pastKeys = {
+            'skal': 'vocabSkulle',
+            'må': 'vocabMaatte',
+            'vil': 'vocabVille',
+            'kan': 'vocabKunne'
+        };
+        const pastDanish = { 'skal': 'skulle', 'må': 'måtte', 'vil': 'ville', 'kan': 'kunne' }[base];
+        return pastDanish + ' (' + getTranslation(pastKeys[base] || base).toLowerCase() + ')';
+    }
+
+    function getBaseModal(modal) {
+        if (!modal) return '';
+        if (['skal', 'skulle'].includes(modal)) return 'skal';
+        if (['må', 'måtte'].includes(modal)) return 'må';
+        if (['vil', 'ville'].includes(modal)) return 'vil';
+        if (['kan', 'kunne'].includes(modal)) return 'kan';
+        return modal;
+    }
+
+    const isPast = state.verbAnchor === 'spiste';
+
     // Top bar
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
@@ -47,10 +89,10 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     <span class="sentence-part no-wrap">${state.nounAnchor} barn</span>
                     <select class="grammatik-select modal-select" id="modal-select">
                         <option value="">???</option>
-                        <option value="skal" ${state.selectedModal === 'skal' ? 'selected' : ''}>skal</option>
-                        <option value="må" ${state.selectedModal === 'må' ? 'selected' : ''}>må</option>
-                        <option value="vil" ${state.selectedModal === 'vil' ? 'selected' : ''}>vil</option>
-                        <option value="kan" ${state.selectedModal === 'kan' ? 'selected' : ''}>kan</option>
+                        <option value="${isPast ? 'skulle' : 'skal'}" ${state.selectedModal === (isPast ? 'skulle' : 'skal') ? 'selected' : ''}>${isPast ? 'skulle' : 'skal'} - ${isPast ? getTranslation('vocabSkulle') : getTranslation('vocabSkal')}</option>
+                        <option value="${isPast ? 'måtte' : 'må'}" ${state.selectedModal === (isPast ? 'måtte' : 'må') ? 'selected' : ''}>${isPast ? 'måtte' : 'må'} - ${isPast ? getTranslation('vocabMaatte') : getTranslation('vocabMaa')}</option>
+                        <option value="${isPast ? 'ville' : 'vil'}" ${state.selectedModal === (isPast ? 'ville' : 'vil') ? 'selected' : ''}>${isPast ? 'ville' : 'vil'} - ${isPast ? getTranslation('vocabVille') : getTranslation('vocabVil')}</option>
+                        <option value="${isPast ? 'kunne' : 'kan'}" ${state.selectedModal === (isPast ? 'kunne' : 'kan') ? 'selected' : ''}>${isPast ? 'kunne' : 'kan'} - ${isPast ? getTranslation('vocabKunne') : getTranslation('vocabKan')}</option>
                     </select>
                     <span class="sentence-part">spise</span>
                 </div>
@@ -71,11 +113,11 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <div class="label">${getTranslation('timelineLabel')}</div>
                         <div class="svg-container" id="timeline-svg"></div>
                         <div class="word-anchor">
-                            <div class="word-display" id="modal-word-marker">${state.selectedModal || 'skal'}</div>
+                            <div class="word-display" id="modal-word-marker">${getModalTranslation(state.selectedModal || 'skal')}</div>
                         </div>
                         <div class="time-toggle">
-                            <button class="toggle-btn" data-time="da">${getTranslation('pastLabel')}</button>
-                            <button class="toggle-btn active" data-time="nu">${getTranslation('nowLabel')}</button>
+                            <button class="toggle-btn ${isPast ? 'active' : ''}" data-time="da">${getTranslation('pastLabel')}</button>
+                            <button class="toggle-btn ${!isPast ? 'active' : ''}" data-time="nu">${getTranslation('nowLabel')}</button>
                         </div>
                     </div>
 
@@ -138,7 +180,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             if (val) {
                 nav.style.display = 'block';
                 const projWord = exerciseArea.querySelector('#modal-word-marker');
-                if (projWord) projWord.textContent = val;
+                if (projWord) projWord.textContent = isPast ? getModalPastTranslation(val) : getModalTranslation(val);
             }
         };
 
@@ -158,8 +200,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         };
 
         goToAdjBtn.onclick = () => navigateFn('adjective_bridge', {
-            nounAnchor: state.nounAnchor,
-            selectedModal: state.selectedModal
+            ...state,
+            verbAnchor: state.verbAnchor // Ensure it's explicitly included if spread doesn't catch it
         });
 
         finishBtn.onclick = () => navigateFn('dagens_opgave');
@@ -174,12 +216,13 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         const actionWord = exerciseArea.querySelector('#action-word-static');
 
         // Timeline SVG
+        const dotCx = isPast ? '100' : '300';
         timelineSvg.innerHTML = `
             <svg viewBox="0 0 400 100" class="timeline-svg-main">
                 <line x1="50" y1="50" x2="350" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="4" stroke-linecap="round" />
                 <circle cx="100" cy="50" r="6" fill="#666" />
                 <circle cx="300" cy="50" r="6" fill="#666" />
-                <circle id="moving-dot" cx="300" cy="50" r="10" fill="var(--bg-deep-red)" style="transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+                <circle id="moving-dot" cx="${dotCx}" cy="50" r="10" fill="var(--bg-deep-red)" style="transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);" />
             </svg>
         `;
 
@@ -198,24 +241,24 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
                 const time = btn.dataset.time;
                 const modal = state.selectedModal || 'skal';
+                const base = getBaseModal(modal);
                 const dot = exerciseArea.querySelector('#moving-dot');
 
                 if (time === 'da') {
                     dot.setAttribute('cx', '100');
-                    const deconstruction = {
-                        'skal': 'skulle',
-                        'må': 'måtte',
-                        'vil': 'ville',
-                        'kan': 'kunne'
-                    };
-                    modalMarker.textContent = deconstruction[modal] || modal;
+                    modalMarker.textContent = getModalPastTranslation(base);
                     modalMarker.style.color = '#ff9800';
                     modalMarker.classList.add('shift-past');
+
+                    const pastMap = { 'skal': 'skulle', 'må': 'måtte', 'vil': 'ville', 'kan': 'kunne' };
+                    state.selectedModal = pastMap[base] || base;
                 } else {
                     dot.setAttribute('cx', '300');
-                    modalMarker.textContent = modal;
+                    modalMarker.textContent = getModalTranslation(base);
                     modalMarker.style.color = 'white';
                     modalMarker.classList.remove('shift-past');
+
+                    state.selectedModal = base;
                 }
 
                 actionWord.classList.add('action-pulse');
@@ -231,6 +274,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
         let svgContent = '';
         let explanation = '';
+        const baseModal = getBaseModal(modal);
 
         const commonStyles = `
             <style>
@@ -241,7 +285,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             </style>
         `;
 
-        if (modal === 'skal') {
+        if (baseModal === 'skal') {
             explanation = getTranslation('modalForceSkal');
             svgContent = `
                 <svg viewBox="0 0 200 120" class="viz-svg">
@@ -260,7 +304,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </path>
                 </svg>
             `;
-        } else if (modal === 'må') {
+        } else if (baseModal === 'må') {
             explanation = getTranslation('modalForceMaa');
             svgContent = `
                 <svg viewBox="0 0 200 120" class="viz-svg">
@@ -275,7 +319,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     <path d="M 60 65 L 140 65" stroke="#4caf50" stroke-width="2" stroke-dasharray="5,5" />
                 </svg>
             `;
-        } else if (modal === 'vil') {
+        } else if (baseModal === 'vil') {
             explanation = getTranslation('modalForceVil');
             svgContent = `
                 <svg viewBox="0 0 200 120" class="viz-svg">
@@ -291,7 +335,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </circle>
                 </svg>
             `;
-        } else if (modal === 'kan') {
+        } else if (baseModal === 'kan') {
             explanation = getTranslation('modalForceKan');
             svgContent = `
                 <svg viewBox="0 0 200 120" class="viz-svg">

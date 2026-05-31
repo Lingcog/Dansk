@@ -73,15 +73,15 @@ export function renderOrdstillingView(container, navigateFn) {
         title.textContent = getTranslation(level === 'A1' ? 'ordstillingLet' : 'ordstillingSvaer');
 
         const sentencesA1 = [
-            "Jeg hedder Mikael.", "Jeg kommer fra Danmark.", "Hvor gammel er du?",
-            "Jeg bor i København.", "Hvad laver du?", "Jeg har en hund.",
-            "Min bil er rød.", "Kaffen er varm."
+            "Foråret er her nu.", "Solen skinner meget varmt.", "Hvor flotte er blomsterne?",
+            "Jeg nyder det gode vejr.", "Hvad sår du der?", "Jeg har en stor have.",
+            "Græsset er meget grønt.", "Kaffen nydes i solen."
         ];
         const sentencesA2 = [
-            "Solen skinner altid i min have.", "Jeg kan godt lide at lære dansk.",
-            "Vi ses i morgen på sprogskolen.", "Kan du tale dansk og engelsk?",
-            "I går var jeg i biografen med min ven.", "Jeg skal købe ind i supermarkedet nu.",
-            "Hvorfor kom du ikke til festen?", "Det er vigtigt at øve sig hver dag."
+            "Om foråret bliver dagene længere og meget lysere.", "Jeg kan godt lide de små tidlige forårsblomster.",
+            "Vi spiser altid frokost ude i det gode forårsvejr.", "I morgen vil jeg cykle en lang tur ud.",
+            "Træerne får snart fine lysegrønne blade på grenene igen.", "Hvorfor er det stadig en lille smule koldt om morgenen?",
+            "Det er skønt at høre de søde små fugle synge.", "I den næste weekend skal vi arbejde ude i haven."
         ];
 
         const sentences = level === 'A1' ? sentencesA1 : sentencesA2;

@@ -6,6 +6,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
     const state = {
         nounAnchor: inheritedState.nounAnchor || 'Et',
+        verbAnchor: inheritedState.verbAnchor || 'spiser',
         selectedModal: inheritedState.selectedModal || 'skal',
         selectedAdjective: ''
     };
@@ -17,8 +18,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     backBtn.className = 'back-btn';
     backBtn.textContent = '← ' + getTranslation('back');
     backBtn.onclick = () => navigateFn('modal_force', {
-        nounAnchor: state.nounAnchor,
-        selectedModal: state.selectedModal
+        ...state
     });
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
@@ -52,7 +52,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                                 <option value="">???</option>
                                 <!-- Dynamic options inserted here -->
                             </select>
-                            <span class="sentence-part">barn <span id="adj-modal-inherited">${state.selectedModal}</span> spise</span>
+                            <span class="sentence-part">barn <span id="adj-modal-inherited">${state.selectedModal}</span> ${state.selectedModal ? 'spise' : state.verbAnchor}</span>
                         </div>
                     </div>
                 </div>
@@ -102,20 +102,20 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     ${getTranslation('agreementExpl')}
                 </div>
 
-                <div class="recommendation-box animate-in" style="margin-top: 4rem;">
+                <div class="adverb-teaser animate-in" style="margin-top: 4rem; text-align: center; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 4rem;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffffff;">${getTranslation('adverbTeaser')}</h3>
+                    <div class="navigation-controls">
+                        <button class="gemini-btn spotlight-btn" id="next-adverb-btn">${getTranslation('nextStepAdverb')}</button>
+                    </div>
+                </div>
+
+                <div class="recommendation-box animate-in" style="margin-top: 5rem;">
                     <div class="rec-title">${getTranslation('practiceMoreTitle')}</div>
                     <div class="rec-links">
                         <a href="#" class="rec-link" id="adj-comp-link">
                             <span class="icon">📈</span>
                             ${getTranslation('adjectiveComparisonLink')}
                         </a>
-                    </div>
-                </div>
-
-                <div class="adverb-teaser animate-in" style="margin-top: 5rem; text-align: center; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 4rem;">
-                    <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: #ffffff;">${getTranslation('adverbTeaser')}</h3>
-                    <div class="navigation-controls">
-                        <button class="gemini-btn spotlight-btn" id="next-adverb-btn">${getTranslation('nextStepAdverb')}</button>
                     </div>
                 </div>
 
@@ -200,10 +200,9 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         const nextAdverbBtn = exerciseArea.querySelector('#next-adverb-btn');
         nextAdverbBtn.onclick = () => {
             navigateFn('adverb_bridge', {
-                nounAnchor: state.nounAnchor,
-                selectedNoun: state.selectedNoun || 'barn',
-                selectedVerb: state.selectedVerb || 'spiser',
-                isPlural: state.isPlural || false
+                ...state,
+                selectedNoun: 'barn', // Keep consistent for now as it's the only one
+                selectedVerb: state.selectedModal ? 'spise' : state.verbAnchor
             });
         };
 
@@ -252,7 +251,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         function updateState() {
             // Noun word handling - keep roots only as requested
             if (currentWord === 'barn') {
-                nounDisplay.textContent = getTranslation('exampleBarn').split(' ')[0];
+                nounDisplay.textContent = 'Barn';
                 stemDisplay.textContent = 'stor';
                 if (currentType === 'bestemt') {
                     suffixDisplay.textContent = 'e';
@@ -262,7 +261,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     suffixDisplay.classList.add('active');
                 }
             } else {
-                nounDisplay.textContent = getTranslation('exampleBil').split(' ')[0];
+                nounDisplay.textContent = 'Bil';
                 stemDisplay.textContent = 'hurtig';
                 if (currentType === 'bestemt') {
                     suffixDisplay.textContent = 'e';

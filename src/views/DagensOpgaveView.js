@@ -24,10 +24,10 @@ export function renderDagensOpgaveView(container, navigateFn) {
     // Cards Data Wrapper
     const cardsData = [
         {
-            icon: '🧠',
-            titleKey: 'laerEtNytOrd',
-            descKey: 'laerEtNytOrdDesc',
-            action: () => navigateFn('word_learning')
+            icon: '🏗️',
+            titleKey: 'howToBuildSentence',
+            descKey: 'howToBuildSentenceDesc',
+            action: () => navigateFn('grounding')
         },
         {
             icon: '⏰',
@@ -42,16 +42,6 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('traen_grammatik')
         },
         {
-            icon: '🕰️',
-            titleKey: 'verberDatidRegelm',
-            action: () => navigateFn('verbum_learning', { categoryId: 'datid_regelm' })
-        },
-        {
-            icon: '🕰️',
-            titleKey: 'verberDatid',
-            action: () => navigateFn('verbum_learning', { categoryId: 'datid' })
-        },
-        {
             icon: '🧩',
             titleKey: 'ordstilling',
             descKey: 'ordstillingDesc',
@@ -62,12 +52,6 @@ export function renderDagensOpgaveView(container, navigateFn) {
             titleKey: 'hvilketOrd',
             descKey: 'hvilketOrdDesc',
             action: () => navigateFn('pronomen')
-        },
-        {
-            icon: '🏗️',
-            titleKey: 'howToBuildSentence',
-            descKey: 'howToBuildSentenceDesc',
-            action: () => navigateFn('grounding')
         }
     ];
 
@@ -103,5 +87,36 @@ export function renderDagensOpgaveView(container, navigateFn) {
     viewContainer.appendChild(title);
     viewContainer.appendChild(subtitle);
     viewContainer.appendChild(grid);
+
+    // --- Support Links ---
+    const supportArea = document.createElement('div');
+    supportArea.className = 'support-links';
+    supportArea.style.display = 'flex';
+    supportArea.style.justifyContent = 'center';
+    supportArea.style.flexWrap = 'wrap';
+    supportArea.style.gap = '1rem';
+    supportArea.style.marginTop = '3rem';
+    supportArea.style.paddingBottom = '2rem';
+
+    const kofiLink = document.createElement('a');
+    kofiLink.href = 'https://ko-fi.com/dansktraening';
+    kofiLink.target = '_blank';
+    kofiLink.className = 'gemini-btn';
+    kofiLink.style.textDecoration = 'none';
+    kofiLink.style.backgroundColor = '#ff5e5b';
+    kofiLink.textContent = '☕ Buy me a coffee';
+
+    const mpLink = document.createElement('a');
+    mpLink.href = 'https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in';
+    mpLink.target = '_blank';
+    mpLink.className = 'gemini-btn';
+    mpLink.style.textDecoration = 'none';
+    mpLink.style.backgroundColor = '#5a78ff';
+    mpLink.textContent = '📱 Støt med MobilePay';
+
+    supportArea.appendChild(kofiLink);
+    supportArea.appendChild(mpLink);
+    viewContainer.appendChild(supportArea);
+
     container.appendChild(viewContainer);
 }

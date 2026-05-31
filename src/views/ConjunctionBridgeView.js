@@ -1,11 +1,16 @@
 import { getTranslation, appState } from '../utils/i18n.js';
 
 export function renderConjunctionBridgeView(container, navigateFn, extraData = {}) {
-    const nounAnchor = extraData.nounAnchor || appState.nounAnchor || 'Et';
-    const selectedNoun = extraData.selectedNoun || appState.selectedNoun || 'barn';
-    const selectedVerb = extraData.selectedVerb || appState.selectedVerb || 'spiser';
-    const selectedAdverb = extraData.selectedAdverb || appState.selectedAdverb || 'langsomt';
-    const adjectivePart = extraData.adjectivePart || 'stort';
+    const state = {
+        nounAnchor: extraData.nounAnchor || 'Et',
+        selectedNoun: extraData.selectedNoun || 'barn',
+        selectedVerb: extraData.selectedVerb || 'spiser',
+        selectedModal: extraData.selectedModal || '',
+        verbAnchor: extraData.verbAnchor || 'spiser',
+        selectedAdjective: extraData.selectedAdjective || '',
+        adjectivePart: extraData.adjectivePart || 'stort',
+        selectedAdverb: extraData.selectedAdverb || 'langsomt'
+    };
 
     let selectedConj = 'fordi';
 
@@ -22,7 +27,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                     <div class="flow-container" id="flow-visual-area">
                         <div class="sentence-node" id="node-1">${getTranslation('sentenceNode1')}</div>
                         <div class="flow-path-wrapper">
-                            <div class="conj-label" id="conj-indicator">${getTranslation('conjFordi')}</div>
+                            <div class="conj-label" id="conj-indicator">fordi</div>
                             
                             <!-- Main SVG Container -->
                             <svg class="flow-svg" viewBox="0 0 400 120" preserveAspectRatio="xMidYMid meet">
@@ -69,23 +74,23 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
                 <div class="full-sentence-display">
                     <div class="sentence-part-1">
-                        <span class="noun-anchor">${nounAnchor}</span>
-                        <span class="adjective-part">${adjectivePart}</span>
-                        <span class="noun-part">${selectedNoun}</span>
-                        <span class="verb-part">${selectedVerb}</span>
-                        <span class="adverb-part">${selectedAdverb}</span>
+                        <span class="noun-anchor">${state.nounAnchor}</span>
+                        <span class="adjective-part">${state.adjectivePart}</span>
+                        <span class="noun-part">barn</span>
+                        <span class="verb-part">${state.selectedModal ? state.selectedModal + ' ' + state.selectedVerb : state.selectedVerb}</span>
+                        <span class="adverb-part">${state.selectedAdverb}</span>
                     </div>
                     
                     <div class="conjunction-part">
                         <span id="punctuation-before">,</span>
                         <select id="conjunction-select" class="grammatik-select premium-select conj-select">
-                            <option value="fordi">${getTranslation('conjFordi')}</option>
-                            <option value="når">${getTranslation('conjNaar')}</option>
-                            <option value="da">${getTranslation('conjDa')}</option>
-                            <option value="selvom">${getTranslation('conjSelvom')}</option>
-                            <option value="alligevel">${getTranslation('conjAlligevel')}</option>
-                            <option value="men">${getTranslation('conjMen')}</option>
-                            <option value="Derfor">${getTranslation('conjDerfor')}</option>
+                            <option value="fordi">fordi</option>
+                            <option value="når">når</option>
+                            <option value="da">da</option>
+                            <option value="selvom">selvom</option>
+                            <option value="alligevel">alligevel</option>
+                            <option value="men">men</option>
+                            <option value="derfor">derfor</option>
                         </select>
                     </div>
                 </div>
@@ -133,7 +138,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
     function updateConjUI(conj) {
         selectedConj = conj;
-        conjIndicator.textContent = getTranslation('conj' + conj.charAt(0).toUpperCase() + conj.slice(1));
+        conjIndicator.textContent = conj.toLowerCase();
 
         const explBox = container.querySelector('#conj-expl-box');
         if (explBox) {
@@ -236,14 +241,12 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
         updateConjUI(e.target.value);
     };
 
-    backBtn.onclick = () => navigateFn('adverb_bridge', {
-        nounAnchor, selectedNoun, selectedVerb, selectedAdverb, adjectivePart
-    });
+    backBtn.onclick = () => navigateFn('adverb_bridge', state);
     finishBtn.onclick = () => navigateFn('dagens_opgave');
 
     practiceLink.onclick = (e) => {
         e.preventDefault();
-        navigateFn('traen_grammatik');
+        navigateFn('conjunction_choice');
     };
 
     // Initial state

@@ -60,6 +60,12 @@ export function renderMainView(container, navigateFn) {
             titleKey: 'laerDanskKultur',
             descKey: 'laerDanskKulturDesc',
             action: () => navigateFn('dansk_kultur')
+        },
+        {
+            icon: '🎨',
+            titleKey: 'talemaader',
+            descKey: 'talemaaderDesc',
+            action: () => navigateFn('talemaader')
         }
     ];
 

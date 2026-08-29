@@ -189,13 +189,13 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
         `).join('');
 
         const selects = container.querySelectorAll('.adj-practice-select');
-        const nextSetBtn = document.getElementById('next-set-btn');
+        const nextSetBtn = viewContainer.querySelector('#next-set-btn');
 
         selects.forEach(select => {
             select.onchange = () => {
                 const idx = select.dataset.idx;
                 const ex = set[idx];
-                const feedbackEl = document.getElementById(`feedback-${idx}`);
+                const feedbackEl = viewContainer.querySelector(`#feedback-${idx}`);
 
                 const absoluteIdx = (currentSetIndex * 5) + parseInt(idx);
 

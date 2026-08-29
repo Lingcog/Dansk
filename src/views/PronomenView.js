@@ -86,7 +86,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
         <div class="card-icon">📈</div>
         <div class="card-title">${getTranslation('soedSoedereSoedest')}</div>
     `;
-    adjCompCard.onclick = () => navigateFn('pronomen', { subPath: 'adjektiv_comparison' });
+    adjCompCard.onclick = () => navigateFn('adjective_comparison');
 
     const adverbChoiceCard = document.createElement('div');
     adverbChoiceCard.className = 'card';
@@ -881,8 +881,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
         startAdverbChoiceExercise();
     } else if (viewMode === 'konjunktioner') {
         startConjunctionChoiceExercise();
-    } else if (viewMode === 'der_er_det_er') {
+    } else if (viewMode === 'der_er_det_er' || subPath === 'der_er_det_er') {
         startDerErExplanation();
+    } else if (subPath === 'adjektiv_comparison') {
+        navigateFn('adjective_comparison');
     } else if (subPath === 'v' || subPath.startsWith('v/')) {
         const parts = subPath.split('/');
         if (parts.length > 1) {

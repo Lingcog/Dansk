@@ -190,6 +190,8 @@ export const translations = {
     "derEr_ex12_feedback": "Korrekt! 'Det er' identificerer.",
     "derEr_ex13_feedback": "Korrekt! 'Det er' bruges fast om vejr, tid og temperatur.",
     "derEr_ex14_feedback": "Korrekt! 'Der er' (omvendt til 'er der') markerer begivenhedens eksistens.",
+    talemaader: "Talemåder & Mønstre",
+    talemaaderDesc: "Lær danske talemåder trin-for-trin og find mønstrene.",
     selectLanguage: "Vælg sprog",
     title: "Træning i dansk",
     subtitle: "Vælg en kategori for at starte din træning.",

@@ -37,6 +37,7 @@ import { renderVerbumMenuView } from './views/VerbumMenuView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
 import { renderDanskKulturView } from './views/DanskKulturView.js';
+import { renderTalemaaderView } from './views/TalemaaderView.js';
 import { appState, getLang, getTranslation, setLanguage, translations } from './utils/i18n.js';
 
 // Router
@@ -81,6 +82,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);
+  } else if (viewTarget === 'talemaader') {
+    appState.currentView = 'talemaader';
+    renderTalemaaderView(appDiv, navigate, extraData);
   } else if (viewTarget === 'samtale_traening') {
     appState.currentView = 'samtale_traening';
     renderSamtaleTraeningView(appDiv, navigate);

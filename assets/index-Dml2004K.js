@@ -3062,12 +3062,12 @@
       .overemne-overlay {
         position: absolute;
         top: 2%;
-        left: 20%;
+        left: 35%;
         width: 60%;
         height: 10%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         z-index: 10;
       }
       .overemne-btn {

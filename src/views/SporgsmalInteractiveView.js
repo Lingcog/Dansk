@@ -52,91 +52,91 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
     function initStoryData() {
         if (storyId === 'sara') {
             storyData = [
-                { type: 'narrative', text: '📍 Situation 1: Saras fødselsdag begynder kl. 18 på lørdag.', image: 'assets/sara_time_18.png' },
+                { type: 'narrative', text: t('sara_sit_1', '📍 Situation 1: Saras fødselsdag begynder kl. 18 på lørdag.'), image: 'assets/sara_time_18.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om tidspunktet.', 
+                  trps: t('sara_trps_1_hv', 'Spørg om tidspunktet.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvornår', 'begynder', 'fødselsdagen?'] },
                   pronunciation: { target: 'Hvornår begynder fødselsdagen?', alternatives: ['Hvornår starter fødselsdagen', 'Hvornår begynder Saras fødselsdag', 'Hvornår starter Saras fødselsdag', 'Hvornår starter fødselsdagen på lørdag', 'Hvornår begynder Saras fødselsdag på lørdag', 'Hvornår starter Saras fødselsdag på lørdag'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Nu et ja/nej-spørgsmål: Spørg om den begynder kl. 18.', 
+                  trps: t('sara_trps_1_jn', 'Nu et ja/nej-spørgsmål: Spørg om den begynder kl. 18.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Begynder', 'fødselsdagen', 'klokken', '18?'] },
                   pronunciation: { target: 'Begynder fødselsdagen klokken 18?', alternatives: ['Starter fødselsdagen klokken 18', 'Begynder den klokken 18', 'Starter den klokken 18', 'Starter fødselsdagen klokken 18 på lørdag', 'Begynder den klokken 18 på lørdag', 'Starter den klokken 18 på lørdag'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 2: Sara inviterer familie og venner.', image: 'assets/sara_friends.png' },
+                { type: 'narrative', text: t('sara_sit_2', '📍 Situation 2: Sara inviterer familie og venner.'), image: 'assets/sara_friends.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om gæsterne.', 
+                  trps: t('sara_trps_2_hv', 'Spørg om gæsterne.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvem', 'inviterer', 'Sara?'] },
                   pronunciation: { target: 'Hvem inviterer Sara?', alternatives: ['Hvem inviterer hun'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om hun inviterer familie og venner.', 
+                  trps: t('sara_trps_2_jn', 'Spørg om hun inviterer familie og venner.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Inviterer', 'Sara', 'familie', 'og', 'venner?'] },
                   pronunciation: { target: 'Inviterer Sara familie og venner?', alternatives: ['Inviterer hun familie og venner'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 3: Sara vil have en ny telefon.', image: 'assets/sara_phone.png' },
+                { type: 'narrative', text: t('sara_sit_3', '📍 Situation 3: Sara vil have en ny telefon.'), image: 'assets/sara_phone.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om gaven.', 
+                  trps: t('sara_trps_3_hv', 'Spørg om gaven.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'vil', 'Sara', 'have?'] },
                   pronunciation: { target: 'Hvad vil Sara have?', alternatives: ['Hvad vil hun have', 'Hvad ønsker Sara sig', 'Hvad ønsker hun sig'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om hun vil have en ny telefon.', 
+                  trps: t('sara_trps_3_jn', 'Spørg om hun vil have en ny telefon.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Vil', 'Sara', 'have', 'en', 'ny', 'telefon?'] },
                   pronunciation: { target: 'Vil Sara have en ny telefon?', alternatives: ['Vil hun have en ny telefon', 'Ønsker Sara sig en ny telefon', 'Ønsker hun sig en ny telefon'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 4: Sara serverer kage.', image: 'assets/sara_cake.png' },
+                { type: 'narrative', text: t('sara_sit_4', '📍 Situation 4: Sara serverer kage.'), image: 'assets/sara_cake.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om maden.', 
+                  trps: t('sara_trps_4_hv', 'Spørg om maden.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'serverer', 'Sara?'] },
                   pronunciation: { target: 'Hvad serverer Sara?', alternatives: ['Hvad serverer hun', 'Hvad laver Sara', 'Hvad bager Sara'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om hun serverer kage.', 
+                  trps: t('sara_trps_4_jn', 'Spørg om hun serverer kage.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Serverer', 'Sara', 'kage?'] },
                   pronunciation: { target: 'Serverer Sara kage?', alternatives: ['Serverer hun kage', 'Bager Sara kage'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 5: Sara holder fødselsdag i lejligheden.', image: 'assets/sara_apartment.png' },
+                { type: 'narrative', text: t('sara_sit_5', '📍 Situation 5: Sara holder fødselsdag i lejligheden.'), image: 'assets/sara_apartment.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om lokationen.', 
+                  trps: t('sara_trps_5_hv', 'Spørg om lokationen.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'holder', 'Sara', 'fødselsdag?'] },
                   pronunciation: { target: 'Hvor holder Sara fødselsdag?', alternatives: ['Hvor holder hun fødselsdag', 'Hvor er fødselsdagen'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om hun holder fødselsdag i lejligheden.', 
+                  trps: t('sara_trps_5_jn', 'Spørg om hun holder fødselsdag i lejligheden.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Holder', 'Sara', 'fødselsdag', 'i', 'lejligheden?'] },
                   pronunciation: { target: 'Holder Sara fødselsdag i lejligheden?', alternatives: ['Holder hun fødselsdag i lejligheden'], focus: [] }
                 },
 
-                { type: 'narrative', text: '📍 Situation 6: Sara elsker musik.', image: 'assets/sara_music.png' },
+                { type: 'narrative', text: t('sara_sit_6', '📍 Situation 6: Sara elsker musik.'), image: 'assets/sara_music.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om musikken.', 
+                  trps: t('sara_trps_6_hv', 'Spørg om musikken.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'elsker', 'Sara?'] },
                   pronunciation: { target: 'Hvad elsker Sara?', alternatives: ['Hvad elsker hun'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om hun elsker musik.', 
+                  trps: t('sara_trps_6_jn', 'Spørg om hun elsker musik.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Elsker', 'Sara', 'musik?'] },
                   pronunciation: { target: 'Elsker Sara musik?', alternatives: ['Elsker hun musik'], focus: [] }
                 },
 
-                { type: 'narrative', text: '📍 Situation 7: Fødselsdagen slutter kl. 23.', image: 'assets/sara_time_23.png' },
+                { type: 'narrative', text: t('sara_sit_7', '📍 Situation 7: Fødselsdagen slutter kl. 23.'), image: 'assets/sara_time_23.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om afslutningen.', 
+                  trps: t('sara_trps_7_hv', 'Spørg om afslutningen.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvornår', 'slutter', 'fødselsdagen?'] },
                   pronunciation: { target: 'Hvornår slutter fødselsdagen?', alternatives: ['Hvornår slutter den'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om den slutter kl. 23.', 
+                  trps: t('sara_trps_7_jn', 'Spørg om den slutter kl. 23.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Slutter', 'fødselsdagen', 'klokken', '23?'] },
                   pronunciation: { target: 'Slutter fødselsdagen klokken 23?', alternatives: ['Slutter den klokken 23'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '🏆 Godt gået! Du har nu trænet både Hv-spørgsmål og Ja/Nej-spørgsmål om Saras fødselsdag!' }
+                { type: 'narrative', text: t('sara_success', '🏆 Godt gået! Du har nu trænet både Hv-spørgsmål og Ja/Nej-spørgsmål om Saras fødselsdag!') }
             ];
             return;
         }

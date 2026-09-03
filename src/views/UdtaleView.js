@@ -273,7 +273,21 @@ export function renderUdtaleView(container, navigateFn) {
         const ex = currentSub.exercises[currentIndex];
         
         catTitle.textContent = t('udtale_' + currentSub.id + '_title', currentSub.title);
-        catHint.textContent = t('udtale_hint_' + currentSub.id + '_' + currentIndex, ex.hint);
+        
+        let hintKey = 'udtale_hint_' + currentSub.id + '_' + currentIndex;
+        let hintText = getTranslation(hintKey);
+        // Hvis den specifikke oversættelse mangler (fx for de nye sætninger), fald tilbage til index 0, som oftest er den samme generelle regel.
+        if (hintText === hintKey) {
+            let fallbackKey = 'udtale_hint_' + currentSub.id + '_0';
+            let fallbackText = getTranslation(fallbackKey);
+            if (fallbackText !== fallbackKey) {
+                hintText = fallbackText;
+            } else {
+                hintText = ex.hint;
+            }
+        }
+        catHint.textContent = hintText;
+        
         countDisplay.textContent = `${currentIndex + 1} / ${currentSub.exercises.length}`;
 
         // Disable buttons at ends

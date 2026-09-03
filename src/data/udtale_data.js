@@ -25,7 +25,7 @@ export const udtaleData = {
                     { text: "De vil bade.", targetWords: ["bade."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
                     { text: "Han spiser mad.", targetWords: ["mad."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
                     { text: "En rød flod.", targetWords: ["rød", "flod."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
-                    { text: "En blød klud.", targetWords: ["blød", "klud."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
+                    { text: "Jeg hedder Jens.", targetWords: ["hedder"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
                     { text: "En flad båd.", targetWords: ["flad", "båd."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" }
                 ]
             },
@@ -58,7 +58,7 @@ export const udtaleData = {
                     { text: "Et groft brød.", targetWords: ["brød."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
                     { text: "Rå ris.", targetWords: ["Rå", "ris."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
                     { text: "Rig og ren.", targetWords: ["Rig", "ren."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
-                    { text: "Rund rust.", targetWords: ["Rund", "rust."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" }
+                    { text: "Han er rigtig frisk.", targetWords: ["rigtig", "frisk."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" }
                 ]
             },
             {
@@ -71,7 +71,7 @@ export const udtaleData = {
                     { text: "Fire store biler.", targetWords: ["Fire", "store", "biler."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
                     { text: "Han køber bøger.", targetWords: ["køber", "bøger."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
                     { text: "Der er et par.", targetWords: ["Der", "par."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
-                    { text: "Mor får et bor.", targetWords: ["Mor", "får", "bor."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a' eller 'å'" }
+                    { text: "Mor har et får.", targetWords: ["Mor", "har", "får."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a' eller 'å'" }
                 ]
             }
         ]
@@ -87,7 +87,7 @@ export const udtaleData = {
                 exercises: [
                     { text: "En gul gris.", targetWords: ["gul", "gris."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
                     { text: "Den gode gås.", targetWords: ["gode", "gås."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
-                    { text: "Gå en god gang.", targetWords: ["Gå", "god", "gang."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
+                    { text: "Gå en god tur.", targetWords: ["Gå", "god"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
                     { text: "Giv en gul gave.", targetWords: ["Giv", "gul", "gave."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
                     { text: "Gro et grønt græs.", targetWords: ["Gro", "grønt", "græs."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
                     { text: "En gal ged.", targetWords: ["gal", "ged."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" }
@@ -102,7 +102,7 @@ export const udtaleData = {
                     { text: "En lille nøgle.", targetWords: ["nøgle."], category: "G som J-lyd", hint: "Nøgle udtales som 'nøjle'" },
                     { text: "Leg en leg.", targetWords: ["Leg", "leg."], category: "G som J-lyd", hint: "Udtales som 'lej en lej'" },
                     { text: "Mig og dig.", targetWords: ["Mig", "dig."], category: "G som J-lyd", hint: "Udtales 'maj' og 'daj'" },
-                    { text: "Et løg og lidt røg.", targetWords: ["løg", "røg."], category: "G som J-lyd", hint: "Udtales 'løj' og 'røj'" },
+                    { text: "Der er lidt røg i køkkenet.", targetWords: ["røg"], category: "G som J-lyd", hint: "Udtales 'røj'" },
                     { text: "Han er bleg.", targetWords: ["bleg."], category: "G som J-lyd", hint: "Udtales 'blaj'" }
                 ]
             },
@@ -128,8 +128,8 @@ export const udtaleData = {
                     { text: "En dreng synger.", targetWords: ["dreng", "synger."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
                     { text: "En tung seng.", targetWords: ["tung", "seng."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
                     { text: "Mange ringe.", targetWords: ["Mange", "ringe."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
-                    { text: "At fange en konge.", targetWords: ["fange", "konge."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
-                    { text: "En ung dreng.", targetWords: ["ung", "dreng."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" }
+                    { text: "Jeg fanger en slange.", targetWords: ["fanger", "slange."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
+                    { text: "Han er en ung dreng.", targetWords: ["ung", "dreng."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" }
                 ]
             }
         ]

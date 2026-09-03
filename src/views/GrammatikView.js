@@ -370,50 +370,49 @@ function getExercises(level) {
     if (level === 'A1') {
         return [
             {
-                text: "Jeg [blank_0] foråret i København. Jeg har en lille [blank_1]. Her er jeg ofte sammen med min [blank_2]. Vi [blank_3] blomster ude i jorden. Min familie er en rigtig stor [blank_4]. Om morgenen [blank_5] vi på naturen. Vi [blank_6] også til fuglene sammen. Det er en [blank_7] dag i dag. Vi er meget [blank_8] på sommeren.",
+                text: "Det er [blank_0] i København. Solen [blank_1] stadig over byen. Jeg [blank_2] en tur rundt om [blank_3]. Træerne har grønne [blank_4]. Men snart [blank_5] det koldere. Jeg [blank_6] på svanerne. Det er en [blank_7] by. Vi [blank_8] den sidste varme.",
                 blanks: [
-                    { answer: "nyder", options: ["nyder", "spiser", "læser"], category: "catVerbum", hints: { "spiser": "hintAction", "læser": "hintAction" } },
-                    { answer: "have", options: ["have", "bil", "bord"], category: "catSubstantiv", hints: { "bil": "hintContext", "bord": "hintPlace" } },
-                    { answer: "familie", options: ["familie", "ven", "hund"], category: "catSubstantiv", hints: { "ven": "hintContext", "hund": "hintContext" } },
-                    { answer: "planter", options: ["planter", "drikker", "køber"], category: "catVerbum", hints: { "drikker": "hintAction", "køber": "hintMean" } },
-                    { answer: "hjælp", options: ["hjælp", "bog", "skole"], category: "catSubstantiv", hints: { "bog": "hintContext", "skole": "hintMean" } },
-                    { answer: "kigger", options: ["kigger", "spiser", "ser"], category: "catVerbum", hints: { "spiser": "hintMean", "ser": "hintAction" } },
-                    { answer: "lytter", options: ["lytter", "hører", "går"], category: "catVerbum", hints: { "hører": "hintContext", "går": "hintAction" } },
-                    { answer: "varm", options: ["varm", "sur", "kold"], category: "catAdjektiv", hints: { "sur": "hintMean", "kold": "hintContext" } },
-                    { answer: "spændte", options: ["spændte", "trætte", "sure"], category: "catAdjektiv", hints: { "trætte": "hintContext", "sure": "hintMean" } }
+                    { answer: "sommer", options: ["sommer", "vinter", "nat"], category: "catSubstantiv", hints: { "vinter": "hintMean", "nat": "hintMean" } },
+                    { answer: "skinner", options: ["skinner", "regner", "blæser"], category: "catVerbum", hints: { "regner": "hintMean", "blæser": "hintMean" } },
+                    { answer: "cykler", options: ["cykler", "spiser", "læser"], category: "catVerbum", hints: { "spiser": "hintAction", "læser": "hintAction" } },
+                    { answer: "Søerne", options: ["Søerne", "bilerne", "husene"], category: "catSubstantiv", hints: { "bilerne": "hintContext", "husene": "hintPlace" } },
+                    { answer: "blade", options: ["blade", "sten", "døre"], category: "catSubstantiv", hints: { "sten": "hintContext", "døre": "hintContext" } },
+                    { answer: "bliver", options: ["bliver", "ser", "hører"], category: "catVerbum", hints: { "ser": "hintAction", "hører": "hintAction" } },
+                    { answer: "kigger", options: ["kigger", "smager", "synger"], category: "catVerbum", hints: { "smager": "hintAction", "synger": "hintAction" } },
+                    { answer: "smuk", options: ["smuk", "sur", "kold"], category: "catAdjektiv", hints: { "sur": "hintMean", "kold": "hintContext" } },
+                    { answer: "nyder", options: ["nyder", "køber", "græder"], category: "catVerbum", hints: { "køber": "hintAction", "græder": "hintMean" } }
                 ]
             }
         ];
     } else if (level === 'A2') {
         return [
             {
-                text: "Det er [blank_0] vejr udenfor i dag. Solen skinner [blank_1], og vi [blank_2] en tur i den lyse skov. Vi ser mange [blank_3] træer med friske grønne blade. Vi trækker vejret [blank_4] for at nyde luften. Fuglene [blank_5] smukt oppe i trætoppene. Det [blank_6] som om, at foråret endelig er her. Vi [blank_7] os til at drikke kaffe på terrassen. Det bliver en [blank_8] sæson for os alle.",
+                text: "Det er [blank_0] august, og aftenerne over Nørrebro er begyndt at blive [blank_1]. Vi [blank_2] ofte en tur i Kongens Have. Man kan mærke, at efteråret langsomt [blank_3] nærmere. Cyklisterne [blank_4] ikke lige så hurtigt mere. Det [blank_5] rart med lidt frisk luft ved vandet. Vi [blank_6] os til at drikke kaffe på en café. Det bliver en [blank_7] overgang fra sommer til efterår i byen.",
                 blanks: [
-                    { answer: "lyst", options: ["lyst", "langsomt", "aldrig"], category: "catAdjektiv", hints: { "langsomt": "hintAdj", "aldrig": "hintAdverb" } },
-                    { answer: "varmt", options: ["varmt", "smukt", "ofte"], category: "catAdjektiv", hints: { "smukt": "hintAdj", "ofte": "hintAdverb" } },
+                    { answer: "allerede", options: ["allerede", "næsten", "aldrig"], category: "catAdverbium", hints: { "næsten": "hintMean", "aldrig": "hintMean" } },
+                    { answer: "mørkere", options: ["mørkere", "lysere", "varmere"], category: "catAdjektiv", hints: { "lysere": "hintMean", "varmere": "hintMean" } },
                     { answer: "går", options: ["går", "gik", "gået"], category: "catVerbum", hints: { "gik": "hintTense", "gået": "hintTense" } },
-                    { answer: "høje", options: ["høje", "høj", "højt"], category: "catAdjektiv", hints: { "høj": "hintForm", "højt": "hintForm" } },
-                    { answer: "langsomt", options: ["langsomt", "langsom", "hurtig"], category: "catAdverbium", hints: { "langsom": "hintForm", "hurtig": "hintAdj" } },
-                    { answer: "synger", options: ["synger", "sang", "sunget"], category: "catVerbum", hints: { "sang": "hintTense", "sunget": "hintTense" } },
+                    { answer: "kommer", options: ["kommer", "kom", "kommet"], category: "catVerbum", hints: { "kom": "hintTense", "kommet": "hintTense" } },
+                    { answer: "kører", options: ["kører", "kørte", "kørt"], category: "catVerbum", hints: { "kørte": "hintTense", "kørt": "hintTense" } },
                     { answer: "føles", options: ["føles", "føler", "føltes"], category: "catVerbum", hints: { "føler": "hintForm", "føltes": "hintTense" } },
                     { answer: "glæder", options: ["glæder", "glædede", "glade"], category: "catVerbum", hints: { "glædede": "hintTense", "glade": "hintForm" } },
-                    { answer: "fantastisk", options: ["fantastisk", "fantastiske", "fantastisket"], category: "catAdjektiv", hints: { "fantastiske": "hintForm", "fantastisket": "hintMean" } }
+                    { answer: "hyggelig", options: ["hyggelig", "hyggelige", "hyggeligt"], category: "catAdjektiv", hints: { "hyggelige": "hintForm", "hyggeligt": "hintForm" } }
                 ]
             }
         ];
     } else if (level === 'B1') {
         return [
             {
-                text: "Jeg tager ofte cyklen på arbejde nu, [blank_0] vejret endelig er blevet bedre. Selvom det blæser [blank_1], foretrækker jeg dog at cykle om foråret. Det er [blank_2] forfriskende, især når jeg har mange [blank_3] opgaver at løse i dag. Jeg [blank_4] dog planlægge min rute [blank_5], så jeg ikke møder for mange bakker. Heldigvis [blank_6] regnen som regel en pause. Hvis jeg [blank_7] mig lidt, kan jeg nyde morgensolen. Det [blank_8] lidt ekstra energi at cykle, men det er det hele værd.",
+                text: "Jeg nyder sensommeren utrolig meget, [blank_0] vejret ofte er mildt nede ved kanalerne. Selvom det blæser [blank_1] på cykelstien, er luften [blank_2] frisk. Bådene har [blank_3] sejlet deres sidste tur i havnen. Man [blank_4] dog huske at tage en trøje med, [blank_5] det bliver koldt om aftenen på Dronning Louises Bro. Byens farver [blank_6] langsomt til gyldne nuancer. Hvis man [blank_7] sig godt for, kan man finde kastanjer i Frederiksberg Have. Det [blank_8] tålmodighed at cykle i modvind, men det er det hele værd.",
                 blanks: [
                     { answer: "fordi", options: ["fordi", "selvom", "men"], category: "catKonjunktion", hints: { "selvom": "hintConj", "men": "hintConj" } },
                     { answer: "kraftigt", options: ["kraftigt", "kraftig", "kraftige"], category: "catAdverbium", hints: { "kraftig": "hintForm", "kraftige": "hintForm" } },
-                    { answer: "temmelig", options: ["temmelig", "temmelige", "temmeligt"], category: "catAdverbium", hints: { "temmelige": "hintForm", "temmeligt": "hintForm" } },
-                    { answer: "vigtige", options: ["vigtige", "vigtig", "vigtigt"], category: "catAdjektiv", hints: { "vigtig": "hintForm", "vigtigt": "hintForm" } },
-                    { answer: "må", options: ["må", "skal", "kan"], category: "catModalverbum", hints: { "skal": "hintContext", "kan": "hintContext" } },
-                    { answer: "omhyggeligt", options: ["omhyggeligt", "omhyggelig", "omhyggelige"], category: "catAdverbium", hints: { "omhyggelig": "hintForm", "omhyggelige": "hintForm" } },
-                    { answer: "holder", options: ["holder", "holdt", "holdt"], category: "catVerbum", hints: { "holdt": "hintTense" } },
-                    { answer: "skynder", options: ["skynder", "skyndte", "skyndet"], category: "catVerbum", hints: { "skyndte": "hintTense", "skyndet": "hintTense" } },
+                    { answer: "stadig", options: ["stadig", "desværre", "næppe"], category: "catAdverbium", hints: { "desværre": "hintMean", "næppe": "hintMean" } },
+                    { answer: "næsten", options: ["næsten", "aldeles", "fuldstændig"], category: "catAdverbium", hints: { "aldeles": "hintMean", "fuldstændig": "hintMean" } },
+                    { answer: "skal", options: ["skal", "vil", "kan"], category: "catModalverbum", hints: { "vil": "hintContext", "kan": "hintContext" } },
+                    { answer: "når", options: ["når", "da", "som"], category: "catKonjunktion", hints: { "da": "hintConj", "som": "hintConj" } },
+                    { answer: "skifter", options: ["skifter", "skiftede", "skiftet"], category: "catVerbum", hints: { "skiftede": "hintTense", "skiftet": "hintTense" } },
+                    { answer: "kigger", options: ["kigger", "kiggede", "kigget"], category: "catVerbum", hints: { "kiggede": "hintTense", "kigget": "hintTense" } },
                     { answer: "kræver", options: ["kræver", "krævede", "krævet"], category: "catVerbum", hints: { "krævede": "hintTense", "krævet": "hintTense" } }
                 ]
             }
@@ -421,21 +420,25 @@ function getExercises(level) {
     } else if (level === 'modultest') {
         return [
             {
-                text: "Velkommen til den store [blank_0] om foråret, hvor vi skal øve dit danske sprog. Denne tekst er [blank_1] end de andre, da den fylder flere linjer. Du skal læse hele teksten [blank_2] for at mærke forårsstemningen. Det er vigtigt at du [blank_3] dig om fuglene, før du vælger et ord. Der er mange [blank_4] i listen ovenover om lyse nætter, som du kan bruge. Hvis du laver en [blank_5], kan du prøve igen og nyde haven lidt mere. Vi håber at du får alle svar [blank_6] i første forsøg, mens blomsterne springer ud. Det kræver meget [blank_7] at lære alting perfekt. Men vi ved at du [blank_8] gøre det. Rigtig god [blank_9] med foråret!",
+                text: "Overgangen fra sommer til begyndende efterår er en af årets smukkeste perioder i København, [blank_0] byen skifter karakter. De lyse nætter bliver [blank_1] kortere, og luften over havnen føles lidt [blank_2] om morgenen. Bladene i Fælledparken falder ned, [blank_3] vinden blæser køligt gennem gaderne. Man kan [blank_4] dufte asfalten, [blank_5] der har været en regnbyge. Mange cyklister [blank_6] travlt med at finde varme handsker frem, [blank_7] de ikke fryser. Man kan være [blank_8] at få bord på en lun café, [blank_9] der ofte er mange mennesker. Nogle bliver lidt [blank_10], når sommeren slutter. Men efteråret [blank_11] heldigvis også på masser af hygge. Det gælder bare om at nyde hver eneste [blank_12] i hovedstaden.",
                 blanks: [
-                    { answer: "modultest", options: ["modultest", "eksamen", "prøve"], category: "catSubstantiv" },
-                    { answer: "længere", options: ["længere", "kort", "sværere"], category: "catAdjektiv" },
-                    { answer: "grundigt", options: ["grundigt", "hurtigt", "nemt"], category: "catAdverbium" },
-                    { answer: "umager", options: ["umager", "gør", "passer"], category: "catVerbum" },
-                    { answer: "ord", options: ["ord", "tekster", "sætninger"], category: "catSubstantiv" },
-                    { answer: "fejl", options: ["fejl", "kage", "pause"], category: "catSubstantiv" },
-                    { answer: "rigtige", options: ["rigtige", "forkerte", "sjove"], category: "catAdjektiv" },
-                    { answer: "arbejde", options: ["arbejde", "hygge", "mad"], category: "catSubstantiv" },
-                    { answer: "kan", options: ["kan", "skal", "får"], category: "catModalverbum" },
-                    { answer: "fornøjelse", options: ["fornøjelse", "lykke", "held"], category: "catSubstantiv" }
+                    { answer: "fordi", options: ["fordi", "selvom", "men"], category: "catKonjunktion", hints: { "selvom": "hintConj", "men": "hintConj" } },
+                    { answer: "langsomt", options: ["langsomt", "hurtigt", "aldrig"], category: "catAdverbium", hints: { "hurtigt": "hintMean", "aldrig": "hintMean" } },
+                    { answer: "koldere", options: ["koldere", "varmere", "lysere"], category: "catAdjektiv", hints: { "varmere": "hintMean", "lysere": "hintMean" } },
+                    { answer: "mens", options: ["mens", "fordi", "at"], category: "catKonjunktion", hints: { "fordi": "hintConj", "at": "hintConj" } },
+                    { answer: "tydeligt", options: ["tydeligt", "tydelig", "tydelige"], category: "catAdverbium", hints: { "tydelig": "hintForm", "tydelige": "hintForm" } },
+                    { answer: "når", options: ["når", "da", "som"], category: "catKonjunktion", hints: { "da": "hintConj", "som": "hintConj" } },
+                    { answer: "har", options: ["har", "får", "er"], category: "catVerbum", hints: { "får": "hintContext", "er": "hintContext" } },
+                    { answer: "så", options: ["så", "hvis", "da"], category: "catKonjunktion", hints: { "hvis": "hintConj", "da": "hintConj" } },
+                    { answer: "heldig", options: ["heldig", "heldige", "heldigt"], category: "catAdjektiv", hints: { "heldige": "hintForm", "heldigt": "hintForm" } },
+                    { answer: "selvom", options: ["selvom", "fordi", "at"], category: "catKonjunktion", hints: { "fordi": "hintConj", "at": "hintConj" } },
+                    { answer: "triste", options: ["triste", "trist", "glade"], category: "catAdjektiv", hints: { "trist": "hintForm", "glade": "hintMean" } },
+                    { answer: "byder", options: ["byder", "bød", "budt"], category: "catVerbum", hints: { "bød": "hintTense", "budt": "hintTense" } },
+                    { answer: "dag", options: ["dag", "årstid", "minut"], category: "catSubstantiv", hints: { "årstid": "hintMean", "minut": "hintMean" } }
                 ]
             }
         ];
     }
     return [];
 }
+

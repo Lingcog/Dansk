@@ -130,53 +130,66 @@ export function renderOrdstillingView(container, navigateFn) {
             gameArea.appendChild(controls);
             nextBtn.style.display = 'none';
             feedback.textContent = '';
-            updateUI();
-        }
-
-        function updateUI() {
+            
+            // Initial setup
             wordPool.innerHTML = '';
-            scrambledWords.forEach((word, idx) => {
+            resultArea.innerHTML = '';
+            
+            scrambledWords.forEach(word => {
                 const chip = document.createElement('div');
-                chip.className = 'word-chip';
+                chip.className = 'word-chip pool';
                 chip.textContent = word;
+                
+                // Allow click to move as a fallback
                 chip.onclick = () => {
-                    scrambledWords.splice(idx, 1);
-                    userWords.push(word);
-                    updateUI();
+                    if (chip.parentElement === wordPool) {
+                        resultArea.appendChild(chip);
+                        chip.classList.replace('pool', 'result-chip');
+                    } else {
+                        wordPool.appendChild(chip);
+                        chip.classList.replace('result-chip', 'pool');
+                    }
+                    checkCorrect();
                 };
                 wordPool.appendChild(chip);
             });
 
-            resultArea.innerHTML = '';
-            if (userWords.length === 0) {
-                resultArea.innerHTML = '<div class="result-placeholder">...</div>';
-            } else {
-                userWords.forEach((word, idx) => {
-                    const chip = document.createElement('div');
-                    chip.className = 'word-chip result-chip';
-                    chip.textContent = word;
-                    chip.onclick = () => {
-                        userWords.splice(idx, 1);
-                        scrambledWords.push(word);
-                        updateUI();
-                    };
-                    resultArea.appendChild(chip);
-                });
+            function checkCorrect() {
+                const selectedArr = Array.from(resultArea.children).map(c => c.textContent);
+                const poolArr = Array.from(wordPool.children);
+                
+                // Update classes
+                Array.from(resultArea.children).forEach(c => c.classList.replace('pool', 'result-chip'));
+                poolArr.forEach(c => c.classList.replace('result-chip', 'pool'));
+                
+                if (poolArr.length === 0) {
+                    if (selectedArr.join(' ') === originalSentence) {
+                        feedback.textContent = getTranslation('correctOrder');
+                        feedback.className = 'game-feedback success';
+                        nextBtn.style.display = 'inline-block';
+                    } else {
+                        feedback.textContent = getTranslation('wrongOrder');
+                        feedback.className = 'game-feedback error';
+                        nextBtn.style.display = 'none';
+                    }
+                } else {
+                    feedback.textContent = '';
+                    nextBtn.style.display = 'none';
+                }
             }
 
-            // Automatic check
-            if (userWords.length > 0 && scrambledWords.length === 0) {
-                const userSentence = userWords.join(' ');
-                if (userSentence === originalSentence) {
-                    feedback.textContent = getTranslation('correctOrder');
-                    feedback.className = 'game-feedback success';
-                    nextBtn.style.display = 'inline-block';
-                } else {
-                    feedback.textContent = getTranslation('wrongOrder');
-                    feedback.className = 'game-feedback error';
-                }
-            } else {
-                feedback.textContent = '';
+            // Initialize SortableJS if available
+            if (window.Sortable) {
+                new window.Sortable(wordPool, {
+                    group: 'main-ordstilling',
+                    animation: 150,
+                    onEnd: checkCorrect
+                });
+                new window.Sortable(resultArea, {
+                    group: 'main-ordstilling',
+                    animation: 150,
+                    onEnd: checkCorrect
+                });
             }
         }
 

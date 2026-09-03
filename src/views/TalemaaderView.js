@@ -1,81 +1,44 @@
 import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { packagesData, getPackageProgress, savePackageProgress } from '../data/talemaaderPackages.js';
 
 export function renderTalemaaderView(container, navigateFn, extraData = {}) {
-  // Read progress from localStorage
-  let progress = JSON.parse(localStorage.getItem('danskTalemaaderProgress') || '{"mod1":false,"mod2":false,"mod3":false,"mod4":false}');
+  // Determine current active package and subview
+  let activePkg = extraData.package || 'pkg1';
+  let subView = extraData.subView || 'overview';
 
-  // Determine current active subview: 'dashboard', 'module1', 'module2', 'module3', 'module4', 'module5', or 'arcade'
-  let subView = extraData.subView || 'dashboard';
+  let currentPkgData = null;
+  let progress = null;
+  let isMod5Unlocked = false;
 
-  // Define modules data
-  const modules = {
-    mod1: {
-      id: 'mod1',
-      title: 'At lykkes & Målrettet flid',
-      desc: 'Blind høne, skyde papegøjen, ramme plet og at kaste frugt af sig.',
-      image: 'succes_flid.png',
-      overemne: 'At lykkes',
-      items: [
-        { id: '1', name: 'Blind høne finder også korn', coords: { left: 9, top: 48, width: 17, height: 10 }, options: ['Blind høne finder også korn', 'At skyde papegøjen', 'At ramme plet'] },
-        { id: '2', name: 'At skyde papegøjen', coords: { left: 30, top: 78, width: 17, height: 10 }, options: ['At skyde papegøjen', 'Det kører på skinner', 'At kaste frugt af sig'] },
-        { id: '3', name: 'At ramme plet', coords: { left: 56, top: 52, width: 17, height: 10 }, options: ['At ramme plet', 'Det kører på skinner', 'Blind høne finder også korn'] },
-        { id: '4', name: 'Det kører på skinner', coords: { left: 79, top: 48, width: 17, height: 10 }, options: ['Det kører på skinner', 'At kaste frugt af sig', 'At skyde papegøjen'] },
-        { id: '5', name: 'At kaste frugt af sig', coords: { left: 76, top: 78, width: 17, height: 10 }, options: ['At kaste frugt af sig', 'At ramme plet', 'At stikke piben ind'] }
-      ]
-    },
-    mod2: {
-      id: 'mod2',
-      title: 'Mental & Handlingsretræte',
-      desc: 'At stikke piben ind, trække i land, slå bak og kaste håndklædet i ringen.',
-      image: 'retraete.png',
-      overemne: 'Retræte',
-      items: [
-        { id: '1', name: 'At trække følerne til sig', coords: { left: 4, top: 57, width: 17, height: 10 }, options: ['At trække følerne til sig', 'At stikke piben ind', 'At slå bak'] },
-        { id: '2', name: 'At stikke piben ind', coords: { left: 27, top: 70, width: 17, height: 10 }, options: ['At stikke piben ind', 'At trække i land', 'At kaste håndklædet i ringen'] },
-        { id: '3', name: 'At trække i land', coords: { left: 72, top: 32, width: 17, height: 10 }, options: ['At trække i land', 'At slå bak', 'At trække følerne til sig'] },
-        { id: '4', name: 'At slå bak', coords: { left: 56, top: 55, width: 17, height: 10 }, options: ['At slå bak', 'At kaste håndklædet i ringen', 'At stikke piben ind'] },
-        { id: '5', name: 'At kaste håndklædet i ringen', coords: { left: 72, top: 78, width: 17, height: 10 }, options: ['At kaste håndklædet i ringen', 'At trække i land', 'At slå bak'] }
-      ]
-    },
-    mod3: {
-      id: 'mod3',
-      title: 'Fejltrin & Kollaps',
-      desc: 'At træde i spinaten, gå i baglås, stå med håret i postkassen og gå ned med flaget.',
-      image: 'fejltrin_kollaps.png',
-      overemne: 'Fejltrin & Kollaps',
-      items: [
-        { id: '1', name: 'At træde i spinaten', coords: { left: 23, top: 27, width: 17, height: 10 }, options: ['At træde i spinaten', 'At gå i baglås', 'At stå med håret i postkassen'] },
-        { id: '2', name: 'At gå i baglås', coords: { left: 8, top: 52, width: 17, height: 10 }, options: ['At gå i baglås', 'At slå et større brød op, end man kan bage', 'At gå ned med flaget'] },
-        { id: '3', name: 'At slå et større brød op, end man kan bage', coords: { left: 25, top: 76, width: 17, height: 10 }, options: ['At slå et større brød op, end man kan bage', 'At træde i spinaten', 'At stå med håret i postkassen'] },
-        { id: '4', name: 'At stå med håret i postkassen', coords: { left: 69, top: 27, width: 17, height: 10 }, options: ['At stå med håret i postkassen', 'At gå ned med flaget', 'At gå i baglås'] },
-        { id: '5', name: 'At gå ned med flaget', coords: { left: 77, top: 78, width: 17, height: 10 }, options: ['At gå ned med flaget', 'At slå et større brød op, end man kan bage', 'At træde i spinaten'] }
-      ]
-    },
-    mod4: {
-      id: 'mod4',
-      title: 'Starte på en frisk',
-      desc: 'At begynde på en frisk, rejse sig ved det træ man er faldet ved, og op på hesten igen.',
-      image: 'starte_igen.png',
-      overemne: 'Starte igen',
-      items: [
-        { id: '1', name: 'At begynde på en frisk', coords: { left: 7, top: 58, width: 17, height: 10 }, options: ['At begynde på en frisk', 'At rejse sig ved det træ, man er faldet ved', 'På med vanten igen'] },
-        { id: '2', name: 'At rejse sig ved det træ, man er faldet ved', coords: { left: 28, top: 56, width: 17, height: 10 }, options: ['At rejse sig ved det træ, man er faldet ved', 'At tage skeen i den anden hånd', 'At komme op på hesten igen'] },
-        { id: '3', name: 'At tage skeen i den anden hånd', coords: { left: 24, top: 79, width: 17, height: 10 }, options: ['At tage skeen i den anden hånd', 'At begynde på en frisk', 'På med vanten igen'] },
-        { id: '4', name: 'På med vanten igen', coords: { left: 57, top: 57, width: 17, height: 10 }, options: ['På med vanten igen', 'At komme op på hesten igen', 'At rejse sig ved det træ, man er faldet ved'] },
-        { id: '5', name: 'At komme op på hesten igen', coords: { left: 74, top: 76, width: 17, height: 10 }, options: ['At komme op på hesten igen', 'At tage skeen i den anden hånd', 'At begynde på en frisk'] }
-      ]
+  function updatePkgState() {
+    if (activePkg && packagesData[activePkg]) {
+      currentPkgData = packagesData[activePkg];
+      progress = getPackageProgress(activePkg);
+      isMod5Unlocked = progress.mod1 && progress.mod2 && progress.mod3 && progress.mod4;
     }
-  };
+  }
 
-  // Check if Mod 5 is unlocked
-  const isMod5Unlocked = progress.mod1 && progress.mod2 && progress.mod3 && progress.mod4;
+  updatePkgState();
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  // Attach to body so it never gets destroyed by container.innerHTML = ''
+  document.body.appendChild(toast);
+
+  function showToast(msg, isError = false) {
+    toast.textContent = msg;
+    toast.className = 'toast show' + (isError ? ' error' : '');
+    setTimeout(() => {
+      toast.className = 'toast';
+    }, 3000);
+  }
 
   function render() {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'talemaader-view';
 
     // Global Styles for Talemåder View
     const style = document.createElement('style');
@@ -108,7 +71,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         box-shadow: 0 10px 20px rgba(0,0,0,0.3);
       }
       .module-card.locked {
-        opacity: 0.6;
+        opacity: 0.5;
         cursor: not-allowed;
       }
       .module-card.completed {
@@ -134,18 +97,6 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         right: 15px;
         font-size: 1.2rem;
       }
-      .module-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        color: white;
-      }
-      .module-desc {
-        font-size: 0.9rem;
-        color: var(--text-muted, #ccc);
-        line-height: 1.4;
-        margin-bottom: 1.5rem;
-      }
       .module-action-btn {
         background: var(--primary-color, #ffc107);
         color: black;
@@ -162,136 +113,175 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         background: #555;
         color: #aaa;
       }
-
-      /* Quiz view styling */
+      .module-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+      .module-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-color, #ffffff);
+      }
+      .module-desc {
+        font-size: 0.95rem;
+        color: rgba(255,255,255,0.7);
+        line-height: 1.4;
+      }
+      .module-status {
+        margin-top: 1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .status-done {
+        color: #4caf50;
+      }
+      .status-locked {
+        color: #ff9800;
+      }
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      .back-btn {
+        background: transparent;
+        color: var(--primary-color, #ffc107);
+        border: 1px solid var(--primary-color, #ffc107);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .back-btn:hover {
+        background: var(--primary-color, #ffc107);
+        color: #121212;
+      }
       .worksheet-outer {
-        max-width: 1000px;
-        margin: 2rem auto;
-        position: relative;
-        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 1rem;
+        border-radius: 12px;
         overflow: hidden;
-        border: 3px solid rgba(255,255,255,0.15);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
       }
       .worksheet-container {
         position: relative;
         width: 100%;
+        max-width: 1000px; /* Big enough for desktop */
       }
       .worksheet-img {
         width: 100%;
         height: auto;
         display: block;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.4);
       }
       .hotspot-mask {
         position: absolute;
-        background: rgba(21, 42, 36, 0.96);
-        border: 2px dashed var(--primary-color, #ffc107);
-        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px dashed rgba(255, 255, 255, 0.4);
+        border-radius: 8px;
         cursor: pointer;
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--primary-color, #ffc107);
-        font-weight: 700;
-        font-size: 1.2rem;
-        transition: all 0.2s ease;
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+        text-align: center;
+        padding: 5px;
       }
       .hotspot-mask:hover {
-        background: rgba(255, 193, 7, 0.15);
-        transform: scale(1.02);
+        background: rgba(255, 193, 7, 0.3);
+        border-color: #ffc107;
       }
       .hotspot-mask.answered {
-        background: transparent;
-        border: 2px solid #2e7d32;
-        color: #2e7d32;
-        font-size: 0.85rem;
+        background: rgba(0, 0, 0, 0.9);
+        border-color: #4caf50;
+        border-style: solid;
+        color: white;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        padding: 4px;
+        overflow-y: auto;
         cursor: default;
       }
-      .hotspot-mask.answered::after {
-        content: '✓';
-        position: absolute;
-        bottom: -10px;
-        right: -10px;
-        background: #2e7d32;
-        color: white;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.7rem;
-        border: 1px solid white;
-      }
-
+      
       /* Overemne Guessing Input */
       .overemne-overlay {
         position: absolute;
         top: 2%;
-        left: 20%;
+        left: 35%;
         width: 60%;
         height: 10%;
         display: flex;
         align-items: center;
-        justify-content: center;
-        z-index: 10;
+        justify-content: flex-end;
       }
       .overemne-btn {
-        background: rgba(21, 42, 36, 0.95);
-        color: var(--primary-color, #ffc107);
-        border: 2px dashed var(--primary-color, #ffc107);
+        background: rgba(0,0,0,0.8);
+        border: 2px dashed #ffc107;
+        color: white;
+        padding: 8px 16px;
         border-radius: 8px;
-        padding: 0.4rem 1.5rem;
-        font-size: 1.1rem;
-        font-weight: 700;
         cursor: pointer;
-        transition: all 0.2s ease;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       }
       .overemne-btn:hover {
-        background: rgba(255,193,7,0.15);
+        background: #ffc107;
+        color: #000;
       }
       .overemne-btn.answered {
-        background: transparent;
-        border: 2px solid #2e7d32;
-        color: #2e7d32;
+        background: rgba(0, 0, 0, 0.9);
+        border-color: #4caf50;
+        border-style: solid;
+        color: white;
         cursor: default;
       }
 
-      /* Mobile Drawer for selections */
+      /* Drawer Menu */
       .drawer-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.7);
-        z-index: 1000;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
         display: none;
         align-items: flex-end;
+        z-index: 2000;
       }
       .drawer-overlay.active {
         display: flex;
       }
       .drawer-content {
-        background: #152a24;
+        background: var(--bg-color, #1a1a2e);
         width: 100%;
-        border-top-left-radius: 24px;
-        border-top-right-radius: 24px;
+        max-height: 55vh;
+        overflow-y: auto;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
         padding: 2rem;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
-        border-top: 2px solid rgba(255,255,255,0.1);
-        transform: translateY(100%);
-        transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.7);
+        animation: slideUp 0.3s ease-out;
+        position: relative;
       }
-      .drawer-overlay.active .drawer-content {
-        transform: translateY(0);
+      @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
       }
       .drawer-title {
         font-size: 1.2rem;
-        font-weight: 700;
+        font-weight: 600;
         margin-bottom: 1.5rem;
         color: white;
-        text-align: center;
       }
       .options-list {
         display: flex;
@@ -301,28 +291,30 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       .option-item {
         background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px;
         padding: 1rem;
-        color: white;
-        font-weight: 600;
+        border-radius: 12px;
         cursor: pointer;
-        transition: all 0.2s ease;
-        text-align: center;
+        transition: all 0.2s;
+        color: white;
+        font-size: 1rem;
       }
       .option-item:hover {
-        background: var(--primary-color, #ffc107);
-        color: black;
-        border-color: var(--primary-color, #ffc107);
+        background: rgba(255, 193, 7, 0.1);
+        border-color: #ffc107;
       }
-      .drawer-close {
-        background: transparent;
-        color: var(--text-muted, #ccc);
-        border: none;
-        font-size: 1.5rem;
+      .close-drawer {
         position: absolute;
-        top: 15px;
-        right: 15px;
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 1.5rem;
+        color: white;
         cursor: pointer;
+        background: none;
+        border: none;
+        opacity: 0.7;
+      }
+      .close-drawer:hover {
+        opacity: 1;
       }
 
       /* Arcade section */
@@ -361,8 +353,8 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       /* Final view nodes coordinates */
       .node-final {
         position: absolute;
-        background: rgba(21, 42, 36, 0.96);
-        border: 2.5px dashed var(--primary-color, #ffc107);
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px dashed rgba(255, 255, 255, 0.4);
         border-radius: 8px;
         cursor: pointer;
         padding: 0.3rem 0.5rem;
@@ -373,13 +365,15 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         color: white;
         transition: all 0.2s ease;
         text-align: center;
+        overflow-y: auto;
       }
       .node-final:hover {
-        background: rgba(255, 193, 7, 0.15);
+        background: rgba(255, 193, 7, 0.3);
+        border-color: #ffc107;
       }
       .node-final.answered {
-        background: rgba(46, 125, 50, 0.1);
-        border: 2.5px solid #2e7d32;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #4caf50;
         color: white;
       }
       .node-final .label-title {
@@ -387,57 +381,97 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         opacity: 0.7;
         text-transform: uppercase;
         margin-bottom: 2px;
+        color: #ffc107;
       }
       .node-final .label-value {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 700;
-        color: var(--primary-color, #ffc107);
+        color: white;
       }
-      .node-final.answered .label-value {
+      .node-final.answered .label-title {
         color: #4caf50;
       }
+      .node-final.answered .label-value {
+        color: white;
+      }
 
-      /* Notification Toast */
+      /* Master-ark / Finale Selects */
+      .finale-select {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 6px;
+        padding: 4px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      }
+      .finale-select:focus {
+        border-color: #ffc107;
+      }
+      .finale-select.correct {
+        border-color: #4caf50;
+        background: rgba(76, 175, 80, 0.2);
+        color: #4caf50;
+        font-weight: bold;
+        pointer-events: none;
+      }
+
+      .final-overemne-overlay {
+        position: absolute;
+        top: 2%;
+        left: 20%;
+        width: 60%;
+        height: 8%;
+      }
+      .final-overemne-select {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        color: #ffc107;
+        border: 2px dashed #ffc107;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        padding: 5px 10px;
+        cursor: pointer;
+        outline: none;
+        text-align: center;
+      }
+      .final-overemne-select.correct {
+        border-color: #4caf50;
+        color: #4caf50;
+        pointer-events: none;
+      }
+
       .toast {
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background: #2e7d32;
+        background: #333;
         color: white;
-        padding: 1rem 2rem;
-        border-radius: 30px;
-        font-weight: 700;
-        z-index: 2000;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        display: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 10000;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       }
       .toast.show {
-        display: block;
-        animation: fadeInUp 0.3s ease, fadeOutDown 0.3s ease 2.7s;
+        opacity: 1;
       }
       .toast.error {
-        background: #c62828;
-      }
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translate(-50%, 20px); }
-        to { opacity: 1; transform: translate(-50%, 0); }
+        background: #d32f2f;
       }
     `;
     viewContainer.appendChild(style);
-
-    // Toast element
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    viewContainer.appendChild(toast);
-
-    function showToast(msg, isError = false) {
-      toast.textContent = msg;
-      toast.className = 'toast show' + (isError ? ' error' : '');
-      setTimeout(() => {
-        toast.className = 'toast';
-      }, 3000);
-    }
 
     // Top Bar (Back Button)
     const topBar = document.createElement('div');
@@ -446,8 +480,11 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     backBtn.className = 'back-btn';
     backBtn.textContent = '← ' + getTranslation('back');
     backBtn.onclick = () => {
-      if (subView === 'dashboard') {
+      if (subView === 'overview') {
         navigateFn('main');
+      } else if (subView === 'dashboard') {
+        subView = 'overview';
+        render();
       } else {
         subView = 'dashboard';
         render();
@@ -457,11 +494,13 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     viewContainer.appendChild(topBar);
 
     // Render Subview
-    if (subView === 'dashboard') {
+    if (subView === 'overview') {
+      renderOverview(viewContainer);
+    } else if (subView === 'dashboard') {
       renderDashboard(viewContainer);
     } else if (subView.startsWith('module') && subView !== 'module5') {
       const moduleId = subView.replace('module', 'mod');
-      renderModuleExercise(viewContainer, modules[moduleId]);
+      renderModuleExercise(viewContainer, currentPkgData.modules[moduleId]);
     } else if (subView === 'module5') {
       renderFinalExercise(viewContainer);
     }
@@ -469,15 +508,65 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     container.appendChild(viewContainer);
   }
 
-  // --- SUBVIEW 1: DASHBOARD ---
-  function renderDashboard(parent) {
+  // --- SUBVIEW 0: OVERVIEW ---
+  function renderOverview(parent) {
     const title = document.createElement('h1');
     title.textContent = 'Talemåder & Mønstre';
     parent.appendChild(title);
 
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Lær danske talemåder trin-for-trin og find de overordnede mønstre ("Erfaringens Kredsløb").';
+    subtitle.textContent = 'Lær danske talemåder trin-for-trin og find de overordnede mønstre';
+    parent.appendChild(subtitle);
+
+    const overviewDiv = document.createElement('div');
+    overviewDiv.className = 'talemaader-dashboard';
+
+    const cardGrid = document.createElement('div');
+    cardGrid.className = 'module-grid';
+
+    Object.keys(packagesData).forEach(pkgKey => {
+      const pkg = packagesData[pkgKey];
+      const card = document.createElement('div');
+      card.className = 'module-card';
+      card.onclick = () => {
+        activePkg = pkgKey;
+        updatePkgState();
+        subView = 'dashboard';
+        render();
+      };
+
+      const cardTitle = document.createElement('div');
+      cardTitle.className = 'module-title';
+      cardTitle.textContent = pkg.title;
+      card.appendChild(cardTitle);
+
+      const cardDesc = document.createElement('div');
+      cardDesc.className = 'module-desc';
+      cardDesc.textContent = pkg.desc;
+      card.appendChild(cardDesc);
+
+      const actionBtn = document.createElement('button');
+      actionBtn.className = 'module-action-btn';
+      actionBtn.textContent = 'Åbn flade';
+      card.appendChild(actionBtn);
+
+      cardGrid.appendChild(card);
+    });
+
+    overviewDiv.appendChild(cardGrid);
+    parent.appendChild(overviewDiv);
+  }
+
+  // --- SUBVIEW 1: DASHBOARD ---
+  function renderDashboard(parent) {
+    const title = document.createElement('h1');
+    title.textContent = currentPkgData.title;
+    parent.appendChild(title);
+
+    const subtitle = document.createElement('p');
+    subtitle.className = 'subtitle';
+    subtitle.textContent = 'Gennemfør kapitlerne for at låse op for finalen ("Erfaringens Kredsløb").';
     parent.appendChild(subtitle);
 
     const dashboard = document.createElement('div');
@@ -485,6 +574,8 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
     const cardGrid = document.createElement('div');
     cardGrid.className = 'module-grid';
+
+    const modules = currentPkgData.modules;
 
     // Add cards for Mod 1-4
     Object.keys(modules).forEach((key, idx) => {
@@ -566,146 +657,94 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     dashboard.appendChild(cardGrid);
 
     // --- Padlet Arcade Room with engaging link boxes ---
-    const arcadeSection = document.createElement('div');
-    arcadeSection.className = 'arcade-section';
+    if (currentPkgData.arcadeGames && currentPkgData.arcadeGames.length > 0) {
+      const arcadeSection = document.createElement('div');
+      arcadeSection.className = 'arcade-section';
 
-    const arcadeHeader = document.createElement('h2');
-    arcadeHeader.textContent = '🕹️ Arcade Træningsrummet';
-    arcadeHeader.style.marginBottom = '0.5rem';
-    arcadeSection.appendChild(arcadeHeader);
+      const arcadeHeader = document.createElement('h2');
+      arcadeHeader.textContent = '🕹️ Arcade Træningsrummet';
+      arcadeHeader.style.marginBottom = '0.5rem';
+      arcadeSection.appendChild(arcadeHeader);
 
-    const arcadeSub = document.createElement('p');
-    arcadeSub.className = 'subtitle';
-    arcadeSub.style.fontSize = '0.95rem';
-    arcadeSub.textContent = 'Træn dine talemåder med interaktive onlinespil. Spillene åbner i en ny fane, så alle tegninger indlæses fejlfrit.';
-    arcadeSection.appendChild(arcadeSub);
+      const arcadeSub = document.createElement('p');
+      arcadeSub.className = 'subtitle';
+      arcadeSub.style.fontSize = '0.95rem';
+      arcadeSub.textContent = 'Træn dine talemåder med interaktive onlinespil. Spillene åbner i en ny fane, så alle tegninger indlæses fejlfrit.';
+      arcadeSection.appendChild(arcadeSub);
 
-    const frameContainer = document.createElement('div');
-    frameContainer.className = 'arcade-frame-container';
-    frameContainer.style.display = 'grid';
-    frameContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
-    frameContainer.style.gap = '1.5rem';
-    frameContainer.style.marginTop = '1.5rem';
+      const frameContainer = document.createElement('div');
+      frameContainer.className = 'arcade-frame-container';
+      frameContainer.style.display = 'grid';
+      frameContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+      frameContainer.style.gap = '1.5rem';
+      frameContainer.style.marginTop = '1.5rem';
 
-    // Game 1 Card
-    const game1Card = document.createElement('div');
-    game1Card.className = 'arcade-wrapper';
-    game1Card.style.padding = '2rem';
-    game1Card.style.background = 'rgba(255,255,255,0.03)';
-    game1Card.style.border = '2px solid rgba(255,255,255,0.08)';
-    game1Card.style.borderRadius = '16px';
-    game1Card.style.display = 'flex';
-    game1Card.style.flexDirection = 'column';
-    game1Card.style.alignItems = 'center';
-    game1Card.style.textAlign = 'center';
-    game1Card.style.transition = 'all 0.3s ease';
+      currentPkgData.arcadeGames.forEach((game) => {
+        const gameCard = document.createElement('div');
+        gameCard.className = 'arcade-wrapper';
+        gameCard.style.padding = '2rem';
+        gameCard.style.background = 'rgba(255,255,255,0.03)';
+        gameCard.style.border = '2px solid rgba(255,255,255,0.08)';
+        gameCard.style.borderRadius = '16px';
+        gameCard.style.display = 'flex';
+        gameCard.style.flexDirection = 'column';
+        gameCard.style.alignItems = 'center';
+        gameCard.style.textAlign = 'center';
+        gameCard.style.transition = 'all 0.3s ease';
 
-    game1Card.onmouseenter = () => {
-      game1Card.style.borderColor = '#ffc107';
-      game1Card.style.transform = 'translateY(-3px)';
-    };
-    game1Card.onmouseleave = () => {
-      game1Card.style.borderColor = 'rgba(255,255,255,0.08)';
-      game1Card.style.transform = 'none';
-    };
+        gameCard.onmouseenter = () => {
+          gameCard.style.borderColor = '#ffc107';
+          gameCard.style.transform = 'translateY(-3px)';
+        };
+        gameCard.onmouseleave = () => {
+          gameCard.style.borderColor = 'rgba(255,255,255,0.08)';
+          gameCard.style.transform = 'none';
+        };
 
-    const g1Icon = document.createElement('div');
-    g1Icon.style.fontSize = '3rem';
-    g1Icon.style.marginBottom = '1rem';
-    g1Icon.textContent = '🧩';
-    game1Card.appendChild(g1Icon);
+        const gIcon = document.createElement('div');
+        gIcon.style.fontSize = '3rem';
+        gIcon.style.marginBottom = '1rem';
+        gIcon.textContent = game.icon || '🕹️';
+        gameCard.appendChild(gIcon);
 
-    const g1Title = document.createElement('h3');
-    g1Title.style.fontSize = '1.25rem';
-    g1Title.style.fontWeight = '700';
-    g1Title.style.marginBottom = '0.5rem';
-    g1Title.style.color = 'white';
-    g1Title.textContent = 'Spil 1: Par tegninger';
-    game1Card.appendChild(g1Title);
+        const gTitle = document.createElement('h3');
+        gTitle.style.fontSize = '1.25rem';
+        gTitle.style.fontWeight = '700';
+        gTitle.style.marginBottom = '0.5rem';
+        gTitle.style.color = 'white';
+        gTitle.textContent = game.title;
+        gameCard.appendChild(gTitle);
 
-    const g1Desc = document.createElement('p');
-    g1Desc.style.fontSize = '0.9rem';
-    g1Desc.style.color = '#ccc';
-    g1Desc.style.lineHeight = '1.4';
-    g1Desc.style.marginBottom = '1.5rem';
-    g1Desc.textContent = 'Kan du matche de fine illustrationer med de rigtige danske talemåder? Sæt din viden på prøve!';
-    game1Card.appendChild(g1Desc);
+        const gDesc = document.createElement('p');
+        gDesc.style.fontSize = '0.9rem';
+        gDesc.style.color = '#ccc';
+        gDesc.style.lineHeight = '1.4';
+        gDesc.style.marginBottom = '1.5rem';
+        gDesc.textContent = game.desc || 'Kan du matche de fine illustrationer med de rigtige danske talemåder?';
+        gameCard.appendChild(gDesc);
 
-    const g1Link = document.createElement('a');
-    g1Link.href = 'https://arcade.padlet.com/game/6wK7zL1NpJ?link_shared=1';
-    g1Link.target = '_blank';
-    g1Link.className = 'module-action-btn';
-    g1Link.textContent = 'Start spillet ➜';
-    g1Link.style.textDecoration = 'none';
-    g1Link.style.display = 'inline-block';
-    game1Card.appendChild(g1Link);
+        const gLink = document.createElement('a');
+        gLink.href = game.url;
+        gLink.target = '_blank';
+        gLink.className = 'module-action-btn';
+        gLink.textContent = 'Start spillet ➜';
+        gLink.style.textDecoration = 'none';
+        gLink.style.display = 'inline-block';
+        gameCard.appendChild(gLink);
 
-    frameContainer.appendChild(game1Card);
+        frameContainer.appendChild(gameCard);
+      });
 
-    // Game 2 Card
-    const game2Card = document.createElement('div');
-    game2Card.className = 'arcade-wrapper';
-    game2Card.style.padding = '2rem';
-    game2Card.style.background = 'rgba(255,255,255,0.03)';
-    game2Card.style.border = '2px solid rgba(255,255,255,0.08)';
-    game2Card.style.borderRadius = '16px';
-    game2Card.style.display = 'flex';
-    game2Card.style.flexDirection = 'column';
-    game2Card.style.alignItems = 'center';
-    game2Card.style.textAlign = 'center';
-    game2Card.style.transition = 'all 0.3s ease';
-
-    game2Card.onmouseenter = () => {
-      game2Card.style.borderColor = '#ffc107';
-      game2Card.style.transform = 'translateY(-3px)';
-    };
-    game2Card.onmouseleave = () => {
-      game2Card.style.borderColor = 'rgba(255,255,255,0.08)';
-      game2Card.style.transform = 'none';
-    };
-
-    const g2Icon = document.createElement('div');
-    g2Icon.style.fontSize = '3rem';
-    g2Icon.style.marginBottom = '1rem';
-    g2Icon.textContent = '🧠';
-    game2Card.appendChild(g2Icon);
-
-    const g2Title = document.createElement('h3');
-    g2Title.style.fontSize = '1.25rem';
-    g2Title.style.fontWeight = '700';
-    g2Title.style.marginBottom = '0.5rem';
-    g2Title.style.color = 'white';
-    g2Title.textContent = 'Spil 2: Gæt overemner';
-    game2Card.appendChild(g2Title);
-
-    const g2Desc = document.createElement('p');
-    g2Desc.style.fontSize = '0.9rem';
-    g2Desc.style.color = '#ccc';
-    g2Desc.style.lineHeight = '1.4';
-    g2Desc.style.marginBottom = '1.5rem';
-    g2Desc.textContent = 'Se de forskellige kategorier og gæt, hvilke overordnede emner talemåderne hører under.';
-    game2Card.appendChild(g2Desc);
-
-    const g2Link = document.createElement('a');
-    g2Link.href = 'https://arcade.padlet.com/game/9Ljk9qvVKO?link_shared=1';
-    g2Link.target = '_blank';
-    g2Link.className = 'module-action-btn';
-    g2Link.textContent = 'Start spillet ➜';
-    g2Link.style.textDecoration = 'none';
-    g2Link.style.display = 'inline-block';
-    game2Card.appendChild(g2Link);
-
-    frameContainer.appendChild(game2Card);
-
-    arcadeSection.appendChild(frameContainer);
-    dashboard.appendChild(arcadeSection);
+      arcadeSection.appendChild(frameContainer);
+      dashboard.appendChild(arcadeSection);
+    }
     parent.appendChild(dashboard);
   }
 
   // --- SUBVIEW 2: INDIVIDUAL MODULES (1-4) ---
   function renderModuleExercise(parent, mod) {
     const title = document.createElement('h1');
-    title.textContent = mod.title;
+    title.textContent = 'Kapitel ' + mod.id.replace('mod', '');
     parent.appendChild(title);
 
     const subtitle = document.createElement('p');
@@ -726,7 +765,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     container.appendChild(img);
 
     // State for current answers inside module
-    const userAnswers = JSON.parse(localStorage.getItem(`danskTalemaader_${mod.id}`) || '{}');
+    const userAnswers = JSON.parse(localStorage.getItem(`danskTalemaader_${activePkg}_${mod.id}`) || '{}');
 
     // Create interactive hotspots for each idiom
     mod.items.forEach(item => {
@@ -762,7 +801,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         const item = {
           id: 'overemne',
           name: mod.overemne,
-          options: ['At lykkes', 'Retræte', 'Fejltrin & Kollaps', 'Starte igen']
+          options: Object.values(currentPkgData.modules).map(m => m.overemne)
         };
         openDrawer(item, overemneBtn, true);
       };
@@ -828,7 +867,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
             }
             
             // Save state
-            localStorage.setItem(`danskTalemaader_${mod.id}`, JSON.stringify(userAnswers));
+            localStorage.setItem(`danskTalemaader_${activePkg}_${mod.id}`, JSON.stringify(userAnswers));
             
             // Check if entire module is complete
             checkModuleCompletion();
@@ -851,7 +890,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
       if (isComplete) {
         progress[mod.id] = true;
-        localStorage.setItem('danskTalemaaderProgress', JSON.stringify(progress));
+        savePackageProgress(activePkg, progress);
         setTimeout(() => {
           showToast('🏆 Kapitel gennemført! Flot klaret!');
           subView = 'dashboard';
@@ -880,61 +919,13 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
     const img = document.createElement('img');
     img.className = 'worksheet-img';
-    img.src = `${baseUrl}images/talemaader/kredsloeb.png`;
+    img.src = `${baseUrl}images/talemaader/${currentPkgData.finale.image}`;
     container.appendChild(img);
 
     // Final state persistence
-    const finalAnswers = JSON.parse(localStorage.getItem('danskTalemaader_final') || '{}');
+    const finalAnswers = JSON.parse(localStorage.getItem(`danskTalemaader_${activePkg}_final`) || '{}');
 
-    // Coordinates of the 5 circles on kredsloeb.png (Aspect ratio 571x1024 - portrait)
-    // We will place two labels on each node: one for Emne, one for Idiom.
-    const nodesFinal = [
-      {
-        id: 'top',
-        title: 'Forberedelse',
-        correctEmne: 'Mental parathed & beslutning',
-        correctIdiom: 'At tage skeen i den anden hånd',
-        coords: { left: 24, top: 29, width: 52, height: 8 },
-        emneOptions: ['Mental parathed & beslutning', 'Målrettet flid & resultat', 'Retræte i handling & handlingsskift'],
-        idiomOptions: ['At tage skeen i den anden hånd', 'At ramme plet', 'At kaste håndklædet i ringen']
-      },
-      {
-        id: 'left',
-        title: 'Succes',
-        correctEmne: 'Målrettet flid & resultat',
-        correctIdiom: 'At ramme plet',
-        coords: { left: 4, top: 57, width: 44, height: 8 },
-        emneOptions: ['Målrettet flid & resultat', 'Fejltrin & procesblokering', 'Mental parathed & beslutning'],
-        idiomOptions: ['At ramme plet', 'At træde i spinaten', 'At begynde på en frisk']
-      },
-      {
-        id: 'right',
-        title: 'Fejltrin',
-        correctEmne: 'Fejltrin & procesblokering',
-        correctIdiom: 'At træde i spinaten',
-        coords: { left: 52, top: 57, width: 44, height: 8 },
-        emneOptions: ['Fejltrin & procesblokering', 'Mental parathed & beslutning', 'Retræte i handling & handlingsskift'],
-        idiomOptions: ['At træde i spinaten', 'At tage skeen i den anden hånd', 'At kaste håndklædet i ringen']
-      },
-      {
-        id: 'bottom_left',
-        title: 'Start Igen',
-        correctEmne: 'Fra forberedelse til handling',
-        correctIdiom: 'At komme op på hesten igen',
-        coords: { left: 4, top: 90, width: 44, height: 8 },
-        emneOptions: ['Fra forberedelse til handling', 'Målrettet flid & resultat', 'Mental parathed & beslutning'],
-        idiomOptions: ['At komme op på hesten igen', 'At ramme plet', 'At stikke piben ind']
-      },
-      {
-        id: 'bottom_right',
-        title: 'Giv Op',
-        correctEmne: 'Retræte i handling & handlingsskift',
-        correctIdiom: 'At kaste håndklædet i ringen',
-        coords: { left: 52, top: 90, width: 44, height: 8 },
-        emneOptions: ['Retræte i handling & handlingsskift', 'Fejltrin & procesblokering', 'Fra forberedelse til handling'],
-        idiomOptions: ['At kaste håndklædet i ringen', 'At træde i spinaten', 'At komme op på hesten igen']
-      }
-    ];
+    const nodesFinal = currentPkgData.finale.nodes;
 
     nodesFinal.forEach(node => {
       const isEmneCorrect = finalAnswers[`${node.id}_emne`] === node.correctEmne;
@@ -963,15 +954,15 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       container.appendChild(block);
     });
 
-    // Overemne Guess for kredsloeb (Title: "Erfaringens Kredsløb")
-    const isOveremneCorrect = finalAnswers.overemne === 'Erfaringens Kredsløb';
+    // Overemne Guess for kredsloeb
+    const isOveremneCorrect = finalAnswers.overemne === currentPkgData.finale.expectedOveremne;
     const overemneWrapper = document.createElement('div');
     overemneWrapper.className = 'overemne-overlay';
     overemneWrapper.style.top = '10%'; // Adjust height relative to portrait kredsloeb.png
 
     const overemneBtn = document.createElement('button');
     overemneBtn.className = 'overemne-btn' + (isOveremneCorrect ? ' answered' : '');
-    overemneBtn.textContent = isOveremneCorrect ? 'Overemne: Erfaringens Kredsløb' : 'Gæt Overemnet for kredsløbet';
+    overemneBtn.textContent = isOveremneCorrect ? `Overemne: ${currentPkgData.finale.expectedOveremne}` : 'Gæt Overemnet for kredsløbet';
     if (!isOveremneCorrect) {
       overemneBtn.onclick = () => {
         openFinalOveremne(overemneBtn);
@@ -1021,7 +1012,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
           btn.onclick = () => {
             if (opt === node.correctEmne) {
               finalAnswers[`${node.id}_emne`] = opt;
-              localStorage.setItem('danskTalemaader_final', JSON.stringify(finalAnswers));
+              localStorage.setItem(`danskTalemaader_${activePkg}_final`, JSON.stringify(finalAnswers));
               showToast('✓ Emne korrekt!');
               drawerOverlay.classList.remove('active');
               render();
@@ -1041,7 +1032,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
           btn.onclick = () => {
             if (opt === node.correctIdiom) {
               finalAnswers[`${node.id}_idiom`] = opt;
-              localStorage.setItem('danskTalemaader_final', JSON.stringify(finalAnswers));
+              localStorage.setItem(`danskTalemaader_${activePkg}_final`, JSON.stringify(finalAnswers));
               showToast('✓ Talemåde korrekt!');
               drawerOverlay.classList.remove('active');
               render();
@@ -1059,16 +1050,16 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     function openFinalOveremne(targetEl) {
       drawerTitle.textContent = 'Gæt kredsløbets samlede mønster / overemne:';
       optionsList.innerHTML = '';
-      const options = ['Erfaringens Kredsløb', 'Lykke & Succes', 'Fejl & Genstart', 'Dansk Grammatik'];
+      const options = currentPkgData.finale.overemneOptions;
       options.forEach(opt => {
         const btn = document.createElement('div');
         btn.className = 'option-item';
         btn.textContent = opt;
         btn.onclick = () => {
-          if (opt === 'Erfaringens Kredsløb') {
+          if (opt === currentPkgData.finale.expectedOveremne) {
             finalAnswers.overemne = opt;
-            localStorage.setItem('danskTalemaader_final', JSON.stringify(finalAnswers));
-            showToast('✓ Helt rigtigt! Det samlede mønster er Erfaringens Kredsløb.');
+            localStorage.setItem(`danskTalemaader_${activePkg}_final`, JSON.stringify(finalAnswers));
+            showToast(`✓ Helt rigtigt! Det samlede mønster er ${currentPkgData.finale.expectedOveremne}.`);
             drawerOverlay.classList.remove('active');
             render();
             checkFinalCompletion();
@@ -1086,11 +1077,11 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       const isComplete = nodesFinal.every(n => 
         finalAnswers[`${n.id}_emne`] === n.correctEmne && 
         finalAnswers[`${n.id}_idiom`] === n.correctIdiom
-      ) && finalAnswers.overemne === 'Erfaringens Kredsløb';
+      ) && finalAnswers.overemne === currentPkgData.finale.expectedOveremne;
 
       if (isComplete) {
         progress.mod5 = true;
-        localStorage.setItem('danskTalemaaderProgress', JSON.stringify(progress));
+        savePackageProgress(activePkg, progress);
         setTimeout(() => {
           showToast('🏆 TILLYKKE! Du har gennemført hele mønsteret og mestret talemåderne!');
           subView = 'dashboard';

@@ -7,7 +7,11 @@ import { renderNotesView } from './views/NotesView.js';
 import { renderDagensOpgaveView } from './views/DagensOpgaveView.js';
 import { renderWordLearningView } from './views/WordLearningView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
+import { renderSamtaleBoligMenuView } from './views/SamtaleBoligMenuView.js';
+import { renderSamtaleArbejdeMenuView } from './views/SamtaleArbejdeMenuView.js';
 import { renderHverdagssamtaleView } from './views/HverdagssamtaleView.js';
+import { renderAiConversationView } from './views/AiConversationView.js';
+import { renderAiConversationArbejdeView } from './views/AiConversationArbejdeView.js';
 import { renderSkrivehjaelpView } from './views/SkrivehjaelpView.js';
 import { renderDu1Modul3View } from './views/Du1Modul3View.js';
 import { renderDu1MinHverdagView } from './views/Du1MinHverdagView.js';
@@ -24,6 +28,13 @@ import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { renderOrdstillingView } from './views/OrdstillingView.js';
 import { renderGrammatikView } from './views/GrammatikView.js';
+import { renderUdtaleView } from './views/UdtaleView.js';
+import { renderUdtaleMenuView } from './views/UdtaleMenuView.js';
+import { renderLegMedUdtaleView } from './views/LegMedUdtaleView.js';
+import { renderInteractiveStoryView } from './views/InteractiveStoryView.js';
+import { renderBranchingStoryView } from './views/BranchingStoryView.js';
+import { renderHistorierMenuView } from './views/HistorierMenuView.js';
+import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
 import { renderPronomenView } from './views/PronomenView.js';
 import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
@@ -38,6 +49,9 @@ import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.j
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
 import { renderDanskKulturView } from './views/DanskKulturView.js';
 import { renderTalemaaderView } from './views/TalemaaderView.js';
+import { renderTraenSporgsmalMenuView } from './views/TraenSporgsmalMenuView.js';
+import { renderHvBetydningView } from './views/HvBetydningView.js';
+import { renderSporgsmalOrdstillingView } from './views/SporgsmalOrdstillingView.js';
 import { appState, getLang, getTranslation, setLanguage, translations } from './utils/i18n.js';
 
 // Router
@@ -91,6 +105,18 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'samtale_hverdag') {
     appState.currentView = 'samtale_hverdag';
     renderHverdagssamtaleView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'samtale_bolig_menu') {
+    appState.currentView = 'samtale_bolig_menu';
+    renderSamtaleBoligMenuView(appDiv, navigate);
+  } else if (viewTarget === 'samtale_ai') {
+    appState.currentView = 'samtale_ai';
+    renderAiConversationView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'samtale_arbejde_menu') {
+    appState.currentView = 'samtale_arbejde_menu';
+    renderSamtaleArbejdeMenuView(appDiv, navigate);
+  } else if (viewTarget === 'samtale_ai_arbejde') {
+    appState.currentView = 'samtale_ai_arbejde';
+    renderAiConversationArbejdeView(appDiv, navigate, extraData);
   } else if (viewTarget === 'skrive_hjaelp') {
     appState.currentView = 'skrive_hjaelp';
     renderSkrivehjaelpView(appDiv, navigate);
@@ -133,12 +159,33 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'lav_sporgsmal') {
     appState.currentView = 'lav_sporgsmal';
     renderLavSporgsmalView(appDiv, navigate);
+  } else if (viewTarget === 'sporgsmal_interactive') {
+    appState.currentView = 'sporgsmal_interactive';
+    renderSporgsmalInteractiveView(appDiv, navigate, extraData);
   } else if (viewTarget === 'ordstilling') {
     appState.currentView = 'ordstilling';
     renderOrdstillingView(appDiv, navigate, extraData);
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
     renderGrammatikView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'traen_udtale') {
+    appState.currentView = 'traen_udtale';
+    renderUdtaleMenuView(appDiv, navigate);
+  } else if (viewTarget === 'traen_bogstaver') {
+    appState.currentView = 'traen_bogstaver';
+    renderUdtaleView(appDiv, navigate);
+  } else if (viewTarget === 'leg_med_udtale') {
+    appState.currentView = 'leg_med_udtale';
+    renderLegMedUdtaleView(appDiv, navigate);
+  } else if (viewTarget === 'historier_menu') {
+    appState.currentView = 'historier_menu';
+    renderHistorierMenuView(appDiv, navigate);
+  } else if (viewTarget === 'interactive_story') {
+    appState.currentView = 'interactive_story';
+    renderInteractiveStoryView(appDiv, navigate);
+  } else if (viewTarget === 'branching_story') {
+    appState.currentView = 'branching_story';
+    renderBranchingStoryView(appDiv, navigate, extraData);
   } else if (viewTarget === 'pronomen') {
     appState.currentView = 'pronomen';
     renderPronomenView(appDiv, navigate, extraData);
@@ -201,6 +248,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'adverb_choice') {
     appState.currentView = 'adverb_choice';
     initAdverbChoiceExerciseView(appDiv);
+  } else if (viewTarget === 'traen_sporgsmal_menu') {
+    appState.currentView = 'traen_sporgsmal_menu';
+    renderTraenSporgsmalMenuView(appDiv, navigate);
+  } else if (viewTarget === 'sporgsmal_hv_betydning') {
+    appState.currentView = 'sporgsmal_hv_betydning';
+    renderHvBetydningView(appDiv, navigate);
+  } else if (viewTarget === 'sporgsmal_ordstilling') {
+    appState.currentView = 'sporgsmal_ordstilling';
+    renderSporgsmalOrdstillingView(appDiv, navigate);
   }
 }
 

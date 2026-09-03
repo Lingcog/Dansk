@@ -1,6 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 
-export function renderSamtaleTraeningView(container, navigateFn) {
+export function renderSamtaleBoligMenuView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -10,32 +10,29 @@ export function renderSamtaleTraeningView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.textContent = '← ' + getTranslation('back');
-    backBtn.onclick = () => navigateFn('main');
+    backBtn.onclick = () => navigateFn('samtale_traening');
     topBar.appendChild(backBtn);
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = getTranslation('samtaleTraening');
+    title.textContent = 'Samtale om bolig';
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = getTranslation('samtaleTraeningDesc');
+    subtitle.textContent = 'Vælg, hvordan du vil tale med Anna om din bolig.';
 
     // Cards
     const cardsData = [
         {
-            icon: '🗣',
-            titleKey: 'hverdagssamtale',
-            action: () => navigateFn('samtale_hverdag')
+            icon: '💬',
+            title: 'Fri snak med Anna',
+            desc: 'Tag en afslappet snak uden at tænke på grammatik.',
+            action: () => navigateFn('samtale_ai', { mode: 'forgiving' })
         },
         {
-            icon: '🏠',
-            titleKey: 'samtaleBolig',
-            action: () => navigateFn('samtale_bolig_menu')
-        },
-        {
-            icon: '💼',
-            titleKey: 'samtaleArbejde',
-            action: () => navigateFn('samtale_arbejde_menu')
+            icon: '👩‍🏫',
+            title: 'Snak med Anna (Feedback)',
+            desc: 'Få rettelser til din grammatik og ordstilling bagefter.',
+            action: () => navigateFn('samtale_ai', { mode: 'feedback' })
         }
     ];
 
@@ -53,10 +50,17 @@ export function renderSamtaleTraeningView(container, navigateFn) {
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
-        cardTitle.textContent = data.title || getTranslation(data.titleKey);
+        cardTitle.textContent = data.title;
+        
+        const cardDesc = document.createElement('p');
+        cardDesc.style.fontSize = '0.9rem';
+        cardDesc.style.color = 'var(--text-muted)';
+        cardDesc.style.marginTop = '0.5rem';
+        cardDesc.textContent = data.desc;
 
         card.appendChild(icon);
         card.appendChild(cardTitle);
+        card.appendChild(cardDesc);
         grid.appendChild(card);
     });
 

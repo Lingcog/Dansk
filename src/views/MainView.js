@@ -38,10 +38,23 @@ export function renderMainView(container, navigateFn) {
         },
 
         {
+            icon: '🕹️',
+            titleKey: 'Interaktive historier',
+            descKey: 'Lær dansk ved at læse historier',
+            action: () => navigateFn('historier_menu')
+        },
+        {
             icon: '💬',
             titleKey: 'lavSporgsmal',
             descKey: 'lavSporgsmalDesc',
             action: () => navigateFn('lav_sporgsmal')
+        },
+
+        {
+            icon: '🎙️',
+            titleKey: 'traenUdtale',
+            descKey: 'udtaleDesc',
+            action: () => navigateFn('traen_udtale')
         },
         {
             icon: '🗣️',
@@ -55,12 +68,7 @@ export function renderMainView(container, navigateFn) {
             descKey: 'skriveHjaelpDesc',
             action: () => navigateFn('skrive_hjaelp')
         },
-        {
-            icon: '🏰',
-            titleKey: 'laerDanskKultur',
-            descKey: 'laerDanskKulturDesc',
-            action: () => navigateFn('dansk_kultur')
-        },
+
         {
             icon: '🎨',
             titleKey: 'talemaader',

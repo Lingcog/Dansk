@@ -3,7 +3,7 @@ export { translations };
 
 export const appState = {
     lang: null,
-    currentView: 'language',
+    currentView: 'language'
 };
 
 export function getLang() {

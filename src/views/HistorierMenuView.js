@@ -1,6 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 
-export function renderSamtaleTraeningView(container, navigateFn) {
+export function renderHistorierMenuView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -9,33 +9,34 @@ export function renderSamtaleTraeningView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← ' + getTranslation('back');
+    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
     backBtn.onclick = () => navigateFn('main');
     topBar.appendChild(backBtn);
+    viewContainer.appendChild(topBar);
 
-    // Header
+    // Header Title
     const title = document.createElement('h1');
-    title.textContent = getTranslation('samtaleTraening');
+    title.textContent = 'Interaktive historier';
+    viewContainer.appendChild(title);
+
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = getTranslation('samtaleTraeningDesc');
+    subtitle.textContent = 'Lær dansk ved at læse historier';
+    viewContainer.appendChild(subtitle);
 
-    // Cards
+    // Menu Cards
     const cardsData = [
         {
-            icon: '🗣',
-            titleKey: 'hverdagssamtale',
-            action: () => navigateFn('samtale_hverdag')
+            icon: '🕹️',
+            title: 'Annas sjove dag i Netto',
+            desc: 'Styr Anna igennem absurde situationer i Netto, imens du træner udtale og sætninger.',
+            action: () => navigateFn('branching_story', { storyId: 'anna_rat' })
         },
         {
-            icon: '🏠',
-            titleKey: 'samtaleBolig',
-            action: () => navigateFn('samtale_bolig_menu')
-        },
-        {
-            icon: '💼',
-            titleKey: 'samtaleArbejde',
-            action: () => navigateFn('samtale_arbejde_menu')
+            icon: '📖',
+            title: 'Din dagligdag',
+            desc: 'Gennemspil hverdags-situationer, byg sætningerne selv, og øv udtalen.',
+            action: () => navigateFn('interactive_story')
         }
     ];
 
@@ -53,16 +54,18 @@ export function renderSamtaleTraeningView(container, navigateFn) {
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
-        cardTitle.textContent = data.title || getTranslation(data.titleKey);
+        cardTitle.textContent = data.title;
+
+        const cardDesc = document.createElement('div');
+        cardDesc.className = 'card-desc';
+        cardDesc.textContent = data.desc;
 
         card.appendChild(icon);
         card.appendChild(cardTitle);
+        card.appendChild(cardDesc);
         grid.appendChild(card);
     });
 
-    viewContainer.appendChild(topBar);
-    viewContainer.appendChild(title);
-    viewContainer.appendChild(subtitle);
     viewContainer.appendChild(grid);
     container.appendChild(viewContainer);
 }

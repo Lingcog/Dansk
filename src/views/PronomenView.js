@@ -171,9 +171,9 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
         const items = category === 'pronomen' ? [
             { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', img: 'pronominer_spotlight.png' },
-            { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'pronominer_objekt.png' },
-            { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'pronominer_possessiv.png' },
-            { key: 'pronominerRefleksiv', type: 'refleksiv', icon: '🔄', img: 'pronominer_refleksiv.png' }
+            { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'objekt_vand.jpg' },
+            { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'ejefald_guide_voksne.jpg' },
+            { key: 'pronominerRefleksiv', type: 'refleksiv', icon: '🔄', img: 'refleksiv_guide.jpg' }
         ] : [
             { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
             { key: 'verberDatidRegelm', type: 'datid_regelm', icon: '🕰️', img: 'verber_kategorier.png' },
@@ -335,34 +335,17 @@ export function renderPronomenView(container, navigateFn, extraData) {
         const slide1 = document.createElement('div');
         slide1.className = 'expl-slide';
         slide1.innerHTML = `
-            <img src="${baseUrl}der_er_bil_gade.png" class="pronomen-illustration">
-            <div class="expl-bubble pulse">${getTranslation('derErIntro1')}</div>
-            <p class="expl-text">${getTranslation('derErExpl')}</p>
-            <button class="gemini-btn next-slide-btn">Næste →</button>
-        `;
-
-        // Slide 2: Identification
-        const slide2 = document.createElement('div');
-        slide2.className = 'expl-slide';
-        slide2.style.display = 'none';
-        slide2.innerHTML = `
-            <img src="${baseUrl}det_er_bil_pegepind.png" class="pronomen-illustration">
-            <div class="expl-bubble pulse">${getTranslation('derErIntro2')}</div>
-            <p class="expl-text">Når vi kender tingen (den er inde i rummet), så bruger vi <b>det</b> til at pege.</p>
+            <img src="${baseUrl}der_det_guide.png" class="pronomen-illustration">
+            <div class="expl-bubble pulse">Brug Paraplyen (Det) til vejret og situationen. Brug Pilen/Spotlampen (Der) til at pege på noget fysisk på et bestemt sted.</div>
+            <p class="expl-text">Lær at mærke forskellen på 'det' og 'der'.</p>
             <button class="gemini-btn start-practice-btn">Start øvelse!</button>
         `;
 
-        slide1.querySelector('.next-slide-btn').onclick = () => {
-            slide1.style.display = 'none';
-            slide2.style.display = 'block';
-        };
-
-        slide2.querySelector('.start-practice-btn').onclick = () => {
+        slide1.querySelector('.start-practice-btn').onclick = () => {
             startDerErExercise();
         };
 
         explContainer.appendChild(slide1);
-        explContainer.appendChild(slide2);
         gameArea.appendChild(explContainer);
     }
 
@@ -370,109 +353,53 @@ export function renderPronomenView(container, navigateFn, extraData) {
         gameArea.innerHTML = '';
         const exerciseData = [
             {
-                text: "Se! [blank_0] en rød hund ude i haven.",
-                answer: "Der er",
-                options: ["Der er", "Det er"],
-                hints: { "Det er": "'Det er' peger på noget bestemt, vi kender. Her introducerer vi en ny hund." },
-                feedback: "Korrekt! 'Der er' bruges, når vi præsenterer eksistensen af noget nyt."
+                text: "Husk din varme jakke, for [blank_0] er koldt udenfor i dag.",
+                answer: "det",
+                options: ["der", "det"],
+                hints: { "der": "Tænk på Paraplyen. Kulden handler om vejret og hele dagen generelt. Vi peger ikke på ét bestemt punkt." },
+                feedback: "Rigtigt! Billede: Paraplyen (Sætter scenen). Kulden handler om vejret og hele dagen generelt. Det er koldt overalt i luften, ikke kun på ét bestemt punkt."
             },
             {
-                text: "Hvad er det for en lyd? [blank_0] bare naboens kat.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Vi skal identificere lyden (faktum). 'Der er' introducerer oftest nye ting på et sted." },
-                feedback: "Korrekt! 'Det er' forklarer og identificerer tingen (katten)."
+                text: "Pas på dine tæer! [blank_0] ligger en tung kuffert på gulvet.",
+                answer: "der",
+                options: ["der", "det"],
+                hints: { "det": "Tænk på Spotlampen/Pilen. Vi peger på en helt bestemt, fysisk ting, der ligger et sted." },
+                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Vi peger på en helt bestemt, fysisk ting (en kuffert), som pludselig befinder sig på gulvet i vores omgivelser."
             },
             {
-                text: "Hvem banker på døren? [blank_0] nok min mor.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Når man spørger 'hvem er', svarer man med identiteten ('Det er')." },
-                feedback: "Korrekt! Vi identificerer en bestemt person."
+                text: "Tænd venligst lyset. [blank_0] er meget mørkt herinde i stuen.",
+                answer: "det",
+                options: ["der", "det"],
+                hints: { "der": "Tænk på Paraplyen. Mørket dækker hele rummets atmosfære, ikke kun ét bestemt sted." },
+                feedback: "Rigtigt! Billede: Paraplyen (Sætter scenen). Mørket dækker hele rummets atmosfære og situation. Hele scenen er bare mørk."
             },
             {
-                text: "[blank_0] mange spændende mennesker i toget i dag.",
-                answer: "Der er",
-                options: ["Der er", "Det er"],
-                hints: { "Det er": "Ordet mangler flertal, og vi præsenterer blot at noget befinder sig i toget." },
-                feedback: "Korrekt! 'Der er' beskriver antallet af noget på et sted."
+                text: "Pas på, når du går ned i kælderen. [blank_0] er mørkt under trappen, så tag din telefon med.",
+                answer: "der",
+                options: ["der", "det"],
+                hints: { "det": "Tænk på Spotlampen/Pilen. Selvom kælderen generelt kan være lys, taler vi om et bestemt sted (under trappen)." },
+                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Selvom kælderen generelt kan være lys, peger vi her på et helt bestemt, afgrænset sted (under trappen), hvor mørket gemmer sig."
             },
             {
-                text: "[blank_0] en dejlig kop kaffe, du har lavet her.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Vi ved allerede at koppen findes foran dig. Nu vurdere vi den." },
-                feedback: "Korrekt! 'Det er' bruges til at bedømme og pege på den specifikke kaffe."
+                text: "I juli måned er [blank_0] som regel rigtig dejligt og varmt i Danmark.",
+                answer: "det",
+                options: ["der", "det"],
+                hints: { "der": "Tænk på Paraplyen. Det handler om det generelle klima og årstiden." },
+                feedback: "Rigtigt! Billede: Paraplyen (Sætter scenen). Varmen beskriver det generelle klima, årstiden og vejret i hele landet på en almen måde."
             },
             {
-                text: "Hvad ligger der på bordet? [blank_0] min danske bog.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Spørgsmålet lyder 'hvad er det?'. Så svarer man for at pege på identiteten." },
-                feedback: "Korrekt! Identifikation af bogen."
+                text: "Pas på din mund! [blank_0] er meget varm kaffe i koppen.",
+                answer: "der",
+                options: ["der", "det"],
+                hints: { "det": "Tænk på Spotlampen/Pilen. Vi zoomer ind på indersiden af koppen (noget fysisk, der befinder sig dér)." },
+                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Vi zoomer ind på indersiden af koppen og konstaterer, at der fysisk befinder sig noget varmt lige dér."
             },
             {
-                text: "Åh nej, [blank_0] slet ingen mælk i vores køleskab.",
-                answer: "Der er",
-                options: ["Der er", "Det er"],
-                hints: { "Det er": "Vi peger ikke på noget. Vi snakker om, at noget mangler (eksistens)." },
-                feedback: "Korrekt! Eksistens (eller manglen på samme) tager altid 'Der er'."
-            },
-            {
-                text: "Hvem var det i telefonen? [blank_0] min gode chef.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Du skal fortælle identiteten på personen. Det gør man ikke med 'Der er'." },
-                feedback: "Korrekt! 'Det er' fortæller hvem det var."
-            },
-            {
-                text: "[blank_0] sikkert et spøgelse oppe i det gamle hus.",
-                answer: "Der er",
-                options: ["Der er", "Det er"],
-                hints: { "Det er": "Vi har ikke set et specifikt spøgelse. Vi gætter på, at et findes der." },
-                feedback: "Korrekt! 'Der er' markerer at noget befinder sig et bestemt sted."
-            },
-            {
-                text: "Er det din taske? Ja, [blank_0] min taske.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Kan kun være forkert her, for du svarer direkte på 'Er det...'." },
-                feedback: "Korrekt! Du bekræfter, hvilken taske vi taler om."
-            },
-            {
-                text: "Se skyerne! [blank_0] snart voldsomt regnvejr.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Når man taler om vejret, bruger vi oftest 'Det er' (det et koldt, det er regnvejr)." },
-                feedback: "Korrekt! Vejr og naturfænomener tager næsten altid 'Det er'."
-            },
-            {
-                text: "Pas på, [blank_0] en sur hund under din bil.",
-                answer: "Der er",
-                options: ["Der er", "Det er"],
-                hints: { "Det er": "Hunden introduceres for allerførste gang som en fare under bilen." },
-                feedback: "Korrekt! Noget uspecificeret findes på et sted ('Der er')."
-            },
-            {
-                text: "Hvem bankede? [blank_0] bare postbuddet med en pakke.",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Vi skal oplyse postbuddets identitet, så 'Der er' fungerer ikke." },
-                feedback: "Korrekt! 'Det er' identificerer."
-            },
-            {
-                text: "[blank_0] meget koldt herinde, kan du lukke vinduet?",
-                answer: "Det er",
-                options: ["Der er", "Det er"],
-                hints: { "Der er": "Vi taler om klima/temperatur. Temperaturen er ikke en fysisk ting." },
-                feedback: "Korrekt! 'Det er' bruges fast om vejr, tid og temperatur."
-            },
-            {
-                text: "På lørdag [blank_0] stor fodboldfest nede i byen.",
-                answer: "er der",
-                options: ["er der", "er det"],
-                hints: { "er det": "Festen findes sted/eksisterer lørdag, vi peger ikke på én fast genstand." },
-                feedback: "Korrekt! 'Der er' (omvendt til 'er der') markerer begivenhedens eksistens."
+                text: "Vi må ikke larme nu, for [blank_0] sover et lille barn inde i soveværelset.",
+                answer: "der",
+                options: ["der", "det"],
+                hints: { "det": "Tænk på Spotlampen/Pilen. Vi henleder opmærksomheden på en person, der befinder sig på et bestemt sted." },
+                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Vi henleder opmærksomheden på, at der fysisk befinder sig en person (et barn) på et bestemt sted på scenen."
             }
         ];
 
@@ -484,6 +411,14 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
             const content = document.createElement('div');
             content.className = 'pronomen-exercise-content';
+
+            const illustration = document.createElement('img');
+            illustration.src = `${baseUrl}der_det_guide.png`;
+            illustration.className = 'pronomen-illustration';
+            illustration.style.maxHeight = '250px';
+            illustration.style.objectFit = 'contain';
+            illustration.style.marginBottom = '1.5rem';
+            content.appendChild(illustration);
 
             const progress = document.createElement('div');
             progress.className = 'exercise-progress';
@@ -610,10 +545,47 @@ export function renderPronomenView(container, navigateFn, extraData) {
         gameArea.innerHTML = '';
         title.textContent = getTranslation(category.key);
 
+        const illustrationContainer = document.createElement('div');
+        illustrationContainer.style.textAlign = 'center';
+        illustrationContainer.style.marginBottom = '2rem';
+        
         const illustration = document.createElement('img');
-        illustration.src = baseUrl + 'pronominer_guide.png';
         illustration.className = 'pronomen-illustration';
-        gameArea.appendChild(illustration);
+        illustration.style.marginBottom = '1rem';
+        
+        if (category.type === 'objekt') {
+            illustration.src = baseUrl + 'objekt_vand.jpg';
+            const caption = document.createElement('div');
+            caption.innerHTML = '<strong>Subjekt → Verbum → Objekt</strong><br><em>"Jeg giver dig et glas vand"</em>';
+            caption.className = 'expl-bubble';
+            caption.style.display = 'inline-block';
+            
+            illustrationContainer.appendChild(illustration);
+            illustrationContainer.appendChild(caption);
+        } else if (category.type === 'possessiv') {
+            illustration.src = baseUrl + 'ejefald_guide_voksne.jpg';
+            const caption = document.createElement('div');
+            caption.innerHTML = '<strong>Ejefald (Possessiv)</strong><br><em>"Hans bil, hendes cykel, vores hus"</em>';
+            caption.className = 'expl-bubble';
+            caption.style.display = 'inline-block';
+            
+            illustrationContainer.appendChild(illustration);
+            illustrationContainer.appendChild(caption);
+        } else if (category.type === 'refleksiv') {
+            illustration.src = baseUrl + 'refleksiv_guide.jpg';
+            const caption = document.createElement('div');
+            caption.innerHTML = '<strong>Refleksivt (Tilbagevisende)</strong><br><em>Subjekt + Verbum + Objekt (Refleksivt)<br>"Jeg skynder mig til toget"</em>';
+            caption.className = 'expl-bubble';
+            caption.style.display = 'inline-block';
+            
+            illustrationContainer.appendChild(illustration);
+            illustrationContainer.appendChild(caption);
+        } else {
+            illustration.src = baseUrl + 'pronominer_guide.png';
+            illustrationContainer.appendChild(illustration);
+        }
+        
+        gameArea.appendChild(illustrationContainer);
 
         const contentWrapper = document.createElement('div');
         contentWrapper.className = 'pronomen-exercise-content';
@@ -872,11 +844,11 @@ export function renderPronomenView(container, navigateFn, extraData) {
     if (viewMode === 'subjekt') {
         showPronomenSets('subjekt', 'pronominer_spotlight.png');
     } else if (viewMode === 'objekt') {
-        showPronomenSets('objekt', 'pronominer_objekt.png');
+        showPronomenSets('objekt', 'objekt_vand.jpg');
     } else if (viewMode === 'possessiv') {
-        showPronomenSets('possessiv', 'pronominer_possessiv.png');
+        showPronomenSets('possessiv', 'ejefald_guide_voksne.jpg');
     } else if (viewMode === 'refleksiv') {
-        showPronomenSets('refleksiv', 'pronominer_refleksiv.png');
+        showPronomenSets('refleksiv', 'refleksiv_guide.jpg');
     } else if (viewMode === 'adverbier') {
         startAdverbChoiceExercise();
     } else if (viewMode === 'konjunktioner') {

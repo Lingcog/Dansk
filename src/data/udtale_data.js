@@ -147,12 +147,12 @@ export const udtaleDataLet = {
                 title: "Hårdt 'd'",
                 explanation: "<strong>Sådan udtales hårdt d:</strong><br/>Som på engelsk. Bruges i starten af ord.",
                 exercises: [
-                    { text: "Du kan spise.", targetWords: ["Du"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
-                    { text: "Den er din.", targetWords: ["Den", "din."], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
-                    { text: "Det er mandag.", targetWords: ["Det", "mandag."], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
-                    { text: "De bor alene.", targetWords: ["De"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
-                    { text: "Du må dele.", targetWords: ["Du", "dele."], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
-                    { text: "Dåsen er sort.", targetWords: ["Dåsen"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" }
+                    { text: "Hvor bor du", targetWords: ["du"], category: "Hårdt 'd'", hint: "D i starten af et ord er hårdt. Sig D som på dit eget sprog." },
+                    { text: "Er det din telefon", targetWords: ["din"], category: "Hårdt 'd'", hint: "D er hårdt her i starten af ordet. Sig D som på dit eget sprog." },
+                    { text: "Hvordan går det?", targetWords: ["Hvordan"], category: "Hårdt 'd'", hint: "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog." },
+                    { text: "Hvornår skal du på arbejde", targetWords: ["arbejde"], category: "Hårdt 'd'", hint: "Nogle gange skal D i et led udtales hårdt (ar-bej-de). Sig D som på dit eget sprog." },
+                    { text: "Du må dele.", targetWords: ["Du", "dele."], category: "Hårdt 'd'", hint: "D i starten af et ord er hårdt. Sig D som på dit eget sprog." },
+                    { text: "Dåsen er sort.", targetWords: ["Dåsen"], category: "Hårdt 'd'", hint: "D er hårdt her i starten af ordet. Sig D som på dit eget sprog." }
                 ]
             },
             {
@@ -160,12 +160,12 @@ export const udtaleDataLet = {
                 title: "Blødt 'd'",
                 explanation: "<strong>Sådan udtales blødt d:</strong><br/>Lyder lidt som engelsk 'the'. Kommer altid efter en vokal.",
                 exercises: [
-                    { text: "Jeg vil bade.", targetWords: ["bade."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
-                    { text: "Hun laver mad.", targetWords: ["mad."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
-                    { text: "Han er sød.", targetWords: ["sød."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
-                    { text: "De sidder ned.", targetWords: ["sidder", "ned."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
-                    { text: "Han hedder Jens.", targetWords: ["hedder"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
-                    { text: "Båden er hvid.", targetWords: ["Båden", "hvid."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" }
+                    { text: "Hvad hedder du", targetWords: ["hedder"], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd (eks. e, a, o). Tungen flad bag undertænderne. Slap helt af." },
+                    { text: "Hvad tid møder du i morgen", targetWords: ["møder"], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd (eks. e, a, o). Tungen flad bag undertænderne. Slap helt af." },
+                    { text: "Hun laver mad.", targetWords: ["mad."], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd. Tungen flad bag undertænderne. Slap helt af." },
+                    { text: "Han er sød.", targetWords: ["sød."], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd. Tungen flad bag undertænderne. Slap helt af." },
+                    { text: "De sidder ned.", targetWords: ["sidder", "ned."], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd. Tungen flad bag undertænderne. Slap helt af." },
+                    { text: "Båden er hvid.", targetWords: ["Båden", "hvid."], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd. Tungen flad bag undertænderne. Slap helt af." }
                 ]
             },
             {
@@ -173,12 +173,12 @@ export const udtaleDataLet = {
                 title: "Stumt 'd'",
                 explanation: "<strong>Stumt d:</strong><br/>Udtales slet ikke (illustreret via endelsen -ed og de klassiske nd/ld/rd-lyde).",
                 exercises: [
-                    { text: "Se min hund.", targetWords: ["hund."], category: "Stumt 'd'", hint: "D'et udtales slet ikke" },
-                    { text: "Maden er kold.", targetWords: ["kold."], category: "Stumt 'd'", hint: "D'et udtales slet ikke" },
-                    { text: "Manden cykler væk.", targetWords: ["Manden"], category: "Stumt 'd'", hint: "D'et udtales slet ikke" },
-                    { text: "Han er hård.", targetWords: ["hård."], category: "Stumt 'd'", hint: "D'et udtales slet ikke" },
-                    { text: "Vi har vand.", targetWords: ["vand."], category: "Stumt 'd'", hint: "D'et udtales slet ikke" },
-                    { text: "Hun kender ham.", targetWords: ["kender"], category: "Stumt 'd'", hint: "D'et udtales slet ikke" }
+                    { text: "Vil du have vand", targetWords: ["vand"], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
+                    { text: "Hvornår holder du pause?", targetWords: ["holder"], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
+                    { text: "Glasset står på bordet", targetWords: ["bordet"], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
+                    { text: "Hvad kan du bedst lide?", targetWords: ["bedst"], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
+                    { text: "Se min hund.", targetWords: ["hund."], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
+                    { text: "Maden er kold.", targetWords: ["kold."], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" }
                 ]
             }
         ]
@@ -192,12 +192,12 @@ export const udtaleDataLet = {
                 title: "Hårdt 'r'",
                 explanation: "<strong>Hårdt r:</strong><br/>En halslyd. Forestil dig, at du gurgler lidt vand nede bag i halsen. Bruges typisk i starten af ord.",
                 exercises: [
-                    { text: "Den er rød.", targetWords: ["rød."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
-                    { text: "Giv en rose.", targetWords: ["rose."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
-                    { text: "Han kan råbe.", targetWords: ["råbe."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
-                    { text: "Ræven er her.", targetWords: ["Ræven"], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
-                    { text: "Hun vil ride.", targetWords: ["ride."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
-                    { text: "Rør min næse.", targetWords: ["Rør"], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" }
+                    { text: "Det regner meget", targetWords: ["regner"], category: "Hårdt 'r'", hint: "Gurgle-lyd i starten af ordet." },
+                    { text: "Hvor er det rart", targetWords: ["rart"], category: "Hårdt 'r'", hint: "Gurgle-lyden skal komme fra halsen. Ikke rulle med tungen!" },
+                    { text: "Træet er stort", targetWords: ["Træet"], category: "Hårdt 'r'", hint: "R efter en konsonant (T) er også en gurgle-lyd." },
+                    { text: "Den er rød.", targetWords: ["rød."], category: "Hårdt 'r'", hint: "Gurgle-lyd i starten af ordet." },
+                    { text: "Han kan råbe.", targetWords: ["råbe."], category: "Hårdt 'r'", hint: "Gurgle-lyden skal komme fra halsen. Ikke rulle med tungen!" },
+                    { text: "Ræven er her.", targetWords: ["Ræven"], category: "Hårdt 'r'", hint: "Gurgle-lyd i starten af ordet." }
                 ]
             },
             {
@@ -205,12 +205,12 @@ export const udtaleDataLet = {
                 title: "Vokalisk 'r'",
                 explanation: "<strong>Vokalisk r:</strong><br/>Lyder næsten bare som et 'a' (eller 'å') dybt inde i munden. Bruges i slutningen af ord. F.eks. lyder 'spis-er' som 'spis-a'.",
                 exercises: [
-                    { text: "Her er vi.", targetWords: ["Her", "er"], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
-                    { text: "Det er mor.", targetWords: ["er", "mor."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
-                    { text: "Han er far.", targetWords: ["er", "far."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
-                    { text: "Se et bær.", targetWords: ["bær."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
-                    { text: "Vi ser ham.", targetWords: ["ser"], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
-                    { text: "Bilen kører nu.", targetWords: ["kører"], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" }
+                    { text: "Min mor og far", targetWords: ["mor", "far"], category: "Vokalisk 'r'", hint: "R til sidst bliver til en 'a'-lyd. Åbn munden." },
+                    { text: "Bilen skal køre", targetWords: ["køre"], category: "Vokalisk 'r'", hint: "R efter en vokal bliver tit til en vokal-lyd." },
+                    { text: "Her er en dør", targetWords: ["dør"], category: "Vokalisk 'r'", hint: "R farver Ø-lyden så den bliver mere åben." },
+                    { text: "Her er vi.", targetWords: ["Her", "er"], category: "Vokalisk 'r'", hint: "R til sidst bliver til en 'a'-lyd. Åbn munden." },
+                    { text: "Vi ser ham.", targetWords: ["ser"], category: "Vokalisk 'r'", hint: "R til sidst bliver til en 'a'-lyd. Åbn munden." },
+                    { text: "Bilen kører nu.", targetWords: ["kører"], category: "Vokalisk 'r'", hint: "R efter en vokal bliver tit til en vokal-lyd." }
                 ]
             }
         ]
@@ -224,12 +224,12 @@ export const udtaleDataLet = {
                 title: "Hårdt 'g'",
                 explanation: "<strong>Hårdt g:</strong><br/>Som et almindeligt g (f.eks. 'gå'). Bruges i starten af ord.",
                 exercises: [
-                    { text: "Han vil gå.", targetWords: ["gå."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
-                    { text: "En god dag.", targetWords: ["god"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
-                    { text: "Giv en gave.", targetWords: ["Giv", "gave."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
-                    { text: "Gå din vej.", targetWords: ["Gå"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
-                    { text: "Den er gul.", targetWords: ["gul."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
-                    { text: "Se en ged.", targetWords: ["ged."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" }
+                    { text: "Det går godt", targetWords: ["går", "godt"], category: "Hårdt 'g'", hint: "G i starten af et ord udtales hårdt." },
+                    { text: "Gaden er lang", targetWords: ["Gaden"], category: "Hårdt 'g'", hint: "Hårdt G i starten." },
+                    { text: "Han vil gå.", targetWords: ["gå."], category: "Hårdt 'g'", hint: "G i starten af et ord udtales hårdt." },
+                    { text: "Giv en gave.", targetWords: ["Giv", "gave."], category: "Hårdt 'g'", hint: "Hårdt G i starten." },
+                    { text: "Gå din vej.", targetWords: ["Gå"], category: "Hårdt 'g'", hint: "G i starten af et ord udtales hårdt." },
+                    { text: "Den er gul.", targetWords: ["gul."], category: "Hårdt 'g'", hint: "Hårdt G i starten." }
                 ]
             },
             {
@@ -237,12 +237,12 @@ export const udtaleDataLet = {
                 title: "Stumt 'g'",
                 explanation: "<strong>Stumt g:</strong><br/>Nogle gange udtales det slet ikke, især i bløde overgange (f.eks. 'nogle' eller 'bage').",
                 exercises: [
-                    { text: "Han bager kage.", targetWords: ["bager", "kage."], category: "Stumt 'g'", hint: "G'et er stumt" },
-                    { text: "Han er modig.", targetWords: ["modig."], category: "Stumt 'g'", hint: "G'et er stumt" },
-                    { text: "Hun ryger ikke.", targetWords: ["ryger"], category: "Stumt 'g'", hint: "G'et er stumt" },
-                    { text: "Den er ledig.", targetWords: ["ledig."], category: "Stumt 'g'", hint: "G'et er stumt" },
-                    { text: "En ny uge.", targetWords: ["uge."], category: "Stumt 'g'", hint: "G'et er stumt" },
-                    { text: "Vi må sige.", targetWords: ["sige."], category: "Stumt 'g'", hint: "G'et er stumt" }
+                    { text: "Det er farligt", targetWords: ["farligt"], category: "Stumt 'g'", hint: "G er stumt i ord der ender på -lig eller -ig." },
+                    { text: "Det smager godt", targetWords: ["smager"], category: "Stumt 'g'", hint: "G er nogle gange stumt efter en åben vokal." },
+                    { text: "Jeg vil bage i morgen", targetWords: ["bage"], category: "Stumt 'g'", hint: "I nogle ord forsvinder g helt foran en åben vokal. Stumt 😶" },
+                    { text: "Han er modig.", targetWords: ["modig."], category: "Stumt 'g'", hint: "G er stumt i ord der ender på -lig eller -ig." },
+                    { text: "Den er ledig.", targetWords: ["ledig."], category: "Stumt 'g'", hint: "G er stumt i ord der ender på -lig eller -ig." },
+                    { text: "Det er ægte guld", targetWords: ["ægte"], category: "Stumt 'g'", hint: "Når G står foran T, lyder det som et K." }
                 ]
             },
             {
@@ -250,12 +250,12 @@ export const udtaleDataLet = {
                 title: "G som j-lyd",
                 explanation: "<strong>J-lyd:</strong><br/>G lyder ofte som et 'j' efter visse vokaler (f.eks. 'kage' -> 'kaje').",
                 exercises: [
-                    { text: "Se på mig.", targetWords: ["mig."], category: "G som J-lyd", hint: "Udtales som 'j'" },
-                    { text: "Jeg ser dig.", targetWords: ["dig."], category: "G som J-lyd", hint: "Udtales som 'j'" },
-                    { text: "Han bader sig.", targetWords: ["sig."], category: "G som J-lyd", hint: "Udtales som 'j'" },
-                    { text: "Køb et løg.", targetWords: ["løg."], category: "G som J-lyd", hint: "Udtales som 'j'" },
-                    { text: "Pigen leger.", targetWords: ["leger."], category: "G som J-lyd", hint: "Udtales som 'j'" },
-                    { text: "Her er røg.", targetWords: ["røg."], category: "G som J-lyd", hint: "Udtales som 'j'" }
+                    { text: "Pigen smiler", targetWords: ["Pigen"], category: "G som J-lyd", hint: "Smile-G: G bliver til et lille J her." },
+                    { text: "Jeg kan lide at lege", targetWords: ["lege"], category: "G som J-lyd", hint: "Efter e, i, æ, ø bliver G tit til et J. Smil!" },
+                    { text: "Se på mig.", targetWords: ["mig."], category: "G som J-lyd", hint: "Smile-G: G bliver til et lille J her." },
+                    { text: "Jeg ser dig.", targetWords: ["dig."], category: "G som J-lyd", hint: "Smile-G: G bliver til et lille J her." },
+                    { text: "Han bader sig.", targetWords: ["sig."], category: "G som J-lyd", hint: "Efter e, i, æ, ø bliver G tit til et J. Smil!" },
+                    { text: "Køb et løg.", targetWords: ["løg."], category: "G som J-lyd", hint: "Efter e, i, æ, ø bliver G tit til et J. Smil!" }
                 ]
             },
             {
@@ -263,10 +263,12 @@ export const udtaleDataLet = {
                 title: "G som w-lyd",
                 explanation: "<strong>W-lyd:</strong><br/>G udtales som et 'w' efter visse vokaler som o og å.",
                 exercises: [
-                    { text: "Læs en bog.", targetWords: ["bog."], category: "G som W-lyd", hint: "Udtales som 'w'" },
-                    { text: "Næste station Bogense.", targetWords: ["Bogense."], category: "G som W-lyd", hint: "Udtales som 'w'" },
-                    { text: "Toget kører nu.", targetWords: ["Toget"], category: "G som W-lyd", hint: "Udtales som 'w'" },
-                    { text: "Låget på kanden.", targetWords: ["Låget"], category: "G som W-lyd", hint: "Udtales som 'w'" }
+                    { text: "En god bog", targetWords: ["bog"], category: "G som W-lyd", hint: "Efter o, u, å bliver G til et W. Rund munden!" },
+                    { text: "Vi skal til Norge", targetWords: ["Norge"], category: "G som W-lyd", hint: "Runde-G: Her lyder G næsten som et W." },
+                    { text: "Læs en bog.", targetWords: ["bog."], category: "G som W-lyd", hint: "Efter o, u, å bliver G til et W. Rund munden!" },
+                    { text: "Næste station Bogense.", targetWords: ["Bogense."], category: "G som W-lyd", hint: "Runde-G: Her lyder G næsten som et W." },
+                    { text: "Toget kører nu.", targetWords: ["Toget"], category: "G som W-lyd", hint: "Efter o, u, å bliver G til et W. Rund munden!" },
+                    { text: "Låget på kanden.", targetWords: ["Låget"], category: "G som W-lyd", hint: "Efter o, u, å bliver G til et W. Rund munden!" }
                 ]
             }
         ]

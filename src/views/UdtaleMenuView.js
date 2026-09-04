@@ -27,10 +27,16 @@ export function renderUdtaleMenuView(container, navigateFn) {
     // Menu Cards
     const cardsData = [
         {
+            icon: '🍏',
+            title: getTranslation('udtaleLetTitle') || 'Lette øvelser (D, R, G)',
+            desc: getTranslation('udtaleLetDesc') || 'Korte og nemme sætninger uden svære konsonanter.',
+            action: () => navigateFn('traen_bogstaver', { level: 'let' })
+        },
+        {
             icon: '🅰️',
-            title: getTranslation('udtaleLettersTitle') || 'Træn bogstaverne D, R og G',
-            desc: getTranslation('udtaleLettersDesc') || 'Målrettet træning af de svære danske bogstaver med specifikke sætninger.',
-            action: () => navigateFn('traen_bogstaver')
+            title: getTranslation('udtaleSvaerTitle') || 'Svære øvelser (D, R, G)',
+            desc: getTranslation('udtaleSvaerDesc') || 'Målrettet træning af de svære danske bogstaver med specifikke sætninger.',
+            action: () => navigateFn('traen_bogstaver', { level: 'svaer' })
         },
         {
             icon: '🎤',

@@ -173,7 +173,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderUdtaleMenuView(appDiv, navigate);
   } else if (viewTarget === 'traen_bogstaver') {
     appState.currentView = 'traen_bogstaver';
-    renderUdtaleView(appDiv, navigate);
+    renderUdtaleView(appDiv, navigate, extraData);
   } else if (viewTarget === 'leg_med_udtale') {
     appState.currentView = 'leg_med_udtale';
     renderLegMedUdtaleView(appDiv, navigate);

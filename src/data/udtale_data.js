@@ -1,4 +1,4 @@
-export const udtaleData = {
+export const udtaleDataSvaer = {
     D: {
         title: "Bogstavet D",
         description: "Træn det danske D (hårdt, blødt og stumt).",
@@ -130,6 +130,145 @@ export const udtaleData = {
                     { text: "Mange ringe.", targetWords: ["Mange", "ringe."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
                     { text: "Jeg fanger en slange.", targetWords: ["fanger", "slange."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
                     { text: "Han er en ung dreng.", targetWords: ["ung", "dreng."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" }
+                ]
+            }
+        ]
+    }
+};
+
+
+export const udtaleDataLet = {
+    D: {
+        title: "Bogstavet D (Let)",
+        description: "Lette sætninger til D (hårdt, blødt, stumt).",
+        subCategories: [
+            {
+                id: "haardt_d",
+                title: "Hårdt 'd'",
+                explanation: "<strong>Sådan udtales hårdt d:</strong><br/>Som på engelsk. Bruges i starten af ord.",
+                exercises: [
+                    { text: "Du må se.", targetWords: ["Du"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
+                    { text: "De må bo.", targetWords: ["De"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
+                    { text: "Din mor lo.", targetWords: ["Din"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
+                    { text: "Du får ti.", targetWords: ["Du"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
+                    { text: "Det er din.", targetWords: ["Det", "din."], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" },
+                    { text: "Din by nu.", targetWords: ["Din"], category: "Hårdt 'd'", hint: "Lyd som 'd' i starten af ord" }
+                ]
+            },
+            {
+                id: "bloedt_d",
+                title: "Blødt 'd'",
+                explanation: "<strong>Sådan udtales blødt d:</strong><br/>Lyder lidt som engelsk 'the'. Kommer altid efter en vokal.",
+                exercises: [
+                    { text: "En rød by.", targetWords: ["rød"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
+                    { text: "Din mad nu.", targetWords: ["mad"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
+                    { text: "En god mor.", targetWords: ["god"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
+                    { text: "En sød ko.", targetWords: ["sød"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
+                    { text: "Gå ud nu.", targetWords: ["ud"], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" },
+                    { text: "Se et bad.", targetWords: ["bad."], category: "Blødt 'd'", hint: "Lyd som engelsk 'the' (efter vokal)" }
+                ]
+            },
+            {
+                id: "stumt_d",
+                title: "Stumt 'd'",
+                explanation: "<strong>Stumt d:</strong><br/>Udtales slet ikke (ofte efter n, l eller før t).",
+                exercises: [
+                    { text: "En ren hund.", targetWords: ["hund."], category: "Stumt 'd'", hint: "D'et udtales slet ikke (efter n)" },
+                    { text: "En fin mand.", targetWords: ["mand."], category: "Stumt 'd'", hint: "D'et udtales slet ikke (efter n)" },
+                    { text: "Se min mund.", targetWords: ["mund."], category: "Stumt 'd'", hint: "D'et udtales slet ikke (efter n)" },
+                    { text: "Giv ham vand.", targetWords: ["vand."], category: "Stumt 'd'", hint: "D'et udtales slet ikke (efter n)" },
+                    { text: "Et nyt land.", targetWords: ["land."], category: "Stumt 'd'", hint: "D'et udtales slet ikke (efter n)" },
+                    { text: "En god hund.", targetWords: ["hund."], category: "Stumt 'd'", hint: "D'et udtales slet ikke (efter n)" }
+                ]
+            }
+        ]
+    },
+    R: {
+        title: "Bogstavet R (Let)",
+        description: "Lette sætninger til R (hårdt og vokalisk).",
+        subCategories: [
+            {
+                id: "haardt_r",
+                title: "Hårdt 'r'",
+                explanation: "<strong>Hårdt r:</strong><br/>En halslyd. Forestil dig, at du gurgler lidt vand nede bag i halsen. Bruges typisk i starten af ord.",
+                exercises: [
+                    { text: "En rød bil.", targetWords: ["rød"], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
+                    { text: "Du får ris.", targetWords: ["ris."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
+                    { text: "En ren ko.", targetWords: ["ren"], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
+                    { text: "Se min ræv.", targetWords: ["ræv."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
+                    { text: "En rå ko.", targetWords: ["rå"], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" },
+                    { text: "Din nye ros.", targetWords: ["ros."], category: "Hårdt 'r'", hint: "Gurgle-lyd i halsen" }
+                ]
+            },
+            {
+                id: "vokalisk_r",
+                title: "Vokalisk 'r'",
+                explanation: "<strong>Vokalisk r:</strong><br/>Lyder næsten bare som et 'a' (eller 'å') dybt inde i munden. Bruges i slutningen af ord. F.eks. lyder 'spis-er' som 'spis-a'.",
+                exercises: [
+                    { text: "Min mor ler.", targetWords: ["mor", "ler."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
+                    { text: "Min far ser.", targetWords: ["far", "ser."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
+                    { text: "Han har bær.", targetWords: ["har", "bær."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
+                    { text: "Hun er her.", targetWords: ["er", "her."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
+                    { text: "Vi ser bær.", targetWords: ["ser", "bær."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a'" },
+                    { text: "Din mor har.", targetWords: ["mor", "har."], category: "Vokalisk 'r'", hint: "Lyder næsten som et 'a' eller 'å'" }
+                ]
+            }
+        ]
+    },
+    G: {
+        title: "Bogstavet G (Let)",
+        description: "Lette sætninger til G.",
+        subCategories: [
+            {
+                id: "haardt_g",
+                title: "Hårdt 'g'",
+                explanation: "<strong>Hårdt g:</strong><br/>Som et almindeligt g (f.eks. 'gå'). Bruges i starten af ord.",
+                exercises: [
+                    { text: "En gul bil.", targetWords: ["gul"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
+                    { text: "En god mor.", targetWords: ["god"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
+                    { text: "Du må gå.", targetWords: ["gå."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
+                    { text: "En ny ged.", targetWords: ["ged."], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
+                    { text: "Giv min mad.", targetWords: ["Giv"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" },
+                    { text: "En god dag.", targetWords: ["god"], category: "Hårdt 'g'", hint: "Almindelig 'g' lyd i starten" }
+                ]
+            },
+            {
+                id: "j_lyd",
+                title: "G som j-lyd",
+                explanation: "<strong>J-lyd:</strong><br/>G lyder ofte som et 'j' efter visse vokaler (f.eks. 'kage' -> 'kaje').",
+                exercises: [
+                    { text: "Se på mig.", targetWords: ["mig."], category: "G som J-lyd", hint: "Udtales 'maj'" },
+                    { text: "Se på dig.", targetWords: ["dig."], category: "G som J-lyd", hint: "Udtales 'daj'" },
+                    { text: "Se mit løg.", targetWords: ["løg."], category: "G som J-lyd", hint: "Løg udtales som 'løj'" },
+                    { text: "Det er røg.", targetWords: ["røg."], category: "G som J-lyd", hint: "Udtales 'røj'" },
+                    { text: "De ser mig.", targetWords: ["mig."], category: "G som J-lyd", hint: "Udtales 'maj'" },
+                    { text: "Giv det mig.", targetWords: ["mig."], category: "G som J-lyd", hint: "Udtales 'maj'" }
+                ]
+            },
+            {
+                id: "stumt_g",
+                title: "Stumt 'g'",
+                explanation: "<strong>Stumt g:</strong><br/>Nogle gange udtales det slet ikke, især i bløde overgange (f.eks. 'nogle' eller 'bage').",
+                exercises: [
+                    { text: "Se min pige.", targetWords: ["pige."], category: "Stumt 'g'", hint: "G'et er stumt: 'pi-e'" },
+                    { text: "Bag en kage.", targetWords: ["kage."], category: "Stumt 'g'", hint: "Udtales 'ka-e'" },
+                    { text: "Du må bage.", targetWords: ["bage."], category: "Stumt 'g'", hint: "Udtales 'ba-e'" },
+                    { text: "En ny uge.", targetWords: ["uge."], category: "Stumt 'g'", hint: "Udtales 'u-e'" },
+                    { text: "Du må sige.", targetWords: ["sige."], category: "Stumt 'g'", hint: "Udtales 'si-e'" },
+                    { text: "En god pige.", targetWords: ["pige."], category: "Stumt 'g'", hint: "Udtales 'pi-e'" }
+                ]
+            },
+            {
+                id: "ng_lyd",
+                title: "NG-lyd",
+                explanation: "<strong>NG-lyd:</strong><br/>Når n og g står sammen, smelter de sammen til én lyd nede i halsen (som i 'penge').",
+                exercises: [
+                    { text: "En ung ko.", targetWords: ["ung"], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
+                    { text: "En tung bil.", targetWords: ["tung"], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
+                    { text: "En lang bil.", targetWords: ["lang"], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
+                    { text: "Syng en sang.", targetWords: ["Syng", "sang."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
+                    { text: "Gå en gang.", targetWords: ["gang."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
+                    { text: "Fang en bi.", targetWords: ["Fang"], category: "NG-lyd", hint: "n og g smelter sammen i halsen" }
                 ]
             }
         ]

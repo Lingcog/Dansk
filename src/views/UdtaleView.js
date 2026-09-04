@@ -1,8 +1,11 @@
 import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
-import { udtaleData } from '../data/udtale_data.js';
+import { udtaleDataSvaer, udtaleDataLet } from '../data/udtale_data.js';
 
-export function renderUdtaleView(container, navigateFn) {
+export function renderUdtaleView(container, navigateFn, extraData = {}) {
+    const isLet = extraData.level === 'let';
+    const activeData = isLet ? udtaleDataLet : udtaleDataSvaer;
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
     
@@ -203,9 +206,9 @@ export function renderUdtaleView(container, navigateFn) {
     let isListening = false;
 
     function updateViewData() {
-        const data = udtaleData[currentLetter];
+        const data = activeData[currentLetter];
         
-        title.textContent = getTranslation('traenUdtale');
+        title.textContent = isLet ? getTranslation('udtaleLetTitle') || 'Lette øvelser (D, R, G)' : getTranslation('udtaleSvaerTitle') || 'Svære øvelser (D, R, G)';
         intro.textContent = '';
         
         // Append sub tab container to the active letter's wrapper

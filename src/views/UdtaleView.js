@@ -271,7 +271,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     }
 
     function renderCurrentExercise() {
-        const data = udtaleData[currentLetter];
+        const data = activeData[currentLetter];
         const currentSub = data.subCategories[currentSubCategory];
         const ex = currentSub.exercises[currentIndex];
         
@@ -334,7 +334,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     };
 
     nextBtn.onclick = () => {
-        const data = udtaleData[currentLetter];
+        const data = activeData[currentLetter];
         const currentSub = data.subCategories[currentSubCategory];
         if (currentIndex < currentSub.exercises.length - 1) {
             currentIndex++;
@@ -382,7 +382,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript.toLowerCase();
             console.log("Hørt:", transcript);
-            const data = udtaleData[currentLetter];
+            const data = activeData[currentLetter];
             const currentSub = data.subCategories[currentSubCategory];
             evaluateSpeech(currentSub.exercises[currentIndex], transcript);
         };

@@ -143,91 +143,91 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
 
         if (storyId === 'lars') {
             storyData = [
-                { type: 'narrative', text: '📍 Situation 1: Lars er kok.', image: 'assets/lars_kok.png' },
+                { type: 'narrative', text: t('lars_sit_1', '📍 Situation 1: Lars er kok.'), image: 'assets/lars_kok.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om hans job.', 
+                  trps: t('lars_trps_1_hv', 'Spørg om hans job.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'arbejder', 'Lars', 'som?'] },
                   pronunciation: { target: 'Hvad arbejder Lars som?', alternatives: ['Hvad laver Lars', 'Hvad er Lars', 'Hvad er hans job', 'Hvad arbejder han som', 'Hvad laver han'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Nu et ja/nej-spørgsmål: Spørg om han er kok.', 
+                  trps: t('lars_trps_1_jn', 'Nu et ja/nej-spørgsmål: Spørg om han er kok.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Er', 'Lars', 'kok?'] },
                   pronunciation: { target: 'Er Lars kok?', alternatives: ['Er han kok', 'Arbejder Lars som kok', 'Arbejder han som kok', 'Er hans job kok'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 2: Lars har 2 børn.', image: 'assets/lars_born.png' },
+                { type: 'narrative', text: t('lars_sit_2', '📍 Situation 2: Lars har 2 børn.'), image: 'assets/lars_born.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om hans børn.', 
+                  trps: t('lars_trps_2_hv', 'Spørg om hans børn.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'mange', 'børn', 'har', 'Lars?'] },
                   pronunciation: { target: 'Hvor mange børn har Lars?', alternatives: ['Hvor mange børn har han', 'Hvor mange børn har familien'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han har to børn.', 
+                  trps: t('lars_trps_2_jn', 'Spørg om han har to børn.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Har', 'Lars', 'to', 'børn?'] },
                   pronunciation: { target: 'Har Lars to børn?', alternatives: ['Har han to børn', 'Har Lars 2 børn', 'Har han 2 børn'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 3: Lars\' søn er 12 år og datter er 10 år.', image: 'assets/lars_born_alder.png' },
+                { type: 'narrative', text: t('lars_sit_3', '📍 Situation 3: Lars\' søn er 12 år og datter er 10 år.'), image: 'assets/lars_born_alder.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om alderen.', 
+                  trps: t('lars_trps_3_hv', 'Spørg om alderen.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'gamle', 'er', 'Lars\'', 'børn?'] },
                   pronunciation: { target: 'Hvor gamle er Lars børn?', alternatives: ['Hvor gamle er hans børn', 'Hvor gammel er Lars søn', 'Hvor gammel er hans søn', 'Hvor gammel er hans datter', 'Hvor gammel er Lars datter'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om hans søn er 12 år.', 
+                  trps: t('lars_trps_3_jn', 'Spørg om hans søn er 12 år.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Er', 'hans', 'søn', '12', 'år?'] },
                   pronunciation: { target: 'Er hans søn 12 år?', alternatives: ['Er Lars søn 12 år', 'Er hans søn tolv år', 'Er Lars søn tolv år', 'Er hans datter 10 år', 'Er Lars datter 10 år', 'Er hans datter ti år'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 4: Lars bor i Farum med sin familie.', image: 'assets/lars_hus.png' },
+                { type: 'narrative', text: t('lars_sit_4', '📍 Situation 4: Lars bor i Farum med sin familie.'), image: 'assets/lars_hus.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om lokationen.', 
+                  trps: t('lars_trps_4_hv', 'Spørg om lokationen.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'bor', 'Lars?'] },
                   pronunciation: { target: 'Hvor bor Lars?', alternatives: ['Hvor bor han', 'Hvor bor Lars henne', 'Hvor bor han henne', 'I hvilken by bor Lars'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han bor i Farum.', 
+                  trps: t('lars_trps_4_jn', 'Spørg om han bor i Farum.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Bor', 'Lars', 'i', 'Farum?'] },
                   pronunciation: { target: 'Bor Lars i Farum?', alternatives: ['Bor han i Farum', 'Bor Lars og hans familie i Farum', 'Bor familien i Farum'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 5: Lars besøger sine forældre 1 gang om ugen.', image: 'assets/lars_foraeldre.png' },
+                { type: 'narrative', text: t('lars_sit_5', '📍 Situation 5: Lars besøger sine forældre 1 gang om ugen.'), image: 'assets/lars_foraeldre.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om frekvensen for besøg.', 
+                  trps: t('lars_trps_5_hv', 'Spørg om frekvensen for besøg.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'ofte', 'besøger', 'Lars', 'sine', 'forældre?'] },
                   pronunciation: { target: 'Hvor ofte besøger Lars sine forældre?', alternatives: ['Hvor ofte besøger han sine forældre', 'Hvor tit besøger Lars sine forældre', 'Hvor tit besøger han sine forældre'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han besøger sine forældre en gang om ugen.', 
+                  trps: t('lars_trps_5_jn', 'Spørg om han besøger sine forældre en gang om ugen.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Besøger', 'Lars', 'sine', 'forældre', 'en', 'gang', 'om', 'ugen?'] },
                   pronunciation: { target: 'Besøger Lars sine forældre en gang om ugen?', alternatives: ['Besøger han sine forældre en gang om ugen', 'Besøger Lars sine forældre 1 gang om ugen', 'Besøger han sine forældre 1 gang om ugen', 'Besøger han dem en gang om ugen', 'Besøger han dem 1 gang om ugen'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 6: Lars ringer til sine forældre hver dag.', image: 'assets/lars_telefon.png' },
+                { type: 'narrative', text: t('lars_sit_6', '📍 Situation 6: Lars ringer til sine forældre hver dag.'), image: 'assets/lars_telefon.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om opkald.', 
+                  trps: t('lars_trps_6_hv', 'Spørg om opkald.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvem', 'ringer', 'Lars', 'til', 'hver', 'dag?'] },
                   pronunciation: { target: 'Hvem ringer Lars til hver dag?', alternatives: ['Hvor ofte ringer Lars til sine forældre', 'Hvem ringer han til hver dag', 'Hvem ringer han til', 'Hvor tit ringer Lars til sine forældre', 'Hvor ofte ringer han til sine forældre'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han ringer hver dag.', 
+                  trps: t('lars_trps_6_jn', 'Spørg om han ringer hver dag.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Ringer', 'Lars', 'til', 'sine', 'forældre', 'hver', 'dag?'] },
                   pronunciation: { target: 'Ringer Lars til sine forældre hver dag?', alternatives: ['Ringer han til sine forældre hver dag', 'Ringer Lars til dem hver dag', 'Ringer han til dem hver dag', 'Ringer han hver dag'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 7: Lars\' familie spiser aftensmad sammen hver dag.', image: 'assets/lars_aftensmad.png' },
+                { type: 'narrative', text: t('lars_sit_7', '📍 Situation 7: Lars\' familie spiser aftensmad sammen hver dag.'), image: 'assets/lars_aftensmad.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om middagen.', 
+                  trps: t('lars_trps_7_hv', 'Spørg om middagen.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvornår', 'spiser', 'Lars\'', 'familie', 'aftensmad', 'sammen?'] },
                   pronunciation: { target: 'Hvornår spiser Lars familie aftensmad sammen?', alternatives: ['Hvor ofte spiser Lars familie aftensmad sammen', 'Hvornår spiser de aftensmad sammen', 'Hvor tit spiser Lars familie aftensmad sammen', 'Hvor ofte spiser de aftensmad sammen', 'Hvor tit spiser de aftensmad sammen'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om de spiser aftensmad sammen hver dag.', 
+                  trps: t('lars_trps_7_jn', 'Spørg om de spiser aftensmad sammen hver dag.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'de', 'aftensmad', 'sammen', 'hver', 'dag?'] },
                   pronunciation: { target: 'Spiser de aftensmad sammen hver dag?', alternatives: ['Spiser Lars familie aftensmad sammen hver dag', 'Spiser familien aftensmad sammen hver dag', 'Spiser de sammen hver dag'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '🏆 Godt gået! Du har nu trænet spørgsmål om familie, arbejde og dagligdag!' }
+                { type: 'narrative', text: t('lars_success', '🏆 Godt gået! Du har nu trænet spørgsmål om familie, arbejde og dagligdag!') }
             ];
             return;
         }

@@ -234,91 +234,91 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
 
         if (storyId === 'jonas') {
             storyData = [
-                { type: 'narrative', text: '📍 Situation 1: Jonas spiser brød og drikker kaffe til morgenmad.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_1', '📍 Situation 1: Jonas spiser brød og drikker kaffe til morgenmad.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om hans morgenmad.', 
+                  trps: t('jonas_trps_1_hv', 'Spørg om hans morgenmad.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'spiser', 'Jonas', 'til', 'morgenmad?'] },
                   pronunciation: { target: 'Hvad spiser Jonas til morgenmad?', alternatives: ['Hvad får Jonas til morgenmad', 'Hvad drikker Jonas til morgenmad', 'Hvad får han til morgenmad', 'Hvad spiser han til morgenmad'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Nu et ja/nej-spørgsmål: Spørg om han spiser brød og kaffe.', 
+                  trps: t('jonas_trps_1_jn', 'Nu et ja/nej-spørgsmål: Spørg om han spiser brød og kaffe.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Jonas', 'brød', 'og', 'kaffe?'] },
                   pronunciation: { target: 'Spiser Jonas brød og kaffe?', alternatives: ['Får Jonas brød og kaffe', 'Får han brød og kaffe til morgenmad', 'Spiser han brød og kaffe'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 2: Jonas spiser en sandwich til frokost.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_2', '📍 Situation 2: Jonas spiser en sandwich til frokost.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om hans frokost.', 
+                  trps: t('jonas_trps_2_hv', 'Spørg om hans frokost.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'spiser', 'Jonas', 'til', 'frokost?'] },
                   pronunciation: { target: 'Hvad spiser Jonas til frokost?', alternatives: ['Hvad får Jonas til frokost', 'Hvad spiser han til frokost', 'Hvad får han til frokost'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han spiser en sandwich.', 
+                  trps: t('jonas_trps_2_jn', 'Spørg om han spiser en sandwich.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Jonas', 'en', 'sandwich?'] },
                   pronunciation: { target: 'Spiser Jonas en sandwich?', alternatives: ['Får Jonas en sandwich', 'Spiser han en sandwich til frokost', 'Spiser han en sandwich', 'Får han en sandwich'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 3: Jonas kan godt lide suppe.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_3', '📍 Situation 3: Jonas kan godt lide suppe.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg ind til hvad han kan lide.', 
+                  trps: t('jonas_trps_3_hv', 'Spørg ind til hvad han kan lide.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'kan', 'Jonas', 'godt', 'lide?'] },
                   pronunciation: { target: 'Hvad kan Jonas godt lide?', alternatives: ['Hvad kan han godt lide', 'Hvad lide Jonas', 'Hvad kan Jonas lide', 'Hvad kan han lide'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han kan lide suppe.', 
+                  trps: t('jonas_trps_3_jn', 'Spørg om han kan lide suppe.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Kan', 'Jonas', 'godt', 'lide', 'suppe?'] },
                   pronunciation: { target: 'Kan Jonas godt lide suppe?', alternatives: ['Kan han godt lide suppe', 'Kan Jonas lide suppe', 'Kan han lide suppe'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 4: Jonas drikker mælk.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_4', '📍 Situation 4: Jonas drikker mælk.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om hvad han drikker.', 
+                  trps: t('jonas_trps_4_hv', 'Spørg om hvad han drikker.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'drikker', 'Jonas?'] },
                   pronunciation: { target: 'Hvad drikker Jonas?', alternatives: ['Hvad drikker han'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han drikker mælk.', 
+                  trps: t('jonas_trps_4_jn', 'Spørg om han drikker mælk.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Drikker', 'Jonas', 'mælk?'] },
                   pronunciation: { target: 'Drikker Jonas mælk?', alternatives: ['Drikker han mælk'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 5: Jonas spiser frugt hver dag.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_5', '📍 Situation 5: Jonas spiser frugt hver dag.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om frekvensen (hvor ofte).', 
+                  trps: t('jonas_trps_5_hv', 'Spørg om frekvensen (hvor ofte).'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'ofte', 'spiser', 'Jonas', 'frugt?'] },
                   pronunciation: { target: 'Hvor ofte spiser Jonas frugt?', alternatives: ['Hvor tit spiser Jonas frugt', 'Hvor tit spiser han frugt', 'Hvor ofte spiser han frugt'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han spiser frugt hver dag.', 
+                  trps: t('jonas_trps_5_jn', 'Spørg om han spiser frugt hver dag.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Jonas', 'frugt', 'hver', 'dag?'] },
                   pronunciation: { target: 'Spiser Jonas frugt hver dag?', alternatives: ['Spiser han frugt hver dag'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 6: Jonas spiser en burger i weekenden.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_6', '📍 Situation 6: Jonas spiser en burger i weekenden.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om tidspunktet.', 
+                  trps: t('jonas_trps_6_hv', 'Spørg om tidspunktet.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvornår', 'spiser', 'Jonas', 'en', 'burger?'] },
                   pronunciation: { target: 'Hvornår spiser Jonas en burger?', alternatives: ['Hvornår spiser han en burger', 'Hvornår får Jonas en burger', 'Hvornår får han en burger'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han spiser en burger i weekenden.', 
+                  trps: t('jonas_trps_6_jn', 'Spørg om han spiser en burger i weekenden.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Jonas', 'en', 'burger', 'i', 'weekenden?'] },
                   pronunciation: { target: 'Spiser Jonas en burger i weekenden?', alternatives: ['Spiser han en burger i weekenden', 'Får Jonas en burger i weekenden', 'Får han en burger i weekenden'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '📍 Situation 7: Jonas køber ind i LIDL.', image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_7', '📍 Situation 7: Jonas køber ind i LIDL.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
-                  trps: 'Spørg om stedet.', 
+                  trps: t('jonas_trps_7_hv', 'Spørg om stedet.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'køber', 'Jonas', 'ind?'] },
                   pronunciation: { target: 'Hvor køber Jonas ind?', alternatives: ['Hvor køber han ind', 'Hvor handler Jonas', 'Hvor handler han'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: 'Spørg om han køber ind i LIDL.', 
+                  trps: t('jonas_trps_7_jn', 'Spørg om han køber ind i LIDL.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Køber', 'Jonas', 'ind', 'i', 'Lidl?'] },
                   pronunciation: { target: 'Køber Jonas ind i Lidl?', alternatives: ['Køber han ind i Lidl', 'Handler Jonas i Lidl', 'Handler han i Lidl'], focus: [] }
                 },
                 
-                { type: 'narrative', text: '🏆 Godt gået! Du har nu trænet spørgsmål om mad og vaner!' }
+                { type: 'narrative', text: t('jonas_success', '🏆 Godt gået! Du har nu trænet spørgsmål om mad og vaner!') }
             ];
             return;
         }

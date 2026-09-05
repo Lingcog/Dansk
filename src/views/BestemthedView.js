@@ -91,7 +91,7 @@ export function renderBestemthedView(container, navigateFn) {
             </div>
             
             <div class="question-wrapper" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
-                <div class="question-row" style="font-size: 1.4rem; line-height: 2; margin-bottom: 1.5rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <div class="question-row" style="font-size: 1.4rem; line-height: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
                     <span>${item.s1_pre}</span>
                     <span class="select-wrapper">
                         <select id="sel1" class="grammatik-select" style="font-size: 1.3rem; padding: 0.3rem 0.6rem; border-radius: 8px;">
@@ -100,10 +100,8 @@ export function renderBestemthedView(container, navigateFn) {
                         </select>
                     </span>
                     <span>${item.s1_post}</span>
-                    <span id="res1" style="margin-left: 10px;"></span>
-                </div>
-
-                <div class="question-row" style="font-size: 1.4rem; line-height: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <span id="res1" style="margin-left: 2px; margin-right: 15px;"></span>
+                    
                     <span>${item.s2_pre}</span>
                     <span class="select-wrapper">
                         <select id="sel2" class="grammatik-select" style="font-size: 1.3rem; padding: 0.3rem 0.6rem; border-radius: 8px;">
@@ -112,7 +110,7 @@ export function renderBestemthedView(container, navigateFn) {
                         </select>
                     </span>
                     <span>${item.s2_post}</span>
-                    <span id="res2" style="margin-left: 10px;"></span>
+                    <span id="res2" style="margin-left: 2px;"></span>
                 </div>
                 
                 <div class="row-feedback" id="feedback" style="display: none; margin-top: 2rem; padding: 1rem; border-radius: 8px; text-align: center; font-size: 1.2rem;"></div>

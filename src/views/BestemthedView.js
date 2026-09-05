@@ -166,8 +166,20 @@ export function renderBestemthedView(container, navigateFn) {
                         currentIdx++;
                         renderExercise();
                     }, 1500);
-                } else {
-                    feedback.textContent = 'Prøv igen! Husk at bruge "en/et" første gang, og "-en/-et" næste gang.';
+                } else if (!isCorrect1 && !isCorrect2) {
+                    feedback.textContent = 'Du har byttet om på dem! Husk: Brug "en/et" første gang, og sæt "-en/-et" bagpå næste gang.';
+                    feedback.style.background = 'rgba(244, 67, 54, 0.1)';
+                    feedback.style.border = '1px solid #F44336';
+                    feedback.style.color = '#E57373';
+                } else if (!isCorrect1) {
+                    const baseWord = item.s1_correct.replace(/^(en|et)\s+/i, '').toLowerCase();
+                    feedback.textContent = `Husk: Første gang du nævner ordet, skal du sætte "en/et" foran (f.eks. "${item.s1_correct.toLowerCase()}").`;
+                    feedback.style.background = 'rgba(244, 67, 54, 0.1)';
+                    feedback.style.border = '1px solid #F44336';
+                    feedback.style.color = '#E57373';
+                } else if (!isCorrect2) {
+                    const baseWord = item.s1_correct.replace(/^(en|et)\s+/i, '').toLowerCase();
+                    feedback.textContent = `Når du allerede har nævnt "${baseWord}", skal du sætte "-en/-et" bagpå (f.eks. "${item.s2_correct.toLowerCase()}").`;
                     feedback.style.background = 'rgba(244, 67, 54, 0.1)';
                     feedback.style.border = '1px solid #F44336';
                     feedback.style.color = '#E57373';

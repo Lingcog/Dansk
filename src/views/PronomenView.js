@@ -333,9 +333,9 @@ export function renderPronomenView(container, navigateFn, extraData) {
         slide1.className = 'expl-slide';
         slide1.innerHTML = `
             <img src="${baseUrl}der_det_guide.png" class="pronomen-illustration">
-            <div class="expl-bubble pulse">Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.</div>
-            <p class="expl-text">Både "det" og "der" kan ofte bruges, afhængigt af hvad du vil fokusere på!</p>
-            <button class="gemini-btn start-practice-btn">Start øvelse!</button>
+            <div class="expl-bubble pulse">${getTranslation('Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.')}</div>
+            <p class="expl-text">${getTranslation('Både "det" og "der" kan ofte bruges, afhængigt af hvad du vil fokusere på!')}</p>
+            <button class="gemini-btn start-practice-btn">${getTranslation('Start øvelse!')}</button>
         `;
 
         slide1.querySelector('.start-practice-btn').onclick = () => {
@@ -508,7 +508,9 @@ export function renderPronomenView(container, navigateFn, extraData) {
                             select.classList.add('correct');
                             select.classList.remove('wrong');
 
-                            const feedbText = ex.feedback[select.value];
+                            // Da opgaverne er ændret markant (både det og der er ofte rigtigt),
+                            // bruger vi bare den danske tekst direkte, da de gamle oversættelser i databasen er uddaterede.
+                            const feedbText = getTranslation(ex.feedback[select.value]);
                             feedbackArea.innerHTML = `<span style="color: #4ade80;">✓</span> ${feedbText}`;
 
                             feedbackArea.style.display = 'block';
@@ -517,7 +519,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
                             select.classList.add('wrong');
                             select.classList.remove('correct');
 
-                            const hintText = ex.hints[select.value] || "Prøv igen!";
+                            const hintText = ex.hints[select.value] ? getTranslation(ex.hints[select.value]) : getTranslation("Prøv igen!");
                             feedbackArea.innerHTML = `<span style="color: #e74c3c;">✗</span> ${hintText}`;
 
                             feedbackArea.style.display = 'block';

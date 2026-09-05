@@ -10,6 +10,10 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
     // Top bar
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
+    topBar.style.display = 'flex';
+    topBar.style.justifyContent = 'space-between';
+    topBar.style.width = '100%';
+
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← Tilbage`;
@@ -18,6 +22,19 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         navigateFn('samtale_traening');
     };
     topBar.appendChild(backBtn);
+
+    if (mode === 'feedback') {
+        const finishBtn = document.createElement('button');
+        finishBtn.className = 'back-btn';
+        finishBtn.style.color = '#4caf50';
+        finishBtn.innerHTML = `Vis feedback`;
+        finishBtn.onclick = () => {
+            window.speechSynthesis.cancel();
+            showFeedback();
+        };
+        topBar.appendChild(finishBtn);
+    }
+
     viewContainer.appendChild(topBar);
 
     // Title
@@ -179,7 +196,11 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         // Fallback for Safari bug hvor 'onend' aldrig affyres
         setTimeout(() => {
             const checkInterval = setInterval(() => {
-                if (!synth.speaking && isSpeaking) {
+                if (!isSpeaking) {
+                    clearInterval(checkInterval);
+                    return;
+                }
+                if (!synth.speaking) {
                     clearInterval(checkInterval);
                     utterance.onend();
                 }
@@ -314,6 +335,12 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
     function showFeedback() {
         controlArea.style.display = 'none';
         
+        // Remove the 'Vis feedback' button from topBar if it exists
+        const topBarBtns = topBar.querySelectorAll('button');
+        topBarBtns.forEach(btn => {
+            if (btn.textContent === 'Vis feedback') btn.remove();
+        });
+        
         const feedbackCard = document.createElement('div');
         feedbackCard.className = 'card udtale-card';
         feedbackCard.style.marginTop = '2rem';
@@ -374,6 +401,18 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
             synth.cancel();
             isSpeaking = false;
             micBtn.classList.remove('disabled');
+            
+            // Hvis brugeren afbryder Anna på det sidste spørgsmål, skal samtalen afsluttes
+            if (currentNode === 8) {
+                if (mode === 'feedback') {
+                    showFeedback();
+                } else {
+                    statusText.textContent = 'Samtalen er slut.';
+                    micBtn.style.display = 'none';
+                    setTimeout(() => navigateFn('samtale_traening'), 3000);
+                }
+                return;
+            }
         }
         
         if (isListening) {

@@ -247,7 +247,13 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
         });
         
         const currentSub = data.subCategories[currentSubCategory];
-        const expText = t('udtale_' + currentSub.id + '_exp', currentSub.explanation);
+        
+        // Prøv først at hente oversættelse baseret på selve den danske tekst. 
+        // Hvis den ikke findes (dvs. returnerer samme tekst), brug den gamle nøgle som fallback.
+        let expText = getTranslation(currentSub.explanation);
+        if (expText === currentSub.explanation && currentSub.explanation) {
+            expText = t('udtale_' + currentSub.id + '_exp', currentSub.explanation);
+        }
         if (expText) {
             explanationBox.style.display = 'block';
             explanationBox.innerHTML = expText;
@@ -280,16 +286,21 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
         
         catTitle.textContent = t('udtale_' + currentSub.id + '_title', currentSub.title);
         
-        let hintKey = 'udtale_hint_' + currentSub.id + '_' + currentIndex;
-        let hintText = getTranslation(hintKey);
-        // Hvis den specifikke oversættelse mangler (fx for de nye sætninger), fald tilbage til index 0, som oftest er den samme generelle regel.
-        if (hintText === hintKey) {
-            let fallbackKey = 'udtale_hint_' + currentSub.id + '_0';
-            let fallbackText = getTranslation(fallbackKey);
-            if (fallbackText !== fallbackKey) {
-                hintText = fallbackText;
+        // Prøv først at hente oversættelsen baseret på den eksakte danske tekst
+        let hintText = getTranslation(ex.hint);
+        
+        // Bagudkompatibilitet: Prøv gamle ID'er hvis oversættelsen mangler
+        if (hintText === ex.hint && ex.hint) {
+            let hintKey = 'udtale_hint_' + currentSub.id + '_' + currentIndex;
+            let oldHintText = getTranslation(hintKey);
+            if (oldHintText !== hintKey) {
+                hintText = oldHintText;
             } else {
-                hintText = ex.hint;
+                let fallbackKey = 'udtale_hint_' + currentSub.id + '_0';
+                let fallbackText = getTranslation(fallbackKey);
+                if (fallbackText !== fallbackKey) {
+                    hintText = fallbackText;
+                }
             }
         }
         catHint.textContent = hintText;

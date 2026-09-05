@@ -27,6 +27,9 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         const finishBtn = document.createElement('button');
         finishBtn.className = 'back-btn';
         finishBtn.style.color = '#4caf50';
+        finishBtn.style.border = '2px solid #4caf50';
+        finishBtn.style.borderRadius = '20px';
+        finishBtn.style.padding = '4px 12px';
         finishBtn.innerHTML = `Vis feedback`;
         finishBtn.onclick = () => {
             window.speechSynthesis.cancel();

@@ -409,6 +409,44 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 options: ["der", "det"],
                 hints: { "det": "Tænk på Pilen. Vi henleder opmærksomheden på et barn på en specifik placering (inde i soveværelset)." },
                 feedback: { "der": "Rigtigt! 🎯 Pil: Vi peger på en specifik placering, hvor et barn befinder sig. Her kan man KUN sige 'der'." }
+            },
+            {
+                text: "Hvordan er vejret på din ferie? - [blank_0] er meget solrigt og varmt hernede.",
+                answers: ["det"],
+                options: ["der", "det"],
+                hints: { "der": "Tænk på Paraplyen. Vi taler om vejret og den generelle tilstand." },
+                feedback: { "det": "Rigtigt! ☂️ Paraply: Varmen og solen beskriver vejret og den generelle tilstand. Her bruger vi 'det'." }
+            },
+            {
+                text: "Skynd dig lidt! [blank_0] holder en taxa og venter på os ude foran.",
+                answers: ["der"],
+                options: ["der", "det"],
+                hints: { "det": "Tænk på Pilen. Vi peger på en bestemt fysisk ting (taxaen) på en specifik placering (ude foran)." },
+                feedback: { "der": "Rigtigt! 🎯 Pil: Vi peger på en specifik taxa, som befinder sig på en specifik placering ude foran. Man kan KUN bruge 'der'." }
+            },
+            {
+                text: "Hvorfor fryser du? - Fordi [blank_0] trækker fra det åbne vindue.",
+                answers: ["det"],
+                options: ["der", "det"],
+                hints: { "der": "Tænk på Paraplyen. At 'det trækker' beskriver en usynlig tilstand i rummet, lidt ligesom vejret." },
+                feedback: { "det": "Rigtigt! ☂️ Paraply: Vi taler om en generel, usynlig tilstand (at vinden trækker ind). Det fungerer præcis som når vi beskriver vejret." }
+            },
+            {
+                text: "Skal vi tage på caféen nede på hjørnet? Ja, [blank_0] er altid så hyggeligt.",
+                answers: ["der", "det"],
+                options: ["der", "det"],
+                hints: {},
+                feedback: {
+                    "der": "Rigtigt! 🎯 Pil: Du fokuserer på den specifikke café og stemningen præcis dér.<br><i>(Tip: 'Det' er også korrekt, hvis du fokuserer på den generelle situation).</i>",
+                    "det": "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle atmosfære og situation på caféen.<br><i>(Tip: 'Der' er også meget almindeligt, da caféen er et specifikt sted).</i>"
+                }
+            },
+            {
+                text: "Kig i køleskabet. [blank_0] står lidt kage tilbage fra i går.",
+                answers: ["der"],
+                options: ["der", "det"],
+                hints: { "det": "Tænk på Pilen. Vi zoomer ind på en bestemt placering (køleskabet) og kigger på en fysisk ting (kagen)." },
+                feedback: { "der": "Rigtigt! 🎯 Pil: Vi peger på en fysisk ting (kagen) på en helt specifik placering (i køleskabet)." }
             }
         ];
 

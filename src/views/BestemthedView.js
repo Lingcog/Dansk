@@ -11,7 +11,7 @@ export function renderBestemthedView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.textContent = '← ' + getTranslation('back');
-    backBtn.onclick = () => navigateFn('pronomen');
+    backBtn.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
@@ -105,7 +105,7 @@ export function renderBestemthedView(container, navigateFn) {
                 <button class="gemini-btn" id="finish-btn">Afslut</button>
             </div>
         `;
-        exerciseArea.querySelector('#finish-btn').onclick = () => navigateFn('pronomen');
+        exerciseArea.querySelector('#finish-btn').onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
     }
 
     renderExercise();

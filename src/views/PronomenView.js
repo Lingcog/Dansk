@@ -104,21 +104,13 @@ export function renderPronomenView(container, navigateFn, extraData) {
     `;
     conjunctionChoiceCard.onclick = () => navigateFn('konjunktioner');
 
-    const artiklerCard = document.createElement('div');
-    artiklerCard.className = 'card';
-    artiklerCard.innerHTML = `
-        <div class="card-icon">🏷️</div>
-        <div class="card-title">En/et? (Artikler)</div>
-    `;
-    artiklerCard.onclick = () => navigateFn('artikler');
-
     const bestemthedCard = document.createElement('div');
     bestemthedCard.className = 'card';
     bestemthedCard.innerHTML = `
         <div class="card-icon">🏷️</div>
-        <div class="card-title">En kat / katten? (bestemt og ubestemt)</div>
+        <div class="card-title">En kat / katten? (Artikler & Bestemthed)</div>
     `;
-    bestemthedCard.onclick = () => navigateFn('bestemthed');
+    bestemthedCard.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
 
     grid1.appendChild(pronomenCard);
     grid1.appendChild(verbumCard);
@@ -126,7 +118,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     grid1.appendChild(adjCompCard);
     grid1.appendChild(adverbChoiceCard);
     grid1.appendChild(conjunctionChoiceCard);
-    grid1.appendChild(artiklerCard);
     grid1.appendChild(bestemthedCard);
     level1Area.appendChild(grid1);
 
@@ -178,17 +169,27 @@ export function renderPronomenView(container, navigateFn, extraData) {
         menuArea.style.display = 'block';
         grid2.innerHTML = '';
 
-        const items = category === 'pronomen' ? [
-            { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', img: 'pronominer_spotlight.png' },
-            { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'objekt_vand.jpg' },
-            { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'ejefald_guide_voksne.jpg' },
-            { key: 'pronominerRefleksiv', type: 'refleksiv', icon: '🔄', img: 'refleksiv_guide.jpg' }
-        ] : [
-            { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
-            { key: 'verberDatidRegelm', type: 'datid_regelm', icon: '🕰️', img: 'verber_kategorier.png' },
-            { key: 'verberDatid', type: 'datid', icon: '🕰️', img: 'verber_kategorier.png' },
-            { key: 'verberTider', type: 'tider', icon: '🌉', img: 'verber_kategorier.png' }
-        ];
+        let items = [];
+        if (category === 'pronomen') {
+            items = [
+                { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', img: 'pronominer_spotlight.png' },
+                { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'objekt_vand.jpg' },
+                { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'ejefald_guide_voksne.jpg' },
+                { key: 'pronominerRefleksiv', type: 'refleksiv', icon: '🔄', img: 'refleksiv_guide.jpg' }
+            ];
+        } else if (category === 'artikler_menu') {
+            items = [
+                { title: 'En/et? (Artikler)', type: 'artikler', icon: '🏷️' },
+                { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', icon: '🏷️' }
+            ];
+        } else {
+            items = [
+                { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
+                { key: 'verberDatidRegelm', type: 'datid_regelm', icon: '🕰️', img: 'verber_kategorier.png' },
+                { key: 'verberDatid', type: 'datid', icon: '🕰️', img: 'verber_kategorier.png' },
+                { key: 'verberTider', type: 'tider', icon: '🌉', img: 'verber_kategorier.png' }
+            ];
+        }
 
         items.forEach(item => {
             const card = document.createElement('div');
@@ -202,6 +203,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
                         refleksiv: 'pronominer_refleksiv'
                     };
                     navigateFn(routeMap[item.type] || 'pronomen');
+                } else if (category === 'artikler_menu') {
+                    navigateFn(item.type);
                 } else {
                     if (item.type === 'verber_nutid') {
                         navigateFn('verbum_menu');
@@ -217,7 +220,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
             const cardTitle = document.createElement('div');
             cardTitle.className = 'card-title';
-            cardTitle.textContent = getTranslation(item.key);
+            cardTitle.textContent = item.title ? item.title : getTranslation(item.key);
 
             card.appendChild(icon);
             card.appendChild(cardTitle);
@@ -948,6 +951,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
         } else {
             showLevel2('pronomen');
         }
+    } else if (subPath === 'artikler_menu') {
+        showLevel2('artikler_menu');
     } else {
         renderStep();
     }

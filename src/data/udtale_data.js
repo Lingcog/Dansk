@@ -83,7 +83,7 @@ export const udtaleDataSvaer = {
             {
                 id: "haardt_g",
                 title: "Hårdt 'g'",
-                explanation: "<strong>Hårdt g:</strong><br/>Som et almindeligt g (f.eks. 'gå'). Bruges i starten af ord.",
+                explanation: "",
                 exercises: [
                     { text: "En gul gris.", targetWords: ["gul", "gris."], category: "Hårdt 'g'", hint: "G i starten af et ord udtales hårdt." },
                     { text: "Den gode gås.", targetWords: ["gode", "gås."], category: "Hårdt 'g'", hint: "G i starten af et ord udtales hårdt." },
@@ -96,7 +96,7 @@ export const udtaleDataSvaer = {
             {
                 id: "j_lyd",
                 title: "G som j-lyd",
-                explanation: "<strong>J-lyd:</strong><br/>G lyder ofte som et 'j' efter visse vokaler (f.eks. 'kage' -> 'kaje').",
+                explanation: "G bliver til et lille J efter visse vokaler, som e, u, å",
                 exercises: [
                     { text: "Pigen leger med løg.", targetWords: ["leger", "løg."], category: "G som J-lyd", hint: "Smile-G: G bliver til et lille J her." },
                     { text: "En lille nøgle.", targetWords: ["nøgle."], category: "G som J-lyd", hint: "Smile-G: G bliver til et lille J her." },
@@ -109,7 +109,7 @@ export const udtaleDataSvaer = {
             {
                 id: "stumt_g",
                 title: "Stumt 'g'",
-                explanation: "<strong>Stumt g:</strong><br/>Nogle gange udtales det slet ikke, især i bløde overgange (f.eks. 'nogle' eller 'bage').",
+                explanation: "I nogle ord forsvinder g helt foran en åben vokal og i slutningen af en stavelse. Stumt 😶",
                 exercises: [
                     { text: "En pige bager.", targetWords: ["pige", "bager."], category: "Stumt 'g'", hint: "I nogle ord forsvinder g helt foran en åben vokal. Stumt 😶" },
                     { text: "Nogle syge fugle.", targetWords: ["Nogle", "syge", "fugle."], category: "Stumt 'g'", hint: "I nogle ord forsvinder g helt foran en åben vokal. Stumt 😶" },
@@ -121,8 +121,8 @@ export const udtaleDataSvaer = {
             },
             {
                 id: "ng_lyd",
-                title: "NG-lyd",
-                explanation: "<strong>NG-lyd:</strong><br/>Når n og g står sammen, smelter de sammen til én lyd nede i halsen (som i 'penge').",
+                title: "ng",
+                explanation: "n og g smelter sammen bag i svælget og får en nasal lyd",
                 exercises: [
                     { text: "En lang slange.", targetWords: ["lang", "slange."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
                     { text: "En dreng synger.", targetWords: ["dreng", "synger."], category: "NG-lyd", hint: "n og g smelter sammen i halsen" },
@@ -222,7 +222,7 @@ export const udtaleDataLet = {
             {
                 id: "haardt_g",
                 title: "Hårdt 'g'",
-                explanation: "<strong>Hårdt g:</strong><br/>Som et almindeligt g (f.eks. 'gå'). Bruges i starten af ord.",
+                explanation: "",
                 exercises: [
                     { text: "Det går godt", targetWords: ["går", "godt"], category: "Hårdt 'g'", hint: "G i starten af et ord udtales hårdt." },
                     { text: "Gaden er lang", targetWords: ["Gaden"], category: "Hårdt 'g'", hint: "Hårdt G i starten." },
@@ -235,7 +235,7 @@ export const udtaleDataLet = {
             {
                 id: "stumt_g",
                 title: "Stumt 'g'",
-                explanation: "<strong>Stumt g:</strong><br/>Nogle gange udtales det slet ikke, især i bløde overgange (f.eks. 'nogle' eller 'bage').",
+                explanation: "I nogle ord forsvinder g helt foran en åben vokal og i slutningen af en stavelse. Stumt 😶",
                 exercises: [
                     { text: "Det er farligt", targetWords: ["farligt"], category: "Stumt 'g'", hint: "G er stumt i ord der ender på -lig eller -ig." },
                     { text: "Det smager godt", targetWords: ["smager"], category: "Stumt 'g'", hint: "G er nogle gange stumt efter en åben vokal." },
@@ -248,7 +248,7 @@ export const udtaleDataLet = {
             {
                 id: "j_lyd",
                 title: "G som j-lyd",
-                explanation: "<strong>J-lyd:</strong><br/>G lyder ofte som et 'j' efter visse vokaler (f.eks. 'kage' -> 'kaje').",
+                explanation: "G bliver til et lille J efter visse vokaler, som e, u, å",
                 exercises: [
                     { text: "Pigen smiler", targetWords: ["Pigen"], category: "G som J-lyd", hint: "Smile-G: G bliver til et lille J her." },
                     { text: "Jeg kan lide at lege", targetWords: ["lege"], category: "G som J-lyd", hint: "Efter e, i, æ, ø bliver G tit til et J. Smil!" },

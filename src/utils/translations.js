@@ -1,5 +1,9 @@
 export const translations = {
   da: {
+    "udtaleLetTitle": "Lette øvelser (D, R, G)",
+    "udtaleLetDesc": "Korte og nemme sætninger uden svære konsonanter.",
+    "udtaleSvaerTitle": "Svære øvelser (D, R, G)",
+    "udtaleSvaerDesc": "Målrettet træning af de svære danske bogstaver med specifikke sætninger.",
     "jonas_sit_1": "📍 Situation 1: Jonas spiser brød og drikker kaffe til morgenmad.",
     "jonas_trps_1_hv": "Spørg om hans morgenmad.",
     "jonas_trps_1_jn": "Nu et ja/nej-spørgsmål: Spørg om han spiser brød og kaffe.",
@@ -937,6 +941,10 @@ export const translations = {
     "dictaphoneMachineHeard": "Maskinen hørte dig sige:"
   },
   en: {
+    "udtaleLetTitle": "Easy Exercises (D, R, G)",
+    "udtaleLetDesc": "Short and easy sentences without difficult consonants.",
+    "udtaleSvaerTitle": "Difficult Exercises (D, R, G)",
+    "udtaleSvaerDesc": "Targeted training of the difficult Danish letters with specific sentences.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "D at the beginning of a word is hard. Say D like in your own language.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "D is hard here at the beginning of the word. Say D like in your own language.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Sometimes D in a syllable is pronounced hard (hvor-dan). Say D like in your own language.",
@@ -1928,6 +1936,10 @@ export const translations = {
     "dictaphoneMachineHeard": "The machine heard you say:"
   },
   de: {
+    "udtaleLetTitle": "Leichte Übungen (D, R, G)",
+    "udtaleLetDesc": "Kurze und einfache Sätze ohne schwierige Konsonanten.",
+    "udtaleSvaerTitle": "Schwierige Übungen (D, R, G)",
+    "udtaleSvaerDesc": "Gezieltes Training der schwierigen dänischen Buchstaben mit spezifischen Sätzen.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "D am Anfang eines Wortes ist hart. Sprich D wie in deiner eigenen Sprache aus.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "D ist hier am Wortanfang hart. Sprich D wie in deiner eigenen Sprache.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Manchmal wird D in einer Silbe hart ausgesprochen (hvor-dan). Sprich D wie in deiner eigenen Sprache.",
@@ -2951,6 +2963,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n und g verschmelzen im Hals"
   },
   ar: {
+    "udtaleLetTitle": "تمارين سهلة (D, R, G)",
+    "udtaleLetDesc": "جمل قصيرة وسهلة بدون حروف ساكنة صعبة.",
+    "udtaleSvaerTitle": "تمارين صعبة (D, R, G)",
+    "udtaleSvaerDesc": "تدريب مستهدف للأحرف الدنماركية الصعبة بجمل محددة.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "حرف D في بداية الكلمة يُنطق قاسياً. انطق D كما في لغتك.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "حرف D قاسٍ هنا في بداية الكلمة. انطق D كما في لغتك.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "أحيانًا يُنطق D في المقطع الصوتي قاسياً (hvor-dan). انطق D كما في لغتك.",
@@ -3980,6 +3996,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n و g يندمجان في الحلق"
   },
   es: {
+    "udtaleLetTitle": "Ejercicios fáciles (D, R, G)",
+    "udtaleLetDesc": "Oraciones cortas y fáciles sin consonantes difíciles.",
+    "udtaleSvaerTitle": "Ejercicios difíciles (D, R, G)",
+    "udtaleSvaerDesc": "Entrenamiento específico de las letras danesas difíciles con oraciones específicas.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "La D al principio de una palabra es fuerte. Di D como en tu propio idioma.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "La D es fuerte aquí al principio de la palabra. Di D como en tu propio idioma.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "A veces la D en una sílaba se pronuncia fuerte (hvor-dan). Di D como en tu idioma.",
@@ -4956,6 +4976,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n y g se funden en la garganta"
   },
   fa: {
+    "udtaleLetTitle": "تمرینات آسان (D, R, G)",
+    "udtaleLetDesc": "جملات کوتاه و آسان بدون صامت‌های دشوار.",
+    "udtaleSvaerTitle": "تمرینات دشوار (D, R, G)",
+    "udtaleSvaerDesc": "آموزش هدفمند حروف دشوار دانمارکی با جملات خاص.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "حرف D در ابتدای کلمه سخت است. D را مانند زبان خود تلفظ کنید.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "حرف D در اینجا در ابتدای کلمه سخت است. D را مانند زبان خود تلفظ کنید.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "گاهی اوقات D در یک هجا سخت تلفظ می‌شود (hvor-dan). D را مانند زبان خود تلفظ کنید.",
@@ -5919,6 +5943,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n و g در گلو ترکیب می‌شوند"
   },
   ku: {
+    "udtaleLetTitle": "Xebatên hêsan (D, R, G)",
+    "udtaleLetDesc": "Hevokên kurt û hêsan bêyî dengdarên dijwar.",
+    "udtaleSvaerTitle": "Xebatên dijwar (D, R, G)",
+    "udtaleSvaerDesc": "Perwerdehiya taybet a tîpên danîmarkî yên dijwar bi hevokên taybetî.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "Tîpa D li destpêka peyvê hişk e. D mîna zimanê xwe bilêv bike.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "D li vir li destpêka peyvê hişk e. D mîna zimanê xwe bilêv bike.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Carna D di kîteyekê de hişk tê bilêvkirin (hvor-dan). D mîna zimanê xwe bilêv bike.",
@@ -6947,6 +6975,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n û g di qirikê de dibin yek"
   },
   ne: {
+    "udtaleLetTitle": "सजिलो अभ्यास (D, R, G)",
+    "udtaleLetDesc": "कठिन व्यञ्जन वर्ण नभएका छोटो र सजिलो वाक्यहरू।",
+    "udtaleSvaerTitle": "कठिन अभ्यास (D, R, G)",
+    "udtaleSvaerDesc": "विशेष वाक्यहरूका साथ कठिन डेनिस अक्षरहरूको लक्षित प्रशिक्षण।",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "शब्दको सुरुमा D कडा हुन्छ। आफ्नो भाषामा जस्तै D भन्नुहोस्।",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "यहाँ शब्दको सुरुमा D कडा हुन्छ। आफ्नो भाषामा जस्तै D भन्नुहोस्।",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "कहिलेकाहीँ शब्दांशमा D कडा उच्चारण गरिन्छ (hvor-dan)। आफ्नो भाषामा जस्तै D भन्नुहोस्।",
@@ -7879,6 +7911,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n र g घाँटीमा मिसिन्छन्"
   },
   ps: {
+    "udtaleLetTitle": "آسان تمرینونه (D, R, G)",
+    "udtaleLetDesc": "لنډ او اسانه جملې پرته له سختو کونسونینټونو.",
+    "udtaleSvaerTitle": "سخت تمرینونه (D, R, G)",
+    "udtaleSvaerDesc": "د ځانګړو جملو سره د سختو ډنمارکي تورو هدفمند روزنه.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "د کلمې په پیل کې D سخت دی. D د خپلې ژبې په څیر ووایاست.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "دلته د کلمې په پیل کې D سخت دی. D د خپلې ژبې په څیر ووایاست.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "کله کله په یوه څپه کې D سخت تلفظ کیږي (hvor-dan). D د خپلې ژبې په څیر ووایاست.",
@@ -8878,6 +8914,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n او g په ستوني کې یوځای کیږي"
   },
   pt: {
+    "udtaleLetTitle": "Exercícios fáceis (D, R, G)",
+    "udtaleLetDesc": "Frases curtas e fáceis sem consoantes difíceis.",
+    "udtaleSvaerTitle": "Exercícios difíceis (D, R, G)",
+    "udtaleSvaerDesc": "Treinamento direcionado das letras dinamarquesas difíceis com frases específicas.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "O D no início de uma palavra é forte. Diga D como no seu próprio idioma.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "O D é forte aqui no início da palavra. Diga D como no seu próprio idioma.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Às vezes o D em uma sílaba é pronunciado forte (hvor-dan). Diga D como no seu idioma.",
@@ -9850,6 +9890,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n e g fundem-se na garganta"
   },
   ru: {
+    "udtaleLetTitle": "Легкие упражнения (D, R, G)",
+    "udtaleLetDesc": "Короткие и простые предложения без сложных согласных.",
+    "udtaleSvaerTitle": "Сложные упражнения (D, R, G)",
+    "udtaleSvaerDesc": "Целенаправленная тренировка сложных датских букв с помощью специальных предложений.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "Д в начале слова твердая. Произносите Д, как в вашем родном языке.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "Д здесь в начале слова твердая. Произносите Д, как в вашем родном языке.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Иногда Д в слоге произносится твердо (hvor-dan). Произносите Д, как в вашем языке.",
@@ -10830,6 +10874,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n и g сливаются в горле"
   },
   th: {
+    "udtaleLetTitle": "แบบฝึกหัดง่ายๆ (D, R, G)",
+    "udtaleLetDesc": "ประโยคสั้นๆ และง่ายๆ ที่ไม่มีพยัญชนะออกเสียงยาก",
+    "udtaleSvaerTitle": "แบบฝึกหัดยากๆ (D, R, G)",
+    "udtaleSvaerDesc": "การฝึกฝนเจาะจงตัวอักษรภาษาเดนมาร์กที่ออกเสียงยากด้วยประโยคเฉพาะ",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "D ที่ต้นคำจะออกเสียงหนัก ให้ออกเสียง D เหมือนในภาษาของคุณเอง",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "D ออกเสียงหนักที่ต้นคำนี้ ให้ออกเสียง D เหมือนในภาษาของคุณ",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "บางครั้ง D ในพยางค์จะออกเสียงหนัก (hvor-dan) ให้ออกเสียง D เหมือนในภาษาของคุณ",
@@ -11805,6 +11853,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n และ g รวมกันในลำคอ"
   },
   tr: {
+    "udtaleLetTitle": "Kolay egzersizler (D, R, G)",
+    "udtaleLetDesc": "Zor ünsüzler içermeyen kısa ve kolay cümleler.",
+    "udtaleSvaerTitle": "Zor egzersizler (D, R, G)",
+    "udtaleSvaerDesc": "Belirli cümlelerle zor Danca harflerin hedeflenmiş eğitimi.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "Kelimenin başındaki D serttir. D'yi kendi dilinizdeki gibi söyleyin.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "D burada kelimenin başında serttir. D'yi kendi dilinizdeki gibi söyleyin.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Bazen bir hecedeki D sert okunur (hvor-dan). D'yi kendi dilinizdeki gibi söyleyin.",
@@ -12762,6 +12814,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n ve g gırtlakta birleşir"
   },
   uk: {
+    "udtaleLetTitle": "Легкі вправи (D, R, G)",
+    "udtaleLetDesc": "Короткі та легкі речення без складних приголосних.",
+    "udtaleSvaerTitle": "Складні вправи (D, R, G)",
+    "udtaleSvaerDesc": "Цілеспрямоване тренування складних данських літер за допомогою спеціальних речень.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "D на початку слова тверда. Вимовляйте D, як у вашій рідній мові.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "D тут на початку слова тверда. Вимовляйте D, як у вашій рідній мові.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Іноді D у складі вимовляється твердо (hvor-dan). Вимовляйте D, як у вашій мові.",
@@ -13739,6 +13795,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n і g зливаються в горлі"
   },
   ur: {
+    "udtaleLetTitle": "آسان مشقیں (D, R, G)",
+    "udtaleLetDesc": "بغیر مشکل حروف کے چھوٹی اور آسان جملے۔",
+    "udtaleSvaerTitle": "مشکل مشقیں (D, R, G)",
+    "udtaleSvaerDesc": "مخصوص جملوں کے ساتھ مشکل ڈینش حروف کی ہدف شدہ تربیت۔",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "لفظ کے شروع میں D سخت ہوتا ہے۔ D کو اپنی زبان کی طرح بولیں۔",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "یہاں لفظ کے شروع میں D سخت ہے۔ D کو اپنی زبان کی طرح بولیں۔",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "کبھی کبھی حرف D ایک ہجے میں سخت بولا جاتا ہے (hvor-dan)۔ D کو اپنی زبان کی طرح بولیں۔",
@@ -14739,6 +14799,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n اور g گلے میں مل جاتے ہیں"
   },
   vi: {
+    "udtaleLetTitle": "Bài tập dễ (D, R, G)",
+    "udtaleLetDesc": "Những câu ngắn và dễ không có phụ âm khó.",
+    "udtaleSvaerTitle": "Bài tập khó (D, R, G)",
+    "udtaleSvaerDesc": "Luyện tập có mục tiêu các chữ cái tiếng Đan Mạch khó với các câu cụ thể.",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "Âm D ở đầu từ được phát âm mạnh. Hãy nói D như trong ngôn ngữ của bạn.",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "Âm D phát âm mạnh ở đầu từ này. Hãy nói D như trong ngôn ngữ của bạn.",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "Đôi khi D trong một âm tiết được phát âm mạnh (hvor-dan). Hãy nói D như trong ngôn ngữ của bạn.",
@@ -15713,6 +15777,10 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n và g hợp lại trong cổ họng"
   },
   zh: {
+    "udtaleLetTitle": "简单练习 (D, R, G)",
+    "udtaleLetDesc": "没有困难辅音的简短句子。",
+    "udtaleSvaerTitle": "困难练习 (D, R, G)",
+    "udtaleSvaerDesc": "通过特定句子针对困难的丹麦语字母进行有针对性的训练。",
     "D i starten af et ord er hårdt. Sig D som på dit eget sprog.": "词首的 D 是硬音。像在你的母语中一样发 D 的音。",
     "D er hårdt her i starten af ordet. Sig D som på dit eget sprog.": "这里的 D 在词首发硬音。像在你的母语中一样发 D 的音。",
     "Nogle gange skal D i et led udtales hårdt (hvor-dan). Sig D som på dit eget sprog.": "有时音节中的 D 会发硬音（hvor-dan）。像在你的母语中一样发 D 的音。",

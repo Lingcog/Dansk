@@ -29,13 +29,46 @@ export function renderBestemthedView(container, navigateFn) {
     viewContainer.appendChild(exerciseArea);
 
     const data = [
-        { word: 'en bil', options: ['bilen', 'bilet'], correct: 'bilen', icon: '🚗' },
-        { word: 'et hus', options: ['husen', 'huset'], correct: 'huset', icon: '🏠' },
-        { word: 'et barn', options: ['barnen', 'barnet'], correct: 'barnet', icon: '👶' },
-        { word: 'en kop', options: ['koppen', 'koppet'], correct: 'koppen', icon: '☕' },
-        { word: 'et æble', options: ['æblen', 'æblet'], correct: 'æblet', icon: '🍎' },
-        { word: 'en stol', options: ['stolen', 'stolet'], correct: 'stolen', icon: '🪑' },
-        { word: 'en kat', options: ['katten', 'kattet'], correct: 'katten', icon: '🐱' }
+        {
+            s1_pre: 'Hvad er det? - Det er ', s1_post: '.', s1_options: ['en kat', 'katten'], s1_correct: 'en kat',
+            s2_pre: 'Hvor er ', s2_post: '? - Her er den!', s2_options: ['en kat', 'katten'], s2_correct: 'katten'
+        },
+        {
+            s1_pre: 'Hvad er det? - Det er ', s1_post: '.', s1_options: ['et bord', 'bordet'], s1_correct: 'et bord',
+            s2_pre: 'Hvor er ', s2_post: '? - Her er det!', s2_options: ['et bord', 'bordet'], s2_correct: 'bordet'
+        },
+        {
+            s1_pre: 'Der holder ', s1_post: ' på gaden.', s1_options: ['en bil', 'bilen'], s1_correct: 'en bil',
+            s2_pre: '', s2_post: ' er rød.', s2_options: ['En bil', 'Bilen'], s2_correct: 'Bilen'
+        },
+        {
+            s1_pre: 'Han spiser ', s1_post: '.', s1_options: ['et æble', 'æblet'], s1_correct: 'et æble',
+            s2_pre: '', s2_post: ' smager godt.', s2_options: ['Et æble', 'Æblet'], s2_correct: 'Æblet'
+        },
+        {
+            s1_pre: 'Hun læser i ', s1_post: '.', s1_options: ['en bog', 'bogen'], s1_correct: 'en bog',
+            s2_pre: '', s2_post: ' er spændende.', s2_options: ['En bog', 'Bogen'], s2_correct: 'Bogen'
+        },
+        {
+            s1_pre: 'Vi vil gerne købe ', s1_post: '.', s1_options: ['et hus', 'huset'], s1_correct: 'et hus',
+            s2_pre: '', s2_post: ' skal være stort.', s2_options: ['Et hus', 'Huset'], s2_correct: 'Huset'
+        },
+        {
+            s1_pre: 'Der løber ', s1_post: ' i parken.', s1_options: ['en hund', 'hunden'], s1_correct: 'en hund',
+            s2_pre: '', s2_post: ' gør meget højt.', s2_options: ['En hund', 'Hunden'], s2_correct: 'Hunden'
+        },
+        {
+            s1_pre: 'Hører du ', s1_post: ' græde?', s1_options: ['et barn', 'barnet'], s1_correct: 'et barn', // maybe "hører du et barn"
+            s2_pre: 'Ja, ', s2_post: ' er vist sultent.', s2_options: ['et barn', 'barnet'], s2_correct: 'barnet'
+        },
+        {
+            s1_pre: 'Jeg har fået ', s1_post: ' i fødselsdagsgave.', s1_options: ['en cykel', 'cyklen'], s1_correct: 'en cykel',
+            s2_pre: '', s2_post: ' kører lynhurtigt.', s2_options: ['En cykel', 'Cyklen'], s2_correct: 'Cyklen'
+        },
+        {
+            s1_pre: 'Der står ', s1_post: ' på bordet.', s1_options: ['en kop', 'koppen'], s1_correct: 'en kop',
+            s2_pre: '', s2_post: ' er fyldt med kaffe.', s2_options: ['En kop', 'Koppen'], s2_correct: 'Koppen'
+        }
     ];
 
     let currentIdx = 0;
@@ -51,49 +84,79 @@ export function renderBestemthedView(container, navigateFn) {
         const item = data[currentIdx];
         const stepDiv = document.createElement('div');
         stepDiv.className = 'step-content animate-in';
+        
+        let state1 = null; // null = pending, false = wrong, true = correct
+        let state2 = null;
+
         stepDiv.innerHTML = `
             <div class="visual-cue">
-                <div class="stickman-container">
-                    <svg viewBox="0 0 100 100" class="mini-stickman">
-                        <circle cx="50" cy="30" r="8" stroke="white" stroke-width="2" fill="none"/>
-                        <line x1="50" y1="38" x2="50" y2="70" stroke="white" stroke-width="2"/>
-                        <line x1="50" y1="45" x2="70" y2="35" stroke="white" stroke-width="2"/>
-                        <line x1="50" y1="45" x2="30" y2="55" stroke="white" stroke-width="2"/>
-                        <line x1="50" y1="70" x2="40" y2="90" stroke="white" stroke-width="2"/>
-                        <line x1="50" y1="70" x2="60" y2="90" stroke="white" stroke-width="2"/>
-                    </svg>
-                    <div class="object-bubble">${item.icon}</div>
+                <img src="${baseUrl}kat_bord_guide.png" alt="Bestemthed guide" style="max-width: 100%; border-radius: 12px; margin-bottom: 2rem;">
+            </div>
+            
+            <div class="sentence-block" style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                <p style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #ccc;">Første gang (Præsenteres):</p>
+                <div class="word-display" style="font-size: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                    ${item.s1_pre}
+                    <select id="sel1" class="gemini-select" style="font-size: 1.2rem; padding: 0.5rem;">
+                        <option value="">Vælg...</option>
+                        ${item.s1_options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                    ${item.s1_post}
+                    <span id="res1" style="margin-left: 10px;"></span>
                 </div>
             </div>
-            <h3>Hvad hedder det i bestemt form?</h3>
-            <div class="word-display">${item.word} ➔ ____</div>
-            <div class="options-grid">
-                ${item.options.map(opt => `<button class="option-btn" data-val="${opt}">${opt}</button>`).join('')}
+
+            <div class="sentence-block" style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <p style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #ccc;">Næste gang (Kendt):</p>
+                <div class="word-display" style="font-size: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                    ${item.s2_pre}
+                    <select id="sel2" class="gemini-select" style="font-size: 1.2rem; padding: 0.5rem;">
+                        <option value="">Vælg...</option>
+                        ${item.s2_options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                    ${item.s2_post}
+                    <span id="res2" style="margin-left: 10px;"></span>
+                </div>
             </div>
+
+            <button class="gemini-btn" id="check-btn" style="width: 100%;">Tjek svar</button>
             <div class="feedback-area" id="feedback"></div>
         `;
         exerciseArea.appendChild(stepDiv);
 
-        stepDiv.querySelectorAll('.option-btn').forEach(btn => {
-            btn.onclick = () => {
-                const val = btn.dataset.val;
-                const feedback = stepDiv.querySelector('#feedback');
-                if (val === item.correct) {
-                    feedback.textContent = 'Korrekt! ✅';
-                    feedback.className = 'feedback-area success';
-                    score++;
-                    btn.classList.add('correct');
-                    setTimeout(() => {
-                        currentIdx++;
-                        renderExercise();
-                    }, 1000);
-                } else {
-                    feedback.textContent = 'Prøv igen! ❌';
-                    feedback.className = 'feedback-area error';
-                    btn.classList.add('wrong');
-                }
-            };
-        });
+        stepDiv.querySelector('#check-btn').onclick = () => {
+            const val1 = stepDiv.querySelector('#sel1').value;
+            const val2 = stepDiv.querySelector('#sel2').value;
+            const feedback = stepDiv.querySelector('#feedback');
+
+            if (!val1 || !val2) {
+                feedback.textContent = 'Vælg venligst et svar i begge sætninger.';
+                feedback.className = 'feedback-area error';
+                return;
+            }
+
+            const isCorrect1 = val1 === item.s1_correct;
+            const isCorrect2 = val2 === item.s2_correct;
+
+            stepDiv.querySelector('#res1').innerHTML = isCorrect1 ? '✅' : '❌';
+            stepDiv.querySelector('#res2').innerHTML = isCorrect2 ? '✅' : '❌';
+
+            if (isCorrect1 && isCorrect2) {
+                feedback.textContent = 'Helt rigtigt! 🎉';
+                feedback.className = 'feedback-area success';
+                score++;
+                
+                stepDiv.querySelector('#check-btn').style.display = 'none';
+                
+                setTimeout(() => {
+                    currentIdx++;
+                    renderExercise();
+                }, 1500);
+            } else {
+                feedback.textContent = 'Prøv igen! Husk at bruge "en/et" første gang, og "-en/-et" næste gang.';
+                feedback.className = 'feedback-area error';
+            }
+        };
     }
 
     function renderResult() {
@@ -101,7 +164,7 @@ export function renderBestemthedView(container, navigateFn) {
             <div class="step-content final-step animate-in">
                 <div class="success-icon">🎉</div>
                 <h2>Flot gået!</h2>
-                <p>Du fik ${score} ud af ${data.length} rigtige.</p>
+                <p>Du forstår nu, hvornår man bruger bestemt og ubestemt form.</p>
                 <button class="gemini-btn" id="finish-btn">Afslut</button>
             </div>
         `;
@@ -114,91 +177,24 @@ export function renderBestemthedView(container, navigateFn) {
         const styles = document.createElement('style');
         styles.id = 'bestemthed-styles';
         styles.textContent = `
-            .bestemthed-view .visual-cue {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 2rem;
-            }
-            .stickman-container {
-                position: relative;
-                width: 150px;
-                height: 150px;
-            }
-            @media (max-width: 600px) {
-                .stickman-container { width: 120px; height: 120px; }
-            }
-            .mini-stickman {
-                width: 100%;
-                height: 100%;
-            }
-            .object-bubble {
-                position: absolute;
-                top: 5px;
-                right: -10px;
-                background: white;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 2.5rem;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                animation: float 3s ease-in-out infinite;
-            }
-            @media (max-width: 600px) {
-                .object-bubble { width: 50px; height: 50px; font-size: 2rem; right: -5px; }
-            }
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-10px); }
-            }
-            .word-display {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin: 2rem 0;
-                color: #fff;
-            }
-            @media (max-width: 600px) {
-                .word-display { font-size: 1.8rem; margin: 1.5rem 0; }
-            }
-            .options-grid {
-                display: flex;
-                gap: 1.5rem;
-                justify-content: center;
-                margin-bottom: 2rem;
-            }
-            @media (max-width: 600px) {
-                .options-grid { gap: 1rem; margin-bottom: 1.5rem; }
-            }
-            .option-btn {
+            .bestemthed-view .gemini-select {
                 background: rgba(255,255,255,0.1);
-                border: 2px solid rgba(255,255,255,0.2);
                 color: white;
-                padding: 1.5rem 3rem;
-                font-size: 1.5rem;
-                font-weight: 700;
-                border-radius: 20px;
+                border: 2px solid rgba(255,255,255,0.2);
+                border-radius: 8px;
+                outline: none;
                 cursor: pointer;
-                transition: all 0.2s;
-                min-width: 120px;
             }
-            @media (max-width: 600px) {
-                .option-btn { padding: 1rem 2rem; font-size: 1.2rem; border-radius: 16px; min-width: 100px; }
+            .bestemthed-view .gemini-select option {
+                background: #1a1a2e;
+                color: white;
             }
-            .option-btn:hover { background: rgba(255,255,255,0.2); }
-            .option-btn.correct { background: #4CAF50; border-color: #4CAF50; }
-            .option-btn.wrong { background: #F44336; border-color: #F44336; }
-            
             .feedback-area {
                 height: 30px;
                 font-size: 1.2rem;
                 font-weight: 600;
                 margin-top: 1rem;
-            }
-            @media (max-width: 600px) {
-                .feedback-area { font-size: 1rem; height: 25px; }
+                text-align: center;
             }
             .feedback-area.success { color: #4CAF50; }
             .feedback-area.error { color: #F44336; }

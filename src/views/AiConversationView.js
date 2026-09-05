@@ -237,9 +237,27 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         }
 
         // Direkte oversættelse fra engelsk "I am ..." -> "jeg er ..."
-        const amMatch = lower.match(/\bjeg er (bor|har|spiser|kører|arbejder|taler|sover|læser)\b/);
+        const amMatch = lower.match(/\bjeg er\s+([a-zæøå\s]*?)(bor|har|spiser|kører|arbejder|taler|sover|læser)\b/);
         if (amMatch) {
-            errorsFound.push(`På dansk siger man bare 'jeg ${amMatch[1]}'. Man bruger ikke 'er' foran udsagnsord som på engelsk.`);
+            // Hvis der er mange ord imellem (som f.eks. "jeg er glad når jeg spiser"), skal vi passe på. 
+            // Men for simpel A1-tale fanger vi typisk "jeg er også bor" eller "jeg er sammen med familie bor".
+            const wordsBetween = amMatch[1].trim();
+            if (wordsBetween.split(' ').length <= 4 && !wordsBetween.includes('når') && !wordsBetween.includes('fordi')) {
+                errorsFound.push(`På dansk siger man normalt bare 'jeg ${amMatch[2]}'. Man bruger ikke 'er' foran et andet udsagnsord som på engelsk.`);
+            }
+        }
+        
+        // Manglende artikel foran bolig-ord (f.eks. "lejlighed er 50 m2")
+        const boligMatch = lower.match(/(?:^|\s)(lejlighed|hus|værelse|køkken|badeværelse|altan)\s+(er|ligger|har)\b/);
+        if (boligMatch) {
+            // Tjek ordet lige før
+            const matchIndex = lower.indexOf(boligMatch[0]);
+            const beforeMatch = lower.substring(0, matchIndex).trim().split(' ').pop();
+            const validArticles = ['en', 'et', 'min', 'mit', 'din', 'dit', 'vores', 'hans', 'hendes', 'den', 'det'];
+            
+            if (!validArticles.includes(beforeMatch)) {
+                errorsFound.push(`Husk at sætte et lille ord foran '${boligMatch[1]}'. For eksempel '<b>min</b> ${boligMatch[1]}', '<b>en/et</b> ${boligMatch[1]}' eller '<b>den/det</b> ${boligMatch[1]}'.`);
+            }
         }
         
         // "sammen med familie" uden bestemt form

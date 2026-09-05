@@ -250,7 +250,13 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
         });
         
         const currentSub = data.subCategories[currentSubCategory];
-        explanationBox.innerHTML = t('udtale_' + currentSub.id + '_exp', currentSub.explanation);
+        const expText = t('udtale_' + currentSub.id + '_exp', currentSub.explanation);
+        if (expText) {
+            explanationBox.style.display = 'block';
+            explanationBox.innerHTML = expText;
+        } else {
+            explanationBox.style.display = 'none';
+        }
         
         const mestringLabel = progressContainer.querySelector('#udtale-mestring-label');
         if(mestringLabel) mestringLabel.textContent = (getTranslation('udtaleMasteryLabel') || 'Mestring af ') + currentLetter + ':';

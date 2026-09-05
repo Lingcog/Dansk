@@ -6,7 +6,7 @@ export const udtaleDataSvaer = {
             {
                 id: "haardt_d",
                 title: "Hårdt 'd'",
-                explanation: "<strong>Sådan udtales hårdt d:</strong><br/>Som på engelsk. Bruges i starten af ord.",
+                explanation: "",
                 exercises: [
                     { text: "I dag er det torsdag.", targetWords: ["dag", "torsdag."], category: "Hårdt 'd'", hint: "D i starten af et ord er hårdt. Sig D som på dit eget sprog." },
                     { text: "Den dør er dyr.", targetWords: ["Den", "dør", "dyr."], category: "Hårdt 'd'", hint: "D i starten af et ord er hårdt. Sig D som på dit eget sprog." },
@@ -19,7 +19,7 @@ export const udtaleDataSvaer = {
             {
                 id: "bloedt_d",
                 title: "Blødt 'd'",
-                explanation: "<strong>Sådan udtales blødt d:</strong><br/>Lyder lidt som engelsk 'the'. Kommer altid efter en vokal.",
+                explanation: "",
                 exercises: [
                     { text: "En bred gade.", targetWords: ["bred", "gade."], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd (eks. e, a, o). Tungen flad bag undertænderne. Slap helt af." },
                     { text: "De vil bade.", targetWords: ["bade."], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd (eks. e, a, o). Tungen flad bag undertænderne. Slap helt af." },
@@ -32,7 +32,7 @@ export const udtaleDataSvaer = {
             {
                 id: "stumt_d",
                 title: "Stumt 'd'",
-                explanation: "<strong>Stumt d:</strong><br/>Udtales slet ikke (ofte efter n, l eller før t).",
+                explanation: "",
                 exercises: [
                     { text: "En stor rund mund.", targetWords: ["rund", "mund."], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
                     { text: "Vandet er koldt.", targetWords: ["Vandet", "koldt."], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
@@ -145,7 +145,7 @@ export const udtaleDataLet = {
             {
                 id: "haardt_d",
                 title: "Hårdt 'd'",
-                explanation: "<strong>Sådan udtales hårdt d:</strong><br/>Som på engelsk. Bruges i starten af ord.",
+                explanation: "",
                 exercises: [
                     { text: "Hvor bor du", targetWords: ["du"], category: "Hårdt 'd'", hint: "D i starten af et ord er hårdt. Sig D som på dit eget sprog." },
                     { text: "Er det din telefon", targetWords: ["din"], category: "Hårdt 'd'", hint: "D er hårdt her i starten af ordet. Sig D som på dit eget sprog." },
@@ -158,7 +158,7 @@ export const udtaleDataLet = {
             {
                 id: "bloedt_d",
                 title: "Blødt 'd'",
-                explanation: "<strong>Sådan udtales blødt d:</strong><br/>Lyder lidt som engelsk 'the'. Kommer altid efter en vokal.",
+                explanation: "",
                 exercises: [
                     { text: "Hvad hedder du", targetWords: ["hedder"], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd (eks. e, a, o). Tungen flad bag undertænderne. Slap helt af." },
                     { text: "Hvad tid møder du i morgen", targetWords: ["møder"], category: "Blødt 'd'", hint: "D er blødt 🪶 efter en åben lyd (eks. e, a, o). Tungen flad bag undertænderne. Slap helt af." },
@@ -171,7 +171,7 @@ export const udtaleDataLet = {
             {
                 id: "stumt_d",
                 title: "Stumt 'd'",
-                explanation: "<strong>Stumt d:</strong><br/>Udtales slet ikke (illustreret via endelsen -ed og de klassiske nd/ld/rd-lyde).",
+                explanation: "",
                 exercises: [
                     { text: "Vil du have vand", targetWords: ["vand"], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },
                     { text: "Hvornår holder du pause?", targetWords: ["holder"], category: "Stumt 'd'", hint: "D udtales ofte ikke her: 😶 nd - ld - rd - ds" },

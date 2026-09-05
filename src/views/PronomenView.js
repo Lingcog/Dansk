@@ -104,11 +104,19 @@ export function renderPronomenView(container, navigateFn, extraData) {
     `;
     conjunctionChoiceCard.onclick = () => navigateFn('konjunktioner');
 
+    const artiklerCard = document.createElement('div');
+    artiklerCard.className = 'card';
+    artiklerCard.innerHTML = `
+        <div class="card-icon">🏷️</div>
+        <div class="card-title">En/et? (Artikler)</div>
+    `;
+    artiklerCard.onclick = () => navigateFn('artikler');
+
     const bestemthedCard = document.createElement('div');
     bestemthedCard.className = 'card';
     bestemthedCard.innerHTML = `
         <div class="card-icon">🏷️</div>
-        <div class="card-title">${getTranslation('bestemthedLabel')}</div>
+        <div class="card-title">En kat / katten? (bestemt og ubestemt)</div>
     `;
     bestemthedCard.onclick = () => navigateFn('bestemthed');
 
@@ -118,6 +126,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
     grid1.appendChild(adjCompCard);
     grid1.appendChild(adverbChoiceCard);
     grid1.appendChild(conjunctionChoiceCard);
+    grid1.appendChild(artiklerCard);
     grid1.appendChild(bestemthedCard);
     level1Area.appendChild(grid1);
 

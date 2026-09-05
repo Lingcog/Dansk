@@ -39,6 +39,7 @@ import { renderPronomenView } from './views/PronomenView.js';
 import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
 import { renderBestemthedView } from './views/BestemthedView.js';
+import { renderArtiklerView } from './views/ArtiklerView.js';
 import { renderModalForceView } from './views/ModalForceView.js';
 import { renderAdjectiveBridgeView } from './views/AdjectiveBridgeView.js';
 import { renderAdverbBridgeView } from './views/AdverbBridgeView.js';
@@ -227,6 +228,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'bestemthed') {
     appState.currentView = 'bestemthed';
     renderBestemthedView(appDiv, navigate);
+  } else if (viewTarget === 'artikler') {
+    appState.currentView = 'artikler';
+    renderArtiklerView(appDiv, navigate);
   } else if (viewTarget === 'modal_force') {
     appState.currentView = 'modal_force';
     renderModalForceView(appDiv, navigate, extraData);

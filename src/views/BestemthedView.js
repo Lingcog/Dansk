@@ -11,16 +11,16 @@ export function renderBestemthedView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.textContent = '← ' + getTranslation('back');
-    backBtn.onclick = () => navigateFn('grounding');
+    backBtn.onclick = () => navigateFn('pronomen');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = 'Bestemthed - En eller Et?';
+    title.textContent = 'En kat / katten? (bestemt og ubestemt)';
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Lær at vælge det rigtige kendeord (artikel) til navneord.';
+    subtitle.textContent = 'Lær at sætte navneord i bestemt form.';
     viewContainer.appendChild(title);
     viewContainer.appendChild(subtitle);
 
@@ -29,12 +29,13 @@ export function renderBestemthedView(container, navigateFn) {
     viewContainer.appendChild(exerciseArea);
 
     const data = [
-        { word: 'bil', correct: 'en', icon: '🚗' },
-        { word: 'hus', correct: 'et', icon: '🏠' },
-        { word: 'barn', correct: 'et', icon: '👶' },
-        { word: 'kop', correct: 'en', icon: '☕' },
-        { word: 'æble', correct: 'et', icon: '🍎' },
-        { word: 'stol', correct: 'en', icon: '🪑' }
+        { word: 'en bil', options: ['bilen', 'bilet'], correct: 'bilen', icon: '🚗' },
+        { word: 'et hus', options: ['husen', 'huset'], correct: 'huset', icon: '🏠' },
+        { word: 'et barn', options: ['barnen', 'barnet'], correct: 'barnet', icon: '👶' },
+        { word: 'en kop', options: ['koppen', 'koppet'], correct: 'koppen', icon: '☕' },
+        { word: 'et æble', options: ['æblen', 'æblet'], correct: 'æblet', icon: '🍎' },
+        { word: 'en stol', options: ['stolen', 'stolet'], correct: 'stolen', icon: '🪑' },
+        { word: 'en kat', options: ['katten', 'kattet'], correct: 'katten', icon: '🐱' }
     ];
 
     let currentIdx = 0;
@@ -64,11 +65,10 @@ export function renderBestemthedView(container, navigateFn) {
                     <div class="object-bubble">${item.icon}</div>
                 </div>
             </div>
-            <h3>Hvad hedder det?</h3>
-            <div class="word-display">____ ${item.word}</div>
+            <h3>Hvad hedder det i bestemt form?</h3>
+            <div class="word-display">${item.word} ➔ ____</div>
             <div class="options-grid">
-                <button class="option-btn" data-val="en">En</button>
-                <button class="option-btn" data-val="et">Et</button>
+                ${item.options.map(opt => `<button class="option-btn" data-val="${opt}">${opt}</button>`).join('')}
             </div>
             <div class="feedback-area" id="feedback"></div>
         `;
@@ -102,10 +102,10 @@ export function renderBestemthedView(container, navigateFn) {
                 <div class="success-icon">🎉</div>
                 <h2>Flot gået!</h2>
                 <p>Du fik ${score} ud af ${data.length} rigtige.</p>
-                <button class="gemini-btn" id="finish-btn">Tilbage til Grounding</button>
+                <button class="gemini-btn" id="finish-btn">Afslut</button>
             </div>
         `;
-        exerciseArea.querySelector('#finish-btn').onclick = () => navigateFn('grounding');
+        exerciseArea.querySelector('#finish-btn').onclick = () => navigateFn('pronomen');
     }
 
     renderExercise();

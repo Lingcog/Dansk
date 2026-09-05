@@ -223,21 +223,21 @@ export function renderAiConversationArbejdeView(container, navigateFn, extraData
         // Mangler nutids-r
         const rMatch = lower.match(/\bjeg (have|køre|løbe|spise|drikke|sove|arbejde|tale|læse|skrive|høre|se|købe|cykle|tage|møde|gå)\b/);
         if (rMatch) {
-            errorsFound.push(`Du sagde 'jeg ${rMatch[1]}', men udsagnsord i nutid ender på r. Husk at sige 'jeg ${rMatch[1]}<b>r</b>'.`);
+            errorsFound.push({ priority: 2, text: `Du sagde 'jeg ${rMatch[1]}', men udsagnsord i nutid ender på r. Husk at sige 'jeg ${rMatch[1]}<b>r</b>'.` });
         }
 
         // Direkte oversættelse fra engelsk "I am ..." -> "jeg er ..."
         const amMatch = lower.match(/\bjeg er (arbejder|har|spiser|kører|taler|sover|læser|møder|tager|cykler|går)\b/);
         if (amMatch) {
-            errorsFound.push(`På dansk siger man bare 'jeg ${amMatch[1]}'. Man bruger ikke 'er' foran udsagnsord som på engelsk.`);
+            errorsFound.push({ priority: 2, text: `På dansk siger man bare 'jeg ${amMatch[1]}'. Man bruger ikke 'er' foran udsagnsord som på engelsk.` });
         }
         
         // Transport-præpositioner
         if (lower.match(/\bmed cykel\b/)) {
-            errorsFound.push("Husk at det hedder '<b>på</b> cykel', ikke 'med cykel'.");
+            errorsFound.push({ priority: 4, text: "Husk at det hedder '<b>på</b> cykel', ikke 'med cykel'." });
         }
         if (lower.match(/\bmed bil\b/)) {
-            errorsFound.push("Husk at det hedder '<b>i</b> bil', ikke 'med bil'.");
+            errorsFound.push({ priority: 4, text: "Husk at det hedder '<b>i</b> bil', ikke 'med bil'." });
         }
         if (lower.match(/\bmed tog\b/) || lower.match(/\bmed bus\b/)) {
             // "med tog" og "med bus" er korrekt. Vi kan evt. fange "i tog", men folk siger ofte "med toget"
@@ -248,13 +248,13 @@ export function renderAiConversationArbejdeView(container, navigateFn, extraData
         // V2-reglen: Hvis sætningen starter med et adverbium/tid/sted, skal der være omvendt ordstilling
         const v2Match = lower.match(/^(nu|her|i dag|i går|ofte|tit|nogle gange|altid|klokken [0-9]+)\s+(jeg|han|hun|vi|de|den|det)\s+(arbejder|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)\b/);
         if (v2Match) {
-            errorsFound.push(`<strong>Ordstilling:</strong> Du sagde '${v2Match[1]} ${v2Match[2]} ${v2Match[3]}'. Husk V2-reglen! Når en sætning starter med tid, skal udsagnsord og grundled bytte plads: '<b>${v2Match[1]} ${v2Match[3]} ${v2Match[2]}</b>'.`);
+            errorsFound.push({ priority: 1, text: `<strong>Ordstilling:</strong> Du sagde '${v2Match[1]} ${v2Match[2]} ${v2Match[3]}'. Husk V2-reglen! Når en sætning starter med tid, skal udsagnsord og grundled bytte plads: '<b>${v2Match[1]} ${v2Match[3]} ${v2Match[2]}</b>'.` });
         }
 
         // Placering af 'ikke': I hovedsætninger står 'ikke' efter det første udsagnsord
         const ikkeMatch = lower.match(/\b(jeg|han|hun|vi|de|den|det)\s+ikke\s+(arbejder|har|er|taler|spiser|drikker|sover|læser|kan|vil|skal|må|møder|tager|cykler|går)\b/);
         if (ikkeMatch) {
-            errorsFound.push(`<strong>Ordstilling:</strong> Du sagde '${ikkeMatch[1]} ikke ${ikkeMatch[2]}'. På dansk skal 'ikke' stå <em>efter</em> udsagnsordet i hovedsætninger: '<b>${ikkeMatch[1]} ${ikkeMatch[2]} ikke</b>'.`);
+            errorsFound.push({ priority: 1, text: `<strong>Ordstilling:</strong> Du sagde '${ikkeMatch[1]} ikke ${ikkeMatch[2]}'. På dansk skal 'ikke' stå <em>efter</em> udsagnsordet i hovedsætninger: '<b>${ikkeMatch[1]} ${ikkeMatch[2]} ikke</b>'.` });
         }
     }
 
@@ -338,11 +338,24 @@ export function renderAiConversationArbejdeView(container, navigateFn, extraData
             ul.style.paddingLeft = '1.5rem';
             ul.style.lineHeight = '1.5';
             
-            // Remove duplicates
-            const uniqueErrors = [...new Set(errorsFound)];
-            uniqueErrors.forEach(err => {
+            // Prioritize and remove duplicates
+            const uniqueErrorsMap = new Map();
+            errorsFound.forEach(err => {
+                if (!uniqueErrorsMap.has(err.text)) {
+                    uniqueErrorsMap.set(err.text, err);
+                } else {
+                    if (err.priority < uniqueErrorsMap.get(err.text).priority) {
+                        uniqueErrorsMap.set(err.text, err);
+                    }
+                }
+            });
+            const topErrors = Array.from(uniqueErrorsMap.values())
+                .sort((a, b) => a.priority - b.priority)
+                .slice(0, 3);
+            
+            topErrors.forEach(err => {
                 const li = document.createElement('li');
-                li.innerHTML = err;
+                li.innerHTML = err.text;
                 li.style.marginBottom = '0.5rem';
                 ul.appendChild(li);
             });

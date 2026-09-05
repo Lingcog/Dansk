@@ -223,17 +223,17 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         // Mangler nutids-r
         const rMatch = lower.match(/\bjeg (bo|have|køre|løbe|spise|drikke|sove|arbejde|tale|læse|skrive|høre|se|købe|cykle)\b/);
         if (rMatch) {
-            errorsFound.push(`Du sagde 'jeg ${rMatch[1]}', men udsagnsord i nutid ender på r. Husk at sige 'jeg ${rMatch[1]}<b>r</b>'.`);
+            errorsFound.push({ priority: 2, text: `Du sagde 'jeg ${rMatch[1]}', men udsagnsord i nutid ender på r. Husk at sige 'jeg ${rMatch[1]}<b>r</b>'.` });
         }
 
         // Forkert køn (hus, værelse, køkken, badeværelse er intetkøn)
         if (lower.match(/\b(en hus|en værelse|en køkken|en badeværelse|en vindue)\b/)) {
-            errorsFound.push("Husk at nogle bolig-ord er intetkøn (t-ord). Det hedder '<b>et</b> hus/værelse/køkken/badeværelse/vindue'.");
+            errorsFound.push({ priority: 3, text: "Husk at nogle bolig-ord er intetkøn (t-ord). Det hedder '<b>et</b> hus/værelse/køkken/badeværelse/vindue'." });
         }
         
         // Forkert køn (lejlighed, altan, have er fælleskøn)
         if (lower.match(/\b(et lejlighed|et altan|et have|et seng|et dør)\b/)) {
-            errorsFound.push("Husk at 'lejlighed', 'altan', 'have', 'seng' og 'dør' er fælleskøn (n-ord). Det hedder f.eks. '<b>en</b> lejlighed'.");
+            errorsFound.push({ priority: 3, text: "Husk at 'lejlighed', 'altan', 'have', 'seng' og 'dør' er fælleskøn (n-ord). Det hedder f.eks. '<b>en</b> lejlighed'." });
         }
 
         // Direkte oversættelse fra engelsk "I am ..." -> "jeg er ..."
@@ -243,7 +243,7 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
             // Men for simpel A1-tale fanger vi typisk "jeg er også bor" eller "jeg er sammen med familie bor".
             const wordsBetween = amMatch[1].trim();
             if (wordsBetween.split(' ').length <= 4 && !wordsBetween.includes('når') && !wordsBetween.includes('fordi')) {
-                errorsFound.push(`På dansk siger man normalt bare 'jeg ${amMatch[2]}'. Man bruger ikke 'er' foran et andet udsagnsord som på engelsk.`);
+                errorsFound.push({ priority: 2, text: `På dansk siger man normalt bare 'jeg ${amMatch[2]}'. Man bruger ikke 'er' foran et andet udsagnsord som på engelsk.` });
             }
         }
         
@@ -256,18 +256,18 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
             const validArticles = ['en', 'et', 'min', 'mit', 'din', 'dit', 'vores', 'hans', 'hendes', 'den', 'det'];
             
             if (!validArticles.includes(beforeMatch)) {
-                errorsFound.push(`Husk at sætte et lille ord foran '${boligMatch[1]}'. For eksempel '<b>min</b> ${boligMatch[1]}', '<b>en/et</b> ${boligMatch[1]}' eller '<b>den/det</b> ${boligMatch[1]}'.`);
+                errorsFound.push({ priority: 3, text: `Husk at sætte et lille ord foran '${boligMatch[1]}'. For eksempel '<b>min</b> ${boligMatch[1]}', '<b>en/et</b> ${boligMatch[1]}' eller '<b>den/det</b> ${boligMatch[1]}'.` });
             }
         }
         
         // "sammen med familie" uden bestemt form
         if (lower.match(/\bsammen med familie\b/)) {
-            errorsFound.push("Husk endelsen: Det hedder 'sammen med <b>min</b> familie' eller 'sammen med famili<b>en</b>'.");
+            errorsFound.push({ priority: 3, text: "Husk endelsen: Det hedder 'sammen med <b>min</b> familie' eller 'sammen med famili<b>en</b>'." });
         }
         
         // Dobbelt subjekt eller forkert bøjning "Ja naboer er gode" -> "naboerne"
         if (lower.match(/\bja naboer\b/) || lower.match(/\bja bolig\b/)) {
-            errorsFound.push("Husk at bruge bestemt form, når vi ved hvad vi taler om: 'naboer<b>ne</b> er gode' og 'bolig<b>en</b> er god'.");
+            errorsFound.push({ priority: 3, text: "Husk at bruge bestemt form, når vi ved hvad vi taler om: 'naboer<b>ne</b> er gode' og 'bolig<b>en</b> er god'." });
         }
 
         // --- SYNTaks (Ordstilling) ---
@@ -275,13 +275,13 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         // V2-reglen: Hvis sætningen starter med et adverbium/tid/sted, skal der være omvendt ordstilling
         const v2Match = lower.match(/^(nu|her|i dag|i går|ofte|tit|nogle gange|altid)\s+(jeg|han|hun|vi|de|den|det)\s+(bor|har|er|taler|arbejder|spiser|drikker|sover|læser)\b/);
         if (v2Match) {
-            errorsFound.push(`<strong>Ordstilling:</strong> Du sagde '${v2Match[1]} ${v2Match[2]} ${v2Match[3]}'. Husk V2-reglen! Når en sætning starter med tid eller sted, skal udsagnsord og grundled bytte plads: '<b>${v2Match[1]} ${v2Match[3]} ${v2Match[2]}</b>'.`);
+            errorsFound.push({ priority: 1, text: `<strong>Ordstilling:</strong> Du sagde '${v2Match[1]} ${v2Match[2]} ${v2Match[3]}'. Husk V2-reglen! Når en sætning starter med tid eller sted, skal udsagnsord og grundled bytte plads: '<b>${v2Match[1]} ${v2Match[3]} ${v2Match[2]}</b>'.` });
         }
 
         // Placering af 'ikke': I hovedsætninger står 'ikke' efter det første udsagnsord
         const ikkeMatch = lower.match(/\b(jeg|han|hun|vi|de|den|det)\s+ikke\s+(bor|har|er|taler|arbejder|spiser|drikker|sover|læser|kan|vil|skal|må)\b/);
         if (ikkeMatch) {
-            errorsFound.push(`<strong>Ordstilling:</strong> Du sagde '${ikkeMatch[1]} ikke ${ikkeMatch[2]}'. På dansk skal 'ikke' stå <em>efter</em> udsagnsordet i hovedsætninger: '<b>${ikkeMatch[1]} ${ikkeMatch[2]} ikke</b>'.`);
+            errorsFound.push({ priority: 1, text: `<strong>Ordstilling:</strong> Du sagde '${ikkeMatch[1]} ikke ${ikkeMatch[2]}'. På dansk skal 'ikke' stå <em>efter</em> udsagnsordet i hovedsætninger: '<b>${ikkeMatch[1]} ${ikkeMatch[2]} ikke</b>'.` });
         }
     }
 
@@ -379,11 +379,24 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
             ul.style.paddingLeft = '1.5rem';
             ul.style.lineHeight = '1.5';
             
-            // Remove duplicates
-            const uniqueErrors = [...new Set(errorsFound)];
-            uniqueErrors.forEach(err => {
+            // Prioritize and remove duplicates
+            const uniqueErrorsMap = new Map();
+            errorsFound.forEach(err => {
+                if (!uniqueErrorsMap.has(err.text)) {
+                    uniqueErrorsMap.set(err.text, err);
+                } else {
+                    if (err.priority < uniqueErrorsMap.get(err.text).priority) {
+                        uniqueErrorsMap.set(err.text, err);
+                    }
+                }
+            });
+            const topErrors = Array.from(uniqueErrorsMap.values())
+                .sort((a, b) => a.priority - b.priority)
+                .slice(0, 3);
+            
+            topErrors.forEach(err => {
                 const li = document.createElement('li');
-                li.innerHTML = err;
+                li.innerHTML = err.text;
                 li.style.marginBottom = '0.5rem';
                 ul.appendChild(li);
             });

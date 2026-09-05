@@ -251,7 +251,7 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
         }
         
         // Manglende artikel foran bolig-ord (f.eks. "lejlighed er 50 m2")
-        const boligMatch = lower.match(/(?:^|\s)(lejlighed|hus|værelse|køkken|badeværelse|altan)\s+(er|ligger|har)\b/);
+        const boligMatch = lower.match(/(?:^|\s)(bolig|lejlighed|hus|værelse|køkken|badeværelse|altan)\s+(er|ligger|har)\b/);
         if (boligMatch) {
             // Tjek ordet lige før
             const matchIndex = lower.indexOf(boligMatch[0]);
@@ -263,17 +263,34 @@ export function renderAiConversationView(container, navigateFn, extraData = {}) 
             }
         }
         
+        // "Bolig tæt på Netto" - mangler udsagnsord og artikel
+        if (lower.match(/(?:^|\s)bolig\s+(tæt på|ved|i|på)/)) {
+            errorsFound.push({ priority: 2, text: "Du sagde 'bolig tæt på/ved...'. Husk at der mangler både et udsagnsord og et lille ord foran bolig. Sig f.eks. '<b>min</b> bolig <b>ligger</b> tæt på...'." });
+        }
+        
         // "sammen med familie" uden bestemt form
         if (lower.match(/\bsammen med familie\b/)) {
             errorsFound.push({ priority: 3, text: "Husk endelsen: Det hedder 'sammen med <b>min</b> familie' eller 'sammen med famili<b>en</b>'." });
         }
         
-        // Dobbelt subjekt eller forkert bøjning "Ja naboer er gode" -> "naboerne"
-        if (lower.match(/\bja naboer\b/) || lower.match(/\bja bolig\b/)) {
-            errorsFound.push({ priority: 3, text: "Husk at bruge bestemt form, når vi ved hvad vi taler om: 'naboer<b>ne</b> er gode' og 'bolig<b>en</b> er god'." });
+        // "Naboer larmer" uden bestemt form eller ejestedord
+        if (lower.match(/(?:^|\s)naboer(?:$|\s)/) && !lower.match(/\b(mine|vores)\s+naboer\b/)) {
+            errorsFound.push({ priority: 3, text: "Når du taler om dine egne naboer, skal du huske bestemt form eller ejestedord: Sig '<b>mine</b> naboer' eller 'naboer<b>ne</b>'." });
         }
 
         // --- SYNTaks (Ordstilling) ---
+
+        // Manglende grundled og rodet ordstilling: f.eks. "I lejlighed bor"
+        const prepEndMatch = lower.match(/^(i|på)\s+([a-zæøå]+)\s+(bor|har|er|taler|arbejder|spiser|drikker|sover|læser)$/);
+        if (prepEndMatch) {
+            errorsFound.push({ priority: 1, text: `<strong>Manglende grundled:</strong> Du sagde '${prepEndMatch[0]}'. Her mangler du et grundled (f.eks. 'jeg'). Det mest naturlige er at starte med personen: '<b>Jeg ${prepEndMatch[3]} ${prepEndMatch[1]} (en/et) ${prepEndMatch[2]}</b>'.` });
+        }
+
+        // Manglende udsagnsord: f.eks. "Jeg i lejlighed"
+        const noVerbMatch = lower.match(/^(jeg|han|hun|vi|de)\s+(i|på|ved|tæt på|sammen med)\b/);
+        if (noVerbMatch) {
+            errorsFound.push({ priority: 2, text: `Du sagde '${noVerbMatch[0]}...'. Der mangler et udsagnsord! Sig f.eks. 'jeg <b>bor</b> ${noVerbMatch[2]}...' eller 'jeg <b>er</b> ${noVerbMatch[2]}...'.` });
+        }
 
         // V2-reglen: Hvis sætningen starter med et adverbium/tid/sted, skal der være omvendt ordstilling
         const v2Match = lower.match(/^(nu|her|i dag|i går|ofte|tit|nogle gange|altid)\s+(jeg|han|hun|vi|de|den|det)\s+(bor|har|er|taler|arbejder|spiser|drikker|sover|læser)\b/);

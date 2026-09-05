@@ -1,5 +1,12 @@
 export const translations = {
   da: {
+    "bestemthed_feedback_correct": "Helt rigtigt! 🎉",
+    "bestemthed_feedback_swapped": "Du har byttet om på dem! Husk: Brug 'en/et' første gang, og sæt '-en/-et' bagpå næste gang.",
+    "bestemthed_feedback_err1": "Husk: Første gang du nævner ordet, skal du sætte 'en/et' foran",
+    "bestemthed_feedback_err2": "Når du allerede har nævnt ordet, skal du sætte '-en/-et' bagpå",
+    "bestemthed_feedback_missing": "Vælg venligst et svar i begge sætninger.",
+    "bestemthed_label_first": "Første gang (Præsenteres):",
+    "bestemthed_label_next": "Næste gang (Kendt):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>",
@@ -968,6 +975,13 @@ export const translations = {
     "dictaphoneMachineHeard": "Maskinen hørte dig sige:"
   },
   en: {
+    "bestemthed_feedback_correct": "Exactly right! 🎉",
+    "bestemthed_feedback_swapped": "You mixed them up! Remember: Use 'en/et' the first time, and add '-en/-et' to the end the next time.",
+    "bestemthed_feedback_err1": "Remember: The first time you mention the word, you must put 'en/et' in front",
+    "bestemthed_feedback_err2": "When you have already mentioned the word, you must add '-en/-et' to the end",
+    "bestemthed_feedback_missing": "Please select an answer in both sentences.",
+    "bestemthed_label_first": "First time (Introduced):",
+    "bestemthed_label_next": "Next time (Known):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Use the Umbrella (Det) for general conditions or weather.<br>Use the Arrow (Der) for a specific point or location.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Both \"det\" and \"der\" can often be used, depending on what you want to focus on!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Correct! ☂️ Umbrella: You focus on the general condition and the weather.<br><i>(Tip: 'Der' is also correct if you focus on the location 'outside').</i>",
@@ -1990,6 +2004,13 @@ export const translations = {
     "dictaphoneMachineHeard": "The machine heard you say:"
   },
   de: {
+    "bestemthed_feedback_correct": "Ganz genau! 🎉",
+    "bestemthed_feedback_swapped": "Du hast sie verwechselt! Denk daran: Verwende beim ersten Mal 'en/et' und hänge beim nächsten Mal '-en/-et' an.",
+    "bestemthed_feedback_err1": "Denk daran: Wenn du das Wort zum ersten Mal erwähnst, musst du 'en/et' davor setzen",
+    "bestemthed_feedback_err2": "Wenn du das Wort bereits erwähnt hast, musst du '-en/-et' anhängen",
+    "bestemthed_feedback_missing": "Bitte wähle in beiden Sätzen eine Antwort.",
+    "bestemthed_label_first": "Erstes Mal (Eingeführt):",
+    "bestemthed_label_next": "Nächstes Mal (Bekannt):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Benutze den Regenschirm (Det) für allgemeine Bedingungen oder das Wetter.<br>Benutze den Pfeil (Der) für einen bestimmten Punkt oder Ort.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Sowohl \"det\" als auch \"der\" können oft verwendet werden, je nachdem, worauf Sie sich konzentrieren möchten!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Richtig! ☂️ Regenschirm: Du konzentrierst dich auf den allgemeinen Zustand und das Wetter.<br><i>(Tipp: 'Der' ist auch richtig, wenn du dich auf den Ort 'draußen' konzentrierst).</i>",
@@ -3044,6 +3065,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n und g verschmelzen im Hals"
   },
   ar: {
+    "bestemthed_feedback_correct": "صحيح تماماً! 🎉",
+    "bestemthed_feedback_swapped": "لقد خلطت بينهما! تذكر: استخدم 'en/et' في المرة الأولى، وأضف '-en/-et' في النهاية في المرة القادمة.",
+    "bestemthed_feedback_err1": "تذكر: في المرة الأولى التي تذكر فيها الكلمة، يجب أن تضع 'en/et' في المقدمة",
+    "bestemthed_feedback_err2": "عندما تكون قد ذكرت الكلمة بالفعل، يجب أن تضيف '-en/-et' في النهاية",
+    "bestemthed_feedback_missing": "يرجى تحديد إجابة في كلتا الجملتين.",
+    "bestemthed_label_first": "المرة الأولى (مقدمة):",
+    "bestemthed_label_next": "المرة القادمة (معروفة):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "استخدم المظلة (Det) للظروف العامة أو الطقس.<br>استخدم السهم (Der) لنقطة أو موقع محدد.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "غالبًا ما يمكن استخدام كل من \"det\" و \"der\" ، اعتمادًا على ما تريد التركيز عليه!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "صحيح! ☂️ مظلة: أنت تركز على الحالة العامة والطقس.<br><i>(نصيحة: 'Der' صحيح أيضًا إذا كنت تركز على الموقع 'بالخارج').</i>",
@@ -4104,6 +4132,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n و g يندمجان في الحلق"
   },
   es: {
+    "bestemthed_feedback_correct": "¡Exactamente! 🎉",
+    "bestemthed_feedback_swapped": "¡Los confundiste! Recuerda: Usa 'en/et' la primera vez y añade '-en/-et' al final la próxima vez.",
+    "bestemthed_feedback_err1": "Recuerda: La primera vez que mencionas la palabra, debes poner 'en/et' delante",
+    "bestemthed_feedback_err2": "Cuando ya has mencionado la palabra, debes añadir '-en/-et' al final",
+    "bestemthed_feedback_missing": "Por favor, selecciona una respuesta en ambas oraciones.",
+    "bestemthed_label_first": "Primera vez (Introducido):",
+    "bestemthed_label_next": "Próxima vez (Conocido):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Usa el Paraguas (Det) para condiciones generales o el clima.<br>Usa la Flecha (Der) para un punto o ubicación específica.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "¡Tanto \"det\" como \"der\" a menudo se pueden usar, dependiendo de en qué quieras enfocarte!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "¡Correcto! ☂️ Paraguas: Te enfocas en la condición general y el clima.<br><i>(Consejo: 'Der' también es correcto si te enfocas en la ubicación 'afuera').</i>",
@@ -5111,6 +5146,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n y g se funden en la garganta"
   },
   fa: {
+    "bestemthed_feedback_correct": "کاملا درست است! 🎉",
+    "bestemthed_feedback_swapped": "آنها را با هم اشتباه گرفتید! به یاد داشته باشید: بار اول از 'en/et' استفاده کنید و دفعه بعد '-en/-et' را به انتها اضافه کنید.",
+    "bestemthed_feedback_err1": "به یاد داشته باشید: اولین باری که کلمه را ذکر می کنید، باید 'en/et' را در جلو قرار دهید",
+    "bestemthed_feedback_err2": "هنگامی که قبلا کلمه را ذکر کرده اید، باید '-en/-et' را به انتها اضافه کنید",
+    "bestemthed_feedback_missing": "لطفا در هر دو جمله یک پاسخ را انتخاب کنید.",
+    "bestemthed_label_first": "بار اول (معرفی شده):",
+    "bestemthed_label_next": "دفعه بعد (شناخته شده):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "برای شرایط کلی یا آب و هوا از چتر (Det) استفاده کنید.<br>برای یک نقطه یا مکان خاص از فلش (Der) استفاده کنید.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "بسته به اینکه می‌خواهید روی چه چیزی تمرکز کنید، اغلب می‌توان از هر دو «det» و «der» استفاده کرد!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "درسته! ☂️ چتر: شما روی وضعیت کلی و آب و هوا تمرکز می کنید.<br><i>(نکته: 'Der' نیز در صورت تمرکز بر روی مکان 'بیرون' صحیح است).</i>",
@@ -6105,6 +6147,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n و g در گلو ترکیب می‌شوند"
   },
   ku: {
+    "bestemthed_feedback_correct": "Tevahî rast e! 🎉",
+    "bestemthed_feedback_swapped": "Te ew tevlîhev kirin! Bîr bîne: Cara yekem 'en/et' bi kar bîne, û cara pêşîn '-en/-et' li dawiyê zêde bike.",
+    "bestemthed_feedback_err1": "Bîr bîne: Cara yekem ku tu qala peyvê dikî, divê tu 'en/et' li pêşiyê deynî",
+    "bestemthed_feedback_err2": "Dema ku te berê qala peyvê kiribe, divê tu '-en/-et' li dawiyê zêde bikî",
+    "bestemthed_feedback_missing": "Ji kerema xwe di her du hevokan de bersivek hilbijêre.",
+    "bestemthed_label_first": "Cara yekem (Tê naskirin):",
+    "bestemthed_label_next": "Cara pêşîn (Tê zanîn):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Sîwanê (Det) ji bo rewşên giştî an hewayê bikar bînin.<br>Tîrê (Der) ji bo xalek an cîhek diyarkirî bikar bînin.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Bi gelemperî hem \"det\" û hem jî \"der\" dikarin werin bikar anîn, li gorî ya ku hûn dixwazin balê bikişînin!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Rast e! ☂️ Sîwan: Hûn balê dikişînin ser rewşa giştî û hewayê.<br><i>(Serişte: 'Der' jî rast e heke hûn balê bikişînin ser cîhê 'derve').</i>",
@@ -7164,6 +7213,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n û g di qirikê de dibin yek"
   },
   ne: {
+    "bestemthed_feedback_correct": "बिल्कुल सही! 🎉",
+    "bestemthed_feedback_swapped": "तपाईंले तिनीहरूलाई मिलाउनुभयो! याद राख्नुहोस्: पहिलो पटक 'en/et' प्रयोग गर्नुहोस्, र अर्को पटक अन्त्यमा '-en/-et' थप्नुहोस्।",
+    "bestemthed_feedback_err1": "याद राख्नुहोस्: पहिलो पटक तपाईंले शब्द उल्लेख गर्दा, तपाईंले अगाडि 'en/et' राख्नु पर्छ",
+    "bestemthed_feedback_err2": "जब तपाईंले पहिले नै शब्द उल्लेख गरिसक्नुभयो, तपाईंले अन्त्यमा '-en/-et' थप्नु पर्छ",
+    "bestemthed_feedback_missing": "कृपया दुवै वाक्यमा उत्तर चयन गर्नुहोस्।",
+    "bestemthed_label_first": "पहिलो पटक (परिचय गरिएको):",
+    "bestemthed_label_next": "अर्को पटक (ज्ञात):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "सामान्य अवस्था वा मौसमको लागि छाता (Det) प्रयोग गर्नुहोस्।<br>विशिष्ट बिन्दु वा स्थानको लागि तीर (Der) प्रयोग गर्नुहोस्।",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "तपाईं केमा फोकस गर्न चाहनुहुन्छ भन्ने आधारमा, प्रायः \"det\" र \"der\" दुवै प्रयोग गर्न सकिन्छ!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "सहि हो! ☂️ छाता: तपाईं सामान्य अवस्था र मौसममा ध्यान केन्द्रित गर्नुहुन्छ।<br><i>(सुझाव: यदि तपाईं 'बाहिर' स्थानमा ध्यान केन्द्रित गर्नुहुन्छ भने 'Der' पनि सही छ)।</i>",
@@ -8127,6 +8183,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n र g घाँटीमा मिसिन्छन्"
   },
   ps: {
+    "bestemthed_feedback_correct": "بیخي سمه ده! 🎉",
+    "bestemthed_feedback_swapped": "تا ګډوډ کړل! په یاد ولرئ: لومړی ځل 'en/et' وکاروئ، او بل ځل په پای کې '-en/-et' اضافه کړئ.",
+    "bestemthed_feedback_err1": "په یاد ولرئ: کله چې تاسو لومړی ځل د کلمې یادونه کوئ، تاسو باید په مخکې کې 'en/et' واچوئ",
+    "bestemthed_feedback_err2": "کله چې تاسو دمخه د کلمې یادونه کړې وي، تاسو باید په پای کې '-en/-et' اضافه کړئ",
+    "bestemthed_feedback_missing": "مهرباني وکړئ په دواړو جملو کې یو ځواب وټاکئ.",
+    "bestemthed_label_first": "لومړی ځل (معرفي شوی):",
+    "bestemthed_label_next": "بل ځل (پیژندل شوی):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "د عمومي شرایطو یا هوا لپاره چترۍ (Det) وکاروئ.<br>د یو ځانګړي نقطې یا موقعیت لپاره تیر (Der) وکاروئ.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "ډیری وختونه دواړه \"det\" او \"der\" کارول کیدی شي ، پدې پورې اړه لري چې تاسو څه تمرکز کول غواړئ!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "سمه ده! ☂️ چترۍ: تاسو عمومي حالت او هوا ته پام کوئ.<br><i>(اشاره: 'Der' هم سم دی که تاسو 'بهر' موقعیت ته پام کوئ).</i>",
@@ -9157,6 +9220,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n او g په ستوني کې یوځای کیږي"
   },
   pt: {
+    "bestemthed_feedback_correct": "Exatamente isso! 🎉",
+    "bestemthed_feedback_swapped": "Você confundiu! Lembre-se: Use 'en/et' da primeira vez e adicione '-en/-et' no final da próxima vez.",
+    "bestemthed_feedback_err1": "Lembre-se: A primeira vez que você menciona a palavra, você deve colocar 'en/et' na frente",
+    "bestemthed_feedback_err2": "Quando você já mencionou a palavra, deve adicionar '-en/-et' no final",
+    "bestemthed_feedback_missing": "Por favor, selecione uma resposta em ambas as frases.",
+    "bestemthed_label_first": "Primeira vez (Introduzido):",
+    "bestemthed_label_next": "Próxima vez (Conhecido):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Use o Guarda-chuva (Det) para condições gerais ou clima.<br>Use a Seta (Der) para um ponto ou local específico.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Tanto \"det\" quanto \"der\" costumam ser usados, dependendo no que você quer focar!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Correto! ☂️ Guarda-chuva: Você foca na condição geral e no clima.<br><i>(Dica: 'Der' também está correto se você focar na localização 'lá fora').</i>",
@@ -10160,6 +10230,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n e g fundem-se na garganta"
   },
   ru: {
+    "bestemthed_feedback_correct": "Совершенно верно! 🎉",
+    "bestemthed_feedback_swapped": "Вы их перепутали! Помните: используйте 'en/et' в первый раз, а в следующий раз добавляйте '-en/-et' в конце.",
+    "bestemthed_feedback_err1": "Помните: когда вы впервые упоминаете слово, вы должны поставить 'en/et' перед ним",
+    "bestemthed_feedback_err2": "Когда вы уже упомянули слово, вы должны добавить '-en/-et' в конце",
+    "bestemthed_feedback_missing": "Пожалуйста, выберите ответ в обоих предложениях.",
+    "bestemthed_label_first": "Первый раз (Представлено):",
+    "bestemthed_label_next": "В следующий раз (Известно):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Используйте Зонт (Det) для общих условий или погоды.<br>Используйте Стрелку (Der) для конкретной точки или места.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Часто можно использовать как «det», так и «der», в зависимости от того, на чем вы хотите сосредоточиться!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Правильно! ☂️ Зонт: Вы сосредотачиваетесь на общем состоянии и погоде.<br><i>(Подсказка: «Der» также правильно, если вы сосредотачиваетесь на месте «снаружи»).</i>",
@@ -11171,6 +11248,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n и g сливаются в горле"
   },
   th: {
+    "bestemthed_feedback_correct": "ถูกต้องเลย! 🎉",
+    "bestemthed_feedback_swapped": "คุณสลับกัน! จำไว้: ใช้ 'en/et' ในครั้งแรก และเติม '-en/-et' ต่อท้ายในครั้งต่อไป",
+    "bestemthed_feedback_err1": "จำไว้: ครั้งแรกที่คุณพูดถึงคำนั้น คุณต้องวาง 'en/et' ไว้ข้างหน้า",
+    "bestemthed_feedback_err2": "เมื่อคุณพูดถึงคำนั้นไปแล้ว คุณต้องเติม '-en/-et' ต่อท้าย",
+    "bestemthed_feedback_missing": "โปรดเลือกคำตอบในทั้งสองประโยค",
+    "bestemthed_label_first": "ครั้งแรก (แนะนำ):",
+    "bestemthed_label_next": "ครั้งต่อไป (รู้จักแล้ว):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "ใช้ร่ม (Det) สำหรับสภาพทั่วไปหรือสภาพอากาศ<br>ใช้ลูกศร (Der) สำหรับจุดหรือสถานที่เฉพาะ",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "บ่อยครั้งที่สามารถใช้ได้ทั้ง \"det\" และ \"der\" ขึ้นอยู่กับว่าคุณต้องการเน้นอะไร!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "ถูกต้อง! ☂️ ร่ม: คุณเน้นที่สภาพทั่วไปและสภาพอากาศ<br><i>(คำแนะนำ: 'Der' ก็ถูกต้องเช่นกัน หากคุณเน้นที่สถานที่ 'ข้างนอก')</i>",
@@ -12177,6 +12261,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n และ g รวมกันในลำคอ"
   },
   tr: {
+    "bestemthed_feedback_correct": "Kesinlikle doğru! 🎉",
+    "bestemthed_feedback_swapped": "Onları karıştırdın! Unutma: İlk seferde 'en/et' kullan, bir dahaki sefere sona '-en/-et' ekle.",
+    "bestemthed_feedback_err1": "Unutma: Kelimeden ilk bahsettiğinde önüne 'en/et' koymalısın",
+    "bestemthed_feedback_err2": "Kelimeden daha önce bahsettiysen, sonuna '-en/-et' eklemelisin",
+    "bestemthed_feedback_missing": "Lütfen her iki cümlede de bir cevap seçin.",
+    "bestemthed_label_first": "İlk sefer (Tanıtılan):",
+    "bestemthed_label_next": "Bir dahaki sefere (Bilinen):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Genel durumlar veya hava durumu için Şemsiyeyi (Det) kullanın.<br>Belirli bir nokta veya konum için Oku (Der) kullanın.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Neye odaklanmak istediğinize bağlı olarak genellikle hem \"det\" hem de \"der\" kullanılabilir!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Doğru! ☂️ Şemsiye: Genel duruma ve hava durumuna odaklanıyorsunuz.<br><i>(İpucu: 'dışarısı' konumuna odaklanırsanız 'Der' de doğrudur).</i>",
@@ -13165,6 +13256,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n ve g gırtlakta birleşir"
   },
   uk: {
+    "bestemthed_feedback_correct": "Абсолютно вірно! 🎉",
+    "bestemthed_feedback_swapped": "Ви їх переплутали! Пам'ятайте: використовуйте 'en/et' першого разу, а наступного разу додавайте '-en/-et' в кінці.",
+    "bestemthed_feedback_err1": "Пам'ятайте: коли ви вперше згадуєте слово, ви повинні поставити 'en/et' на початку",
+    "bestemthed_feedback_err2": "Коли ви вже згадали слово, ви повинні додати '-en/-et' в кінці",
+    "bestemthed_feedback_missing": "Будь ласка, виберіть відповідь в обох реченнях.",
+    "bestemthed_label_first": "Перший раз (Представлено):",
+    "bestemthed_label_next": "Наступного разу (Відомо):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Використовуйте Парасольку (Det) для загальних умов або погоды.<br>Використовуйте Стрілку (Der) для конкретної точки або місця.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Часто можна використовувати як «det», так і «der», залежно від того, на чому ви хочете зосередитися!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Правильно! ☂️ Парасолька: Ви зосереджуєтесь на загальному стані та погоді.<br><i>(Підказка: «Der» також правильне, якщо ви зосереджуєтесь на місці «зовні»).</i>",
@@ -14173,6 +14271,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n і g зливаються в горлі"
   },
   ur: {
+    "bestemthed_feedback_correct": "بالکل درست! 🎉",
+    "bestemthed_feedback_swapped": "آپ نے انہیں ملا دیا! یاد رکھیں: پہلی بار 'en/et' استعمال کریں، اور اگلی بار آخر میں '-en/-et' شامل کریں۔",
+    "bestemthed_feedback_err1": "یاد رکھیں: جب آپ پہلی بار لفظ کا ذکر کرتے ہیں، تو آپ کو شروع میں 'en/et' لگانا ہوگا",
+    "bestemthed_feedback_err2": "جب آپ پہلے ہی لفظ کا ذکر کر چکے ہیں، تو آپ کو آخر میں '-en/-et' شامل کرنا ہوگا",
+    "bestemthed_feedback_missing": "براہ کرم دونوں جملوں میں ایک جواب منتخب کریں۔",
+    "bestemthed_label_first": "پہلی بار (متعارف کرایا گیا):",
+    "bestemthed_label_next": "اگلی بار (معلوم):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "عام حالات یا موسم کے لیے چھتری (Det) کا استعمال کریں۔<br>کسی مخصوص نقطہ یا مقام کے لیے تیر (Der) کا استعمال کریں۔",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "آپ کس چیز پر توجہ مرکوز کرنا چاہتے ہیں اس پر منحصر ہے کہ اکثر \"det\" اور \"der\" دونوں استعمال کیے جا سکتے ہیں!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "بالکل ٹھیک! ☂️ چھتری: آپ عام حالت اور موسم پر توجہ مرکوز کرتے ہیں۔<br><i>(ٹپ: 'Der' بھی صحیح ہے اگر آپ باہر کے مقام پر توجہ مرکوز کرتے ہیں)۔</i>",
@@ -15204,6 +15309,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n اور g گلے میں مل جاتے ہیں"
   },
   vi: {
+    "bestemthed_feedback_correct": "Hoàn toàn chính xác! 🎉",
+    "bestemthed_feedback_swapped": "Bạn đã nhầm lẫn! Hãy nhớ: Sử dụng 'en/et' lần đầu tiên và thêm '-en/-et' vào cuối lần tiếp theo.",
+    "bestemthed_feedback_err1": "Hãy nhớ: Lần đầu tiên bạn nhắc đến từ đó, bạn phải đặt 'en/et' ở phía trước",
+    "bestemthed_feedback_err2": "Khi bạn đã nhắc đến từ đó rồi, bạn phải thêm '-en/-et' vào cuối",
+    "bestemthed_feedback_missing": "Vui lòng chọn một câu trả lời ở cả hai câu.",
+    "bestemthed_label_first": "Lần đầu tiên (Được giới thiệu):",
+    "bestemthed_label_next": "Lần tiếp theo (Đã biết):",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "Sử dụng Ô (Det) cho các điều kiện chung hoặc thời tiết.<br>Sử dụng Mũi tên (Der) cho một điểm hoặc vị trí cụ thể.",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "Cả \"det\" và \"der\" thường có thể được sử dụng, tùy thuộc vào điều bạn muốn tập trung vào!",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "Chính xác! ☂️ Ô: Bạn tập trung vào điều kiện chung và thời tiết.<br><i>(Mẹo: 'Der' cũng đúng nếu bạn tập trung vào vị trí 'bên ngoài').</i>",
@@ -16209,6 +16321,13 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n và g hợp lại trong cổ họng"
   },
   zh: {
+    "bestemthed_feedback_correct": "完全正确！ 🎉",
+    "bestemthed_feedback_swapped": "你把它们搞混了！记住：第一次使用'en/et'，下一次在末尾加上'-en/-et'。",
+    "bestemthed_feedback_err1": "记住：当你第一次提到这个词时，你必须把'en/et'放在前面",
+    "bestemthed_feedback_err2": "当你已经提到过这个词时，你必须在末尾加上'-en/-et'",
+    "bestemthed_feedback_missing": "请在两个句子中都选择一个答案。",
+    "bestemthed_label_first": "第一次（引入）：",
+    "bestemthed_label_next": "下一次（已知）：",
     "Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.": "在一般情况或天气中使用雨伞 (Det)。<br>对于特定点或位置，请使用箭头 (Der)。",
     "Både \"det\" og \"der\" kan ofte bruges, afhængigt af hvad du vil fokusere på!": "“det”和“der”通常都可以使用，具体取决于您想要关注的内容！",
     "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>": "正确！ ☂️ 雨伞：您关注一般情况和天气。<br><i>（提示：如果您关注位置“外面”，“Der”也是正确的）。</i>",

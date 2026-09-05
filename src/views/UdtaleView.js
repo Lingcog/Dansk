@@ -82,15 +82,12 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     });
     viewContainer.appendChild(tabContainer);
 
-    // Explanation Box
+    // Explanation Text (formerly Box)
     const explanationBox = document.createElement('div');
-    explanationBox.className = 'card';
     explanationBox.style.marginBottom = '2rem';
-    explanationBox.style.padding = '1.5rem';
-    explanationBox.style.background = 'rgba(255,255,255,0.05)';
-    explanationBox.style.border = '1px solid rgba(255,255,255,0.1)';
-    explanationBox.style.borderRadius = '12px';
     explanationBox.style.lineHeight = '1.6';
+    explanationBox.style.textAlign = 'center';
+    explanationBox.style.color = 'var(--text-muted)';
     viewContainer.appendChild(explanationBox);
 
     // Header for Category

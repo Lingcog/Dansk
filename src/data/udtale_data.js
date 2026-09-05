@@ -51,7 +51,7 @@ export const udtaleDataSvaer = {
             {
                 id: "haardt_r",
                 title: "Hårdt 'r'",
-                explanation: "<strong>Hårdt r:</strong><br/>En halslyd. Forestil dig, at du gurgler lidt vand nede bag i halsen. Bruges typisk i starten af ord.",
+                explanation: "En halslyd. Forestil dig, at du gurgler lidt vand nede bag i halsen. Bruges ofte i starten af et ord",
                 exercises: [
                     { text: "En rigtig rød rose.", targetWords: ["rigtig", "rød", "rose."], category: "Hårdt 'r'", hint: "Gurgle-lyd i starten af ordet." },
                     { text: "Et bredt træ.", targetWords: ["træ."], category: "Hårdt 'r'", hint: "Gurgle-lyd i starten af ordet." },
@@ -190,7 +190,7 @@ export const udtaleDataLet = {
             {
                 id: "haardt_r",
                 title: "Hårdt 'r'",
-                explanation: "<strong>Hårdt r:</strong><br/>En halslyd. Forestil dig, at du gurgler lidt vand nede bag i halsen. Bruges typisk i starten af ord.",
+                explanation: "En halslyd. Forestil dig, at du gurgler lidt vand nede bag i halsen. Bruges ofte i starten af et ord",
                 exercises: [
                     { text: "Det regner meget", targetWords: ["regner"], category: "Hårdt 'r'", hint: "Gurgle-lyd i starten af ordet." },
                     { text: "Hvor er det rart", targetWords: ["rart"], category: "Hårdt 'r'", hint: "Gurgle-lyden skal komme fra halsen. Ikke rulle med tungen!" },

@@ -230,9 +230,12 @@ export function renderAiConversationArbejdeView(container, navigateFn, extraData
         }
 
         // Direkte oversættelse fra engelsk "I am ..." -> "jeg er ..."
-        const amMatch = lower.match(/\bjeg er (arbejder|har|spiser|kører|taler|sover|læser|møder|tager|cykler|går)\b/);
+        const amMatch = lower.match(/\bjeg er\s+([a-zæøå\s]*?)(arbejder|har|spiser|kører|taler|sover|læser|møder|tager|cykler|går)\b/);
         if (amMatch) {
-            errorsFound.push({ priority: 2, text: `På dansk siger man bare 'jeg ${amMatch[1]}'. Man bruger ikke 'er' foran udsagnsord som på engelsk.` });
+            const wordsBetween = amMatch[1].trim();
+            if (wordsBetween.split(' ').length <= 4 && !wordsBetween.includes('når') && !wordsBetween.includes('fordi')) {
+                errorsFound.push({ priority: 2, text: `På dansk siger man normalt bare 'jeg ${amMatch[2]}'. Man bruger ikke 'er' foran et andet udsagnsord som på engelsk.` });
+            }
         }
         
         // Transport-præpositioner
@@ -247,6 +250,24 @@ export function renderAiConversationArbejdeView(container, navigateFn, extraData
         }
 
         // --- SYNTaks (Ordstilling) ---
+
+        // Manglende grundled og rodet ordstilling: f.eks. "På kontoret arbejder"
+        const prepEndMatch = lower.match(/^(i|på)\s+([a-zæøå]+)\s+(arbejder|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)$/);
+        if (prepEndMatch) {
+            errorsFound.push({ priority: 1, text: `<strong>Manglende grundled:</strong> Du sagde '${prepEndMatch[0]}'. Her mangler du et grundled (f.eks. 'jeg'). Det mest naturlige er at starte med personen: '<b>Jeg ${prepEndMatch[3]} ${prepEndMatch[1]} (en/et) ${prepEndMatch[2]}</b>'.` });
+        }
+
+        // Manglende udsagnsord: f.eks. "Jeg på kontoret"
+        const noVerbMatch = lower.match(/^(jeg|han|hun|vi|de)\s+(i|på|ved|tæt på|sammen med)\b/);
+        if (noVerbMatch) {
+            errorsFound.push({ priority: 2, text: `Du sagde '${noVerbMatch[0]}...'. Der mangler et udsagnsord! Sig f.eks. 'jeg <b>arbejder</b> ${noVerbMatch[2]}...' eller 'jeg <b>er</b> ${noVerbMatch[2]}...'.` });
+        }
+
+        // "Kolleger larmer" uden bestemt form eller ejestedord
+        const kollegerMatch = lower.match(/(?:^|\s)(kolleger|kunder)(?:$|\s)/);
+        if (kollegerMatch && !lower.match(/\b(mine|vores|mange|nogle|nye|gode)\s+(kolleger|kunder)\b/)) {
+            errorsFound.push({ priority: 3, text: `Når du taler om dine ${kollegerMatch[1]}, skal du ofte bruge ejestedord eller bestemt form: Sig f.eks. '<b>mine</b> ${kollegerMatch[1]}' eller '${kollegerMatch[1]}<b>ne</b>'.` });
+        }
 
         // V2-reglen: Hvis sætningen starter med et adverbium/tid/sted, skal der være omvendt ordstilling
         const v2Match = lower.match(/^(nu|her|i dag|i går|ofte|tit|nogle gange|altid|klokken [0-9]+)\s+(jeg|han|hun|vi|de|den|det)\s+(arbejder|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)\b/);

@@ -85,78 +85,102 @@ export function renderBestemthedView(container, navigateFn) {
         const stepDiv = document.createElement('div');
         stepDiv.className = 'step-content animate-in';
         
-        let state1 = null; // null = pending, false = wrong, true = correct
-        let state2 = null;
-
         stepDiv.innerHTML = `
             <div class="visual-cue">
                 <img src="${baseUrl}kat_bord_guide.png" alt="Bestemthed guide" style="max-width: 100%; border-radius: 12px; margin-bottom: 2rem;">
             </div>
             
-            <div class="sentence-block" style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                <p style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #ccc;">Første gang (Præsenteres):</p>
-                <div class="word-display" style="font-size: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
-                    ${item.s1_pre}
-                    <select id="sel1" class="gemini-select" style="font-size: 1.2rem; padding: 0.5rem;">
-                        <option value="">Vælg...</option>
-                        ${item.s1_options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                    </select>
-                    ${item.s1_post}
+            <div class="question-wrapper" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div class="question-row" style="font-size: 1.4rem; line-height: 2; margin-bottom: 1.5rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <span>${item.s1_pre}</span>
+                    <span class="select-wrapper">
+                        <select id="sel1" class="grammatik-select" style="font-size: 1.3rem; padding: 0.3rem 0.6rem; border-radius: 8px;">
+                            <option value="">...</option>
+                            ${item.s1_options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                        </select>
+                    </span>
+                    <span>${item.s1_post}</span>
                     <span id="res1" style="margin-left: 10px;"></span>
                 </div>
-            </div>
 
-            <div class="sentence-block" style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-                <p style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #ccc;">Næste gang (Kendt):</p>
-                <div class="word-display" style="font-size: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
-                    ${item.s2_pre}
-                    <select id="sel2" class="gemini-select" style="font-size: 1.2rem; padding: 0.5rem;">
-                        <option value="">Vælg...</option>
-                        ${item.s2_options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                    </select>
-                    ${item.s2_post}
+                <div class="question-row" style="font-size: 1.4rem; line-height: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <span>${item.s2_pre}</span>
+                    <span class="select-wrapper">
+                        <select id="sel2" class="grammatik-select" style="font-size: 1.3rem; padding: 0.3rem 0.6rem; border-radius: 8px;">
+                            <option value="">...</option>
+                            ${item.s2_options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                        </select>
+                    </span>
+                    <span>${item.s2_post}</span>
                     <span id="res2" style="margin-left: 10px;"></span>
                 </div>
+                
+                <div class="row-feedback" id="feedback" style="display: none; margin-top: 2rem; padding: 1rem; border-radius: 8px; text-align: center; font-size: 1.2rem;"></div>
             </div>
-
-            <button class="gemini-btn" id="check-btn" style="width: 100%;">Tjek svar</button>
-            <div class="feedback-area" id="feedback"></div>
         `;
         exerciseArea.appendChild(stepDiv);
 
-        stepDiv.querySelector('#check-btn').onclick = () => {
-            const val1 = stepDiv.querySelector('#sel1').value;
-            const val2 = stepDiv.querySelector('#sel2').value;
-            const feedback = stepDiv.querySelector('#feedback');
+        const sel1 = stepDiv.querySelector('#sel1');
+        const sel2 = stepDiv.querySelector('#sel2');
+        const feedback = stepDiv.querySelector('#feedback');
+        const res1 = stepDiv.querySelector('#res1');
+        const res2 = stepDiv.querySelector('#res2');
 
-            if (!val1 || !val2) {
-                feedback.textContent = 'Vælg venligst et svar i begge sætninger.';
-                feedback.className = 'feedback-area error';
-                return;
+        const evaluate = () => {
+            const val1 = sel1.value;
+            const val2 = sel2.value;
+
+            if (val1) {
+                const isCorrect1 = val1 === item.s1_correct;
+                res1.innerHTML = isCorrect1 ? '✅' : '❌';
+                sel1.className = 'grammatik-select ' + (isCorrect1 ? 'correct' : 'wrong');
+            } else {
+                res1.innerHTML = '';
+                sel1.className = 'grammatik-select';
             }
 
-            const isCorrect1 = val1 === item.s1_correct;
-            const isCorrect2 = val2 === item.s2_correct;
-
-            stepDiv.querySelector('#res1').innerHTML = isCorrect1 ? '✅' : '❌';
-            stepDiv.querySelector('#res2').innerHTML = isCorrect2 ? '✅' : '❌';
-
-            if (isCorrect1 && isCorrect2) {
-                feedback.textContent = 'Helt rigtigt! 🎉';
-                feedback.className = 'feedback-area success';
-                score++;
-                
-                stepDiv.querySelector('#check-btn').style.display = 'none';
-                
-                setTimeout(() => {
-                    currentIdx++;
-                    renderExercise();
-                }, 1500);
+            if (val2) {
+                const isCorrect2 = val2 === item.s2_correct;
+                res2.innerHTML = isCorrect2 ? '✅' : '❌';
+                sel2.className = 'grammatik-select ' + (isCorrect2 ? 'correct' : 'wrong');
             } else {
-                feedback.textContent = 'Prøv igen! Husk at bruge "en/et" første gang, og "-en/-et" næste gang.';
-                feedback.className = 'feedback-area error';
+                res2.innerHTML = '';
+                sel2.className = 'grammatik-select';
+            }
+
+            if (val1 && val2) {
+                const isCorrect1 = val1 === item.s1_correct;
+                const isCorrect2 = val2 === item.s2_correct;
+
+                feedback.style.display = 'block';
+
+                if (isCorrect1 && isCorrect2) {
+                    feedback.textContent = 'Helt rigtigt! 🎉';
+                    feedback.style.background = 'rgba(76, 175, 80, 0.1)';
+                    feedback.style.border = '1px solid #4CAF50';
+                    feedback.style.color = '#81C784';
+                    
+                    sel1.disabled = true;
+                    sel2.disabled = true;
+                    
+                    score++;
+                    setTimeout(() => {
+                        currentIdx++;
+                        renderExercise();
+                    }, 1500);
+                } else {
+                    feedback.textContent = 'Prøv igen! Husk at bruge "en/et" første gang, og "-en/-et" næste gang.';
+                    feedback.style.background = 'rgba(244, 67, 54, 0.1)';
+                    feedback.style.border = '1px solid #F44336';
+                    feedback.style.color = '#E57373';
+                }
+            } else {
+                feedback.style.display = 'none';
             }
         };
+
+        sel1.addEventListener('change', evaluate);
+        sel2.addEventListener('change', evaluate);
     }
 
     function renderResult() {
@@ -177,27 +201,29 @@ export function renderBestemthedView(container, navigateFn) {
         const styles = document.createElement('style');
         styles.id = 'bestemthed-styles';
         styles.textContent = `
-            .bestemthed-view .gemini-select {
+            .bestemthed-view .grammatik-select {
                 background: rgba(255,255,255,0.1);
                 color: white;
                 border: 2px solid rgba(255,255,255,0.2);
-                border-radius: 8px;
                 outline: none;
                 cursor: pointer;
+                transition: all 0.2s;
             }
-            .bestemthed-view .gemini-select option {
+            .bestemthed-view .grammatik-select:focus {
+                border-color: #5a78ff;
+            }
+            .bestemthed-view .grammatik-select option {
                 background: #1a1a2e;
                 color: white;
             }
-            .feedback-area {
-                height: 30px;
-                font-size: 1.2rem;
-                font-weight: 600;
-                margin-top: 1rem;
-                text-align: center;
+            .bestemthed-view .grammatik-select.correct {
+                border-color: #4CAF50;
+                background: rgba(76, 175, 80, 0.2);
             }
-            .feedback-area.success { color: #4CAF50; }
-            .feedback-area.error { color: #F44336; }
+            .bestemthed-view .grammatik-select.wrong {
+                border-color: #F44336;
+                background: rgba(244, 67, 54, 0.2);
+            }
         `;
         document.head.appendChild(styles);
     }

@@ -329,15 +329,12 @@ export function renderPronomenView(container, navigateFn, extraData) {
         title.textContent = getTranslation('derErDetEr');
 
         const explContainer = document.createElement('div');
-        explContainer.className = 'der-er-explanation';
-
-        // Slide 1: Introduction
         const slide1 = document.createElement('div');
         slide1.className = 'expl-slide';
         slide1.innerHTML = `
             <img src="${baseUrl}der_det_guide.png" class="pronomen-illustration">
-            <div class="expl-bubble pulse">Brug Paraplyen (Det) til vejret og situationen. Brug Pilen/Spotlampen (Der) til at pege på noget fysisk på et bestemt sted.</div>
-            <p class="expl-text">Lær at mærke forskellen på 'det' og 'der'.</p>
+            <div class="expl-bubble pulse">Brug Paraplyen (Det) om den generelle tilstand eller vejret.<br>Brug Pilen (Der) om et specifikt punkt eller en placering.</div>
+            <p class="expl-text">Både "det" og "der" kan ofte bruges, afhængigt af hvad du vil fokusere på!</p>
             <button class="gemini-btn start-practice-btn">Start øvelse!</button>
         `;
 
@@ -354,52 +351,64 @@ export function renderPronomenView(container, navigateFn, extraData) {
         const exerciseData = [
             {
                 text: "Husk din varme jakke, for [blank_0] er koldt udenfor i dag.",
-                answer: "det",
+                answers: ["det", "der"],
                 options: ["der", "det"],
-                hints: { "der": "Tænk på Paraplyen. Kulden handler om vejret og hele dagen generelt. Vi peger ikke på ét bestemt punkt." },
-                feedback: "Rigtigt! Billede: Paraplyen (Sætter scenen). Kulden handler om vejret og hele dagen generelt. Det er koldt overalt i luften, ikke kun på ét bestemt punkt."
+                hints: {},
+                feedback: {
+                    "det": "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand og vejret.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'udenfor').</i>",
+                    "der": "Rigtigt! 🎯 Pil: Du fokuserer på placeringen udenfor.<br><i>(Tip: 'Det' er også meget almindeligt, da det handler om vejret generelt).</i>"
+                }
             },
             {
                 text: "Pas på dine tæer! [blank_0] ligger en tung kuffert på gulvet.",
-                answer: "der",
+                answers: ["der"],
                 options: ["der", "det"],
-                hints: { "det": "Tænk på Spotlampen/Pilen. Vi peger på en helt bestemt, fysisk ting, der ligger et sted." },
-                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Vi peger på en helt bestemt, fysisk ting (en kuffert), som pludselig befinder sig på gulvet i vores omgivelser."
+                hints: { "det": "Tænk på Pilen. Vi peger på en helt bestemt fysisk ting (kufferten) på en specifik placering (gulvet)." },
+                feedback: { "der": "Rigtigt! 🎯 Pil: Vi peger på en specifik ting på en specifik placering. Her kan man KUN sige 'der'." }
             },
             {
                 text: "Tænd venligst lyset. [blank_0] er meget mørkt herinde i stuen.",
-                answer: "det",
+                answers: ["det", "der"],
                 options: ["der", "det"],
-                hints: { "der": "Tænk på Paraplyen. Mørket dækker hele rummets atmosfære, ikke kun ét bestemt sted." },
-                feedback: "Rigtigt! Billede: Paraplyen (Sætter scenen). Mørket dækker hele rummets atmosfære og situation. Hele scenen er bare mørk."
+                hints: {},
+                feedback: {
+                    "det": "Rigtigt! ☂️ Paraply: Du fokuserer på stuens generelle tilstand.<br><i>(Tip: 'Der' er også korrekt, hvis du fokuserer på placeringen 'herinde').</i>",
+                    "der": "Rigtigt! 🎯 Pil: Du fokuserer på den specifikke placering 'herinde i stuen'.<br><i>(Tip: 'Det' er også korrekt, hvis du fokuserer på den generelle tilstand).</i>"
+                }
             },
             {
                 text: "Pas på, når du går ned i kælderen. [blank_0] er mørkt under trappen, så tag din telefon med.",
-                answer: "der",
+                answers: ["der", "det"],
                 options: ["der", "det"],
-                hints: { "det": "Tænk på Spotlampen/Pilen. Selvom kælderen generelt kan være lys, taler vi om et bestemt sted (under trappen)." },
-                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Selvom kælderen generelt kan være lys, peger vi her på et helt bestemt, afgrænset sted (under trappen), hvor mørket gemmer sig."
+                hints: {},
+                feedback: {
+                    "der": "Rigtigt! 🎯 Pil: Du peger på et helt specifikt, afgrænset punkt (under trappen).",
+                    "det": "Rigtigt! ☂️ Paraply: Du fokuserer på den generelle tilstand (at der er mørkt).<br><i>('Der' er ofte mere naturligt her, da vi fokuserer stærkt på det specifikke sted).</i>"
+                }
             },
             {
                 text: "I juli måned er [blank_0] som regel rigtig dejligt og varmt i Danmark.",
-                answer: "det",
+                answers: ["det", "der"],
                 options: ["der", "det"],
-                hints: { "der": "Tænk på Paraplyen. Det handler om det generelle klima og årstiden." },
-                feedback: "Rigtigt! Billede: Paraplyen (Sætter scenen). Varmen beskriver det generelle klima, årstiden og vejret i hele landet på en almen måde."
+                hints: {},
+                feedback: {
+                    "det": "Rigtigt! ☂️ Paraply: Varmen beskriver vejret generelt.<br><i>(Tip: 'Der' er også korrekt, da vi taler om placeringen 'i Danmark').</i>",
+                    "der": "Rigtigt! 🎯 Pil: Du fokuserer på placeringen (Danmark).<br><i>(Tip: 'Det' er også meget almindeligt for at beskrive det generelle vejr).</i>"
+                }
             },
             {
                 text: "Pas på din mund! [blank_0] er meget varm kaffe i koppen.",
-                answer: "der",
+                answers: ["der"],
                 options: ["der", "det"],
-                hints: { "det": "Tænk på Spotlampen/Pilen. Vi zoomer ind på indersiden af koppen (noget fysisk, der befinder sig dér)." },
-                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Vi zoomer ind på indersiden af koppen og konstaterer, at der fysisk befinder sig noget varmt lige dér."
+                hints: { "det": "Tænk på Pilen. Vi zoomer ind på en bestemt placering (i koppen) og den fysiske kaffe." },
+                feedback: { "der": "Rigtigt! 🎯 Pil: Vi zoomer ind på en bestemt placering (i koppen) og peger på kaffen dér. Her kan man KUN bruge 'der'." }
             },
             {
                 text: "Vi må ikke larme nu, for [blank_0] sover et lille barn inde i soveværelset.",
-                answer: "der",
+                answers: ["der"],
                 options: ["der", "det"],
-                hints: { "det": "Tænk på Spotlampen/Pilen. Vi henleder opmærksomheden på en person, der befinder sig på et bestemt sted." },
-                feedback: "Rigtigt! Billede: Spotlampen/Pilen (Peger på en del af scenen). Vi henleder opmærksomheden på, at der fysisk befinder sig en person (et barn) på et bestemt sted på scenen."
+                hints: { "det": "Tænk på Pilen. Vi henleder opmærksomheden på et barn på en specifik placering (inde i soveværelset)." },
+                feedback: { "der": "Rigtigt! 🎯 Pil: Vi peger på en specifik placering, hvor et barn befinder sig. Her kan man KUN sige 'der'." }
             }
         ];
 
@@ -455,11 +464,13 @@ export function renderPronomenView(container, navigateFn, extraData) {
                     textContainer.appendChild(wrapper);
 
                     select.onchange = () => {
-                        if (select.value === ex.answer) {
+                        const isCorrect = ex.answers.includes(select.value);
+                        
+                        if (isCorrect) {
                             select.classList.add('correct');
                             select.classList.remove('wrong');
 
-                            const feedbText = getTranslation(`derEr_ex${currentIdx}_feedback`) || ex.feedback;
+                            const feedbText = ex.feedback[select.value];
                             feedbackArea.innerHTML = `<span style="color: #4ade80;">✓</span> ${feedbText}`;
 
                             feedbackArea.style.display = 'block';
@@ -468,8 +479,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
                             select.classList.add('wrong');
                             select.classList.remove('correct');
 
-                            const safeOpt = select.value.replace(/[^a-zA-ZæøåÆØÅ]/g, '');
-                            const hintText = getTranslation(`derEr_ex${currentIdx}_hint_${safeOpt}`) || ex.hints[select.value] || "Prøv igen!";
+                            const hintText = ex.hints[select.value] || "Prøv igen!";
                             feedbackArea.innerHTML = `<span style="color: #e74c3c;">✗</span> ${hintText}`;
 
                             feedbackArea.style.display = 'block';

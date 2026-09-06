@@ -1,4 +1,5 @@
 import { getTranslation, appState } from '../utils/i18n.js';
+import { baseUrl } from '../utils/config.js';
 
 export function initAdverbChoiceExerciseView(container, navigateFn) {
     // 2 sets of 5 questions
@@ -182,6 +183,9 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
                 </div>
                 
                 <div style="background: rgba(var(--primary-rgb, 90, 120, 255), 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; border-left: 4px solid var(--primary-color, #5a78ff);">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <img src="${baseUrl}holdningsadverbier.png" alt="Holdningsadverbier" style="max-width: 100%; border-radius: 12px;">
+                    </div>
                     <p style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.5;">
                         Holdningsadverbier modificerer verbet og udtrykker talerens holdning til handlingen.
                     </p>

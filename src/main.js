@@ -211,6 +211,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'adverbier') {
     appState.currentView = 'adverbier';
     renderPronomenView(appDiv, navigate, { viewMode: 'adverbier', ...extraData });
+  } else if (viewTarget === 'adverbier_dialog') {
+    appState.currentView = 'adverbier_dialog';
+    renderPronomenView(appDiv, navigate, { viewMode: 'adverbier_dialog', ...extraData });
   } else if (viewTarget === 'konjunktioner') {
     appState.currentView = 'konjunktioner';
     renderPronomenView(appDiv, navigate, { viewMode: 'konjunktioner', ...extraData });

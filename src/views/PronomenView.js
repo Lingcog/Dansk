@@ -3,6 +3,7 @@ import { getTranslation } from '../utils/i18n.js';
 import { pronomenData } from '../utils/pronomenData.js';
 
 import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
+import { initAdverbDialogExerciseView } from './AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './ConjunctionChoiceExerciseView.js';
 
 export function renderPronomenView(container, navigateFn, extraData) {
@@ -214,8 +215,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 } else if (category === 'adverbier_menu') {
                     if (item.type === 'adverbier_holdninger') {
                         navigateFn('adverbier');
+                    } else if (item.type === 'adverbier_dialog') {
+                        navigateFn('adverbier_dialog');
                     } else {
-                        // TODO: Implement views for dialog and tid
+                        // TODO: Implement views for tid
                         alert('Denne opgave er under udvikling. Kommer snart!');
                     }
                 } else {
@@ -604,6 +607,15 @@ export function renderPronomenView(container, navigateFn, extraData) {
         initAdverbChoiceExerciseView(gameArea, navigateFn);
     }
 
+    function startAdverbDialogExercise() {
+        currentLevel = 2;
+        menuArea.style.display = 'none';
+        gameArea.style.display = 'block';
+        gameArea.innerHTML = '';
+        title.textContent = 'Dialog - adverbier';
+        initAdverbDialogExerciseView(gameArea, navigateFn);
+    }
+
     function startConjunctionChoiceExercise() {
         currentLevel = 2;
         menuArea.style.display = 'none';
@@ -926,6 +938,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
         showPronomenSets('refleksiv', 'refleksiv_guide.jpg');
     } else if (viewMode === 'adverbier') {
         startAdverbChoiceExercise();
+    } else if (viewMode === 'adverbier_dialog') {
+        startAdverbDialogExercise();
     } else if (viewMode === 'konjunktioner') {
         startConjunctionChoiceExercise();
     } else if (viewMode === 'der_er_det_er' || subPath === 'der_er_det_er') {

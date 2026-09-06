@@ -980,6 +980,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
         }
     } else if (subPath === 'artikler_menu') {
         showLevel2('artikler_menu');
+    } else if (subPath === 'adverbier_menu') {
+        showLevel2('adverbier_menu');
     } else {
         renderStep();
     }

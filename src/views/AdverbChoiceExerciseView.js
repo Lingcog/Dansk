@@ -181,9 +181,17 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
                     </span>
                 </div>
                 
-                <p style="color: var(--text-secondary); margin-bottom: 2.5rem;">
-                    ${getTranslation('advChoiceDesc')}
-                </p>
+                <div style="background: rgba(var(--primary-rgb, 90, 120, 255), 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; border-left: 4px solid var(--primary-color, #5a78ff);">
+                    <p style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.5;">
+                        Holdningsadverbier modificerer verbet og udtrykker talerens holdning til handlingen.
+                    </p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <span style="color: #4CAF50; font-weight: bold;">Eksempel:</span> "Maden smager <strong>rigtig</strong> godt."
+                    </div>
+                    <p style="margin-bottom: 0;">
+                        Om ordstilling <a href="#/${appState.lang}/ordstilling" style="color: var(--primary-color, #5a78ff); text-decoration: underline; font-weight: bold;">tryk på dette link</a>.
+                    </p>
+                </div>
  
                 <div class="questions-list">
                     ${questions.map((q, i) => {

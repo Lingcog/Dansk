@@ -236,7 +236,7 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
 
         document.getElementById('adv-back-btn').addEventListener('click', () => {
             if (navigateFn) {
-                navigateFn('pronomen');
+                navigateFn('pronomen', { subPath: 'adverbier_menu' });
             } else {
                 window.location.hash = `/${appState.lang}/pronomen`;
             }

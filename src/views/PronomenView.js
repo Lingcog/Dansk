@@ -94,7 +94,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
         <div class="card-icon">💨</div>
         <div class="card-title">${getTranslation('advChoiceTitle')}</div>
     `;
-    adverbChoiceCard.onclick = () => navigateFn('adverbier');
+    adverbChoiceCard.onclick = () => navigateFn('pronomen', { subPath: 'adverbier_menu' });
 
     const conjunctionChoiceCard = document.createElement('div');
     conjunctionChoiceCard.className = 'card';
@@ -182,6 +182,12 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 { title: 'En/et? (Artikler)', type: 'artikler', icon: '🏷️' },
                 { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', icon: '🏷️' }
             ];
+        } else if (category === 'adverbier_menu') {
+            items = [
+                { title: 'Holdninger - adverbier', type: 'adverbier_holdninger', icon: '💨' },
+                { title: 'Dialog - adverbier', type: 'adverbier_dialog', icon: '💬' },
+                { title: 'Tid - adverbier', type: 'adverbier_tid', icon: '⏱️' }
+            ];
         } else {
             items = [
                 { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
@@ -205,6 +211,13 @@ export function renderPronomenView(container, navigateFn, extraData) {
                     navigateFn(routeMap[item.type] || 'pronomen');
                 } else if (category === 'artikler_menu') {
                     navigateFn(item.type);
+                } else if (category === 'adverbier_menu') {
+                    if (item.type === 'adverbier_holdninger') {
+                        navigateFn('adverbier');
+                    } else {
+                        // TODO: Implement views for dialog and tid
+                        alert('Denne opgave er under udvikling. Kommer snart!');
+                    }
                 } else {
                     if (item.type === 'verber_nutid') {
                         navigateFn('verbum_menu');

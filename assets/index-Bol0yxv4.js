@@ -746,9 +746,17 @@
                     </span>
                 </div>
                 
-                <p style="color: var(--text-secondary); margin-bottom: 2.5rem;">
-                    ${e("advChoiceDesc")}
-                </p>
+                <div style="background: rgba(var(--primary-rgb, 90, 120, 255), 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; border-left: 4px solid var(--primary-color, #5a78ff);">
+                    <p style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.5;">
+                        Holdningsadverbier modificerer verbet og udtrykker talerens holdning til handlingen.
+                    </p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <span style="color: #4CAF50; font-weight: bold;">Eksempel:</span> "Maden smager <strong>rigtig</strong> godt."
+                    </div>
+                    <p style="margin-bottom: 0;">
+                        Om ordstilling <a href="#/${O.lang}/ordstilling" style="color: var(--primary-color, #5a78ff); text-decoration: underline; font-weight: bold;">tryk på dette link</a>.
+                    </p>
+                </div>
  
                 <div class="questions-list">
                     ${g.map((s,o)=>{const r=n*5+o,l=Array.isArray(s.sentence)?s.sentence:s.sentence.split("____"),d=i[o]===null?"rgba(255,255,255,0.1)":i[o]?"#4CAF50":"#F44336";let x="";if(i[o]!==null)if(i[o])x="✓ "+(e(`adv_${r}_feedback`)||s.feedback);else{const w=g[o].selectedValue?g[o].selectedValue.replace(/[^a-zA-ZæøåÆØÅ]/g,""):"";x="⚠ "+(e(`adv_${r}_hint_${w}`)||s.hints[g[o].selectedValue]||"Prøv igen.")}return`

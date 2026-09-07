@@ -140,35 +140,35 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
             const styles = document.createElement('style');
             styles.id = 'adv-choice-styles';
             styles.textContent = `
-    .adv - choice - container { max - width: 800px; margin: 2rem auto; padding: 2.5rem; }
-                .adv - choice - header { display: flex; justify - content: space - between; align - items: baseline; margin - bottom: 1.5rem; flex - wrap: wrap; gap: 0.5rem; }
-                .adv - choice - set - counter { font - weight: bold; color: var(--primary - color); }
-                .questions - list { display: flex; flex - direction: column; gap: 1.5rem; }
-                .question - row { display: flex; align - items: center; gap: 0.6rem; font - size: 1.2rem; line - height: 1.4; flex - wrap: wrap; }
-                .adverb - select - input {
-    padding: 0.4rem 0.6rem;
-    border - radius: 8px;
-    font - size: 1.1rem;
-    background: var(--bg - card);
-    color: var(--text - primary);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-                .adv - choice - controls { margin - top: 2rem; display: flex; justify - content: space - between; align - items: center; gap: 1rem; }
+                .adv-choice-container { max-width: 800px; margin: 2rem auto; padding: 2.5rem; }
+                .adv-choice-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; }
+                .adv-choice-set-counter { font-weight: bold; color: var(--primary-color); }
+                .questions-list { display: flex; flex-direction: column; gap: 1.5rem; }
+                .question-row { display: flex; align-items: center; gap: 0.6rem; font-size: 1.2rem; line-height: 1.4; flex-wrap: wrap; }
+                .adverb-select-input {
+                    padding: 0.4rem 0.6rem;
+                    border-radius: 8px;
+                    font-size: 1.1rem;
+                    background: var(--bg-card);
+                    color: var(--text-primary);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+                .adv-choice-controls { margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 
-@media(max - width: 600px) {
-                    .adv - choice - container { margin: 1rem; padding: 1.5rem; }
-                    .question - row { font - size: 1.05rem; gap: 0.4rem; border - bottom: 1px solid rgba(255, 255, 255, 0.05); padding - bottom: 0.8rem; }
-                    .adverb - select - input { font - size: 0.95rem; padding: 0.3rem 0.5rem; }
-                    .adv - choice - controls { flex - direction: column; align - items: stretch; }
-                    .adv - choice - controls button { width: 100 %; }
-}
-`;
+                @media(max-width: 600px) {
+                    .adv-choice-container { margin: 1rem; padding: 1.5rem; }
+                    .question-row { font-size: 1.05rem; gap: 0.4rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.8rem; }
+                    .adverb-select-input { font-size: 0.95rem; padding: 0.3rem 0.5rem; }
+                    .adv-choice-controls { flex-direction: column; align-items: stretch; }
+                    .adv-choice-controls button { width: 100%; }
+                }
+            `;
             document.head.appendChild(styles);
         }
 
         container.innerHTML = `
-    < div class="exercise-container premium-card animate-fade-in adv-choice-container" >
+            <div class="exercise-container premium-card animate-fade-in adv-choice-container">
                 <button id="adv-back-btn" class="back-btn" style="margin-bottom: 1.5rem;">
                     <i class="fas fa-arrow-left"></i> ${getTranslation('back')}
                 </button>
@@ -243,7 +243,7 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
                         </div>
                     `}
                 </div>
-            </div >
+            </div>
     `;
 
         document.getElementById('adv-back-btn').addEventListener('click', () => {

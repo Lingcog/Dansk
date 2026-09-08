@@ -201,11 +201,13 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
                     ${questions.map((q, i) => {
             const absoluteIdx = (currentSetIndex * 5) + i;
             const parts = Array.isArray(q.sentence) ? q.sentence : q.sentence.split('____');
-            const borderColor = scores[i] === null ? 'rgba(255,255,255,0.1)' : (scores[i] ? '#4CAF50' : '#F44336');
+            const isCorrect = scores[i] === true;
+            const isWrong = scores[i] === false;
+            const validationClass = isCorrect ? 'correct' : (isWrong ? 'wrong' : '');
 
             let feedbackText = '';
             if (scores[i] !== null) {
-                if (scores[i]) {
+                if (isCorrect) {
                     feedbackText = '✓ ' + (getTranslation(`adv_${absoluteIdx}_feedback`) || q.feedback);
                 } else {
                     const safeOpt = questions[i].selectedValue ? questions[i].selectedValue.replace(/[^a-zA-ZæøåÆØÅ]/g, '') : '';
@@ -215,18 +217,21 @@ export function initAdverbChoiceExerciseView(container, navigateFn) {
 
             return `
                             <div class="question-wrapper" style="margin-bottom: 2rem;">
-                                <div class="question-row">
+                                <div class="question-row" style="font-size: 1.3rem; line-height: 1.8;">
                                     <span>${parts[0]}</span>
-                                    <select class="adverb-select-input" data-index="${i}" style="border: 2px solid ${borderColor};">
-                                        <option value="">...</option>
-                                        ${q.options.map(opt => `<option value="${opt}" ${questions[i].selectedValue === opt ? 'selected' : ''}>${opt}</option>`).join('')}
-                                    </select>
+                                    <span class="select-wrapper">
+                                        <select class="grammatik-select ${validationClass}" data-index="${i}" ${isCorrect ? 'disabled' : ''}>
+                                            <option value="">...</option>
+                                            ${q.options.map(opt => `<option value="${opt}" ${questions[i].selectedValue === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                                        </select>
+                                    </span>
                                     <span>${parts[1] || ''}</span>
-                                    ${scores[i] !== null ? (scores[i] ? '<i class="fas fa-check" style="color: #4CAF50; margin-left: 0.5rem;"></i>' : '<i class="fas fa-times" style="color: #F44336; margin-left: 0.5rem;"></i>') : ''}
                                 </div>
-                                <div id="feedback-${i}" class="row-feedback" style="display: ${scores[i] !== null ? 'block' : 'none'}; font-style: italic; font-size: 0.95rem; margin-top: 0.5rem; padding: 0.5rem 1rem; border-left: 3px solid ${borderColor}; background: ${scores[i] ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)'}; border-radius: 4px; color: ${borderColor};">
-                                    ${feedbackText}
-                                </div>
+                                ${scores[i] !== null ? `
+                                    <div class="row-feedback" style="background: ${isCorrect ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)'}; border: 1px solid ${isCorrect ? '#4CAF50' : '#F44336'}; color: ${isCorrect ? '#81C784' : '#E57373'}; margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 4px; font-style: italic; font-size: 0.95rem;">
+                                        <span>${feedbackText}</span>
+                                    </div>
+                                ` : ''}
                             </div>
                         `;
         }).join('')}

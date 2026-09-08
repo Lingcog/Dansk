@@ -761,7 +761,7 @@
                     </p>
                 </div>
  
-                <div class="questions-list">
+                <div class="questions-list grammatik-text-container">
                     ${c.map((s,o)=>{const r=n*5+o,l=Array.isArray(s.sentence)?s.sentence:s.sentence.split("____"),d=i[o]===!0,D=i[o]===!1,w=d?"correct":D?"wrong":"";let x="";if(i[o]!==null)if(d)x="✓ "+(e(`adv_${r}_feedback`)||s.feedback);else{const h=c[o].selectedValue?c[o].selectedValue.replace(/[^a-zA-ZæøåÆØÅ]/g,""):"";x="⚠ "+(e(`adv_${r}_hint_${h}`)||s.hints[c[o].selectedValue]||"Prøv igen.")}return`
                             <div class="question-wrapper" style="margin-bottom: 2rem;">
                                 <div class="question-row" style="font-size: 1.3rem; line-height: 1.8;">
@@ -852,7 +852,7 @@
                     </p>
                 </div>
  
-                <div class="questions-list">
+                <div class="questions-list grammatik-text-container">
                     ${c.map((s,o)=>{const r=n*5+o,l=Array.isArray(s.sentence)?s.sentence:s.sentence.split("____"),d=i[o]===!0,D=i[o]===!1,w=d?"correct":D?"wrong":"";let x="";if(i[o]!==null)if(d){const h=`dialogadv_${r}_feedback_${c[o].selectedValue}`;x="✓ "+(e(h)===h?s.feedback[c[o].selectedValue]:e(h))}else{const h=c[o].selectedValue?c[o].selectedValue.replace(/[^a-zA-ZæøåÆØÅ]/g,""):"",u=`dialogadv_${r}_hint_${h}`;x="⚠ "+(e(u)===u?s.hints[c[o].selectedValue]||"Prøv igen.":e(u))}return`
                             <div class="question-wrapper" style="margin-bottom: 2rem;">
                                 <div class="question-row" style="font-size: 1.3rem; line-height: 1.8;">

@@ -180,7 +180,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
             ];
         } else if (category === 'artikler_menu') {
             items = [
-                { title: 'En/et? (Artikler)', type: 'artikler', icon: '🏷️' },
+                { title: 'En/et? (artikler)', type: 'artikler', icon: '🏷️' },
                 { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', icon: '🏷️' }
             ];
         } else if (category === 'adverbier_menu') {

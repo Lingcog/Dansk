@@ -127,7 +127,7 @@ export const conjunctionData = {
     ],
     traening2: {
         'da_naar': {
-            title: "Da / Når?",
+            title: "Da / når?",
             illustration: "da_naar_guide_future.jpg",
             explanation: "<strong>Da / Når?</strong><br><em>'Da' peger på et enkeltstående punkt i fortiden (tegnestiften). 'Når' bruges om gentagne vaner (cirklen) eller begivenheder i fremtiden (pilen).</em>",
             questions: [
@@ -231,7 +231,7 @@ export const conjunctionData = {
             ]
         },
         'selvom_alligevel': {
-            title: "Selvom / Alligevel",
+            title: "Selvom / alligevel",
             illustration: "tekstflow_dynamik.png",
             explanation: "<strong>Selvom / Alligevel</strong><br><em>'Selvom' er muren / forhindringen. 'Alligevel' er bolden, der kommer igennem muren (handlingen gennemføres trods forhindringen).</em>",
             questions: [

@@ -1,6 +1,6 @@
 export const ordstillingData = {
     hovedsaetninger: {
-        title: "Adverbier i Hovedsætninger",
+        title: "Adverbier i hovedsætninger",
         illustration: "v2_master_diagram.png", // Genbruger en illustration midlertidigt
         explanation: "<strong>Reglen for hovedsætninger:</strong> I en hovedsætning står centraladverbiet (fx 'ikke', 'altid', 'aldrig') <strong>efter</strong> verbet.<br><em>Husk: Subjekt (S) + Verbum (V) + Adverbium (a)</em>",
         sentences: [
@@ -42,7 +42,7 @@ export const ordstillingData = {
         ]
     },
     ledsaetninger: {
-        title: "Adverbier i Ledsætninger",
+        title: "Adverbier i ledsætninger",
         illustration: "v2_master_diagram.png",
         explanation: "<strong>Reglen for ledsætninger:</strong> I en ledsætning står centraladverbiet (fx 'ikke', 'altid', 'aldrig') <strong>før</strong> verbet.<br><em>Husk: Konjunktion + Subjekt (S) + Adverbium (a) + Verbum (V)</em>",
         sentences: [
@@ -126,7 +126,7 @@ export const ordstillingData = {
         ]
     },
     master: {
-        title: "Master: Inversion + Adverbium",
+        title: "Master: Inversion + adverbium",
         illustration: "v2_master_diagram.png",
         explanation: "<strong>Master-udfordringen:</strong> Kombiner alt det du har lært. Ledsætningen har adverbiet <em>før</em> verbet. Hovedsætningen bagefter har inversion (V + S) og adverbiet står <em>efter</em> subjektet.",
         sentences: [

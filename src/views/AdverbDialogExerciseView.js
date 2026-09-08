@@ -196,7 +196,7 @@ export function initAdverbDialogExerciseView(container, navigateFn) {
                     </p>
                 </div>
  
-                <div class="questions-list">
+                <div class="questions-list grammatik-text-container">
                     ${questions.map((q, i) => {
                         const absoluteIdx = (currentSetIndex * 5) + i;
                         const parts = Array.isArray(q.sentence) ? q.sentence : q.sentence.split('____');

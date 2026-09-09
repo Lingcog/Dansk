@@ -443,7 +443,7 @@ export function renderLegMedVokalerView(container, navigateFn) {
                     nextBtn.style.display = 'block';
                 } else {
                     feedbackText.style.color = '#ff9800';
-                    feedbackText.textContent = \`Jeg hørte "${transcript}". Prøv igen!\`;
+                    feedbackText.textContent = `Jeg hørte "${transcript}". Prøv igen!`;
                 }
             };
             recognition.onerror = (event) => {
@@ -451,7 +451,7 @@ export function renderLegMedVokalerView(container, navigateFn) {
                 if (event.error === 'no-speech') {
                     feedbackText.textContent = 'Jeg hørte ikke noget. Prøv at tale tættere på mikrofonen.';
                 } else {
-                    feedbackText.textContent = \`Mikrofon fejl: ${event.error}\`;
+                    feedbackText.textContent = `Mikrofon fejl: ${event.error}`;
                 }
                 micBtn.classList.remove('listening');
                 isListening = false;
@@ -503,7 +503,7 @@ export function renderLegMedVokalerView(container, navigateFn) {
         scoreText.style.fontSize = '1.2rem';
         scoreText.style.color = '#b0c4ba';
         scoreText.style.marginBottom = '2rem';
-        scoreText.textContent = \`Du fik ${score} ud af ${total} rigtige i første forsøg.\`;
+        scoreText.textContent = `Du fik ${score} ud af ${total} rigtige i første forsøg.`;
         compContainer.appendChild(scoreText);
 
         const againBtn = document.createElement('button');

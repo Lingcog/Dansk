@@ -39,6 +39,18 @@ export function renderUdtaleMenuView(container, navigateFn) {
             action: () => navigateFn('traen_bogstaver', { level: 'svaer' })
         },
         {
+            icon: '📖',
+            title: 'Læsetræning',
+            desc: 'Lær at læse og udtale ved at samle lyde.',
+            action: () => navigateFn('laesetraening')
+        },
+        {
+            icon: '🅰️',
+            title: 'Leg med vokaler',
+            desc: 'Træn fonetisk præcision med sjove rimesætninger.',
+            action: () => navigateFn('leg_med_vokaler')
+        },
+        {
             icon: '🎤',
             title: getTranslation('udtaleDictaphoneTitle') || 'Diktafon - leg med udtale',
             desc: getTranslation('udtaleDictaphoneDesc') || 'Den frie diktafon: Skriv en sætning og test din udtale, eller tal frit fra leveren.',

@@ -18,41 +18,241 @@ export const packagesData = {
       mod1: {
         id: 'mod1', title: 'At lykkes & Målrettet flid', desc: 'Blind høne, skyde papegøjen, ramme plet og at kaste frugt af sig.', image: 'succes_flid.png', overemne: 'At lykkes',
         items: [
-          { id: '1', name: 'Blind høne finder også korn', coords: { left: 9, top: 48, width: 17, height: 10 }, options: ['Blind høne finder også korn', 'At skyde papegøjen', 'At ramme plet'] },
-          { id: '2', name: 'At skyde papegøjen', coords: { left: 30, top: 78, width: 17, height: 10 }, options: ['At skyde papegøjen', 'Det kører på skinner', 'At kaste frugt af sig'] },
-          { id: '3', name: 'At ramme plet', coords: { left: 56, top: 52, width: 17, height: 10 }, options: ['At ramme plet', 'Det kører på skinner', 'Blind høne finder også korn'] },
-          { id: '4', name: 'Det kører på skinner', coords: { left: 79, top: 48, width: 17, height: 10 }, options: ['Det kører på skinner', 'At kaste frugt af sig', 'At skyde papegøjen'] },
-          { id: '5', name: 'At kaste frugt af sig', coords: { left: 76, top: 78, width: 17, height: 10 }, options: ['At kaste frugt af sig', 'At ramme plet', 'At stikke piben ind'] }
+          { 
+            id: '1', 
+            name: 'At man kan være heldig at lykkes med noget, selvom man egentlig ikke er særligt dygtig eller har forberedt sig.', 
+            coords: { left: 9, top: 63, width: 17, height: 10 }, 
+            options: [
+              'At man kan være heldig at lykkes med noget, selvom man egentlig ikke er særligt dygtig eller har forberedt sig.', 
+              'At en person, der arbejder i det stille, altid ender med at finde den største belønning.', 
+              'At man er så stædig, at man stjæler andres hårdt tjente resultater.', 
+              'At et dårligt syn ofte gør, at man lægger mærke til de helt små detaljer på jorden.'
+            ] 
+          },
+          { 
+            id: '2', 
+            name: 'At man er usædvanligt heldig og vinder den helt store gevinst (oftest et godt ægteskab eller drømmejobbet).', 
+            coords: { left: 30, top: 86.5, width: 17, height: 10 }, 
+            options: [
+              'At man er usædvanligt heldig og vinder den helt store gevinst (oftest et godt ægteskab eller drømmejobbet).', 
+              'At man er så utroligt præcis i sit arbejde, at man kan ramme et meget lille mål.', 
+              'At man ødelægger noget smukt og sjældent, bare fordi man vil vise sig frem for andre.', 
+              'At man tager på en lang jagt for at finde den eneste løsning på et svært problem.'
+            ] 
+          },
+          { 
+            id: '3', 
+            name: 'At man siger eller gør noget, der er fuldstændig rigtigt og præcist i den givne situation.', 
+            coords: { left: 56, top: 60.5, width: 17, height: 10 }, 
+            options: [
+              'At man siger eller gør noget, der er fuldstændig rigtigt og præcist i den givne situation.', 
+              'At man vinder en stor sum penge i et meget svært og kompliceret spil.', 
+              'At man ved et uheld rammer et ømt punkt hos en anden og gør dem meget kede af det.', 
+              'At man skyder til måls og formår at træffe midten af skiven.'
+            ] 
+          },
+          { 
+            id: '4', 
+            name: 'At en proces eller opgave forløber helt planmæssigt, nemt og uden nogen form for problemer.', 
+            coords: { left: 79, top: 56.5, width: 17, height: 10 }, 
+            options: [
+              'At en proces eller opgave forløber helt planmæssigt, nemt og uden nogen form for problemer.', 
+              'At man har så meget energi, at man kan arbejde hurtigere end alle andre i teamet.', 
+              'At man sidder urokkeligt fast i en gammel rutine og nægter at prøve nye metoder.', 
+              'At man vælger at tage toget i stedet for bilen for at undgå trafikken på vejene.'
+            ] 
+          },
+          { 
+            id: '5', 
+            name: 'At ens hårde arbejde endelig giver et godt og synligt resultat, som man kan nyde godt af.', 
+            coords: { left: 76, top: 86.5, width: 17, height: 10 }, 
+            options: [
+              'At ens hårde arbejde endelig giver et godt og synligt resultat, som man kan nyde godt af.', 
+              'At man er et meget generøst menneske, der elsker at dele ud af sine gaver til andre.', 
+              'At man spilder sine gode idéer på folk, som overhovedet ikke forstår dem.', 
+              'At man planter et træ i sin have og venter flere år på at kunne høste fra det.'
+            ] 
+          }
         ]
       },
       mod2: {
         id: 'mod2', title: 'Mental & Handlingsretræte', desc: 'At stikke piben ind, trække i land, slå bak og kaste håndklædet i ringen.', image: 'retraete.png', overemne: 'Retræte',
         items: [
-          { id: '1', name: 'At trække følerne til sig', coords: { left: 4, top: 57, width: 17, height: 10 }, options: ['At trække følerne til sig', 'At stikke piben ind', 'At slå bak'] },
-          { id: '2', name: 'At stikke piben ind', coords: { left: 27, top: 70, width: 17, height: 10 }, options: ['At stikke piben ind', 'At trække i land', 'At kaste håndklædet i ringen'] },
-          { id: '3', name: 'At trække i land', coords: { left: 72, top: 32, width: 17, height: 10 }, options: ['At trække i land', 'At slå bak', 'At trække følerne til sig'] },
-          { id: '4', name: 'At slå bak', coords: { left: 56, top: 55, width: 17, height: 10 }, options: ['At slå bak', 'At kaste håndklædet i ringen', 'At stikke piben ind'] },
-          { id: '5', name: 'At kaste håndklædet i ringen', coords: { left: 72, top: 78, width: 17, height: 10 }, options: ['At kaste håndklædet i ringen', 'At trække i land', 'At slå bak'] }
+          { 
+            id: '1', 
+            name: 'At man bliver forsigtig og trækker sig tilbage for at vurdere en situation, før man gør mere.', 
+            coords: { left: 4, top: 63, width: 17, height: 10 }, 
+            options: [
+              'At man bliver forsigtig og trækker sig tilbage for at vurdere en situation, før man gør mere.', 
+              'At man lytter ekstremt godt efter, hvad andre fortæller en, så man kan hjælpe dem bedst muligt.', 
+              'At man lukker sig fuldstændig inde i sig selv og nægter at tale med sine venner.', 
+              'At man tager tykt tøj på for at beskytte sig mod kulden udenfor.'
+            ] 
+          },
+          { 
+            id: '2', 
+            name: 'At man dæmper sig, bliver mindre påståelig og bøjer sig, fordi man indser, at man tager fejl.', 
+            coords: { left: 27, top: 76, width: 17, height: 10 }, 
+            options: [
+              'At man dæmper sig, bliver mindre påståelig og bøjer sig, fordi man indser, at man tager fejl.', 
+              'At man kommer med en fantastisk idé, som løser problemet for hele gruppen.', 
+              'At man stjæler opmærksomheden fra en anden, netop som de skal til at tale.', 
+              'At man pakker sine ting sammen og forbereder sig på at tage hjem fra arbejde.'
+            ] 
+          },
+          { 
+            id: '3', 
+            name: 'At man ændrer mening eller trækker en tidligere påstand tilbage for at undgå en konflikt.', 
+            coords: { left: 72, top: 38, width: 17, height: 10 }, 
+            options: [
+              'At man ændrer mening eller trækker en tidligere påstand tilbage for at undgå en konflikt.', 
+              'At man redder et andet menneske ud af en meget farlig situation.', 
+              'At man nægter at betale sin gæld tilbage til en ven, der ellers har hjulpet en.', 
+              'At man fortøjrer sin båd solidt til molen efter en lang dag på havet.'
+            ] 
+          },
+          { 
+            id: '4', 
+            name: 'At man bremser op, fortryder sin handling og trækker sig tilbage fra det, man var i gang med.', 
+            coords: { left: 56, top: 61, width: 17, height: 10 }, 
+            options: [
+              'At man bremser op, fortryder sin handling og trækker sig tilbage fra det, man var i gang med.', 
+              'At man slår et stort og flot brød op, som man deler med hele familien.', 
+              'At man slår en anden person i ryggen for at få sin vilje trumfet igennem.', 
+              'At man skifter gear i bilen for at kunne køre baglæns ud af en parkeringsplads.'
+            ] 
+          },
+          { 
+            id: '5', 
+            name: 'At man giver helt op og erkender sit nederlag, fordi situationen er blevet for svær at klare.', 
+            coords: { left: 72, top: 84, width: 17, height: 10 }, 
+            options: [
+              'At man giver helt op og erkender sit nederlag, fordi situationen er blevet for svær at klare.', 
+              'At man smider sine bekymringer væk og endelig begynder at nyde livet i fulde drag.', 
+              'At man kaster sit skrald i naturen i stedet for at rydde ordentligt op efter sig selv.', 
+              'At man er færdig med at tage bad og lægger håndklædet til vask.'
+            ] 
+          }
         ]
       },
       mod3: {
         id: 'mod3', title: 'Fejltrin & Kollaps', desc: 'At træde i spinaten, gå i baglås, stå med håret i postkassen og gå ned med flaget.', image: 'fejltrin_kollaps.png', overemne: 'Fejltrin & Kollaps',
         items: [
-          { id: '1', name: 'At træde i spinaten', coords: { left: 23, top: 27, width: 17, height: 10 }, options: ['At træde i spinaten', 'At gå i baglås', 'At stå med håret i postkassen'] },
-          { id: '2', name: 'At gå i baglås', coords: { left: 8, top: 52, width: 17, height: 10 }, options: ['At gå i baglås', 'At slå et større brød op, end man kan bage', 'At gå ned med flaget'] },
-          { id: '3', name: 'At slå et større brød op, end man kan bage', coords: { left: 25, top: 76, width: 17, height: 10 }, options: ['At slå et større brød op, end man kan bage', 'At træde i spinaten', 'At stå med håret i postkassen'] },
-          { id: '4', name: 'At stå med håret i postkassen', coords: { left: 69, top: 27, width: 17, height: 10 }, options: ['At stå med håret i postkassen', 'At gå ned med flaget', 'At gå i baglås'] },
-          { id: '5', name: 'At gå ned med flaget', coords: { left: 77, top: 78, width: 17, height: 10 }, options: ['At gå ned med flaget', 'At slå et større brød op, end man kan bage', 'At træde i spinaten'] }
+          { 
+            id: '1', 
+            name: 'At man kommer til at sige eller gøre noget dumt, der gør andre flove eller skaber en pinlig situation.', 
+            coords: { left: 23, top: 29.5, width: 17, height: 10 }, 
+            options: [
+              'At man kommer til at sige eller gøre noget dumt, der gør andre flove eller skaber en pinlig situation.', 
+              'At man tager ud i naturen for at samle sunde urter og grøntsager til aftensmaden.', 
+              'At man ødelægger andres hårde arbejde med vilje, fordi man er misundelig.', 
+              'At man tager sine gamle sko på, fordi det regner og er mudret udenfor.'
+            ] 
+          },
+          { 
+            id: '2', 
+            name: 'At man fuldstændig mister evnen til at tænke klart eller handle, ofte fordi man er stresset eller presset.', 
+            coords: { left: 8, top: 54.5, width: 17, height: 10 }, 
+            options: [
+              'At man fuldstændig mister evnen til at tænke klart eller handle, ofte fordi man er stresset eller presset.', 
+              'At man sikrer sit hus så godt, at ingen tyve nogensinde kan bryde ind.', 
+              'At man låser en anden person inde på et værelse for at straffe dem.', 
+              'At man glemmer sin nøgle og må vente på at en låsesmed kommer og hjælper.'
+            ] 
+          },
+          { 
+            id: '3', 
+            name: 'At man påtager sig en opgave eller et ansvar, som er alt for stort og svært til, at man kan klare det.', 
+            coords: { left: 25, top: 83.5, width: 17, height: 10 }, 
+            options: [
+              'At man påtager sig en opgave eller et ansvar, som er alt for stort og svært til, at man kan klare det.', 
+              'At man bager så meget brød, at man kan invitere hele nabolaget til en stor fest.', 
+              'At man spiser så meget mad, at man bliver frygteligt syg og kaster op.', 
+              'At man lærer at ælte dejen rigtigt for at få luftige og lækre boller.'
+            ] 
+          },
+          { 
+            id: '4', 
+            name: 'At man er havnet i en rigtig ærgerlig og uforskyldt knibe, hvor man står tilbage som taberen.', 
+            coords: { left: 69, top: 34.5, width: 17, height: 10 }, 
+            options: [
+              'At man er havnet i en rigtig ærgerlig og uforskyldt knibe, hvor man står tilbage som taberen.', 
+              'At man modtager et fantastisk kærestebrev, som får en til at rødme af glæde.', 
+              'At man stjæler andres post for at finde hemmeligheder om dem.', 
+              'At man går ud for at hente avisen, mens det blæser kraftigt udenfor.'
+            ] 
+          },
+          { 
+            id: '5', 
+            name: 'At man bryder helt sammen af stress eller sygdom og simpelthen ikke har energi til mere.', 
+            coords: { left: 77, top: 85.5, width: 17, height: 10 }, 
+            options: [
+              'At man bryder helt sammen af stress eller sygdom og simpelthen ikke har energi til mere.', 
+              'At man sænker flaget ved solnedgang som en smuk og ærefuld tradition.', 
+              'At man nægter at fejre andres fødselsdag og i stedet bliver sur over deres gaver.', 
+              'At man pakker flagstangen væk for vinteren for at beskytte den mod storm.'
+            ] 
+          }
         ]
       },
       mod4: {
         id: 'mod4', title: 'Starte på en frisk', desc: 'At begynde på en frisk, rejse sig ved det træ man er faldet ved, og op på hesten igen.', image: 'starte_igen.png', overemne: 'Starte igen',
         items: [
-          { id: '1', name: 'At begynde på en frisk', coords: { left: 7, top: 58, width: 17, height: 10 }, options: ['At begynde på en frisk', 'At rejse sig ved det træ, man er faldet ved', 'På med vanten igen'] },
-          { id: '2', name: 'At rejse sig ved det træ, man er faldet ved', coords: { left: 28, top: 56, width: 17, height: 10 }, options: ['At rejse sig ved det træ, man er faldet ved', 'At tage skeen i den anden hånd', 'At komme op på hesten igen'] },
-          { id: '3', name: 'At tage skeen i den anden hånd', coords: { left: 24, top: 79, width: 17, height: 10 }, options: ['At tage skeen i den anden hånd', 'At begynde på en frisk', 'På med vanten igen'] },
-          { id: '4', name: 'På med vanten igen', coords: { left: 57, top: 57, width: 17, height: 10 }, options: ['På med vanten igen', 'At komme op på hesten igen', 'At rejse sig ved det træ, man er faldet ved'] },
-          { id: '5', name: 'At komme op på hesten igen', coords: { left: 74, top: 76, width: 17, height: 10 }, options: ['At komme op på hesten igen', 'At tage skeen i den anden hånd', 'At begynde på en frisk'] }
+          { 
+            id: '1', 
+            name: 'At man lægger fortidens problemer bag sig og starter forfra med fornyet energi.', 
+            coords: { left: 7, top: 60.5, width: 17, height: 10 }, 
+            options: [
+              'At man lægger fortidens problemer bag sig og starter forfra med fornyet energi.', 
+              'At man bager et helt friskt og lækkert brød til at byde sine gæster velkommen.', 
+              'At man glemmer alle sine gamle venner for kun at bruge tid sammen med nye.', 
+              'At man tager ud i skoven tidligt om morgenen for at trække vejret i den kølige vind.'
+            ] 
+          },
+          { 
+            id: '2', 
+            name: 'At man overvinder sit nederlag ved at prøve igen samme sted eller med samme opgave, hvor det gik galt.', 
+            coords: { left: 28, top: 63, width: 17, height: 10 }, 
+            options: [
+              'At man overvinder sit nederlag ved at prøve igen samme sted eller med samme opgave, hvor det gik galt.', 
+              'At man planter et nyt og stærkt træ for hvert lille problem man løser i hverdagen.', 
+              'At man nægter at gå væk fra et sted, hvor man er faldet, selvom man fryser.', 
+              'At man tager ud for at fælde brænde i skoven, efter det har stormet kraftigt.'
+            ] 
+          },
+          { 
+            id: '3', 
+            name: 'At man pludselig ændrer sin måde at gøre tingene på og tager fat med fornyet beslutsomhed.', 
+            coords: { left: 24, top: 81.5, width: 17, height: 10 }, 
+            options: [
+              'At man pludselig ændrer sin måde at gøre tingene på og tager fat med fornyet beslutsomhed.', 
+              'At man hjælper en anden med at spise, fordi de ikke selv har kræfter til det.', 
+              'At man kaster sit bestik fra sig i vrede, fordi man ikke kan lide den mad der serveres.', 
+              'At man øver sig i at spise med venstre hånd, selvom man normalt er højrehåndet.'
+            ] 
+          },
+          { 
+            id: '4', 
+            name: 'At man genoptager sit hårde arbejde uden at klage, efter man har holdt pause eller mødt modgang.', 
+            coords: { left: 57, top: 62, width: 17, height: 10 }, 
+            options: [
+              'At man genoptager sit hårde arbejde uden at klage, efter man har holdt pause eller mødt modgang.', 
+              'At man strikker varme handsker til sine venner, når det begynder at blive vinter.', 
+              'At man gemmer sine hænder, fordi man ikke gider at hjælpe til med det hårde arbejde.', 
+              'At man tager en tyk jakke og hue på, fordi man skal ud og skovle sne.'
+            ] 
+          },
+          { 
+            id: '5', 
+            name: 'At man hurtigt prøver igen efter et nederlag, så man ikke når at blive bange for at fejle.', 
+            coords: { left: 74, top: 81, width: 17, height: 10 }, 
+            options: [
+              'At man hurtigt prøver igen efter et nederlag, så man ikke når at blive bange for at fejle.', 
+              'At man vinder et flot trofæ i en stor ridekonkurrence efter lang tids træning.', 
+              'At man presser et stakkels dyr alt for hårdt, selvom det er meget træt.', 
+              'At man tager ud på en rolig ridetur i skoven for at nyde det gode vejr.'
+            ] 
+          }
         ]
       }
     },

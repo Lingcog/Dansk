@@ -1,5 +1,13 @@
-import { translations } from './translations.js';
-export { translations };
+import { translations as baseTranslations } from './translations.js';
+import { talemaaderTranslations } from './talemaader_translations.js';
+
+export const translations = {};
+Object.keys(baseTranslations).forEach(lang => {
+    translations[lang] = {
+        ...baseTranslations[lang],
+        ...(talemaaderTranslations[lang] || {})
+    };
+});
 
 export const appState = {
     lang: null,

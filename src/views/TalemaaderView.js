@@ -538,12 +538,12 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
       const cardTitle = document.createElement('div');
       cardTitle.className = 'module-title';
-      cardTitle.textContent = pkg.title;
+      cardTitle.textContent = getTranslation(pkg.title);
       card.appendChild(cardTitle);
 
-      const cardDesc = document.createElement('div');
+      const cardDesc = document.createElement('p');
       cardDesc.className = 'module-desc';
-      cardDesc.textContent = pkg.desc;
+      cardDesc.textContent = getTranslation(pkg.desc);
       card.appendChild(cardDesc);
 
       const actionBtn = document.createElement('button');
@@ -561,7 +561,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
   // --- SUBVIEW 1: DASHBOARD ---
   function renderDashboard(parent) {
     const title = document.createElement('h1');
-    title.textContent = currentPkgData.title;
+    title.textContent = getTranslation(currentPkgData.title);
     parent.appendChild(title);
 
     const subtitle = document.createElement('p');
@@ -596,14 +596,14 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         card.appendChild(badge);
       }
 
-      const modTitle = document.createElement('div');
+      const modTitle = document.createElement('h3');
       modTitle.className = 'module-title';
       modTitle.textContent = `Kapitel ${idx + 1}`;
       card.appendChild(modTitle);
 
-      const modDesc = document.createElement('div');
+      const modDesc = document.createElement('p');
       modDesc.className = 'module-desc';
-      modDesc.textContent = mod.desc;
+      modDesc.textContent = getTranslation(mod.desc);
       card.appendChild(modDesc);
 
       const actionBtn = document.createElement('button');
@@ -707,20 +707,14 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
         gIcon.textContent = game.icon || '🕹️';
         gameCard.appendChild(gIcon);
 
-        const gTitle = document.createElement('h3');
-        gTitle.style.fontSize = '1.25rem';
-        gTitle.style.fontWeight = '700';
-        gTitle.style.marginBottom = '0.5rem';
-        gTitle.style.color = 'white';
-        gTitle.textContent = game.title;
+        const gTitle = document.createElement('h4');
+        gTitle.style.cssText = 'margin-bottom: 0.5rem; color: #fff; font-size: 1.1rem;';
+        gTitle.textContent = getTranslation(game.title);
         gameCard.appendChild(gTitle);
 
         const gDesc = document.createElement('p');
-        gDesc.style.fontSize = '0.9rem';
-        gDesc.style.color = '#ccc';
-        gDesc.style.lineHeight = '1.4';
-        gDesc.style.marginBottom = '1.5rem';
-        gDesc.textContent = game.desc || 'Kan du matche de fine illustrationer med de rigtige danske talemåder?';
+        gDesc.style.cssText = 'font-size: 0.9rem; color: #ccc; flex: 1;';
+        gDesc.textContent = getTranslation(game.desc) || getTranslation('Kan du matche de fine illustrationer med de rigtige danske talemåder?');
         gameCard.appendChild(gDesc);
 
         const gLink = document.createElement('a');
@@ -769,17 +763,16 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
     // Create interactive hotspots for each idiom
     mod.items.forEach(item => {
-      const isAnswered = userAnswers[item.id] !== undefined;
-
       const hotspot = document.createElement('div');
-      hotspot.className = 'hotspot-mask' + (isAnswered ? ' answered' : '');
+      hotspot.className = 'hotspot-mask';
       hotspot.style.left = `${item.coords.left}%`;
       hotspot.style.top = `${item.coords.top}%`;
       hotspot.style.width = `${item.coords.width}%`;
       hotspot.style.height = `${item.coords.height}%`;
 
-      if (isAnswered) {
-        hotspot.textContent = userAnswers[item.id];
+      if (userAnswers[item.id]) {
+        hotspot.classList.add('answered');
+        hotspot.textContent = getTranslation(userAnswers[item.id]);
       } else {
         hotspot.textContent = '?';
         hotspot.onclick = () => openDrawer(item, hotspot);
@@ -795,7 +788,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
     const overemneBtn = document.createElement('button');
     overemneBtn.className = 'overemne-btn' + (isOveremneAnswered ? ' answered' : '');
-    overemneBtn.textContent = isOveremneAnswered ? `Overemne: ${userAnswers.overemne}` : 'Tryk for at gætte Overemnet';
+    overemneBtn.textContent = isOveremneAnswered ? `Overemne: ${getTranslation(userAnswers.overemne)}` : getTranslation('Tryk for at gætte Overemnet');
     if (!isOveremneAnswered) {
       overemneBtn.onclick = () => {
         const item = {
@@ -838,7 +831,14 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
     // Handle drawer opening
     function openDrawer(item, targetEl, isOveremne = false) {
-      drawerTitle.textContent = isOveremne ? 'Gæt Overemnet:' : 'Hvilken talemåde passer her?';
+      if (isOveremne) {
+        drawerTitle.textContent = getTranslation('Gæt Overemnet:');
+      } else {
+        const isMeaningExercise = currentPkgData.id === 'pkg2' || currentPkgData.id === 'pkg1';
+        drawerTitle.textContent = isMeaningExercise 
+          ? getTranslation('Hvad betyder denne talemåde?') 
+          : getTranslation('Hvilken talemåde passer her?');
+      }
       optionsList.innerHTML = '';
 
       // Shuffle options slightly to make it interesting
@@ -847,7 +847,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       shuffledOptions.forEach(opt => {
         const btn = document.createElement('div');
         btn.className = 'option-item';
-        btn.textContent = opt;
+        btn.textContent = getTranslation(opt);
         btn.onclick = () => {
           if (opt === item.name) {
             // Correct Answer!
@@ -856,13 +856,13 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
             
             if (isOveremne) {
               userAnswers.overemne = opt;
-              targetEl.textContent = `Overemne: ${opt}`;
-              targetEl.className = 'overemne-btn answered';
+              targetEl.textContent = `Overemne: ${getTranslation(opt)}`;
+              targetEl.classList.add('answered');
               targetEl.onclick = null;
             } else {
               userAnswers[item.id] = opt;
-              targetEl.textContent = opt;
-              targetEl.className = 'hotspot-mask answered';
+              targetEl.textContent = getTranslation(opt);
+              targetEl.classList.add('answered');
               targetEl.onclick = null;
             }
             
@@ -962,7 +962,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
     const overemneBtn = document.createElement('button');
     overemneBtn.className = 'overemne-btn' + (isOveremneCorrect ? ' answered' : '');
-    overemneBtn.textContent = isOveremneCorrect ? `Overemne: ${currentPkgData.finale.expectedOveremne}` : 'Gæt Overemnet for kredsløbet';
+    overemneBtn.textContent = isOveremneCorrect ? `Overemne: ${getTranslation(currentPkgData.finale.expectedOveremne)}` : getTranslation('Gæt Overemnet for kredsløbet');
     if (!isOveremneCorrect) {
       overemneBtn.onclick = () => {
         openFinalOveremne(overemneBtn);
@@ -1003,12 +1003,12 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       
       // If Emne is not answered yet, let them answer Emne. Once answered, let them do Idiom.
       if (!isEmneCorrect) {
-        drawerTitle.textContent = `Hvilket emne passer til "${node.title}"?`;
+        drawerTitle.textContent = getTranslation('Hvilket emne passer til') + ' "' + getTranslation(node.title) + '"?';
         optionsList.innerHTML = '';
         node.emneOptions.forEach(opt => {
           const btn = document.createElement('div');
           btn.className = 'option-item';
-          btn.textContent = opt;
+          btn.textContent = getTranslation(opt);
           btn.onclick = () => {
             if (opt === node.correctEmne) {
               finalAnswers[`${node.id}_emne`] = opt;
@@ -1023,12 +1023,12 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
           optionsList.appendChild(btn);
         });
       } else {
-        drawerTitle.textContent = `Hvilken talemåde passer til "${node.title}"?`;
+        drawerTitle.textContent = getTranslation('Hvilken talemåde passer til') + ' "' + getTranslation(node.title) + '"?';
         optionsList.innerHTML = '';
         node.idiomOptions.forEach(opt => {
           const btn = document.createElement('div');
           btn.className = 'option-item';
-          btn.textContent = opt;
+          btn.textContent = getTranslation(opt);
           btn.onclick = () => {
             if (opt === node.correctIdiom) {
               finalAnswers[`${node.id}_idiom`] = opt;
@@ -1048,18 +1048,18 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     }
 
     function openFinalOveremne(targetEl) {
-      drawerTitle.textContent = 'Gæt kredsløbets samlede mønster / overemne:';
+      drawerTitle.textContent = getTranslation('Gæt kredsløbets samlede mønster / overemne:');
       optionsList.innerHTML = '';
       const options = currentPkgData.finale.overemneOptions;
       options.forEach(opt => {
         const btn = document.createElement('div');
         btn.className = 'option-item';
-        btn.textContent = opt;
+        btn.textContent = getTranslation(opt);
         btn.onclick = () => {
           if (opt === currentPkgData.finale.expectedOveremne) {
             finalAnswers.overemne = opt;
             localStorage.setItem(`danskTalemaader_${activePkg}_final`, JSON.stringify(finalAnswers));
-            showToast(`✓ Helt rigtigt! Det samlede mønster er ${currentPkgData.finale.expectedOveremne}.`);
+            showToast(getTranslation('✓ Helt rigtigt! Det samlede mønster er') + ' ' + getTranslation(currentPkgData.finale.expectedOveremne) + '.');
             drawerOverlay.classList.remove('active');
             render();
             checkFinalCompletion();

@@ -53,6 +53,8 @@ import { renderTalemaaderView } from './views/TalemaaderView.js';
 import { renderTraenSporgsmalMenuView } from './views/TraenSporgsmalMenuView.js';
 import { renderHvBetydningView } from './views/HvBetydningView.js';
 import { renderSporgsmalOrdstillingView } from './views/SporgsmalOrdstillingView.js';
+import { renderLaesetraeningView } from './views/LaesetraeningView.js';
+import { renderLegMedVokalerView } from './views/LegMedVokalerView.js';
 import { appState, getLang, getTranslation, setLanguage, translations } from './utils/i18n.js';
 
 // Router
@@ -175,6 +177,12 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'traen_bogstaver') {
     appState.currentView = 'traen_bogstaver';
     renderUdtaleView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'laesetraening') {
+    appState.currentView = 'laesetraening';
+    renderLaesetraeningView(appDiv, navigate);
+  } else if (viewTarget === 'leg_med_vokaler') {
+    appState.currentView = 'leg_med_vokaler';
+    renderLegMedVokalerView(appDiv, navigate);
   } else if (viewTarget === 'leg_med_udtale') {
     appState.currentView = 'leg_med_udtale';
     renderLegMedUdtaleView(appDiv, navigate);

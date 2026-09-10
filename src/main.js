@@ -55,6 +55,7 @@ import { renderHvBetydningView } from './views/HvBetydningView.js';
 import { renderSporgsmalOrdstillingView } from './views/SporgsmalOrdstillingView.js';
 import { renderLaesetraeningView } from './views/LaesetraeningView.js';
 import { renderLegMedVokalerView } from './views/LegMedVokalerView.js';
+import { renderDetDanskeStoedView } from './views/DetDanskeStoedView.js';
 import { appState, getLang, getTranslation, setLanguage, translations } from './utils/i18n.js';
 
 // Router
@@ -179,13 +180,16 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderUdtaleView(appDiv, navigate, extraData);
   } else if (viewTarget === 'laesetraening') {
     appState.currentView = 'laesetraening';
-    renderLaesetraeningView(appDiv, navigate);
+    renderLaesetraeningView(appDiv, navigate, extraData);
   } else if (viewTarget === 'leg_med_vokaler') {
     appState.currentView = 'leg_med_vokaler';
-    renderLegMedVokalerView(appDiv, navigate);
+    renderLegMedVokalerView(appDiv, navigate, extraData);
   } else if (viewTarget === 'leg_med_udtale') {
     appState.currentView = 'leg_med_udtale';
     renderLegMedUdtaleView(appDiv, navigate);
+  } else if (viewTarget === 'det_danske_stoed') {
+    appState.currentView = 'det_danske_stoed';
+    renderDetDanskeStoedView(appDiv, navigate);
   } else if (viewTarget === 'historier_menu') {
     appState.currentView = 'historier_menu';
     renderHistorierMenuView(appDiv, navigate);
@@ -259,10 +263,10 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderAdjectiveComparisonView(appDiv, navigate);
   } else if (viewTarget === 'conjunction_choice') {
     appState.currentView = 'conjunction_choice';
-    initConjunctionChoiceExerciseView(appDiv);
+    initConjunctionChoiceExerciseView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverb_choice') {
     appState.currentView = 'adverb_choice';
-    initAdverbChoiceExerciseView(appDiv);
+    initAdverbChoiceExerciseView(appDiv, navigate, extraData);
   } else if (viewTarget === 'traen_sporgsmal_menu') {
     appState.currentView = 'traen_sporgsmal_menu';
     renderTraenSporgsmalMenuView(appDiv, navigate);

@@ -28,15 +28,9 @@ export function renderUdtaleMenuView(container, navigateFn) {
     const cardsData = [
         {
             icon: '🍏',
-            title: getTranslation('udtaleLetTitle') || 'Lette øvelser (D, R, G)',
-            desc: getTranslation('udtaleLetDesc') || 'Korte og nemme sætninger uden svære konsonanter.',
+            title: 'Træn bogstaverne D, R og G',
+            desc: 'Disse bogstaver forandrer lyd forskellige steder i et ord',
             action: () => navigateFn('traen_bogstaver', { level: 'let' })
-        },
-        {
-            icon: '🅰️',
-            title: getTranslation('udtaleSvaerTitle') || 'Svære øvelser (D, R, G)',
-            desc: getTranslation('udtaleSvaerDesc') || 'Målrettet træning af de svære danske bogstaver med specifikke sætninger.',
-            action: () => navigateFn('traen_bogstaver', { level: 'svaer' })
         },
         {
             icon: '📖',
@@ -55,6 +49,12 @@ export function renderUdtaleMenuView(container, navigateFn) {
             title: getTranslation('udtaleDictaphoneTitle') || 'Diktafon - leg med udtale',
             desc: getTranslation('udtaleDictaphoneDesc') || 'Den frie diktafon: Skriv en sætning og test din udtale, eller tal frit fra leveren.',
             action: () => navigateFn('leg_med_udtale')
+        },
+        {
+            icon: '⚡',
+            title: 'Det danske stød',
+            desc: 'Træn det unikke danske stød. Rammer du forkert, fanger maskinen et helt andet ord!',
+            action: () => navigateFn('det_danske_stoed')
         }
     ];
 

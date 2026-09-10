@@ -51,6 +51,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     let currentLetter = 'D';
     let currentSubCategory = 0;
     let currentIndex = 0;
+    let consecutiveCorrect = 0;
     
     const tabWrappers = {};
 
@@ -73,6 +74,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
                 currentLetter = letter;
                 currentSubCategory = 0;
                 currentIndex = 0;
+                consecutiveCorrect = 0;
                 updateViewData();
             }
         };
@@ -156,11 +158,20 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     resultBox.style.fontSize = '1.2rem';
     resultBox.style.display = 'none';
 
+    const streakContainer = document.createElement('div');
+    streakContainer.className = 'udtale-streak';
+    streakContainer.style.marginTop = '1rem';
+    streakContainer.style.fontSize = '1.2rem';
+    streakContainer.style.fontWeight = 'bold';
+    streakContainer.style.textAlign = 'center';
+    streakContainer.style.display = 'none';
+
     exerciseArea.appendChild(sentenceDisplay);
     exerciseArea.appendChild(progressContainer);
     exerciseArea.appendChild(micBtn);
     exerciseArea.appendChild(statusText);
     exerciseArea.appendChild(resultBox);
+    exerciseArea.appendChild(streakContainer);
     viewContainer.appendChild(exerciseArea);
 
     // Navigation Controls
@@ -240,6 +251,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
                 if (currentSubCategory !== index) {
                     currentSubCategory = index;
                     currentIndex = 0;
+                    consecutiveCorrect = 0;
                     updateViewData(); // re-render to update active styling and content
                 }
             };
@@ -336,6 +348,16 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
 
         progressContainer.style.display = 'none';
         resultBox.style.display = 'none';
+        
+        const doubleVerifIds = ['stumt_d', 'bloedt_d', 'stumt_g', 'j_lyd', 'w_lyd', 'haardt_r'];
+        const requiresDoubleVerification = (isLet && doubleVerifIds.includes(currentSub.id));
+        if (requiresDoubleVerification) {
+            streakContainer.style.display = 'block';
+            streakContainer.innerHTML = `Krav: 2 i træk <br/><span style="color:#ff9800">${consecutiveCorrect}/2</span>`;
+        } else {
+            streakContainer.style.display = 'none';
+        }
+
         statusText.textContent = getTranslation('udtalePressMic') || 'Tryk på mikrofonen for at starte';
         statusText.style.color = 'var(--text-muted)';
     }
@@ -343,6 +365,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     prevBtn.onclick = () => {
         if (currentIndex > 0) {
             currentIndex--;
+            consecutiveCorrect = 0;
             renderCurrentExercise();
         }
     };
@@ -352,12 +375,14 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
         const currentSub = data.subCategories[currentSubCategory];
         if (currentIndex < currentSub.exercises.length - 1) {
             currentIndex++;
+            consecutiveCorrect = 0;
             renderCurrentExercise();
         } else {
             // Automatically jump to next subcategory if we're at the end
             if (currentSubCategory < data.subCategories.length - 1) {
                 currentSubCategory++;
                 currentIndex = 0;
+                consecutiveCorrect = 0;
                 updateViewData();
             }
         }
@@ -420,6 +445,9 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     function evaluateSpeech(ex, spoken) {
         statusText.textContent = getTranslation('udtaleProcessing') || 'Behandler...';
         
+        const data = activeData[currentLetter];
+        const currentSub = data.subCategories[currentSubCategory];
+        
         const targetWords = ex.text.toLowerCase().replace(/[.,!?]/g, '').split(' ');
         const spokenWords = spoken.toLowerCase().replace(/[.,!?]/g, '').split(' ');
         const targetCleanList = ex.targetWords.map(w => w.toLowerCase().replace(/[.,!?]/g, ''));
@@ -438,7 +466,7 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
 
             let foundMatch = false;
             for (let i = spokenIndex; i < Math.min(spokenIndex + 3, spokenWords.length); i++) {
-                if (spokenWords[i] === word || isSimilar(spokenWords[i], word)) {
+                if (spokenWords[i] === word) {
                     foundMatch = true;
                     spokenIndex = i + 1;
                     break;
@@ -463,6 +491,23 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
         });
 
         const score = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 100;
+        const doubleVerifIds = ['stumt_d', 'bloedt_d', 'stumt_g', 'j_lyd', 'w_lyd', 'haardt_r'];
+        const requiresDoubleVerification = (isLet && doubleVerifIds.includes(currentSub.id));
+
+        if (requiresDoubleVerification) {
+            if (score === 100) {
+                consecutiveCorrect++;
+                if (consecutiveCorrect === 1) {
+                    streakContainer.innerHTML = `Flot! En gang til: <br/><span style="color:#4caf50">1/2</span>`;
+                } else if (consecutiveCorrect >= 2) {
+                    streakContainer.innerHTML = `Perfekt! <br/><span style="font-size: 2rem">🏆</span> <span style="color:#4caf50">2/2</span>`;
+                }
+            } else {
+                consecutiveCorrect = 0;
+                streakContainer.innerHTML = `Hov, prøv igen: <br/><span style="color:#ff9800">0/2</span>`;
+            }
+        }
+
         progressContainer.style.display = 'block';
         const bar = progressContainer.querySelector('#udtale-bar');
         const scoreText = progressContainer.querySelector('#udtale-score');
@@ -475,13 +520,15 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
             
             resultBox.style.display = 'block';
             resultBox.innerHTML = `<strong>${getTranslation('udtaleYouSaid') || 'Du sagde:'}</strong> <em>"${spoken}"</em>`;
+            
+            if (requiresDoubleVerification && consecutiveCorrect >= 2) {
+                statusText.textContent = 'Går videre...';
+                statusText.style.color = '#4caf50';
+                setTimeout(() => {
+                    nextBtn.click();
+                }, 2000);
+            }
         }, 100);
-    }
-
-    function isSimilar(w1, w2) {
-        if (w1 === w2) return true;
-        if (w1.length > 3 && w2.length > 3 && (w1.includes(w2) || w2.includes(w1))) return true;
-        return false;
     }
 
     // Init

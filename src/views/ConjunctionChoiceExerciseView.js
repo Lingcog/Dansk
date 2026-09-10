@@ -2,13 +2,38 @@ import { getTranslation, appState } from '../utils/i18n.js';
 import { conjunctionData } from '../utils/conjunctionData.js';
 import { baseUrl } from '../utils/config.js';
 
-export function initConjunctionChoiceExerciseView(container, navigateFn) {
-    let viewState = 'menu'; // 'menu', 'traening2_menu', 'exercise'
-    let currentExerciseType = null;
+export function initConjunctionChoiceExerciseView(container, navigateFn, extraData = {}) {
+    let viewState = 'menu'; // 'menu', 'traening1', 'traening2_menu', 'traening2_da_naar', etc.
+    if (extraData.subPath) {
+        if (extraData.subPath === 'traening1') {
+            viewState = 'exercise';
+        } else if (extraData.subPath === 'traening2') {
+            viewState = 'traening2_menu';
+        } else if (extraData.subPath.startsWith('traening2/')) {
+            viewState = 'exercise';
+        }
+    }
+    
+    let currentExerciseType = extraData.subPath && extraData.subPath.startsWith('traening2') ? 'traening2' : (extraData.subPath === 'traening1' ? 'traening1' : null);
     let currentSetIndex = 0;
     let scores = [null, null, null, null, null];
     let currentQuestions = [];
     let exerciseMetadata = null; // for title, illustration, explanation
+    
+    // Set up initial state if loading directly from subPath
+    if (viewState === 'exercise') {
+        if (currentExerciseType === 'traening1') {
+            currentQuestions = conjunctionData.traening1[currentSetIndex];
+        } else if (currentExerciseType === 'traening2') {
+            const key = extraData.subPath.split('/')[1];
+            if (conjunctionData.traening2[key]) {
+                exerciseMetadata = conjunctionData.traening2[key];
+                currentQuestions = JSON.parse(JSON.stringify(exerciseMetadata.questions));
+            } else {
+                viewState = 'traening2_menu'; // fallback if key is invalid
+            }
+        }
+    }
 
     function render() {
         if (!document.getElementById('conj-choice-styles')) {
@@ -86,17 +111,10 @@ export function initConjunctionChoiceExerciseView(container, navigateFn) {
             else window.location.hash = `/${appState.lang}/pronomen`;
         });
         document.getElementById('btn-t1').addEventListener('click', () => {
-            currentExerciseType = 'traening1';
-            currentSetIndex = 0;
-            scores = [null, null, null, null, null];
-            currentQuestions = conjunctionData.traening1[currentSetIndex];
-            exerciseMetadata = null;
-            viewState = 'exercise';
-            render();
+            navigateFn('conjunction_choice', { subPath: 'traening1' });
         });
         document.getElementById('btn-t2').addEventListener('click', () => {
-            viewState = 'traening2_menu';
-            render();
+            navigateFn('conjunction_choice', { subPath: 'traening2' });
         });
     }
 
@@ -126,17 +144,10 @@ export function initConjunctionChoiceExerciseView(container, navigateFn) {
             </div>
         `;
         document.getElementById('conj-back-btn').addEventListener('click', () => {
-            viewState = 'menu';
-            render();
+            navigateFn('conjunction_choice');
         });
         const setupExercise = (key) => {
-            currentExerciseType = 'traening2';
-            exerciseMetadata = conjunctionData.traening2[key];
-            currentSetIndex = 0;
-            scores = [null, null, null, null, null];
-            currentQuestions = JSON.parse(JSON.stringify(exerciseMetadata.questions));
-            viewState = 'exercise';
-            render();
+            navigateFn('conjunction_choice', { subPath: `traening2/${key}` });
         };
         document.getElementById('btn-da-naar').addEventListener('click', () => setupExercise('da_naar'));
         document.getElementById('btn-fordi-derfor').addEventListener('click', () => setupExercise('fordi_derfor'));
@@ -230,11 +241,10 @@ export function initConjunctionChoiceExerciseView(container, navigateFn) {
 
         document.getElementById('conj-back-btn').addEventListener('click', () => {
             if (isTraening1) {
-                viewState = 'menu';
+                navigateFn('conjunction_choice');
             } else {
-                viewState = 'traening2_menu';
+                navigateFn('conjunction_choice', { subPath: 'traening2' });
             }
-            render();
         });
 
         const selects = container.querySelectorAll('.grammatik-select');

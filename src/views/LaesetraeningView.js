@@ -1,7 +1,7 @@
 import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
-export function renderLaesetraeningView(container, navigateFn) {
+export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container laesetraening-container';
 
@@ -324,7 +324,10 @@ export function renderLaesetraeningView(container, navigateFn) {
     };
 
     // State
-    let currentSetId = null;
+    let currentSetId = extraData.subPath ? parseInt(extraData.subPath, 10) : null;
+    if (isNaN(currentSetId) || currentSetId < 0 || currentSetId >= wordSets.length) {
+        currentSetId = null;
+    }
     let currentWordIndex = 0;
     let score = 0;
 
@@ -365,10 +368,9 @@ export function renderLaesetraeningView(container, navigateFn) {
             synth.cancel();
             if (recognition) recognition.abort();
             if (currentSetId !== null) {
-                currentSetId = null;
-                renderView();
+                navigateFn('laesetraening');
             } else {
-                navigateFn('traen_udtale_menu');
+                navigateFn('traen_udtale');
             }
         };
         topBar.appendChild(backBtn);
@@ -409,10 +411,7 @@ export function renderLaesetraeningView(container, navigateFn) {
                 <div class="laese-level-desc">${wordSets[id].desc}</div>
             `;
             btn.onclick = () => {
-                currentSetId = id;
-                currentWordIndex = 0;
-                score = 0;
-                renderView();
+                navigateFn('laesetraening', { subPath: id.toString() });
             };
             menuContainer.appendChild(btn);
         });
@@ -705,8 +704,7 @@ export function renderLaesetraeningView(container, navigateFn) {
         againBtn.className = 'laese-action-btn primary';
         againBtn.textContent = 'Vælg et andet niveau';
         againBtn.onclick = () => {
-            currentSetId = null;
-            renderView();
+            navigateFn('laesetraening');
         };
         compContainer.appendChild(againBtn);
 

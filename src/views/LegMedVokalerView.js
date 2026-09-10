@@ -1,7 +1,7 @@
 import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
-export function renderLegMedVokalerView(container, navigateFn) {
+export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container vokaler-container';
 
@@ -213,9 +213,8 @@ export function renderLegMedVokalerView(container, navigateFn) {
 
     // Data Sets
     const datasets = {
-        'r': {
-            title: "Træn R-lyden",
-            desc: "7 sætninger med R i start og slut",
+        'haardt_r': {
+            title: "Hårdt 'r'",
             sentences: [
                 "Rulle en rotte",
                 "Røve en ræv",
@@ -226,9 +225,19 @@ export function renderLegMedVokalerView(container, navigateFn) {
                 "Råbe på Rom"
             ]
         },
-        'd': {
-            title: "Træn D-lyden",
-            desc: "10 sætninger med hårdt D",
+        'vokalisk_r': {
+            title: "Vokalisk 'r'",
+            sentences: [
+                "En bager der smager",
+                "En lærer der bærer",
+                "En køber der løber",
+                "En murer der skurer",
+                "En svømmer der drømmer",
+                "En maler der taler"
+            ]
+        },
+        'haardt_d': {
+            title: "Hårdt 'd'",
             sentences: [
                 "Danse med en dåse",
                 "Dyppe en due",
@@ -242,9 +251,19 @@ export function renderLegMedVokalerView(container, navigateFn) {
                 "Dampe din dug"
             ]
         },
-        'g': {
-            title: "Træn G-lyden",
-            desc: "10 sætninger med hårdt G",
+        'bloedt_d': {
+            title: "Blødt 'd'",
+            sentences: [
+                "En glad mand i et bad",
+                "En rød glød",
+                "Et blødt brød",
+                "En blid strid",
+                "Træde i noget smadder",
+                "Gide en bide"
+            ]
+        },
+        'haardt_g': {
+            title: "Hårdt 'g'",
             sentences: [
                 "Gribe en ged",
                 "Gemme en gås",
@@ -257,11 +276,22 @@ export function renderLegMedVokalerView(container, navigateFn) {
                 "Give en gople",
                 "Gø ad en gæst"
             ]
+        },
+        'stumt_g': {
+            title: "Stumt 'g'",
+            sentences: [
+                "At bage en kage",
+                "Søge og spøge",
+                "Farlig og ærlig",
+                "Dejligt og belejligt",
+                "At koge en låge",
+                "En syg myg"
+            ]
         }
     };
 
     // State
-    let currentSetId = null;
+    let currentSetId = extraData.subPath && datasets[extraData.subPath] ? extraData.subPath : null;
     let currentIndex = 0;
     let score = 0;
 
@@ -302,10 +332,9 @@ export function renderLegMedVokalerView(container, navigateFn) {
             synth.cancel();
             if (recognition) recognition.abort();
             if (currentSetId !== null) {
-                currentSetId = null;
-                renderView();
+                navigateFn('leg_med_vokaler');
             } else {
-                navigateFn('traen_udtale_menu');
+                navigateFn('traen_udtale');
             }
         };
         topBar.appendChild(backBtn);
@@ -337,20 +366,55 @@ export function renderLegMedVokalerView(container, navigateFn) {
         title.textContent = 'Leg med vokaler';
         menuContainer.appendChild(title);
 
-        ['r', 'd', 'g'].forEach(id => {
-            const btn = document.createElement('button');
-            btn.className = 'vokaler-level-btn';
-            btn.innerHTML = `
-                <div class="vokaler-level-title">${datasets[id].title}</div>
-                <div class="vokaler-level-desc">${datasets[id].desc}</div>
-            `;
-            btn.onclick = () => {
-                currentSetId = id;
-                currentIndex = 0;
-                score = 0;
-                renderView();
-            };
-            menuContainer.appendChild(btn);
+        const menuConfig = [
+            { title: 'Træn R-lyden', subs: [{id: 'haardt_r', label: 'Hårdt "r"'}, {id: 'vokalisk_r', label: 'Vokalisk "r"'}] },
+            { title: 'Træn D-lyden', subs: [{id: 'haardt_d', label: 'Hårdt "d"'}, {id: 'bloedt_d', label: 'Blødt "d"'}] },
+            { title: 'Træn G-lyden', subs: [{id: 'haardt_g', label: 'Hårdt "g"'}, {id: 'stumt_g', label: 'Stumt "g"'}] }
+        ];
+
+        menuConfig.forEach(cat => {
+            const group = document.createElement('div');
+            group.className = 'vokaler-level-btn';
+            group.style.cursor = 'default';
+            group.style.display = 'flex';
+            group.style.flexDirection = 'column';
+            group.style.gap = '1rem';
+            
+            const catTitle = document.createElement('div');
+            catTitle.className = 'vokaler-level-title';
+            catTitle.textContent = cat.title;
+            group.appendChild(catTitle);
+            
+            const subContainer = document.createElement('div');
+            subContainer.style.display = 'flex';
+            subContainer.style.gap = '0.8rem';
+            subContainer.style.width = '100%';
+            
+            cat.subs.forEach(sub => {
+                const subBtn = document.createElement('button');
+                subBtn.textContent = sub.label;
+                subBtn.style.flex = '1';
+                subBtn.style.padding = '0.8rem';
+                subBtn.style.backgroundColor = '#ff9800';
+                subBtn.style.color = 'white';
+                subBtn.style.border = 'none';
+                subBtn.style.borderRadius = '8px';
+                subBtn.style.fontWeight = 'bold';
+                subBtn.style.fontSize = '1.1rem';
+                subBtn.style.cursor = 'pointer';
+                subBtn.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                
+                subBtn.onmouseover = () => subBtn.style.backgroundColor = '#f57c00';
+                subBtn.onmouseout = () => subBtn.style.backgroundColor = '#ff9800';
+                
+                subBtn.onclick = () => {
+                    navigateFn('leg_med_vokaler', { subPath: sub.id });
+                };
+                subContainer.appendChild(subBtn);
+            });
+            
+            group.appendChild(subContainer);
+            menuContainer.appendChild(group);
         });
 
         viewContainer.appendChild(menuContainer);
@@ -510,8 +574,7 @@ export function renderLegMedVokalerView(container, navigateFn) {
         againBtn.className = 'vokaler-action-btn primary';
         againBtn.textContent = 'Vælg et andet niveau';
         againBtn.onclick = () => {
-            currentSetId = null;
-            renderView();
+            navigateFn('leg_med_vokaler');
         };
         compContainer.appendChild(againBtn);
 

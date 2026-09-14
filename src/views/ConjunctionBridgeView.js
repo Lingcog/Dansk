@@ -1,4 +1,5 @@
 import { getTranslation, appState } from '../utils/i18n.js';
+import { renderGrammarMenu } from '../components/GrammarMenu.js';
 
 export function renderConjunctionBridgeView(container, navigateFn, extraData = {}) {
     const state = {
@@ -119,6 +120,8 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             </div>
         </div>
     `;
+
+    container.querySelector('.header-section').after(renderGrammarMenu('konjunktioner', navigateFn));
 
     const backBtn = container.querySelector('#back-to-adv');
     const finishBtn = container.querySelector('#finish-btn');

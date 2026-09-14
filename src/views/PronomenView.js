@@ -1,5 +1,5 @@
 import { baseUrl } from '../utils/config.js';
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, appState } from '../utils/i18n.js';
 import { pronomenData } from '../utils/pronomenData.js';
 
 import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
@@ -170,13 +170,22 @@ export function renderPronomenView(container, navigateFn, extraData) {
         menuArea.style.display = 'block';
         grid2.innerHTML = '';
 
+        if (category === 'pronomen') {
+            title.textContent = 'Han / ham / hans (Pronominer)';
+        } else if (category === 'verbum') {
+            title.textContent = getTranslation('gårGikGået');
+        } else if (category === 'artikler_menu') {
+            title.textContent = 'En kat / katten? (Artikler & Bestemthed)';
+        } else if (category === 'adverbier_menu') {
+            title.textContent = getTranslation('advChoiceTitle');
+        }
+
         let items = [];
         if (category === 'pronomen') {
             items = [
                 { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', img: 'pronominer_spotlight.png' },
                 { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'objekt_vand.jpg' },
-                { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'ejefald_guide_voksne.jpg' },
-                { key: 'pronominerRefleksiv', type: 'refleksiv', icon: '🔄', img: 'refleksiv_guide.jpg' }
+                { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'ejefald_guide_voksne.jpg' }
             ];
         } else if (category === 'artikler_menu') {
             items = [
@@ -206,8 +215,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
                     const routeMap = {
                         subjekt: 'pronominer_subjekt',
                         objekt: 'pronominer_objekt',
-                        possessiv: 'pronominer_possessiv',
-                        refleksiv: 'pronominer_refleksiv'
+                        possessiv: 'pronominer_possessiv'
                     };
                     navigateFn(routeMap[item.type] || 'pronomen');
                 } else if (category === 'artikler_menu') {
@@ -253,7 +261,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
         menuArea.style.display = 'block';
         grid3.innerHTML = '';
         illustrationContainer.innerHTML = '';
-        title.textContent = getTranslation('hanHamHans');
+        title.textContent = 'Han / ham / hans (Pronominer)';
 
         if (illustrationImg) {
             const illustration = document.createElement('img');
@@ -740,14 +748,19 @@ export function renderPronomenView(container, navigateFn, extraData) {
                             select.classList.add('wrong');
                             select.classList.remove('correct');
 
-                            let hintKey = 'hintPronominer';
-                            if (category.type === 'subjekt') hintKey = 'hintPronominerSubjekt';
-                            else if (category.type === 'objekt') hintKey = 'hintPronominerObjekt';
-                            else if (category.type === 'possessiv') hintKey = 'hintPronominerPossessiv';
-                            else if (category.type === 'refleksiv') hintKey = 'hintPronominerRefleksiv';
+                            if (ex.blanks[idx].feedback && ex.blanks[idx].feedback[val]) {
+                                const fb = ex.blanks[idx].feedback[val];
+                                feedbackRow.innerHTML = typeof fb === 'object' ? (fb[appState.lang] || fb['da']) : fb;
+                            } else {
+                                let hintKey = 'hintPronominer';
+                                if (category.type === 'subjekt') hintKey = 'hintPronominerSubjekt';
+                                else if (category.type === 'objekt') hintKey = 'hintPronominerObjekt';
+                                else if (category.type === 'possessiv') hintKey = 'hintPronominerPossessiv';
+                                else if (category.type === 'refleksiv') hintKey = 'hintPronominerRefleksiv';
 
-                            const personInfo = ex.person ? ` (${ex.person})` : "";
-                            feedbackRow.textContent = getTranslation(hintKey) + personInfo;
+                                const personInfo = ex.person ? ` (${ex.person})` : "";
+                                feedbackRow.textContent = getTranslation(hintKey) + personInfo;
+                            }
                             feedbackRow.style.display = 'block';
                             if (select.dataset.solved) {
                                 delete select.dataset.solved;

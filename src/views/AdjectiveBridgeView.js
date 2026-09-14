@@ -1,4 +1,5 @@
 import { getTranslation, appState } from '../utils/i18n.js';
+import { renderGrammarMenu } from '../components/GrammarMenu.js';
 
 export function renderAdjectiveBridgeView(container, navigateFn, inheritedState = {}) {
     const viewContainer = document.createElement('div');
@@ -22,6 +23,8 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     });
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    viewContainer.appendChild(renderGrammarMenu('adjektiver', navigateFn));
 
     // Header
     const title = document.createElement('h1');

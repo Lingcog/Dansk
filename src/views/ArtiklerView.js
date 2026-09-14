@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { renderGrammarMenu } from '../components/GrammarMenu.js';
 
 export function renderArtiklerView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -14,6 +15,8 @@ export function renderArtiklerView(container, navigateFn) {
     backBtn.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    viewContainer.appendChild(renderGrammarMenu('kendeord', navigateFn));
 
     // Header
     const title = document.createElement('h1');

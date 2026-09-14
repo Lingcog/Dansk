@@ -1,4 +1,5 @@
 import { getTranslation, appState } from '../utils/i18n.js';
+import { renderGrammarMenu } from '../components/GrammarMenu.js';
 
 export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
     const state = {
@@ -86,6 +87,8 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             </div>
         </div>
     `;
+
+    container.querySelector('.header-section').after(renderGrammarMenu('adverbier', navigateFn));
 
     const backBtn = container.querySelector('#back-to-adj');
     const finishBtn = container.querySelector('#finish-btn');

@@ -1,6 +1,7 @@
 import { getTranslation } from '../utils/i18n.js';
 import { navigate } from '../main.js';
 import { baseUrl } from '../utils/config.js';
+import { renderGrammarMenu } from '../components/GrammarMenu.js';
 
 export function renderGroundingView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -15,6 +16,8 @@ export function renderGroundingView(container, navigateFn) {
     backBtn.onclick = () => navigateFn('dagens_opgave');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+    
+    viewContainer.appendChild(renderGrammarMenu('intro', navigateFn));
 
     // Header
     const title = document.createElement('h1');
@@ -511,9 +514,9 @@ export function renderGroundingView(container, navigateFn) {
 
         finalContainer.querySelector('#finish-btn').onclick = () => navigateFn('dagens_opgave');
         finalContainer.querySelector('#start-modal').onclick = () => navigateFn('modal_force', state);
-        finalContainer.querySelector('#rec-bestemthed').onclick = () => navigateFn('bestemthed');
-        finalContainer.querySelector('#rec-pronomen').onclick = () => navigateFn('pronomen', { category: 'pronomen' });
-        finalContainer.querySelector('#rec-verber').onclick = () => navigateFn('verbum');
+        finalContainer.querySelector('#rec-bestemthed').onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
+        finalContainer.querySelector('#rec-pronomen').onclick = () => navigateFn('pronominer_possessiv');
+        finalContainer.querySelector('#rec-verber').onclick = () => navigateFn('pronomen', { subPath: 'v' });
 
         // Scroll to the final message
         setTimeout(() => {

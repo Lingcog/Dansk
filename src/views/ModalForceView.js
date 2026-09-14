@@ -1,4 +1,5 @@
 import { getTranslation } from '../utils/i18n.js';
+import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { navigate } from '../main.js';
 import { baseUrl } from '../utils/config.js';
 
@@ -64,6 +65,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     backBtn.onclick = () => navigateFn('grounding');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    viewContainer.appendChild(renderGrammarMenu('modalverber', navigateFn));
 
     // Header
     const title = document.createElement('h1');

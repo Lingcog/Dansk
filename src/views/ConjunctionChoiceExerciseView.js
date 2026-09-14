@@ -11,10 +11,12 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
             viewState = 'traening2_menu';
         } else if (extraData.subPath.startsWith('traening2/')) {
             viewState = 'exercise';
+        } else if (extraData.subPath === 'traening3') {
+            viewState = 'exercise';
         }
     }
     
-    let currentExerciseType = extraData.subPath && extraData.subPath.startsWith('traening2') ? 'traening2' : (extraData.subPath === 'traening1' ? 'traening1' : null);
+    let currentExerciseType = extraData.subPath && extraData.subPath.startsWith('traening2') ? 'traening2' : (extraData.subPath === 'traening1' ? 'traening1' : (extraData.subPath === 'traening3' ? 'traening3' : null));
     let currentSetIndex = 0;
     let scores = [null, null, null, null, null];
     let currentQuestions = [];
@@ -32,6 +34,8 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
             } else {
                 viewState = 'traening2_menu'; // fallback if key is invalid
             }
+        } else if (currentExerciseType === 'traening3') {
+            currentQuestions = conjunctionData.traening3;
         }
     }
 
@@ -103,6 +107,11 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                         <h3 class="card-title">Træning 2</h3>
                         <p class="card-desc">Parrede bindeord & kognitiv forståelse</p>
                     </div>
+                    <div class="card" id="btn-t3">
+                        <div class="card-icon">📖</div>
+                        <h3 class="card-title">${getTranslation('traening3Title') || 'Træning 3'}</h3>
+                        <p class="card-desc">${getTranslation('traening3Desc') || 'Tekstflow og historier'}</p>
+                    </div>
                 </div>
             </div>
         `;
@@ -115,6 +124,9 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
         });
         document.getElementById('btn-t2').addEventListener('click', () => {
             navigateFn('conjunction_choice', { subPath: 'traening2' });
+        });
+        document.getElementById('btn-t3').addEventListener('click', () => {
+            navigateFn('conjunction_choice', { subPath: 'traening3' });
         });
     }
 
@@ -156,8 +168,9 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
 
     function renderExercise() {
         const isTraening1 = currentExerciseType === 'traening1';
-        const title = isTraening1 ? 'Træning 1: Bindeord' : exerciseMetadata.title;
-        const maxSets = isTraening1 ? conjunctionData.traening1.length : 1;
+        const isTraening3 = currentExerciseType === 'traening3';
+        const title = isTraening3 ? (getTranslation('traening3Title') || 'Træning 3: Tekstflow') : (isTraening1 ? 'Træning 1: Bindeord' : exerciseMetadata.title);
+        const maxSets = isTraening1 ? conjunctionData.traening1.length : (isTraening3 ? conjunctionData.traening3.length : 1);
 
         let illustrationHTML = '';
         if (exerciseMetadata && exerciseMetadata.illustration) {
@@ -183,7 +196,7 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 ${illustrationHTML}
   
                 <div class="questions-list grammatik-text-container" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    ${currentQuestions.map((q, i) => {
+                    ${isTraening3 ? renderTraening3Content() : currentQuestions.map((q, i) => {
             const absoluteIdx = (currentSetIndex * 5) + i;
             const parts = Array.isArray(q.sentence) ? q.sentence : q.sentence.split('____');
             const isCorrect = scores[i] === true;
@@ -197,7 +210,6 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 } else {
                     const safeOpt = q.selectedValue ? q.selectedValue.replace(/[^a-zA-ZæøåÆØÅ]/g, '') : '';
                     const translatedHint = isTraening1 ? getTranslation(`conj_${absoluteIdx}_hint_${safeOpt}`) : null;
-                    // getTranslation might return the key itself if not found. If it returns the key, we should fallback.
                     const finalHint = (translatedHint && !translatedHint.startsWith('conj_')) ? translatedHint : q.hints[q.selectedValue];
                     feedbackText = '⚠ ' + (finalHint || "Prøv igen. Tænk på forbindelsen mellem sætningerne.");
                 }
@@ -226,12 +238,12 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 </div>
   
                 <div class="conj-choice-controls">
-                    ${(isTraening1 && currentSetIndex < maxSets - 1) ? `
-                        <button id="next-set-btn" class="secondary-button" style="display: ${scores.every(s => s === true) ? 'block' : 'none'}; padding: 0.8rem 2rem; border-radius: 50px;">
-                            Næste sæt <i class="fas fa-arrow-right"></i>
+                    ${((isTraening1 || isTraening3) && currentSetIndex < maxSets - 1) ? `
+                        <button id="next-set-btn" class="secondary-button" style="display: none; padding: 0.8rem 2rem; border-radius: 50px;">
+                            Næste historie <i class="fas fa-arrow-right"></i>
                         </button>
                     ` : `
-                        <div id="final-success" style="display: ${scores.every(s => s === true) ? 'block' : 'none'}; color: #4CAF50; font-weight: bold; text-align: center; font-size: 1.2rem; background: rgba(76, 175, 80, 0.1); padding: 1rem; border-radius: 12px; width: 100%;">
+                        <div id="final-success" style="display: none; color: #4CAF50; font-weight: bold; text-align: center; font-size: 1.2rem; background: rgba(76, 175, 80, 0.1); padding: 1rem; border-radius: 12px; width: 100%;">
                             <i class="fas fa-star"></i> Alle rigtige!
                         </div>
                     `}
@@ -239,15 +251,51 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
             </div>
         `;
 
+        function renderTraening3Content() {
+            const story = conjunctionData.traening3[currentSetIndex];
+            const parts = story.text.split(/(\[blank_\d+\])/);
+            
+            let html = '<div class="question-wrapper"><div class="question-row" style="font-size: 1.3rem; line-height: 1.8; display: block;">';
+            
+            parts.forEach(part => {
+                const match = part.match(/\[blank_(\d+)\]/);
+                if (match) {
+                    const idx = match[1];
+                    const blankData = story.blanks[idx];
+                    const selectedVal = blankData.selectedValue || "";
+                    const isCorrect = selectedVal === blankData.answer;
+                    const isWrong = selectedVal !== "" && !isCorrect;
+                    const validationClass = isCorrect ? 'correct' : (isWrong ? 'wrong' : '');
+                    
+                    html += `
+                        <span class="select-wrapper">
+                            <select class="grammatik-select t3-select ${validationClass}" data-blank="${idx}" ${isCorrect ? 'disabled' : ''}>
+                                <option value="">...</option>
+                                ${blankData.options.map(opt => `<option value="${opt}" ${selectedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                            </select>
+                        </span>
+                    `;
+                } else {
+                    html += `<span>${part}</span>`;
+                }
+            });
+            
+            html += '</div></div>';
+            
+            // Add feedback area at the bottom of the story
+            html += `<div id="t3-feedback-area" class="row-feedback" style="display: none; font-size: 1.1rem; line-height: 1.5; margin-top: 1.5rem;"></div>`;
+            return html;
+        }
+
         document.getElementById('conj-back-btn').addEventListener('click', () => {
-            if (isTraening1) {
+            if (isTraening1 || isTraening3) {
                 navigateFn('conjunction_choice');
             } else {
                 navigateFn('conjunction_choice', { subPath: 'traening2' });
             }
         });
 
-        const selects = container.querySelectorAll('.grammatik-select');
+        const selects = container.querySelectorAll('.grammatik-select:not(.t3-select)');
         selects.forEach((select, i) => {
             select.addEventListener('change', () => {
                 const val = select.value;
@@ -262,13 +310,108 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 render();
             });
         });
+        
+        // Traening 3 selects
+        const t3Selects = container.querySelectorAll('.t3-select');
+        let t3Scores = [];
+        t3Selects.forEach((select) => {
+            const blankIdx = select.dataset.blank;
+            const story = conjunctionData.traening3[currentSetIndex];
+            
+            // Initialize t3Scores based on current state
+            if (story.blanks[blankIdx].selectedValue === story.blanks[blankIdx].answer) {
+                t3Scores[blankIdx] = true;
+            }
+            
+            select.addEventListener('change', () => {
+                const val = select.value;
+                const blankData = story.blanks[blankIdx];
+                blankData.selectedValue = val;
+                
+                const isCorrect = val === blankData.answer;
+                t3Scores[blankIdx] = val ? isCorrect : null;
+                
+                const fbArea = document.getElementById('t3-feedback-area');
+                if (val && !isCorrect) {
+                    const fb = blankData.feedback[val];
+                    const transKey = `traening3_${story.id}_${blankIdx}_${val}`;
+                    const translatedFb = getTranslation(transKey);
+                    
+                    // getTranslation returns the translation or falls back. 
+                    // To be safe, if getTranslation is missing we use the fallback 'fb' string from data.
+                    const fbText = (translatedFb && translatedFb !== transKey) ? translatedFb : fb;
+                    
+                    fbArea.innerHTML = `⚠ ${fbText}`;
+                    fbArea.style.display = 'block';
+                    fbArea.style.background = 'rgba(244, 67, 54, 0.1)';
+                    fbArea.style.border = '1px solid #F44336';
+                    fbArea.style.color = '#E57373';
+                } else if (isCorrect) {
+                    fbArea.innerHTML = `✓ Rigtigt!`;
+                    fbArea.style.display = 'block';
+                    fbArea.style.background = 'rgba(76, 175, 80, 0.1)';
+                    fbArea.style.border = '1px solid #4CAF50';
+                    fbArea.style.color = '#81C784';
+                    setTimeout(() => { if (fbArea.innerHTML === `✓ Rigtigt!`) fbArea.style.display = 'none'; }, 1500);
+                } else {
+                    fbArea.style.display = 'none';
+                }
+                
+                // Re-render after a tiny delay so focus isn't completely lost, 
+                // or just manually update classes to prevent full re-render which loses focus.
+                if (val === "") {
+                    select.classList.remove('correct', 'wrong');
+                } else if (isCorrect) {
+                    select.classList.add('correct');
+                    select.classList.remove('wrong');
+                    select.disabled = true;
+                } else {
+                    select.classList.add('wrong');
+                    select.classList.remove('correct');
+                }
+                
+                checkAllDone();
+            });
+        });
+        
+        function checkAllDone() {
+            let allDone = false;
+            if (isTraening3) {
+                const story = conjunctionData.traening3[currentSetIndex];
+                const totalBlanks = Object.keys(story.blanks).length;
+                let correctCount = 0;
+                for (let i = 0; i < totalBlanks; i++) {
+                    if (story.blanks[i].selectedValue === story.blanks[i].answer) correctCount++;
+                }
+                allDone = correctCount === totalBlanks;
+            } else {
+                allDone = scores.length === currentQuestions.length && scores.every(s => s === true);
+            }
+            
+            const nextSetBtn = document.getElementById('next-set-btn');
+            const finalSuccess = document.getElementById('final-success');
+            
+            if (nextSetBtn) {
+                nextSetBtn.style.display = allDone ? 'block' : 'none';
+            }
+            if (finalSuccess && allDone && currentSetIndex === maxSets - 1) {
+                finalSuccess.style.display = 'block';
+            }
+        }
+        
+        // Initial check
+        checkAllDone();
 
         const nextSetBtn = document.getElementById('next-set-btn');
         if (nextSetBtn) {
             nextSetBtn.addEventListener('click', () => {
                 currentSetIndex++;
                 scores = [null, null, null, null, null];
-                currentQuestions = conjunctionData.traening1[currentSetIndex];
+                if (isTraening3) {
+                    currentQuestions = conjunctionData.traening3;
+                } else {
+                    currentQuestions = conjunctionData.traening1[currentSetIndex];
+                }
                 render();
             });
         }

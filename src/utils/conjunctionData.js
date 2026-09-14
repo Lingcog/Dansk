@@ -282,5 +282,169 @@ export const conjunctionData = {
                 }
             ]
         }
-    }
+    },
+    traening3: [
+        {
+            id: 'historie1',
+            text: "Peter bringer mad ud på sin cykel. [blank_0] det sner, er det svært at cykle. I dag sner det meget i byen. [blank_1] cykler han langsomt. Han er meget kold, [blank_2] han har glemt sine varme handsker. [blank_3] han fryser, smiler han til kunderne, der venter på deres mad. Det er en hård vagt, men han fortsætter [blank_4]. [blank_5] han kørte hjemmefra klokken 16, var det lyst. Nu er det helt mørkt.",
+            blanks: {
+                "0": {
+                    options: ["Når", "Da", "Fordi"],
+                    answer: "Når",
+                    feedback: {
+                        "Da": "Husk at det sner flere gange (det er en generel tilstand, han oplever ofte). Derfor bruger vi 'Når'. 'Da' er kun for en enkeltstående begivenhed i fortiden.",
+                        "Fordi": "'Fordi' beskriver en årsag. Her vil vi sige, at i de tilfælde hvor det sner, er det svært at cykle. Tiden (når) er bedst."
+                    }
+                },
+                "1": {
+                    options: ["Derfor", "Fordi", "Men"],
+                    answer: "Derfor",
+                    feedback: {
+                        "Fordi": "'Fordi' peger bagud mod årsagen. Her peger vi fremad mod konsekvensen af sneen (at han cykler langsomt), så det er 'Derfor'.",
+                        "Men": "Der er ikke en modsætning. Det er logisk at man cykler langsomt i sne, så vi skal vise en konsekvens (Derfor)."
+                    }
+                },
+                "2": {
+                    options: ["fordi", "derfor", "selvom"],
+                    answer: "fordi",
+                    feedback: {
+                        "derfor": "'Derfor' peger fremad. Her forklarer vi baggrunden for, at han er kold. Vi kigger bagud på årsagen, som er de glemte handsker.",
+                        "selvom": "Der er ingen modsætning. Man bliver jo kold af at glemme handskerne."
+                    }
+                },
+                "3": {
+                    options: ["Selvom", "Alligevel", "Da"],
+                    answer: "Selvom",
+                    feedback: {
+                        "Alligevel": "'Alligevel' beskriver at man bryder igennem en mur, men her er muren (kulden) lige ved at blive bygget op. Vi starter forhindringen med 'Selvom'.",
+                        "Da": "Vi taler ikke om en enkeltstående hændelse i fortiden. Det sker lige nu."
+                    }
+                },
+                "4": {
+                    options: ["alligevel", "selvom", "fordi"],
+                    answer: "alligevel",
+                    feedback: {
+                        "selvom": "'Selvom' kræver en ny sætning (muren). Her sker handlingen PÅ TRODS AF det hårde arbejde. Han bryder muren, så vi siger 'alligevel'.",
+                        "fordi": "Han fortsætter jo ikke FORDI det er hårdt. Det ville være mærkeligt. Han fortsætter på trods."
+                    }
+                },
+                "5": {
+                    options: ["Da", "Når", "Derfor"],
+                    answer: "Da",
+                    feedback: {
+                        "Når": "Dette skete præcis klokken 16 i går. Det er et punktnedslag i fortiden (tegnestiften), så det skal være 'Da'.",
+                        "Derfor": "Tidspunktet klokken 16 er ikke en konsekvens af noget. Det er en tidsangivelse i fortiden."
+                    }
+                }
+            }
+        },
+        {
+            id: 'historie2',
+            text: "Anna arbejder som gartner i en stor park. Hun klipper kun græsset, [blank_0] det er tørvejr. I går regnede det hele dagen. [blank_1] hun mødte på arbejde, var alting vådt. Hun kunne ikke klippe græsset, [blank_2] jorden var for blød. [blank_3] arbejdede hun inde i det store drivhus i stedet. [blank_4] det regnede og var koldt udenfor, var der meget varmt i drivhuset. Hun svedte, men hun fortsatte [blank_5] med at arbejde.",
+            blanks: {
+                "0": {
+                    options: ["når", "da", "derfor"],
+                    answer: "når",
+                    feedback: {
+                        "da": "At klippe græsset i tørvejr er en vane (noget der sker flere gange). 'Da' bruges kun om fortid.",
+                        "derfor": "'Derfor' bruges til en logisk konsekvens i en ny sætning, ikke til at beskrive en betingelse i tiden."
+                    }
+                },
+                "1": {
+                    options: ["Da", "Når", "Fordi"],
+                    answer: "Da",
+                    feedback: {
+                        "Når": "Det her handler om en specifik dag (i går). Et punktnedslag i fortiden (tegnestiften) kræver 'Da'.",
+                        "Fordi": "Det var ikke *årsagen* til at alt var vådt at hun mødte på arbejde, det skete bare på det tidspunkt."
+                    }
+                },
+                "2": {
+                    options: ["fordi", "derfor", "alligevel"],
+                    answer: "fordi",
+                    feedback: {
+                        "derfor": "Den bløde jord er årsagen (peger bagud). 'Derfor' bruges, når vi peger frem mod konsekvensen.",
+                        "alligevel": "Der er ikke tale om, at hun ikke kunne klippe græsset på trods af noget. Det var pga. regnen."
+                    }
+                },
+                "3": {
+                    options: ["Derfor", "Fordi", "Selvom"],
+                    answer: "Derfor",
+                    feedback: {
+                        "Fordi": "Her kigger vi frem mod handlingen: at arbejde i drivhuset. Det er konsekvensen af regnen. Vi skyder bolden afsted med 'Derfor'.",
+                        "Selvom": "At hun ikke klippede græsset, er ikke muren. Drivhusarbejdet var bare hendes anden mulighed."
+                    }
+                },
+                "4": {
+                    options: ["Selvom", "Alligevel", "Da"],
+                    answer: "Selvom",
+                    feedback: {
+                        "Alligevel": "Vi er i gang med at beskrive modsætningen mellem vejret ude og inde. Vi bygger muren ('det var koldt udenfor'), så vi starter med 'Selvom'.",
+                        "Da": "Det handler om en modsætning (koldt ude vs varmt inde), ikke bare et tidspunkt."
+                    }
+                },
+                "5": {
+                    options: ["alligevel", "selvom", "derfor"],
+                    answer: "alligevel",
+                    feedback: {
+                        "selvom": "Sveden (muren) er allerede nævnt, nu bryder hun igennem den og arbejder videre, og det kalder vi 'alligevel'.",
+                        "derfor": "Man fortsætter normalt ikke arbejdet FORDI man sveder voldsomt. Man gør det på trods."
+                    }
+                }
+            }
+        },
+        {
+            id: 'historie3',
+            text: "Lars er tjener på en populær café. Caféen har mange borde udenfor. [blank_0] solen skinner, vil alle gæsterne sidde ude. I dag er det sommer og meget varmt. [blank_1] har Lars ekstra travlt. Han løber hurtigt, [blank_2] mange gæster venter på deres mad. [blank_3] han er træt i benene, smiler han og er glad. Han tager en ekstra vagt [blank_4]. [blank_5] han endelig fik en kort pause klokken 14, drak han en stor, kold cola.",
+            blanks: {
+                "0": {
+                    options: ["Når", "Da", "Derfor"],
+                    answer: "Når",
+                    feedback: {
+                        "Da": "At solen skinner, sker mere end én gang. Det er en vane for gæsterne, at de sætter sig ud i solen. Brug 'Når'.",
+                        "Derfor": "Her beskriver vi hvornår gæsterne vil sidde ude, ikke en konsekvens i sig selv."
+                    }
+                },
+                "1": {
+                    options: ["Derfor", "Fordi", "Men"],
+                    answer: "Derfor",
+                    feedback: {
+                        "Fordi": "Vi ved allerede at solen skinner. At han får travlt er konsekvensen (pilen fremad), så vi bruger 'Derfor'.",
+                        "Men": "Det er meget logisk at en café får travlt i solskin. Der er ikke nogen modsætning her."
+                    }
+                },
+                "2": {
+                    options: ["fordi", "derfor", "alligevel"],
+                    answer: "fordi",
+                    feedback: {
+                        "derfor": "Vi skal give årsagen (pege bagud) til, at han løber hurtigt. Gæsterne der venter er årsagen.",
+                        "alligevel": "Han løber ikke hurtigt på trods af gæsterne, men netop på grund af dem."
+                    }
+                },
+                "3": {
+                    options: ["Selvom", "Alligevel", "Da"],
+                    answer: "Selvom",
+                    feedback: {
+                        "Alligevel": "Vi er ved at bygge muren/forhindringen op (at han er træt i benene). 'Selvom' starter muren.",
+                        "Da": "Sætningen viser, at han smiler på trods af smerten i benene, ikke at det var noget, der skete i fortiden."
+                    }
+                },
+                "4": {
+                    options: ["alligevel", "selvom", "fordi"],
+                    answer: "alligevel",
+                    feedback: {
+                        "selvom": "Handlingen udføres på trods (han tager vagten). 'Alligevel' bryder igennem forhindringen i slutningen af sætningen.",
+                        "fordi": "Han tager vel ikke vagten FORDI han er træt! Han gør det på trods af, at han er træt."
+                    }
+                },
+                "5": {
+                    options: ["Da", "Når", "Fordi"],
+                    answer: "Da",
+                    feedback: {
+                        "Når": "Klokken 14 var et enkeltstående tidspunkt i fortiden. Så husk at sætte tegnestiften og bruge 'Da'.",
+                        "Fordi": "Pausen var ikke årsagen til, at han drak cola. Det skete på det specifikke tidspunkt i fortiden."
+                    }
+                }
+            }
+        }
+    ]
 };

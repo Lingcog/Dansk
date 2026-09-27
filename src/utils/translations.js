@@ -1144,7 +1144,9 @@ export const translations = {
     idiom_vi_brug: "Advarsel mod dårlig mad.",
     idiom_pt_brug: "Sund mad giver godt helbred.",
     idiom_fa_brug: "Det er sundt ikke at spise for meget.",
-    idiom_th_brug: "En god regel, før I spiser."
+    idiom_th_brug: "En god regel, før I spiser.",
+    "talemaader_title": "Talemåder & Mønstre",
+    "talemaader_subtitle": "Lær danske talemåder trin-for-trin og find de overordnede mønstre"
   },
   en: {
     "flow_story": "<strong>How it works in practice:</strong><br>When we start, <strong>When (Da)</strong> tells us we are at a fixed point in the past, while <strong>When (Når)</strong> shows we are in a roundabout where things repeat. To move forward, we need the engine <strong>Because</strong> (the cause), which propels us toward the result with <strong>Therefore</strong>. Along the way, we can continue straight and add more with <strong>And/Plus</strong>, or take an unexpected turn with <strong>But</strong>. If we hit a roadblock (<strong>Even though</strong>), we know it won't stop us... Because <strong>Anyway</strong> smashes right through it!",
@@ -2329,7 +2331,9 @@ export const translations = {
     idiom_vi_brug: "Warning against bad food.",
     idiom_pt_brug: "Healthy food gives good health.",
     idiom_fa_brug: "It is healthy not to overeat.",
-    idiom_th_brug: "A good rule before eating."
+    idiom_th_brug: "A good rule before eating.",
+    "talemaader_title": "Idioms & Patterns",
+    "talemaader_subtitle": "Learn Danish idioms step-by-step and find the overarching patterns"
   },
   de: {
     "flow_story": "<strong>Wie es in der Praxis funktioniert:</strong><br>Wenn wir starten, sagt uns <strong>Als (Da)</strong>, dass wir uns an einem festen Punkt in der Vergangenheit befinden, während <strong>Wenn (Når)</strong> zeigt, dass wir uns in einem Kreisverkehr befinden. Um voranzukommen, brauchen wir den Motor <strong>Weil</strong> (die Ursache), der uns mit <strong>Deshalb</strong> zum Ergebnis treibt. Unterwegs können wir mit <strong>Und</strong> geradeaus weiterfahren oder mit <strong>Aber</strong> eine unerwartete Wendung nehmen. Wenn wir auf eine Straßensperre stoßen (<strong>Obwohl</strong>), wissen wir, dass sie uns nicht aufhalten wird... Denn <strong>Trotzdem</strong> durchbricht sie einfach!",
@@ -3544,7 +3548,9 @@ export const translations = {
     idiom_vi_brug: "Warnung vor schlechtem Essen.",
     idiom_pt_brug: "Gesundes Essen gibt gute Gesundheit.",
     idiom_fa_brug: "Es ist gesund, nicht zu viel zu essen.",
-    idiom_th_brug: "Eine gute Regel vor dem Essen."
+    idiom_th_brug: "Eine gute Regel vor dem Essen.",
+    "talemaader_title": "Redewendungen & Muster",
+    "talemaader_subtitle": "Lerne dänische Redewendungen Schritt für Schritt und finde die übergeordneten Muster"
   },
   ar: {
     "flow_story": "<strong>كيف تعمل في الممارسة العملية:</strong><br>عندما نبدأ، تخبرنا <strong>Da</strong> أننا في نقطة ثابتة في الماضي، بينما تظهر <strong>Når</strong> أننا في دوار حيث تتكرر الأشياء. للمضي قدمًا، نحتاج إلى المحرك <strong>لأن</strong> (السبب)، الذي يدفعنا نحو النتيجة باستخدام <strong>لذلك</strong>. على طول الطريق، يمكننا الاستمرار للأمام وإضافة المزيد باستخدام <strong>و</strong>، أو أخذ منعطف غير متوقع باستخدام <strong>لكن</strong>. إذا واجهنا حاجزًا (<strong>بالرغم من</strong>)، فإننا نعلم أنه لن يوقفنا... لأن <strong>مع ذلك</strong> تخترقه!",
@@ -4765,7 +4771,9 @@ export const translations = {
     idiom_vi_brug: "Advarsel mod dårlig mad.",
     idiom_pt_brug: "Sund mad giver godt helbred.",
     idiom_fa_brug: "Det er sundt ikke at spise for meget.",
-    idiom_th_brug: "En god regel, før I spiser."
+    idiom_th_brug: "En god regel, før I spiser.",
+    "talemaader_title": "التعابير والأنماط",
+    "talemaader_subtitle": "تعلم التعابير الدنماركية خطوة بخطوة واكتشف الأنماط العامة"
   },
   es: {
     "flow_story": "<strong>Cómo funciona en la práctica:</strong><br>Cuando empezamos, <strong>Da</strong> nos dice que estamos en un punto fijo en el pasado, mientras que <strong>Når</strong> muestra que estamos en una rotonda. Para avanzar, necesitamos el motor <strong>Porque</strong> (la causa), que nos impulsa hacia el resultado con <strong>Por lo tanto</strong>. En el camino, podemos seguir recto con <strong>Y</strong>, o tomar un giro inesperado con <strong>Pero</strong>. Si encontramos un obstáculo (<strong>Aunque</strong>), sabemos que no nos detendrá... ¡Porque <strong>Aún así</strong> lo atraviesa!",
@@ -5933,7 +5941,9 @@ export const translations = {
     idiom_vi_brug: "Advertencia contra la mala comida.",
     idiom_pt_brug: "La comida saludable da buena salud.",
     idiom_fa_brug: "Es saludable no comer demasiado.",
-    idiom_th_brug: "Una buena regla antes de comer."
+    idiom_th_brug: "Una buena regla antes de comer.",
+    "talemaader_title": "Modismos y Patrones",
+    "talemaader_subtitle": "Aprende modismos daneses paso a paso y encuentra los patrones generales"
   },
   fa: {
     "flow_story": "<strong>نحوه عملکرد آن در عمل:</strong><br>وقتی شروع می کنیم، <strong>Da</strong> به ما می گوید که در یک نقطه ثابت در گذشته هستیم، در حالی که <strong>Når</strong> نشان می دهد در میدانی هستیم که چیزها تکرار می شوند. برای حرکت به جلو، به موتور <strong>زیرا</strong> (علت) نیاز داریم که ما را با <strong>بنابراین</strong> به سمت نتیجه سوق می دهد. در طول مسیر، می توانیم با <strong>و</strong> مستقیم ادامه دهیم، یا با <strong>اما</strong> یک چرخش غیرمنتظره داشته باشیم. اگر به مانعی برخورد کنیم (<strong>اگرچه</strong>)، می دانیم که ما را متوقف نخواهد کرد... زیرا <strong>با این حال</strong> مستقیماً آن را می شکند!",
@@ -7088,7 +7098,9 @@ export const translations = {
     idiom_vi_brug: "هشدار درباره غذای بد.",
     idiom_pt_brug: "غذای سالم سلامتی خوبی به همراه دارد.",
     idiom_fa_brug: "بیش از حد نخوردن سالم است.",
-    idiom_th_brug: "یک قانون خوب قبل از غذا خوردن."
+    idiom_th_brug: "یک قانون خوب قبل از غذا خوردن.",
+    "talemaader_title": "اصطلاحات و الگوها",
+    "talemaader_subtitle": "اصطلاحات دانمارکی را گام به گام بیاموزید و الگوهای کلی را پیدا کنید"
   },
   ku: {
     "flow_story": "<strong>Di pratîkê de çawa dixebite:</strong><br>Gava ku em dest pê dikin, <strong>Da</strong> ji me re dibêje em li xalek di rabirdûyê de ne, dema ku <strong>Når</strong> nîşan dide em li çarxerêyekê ne. Ji bo ku em pêşve biçin, em hewceyê motorê <strong>Ji ber ku</strong> ne, ku me bi <strong>Lewma</strong> ber bi encamê ve dibe. Li ser rê, em dikarin bi <strong>Û</strong> rast dewam bikin, an jî bi <strong>Lê</strong> zivirînek nedîtî bikin. Heke em rastî rêbendek (<strong>Tevî ku</strong>) bên, em dizanin ku ew ê me nesekine... Ji ber ku <strong>Dîsa jî</strong> wê dişkîne!",
@@ -8308,7 +8320,9 @@ export const translations = {
     idiom_vi_brug: "Hişyariya li dijî xwarina xirab.",
     idiom_pt_brug: "Xwarina tendurist tenduristiyek baş dide.",
     idiom_fa_brug: "Tendurist e ku mirov zêde nexwe.",
-    idiom_th_brug: "Beriya xwarinê qaîdeyek baş."
+    idiom_th_brug: "Beriya xwarinê qaîdeyek baş.",
+    "talemaader_title": "Biwêj û Nimûne",
+    "talemaader_subtitle": "Biwêjên danîmarkî gav bi gav fêr bibin û nimûneyên giştî bibînin"
   },
   ne: {
     "flow_story": "<strong>यसले कसरी काम गर्छ:</strong><br>जब हामी सुरु गर्छौं, <strong>Da</strong> ले हामीलाई अतीतको एक निश्चित बिन्दुमा छौं भन्छ। अगाडि बढ्न हामीलाई इन्जिन <strong>किनभने</strong> चाहिन्छ, जसले हामीलाई <strong>त्यसैले</strong> को साथ परिणामतर्फ धकेल्छ। बाटोमा, हामी <strong>र</strong> सँग सीधा अगाडि बढ्न सक्छौं, वा <strong>तर</strong> सँग अप्रत्याशित मोड लिन सक्छौं। यदि हामीले सडक अवरोध (<strong>यद्यपि</strong>) सामना गर्यौं भने, हामीलाई थाहा छ यसले हामीलाई रोक्ने छैन... किनभने <strong>तैपनि</strong> ले यसलाई तोड्छ!",
@@ -9432,7 +9446,9 @@ export const translations = {
     idiom_vi_brug: "खराब खानाको विरुद्ध चेतावनी।",
     idiom_pt_brug: "स्वस्थ खानाले राम्रो स्वास्थ्य दिन्छ।",
     idiom_fa_brug: "धेरै नखानु स्वस्थकर छ।",
-    idiom_th_brug: "खानुपहिले एउटा राम्रो नियम।"
+    idiom_th_brug: "खानुपहिले एउटा राम्रो नियम।",
+    "talemaader_title": "टुक्का र ढाँचाहरू",
+    "talemaader_subtitle": "डेनिस टुक्काहरू चरण-दर-चरण सिक्नुहोस् र समग्र ढाँचाहरू फेला पार्नुहोस्"
   },
   ps: {
     "flow_story": "<strong>دا په عمل کې څنګه کار کوي:</strong><br>کله چې موږ پیل کوو، <strong>Da</strong> موږ ته وایي چې موږ په تیرو کې یو، پداسې حال کې چې <strong>Når</strong> موږ ته ښیې چې موږ په یوه ګرداب کې یو. د مخ په وړاندې تګ لپاره، موږ انجن <strong>ځکه چې</strong> ته اړتیا لرو، کوم چې موږ <strong>نو</strong> سره پایلې ته رسوي. په لاره کې، موږ کولی شو د <strong>او</strong> سره مستقیم لاړ شو، یا د <strong>مګر</strong> سره ناڅاپي لوري بدل کړو. که چیرې موږ د خنډ (<strong>که څه هم</strong>) سره مخ شو، موږ پوهیږو چې دا به موږ ونه دروي... ځکه چې <strong>بیا هم</strong> د هغې له لارې تیریږي!",
@@ -10623,7 +10639,9 @@ export const translations = {
     idiom_vi_brug: "د خرابو خوړو په وړاندې خبرداری.",
     idiom_pt_brug: "سالم خواړه ښه روغتیا ورکوي.",
     idiom_fa_brug: "ډیر نه خوړل روغتیا ده.",
-    idiom_th_brug: "له خوړلو مخکې یو ښه قانون."
+    idiom_th_brug: "له خوړلو مخکې یو ښه قانون.",
+    "talemaader_title": "اصطلاحات او نمونې",
+    "talemaader_subtitle": "ډنمارکي اصطلاحات په تدریجي ډول زده کړئ او عمومي نمونې ومومئ"
   },
   pt: {
     "flow_story": "<strong>Como funciona na prática:</strong><br>Quando começamos, <strong>Da</strong> nos diz que estamos em um ponto fixo no passado, enquanto <strong>Når</strong> mostra que estamos em uma rotatória. Para avançar, precisamos do motor <strong>Porque</strong> (a causa), que nos impulsiona em direção ao resultado com <strong>Portanto</strong>. Ao longo do caminho, podemos continuar reto com <strong>E</strong>, ou fazer uma curva inesperada com <strong>Mas</strong>. Se batermos em um obstáculo (<strong>Embora</strong>), sabemos que ele não nos impedirá... Porque <strong>Ainda assim</strong> passa direto por ele!",
@@ -11787,7 +11805,9 @@ export const translations = {
     idiom_vi_brug: "Aviso contra comida ruim.",
     idiom_pt_brug: "Comida saudável dá boa saúde.",
     idiom_fa_brug: "É saudável não comer em excesso.",
-    idiom_th_brug: "Uma boa regra antes de comer."
+    idiom_th_brug: "Uma boa regra antes de comer.",
+    "talemaader_title": "Expressões e Padrões",
+    "talemaader_subtitle": "Aprenda expressões dinamarquesas passo a passo e encontre os padrões gerais"
   },
   ru: {
     "flow_story": "<strong>Как это работает на практике:</strong><br>Когда мы начинаем, <strong>Когда (Da)</strong> говорит нам, что мы находимся в фиксированной точке в прошлом, в то время как <strong>Когда (Når)</strong> показывает, что мы на кольце, где вещи повторяются. Чтобы двигаться вперед, нам нужен двигатель <strong>Потому что</strong> (причина), который толкает нас к результату с помощью <strong>Поэтому</strong>. По пути мы можем продолжить прямо с <strong>И</strong>, или сделать неожиданный поворот с <strong>Но</strong>. Если мы столкнемся с препятствием (<strong>Хотя</strong>), мы знаем, что оно нас не остановит... Потому что <strong>Всё равно</strong> прорывается сквозь него!",
@@ -12959,7 +12979,9 @@ export const translations = {
     idiom_vi_brug: "Предупреждение о плохой еде.",
     idiom_pt_brug: "Здоровая еда дает хорошее здоровье.",
     idiom_fa_brug: "Полезно не переедать.",
-    idiom_th_brug: "Хорошее правило перед едой."
+    idiom_th_brug: "Хорошее правило перед едой.",
+    "talemaader_title": "Идиомы и Паттерны",
+    "talemaader_subtitle": "Изучайте датские идиомы шаг за шагом и находите общие паттерны"
   },
   th: {
     "traening3_historie1_0_Da": "จำไว้ว่าหิมะตกหลายครั้ง (เป็นสถานการณ์ทั่วไปที่เขาพบเจอบ่อยๆ) ดังนั้นเราจึงใช้ 'Når' ส่วน 'Da' ใช้สำหรับเหตุการณ์ที่เกิดขึ้นเพียงครั้งเดียวในอดีตเท่านั้น",
@@ -14125,7 +14147,9 @@ export const translations = {
     idiom_vi_brug: "คำเตือนเกี่ยวกับอาหารที่ไม่ดี",
     idiom_pt_brug: "อาหารที่ดีต่อสุขภาพทำให้ร่างกายแข็งแรง",
     idiom_fa_brug: "การไม่กินมากเกินไปคือสุขภาพดี",
-    idiom_th_brug: "กฎที่ดีก่อนการกิน"
+    idiom_th_brug: "กฎที่ดีก่อนการกิน",
+    "talemaader_title": "สำนวนและรูปแบบ",
+    "talemaader_subtitle": "เรียนรู้สำนวนภาษาเดนมาร์กทีละขั้นตอนและค้นหารูปแบบโดยรวม"
   },
   tr: {
     "flow_story": "<strong>Pratikte nasıl çalışır:</strong><br>Başladığımızda, <strong>Da</strong> geçmişte sabit bir noktada olduğumuzu söylerken, <strong>Når</strong> olayların tekrarlandığı bir döner kavşakta olduğumuzu gösterir. İlerlemek için, bizi <strong>Derfor</strong> ile sonuca doğru iten motor <strong>Fordi</strong>'ye (nedene) ihtiyacımız var. Yol boyunca <strong>Og</strong> ile düz devam edebilir veya <strong>Men</strong> ile beklenmedik bir dönüş yapabiliriz. Bir engele çarparsak (<strong>Selvom</strong>), bizi durdurmayacağını biliriz... Çünkü <strong>Alligevel</strong> onu kırıp geçer!",
@@ -15274,7 +15298,9 @@ export const translations = {
     idiom_vi_brug: "Kötü yiyeceklere karşı uyarı.",
     idiom_pt_brug: "Sağlıklı yiyecekler iyi sağlık verir.",
     idiom_fa_brug: "Çok fazla yememek sağlıklıdır.",
-    idiom_th_brug: "Yemekten önce iyi bir kural."
+    idiom_th_brug: "Yemekten önce iyi bir kural.",
+    "talemaader_title": "Deyimler ve Desenler",
+    "talemaader_subtitle": "Danca deyimleri adım adım öğrenin ve genel desenleri bulun"
   },
   uk: {
     "flow_story": "<strong>Як це працює на практиці:</strong><br>Коли ми починаємо, <strong>Коли (Da)</strong> говорить нам, що ми знаходимося у фіксованій точці в минулому, тоді як <strong>Коли (Når)</strong> показує, що ми на кільці, де події повторюються. Щоб рухатися вперед, нам потрібен двигун <strong>Тому що</strong> (причина), який штовхає нас до результату за допомогою <strong>Тому</strong>. По дорозі ми можемо продовжити прямо і додати ще за допомогою <strong>Та/І</strong>, або зробити несподіваний поворот за допомогою <strong>Але</strong>. Якщо ми зіткнемося з перешкодою (<strong>Хоча</strong>), ми знаємо, що вона нас не зупинить... Тому що <strong>Все одно</strong> проривається крізь неї!",
@@ -16443,7 +16469,9 @@ export const translations = {
     idiom_vi_brug: "Попередження проти шкідливої їжі.",
     idiom_pt_brug: "Здорова їжа дає міцне здоров'я.",
     idiom_fa_brug: "Корисно не переїдати.",
-    idiom_th_brug: "Хороше правило перед їжею."
+    idiom_th_brug: "Хороше правило перед їжею.",
+    "talemaader_title": "Ідіоми та Патерни",
+    "talemaader_subtitle": "Вивчайте данські ідіоми крок за кроком і знаходьте загальні патерни"
   },
   ur: {
     "traening3_historie1_0_Da": "یاد رکھیں کہ برف باری بار بار ہوتی ہے (یہ ایک عمومی کیفیت ہے جس کا سامنا وہ اکثر کرتا ہے)۔ اس لیے ہم 'Når' استعمال کرتے ہیں۔ 'Da' صرف ماضی کے کسی ایک واقعے کے لیے استعمال ہوتا ہے۔",
@@ -17634,7 +17662,9 @@ export const translations = {
     idiom_vi_brug: "خراب کھانے کے خلاف انتباہ۔",
     idiom_pt_brug: "صحت بخش کھانا اچھی صحت دیتا ہے۔",
     idiom_fa_brug: "زیادہ نہ کھانا صحت مند ہے۔",
-    idiom_th_brug: "کھانے سے پہلے ایک اچھا اصول۔"
+    idiom_th_brug: "کھانے سے پہلے ایک اچھا اصول۔",
+    "talemaader_title": "محاورے اور طرزیں",
+    "talemaader_subtitle": "ڈینش محاورے مرحلہ وار سیکھیں اور مجموعی طرزیں تلاش کریں"
   },
   vi: {
     "flow_story": "<strong>Cách hoạt động trong thực tế:</strong><br>Khi chúng ta bắt đầu, <strong>Da</strong> cho chúng ta biết chúng ta đang ở một điểm cố định trong quá khứ, trong khi <strong>Når</strong> cho thấy chúng ta đang ở một vòng xuyến. Để tiến lên, chúng ta cần động cơ <strong>Bởi vì</strong> (nguyên nhân), nó thúc đẩy chúng ta tới kết quả với <strong>Do đó</strong>. Dọc đường, chúng ta có thể đi thẳng với <strong>Và</strong>, hoặc rẽ bất ngờ với <strong>Nhưng</strong>. Nếu chúng ta gặp rào cản (<strong>Mặc dù</strong>), chúng ta biết nó sẽ không cản được... Bởi vì <strong>Dù sao thì</strong> cũng sẽ vượt qua nó!",
@@ -18800,7 +18830,9 @@ export const translations = {
     idiom_vi_brug: "Cảnh báo về thức ăn không tốt.",
     idiom_pt_brug: "Thức ăn lành mạnh mang lại sức khỏe tốt.",
     idiom_fa_brug: "Thật khỏe mạnh khi không ăn quá nhiều.",
-    idiom_th_brug: "Một nguyên tắc tốt trước khi ăn."
+    idiom_th_brug: "Một nguyên tắc tốt trước khi ăn.",
+    "talemaader_title": "Thành ngữ & Mẫu",
+    "talemaader_subtitle": "Học thành ngữ Đan Mạch từng bước và tìm ra các mẫu chung"
   },
   zh: {
     "flow_story": "<strong>它是如何运作的：</strong><br>当我们开始时，<strong>Da</strong> 告诉我们处于过去的一个固定点，而 <strong>Når</strong> 显示我们处于一个循环中。为了前进，我们需要引擎 <strong>因为</strong>（原因），它用 <strong>所以</strong> 将我们推向结果。在路上，我们可以用 <strong>和</strong> 继续直行，或者用 <strong>但是</strong> 意外转弯。如果我们遇到路障（<strong>尽管</strong>），我们知道它不会阻止我们... 因为 <strong>仍然</strong> 会直接冲破它！",
@@ -19941,6 +19973,8 @@ export const translations = {
     idiom_vi_brug: "警告不要吃不好的食物。",
     idiom_pt_brug: "健康的食物带来好身体。",
     idiom_fa_brug: "不吃太多是健康的。",
-    idiom_th_brug: "饭前的一条好规矩。"
+    idiom_th_brug: "饭前的一条好规矩。",
+    "talemaader_title": "成语与模式",
+    "talemaader_subtitle": "逐步学习丹麦语成语并找出整体模式"
   }
 };

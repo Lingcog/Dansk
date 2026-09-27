@@ -34,6 +34,49 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     }, 3000);
   }
 
+  
+  function renderFaellesTanker(parent) {
+    const title = document.createElement('h1');
+    title.textContent = getTranslation('faelles_tanker_title');
+    parent.appendChild(title);
+
+    const subtitle = document.createElement('p');
+    subtitle.className = 'subtitle';
+    subtitle.textContent = getTranslation('faelles_tanker_desc');
+    parent.appendChild(subtitle);
+    
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-btn';
+    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Tilbage';
+    backBtn.onclick = () => {
+      subView = 'overview';
+      render();
+    };
+    parent.appendChild(backBtn);
+
+    const grid = document.createElement('div');
+    grid.className = 'module-grid';
+    grid.style.marginTop = '30px';
+
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    card.style.borderColor = '#38bdf8';
+    card.onclick = () => navigateFn('idiom_mader_medicin');
+    card.innerHTML = `<div class="module-title">${getTranslation('mader_medicin_card_title')}</div><div class="module-desc">${getTranslation('mader_medicin_card_desc')}</div><button class="module-action-btn" style="background:#38bdf8;color:white;">${getTranslation('mader_medicin_btn')}</button>`;
+    grid.appendChild(card);
+
+    const card2 = document.createElement('div');
+    card2.className = 'module-card';
+    card2.style.borderColor = '#fbbf24';
+    card2.onclick = () => navigateFn('idiom_hjerterum');
+    card2.innerHTML = `<div class="module-title">Gæstfrihed</div><div class="module-desc">Hvor der er hjerterum, er der husrum.</div><button class="module-action-btn" style="background:#fbbf24;color:white;">Prøv nu</button>`;
+    grid.appendChild(card2);
+
+    
+    parent.appendChild(grid);
+  }
+
+
   function render() {
     container.innerHTML = '';
 
@@ -503,7 +546,10 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       renderModuleExercise(viewContainer, currentPkgData.modules[moduleId]);
     } else if (subView === 'module5') {
       renderFinalExercise(viewContainer);
+    } else if (subView === 'faelles_tanker') {
+      renderFaellesTanker(viewContainer);
     }
+
 
     container.appendChild(viewContainer);
   }
@@ -511,12 +557,12 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
   // --- SUBVIEW 0: OVERVIEW ---
   function renderOverview(parent) {
     const title = document.createElement('h1');
-    title.textContent = 'Talemåder & Mønstre';
+    title.textContent = getTranslation('talemaader_title') || 'Talemåder & Mønstre';
     parent.appendChild(title);
 
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Lær danske talemåder trin-for-trin og find de overordnede mønstre';
+    subtitle.textContent = getTranslation('talemaader_subtitle') || 'Lær danske talemåder trin-for-trin og find de overordnede mønstre';
     parent.appendChild(subtitle);
 
     const overviewDiv = document.createElement('div');
@@ -541,18 +587,33 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
       cardTitle.textContent = getTranslation(pkg.title);
       card.appendChild(cardTitle);
 
-      const cardDesc = document.createElement('p');
+      const cardDesc = document.createElement('div');
       cardDesc.className = 'module-desc';
-      cardDesc.textContent = getTranslation(pkg.desc);
+      cardDesc.textContent = "Lær talemåder omkring " + getTranslation(pkg.finale.expectedOveremne);
       card.appendChild(cardDesc);
 
       const actionBtn = document.createElement('button');
       actionBtn.className = 'module-action-btn';
-      actionBtn.textContent = 'Åbn flade';
+      actionBtn.textContent = 'Åbn pakke';
       card.appendChild(actionBtn);
 
       cardGrid.appendChild(card);
     });
+
+    // Fælles tanker, forskellige billeder
+    const faellesCard = document.createElement('div');
+    faellesCard.className = 'module-card';
+    faellesCard.style.borderColor = '#10b981';
+    faellesCard.onclick = () => {
+        subView = 'faelles_tanker';
+        render();
+    };
+    faellesCard.innerHTML = `<div class="module-title">${getTranslation('faelles_tanker_title')}</div><div class="module-desc">${getTranslation('faelles_tanker_subtitle')}</div><button class="module-action-btn" style="background:#10b981;color:white;">${getTranslation('mader_medicin_btn')}</button>`;
+    cardGrid.appendChild(faellesCard);
+
+
+    
+
 
     overviewDiv.appendChild(cardGrid);
     parent.appendChild(overviewDiv);
@@ -613,6 +674,18 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
 
       cardGrid.appendChild(card);
     });
+
+    // Fælles tanker, forskellige billeder
+    const faellesCard = document.createElement('div');
+    faellesCard.className = 'module-card';
+    faellesCard.style.borderColor = '#10b981';
+    faellesCard.onclick = () => {
+        subView = 'faelles_tanker';
+        render();
+    };
+    faellesCard.innerHTML = `<div class="module-title">${getTranslation('faelles_tanker_title')}</div><div class="module-desc">${getTranslation('faelles_tanker_subtitle')}</div><button class="module-action-btn" style="background:#10b981;color:white;">${getTranslation('mader_medicin_btn')}</button>`;
+    cardGrid.appendChild(faellesCard);
+
 
     // Add card for Mod 5 (Final)
     const card5 = document.createElement('div');

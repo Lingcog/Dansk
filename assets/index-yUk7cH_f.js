@@ -117,7 +117,7 @@
             
             <!-- SIDE 2: Bogstavelig oversættelse og Gloser -->
             <div style="background: #fdf2f8; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; text-align: center; border: 1px solid #fbcfe8;">
-                <h2 style="font-size: 2.5rem; color: #831843; margin-bottom: 20px;">Et æble om dagen holder lægen fra døren</h2>
+                <h2 style="font-size: 2.5rem; color: #831843; margin-bottom: 20px;">Et æble om dagen holder lægen væk</h2>
                 <p style="font-size: 1.2rem; color: #9d174d; max-width: 700px; margin: 0 auto 40px auto; line-height: 1.6;">
                     Her er den direkte oversættelse af det danske udtryk til andre sprog. Læg mærke til, hvordan du siger "æble" og "læge" på dit sprog!
                 </p>

@@ -1,5 +1,7 @@
 export const translations = {
   da: {
+    "flow_story": "<strong>Sådan fungerer det i praksis:</strong><br>Når vi starter, fortæller <strong>Da</strong> os, at vi står ved et fast punkt i fortiden, mens <strong>Når</strong> viser, at vi kører i en rundkørsel, hvor ting gentager sig. For at komme frem skal vi bruge motoren <strong>Fordi</strong> (årsagen), som skyder os fremad mod resultatet med <strong>Derfor</strong>. Undervejs kan vi fortsætte ligeud og bygge mere på med <strong>Og/Samt</strong>, eller tage et uventet sving med <strong>Men</strong>. Støder vi ind i en vejspærring (<strong>Selvom</strong>), ved vi, at den ikke stopper os... For <strong>Alligevel</strong> smadrer lige igennem den!",
+    "flow_story": "<strong>Sådan fungerer det i praksis:</strong><br>Når vi starter, fortæller <strong>Da</strong> os, at vi står på et fast punkt i fortiden (som en tegnestift), mens <strong>Når</strong> viser os, at vi kører i en rundkørsel, hvor ting gentager sig. For at komme videre, skal vi bruge motoren <strong>Fordi</strong> (årsagen), som med <strong>Derfor</strong> skubber os frem mod resultatet. Undervejs kan vi bare fortsætte ligeud og lægge mere til med <strong>Og / Samt</strong>, eller tage et uventet sving med <strong>Men</strong>. Rammer vi en vejspærring (<strong>Selvom</strong>), ved vi, at den ikke stopper os... For <strong>Alligevel</strong> brager lige igennem den!",
     "traening3_historie1_0_Da": "Husk at det sner flere gange (det er en generel tilstand, han oplever ofte). Derfor bruger vi 'Når'. 'Da' er kun for en enkeltstående begivenhed i fortiden.",
     "traening3_historie1_0_Fordi": "'Fordi' beskriver en årsag. Her vil vi sige, at i de tilfælde hvor det sner, er det svært at cykle. Tiden (når) er bedst.",
     "traening3_historie1_1_Fordi": "'Fordi' peger bagud mod årsagen. Her peger vi fremad mod konsekvensen af sneen (at han cykler langsomt), så det er 'Derfor'.",
@@ -1059,6 +1061,8 @@ export const translations = {
     "dictaphoneMachineHeard": "Maskinen hørte dig sige:"
   },
   en: {
+    "flow_story": "<strong>How it works in practice:</strong><br>When we start, <strong>When (Da)</strong> tells us we are at a fixed point in the past, while <strong>When (Når)</strong> shows we are in a roundabout where things repeat. To move forward, we need the engine <strong>Because</strong> (the cause), which propels us toward the result with <strong>Therefore</strong>. Along the way, we can continue straight and add more with <strong>And/Plus</strong>, or take an unexpected turn with <strong>But</strong>. If we hit a roadblock (<strong>Even though</strong>), we know it won't stop us... Because <strong>Anyway</strong> smashes right through it!",
+    "flow_story": "<strong>How it works in practice:</strong><br>When we start, <strong>Da (When)</strong> tells us we are at a fixed point in the past, while <strong>Når (When/Whenever)</strong> shows we are in a roundabout where things repeat. To move forward, we need the engine <strong>Fordi (Because)</strong> (the cause), which pushes us towards the result with <strong>Derfor (Therefore)</strong>. Along the way, we can continue straight and add more with <strong>Og (And)</strong>, or take an unexpected turn with <strong>Men (But)</strong>. If we hit a roadblock (<strong>Selvom (Even though)</strong>), we know it won't stop us... Because <strong>Alligevel (Anyway)</strong> crashes right through it!",
     "traening3_historie1_0_Da": "Remember that it snows multiple times (it is a general condition he experiences often). Therefore, we use 'Når'. 'Da' is only for a single event in the past.",
     "traening3_historie1_0_Fordi": "'Fordi' describes a cause. Here, we want to say that in cases where it snows, it is difficult to cycle. Time (når) is best.",
     "traening3_historie1_1_Fordi": "'Fordi' points backward to the cause. Here we point forward to the consequence of the snow (that he cycles slowly), so it is 'Derfor'.",
@@ -2155,6 +2159,7 @@ export const translations = {
     "dictaphoneMachineHeard": "The machine heard you say:"
   },
   de: {
+    "flow_story": "<strong>Wie es in der Praxis funktioniert:</strong><br>Wenn wir starten, sagt uns <strong>Als (Da)</strong>, dass wir uns an einem festen Punkt in der Vergangenheit befinden, während <strong>Wenn (Når)</strong> zeigt, dass wir uns in einem Kreisverkehr befinden. Um voranzukommen, brauchen wir den Motor <strong>Weil</strong> (die Ursache), der uns mit <strong>Deshalb</strong> zum Ergebnis treibt. Unterwegs können wir mit <strong>Und</strong> geradeaus weiterfahren oder mit <strong>Aber</strong> eine unerwartete Wendung nehmen. Wenn wir auf eine Straßensperre stoßen (<strong>Obwohl</strong>), wissen wir, dass sie uns nicht aufhalten wird... Denn <strong>Trotzdem</strong> durchbricht sie einfach!",
     "traening3_historie1_0_Da": "Denk daran, dass es mehrmals schneit (das ist ein allgemeiner Zustand, den er oft erlebt). Deshalb verwenden wir 'Når'. 'Da' steht nur für ein einmaliges Ereignis in der Vergangenheit.",
     "traening3_historie1_0_Fordi": "'Fordi' beschreibt eine Ursache. Hier möchten wir sagen, dass es in den Fällen, in denen es schneit, schwierig ist, Fahrrad zu fahren. Die Zeitangabe (når) ist am besten.",
     "traening3_historie1_1_Fordi": "'Fordi' weist nach hinten auf die Ursache. Hier weisen wir nach vorne auf die Folge des Schnees (dass er langsam Rad fährt), daher ist es 'Derfor'.",
@@ -3283,6 +3288,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n und g verschmelzen im Hals"
   },
   ar: {
+    "flow_story": "<strong>كيف تعمل في الممارسة العملية:</strong><br>عندما نبدأ، تخبرنا <strong>Da</strong> أننا في نقطة ثابتة في الماضي، بينما تظهر <strong>Når</strong> أننا في دوار حيث تتكرر الأشياء. للمضي قدمًا، نحتاج إلى المحرك <strong>لأن</strong> (السبب)، الذي يدفعنا نحو النتيجة باستخدام <strong>لذلك</strong>. على طول الطريق، يمكننا الاستمرار للأمام وإضافة المزيد باستخدام <strong>و</strong>، أو أخذ منعطف غير متوقع باستخدام <strong>لكن</strong>. إذا واجهنا حاجزًا (<strong>بالرغم من</strong>)، فإننا نعلم أنه لن يوقفنا... لأن <strong>مع ذلك</strong> تخترقه!",
     "traening3_historie1_0_Da": "تذكّر أن الثلج يتساقط عدة مرات (إنها حالة عامة يمر بها كثيرًا). لذلك نستخدم 'Når'. أما 'Da' فتُستخدم فقط لحدث وقع لمرة واحدة في الماضي.",
     "traening3_historie1_0_Fordi": "تصف كلمة 'Fordi' السبب. هنا نريد أن نقول إنه في الحالات التي يتساقط فيها الثلج، يصعب ركوب الدراجة. الظرف الزمني (når) هو الأنسب.",
     "traening3_historie1_1_Fordi": "تشير كلمة 'Fordi' إلى الوراء نحو السبب. وهنا نشير إلى الأمام نحو النتيجة المترتبة على الثلج (أنه يقود الدراجة ببطء)، لذا نستخدم 'Derfor'.",
@@ -4417,6 +4423,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n و g يندمجان في الحلق"
   },
   es: {
+    "flow_story": "<strong>Cómo funciona en la práctica:</strong><br>Cuando empezamos, <strong>Da</strong> nos dice que estamos en un punto fijo en el pasado, mientras que <strong>Når</strong> muestra que estamos en una rotonda. Para avanzar, necesitamos el motor <strong>Porque</strong> (la causa), que nos impulsa hacia el resultado con <strong>Por lo tanto</strong>. En el camino, podemos seguir recto con <strong>Y</strong>, o tomar un giro inesperado con <strong>Pero</strong>. Si encontramos un obstáculo (<strong>Aunque</strong>), sabemos que no nos detendrá... ¡Porque <strong>Aún así</strong> lo atraviesa!",
     "traening3_historie1_0_Da": "Recuerda que nieva varias veces (es una situación general que él experimenta a menudo). Por eso usamos 'Når'. 'Da' es solo para un acontecimiento puntual en el pasado.",
     "traening3_historie1_0_Fordi": "'Fordi' describe una causa. Aquí queremos decir que en los casos en que nieva, es difícil andar en bicicleta. La referencia temporal (når) es la mejor opción.",
     "traening3_historie1_1_Fordi": "'Fordi' apunta hacia atrás, hacia la causa. Aquí apuntamos hacia adelante, hacia la consecuencia de la nieve (que él va despacio en bicicleta), por lo que es 'Derfor'.",
@@ -5498,6 +5505,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n y g se funden en la garganta"
   },
   fa: {
+    "flow_story": "<strong>نحوه عملکرد آن در عمل:</strong><br>وقتی شروع می کنیم، <strong>Da</strong> به ما می گوید که در یک نقطه ثابت در گذشته هستیم، در حالی که <strong>Når</strong> نشان می دهد در میدانی هستیم که چیزها تکرار می شوند. برای حرکت به جلو، به موتور <strong>زیرا</strong> (علت) نیاز داریم که ما را با <strong>بنابراین</strong> به سمت نتیجه سوق می دهد. در طول مسیر، می توانیم با <strong>و</strong> مستقیم ادامه دهیم، یا با <strong>اما</strong> یک چرخش غیرمنتظره داشته باشیم. اگر به مانعی برخورد کنیم (<strong>اگرچه</strong>)، می دانیم که ما را متوقف نخواهد کرد... زیرا <strong>با این حال</strong> مستقیماً آن را می شکند!",
     "traening3_historie1_0_Da": "به یاد داشته باشید که برف چندین بار می‌بارد (این یک وضعیت کلی است که او اغلب تجربه می‌کند). بنابراین از 'Når' استفاده می‌کنیم. 'Da' فقط برای یک رویداد یک‌باره در گذشته به کار می‌رود.",
     "traening3_historie1_0_Fordi": "واژه 'Fordi' بیانگر علت است. در اینجا می‌خواهیم بگوییم در مواردی که برف می‌بارد، دوچرخه‌سواری دشوار است. قید زمان (når) مناسب‌ترین گزینه است.",
     "traening3_historie1_1_Fordi": "واژه 'Fordi' به عقب و به سمت علت اشاره دارد. در اینجا ما به جلو و به سمت نتیجه برف (اینکه او آهسته دوچرخه‌سواری می‌کند) اشاره می‌کنیم، بنابراین باید از 'Derfor' استفاده شود.",
@@ -6566,6 +6574,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n و g در گلو ترکیب می‌شوند"
   },
   ku: {
+    "flow_story": "<strong>Di pratîkê de çawa dixebite:</strong><br>Gava ku em dest pê dikin, <strong>Da</strong> ji me re dibêje em li xalek di rabirdûyê de ne, dema ku <strong>Når</strong> nîşan dide em li çarxerêyekê ne. Ji bo ku em pêşve biçin, em hewceyê motorê <strong>Ji ber ku</strong> ne, ku me bi <strong>Lewma</strong> ber bi encamê ve dibe. Li ser rê, em dikarin bi <strong>Û</strong> rast dewam bikin, an jî bi <strong>Lê</strong> zivirînek nedîtî bikin. Heke em rastî rêbendek (<strong>Tevî ku</strong>) bên, em dizanin ku ew ê me nesekine... Ji ber ku <strong>Dîsa jî</strong> wê dişkîne!",
     "traening3_historie1_0_Da": "Bîra xwe bîne ku berf çend caran dibare (ev rewşeke giştî ye ku ew pir caran dibîne). Ji ber vê yekê em 'Når' bikar tînin. 'Da' tenê ji bo bûyereke yekcarî ya di dema borî de ye.",
     "traening3_historie1_0_Fordi": "'Fordi' sedemekê rave dike. Li vir em dixwazin bibêjin ku di wan rewşan de ku berf dibare, ajotina duçerxeyê zehmet e. Diyarkirina demê (når) ya herî baş e.",
     "traening3_historie1_1_Fordi": "'Fordi' ber bi paş ve nîşana sedemê dide. Li vir em ber bi pêş ve nîşana encama berfê didin (ku ew hêdî duçerxeyê diajo), ji ber vê yekê ew 'Derfor' e.",
@@ -7699,6 +7708,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n û g di qirikê de dibin yek"
   },
   ne: {
+    "flow_story": "<strong>यसले कसरी काम गर्छ:</strong><br>जब हामी सुरु गर्छौं, <strong>Da</strong> ले हामीलाई अतीतको एक निश्चित बिन्दुमा छौं भन्छ। अगाडि बढ्न हामीलाई इन्जिन <strong>किनभने</strong> चाहिन्छ, जसले हामीलाई <strong>त्यसैले</strong> को साथ परिणामतर्फ धकेल्छ। बाटोमा, हामी <strong>र</strong> सँग सीधा अगाडि बढ्न सक्छौं, वा <strong>तर</strong> सँग अप्रत्याशित मोड लिन सक्छौं। यदि हामीले सडक अवरोध (<strong>यद्यपि</strong>) सामना गर्यौं भने, हामीलाई थाहा छ यसले हामीलाई रोक्ने छैन... किनभने <strong>तैपनि</strong> ले यसलाई तोड्छ!",
     "traening3_historie1_0_Da": "याद राख्नुहोस् कि हिउँ धेरै पटक पर्छ (यो एक सामान्य अवस्था हो, जुन उसले प्रायः अनुभव गर्छ)। त्यसैले हामी 'Når' प्रयोग गर्छौं। 'Da' भूतकालको कुनै एक पटक मात्र भएको घटनाको लागि प्रयोग गरिन्छ।",
     "traening3_historie1_0_Fordi": "'Fordi' ले कारणलाई बुझाउँछ। यहाँ हामी भन्न चाहन्छौं कि जुन अवस्थामा हिउँ पर्छ, त्यतिबेला साइकल चलाउन गाह्रो हुन्छ। समय (når) सबैभन्दा उपयुक्त हुन्छ।",
     "traening3_historie1_1_Fordi": "'Fordi' ले पछाडि कारणतर्फ संकेत गर्छ। यहाँ हामी हिउँको परिणामतर्फ अगाडि संकेत गर्दैछौं (कि ऊ बिस्तारै साइकल चलाउँछ), त्यसैले यहाँ 'Derfor' प्रयोग हुन्छ।",
@@ -8736,6 +8746,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n र g घाँटीमा मिसिन्छन्"
   },
   ps: {
+    "flow_story": "<strong>دا په عمل کې څنګه کار کوي:</strong><br>کله چې موږ پیل کوو، <strong>Da</strong> موږ ته وایي چې موږ په تیرو کې یو، پداسې حال کې چې <strong>Når</strong> موږ ته ښیې چې موږ په یوه ګرداب کې یو. د مخ په وړاندې تګ لپاره، موږ انجن <strong>ځکه چې</strong> ته اړتیا لرو، کوم چې موږ <strong>نو</strong> سره پایلې ته رسوي. په لاره کې، موږ کولی شو د <strong>او</strong> سره مستقیم لاړ شو، یا د <strong>مګر</strong> سره ناڅاپي لوري بدل کړو. که چیرې موږ د خنډ (<strong>که څه هم</strong>) سره مخ شو، موږ پوهیږو چې دا به موږ ونه دروي... ځکه چې <strong>بیا هم</strong> د هغې له لارې تیریږي!",
     "traening3_historie1_0_Da": "په یاد ولرئ چې واوره څو ځله وریږي (دا یو عمومي حالت دی چې هغه ورسره ډېر مخامخ کیږي). له همدې امله موږ 'Når' کاروو. 'Da' یوازې په تېر وخت کې د یوې واحدې پېښې لپاره کارول کیږي.",
     "traening3_historie1_0_Fordi": "'Fordi' یو لامل بیانوي. دلته موږ غواړو ووایو چې په هغو حالتونو کې چې واوره وریږي، بایسکل چلول ستونزمن وي. د وخت قید (når) تر ټولو غوره دی.",
     "traening3_historie1_1_Fordi": "'Fordi' شاته د لامل لور ته اشاره کوي. دلته موږ مخ پر وړاندې د واورې پایلې ته (چې هغه ورو بایسکل چلوي) اشاره کوو، نو ځکه باید 'Derfor' وکارول شي.",
@@ -9840,6 +9851,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n او g په ستوني کې یوځای کیږي"
   },
   pt: {
+    "flow_story": "<strong>Como funciona na prática:</strong><br>Quando começamos, <strong>Da</strong> nos diz que estamos em um ponto fixo no passado, enquanto <strong>Når</strong> mostra que estamos em uma rotatória. Para avançar, precisamos do motor <strong>Porque</strong> (a causa), que nos impulsiona em direção ao resultado com <strong>Portanto</strong>. Ao longo do caminho, podemos continuar reto com <strong>E</strong>, ou fazer uma curva inesperada com <strong>Mas</strong>. Se batermos em um obstáculo (<strong>Embora</strong>), sabemos que ele não nos impedirá... Porque <strong>Ainda assim</strong> passa direto por ele!",
     "traening3_historie1_0_Da": "Lembre-se de que neva várias vezes (é uma situação geral que ele vivencia com frequência). Por isso usamos 'Når'. 'Da' é apenas para um acontecimento pontual no passado.",
     "traening3_historie1_0_Fordi": "'Fordi' descreve uma causa. Aqui queremos dizer que, nos casos em que neva, é difícil andar de bicicleta. A indicação de tempo (når) é a melhor opção.",
     "traening3_historie1_1_Fordi": "'Fordi' aponta para trás, em direção à causa. Aqui apontamos para a frente, em direção à consequência da neve (que ele anda devagar de bicicleta), portanto é 'Derfor'.",
@@ -10917,6 +10929,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n e g fundem-se na garganta"
   },
   ru: {
+    "flow_story": "<strong>Как это работает на практике:</strong><br>Когда мы начинаем, <strong>Когда (Da)</strong> говорит нам, что мы находимся в фиксированной точке в прошлом, в то время как <strong>Когда (Når)</strong> показывает, что мы на кольце, где вещи повторяются. Чтобы двигаться вперед, нам нужен двигатель <strong>Потому что</strong> (причина), который толкает нас к результату с помощью <strong>Поэтому</strong>. По пути мы можем продолжить прямо с <strong>И</strong>, или сделать неожиданный поворот с <strong>Но</strong>. Если мы столкнемся с препятствием (<strong>Хотя</strong>), мы знаем, что оно нас не остановит... Потому что <strong>Всё равно</strong> прорывается сквозь него!",
     "traening3_historie1_0_Da": "Помни, что снег идет неоднократно (это обычное состояние, с которым он часто сталкивается). Поэтому мы используем 'Når'. 'Da' используется только для единичного события в прошлом.",
     "traening3_historie1_0_Fordi": "'Fordi' описывает причину. Здесь мы хотим сказать, что в тех случаях, когда идет снег, ехать на велосипеде трудно. Указание времени (når) подходит лучше всего.",
     "traening3_historie1_1_Fordi": "'Fordi' указывает назад, на причину. Здесь же мы указываем вперед, на следствие снега (то, что он медленно едет на велосипеде), поэтому здесь 'Derfor'.",
@@ -13082,6 +13095,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n และ g รวมกันในลำคอ"
   },
   tr: {
+    "flow_story": "<strong>Pratikte nasıl çalışır:</strong><br>Başladığımızda, <strong>Da</strong> geçmişte sabit bir noktada olduğumuzu söylerken, <strong>Når</strong> olayların tekrarlandığı bir döner kavşakta olduğumuzu gösterir. İlerlemek için, bizi <strong>Derfor</strong> ile sonuca doğru iten motor <strong>Fordi</strong>'ye (nedene) ihtiyacımız var. Yol boyunca <strong>Og</strong> ile düz devam edebilir veya <strong>Men</strong> ile beklenmedik bir dönüş yapabiliriz. Bir engele çarparsak (<strong>Selvom</strong>), bizi durdurmayacağını biliriz... Çünkü <strong>Alligevel</strong> onu kırıp geçer!",
     "traening3_historie1_0_Da": "Karın birden fazla kez yağdığını unutmayın (bu, sık sık yaşadığı genel bir durumdur). Bu yüzden 'Når' kullanıyoruz. 'Da' yalnızca geçmişteki tek seferlik bir olay içindir.",
     "traening3_historie1_0_Fordi": "'Fordi' bir nedeni belirtir. Burada kar yağdığı durumlarda bisiklete binmenin zor olduğunu söylemek istiyoruz. Zaman bildiren ifade (når) en uygunudur.",
     "traening3_historie1_1_Fordi": "'Fordi' geriye, nedene işaret eder. Burada ise karın sonucuna (onun yavaş bisiklet sürmesine) doğru ileriye işaret ediyoruz, bu yüzden 'Derfor' kullanılır.",
@@ -14144,6 +14158,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n ve g gırtlakta birleşir"
   },
   uk: {
+    "flow_story": "<strong>Як це працює на практиці:</strong><br>Коли ми починаємо, <strong>Коли (Da)</strong> говорить нам, що ми знаходимося у фіксованій точці в минулому, тоді як <strong>Коли (Når)</strong> показує, що ми на кільці, де події повторюються. Щоб рухатися вперед, нам потрібен двигун <strong>Тому що</strong> (причина), який штовхає нас до результату за допомогою <strong>Тому</strong>. По дорозі ми можемо продовжити прямо і додати ще за допомогою <strong>Та/І</strong>, або зробити несподіваний поворот за допомогою <strong>Але</strong>. Якщо ми зіткнемося з перешкодою (<strong>Хоча</strong>), ми знаємо, що вона нас не зупинить... Тому що <strong>Все одно</strong> проривається крізь неї!",
     "traening3_historie1_0_Da": "Пам'ятай, що сніг іде неодноразово (це загальний стан, з яким він часто стикається). Тому ми використовуємо 'Når'. 'Da' використовується лише для одиничної події в минулому.",
     "traening3_historie1_0_Fordi": "'Fordi' описує причину. Тут ми хочемо сказати, що у випадках, коли йде сніг, їхати на велосипеді важко. Вказівка часу (når) підходить найкраще.",
     "traening3_historie1_1_Fordi": "'Fordi' вказує назад, на причину. Тут ми вказуємо вперед, на наслідок снігу (те, що він повільно їде на велосипеді), тому тут 'Derfor'.",
@@ -16331,6 +16346,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n اور g گلے میں مل جاتے ہیں"
   },
   vi: {
+    "flow_story": "<strong>Cách hoạt động trong thực tế:</strong><br>Khi chúng ta bắt đầu, <strong>Da</strong> cho chúng ta biết chúng ta đang ở một điểm cố định trong quá khứ, trong khi <strong>Når</strong> cho thấy chúng ta đang ở một vòng xuyến. Để tiến lên, chúng ta cần động cơ <strong>Bởi vì</strong> (nguyên nhân), nó thúc đẩy chúng ta tới kết quả với <strong>Do đó</strong>. Dọc đường, chúng ta có thể đi thẳng với <strong>Và</strong>, hoặc rẽ bất ngờ với <strong>Nhưng</strong>. Nếu chúng ta gặp rào cản (<strong>Mặc dù</strong>), chúng ta biết nó sẽ không cản được... Bởi vì <strong>Dù sao thì</strong> cũng sẽ vượt qua nó!",
     "traening3_historie1_0_Da": "Hãy nhớ rằng tuyết rơi nhiều lần (đây là một tình trạng chung mà anh ấy thường xuyên trải qua). Vì vậy, chúng ta dùng 'Når'. 'Da' chỉ dành cho một sự kiện đơn lẻ trong quá khứ.",
     "traening3_historie1_0_Fordi": "'Fordi' diễn tả nguyên nhân. Ở đây chúng ta muốn nói rằng trong các trường hợp có tuyết rơi, việc đạp xe rất khó khăn. Từ chỉ thời gian (når) là thích hợp nhất.",
     "traening3_historie1_1_Fordi": "'Fordi' hướng ngược về nguyên nhân. Ở đây chúng ta hướng về phía trước đến kết quả của tuyết (việc anh ấy đạp xe chậm), vì vậy phải là 'Derfor'.",
@@ -17410,6 +17426,7 @@ export const translations = {
     "udtale_hint_ng_lyd_1": "n và g hợp lại trong cổ họng"
   },
   zh: {
+    "flow_story": "<strong>它是如何运作的：</strong><br>当我们开始时，<strong>Da</strong> 告诉我们处于过去的一个固定点，而 <strong>Når</strong> 显示我们处于一个循环中。为了前进，我们需要引擎 <strong>因为</strong>（原因），它用 <strong>所以</strong> 将我们推向结果。在路上，我们可以用 <strong>和</strong> 继续直行，或者用 <strong>但是</strong> 意外转弯。如果我们遇到路障（<strong>尽管</strong>），我们知道它不会阻止我们... 因为 <strong>仍然</strong> 会直接冲破它！",
     "traening3_historie1_0_Da": "请记住，下雪不止一次（这是他经常经历的普遍情况）。因此我们使用 'Når'。'Da' 仅用于过去发生的一次性事件。",
     "traening3_historie1_0_Fordi": "'Fordi' 描述的是原因。这里我们想表达的是，在下雪的情况下很难骑自行车。表示时间（når）最合适。",
     "traening3_historie1_1_Fordi": "'Fordi' 向后指向原因。这里我们向前指向下雪的后果（他骑得很慢），所以应该用 'Derfor'。",

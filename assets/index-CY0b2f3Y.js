@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-    `,document.getElementById("back-btn").addEventListener("click",()=>{_("home")});const r=[`${ae}images/placeholders/slide1.svg`,`${ae}images/placeholders/slide2.svg`,`${ae}images/placeholders/slide3.svg`,`${ae}images/placeholders/slide4.svg`,`${ae}images/placeholders/slide5.svg`];let n=0;const i=document.getElementById("slide-img"),t=document.getElementById("prev-btn"),c=document.getElementById("next-btn"),f=document.getElementById("indicators");r.forEach((s,d)=>{const a=document.createElement("div");a.style.width="12px",a.style.height="12px",a.style.borderRadius="50%",a.style.background="rgba(255,255,255,0.5)",a.style.cursor="pointer",a.addEventListener("click",()=>m(d)),f.appendChild(a)});function m(s){n=s,i.src=r[n],Array.from(f.children).forEach((d,a)=>{d.style.background=a===n?"white":"rgba(255,255,255,0.5)"}),t.style.display=n===0?"none":"block",c.style.display=n===r.length-1?"none":"block"}t.addEventListener("click",()=>{n>0&&m(n-1)}),c.addEventListener("click",()=>{n<r.length-1&&m(n+1)}),m(0)}function Pe(j,_){j.innerHTML=`
+    `,document.getElementById("back-btn").addEventListener("click",()=>{_("home")});const r=[`${ae}images/placeholders/slide1.png`,`${ae}images/placeholders/slide2.png`,`${ae}images/placeholders/slide3.png`,`${ae}images/placeholders/slide4.png`,`${ae}images/placeholders/slide5.png`];let n=0;const i=document.getElementById("slide-img"),t=document.getElementById("prev-btn"),c=document.getElementById("next-btn"),f=document.getElementById("indicators");r.forEach((s,d)=>{const a=document.createElement("div");a.style.width="12px",a.style.height="12px",a.style.borderRadius="50%",a.style.background="rgba(255,255,255,0.5)",a.style.cursor="pointer",a.addEventListener("click",()=>m(d)),f.appendChild(a)});function m(s){n=s,i.src=r[n],Array.from(f.children).forEach((d,a)=>{d.style.background=a===n?"white":"rgba(255,255,255,0.5)"}),t.style.display=n===0?"none":"block",c.style.display=n===r.length-1?"none":"block"}t.addEventListener("click",()=>{n>0&&m(n-1)}),c.addEventListener("click",()=>{n<r.length-1&&m(n+1)}),m(0)}function Pe(j,_){j.innerHTML=`
         <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
             <button id="back-btn" class="back-btn" style="margin-bottom: 20px; position: sticky; top: 20px; z-index: 100;">
                 <i class="fas fa-arrow-left"></i> Tilbage
@@ -29,24 +29,24 @@
             <p>Rul ned ad siden for at læse historien som en artikel.</p>
             
             <div style="display: flex; flex-direction: column; gap: 40px; margin-top: 30px;">
-                <img src="${ae}images/placeholders/slide1.svg" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+                <img src="${ae}images/placeholders/slide1.png" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
                 
                 <div style="padding: 20px; background: #f8fafc; border-left: 4px solid var(--primary-color); border-radius: 8px;">
                     <p style="margin:0; font-size: 1.1rem; color: #334155;">I dag skal vi tale om sundhed. I alle lande og alle kulturer ved vi én ting...</p>
                 </div>
                 
-                <img src="${ae}images/placeholders/slide2.svg" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+                <img src="${ae}images/placeholders/slide2.png" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
                 
-                <img src="${ae}images/placeholders/slide3.svg" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+                <img src="${ae}images/placeholders/slide3.png" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
                 
                 <div style="padding: 20px; background: #f0fdf4; border-radius: 8px; text-align: center;">
                     <h3 style="margin-top:0; color: #166534;">Interaktiv tabel (idé)</h3>
                     <p style="margin:0; color: #15803d;">Her kunne vi gøre sprogene klikbare, så tabellen er lettere at læse på mobiltelefoner.</p>
                 </div>
                 
-                <img src="${ae}images/placeholders/slide4.svg" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+                <img src="${ae}images/placeholders/slide4.png" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
                 
-                <img src="${ae}images/placeholders/slide5.svg" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+                <img src="${ae}images/placeholders/slide5.png" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
             </div>
             
             <div style="height: 100px;"></div>

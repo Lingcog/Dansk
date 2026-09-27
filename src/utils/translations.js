@@ -1148,7 +1148,17 @@ export const translations = {
     "talemaader_title": "Talemåder & Mønstre",
     "talemaader_subtitle": "Lær danske talemåder trin-for-trin og find de overordnede mønstre",
     "talemaader": "Talemåder & Mønstre",
-    "talemaaderDesc": "Lær danske talemåder trin-for-trin og find de overordnede mønstre"
+    "talemaaderDesc": "Lær danske talemåder trin-for-trin og find de overordnede mønstre",
+    "hjerterum_title": "Gæstfrihed er fleksibel",
+    "hjerterum_idiom": "Hvor der er hjerterum, er der husrum.",
+    "hjerterum_li1": "Ægte gæstfrihed handler ikke om et stort hus.",
+    "hjerterum_li2": "Det handler om et åbent hjerte.",
+    "hjerterum_li3": "Vi deler alle denne følelse – uanset hvor vi kommer fra.",
+    "hjerterum_world_title": "Hvordan siger man det ude i verden?",
+    "hjerterum_world_desc": "Tryk på et land for at se deres måde at sige det på.",
+    "hjerterum_world_empty": "Vælg et sprog foroven",
+    "hjerterum_images_title": "Billeder på Gæstfrihed",
+    "hjerterum_images_desc": "Gæstfrihed ser forskellig ud rundt om i verden, men følelsen er den samme."
   },
   en: {
     "flow_story": "<strong>How it works in practice:</strong><br>When we start, <strong>When (Da)</strong> tells us we are at a fixed point in the past, while <strong>When (Når)</strong> shows we are in a roundabout where things repeat. To move forward, we need the engine <strong>Because</strong> (the cause), which propels us toward the result with <strong>Therefore</strong>. Along the way, we can continue straight and add more with <strong>And/Plus</strong>, or take an unexpected turn with <strong>But</strong>. If we hit a roadblock (<strong>Even though</strong>), we know it won't stop us... Because <strong>Anyway</strong> smashes right through it!",
@@ -2337,7 +2347,17 @@ export const translations = {
     "talemaader_title": "Idioms & Patterns",
     "talemaader_subtitle": "Learn Danish idioms step-by-step and find the overarching patterns",
     "talemaader": "Idioms & Patterns",
-    "talemaaderDesc": "Learn Danish idioms step-by-step and find the overarching patterns"
+    "talemaaderDesc": "Learn Danish idioms step-by-step and find the overarching patterns",
+    "hjerterum_title": "Hospitality is flexible",
+    "hjerterum_idiom": "Where there is room in the heart, there is room in the house.",
+    "hjerterum_li1": "True hospitality is not about a big house.",
+    "hjerterum_li2": "It's about an open heart.",
+    "hjerterum_li3": "We all share this feeling – no matter where we come from.",
+    "hjerterum_world_title": "How do they say it around the world?",
+    "hjerterum_world_desc": "Tap a country to see their way of saying it.",
+    "hjerterum_world_empty": "Select a language above",
+    "hjerterum_images_title": "Images of Hospitality",
+    "hjerterum_images_desc": "Hospitality looks different around the world, but the feeling is the same."
   },
   de: {
     "flow_story": "<strong>Wie es in der Praxis funktioniert:</strong><br>Wenn wir starten, sagt uns <strong>Als (Da)</strong>, dass wir uns an einem festen Punkt in der Vergangenheit befinden, während <strong>Wenn (Når)</strong> zeigt, dass wir uns in einem Kreisverkehr befinden. Um voranzukommen, brauchen wir den Motor <strong>Weil</strong> (die Ursache), der uns mit <strong>Deshalb</strong> zum Ergebnis treibt. Unterwegs können wir mit <strong>Und</strong> geradeaus weiterfahren oder mit <strong>Aber</strong> eine unerwartete Wendung nehmen. Wenn wir auf eine Straßensperre stoßen (<strong>Obwohl</strong>), wissen wir, dass sie uns nicht aufhalten wird... Denn <strong>Trotzdem</strong> durchbricht sie einfach!",
@@ -3556,7 +3576,17 @@ export const translations = {
     "talemaader_title": "Redewendungen & Muster",
     "talemaader_subtitle": "Lerne dänische Redewendungen Schritt für Schritt und finde die übergeordneten Muster",
     "talemaader": "Redewendungen & Muster",
-    "talemaaderDesc": "Lerne dänische Redewendungen Schritt für Schritt und finde die übergeordneten Muster"
+    "talemaaderDesc": "Lerne dänische Redewendungen Schritt für Schritt und finde die übergeordneten Muster",
+    "hjerterum_title": "Gastfreundschaft ist flexibel",
+    "hjerterum_idiom": "Wo Platz im Herzen ist, ist auch Platz im Haus.",
+    "hjerterum_li1": "Wahre Gastfreundschaft hat nichts mit einem großen Haus zu tun.",
+    "hjerterum_li2": "Es geht um ein offenes Herz.",
+    "hjerterum_li3": "Wir alle teilen dieses Gefühl – egal woher wir kommen.",
+    "hjerterum_world_title": "Wie sagt man das in der Welt?",
+    "hjerterum_world_desc": "Tippe auf ein Land, um zu sehen, wie man es dort sagt.",
+    "hjerterum_world_empty": "Wähle oben eine Sprache",
+    "hjerterum_images_title": "Bilder der Gastfreundschaft",
+    "hjerterum_images_desc": "Gastfreundschaft sieht auf der ganzen Welt anders aus, aber das Gefühl ist dasselbe."
   },
   ar: {
     "flow_story": "<strong>كيف تعمل في الممارسة العملية:</strong><br>عندما نبدأ، تخبرنا <strong>Da</strong> أننا في نقطة ثابتة في الماضي، بينما تظهر <strong>Når</strong> أننا في دوار حيث تتكرر الأشياء. للمضي قدمًا، نحتاج إلى المحرك <strong>لأن</strong> (السبب)، الذي يدفعنا نحو النتيجة باستخدام <strong>لذلك</strong>. على طول الطريق، يمكننا الاستمرار للأمام وإضافة المزيد باستخدام <strong>و</strong>، أو أخذ منعطف غير متوقع باستخدام <strong>لكن</strong>. إذا واجهنا حاجزًا (<strong>بالرغم من</strong>)، فإننا نعلم أنه لن يوقفنا... لأن <strong>مع ذلك</strong> تخترقه!",
@@ -4781,7 +4811,17 @@ export const translations = {
     "talemaader_title": "التعابير والأنماط",
     "talemaader_subtitle": "تعلم التعابير الدنماركية خطوة بخطوة واكتشف الأنماط العامة",
     "talemaader": "التعابير والأنماط",
-    "talemaaderDesc": "تعلم التعابير الدنماركية خطوة بخطوة واكتشف الأنماط العامة"
+    "talemaaderDesc": "تعلم التعابير الدنماركية خطوة بخطوة واكتشف الأنماط العامة",
+    "hjerterum_title": "الضيافة مرنة",
+    "hjerterum_idiom": "حيث يوجد متسع في القلب، يوجد متسع في المنزل.",
+    "hjerterum_li1": "الضيافة الحقيقية لا تتعلق بالمنزل الكبير.",
+    "hjerterum_li2": "إنها تتعلق بالقلب المفتوح.",
+    "hjerterum_li3": "جميعنا نشارك هذا الشعور - بغض النظر عن المكان الذي نأتي منه.",
+    "hjerterum_world_title": "كيف يقولون ذلك في العالم؟",
+    "hjerterum_world_desc": "انقر على بلد لترى طريقتهم في قول ذلك.",
+    "hjerterum_world_empty": "اختر لغة من الأعلى",
+    "hjerterum_images_title": "صور للضيافة",
+    "hjerterum_images_desc": "تبدو الضيافة مختلفة حول العالم، لكن الشعور واحد."
   },
   es: {
     "flow_story": "<strong>Cómo funciona en la práctica:</strong><br>Cuando empezamos, <strong>Da</strong> nos dice que estamos en un punto fijo en el pasado, mientras que <strong>Når</strong> muestra que estamos en una rotonda. Para avanzar, necesitamos el motor <strong>Porque</strong> (la causa), que nos impulsa hacia el resultado con <strong>Por lo tanto</strong>. En el camino, podemos seguir recto con <strong>Y</strong>, o tomar un giro inesperado con <strong>Pero</strong>. Si encontramos un obstáculo (<strong>Aunque</strong>), sabemos que no nos detendrá... ¡Porque <strong>Aún así</strong> lo atraviesa!",
@@ -5953,7 +5993,17 @@ export const translations = {
     "talemaader_title": "Modismos y Patrones",
     "talemaader_subtitle": "Aprende modismos daneses paso a paso y encuentra los patrones generales",
     "talemaader": "Modismos y Patrones",
-    "talemaaderDesc": "Aprende modismos daneses paso a paso y encuentra los patrones generales"
+    "talemaaderDesc": "Aprende modismos daneses paso a paso y encuentra los patrones generales",
+    "hjerterum_title": "La hospitalidad es flexible",
+    "hjerterum_idiom": "Donde hay lugar en el corazón, hay lugar en la casa.",
+    "hjerterum_li1": "La verdadera hospitalidad no se trata de una casa grande.",
+    "hjerterum_li2": "Se trata de un corazón abierto.",
+    "hjerterum_li3": "Todos compartimos este sentimiento, sin importar de dónde vengamos.",
+    "hjerterum_world_title": "¿Cómo lo dicen en el mundo?",
+    "hjerterum_world_desc": "Toca un país para ver su forma de decirlo.",
+    "hjerterum_world_empty": "Selecciona un idioma arriba",
+    "hjerterum_images_title": "Imágenes de Hospitalidad",
+    "hjerterum_images_desc": "La hospitalidad se ve diferente en todo el mundo, pero el sentimiento es el mismo."
   },
   fa: {
     "flow_story": "<strong>نحوه عملکرد آن در عمل:</strong><br>وقتی شروع می کنیم، <strong>Da</strong> به ما می گوید که در یک نقطه ثابت در گذشته هستیم، در حالی که <strong>Når</strong> نشان می دهد در میدانی هستیم که چیزها تکرار می شوند. برای حرکت به جلو، به موتور <strong>زیرا</strong> (علت) نیاز داریم که ما را با <strong>بنابراین</strong> به سمت نتیجه سوق می دهد. در طول مسیر، می توانیم با <strong>و</strong> مستقیم ادامه دهیم، یا با <strong>اما</strong> یک چرخش غیرمنتظره داشته باشیم. اگر به مانعی برخورد کنیم (<strong>اگرچه</strong>)، می دانیم که ما را متوقف نخواهد کرد... زیرا <strong>با این حال</strong> مستقیماً آن را می شکند!",
@@ -7112,7 +7162,17 @@ export const translations = {
     "talemaader_title": "اصطلاحات و الگوها",
     "talemaader_subtitle": "اصطلاحات دانمارکی را گام به گام بیاموزید و الگوهای کلی را پیدا کنید",
     "talemaader": "اصطلاحات و الگوها",
-    "talemaaderDesc": "اصطلاحات دانمارکی را گام به گام بیاموزید و الگوهای کلی را پیدا کنید"
+    "talemaaderDesc": "اصطلاحات دانمارکی را گام به گام بیاموزید و الگوهای کلی را پیدا کنید",
+    "hjerterum_title": "مهمان‌نوازی انعطاف‌پذیر است",
+    "hjerterum_idiom": "جایی که در دل جا هست، در خانه هم جا هست.",
+    "hjerterum_li1": "مهمان‌نوازی واقعی به داشتن خانه‌ای بزرگ نیست.",
+    "hjerterum_li2": "به داشتن قلبی باز است.",
+    "hjerterum_li3": "همه ما این احساس را به اشتراک می‌گذاریم - مهم نیست از کجا آمده‌ایم.",
+    "hjerterum_world_title": "در دنیا چگونه می‌گویند؟",
+    "hjerterum_world_desc": "برای دیدن نحوه گفتن آن روی یک کشور ضربه بزنید.",
+    "hjerterum_world_empty": "زبانی را در بالا انتخاب کنید",
+    "hjerterum_images_title": "تصاویری از مهمان‌نوازی",
+    "hjerterum_images_desc": "مهمان‌نوازی در سراسر جهان متفاوت به نظر می‌رسد، اما احساس آن یکی است."
   },
   ku: {
     "flow_story": "<strong>Di pratîkê de çawa dixebite:</strong><br>Gava ku em dest pê dikin, <strong>Da</strong> ji me re dibêje em li xalek di rabirdûyê de ne, dema ku <strong>Når</strong> nîşan dide em li çarxerêyekê ne. Ji bo ku em pêşve biçin, em hewceyê motorê <strong>Ji ber ku</strong> ne, ku me bi <strong>Lewma</strong> ber bi encamê ve dibe. Li ser rê, em dikarin bi <strong>Û</strong> rast dewam bikin, an jî bi <strong>Lê</strong> zivirînek nedîtî bikin. Heke em rastî rêbendek (<strong>Tevî ku</strong>) bên, em dizanin ku ew ê me nesekine... Ji ber ku <strong>Dîsa jî</strong> wê dişkîne!",
@@ -8336,7 +8396,17 @@ export const translations = {
     "talemaader_title": "Biwêj û Nimûne",
     "talemaader_subtitle": "Biwêjên danîmarkî gav bi gav fêr bibin û nimûneyên giştî bibînin",
     "talemaader": "Biwêj û Nimûne",
-    "talemaaderDesc": "Biwêjên danîmarkî gav bi gav fêr bibin û nimûneyên giştî bibînin"
+    "talemaaderDesc": "Biwêjên danîmarkî gav bi gav fêr bibin û nimûneyên giştî bibînin",
+    "hjerterum_title": "Mêvanperwerî nerm e",
+    "hjerterum_idiom": "Cihê ku di dil de cîh hebe, di malê de jî cîh heye.",
+    "hjerterum_li1": "Mêvanperweriya rastîn ne girêdayî xaniyekî mezin e.",
+    "hjerterum_li2": "Ew girêdayî dilekî vekirî ye.",
+    "hjerterum_li3": "Em hemî vê hestê parve dikin - ferq nake em ji ku derê tên.",
+    "hjerterum_world_title": "Li cîhanê çawa dibêjin?",
+    "hjerterum_world_desc": "Li ser welatekî bitikîne da ku bibînî ew çawa dibêjin.",
+    "hjerterum_world_empty": "Zimanek li jor hilbijêre",
+    "hjerterum_images_title": "Wêneyên Mêvanperweriyê",
+    "hjerterum_images_desc": "Mêvanperwerî li seranserê cîhanê cuda xuya dike, lê hest heman e."
   },
   ne: {
     "flow_story": "<strong>यसले कसरी काम गर्छ:</strong><br>जब हामी सुरु गर्छौं, <strong>Da</strong> ले हामीलाई अतीतको एक निश्चित बिन्दुमा छौं भन्छ। अगाडि बढ्न हामीलाई इन्जिन <strong>किनभने</strong> चाहिन्छ, जसले हामीलाई <strong>त्यसैले</strong> को साथ परिणामतर्फ धकेल्छ। बाटोमा, हामी <strong>र</strong> सँग सीधा अगाडि बढ्न सक्छौं, वा <strong>तर</strong> सँग अप्रत्याशित मोड लिन सक्छौं। यदि हामीले सडक अवरोध (<strong>यद्यपि</strong>) सामना गर्यौं भने, हामीलाई थाहा छ यसले हामीलाई रोक्ने छैन... किनभने <strong>तैपनि</strong> ले यसलाई तोड्छ!",
@@ -9464,7 +9534,17 @@ export const translations = {
     "talemaader_title": "टुक्का र ढाँचाहरू",
     "talemaader_subtitle": "डेनिस टुक्काहरू चरण-दर-चरण सिक्नुहोस् र समग्र ढाँचाहरू फेला पार्नुहोस्",
     "talemaader": "टुक्का र ढाँचाहरू",
-    "talemaaderDesc": "डेनिस टुक्काहरू चरण-दर-चरण सिक्नुहोस् र समग्र ढाँचाहरू फेला पार्नुहोस्"
+    "talemaaderDesc": "डेनिस टुक्काहरू चरण-दर-चरण सिक्नुहोस् र समग्र ढाँचाहरू फेला पार्नुहोस्",
+    "hjerterum_title": "अतिथि सत्कार लचिलो छ",
+    "hjerterum_idiom": "जहाँ मुटुमा ठाउँ छ, त्यहाँ घरमा ठाउँ छ।",
+    "hjerterum_li1": "साँचो अतिथि सत्कार ठूलो घरको बारेमा होइन।",
+    "hjerterum_li2": "यो खुला हृदयको बारेमा हो।",
+    "hjerterum_li3": "हामी सबै यो भावना साझा गर्छौं - हामी जहाँबाट आए पनि।",
+    "hjerterum_world_title": "विश्वमा यसलाई कसरी भनिन्छ?",
+    "hjerterum_world_desc": "उनीहरूले भन्ने तरिका हेर्न एउटा देशमा ट्याप गर्नुहोस्।",
+    "hjerterum_world_empty": "माथि एउटा भाषा छान्नुहोस्",
+    "hjerterum_images_title": "अतिथि सत्कारका चित्रहरू",
+    "hjerterum_images_desc": "अतिथि सत्कार विश्वभरि फरक देखिन्छ, तर भावना उस्तै छ।"
   },
   ps: {
     "flow_story": "<strong>دا په عمل کې څنګه کار کوي:</strong><br>کله چې موږ پیل کوو، <strong>Da</strong> موږ ته وایي چې موږ په تیرو کې یو، پداسې حال کې چې <strong>Når</strong> موږ ته ښیې چې موږ په یوه ګرداب کې یو. د مخ په وړاندې تګ لپاره، موږ انجن <strong>ځکه چې</strong> ته اړتیا لرو، کوم چې موږ <strong>نو</strong> سره پایلې ته رسوي. په لاره کې، موږ کولی شو د <strong>او</strong> سره مستقیم لاړ شو، یا د <strong>مګر</strong> سره ناڅاپي لوري بدل کړو. که چیرې موږ د خنډ (<strong>که څه هم</strong>) سره مخ شو، موږ پوهیږو چې دا به موږ ونه دروي... ځکه چې <strong>بیا هم</strong> د هغې له لارې تیریږي!",
@@ -10659,7 +10739,17 @@ export const translations = {
     "talemaader_title": "اصطلاحات او نمونې",
     "talemaader_subtitle": "ډنمارکي اصطلاحات په تدریجي ډول زده کړئ او عمومي نمونې ومومئ",
     "talemaader": "اصطلاحات او نمونې",
-    "talemaaderDesc": "ډنمارکي اصطلاحات په تدریجي ډول زده کړئ او عمومي نمونې ومومئ"
+    "talemaaderDesc": "ډنمارکي اصطلاحات په تدریجي ډول زده کړئ او عمومي نمونې ومومئ",
+    "hjerterum_title": "میلمه پالنه انعطاف منونکې ده",
+    "hjerterum_idiom": "چیرته چې په زړه کې ځای وي، هلته په کور کې ځای وي.",
+    "hjerterum_li1": "ریښتینې میلمه پالنه د لوی کور په اړه نده.",
+    "hjerterum_li2": "دا د خلاص زړه په اړه ده.",
+    "hjerterum_li3": "موږ ټول دا احساس شریکوو - مهمه نده چې موږ له کوم ځای څخه راغلي یو.",
+    "hjerterum_world_title": "په نړۍ کې یې څنګه وایي؟",
+    "hjerterum_world_desc": "د دوی د ویلو طریقه لیدو لپاره په یو هیواد ټایپ کړئ.",
+    "hjerterum_world_empty": "پاس یوه ژبه غوره کړئ",
+    "hjerterum_images_title": "د میلمه پالنې انځورونه",
+    "hjerterum_images_desc": "میلمه پالنه په ټوله نړۍ کې توپیر لري، مګر احساس یې ورته دی."
   },
   pt: {
     "flow_story": "<strong>Como funciona na prática:</strong><br>Quando começamos, <strong>Da</strong> nos diz que estamos em um ponto fixo no passado, enquanto <strong>Når</strong> mostra que estamos em uma rotatória. Para avançar, precisamos do motor <strong>Porque</strong> (a causa), que nos impulsiona em direção ao resultado com <strong>Portanto</strong>. Ao longo do caminho, podemos continuar reto com <strong>E</strong>, ou fazer uma curva inesperada com <strong>Mas</strong>. Se batermos em um obstáculo (<strong>Embora</strong>), sabemos que ele não nos impedirá... Porque <strong>Ainda assim</strong> passa direto por ele!",
@@ -11827,7 +11917,17 @@ export const translations = {
     "talemaader_title": "Expressões e Padrões",
     "talemaader_subtitle": "Aprenda expressões dinamarquesas passo a passo e encontre os padrões gerais",
     "talemaader": "Expressões e Padrões",
-    "talemaaderDesc": "Aprenda expressões dinamarquesas passo a passo e encontre os padrões gerais"
+    "talemaaderDesc": "Aprenda expressões dinamarquesas passo a passo e encontre os padrões gerais",
+    "hjerterum_title": "A hospitalidade é flexível",
+    "hjerterum_idiom": "Onde há espaço no coração, há espaço na casa.",
+    "hjerterum_li1": "A verdadeira hospitalidade não é sobre uma casa grande.",
+    "hjerterum_li2": "É sobre um coração aberto.",
+    "hjerterum_li3": "Todos compartilhamos esse sentimento – não importa de onde viemos.",
+    "hjerterum_world_title": "Como eles dizem isso ao redor do mundo?",
+    "hjerterum_world_desc": "Toque em um país para ver como eles dizem.",
+    "hjerterum_world_empty": "Selecione um idioma acima",
+    "hjerterum_images_title": "Imagens de Hospitalidade",
+    "hjerterum_images_desc": "A hospitalidade parece diferente em todo o mundo, mas o sentimento é o mesmo."
   },
   ru: {
     "flow_story": "<strong>Как это работает на практике:</strong><br>Когда мы начинаем, <strong>Когда (Da)</strong> говорит нам, что мы находимся в фиксированной точке в прошлом, в то время как <strong>Когда (Når)</strong> показывает, что мы на кольце, где вещи повторяются. Чтобы двигаться вперед, нам нужен двигатель <strong>Потому что</strong> (причина), который толкает нас к результату с помощью <strong>Поэтому</strong>. По пути мы можем продолжить прямо с <strong>И</strong>, или сделать неожиданный поворот с <strong>Но</strong>. Если мы столкнемся с препятствием (<strong>Хотя</strong>), мы знаем, что оно нас не остановит... Потому что <strong>Всё равно</strong> прорывается сквозь него!",
@@ -13003,7 +13103,17 @@ export const translations = {
     "talemaader_title": "Идиомы и Паттерны",
     "talemaader_subtitle": "Изучайте датские идиомы шаг за шагом и находите общие паттерны",
     "talemaader": "Идиомы и Паттерны",
-    "talemaaderDesc": "Изучайте датские идиомы шаг за шагом и находите общие паттерны"
+    "talemaaderDesc": "Изучайте датские идиомы шаг за шагом и находите общие паттерны",
+    "hjerterum_title": "Гостеприимство гибко",
+    "hjerterum_idiom": "В тесноте, да не в обиде (Где есть место в сердце, есть место и в доме).",
+    "hjerterum_li1": "Истинное гостеприимство — это не большой дом.",
+    "hjerterum_li2": "Это открытое сердце.",
+    "hjerterum_li3": "Мы все разделяем это чувство, откуда бы мы ни были.",
+    "hjerterum_world_title": "Как говорят об этом в мире?",
+    "hjerterum_world_desc": "Нажмите на страну, чтобы увидеть, как там это говорят.",
+    "hjerterum_world_empty": "Выберите язык выше",
+    "hjerterum_images_title": "Образы Гостеприимства",
+    "hjerterum_images_desc": "Гостеприимство выглядит по-разному во всем мире, но чувство одно и то же."
   },
   th: {
     "traening3_historie1_0_Da": "จำไว้ว่าหิมะตกหลายครั้ง (เป็นสถานการณ์ทั่วไปที่เขาพบเจอบ่อยๆ) ดังนั้นเราจึงใช้ 'Når' ส่วน 'Da' ใช้สำหรับเหตุการณ์ที่เกิดขึ้นเพียงครั้งเดียวในอดีตเท่านั้น",
@@ -14173,7 +14283,17 @@ export const translations = {
     "talemaader_title": "สำนวนและรูปแบบ",
     "talemaader_subtitle": "เรียนรู้สำนวนภาษาเดนมาร์กทีละขั้นตอนและค้นหารูปแบบโดยรวม",
     "talemaader": "สำนวนและรูปแบบ",
-    "talemaaderDesc": "เรียนรู้สำนวนภาษาเดนมาร์กทีละขั้นตอนและค้นหารูปแบบโดยรวม"
+    "talemaaderDesc": "เรียนรู้สำนวนภาษาเดนมาร์กทีละขั้นตอนและค้นหารูปแบบโดยรวม",
+    "hjerterum_title": "การต้อนรับมีความยืดหยุ่น",
+    "hjerterum_idiom": "ที่ไหนมีที่ว่างในใจ ที่นั่นก็มีที่ว่างในบ้าน",
+    "hjerterum_li1": "การต้อนรับที่แท้จริงไม่ได้เกี่ยวกับบ้านหลังใหญ่",
+    "hjerterum_li2": "มันเกี่ยวกับหัวใจที่เปิดกว้าง",
+    "hjerterum_li3": "เราทุกคนมีความรู้สึกนี้ร่วมกัน – ไม่ว่าเราจะมาจากไหน",
+    "hjerterum_world_title": "ทั่วโลกพูดกันว่าอย่างไร?",
+    "hjerterum_world_desc": "แตะที่ประเทศเพื่อดูวิธีพูดของพวกเขา",
+    "hjerterum_world_empty": "เลือกภาษาด้านบน",
+    "hjerterum_images_title": "รูปภาพของการต้อนรับ",
+    "hjerterum_images_desc": "การต้อนรับดูแตกต่างกันไปทั่วโลก แต่ความรู้สึกเหมือนกัน"
   },
   tr: {
     "flow_story": "<strong>Pratikte nasıl çalışır:</strong><br>Başladığımızda, <strong>Da</strong> geçmişte sabit bir noktada olduğumuzu söylerken, <strong>Når</strong> olayların tekrarlandığı bir döner kavşakta olduğumuzu gösterir. İlerlemek için, bizi <strong>Derfor</strong> ile sonuca doğru iten motor <strong>Fordi</strong>'ye (nedene) ihtiyacımız var. Yol boyunca <strong>Og</strong> ile düz devam edebilir veya <strong>Men</strong> ile beklenmedik bir dönüş yapabiliriz. Bir engele çarparsak (<strong>Selvom</strong>), bizi durdurmayacağını biliriz... Çünkü <strong>Alligevel</strong> onu kırıp geçer!",
@@ -15326,7 +15446,17 @@ export const translations = {
     "talemaader_title": "Deyimler ve Desenler",
     "talemaader_subtitle": "Danca deyimleri adım adım öğrenin ve genel desenleri bulun",
     "talemaader": "Deyimler ve Desenler",
-    "talemaaderDesc": "Danca deyimleri adım adım öğrenin ve genel desenleri bulun"
+    "talemaaderDesc": "Danca deyimleri adım adım öğrenin ve genel desenleri bulun",
+    "hjerterum_title": "Misafirperverlik esnektir",
+    "hjerterum_idiom": "Kalpte yer olan yerde, evde de yer vardır.",
+    "hjerterum_li1": "Gerçek misafirperverlik büyük bir evle ilgili değildir.",
+    "hjerterum_li2": "Açık bir kalple ilgilidir.",
+    "hjerterum_li3": "Nereden gelirsek gelelim, hepimiz bu duyguyu paylaşıyoruz.",
+    "hjerterum_world_title": "Dünyada nasıl söylüyorlar?",
+    "hjerterum_world_desc": "Nasıl söylediklerini görmek için bir ülkeye dokunun.",
+    "hjerterum_world_empty": "Yukarıdan bir dil seçin",
+    "hjerterum_images_title": "Misafirperverlik Resimleri",
+    "hjerterum_images_desc": "Misafirperverlik dünyanın her yerinde farklı görünür, ancak duygu aynıdır."
   },
   uk: {
     "flow_story": "<strong>Як це працює на практиці:</strong><br>Коли ми починаємо, <strong>Коли (Da)</strong> говорить нам, що ми знаходимося у фіксованій точці в минулому, тоді як <strong>Коли (Når)</strong> показує, що ми на кільці, де події повторюються. Щоб рухатися вперед, нам потрібен двигун <strong>Тому що</strong> (причина), який штовхає нас до результату за допомогою <strong>Тому</strong>. По дорозі ми можемо продовжити прямо і додати ще за допомогою <strong>Та/І</strong>, або зробити несподіваний поворот за допомогою <strong>Але</strong>. Якщо ми зіткнемося з перешкодою (<strong>Хоча</strong>), ми знаємо, що вона нас не зупинить... Тому що <strong>Все одно</strong> проривається крізь неї!",
@@ -16499,7 +16629,17 @@ export const translations = {
     "talemaader_title": "Ідіоми та Патерни",
     "talemaader_subtitle": "Вивчайте данські ідіоми крок за кроком і знаходьте загальні патерни",
     "talemaader": "Ідіоми та Патерни",
-    "talemaaderDesc": "Вивчайте данські ідіоми крок за кроком і знаходьте загальні патерни"
+    "talemaaderDesc": "Вивчайте данські ідіоми крок за кроком і знаходьте загальні патерни",
+    "hjerterum_title": "Гостинність гнучка",
+    "hjerterum_idiom": "В тісноті, та не в образі (Де є місце в серці, є місце і в домі).",
+    "hjerterum_li1": "Справжня гостинність — це не великий дім.",
+    "hjerterum_li2": "Це відкрите серце.",
+    "hjerterum_li3": "Ми всі поділяємо це почуття, звідки б ми не були.",
+    "hjerterum_world_title": "Як кажуть про це у світі?",
+    "hjerterum_world_desc": "Натисніть на країну, щоб побачити, як там це кажуть.",
+    "hjerterum_world_empty": "Виберіть мову вище",
+    "hjerterum_images_title": "Образи Гостинності",
+    "hjerterum_images_desc": "Гостинність виглядає по-різному в усьому світі, але почуття одне й те саме."
   },
   ur: {
     "traening3_historie1_0_Da": "یاد رکھیں کہ برف باری بار بار ہوتی ہے (یہ ایک عمومی کیفیت ہے جس کا سامنا وہ اکثر کرتا ہے)۔ اس لیے ہم 'Når' استعمال کرتے ہیں۔ 'Da' صرف ماضی کے کسی ایک واقعے کے لیے استعمال ہوتا ہے۔",
@@ -17694,7 +17834,17 @@ export const translations = {
     "talemaader_title": "محاورے اور طرزیں",
     "talemaader_subtitle": "ڈینش محاورے مرحلہ وار سیکھیں اور مجموعی طرزیں تلاش کریں",
     "talemaader": "محاورے اور طرزیں",
-    "talemaaderDesc": "ڈینش محاورے مرحلہ وار سیکھیں اور مجموعی طرزیں تلاش کریں"
+    "talemaaderDesc": "ڈینش محاورے مرحلہ وار سیکھیں اور مجموعی طرزیں تلاش کریں",
+    "hjerterum_title": "مہمان نوازی لچکدار ہے",
+    "hjerterum_idiom": "جہاں دل میں جگہ ہو، وہاں گھر میں بھی جگہ ہوتی ہے۔",
+    "hjerterum_li1": "سچی مہمان نوازی کا تعلق بڑے گھر سے نہیں ہے۔",
+    "hjerterum_li2": "اس کا تعلق کھلے دل سے ہے۔",
+    "hjerterum_li3": "ہم سب اس احساس میں شریک ہیں - چاہے ہم کہیں سے بھی آئے ہوں۔",
+    "hjerterum_world_title": "دنیا میں یہ کیسے کہتے ہیں؟",
+    "hjerterum_world_desc": "ان کا طریقہ دیکھنے کے لئے کسی ملک پر ٹیپ کریں۔",
+    "hjerterum_world_empty": "اوپر ایک زبان منتخب کریں",
+    "hjerterum_images_title": "مہمان نوازی کی تصاویر",
+    "hjerterum_images_desc": "مہمان نوازی پوری دنیا میں مختلف نظر آتی ہے، لیکن احساس ایک ہی ہے۔"
   },
   vi: {
     "flow_story": "<strong>Cách hoạt động trong thực tế:</strong><br>Khi chúng ta bắt đầu, <strong>Da</strong> cho chúng ta biết chúng ta đang ở một điểm cố định trong quá khứ, trong khi <strong>Når</strong> cho thấy chúng ta đang ở một vòng xuyến. Để tiến lên, chúng ta cần động cơ <strong>Bởi vì</strong> (nguyên nhân), nó thúc đẩy chúng ta tới kết quả với <strong>Do đó</strong>. Dọc đường, chúng ta có thể đi thẳng với <strong>Và</strong>, hoặc rẽ bất ngờ với <strong>Nhưng</strong>. Nếu chúng ta gặp rào cản (<strong>Mặc dù</strong>), chúng ta biết nó sẽ không cản được... Bởi vì <strong>Dù sao thì</strong> cũng sẽ vượt qua nó!",
@@ -18864,7 +19014,17 @@ export const translations = {
     "talemaader_title": "Thành ngữ & Mẫu",
     "talemaader_subtitle": "Học thành ngữ Đan Mạch từng bước và tìm ra các mẫu chung",
     "talemaader": "Thành ngữ & Mẫu",
-    "talemaaderDesc": "Học thành ngữ Đan Mạch từng bước và tìm ra các mẫu chung"
+    "talemaaderDesc": "Học thành ngữ Đan Mạch từng bước và tìm ra các mẫu chung",
+    "hjerterum_title": "Lòng hiếu khách rất linh hoạt",
+    "hjerterum_idiom": "Nơi nào có chỗ trong tim, nơi đó có chỗ trong nhà.",
+    "hjerterum_li1": "Lòng hiếu khách thực sự không phải là một ngôi nhà lớn.",
+    "hjerterum_li2": "Nó là về một trái tim rộng mở.",
+    "hjerterum_li3": "Tất cả chúng ta đều chia sẻ cảm giác này – bất kể chúng ta đến từ đâu.",
+    "hjerterum_world_title": "Mọi người trên thế giới nói điều đó như thế nào?",
+    "hjerterum_world_desc": "Nhấn vào một quốc gia để xem cách họ nói.",
+    "hjerterum_world_empty": "Chọn một ngôn ngữ ở trên",
+    "hjerterum_images_title": "Hình ảnh Lòng hiếu khách",
+    "hjerterum_images_desc": "Lòng hiếu khách trông có vẻ khác nhau trên khắp thế giới, nhưng cảm giác thì giống nhau."
   },
   zh: {
     "flow_story": "<strong>它是如何运作的：</strong><br>当我们开始时，<strong>Da</strong> 告诉我们处于过去的一个固定点，而 <strong>Når</strong> 显示我们处于一个循环中。为了前进，我们需要引擎 <strong>因为</strong>（原因），它用 <strong>所以</strong> 将我们推向结果。在路上，我们可以用 <strong>和</strong> 继续直行，或者用 <strong>但是</strong> 意外转弯。如果我们遇到路障（<strong>尽管</strong>），我们知道它不会阻止我们... 因为 <strong>仍然</strong> 会直接冲破它！",
@@ -20009,6 +20169,16 @@ export const translations = {
     "talemaader_title": "成语与模式",
     "talemaader_subtitle": "逐步学习丹麦语成语并找出整体模式",
     "talemaader": "成语与模式",
-    "talemaaderDesc": "逐步学习丹麦语成语并找出整体模式"
+    "talemaaderDesc": "逐步学习丹麦语成语并找出整体模式",
+    "hjerterum_title": "好客是灵活的",
+    "hjerterum_idiom": "心有多大，家就有多大。",
+    "hjerterum_li1": "真正的好客不在于大房子。",
+    "hjerterum_li2": "而在于一颗敞开的心。",
+    "hjerterum_li3": "无论我们来自哪里，我们都认同这种感觉。",
+    "hjerterum_world_title": "世界各地的人们怎么说？",
+    "hjerterum_world_desc": "点击一个国家，看看他们的说法。",
+    "hjerterum_world_empty": "在上方选择一种语言",
+    "hjerterum_images_title": "好客的画面",
+    "hjerterum_images_desc": "世界各地的好客看起来各有不同，但感觉是一样的。"
   }
 };

@@ -4,7 +4,6 @@
                 <i class="fas fa-arrow-left"></i> Tilbage
             </button>
             
-            <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 50px;">Løsning C: Ægte HTML (Den professionelle vej)</h2>
             
             <!-- SIDE 1: Mad er medicin -->
             <div style="background: #fffaf0; border-radius: 20px; padding: 60px 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; position: relative; overflow: hidden;">

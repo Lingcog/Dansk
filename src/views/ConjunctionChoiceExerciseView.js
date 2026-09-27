@@ -30,7 +30,11 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
             const key = extraData.subPath.split('/')[1];
             if (conjunctionData.traening2[key]) {
                 exerciseMetadata = conjunctionData.traening2[key];
-                currentQuestions = JSON.parse(JSON.stringify(exerciseMetadata.questions));
+                if (Array.isArray(exerciseMetadata.questions[0])) {
+                    currentQuestions = JSON.parse(JSON.stringify(exerciseMetadata.questions[currentSetIndex]));
+                } else {
+                    currentQuestions = JSON.parse(JSON.stringify(exerciseMetadata.questions));
+                }
             } else {
                 viewState = 'traening2_menu'; // fallback if key is invalid
             }
@@ -94,7 +98,7 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                     <i class="fas fa-arrow-left"></i> ${getTranslation('back')}
                 </button>
                 <div class="conj-choice-header">
-                    <h2 style="color: var(--primary-color); margin: 0;">${getTranslation('conjunctionChoiceTitle') || 'Vælg det rigtige ord'}</h2>
+                    <h2 style="color: var(--primary-color); margin: 0;">${(getTranslation('conjunctionChoiceTitle') !== 'conjunctionChoiceTitle' ? getTranslation('conjunctionChoiceTitle') : 'Vælg det rigtige ord')}</h2>
                 </div>
                 <div class="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
                     <div class="card" id="btn-t1">
@@ -109,8 +113,8 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                     </div>
                     <div class="card" id="btn-t3">
                         <div class="card-icon">📖</div>
-                        <h3 class="card-title">${getTranslation('traening3Title') || 'Træning 3'}</h3>
-                        <p class="card-desc">${getTranslation('traening3Desc') || 'Tekstflow og historier'}</p>
+                        <h3 class="card-title">${(getTranslation('traening3Title') !== 'traening3Title' ? getTranslation('traening3Title') : 'Træning 3')}</h3>
+                        <p class="card-desc">${(getTranslation('traening3Desc') !== 'traening3Desc' ? getTranslation('traening3Desc') : 'Tekstflow og historier')}</p>
                     </div>
                 </div>
             </div>
@@ -142,15 +146,15 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 <div class="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
                     <div class="card" id="btn-da-naar">
                         <div class="card-icon">📅</div>
-                        <h3 class="card-title">Da / Når</h3>
+                        <h3 class="card-title">Da / når</h3>
                     </div>
                     <div class="card" id="btn-fordi-derfor">
                         <div class="card-icon">➡️</div>
-                        <h3 class="card-title">Fordi / Derfor</h3>
+                        <h3 class="card-title">Fordi / derfor</h3>
                     </div>
                     <div class="card" id="btn-selvom-alligevel">
                         <div class="card-icon">🧱</div>
-                        <h3 class="card-title">Selvom / Alligevel</h3>
+                        <h3 class="card-title">Selvom / alligevel</h3>
                     </div>
                 </div>
             </div>
@@ -168,16 +172,93 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
 
     function renderExercise() {
         const isTraening1 = currentExerciseType === 'traening1';
+        const isTraening2 = currentExerciseType === 'traening2';
         const isTraening3 = currentExerciseType === 'traening3';
-        const title = isTraening3 ? (getTranslation('traening3Title') || 'Træning 3: Tekstflow') : (isTraening1 ? 'Træning 1: Bindeord' : exerciseMetadata.title);
-        const maxSets = isTraening1 ? conjunctionData.traening1.length : (isTraening3 ? conjunctionData.traening3.length : 1);
+        const t2Key = extraData.subPath && extraData.subPath.split('/')[1];
+        const title = isTraening3 ? ((getTranslation('traening3Title') !== 'traening3Title' ? getTranslation('traening3Title') : 'Træning 3: Tekstflow')) : (isTraening1 ? 'Træning 1: Bindeord' : (getTranslation(`t2_${t2Key}_title`).startsWith('t2_') ? exerciseMetadata.title : getTranslation(`t2_${t2Key}_title`)));
+        const maxSets = isTraening1 ? conjunctionData.traening1.length : (isTraening3 ? conjunctionData.traening3.length : (isTraening2 && exerciseMetadata && Array.isArray(exerciseMetadata.questions[0]) ? exerciseMetadata.questions.length : 1));
 
         let illustrationHTML = '';
         if (exerciseMetadata && exerciseMetadata.illustration) {
             illustrationHTML = `
                 <div style="text-align: center;">
                     <img src="${baseUrl}${exerciseMetadata.illustration}" class="conj-illustration" alt="${title}" />
-                    <div class="conj-expl-bubble">${exerciseMetadata.explanation}</div>
+                    <div class="conj-expl-bubble">${(getTranslation(`t2_${t2Key}_explanation`).startsWith('t2_')) ? exerciseMetadata.explanation : getTranslation(`t2_${t2Key}_explanation`)}</div>
+                </div>
+            `;
+        } else if (isTraening1 || isTraening3) {
+            illustrationHTML = `
+                <div class="flow-accordion-container" style="margin-bottom: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px;">
+                    <button id="toggle-flow-btn" style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 10px; border: none; background: transparent; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: #334155;">
+                        <span>🚥 ${(getTranslation('flow_title') !== 'flow_title' ? getTranslation('flow_title') : 'Tekstens Trafik')}</span>
+                        <i class="fas fa-chevron-down" id="flow-chevron" style="transition: transform 0.3s;"></i>
+                    </button>
+                    <div id="flow-content" style="display: none; padding-top: 15px;">
+                        <p style="text-align: center; color: #64748b; margin-bottom: 20px; font-size: 0.95rem;">${(getTranslation('flow_desc') !== 'flow_desc' ? getTranslation('flow_desc') : 'Hvordan bindeord styrer flowet og retningen, når vi læser.')}</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
+                            <!-- DA -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #ef4444; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">📍</span>
+                                <h4 style="margin: 0; color: #ef4444; font-size: 1.1rem;">${(getTranslation('flow_da_word') !== 'flow_da_word' ? getTranslation('flow_da_word') : 'Da')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #ef4444; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_da_role') !== 'flow_da_role' ? getTranslation('flow_da_role') : 'Tegnestiften')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_da_desc') !== 'flow_da_desc' ? getTranslation('flow_da_desc') : 'Et fast punkt på kortet.')}</p>
+                            </div>
+                            <!-- NAAR -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #10b981; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🔁</span>
+                                <h4 style="margin: 0; color: #10b981; font-size: 1.1rem;">${(getTranslation('flow_naar_word') !== 'flow_naar_word' ? getTranslation('flow_naar_word') : 'Når')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_naar_role') !== 'flow_naar_role' ? getTranslation('flow_naar_role') : 'Rundkørslen')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_naar_desc') !== 'flow_naar_desc' ? getTranslation('flow_naar_desc') : 'Noget der sker igen og igen.')}</p>
+                            </div>
+                            <!-- FORDI -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #f59e0b; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">⛽</span>
+                                <h4 style="margin: 0; color: #f59e0b; font-size: 1.1rem;">${(getTranslation('flow_fordi_word') !== 'flow_fordi_word' ? getTranslation('flow_fordi_word') : 'Fordi')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #f59e0b; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_fordi_role') !== 'flow_fordi_role' ? getTranslation('flow_fordi_role') : 'Motoren')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_fordi_desc') !== 'flow_fordi_desc' ? getTranslation('flow_fordi_desc') : 'Viser hvorfor vi bevæger os.')}</p>
+                            </div>
+                            <!-- DERFOR -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #8b5cf6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">➡️</span>
+                                <h4 style="margin: 0; color: #8b5cf6; font-size: 1.1rem;">${(getTranslation('flow_derfor_word') !== 'flow_derfor_word' ? getTranslation('flow_derfor_word') : 'Derfor')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #8b5cf6; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_derfor_role') !== 'flow_derfor_role' ? getTranslation('flow_derfor_role') : 'Pilen fremad')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_derfor_desc') !== 'flow_derfor_desc' ? getTranslation('flow_derfor_desc') : 'Fører frem mod resultatet.')}</p>
+                            </div>
+                            <!-- OG/SAMT -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #14b8a6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🛣️</span>
+                                <h4 style="margin: 0; color: #14b8a6; font-size: 1.1rem;">${(getTranslation('flow_og_word') !== 'flow_og_word' ? getTranslation('flow_og_word') : 'Og / Samt')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #14b8a6; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_og_role') !== 'flow_og_role' ? getTranslation('flow_og_role') : 'Den lige vej')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_og_desc') !== 'flow_og_desc' ? getTranslation('flow_og_desc') : 'Vejen fortsætter bare ligeud.')}</p>
+                            </div>
+                            <!-- MEN -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #ec4899; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">↩️</span>
+                                <h4 style="margin: 0; color: #ec4899; font-size: 1.1rem;">${(getTranslation('flow_men_word') !== 'flow_men_word' ? getTranslation('flow_men_word') : 'Men')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #ec4899; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_men_role') !== 'flow_men_role' ? getTranslation('flow_men_role') : 'Skarpt sving')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_men_desc') !== 'flow_men_desc' ? getTranslation('flow_men_desc') : 'Retningen skifter pludseligt.')}</p>
+                            </div>
+                            <!-- SELVOM -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #64748b; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🚧</span>
+                                <h4 style="margin: 0; color: #64748b; font-size: 1.1rem;">${(getTranslation('flow_selvom_word') !== 'flow_selvom_word' ? getTranslation('flow_selvom_word') : 'Selvom')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_selvom_role') !== 'flow_selvom_role' ? getTranslation('flow_selvom_role') : 'Vejspærring')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_selvom_desc') !== 'flow_selvom_desc' ? getTranslation('flow_selvom_desc') : 'En mur på vejen.')}</p>
+                            </div>
+                            <!-- ALLIGEVEL -->
+                            <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #0ea5e9; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <span style="font-size: 2rem; display: block; margin-bottom: 8px;">☄️</span>
+                                <h4 style="margin: 0; color: #0ea5e9; font-size: 1.1rem;">${(getTranslation('flow_alligevel_word') !== 'flow_alligevel_word' ? getTranslation('flow_alligevel_word') : 'Alligevel')}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #0ea5e9; text-transform: uppercase; margin-bottom: 6px;">${(getTranslation('flow_alligevel_role') !== 'flow_alligevel_role' ? getTranslation('flow_alligevel_role') : 'Gennembrud')}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${(getTranslation('flow_alligevel_desc') !== 'flow_alligevel_desc' ? getTranslation('flow_alligevel_desc') : 'Vi kører igennem muren.')}</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 10px; border-left: 4px solid #3b82f6; font-size: 0.95rem; color: #334155; line-height: 1.6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            ${(getTranslation('flow_story') !== 'flow_story' ? getTranslation('flow_story') : '')}
+                        </div>
+                    </div>
                 </div>
             `;
         }
@@ -206,11 +287,12 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
             let feedbackText = '';
             if (scores[i] !== null) {
                 if (isCorrect) {
-                    feedbackText = '✓ ' + (isTraening1 ? (getTranslation(`conj_${absoluteIdx}_feedback`) || q.feedback) : q.feedback);
+                    feedbackText = '✓ ' + (isTraening1 ? (getTranslation(`conj_${absoluteIdx}_feedback`) || q.feedback) : (getTranslation(`t2_${t2Key}_${absoluteIdx}_feedback`) || q.feedback));
+                    if (feedbackText.includes('conj_') || feedbackText.includes('t2_')) { feedbackText = '✓ ' + q.feedback; }
                 } else {
                     const safeOpt = q.selectedValue ? q.selectedValue.replace(/[^a-zA-ZæøåÆØÅ]/g, '') : '';
-                    const translatedHint = isTraening1 ? getTranslation(`conj_${absoluteIdx}_hint_${safeOpt}`) : null;
-                    const finalHint = (translatedHint && !translatedHint.startsWith('conj_')) ? translatedHint : q.hints[q.selectedValue];
+                    const translatedHint = isTraening1 ? getTranslation(`conj_${absoluteIdx}_hint_${safeOpt}`) : getTranslation(`t2_${t2Key}_${absoluteIdx}_hint_${safeOpt}`);
+                    const finalHint = (translatedHint && !translatedHint.startsWith('conj_') && !translatedHint.startsWith('t2_')) ? translatedHint : q.hints[q.selectedValue];
                     feedbackText = '⚠ ' + (finalHint || "Prøv igen. Tænk på forbindelsen mellem sætningerne.");
                 }
             }
@@ -238,7 +320,7 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 </div>
   
                 <div class="conj-choice-controls">
-                    ${((isTraening1 || isTraening3) && currentSetIndex < maxSets - 1) ? `
+                    ${((isTraening1 || isTraening2 || isTraening3) && currentSetIndex < maxSets - 1) ? `
                         <button id="next-set-btn" class="secondary-button" style="display: none; padding: 0.8rem 2rem; border-radius: 50px;">
                             Næste historie <i class="fas fa-arrow-right"></i>
                         </button>
@@ -294,6 +376,21 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 navigateFn('conjunction_choice', { subPath: 'traening2' });
             }
         });
+
+        const toggleFlowBtn = container.querySelector('#toggle-flow-btn');
+        if (toggleFlowBtn) {
+            toggleFlowBtn.addEventListener('click', () => {
+                const content = container.querySelector('#flow-content');
+                const chevron = container.querySelector('#flow-chevron');
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    content.style.display = 'none';
+                    chevron.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
 
         const selects = container.querySelectorAll('.grammatik-select:not(.t3-select)');
         selects.forEach((select, i) => {
@@ -409,8 +506,10 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                 scores = [null, null, null, null, null];
                 if (isTraening3) {
                     currentQuestions = conjunctionData.traening3;
-                } else {
+                } else if (isTraening1) {
                     currentQuestions = conjunctionData.traening1[currentSetIndex];
+                } else if (isTraening2) {
+                    currentQuestions = JSON.parse(JSON.stringify(exerciseMetadata.questions[currentSetIndex]));
                 }
                 render();
             });

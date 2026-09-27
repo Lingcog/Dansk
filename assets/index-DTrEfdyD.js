@@ -1159,7 +1159,7 @@
                     <i class="fas fa-arrow-left"></i> ${e("back")}
                 </button>
                 <div class="conj-choice-header">
-                    <h2 style="color: var(--primary-color); margin: 0;">${e("conjunctionChoiceTitle")||"Vælg det rigtige ord"}</h2>
+                    <h2 style="color: var(--primary-color); margin: 0;">${e("conjunctionChoiceTitle")!=="conjunctionChoiceTitle"?e("conjunctionChoiceTitle"):"Vælg det rigtige ord"}</h2>
                 </div>
                 <div class="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
                     <div class="card" id="btn-t1">
@@ -1174,8 +1174,8 @@
                     </div>
                     <div class="card" id="btn-t3">
                         <div class="card-icon">📖</div>
-                        <h3 class="card-title">${e("traening3Title")||"Træning 3"}</h3>
-                        <p class="card-desc">${e("traening3Desc")||"Tekstflow og historier"}</p>
+                        <h3 class="card-title">${e("traening3Title")!=="traening3Title"?e("traening3Title"):"Træning 3"}</h3>
+                        <p class="card-desc">${e("traening3Desc")!=="traening3Desc"?e("traening3Desc"):"Tekstflow og historier"}</p>
                     </div>
                 </div>
             </div>
@@ -1202,7 +1202,7 @@
                     </div>
                 </div>
             </div>
-        `,document.getElementById("conj-back-btn").addEventListener("click",()=>{g("conjunction_choice")});const o=A=>{g("conjunction_choice",{subPath:`traening2/${A}`})};document.getElementById("btn-da-naar").addEventListener("click",()=>o("da_naar")),document.getElementById("btn-fordi-derfor").addEventListener("click",()=>o("fordi_derfor")),document.getElementById("btn-selvom-alligevel").addEventListener("click",()=>o("selvom_alligevel"))}function s(){const o=i==="traening1",A=i==="traening2",D=i==="traening3",T=r.subPath&&r.subPath.split("/")[1],_=D?e("traening3Title")||"Træning 3: Tekstflow":o?"Træning 1: Bindeord":e(`t2_${T}_title`).startsWith("t2_")?m.title:e(`t2_${T}_title`),k=o?ue.traening1.length:D?ue.traening3.length:A&&m&&Array.isArray(m.questions[0])?m.questions.length:1;let h="";m&&m.illustration?h=`
+        `,document.getElementById("conj-back-btn").addEventListener("click",()=>{g("conjunction_choice")});const o=A=>{g("conjunction_choice",{subPath:`traening2/${A}`})};document.getElementById("btn-da-naar").addEventListener("click",()=>o("da_naar")),document.getElementById("btn-fordi-derfor").addEventListener("click",()=>o("fordi_derfor")),document.getElementById("btn-selvom-alligevel").addEventListener("click",()=>o("selvom_alligevel"))}function s(){const o=i==="traening1",A=i==="traening2",D=i==="traening3",T=r.subPath&&r.subPath.split("/")[1],_=D?e("traening3Title")!=="traening3Title"?e("traening3Title"):"Træning 3: Tekstflow":o?"Træning 1: Bindeord":e(`t2_${T}_title`).startsWith("t2_")?m.title:e(`t2_${T}_title`),k=o?ue.traening1.length:D?ue.traening3.length:A&&m&&Array.isArray(m.questions[0])?m.questions.length:1;let h="";m&&m.illustration?h=`
                 <div style="text-align: center;">
                     <img src="${ae}${m.illustration}" class="conj-illustration" alt="${_}" />
                     <div class="conj-expl-bubble">${e(`t2_${T}_explanation`).startsWith("t2_")?m.explanation:e(`t2_${T}_explanation`)}</div>
@@ -1210,73 +1210,73 @@
             `:(o||D)&&(h=`
                 <div class="flow-accordion-container" style="margin-bottom: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px;">
                     <button id="toggle-flow-btn" style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 10px; border: none; background: transparent; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: #334155;">
-                        <span>🚥 ${e("flow_title")||"Tekstens Trafik"}</span>
+                        <span>🚥 ${e("flow_title")!=="flow_title"?e("flow_title"):"Tekstens Trafik"}</span>
                         <i class="fas fa-chevron-down" id="flow-chevron" style="transition: transform 0.3s;"></i>
                     </button>
                     <div id="flow-content" style="display: none; padding-top: 15px;">
-                        <p style="text-align: center; color: #64748b; margin-bottom: 20px; font-size: 0.95rem;">${e("flow_desc")||"Hvordan bindeord styrer flowet og retningen, når vi læser."}</p>
+                        <p style="text-align: center; color: #64748b; margin-bottom: 20px; font-size: 0.95rem;">${e("flow_desc")!=="flow_desc"?e("flow_desc"):"Hvordan bindeord styrer flowet og retningen, når vi læser."}</p>
                         
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
                             <!-- DA -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #ef4444; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">📍</span>
-                                <h4 style="margin: 0; color: #ef4444; font-size: 1.1rem;">${e("flow_da_word")||"Da"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #ef4444; text-transform: uppercase; margin-bottom: 6px;">${e("flow_da_role")||"Tegnestiften"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_da_desc")||"Et fast punkt på kortet."}</p>
+                                <h4 style="margin: 0; color: #ef4444; font-size: 1.1rem;">${e("flow_da_word")!=="flow_da_word"?e("flow_da_word"):"Da"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #ef4444; text-transform: uppercase; margin-bottom: 6px;">${e("flow_da_role")!=="flow_da_role"?e("flow_da_role"):"Tegnestiften"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_da_desc")!=="flow_da_desc"?e("flow_da_desc"):"Et fast punkt på kortet."}</p>
                             </div>
                             <!-- NAAR -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #10b981; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🔁</span>
-                                <h4 style="margin: 0; color: #10b981; font-size: 1.1rem;">${e("flow_naar_word")||"Når"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">${e("flow_naar_role")||"Rundkørslen"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_naar_desc")||"Noget der sker igen og igen."}</p>
+                                <h4 style="margin: 0; color: #10b981; font-size: 1.1rem;">${e("flow_naar_word")!=="flow_naar_word"?e("flow_naar_word"):"Når"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">${e("flow_naar_role")!=="flow_naar_role"?e("flow_naar_role"):"Rundkørslen"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_naar_desc")!=="flow_naar_desc"?e("flow_naar_desc"):"Noget der sker igen og igen."}</p>
                             </div>
                             <!-- FORDI -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #f59e0b; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">⛽</span>
-                                <h4 style="margin: 0; color: #f59e0b; font-size: 1.1rem;">${e("flow_fordi_word")||"Fordi"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #f59e0b; text-transform: uppercase; margin-bottom: 6px;">${e("flow_fordi_role")||"Motoren"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_fordi_desc")||"Viser hvorfor vi bevæger os."}</p>
+                                <h4 style="margin: 0; color: #f59e0b; font-size: 1.1rem;">${e("flow_fordi_word")!=="flow_fordi_word"?e("flow_fordi_word"):"Fordi"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #f59e0b; text-transform: uppercase; margin-bottom: 6px;">${e("flow_fordi_role")!=="flow_fordi_role"?e("flow_fordi_role"):"Motoren"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_fordi_desc")!=="flow_fordi_desc"?e("flow_fordi_desc"):"Viser hvorfor vi bevæger os."}</p>
                             </div>
                             <!-- DERFOR -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #8b5cf6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">➡️</span>
-                                <h4 style="margin: 0; color: #8b5cf6; font-size: 1.1rem;">${e("flow_derfor_word")||"Derfor"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #8b5cf6; text-transform: uppercase; margin-bottom: 6px;">${e("flow_derfor_role")||"Pilen fremad"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_derfor_desc")||"Fører frem mod resultatet."}</p>
+                                <h4 style="margin: 0; color: #8b5cf6; font-size: 1.1rem;">${e("flow_derfor_word")!=="flow_derfor_word"?e("flow_derfor_word"):"Derfor"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #8b5cf6; text-transform: uppercase; margin-bottom: 6px;">${e("flow_derfor_role")!=="flow_derfor_role"?e("flow_derfor_role"):"Pilen fremad"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_derfor_desc")!=="flow_derfor_desc"?e("flow_derfor_desc"):"Fører frem mod resultatet."}</p>
                             </div>
                             <!-- OG/SAMT -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #14b8a6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🛣️</span>
-                                <h4 style="margin: 0; color: #14b8a6; font-size: 1.1rem;">${e("flow_og_word")||"Og / Samt"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #14b8a6; text-transform: uppercase; margin-bottom: 6px;">${e("flow_og_role")||"Den lige vej"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_og_desc")||"Vejen fortsætter bare ligeud."}</p>
+                                <h4 style="margin: 0; color: #14b8a6; font-size: 1.1rem;">${e("flow_og_word")!=="flow_og_word"?e("flow_og_word"):"Og / Samt"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #14b8a6; text-transform: uppercase; margin-bottom: 6px;">${e("flow_og_role")!=="flow_og_role"?e("flow_og_role"):"Den lige vej"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_og_desc")!=="flow_og_desc"?e("flow_og_desc"):"Vejen fortsætter bare ligeud."}</p>
                             </div>
                             <!-- MEN -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #ec4899; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">↩️</span>
-                                <h4 style="margin: 0; color: #ec4899; font-size: 1.1rem;">${e("flow_men_word")||"Men"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #ec4899; text-transform: uppercase; margin-bottom: 6px;">${e("flow_men_role")||"Skarpt sving"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_men_desc")||"Retningen skifter pludseligt."}</p>
+                                <h4 style="margin: 0; color: #ec4899; font-size: 1.1rem;">${e("flow_men_word")!=="flow_men_word"?e("flow_men_word"):"Men"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #ec4899; text-transform: uppercase; margin-bottom: 6px;">${e("flow_men_role")!=="flow_men_role"?e("flow_men_role"):"Skarpt sving"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_men_desc")!=="flow_men_desc"?e("flow_men_desc"):"Retningen skifter pludseligt."}</p>
                             </div>
                             <!-- SELVOM -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #64748b; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🚧</span>
-                                <h4 style="margin: 0; color: #64748b; font-size: 1.1rem;">${e("flow_selvom_word")||"Selvom"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">${e("flow_selvom_role")||"Vejspærring"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_selvom_desc")||"En mur på vejen."}</p>
+                                <h4 style="margin: 0; color: #64748b; font-size: 1.1rem;">${e("flow_selvom_word")!=="flow_selvom_word"?e("flow_selvom_word"):"Selvom"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">${e("flow_selvom_role")!=="flow_selvom_role"?e("flow_selvom_role"):"Vejspærring"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_selvom_desc")!=="flow_selvom_desc"?e("flow_selvom_desc"):"En mur på vejen."}</p>
                             </div>
                             <!-- ALLIGEVEL -->
                             <div style="background: white; padding: 12px; border-radius: 10px; text-align: center; border-bottom: 4px solid #0ea5e9; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <span style="font-size: 2rem; display: block; margin-bottom: 8px;">☄️</span>
-                                <h4 style="margin: 0; color: #0ea5e9; font-size: 1.1rem;">${e("flow_alligevel_word")||"Alligevel"}</h4>
-                                <div style="font-size: 0.75rem; font-weight: bold; color: #0ea5e9; text-transform: uppercase; margin-bottom: 6px;">${e("flow_alligevel_role")||"Gennembrud"}</div>
-                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_alligevel_desc")||"Vi kører igennem muren."}</p>
+                                <h4 style="margin: 0; color: #0ea5e9; font-size: 1.1rem;">${e("flow_alligevel_word")!=="flow_alligevel_word"?e("flow_alligevel_word"):"Alligevel"}</h4>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #0ea5e9; text-transform: uppercase; margin-bottom: 6px;">${e("flow_alligevel_role")!=="flow_alligevel_role"?e("flow_alligevel_role"):"Gennembrud"}</div>
+                                <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">${e("flow_alligevel_desc")!=="flow_alligevel_desc"?e("flow_alligevel_desc"):"Vi kører igennem muren."}</p>
                             </div>
                         </div>
                         
                         <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 10px; border-left: 4px solid #3b82f6; font-size: 0.95rem; color: #334155; line-height: 1.6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                            ${e("flow_story")||""}
+                            ${e("flow_story")!=="flow_story"?e("flow_story"):""}
                         </div>
                     </div>
                 </div>

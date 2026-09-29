@@ -349,7 +349,7 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
 }
 
 
-export function renderIdiomUglerIMosen(container, navigateFn) {
+export function renderIdiomUglerIMosen(container, navigateFn) { console.log("Rendering Ugler i mosen...");
     container.innerHTML = `
         <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
             <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">

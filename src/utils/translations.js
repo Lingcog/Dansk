@@ -1149,6 +1149,7 @@ export const translations = {
     "talemaader_subtitle": "Lær danske talemåder trin-for-trin og find de overordnede mønstre",
     "talemaader": "Talemåder & Mønstre",
     "talemaaderDesc": "Lær danske talemåder trin-for-trin og find de overordnede mønstre",
+    "hjerterum_card_title": "Gæstfrihed...",
     "hjerterum_title": "Gæstfrihed er fleksibel",
     "hjerterum_idiom": "Hvor der er hjerterum, er der husrum.",
     "hjerterum_li1": "Ægte gæstfrihed handler ikke om et stort hus.",
@@ -1187,7 +1188,7 @@ export const translations = {
     "ugler_s5_p1": "Når ting ikke er, hvad de ser ud til, reagerer vi alle ens.",
     "ugler_s5_p2": "Nogle sprog taler om ulve og ugler. Nogle taler om fisk, der lugter, eller katte i kasser. Andre taler om tigerkostumer eller sorte pletter i suppen.",
     "ugler_s5_p3": "Billederne er forskellige, men vi er alle mennesker. Vi deler præcis den samme evne til at mærke intuition og mistanke. Selvom vi taler forskellige sprog, er vi bundet sammen af den samme følelse. <strong>Vi deler de samme sandheder.</strong>",
-    "ugler_card_title": "Ugler i mosen",
+    "ugler_card_title": "Ting er ikke altid som de ser ud - Ugler i mosen",
     "ugler_card_desc": "Ting er ikke, hvad de ser ud til."
   },
   en: {
@@ -2378,6 +2379,7 @@ export const translations = {
     "talemaader_subtitle": "Learn Danish idioms step-by-step and find the overarching patterns",
     "talemaader": "Idioms & Patterns",
     "talemaaderDesc": "Learn Danish idioms step-by-step and find the overarching patterns",
+    "hjerterum_card_title": "Hospitality...",
     "hjerterum_title": "Hospitality is flexible",
     "hjerterum_idiom": "Where there is room in the heart, there is room in the house.",
     "hjerterum_li1": "True hospitality is not about a big house.",
@@ -2416,7 +2418,7 @@ export const translations = {
     "ugler_s5_p1": "When things are not what they seem, we all react the same way.",
     "ugler_s5_p2": "Some languages talk about wolves and owls. Some talk about fish that smell, or cats in boxes. Others talk about tiger costumes or black spots in the soup.",
     "ugler_s5_p3": "The images are different, but we are all human. We share exactly the same ability to feel intuition and suspicion. Even though we speak different languages, we are bound together by the same feeling. <strong>We share the same truths.</strong>",
-    "ugler_card_title": "Owls in the bog",
+    "ugler_card_title": "Things are not always as they seem - Owls in the bog",
     "ugler_card_desc": "Things are not what they seem."
   },
   de: {

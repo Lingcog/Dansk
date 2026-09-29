@@ -70,14 +70,14 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     card2.className = 'module-card';
     card2.style.borderColor = '#fbbf24';
     card2.onclick = () => navigateFn('idiom_hjerterum');
-    card2.innerHTML = `<div class="module-title">${getTranslation('hjerterum_card_title') || 'Gæstfrihed'}</div><div class="module-desc">${getTranslation('hjerterum_idiom') || 'Hvor der er hjerterum, er der husrum.'}</div><button class="module-action-btn" style="background:#fbbf24;color:white;">Prøv nu</button>`;
+    card2.innerHTML = `<div class="module-title">${getTranslation('hjerterum_card_title') || 'Gæstfrihed...'}</div><div class="module-desc">${getTranslation('hjerterum_idiom') || 'Hvor der er hjerterum, er der husrum.'}</div><button class="module-action-btn" style="background:#fbbf24;color:white;">Prøv nu</button>`;
     grid.appendChild(card2);
 
     const card3 = document.createElement('div');
     card3.className = 'module-card';
     card3.style.borderColor = '#4f46e5';
     card3.onclick = () => navigateFn('idiom_ugler_i_mosen');
-    card3.innerHTML = `<div class="module-title">${getTranslation('ugler_card_title') || 'Ugler i mosen'}</div><div class="module-desc">${getTranslation('ugler_card_desc') || 'Ting er ikke, hvad de ser ud til.'}</div><button class="module-action-btn" style="background:#4f46e5;color:white;">Prøv nu</button>`;
+    card3.innerHTML = `<div class="module-title">${getTranslation('ugler_card_title') || 'Ting er ikke altid som de ser ud - Ugler i mosen'}</div><div class="module-desc">${getTranslation('ugler_card_desc') || 'Ting er ikke, hvad de ser ud til.'}</div><button class="module-action-btn" style="background:#4f46e5;color:white;">Prøv nu</button>`;
     grid.appendChild(card3);
 
 

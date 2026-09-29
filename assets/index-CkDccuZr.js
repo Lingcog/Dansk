@@ -243,7 +243,7 @@
             background: white; color: #4a5568; font-weight: 600; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
             transition: all 0.2s;
-        `,l.addEventListener("mouseover",()=>l.style.transform="translateY(-2px)"),l.addEventListener("mouseout",()=>l.style.transform="translateY(0)"),l.addEventListener("click",()=>{t.style.display="none",a.style.display="flex",a.style.opacity="0",setTimeout(()=>{c.textContent=d.flag,v.textContent=`"${d.original}"`,m.textContent=`Betyder: "${d.danish}"`,a.style.opacity="1",a.style.transition="opacity 0.3s ease"},50)}),n.appendChild(l)})}function Me(j,g){j.innerHTML=`
+        `,l.addEventListener("mouseover",()=>l.style.transform="translateY(-2px)"),l.addEventListener("mouseout",()=>l.style.transform="translateY(0)"),l.addEventListener("click",()=>{t.style.display="none",a.style.display="flex",a.style.opacity="0",setTimeout(()=>{c.textContent=d.flag,v.textContent=`"${d.original}"`,m.textContent=`Betyder: "${d.danish}"`,a.style.opacity="1",a.style.transition="opacity 0.3s ease"},50)}),n.appendChild(l)})}function Me(j,g){console.log("Rendering Ugler i mosen..."),j.innerHTML=`
         <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
             <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
                 <i class="fas fa-arrow-left"></i> Tilbage

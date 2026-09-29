@@ -280,6 +280,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'idiom_hjerterum') {
     appState.currentView = 'idiom_hjerterum';
     renderIdiomHjerterumHusrum(appDiv, navigate);
+  } else if (viewTarget === 'idiom_ugler_i_mosen') {
+    appState.currentView = 'idiom_ugler_i_mosen';
+    renderIdiomUglerIMosen(appDiv, navigate);
   } else if (viewTarget === 'idiom_mader_medicin') {
     appState.currentView = 'idiom_mader_medicin';
     renderIdiomMadErMedicin(appDiv, navigate);

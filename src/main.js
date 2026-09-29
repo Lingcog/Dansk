@@ -1,3 +1,4 @@
+import { renderIdiomMadErMedicin, renderIdiomHjerterumHusrum, renderIdiomUglerIMosen } from './views/TestPDFViews.js';
 import './style.css';
 import { baseUrl } from './utils/config.js';
 export { baseUrl };
@@ -276,6 +277,12 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'sporgsmal_ordstilling') {
     appState.currentView = 'sporgsmal_ordstilling';
     renderSporgsmalOrdstillingView(appDiv, navigate);
+  } else if (viewTarget === 'idiom_hjerterum') {
+    appState.currentView = 'idiom_hjerterum';
+    renderIdiomHjerterumHusrum(appDiv, navigate);
+  } else if (viewTarget === 'idiom_mader_medicin') {
+    appState.currentView = 'idiom_mader_medicin';
+    renderIdiomMadErMedicin(appDiv, navigate);
   }
 }
 
@@ -320,3 +327,13 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', handleRouting);
   handleRouting();
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for(let registration of registrations) {
+      registration.unregister();
+    }
+  });
+}
+// Cache buster Sun Sep 27 12:00:31 CEST 2026
+console.log('Cache buster Sun Sep 27 12:00:45 CEST 2026');

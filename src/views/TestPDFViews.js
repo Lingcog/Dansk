@@ -161,7 +161,7 @@ export function renderIdiomMadErMedicin(container, navigateFn) {
 
     // Interactive logic
     const idioms = [
-        { id: 'en', name: 'Engelsk', icon: '🍏', idiom: "An apple a day keeps the doctor away", dansk: "Et æble hver dag holder lægen væk.", brug: "Når frugt gør dig sund." },
+        { id: 'en', name: getTranslation('en_country') || 'Engelsk', icon: '🍏', idiom: "An apple a day keeps the doctor away", dansk: "Et æble hver dag holder lægen væk.", brug: "Når frugt gør dig sund." },
         { id: 'ar', name: 'Arabisk', icon: '🩺', idiom: "Al-mi'dah bayt ad-da'...", dansk: "Maven er et hus for sygdom, og diæt er bedste medicin.", brug: "Når dårlig mad gør dig syg." },
         { id: 'ur', name: 'Urdu', icon: '🛡️', idiom: "Parhez ilaj se behtar hai", dansk: "At passe på maden er bedre end medicin.", brug: "Spis ikke usund mad." },
         { id: 'th', name: 'Thai', icon: '🧼', idiom: "Kin ron, chon klang, lang mue", dansk: "Spis varm mad, brug fælles ske, vask hænder.", brug: "En god regel, før I spiser." },
@@ -228,7 +228,7 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
             <!-- SIDE 2 & 3: Sprog interaktiv vælger -->
             <div style="background: white; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
                 <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 20px;">${getTranslation('hjerterum_world_title') || 'Hvordan siger man det ude i verden?'}</h2>
-                <p style="text-align: center; color: #718096; margin-bottom: 40px;">${getTranslation('hjerterum_world_desc') || 'Tryk på et land for at se deres måde at sige det på.'}</p>
+                <p style="text-align: center; color: #718096; margin-bottom: 40px;">${getTranslation('hjerterum_world_desc') || getTranslation('ugler_s3_desc') || 'Tryk på et land for at se deres måde at sige det på.'}</p>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 40px;" id="lang-buttons">
                     <!-- Buttons vil blive fyldt af JS -->
@@ -241,7 +241,7 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
                 </div>
                 <div id="idiom-placeholder" style="background: #f7fafc; padding: 40px; border-radius: 16px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <i class="fas fa-globe-americas" style="font-size: 3rem; color: #cbd5e0; margin-bottom: 15px;"></i>
-                    <p style="color: #a0aec0; font-size: 1.1rem;">${getTranslation('hjerterum_world_empty') || 'Vælg et sprog foroven'}</p>
+                    <p style="color: #a0aec0; font-size: 1.1rem;">${getTranslation('hjerterum_world_empty') || getTranslation('ugler_empty_desc') || 'Vælg et sprog foroven'}</p>
                 </div>
             </div>
 
@@ -301,7 +301,7 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
     });
 
     const idioms = [
-        { lang: 'Engelsk', flag: '🇬🇧', original: 'Always room for one more', danish: 'Altid plads til en mere.' },
+        { lang: getTranslation('en_country') || 'Engelsk', flag: '🇬🇧', original: 'Always room for one more', danish: 'Altid plads til en mere.' },
         { lang: 'Rumænsk', flag: '🇷🇴', original: 'Locul mic, inima mare', danish: 'Lille sted, stort hjerte.' },
         { lang: 'Urdu', flag: '🇵🇰', original: 'Dil bara hona chahiye, ghar nahi', danish: 'Hjertet skal være stort, ikke huset.' },
         { lang: 'Kinesisk', flag: '🇨🇳', original: 'Xīn kuān wū gèng kuān', danish: 'Et bredt hjerte skaber et bredt hus.' },
@@ -345,5 +345,189 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
             }, 50);
         });
         btnContainer.appendChild(btn);
+    });
+}
+
+
+export function renderIdiomUglerIMosen(container, navigateFn) {
+    container.innerHTML = `
+        <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
+            <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
+                <i class="fas fa-arrow-left"></i> Tilbage
+            </button>
+            
+            <!-- SIDE 1: Introduktion -->
+            <div style="background: #eef2ff; border-radius: 20px; padding: 60px 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; position: relative; overflow: hidden; border-top: 10px solid #818cf8;">
+                <h1 style="font-size: 3rem; color: #3730a3; margin-bottom: 20px; letter-spacing: 1px;">${getTranslation('ugler_title') || 'TING ER IKKE, HVAD DE SER UD TIL'}</h1>
+                
+                <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+                    <img src="${baseUrl}images/ugler_i_mosen/wolf.jpg" style="width: 250px; border-radius: 10px;" />
+                </div>
+                
+                <p style="font-size: 1.2rem; color: #4f46e5; max-width: 700px; margin: 0 auto; line-height: 1.8; text-align: left; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px;">
+                    ${getTranslation('ugler_p1') || 'Velkommen! Uanset hvor vi kommer fra i verden, kender vi alle sammen en helt speciel følelse. Det er følelsen af, at noget er mærkeligt. Vi kan mærke, at noget er skjult eller forkert, selvom det ser normalt ud. Det kalder vi <strong>intuition</strong> eller <strong>mistanke</strong>. Vi deler denne mavefornemmelse.'}
+                </p>
+
+                <div style="font-size: 1.1rem; color: #4338ca; max-width: 700px; margin: 0 auto; line-height: 1.8; text-align: left; background: #e0e7ff; padding: 30px; border-radius: 15px; border-left: 5px solid #6366f1;">
+                    <h3 style="margin-bottom: 15px; font-size: 1.4rem;">${getTranslation('ugler_h3') || 'Hvorfor siger vi "ugler i mosen" på dansk?'}</h3>
+                    <p style="margin-bottom: 10px;">${getTranslation('ugler_p2') || 'For mange hundrede år siden levede der farlige ulve i Danmark. Dengang sagde man: "Der er ulve i mosen!" for at advare hinanden.'}</p>
+                    <p style="margin-bottom: 10px;">${getTranslation('ugler_p3') || 'Senere forsvandt ulvene fra den danske natur. Folk glemte det gamle ord og hørte forkert. De ændrede "ulve" til det mere kendte ord "ugler".'}</p>
+                    <p style="font-weight: bold;">${getTranslation('ugler_p4') || 'Sådan opstod udtrykket "Der er ugler i mosen!"'}</p>
+                </div>
+            </div>
+
+            <!-- SIDE 2: Bogstavelig oversættelse -->
+            <div style="background: white; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
+                <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 40px;">${getTranslation('ugler_s2_title') || 'Lad os oversætte de danske ugler direkte'}</h2>
+                
+                <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <img src="${baseUrl}images/ugler_i_mosen/owl.jpg" style="width: 200px; border-radius: 10px; margin-bottom: 15px;" />
+                        <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; font-size: 1.2rem; font-weight: bold; color: #334155;">
+                            ${getTranslation('ugler_da_title') || 'Dansk: Ugler i mosen'}<br>
+                            <span style="font-weight: normal; font-size: 1rem;">${getTranslation('ugler_da_desc') || '(Owls = ugler, bog = mose)'}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 10px;">
+                        <div style="background: #f8fafc; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #94a3b8; font-size: 1.1rem; color: #475569;">
+                            <strong>Engelsk:</strong> Owls in the bog
+                        </div>
+                        <div style="background: #fff1f2; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #fb7185; font-size: 1.1rem; color: #881337;">
+                            <strong>Spansk:</strong> Búhos en el pantano -> <em>${getTranslation('ugler_es_desc') || 'Der er en indestængt kat!'}</em>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #94a3b8; font-size: 1.1rem; color: #475569;">
+                            <strong>Portugisisk:</strong> Corujas no pântano <span style="font-size: 0.9rem;">(Corujas: ugler, pântano: mose)</span>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #94a3b8; font-size: 1.1rem; color: #475569;">
+                            <strong>Serbo-kroatisk:</strong> Sove u močvari <span style="font-size: 0.9rem;">(Sove: ugler, močvara: mose)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDE 3: Sprog interaktiv vælger -->
+            <div style="background: white; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
+                <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 20px;">${getTranslation('ugler_s3_title') || 'Hvordan siger man det i jeres lande?'}</h2>
+                <p style="text-align: center; color: #718096; margin-bottom: 40px;">${getTranslation('ugler_s3_desc') || 'Tryk på et land for at se deres måde at sige det på.'}</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 40px;" id="ugler-lang-buttons">
+                    <!-- Buttons vil blive fyldt af JS -->
+                </div>
+
+                <div id="ugler-idiom-display" style="background: #f7fafc; padding: 40px; border-radius: 16px; text-align: center; display: none; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                    <div id="ugler-idiom-flag" style="font-size: 3rem; margin-bottom: 15px;"></div>
+                    <h3 id="ugler-idiom-original" style="font-size: 2rem; color: #2b6cb0; margin-bottom: 5px;"></h3>
+                    <p id="ugler-idiom-pronunciation" style="font-size: 1.1rem; color: #718096; margin-bottom: 20px;"></p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                        <div style="background: white; padding: 15px 25px; border-radius: 10px; border: 1px solid #e2e8f0; flex: 1; min-width: 250px;">
+                            <strong style="color: #4a5568; display: block; margin-bottom: 5px;">${getTranslation('ugler_meaning_title') || 'Hvad betyder billedet?'}</strong>
+                            <span id="ugler-idiom-danish" style="color: #2d3748; font-size: 1.2rem;"></span>
+                        </div>
+                        <div style="background: white; padding: 15px 25px; border-radius: 10px; border: 1px solid #e2e8f0; flex: 1; min-width: 250px;">
+                            <strong style="color: #4a5568; display: block; margin-bottom: 5px;">${getTranslation('ugler_usage_title') || 'Hvornår bruger vi det?'}</strong>
+                            <span id="ugler-idiom-brug" style="color: #2d3748; font-size: 1.2rem;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="ugler-idiom-placeholder" style="background: #f7fafc; padding: 40px; border-radius: 16px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <i class="fas fa-globe-americas" style="font-size: 3rem; color: #cbd5e0; margin-bottom: 15px;"></i>
+                    <p style="color: #a0aec0; font-size: 1.1rem;">${getTranslation('ugler_empty_desc') || 'Vælg et sprog foroven'}</p>
+                </div>
+            </div>
+
+            <!-- SIDE 4: Sammenligning -->
+            <div style="background: #fdfbf7; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; border: 1px solid #e2e8f0;">
+                <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 40px;">${getTranslation('ugler_s4_title') || 'Vores ord er forskellige, men vi ser de samme billeder'}</h2>
+                
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <div style="background: #115e59; color: white; padding: 20px; border-radius: 12px; width: 200px; text-align: center;">
+                        <h3 style="margin-bottom: 15px;">Danmark</h3>
+                        <img src="${baseUrl}images/ugler_i_mosen/owl.jpg" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+                        <p>${getTranslation('ugler_da_meaning') || 'Naturen gemmer på farer.'}</p>
+                    </div>
+                    
+                    <div style="background: #94a3b8; color: white; padding: 20px; border-radius: 12px; width: 200px; text-align: center;">
+                        <h3 style="margin-bottom: 15px;">Engelsk</h3>
+                        <div style="font-size: 4rem; margin-bottom: 15px;">🐟</div>
+                        <p>${getTranslation('ugler_en_meaning') || 'Dårlig lugt er et tegn på, at noget er forkert.'}</p>
+                    </div>
+                    
+                    <div style="background: #ea580c; color: white; padding: 20px; border-radius: 12px; width: 200px; text-align: center;">
+                        <h3 style="margin-bottom: 15px;">Spansk</h3>
+                        <img src="${baseUrl}images/ugler_i_mosen/cat.png" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+                        <p>${getTranslation('ugler_es_meaning') || 'Hemmeligheder er som dyr, der er lukket inde.'}</p>
+                    </div>
+                    
+                    <div style="background: #f59e0b; color: white; padding: 20px; border-radius: 12px; width: 200px; text-align: center;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.1rem;">Urdu/Hindi/Nepal</h3>
+                        <img src="${baseUrl}images/ugler_i_mosen/soup.png" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+                        <p>${getTranslation('ugler_ur_meaning') || 'Noget lille ødelægger det hele.'}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDE 5: Konklusion -->
+            <div style="background: #f0fdf4; border-radius: 20px; padding: 60px 40px; text-align: center; border: 1px solid #bbf7d0;">
+                <h2 style="font-size: 2.5rem; color: #14532d; margin-bottom: 30px;">${getTranslation('ugler_s5_title') || 'Vi deler den samme mavefornemmelse'}</h2>
+                <div style="font-size: 1.2rem; color: #166534; max-width: 700px; margin: 0 auto; line-height: 1.8; text-align: left;">
+                    <p style="margin-bottom: 15px;">${getTranslation('ugler_s5_p1') || 'Når ting ikke er, hvad de ser ud til, reagerer vi alle ens.'}</p>
+                    <p style="margin-bottom: 15px;">${getTranslation('ugler_s5_p2') || 'Nogle sprog taler om ulve og ugler. Nogle taler om fisk, der lugter, eller katte i kasser. Andre taler om tigerkostumer eller sorte pletter i suppen.'}</p>
+                    <p>${getTranslation('ugler_s5_p3') || 'Billederne er forskellige, men vi er alle mennesker. Vi deler præcis den samme evne til at mærke intuition og mistanke. Selvom vi taler forskellige sprog, er vi bundet sammen af den samme følelse. <strong>Vi deler de samme sandheder.</strong>'}</p>
+                </div>
+            </div>
+            
+            <div style="height: 100px;"></div>
+        </div>
+    `;
+
+    document.getElementById('back-btn').addEventListener('click', () => {
+        navigateFn('home');
+    });
+
+    // Interactive logic
+    const idioms = [
+        { id: 'en', name: getTranslation('en_country') || 'Engelsk', icon: '🐟', idiom: "Something is fishy", pron: "(Sam-thing is fisji)", dansk: "Noget lugter af fisk", brug: "Brug det, når en situation er mærkelig." },
+        { id: 'es', name: getTranslation('es_country') || 'Spansk', icon: '📦', idiom: "Hay gato encerrado", pron: "(Aj ga-to en-ser-ra-do)", dansk: "Der er en indestængt kat", brug: "Brug det, når du tror, at folk gemmer en hemmelighed." },
+        { id: 'ps', name: 'Pashto', icon: '🥣', idiom: "Pa ka-sa ki nim ka-sa sjta", pron: "(Pashto udtryk)", dansk: "Der er en halv skål i skålen", brug: "Brug det, når noget ser fint ud udenpå, men der er problem indeni." },
+        { id: 'pt', name: 'Portugisisk', icon: '🌽', idiom: "Tem caroço nesse angu", pron: "(Teng ka-ro-so nes-se an-gu)", dansk: "Der er en hård sten i majsgrøden", brug: "Brug det, når noget ser godt ud, men pludselig føles forkert." },
+        { id: 'ur', name: 'Urdu', icon: '🍲', idiom: "Dal men kutj ka-la hæ", pron: "(Urdu udtryk)", dansk: "Der er noget sort i linsesuppen", brug: "Brug det, når du tvivler på det, du ser eller hører." },
+        { id: 'hi', name: 'Hindi', icon: '🍲', idiom: "Dal men kutj ka-la hæ", pron: "(Hindi udtryk)", dansk: "Der er noget sort i linsesuppen", brug: "Brug det, når en person siger én ting, men du tror noget andet." },
+        { id: 'ta', name: 'Tamilsk', icon: '🐯', idiom: "Pu-li ve-sjam", pron: "(Tamilsk udtryk)", dansk: "Et tiger-kostume", brug: "Brug det, når en person lader som om, han er en anden." },
+        { id: 'sr', name: 'Serbo-kroatisk', icon: '🧹', idiom: "Ni-su tjis-ta pos-la", pron: "(Serbo-kroatisk udtryk)", dansk: "Arbejdet er ikke rent", brug: "Brug det, når en aftale ikke føles god eller lovlig." },
+        { id: 'ne', name: 'Nepalesisk', icon: '🍲', idiom: "Dal-ma ke-hi ka-lo tja", pron: "(Nepalesisk udtryk)", dansk: "Der er noget sort i suppen", brug: "Brug det, når der er en skjult fejl i en plan." }
+    ];
+    
+    const gridEl = document.getElementById('ugler-lang-buttons');
+    const detailsEl = document.getElementById('ugler-idiom-display');
+    const placeholderEl = document.getElementById('ugler-idiom-placeholder');
+    
+    idioms.forEach(item => {
+        const btn = document.createElement('button');
+        btn.innerHTML = `<span style="font-size: 1.5rem;">${item.icon}</span><br/><span style="font-weight: 600;">${item.name}</span>`;
+        btn.style.cssText = "background: #f1f5f9; border: 2px solid #cbd5e1; padding: 15px 10px; border-radius: 12px; cursor: pointer; transition: all 0.2s;";
+        
+        btn.onmouseover = () => {
+            btn.style.background = "#e2e8f0";
+            btn.style.borderColor = "var(--primary-color)";
+        };
+        btn.onmouseout = () => {
+            btn.style.background = "#f1f5f9";
+            btn.style.borderColor = "#cbd5e1";
+        };
+        
+        btn.onclick = () => {
+            placeholderEl.style.display = 'none';
+            document.getElementById('ugler-idiom-flag').textContent = item.icon;
+            document.getElementById('ugler-idiom-original').textContent = item.idiom;
+            document.getElementById('ugler-idiom-pronunciation').textContent = item.pron;
+            document.getElementById('ugler-idiom-danish').textContent = item.dansk;
+            document.getElementById('ugler-idiom-brug').textContent = item.brug;
+            
+            detailsEl.style.display = 'block';
+            detailsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
+        gridEl.appendChild(btn);
     });
 }

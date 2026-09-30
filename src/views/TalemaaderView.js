@@ -77,7 +77,7 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     card3.className = 'module-card';
     card3.style.borderColor = '#4f46e5';
     card3.onclick = () => navigateFn('idiom_ugler_i_mosen');
-    card3.innerHTML = `<div class=\"module-title\">${getTranslation('ugler_card_title') || 'Ting er ikke altid som de ser ud <span style=\"font-weight: 400;\">- Ugler i mosen</span>'}</div><button class=\"module-action-btn\" style=\"background:#4f46e5;color:white; margin-top: 10px;\">Prøv nu</button>`;
+    card3.innerHTML = `<div class="module-title">${getTranslation('ugler_card_title') || 'Ting er ikke altid som de ser ud'}</div><div class="module-desc">${getTranslation('ugler_card_desc') || '- Der er ugler i mosen'}</div><button class="module-action-btn" style="background:#4f46e5;color:white; margin-top: 10px;">Prøv nu</button>`;
     grid.appendChild(card3);
 
 

@@ -1188,7 +1188,8 @@ export const translations = {
     "ugler_s5_p1": "Når ting ikke er, hvad de ser ud til, reagerer vi alle ens.",
     "ugler_s5_p2": "Nogle sprog taler om ulve og ugler. Nogle taler om fisk, der lugter, eller katte i kasser. Andre taler om tigerkostumer eller sorte pletter i suppen.",
     "ugler_s5_p3": "Billederne er forskellige, men vi er alle mennesker. Vi deler præcis den samme evne til at mærke intuition og mistanke. Selvom vi taler forskellige sprog, er vi bundet sammen af den samme følelse. <strong>Vi deler de samme sandheder.</strong>",
-    "ugler_card_title": "Ting er ikke altid som de ser ud <span style=\"font-weight: 400;\">- Ugler i mosen</span>"
+    "ugler_card_title": "Ting er ikke altid som de ser ud",
+    "ugler_card_desc": "- Der er ugler i mosen"
   },
   en: {
     "flow_story": "<strong>How it works in practice:</strong><br>When we start, <strong>When (Da)</strong> tells us we are at a fixed point in the past, while <strong>When (Når)</strong> shows we are in a roundabout where things repeat. To move forward, we need the engine <strong>Because</strong> (the cause), which propels us toward the result with <strong>Therefore</strong>. Along the way, we can continue straight and add more with <strong>And/Plus</strong>, or take an unexpected turn with <strong>But</strong>. If we hit a roadblock (<strong>Even though</strong>), we know it won't stop us... Because <strong>Anyway</strong> smashes right through it!",
@@ -2417,7 +2418,8 @@ export const translations = {
     "ugler_s5_p1": "When things are not what they seem, we all react the same way.",
     "ugler_s5_p2": "Some languages talk about wolves and owls. Some talk about fish that smell, or cats in boxes. Others talk about tiger costumes or black spots in the soup.",
     "ugler_s5_p3": "The images are different, but we are all human. We share exactly the same ability to feel intuition and suspicion. Even though we speak different languages, we are bound together by the same feeling. <strong>We share the same truths.</strong>",
-    "ugler_card_title": "Things are not always as they seem <span style=\"font-weight: 400;\">- Owls in the bog</span>"
+    "ugler_card_title": "Things are not always as they seem",
+    "ugler_card_desc": "- There are owls in the bog"
   },
   de: {
     "flow_story": "<strong>Wie es in der Praxis funktioniert:</strong><br>Wenn wir starten, sagt uns <strong>Als (Da)</strong>, dass wir uns an einem festen Punkt in der Vergangenheit befinden, während <strong>Wenn (Når)</strong> zeigt, dass wir uns in einem Kreisverkehr befinden. Um voranzukommen, brauchen wir den Motor <strong>Weil</strong> (die Ursache), der uns mit <strong>Deshalb</strong> zum Ergebnis treibt. Unterwegs können wir mit <strong>Und</strong> geradeaus weiterfahren oder mit <strong>Aber</strong> eine unerwartete Wendung nehmen. Wenn wir auf eine Straßensperre stoßen (<strong>Obwohl</strong>), wissen wir, dass sie uns nicht aufhalten wird... Denn <strong>Trotzdem</strong> durchbricht sie einfach!",

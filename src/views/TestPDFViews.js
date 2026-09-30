@@ -5,8 +5,8 @@ export function renderIdiomMadErMedicin(container, navigateFn) {
     container.innerHTML = `
         <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
             <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
-                <i class="fas fa-arrow-left"></i> Tilbage
-            </button>
+                    <i class="fas fa-arrow-left"></i> Tilbage
+                </button>
             
             
             <!-- SIDE 1: Mad er medicin -->
@@ -208,8 +208,8 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
     container.innerHTML = `
         <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
             <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
-                <i class="fas fa-arrow-left"></i> Tilbage
-            </button>
+                    <i class="fas fa-arrow-left"></i> Tilbage
+                </button>
             
             <!-- SIDE 1: Gæstfrihed er fleksibel -->
             <div style="background: #fff8eb; border-radius: 20px; padding: 60px 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; position: relative; overflow: hidden; border-top: 10px solid #fbd38d;">
@@ -352,9 +352,14 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
 export function renderIdiomUglerIMosen(container, navigateFn) { console.log("Rendering Ugler i mosen...");
     container.innerHTML = `
         <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
-            <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
-                <i class="fas fa-arrow-left"></i> Tilbage
-            </button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
+                <button id="back-btn" class="back-btn" style="margin: 0;">
+                    <i class="fas fa-arrow-left"></i> Tilbage
+                </button>
+                <a href="${baseUrl}pdf/ugler_i_mosen.pdf" target="_blank" style="background: white; color: #ef4444; border: 2px solid #ef4444; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; cursor: pointer; font-size: 0.9rem;">
+                    <i class="fas fa-file-pdf" style="font-size: 1.2rem;"></i> PDF
+                </a>
+            </div>
             
             <!-- SIDE 1: Introduktion -->
             <div style="background: #eef2ff; border-radius: 20px; padding: 60px 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; position: relative; overflow: hidden; border-top: 10px solid #818cf8;">

@@ -546,3 +546,162 @@ export function renderIdiomUglerIMosen(container, navigateFn) { console.log("Ren
         gridEl.appendChild(btn);
     });
 }
+
+
+export function renderIdiomArmeneNed(container, navigateFn) {
+    container.innerHTML = `
+        <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
+                <button id="back-btn" class="back-btn" style="margin: 0;">
+                    <i class="fas fa-arrow-left"></i> Tilbage
+                </button>
+                <a href="${baseUrl}pdf/armene_ned.pdf" target="_blank" style="background: white; color: #ef4444; border: 2px solid #ef4444; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; cursor: pointer; font-size: 0.9rem;">
+                    <i class="fas fa-file-pdf" style="font-size: 1.2rem;"></i> PDF
+                </a>
+            </div>
+            
+            <!-- SIDE 1: Introduktion -->
+            <div style="background: #fdf4ff; border-radius: 20px; padding: 60px 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; position: relative; overflow: hidden; border-top: 10px solid #d946ef;">
+                <h1 style="font-size: 3rem; color: #86198f; margin-bottom: 20px; letter-spacing: 1px;">${getTranslation('armene_title') || 'EKSTREM GLÆDE!'}</h1>
+                <h2 style="font-size: 1.8rem; color: #a21caf; margin-bottom: 40px; font-style: italic;">${getTranslation('armene_subtitle') || 'Når kroppen vil hoppe og juble.'}</h2>
+                
+                <div style="font-size: 1.2rem; color: #4a5568; max-width: 700px; margin: 0 auto; line-height: 1.8; text-align: left; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px;">
+                    <p style="margin-bottom: 10px;">${getTranslation('armene_p1') || 'Vi har forskellige sprog. Men vi har den samme krop.'}</p>
+                    <p>${getTranslation('armene_p2') || 'Når vi har stor succes, føles det ens indeni.'}</p>
+                </div>
+            </div>
+
+            <!-- SIDE 2 & 3: Interactive Billeder -->
+            <div style="background: white; border-radius: 20px; padding: 50px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px;">
+                <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 10px;">${getTranslation('armene_s2_title') || 'Hvad siger I i virkeligheden?'}</h2>
+                <p style="text-align: center; color: #718096; font-size: 1.1rem; margin-bottom: 40px;">${getTranslation('armene_s2_desc') || 'Smukke billeder på ekstrem glæde fra hele verden. Tryk for at se!'} <i class="fas fa-hand-pointer"></i></p>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 40px;" id="armene-lang-buttons">
+                    <!-- Buttons vil blive fyldt af JS -->
+                </div>
+
+                <div id="armene-idiom-display" style="background: #f7fafc; padding: 40px; border-radius: 16px; text-align: center; display: none; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                    <div id="armene-idiom-flag" style="font-size: 3rem; margin-bottom: 15px;"></div>
+                    <h3 id="armene-idiom-original" style="font-size: 2rem; color: #2b6cb0; margin-bottom: 5px;"></h3>
+                    <p id="armene-idiom-pronunciation" style="font-size: 1.1rem; color: #718096; margin-bottom: 20px;"></p>
+                    
+                    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); display: inline-block; margin: 0 auto; text-align: left;">
+                        <div style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                            <i class="fas fa-language" style="color: #4299e1; font-size: 1.5rem; margin-right: 15px; margin-top: 3px;"></i>
+                            <div>
+                                <div style="font-size: 0.9rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;">Direkte på dansk</div>
+                                <span id="armene-idiom-danish" style="color: #2d3748; font-size: 1.2rem;"></span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: flex-start;">
+                            <i class="fas fa-info-circle" style="color: #48bb78; font-size: 1.5rem; margin-right: 15px; margin-top: 3px;"></i>
+                            <div>
+                                <div style="font-size: 0.9rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;">Brug det</div>
+                                <span id="armene-idiom-brug" style="color: #2d3748; font-size: 1.2rem;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="armene-idiom-placeholder" style="background: #f7fafc; padding: 40px; border-radius: 16px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <i class="fas fa-globe-americas" style="font-size: 3rem; color: #cbd5e0; margin-bottom: 15px;"></i>
+                    <p style="color: #a0aec0; font-size: 1.1rem;">${getTranslation('armene_empty_desc') || 'Vælg et sprog foroven'}</p>
+                </div>
+            </div>
+
+            <!-- SIDE 4: Tre sjove billeder -->
+            <div style="background: #f0fdfa; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; border: 1px solid #ccfbf1;">
+                <h2 style="font-size: 2.2rem; color: #115e59; text-align: center; margin-bottom: 40px;">${getTranslation('armene_s4_title') || 'Tre sjove billeder på glæde i verden'}</h2>
+                
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; width: 250px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                        <img src="${baseUrl}images/armene_ned/jump.png" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+                        <h3 style="margin-bottom: 15px; color: #0f766e;">1. Vi hopper op!</h3>
+                        <p style="color: #475569; font-size: 0.95rem;">${getTranslation('armene_s4_1') || 'Kroppen vil opad mod loftet eller himlen. (Danmark, Spansk, Portugisisk, Serbo-kroatisk, Ukrainsk)'}</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 12px; width: 250px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                        <img src="${baseUrl}images/armene_ned/shirt.png" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+                        <h3 style="margin-bottom: 15px; color: #0f766e;">2. Vi vokser og sprækker!</h3>
+                        <p style="color: #475569; font-size: 0.95rem;">${getTranslation('armene_s4_2') || 'Hjertet og stoltheden bliver så stor, at tøjet er for småt. (Pashto, Urdu, Hindi)'}</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 12px; width: 250px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                        <img src="${baseUrl}images/armene_ned/fly.png" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+                        <h3 style="margin-bottom: 15px; color: #0f766e;">3. Vi flyver over jorden!</h3>
+                        <p style="color: #475569; font-size: 0.95rem;">${getTranslation('armene_s4_3') || 'Glæden gør os så lette, at vi mister jordforbindelsen og flyder. (Tamilsk, Nepalesisk)'}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDE 5: Konklusion -->
+            <div style="background: #fff7ed; border-radius: 20px; padding: 60px 40px; text-align: center; border: 1px solid #ffedd5;">
+                <h2 style="font-size: 2.5rem; color: #c2410c; margin-bottom: 30px;">${getTranslation('armene_s5_title') || 'Forskellige ord. Samme hjerte.'}</h2>
+                <div style="font-size: 1.2rem; color: #9a3412; max-width: 700px; margin: 0 auto; line-height: 1.8; text-align: left;">
+                    <p style="margin-bottom: 15px;">${getTranslation('armene_s5_p1') || 'Vi siger det forskelligt:'}</p>
+                    <ul style="list-style-type: '✨ '; padding-left: 20px; margin-bottom: 15px;">
+                        <li>${getTranslation('armene_s5_l1') || 'Nogle holder armene oppe.'}</li>
+                        <li>${getTranslation('armene_s5_l2') || 'Nogle smiler til ørerne.'}</li>
+                        <li>${getTranslation('armene_s5_l3') || 'Nogle hopper til loftet.'}</li>
+                        <li>${getTranslation('armene_s5_l4') || 'Nogle ødelægger deres tøj af stolthed.'}</li>
+                        <li>${getTranslation('armene_s5_l5') || 'Nogle flyver over jorden.'}</li>
+                    </ul>
+                    <p style="margin-bottom: 15px;">${getTranslation('armene_s5_p2') || 'Men vi deler alle den samme fantastiske følelse.'}</p>
+                    <p style="font-weight: bold; color: #ea580c;">${getTranslation('armene_s5_p3') || 'Tak fordi I delte jeres sprog!'}</p>
+                </div>
+            </div>
+            
+            <div style="height: 100px;"></div>
+        </div>
+    `;
+
+    document.getElementById('back-btn').addEventListener('click', () => {
+        navigateFn('home');
+    });
+
+    const idioms = [
+        { id: 'en', name: getTranslation('en_country') || 'Engelsk', icon: '😁', idiom: "Grinning from ear to ear", pron: "[Grin-ning from ir to ir]", dansk: "At smile fra det ene øre til det andet.", brug: "Når du smiler stort over hele ansigtet, fordi du er glad." },
+        { id: 'es', name: getTranslation('es_country') || 'Spansk', icon: '🦘', idiom: "Saltar de alegría", pron: "[Sal-tar de ale-gri-a]", dansk: "At hoppe af glæde.", brug: "Når du er så glad, at du ikke kan stå stille." },
+        { id: 'ps', name: 'Pashto', icon: '👕', idiom: "Pa jamo ke na zayedel", pron: "[Pa jamo ke na zayedel]", dansk: "Ikke at kunne være i sit eget tøj.", brug: "Når du har for meget energi i din krop." },
+        { id: 'pt', name: 'Portugisisk', icon: '🦘', idiom: "Dar pulos de alegria", pron: "[Dar po-los dji a-legri-a]", dansk: "At give hop af glæde.", brug: "Når du viser glæde med hele kroppen." },
+        { id: 'ur', name: 'Urdu', icon: '👕', idiom: "Phole na samana", pron: "[Phole na samana]", dansk: "At svulme op, så man ikke kan være der.", brug: "Når du næsten sprænger af stolthed eller glæde." },
+        { id: 'hi', name: 'Hindi', icon: '👕', idiom: "Phoole na samaana", pron: "[Phoole na samaana]", dansk: "At svulme op, så man ikke kan være der.", brug: "Når hjertet føles meget stort af glæde." },
+        { id: 'ta', name: 'Tamilsk', icon: '☁️', idiom: "Santhoshathil mithappathu", pron: "[Santhoshathil mithappathu]", dansk: "At flyde i glæde.", brug: "Når du føler, at du flyver af lykke." },
+        { id: 'sr', name: 'Serbo-kroatisk', icon: '🚀', idiom: "Skakati do neba", pron: "[Skakati do neba]", dansk: "At hoppe op til himlen.", brug: "Når du har en meget høj energi og jubler." },
+        { id: 'ne', name: 'Nepalesisk', icon: '☁️', idiom: "Bhuin-ma khutta na-hunu", pron: "[Bhuin-ma khutta na-hunu]", dansk: "Ikke at have fødderne på jorden.", brug: "Når du glemmer alt andet, fordi du er glad." },
+        { id: 'uk', name: 'Ukrainsk', icon: '🚀', idiom: "Stry-ba-ty do ste-li", pron: "[Stry-ba-ty do ste-li]", dansk: "At hoppe op til loftet.", brug: "Når du vinder noget og bliver ekstremt glad." }
+    ];
+    
+    const gridEl = document.getElementById('armene-lang-buttons');
+    const detailsEl = document.getElementById('armene-idiom-display');
+    const placeholderEl = document.getElementById('armene-idiom-placeholder');
+    
+    idioms.forEach(item => {
+        const btn = document.createElement('button');
+        btn.innerHTML = `<span style="font-size: 1.5rem;">${item.icon}</span><br/><span style="font-weight: 600;">${item.name}</span>`;
+        btn.style.cssText = "background: #f1f5f9; border: 2px solid #cbd5e1; padding: 15px 10px; border-radius: 12px; cursor: pointer; transition: all 0.2s;";
+        
+        btn.onmouseover = () => {
+            btn.style.background = "#e2e8f0";
+            btn.style.borderColor = "var(--primary-color)";
+        };
+        btn.onmouseout = () => {
+            btn.style.background = "#f1f5f9";
+            btn.style.borderColor = "#cbd5e1";
+        };
+        
+        btn.onclick = () => {
+            placeholderEl.style.display = 'none';
+            document.getElementById('armene-idiom-flag').textContent = item.icon;
+            document.getElementById('armene-idiom-original').textContent = item.idiom;
+            document.getElementById('armene-idiom-pronunciation').textContent = item.pron;
+            document.getElementById('armene-idiom-danish').textContent = item.dansk;
+            document.getElementById('armene-idiom-brug').textContent = item.brug;
+            
+            detailsEl.style.display = 'block';
+            detailsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
+        gridEl.appendChild(btn);
+    });
+}

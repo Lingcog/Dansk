@@ -80,6 +80,14 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     card3.innerHTML = `<div class="module-title">${getTranslation('ugler_card_title') || 'Ting er ikke altid som de ser ud'}</div><div class="module-desc">${getTranslation('ugler_card_desc') || '- Der er ugler i mosen'}</div><button class="module-action-btn" style="background:#4f46e5;color:white; margin-top: 10px;">Prøv nu</button>`;
     grid.appendChild(card3);
 
+    const card4 = document.createElement('div');
+    card4.className = 'module-card';
+    card4.style.borderColor = '#d946ef';
+    card4.onclick = () => navigateFn('idiom_armene_ned');
+    card4.innerHTML = `<div class="module-title">${getTranslation('armene_card_title') || 'Begejstring er svær at skjule'}</div><div class="module-desc">${getTranslation('armene_card_desc') || '- At have svært ved at få armene ned'}</div><button class="module-action-btn" style="background:#d946ef;color:white; margin-top: 10px;">Prøv nu</button>`;
+    grid.appendChild(card4);
+
+
 
     
     parent.appendChild(grid);

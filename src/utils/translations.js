@@ -1189,7 +1189,9 @@ export const translations = {
     "ugler_s5_p2": "Nogle sprog taler om ulve og ugler. Nogle taler om fisk, der lugter, eller katte i kasser. Andre taler om tigerkostumer eller sorte pletter i suppen.",
     "ugler_s5_p3": "Billederne er forskellige, men vi er alle mennesker. Vi deler præcis den samme evne til at mærke intuition og mistanke. Selvom vi taler forskellige sprog, er vi bundet sammen af den samme følelse. <strong>Vi deler de samme sandheder.</strong>",
     "ugler_card_title": "Ting er ikke altid som de ser ud",
-    "ugler_card_desc": "- Der er ugler i mosen"
+    "ugler_card_desc": "- Der er ugler i mosen",
+    "armene_card_title": "Begejstring er svær at skjule",
+    "armene_card_desc": "- At have svært ved at få armene ned"
   },
   en: {
     "flow_story": "<strong>How it works in practice:</strong><br>When we start, <strong>When (Da)</strong> tells us we are at a fixed point in the past, while <strong>When (Når)</strong> shows we are in a roundabout where things repeat. To move forward, we need the engine <strong>Because</strong> (the cause), which propels us toward the result with <strong>Therefore</strong>. Along the way, we can continue straight and add more with <strong>And/Plus</strong>, or take an unexpected turn with <strong>But</strong>. If we hit a roadblock (<strong>Even though</strong>), we know it won't stop us... Because <strong>Anyway</strong> smashes right through it!",

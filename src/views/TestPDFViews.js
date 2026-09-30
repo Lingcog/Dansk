@@ -4,9 +4,14 @@ import { baseUrl } from '../utils/config.js';
 export function renderIdiomMadErMedicin(container, navigateFn) {
     container.innerHTML = `
         <div style="max-width: 900px; margin: 0 auto; padding: 20px; font-family: 'Poppins', sans-serif;">
-            <button id="back-btn" class="back-btn" style="margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; position: sticky; top: 20px; z-index: 100;">
+                <button id="back-btn" class="back-btn" style="margin: 0;">
                     <i class="fas fa-arrow-left"></i> Tilbage
                 </button>
+                <a href="${baseUrl}pdf/mader_medicin.pdf" target="_blank" style="background: white; color: #ef4444; border: 2px solid #ef4444; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; cursor: pointer; font-size: 0.9rem;">
+                    <i class="fas fa-file-pdf" style="font-size: 1.2rem;"></i> PDF
+                </a>
+            </div>
             
             
             <!-- SIDE 1: Mad er medicin -->

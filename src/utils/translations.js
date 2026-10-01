@@ -1195,7 +1195,7 @@ export const translations = {
     "armene_title": "EKSTREM GLÆDE!",
     "armene_subtitle": "Når kroppen vil hoppe og juble.",
     "armene_p1": "Vi har forskellige sprog. Men vi har den samme krop.",
-    "armene_p2": "Når vi har stor succes, føles det ens indeni.",
+    "armene_p2": "Når vi føler stor glæde og begejstring, kan vi alle føle det inden i vores krop.",
     "armene_s2_title": "Hvad siger I i virkeligheden?",
     "armene_s2_desc": "Smukke billeder på ekstrem glæde fra hele verden. Tryk for at se!",
     "armene_empty_desc": "Vælg et sprog foroven",
@@ -1212,6 +1212,9 @@ export const translations = {
     "armene_s5_l5": "Nogle flyver over jorden.",
     "armene_s5_p2": "Men vi deler alle den samme fantastiske følelse.",
     "armene_s5_p3": "Tak fordi I delte jeres sprog!"
+,
+    "armene_s15_title": "Det danske udtryk: At have svært ved at få armene ned",
+    "armene_s15_desc": "Betydning: At være fantastisk glad! / Men hvad sker der, hvis vi oversætter det direkte?",
 
   },
   en: {

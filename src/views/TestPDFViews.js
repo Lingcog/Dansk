@@ -571,6 +571,53 @@ export function renderIdiomArmeneNed(container, navigateFn) {
                 </div>
             </div>
 
+            
+            <!-- SIDE 1.5: Bogstavelig Oversættelse -->
+            <div style="background: #faf5ff; border-radius: 20px; padding: 50px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px;">
+                <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 10px;">${getTranslation('armene_s15_title') || 'Det danske udtryk: At have svært ved at få armene ned'}</h2>
+                <p style="text-align: center; color: #718096; font-size: 1.1rem; margin-bottom: 40px;">${getTranslation('armene_s15_desc') || 'Betydning: At være fantastisk glad! / Men hvad sker der, hvis vi oversætter det direkte?'}</p>
+
+                <div style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+                    
+                    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 10px;">
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #94a3b8; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Engelsk:</strong> To have it difficult with getting the arms down <br><span style="font-size: 0.9rem;">(Arm = arm, Ned = down)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #f59e0b; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Spansk:</strong> Tener dificultad para bajar los brazos <br><span style="font-size: 0.9rem;">(Arm = brazo, Ned = abajo)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #14b8a6; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Pashto:</strong> د لاسونو لاندې کولو کې ستونزه درلودل <br><span style="font-size: 0.9rem;">(Arm = las, Ned = lande)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #6366f1; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Portugisisk:</strong> Ter dificuldade em baixar os braços <br><span style="font-size: 0.9rem;">(Arm = braço, Ned = baixo)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #3b82f6; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Urdu:</strong> بازو نیچے کرنے میں مشکل پیش آنا <br><span style="font-size: 0.9rem;">(Arm = bazu, Ned = niche)</span>
+                        </div>
+                    </div>
+
+                    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 10px;">
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #0ea5e9; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Ukrainsk:</strong> Мати труднощі з опусканням рук <br><span style="font-size: 0.9rem;">(Arm = ruka, Ned = vnyz)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #ef4444; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Nepalesisk:</strong> हात तल झार्न गाह्रो हुनु <br><span style="font-size: 0.9rem;">(Arm = haat, Ned = tala)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #f43f5e; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Serbo-kroatisk:</strong> Imati teškoća sa spuštanjem ruku <br><span style="font-size: 0.9rem;">(Arm = ruka, Ned = dole/dolje)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #eab308; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Tamilsk:</strong> கைகளை கீழே கொண்டு வருவதில் சிரமம் <br><span style="font-size: 0.9rem;">(Arm = kai, Ned = keezhe)</span>
+                        </div>
+                        <div style="background: white; padding: 15px 20px; border-radius: 8px; border-left: 4px solid #ec4899; font-size: 1.1rem; color: #475569; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <strong>Hindi:</strong> अपनी बाहों को नीचे करने में कठिनाई होना <br><span style="font-size: 0.9rem;">(Arm = baanh, Ned = neeche)</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
             <!-- SIDE 2 & 3: Interactive Billeder -->
             <div style="background: white; border-radius: 20px; padding: 50px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px;">
                 <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 10px;">${getTranslation('armene_s2_title') || 'Hvad siger I i virkeligheden?'}</h2>

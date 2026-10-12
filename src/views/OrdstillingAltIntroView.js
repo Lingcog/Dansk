@@ -88,7 +88,7 @@ function renderFokusPaaSted(container, navigateFn) {
             num: '1',
             q: 'Hvor sker det?',
             ans: 'På gaden',
-            colorClass: 'step-green',
+            colorClass: 'step-blue',
             icon: '📍',
             note: 'Stedet sættes forrest',
             grammar: 'Præposition (sted)'
@@ -106,7 +106,7 @@ function renderFokusPaaSted(container, navigateFn) {
             num: '3',
             q: 'Hvad eller hvem taler vi om?',
             ans: 'en kvinde',
-            colorClass: 'step-blue',
+            colorClass: 'step-green',
             icon: '👤',
             note: 'Personen rykker om bagved',
             grammar: 'Substantiv / Pronomen (subjekt)'
@@ -115,7 +115,7 @@ function renderFokusPaaSted(container, navigateFn) {
             num: '4',
             q: 'Hvornår sker det?',
             ans: 'om morgenen',
-            colorClass: 'step-orange',
+            colorClass: 'step-purple',
             icon: '⏰',
             note: 'Tiden kommer til sidst',
             grammar: 'Tidsadverbium'
@@ -144,10 +144,10 @@ function renderFokusPaaSted(container, navigateFn) {
     resultBox.innerHTML = `
         <div class="banner-label">Den færdige sætning:</div>
         <div class="banner-sentence">
-            <span class="word-green">På gaden</span> 
+            <span class="word-blue">På gaden</span> 
             <span class="word-red">cykler</span> 
-            <span class="word-blue">en kvinde</span> 
-            <span class="word-orange">om morgenen</span>.
+            <span class="word-green">en kvinde</span> 
+            <span class="word-purple">om morgenen</span>.
         </div>
         <button class="listen-btn" title="Hør udtale">
             <span>🔊</span> Hør sætningen
@@ -220,7 +220,7 @@ function setupStedStepBuilder(container) {
     const categories = [
         {
             q: "1. Hvor sker det? (Stedet forrest)",
-            colorClass: "step-green",
+            colorClass: "step-blue",
             grammar: "Præposition (sted)",
             options: ["På gaden", "I parken", "På skolen", "Derhjemme", "I haven", "På caféen"]
         },
@@ -232,13 +232,13 @@ function setupStedStepBuilder(container) {
         },
         {
             q: "3. Hvad eller hvem taler vi om? (Personen/tingen)",
-            colorClass: "step-blue",
+            colorClass: "step-green",
             grammar: "Substantiv / Pronomen",
             options: ["en kvinde", "en mand", "læreren", "katten", "bussen", "folk"]
         },
         {
             q: "4. Hvornår sker det? (Tiden til sidst)",
-            colorClass: "step-orange",
+            colorClass: "step-purple",
             grammar: "Tidsadverbium",
             options: ["om morgenen", "om aftenen", "hver dag", "lige nu", "i dag", "om natten"]
         }
@@ -256,10 +256,10 @@ function setupStedStepBuilder(container) {
         outputBox.innerHTML = `
             <div class="live-label">Din sætning med fokus på sted:</div>
             <div class="live-text">
-                <span class="word-green">${selections[0]}</span> 
+                <span class="word-blue">${selections[0]}</span> 
                 <span class="word-red">${selections[1]}</span> 
-                <span class="word-blue">${selections[2]}</span> 
-                <span class="word-orange">${selections[3]}</span>.
+                <span class="word-green">${selections[2]}</span> 
+                <span class="word-purple">${selections[3]}</span>.
             </div>
             <button class="listen-btn-small" title="Lyt">🔊 Hør udtale</button>
         `;
@@ -412,7 +412,7 @@ function setupStedPuzzleExercise(container) {
 
         slotPrompts.forEach((promptItem, idx) => {
             const slot = document.createElement('div');
-            const colorClass = idx === 0 ? 'sted-slot-green' : idx === 1 ? 'sted-slot-red' : idx === 2 ? 'sted-slot-blue' : 'sted-slot-orange';
+            const colorClass = idx === 0 ? 'sted-slot-blue' : idx === 1 ? 'sted-slot-red' : idx === 2 ? 'sted-slot-green' : 'sted-slot-purple';
             slot.className = `puzzle-slot ${colorClass}`;
             slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
             slot.dataset.idx = idx;
@@ -572,23 +572,32 @@ function renderFokusPaaTid(container, navigateFn) {
             <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('tid_hero_img_alt')}" class="hero-image">
             <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                 <defs>
-                    <marker id="arrowhead-tid" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#c62828" />
+                    <marker id="arrowhead-tid-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#9C27B0" />
+                    </marker>
+                    <marker id="arrowhead-tid-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#F44336" />
+                    </marker>
+                    <marker id="arrowhead-tid-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#4CAF50" />
+                    </marker>
+                    <marker id="arrowhead-tid-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#2196F3" />
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Hvornår - tid) til himmel/bygning -->
-                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead-tid)" />
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#9C27B0" stroke-width="4" marker-end="url(#arrowhead-tid-purple)" />
                 <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
-                <line x1="880" y1="450" x2="740" y2="480" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead-tid)" />
-                <!-- Arrow 3: Fra Boks 3 (Hvem/hvad) til kvinde -->
-                <line x1="430" y1="130" x2="620" y2="340" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead-tid)" />
+                <line x1="880" y1="450" x2="740" y2="480" stroke="#F44336" stroke-width="4" marker-end="url(#arrowhead-tid-red)" />
+                <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
+                <line x1="430" y1="130" x2="620" y2="340" stroke="#4CAF50" stroke-width="4" marker-end="url(#arrowhead-tid-green)" />
                 <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
-                <line x1="300" y1="600" x2="520" y2="610" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead-tid)" />
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#2196F3" stroke-width="4" marker-end="url(#arrowhead-tid-blue)" />
             </svg>
             <!-- Box 1: Hvornår sker det? (Tid forrest) -->
             <div class="photo-bubble bubble-4">
                 <div class="bubble-q">1. ${getTranslation('tid_q1')}</div>
-                <div class="bubble-ans ans-orange">Om morgenen</div>
+                <div class="bubble-ans ans-purple">Om morgenen</div>
             </div>
             <!-- Box 2: Hvad laver personen eller tingen? (Handlingen er altid nr. 2!) -->
             <div class="photo-bubble bubble-2">
@@ -598,12 +607,12 @@ function renderFokusPaaTid(container, navigateFn) {
             <!-- Box 3: Hvad eller hvem taler vi om? (Personen rykker bagved) -->
             <div class="photo-bubble bubble-1">
                 <div class="bubble-q">3. ${getTranslation('tid_q3')}</div>
-                <div class="bubble-ans ans-blue">en kvinde</div>
+                <div class="bubble-ans ans-green">en kvinde</div>
             </div>
             <!-- Box 4: Hvor sker det? (Stedet til sidst) -->
             <div class="photo-bubble bubble-3">
                 <div class="bubble-q">4. ${getTranslation('tid_q4')}</div>
-                <div class="bubble-ans ans-green">på gaden</div>
+                <div class="bubble-ans ans-blue">på gaden</div>
             </div>
         </div>
     `;
@@ -618,7 +627,7 @@ function renderFokusPaaTid(container, navigateFn) {
             num: '1',
             q: getTranslation('tid_q1'),
             ans: 'Om morgenen',
-            colorClass: 'step-orange',
+            colorClass: 'step-purple',
             icon: '⏰',
             note: getTranslation('tid_note_1'),
             grammar: getTranslation('tid_g1')
@@ -636,7 +645,7 @@ function renderFokusPaaTid(container, navigateFn) {
             num: '3',
             q: getTranslation('tid_q3'),
             ans: 'en kvinde',
-            colorClass: 'step-blue',
+            colorClass: 'step-green',
             icon: '👤',
             note: getTranslation('tid_note_3'),
             grammar: getTranslation('tid_g3')
@@ -645,7 +654,7 @@ function renderFokusPaaTid(container, navigateFn) {
             num: '4',
             q: getTranslation('tid_q4'),
             ans: 'på gaden',
-            colorClass: 'step-green',
+            colorClass: 'step-blue',
             icon: '📍',
             note: getTranslation('tid_note_4'),
             grammar: getTranslation('tid_g4')
@@ -674,10 +683,10 @@ function renderFokusPaaTid(container, navigateFn) {
     resultBox.innerHTML = `
         <div class="banner-label">${getTranslation('tid_finished_label')}</div>
         <div class="banner-sentence">
-            <span class="word-orange">Om morgenen</span> 
+            <span class="word-purple">Om morgenen</span> 
             <span class="word-red">cykler</span> 
-            <span class="word-blue">en kvinde</span> 
-            <span class="word-green">på gaden</span>.
+            <span class="word-green">en kvinde</span> 
+            <span class="word-blue">på gaden</span>.
         </div>
         <button class="listen-btn" title="${getTranslation('tid_listen_btn')}">
             <span>🔊</span> ${getTranslation('tid_listen_btn')}
@@ -746,7 +755,7 @@ function setupTidStepBuilder(container) {
     const categories = [
         {
             q: `1. ${getTranslation('tid_q1')} (${getTranslation('tid_builder_hint_1')})`,
-            colorClass: "step-orange",
+            colorClass: "step-purple",
             grammar: getTranslation('tid_g1'),
             options: ["Om morgenen", "Om aftenen", "Hver dag", "Lige nu", "I dag", "Om eftermiddagen"]
         },
@@ -758,13 +767,13 @@ function setupTidStepBuilder(container) {
         },
         {
             q: `3. ${getTranslation('tid_q3')} (${getTranslation('tid_builder_hint_3')})`,
-            colorClass: "step-blue",
+            colorClass: "step-green",
             grammar: getTranslation('tid_g3'),
             options: ["en kvinde", "en mand", "en hund", "læreren", "bussen", "folk"]
         },
         {
             q: `4. ${getTranslation('tid_q4')} (${getTranslation('tid_builder_hint_4')})`,
-            colorClass: "step-green",
+            colorClass: "step-blue",
             grammar: getTranslation('tid_g4'),
             options: ["på gaden", "i parken", "på skolen", "derhjemme", "i haven", "på vejen"]
         }
@@ -782,10 +791,10 @@ function setupTidStepBuilder(container) {
         outputBox.innerHTML = `
             <div class="live-label">${getTranslation('tid_builder_live_label')}</div>
             <div class="live-text">
-                <span class="word-orange">${selections[0]}</span> 
+                <span class="word-purple">${selections[0]}</span> 
                 <span class="word-red">${selections[1]}</span> 
-                <span class="word-blue">${selections[2]}</span> 
-                <span class="word-green">${selections[3]}</span>.
+                <span class="word-green">${selections[2]}</span> 
+                <span class="word-blue">${selections[3]}</span>.
             </div>
             <button class="listen-btn-small" title="${getTranslation('tid_listen_pronunciation')}">🔊 ${getTranslation('tid_listen_pronunciation')}</button>
         `;
@@ -935,7 +944,7 @@ function setupTidPuzzleExercise(container) {
 
         slotPrompts.forEach((promptItem, idx) => {
             const slot = document.createElement('div');
-            const colorClass = idx === 0 ? 'tid-slot-orange' : idx === 1 ? 'tid-slot-red' : idx === 2 ? 'tid-slot-blue' : 'tid-slot-green';
+            const colorClass = idx === 0 ? 'tid-slot-purple' : idx === 1 ? 'tid-slot-red' : idx === 2 ? 'tid-slot-green' : 'tid-slot-blue';
             slot.className = `puzzle-slot ${colorClass}`;
             slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
             slot.dataset.idx = idx;
@@ -1107,8 +1116,8 @@ function renderFokusPaaHoldning(container, navigateFn) {
             num: '1',
             q: 'Hvad mener eller føler du om det?',
             ans: 'Heldigvis',
-            colorClass: 'step-pink',
-            icon: '🌸',
+            colorClass: 'step-yellow',
+            icon: '🌤️',
             note: 'Holdningen sættes forrest',
             grammar: 'Centraladverbium'
         },
@@ -1125,7 +1134,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             num: '3',
             q: 'Hvad eller hvem taler vi om?',
             ans: 'en kvinde',
-            colorClass: 'step-blue',
+            colorClass: 'step-green',
             icon: '👤',
             note: 'Personen rykker om bagved',
             grammar: 'Substantiv / Pronomen (subjekt)'
@@ -1134,7 +1143,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             num: '4',
             q: 'Hvor sker det?',
             ans: 'på gaden',
-            colorClass: 'step-green',
+            colorClass: 'step-blue',
             icon: '📍',
             note: 'Stedet til sidst',
             grammar: 'Præposition (sted)'
@@ -1163,10 +1172,10 @@ function renderFokusPaaHoldning(container, navigateFn) {
     resultBox.innerHTML = `
         <div class="banner-label">Den færdige sætning:</div>
         <div class="banner-sentence">
-            <span class="word-pink">Heldigvis</span> 
+            <span class="word-yellow">Heldigvis</span> 
             <span class="word-red">cykler</span> 
-            <span class="word-blue">en kvinde</span> 
-            <span class="word-green">på gaden</span>.
+            <span class="word-green">en kvinde</span> 
+            <span class="word-blue">på gaden</span>.
         </div>
         <button class="listen-btn" title="Hør udtale">
             <span>🔊</span> Hør sætningen
@@ -1239,7 +1248,7 @@ function setupHoldningStepBuilder(container) {
     const categories = [
         {
             q: "1. Hvad mener eller føler du? (Holdningen forrest)",
-            colorClass: "step-pink",
+            colorClass: "step-yellow",
             grammar: "Centraladverbium",
             options: ["Heldigvis", "Desværre", "Faktisk", "Forhåbentlig", "Sandsynligvis", "Måske"]
         },
@@ -1251,13 +1260,13 @@ function setupHoldningStepBuilder(container) {
         },
         {
             q: "3. Hvad eller hvem taler vi om? (Personen/tingen)",
-            colorClass: "step-blue",
+            colorClass: "step-green",
             grammar: "Substantiv / Pronomen",
             options: ["en kvinde", "en mand", "læreren", "katten", "bussen", "folk"]
         },
         {
             q: "4. Hvor sker det? (Stedet til sidst)",
-            colorClass: "step-green",
+            colorClass: "step-blue",
             grammar: "Præposition (sted)",
             options: ["på gaden", "i parken", "på skolen", "derhjemme", "i haven", "på caféen"]
         }
@@ -1275,10 +1284,10 @@ function setupHoldningStepBuilder(container) {
         outputBox.innerHTML = `
             <div class="live-label">Din sætning med fokus på holdning:</div>
             <div class="live-text">
-                <span class="word-pink">${selections[0]}</span> 
+                <span class="word-yellow">${selections[0]}</span> 
                 <span class="word-red">${selections[1]}</span> 
-                <span class="word-blue">${selections[2]}</span> 
-                <span class="word-green">${selections[3]}</span>.
+                <span class="word-green">${selections[2]}</span> 
+                <span class="word-blue">${selections[3]}</span>.
             </div>
             <button class="listen-btn-small" title="Lyt">🔊 Hør udtale</button>
         `;
@@ -1431,7 +1440,7 @@ function setupHoldningPuzzleExercise(container) {
 
         slotPrompts.forEach((promptItem, idx) => {
             const slot = document.createElement('div');
-            const colorClass = idx === 0 ? 'holdning-slot-pink' : idx === 1 ? 'holdning-slot-red' : idx === 2 ? 'holdning-slot-blue' : 'holdning-slot-green';
+            const colorClass = idx === 0 ? 'holdning-slot-yellow' : idx === 1 ? 'holdning-slot-red' : idx === 2 ? 'holdning-slot-green' : 'holdning-slot-blue';
             slot.className = `puzzle-slot ${colorClass}`;
             slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
             slot.dataset.idx = idx;
@@ -1689,6 +1698,9 @@ function ensureIntroStyles() {
         .ans-red { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
         .ans-green { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
         .ans-orange { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+        .ans-purple { background: #f3e5f5; color: #7b1fa2; border: 1px solid #ce93d8; }
+        .ans-yellow { background: #fffde7; color: #b45309; border: 1px solid #fde68a; }
+        .ans-pink { background: #fce4ec; color: #c2185b; border: 1px solid #f48fb1; }
 
         .bubble-1 { top: 9%; left: 16%; }
         .bubble-4 { top: 9%; right: 18%; }
@@ -1724,6 +1736,8 @@ function ensureIntroStyles() {
         .simple-step-card.step-red { border-color: #F44336; background: rgba(244, 67, 54, 0.08); }
         .simple-step-card.step-green { border-color: #4CAF50; background: rgba(76, 175, 80, 0.08); }
         .simple-step-card.step-orange { border-color: #FF9800; background: rgba(255, 152, 0, 0.08); }
+        .simple-step-card.step-purple { border-color: #9C27B0; background: rgba(156, 39, 176, 0.08); }
+        .simple-step-card.step-yellow { border-color: #F59E0B; background: rgba(245, 158, 11, 0.08); }
         .simple-step-card.step-pink { border-color: #E91E63; background: rgba(233, 30, 99, 0.08); }
 
         .step-badge {
@@ -1742,6 +1756,8 @@ function ensureIntroStyles() {
         .step-red .step-badge { background: #F44336; }
         .step-green .step-badge { background: #4CAF50; }
         .step-orange .step-badge { background: #FF9800; }
+        .step-purple .step-badge { background: #9C27B0; }
+        .step-yellow .step-badge { background: #F59E0B; }
         .step-pink .step-badge { background: #E91E63; }
 
         .step-card-content { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -1776,6 +1792,8 @@ function ensureIntroStyles() {
         .word-red { color: #E57373; }
         .word-green { color: #81C784; }
         .word-orange { color: #FFB74D; }
+        .word-purple { color: #BA68C8; }
+        .word-yellow { color: #FCD34D; }
         .word-pink { color: #F06292; }
 
         .listen-btn {
@@ -1848,6 +1866,8 @@ function ensureIntroStyles() {
         .builder-q-row.step-red { border-left-color: #F44336; }
         .builder-q-row.step-green { border-left-color: #4CAF50; }
         .builder-q-row.step-orange { border-left-color: #FF9800; }
+        .builder-q-row.step-purple { border-left-color: #9C27B0; }
+        .builder-q-row.step-yellow { border-left-color: #F59E0B; }
         .builder-q-row.step-pink { border-left-color: #E91E63; }
 
         .builder-q-title { font-size: 1rem; font-weight: 600; color: #e0e0e0; margin-bottom: 0.75rem; }
@@ -1934,22 +1954,22 @@ function ensureIntroStyles() {
         .puzzle-slot.filled { background: rgba(76, 175, 80, 0.15); border-style: solid; border-color: #4CAF50; cursor: pointer; }
 
         /* Tid slot colors */
-        .puzzle-slot.tid-slot-orange.filled { border-color: #FF9800; background: rgba(255, 152, 0, 0.15); }
+        .puzzle-slot.tid-slot-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
         .puzzle-slot.tid-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-        .puzzle-slot.tid-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
         .puzzle-slot.tid-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
+        .puzzle-slot.tid-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
 
         /* Sted slot colors */
-        .puzzle-slot.sted-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-        .puzzle-slot.sted-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
         .puzzle-slot.sted-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
-        .puzzle-slot.sted-slot-orange.filled { border-color: #FF9800; background: rgba(255, 152, 0, 0.15); }
+        .puzzle-slot.sted-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
+        .puzzle-slot.sted-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
+        .puzzle-slot.sted-slot-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
 
         /* Holdning slot colors */
-        .puzzle-slot.holdning-slot-pink.filled { border-color: #E91E63; background: rgba(233, 30, 99, 0.15); }
+        .puzzle-slot.holdning-slot-yellow.filled { border-color: #F59E0B; background: rgba(245, 158, 11, 0.15); }
         .puzzle-slot.holdning-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-        .puzzle-slot.holdning-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
         .puzzle-slot.holdning-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
+        .puzzle-slot.holdning-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
 
         .slot-hint { font-size: 0.85rem; color: #888; font-style: italic; }
         .slot-number { position: absolute; top: 4px; left: 8px; font-size: 0.75rem; font-weight: bold; opacity: 0.7; }

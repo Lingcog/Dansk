@@ -98,28 +98,37 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('part1_hero_img_alt')}" class="hero-image">
                 <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                     <defs>
-                        <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#c62828" />
+                        <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#4CAF50" />
+                        </marker>
+                        <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#F44336" />
+                        </marker>
+                        <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#2196F3" />
+                        </marker>
+                        <marker id="arrowhead-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#9C27B0" />
                         </marker>
                     </defs>
-                    <!-- Arrow 1: Fra Boks 1 (Hvem/hvad) til kvinde -->
-                    <line x1="430" y1="130" x2="620" y2="340" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead)" />
-                    <!-- Arrow 4: Fra Boks 4 (Hvornår) til himmel/bygning -->
-                    <line x1="1130" y1="120" x2="1180" y2="150" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead)" />
-                    <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
-                    <line x1="880" y1="450" x2="740" y2="480" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead)" />
+                    <!-- Arrow 1: Fra Boks 1 (Hvem/hvad - Substantiv) til kvinde -->
+                    <line x1="430" y1="130" x2="620" y2="340" stroke="#4CAF50" stroke-width="4" marker-end="url(#arrowhead-green)" />
+                    <!-- Arrow 4: Fra Boks 4 (Hvornår - Tid) til himmel/bygning -->
+                    <line x1="1130" y1="120" x2="1180" y2="150" stroke="#9C27B0" stroke-width="4" marker-end="url(#arrowhead-purple)" />
+                    <!-- Arrow 2: Fra Boks 2 (Handling - Verbum) til cykel/pedaler -->
+                    <line x1="880" y1="450" x2="740" y2="480" stroke="#F44336" stroke-width="4" marker-end="url(#arrowhead-red)" />
                     <!-- Arrow 3: Fra Boks 3 (Sted) til gaden -->
-                    <line x1="300" y1="600" x2="520" y2="610" stroke="#c62828" stroke-width="4" marker-end="url(#arrowhead)" />
+                    <line x1="300" y1="600" x2="520" y2="610" stroke="#2196F3" stroke-width="4" marker-end="url(#arrowhead-blue)" />
                 </svg>
                 <!-- Box 1: Hvem eller hvad taler vi om? -->
                 <div class="photo-bubble bubble-1">
                     <div class="bubble-q">1. ${getTranslation('part1_q1')}</div>
-                    <div class="bubble-ans ans-blue">En kvinde</div>
+                    <div class="bubble-ans ans-green">En kvinde</div>
                 </div>
                 <!-- Box 4: Hvornår sker det? -->
                 <div class="photo-bubble bubble-4">
                     <div class="bubble-q">4. ${getTranslation('part1_q4')}</div>
-                    <div class="bubble-ans ans-orange">om morgenen</div>
+                    <div class="bubble-ans ans-purple">om morgenen</div>
                 </div>
                 <!-- Box 2: Hvad laver personen eller tingen? -->
                 <div class="photo-bubble bubble-2">
@@ -129,7 +138,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 <!-- Box 3: Hvor sker det? -->
                 <div class="photo-bubble bubble-3">
                     <div class="bubble-q">3. ${getTranslation('part1_q3')}</div>
-                    <div class="bubble-ans ans-green">på gaden</div>
+                    <div class="bubble-ans ans-blue">på gaden</div>
                 </div>
             </div>
         `;
@@ -144,7 +153,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 num: '1',
                 q: getTranslation('part1_q1'),
                 ans: 'En kvinde',
-                colorClass: 'step-blue',
+                colorClass: 'step-green',
                 icon: '👤',
                 grammar: getTranslation('part1_g1')
             },
@@ -160,7 +169,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 num: '3',
                 q: getTranslation('part1_q3'),
                 ans: 'på gaden',
-                colorClass: 'step-green',
+                colorClass: 'step-blue',
                 icon: '📍',
                 grammar: getTranslation('part1_g3')
             },
@@ -168,7 +177,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 num: '4',
                 q: getTranslation('part1_q4'),
                 ans: 'om morgenen',
-                colorClass: 'step-orange',
+                colorClass: 'step-purple',
                 icon: '⏰',
                 grammar: getTranslation('part1_g4')
             }
@@ -210,10 +219,10 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         resultBox.innerHTML = `
             <div class="banner-label">${getTranslation('part1_finished_sentence_label')}</div>
             <div class="banner-sentence">
-                <span class="word-blue">En kvinde</span> 
+                <span class="word-green">En kvinde</span> 
                 <span class="word-red">cykler</span> 
-                <span class="word-green">på gaden</span> 
-                <span class="word-orange">om morgenen</span>.
+                <span class="word-blue">på gaden</span> 
+                <span class="word-purple">om morgenen</span>.
             </div>
             <button class="listen-btn" title="Hør udtale">
                 <span>🔊</span> ${getTranslation('part1_listen_btn')}
@@ -283,7 +292,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         const categories = [
             {
                 q: getTranslation('part1_builder_q1'),
-                colorClass: "step-blue",
+                colorClass: "step-green",
                 grammar: getTranslation('part1_builder_g1'),
                 options: ["En kvinde", "En mand", "En hund", "En dreng", "En pige", "Bussen"]
             },
@@ -295,13 +304,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             },
             {
                 q: getTranslation('part1_builder_q3'),
-                colorClass: "step-green",
+                colorClass: "step-blue",
                 grammar: getTranslation('part1_builder_g3'),
                 options: ["på gaden", "i parken", "på caféen", "i skolen", "i køkkenet"]
             },
             {
                 q: getTranslation('part1_builder_q4'),
-                colorClass: "step-orange",
+                colorClass: "step-purple",
                 grammar: getTranslation('part1_builder_g4'),
                 options: ["om morgenen", "om aftenen", "hver dag", "lige nu", "i dag"]
             }
@@ -319,10 +328,10 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             outputBox.innerHTML = `
                 <div class="live-label">${getTranslation('part1_live_label')}</div>
                 <div class="live-text">
-                    <span class="word-blue">${selections[0]}</span> 
+                    <span class="word-green">${selections[0]}</span> 
                     <span class="word-red">${selections[1]}</span> 
-                    <span class="word-green">${selections[2]}</span> 
-                    <span class="word-orange">${selections[3]}</span>.
+                    <span class="word-blue">${selections[2]}</span> 
+                    <span class="word-purple">${selections[3]}</span>.
                 </div>
                 <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
             `;
@@ -625,13 +634,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         stepGrid.className = 'simple-steps-grid';
 
         const stepItems = [
-            { num: '1', q: getTranslation('part2_q1'), ans: 'Den travle', colorClass: 'step-purple', icon: '🎨', note: getTranslation('part2_note_1'), grammar: getTranslation('part2_g1') },
-            { num: '2', q: getTranslation('part2_q2'), ans: 'kvinde', colorClass: 'step-blue', icon: '👤', note: getTranslation('part2_note_2'), grammar: getTranslation('part2_g2') },
+            { num: '1', q: getTranslation('part2_q1'), ans: 'Den travle', colorClass: 'step-orange', icon: '🎨', note: getTranslation('part2_note_1'), grammar: getTranslation('part2_g1') },
+            { num: '2', q: getTranslation('part2_q2'), ans: 'kvinde', colorClass: 'step-green', icon: '👤', note: getTranslation('part2_note_2'), grammar: getTranslation('part2_g2') },
             { num: '3', q: getTranslation('part2_q3'), ans: 'cykler', colorClass: 'step-red', icon: '🚲', note: getTranslation('part2_note_3'), grammar: getTranslation('part2_g3') },
-            { num: '4', q: getTranslation('part2_q4'), ans: 'heldigvis', colorClass: 'step-pink', icon: '🌤️', note: getTranslation('part2_note_4'), grammar: getTranslation('part2_g4') },
-            { num: '5', q: getTranslation('part2_q5'), ans: 'forsigtigt', colorClass: 'step-cyan', icon: '⚡', note: getTranslation('part2_note_5'), grammar: getTranslation('part2_g5') },
-            { num: '6', q: getTranslation('part2_q6'), ans: 'på gaden', colorClass: 'step-green', icon: '📍', note: getTranslation('part2_note_6'), grammar: getTranslation('part2_g6') },
-            { num: '7', q: getTranslation('part2_q7'), ans: 'mens det sner', colorClass: 'step-orange', icon: '❄️', note: getTranslation('part2_note_7'), grammar: getTranslation('part2_g7') }
+            { num: '4', q: getTranslation('part2_q4'), ans: 'heldigvis', colorClass: 'step-yellow', icon: '🌤️', note: getTranslation('part2_note_4'), grammar: getTranslation('part2_g4') },
+            { num: '5', q: getTranslation('part2_q5'), ans: 'forsigtigt', colorClass: 'step-pink', icon: '⚡', note: getTranslation('part2_note_5'), grammar: getTranslation('part2_g5') },
+            { num: '6', q: getTranslation('part2_q6'), ans: 'på gaden', colorClass: 'step-blue', icon: '📍', note: getTranslation('part2_note_6'), grammar: getTranslation('part2_g6') },
+            { num: '7', q: getTranslation('part2_q7'), ans: 'mens det sner', colorClass: 'step-purple', icon: '❄️', note: getTranslation('part2_note_7'), grammar: getTranslation('part2_g7') }
         ];
 
         stepItems.forEach(item => {
@@ -656,13 +665,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         resultBox.innerHTML = `
             <div class="banner-label">${getTranslation('part2_finished_label')}</div>
             <div class="banner-sentence">
-                <span class="word-purple">Den travle</span> 
-                <span class="word-blue">kvinde</span> 
+                <span class="word-orange">Den travle</span> 
+                <span class="word-green">kvinde</span> 
                 <span class="word-red">cykler</span> 
-                <span class="word-pink">heldigvis</span> 
-                <span class="word-cyan">forsigtigt</span> 
-                <span class="word-green">på gaden</span>, 
-                <span class="word-orange">mens det sner</span>.
+                <span class="word-yellow">heldigvis</span> 
+                <span class="word-pink">forsigtigt</span> 
+                <span class="word-blue">på gaden</span>, 
+                <span class="word-purple">mens det sner</span>.
             </div>
             <button class="listen-btn" title="${getTranslation('part2_listen_btn')}">
                 <span>🔊</span> ${getTranslation('part2_listen_btn')}
@@ -732,13 +741,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         const categories = [
             {
                 q: `1. ${getTranslation('part2_q1')} (${getTranslation('part2_note_1')})`,
-                colorClass: "step-purple",
+                colorClass: "step-orange",
                 grammar: getTranslation('part2_g1'),
                 options: ["Den travle", "En glad", "Det lille", "Den dygtige", "En stor", "Den unge"]
             },
             {
                 q: `2. ${getTranslation('part2_q2')} (${getTranslation('part2_note_2')})`,
-                colorClass: "step-blue",
+                colorClass: "step-green",
                 grammar: getTranslation('part2_g2'),
                 options: ["kvinde", "mand", "barn", "lærer", "hund", "pige"]
             },
@@ -750,25 +759,25 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             },
             {
                 q: `4. ${getTranslation('part2_q4')} (${getTranslation('part2_note_4')})`,
-                colorClass: "step-pink",
+                colorClass: "step-yellow",
                 grammar: getTranslation('part2_g4'),
                 options: ["heldigvis", "desværre", "faktisk", "altid", "ofte"]
             },
             {
                 q: `5. ${getTranslation('part2_q5')} (${getTranslation('part2_note_5')})`,
-                colorClass: "step-cyan",
+                colorClass: "step-pink",
                 grammar: getTranslation('part2_g5'),
                 options: ["forsigtigt", "hurtigt", "roligt", "flittigt", "vildt", "stille"]
             },
             {
                 q: `6. ${getTranslation('part2_q6')} (${getTranslation('part2_note_6')})`,
-                colorClass: "step-green",
+                colorClass: "step-blue",
                 grammar: getTranslation('part2_g6'),
                 options: ["på gaden", "i parken", "i skolen", "derhjemme", "i haven", "på biblioteket"]
             },
             {
                 q: `7. ${getTranslation('part2_q7')} (${getTranslation('part2_note_7')})`,
-                colorClass: "step-orange",
+                colorClass: "step-purple",
                 grammar: getTranslation('part2_g7'),
                 options: ["mens det sner", "fordi solen skinner", "selvom det regner", "når eleverne har fri", "mens gæsterne spiser", "før timen starter"]
             }
@@ -794,13 +803,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             outputBox.innerHTML = `
                 <div class="live-label">${getTranslation('part2_builder_live_label')}</div>
                 <div class="live-text">
-                    <span class="word-purple">${selections[0]}</span> 
-                    <span class="word-blue">${selections[1]}</span> 
+                    <span class="word-orange">${selections[0]}</span> 
+                    <span class="word-green">${selections[1]}</span> 
                     <span class="word-red">${selections[2]}</span> 
-                    <span class="word-pink">${selections[3]}</span> 
-                    <span class="word-cyan">${selections[4]}</span> 
-                    <span class="word-green">${selections[5]}</span>, 
-                    <span class="word-orange">${selections[6]}</span>.
+                    <span class="word-yellow">${selections[3]}</span> 
+                    <span class="word-pink">${selections[4]}</span> 
+                    <span class="word-blue">${selections[5]}</span>, 
+                    <span class="word-purple">${selections[6]}</span>.
                 </div>
                 <button class="listen-btn-small" title="${getTranslation('part2_listen_pronunciation')}">🔊 ${getTranslation('part2_listen_pronunciation')}</button>
             `;
@@ -954,13 +963,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 { text: `7. ${getTranslation('part2_note_7')}`, grammar: getTranslation('part2_g7') }
             ];
             const slotColorClasses = [
-                "slot7-purple",
-                "slot7-blue",
-                "slot7-red",
-                "slot7-pink",
-                "slot7-cyan",
+                "slot7-orange",
                 "slot7-green",
-                "slot7-orange"
+                "slot7-red",
+                "slot7-yellow",
+                "slot7-pink",
+                "slot7-blue",
+                "slot7-purple"
             ];
 
             slotPrompts.forEach((promptItem, idx) => {
@@ -1231,6 +1240,9 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .ans-red { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
             .ans-green { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
             .ans-orange { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+            .ans-purple { background: #f3e5f5; color: #7b1fa2; border: 1px solid #ce93d8; }
+            .ans-yellow { background: #fffde7; color: #b45309; border: 1px solid #fde68a; }
+            .ans-pink { background: #fce4ec; color: #c2185b; border: 1px solid #f48fb1; }
 
             .bubble-1 { top: 9%; left: 16%; }
             .bubble-4 { top: 9%; right: 18%; }
@@ -1270,6 +1282,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .simple-step-card.step-green { border-color: #4CAF50; background: rgba(76, 175, 80, 0.08); }
             .simple-step-card.step-orange { border-color: #FF9800; background: rgba(255, 152, 0, 0.08); }
             .simple-step-card.step-purple { border-color: #9C27B0; background: rgba(156, 39, 176, 0.08); }
+            .simple-step-card.step-yellow { border-color: #F59E0B; background: rgba(245, 158, 11, 0.08); }
             .simple-step-card.step-pink { border-color: #E91E63; background: rgba(233, 30, 99, 0.08); }
             .simple-step-card.step-cyan { border-color: #00BCD4; background: rgba(0, 188, 212, 0.08); }
 
@@ -1290,6 +1303,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .step-green .step-badge { background: #4CAF50; }
             .step-orange .step-badge { background: #FF9800; }
             .step-purple .step-badge { background: #9C27B0; }
+            .step-yellow .step-badge { background: #F59E0B; }
             .step-pink .step-badge { background: #E91E63; }
             .step-cyan .step-badge { background: #00BCD4; }
 
@@ -1339,6 +1353,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .word-green { color: #81C784; }
             .word-orange { color: #FFB74D; }
             .word-purple { color: #BA68C8; }
+            .word-yellow { color: #FCD34D; }
             .word-pink { color: #F06292; }
             .word-cyan { color: #4DD0E1; }
 
@@ -1448,6 +1463,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .builder-q-row.step-green { border-left-color: #4CAF50; }
             .builder-q-row.step-orange { border-left-color: #FF9800; }
             .builder-q-row.step-purple { border-left-color: #9C27B0; }
+            .builder-q-row.step-yellow { border-left-color: #F59E0B; }
             .builder-q-row.step-pink { border-left-color: #E91E63; }
             .builder-q-row.step-cyan { border-left-color: #00BCD4; }
 
@@ -1603,21 +1619,21 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 border-color: #4CAF50;
                 cursor: pointer;
             }
-            .puzzle-slot.slot-0.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
+            .puzzle-slot.slot-0.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
             .puzzle-slot.slot-1.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-            .puzzle-slot.slot-2.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-            .puzzle-slot.slot-3.filled { border-color: #FF9800; background: rgba(255, 152, 0, 0.15); }
+            .puzzle-slot.slot-2.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
+            .puzzle-slot.slot-3.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
 
             .puzzle-slots-7 {
                 grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             }
-            .puzzle-slot.slot7-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
-            .puzzle-slot.slot7-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
-            .puzzle-slot.slot7-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-            .puzzle-slot.slot7-pink.filled { border-color: #E91E63; background: rgba(233, 30, 99, 0.15); }
-            .puzzle-slot.slot7-cyan.filled { border-color: #00BCD4; background: rgba(0, 188, 212, 0.15); }
-            .puzzle-slot.slot7-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
             .puzzle-slot.slot7-orange.filled { border-color: #FF9800; background: rgba(255, 152, 0, 0.15); }
+            .puzzle-slot.slot7-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
+            .puzzle-slot.slot7-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
+            .puzzle-slot.slot7-yellow.filled { border-color: #F59E0B; background: rgba(245, 158, 11, 0.15); }
+            .puzzle-slot.slot7-pink.filled { border-color: #E91E63; background: rgba(233, 30, 99, 0.15); }
+            .puzzle-slot.slot7-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
+            .puzzle-slot.slot7-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
 
             .slot-hint {
                 font-size: 0.85rem;

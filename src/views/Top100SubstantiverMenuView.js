@@ -252,24 +252,16 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     cardByrum.onclick = () => navigateFn('byrummet_vrimmel');
     grid.appendChild(cardByrum);
 
-    // 2. Scene 2: Køkkenet & Hjemmet
+    // 2. Scene 2: Hjemmet & Køkkenet
     const cardKoekken = document.createElement('div');
     cardKoekken.className = 'scene-card';
     cardKoekken.innerHTML = `
         <div class="scene-card-img-wrap">
-            <img src="assets/koekken_vrimmel.jpg" alt="Køkkenet og hjemmet vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-scene-2">${getTranslation('top100_scene2_badge')}</div>
+            <img src="assets/koekken_vrimmel.jpg" alt="Hjemmet og køkkenet vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
             <h3>${getTranslation('top100_scene2_title')}</h3>
             <p>${getTranslation('top100_scene2_desc')}</p>
-            <div class="scene-features-tags">
-                <span class="feature-tag tag-substantiv">${getTranslation('top100_tag_20_substantiver')}</span>
-                <span class="feature-tag">${getTranslation('top100_tag_farve_radar')}</span>
-                <span class="feature-tag">${getTranslation('top100_tag_sorting')}</span>
-                <span class="feature-tag">${getTranslation('top100_tag_kaffe')}</span>
-                <span class="feature-tag">${getTranslation('top100_tag_bygger')}</span>
-            </div>
             <button class="scene-action-btn">${getTranslation('top100_scene2_btn')}</button>
         </div>
     `;

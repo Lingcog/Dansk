@@ -45,6 +45,14 @@ export const top100Translations = {
     top100_tag_historie: "💭 Mikro-historie",
     top100_tag_bygger: "✍️ Sætningsbygger",
     top100_tag_sorting: "📦 20-ords kassesortering",
+    top100_tag_24_substantiver: "🟢 24 substantiver",
+    top100_tag_20_substantiver: "🟢 20 substantiver",
+    top100_tag_kaffe: "💭 Kaffen vælter!",
+    top100_tag_learning: "📖 Læring",
+    top100_tag_tech: "💻 Teknologi",
+    top100_tag_time: "⏰ Tidsudtryk",
+    top100SubstantiverTitle: "Lær de 100 mest almindelige danske substantiver",
+    top100SubstantiverDesc: "Udforsk over 50 % af alle hverdagsord i levende vrimlebilleder med farve-radar, kønstræning og sætningsbygger.",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "Se rent billede:",
@@ -203,6 +211,14 @@ export const top100Translations = {
     top100_tag_historie: "💭 Micro Story",
     top100_tag_bygger: "✍️ Sentence Builder",
     top100_tag_sorting: "📦 20-Word Box Sorting",
+    top100_tag_24_substantiver: "🟢 24 nouns",
+    top100_tag_20_substantiver: "🟢 20 nouns",
+    top100_tag_kaffe: "💭 Coffee spills!",
+    top100_tag_learning: "📖 Learning",
+    top100_tag_tech: "💻 Technology",
+    top100_tag_time: "⏰ Time expressions",
+    top100SubstantiverTitle: "Learn the 100 Most Common Danish Nouns",
+    top100SubstantiverDesc: "Explore over 50% of everyday words in vivid picture scenes with color radar, gender sorting, and sentence builders.",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "View pure image:",
@@ -361,6 +377,14 @@ export const top100Translations = {
     top100_tag_historie: "💭 Microhistoria",
     top100_tag_bygger: "✍️ Constructor de oraciones",
     top100_tag_sorting: "📦 Clasificación de 20 palabras",
+    top100_tag_24_substantiver: "🟢 24 sustantivos",
+    top100_tag_20_substantiver: "🟢 20 sustantivos",
+    top100_tag_kaffe: "💭 ¡El café se derrama!",
+    top100_tag_learning: "📖 Aprendizaje",
+    top100_tag_tech: "💻 Tecnología",
+    top100_tag_time: "⏰ Expresiones de tiempo",
+    top100SubstantiverTitle: "Aprende los 100 sustantivos daneses más comunes",
+    top100SubstantiverDesc: "Explora más del 50% de las palabras cotidianas en escenas ilustradas vivas con radar de color, clasificación de género y construcción de oraciones.",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "Ver imagen limpia:",
@@ -519,6 +543,14 @@ export const top100Translations = {
     top100_tag_historie: "💭 微情景小故事",
     top100_tag_bygger: "✍️ 结构造句器",
     top100_tag_sorting: "📦 20词归类箱",
+    top100_tag_24_substantiver: "🟢 24个名词",
+    top100_tag_20_substantiver: "🟢 20个名词",
+    top100_tag_kaffe: "💭 咖啡打翻了！",
+    top100_tag_learning: "📖 学习",
+    top100_tag_tech: "💻 科技",
+    top100_tag_time: "⏰ 时间表达",
+    top100SubstantiverTitle: "学习最常用的100个丹麦语名词",
+    top100SubstantiverDesc: "在生动的生活画卷中探索超过50%的日常高频词，配备颜色雷达、词性归类与造句练习。",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "纯净原图模式：",

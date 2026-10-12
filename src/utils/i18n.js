@@ -32,9 +32,10 @@ export const MODEL_A_GRAMMAR_TERMS = {
 };
 
 export const translations = {};
-Object.keys(baseTranslations).forEach(lang => {
+const allLangs = new Set([...Object.keys(baseTranslations), ...Object.keys(top100Translations || {}), ...Object.keys(talemaaderTranslations || {})]);
+allLangs.forEach(lang => {
     translations[lang] = {
-        ...baseTranslations[lang],
+        ...(baseTranslations[lang] || {}),
         ...(talemaaderTranslations[lang] || {}),
         ...(top100Translations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
@@ -56,8 +57,13 @@ export function getLang() {
 }
 
 export function getTranslation(key, params = {}) {
-    const langObj = translations[getLang()];
-    let text = (langObj && langObj[key]) ? langObj[key] : (translations['da'][key] || key);
+    const currentLang = getLang();
+    const langObj = translations[currentLang];
+    let text = (langObj && langObj[key])
+        ? langObj[key]
+        : (currentLang !== 'da' && translations['en']?.[key]
+            ? translations['en'][key]
+            : (translations['da']?.[key] || key));
 
     Object.keys(params).forEach(p => {
         text = text.replace(`{${p}}`, params[p]);

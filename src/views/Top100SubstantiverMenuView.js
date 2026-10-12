@@ -258,7 +258,7 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <h3>${getTranslation('top100_scene1_title')}</h3>
             <p>${getTranslation('top100_scene1_desc')}</p>
             <div class="scene-features-tags">
-                <span class="feature-tag tag-substantiv">🟢 24 ${getTranslation('top100_legend_substantiv')}er</span>
+                <span class="feature-tag tag-substantiv">${getTranslation('top100_tag_24_substantiver')}</span>
                 <span class="feature-tag">${getTranslation('top100_tag_farve_radar')}</span>
                 <span class="feature-tag">${getTranslation('top100_tag_detektiv')}</span>
                 <span class="feature-tag">${getTranslation('top100_tag_historie')}</span>
@@ -282,10 +282,10 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <h3>${getTranslation('top100_scene2_title')}</h3>
             <p>${getTranslation('top100_scene2_desc')}</p>
             <div class="scene-features-tags">
-                <span class="feature-tag tag-substantiv">🟢 20 ${getTranslation('top100_legend_substantiv')}er</span>
+                <span class="feature-tag tag-substantiv">${getTranslation('top100_tag_20_substantiver')}</span>
                 <span class="feature-tag">${getTranslation('top100_tag_farve_radar')}</span>
                 <span class="feature-tag">${getTranslation('top100_tag_sorting')}</span>
-                <span class="feature-tag">💭 Kaffen vælter!</span>
+                <span class="feature-tag">${getTranslation('top100_tag_kaffe')}</span>
                 <span class="feature-tag">${getTranslation('top100_tag_bygger')}</span>
             </div>
             <button class="scene-action-btn">${getTranslation('top100_scene2_btn')}</button>
@@ -306,9 +306,9 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <h3>${getTranslation('top100_scene3_title')}</h3>
             <p>${getTranslation('top100_scene3_desc')}</p>
             <div class="scene-features-tags">
-                <span class="feature-tag">📖 Læring</span>
-                <span class="feature-tag">💻 Teknologi</span>
-                <span class="feature-tag">⏰ Tidsudtryk</span>
+                <span class="feature-tag">${getTranslation('top100_tag_learning')}</span>
+                <span class="feature-tag">${getTranslation('top100_tag_tech')}</span>
+                <span class="feature-tag">${getTranslation('top100_tag_time')}</span>
             </div>
             <button class="scene-action-btn">${getTranslation('top100_scene3_btn')}</button>
         </div>

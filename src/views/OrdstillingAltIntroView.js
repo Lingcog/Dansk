@@ -1819,7 +1819,7 @@ function ensureIntroStyles() {
             font-weight: 700;
         }
         .grammar-system-banner {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             gap: 1rem 1.5rem;
             justify-content: center;
@@ -1830,6 +1830,10 @@ function ensureIntroStyles() {
             padding: 0.8rem 1.2rem;
             margin: 1rem auto 1.5rem auto;
             max-width: 820px;
+        }
+        .grammar-mode-active .grammar-system-banner {
+            display: flex;
+            animation: fadeInGrammar 0.25s ease;
         }
         .grammar-system-item {
             display: flex;

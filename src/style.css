@@ -928,6 +928,40 @@ footer a:hover {
     font-style: italic;
 }
 
+.grammar-system-banner {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    margin: 1rem auto 1.5rem auto;
+    max-width: 820px;
+}
+
+.grammar-mode-active .grammar-system-banner {
+    display: flex;
+    animation: fadeInGrammar 0.25s ease;
+}
+
+.grammar-system-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.grammar-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
 @keyframes fadeInGrammar {
     from { opacity: 0; transform: translateY(-3px); }
     to { opacity: 1; transform: translateY(0); }

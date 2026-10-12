@@ -40,6 +40,12 @@ export const top100Translations = {
     top100_scene3_title: "🏫 Undervisningslokalet og kontoret",
     top100_scene3_desc: "Udforsk undervisningen, sproget, bøgerne, computeren og arbejdet på kontoret. Lær ord som <em>lærer, elev, bog, computer, papir, opgave, spørgsmål, svar, møde</em> og <em>arbejde</em>.",
     top100_scene3_btn: "Gå til lokalet ➔",
+    top100_scene4_title: "🌳 Naturen og fritiden",
+    top100_scene4_desc: "Udforsk parken, stranden, skoven, kroppen og fritidslivet. Lær ord som <em>skov, strand, vand, vejr, hoved, hånd, fod, hjerte, ferie, fest, gave, musik, film, spil</em> og <em>bold</em>.",
+    top100_scene4_btn: "Gå til naturen ➔",
+    top100_scene5_title: "🚆 Stationen, indkøb og tiden",
+    top100_scene5_desc: "Udforsk togstationen, bussen, dagligvarebutikken, kalenderen og døgnets tider. Lær ord som <em>tog, bus, cykel, billet, butik, brød, mælk, æble, dag, uge, måned, år, morgen</em> og <em>aften</em>.",
+    top100_scene5_btn: "Gå til stationen ➔",
     top100_tag_farve_radar: "📡 Farve-radar EN/ET",
     top100_tag_detektiv: "🕵️ Detektiv-mission",
     top100_tag_historie: "💭 En lille historie",
@@ -86,6 +92,8 @@ export const top100Translations = {
     sort_kitchen_title: "Sorter alle 20 ord i EN- og ET-kassen",
     sort_byrum_title: "Sorter alle 24 ord i EN- og ET-kassen",
     sort_klasse_title: "Sorter alle 24 ord i EN- og ET-kassen",
+    sort_natur_title: "Sorter alle 21 ord i EN- og ET-kassen",
+    sort_station_title: "Sorter alle 21 ord i EN- og ET-kassen",
     sort_progress_text: "{n} / {total} sorteret",
     sort_bin_en_title: "📦 Kasse til EN-ord",
     sort_bin_et_title: "📦 Kasse til ET-ord",
@@ -98,6 +106,8 @@ export const top100Translations = {
     builder_kitchen_title: "Vælg det rigtige verbum og byg sætningen:",
     builder_byrum_title: "Vælg det rigtige verbum og dan en byrums-sætning:",
     builder_klasse_title: "Vælg det rigtige verbum og byg sætningen:",
+    builder_natur_title: "Vælg det rigtige verbum og byg sætningen:",
+    builder_station_title: "Vælg det rigtige verbum og byg sætningen:",
     builder_choose_verb_slot: "❓ Vælg verbum",
     builder_tray_title: "Hvilket verbum passer til handlingen? (🔴 Verbum)",
     builder_preview_default: "Vælg et verbum for at høre sætningen...",
@@ -214,7 +224,79 @@ export const top100Translations = {
     klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
     klasse_context_s3_q: "Hvordan får man fat i en bog?",
     klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
-    klasse_context_s3_b: "B) Man vasker bilen med en bog"
+    klasse_context_s3_b: "B) Man vasker bilen med en bog",
+
+    // Natur & Fritid specific
+    natur_hero_title: "🌳 Naturen og fritiden",
+    natur_hero_desc: "Mød skoven, stranden, vejret, kroppen, festen og fritidslivet på billedet.",
+    natur_default_badge: "Klik på en cirkel i billedet",
+    natur_default_title: "Gå på opdagelse i naturen!",
+    natur_default_desc: "Lær om ordet hedder <strong>en</strong> eller <strong>et</strong>, lyt til udtalen og træn med mikrofonen.",
+    natur_detektiv_count_prompt: "Klik på de 3 rigtige ord herunder:",
+    natur_detektiv_complete: "Rigtigt! ✓",
+    natur_detektiv_next: "Næste mission ➔",
+    natur_detektiv_restart: "Start forfra 🔄",
+    natur_m1_title: "Find 3 dele af kroppen 🫱🦶",
+    natur_m2_title: "Find 3 ting i naturen og landskabet 🌲🏖️",
+    natur_m3_title: "Find 3 ord om fest og ferie 🎉🎁",
+    natur_m4_title: "Find 3 ting til leg og underholdning ⚽🎲",
+    natur_story_title: "Løberen der vrikker om 🏃‍♂️💥",
+    natur_story_desc: "Se på løberen på bænken til højre. Sådan bevæger sproget sig fra konkret til abstrakt:",
+    natur_story_s1_q: "Trin 1: Hvilken konkret kropsdel vrikkede løberen om på?",
+    natur_story_s2_q: "Trin 2: Hvad skete der pludselig på løbeturen?",
+    natur_story_s3_q: "Trin 3: Hvad har løberen nu, da han ikke kan gå?",
+    natur_story_s4_q: "Trin 4: Hvad gør vennen for at løse problemet?",
+    natur_story_pedagogy: "💡 <strong>Pædagogisk pointe:</strong> Fra den konkrete fod ➔ til det uventede uheld ➔ til problemet og den hjælpende hånd! Sådan hænger sproget sammen.",
+    natur_context_title: "Målord: \"en hånd\"",
+    natur_context_desc: "Ordet <strong>en hånd</strong> optræder i mange sammenhænge i hverdagen:",
+    natur_context_s1_title: "🌳 1. Ved uheldet i parken",
+    natur_context_s1_q: "Hvad bruger vennen sin hånd til her?",
+    natur_context_s1_a: "A) Han rækker sin hånd frem og hjælper løberen op",
+    natur_context_s1_b: "B) Han bruger sin hånd som en båd på vandet",
+    natur_context_s2_title: "🤝 2. Når man møder nye mennesker",
+    natur_context_s2_q: "Hvad gør man ofte med hånden, når man hilser?",
+    natur_context_s2_a: "A) Man giver hinanden hånden og siger goddag",
+    natur_context_s2_b: "B) Man lægger hånden ind i køleskabet",
+    natur_context_s3_title: "🏫 3. I undervisningslokalet",
+    natur_context_s3_q: "Hvad gør eleven med hånden i timen?",
+    natur_context_s3_a: "A) Eleven rækker hånden op for at stille et spørgsmål",
+    natur_context_s3_b: "B) Eleven spiser sin hånd til frokost",
+
+    // Station, Indkøb & Tid specific
+    station_hero_title: "🚆 Stationen, indkøb og tiden",
+    station_hero_desc: "Mød toget, bussen, dagligvarebutikken, kalenderen og døgnets tider på billedet.",
+    station_default_badge: "Klik på en cirkel i billedet",
+    station_default_title: "Gå på opdagelse på stationen!",
+    station_default_desc: "Lær om ordet hedder <strong>en</strong> eller <strong>et</strong>, lyt til udtalen og træn med mikrofonen.",
+    station_detektiv_count_prompt: "Klik på de 3 rigtige ord herunder:",
+    station_detektiv_complete: "Rigtigt! ✓",
+    station_detektiv_next: "Næste mission ➔",
+    station_detektiv_restart: "Start forfra 🔄",
+    station_m1_title: "Find 3 transportmidler på stationen 🚆🚌",
+    station_m2_title: "Find 3 madvarer i butikken 🍞🍎",
+    station_m3_title: "Find 3 ord fra kalenderen 📅",
+    station_m4_title: "Find 3 tider på døgnet 🌅🌙",
+    station_story_title: "Toget der er kørt 🚆⏰",
+    station_story_desc: "Se på kvinden med billetten til højre. Sådan bevæger sproget sig fra konkret til abstrakt:",
+    station_story_s1_q: "Trin 1: Hvilket konkret transportmiddel skulle kvinden med?",
+    station_story_s2_q: "Trin 2: Hvad skete der pludselig med tiden?",
+    station_story_s3_q: "Trin 3: Hvad har kvinden nu, da toget er kørt?",
+    station_story_s4_q: "Trin 4: Hvad gør kvinden for at løse problemet?",
+    station_story_pedagogy: "💡 <strong>Pædagogisk pointe:</strong> Fra det konkrete tog og uret ➔ til forsinkelsen ➔ til problemet og den nye plan med bussen! Sådan hænger sproget sammen.",
+    station_context_title: "Målord: \"en billet\"",
+    station_context_desc: "Ordet <strong>en billet</strong> optræder i mange sammenhænge i hverdagen:",
+    station_context_s1_title: "🚆 1. På togstationen og i bussen",
+    station_context_s1_q: "Hvorfor har passageren en billet med?",
+    station_context_s1_a: "A) Man viser sin billet for at rejse med tog eller bus",
+    station_context_s1_b: "B) Man smører smør på sin billet og spiser den",
+    station_context_s2_title: "🎬 2. I biografen og til koncert",
+    station_context_s2_q: "Hvad bruger man en billet til i fritiden?",
+    station_context_s2_a: "A) Man køber en billet for at komme ind og se en film eller høre musik",
+    station_context_s2_b: "B) Man bruger en billet som paraply i regnvejr",
+    station_context_s3_title: "✈️ 3. På ferie og rejse",
+    station_context_s3_q: "Hvad skal man huske, når man rejser til et andet land?",
+    station_context_s3_a: "A) Man bestiller en billet til rejsen i god tid",
+    station_context_s3_b: "B) Man planter en billet i skoven"
   },
 
   en: {
@@ -244,6 +326,12 @@ export const top100Translations = {
     top100_scene3_title: "🏫 Classroom and Office",
     top100_scene3_desc: "Explore teaching, language, books, computers, and office work. Learn words like <em>lærer (teacher), elev (student), bog (book), computer, papir (paper), opgave (task), spørgsmål (question), svar (answer), møde (meeting)</em>, and <em>arbejde (work)</em>.",
     top100_scene3_btn: "Go to the classroom ➔",
+    top100_scene4_title: "🌲 Nature and Free Time",
+    top100_scene4_desc: "Explore the forest, beach, weather, body, and free-time activities. Learn words like <em>skov (forest), strand (beach), vejr (weather), fugl (bird), blomst (flower), hånd (hand), hoved (head), fod (foot), musik (music), film, spil (game)</em>, and <em>ferie (holiday)</em>.",
+    top100_scene4_btn: "Go to nature ➔",
+    top100_scene5_title: "🚆 Station, Shopping and Time",
+    top100_scene5_desc: "Explore the train station, grocery store, calendar, and time of day. Learn words like <em>tog (train), billet (ticket), butik (shop), brød (bread), mælk (milk), æble (apple), pris (price), morgen (morning), aften (evening)</em>, and <em>år (year)</em>.",
+    top100_scene5_btn: "Go to the station ➔",
     top100_tag_farve_radar: "📡 Color Radar EN/ET",
     top100_tag_detektiv: "🕵️ Detective Mission",
     top100_tag_historie: "💭 A little story",
@@ -290,6 +378,8 @@ export const top100Translations = {
     sort_kitchen_title: "Sort all 20 words into the EN and ET boxes",
     sort_byrum_title: "Sort all 24 words into the EN and ET boxes",
     sort_klasse_title: "Sort all 24 words into the EN and ET boxes",
+    sort_natur_title: "Sort all 21 words into the EN and ET boxes",
+    sort_station_title: "Sort all 21 words into the EN and ET boxes",
     sort_progress_text: "{n} / {total} sorted",
     sort_bin_en_title: "📦 Box for EN words",
     sort_bin_et_title: "📦 Box for ET words",
@@ -302,6 +392,8 @@ export const top100Translations = {
     builder_kitchen_title: "Choose the correct verb and build the sentence:",
     builder_byrum_title: "Choose the correct verb and build the city sentence:",
     builder_klasse_title: "Choose the correct verb and build the sentence:",
+    builder_natur_title: "Choose the correct verb and build the sentence:",
+    builder_station_title: "Choose the correct verb and build the sentence:",
     builder_choose_verb_slot: "❓ Choose verb",
     builder_tray_title: "Which verb matches the action? (🔴 Verb)",
     builder_preview_default: "Choose a verb to hear the sentence...",
@@ -418,7 +510,79 @@ export const top100Translations = {
     klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
     klasse_context_s3_q: "How do you get a book?",
     klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
-    klasse_context_s3_b: "B) Man vasker bilen med en bog"
+    klasse_context_s3_b: "B) Man vasker bilen med en bog",
+
+    // Natur & Fritid specific
+    natur_hero_title: "🌲 Nature and Free Time",
+    natur_hero_desc: "Meet the forest, beach, weather, body, and free-time activities in the picture.",
+    natur_default_badge: "Click a circle in the picture",
+    natur_default_title: "Explore nature and free time!",
+    natur_default_desc: "Learn whether the word takes <strong>en</strong> or <strong>et</strong>, listen to pronunciation, and practice with your microphone.",
+    natur_detektiv_count_prompt: "Click the 3 correct words below:",
+    natur_detektiv_complete: "Correct! ✓",
+    natur_detektiv_next: "Next mission ➔",
+    natur_detektiv_restart: "Start over 🔄",
+    natur_m1_title: "Find 3 parts of the body 🦶🫱",
+    natur_m2_title: "Find 3 things in nature 🌲🏖️",
+    natur_m3_title: "Find 3 things for celebration and joy 🎉🎁",
+    natur_m4_title: "Find 3 things for play and entertainment ⚽🎬",
+    natur_story_title: "The runner who twists his ankle 🏃‍♂️💥",
+    natur_story_desc: "Look at the runner on the bench on the right. Here is how language moves from concrete to abstract:",
+    natur_story_s1_q: "Step 1: Which concrete body part did the runner hurt?",
+    natur_story_s2_q: "Step 2: What suddenly happened on the forest path?",
+    natur_story_s3_q: "Step 3: What does the runner have now that he cannot walk?",
+    natur_story_s4_q: "Step 4: How do they solve the problem?",
+    natur_story_pedagogy: "💡 <strong>Pedagogical point:</strong> From the concrete foot ➔ to the accident on the path ➔ to the problem and a helping hand! This is how language connects.",
+    natur_context_title: "Target word: \"en hånd\" (a hand)",
+    natur_context_desc: "The word <strong>en hånd</strong> appears in many everyday contexts:",
+    natur_context_s1_title: "🤝 1. Når man mødes og hjælper",
+    natur_context_s1_q: "What do you use your hand for when meeting or helping someone?",
+    natur_context_s1_a: "A) Man giver hånd eller rækker en ven en hjælpende hånd",
+    natur_context_s1_b: "B) Man flyver op i himlen med sin hånd",
+    natur_context_s2_title: "🏫 2. I skolen og til mødet",
+    natur_context_s2_q: "What does the student do with their hand in class?",
+    natur_context_s2_a: "A) Kursisten rækker hånden op for at stille et spørgsmål",
+    natur_context_s2_b: "B) Kursisten parkerer bilen i sin hånd",
+    natur_context_s3_title: "⚽ 3. I sport og fritid",
+    natur_context_s3_q: "How do you use your hand in games and play?",
+    natur_context_s3_a: "A) Man kaster en bold eller holder kortene i sin hånd",
+    natur_context_s3_b: "B) Man koger kaffe inde i sin hånd",
+
+    // Station, Indkøb & Tid specific
+    station_hero_title: "🚆 Station, Shopping and Time",
+    station_hero_desc: "Meet the train station, grocery shop, calendar, and time of day in the picture.",
+    station_default_badge: "Click a circle in the picture",
+    station_default_title: "Explore the station, shop, and time!",
+    station_default_desc: "Learn whether the word takes <strong>en</strong> or <strong>et</strong>, listen to pronunciation, and practice with your microphone.",
+    station_detektiv_count_prompt: "Click the 3 correct words below:",
+    station_detektiv_complete: "Correct! ✓",
+    station_detektiv_next: "Next mission ➔",
+    station_detektiv_restart: "Start over 🔄",
+    station_m1_title: "Find 3 groceries in the shop 🍞🥛",
+    station_m2_title: "Find 3 means of transportation at the station 🚆🚌",
+    station_m3_title: "Find 3 words for times of the day 🌅🌙",
+    station_m4_title: "Find 3 words from the calendar 📅",
+    station_story_title: "The train that has left 🚆⏰",
+    station_story_desc: "Look at the woman with the ticket on the right. Here is how language moves from concrete to abstract:",
+    station_story_s1_q: "Step 1: Which concrete means of transport was the woman supposed to catch?",
+    station_story_s2_q: "Step 2: What suddenly happened with the time?",
+    station_story_s3_q: "Step 3: What does the woman have now that the train has left?",
+    station_story_s4_q: "Step 4: What does the woman do to solve the problem?",
+    station_story_pedagogy: "💡 <strong>Pedagogical point:</strong> From the concrete train and clock ➔ to the delay ➔ to the problem and the new plan with the bus! This is how language connects.",
+    station_context_title: "Target word: \"en billet\" (a ticket)",
+    station_context_desc: "The word <strong>en billet</strong> appears in many everyday contexts:",
+    station_context_s1_title: "🚆 1. På togstationen og i bussen",
+    station_context_s1_q: "Why is the passenger carrying a ticket?",
+    station_context_s1_a: "A) Man viser sin billet for at rejse med tog eller bus",
+    station_context_s1_b: "B) Man smører smør på sin billet og spiser den",
+    station_context_s2_title: "🎬 2. I biografen og til koncert",
+    station_context_s2_q: "What do you use a ticket for in your free time?",
+    station_context_s2_a: "A) Man køber en billet for at komme ind og se en film eller høre musik",
+    station_context_s2_b: "B) Man bruger en billet som paraply i regnvejr",
+    station_context_s3_title: "✈️ 3. På ferie og rejse",
+    station_context_s3_q: "What should you remember when traveling to another country?",
+    station_context_s3_a: "A) Man bestiller en billet til rejsen i god tid",
+    station_context_s3_b: "B) Man planter en billet i skoven"
   },
 
   es: {
@@ -448,6 +612,12 @@ export const top100Translations = {
     top100_scene3_title: "🏫 El aula y la oficina",
     top100_scene3_desc: "Explora la enseñanza, el idioma, los libros, el ordenador y el trabajo en la oficina. Aprende palabras como <em>lærer (profesor), elev (alumno), bog (libro), computer, papir (papel), opgave (tarea), spørgsmål (pregunta), svar (respuesta), møde (reunión)</em> y <em>arbejde (trabajo)</em>.",
     top100_scene3_btn: "Ir al aula ➔",
+    top100_scene4_title: "🌲 La naturaleza y el tiempo libre",
+    top100_scene4_desc: "Explora el bosque, la playa, el clima, el cuerpo y el tiempo libre. Aprende palabras como <em>skov (bosque), strand (playa), vejr (clima), fugl (pájaro), blomst (flor), hånd (mano), hoved (cabeza), fod (pie), musik (música), film, spil (juego)</em> y <em>ferie (vacaciones)</em>.",
+    top100_scene4_btn: "Ir a la naturaleza ➔",
+    top100_scene5_title: "🚆 La estación, las compras y el tiempo",
+    top100_scene5_desc: "Explora la estación de tren, la tienda de comestibles, el calendario y las horas del día. Aprende palabras como <em>tog (tren), billet (billete), butik (tienda), brød (pan), mælk (leche), æble (manzana), pris (precio), morgen (mañana), aften (tarde/noche)</em> y <em>år (año)</em>.",
+    top100_scene5_btn: "Ir a la estación ➔",
     top100_tag_farve_radar: "📡 Radar de color EN/ET",
     top100_tag_detektiv: "🕵️ Misión de detective",
     top100_tag_historie: "💭 Una pequeña historia",
@@ -494,6 +664,8 @@ export const top100Translations = {
     sort_kitchen_title: "Clasifica las 20 palabras en las cajas EN y ET",
     sort_byrum_title: "Clasifica las 24 palabras en las cajas EN y ET",
     sort_klasse_title: "Clasifica las 24 palabras en las cajas EN y ET",
+    sort_natur_title: "Clasifica las 21 palabras en las cajas EN y ET",
+    sort_station_title: "Clasifica las 21 palabras en las cajas EN y ET",
     sort_progress_text: "{n} / {total} clasificadas",
     sort_bin_en_title: "📦 Caja para palabras EN",
     sort_bin_et_title: "📦 Caja para palabras ET",
@@ -506,6 +678,8 @@ export const top100Translations = {
     builder_kitchen_title: "Elige el verbo correcto y construye la oración:",
     builder_byrum_title: "Elige el verbo correcto y forma una oración urbana:",
     builder_klasse_title: "Elige el verbo correcto y construye la oración:",
+    builder_natur_title: "Elige el verbo correcto y construye la oración:",
+    builder_station_title: "Elige el verbo correcto y construye la oración:",
     builder_choose_verb_slot: "❓ Elegir verbo",
     builder_tray_title: "¿Qué verbo se ajusta a la acción? (🔴 Verbo)",
     builder_preview_default: "Elige un verbo para escuchar la oración...",
@@ -622,7 +796,79 @@ export const top100Translations = {
     klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
     klasse_context_s3_q: "¿Cómo consigues un libro?",
     klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
-    klasse_context_s3_b: "B) Man vasker bilen med en bog"
+    klasse_context_s3_b: "B) Man vasker bilen med en bog",
+
+    // Natur & Fritid specific
+    natur_hero_title: "🌲 La naturaleza y el tiempo libre",
+    natur_hero_desc: "Conoce el bosque, la playa, el clima, el cuerpo y el tiempo libre en la imagen.",
+    natur_default_badge: "Haz clic en un círculo en la imagen",
+    natur_default_title: "¡Explora la naturaleza y el tiempo libre!",
+    natur_default_desc: "Aprende si la palabra lleva <strong>en</strong> o <strong>et</strong>, escucha la pronunciación y practica con tu micrófono.",
+    natur_detektiv_count_prompt: "Haz clic en las 3 palabras correctas abajo:",
+    natur_detektiv_complete: "¡Correcto! ✓",
+    natur_detektiv_next: "Siguiente misión ➔",
+    natur_detektiv_restart: "Empezar de nuevo 🔄",
+    natur_m1_title: "Encuentra 3 partes del cuerpo 🦶🫱",
+    natur_m2_title: "Encuentra 3 elementos de la naturaleza 🌲🏖️",
+    natur_m3_title: "Encuentra 3 cosas para celebrar y alegrarse 🎉🎁",
+    natur_m4_title: "Encuentra 3 cosas para jugar y entretenerse ⚽🎬",
+    natur_story_title: "El corredor que se tuerce el tobillo 🏃‍♂️💥",
+    natur_story_desc: "Mira al corredor en el banco a la derecha. Así pasa el idioma de lo concreto a lo abstracto:",
+    natur_story_s1_q: "Paso 1: ¿Qué parte concreta del cuerpo se lastimó el corredor?",
+    natur_story_s2_q: "Paso 2: ¿Qué ocurrió de repente en el sendero del bosque?",
+    natur_story_s3_q: "Paso 3: ¿Qué tiene el corredor ahora que no puede caminar?",
+    natur_story_s4_q: "Paso 4: ¿Cómo resuelven el problema?",
+    natur_story_pedagogy: "💡 <strong>Punto pedagógico:</strong> ¡Del pie concreto ➔ al accidente en el sendero ➔ al problema y la mano que ayuda! Así es como se conecta el lenguaje.",
+    natur_context_title: "Palabra clave: \"en hånd\" (una mano)",
+    natur_context_desc: "La palabra <strong>en hånd</strong> aparece en muchos contextos cotidianos:",
+    natur_context_s1_title: "🤝 1. Når man mødes og hjælper",
+    natur_context_s1_q: "¿Para qué usas la mano cuando conoces o ayudas a alguien?",
+    natur_context_s1_a: "A) Man giver hånd eller rækker en ven en hjælpende hånd",
+    natur_context_s1_b: "B) Man flyver op i himlen med sin hånd",
+    natur_context_s2_title: "🏫 2. I skolen og til mødet",
+    natur_context_s2_q: "¿Qué hace el estudiante con su mano en clase?",
+    natur_context_s2_a: "A) Kursisten rækker hånden op for at stille et spørgsmål",
+    natur_context_s2_b: "B) Kursisten parkerer bilen i sin hånd",
+    natur_context_s3_title: "⚽ 3. I sport og fritid",
+    natur_context_s3_q: "¿Cómo usas la mano en el juego y el deporte?",
+    natur_context_s3_a: "A) Man kaster en bold eller holder kortene i sin hånd",
+    natur_context_s3_b: "B) Man koger kaffe inde i sin hånd",
+
+    // Station, Indkøb & Tid specific
+    station_hero_title: "🚆 La estación, las compras y el tiempo",
+    station_hero_desc: "Conoce la estación de tren, la tienda de comestibles, el calendario y las horas del día en la imagen.",
+    station_default_badge: "Haz clic en un círculo en la imagen",
+    station_default_title: "¡Explora la estación, la tienda y el tiempo!",
+    station_default_desc: "Aprende si la palabra lleva <strong>en</strong> o <strong>et</strong>, escucha la pronunciación y practica con tu micrófono.",
+    station_detektiv_count_prompt: "Haz clic en las 3 palabras correctas abajo:",
+    station_detektiv_complete: "¡Correcto! ✓",
+    station_detektiv_next: "Siguiente misión ➔",
+    station_detektiv_restart: "Empezar de nuevo 🔄",
+    station_m1_title: "Encuentra 3 alimentos en la tienda 🍞🥛",
+    station_m2_title: "Encuentra 3 medios de transporte en la estación 🚆🚌",
+    station_m3_title: "Encuentra 3 palabras para momentos del día 🌅🌙",
+    station_m4_title: "Encuentra 3 palabras del calendario 📅",
+    station_story_title: "El tren que ya se fue 🚆⏰",
+    station_story_desc: "Mira a la mujer con el billete a la derecha. Así pasa el idioma de lo concreto a lo abstracto:",
+    station_story_s1_q: "Paso 1: ¿Qué medio de transporte concreto iba a tomar la mujer?",
+    station_story_s2_q: "Paso 2: ¿Qué pasó de repente con el tiempo?",
+    station_story_s3_q: "Paso 3: ¿Qué tiene la mujer ahora que el tren se ha ido?",
+    station_story_s4_q: "Paso 4: ¿Qué hace la mujer para resolver el problema?",
+    station_story_pedagogy: "💡 <strong>Punto pedagógico:</strong> ¡Del tren y el reloj concretos ➔ al retraso ➔ al problema y el nuevo plan con el autobús! Así es como se conecta el lenguaje.",
+    station_context_title: "Palabra clave: \"en billet\" (un billete)",
+    station_context_desc: "La palabra <strong>en billet</strong> aparece en muchos contextos cotidianos:",
+    station_context_s1_title: "🚆 1. På togstationen og i bussen",
+    station_context_s1_q: "¿Por qué lleva un billete el pasajero?",
+    station_context_s1_a: "A) Man viser sin billet for at rejse med tog eller bus",
+    station_context_s1_b: "B) Man smører smør på sin billet og spiser den",
+    station_context_s2_title: "🎬 2. I biografen og til koncert",
+    station_context_s2_q: "¿Para qué usas una entrada o billete en tu tiempo libre?",
+    station_context_s2_a: "A) Man køber en billet for at komme ind og se en film eller høre musik",
+    station_context_s2_b: "B) Man bruger en billet som paraply i regnvejr",
+    station_context_s3_title: "✈️ 3. På ferie og rejse",
+    station_context_s3_q: "¿Qué debes recordar cuando viajas a otro país?",
+    station_context_s3_a: "A) Man bestiller en billet til rejsen i god tid",
+    station_context_s3_b: "B) Man planter en billet i skoven"
   },
 
   zh: {
@@ -652,6 +898,12 @@ export const top100Translations = {
     top100_scene3_title: "🏫 教室与办公室",
     top100_scene3_desc: "探索课堂教学、语言、书籍、电脑与办公室工作。掌握如：<em>lærer (老师), elev (学生), bog (书), computer (电脑), papir (纸), opgave (作业), spørgsmål (问题), svar (回答), møde (会议)</em> 与 <em>arbejde (工作)</em>。",
     top100_scene3_btn: "进入教室 ➔",
+    top100_scene4_title: "🌲 自然与休闲",
+    top100_scene4_desc: "探索森林、海滩、天气、身体部位与休闲活动。掌握如：<em>skov (森林), strand (海滩), vejr (天气), fugl (鸟), blomst (花), hånd (手), hoved (头), fod (脚), musik (音乐), film (电影), spil (游戏)</em> 与 <em>ferie (假期)</em>。",
+    top100_scene4_btn: "进入自然 ➔",
+    top100_scene5_title: "🚆 车站、购物与时间",
+    top100_scene5_desc: "探索火车站、食品商店、日历与一天中的时间。掌握如：<em>tog (火车), billet (票), butik (商店), brød (面包), mælk (牛奶), æble (苹果), pris (价格), morgen (早晨), aften (晚上)</em> 与 <em>år (年)</em>。",
+    top100_scene5_btn: "进入车站 ➔",
     top100_tag_farve_radar: "📡 颜色雷达 EN/ET",
     top100_tag_detektiv: "🕵️ 侦探分类任务",
     top100_tag_historie: "💭 小故事",
@@ -698,6 +950,8 @@ export const top100Translations = {
     sort_kitchen_title: "将所有20个单词分别归类到 EN 与 ET 箱子中",
     sort_byrum_title: "将所有24个单词分别归类到 EN 与 ET 箱子中",
     sort_klasse_title: "将所有24个单词分别归类到 EN 与 ET 箱子中",
+    sort_natur_title: "将所有21个单词分别归类到 EN 与 ET 箱子中",
+    sort_station_title: "将所有21个单词分别归类到 EN 与 ET 箱子中",
     sort_progress_text: "已完成 {n} / {total}",
     sort_bin_en_title: "📦 EN性词箱 (通性)",
     sort_bin_et_title: "📦 ET性词箱 (中性)",
@@ -710,6 +964,8 @@ export const top100Translations = {
     builder_kitchen_title: "选择正确的动词并完成句子：",
     builder_byrum_title: "选择正确的动词并构建城市街景句子：",
     builder_klasse_title: "选择正确的动词并完成句子：",
+    builder_natur_title: "选择正确的动词并完成句子：",
+    builder_station_title: "选择正确的动词并完成句子：",
     builder_choose_verb_slot: "❓ 选择动词",
     builder_tray_title: "哪个动词符合动作？ (🔴 动词)",
     builder_preview_default: "选择动词后即可听整句朗读...",
@@ -826,7 +1082,79 @@ export const top100Translations = {
     klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
     klasse_context_s3_q: "人们如何获得一本书？",
     klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
-    klasse_context_s3_b: "B) Man vasker bilen med en bog"
+    klasse_context_s3_b: "B) Man vasker bilen med en bog",
+
+    // Natur & Fritid specific
+    natur_hero_title: "🌲 自然与休闲",
+    natur_hero_desc: "在画面中认识森林、海滩、天气、身体部位与休闲活动。",
+    natur_default_badge: "点击画面上的圆圈",
+    natur_default_title: "探索自然与休闲时光！",
+    natur_default_desc: "辨析名词词性（<strong>en</strong> 还是 <strong>et</strong>），听标准发音并用麦克风跟读练习。",
+    natur_detektiv_count_prompt: "在下方点击3个符合条件的正确单词：",
+    natur_detektiv_complete: "回答正确！✓",
+    natur_detektiv_next: "下一个任务 ➔",
+    natur_detektiv_restart: "重新开始 🔄",
+    natur_m1_title: "找出3个身体部位 🦶🫱",
+    natur_m2_title: "找出大自然中的3样事物 🌲🏖️",
+    natur_m3_title: "找出3个与庆祝和欢乐相关的词汇 🎉🎁",
+    natur_m4_title: "找出3个与游戏和娱乐相关的词汇 ⚽🎬",
+    natur_story_title: "扭伤脚踝的跑步者 🏃‍♂️💥",
+    natur_story_desc: "观察右侧长椅上的跑步者。看看语言概念是如何从具体演化到抽象的：",
+    natur_story_s1_q: "第1步：跑步者弄伤了哪个具体的身体部位？",
+    natur_story_s2_q: "第2步：林间小路上突然发生了什么？",
+    natur_story_s3_q: "第3步：跑步者走不了路了，现在面临什么？",
+    natur_story_s4_q: "第4步：他们如何解决这个问题？",
+    natur_story_pedagogy: "💡 <strong>教学要点：</strong> 从具体的脚 ➔ 到小路上的意外 ➔ 再到问题和伸出援手！这就是语言概念层层递进的逻辑关联。",
+    natur_context_title: "核心目标词：\"en hånd\" (手)",
+    natur_context_desc: "单词 <strong>en hånd</strong> 在日常生活中有多种语境：",
+    natur_context_s1_title: "🤝 1. Når man mødes og hjælper",
+    natur_context_s1_q: "在与人见面或提供帮助时，手可以用来做什么？",
+    natur_context_s1_a: "A) Man giver hånd eller rækker en ven en hjælpende hånd",
+    natur_context_s1_b: "B) Man flyver op i himlen med sin hånd",
+    natur_context_s2_title: "🏫 2. I skolen og til mødet",
+    natur_context_s2_q: "上课时学生用手做什么？",
+    natur_context_s2_a: "A) Kursisten rækker hånden op for at stille et spørgsmål",
+    natur_context_s2_b: "B) Kursisten parkerer bilen i sin hånd",
+    natur_context_s3_title: "⚽ 3. I sport og fritid",
+    natur_context_s3_q: "在运动和游戏时如何使用手？",
+    natur_context_s3_a: "A) Man kaster en bold eller holder kortene i sin hånd",
+    natur_context_s3_b: "B) Man koger kaffe inde i sin hånd",
+
+    // Station, Indkøb & Tid specific
+    station_hero_title: "🚆 车站、购物与时间",
+    station_hero_desc: "在画面中认识火车站、食品商店、日历与一天中的时间。",
+    station_default_badge: "点击画面上的圆圈",
+    station_default_title: "探索车站、商店与时间！",
+    station_default_desc: "辨析名词词性（<strong>en</strong> 还是 <strong>et</strong>），听标准发音并用麦克风跟读练习。",
+    station_detektiv_count_prompt: "在下方点击3个符合条件的正确单词：",
+    station_detektiv_complete: "回答正确！✓",
+    station_detektiv_next: "下一个任务 ➔",
+    station_detektiv_restart: "重新开始 🔄",
+    station_m1_title: "找出商店里的3种食品 🍞🥛",
+    station_m2_title: "找出车站附近的3种交通工具 🚆🚌",
+    station_m3_title: "找出表示一天中不同时段的3个词 🌅🌙",
+    station_m4_title: "找出日历上的3个时间单位 📅",
+    station_story_title: "已经开走的火车 🚆⏰",
+    station_story_desc: "观察右侧拿着车票的女士。看看语言概念是如何从具体演化到抽象的：",
+    station_story_s1_q: "第1步：女士原本要乘坐哪种具体的交通工具？",
+    station_story_s2_q: "第2步：在时间上突然发生了什么失误？",
+    station_story_s3_q: "第3步：火车开走了，女士现在面临什么？",
+    station_story_s4_q: "第4步：女士采取什么措施来解决问题？",
+    station_story_pedagogy: "💡 <strong>教学要点：</strong> 从具体的火车和时钟 ➔ 到迟到的失误 ➔ 再到问题与改乘公交车的新方案！这就是语言概念层层递进的逻辑关联。",
+    station_context_title: "核心目标词：\"en billet\" (票)",
+    station_context_desc: "单词 <strong>en billet</strong> 在日常生活中有多种语境：",
+    station_context_s1_title: "🚆 1. På togstationen og i bussen",
+    station_context_s1_q: "乘客为什么要携带车票？",
+    station_context_s1_a: "A) Man viser sin billet for at rejse med tog eller bus",
+    station_context_s1_b: "B) Man smører smør på sin billet og spiser den",
+    station_context_s2_title: "🎬 2. I biografen og til koncert",
+    station_context_s2_q: "在业余休闲时，票可以用来做什么？",
+    station_context_s2_a: "A) Man køber en billet for at komme ind og se en film eller høre musik",
+    station_context_s2_b: "B) Man bruger en billet som paraply i regnvejr",
+    station_context_s3_title: "✈️ 3. På ferie og rejse",
+    station_context_s3_q: "去另一个国家旅行时需要记住什么？",
+    station_context_s3_a: "A) Man bestiller en billet til rejsen i god tid",
+    station_context_s3_b: "B) Man planter en billet i skoven"
   }
 };
 
@@ -1197,4 +1525,227 @@ export const klasseWordTranslations = {
     zh: { meaning: "一个问题 / 故障", sentence: "屏幕上出现了错误提示——这位男士遇到了技术问题。" }
   }
 };
+
+/**
+ * Translations for individual vocabulary words in Natur & Fritid (21 words)
+ */
+export const naturWordTranslations = {
+  "en fugl": {
+    en: { meaning: "a bird", sentence: "A white bird flies high up in the sky." },
+    es: { meaning: "un pájaro / ave", sentence: "Un pájaro blanco vuela alto en el cielo." },
+    zh: { meaning: "一只鸟", sentence: "一只白色的鸟在高空中飞翔。" }
+  },
+  "en luft": {
+    en: { meaning: "air", sentence: "There is fresh air out by the sea and the forest." },
+    es: { meaning: "aire", sentence: "Hay aire fresco junto al mar y el bosque." },
+    zh: { meaning: "空气", sentence: "海边和森林里有新鲜的空气。" }
+  },
+  "et vejr": {
+    en: { meaning: "weather", sentence: "It is lovely weather for a trip in the park." },
+    es: { meaning: "tiempo / clima", sentence: "Hace un tiempo estupendo para dar un paseo por el parque." },
+    zh: { meaning: "天气", sentence: "去公园散步的天气真好。" }
+  },
+  "et vand": {
+    en: { meaning: "water", sentence: "The blue water laps quietly against the coast." },
+    es: { meaning: "agua", sentence: "El agua azul chapotea suavemente contra la costa." },
+    zh: { meaning: "水 / 海水", sentence: "蔚蓝的海水静静地拍打着海岸。" }
+  },
+  "en strand": {
+    en: { meaning: "a beach", sentence: "The children run and play on the bright beach." },
+    es: { meaning: "una playa", sentence: "Los niños corren y juegan en la playa luminosa." },
+    zh: { meaning: "一片海滩", sentence: "孩子们在明亮的沙滩上奔跑玩耍。" }
+  },
+  "en bold": {
+    en: { meaning: "a ball", sentence: "The boy and the girl play with a round ball." },
+    es: { meaning: "una pelota / balón", sentence: "El niño y la niña juegan con una pelota redonda." },
+    zh: { meaning: "一个球", sentence: "男孩和女孩在玩一个圆球。" }
+  },
+  "en blomst": {
+    en: { meaning: "a flower", sentence: "Red and yellow flowers grow in the green grass." },
+    es: { meaning: "una flor", sentence: "Flores rojas y amarillas crecen en la hierba verde." },
+    zh: { meaning: "一朵花", sentence: "红花和黄花生长在绿草地上。" }
+  },
+  "en skov": {
+    en: { meaning: "a forest / woods", sentence: "There is a green forest with many trees in the background." },
+    es: { meaning: "un bosque", sentence: "Hay un bosque verde con muchos árboles al fondo." },
+    zh: { meaning: "一片森林", sentence: "背景中有一片树木茂密的绿色森林。" }
+  },
+  "en musik": {
+    en: { meaning: "music", sentence: "Happy music flows out from the small speaker." },
+    es: { meaning: "música", sentence: "Sale música alegre del pequeño altavoz." },
+    zh: { meaning: "音乐", sentence: "欢快的音乐从小音箱里流淌出来。" }
+  },
+  "en ferie": {
+    en: { meaning: "a holiday / vacation", sentence: "The friends enjoy their summer and spend their holiday together." },
+    es: { meaning: "unas vacaciones", sentence: "Los amigos disfrutan del verano y pasan las vacaciones juntos." },
+    zh: { meaning: "假期 / 度假", sentence: "朋友们享受夏天，一起共度假期。" }
+  },
+  "en fest": {
+    en: { meaning: "a party / celebration", sentence: "They celebrate a birthday and have a cozy party outdoors." },
+    es: { meaning: "una fiesta", sentence: "Celebran un cumpleaños y hacen una fiesta acogedora al aire libre." },
+    zh: { meaning: "一场聚会 / 派对", sentence: "他们在户外庆祝生日，举办温馨的派对。" }
+  },
+  "et hjerte": {
+    en: { meaning: "a heart", sentence: "The red balloon is shaped like a big heart." },
+    es: { meaning: "un corazón", sentence: "El globo rojo tiene forma de un gran corazón." },
+    zh: { meaning: "一颗心 / 心脏", sentence: "红色的气球是大大心形的。" }
+  },
+  "en gave": {
+    en: { meaning: "a gift / present", sentence: "In the middle of the blanket stands a nice gift with a red ribbon." },
+    es: { meaning: "un regalo", sentence: "En medio de la manta hay un bonito regalo con un lazo rojo." },
+    zh: { meaning: "一份礼物", sentence: "毯子中央放着一份系着红丝带的精美礼物。" }
+  },
+  "en film": {
+    en: { meaning: "a movie / film", sentence: "On the screen you can choose to watch a good movie." },
+    es: { meaning: "una película", sentence: "En la pantalla se puede elegir ver una buena película." },
+    zh: { meaning: "一部电影", sentence: "在屏幕上可以选择观看一部好电影。" }
+  },
+  "et spil": {
+    en: { meaning: "a game", sentence: "The friends have fun with a board game on the blanket." },
+    es: { meaning: "un juego", sentence: "Los amigos se divierten con un juego de mesa sobre la manta." },
+    zh: { meaning: "一个游戏", sentence: "朋友们在毯子上愉快地玩桌游。" }
+  },
+  "et liv": {
+    en: { meaning: "a life", sentence: "There is plenty of joy and good life in the park." },
+    es: { meaning: "una vida", sentence: "Hay mucha alegría y buena vida en el parque." },
+    zh: { meaning: "生活 / 生命", sentence: "公园里充满了欢乐与美好的生活气息。" }
+  },
+  "et menneske": {
+    en: { meaning: "a human / person", sentence: "A kind person stops to help the runner." },
+    es: { meaning: "un ser humano / persona", sentence: "Una persona amable se detiene para ayudar al corredor." },
+    zh: { meaning: "人 / 人类", sentence: "一位好心人停下来帮助跑步者。" }
+  },
+  "en hånd": {
+    en: { meaning: "a hand", sentence: "He reaches out his hand to help his friend." },
+    es: { meaning: "una mano", sentence: "Él extiende su mano para ayudar a su amigo." },
+    zh: { meaning: "一只手", sentence: "他伸出手去帮助他的朋友。" }
+  },
+  "et hoved": {
+    en: { meaning: "a head", sentence: "The runner bends his head down and looks at his leg." },
+    es: { meaning: "una cabeza", sentence: "El corredor inclina la cabeza y se mira la pierna." },
+    zh: { meaning: "一个头 / 脑袋", sentence: "跑步者低下头看着自己的腿。" }
+  },
+  "et øje": {
+    en: { meaning: "an eye", sentence: "He looks down worriedly with each eye." },
+    es: { meaning: "un ojo", sentence: "Mira hacia abajo preocupado con cada ojo." },
+    zh: { meaning: "一只眼睛", sentence: "他满眼担忧地往下看。" }
+  },
+  "en fod": {
+    en: { meaning: "a foot", sentence: "The runner twisted his ankle and has pain in his foot." },
+    es: { meaning: "un pie", sentence: "El corredor se torció el tobillo y le duele el pie." },
+    zh: { meaning: "一只脚", sentence: "跑步者崴了脚，脚部感到疼痛。" }
+  }
+};
+
+/**
+ * Translations for individual vocabulary words in Station, Indkøb & Tid (21 words)
+ */
+export const stationWordTranslations = {
+  "en butik": {
+    en: { meaning: "a shop / store", sentence: "On the corner by the station is a busy grocery shop." },
+    es: { meaning: "una tienda", sentence: "En la esquina junto a la estación hay una tienda de comestibles concurrida." },
+    zh: { meaning: "一家商店", sentence: "车站旁的街角有一家热闹的食品店。" }
+  },
+  "en verden": {
+    en: { meaning: "a world", sentence: "The globe shows countries and continents in the whole world." },
+    es: { meaning: "un mundo", sentence: "El globo terráqueo muestra países y continentes de todo el mundo." },
+    zh: { meaning: "世界", sentence: "地球仪展示了全世界的国家和大陆。" }
+  },
+  "et land": {
+    en: { meaning: "a country", sentence: "Denmark is a small country with a red and white flag." },
+    es: { meaning: "un país", sentence: "Dinamarca es un país pequeño con bandera roja y blanca." },
+    zh: { meaning: "一个国家", sentence: "丹麦是一个有着红白国旗的小国家。" }
+  },
+  "et år": {
+    en: { meaning: "a year", sentence: "The calendar on the wall shows the month and year." },
+    es: { meaning: "un año", sentence: "El calendario en la pared muestra el mes y el año." },
+    zh: { meaning: "一年 / 年份", sentence: "墙上的日历显示着月份和年份。" }
+  },
+  "en måned": {
+    en: { meaning: "a month", sentence: "May is a lovely and bright month in spring." },
+    es: { meaning: "un mes", sentence: "Mayo es un mes hermoso y luminoso de primavera." },
+    zh: { meaning: "一个月 / 月份", sentence: "五月是春天里美好而明亮的一个月。" }
+  },
+  "en uge": {
+    en: { meaning: "a week", sentence: "A whole row in the calendar corresponds to a week of seven days." },
+    es: { meaning: "una semana", sentence: "Una fila entera en el calendario corresponde a una semana de siete días." },
+    zh: { meaning: "一周 / 星期", sentence: "日历上的一整行对应有七天的一周。" }
+  },
+  "en dag": {
+    en: { meaning: "a day", sentence: "Today's day is marked with a box in the calendar." },
+    es: { meaning: "un día", sentence: "El día de hoy está marcado con un recuadro en el calendario." },
+    zh: { meaning: "一天 / 日子", sentence: "今天的日期在日历上用方框标出了。" }
+  },
+  "et brød": {
+    en: { meaning: "a loaf of bread", sentence: "There is a freshly baked loaf of bread on the wooden board." },
+    es: { meaning: "un pan", sentence: "Hay un pan recién horneado sobre la tabla de madera." },
+    zh: { meaning: "一个面包", sentence: "木板上放着一个刚烤好的面包。" }
+  },
+  "en pris": {
+    en: { meaning: "a price", sentence: "The small sign shows the item's price in kroner." },
+    es: { meaning: "un precio", sentence: "El pequeño cartel muestra el precio del producto en coronas." },
+    zh: { meaning: "价格 / 价钱", sentence: "小标牌上显示着以克朗计价的商品价格。" }
+  },
+  "en mælk": {
+    en: { meaning: "milk", sentence: "A cold carton of milk stands ready on the counter." },
+    es: { meaning: "leche", sentence: "Un cartón de leche fría está listo en el mostrador." },
+    zh: { meaning: "牛奶", sentence: "柜台上放着一盒冰镇牛奶。" }
+  },
+  "en flaske": {
+    en: { meaning: "a bottle", sentence: "Behind the milk stands a clear bottle of water." },
+    es: { meaning: "una botella", sentence: "Detrás de la leche hay una botella transparente con agua." },
+    zh: { meaning: "一瓶 / 瓶子", sentence: "牛奶后面立着一瓶清澈的水。" }
+  },
+  "et æble": {
+    en: { meaning: "an apple", sentence: "The basket is filled with red and fresh apples." },
+    es: { meaning: "una manzana", sentence: "La cesta está llena de manzanas rojas y frescas." },
+    zh: { meaning: "一个苹果", sentence: "篮子里装满了新鲜的红苹果。" }
+  },
+  "en pose": {
+    en: { meaning: "a bag", sentence: "The woman carries her groceries in a brown paper bag." },
+    es: { meaning: "una bolsa", sentence: "La mujer lleva sus compras en una bolsa de papel marrón." },
+    zh: { meaning: "一个袋子 / 购物袋", sentence: "女士用棕色纸袋装着她买的东西。" }
+  },
+  "en bus": {
+    en: { meaning: "a bus", sentence: "The yellow bus drives passengers into the city center." },
+    es: { meaning: "un autobús", sentence: "El autobús amarillo lleva pasajeros al centro de la ciudad." },
+    zh: { meaning: "一辆公交车", sentence: "黄色公交车把乘客送往市中心。" }
+  },
+  "en cykel": {
+    en: { meaning: "a bicycle", sentence: "A blue bicycle stands parked in the bike rack by the platform." },
+    es: { meaning: "una bicicleta", sentence: "Una bicicleta azul está aparcada junto al andén." },
+    zh: { meaning: "一辆自行车", sentence: "一辆蓝色自行车停在站台旁的车架上。" }
+  },
+  "en time": {
+    en: { meaning: "an hour", sentence: "The station clock shows every hour and every minute." },
+    es: { meaning: "una hora", sentence: "El reloj de la estación muestra cada hora y cada minuto." },
+    zh: { meaning: "一小时", sentence: "车站时钟指示着每一小时和每一分钟。" }
+  },
+  "en morgen": {
+    en: { meaning: "a morning", sentence: "Many commuters travel to work early in the morning." },
+    es: { meaning: "una mañana", sentence: "Muchos viajeros van al trabajo temprano por la mañana." },
+    zh: { meaning: "早晨 / 上午", sentence: "许多通勤者一大早就出发去上班。" }
+  },
+  "en aften": {
+    en: { meaning: "an evening", sentence: "In the evening, the trains take the passengers home again." },
+    es: { meaning: "una tarde / noche", sentence: "Por la tarde, los trenes llevan a los pasajeros de vuelta a casa." },
+    zh: { meaning: "傍晚 / 晚上", sentence: "到了傍晚，火车把乘客们送回家。" }
+  },
+  "en nat": {
+    en: { meaning: "a night", sentence: "When dark night falls, it is quiet at the station." },
+    es: { meaning: "una noche", sentence: "Cuando llega la noche oscura, la estación está tranquila." },
+    zh: { meaning: "夜晚 / 深夜", sentence: "当黑夜降临时，车站里一片宁静。" }
+  },
+  "et tog": {
+    en: { meaning: "a train", sentence: "The red train runs along the platform on track 3." },
+    es: { meaning: "un tren", sentence: "El tren rojo circula junto al andén por la vía 3." },
+    zh: { meaning: "一列火车", sentence: "红色火车沿着3号站台行驶。" }
+  },
+  "en billet": {
+    en: { meaning: "a ticket", sentence: "The woman stands with her ticket in hand and looks at the clock." },
+    es: { meaning: "un billete / boleto", sentence: "La mujer está con su billete en la mano mirando el reloj." },
+    zh: { meaning: "一张票 / 车票", sentence: "女士手里拿着车票看着时钟。" }
+  }
+};
+
 

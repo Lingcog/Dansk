@@ -284,6 +284,38 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     cardKlasse.onclick = () => navigateFn('klasse_kontor');
     grid.appendChild(cardKlasse);
 
+    // 4. Scene 4: Naturen og fritiden
+    const cardNatur = document.createElement('div');
+    cardNatur.className = 'scene-card';
+    cardNatur.innerHTML = `
+        <div class="scene-card-img-wrap">
+            <img src="assets/natur_fritid_vrimmel.jpg" alt="Naturen og fritiden vrimlebillede" class="scene-card-img">
+        </div>
+        <div class="scene-card-content">
+            <h3>${getTranslation('top100_scene4_title')}</h3>
+            <p>${getTranslation('top100_scene4_desc')}</p>
+            <button class="scene-action-btn">${getTranslation('top100_scene4_btn')}</button>
+        </div>
+    `;
+    cardNatur.onclick = () => navigateFn('natur_fritid');
+    grid.appendChild(cardNatur);
+
+    // 5. Scene 5: Stationen, indkøb og tiden
+    const cardStation = document.createElement('div');
+    cardStation.className = 'scene-card';
+    cardStation.innerHTML = `
+        <div class="scene-card-img-wrap">
+            <img src="assets/station_indkoeb_vrimmel.jpg" alt="Stationen, indkøb og tiden vrimlebillede" class="scene-card-img">
+        </div>
+        <div class="scene-card-content">
+            <h3>${getTranslation('top100_scene5_title')}</h3>
+            <p>${getTranslation('top100_scene5_desc')}</p>
+            <button class="scene-action-btn">${getTranslation('top100_scene5_btn')}</button>
+        </div>
+    `;
+    cardStation.onclick = () => navigateFn('station_indkoeb');
+    grid.appendChild(cardStation);
+
     viewContainer.appendChild(grid);
     container.appendChild(viewContainer);
 }

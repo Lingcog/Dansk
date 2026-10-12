@@ -12,6 +12,8 @@ import { renderTop100SubstantiverMenuView } from './views/Top100SubstantiverMenu
 import { renderByrummetView } from './views/ByrummetView.js';
 import { renderKoekkenHjemmetView } from './views/KoekkenHjemmetView.js';
 import { renderKlasseKontorView } from './views/KlasseKontorView.js';
+import { renderNaturFritidView } from './views/NaturFritidView.js';
+import { renderStationIndkoebView } from './views/StationIndkoebView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
 import { renderSamtaleBoligMenuView } from './views/SamtaleBoligMenuView.js';
 import { renderSamtaleArbejdeMenuView } from './views/SamtaleArbejdeMenuView.js';
@@ -119,6 +121,12 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'klasse_kontor') {
     appState.currentView = 'klasse_kontor';
     renderKlasseKontorView(appDiv, navigate);
+  } else if (viewTarget === 'natur_fritid') {
+    appState.currentView = 'natur_fritid';
+    renderNaturFritidView(appDiv, navigate);
+  } else if (viewTarget === 'station_indkoeb') {
+    appState.currentView = 'station_indkoeb';
+    renderStationIndkoebView(appDiv, navigate);
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);

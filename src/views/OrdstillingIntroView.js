@@ -25,6 +25,18 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     const grammarToggle = createGrammarToggle(viewContainer);
     viewContainer.appendChild(grammarToggle);
 
+    // Grammar System Banner
+    const grammarBanner = document.createElement('div');
+    grammarBanner.className = 'grammar-system-banner';
+    grammarBanner.innerHTML = `
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+    `;
+    viewContainer.appendChild(grammarBanner);
+
     // Navigation Tabs: 1. del vs. 2. del
     const tabsContainer = document.createElement('div');
     tabsContainer.className = 'intro-tabs-nav';
@@ -99,26 +111,26 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                     <defs>
                         <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#4CAF50" />
+                            <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
                         </marker>
                         <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#F44336" />
+                            <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
                         </marker>
                         <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#2196F3" />
+                            <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
                         </marker>
                         <marker id="arrowhead-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#9C27B0" />
+                            <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
                         </marker>
                     </defs>
                     <!-- Arrow 1: Fra Boks 1 (Hvem/hvad - Substantiv) til kvinde -->
-                    <line x1="430" y1="130" x2="620" y2="340" stroke="#4CAF50" stroke-width="4" marker-end="url(#arrowhead-green)" />
+                    <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-green)" />
                     <!-- Arrow 4: Fra Boks 4 (Hvornår - Tid) til himmel/bygning -->
-                    <line x1="1130" y1="120" x2="1180" y2="150" stroke="#9C27B0" stroke-width="4" marker-end="url(#arrowhead-purple)" />
+                    <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-purple)" />
                     <!-- Arrow 2: Fra Boks 2 (Handling - Verbum) til cykel/pedaler -->
-                    <line x1="880" y1="450" x2="740" y2="480" stroke="#F44336" stroke-width="4" marker-end="url(#arrowhead-red)" />
+                    <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-red)" />
                     <!-- Arrow 3: Fra Boks 3 (Sted) til gaden -->
-                    <line x1="300" y1="600" x2="520" y2="610" stroke="#2196F3" stroke-width="4" marker-end="url(#arrowhead-blue)" />
+                    <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-blue)" />
                 </svg>
                 <!-- Box 1: Hvem eller hvad taler vi om? -->
                 <div class="photo-bubble bubble-1">
@@ -619,14 +631,88 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         `;
         part2Container.appendChild(introCard);
 
-        // Hero Image with 7 frames
+        // Hero Image with 7 frames & dynamic overlay
         const imgWrapper = document.createElement('div');
-        imgWrapper.className = 'hero-image-wrapper';
-        const heroImg = document.createElement('img');
-        heroImg.src = 'assets/foto_metafor_7trin.jpg';
-        heroImg.alt = getTranslation('part2_hero_img_alt');
-        heroImg.className = 'hero-image';
-        imgWrapper.appendChild(heroImg);
+        imgWrapper.className = 'hero-image-wrapper photo-overlay-container';
+        imgWrapper.innerHTML = `
+            <div class="photo-overlay-wrap">
+                <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('part2_hero_img_alt')}" class="hero-image">
+                <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
+                    <defs>
+                        <marker id="arrowhead-7-orange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#f97316" />
+                        </marker>
+                        <marker id="arrowhead-7-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
+                        </marker>
+                        <marker id="arrowhead-7-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+                        </marker>
+                        <marker id="arrowhead-7-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
+                        </marker>
+                        <marker id="arrowhead-7-cyan" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#06b6d4" />
+                        </marker>
+                        <marker id="arrowhead-7-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                        </marker>
+                        <marker id="arrowhead-7-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+                        </marker>
+                    </defs>
+                    <!-- Arrow 4: Heldigvis (Holdning) -> Sol/himmel -->
+                    <line x1="200" y1="110" x2="310" y2="160" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-7-yellow)" />
+                    <!-- Arrow 1: Den travle (Adjektiv) -> Kvinde -->
+                    <line x1="200" y1="260" x2="570" y2="280" stroke="#f97316" stroke-width="4" marker-end="url(#arrowhead-7-orange)" />
+                    <!-- Arrow 2: kvinde (Substantiv) -> Hoved/ansigt -->
+                    <line x1="580" y1="120" x2="650" y2="230" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-7-green)" />
+                    <!-- Arrow 7: mens det sner (Tid/biled) -> Snevejr/himmel -->
+                    <line x1="1080" y1="120" x2="1140" y2="170" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-7-purple)" />
+                    <!-- Arrow 3: cykler (Verbum) -> Pedaler/hjul -->
+                    <line x1="910" y1="440" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-7-red)" />
+                    <!-- Arrow 5: forsigtigt (Måde) -> Cykelsti/fart -->
+                    <line x1="910" y1="590" x2="840" y2="590" stroke="#06b6d4" stroke-width="4" marker-end="url(#arrowhead-7-cyan)" />
+                    <!-- Arrow 6: på gaden (Sted) -> Vejbanen -->
+                    <line x1="250" y1="670" x2="520" y2="670" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-7-blue)" />
+                </svg>
+                <!-- Box 4: Holdning -->
+                <div class="photo-bubble bubble-7-holdning">
+                    <div class="bubble-q">4. ${getTranslation('part2_q4')}</div>
+                    <div class="bubble-ans ans-yellow">heldigvis</div>
+                </div>
+                <!-- Box 1: Adjektiv -->
+                <div class="photo-bubble bubble-7-adjektiv">
+                    <div class="bubble-q">1. ${getTranslation('part2_q1')}</div>
+                    <div class="bubble-ans ans-orange">Den travle</div>
+                </div>
+                <!-- Box 2: Substantiv -->
+                <div class="photo-bubble bubble-7-substantiv">
+                    <div class="bubble-q">2. ${getTranslation('part2_q2')}</div>
+                    <div class="bubble-ans ans-green">kvinde</div>
+                </div>
+                <!-- Box 7: Ledsætning / Tid -->
+                <div class="photo-bubble bubble-7-ledsaetning">
+                    <div class="bubble-q">7. ${getTranslation('part2_q7')}</div>
+                    <div class="bubble-ans ans-purple">mens det sner</div>
+                </div>
+                <!-- Box 3: Verbum -->
+                <div class="photo-bubble bubble-7-verbum">
+                    <div class="bubble-q">3. ${getTranslation('part2_q3')}</div>
+                    <div class="bubble-ans ans-red">cykler</div>
+                </div>
+                <!-- Box 5: Måde -->
+                <div class="photo-bubble bubble-7-maade">
+                    <div class="bubble-q">5. ${getTranslation('part2_q5')}</div>
+                    <div class="bubble-ans ans-cyan">forsigtigt</div>
+                </div>
+                <!-- Box 6: Sted -->
+                <div class="photo-bubble bubble-7-sted">
+                    <div class="bubble-q">6. ${getTranslation('part2_q6')}</div>
+                    <div class="bubble-ans ans-blue">på gaden</div>
+                </div>
+            </div>
+        `;
         part2Container.appendChild(imgWrapper);
 
         // 7-Step Overview Grid
@@ -638,7 +724,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             { num: '2', q: getTranslation('part2_q2'), ans: 'kvinde', colorClass: 'step-green', icon: '👤', note: getTranslation('part2_note_2'), grammar: getTranslation('part2_g2') },
             { num: '3', q: getTranslation('part2_q3'), ans: 'cykler', colorClass: 'step-red', icon: '🚲', note: getTranslation('part2_note_3'), grammar: getTranslation('part2_g3') },
             { num: '4', q: getTranslation('part2_q4'), ans: 'heldigvis', colorClass: 'step-yellow', icon: '🌤️', note: getTranslation('part2_note_4'), grammar: getTranslation('part2_g4') },
-            { num: '5', q: getTranslation('part2_q5'), ans: 'forsigtigt', colorClass: 'step-pink', icon: '⚡', note: getTranslation('part2_note_5'), grammar: getTranslation('part2_g5') },
+            { num: '5', q: getTranslation('part2_q5'), ans: 'forsigtigt', colorClass: 'step-cyan', icon: '⚡', note: getTranslation('part2_note_5'), grammar: getTranslation('part2_g5') },
             { num: '6', q: getTranslation('part2_q6'), ans: 'på gaden', colorClass: 'step-blue', icon: '📍', note: getTranslation('part2_note_6'), grammar: getTranslation('part2_g6') },
             { num: '7', q: getTranslation('part2_q7'), ans: 'mens det sner', colorClass: 'step-purple', icon: '❄️', note: getTranslation('part2_note_7'), grammar: getTranslation('part2_g7') }
         ];
@@ -669,7 +755,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 <span class="word-green">kvinde</span> 
                 <span class="word-red">cykler</span> 
                 <span class="word-yellow">heldigvis</span> 
-                <span class="word-pink">forsigtigt</span> 
+                <span class="word-cyan">forsigtigt</span> 
                 <span class="word-blue">på gaden</span>, 
                 <span class="word-purple">mens det sner</span>.
             </div>
@@ -1236,18 +1322,54 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 font-size: clamp(0.72rem, 1.35vw, 0.98rem);
                 font-weight: 700;
             }
-            .ans-blue { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
-            .ans-red { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
-            .ans-green { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-            .ans-orange { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
-            .ans-purple { background: #f3e5f5; color: #7b1fa2; border: 1px solid #ce93d8; }
-            .ans-yellow { background: #fffde7; color: #b45309; border: 1px solid #fde68a; }
-            .ans-pink { background: #fce4ec; color: #c2185b; border: 1px solid #f48fb1; }
+            .grammar-system-banner {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem 1.5rem;
+                justify-content: center;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.35);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 12px;
+                padding: 0.8rem 1.2rem;
+                margin: 1rem auto 1.5rem auto;
+                max-width: 820px;
+            }
+            .grammar-system-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.95rem;
+            }
+            .grammar-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                display: inline-block;
+                flex-shrink: 0;
+            }
+
+            .ans-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; }
+            .ans-red { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+            .ans-orange { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid #f97316; }
+            .ans-blue { background: rgba(2, 132, 199, 0.15); color: #60a5fa; border: 1px solid #0284c7; }
+            .ans-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid #8b5cf6; }
+            .ans-yellow { background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid #eab308; }
+            .ans-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
+            .ans-pink { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
 
             .bubble-1 { top: 9%; left: 16%; }
             .bubble-4 { top: 9%; right: 18%; }
             .bubble-2 { top: 48%; right: 5%; }
             .bubble-3 { bottom: 12%; left: 6%; }
+
+            .bubble-7-holdning { top: 6%; left: 3%; }
+            .bubble-7-adjektiv { top: 25%; left: 2%; }
+            .bubble-7-substantiv { top: 6%; left: 36%; }
+            .bubble-7-ledsaetning { top: 6%; right: 10%; }
+            .bubble-7-verbum { top: 48%; right: 4%; }
+            .bubble-7-maade { bottom: 18%; right: 8%; }
+            .bubble-7-sted { bottom: 8%; left: 3%; }
 
             @media (max-width: 600px) {
                 .photo-bubble { padding: 3px 6px; border-width: 1.5px; }
@@ -1255,6 +1377,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 .bubble-4 { top: 6%; right: 6%; }
                 .bubble-2 { top: 45%; right: 2%; }
                 .bubble-3 { bottom: 8%; left: 2%; }
+                .bubble-7-holdning { top: 4%; left: 2%; }
+                .bubble-7-adjektiv { top: 22%; left: 2%; }
+                .bubble-7-substantiv { top: 4%; left: 32%; }
+                .bubble-7-ledsaetning { top: 4%; right: 2%; }
+                .bubble-7-verbum { top: 44%; right: 2%; }
+                .bubble-7-maade { bottom: 18%; right: 2%; }
+                .bubble-7-sted { bottom: 4%; left: 2%; }
             }
 
             /* Simple Steps 4-Card Grid */
@@ -1277,35 +1406,23 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .simple-step-card:hover {
                 transform: translateY(-2px);
             }
-            .simple-step-card.step-blue { border-color: #2196F3; background: rgba(33, 150, 243, 0.08); }
-            .simple-step-card.step-red { border-color: #F44336; background: rgba(244, 67, 54, 0.08); }
-            .simple-step-card.step-green { border-color: #4CAF50; background: rgba(76, 175, 80, 0.08); }
-            .simple-step-card.step-orange { border-color: #FF9800; background: rgba(255, 152, 0, 0.08); }
-            .simple-step-card.step-purple { border-color: #9C27B0; background: rgba(156, 39, 176, 0.08); }
-            .simple-step-card.step-yellow { border-color: #F59E0B; background: rgba(245, 158, 11, 0.08); }
-            .simple-step-card.step-pink { border-color: #E91E63; background: rgba(233, 30, 99, 0.08); }
-            .simple-step-card.step-cyan { border-color: #00BCD4; background: rgba(0, 188, 212, 0.08); }
+            .simple-step-card.step-green { border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+            .simple-step-card.step-red { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+            .simple-step-card.step-orange { border-color: #f97316; background: rgba(249, 115, 22, 0.1); }
+            .simple-step-card.step-blue { border-color: #0284c7; background: rgba(2, 132, 199, 0.1); }
+            .simple-step-card.step-purple { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+            .simple-step-card.step-yellow { border-color: #eab308; background: rgba(234, 179, 8, 0.1); }
+            .simple-step-card.step-pink { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
+            .simple-step-card.step-cyan { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
 
-            .step-badge {
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                font-size: 1.1rem;
-                color: #fff;
-                flex-shrink: 0;
-            }
-            .step-blue .step-badge { background: #2196F3; }
-            .step-red .step-badge { background: #F44336; }
-            .step-green .step-badge { background: #4CAF50; }
-            .step-orange .step-badge { background: #FF9800; }
-            .step-purple .step-badge { background: #9C27B0; }
-            .step-yellow .step-badge { background: #F59E0B; }
-            .step-pink .step-badge { background: #E91E63; }
-            .step-cyan .step-badge { background: #00BCD4; }
+            .step-green .step-badge { background: #22c55e; }
+            .step-red .step-badge { background: #ef4444; }
+            .step-orange .step-badge { background: #f97316; }
+            .step-blue .step-badge { background: #0284c7; }
+            .step-purple .step-badge { background: #8b5cf6; }
+            .step-yellow .step-badge { background: #eab308; }
+            .step-pink .step-badge { background: #06b6d4; }
+            .step-cyan .step-badge { background: #06b6d4; }
 
             .step-card-content {
                 display: flex;
@@ -1326,7 +1443,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             /* Finished Sentence Banner */
             .finished-sentence-banner {
                 background: linear-gradient(135deg, rgba(30, 59, 37, 0.9) 0%, rgba(20, 40, 25, 0.9) 100%);
-                border: 2px solid #4CAF50;
+                border: 2px solid #22c55e;
                 border-radius: 16px;
                 padding: 1.5rem;
                 text-align: center;
@@ -1337,7 +1454,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 font-size: 0.9rem;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #81C784;
+                color: #4ade80;
                 font-weight: bold;
                 margin-bottom: 0.5rem;
             }
@@ -1348,14 +1465,14 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 margin-bottom: 1.2rem;
                 line-height: 1.4;
             }
-            .word-blue { color: #64B5F6; }
-            .word-red { color: #E57373; }
-            .word-green { color: #81C784; }
-            .word-orange { color: #FFB74D; }
-            .word-purple { color: #BA68C8; }
-            .word-yellow { color: #FCD34D; }
-            .word-pink { color: #F06292; }
-            .word-cyan { color: #4DD0E1; }
+            .word-green { color: #4ade80; }
+            .word-red { color: #f87171; }
+            .word-orange { color: #fb923c; }
+            .word-blue { color: #60a5fa; }
+            .word-purple { color: #c084fc; }
+            .word-yellow { color: #fde047; }
+            .word-pink { color: #38bdf8; }
+            .word-cyan { color: #38bdf8; }
 
             .listen-btn {
                 background: #4CAF50;
@@ -1458,14 +1575,14 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 border-radius: 12px;
                 border-left: 4px solid #fff;
             }
-            .builder-q-row.step-blue { border-left-color: #2196F3; }
-            .builder-q-row.step-red { border-left-color: #F44336; }
-            .builder-q-row.step-green { border-left-color: #4CAF50; }
-            .builder-q-row.step-orange { border-left-color: #FF9800; }
-            .builder-q-row.step-purple { border-left-color: #9C27B0; }
-            .builder-q-row.step-yellow { border-left-color: #F59E0B; }
-            .builder-q-row.step-pink { border-left-color: #E91E63; }
-            .builder-q-row.step-cyan { border-left-color: #00BCD4; }
+            .builder-q-row.step-green { border-left-color: #22c55e; }
+            .builder-q-row.step-red { border-left-color: #ef4444; }
+            .builder-q-row.step-orange { border-left-color: #f97316; }
+            .builder-q-row.step-blue { border-left-color: #0284c7; }
+            .builder-q-row.step-purple { border-left-color: #8b5cf6; }
+            .builder-q-row.step-yellow { border-left-color: #eab308; }
+            .builder-q-row.step-pink { border-left-color: #06b6d4; }
+            .builder-q-row.step-cyan { border-left-color: #06b6d4; }
 
             .builder-q-title {
                 font-size: 1rem;
@@ -1619,21 +1736,21 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 border-color: #4CAF50;
                 cursor: pointer;
             }
-            .puzzle-slot.slot-0.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-            .puzzle-slot.slot-1.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-            .puzzle-slot.slot-2.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
-            .puzzle-slot.slot-3.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
+            .puzzle-slot.slot-0.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+            .puzzle-slot.slot-1.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            .puzzle-slot.slot-2.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+            .puzzle-slot.slot-3.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
 
             .puzzle-slots-7 {
                 grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             }
-            .puzzle-slot.slot7-orange.filled { border-color: #FF9800; background: rgba(255, 152, 0, 0.15); }
-            .puzzle-slot.slot7-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-            .puzzle-slot.slot7-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-            .puzzle-slot.slot7-yellow.filled { border-color: #F59E0B; background: rgba(245, 158, 11, 0.15); }
-            .puzzle-slot.slot7-pink.filled { border-color: #E91E63; background: rgba(233, 30, 99, 0.15); }
-            .puzzle-slot.slot7-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
-            .puzzle-slot.slot7-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
+            .puzzle-slot.slot7-orange.filled { border-color: #f97316; background: rgba(249, 115, 22, 0.15); }
+            .puzzle-slot.slot7-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+            .puzzle-slot.slot7-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            .puzzle-slot.slot7-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+            .puzzle-slot.slot7-pink.filled { border-color: #06b6d4; background: rgba(6, 182, 212, 0.15); }
+            .puzzle-slot.slot7-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+            .puzzle-slot.slot7-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
 
             .slot-hint {
                 font-size: 0.85rem;
@@ -1737,13 +1854,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .foto-timeline { display: flex; flex-direction: column; gap: 1.5rem; padding: 1rem 0 3rem 0; }
             .foto-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; animation: slideUp 0.4s ease forwards; opacity: 0; transform: translateY(20px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
             
-            .foto-card:nth-child(1) { animation-delay: 0.1s; border-left: 4px solid #4CAF50; }
-            .foto-card:nth-child(2) { animation-delay: 0.2s; border-left: 4px solid #2196F3; }
-            .foto-card:nth-child(3) { animation-delay: 0.3s; border-left: 4px solid #F44336; }
-            .foto-card:nth-child(4) { animation-delay: 0.4s; border-left: 4px solid #FF9800; }
-            .foto-card:nth-child(5) { animation-delay: 0.5s; border-left: 4px solid #9C27B0; }
-            .foto-card:nth-child(6) { animation-delay: 0.6s; border-left: 4px solid #E91E63; }
-            .foto-card:nth-child(7) { animation-delay: 0.7s; border-left: 4px solid #00BCD4; }
+            .foto-card:nth-child(1) { animation-delay: 0.1s; border-left: 4px solid #f97316; }
+            .foto-card:nth-child(2) { animation-delay: 0.2s; border-left: 4px solid #22c55e; }
+            .foto-card:nth-child(3) { animation-delay: 0.3s; border-left: 4px solid #ef4444; }
+            .foto-card:nth-child(4) { animation-delay: 0.4s; border-left: 4px solid #eab308; }
+            .foto-card:nth-child(5) { animation-delay: 0.5s; border-left: 4px solid #06b6d4; }
+            .foto-card:nth-child(6) { animation-delay: 0.6s; border-left: 4px solid #0284c7; }
+            .foto-card:nth-child(7) { animation-delay: 0.7s; border-left: 4px solid #8b5cf6; }
 
             .foto-card-header { display: flex; gap: 1.5rem; align-items: center; }
             .foto-icon { font-size: 3.5rem; min-width: 70px; text-align: center; background: rgba(255,255,255,0.1); border-radius: 50%; height: 70px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }

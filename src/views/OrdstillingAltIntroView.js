@@ -55,6 +55,18 @@ function renderFokusPaaSted(container, navigateFn) {
     const grammarToggle = createGrammarToggle(viewContainer);
     viewContainer.appendChild(grammarToggle);
 
+    // Grammar System Banner
+    const grammarBanner = document.createElement('div');
+    grammarBanner.className = 'grammar-system-banner';
+    grammarBanner.innerHTML = `
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+    `;
+    viewContainer.appendChild(grammarBanner);
+
     // Hero Explanation Card
     const introCard = document.createElement('div');
     introCard.className = 'intro-hero-card';
@@ -69,14 +81,58 @@ function renderFokusPaaSted(container, navigateFn) {
     `;
     viewContainer.appendChild(introCard);
 
-    // Hero Image with the 4 frames (place first)
+    // Hero Image with 4 frames & dynamic overlay (Sted first)
     const imgWrapper = document.createElement('div');
-    imgWrapper.className = 'hero-image-wrapper';
-    const heroImg = document.createElement('img');
-    heroImg.src = 'assets/foto_metafor_sted_4trin.jpg';
-    heroImg.alt = 'Fokus på sted: På gaden cykler en kvinde om morgenen';
-    heroImg.className = 'hero-image';
-    imgWrapper.appendChild(heroImg);
+    imgWrapper.className = 'hero-image-wrapper photo-overlay-container';
+    imgWrapper.innerHTML = `
+        <div class="photo-overlay-wrap">
+            <img src="assets/foto_metafor_clean.jpg" alt="Fokus på sted: På gaden cykler en kvinde om morgenen" class="hero-image">
+            <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
+                <defs>
+                    <marker id="arrowhead-sted-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                    </marker>
+                    <marker id="arrowhead-sted-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+                    </marker>
+                    <marker id="arrowhead-sted-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
+                    </marker>
+                    <marker id="arrowhead-sted-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+                    </marker>
+                </defs>
+                <!-- Arrow 1: Fra Boks 1 (Sted) til gaden -->
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-sted-blue)" />
+                <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
+                <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-sted-red)" />
+                <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
+                <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-sted-green)" />
+                <!-- Arrow 4: Fra Boks 4 (Hvornår - tid) til himmel/bygning -->
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-sted-purple)" />
+            </svg>
+            <!-- Box 1: Hvor sker det? (Sted forrest) -->
+            <div class="photo-bubble bubble-3">
+                <div class="bubble-q">1. Hvor sker det?</div>
+                <div class="bubble-ans ans-blue">På gaden</div>
+            </div>
+            <!-- Box 2: Hvad laver personen eller tingen? (Handlingen nr. 2!) -->
+            <div class="photo-bubble bubble-2">
+                <div class="bubble-q">2. Hvad laver personen?</div>
+                <div class="bubble-ans ans-red">cykler</div>
+            </div>
+            <!-- Box 3: Hvem eller hvad taler vi om? (Subjekt nr. 3) -->
+            <div class="photo-bubble bubble-1">
+                <div class="bubble-q">3. Hvem taler vi om?</div>
+                <div class="bubble-ans ans-green">en kvinde</div>
+            </div>
+            <!-- Box 4: Hvornår sker det? -->
+            <div class="photo-bubble bubble-4">
+                <div class="bubble-q">4. Hvornår sker det?</div>
+                <div class="bubble-ans ans-purple">om morgenen</div>
+            </div>
+        </div>
+    `;
     viewContainer.appendChild(imgWrapper);
 
     // 4-Step Overview Grid
@@ -553,6 +609,18 @@ function renderFokusPaaTid(container, navigateFn) {
     const grammarToggle = createGrammarToggle(viewContainer);
     viewContainer.appendChild(grammarToggle);
 
+    // Grammar System Banner
+    const grammarBanner = document.createElement('div');
+    grammarBanner.className = 'grammar-system-banner';
+    grammarBanner.innerHTML = `
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+    `;
+    viewContainer.appendChild(grammarBanner);
+
     // Hero Explanation Card
     const introCard = document.createElement('div');
     introCard.className = 'intro-hero-card';
@@ -573,26 +641,26 @@ function renderFokusPaaTid(container, navigateFn) {
             <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                 <defs>
                     <marker id="arrowhead-tid-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#9C27B0" />
+                        <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
                     </marker>
                     <marker id="arrowhead-tid-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#F44336" />
+                        <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
                     </marker>
                     <marker id="arrowhead-tid-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#4CAF50" />
+                        <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
                     </marker>
                     <marker id="arrowhead-tid-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#2196F3" />
+                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Hvornår - tid) til himmel/bygning -->
-                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#9C27B0" stroke-width="4" marker-end="url(#arrowhead-tid-purple)" />
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-tid-purple)" />
                 <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
-                <line x1="880" y1="450" x2="740" y2="480" stroke="#F44336" stroke-width="4" marker-end="url(#arrowhead-tid-red)" />
+                <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-tid-red)" />
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
-                <line x1="430" y1="130" x2="620" y2="340" stroke="#4CAF50" stroke-width="4" marker-end="url(#arrowhead-tid-green)" />
+                <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-tid-green)" />
                 <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
-                <line x1="300" y1="600" x2="520" y2="610" stroke="#2196F3" stroke-width="4" marker-end="url(#arrowhead-tid-blue)" />
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-tid-blue)" />
             </svg>
             <!-- Box 1: Hvornår sker det? (Tid forrest) -->
             <div class="photo-bubble bubble-4">
@@ -1083,6 +1151,18 @@ function renderFokusPaaHoldning(container, navigateFn) {
     const grammarToggle = createGrammarToggle(viewContainer);
     viewContainer.appendChild(grammarToggle);
 
+    // Grammar System Banner
+    const grammarBanner = document.createElement('div');
+    grammarBanner.className = 'grammar-system-banner';
+    grammarBanner.innerHTML = `
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+    `;
+    viewContainer.appendChild(grammarBanner);
+
     // Hero Explanation Card
     const introCard = document.createElement('div');
     introCard.className = 'intro-hero-card';
@@ -1097,14 +1177,58 @@ function renderFokusPaaHoldning(container, navigateFn) {
     `;
     viewContainer.appendChild(introCard);
 
-    // Hero Image with the 4 frames (Holdning first)
+    // Hero Image with 4 frames & dynamic overlay (Holdning first)
     const imgWrapper = document.createElement('div');
-    imgWrapper.className = 'hero-image-wrapper';
-    const heroImg = document.createElement('img');
-    heroImg.src = 'assets/foto_metafor_holdning_4trin.jpg';
-    heroImg.alt = 'Fokus på holdning: Heldigvis cykler en kvinde på gaden';
-    heroImg.className = 'hero-image';
-    imgWrapper.appendChild(heroImg);
+    imgWrapper.className = 'hero-image-wrapper photo-overlay-container';
+    imgWrapper.innerHTML = `
+        <div class="photo-overlay-wrap">
+            <img src="assets/foto_metafor_clean.jpg" alt="Fokus på holdning: Heldigvis cykler en kvinde på gaden" class="hero-image">
+            <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
+                <defs>
+                    <marker id="arrowhead-holdning-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
+                    </marker>
+                    <marker id="arrowhead-holdning-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+                    </marker>
+                    <marker id="arrowhead-holdning-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
+                    </marker>
+                    <marker id="arrowhead-holdning-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                    </marker>
+                </defs>
+                <!-- Arrow 1: Fra Boks 1 (Holdning) til himmel/sol -->
+                <line x1="200" y1="110" x2="310" y2="160" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-holdning-yellow)" />
+                <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
+                <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-holdning-red)" />
+                <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
+                <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-holdning-green)" />
+                <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-holdning-blue)" />
+            </svg>
+            <!-- Box 1: Hvad mener eller føler du om det? (Holdning forrest) -->
+            <div class="photo-bubble bubble-7-holdning">
+                <div class="bubble-q">1. Hvad mener eller føler du?</div>
+                <div class="bubble-ans ans-yellow">Heldigvis</div>
+            </div>
+            <!-- Box 2: Hvad laver personen eller tingen? (Handlingen er altid nr. 2!) -->
+            <div class="photo-bubble bubble-2">
+                <div class="bubble-q">2. Hvad laver personen?</div>
+                <div class="bubble-ans ans-red">cykler</div>
+            </div>
+            <!-- Box 3: Hvad eller hvem taler vi om? (Personen rykker bagved) -->
+            <div class="photo-bubble bubble-1">
+                <div class="bubble-q">3. Hvem taler vi om?</div>
+                <div class="bubble-ans ans-green">en kvinde</div>
+            </div>
+            <!-- Box 4: Hvor sker det? -->
+            <div class="photo-bubble bubble-3">
+                <div class="bubble-q">4. Hvor sker det?</div>
+                <div class="bubble-ans ans-blue">på gaden</div>
+            </div>
+        </div>
+    `;
     viewContainer.appendChild(imgWrapper);
 
     // 4-Step Overview Grid
@@ -1694,18 +1818,47 @@ function ensureIntroStyles() {
             font-size: clamp(0.72rem, 1.35vw, 0.98rem);
             font-weight: 700;
         }
-        .ans-blue { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
-        .ans-red { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
-        .ans-green { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-        .ans-orange { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
-        .ans-purple { background: #f3e5f5; color: #7b1fa2; border: 1px solid #ce93d8; }
-        .ans-yellow { background: #fffde7; color: #b45309; border: 1px solid #fde68a; }
-        .ans-pink { background: #fce4ec; color: #c2185b; border: 1px solid #f48fb1; }
+        .grammar-system-banner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 1.5rem;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            margin: 1rem auto 1.5rem auto;
+            max-width: 820px;
+        }
+        .grammar-system-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .grammar-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .ans-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; }
+        .ans-red { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+        .ans-orange { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid #f97316; }
+        .ans-blue { background: rgba(2, 132, 199, 0.15); color: #60a5fa; border: 1px solid #0284c7; }
+        .ans-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid #8b5cf6; }
+        .ans-yellow { background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid #eab308; }
+        .ans-pink { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
+        .ans-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
 
         .bubble-1 { top: 9%; left: 16%; }
         .bubble-4 { top: 9%; right: 18%; }
         .bubble-2 { top: 48%; right: 5%; }
         .bubble-3 { bottom: 12%; left: 6%; }
+        .bubble-7-holdning { top: 6%; left: 3%; }
 
         @media (max-width: 600px) {
             .photo-bubble { padding: 3px 6px; border-width: 1.5px; }
@@ -1713,6 +1866,7 @@ function ensureIntroStyles() {
             .bubble-4 { top: 6%; right: 6%; }
             .bubble-2 { top: 45%; right: 2%; }
             .bubble-3 { bottom: 8%; left: 2%; }
+            .bubble-7-holdning { top: 4%; left: 2%; }
         }
 
         .simple-steps-grid {
@@ -1732,33 +1886,23 @@ function ensureIntroStyles() {
             transition: transform 0.2s ease;
         }
         .simple-step-card:hover { transform: translateY(-2px); }
-        .simple-step-card.step-blue { border-color: #2196F3; background: rgba(33, 150, 243, 0.08); }
-        .simple-step-card.step-red { border-color: #F44336; background: rgba(244, 67, 54, 0.08); }
-        .simple-step-card.step-green { border-color: #4CAF50; background: rgba(76, 175, 80, 0.08); }
-        .simple-step-card.step-orange { border-color: #FF9800; background: rgba(255, 152, 0, 0.08); }
-        .simple-step-card.step-purple { border-color: #9C27B0; background: rgba(156, 39, 176, 0.08); }
-        .simple-step-card.step-yellow { border-color: #F59E0B; background: rgba(245, 158, 11, 0.08); }
-        .simple-step-card.step-pink { border-color: #E91E63; background: rgba(233, 30, 99, 0.08); }
+        .simple-step-card.step-green { border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+        .simple-step-card.step-red { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .simple-step-card.step-orange { border-color: #f97316; background: rgba(249, 115, 22, 0.1); }
+        .simple-step-card.step-blue { border-color: #0284c7; background: rgba(2, 132, 199, 0.1); }
+        .simple-step-card.step-purple { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+        .simple-step-card.step-yellow { border-color: #eab308; background: rgba(234, 179, 8, 0.1); }
+        .simple-step-card.step-pink { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
+        .simple-step-card.step-cyan { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
 
-        .step-badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #fff;
-            flex-shrink: 0;
-        }
-        .step-blue .step-badge { background: #2196F3; }
-        .step-red .step-badge { background: #F44336; }
-        .step-green .step-badge { background: #4CAF50; }
-        .step-orange .step-badge { background: #FF9800; }
-        .step-purple .step-badge { background: #9C27B0; }
-        .step-yellow .step-badge { background: #F59E0B; }
-        .step-pink .step-badge { background: #E91E63; }
+        .step-green .step-badge { background: #22c55e; }
+        .step-red .step-badge { background: #ef4444; }
+        .step-orange .step-badge { background: #f97316; }
+        .step-blue .step-badge { background: #0284c7; }
+        .step-purple .step-badge { background: #8b5cf6; }
+        .step-yellow .step-badge { background: #eab308; }
+        .step-pink .step-badge { background: #06b6d4; }
+        .step-cyan .step-badge { background: #06b6d4; }
 
         .step-card-content { display: flex; flex-direction: column; gap: 0.4rem; }
         .step-q { font-size: 0.95rem; color: #b0c4ba; line-height: 1.3; }
@@ -1766,7 +1910,7 @@ function ensureIntroStyles() {
 
         .finished-sentence-banner {
             background: linear-gradient(135deg, rgba(30, 59, 37, 0.9) 0%, rgba(20, 40, 25, 0.9) 100%);
-            border: 2px solid #4CAF50;
+            border: 2px solid #22c55e;
             border-radius: 16px;
             padding: 1.5rem;
             text-align: center;
@@ -1777,7 +1921,7 @@ function ensureIntroStyles() {
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #81C784;
+            color: #4ade80;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
@@ -1788,13 +1932,14 @@ function ensureIntroStyles() {
             margin-bottom: 1.2rem;
             line-height: 1.4;
         }
-        .word-blue { color: #64B5F6; }
-        .word-red { color: #E57373; }
-        .word-green { color: #81C784; }
-        .word-orange { color: #FFB74D; }
-        .word-purple { color: #BA68C8; }
-        .word-yellow { color: #FCD34D; }
-        .word-pink { color: #F06292; }
+        .word-green { color: #4ade80; }
+        .word-red { color: #f87171; }
+        .word-orange { color: #fb923c; }
+        .word-blue { color: #60a5fa; }
+        .word-purple { color: #c084fc; }
+        .word-yellow { color: #fde047; }
+        .word-pink { color: #38bdf8; }
+        .word-cyan { color: #38bdf8; }
 
         .listen-btn {
             background: #4CAF50;
@@ -1862,13 +2007,14 @@ function ensureIntroStyles() {
             border-radius: 12px;
             border-left: 4px solid #fff;
         }
-        .builder-q-row.step-blue { border-left-color: #2196F3; }
-        .builder-q-row.step-red { border-left-color: #F44336; }
-        .builder-q-row.step-green { border-left-color: #4CAF50; }
-        .builder-q-row.step-orange { border-left-color: #FF9800; }
-        .builder-q-row.step-purple { border-left-color: #9C27B0; }
-        .builder-q-row.step-yellow { border-left-color: #F59E0B; }
-        .builder-q-row.step-pink { border-left-color: #E91E63; }
+        .builder-q-row.step-green { border-left-color: #22c55e; }
+        .builder-q-row.step-red { border-left-color: #ef4444; }
+        .builder-q-row.step-orange { border-left-color: #f97316; }
+        .builder-q-row.step-blue { border-left-color: #0284c7; }
+        .builder-q-row.step-purple { border-left-color: #8b5cf6; }
+        .builder-q-row.step-yellow { border-left-color: #eab308; }
+        .builder-q-row.step-pink { border-left-color: #06b6d4; }
+        .builder-q-row.step-cyan { border-left-color: #06b6d4; }
 
         .builder-q-title { font-size: 1rem; font-weight: 600; color: #e0e0e0; margin-bottom: 0.75rem; }
         .builder-btn-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
@@ -1954,22 +2100,22 @@ function ensureIntroStyles() {
         .puzzle-slot.filled { background: rgba(76, 175, 80, 0.15); border-style: solid; border-color: #4CAF50; cursor: pointer; }
 
         /* Tid slot colors */
-        .puzzle-slot.tid-slot-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
-        .puzzle-slot.tid-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-        .puzzle-slot.tid-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-        .puzzle-slot.tid-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
+        .puzzle-slot.tid-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+        .puzzle-slot.tid-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+        .puzzle-slot.tid-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+        .puzzle-slot.tid-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
 
         /* Sted slot colors */
-        .puzzle-slot.sted-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
-        .puzzle-slot.sted-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-        .puzzle-slot.sted-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-        .puzzle-slot.sted-slot-purple.filled { border-color: #9C27B0; background: rgba(156, 39, 176, 0.15); }
+        .puzzle-slot.sted-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+        .puzzle-slot.sted-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+        .puzzle-slot.sted-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+        .puzzle-slot.sted-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
 
         /* Holdning slot colors */
-        .puzzle-slot.holdning-slot-yellow.filled { border-color: #F59E0B; background: rgba(245, 158, 11, 0.15); }
-        .puzzle-slot.holdning-slot-red.filled { border-color: #F44336; background: rgba(244, 67, 54, 0.15); }
-        .puzzle-slot.holdning-slot-green.filled { border-color: #4CAF50; background: rgba(76, 175, 80, 0.15); }
-        .puzzle-slot.holdning-slot-blue.filled { border-color: #2196F3; background: rgba(33, 150, 243, 0.15); }
+        .puzzle-slot.holdning-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+        .puzzle-slot.holdning-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+        .puzzle-slot.holdning-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+        .puzzle-slot.holdning-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
 
         .slot-hint { font-size: 0.85rem; color: #888; font-style: italic; }
         .slot-number { position: absolute; top: 4px; left: 8px; font-size: 0.75rem; font-weight: bold; opacity: 0.7; }

@@ -34,6 +34,18 @@ export function renderOrdstillingView(container, navigateFn) {
     const grammarToggle = createGrammarToggle(viewContainer);
     viewContainer.appendChild(grammarToggle);
 
+    // Grammar System Banner
+    const grammarBanner = document.createElement('div');
+    grammarBanner.className = 'grammar-system-banner';
+    grammarBanner.innerHTML = `
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+    `;
+    viewContainer.appendChild(grammarBanner);
+
     const menuArea = document.createElement('div');
     const gameArea = document.createElement('div');
     gameArea.style.display = 'none';
@@ -260,6 +272,32 @@ export function renderOrdstillingView(container, navigateFn) {
         const styles = document.createElement('style');
         styles.id = 'ordstilling-styles';
         styles.textContent = `
+            .grammar-system-banner {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem 1.5rem;
+                justify-content: center;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.35);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 12px;
+                padding: 0.8rem 1.2rem;
+                margin: 1rem auto 1.5rem auto;
+                max-width: 820px;
+            }
+            .grammar-system-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.95rem;
+            }
+            .grammar-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                display: inline-block;
+                flex-shrink: 0;
+            }
             .ordstilling-game-area { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: 0.5rem; }
             .pedagogical-frame { background: rgba(var(--primary-rgb), 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid var(--primary-color); font-size: 1.1rem; line-height: 1.6; color: var(--text-main); }
             .split-sentence-area { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }

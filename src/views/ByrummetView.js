@@ -699,9 +699,6 @@ export function renderByrummetView(container, navigateFn) {
     const controlBar = document.createElement('div');
     controlBar.className = 'radar-control-bar';
 
-    const radarToggleWrapper = document.createElement('div');
-    radarToggleWrapper.className = 'radar-toggle-wrapper';
-
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
     pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status-byrum">${getTranslation('vrimmel_status_off')}</strong>`;
@@ -714,21 +711,7 @@ export function renderByrummetView(container, navigateFn) {
         pureBtn.querySelector('#pure-mode-status-byrum').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
     };
 
-    const radarBtn = document.createElement('button');
-    radarBtn.className = 'radar-toggle-btn';
-    radarBtn.innerHTML = `<span>📡</span> ${getTranslation('vrimmel_radar_btn')} <strong id="radar-status-byrum">${getTranslation('vrimmel_status_off')}</strong>`;
-
-    const radarLegend = document.createElement('div');
-    radarLegend.className = 'radar-legend';
-    radarLegend.innerHTML = `
-        <div class="legend-item"><div class="legend-dot-en"></div> <strong>${getTranslation('vrimmel_legend_en')}</strong></div>
-        <div class="legend-item"><div class="legend-dot-et"></div> <strong>${getTranslation('vrimmel_legend_et')}</strong></div>
-    `;
-
-    radarToggleWrapper.appendChild(pureBtn);
-    radarToggleWrapper.appendChild(radarBtn);
-    controlBar.appendChild(radarToggleWrapper);
-    controlBar.appendChild(radarLegend);
+    controlBar.appendChild(pureBtn);
     vrimmelCard.appendChild(controlBar);
 
     // Stage with Image
@@ -890,18 +873,6 @@ export function renderByrummetView(container, navigateFn) {
         stage.appendChild(spot);
         renderedHotspots.push({ el: spot, bw });
     });
-
-    let radarActive = false;
-    radarBtn.onclick = () => {
-        radarActive = !radarActive;
-        stage.classList.toggle('radar-active', radarActive);
-        radarBtn.classList.toggle('active', radarActive);
-        radarBtn.querySelector('#radar-status-byrum').textContent = radarActive ? `${getTranslation('vrimmel_status_on')} ⚡` : getTranslation('vrimmel_status_off');
-
-        renderedHotspots.forEach(({ el, bw }) => {
-            el.textContent = radarActive ? bw.gender.toUpperCase() : '?';
-        });
-    };
 
     vrimmelCard.appendChild(stage);
     vrimmelCard.appendChild(detailBox);

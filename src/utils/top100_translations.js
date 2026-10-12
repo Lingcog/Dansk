@@ -77,10 +77,10 @@ export const top100Translations = {
 
     // Tabs
     tab_label_vrimmel: "1. Udforsk billedet",
-    tab_label_detektiv: "2. Detektiv-missionen",
-    tab_label_historie: "3. Mikro-historie",
-    tab_label_kontekst: "4. Kontekst-skiftet",
-    tab_label_saetning: "5. Find verbet & Byg",
+    tab_label_detektiv: "2. Find ord der hænger sammen",
+    tab_label_historie: "3. En lille historie",
+    tab_label_kontekst: "4. Sammenhæng",
+    tab_label_saetning: "5. Find verbet",
 
     // Sorting
     sort_kitchen_title: "Sorter alle 20 ord i EN- og ET-kassen",
@@ -107,8 +107,8 @@ export const top100Translations = {
     builder_wrong_feedback: "Nej, det giver ikke mening her. Prøv et andet verbum!",
 
     // Kitchen specific
-    koekken_hero_title: "🍳 Køkkenet & Hjemmet",
-    koekken_hero_desc: "Lær de mest brugte danske navneord i et levende vrimlebillede. Mestr <strong>EN</strong> og <strong>ET</strong> med farve-radaren, løs detektiv-missioner og byg rigtige sætninger.",
+    koekken_hero_title: "🍳 Hjemmet og køkkenet",
+    koekken_hero_desc: "Mød familiens måltid, maden, møblerne og tøjet på billedet.",
     koekken_default_badge: "Klik på en cirkel i billedet",
     koekken_default_title: "Gå på opdagelse i køkkenet!",
     koekken_default_desc: "Hør udtalen, træn med mikrofonen og lær om ordet hedder <strong>en</strong> eller <strong>et</strong>.",
@@ -143,8 +143,8 @@ export const top100Translations = {
     koekken_context_s3_b: "B) Lægen opererer en patient",
 
     // Byrum specific
-    byrum_hero_title: "🏙️ Byrummet (Byen, gaden & hverdagen)",
-    byrum_hero_desc: "Her finder du <strong>60–70 % af de mest brugte danske substantiver</strong>! Mød menneskene på gaden, transportmidler, skolen, butikken, tid og penge i et levende vrimlebillede.",
+    byrum_hero_title: "🏙️ Byen",
+    byrum_hero_desc: "Mød menneskene på gaden, transportmidler, skolen, butikken, tid og penge på billedet.",
     byrum_default_badge: "Klik på en cirkel i byrummet",
     byrum_default_title: "Gå på opdagelse i byen!",
     byrum_default_desc: "Lær om ordet hedder <strong>en</strong> eller <strong>et</strong>, lyt til udtalen og træn med mikrofonen.",
@@ -243,10 +243,10 @@ export const top100Translations = {
 
     // Tabs
     tab_label_vrimmel: "1. Explore picture",
-    tab_label_detektiv: "2. Detective mission",
-    tab_label_historie: "3. Micro story",
-    tab_label_kontekst: "4. Context shift",
-    tab_label_saetning: "5. Find the verb & Build",
+    tab_label_detektiv: "2. Words that connect",
+    tab_label_historie: "3. A little story",
+    tab_label_kontekst: "4. Context",
+    tab_label_saetning: "5. Find the verb",
 
     // Sorting
     sort_kitchen_title: "Sort all 20 words into the EN and ET boxes",
@@ -273,8 +273,8 @@ export const top100Translations = {
     builder_wrong_feedback: "No, that does not make sense here. Try another verb!",
 
     // Kitchen specific
-    koekken_hero_title: "🍳 Kitchen & Home",
-    koekken_hero_desc: "Learn the most common Danish nouns in a vibrant picture scene. Master <strong>EN</strong> and <strong>ET</strong> with the color radar, solve detective missions, and build real sentences.",
+    koekken_hero_title: "🍳 Home & Kitchen",
+    koekken_hero_desc: "Meet the family meal, food, furniture, and clothes in the picture.",
     koekken_default_badge: "Click a circle in the picture",
     koekken_default_title: "Explore the kitchen!",
     koekken_default_desc: "Hear pronunciation, practice with the microphone, and learn whether the word takes <strong>en</strong> or <strong>et</strong>.",
@@ -309,8 +309,8 @@ export const top100Translations = {
     koekken_context_s3_b: "B) The doctor operates on a patient",
 
     // Byrum specific
-    byrum_hero_title: "🏙️ Urban Space (City, Street & Daily Life)",
-    byrum_hero_desc: "Here you find <strong>60–70% of the most common Danish nouns</strong>! Meet the people on the street, transport vehicles, school, shops, time, and money in a lively scene.",
+    byrum_hero_title: "🏙️ The City",
+    byrum_hero_desc: "Meet the people on the street, transport vehicles, school, shops, time, and money in the picture.",
     byrum_default_badge: "Click a circle in the city",
     byrum_default_title: "Explore the city!",
     byrum_default_desc: "Learn whether the word takes <strong>en</strong> or <strong>et</strong>, listen to pronunciation, and practice with your microphone.",
@@ -409,10 +409,10 @@ export const top100Translations = {
 
     // Tabs
     tab_label_vrimmel: "1. Explorar imagen",
-    tab_label_detektiv: "2. Misión de detective",
-    tab_label_historie: "3. Microhistoria",
-    tab_label_kontekst: "4. Cambio de contexto",
-    tab_label_saetning: "5. Encuentra el verbo y construye",
+    tab_label_detektiv: "2. Palabras relacionadas",
+    tab_label_historie: "3. Una pequeña historia",
+    tab_label_kontekst: "4. Contexto",
+    tab_label_saetning: "5. Encuentra el verbo",
 
     // Sorting
     sort_kitchen_title: "Clasifica las 20 palabras en las cajas EN y ET",
@@ -439,8 +439,8 @@ export const top100Translations = {
     builder_wrong_feedback: "No, no tiene sentido aquí. ¡Prueba con otro verbo!",
 
     // Kitchen specific
-    koekken_hero_title: "🍳 Cocina y hogar",
-    koekken_hero_desc: "Aprende los sustantivos daneses más usados en una escena animada. Domina <strong>EN</strong> y <strong>ET</strong> con el radar de color, resuelve misiones de detectives y crea oraciones reales.",
+    koekken_hero_title: "🍳 El hogar y la cocina",
+    koekken_hero_desc: "Conoce la comida familiar, los alimentos, los muebles y la ropa en la imagen.",
     koekken_default_badge: "Haz clic en un círculo en la imagen",
     koekken_default_title: "¡Explora la cocina!",
     koekken_default_desc: "Escucha la pronunciación, practica con el micrófono y aprende si la palabra lleva <strong>en</strong> o <strong>et</strong>.",
@@ -475,8 +475,8 @@ export const top100Translations = {
     koekken_context_s3_b: "B) El médico opera a un paciente",
 
     // Byrum specific
-    byrum_hero_title: "🏙️ Espacio urbano (Ciudad, calle y vida cotidiana)",
-    byrum_hero_desc: "¡Aquí encuentras el <strong>60–70% de los sustantivos más usados en danés</strong>! Conoce a las personas en la calle, los medios de transporte, la escuela, la tienda, el tiempo y el dinero en una escena viva.",
+    byrum_hero_title: "🏙️ La ciudad",
+    byrum_hero_desc: "Conoce a las personas en la calle, los medios de transporte, la escuela, la tienda, el tiempo y el dinero en la imagen.",
     byrum_default_badge: "Haz clic en un círculo en la ciudad",
     byrum_default_title: "¡Explora la ciudad!",
     byrum_default_desc: "Aprende si la palabra lleva <strong>en</strong> o <strong>et</strong>, escucha la pronunciación y practica con tu micrófono.",
@@ -575,10 +575,10 @@ export const top100Translations = {
 
     // Tabs
     tab_label_vrimmel: "1. 探索画卷",
-    tab_label_detektiv: "2. 侦探任务",
-    tab_label_historie: "3. 微小故事",
-    tab_label_kontekst: "4. 语境转换",
-    tab_label_saetning: "5. 动词与造句",
+    tab_label_detektiv: "2. 寻找关联词",
+    tab_label_historie: "3. 小故事",
+    tab_label_kontekst: "4. 语境关联",
+    tab_label_saetning: "5. 找出动词",
 
     // Sorting
     sort_kitchen_title: "将所有20个单词分别归类到 EN 与 ET 箱子中",
@@ -605,8 +605,8 @@ export const top100Translations = {
     builder_wrong_feedback: "不对哦，在这个语境中意思不通顺。试一试另一个动词吧！",
 
     // Kitchen specific
-    koekken_hero_title: "🍳 厨房与居家生活",
-    koekken_hero_desc: "在丰富的生活画卷中学习最高频的丹麦语名词。利用颜色雷达搞定 <strong>EN</strong> 与 <strong>ET</strong> 词性，通过侦探任务与造句练习实现真正掌握。",
+    koekken_hero_title: "🍳 居家与厨房",
+    koekken_hero_desc: "在画面中认识家庭聚餐、食物、家具和衣物。",
     koekken_default_badge: "点击画面上的圆圈",
     koekken_default_title: "探索厨房与家居！",
     koekken_default_desc: "听标准丹麦语发音，使用麦克风开口跟读，掌握单词词性（<strong>en</strong> 还是 <strong>et</strong>）。",
@@ -641,8 +641,8 @@ export const top100Translations = {
     koekken_context_s3_b: "B) 医生正在为病人做手术",
 
     // Byrum specific
-    byrum_hero_title: "🏙️ 城市公共空间 (街区、道路与日常生活)",
-    byrum_hero_desc: "这里汇集了<strong>60–70%最常用的丹麦语名词</strong>！在生动的城市街景中认识街头行人、交通工具、学校、商铺、时间与金钱表达。",
+    byrum_hero_title: "🏙️ 城市",
+    byrum_hero_desc: "在画面中认识街头行人、交通工具、学校、商铺、时间与金钱表达。",
     byrum_default_badge: "点击画面上的圆圈",
     byrum_default_title: "探索城市街景！",
     byrum_default_desc: "辨析名词词性（<strong>en</strong> 还是 <strong>et</strong>），听标准发音并用麦克风跟读练习。",

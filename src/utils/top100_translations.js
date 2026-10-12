@@ -37,9 +37,9 @@ export const top100Translations = {
     top100_scene2_desc: "Udforsk familiens måltid, maden, møblerne og tøjet i det nære miljø. Lær ord som <em>mor, far, barn, bord, stol, kop, kaffe, mad, seng, hund</em> og <em>problem</em>.",
     top100_scene2_btn: "Gå til køkkenet ➔",
     top100_scene3_badge: "📚 Scene 3: Viden & Sprog",
-    top100_scene3_title: "🏫 Undervisningslokalet & Kontoret",
-    top100_scene3_desc: "Læring, sprog, teknologi og tid. Dækker ord som <em>lærer, elev, bog, computer, papir, opgave, spørgsmål, svar</em> og <em>arbejde</em>.",
-    top100_scene3_btn: "Kommer snart 🔒",
+    top100_scene3_title: "🏫 Undervisningslokalet og kontoret",
+    top100_scene3_desc: "Udforsk undervisningen, sproget, bøgerne, computeren og arbejdet på kontoret. Lær ord som <em>lærer, elev, bog, computer, papir, opgave, spørgsmål, svar, møde</em> og <em>arbejde</em>.",
+    top100_scene3_btn: "Gå til lokalet ➔",
     top100_tag_farve_radar: "📡 Farve-radar EN/ET",
     top100_tag_detektiv: "🕵️ Detektiv-mission",
     top100_tag_historie: "💭 En lille historie",
@@ -85,6 +85,7 @@ export const top100Translations = {
     // Sorting
     sort_kitchen_title: "Sorter alle 20 ord i EN- og ET-kassen",
     sort_byrum_title: "Sorter alle 24 ord i EN- og ET-kassen",
+    sort_klasse_title: "Sorter alle 24 ord i EN- og ET-kassen",
     sort_progress_text: "{n} / {total} sorteret",
     sort_bin_en_title: "📦 Kasse til EN-ord",
     sort_bin_et_title: "📦 Kasse til ET-ord",
@@ -96,6 +97,7 @@ export const top100Translations = {
     builder_badge: "✍️ Sætningsbygger {current} af {total}",
     builder_kitchen_title: "Vælg det rigtige verbum og byg sætningen:",
     builder_byrum_title: "Vælg det rigtige verbum og dan en byrums-sætning:",
+    builder_klasse_title: "Vælg det rigtige verbum og byg sætningen:",
     builder_choose_verb_slot: "❓ Vælg verbum",
     builder_tray_title: "Hvilket verbum passer til handlingen? (🔴 Verbum)",
     builder_preview_default: "Vælg et verbum for at høre sætningen...",
@@ -176,7 +178,43 @@ export const top100Translations = {
     byrum_context_s3_title: "🪙 3. Økonomi og køb",
     byrum_context_s3_q: "Hvad koster det at have en bil?",
     byrum_context_s3_a: "A) Man betaler penge (kroner) for benzin og reparation",
-    byrum_context_s3_b: "B) Man får gratis mad i skolen"
+    byrum_context_s3_b: "B) Man får gratis mad i skolen",
+
+    // Klasse & Kontor specific
+    klasse_hero_title: "🏫 Undervisningslokalet og kontoret",
+    klasse_hero_desc: "Mød læreren, eleverne, bøgerne, computeren, kollegerne og opgaverne på billedet.",
+    klasse_default_badge: "Klik på en cirkel i billedet",
+    klasse_default_title: "Gå på opdagelse i lokalet!",
+    klasse_default_desc: "Lær om ordet hedder <strong>en</strong> eller <strong>et</strong>, lyt til udtalen og træn med mikrofonen.",
+    klasse_detektiv_count_prompt: "Klik på de 3 rigtige ord herunder:",
+    klasse_detektiv_complete: "Rigtigt! ✓",
+    klasse_detektiv_next: "Næste mission ➔",
+    klasse_detektiv_restart: "Start forfra 🔄",
+    klasse_m1_title: "Find 3 ting, man læser eller skriver med 📖✏️",
+    klasse_m2_title: "Find 3 ord om sprog og kommunikation 💬",
+    klasse_m3_title: "Find 3 personer eller aktiviteter i lokalet 🧑‍🏫🤝",
+    klasse_m4_title: "Find 3 ting med teknologi eller kontor 💻✉️",
+    klasse_story_title: "Computeren der driller 💻💥",
+    klasse_story_desc: "Se på manden ved computeren til højre. Sådan bevæger sproget sig fra konkret til abstrakt:",
+    klasse_story_s1_q: "Trin 1: Hvilken konkret genstand arbejdede manden på?",
+    klasse_story_s2_q: "Trin 2: Hvad skete der pludselig på skærmen?",
+    klasse_story_s3_q: "Trin 3: Hvad har manden nu, da programmet ikke virker?",
+    klasse_story_s4_q: "Trin 4: Hvad gør manden for at løse problemet?",
+    klasse_story_pedagogy: "💡 <strong>Pædagogisk pointe:</strong> Fra den konkrete computer ➔ til den tekniske fejl ➔ til det abstrakte problem og spørgsmålet, der giver et svar! Sådan hænger sproget sammen.",
+    klasse_context_title: "Målord: \"en bog\"",
+    klasse_context_desc: "Ordet <strong>en bog</strong> optræder i mange sammenhænge i hverdagen:",
+    klasse_context_s1_title: "🏫 1. I undervisningen",
+    klasse_context_s1_q: "Hvad bruger man bogen til i skolen?",
+    klasse_context_s1_a: "A) Kursisten læser i bogen og løser en opgave",
+    klasse_context_s1_b: "B) Kursisten koger suppe i bogen",
+    klasse_context_s2_title: "🏠 2. Hjemme i stuen",
+    klasse_context_s2_q: "Hvad gør man med en bog i sin fritid?",
+    klasse_context_s2_a: "A) Man sidder i sofaen og læser en god bog",
+    klasse_context_s2_b: "B) Bogen kører en tur på cykelstien",
+    klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
+    klasse_context_s3_q: "Hvordan får man fat i en bog?",
+    klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
+    klasse_context_s3_b: "B) Man vasker bilen med en bog"
   },
 
   en: {
@@ -203,9 +241,9 @@ export const top100Translations = {
     top100_scene2_desc: "Explore family meals, food, furniture, and clothing at home. Learn words like <em>mor (mother), far (father), barn (child), bord (table), stol (chair), kop (cup), kaffe (coffee), mad (food), seng (bed), hund (dog)</em>, and <em>problem</em>.",
     top100_scene2_btn: "Go to the kitchen ➔",
     top100_scene3_badge: "📚 Scene 3: Knowledge & Language",
-    top100_scene3_title: "🏫 Classroom & Office",
-    top100_scene3_desc: "Learning, language, technology, and time. Covers words like <em>lærer (teacher), elev (student), bog (book), computer, papir (paper), opgave (task), spørgsmål (question), svar (answer)</em>, and <em>arbejde (work)</em>.",
-    top100_scene3_btn: "Coming soon 🔒",
+    top100_scene3_title: "🏫 Classroom and Office",
+    top100_scene3_desc: "Explore teaching, language, books, computers, and office work. Learn words like <em>lærer (teacher), elev (student), bog (book), computer, papir (paper), opgave (task), spørgsmål (question), svar (answer), møde (meeting)</em>, and <em>arbejde (work)</em>.",
+    top100_scene3_btn: "Go to the classroom ➔",
     top100_tag_farve_radar: "📡 Color Radar EN/ET",
     top100_tag_detektiv: "🕵️ Detective Mission",
     top100_tag_historie: "💭 A little story",
@@ -251,6 +289,7 @@ export const top100Translations = {
     // Sorting
     sort_kitchen_title: "Sort all 20 words into the EN and ET boxes",
     sort_byrum_title: "Sort all 24 words into the EN and ET boxes",
+    sort_klasse_title: "Sort all 24 words into the EN and ET boxes",
     sort_progress_text: "{n} / {total} sorted",
     sort_bin_en_title: "📦 Box for EN words",
     sort_bin_et_title: "📦 Box for ET words",
@@ -262,6 +301,7 @@ export const top100Translations = {
     builder_badge: "✍️ Sentence builder {current} of {total}",
     builder_kitchen_title: "Choose the correct verb and build the sentence:",
     builder_byrum_title: "Choose the correct verb and build the city sentence:",
+    builder_klasse_title: "Choose the correct verb and build the sentence:",
     builder_choose_verb_slot: "❓ Choose verb",
     builder_tray_title: "Which verb matches the action? (🔴 Verb)",
     builder_preview_default: "Choose a verb to hear the sentence...",
@@ -342,7 +382,43 @@ export const top100Translations = {
     byrum_context_s3_title: "🪙 3. Økonomi og køb",
     byrum_context_s3_q: "What does it cost to have a car?",
     byrum_context_s3_a: "A) Man betaler penge (kroner) for benzin og reparation",
-    byrum_context_s3_b: "B) Man får gratis mad i skolen"
+    byrum_context_s3_b: "B) Man får gratis mad i skolen",
+
+    // Klasse & Kontor specific
+    klasse_hero_title: "🏫 Classroom and Office",
+    klasse_hero_desc: "Meet the teacher, students, books, computer, colleagues, and tasks in the picture.",
+    klasse_default_badge: "Click a circle in the picture",
+    klasse_default_title: "Explore the classroom and office!",
+    klasse_default_desc: "Learn whether the word takes <strong>en</strong> or <strong>et</strong>, listen to pronunciation, and practice with your microphone.",
+    klasse_detektiv_count_prompt: "Click the 3 correct words below:",
+    klasse_detektiv_complete: "Correct! ✓",
+    klasse_detektiv_next: "Next mission ➔",
+    klasse_detektiv_restart: "Start over 🔄",
+    klasse_m1_title: "Find 3 things used for reading or writing 📖✏️",
+    klasse_m2_title: "Find 3 words about language and communication 💬",
+    klasse_m3_title: "Find 3 people or activities in the room 🧑‍🏫🤝",
+    klasse_m4_title: "Find 3 items related to technology or office 💻✉️",
+    klasse_story_title: "The tricky computer 💻💥",
+    klasse_story_desc: "Look at the man by the computer on the right. Here is how language moves from concrete to abstract:",
+    klasse_story_s1_q: "Step 1: Which concrete object was the man working on?",
+    klasse_story_s2_q: "Step 2: What suddenly happened on the screen?",
+    klasse_story_s3_q: "Step 3: What does the man have now that the program doesn't work?",
+    klasse_story_s4_q: "Step 4: What does the man do to solve the problem?",
+    klasse_story_pedagogy: "💡 <strong>Pedagogical point:</strong> From the concrete computer ➔ to the technical error ➔ to the abstract problem and the question that gives an answer! This is how language connects.",
+    klasse_context_title: "Target word: \"en bog\" (a book)",
+    klasse_context_desc: "The word <strong>en bog</strong> appears in many everyday contexts:",
+    klasse_context_s1_title: "🏫 1. I undervisningen",
+    klasse_context_s1_q: "What is the book used for at school?",
+    klasse_context_s1_a: "A) Kursisten læser i bogen og løser en opgave",
+    klasse_context_s1_b: "B) Kursisten koger suppe i bogen",
+    klasse_context_s2_title: "🏠 2. Hjemme i stuen",
+    klasse_context_s2_q: "What do you do with a book in your free time?",
+    klasse_context_s2_a: "A) Man sidder i sofaen og læser en god bog",
+    klasse_context_s2_b: "B) Bogen kører en tur på cykelstien",
+    klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
+    klasse_context_s3_q: "How do you get a book?",
+    klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
+    klasse_context_s3_b: "B) Man vasker bilen med en bog"
   },
 
   es: {
@@ -369,9 +445,9 @@ export const top100Translations = {
     top100_scene2_desc: "Explora la comida familiar, los muebles y la ropa en casa. Aprende palabras como <em>mor (madre), far (padre), barn (niño), bord (mesa), stol (silla), kop (taza), kaffe (café), mad (comida), seng (cama), hund (perro)</em> y <em>problem</em>.",
     top100_scene2_btn: "Ir a la cocina ➔",
     top100_scene3_badge: "📚 Escena 3: Conocimiento e idioma",
-    top100_scene3_title: "🏫 Aula y oficina",
-    top100_scene3_desc: "Aprendizaje, idioma, tecnología y tiempo. Cubre palabras como <em>lærer (profesor), elev (alumno), bog (libro), computer, papir (papel), opgave (tarea), spørgsmål (pregunta), svar (respuesta)</em> y <em>arbejde (trabajo)</em>.",
-    top100_scene3_btn: "Próximamente 🔒",
+    top100_scene3_title: "🏫 El aula y la oficina",
+    top100_scene3_desc: "Explora la enseñanza, el idioma, los libros, el ordenador y el trabajo en la oficina. Aprende palabras como <em>lærer (profesor), elev (alumno), bog (libro), computer, papir (papel), opgave (tarea), spørgsmål (pregunta), svar (respuesta), møde (reunión)</em> y <em>arbejde (trabajo)</em>.",
+    top100_scene3_btn: "Ir al aula ➔",
     top100_tag_farve_radar: "📡 Radar de color EN/ET",
     top100_tag_detektiv: "🕵️ Misión de detective",
     top100_tag_historie: "💭 Una pequeña historia",
@@ -417,6 +493,7 @@ export const top100Translations = {
     // Sorting
     sort_kitchen_title: "Clasifica las 20 palabras en las cajas EN y ET",
     sort_byrum_title: "Clasifica las 24 palabras en las cajas EN y ET",
+    sort_klasse_title: "Clasifica las 24 palabras en las cajas EN y ET",
     sort_progress_text: "{n} / {total} clasificadas",
     sort_bin_en_title: "📦 Caja para palabras EN",
     sort_bin_et_title: "📦 Caja para palabras ET",
@@ -428,6 +505,7 @@ export const top100Translations = {
     builder_badge: "✍️ Constructor de oraciones {current} de {total}",
     builder_kitchen_title: "Elige el verbo correcto y construye la oración:",
     builder_byrum_title: "Elige el verbo correcto y forma una oración urbana:",
+    builder_klasse_title: "Elige el verbo correcto y construye la oración:",
     builder_choose_verb_slot: "❓ Elegir verbo",
     builder_tray_title: "¿Qué verbo se ajusta a la acción? (🔴 Verbo)",
     builder_preview_default: "Elige un verbo para escuchar la oración...",
@@ -508,7 +586,43 @@ export const top100Translations = {
     byrum_context_s3_title: "🪙 3. Økonomi og køb",
     byrum_context_s3_q: "¿Cuánto cuesta tener un coche?",
     byrum_context_s3_a: "A) Man betaler penge (kroner) for benzin og reparation",
-    byrum_context_s3_b: "B) Man får gratis mad i skolen"
+    byrum_context_s3_b: "B) Man får gratis mad i skolen",
+
+    // Klasse & Kontor specific
+    klasse_hero_title: "🏫 El aula y la oficina",
+    klasse_hero_desc: "Conoce al profesor, a los alumnos, los libros, el ordenador, los compañeros y las tareas en la imagen.",
+    klasse_default_badge: "Haz clic en un círculo en la imagen",
+    klasse_default_title: "¡Explora el aula y la oficina!",
+    klasse_default_desc: "Aprende si la palabra lleva <strong>en</strong> o <strong>et</strong>, escucha la pronunciación y practica con tu micrófono.",
+    klasse_detektiv_count_prompt: "Haz clic en las 3 palabras correctas abajo:",
+    klasse_detektiv_complete: "¡Correcto! ✓",
+    klasse_detektiv_next: "Siguiente misión ➔",
+    klasse_detektiv_restart: "Empezar de nuevo 🔄",
+    klasse_m1_title: "Encuentra 3 cosas con las que se lee o escribe 📖✏️",
+    klasse_m2_title: "Encuentra 3 palabras sobre idioma y comunicación 💬",
+    klasse_m3_title: "Encuentra 3 personas o actividades en la sala 🧑‍🏫🤝",
+    klasse_m4_title: "Encuentra 3 elementos de tecnología u oficina 💻✉️",
+    klasse_story_title: "El ordenador que falla 💻💥",
+    klasse_story_desc: "Mira al hombre junto al ordenador a la derecha. Así pasa el idioma de lo concreto a lo abstracto:",
+    klasse_story_s1_q: "Paso 1: ¿En qué objeto concreto estaba trabajando el hombre?",
+    klasse_story_s2_q: "Paso 2: ¿Qué ocurrió de repente en la pantalla?",
+    klasse_story_s3_q: "Paso 3: ¿Qué tiene el hombre ahora que el programa no funciona?",
+    klasse_story_s4_q: "Paso 4: ¿Qué hace el hombre para resolver el problema?",
+    klasse_story_pedagogy: "💡 <strong>Punto pedagógico:</strong> ¡Del ordenador concreto ➔ al error técnico ➔ al problema abstracto y la pregunta que da una respuesta! Así es como se conecta el lenguaje.",
+    klasse_context_title: "Palabra clave: \"en bog\" (un libro)",
+    klasse_context_desc: "La palabra <strong>en bog</strong> aparece en muchos contextos cotidianos:",
+    klasse_context_s1_title: "🏫 1. I undervisningen",
+    klasse_context_s1_q: "¿Para qué se usa el libro en la escuela?",
+    klasse_context_s1_a: "A) Kursisten læser i bogen og løser en opgave",
+    klasse_context_s1_b: "B) Kursisten koger suppe i bogen",
+    klasse_context_s2_title: "🏠 2. Hjemme i stuen",
+    klasse_context_s2_q: "¿Qué haces con un libro en tu tiempo libre?",
+    klasse_context_s2_a: "A) Man sidder i sofaen og læser en god bog",
+    klasse_context_s2_b: "B) Bogen kører en tur på cykelstien",
+    klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
+    klasse_context_s3_q: "¿Cómo consigues un libro?",
+    klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
+    klasse_context_s3_b: "B) Man vasker bilen med en bog"
   },
 
   zh: {
@@ -536,8 +650,8 @@ export const top100Translations = {
     top100_scene2_btn: "进入厨房 ➔",
     top100_scene3_badge: "📚 场景三：知识与语言",
     top100_scene3_title: "🏫 教室与办公室",
-    top100_scene3_desc: "学习、语言、科技与时间表达。包含：<em>lærer (老师), elev (学生), bog (书), computer (电脑), papir (纸), opgave (作业), spørgsmål (问题), svar (回答)</em> 与 <em>arbejde (工作)</em>。",
-    top100_scene3_btn: "即将推出 🔒",
+    top100_scene3_desc: "探索课堂教学、语言、书籍、电脑与办公室工作。掌握如：<em>lærer (老师), elev (学生), bog (书), computer (电脑), papir (纸), opgave (作业), spørgsmål (问题), svar (回答), møde (会议)</em> 与 <em>arbejde (工作)</em>。",
+    top100_scene3_btn: "进入教室 ➔",
     top100_tag_farve_radar: "📡 颜色雷达 EN/ET",
     top100_tag_detektiv: "🕵️ 侦探分类任务",
     top100_tag_historie: "💭 小故事",
@@ -583,6 +697,7 @@ export const top100Translations = {
     // Sorting
     sort_kitchen_title: "将所有20个单词分别归类到 EN 与 ET 箱子中",
     sort_byrum_title: "将所有24个单词分别归类到 EN 与 ET 箱子中",
+    sort_klasse_title: "将所有24个单词分别归类到 EN 与 ET 箱子中",
     sort_progress_text: "已完成 {n} / {total}",
     sort_bin_en_title: "📦 EN性词箱 (通性)",
     sort_bin_et_title: "📦 ET性词箱 (中性)",
@@ -594,6 +709,7 @@ export const top100Translations = {
     builder_badge: "✍️ 造句练习 {current} / {total}",
     builder_kitchen_title: "选择正确的动词并完成句子：",
     builder_byrum_title: "选择正确的动词并构建城市街景句子：",
+    builder_klasse_title: "选择正确的动词并完成句子：",
     builder_choose_verb_slot: "❓ 选择动词",
     builder_tray_title: "哪个动词符合动作？ (🔴 动词)",
     builder_preview_default: "选择动词后即可听整句朗读...",
@@ -674,7 +790,43 @@ export const top100Translations = {
     byrum_context_s3_title: "🪙 3. Økonomi og køb",
     byrum_context_s3_q: "拥有一辆汽车需要花费什么？",
     byrum_context_s3_a: "A) Man betaler penge (kroner) for benzin og reparation",
-    byrum_context_s3_b: "B) Man får gratis mad i skolen"
+    byrum_context_s3_b: "B) Man får gratis mad i skolen",
+
+    // Klasse & Kontor specific
+    klasse_hero_title: "🏫 教室与办公室",
+    klasse_hero_desc: "在画面中认识老师、学生、书籍、电脑、同事和课堂作业。",
+    klasse_default_badge: "点击画面上的圆圈",
+    klasse_default_title: "探索教室与办公室！",
+    klasse_default_desc: "辨析名词词性（<strong>en</strong> 还是 <strong>et</strong>），听标准发音并用麦克风跟读练习。",
+    klasse_detektiv_count_prompt: "在下方点击3个符合条件的正确单词：",
+    klasse_detektiv_complete: "回答正确！✓",
+    klasse_detektiv_next: "下一个任务 ➔",
+    klasse_detektiv_restart: "重新开始 🔄",
+    klasse_m1_title: "找出3种用于阅读或书写的物品 📖✏️",
+    klasse_m2_title: "找出3个关于语言与交流的词汇 💬",
+    klasse_m3_title: "找出室内3个人物或活动 🧑‍🏫🤝",
+    klasse_m4_title: "找出3个与科技或办公相关的物品 💻✉️",
+    klasse_story_title: "出故障的电脑 💻💥",
+    klasse_story_desc: "观察右侧电脑旁的男士。看看语言概念是如何从具体演化到抽象的：",
+    klasse_story_s1_q: "第1步：男士正在使用什么具体物品工作？",
+    klasse_story_s2_q: "第2步：屏幕上突然发生了什么？",
+    klasse_story_s3_q: "第3步：程序无法运行，男士现在面临什么？",
+    klasse_story_s4_q: "第4步：男士采取什么措施解决问题？",
+    klasse_story_pedagogy: "💡 <strong>教学要点：</strong> 从具体的电脑 ➔ 到技术错误 ➔ 再到抽象的问题以及提问后获得的解答！这就是语言概念层层递进的逻辑关联。",
+    klasse_context_title: "核心目标词：\"en bog\" (书)",
+    klasse_context_desc: "单词 <strong>en bog</strong> 在日常生活中有多种语境：",
+    klasse_context_s1_title: "🏫 1. I undervisningen",
+    klasse_context_s1_q: "在学校里书是用来做什么的？",
+    klasse_context_s1_a: "A) Kursisten læser i bogen og løser en opgave",
+    klasse_context_s1_b: "B) Kursisten koger suppe i bogen",
+    klasse_context_s2_title: "🏠 2. Hjemme i stuen",
+    klasse_context_s2_q: "在业余时间你会用书做什么？",
+    klasse_context_s2_a: "A) Man sidder i sofaen og læser en god bog",
+    klasse_context_s2_b: "B) Bogen kører en tur på cykelstien",
+    klasse_context_s3_title: "🏛️ 3. På biblioteket og i boghandlen",
+    klasse_context_s3_q: "人们如何获得一本书？",
+    klasse_context_s3_a: "A) Man låner eller køber en ny bog med hjem",
+    klasse_context_s3_b: "B) Man vasker bilen med en bog"
   }
 };
 
@@ -919,3 +1071,130 @@ export const byrumWordTranslations = {
     zh: { meaning: "一个问题/故障", sentence: "汽车抛锚了——这位男士遇到了故障和问题。" }
   }
 };
+
+/**
+ * Translations for individual vocabulary words in Undervisningslokalet og kontoret (24 words)
+ */
+export const klasseWordTranslations = {
+  "et billede": {
+    en: { meaning: "a picture / painting", sentence: "A handsome picture with a windmill hangs on the wall." },
+    es: { meaning: "un cuadro / imagen", sentence: "Un bonito cuadro con un molino cuelga en la pared." },
+    zh: { meaning: "一幅画 / 图片", sentence: "墙上挂着一幅带有风车的漂亮画作。" }
+  },
+  "en lampe": {
+    en: { meaning: "a lamp", sentence: "The lamp on the ceiling provides good light in the room." },
+    es: { meaning: "una lámpara", sentence: "La lámpara del techo da buena luz en la sala." },
+    zh: { meaning: "一盏灯", sentence: "天花板上的吊灯为教室提供充足的光线。" }
+  },
+  "et ur": {
+    en: { meaning: "a clock / watch", sentence: "The clock on the wall shows when the lesson begins." },
+    es: { meaning: "un reloj", sentence: "El reloj de la pared muestra cuándo empieza la clase." },
+    zh: { meaning: "一个时钟", sentence: "墙上的时钟显示什么时候开始上课。" }
+  },
+  "en tavle": {
+    en: { meaning: "a board / blackboard", sentence: "The teacher stands by the green board in the classroom." },
+    es: { meaning: "una pizarra", sentence: "La profesora está junto a la pizarra verde en el aula." },
+    zh: { meaning: "一块黑板", sentence: "老师站在教室的绿黑板旁。" }
+  },
+  "et sprog": {
+    en: { meaning: "a language", sentence: "The students are learning Danish as a new language." },
+    es: { meaning: "un idioma / lengua", sentence: "Los estudiantes aprenden danés como un nuevo idioma." },
+    zh: { meaning: "一种语言", sentence: "学员们正在学习丹麦语这门新语言。" }
+  },
+  "et spørgsmål": {
+    en: { meaning: "a question", sentence: "The student raises his hand and asks a question." },
+    es: { meaning: "una pregunta", sentence: "El alumno levanta la mano y hace una pregunta." },
+    zh: { meaning: "一个问题（提问）", sentence: "学生举起手提出一个问题。" }
+  },
+  "en elev": {
+    en: { meaning: "a student / pupil", sentence: "A student sits at the desk and raises his hand." },
+    es: { meaning: "un alumno / estudiante", sentence: "Un alumno se sienta en la mesa y levanta la mano." },
+    zh: { meaning: "一名学生 / 学员", sentence: "一名学生坐在课桌旁举手。" }
+  },
+  "en lærer": {
+    en: { meaning: "a teacher", sentence: "A friendly teacher teaches and explains by the board." },
+    es: { meaning: "un profesor / maestro", sentence: "Una profesora amable enseña y explica junto a la pizarra." },
+    zh: { meaning: "一位老师", sentence: "一位和蔼的老师在黑板前讲课。" }
+  },
+  "et svar": {
+    en: { meaning: "an answer", sentence: "The teacher gives a clear and correct answer." },
+    es: { meaning: "una respuesta", sentence: "La profesora da una respuesta clara y correcta." },
+    zh: { meaning: "一个回答 / 答案", sentence: "老师给出了清晰正确的回答。" }
+  },
+  "en bog": {
+    en: { meaning: "a book", sentence: "He is reading a Danish text in his book." },
+    es: { meaning: "un libro", sentence: "Él lee un texto en danés en su libro." },
+    zh: { meaning: "一本书", sentence: "他正在阅读书里的丹麦语课文。" }
+  },
+  "et bord": {
+    en: { meaning: "a table / desk", sentence: "Books and papers lie ready on the desk." },
+    es: { meaning: "una mesa / pupitre", sentence: "Los libros y papeles están listos sobre la mesa." },
+    zh: { meaning: "一张桌子 / 课桌", sentence: "书本和纸张整齐地放在课桌上。" }
+  },
+  "en stol": {
+    en: { meaning: "a chair", sentence: "The student sits comfortably on his chair." },
+    es: { meaning: "una silla", sentence: "El estudiante se sienta cómodamente en su silla." },
+    zh: { meaning: "一把椅子", sentence: "学员舒适地坐在椅子上。" }
+  },
+  "et papir": {
+    en: { meaning: "a piece of paper", sentence: "She writes notes down on a white piece of paper." },
+    es: { meaning: "un papel", sentence: "Ella escribe apuntes en un papel blanco." },
+    zh: { meaning: "一张纸", sentence: "她在白纸上认真做笔记。" }
+  },
+  "en opgave": {
+    en: { meaning: "a task / assignment", sentence: "She sits focused and solves a written assignment." },
+    es: { meaning: "una tarea / ejercicio", sentence: "Ella está concentrada resolviendo una tarea escrita." },
+    zh: { meaning: "一项作业 / 任务", sentence: "她专心致志地坐着完成书面作业。" }
+  },
+  "en blyant": {
+    en: { meaning: "a pencil", sentence: "There is a yellow pencil next to the paper." },
+    es: { meaning: "un lápiz", sentence: "Hay un lápiz amarillo al lado del papel." },
+    zh: { meaning: "一支铅笔", sentence: "纸张旁边放着一支黄色的铅笔。" }
+  },
+  "en telefon": {
+    en: { meaning: "a phone", sentence: "The phone lies quietly on the desk during class." },
+    es: { meaning: "un teléfono", sentence: "El teléfono está en silencio sobre la mesa durante la clase." },
+    zh: { meaning: "一部手机 / 电话", sentence: "上课时手机安静地放在桌上。" }
+  },
+  "en taske": {
+    en: { meaning: "a bag / backpack", sentence: "The bag stands on the floor next to the chair." },
+    es: { meaning: "un bolso / mochila", sentence: "La mochila está en el suelo junto a la silla." },
+    zh: { meaning: "一个书包 / 包", sentence: "书包放在椅子旁边的地板上。" }
+  },
+  "et arbejde": {
+    en: { meaning: "a job / work", sentence: "The woman sits in the office and does her work." },
+    es: { meaning: "un trabajo", sentence: "La mujer está sentada en la oficina haciendo su trabajo." },
+    zh: { meaning: "一份工作", sentence: "女士坐在办公室里处理她的工作。" }
+  },
+  "et møde": {
+    en: { meaning: "a meeting", sentence: "The two colleagues have a short meeting in the office." },
+    es: { meaning: "una reunión", sentence: "Los dos compañeros tienen una breve reunión en la oficina." },
+    zh: { meaning: "一次会议", sentence: "两位同事在办公室里进行简短的会谈。" }
+  },
+  "en idé": {
+    en: { meaning: "an idea", sentence: "He gets a good idea during the conversation." },
+    es: { meaning: "una idea", sentence: "A él se le ocurre una buena idea durante la conversación." },
+    zh: { meaning: "一个主意 / 想法", sentence: "他在交谈中想到了一个好主意。" }
+  },
+  "et brev": {
+    en: { meaning: "a letter", sentence: "They look together at an important letter in an envelope." },
+    es: { meaning: "una carta", sentence: "Miran juntos una carta importante en un sobre." },
+    zh: { meaning: "一封信", sentence: "他们一起查看信封里的一封重要信件。" }
+  },
+  "et vindue": {
+    en: { meaning: "a window", sentence: "Daylight shines in through the office window." },
+    es: { meaning: "una ventana", sentence: "La luz del día entra por la ventana de la oficina." },
+    zh: { meaning: "一扇窗户", sentence: "自然光透过办公室的窗户照进来。" }
+  },
+  "en computer": {
+    en: { meaning: "a computer", sentence: "The man works at his laptop computer." },
+    es: { meaning: "un ordenador / computadora", sentence: "El hombre trabaja en su ordenador portátil." },
+    zh: { meaning: "一台电脑", sentence: "这位男士正在使用笔记本电脑工作。" }
+  },
+  "et problem": {
+    en: { meaning: "a problem", sentence: "There is an error on the screen – the man has a technical problem." },
+    es: { meaning: "un problema", sentence: "Hay un error en la pantalla: el hombre tiene un problema técnico." },
+    zh: { meaning: "一个问题 / 故障", sentence: "屏幕上出现了错误提示——这位男士遇到了技术问题。" }
+  }
+};
+

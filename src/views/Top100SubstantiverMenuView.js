@@ -268,25 +268,20 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     cardKoekken.onclick = () => navigateFn('koekken_hjemmet');
     grid.appendChild(cardKoekken);
 
-    // 3. Scene 3: Undervisningslokalet & Kontoret (Forberedt)
+    // 3. Scene 3: Undervisningslokalet og kontoret
     const cardKlasse = document.createElement('div');
-    cardKlasse.className = 'scene-card coming-soon';
+    cardKlasse.className = 'scene-card';
     cardKlasse.innerHTML = `
-        <div class="scene-card-img-wrap" style="background: linear-gradient(135deg, #1e1b4b, #312e81); display: flex; align-items: center; justify-content: center;">
-            <div style="font-size: 4rem;">🏫</div>
-            <div class="scene-pill-badge badge-scene-3">${getTranslation('top100_scene3_badge')}</div>
+        <div class="scene-card-img-wrap">
+            <img src="assets/klasse_kontor_vrimmel.jpg" alt="Undervisningslokalet og kontoret vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
             <h3>${getTranslation('top100_scene3_title')}</h3>
             <p>${getTranslation('top100_scene3_desc')}</p>
-            <div class="scene-features-tags">
-                <span class="feature-tag">${getTranslation('top100_tag_learning')}</span>
-                <span class="feature-tag">${getTranslation('top100_tag_tech')}</span>
-                <span class="feature-tag">${getTranslation('top100_tag_time')}</span>
-            </div>
             <button class="scene-action-btn">${getTranslation('top100_scene3_btn')}</button>
         </div>
     `;
+    cardKlasse.onclick = () => navigateFn('klasse_kontor');
     grid.appendChild(cardKlasse);
 
     viewContainer.appendChild(grid);

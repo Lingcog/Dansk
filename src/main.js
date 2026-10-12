@@ -380,5 +380,5 @@ if ('caches' in window) {
   });
 }
 
-// Cache buster Sun Sep 27 12:00:31 CEST 2026
-console.log('Cache buster Sun Sep 27 12:00:45 CEST 2026');
+// Cache buster Mon Oct 12 16:30:00 CEST 2026
+console.log('App version: Mon Oct 12 16:30:00 CEST 2026');

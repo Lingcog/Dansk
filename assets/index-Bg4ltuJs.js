@@ -1316,7 +1316,7 @@
         .network-lines { display: none; }
         .node { position: static; width: 100%; max-width: 320px; height: auto; transform: none !important; }
       }
-    `,_.appendChild(d);const A=document.createElement("h1");A.textContent=e("laerNyeOrd"),_.appendChild(A),t==="selection"?a(_):t==="exercise_semantic"?n(_):t==="exercise_naboord"?h(_):t==="exercise_ordfamilier"?k(_):t==="exercise_historier"&&p(_),y.appendChild(_)}function a(_){const i=document.createElement("div");i.className="task-selection-grid",[{id:"exercise_top100_substantiver",title:"top100SubstantiverTitle",desc:"top100SubstantiverDesc",icon:"🏆",highlight:!0},{id:"exercise_semantic",title:"laerEtNytOrd",desc:"laerEtNytOrdDesc",icon:"🎨"},{id:"exercise_naboord",title:"laerNaboord",desc:"laerNaboordDesc",icon:"👯"},{id:"exercise_ordfamilier",title:"laerOrdfamilier",desc:"laerOrdfamilierDesc",icon:"🌳"},{id:"exercise_historier",title:"laerNyeOrdHistorier",desc:"laerNyeOrdHistorierDesc",icon:"📖"}].forEach(E=>{const b=document.createElement("div");b.className=`task-choice-card ${E.highlight?"highlight-choice":""}`,E.highlight&&(b.style.border="2px solid #38bdf8",b.style.background="linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(30, 41, 59, 0.9))"),b.onclick=()=>{E.id==="exercise_top100_substantiver"?c("top100_substantiver"):(t=E.id,r())};const g=document.createElement("div");g.className="task-choice-icon",g.textContent=E.icon,b.appendChild(g);const o=document.createElement("div");o.className="task-choice-title",o.textContent=e(E.title),b.appendChild(o);const l=document.createElement("div");l.className="task-choice-desc",l.textContent=e(E.desc),b.appendChild(l),i.appendChild(b)}),_.appendChild(i);const d=document.createElement("div");d.className="support-links",d.style.display="flex",d.style.justifyContent="center",d.style.flexWrap="wrap",d.style.gap="1rem",d.style.marginTop="3rem",d.style.paddingBottom="2rem";const A=document.createElement("a");A.href="https://ko-fi.com/dansktraening",A.target="_blank",A.className="gemini-btn",A.style.textDecoration="none",A.style.backgroundColor="#ff5e5b",A.textContent="☕ Buy me a coffee";const x=document.createElement("a");x.href="https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in",x.target="_blank",x.className="gemini-btn",x.style.textDecoration="none",x.style.backgroundColor="#5a78ff",x.textContent="📱 Støt med MobilePay",d.appendChild(A),d.appendChild(x),_.appendChild(d)}function n(_){const i=document.createElement("div");i.className="exercise-card";const m=document.createElement("h2");m.className="exercise-card-title",m.textContent=e("laerEtNytOrd"),i.appendChild(m);const d=document.createElement("div");d.className="semantic-network",[{class:"node center",label:e("targetWord"),img:"car_main.png"},{class:"node top",label:e("hypernymWord"),hint:e("hypernym"),img:"vehicle_group.png"},{class:"node bottom",label:e("hyponymWord"),hint:e("hyponym"),img:"electric_car.png"},{class:"node left",label:e("synonymWord"),hint:e("synonym"),img:"sedan_car.png"},{class:"node right",label:e("antonymWord"),hint:e("antonym"),img:"bicycle.png"}].forEach(E=>{const b=document.createElement("div");b.className=E.class,b.innerHTML=`<img src="${le}${E.img}" alt="${E.label}"><div class="word">${E.label}</div>`,E.hint&&(b.innerHTML+=`<div class="hint">${E.hint}</div>`),d.appendChild(b)}),d.insertAdjacentHTML("afterbegin",`
+    `,_.appendChild(d);const A=document.createElement("h1");A.textContent=e("laerNyeOrd"),_.appendChild(A),t==="selection"?a(_):t==="exercise_semantic"?n(_):t==="exercise_naboord"?h(_):t==="exercise_ordfamilier"?k(_):t==="exercise_historier"&&p(_),y.appendChild(_)}function a(_){const i=document.createElement("div");i.className="task-selection-grid",[{id:"exercise_top100_substantiver",title:"top100SubstantiverTitle",desc:"top100SubstantiverDesc",icon:"🏆",highlight:!0},{id:"exercise_semantic",title:"laerEtNytOrd",desc:"laerEtNytOrdDesc",icon:"🎨"},{id:"exercise_naboord",title:"laerNaboord",desc:"laerNaboordDesc",icon:"👯"},{id:"exercise_ordfamilier",title:"laerOrdfamilier",desc:"laerOrdfamilierDesc",icon:"🌳"},{id:"exercise_historier",title:"laerNyeOrdHistorier",desc:"laerNyeOrdHistorierDesc",icon:"📖"}].forEach(E=>{const b=document.createElement("div");b.className=`task-choice-card ${E.highlight?"highlight-choice":""}`,E.highlight&&(b.style.border="2px solid #22c55e",b.style.background="linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(30, 41, 59, 0.9))"),b.onclick=()=>{E.id==="exercise_top100_substantiver"?c("top100_substantiver"):(t=E.id,r())};const g=document.createElement("div");g.className="task-choice-icon",g.textContent=E.icon,b.appendChild(g);const o=document.createElement("div");o.className="task-choice-title",o.textContent=e(E.title),b.appendChild(o);const l=document.createElement("div");l.className="task-choice-desc",l.textContent=e(E.desc),b.appendChild(l),i.appendChild(b)}),_.appendChild(i);const d=document.createElement("div");d.className="support-links",d.style.display="flex",d.style.justifyContent="center",d.style.flexWrap="wrap",d.style.gap="1rem",d.style.marginTop="3rem",d.style.paddingBottom="2rem";const A=document.createElement("a");A.href="https://ko-fi.com/dansktraening",A.target="_blank",A.className="gemini-btn",A.style.textDecoration="none",A.style.backgroundColor="#ff5e5b",A.textContent="☕ Buy me a coffee";const x=document.createElement("a");x.href="https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in",x.target="_blank",x.className="gemini-btn",x.style.textDecoration="none",x.style.backgroundColor="#5a78ff",x.textContent="📱 Støt med MobilePay",d.appendChild(A),d.appendChild(x),_.appendChild(d)}function n(_){const i=document.createElement("div");i.className="exercise-card";const m=document.createElement("h2");m.className="exercise-card-title",m.textContent=e("laerEtNytOrd"),i.appendChild(m);const d=document.createElement("div");d.className="semantic-network",[{class:"node center",label:e("targetWord"),img:"car_main.png"},{class:"node top",label:e("hypernymWord"),hint:e("hypernym"),img:"vehicle_group.png"},{class:"node bottom",label:e("hyponymWord"),hint:e("hyponym"),img:"electric_car.png"},{class:"node left",label:e("synonymWord"),hint:e("synonym"),img:"sedan_car.png"},{class:"node right",label:e("antonymWord"),hint:e("antonym"),img:"bicycle.png"}].forEach(E=>{const b=document.createElement("div");b.className=E.class,b.innerHTML=`<img src="${le}${E.img}" alt="${E.label}"><div class="word">${E.label}</div><span style="font-size: 0.68rem; font-weight: 700; color: #4ade80; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; border-radius: 4px; padding: 1px 6px; margin-top: 4px;">Substantiv</span>`,E.hint&&(b.innerHTML+=`<div class="hint">${E.hint}</div>`),d.appendChild(b)}),d.insertAdjacentHTML("afterbegin",`
       <svg class="network-lines"><line x1="50%" y1="50%" x2="50%" y2="15%" stroke="rgba(255,255,255,0.6)" stroke-width="2"/><line x1="50%" y1="50%" x2="50%" y2="85%" stroke="rgba(255,255,255,0.6)" stroke-width="2"/><line x1="50%" y1="50%" x2="15%" y2="50%" stroke="rgba(255,255,255,0.6)" stroke-width="2"/><line x1="50%" y1="50%" x2="85%" y2="50%" stroke="rgba(255,255,255,0.6)" stroke-width="2"/></svg>
     `),i.appendChild(d);const x=document.createElement("p");x.className="word-explanation",x.textContent=e("wordNetworkExplanation"),i.appendChild(x),s(i,"https://gemini.google.com/gem/1mnr6c6GaSiftVf5RMJ2cfxqgwH8p9djT?usp=sharing"),_.appendChild(i)}function h(_){const i=document.createElement("div");i.className="exercise-card";const m=document.createElement("h2");m.className="exercise-card-title",m.textContent=e("laerNaboord"),i.appendChild(m);const d=document.createElement("img");d.src=`${le}naboord.png`,d.className="full-width-img",d.alt="Naboord",i.appendChild(d);const A=document.createElement("p");A.className="word-explanation",A.textContent=e("laerNaboordDesc"),i.appendChild(A),s(i,"https://gemini.google.com/gem/19kTcKuh8N5tRIxoqPXN0ryhlJyuRpb-R?usp=sharing"),_.appendChild(i)}function k(_){const i=document.createElement("div");i.className="exercise-card";const m=document.createElement("h2");m.className="exercise-card-title",m.textContent=e("laerOrdfamilier"),i.appendChild(m);const d=document.createElement("img");d.src=`${le}ordpar.png`,d.className="full-width-img",d.alt="Ordfamilier",i.appendChild(d);const A=document.createElement("p");A.className="word-explanation",A.textContent=e("laerOrdfamilierDesc"),i.appendChild(A),s(i,"https://gemini.google.com/gem/1STqY0Ea8HW0AWPyrXXj5jgA0H1doVlEP?usp=sharing"),_.appendChild(i)}function p(_){const i=document.createElement("div");i.className="exercise-card";const m=document.createElement("h2");m.className="exercise-card-title",m.textContent=e("laerNyeOrdHistorier"),i.appendChild(m);const d=document.createElement("img");d.src=`${le}historier.png`,d.className="full-width-img",d.alt="Historier",i.appendChild(d);const A=document.createElement("p");A.className="word-explanation",A.textContent=e("laerNyeOrdHistorierDesc"),i.appendChild(A);const x=document.createElement("div");x.style.marginTop="2rem",x.style.marginBottom="2rem",x.style.padding="1.5rem",x.style.background="rgba(255, 255, 255, 0.05)",x.style.borderLeft="4px solid var(--primary-color)",x.style.borderRadius="8px",x.style.textAlign="left",x.style.fontSize="0.95rem",x.style.lineHeight="1.6",x.style.color="var(--text-color, white)",x.innerHTML=e("historierPromptGuide"),i.appendChild(x),s(i,"https://gemini.google.com/gem/1d8R8VVlBLmF9Sfdh3zXwtM1u9uRuvZp3?usp=sharing"),_.appendChild(i)}function s(_,i){const m=document.createElement("div");m.className="consent-container";const d=document.createElement("input");d.type="checkbox",d.id="gemini-consent-"+Math.random().toString(36).substr(2,9);const A=document.createElement("label");A.htmlFor=d.id,A.textContent=" "+e("geminiConsentText"),m.appendChild(d),m.appendChild(A),_.appendChild(m);const x=document.createElement("div");x.className="gemini-btn-container";const E=document.createElement("a");E.href=i,E.target="_blank",E.className="gemini-btn disabled",E.textContent=e("geminiBtnText"),x.appendChild(E),_.appendChild(x),d.addEventListener("change",b=>{E.classList.toggle("disabled",!b.target.checked)})}r()}function lt(y,c){y.innerHTML="";const t=document.createElement("div");t.className="view-container top100-substantiver-hub";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.innerHTML=`← ${e("back")}`,a.onclick=()=>c("word_learning"),r.appendChild(a),t.appendChild(r);const n=document.createElement("style");n.textContent=`
         .top100-substantiver-hub {
@@ -1348,13 +1348,44 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid #0284c7;
-            color: #38bdf8;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid #22c55e;
+            color: #4ade80;
             padding: 0.5rem 1.2rem;
             border-radius: 20px;
             font-size: 0.95rem;
             font-weight: 700;
+        }
+        .tag-substantiv {
+            background: rgba(34, 197, 94, 0.2) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+            font-weight: 700 !important;
+        }
+        .grammar-system-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin: 1rem auto 2.5rem;
+            padding: 0.8rem 1.4rem;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            max-width: 850px;
+            font-size: 0.9rem;
+        }
+        .grammar-system-item {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .grammar-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: inline-block;
         }
 
         .hub-scenes-grid {
@@ -1488,7 +1519,14 @@
         <h1>🏆 De 100 mest almindelige substantiver</h1>
         <p>Disse 100 navneord udgør over halvdelen af alle substantiver, du møder i hverdagen. I stedet for at lære dem fra en kedelig liste, udforsker du dem i levende vrimlebilleder med <strong>farve-radar (EN/ET)</strong>, detektiv-missioner og sætningsbygning.</p>
         <div class="hub-facts-badge">
-            <span>💡</span> 3 semantiske verdener dækker hele dit hverdagsordforråd
+            <span>🟢</span> <strong>Ordklasse: Substantiver</strong> (Navneord i grøn farve)
+        </div>
+        <div class="grammar-system-banner">
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong>Substantiv</strong> (grøn)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong>Verbum</strong> (rød)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong>Adjektiv</strong> (orange)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong>Sted</strong> (blå)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong>Tid</strong> (lilla)</div>
         </div>
     `,t.appendChild(h);const k=document.createElement("div");k.className="hub-scenes-grid";const p=document.createElement("div");p.className="scene-card",p.innerHTML=`
         <div class="scene-card-img-wrap">
@@ -1499,6 +1537,7 @@
             <h3>🏙️ Byrummet</h3>
             <p>Udforsk gaden, torvet, skolen, butikken og menneskene i byen. Lær centrale højfrekvente ord som <em>mand, kvinde, bil, vej, skole, tid, penge, læge</em> og <em>tur</em>.</p>
             <div class="scene-features-tags">
+                <span class="feature-tag tag-substantiv">🟢 24 Substantiver</span>
                 <span class="feature-tag">📡 Farve-radar EN/ET</span>
                 <span class="feature-tag">🕵️ Detektiv-mission</span>
                 <span class="feature-tag">💭 Mikro-historie</span>
@@ -1515,6 +1554,7 @@
             <h3>🍳 Køkkenet & Hjemmet</h3>
             <p>Udforsk familiens måltid, maden, møblerne og tøjet i det nære miljø. Lær ord som <em>mor, far, barn, bord, stol, kop, kaffe, mad, seng, hund</em> og <em>problem</em>.</p>
             <div class="scene-features-tags">
+                <span class="feature-tag tag-substantiv">🟢 20 Substantiver</span>
                 <span class="feature-tag">📡 Farve-radar EN/ET</span>
                 <span class="feature-tag">📦 20-ords kassesortering</span>
                 <span class="feature-tag">💭 Kaffen vælter!</span>
@@ -1786,6 +1826,19 @@
             text-transform: uppercase;
             margin-bottom: 0.5rem;
         }
+        .badge-substantiv {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            margin-right: 0.4rem;
+        }
         .badge-en { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
         .badge-et { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid #ea580c; }
         .detail-main-word { font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.3rem; }
@@ -2037,22 +2090,64 @@
         }
         .builder-slot-box {
             padding: 0.7rem 1.2rem; border-radius: 10px; font-weight: 700; font-size: 1.05rem;
-            display: flex; align-items: center; gap: 0.5rem;
+            display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem;
         }
-        .slot-subjekt { background: rgba(56, 189, 248, 0.25); color: #38bdf8; border: 1px solid #0284c7; }
-        .slot-verbum { background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid #ef4444; }
-        .slot-objekt { background: rgba(249, 115, 22, 0.25); color: #fb923c; border: 1px solid #ea580c; }
-        .slot-adverbial { background: rgba(34, 197, 94, 0.25); color: #4ade80; border: 1px solid #22c55e; }
+        /* Grammatisk farvesystematik:
+           🟢 Substantiv/Pronomen (Subjekt & Objekt): Grøn
+           🔴 Verbum: Rød
+           🟠 Adjektiv: Orange
+           🔵 Sted / Præposition: Blå
+           🟣 Tid: Lilla
+        */
+        .slot-subjekt { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .slot-verbum { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        .slot-objekt { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .slot-adverbial { background: rgba(2, 132, 199, 0.2); color: #60a5fa; border: 1px solid #0284c7; }
+        .slot-role-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            margin-bottom: 0.2rem;
+        }
+        .grammar-legend-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.4rem;
+            padding: 0.6rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+        }
+        .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+        .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-adjektiv { background: #f97316; box-shadow: 0 0 6px rgba(249, 115, 22, 0.6); }
+        .chip-sted { background: #0284c7; box-shadow: 0 0 6px rgba(2, 132, 199, 0.6); }
+        .chip-tid { background: #8b5cf6; box-shadow: 0 0 6px rgba(139, 92, 246, 0.6); }
+
         .tray-chips-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem; }
         .tray-chip-btn {
-            background: #1e293b; border: 1px solid #475569; color: white; padding: 0.6rem 1rem;
+            background: #1e293b; border: 1px solid rgba(239, 68, 68, 0.4); color: white; padding: 0.6rem 1rem;
             border-radius: 10px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
         }
-        .tray-chip-btn:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .tray-chip-btn:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); transform: translateY(-2px); }
         .live-sentence-preview {
             background: #0f172a; border: 1px solid #334155; border-radius: 14px; padding: 1.2rem;
             text-align: center; font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin-bottom: 1.5rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;
         }
+        .grammar-word { font-weight: 800; }
+        .word-substantiv { color: #4ade80; }
+        .word-verbum { color: #f87171; }
+        .word-adjektiv { color: #fb923c; }
+        .word-sted { color: #60a5fa; }
+        .word-tid { color: #c084fc; }
     `,t.appendChild(h);const k=document.createElement("div");k.className="byrum-hero-header",k.innerHTML=`
         <h1>🏙️ Byrummet (Byen, gaden & hverdagen)</h1>
         <p>Her finder du <strong>60–70 % af de mest brugte danske substantiver</strong>! Mød menneskene på gaden, transportmidler, skolen, butikken, tid og penge i et levende vrimlebillede.</p>
@@ -2067,7 +2162,10 @@
         </div>
     `;const H=[];d.forEach(O=>{const V=document.createElement("div");V.className=`vrimmel-hotspot hotspot-${O.gender}`,V.style.left=`${O.x}%`,V.style.top=`${O.y}%`,V.textContent="?",V.title=O.word,V.onclick=()=>{w.innerHTML=`
                 <div style="flex: 1; min-width: 250px;">
-                    <div class="detail-word-badge badge-${O.gender}">🏷️ ${O.gender.toUpperCase()}-ord (${O.gender==="en"?"Fælleskøn":"Intetkøn"})</div>
+                    <div>
+                        <span class="badge-substantiv">Substantiv</span>
+                        <span class="detail-word-badge badge-${O.gender}">🏷️ ${O.gender.toUpperCase()}-ord (${O.gender==="en"?"Fælleskøn":"Intetkøn"})</span>
+                    </div>
                     <div class="detail-main-word">${O.icon} ${O.word}</div>
                     <div class="detail-forms">Bestemt: <strong>${O.bestemt}</strong> | Flertal: <strong>${O.flertal}</strong></div>
                     <div class="detail-sentence">"${O.sentence}"</div>
@@ -2175,15 +2273,35 @@
                 <h3 style="font-size: 1.6rem; color: white;">Vælg det rigtige verbum og dan en byrums-sætning:</h3>
             </div>
 
+            <!-- Grammatisk farveforklaring -->
+            <div class="grammar-legend-bar">
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>Substantiv</strong> (grøn)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>Verbum</strong> (rød)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>Adjektiv</strong> (orange)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>Sted</strong> (blå)</div>
+            </div>
+
             <div class="builder-slots-row">
-                <div class="builder-slot-box slot-subjekt">${O.subjekt}</div>
-                <div class="builder-slot-box slot-verbum" id="slot-v-byrum">❓ Vælg verbum</div>
-                <div class="builder-slot-box slot-objekt">${O.objekt}</div>
-                <div class="builder-slot-box slot-adverbial">${O.adverbial}</div>
+                <div class="builder-slot-box slot-subjekt">
+                    <span class="slot-role-tag">Substantiv</span>
+                    <span>${O.subjekt}</span>
+                </div>
+                <div class="builder-slot-box slot-verbum" id="slot-v-byrum">
+                    <span class="slot-role-tag">Verbum</span>
+                    <span>❓ Vælg verbum</span>
+                </div>
+                <div class="builder-slot-box slot-objekt">
+                    <span class="slot-role-tag">Substantiv</span>
+                    <span>${O.objekt}</span>
+                </div>
+                <div class="builder-slot-box slot-adverbial">
+                    <span class="slot-role-tag">Sted</span>
+                    <span>${O.adverbial}</span>
+                </div>
             </div>
 
             <div class="words-selection-tray">
-                <div class="tray-group-title">Hvilket verbum passer til handlingen?</div>
+                <div class="tray-group-title">Hvilket verbum passer til handlingen? (🔴 Verbum)</div>
                 <div class="tray-chips-list" id="verb-chips-byrum"></div>
             </div>
 
@@ -2192,14 +2310,19 @@
             </div>
 
             <div style="text-align: center;" id="action-area-byrum"></div>
-        `;const V=ne.querySelector("#verb-chips-byrum");[O.verbum,...O.wrongVerbs].sort(()=>Math.random()-.5).forEach(Q=>{const U=document.createElement("button");U.className="tray-chip-btn",U.textContent=Q,U.onclick=()=>{const ee=ne.querySelector("#slot-v-byrum"),te=ne.querySelector("#preview-text-byrum"),ge=ne.querySelector("#action-area-byrum");Q===O.verbum?(ee.textContent=Q,ee.style.background="rgba(34, 197, 94, 0.35)",ee.style.borderColor="#22c55e",ee.style.color="#4ade80",te.innerHTML=`🎉 <strong>${O.correctText}</strong>`,n(O.correctText),ge.innerHTML=`
+        `;const V=ne.querySelector("#verb-chips-byrum");[O.verbum,...O.wrongVerbs].sort(()=>Math.random()-.5).forEach(Q=>{const U=document.createElement("button");U.className="tray-chip-btn",U.textContent=Q,U.onclick=()=>{const ee=ne.querySelector("#slot-v-byrum"),te=ne.querySelector("#preview-text-byrum"),ge=ne.querySelector("#action-area-byrum");Q===O.verbum?(ee.innerHTML=`<span class="slot-role-tag">Verbum</span><span>${Q} ✓</span>`,ee.style.background="rgba(239, 68, 68, 0.35)",ee.style.borderColor="#ef4444",ee.style.color="#fca5a5",te.innerHTML=`
+                        🎉 <span class="grammar-word word-substantiv">${O.subjekt}</span> 
+                        <span class="grammar-word word-verbum">${O.verbum}</span> 
+                        <span class="grammar-word word-substantiv">${O.objekt}</span> 
+                        <span class="grammar-word word-sted">${O.adverbial}</span>.
+                    `,n(O.correctText),ge.innerHTML=`
                         <button class="listen-word-btn" style="display: inline-flex; margin-right: 0.8rem;" id="listen-byrum-sent">
                             🔊 Hør udtale
                         </button>
                         <button class="mission-next-btn" style="margin-top: 0;" id="next-byrum-sent-task">
                             ${Z<oe.length-1?"Næste sætning ➔":"Start forfra 🔄"}
                         </button>
-                    `,ge.querySelector("#listen-byrum-sent").onclick=()=>n(O.correctText),ge.querySelector("#next-byrum-sent-task").onclick=()=>{Z=(Z+1)%oe.length,ae()}):(ee.textContent=`${Q} ✕`,ee.style.borderColor="#ef4444",ee.style.color="#f87171",te.textContent=`Nej, "${O.subjekt} ${Q} ${O.objekt}" passer ikke. Prøv et andet verbum!`,n("Nej, prøv et andet verbum"))},V.appendChild(U)})}ae(),_e.appendChild(ne),i.appendChild(_e),y.appendChild(t)}function gt(y,c){y.innerHTML="";const t=document.createElement("div");t.className="view-container koekken-vrimmel-view";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.innerHTML=`← ${e("back")}`,a.onclick=()=>c("word_learning"),r.appendChild(a),t.appendChild(r);function n(V){if(!("speechSynthesis"in window))return;window.speechSynthesis.cancel();const W=new SpeechSynthesisUtterance(V);W.lang="da-DK",W.rate=.9,window.speechSynthesis.speak(W)}const h=document.createElement("style");h.textContent=`
+                    `,ge.querySelector("#listen-byrum-sent").onclick=()=>n(O.correctText),ge.querySelector("#next-byrum-sent-task").onclick=()=>{Z=(Z+1)%oe.length,ae()}):(ee.innerHTML=`<span class="slot-role-tag">Verbum</span><span>${Q} ✕</span>`,ee.style.borderColor="#ef4444",ee.style.color="#f87171",te.textContent=`Nej, "${O.subjekt} ${Q} ${O.objekt}" passer ikke. Prøv et andet verbum!`,n("Nej, prøv et andet verbum"))},V.appendChild(U)})}ae(),_e.appendChild(ne),i.appendChild(_e),y.appendChild(t)}function gt(y,c){y.innerHTML="";const t=document.createElement("div");t.className="view-container koekken-vrimmel-view";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.innerHTML=`← ${e("back")}`,a.onclick=()=>c("word_learning"),r.appendChild(a),t.appendChild(r);function n(V){if(!("speechSynthesis"in window))return;window.speechSynthesis.cancel();const W=new SpeechSynthesisUtterance(V);W.lang="da-DK",W.rate=.9,window.speechSynthesis.speak(W)}const h=document.createElement("style");h.textContent=`
         .koekken-vrimmel-view {
             max-width: 1200px;
             margin: 0 auto;
@@ -2460,6 +2583,19 @@
             font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
+        }
+        .badge-substantiv {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            margin-right: 0.4rem;
         }
         .badge-en { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
         .badge-et { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid #ea580c; }
@@ -2949,13 +3085,48 @@
             font-weight: 700;
             font-size: 1.05rem;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
         }
-        .slot-subjekt { background: rgba(56, 189, 248, 0.25); color: #38bdf8; border: 1px solid #0284c7; }
-        .slot-verbum { background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid #ef4444; }
-        .slot-objekt { background: rgba(249, 115, 22, 0.25); color: #fb923c; border: 1px solid #ea580c; }
-        .slot-adverbial { background: rgba(34, 197, 94, 0.25); color: #4ade80; border: 1px solid #22c55e; }
+        /* Grammatisk farvesystematik:
+           🟢 Substantiv/Pronomen (Subjekt & Objekt): Grøn
+           🔴 Verbum: Rød
+           🟠 Adjektiv: Orange
+           🔵 Sted / Præposition: Blå
+           🟣 Tid: Lilla
+        */
+        .slot-subjekt { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .slot-verbum { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        .slot-objekt { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .slot-adverbial { background: rgba(2, 132, 199, 0.2); color: #60a5fa; border: 1px solid #0284c7; }
+        .slot-role-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            margin-bottom: 0.2rem;
+        }
+        .grammar-legend-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.4rem;
+            padding: 0.6rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+        }
+        .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+        .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-adjektiv { background: #f97316; box-shadow: 0 0 6px rgba(249, 115, 22, 0.6); }
+        .chip-sted { background: #0284c7; box-shadow: 0 0 6px rgba(2, 132, 199, 0.6); }
+        .chip-tid { background: #8b5cf6; box-shadow: 0 0 6px rgba(139, 92, 246, 0.6); }
 
         .words-selection-tray {
             margin-bottom: 1.5rem;
@@ -2975,7 +3146,7 @@
         }
         .tray-chip-btn {
             background: #1e293b;
-            border: 1px solid #475569;
+            border: 1px solid rgba(239, 68, 68, 0.4);
             color: white;
             padding: 0.6rem 1rem;
             border-radius: 10px;
@@ -2985,7 +3156,8 @@
             transition: all 0.2s ease;
         }
         .tray-chip-btn:hover {
-            border-color: #38bdf8;
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.15);
             transform: translateY(-2px);
         }
         .live-sentence-preview {
@@ -3001,9 +3173,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
+        .grammar-word { font-weight: 800; }
+        .word-substantiv { color: #4ade80; }
+        .word-verbum { color: #f87171; }
+        .word-adjektiv { color: #fb923c; }
+        .word-sted { color: #60a5fa; }
+        .word-tid { color: #c084fc; }
     `,t.appendChild(h);const k=document.createElement("div");k.className="kv-hero-header",k.innerHTML=`
         <h1>🍳 Køkkenet & Hjemmet</h1>
         <p>Lær de mest brugte danske navneord i et levende vrimlebillede. Mestr <strong>EN</strong> og <strong>ET</strong> med farve-radaren, løs detektiv-missioner og byg rigtige sætninger.</p>
@@ -3018,7 +3196,10 @@
         </div>
     `;const H=[];d.forEach(V=>{const W=document.createElement("div");W.className=`vrimmel-hotspot hotspot-${V.gender}`,W.style.left=`${V.x}%`,W.style.top=`${V.y}%`,W.textContent="?",W.title=V.word,W.onclick=()=>{w.innerHTML=`
                 <div style="flex: 1; min-width: 250px;">
-                    <div class="detail-word-badge badge-${V.gender}">🏷️ ${V.gender.toUpperCase()}-ord (${V.gender==="en"?"Fælleskøn":"Intetkøn"})</div>
+                    <div>
+                        <span class="badge-substantiv">Substantiv</span>
+                        <span class="detail-word-badge badge-${V.gender}">🏷️ ${V.gender.toUpperCase()}-ord (${V.gender==="en"?"Fælleskøn":"Intetkøn"})</span>
+                    </div>
                     <div class="detail-main-word">${V.icon} ${V.word}</div>
                     <div class="detail-forms">Bestemt: <strong>${V.bestemt}</strong> | Flertal: <strong>${V.flertal}</strong></div>
                     <div class="detail-sentence">"${V.sentence}"</div>
@@ -3140,17 +3321,37 @@
                 <h3 style="font-size: 1.6rem; color: white;">Vælg det rigtige verbum og byg sætningen:</h3>
             </div>
 
+            <!-- Grammatisk farveforklaring -->
+            <div class="grammar-legend-bar">
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>Substantiv</strong> (grøn)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>Verbum</strong> (rød)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>Adjektiv</strong> (orange)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>Sted</strong> (blå)</div>
+            </div>
+
             <!-- Slots container -->
             <div class="builder-slots-row" id="sentence-slots">
-                <div class="builder-slot-box slot-subjekt">${V.subjekt}</div>
-                <div class="builder-slot-box slot-verbum" id="slot-v">❓ Vælg verbum</div>
-                <div class="builder-slot-box slot-objekt">${V.objekt}</div>
-                <div class="builder-slot-box slot-adverbial">${V.adverbial}</div>
+                <div class="builder-slot-box slot-subjekt">
+                    <span class="slot-role-tag">Substantiv</span>
+                    <span>${V.subjekt}</span>
+                </div>
+                <div class="builder-slot-box slot-verbum" id="slot-v">
+                    <span class="slot-role-tag">Verbum</span>
+                    <span>❓ Vælg verbum</span>
+                </div>
+                <div class="builder-slot-box slot-objekt">
+                    <span class="slot-role-tag">Substantiv</span>
+                    <span>${V.objekt}</span>
+                </div>
+                <div class="builder-slot-box slot-adverbial">
+                    <span class="slot-role-tag">Sted</span>
+                    <span>${V.adverbial}</span>
+                </div>
             </div>
 
             <!-- Verbs selection -->
             <div class="words-selection-tray">
-                <div class="tray-group-title">Hvilket verbum passer til handlingen?</div>
+                <div class="tray-group-title">Hvilket verbum passer til handlingen? (🔴 Verbum)</div>
                 <div class="tray-chips-list" id="verb-chips-list"></div>
             </div>
 
@@ -3159,14 +3360,19 @@
             </div>
 
             <div style="text-align: center;" id="sentence-action-area"></div>
-        `;const W=ae.querySelector("#verb-chips-list");[V.verbum,...V.wrongVerbs].sort(()=>Math.random()-.5).forEach(U=>{const ee=document.createElement("button");ee.className="tray-chip-btn",ee.textContent=U,ee.onclick=()=>{const te=ae.querySelector("#slot-v"),ge=ae.querySelector("#preview-text"),me=ae.querySelector("#sentence-action-area");U===V.verbum?(te.textContent=U,te.style.background="rgba(34, 197, 94, 0.35)",te.style.borderColor="#22c55e",te.style.color="#4ade80",ge.innerHTML=`🎉 <strong>${V.correctText}</strong>`,n(V.correctText),me.innerHTML=`
+        `;const W=ae.querySelector("#verb-chips-list");[V.verbum,...V.wrongVerbs].sort(()=>Math.random()-.5).forEach(U=>{const ee=document.createElement("button");ee.className="tray-chip-btn",ee.textContent=U,ee.onclick=()=>{const te=ae.querySelector("#slot-v"),ge=ae.querySelector("#preview-text"),me=ae.querySelector("#sentence-action-area");U===V.verbum?(te.innerHTML=`<span class="slot-role-tag">Verbum</span><span>${U} ✓</span>`,te.style.background="rgba(239, 68, 68, 0.35)",te.style.borderColor="#ef4444",te.style.color="#fca5a5",ge.innerHTML=`
+                        🎉 <span class="grammar-word word-substantiv">${V.subjekt}</span> 
+                        <span class="grammar-word word-verbum">${V.verbum}</span> 
+                        <span class="grammar-word word-substantiv">${V.objekt}</span> 
+                        <span class="grammar-word word-sted">${V.adverbial}</span>.
+                    `,n(V.correctText),me.innerHTML=`
                         <button class="listen-word-btn" style="display: inline-flex; margin-right: 0.8rem;" id="listen-full-sentence">
                             🔊 Hør udtale
                         </button>
                         <button class="mission-next-btn" style="margin-top: 0;" id="next-sentence-task">
                             ${ne<Z.length-1?"Næste sætning ➔":"Start forfra 🔄"}
                         </button>
-                    `,me.querySelector("#listen-full-sentence").onclick=()=>n(V.correctText),me.querySelector("#next-sentence-task").onclick=()=>{ne=(ne+1)%Z.length,O()}):(te.textContent=`${U} ✕`,te.style.borderColor="#ef4444",te.style.color="#f87171",ge.textContent=`Nej, "${V.subjekt} ${U} ${V.objekt}" giver ikke mening her. Prøv et andet verbum!`,n("Nej, prøv et andet verbum"))},W.appendChild(ee)})}O(),oe.appendChild(ae),i.appendChild(oe),y.appendChild(t)}function mt(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("main"),r.appendChild(a);const n=document.createElement("h1");n.textContent=e("samtaleTraening");const h=document.createElement("p");h.className="subtitle",h.textContent=e("samtaleTraeningDesc");const k=[{icon:"🗣",titleKey:"hverdagssamtale",action:()=>c("samtale_hverdag")},{icon:"🏠",titleKey:"samtaleBolig",action:()=>c("samtale_bolig_menu")},{icon:"💼",titleKey:"samtaleArbejde",action:()=>c("samtale_arbejde_menu")},{icon:"🏫",titleKey:"samtaleSprogskole",title:"Samtale om Sprogskole",action:()=>c("samtale_sprogskole_menu")}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title||e(s.titleKey),_.appendChild(i),_.appendChild(m),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function ct(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("samtale_traening"),r.appendChild(a);const n=document.createElement("h1");n.textContent="Samtale om bolig";const h=document.createElement("p");h.className="subtitle",h.textContent="Vælg, hvordan du vil tale med Anna om din bolig.";const k=[{icon:"💬",title:"Fri snak med Anna",desc:"Tag en afslappet snak uden at tænke på grammatik.",action:()=>c("samtale_ai",{mode:"forgiving"})},{icon:"👩‍🏫",title:"Snak med Anna (Feedback)",desc:"Få rettelser til din grammatik og ordstilling bagefter.",action:()=>c("samtale_ai",{mode:"feedback"})}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title;const d=document.createElement("p");d.style.fontSize="0.9rem",d.style.color="var(--text-muted)",d.style.marginTop="0.5rem",d.textContent=s.desc,_.appendChild(i),_.appendChild(m),_.appendChild(d),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function ut(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("samtale_traening"),r.appendChild(a);const n=document.createElement("h1");n.textContent="Samtale om arbejde";const h=document.createElement("p");h.className="subtitle",h.textContent="Vælg, hvordan du vil tale med Anna om dit arbejde.";const k=[{icon:"💬",title:"Fri snak med Anna",desc:"Tag en afslappet snak uden at tænke på grammatik.",action:()=>c("samtale_ai_arbejde",{mode:"forgiving"})},{icon:"👩‍🏫",title:"Snak med Anna (Feedback)",desc:"Få rettelser til din grammatik og ordstilling bagefter.",action:()=>c("samtale_ai_arbejde",{mode:"feedback"})}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title;const d=document.createElement("p");d.style.fontSize="0.9rem",d.style.color="var(--text-muted)",d.style.marginTop="0.5rem",d.textContent=s.desc,_.appendChild(i),_.appendChild(m),_.appendChild(d),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function pt(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("samtale_traening"),r.appendChild(a);const n=document.createElement("h1");n.textContent="Samtale om sprogskolen";const h=document.createElement("p");h.className="subtitle",h.textContent="Vælg, hvordan du vil tale med Anna om din sprogskole.";const k=[{icon:"💬",title:"Fri snak med Anna",desc:"Tag en afslappet snak uden at tænke på grammatik.",action:()=>c("samtale_ai_sprogskole",{mode:"forgiving"})},{icon:"👩‍🏫",title:"Snak med Anna (Feedback)",desc:"Få rettelser til din grammatik og ordstilling bagefter.",action:()=>c("samtale_ai_sprogskole",{mode:"feedback"})}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title;const d=document.createElement("p");d.style.fontSize="0.9rem",d.style.color="var(--text-muted)",d.style.marginTop="0.5rem",d.textContent=s.desc,_.appendChild(i),_.appendChild(m),_.appendChild(d),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function ht(y,c,t={}){const r=t.mode||"feedback",a=document.createElement("div");a.className="view-container ai-conversation-container";const n=document.createElement("div");n.className="top-bar",n.style.display="flex",n.style.justifyContent="space-between",n.style.width="100%";const h=document.createElement("button");if(h.className="back-btn",h.innerHTML="← Tilbage",h.onclick=()=>{window.speechSynthesis.cancel(),c("samtale_traening")},n.appendChild(h),r==="feedback"){const f=document.createElement("button");f.className="back-btn",f.style.color="#4caf50",f.style.border="2px solid #4caf50",f.style.borderRadius="20px",f.style.padding="4px 12px",f.innerHTML="Vis feedback",f.onclick=()=>{window.speechSynthesis.cancel(),z()},n.appendChild(f)}a.appendChild(n);const k=document.createElement("h1");k.textContent="Samtale med Anna",a.appendChild(k);const p=document.createElement("p");p.className="subtitle",p.textContent="Anna lytter til dig og svarer. Snak med hende om din sprogskole!",a.appendChild(p);const s=document.createElement("div");s.className="ai-chat-container",a.appendChild(s);const _=document.createElement("div");_.className="ai-control-area";const i=document.createElement("div");i.className="ai-status-text",i.textContent="Tryk på mikrofonen for at svare";const m=document.createElement("button");m.className="ai-mic-btn",m.innerHTML="🎤",_.appendChild(i),_.appendChild(m),a.appendChild(_),y.appendChild(a);const d=window.SpeechRecognition||window.webkitSpeechRecognition;let A=null;d&&(A=new d,A.lang="da-DK",A.interimResults=!0,A.maxAlternatives=1,A.continuous=!1);const x=window.speechSynthesis;let E=null;function b(){const f=x.getVoices();E=f.filter(B=>B.lang==="da-DK"||B.lang==="da_DK")[0]||f[0]}b(),x.onvoiceschanged!==void 0&&(x.onvoiceschanged=b);let g=0,o=[],l=!1;function u(f,D){const B=document.createElement("div");if(B.className=`ai-chat-wrapper ${D}`,D==="anna"){const F=document.createElement("img");F.src=le+"assets/anna_shopping_vector.png",F.className="ai-avatar",B.appendChild(F)}const P=document.createElement("div");P.className=`ai-chat-bubble ${D}`,P.innerHTML=f,B.appendChild(P),s.appendChild(B),setTimeout(()=>{s.scrollTo({top:s.scrollHeight,behavior:"smooth"})},100)}function v(){const f=document.createElement("div");f.className="ai-chat-wrapper anna typing-indicator-wrapper",f.id="typing-indicator";const D=document.createElement("img");D.src=le+"assets/anna_shopping_vector.png",D.className="ai-avatar",f.appendChild(D);const B=document.createElement("div");B.className="ai-chat-bubble anna typing-indicator",B.innerHTML='<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>',f.appendChild(B),s.appendChild(f),s.scrollTo({top:s.scrollHeight,behavior:"smooth"})}function S(){const f=document.getElementById("typing-indicator");f&&f.remove()}let w=!1;function H(f){E||b(),l=!0,m.classList.add("disabled"),i.textContent="Anna taler...";const D=new SpeechSynthesisUtterance(f);window.activeUtterance=D,E&&(D.voice=E),D.lang="da-DK",D.rate=.9,D.pitch=1,D.onend=()=>{l&&(l=!1,w=!0,i.textContent="Gør mikrofonen klar...",setTimeout(()=>{w=!1,m.classList.remove("disabled"),i.textContent="Tryk på mikrofonen for at svare",g===10&&(r==="feedback"?z():(i.textContent="Samtalen er slut.",m.style.display="none",setTimeout(()=>c("samtale_traening"),3e3)))},1500))},x.speak(D),setTimeout(()=>{const B=setInterval(()=>{if(!l){clearInterval(B);return}x.speaking||(clearInterval(B),D.onend())},500)},1e3)}function j(f){v(),setTimeout(()=>{S(),u(`<strong>Anna:</strong> ${f}`,"anna"),H(f)},1500+Math.random()*1e3)}function T(f){const D=f.toLowerCase(),B=D.match(/\bjeg (have|køre|løbe|spise|drikke|sove|sprogskole|tale|læse|skrive|høre|se|købe|cykle|tage|møde|gå)\b/);B&&o.push({priority:2,text:`Du sagde 'jeg ${B[1]}', men udsagnsord i nutid ender på r. Husk at sige 'jeg ${B[1]}<b>r</b>'.`});const P=D.match(/\bjeg er\s+([a-zæøå\s]*?)(sprogskoler|har|spiser|kører|taler|sover|læser|møder|tager|cykler|går)\b/);if(P){const G=P[1].trim();G.split(" ").length<=4&&!G.includes("når")&&!G.includes("fordi")&&o.push({priority:2,text:`På dansk siger man normalt bare 'jeg ${P[2]}'. Man bruger ikke 'er' foran et andet udsagnsord som på engelsk.`})}D.match(/\bmed cykel\b/)&&o.push({priority:4,text:"Husk at det hedder '<b>på</b> cykel', ikke 'med cykel'."}),D.match(/\bmed bil\b/)&&o.push({priority:4,text:"Husk at det hedder '<b>i</b> bil', ikke 'med bil'."}),D.match(/\bmed tog\b/)||D.match(/\bmed bus\b/);const F=D.match(/^(i|på)\s+([a-zæøå]+)\s+(sprogskoler|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)$/);F&&o.push({priority:1,text:`<strong>Manglende grundled:</strong> Du sagde '${F[0]}'. Her mangler du et grundled (f.eks. 'jeg'). Det mest naturlige er at starte med personen: '<b>Jeg ${F[3]} ${F[1]} (en/et) ${F[2]}</b>'.`});const I=D.match(/^(jeg|han|hun|vi|de)\s+(i|på|ved|tæt på|sammen med)\b/);I&&o.push({priority:2,text:`Du sagde '${I[0]}...'. Der mangler et udsagnsord! Sig f.eks. 'jeg <b>sprogskoler</b> ${I[2]}...' eller 'jeg <b>er</b> ${I[2]}...'.`});const M=D.match(/(?:^|\s)(kolleger|kunder)(?:$|\s)/);M&&!D.match(/\b(mine|vores|mange|nogle|nye|gode)\s+(kolleger|kunder)\b/)&&o.push({priority:3,text:`Når du taler om dine ${M[1]}, skal du ofte bruge ejestedord eller bestemt form: Sig f.eks. '<b>mine</b> ${M[1]}' eller '${M[1]}<b>ne</b>'.`});const K=D.match(/^(nu|her|i dag|i går|ofte|tit|nogle gange|altid|klokken [0-9]+)\s+(jeg|han|hun|vi|de|den|det)\s+(sprogskoler|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)\b/);K&&o.push({priority:1,text:`<strong>Ordstilling:</strong> Du sagde '${K[1]} ${K[2]} ${K[3]}'. Husk V2-reglen! Når en sætning starter med tid, skal udsagnsord og grundled bytte plads: '<b>${K[1]} ${K[3]} ${K[2]}</b>'.`});const R=D.match(/\b(jeg|han|hun|vi|de|den|det)\s+ikke\s+(sprogskoler|har|er|taler|spiser|drikker|sover|læser|kan|vil|skal|må|møder|tager|cykler|går)\b/);R&&o.push({priority:1,text:`<strong>Ordstilling:</strong> Du sagde '${R[1]} ikke ${R[2]}'. På dansk skal 'ikke' stå <em>efter</em> udsagnsordet i hovedsætninger: '<b>${R[1]} ${R[2]} ikke</b>'.`})}function C(f){switch(u(f,"user"),r==="feedback"&&T(f),f.toLowerCase(),g){case 0:g=1,j("Spændende! Hvornår går du på sprogskole?");break;case 1:g=2,j("Det lyder godt. Hvad laver du på sprogskole?");break;case 2:g=3,j("Ah, okay. Hvor mange kursister går du sammen med?");break;case 3:g=4,j("Så er I mange! Hvad laver du i pausen?");break;case 4:g=5,j("Hyggeligt! Hvordan kommer du til sprogskole?");break;case 5:g=6,j("Det lyder dejligt. Tusind tak for snakken. Nu kender jeg din sprogskole bedre!"),r==="feedback"&&setTimeout(()=>{z()},4e3);break}}function z(){_.style.display="none",n.querySelectorAll("button").forEach(F=>{F.textContent==="Vis feedback"&&F.remove()});const D=document.createElement("div");D.className="card udtale-card",D.style.marginTop="2rem",D.style.textAlign="left";const B=document.createElement("h2");B.textContent="Feedback på samtalen 💡",B.style.marginBottom="1rem",D.appendChild(B);const P=document.createElement("p");if(P.textContent="Super flot klaret! At føre en spontan samtale er svært, men du gjorde det godt.",D.appendChild(P),o.length>0){const F=document.createElement("ul");F.style.marginTop="1rem",F.style.paddingLeft="1.5rem",F.style.lineHeight="1.5";const I=new Map;o.forEach(K=>{I.has(K.text)?K.priority<I.get(K.text).priority&&I.set(K.text,K):I.set(K.text,K)}),Array.from(I.values()).sort((K,R)=>K.priority-R.priority).slice(0,3).forEach(K=>{const R=document.createElement("li");R.innerHTML=K.text,R.style.marginBottom="0.5rem",F.appendChild(R)}),D.appendChild(F)}else{const F=document.createElement("p");F.style.color="#4caf50",F.style.marginTop="1rem",F.style.fontWeight="bold",F.textContent="Vi lagde ikke mærke til nogen typiske grammatikfejl i din tale!",D.appendChild(F)}s.appendChild(D),s.scrollTo({top:s.scrollHeight,behavior:"smooth"})}setTimeout(()=>{j("Hej! Jeg hedder Anna. Jeg vil gerne høre lidt om dit sprogskole. Hvornår møder du på sprogskole?")},500);let N=!1,q="",L=null;if(m.onclick=()=>{if(!w){if(l&&(x.cancel(),l=!1,m.classList.remove("disabled"),g===10)){r==="feedback"?z():(i.textContent="Samtalen er slut.",m.style.display="none",setTimeout(()=>c("samtale_traening"),3e3));return}if(N){N=!1,A.stop();return}try{A.start(),N=!0,m.classList.add("listening"),i.textContent="Lytter... Tal nu (tryk igen for at sende)",i.style.color="#ffeb3b",q="",L=document.createElement("div"),L.className="ai-chat-bubble user live-recording",L.innerHTML='<span class="recording-dot"></span> <em>Lytter...</em>';const f=document.createElement("div");f.className="ai-chat-wrapper user",f.id="live-recording-wrapper",f.appendChild(L),s.appendChild(f),s.scrollTo({top:s.scrollHeight,behavior:"smooth"})}catch{i.textContent="Kunne ikke starte mikrofonen.",N=!1}}},A?(A.onresult=f=>{let D="";for(let P=f.resultIndex;P<f.results.length;++P)f.results[P].isFinal?q+=f.results[P][0].transcript:D+=f.results[P][0].transcript;const B=(q+" "+D).trim();i.textContent="Hører: "+B,L&&(L.innerHTML='<span class="recording-dot"></span> '+(B||"<em>Lytter...</em>"),s.scrollTo({top:s.scrollHeight,behavior:"smooth"}))},A.onerror=f=>{if(f.error==="no-speech")return;m.classList.remove("listening"),N=!1,i.textContent="Fejl: "+f.error,i.style.color="#ff5e5b";const D=document.createElement("div");D.className="ai-chat-bubble anna",D.style.backgroundColor="rgba(255, 0, 0, 0.2)",D.style.border="1px solid red",D.innerHTML=`<em>System-info: Mikrofonen blev afbrudt af browseren (fejlkode: <strong>${f.error}</strong>).<br><br>Hvis du lige har trykket "Tillad", så er dette helt normalt for Apple-enheder. Tryk på mikrofonen én gang til for at starte optagelsen.</em>`,s.appendChild(D),s.scrollTo({top:s.scrollHeight,behavior:"smooth"});const B=document.getElementById("live-recording-wrapper");B&&B.remove(),L=null},A.onend=()=>{if(!N)return;m.classList.remove("listening"),N=!1,i.textContent="Behandler...",i.style.color="var(--text-muted)";const f=document.getElementById("live-recording-wrapper");f&&f.remove(),L=null,q.trim()!==""?C(q.trim()):i.textContent="Tryk på mikrofonen for at svare"}):(m.style.display="none",i.textContent="Din browser understøtter desværre ikke tale-genkendelse."),!document.getElementById("ai-chat-styles")){const f=document.createElement("style");f.id="ai-chat-styles",f.textContent=`
+                    `,me.querySelector("#listen-full-sentence").onclick=()=>n(V.correctText),me.querySelector("#next-sentence-task").onclick=()=>{ne=(ne+1)%Z.length,O()}):(te.innerHTML=`<span class="slot-role-tag">Verbum</span><span>${U} ✕</span>`,te.style.borderColor="#ef4444",te.style.color="#f87171",ge.textContent=`Nej, "${V.subjekt} ${U} ${V.objekt}" giver ikke mening her. Prøv et andet verbum!`,n("Nej, prøv et andet verbum"))},W.appendChild(ee)})}O(),oe.appendChild(ae),i.appendChild(oe),y.appendChild(t)}function mt(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("main"),r.appendChild(a);const n=document.createElement("h1");n.textContent=e("samtaleTraening");const h=document.createElement("p");h.className="subtitle",h.textContent=e("samtaleTraeningDesc");const k=[{icon:"🗣",titleKey:"hverdagssamtale",action:()=>c("samtale_hverdag")},{icon:"🏠",titleKey:"samtaleBolig",action:()=>c("samtale_bolig_menu")},{icon:"💼",titleKey:"samtaleArbejde",action:()=>c("samtale_arbejde_menu")},{icon:"🏫",titleKey:"samtaleSprogskole",title:"Samtale om Sprogskole",action:()=>c("samtale_sprogskole_menu")}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title||e(s.titleKey),_.appendChild(i),_.appendChild(m),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function ct(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("samtale_traening"),r.appendChild(a);const n=document.createElement("h1");n.textContent="Samtale om bolig";const h=document.createElement("p");h.className="subtitle",h.textContent="Vælg, hvordan du vil tale med Anna om din bolig.";const k=[{icon:"💬",title:"Fri snak med Anna",desc:"Tag en afslappet snak uden at tænke på grammatik.",action:()=>c("samtale_ai",{mode:"forgiving"})},{icon:"👩‍🏫",title:"Snak med Anna (Feedback)",desc:"Få rettelser til din grammatik og ordstilling bagefter.",action:()=>c("samtale_ai",{mode:"feedback"})}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title;const d=document.createElement("p");d.style.fontSize="0.9rem",d.style.color="var(--text-muted)",d.style.marginTop="0.5rem",d.textContent=s.desc,_.appendChild(i),_.appendChild(m),_.appendChild(d),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function ut(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("samtale_traening"),r.appendChild(a);const n=document.createElement("h1");n.textContent="Samtale om arbejde";const h=document.createElement("p");h.className="subtitle",h.textContent="Vælg, hvordan du vil tale med Anna om dit arbejde.";const k=[{icon:"💬",title:"Fri snak med Anna",desc:"Tag en afslappet snak uden at tænke på grammatik.",action:()=>c("samtale_ai_arbejde",{mode:"forgiving"})},{icon:"👩‍🏫",title:"Snak med Anna (Feedback)",desc:"Få rettelser til din grammatik og ordstilling bagefter.",action:()=>c("samtale_ai_arbejde",{mode:"feedback"})}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title;const d=document.createElement("p");d.style.fontSize="0.9rem",d.style.color="var(--text-muted)",d.style.marginTop="0.5rem",d.textContent=s.desc,_.appendChild(i),_.appendChild(m),_.appendChild(d),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function pt(y,c){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const a=document.createElement("button");a.className="back-btn",a.textContent="← "+e("back"),a.onclick=()=>c("samtale_traening"),r.appendChild(a);const n=document.createElement("h1");n.textContent="Samtale om sprogskolen";const h=document.createElement("p");h.className="subtitle",h.textContent="Vælg, hvordan du vil tale med Anna om din sprogskole.";const k=[{icon:"💬",title:"Fri snak med Anna",desc:"Tag en afslappet snak uden at tænke på grammatik.",action:()=>c("samtale_ai_sprogskole",{mode:"forgiving"})},{icon:"👩‍🏫",title:"Snak med Anna (Feedback)",desc:"Få rettelser til din grammatik og ordstilling bagefter.",action:()=>c("samtale_ai_sprogskole",{mode:"feedback"})}],p=document.createElement("div");p.className="grid",k.forEach(s=>{const _=document.createElement("div");_.className="card",_.onclick=s.action;const i=document.createElement("div");i.className="card-icon",i.textContent=s.icon;const m=document.createElement("div");m.className="card-title",m.textContent=s.title;const d=document.createElement("p");d.style.fontSize="0.9rem",d.style.color="var(--text-muted)",d.style.marginTop="0.5rem",d.textContent=s.desc,_.appendChild(i),_.appendChild(m),_.appendChild(d),p.appendChild(_)}),t.appendChild(r),t.appendChild(n),t.appendChild(h),t.appendChild(p),y.appendChild(t)}function ht(y,c,t={}){const r=t.mode||"feedback",a=document.createElement("div");a.className="view-container ai-conversation-container";const n=document.createElement("div");n.className="top-bar",n.style.display="flex",n.style.justifyContent="space-between",n.style.width="100%";const h=document.createElement("button");if(h.className="back-btn",h.innerHTML="← Tilbage",h.onclick=()=>{window.speechSynthesis.cancel(),c("samtale_traening")},n.appendChild(h),r==="feedback"){const f=document.createElement("button");f.className="back-btn",f.style.color="#4caf50",f.style.border="2px solid #4caf50",f.style.borderRadius="20px",f.style.padding="4px 12px",f.innerHTML="Vis feedback",f.onclick=()=>{window.speechSynthesis.cancel(),z()},n.appendChild(f)}a.appendChild(n);const k=document.createElement("h1");k.textContent="Samtale med Anna",a.appendChild(k);const p=document.createElement("p");p.className="subtitle",p.textContent="Anna lytter til dig og svarer. Snak med hende om din sprogskole!",a.appendChild(p);const s=document.createElement("div");s.className="ai-chat-container",a.appendChild(s);const _=document.createElement("div");_.className="ai-control-area";const i=document.createElement("div");i.className="ai-status-text",i.textContent="Tryk på mikrofonen for at svare";const m=document.createElement("button");m.className="ai-mic-btn",m.innerHTML="🎤",_.appendChild(i),_.appendChild(m),a.appendChild(_),y.appendChild(a);const d=window.SpeechRecognition||window.webkitSpeechRecognition;let A=null;d&&(A=new d,A.lang="da-DK",A.interimResults=!0,A.maxAlternatives=1,A.continuous=!1);const x=window.speechSynthesis;let E=null;function b(){const f=x.getVoices();E=f.filter(B=>B.lang==="da-DK"||B.lang==="da_DK")[0]||f[0]}b(),x.onvoiceschanged!==void 0&&(x.onvoiceschanged=b);let g=0,o=[],l=!1;function u(f,D){const B=document.createElement("div");if(B.className=`ai-chat-wrapper ${D}`,D==="anna"){const F=document.createElement("img");F.src=le+"assets/anna_shopping_vector.png",F.className="ai-avatar",B.appendChild(F)}const P=document.createElement("div");P.className=`ai-chat-bubble ${D}`,P.innerHTML=f,B.appendChild(P),s.appendChild(B),setTimeout(()=>{s.scrollTo({top:s.scrollHeight,behavior:"smooth"})},100)}function v(){const f=document.createElement("div");f.className="ai-chat-wrapper anna typing-indicator-wrapper",f.id="typing-indicator";const D=document.createElement("img");D.src=le+"assets/anna_shopping_vector.png",D.className="ai-avatar",f.appendChild(D);const B=document.createElement("div");B.className="ai-chat-bubble anna typing-indicator",B.innerHTML='<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>',f.appendChild(B),s.appendChild(f),s.scrollTo({top:s.scrollHeight,behavior:"smooth"})}function S(){const f=document.getElementById("typing-indicator");f&&f.remove()}let w=!1;function H(f){E||b(),l=!0,m.classList.add("disabled"),i.textContent="Anna taler...";const D=new SpeechSynthesisUtterance(f);window.activeUtterance=D,E&&(D.voice=E),D.lang="da-DK",D.rate=.9,D.pitch=1,D.onend=()=>{l&&(l=!1,w=!0,i.textContent="Gør mikrofonen klar...",setTimeout(()=>{w=!1,m.classList.remove("disabled"),i.textContent="Tryk på mikrofonen for at svare",g===10&&(r==="feedback"?z():(i.textContent="Samtalen er slut.",m.style.display="none",setTimeout(()=>c("samtale_traening"),3e3)))},1500))},x.speak(D),setTimeout(()=>{const B=setInterval(()=>{if(!l){clearInterval(B);return}x.speaking||(clearInterval(B),D.onend())},500)},1e3)}function j(f){v(),setTimeout(()=>{S(),u(`<strong>Anna:</strong> ${f}`,"anna"),H(f)},1500+Math.random()*1e3)}function T(f){const D=f.toLowerCase(),B=D.match(/\bjeg (have|køre|løbe|spise|drikke|sove|sprogskole|tale|læse|skrive|høre|se|købe|cykle|tage|møde|gå)\b/);B&&o.push({priority:2,text:`Du sagde 'jeg ${B[1]}', men udsagnsord i nutid ender på r. Husk at sige 'jeg ${B[1]}<b>r</b>'.`});const P=D.match(/\bjeg er\s+([a-zæøå\s]*?)(sprogskoler|har|spiser|kører|taler|sover|læser|møder|tager|cykler|går)\b/);if(P){const G=P[1].trim();G.split(" ").length<=4&&!G.includes("når")&&!G.includes("fordi")&&o.push({priority:2,text:`På dansk siger man normalt bare 'jeg ${P[2]}'. Man bruger ikke 'er' foran et andet udsagnsord som på engelsk.`})}D.match(/\bmed cykel\b/)&&o.push({priority:4,text:"Husk at det hedder '<b>på</b> cykel', ikke 'med cykel'."}),D.match(/\bmed bil\b/)&&o.push({priority:4,text:"Husk at det hedder '<b>i</b> bil', ikke 'med bil'."}),D.match(/\bmed tog\b/)||D.match(/\bmed bus\b/);const F=D.match(/^(i|på)\s+([a-zæøå]+)\s+(sprogskoler|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)$/);F&&o.push({priority:1,text:`<strong>Manglende grundled:</strong> Du sagde '${F[0]}'. Her mangler du et grundled (f.eks. 'jeg'). Det mest naturlige er at starte med personen: '<b>Jeg ${F[3]} ${F[1]} (en/et) ${F[2]}</b>'.`});const I=D.match(/^(jeg|han|hun|vi|de)\s+(i|på|ved|tæt på|sammen med)\b/);I&&o.push({priority:2,text:`Du sagde '${I[0]}...'. Der mangler et udsagnsord! Sig f.eks. 'jeg <b>sprogskoler</b> ${I[2]}...' eller 'jeg <b>er</b> ${I[2]}...'.`});const M=D.match(/(?:^|\s)(kolleger|kunder)(?:$|\s)/);M&&!D.match(/\b(mine|vores|mange|nogle|nye|gode)\s+(kolleger|kunder)\b/)&&o.push({priority:3,text:`Når du taler om dine ${M[1]}, skal du ofte bruge ejestedord eller bestemt form: Sig f.eks. '<b>mine</b> ${M[1]}' eller '${M[1]}<b>ne</b>'.`});const K=D.match(/^(nu|her|i dag|i går|ofte|tit|nogle gange|altid|klokken [0-9]+)\s+(jeg|han|hun|vi|de|den|det)\s+(sprogskoler|har|er|taler|spiser|drikker|sover|læser|møder|tager|cykler|går)\b/);K&&o.push({priority:1,text:`<strong>Ordstilling:</strong> Du sagde '${K[1]} ${K[2]} ${K[3]}'. Husk V2-reglen! Når en sætning starter med tid, skal udsagnsord og grundled bytte plads: '<b>${K[1]} ${K[3]} ${K[2]}</b>'.`});const R=D.match(/\b(jeg|han|hun|vi|de|den|det)\s+ikke\s+(sprogskoler|har|er|taler|spiser|drikker|sover|læser|kan|vil|skal|må|møder|tager|cykler|går)\b/);R&&o.push({priority:1,text:`<strong>Ordstilling:</strong> Du sagde '${R[1]} ikke ${R[2]}'. På dansk skal 'ikke' stå <em>efter</em> udsagnsordet i hovedsætninger: '<b>${R[1]} ${R[2]} ikke</b>'.`})}function C(f){switch(u(f,"user"),r==="feedback"&&T(f),f.toLowerCase(),g){case 0:g=1,j("Spændende! Hvornår går du på sprogskole?");break;case 1:g=2,j("Det lyder godt. Hvad laver du på sprogskole?");break;case 2:g=3,j("Ah, okay. Hvor mange kursister går du sammen med?");break;case 3:g=4,j("Så er I mange! Hvad laver du i pausen?");break;case 4:g=5,j("Hyggeligt! Hvordan kommer du til sprogskole?");break;case 5:g=6,j("Det lyder dejligt. Tusind tak for snakken. Nu kender jeg din sprogskole bedre!"),r==="feedback"&&setTimeout(()=>{z()},4e3);break}}function z(){_.style.display="none",n.querySelectorAll("button").forEach(F=>{F.textContent==="Vis feedback"&&F.remove()});const D=document.createElement("div");D.className="card udtale-card",D.style.marginTop="2rem",D.style.textAlign="left";const B=document.createElement("h2");B.textContent="Feedback på samtalen 💡",B.style.marginBottom="1rem",D.appendChild(B);const P=document.createElement("p");if(P.textContent="Super flot klaret! At føre en spontan samtale er svært, men du gjorde det godt.",D.appendChild(P),o.length>0){const F=document.createElement("ul");F.style.marginTop="1rem",F.style.paddingLeft="1.5rem",F.style.lineHeight="1.5";const I=new Map;o.forEach(K=>{I.has(K.text)?K.priority<I.get(K.text).priority&&I.set(K.text,K):I.set(K.text,K)}),Array.from(I.values()).sort((K,R)=>K.priority-R.priority).slice(0,3).forEach(K=>{const R=document.createElement("li");R.innerHTML=K.text,R.style.marginBottom="0.5rem",F.appendChild(R)}),D.appendChild(F)}else{const F=document.createElement("p");F.style.color="#4caf50",F.style.marginTop="1rem",F.style.fontWeight="bold",F.textContent="Vi lagde ikke mærke til nogen typiske grammatikfejl i din tale!",D.appendChild(F)}s.appendChild(D),s.scrollTo({top:s.scrollHeight,behavior:"smooth"})}setTimeout(()=>{j("Hej! Jeg hedder Anna. Jeg vil gerne høre lidt om dit sprogskole. Hvornår møder du på sprogskole?")},500);let N=!1,q="",L=null;if(m.onclick=()=>{if(!w){if(l&&(x.cancel(),l=!1,m.classList.remove("disabled"),g===10)){r==="feedback"?z():(i.textContent="Samtalen er slut.",m.style.display="none",setTimeout(()=>c("samtale_traening"),3e3));return}if(N){N=!1,A.stop();return}try{A.start(),N=!0,m.classList.add("listening"),i.textContent="Lytter... Tal nu (tryk igen for at sende)",i.style.color="#ffeb3b",q="",L=document.createElement("div"),L.className="ai-chat-bubble user live-recording",L.innerHTML='<span class="recording-dot"></span> <em>Lytter...</em>';const f=document.createElement("div");f.className="ai-chat-wrapper user",f.id="live-recording-wrapper",f.appendChild(L),s.appendChild(f),s.scrollTo({top:s.scrollHeight,behavior:"smooth"})}catch{i.textContent="Kunne ikke starte mikrofonen.",N=!1}}},A?(A.onresult=f=>{let D="";for(let P=f.resultIndex;P<f.results.length;++P)f.results[P].isFinal?q+=f.results[P][0].transcript:D+=f.results[P][0].transcript;const B=(q+" "+D).trim();i.textContent="Hører: "+B,L&&(L.innerHTML='<span class="recording-dot"></span> '+(B||"<em>Lytter...</em>"),s.scrollTo({top:s.scrollHeight,behavior:"smooth"}))},A.onerror=f=>{if(f.error==="no-speech")return;m.classList.remove("listening"),N=!1,i.textContent="Fejl: "+f.error,i.style.color="#ff5e5b";const D=document.createElement("div");D.className="ai-chat-bubble anna",D.style.backgroundColor="rgba(255, 0, 0, 0.2)",D.style.border="1px solid red",D.innerHTML=`<em>System-info: Mikrofonen blev afbrudt af browseren (fejlkode: <strong>${f.error}</strong>).<br><br>Hvis du lige har trykket "Tillad", så er dette helt normalt for Apple-enheder. Tryk på mikrofonen én gang til for at starte optagelsen.</em>`,s.appendChild(D),s.scrollTo({top:s.scrollHeight,behavior:"smooth"});const B=document.getElementById("live-recording-wrapper");B&&B.remove(),L=null},A.onend=()=>{if(!N)return;m.classList.remove("listening"),N=!1,i.textContent="Behandler...",i.style.color="var(--text-muted)";const f=document.getElementById("live-recording-wrapper");f&&f.remove(),L=null,q.trim()!==""?C(q.trim()):i.textContent="Tryk på mikrofonen for at svare"}):(m.style.display="none",i.textContent="Din browser understøtter desværre ikke tale-genkendelse."),!document.getElementById("ai-chat-styles")){const f=document.createElement("style");f.id="ai-chat-styles",f.textContent=`
             .ai-conversation-container {
                 display: flex;
                 flex-direction: column;

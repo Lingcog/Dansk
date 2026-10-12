@@ -581,7 +581,7 @@ export const translations = {
     enKlage: "En klage",
     du3mod4: "DU3, modul 4",
     laerNyeOrd: "Lær nye ord",
-    top100SubstantiverTitle: "Lær de 100 mest almindelige danske hverdagsord",
+    top100SubstantiverTitle: "De 100 mest almindelige hverdagsord",
     top100SubstantiverDesc: "Lær ordene ved at lave sjove øvelser.",
     laerKoekkenVrimmel: "Køkkenet & Hjemmet (Vrimlebillede)",
     laerKoekkenVrimmelDesc: "Udforsk de 100 vigtigste hverdagsord med farve-radar (EN/ET), detektiv-missioner og sætningsbygger.",

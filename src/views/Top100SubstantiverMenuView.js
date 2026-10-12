@@ -229,16 +229,6 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     hero.innerHTML = `
         <h1>${getTranslation('top100_hub_title')}</h1>
         <p>${getTranslation('top100_hub_desc')}</p>
-        <div class="hub-facts-badge">
-            <span>🟢</span> <strong>${getTranslation('top100_hub_class_badge')}</strong>
-        </div>
-        <div class="grammar-system-banner">
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong>${getTranslation('top100_legend_substantiv')}</strong> (${getTranslation('top100_legend_green')})</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong>${getTranslation('top100_legend_verbum')}</strong> (${getTranslation('top100_legend_red')})</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong>${getTranslation('top100_legend_adjektiv')}</strong> (${getTranslation('top100_legend_orange')})</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong>${getTranslation('top100_legend_sted')}</strong> (${getTranslation('top100_legend_blue')})</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong>${getTranslation('top100_legend_tid')}</strong> (${getTranslation('top100_legend_purple')})</div>
-        </div>
     `;
     viewContainer.appendChild(hero);
 

@@ -152,6 +152,33 @@ export function renderByrummetView(container, navigateFn) {
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
             color: white;
         }
+        .pure-image-toggle-btn {
+            background: #1e293b;
+            color: #f1f5f9;
+            border: 2px solid #64748b;
+            padding: 0.6rem 1.3rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pure-image-toggle-btn:hover {
+            border-color: #10b981;
+            background: #334155;
+        }
+        .pure-image-toggle-btn.active {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-color: #34d399;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
+            color: white;
+        }
+        .vrimmel-stage.pure-mode .vrimmel-hotspot {
+            display: none !important;
+        }
         .radar-legend {
             display: flex;
             align-items: center;
@@ -275,6 +302,70 @@ export function renderByrummetView(container, navigateFn) {
             gap: 0.5rem;
         }
         .listen-word-btn:hover { background: #1d4ed8; transform: scale(1.05); }
+        .mic-speak-btn {
+            background: #0f172a;
+            color: #f8fafc;
+            border: 2px solid #64748b;
+            padding: 0.8rem 1.4rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .mic-speak-btn:hover {
+            border-color: #38bdf8;
+            background: #1e293b;
+        }
+        .mic-speak-btn.listening {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            animation: micGlow 1.2s infinite ease-in-out;
+        }
+        @keyframes micGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.8); transform: scale(1.05); }
+        }
+        .speech-feedback-box {
+            width: 100%;
+            margin-top: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            display: none;
+        }
+        .speech-feedback-box.correct {
+            display: block;
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+        }
+        .speech-feedback-box.incorrect {
+            display: block;
+            background: rgba(249, 115, 22, 0.15);
+            color: #fb923c;
+            border: 1px solid #ea580c;
+        }
+        .speech-feedback-box.listening {
+            display: block;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid #0284c7;
+        }
+        @keyframes shakeBin {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .bin-shake {
+            animation: shakeBin 0.4s ease;
+            border-color: #ef4444 !important;
+        }
 
         /* Sorting Game */
         .sorting-game-box {
@@ -474,7 +565,7 @@ export function renderByrummetView(container, navigateFn) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'byrum-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Udforsk & Farve-radar', icon: '🔍' },
+        { id: 'tab_vrimmel', label: '1. Udforsk billedet', icon: '🔍' },
         { id: 'tab_detektiv', label: '2. Detektiv-missionen', icon: '🕵️' },
         { id: 'tab_historie', label: '3. Mikro-historie', icon: '💭' },
         { id: 'tab_kontekst', label: '4. Kontekst-skiftet', icon: '🔄' },
@@ -555,6 +646,18 @@ export function renderByrummetView(container, navigateFn) {
     const radarToggleWrapper = document.createElement('div');
     radarToggleWrapper.className = 'radar-toggle-wrapper';
 
+    const pureBtn = document.createElement('button');
+    pureBtn.className = 'pure-image-toggle-btn';
+    pureBtn.innerHTML = `<span>🖼️</span> Se rent billede: <strong id="pure-mode-status-byrum">FRA</strong>`;
+
+    let pureModeActive = false;
+    pureBtn.onclick = () => {
+        pureModeActive = !pureModeActive;
+        stage.classList.toggle('pure-mode', pureModeActive);
+        pureBtn.classList.toggle('active', pureModeActive);
+        pureBtn.querySelector('#pure-mode-status-byrum').textContent = pureModeActive ? 'TIL 🖼️' : 'FRA';
+    };
+
     const radarBtn = document.createElement('button');
     radarBtn.className = 'radar-toggle-btn';
     radarBtn.innerHTML = `<span>📡</span> Farve-radar (EN / ET): <strong id="radar-status-byrum">FRA</strong>`;
@@ -566,6 +669,7 @@ export function renderByrummetView(container, navigateFn) {
         <div class="legend-item"><div class="legend-dot-et"></div> <strong>ET</strong> (orange)</div>
     `;
 
+    radarToggleWrapper.appendChild(pureBtn);
     radarToggleWrapper.appendChild(radarBtn);
     controlBar.appendChild(radarToggleWrapper);
     controlBar.appendChild(radarLegend);
@@ -588,7 +692,7 @@ export function renderByrummetView(container, navigateFn) {
         <div>
             <div class="detail-word-badge badge-en">Klik på en cirkel i byrummet</div>
             <div class="detail-main-word">Gå på opdagelse i byen!</div>
-            <div class="detail-forms">Lær om ordet hedder <strong>en</strong> eller <strong>et</strong> og lyt til udtalen.</div>
+            <div class="detail-forms">Lær om ordet hedder <strong>en</strong> eller <strong>et</strong>, lyt til udtalen og træn med mikrofonen.</div>
         </div>
     `;
 
@@ -604,20 +708,115 @@ export function renderByrummetView(container, navigateFn) {
 
         spot.onclick = () => {
             detailBox.innerHTML = `
-                <div>
+                <div style="flex: 1; min-width: 250px;">
                     <div class="detail-word-badge badge-${bw.gender}">🏷️ ${bw.gender.toUpperCase()}-ord (${bw.gender === 'en' ? 'Fælleskøn' : 'Intetkøn'})</div>
                     <div class="detail-main-word">${bw.icon} ${bw.word}</div>
                     <div class="detail-forms">Bestemt: <strong>${bw.bestemt}</strong> | Flertal: <strong>${bw.flertal}</strong></div>
                     <div class="detail-sentence">"${bw.sentence}"</div>
                 </div>
-                <button class="listen-word-btn" id="listen-byrum-word">
-                    <span>🔊</span> Hør udtale
-                </button>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
+                    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <button class="listen-word-btn" id="listen-byrum-word">
+                            <span>🔊</span> Hør udtale
+                        </button>
+                        <button class="mic-speak-btn" id="mic-byrum-word">
+                            <span>🎤</span> Prøv at udtale
+                        </button>
+                    </div>
+                    <div class="speech-feedback-box" id="speech-feedback-byrum"></div>
+                </div>
             `;
+
             detailBox.querySelector('#listen-byrum-word').onclick = () => {
-                speakDanish(`${bw.word}. ${bw.bestemt}. ${bw.sentence}`);
+                if (bw.audioFile) {
+                    const audio = new Audio(bw.audioFile);
+                    audio.play().catch(() => speakDanish(bw.word));
+                } else {
+                    speakDanish(bw.word);
+                }
             };
-            speakDanish(bw.word);
+
+            const micBtn = detailBox.querySelector('#mic-byrum-word');
+            const feedbackBox = detailBox.querySelector('#speech-feedback-byrum');
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+                micBtn.onclick = () => {
+                    feedbackBox.className = 'speech-feedback-box incorrect';
+                    feedbackBox.textContent = 'Tale-genkendelse understøttes i Chrome, Safari og Edge.';
+                };
+            } else {
+                let rec = null;
+                let isListening = false;
+                micBtn.onclick = () => {
+                    if (isListening && rec) {
+                        rec.stop();
+                        return;
+                    }
+                    try {
+                        rec = new SpeechRecognition();
+                        rec.lang = 'da-DK';
+                        rec.interimResults = false;
+                        rec.maxAlternatives = 1;
+
+                        rec.onstart = () => {
+                            isListening = true;
+                            micBtn.classList.add('listening');
+                            micBtn.innerHTML = `<span>🔴</span> Lytter...`;
+                            feedbackBox.className = 'speech-feedback-box listening';
+                            feedbackBox.textContent = `Sig ordet: "${bw.clean}"...`;
+                        };
+
+                        rec.onresult = (evt) => {
+                            const spoken = evt.results[0][0].transcript.toLowerCase().trim();
+                            const cleanSpoken = spoken.replace(/[.,!?]/g, '').trim();
+                            const cleanTarget = bw.clean.toLowerCase().trim();
+                            const fullTarget = bw.word.toLowerCase().trim();
+                            const isMatch = cleanSpoken === cleanTarget || 
+                                            cleanSpoken === fullTarget || 
+                                            cleanSpoken.split(' ').includes(cleanTarget) ||
+                                            cleanTarget.includes(cleanSpoken);
+
+                            if (isMatch) {
+                                feedbackBox.className = 'speech-feedback-box correct';
+                                feedbackBox.innerHTML = `🎉 Flot! Du sagde: <strong>"${spoken}"</strong> ✓`;
+                                speakDanish("Rigtigt");
+                            } else {
+                                feedbackBox.className = 'speech-feedback-box incorrect';
+                                feedbackBox.innerHTML = `🤔 Du sagde: <em>"${spoken}"</em>. Prøv igen!`;
+                            }
+                        };
+
+                        rec.onerror = (err) => {
+                            isListening = false;
+                            micBtn.classList.remove('listening');
+                            micBtn.innerHTML = `<span>🎤</span> Prøv at udtale`;
+                            if (err.error !== 'no-speech') {
+                                feedbackBox.className = 'speech-feedback-box incorrect';
+                                feedbackBox.textContent = `Mikrofon: ${err.error}`;
+                            }
+                        };
+
+                        rec.onend = () => {
+                            isListening = false;
+                            micBtn.classList.remove('listening');
+                            micBtn.innerHTML = `<span>🎤</span> Prøv at udtale`;
+                        };
+
+                        rec.start();
+                    } catch (e) {
+                        feedbackBox.className = 'speech-feedback-box incorrect';
+                        feedbackBox.textContent = 'Kunne ikke starte mikrofonen.';
+                    }
+                };
+            }
+
+            if (bw.audioFile) {
+                const audio = new Audio(bw.audioFile);
+                audio.play().catch(() => speakDanish(bw.word));
+            } else {
+                speakDanish(bw.word);
+            }
         };
 
         stage.appendChild(spot);
@@ -650,7 +849,7 @@ export function renderByrummetView(container, navigateFn) {
     sortHeader.className = 'sorting-header-row';
     sortHeader.innerHTML = `
         <div>
-            <h3 style="font-size: 1.3rem; margin: 0;">📦 Kønstræning: Sorter byens ord i EN- og ET-kassen</h3>
+            <h3 style="font-size: 1.3rem; margin: 0;">📦 Sorter alle 24 ord i EN- og ET-kassen</h3>
             <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">Vælg et ord nedenfor og klik på kassen. Træn kønnet på de vigtigste hverdagsord!</p>
         </div>
         <div class="sort-progress-badge" id="byrum-sort-progress">0 / ${byrumWords.length} sorteret</div>
@@ -689,7 +888,6 @@ export function renderByrummetView(container, navigateFn) {
                 selectedSortWord = item;
                 wordsBank.querySelectorAll('.sort-word-chip').forEach(c => c.classList.remove('selected'));
                 chip.classList.add('selected');
-                speakDanish(item.clean);
             };
             wordsBank.appendChild(chip);
         });
@@ -702,16 +900,14 @@ export function renderByrummetView(container, navigateFn) {
 
     function handleByrumBinDrop(targetGender, binListEl) {
         if (!selectedSortWord) {
-            speakDanish("Vælg først et ord fra listen nedenunder!");
             return;
         }
 
         if (selectedSortWord.gender === targetGender) {
             const placedChip = document.createElement('div');
             placedChip.className = 'chip-in-bin';
-            placedChip.textContent = `${targetGender} ${selectedSortWord.clean} ✓`;
+            placedChip.textContent = `${targetGender} ${selectedSortWord.clean}`;
             binListEl.appendChild(placedChip);
-            speakDanish(`Rigtigt! ${targetGender} ${selectedSortWord.clean}`);
 
             byrumPlacedCount++;
             sortHeader.querySelector('#byrum-sort-progress').textContent = `${byrumPlacedCount} / ${byrumWords.length} sorteret`;
@@ -724,13 +920,14 @@ export function renderByrummetView(container, navigateFn) {
             });
 
             if (byrumPlacedCount === byrumWords.length) {
-                sortHeader.querySelector('#byrum-sort-progress').innerHTML = `🎉 Alle ord i Byrummet sorteret korrekt!`;
-                speakDanish("Fantastisk klaret! Du mestrer nu byens navneord.");
+                sortHeader.querySelector('#byrum-sort-progress').innerHTML = `🎉 Alle 24 ord sorteret!`;
             }
 
             selectedSortWord = null;
         } else {
-            speakDanish(`Hov! Det hedder ikke ${targetGender} ${selectedSortWord.clean}. Prøv den anden kasse!`);
+            const wrongBin = targetGender === 'en' ? binEn : binEt;
+            wrongBin.classList.add('bin-shake');
+            setTimeout(() => wrongBin.classList.remove('bin-shake'), 400);
         }
     }
 
@@ -860,14 +1057,14 @@ export function renderByrummetView(container, navigateFn) {
 
                     if (selectedCount === m.targetCount) {
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ${m.feedback}
+                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
+                                Rigtigt! ✓
                             </div>
                             <button class="mission-next-btn" id="next-byrum-mission">
                                 ${currMissionIdx < byrumMissions.length - 1 ? 'Næste mission ➔' : 'Start forfra 🔄'}
                             </button>
                         `;
-                        speakDanish(m.feedback);
+                        speakDanish("Rigtigt");
                         feedbackEl.querySelector('#next-byrum-mission').onclick = () => {
                             currMissionIdx = (currMissionIdx + 1) % byrumMissions.length;
                             renderByrumMission();
@@ -875,8 +1072,7 @@ export function renderByrummetView(container, navigateFn) {
                     }
                 } else {
                     btn.classList.add('selected-wrong');
-                    speakDanish(`Ikke ${opt.text}. Prøv igen!`);
-                    setTimeout(() => btn.classList.remove('selected-wrong'), 1000);
+                    setTimeout(() => btn.classList.remove('selected-wrong'), 800);
                 }
             };
             grid.appendChild(btn);

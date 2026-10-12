@@ -1,0 +1,72 @@
+import { getTranslation } from '../utils/i18n.js';
+
+export function renderSamtaleSprogskoleMenuView(container, navigateFn) {
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container';
+
+    // Top bar
+    const topBar = document.createElement('div');
+    topBar.className = 'top-bar';
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-btn';
+    backBtn.textContent = '← ' + getTranslation('back');
+    backBtn.onclick = () => navigateFn('samtale_traening');
+    topBar.appendChild(backBtn);
+
+    // Header
+    const title = document.createElement('h1');
+    title.textContent = 'Samtale om sprogskolen';
+    const subtitle = document.createElement('p');
+    subtitle.className = 'subtitle';
+    subtitle.textContent = 'Vælg, hvordan du vil tale med Anna om din sprogskole.';
+
+    // Cards
+    const cardsData = [
+        {
+            icon: '💬',
+            title: 'Fri snak med Anna',
+            desc: 'Tag en afslappet snak uden at tænke på grammatik.',
+            action: () => navigateFn('samtale_ai_sprogskole', { mode: 'forgiving' })
+        },
+        {
+            icon: '👩‍🏫',
+            title: 'Snak med Anna (Feedback)',
+            desc: 'Få rettelser til din grammatik og ordstilling bagefter.',
+            action: () => navigateFn('samtale_ai_sprogskole', { mode: 'feedback' })
+        }
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+
+    cardsData.forEach(data => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = data.action;
+
+        const icon = document.createElement('div');
+        icon.className = 'card-icon';
+        icon.textContent = data.icon;
+
+        const cardTitle = document.createElement('div');
+        cardTitle.className = 'card-title';
+        cardTitle.textContent = data.title;
+        
+        const cardDesc = document.createElement('p');
+        cardDesc.style.fontSize = '0.9rem';
+        cardDesc.style.color = 'var(--text-muted)';
+        cardDesc.style.marginTop = '0.5rem';
+        cardDesc.textContent = data.desc;
+
+        card.appendChild(icon);
+        card.appendChild(cardTitle);
+        card.appendChild(cardDesc);
+        grid.appendChild(card);
+    });
+
+    viewContainer.appendChild(topBar);
+    viewContainer.appendChild(title);
+    viewContainer.appendChild(subtitle);
+    viewContainer.appendChild(grid);
+    container.appendChild(viewContainer);
+}

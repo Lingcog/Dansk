@@ -141,7 +141,7 @@ export const ordstillingData = {
                 lockedPrefix: "Selvom han",
                 lockedSuffix: "til festen.",
                 draggable: ["aldrig", "har", "tid,", "kommer", "han", "altid"],
-                correct: "aldrig har tid, kommer han altid",
+                correct: ["aldrig har tid, kommer han altid", "altid har tid, kommer han aldrig"],
                 hint: "Se rammen ovenfor: Hvad er subjekt og verbum i de to dele af sætningen?"
             },
             {
@@ -164,6 +164,49 @@ export const ordstillingData = {
                 draggable: ["ikke", "havde", "råd,", "købte"],
                 correct: "ikke havde råd, købte",
                 hint: "Se rammen ovenfor: Hvad er subjekt og verbum i de to dele af sætningen?"
+            }
+        ]
+    }
+
+,    alt_tid: {
+        title: "Fokus på tid",
+        illustration: "foto_metafor.jpg",
+        explanation: "<strong>Reglen:</strong> Når du starter sætningen med tid (her: 'I aftes'), skal handlings-motoren (verbet) stå på 2. plads – lige efter tiden! Flyt ordene på plads.",
+        sentences: [
+            {
+                lockedPrefix: "I aftes",
+                lockedSuffix: ", mens det snede.",
+                draggable: ["kørte", "den", "travle", "kvinde", "heldigvis", "forsigtigt", "på gaden"],
+                correct: "kørte den travle kvinde heldigvis forsigtigt på gaden",
+                hint: "Husk at verbet (kørte) skal stå lige efter 'I aftes', efterfulgt af motivet (den travle kvinde)."
+            }
+        ]
+    },
+    alt_holdning: {
+        title: "Fokus på holdning",
+        illustration: "foto_metafor.jpg",
+        explanation: "<strong>Reglen:</strong> Når du starter med et filter / holdning (her: 'Heldigvis'), skal handlings-motoren (verbet) stå på 2. plads – lige efter filteret!",
+        sentences: [
+            {
+                lockedPrefix: "Heldigvis",
+                lockedSuffix: ", mens det snede.",
+                draggable: ["kørte", "den", "travle", "kvinde", "forsigtigt", "på gaden", "i aftes"],
+                correct: "kørte den travle kvinde forsigtigt på gaden i aftes",
+                hint: "Husk at verbet (kørte) skal stå lige efter 'Heldigvis', efterfulgt af motivet (den travle kvinde)."
+            }
+        ]
+    },
+    alt_sted: {
+        title: "Fokus på stedet",
+        illustration: "foto_metafor.jpg",
+        explanation: "<strong>Reglen:</strong> Når du starter sætningen med stedet (her: 'På gaden'), rykker verbet op på 2. plads, og motivet følger lige efter.",
+        sentences: [
+            {
+                lockedPrefix: "På gaden",
+                lockedSuffix: ", mens det snede.",
+                draggable: ["kørte", "den", "travle", "kvinde", "heldigvis", "forsigtigt", "i aftes"],
+                correct: "kørte den travle kvinde heldigvis forsigtigt i aftes",
+                hint: "Husk at verbet (kørte) skal stå lige efter 'På gaden', efterfulgt af motivet (den travle kvinde)."
             }
         ]
     }

@@ -291,34 +291,73 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
             title: "Sæt 1: Fundamentet",
             desc: "Korte, simple ord",
             words: [
-                { word: 'sol', count: 3 }, { word: 'bus', count: 3 }, { word: 'mad', count: 3 }, { word: 'hus', count: 3 }, { word: 'banan', count: 5 },
-                { word: 'pen', count: 3 }, { word: 'vin', count: 3 }, { word: 'ben', count: 3 }, { word: 'kat', count: 3 }, { word: 'lys', count: 3 }
+                { word: 'sol', count: 3, audioFile: 'laese_set1_sol.m4a' },
+                { word: 'bus', count: 3, audioFile: 'laese_set1_bus.m4a' },
+                { word: 'mad', count: 3, audioFile: 'laese_set1_mad.m4a' },
+                { word: 'hus', count: 3, audioFile: 'laese_set1_hus.m4a' },
+                { word: 'banan', count: 5, audioFile: 'laese_set1_banan.m4a' },
+                { word: 'pen', count: 3, audioFile: 'laese_set1_pen.m4a' },
+                { word: 'vin', count: 3, audioFile: 'laese_set1_vin.m4a' },
+                { word: 'ben', count: 3, audioFile: 'laese_set1_ben.m4a' },
+                { word: 'kat', count: 3, audioFile: 'laese_set1_kat.m4a' },
+                { word: 'lys', count: 3, audioFile: 'laese_set1_lys.m4a' }
             ]
         },
         2: {
             title: "Sæt 2: Konsonantklynger",
             desc: "Ord med flere konsonanter i træk",
             words: [
-                { word: 'sko', count: 3 }, { word: 'stol', count: 4 }, { word: 'mælk', count: 4 }, { word: 'plakat', count: 6 }, { word: 'slik', count: 4 },
-                { word: 'prins', count: 5 }, { word: 'glas', count: 4 }, { word: 'strøm', count: 5 }, { word: 'frisk', count: 5 }, { word: 'blomst', count: 6 }
+                { word: 'sko', count: 3, audioFile: 'laese_set2_sko.m4a' },
+                { word: 'stol', count: 4, audioFile: 'laese_set2_stol.m4a' },
+                { word: 'mælk', count: 4, audioFile: 'laese_set2_mælk.m4a' },
+                { word: 'plakat', count: 6, audioFile: 'laese_set2_plakat.m4a' },
+                { word: 'slik', count: 4, audioFile: 'laese_set2_slik.m4a' },
+                { word: 'prins', count: 5, audioFile: 'laese_set2_prins.m4a' },
+                { word: 'glas', count: 4, audioFile: 'laese_set2_glas.m4a' },
+                { word: 'strøm', count: 5, audioFile: 'laese_set2_strøm.m4a' },
+                { word: 'frisk', count: 5, audioFile: 'laese_set2_frisk.m4a' },
+                { word: 'blomst', count: 6, audioFile: 'laese_set2_blomst.m4a' }
             ]
         },
         3: {
             title: "Sæt 3: Vokalkombinationer",
             desc: "Flere vokaler ved siden af hinanden",
             words: [
-                { word: 'kaos', count: 4 }, { word: 'kiosk', count: 5 }, { word: 'ruin', count: 4 }, { word: 'viol', count: 4 }, { word: 'oase', count: 4 },
-                { word: 'poet', count: 4 }, { word: 'radio', count: 5 }, { word: 'piano', count: 5 }, { word: 'koala', count: 5 }, { word: 'fias', count: 4 }
+                { word: 'kaos', count: 4, audioFile: 'laese_set3_kaos.m4a' },
+                { word: 'kiosk', count: 5, audioFile: 'laese_set3_kiosk.m4a' },
+                { word: 'ruin', count: 4, audioFile: 'laese_set3_ruin.m4a' },
+                { word: 'viol', count: 4, audioFile: 'laese_set3_viol.m4a' },
+                { word: 'oase', count: 4, audioFile: 'laese_set3_oase.m4a' },
+                { word: 'poet', count: 4, audioFile: 'laese_set3_poet.m4a' },
+                { word: 'radio', count: 5, audioFile: 'laese_set3_radio.m4a' },
+                { word: 'piano', count: 5, audioFile: 'laese_set3_piano.m4a' },
+                { word: 'koala', count: 5, audioFile: 'laese_set3_koala.m4a' }
             ]
         },
         4: {
             title: "Sæt 4: Modultest",
             desc: "Fonetisk træning med vrøvleord",
             words: [
-                { word: 'mys', count: 3 }, { word: 'bøt', count: 3 }, { word: 'dul', count: 3 }, { word: 'sæn', count: 3 }, { word: 'epi', count: 3 },
-                { word: 'flæ', count: 3 }, { word: 'smø', count: 3 }, { word: 'prå', count: 3 }, { word: 'klu', count: 3 }, { word: 'vri', count: 3 },
-                { word: 'peni', count: 4 }, { word: 'lona', count: 4 }, { word: 'salu', count: 4 }, { word: 'mibo', count: 4 }, { word: 'tuvu', count: 4 },
-                { word: 'bomi', count: 4 }, { word: 'nave', count: 4 }, { word: 'almo', count: 4 }, { word: 'eksi', count: 4 }, { word: 'vamo', count: 4 }
+                { word: 'mys', count: 3, audioFile: 'laese_set4_mys.m4a' },
+                { word: 'bøt', count: 3, audioFile: 'laese_set4_bøt.m4a' },
+                { word: 'dul', count: 3, audioFile: 'laese_set4_dul.m4a' },
+                { word: 'sæn', count: 3, audioFile: 'laese_set4_sæn.m4a' },
+                { word: 'epi', count: 3, audioFile: 'laese_set4_epi.m4a' },
+                { word: 'flæ', count: 3, audioFile: 'laese_set4_flæ.m4a' },
+                { word: 'smø', count: 3, audioFile: 'laese_set4_smø.m4a' },
+                { word: 'prå', count: 3, audioFile: 'laese_set4_prå.m4a' },
+                { word: 'klu', count: 3, audioFile: 'laese_set4_klu.m4a' },
+                { word: 'vri', count: 3, audioFile: 'laese_set4_vri.m4a' },
+                { word: 'peni', count: 4, audioFile: 'laese_set4_peni.m4a' },
+                { word: 'lona', count: 4, audioFile: 'laese_set4_lona.m4a' },
+                { word: 'salu', count: 4, audioFile: 'laese_set4_salu.m4a' },
+                { word: 'mibo', count: 4, audioFile: 'laese_set4_mibo.m4a' },
+                { word: 'tuvu', count: 4, audioFile: 'laese_set4_tuvu.m4a' },
+                { word: 'bomi', count: 4, audioFile: 'laese_set4_bomi.m4a' },
+                { word: 'nave', count: 4, audioFile: 'laese_set4_nave.m4a' },
+                { word: 'almo', count: 4, audioFile: 'laese_set4_almo.m4a' },
+                { word: 'eksi', count: 4, audioFile: 'laese_set4_eksi.m4a' },
+                { word: 'vamo', count: 4, audioFile: 'laese_set4_vamo.m4a' }
             ]
         }
     };
@@ -433,13 +472,18 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
         listenBtn.innerHTML = '🔊 Lyt til ordet';
         
         listenBtn.onclick = () => {
-            synth.cancel();
-            if (!voice) loadVoices();
-            const utterance = new SpeechSynthesisUtterance(wordData.word);
-            if (voice) utterance.voice = voice;
-            utterance.lang = 'da-DK';
-            utterance.rate = 0.85;
-            synth.speak(utterance);
+            if (wordData.audioFile) {
+                const audio = new Audio(baseUrl + 'assets/audio/' + wordData.audioFile);
+                audio.play().catch(e => console.error("Error playing audio:", e));
+            } else {
+                synth.cancel();
+                if (!voice) loadVoices();
+                const utterance = new SpeechSynthesisUtterance(wordData.word);
+                if (voice) utterance.voice = voice;
+                utterance.lang = 'da-DK';
+                utterance.rate = 0.85;
+                synth.speak(utterance);
+            }
         };
         viewContainer.appendChild(listenBtn);
 

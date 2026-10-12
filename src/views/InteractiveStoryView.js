@@ -70,13 +70,24 @@ export function renderInteractiveStoryView(container, navigateFn) {
             },
             { type: 'npc', name: 'Mateo', text: 'Jeg kommer fra Spanien. Og hvad med dig? Hvor kommer du fra?' },
             { type: 'user_action',
-              trps: 'Fortæl, at du bor i Danmark nu, og spørg hvor længe han har boet her.',
+              trps: 'Fortæl ham, hvilket land du kommer fra.',
               construction: {
                 type: 'OP',
-                words: ['Jeg', 'bor', 'i', 'Danmark', 'nu.', 'Hvor', 'længe', 'har', 'du', 'boet', 'her?']
+                words: ['Jeg', 'kommer', 'fra', '[dit land]']
               },
               pronunciation: {
-                target: 'Jeg bor i Danmark nu. Hvor længe har du boet her?',
+                target: 'Jeg kommer fra [dit land]',
+                focus: ['kommer', 'fra']
+              }
+            },
+            { type: 'user_action',
+              trps: 'Spørg hvor længe han har boet her i Danmark.',
+              construction: {
+                type: 'OP',
+                words: ['Hvor', 'længe', 'har', 'du', 'boet', 'her', 'i', 'Danmark?']
+              },
+              pronunciation: {
+                target: 'Hvor længe har du boet her i Danmark?',
                 focus: []
               }
             },
@@ -87,8 +98,15 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { type: 'user_action',
               trps: 'Du vil gerne vide, hvor tomaterne er. Hvordan spørger du?',
               construction: {
-                type: 'OP',
-                words: ['Hej.', 'Undskyld,', 'hvor', 'er', 'tomaterne?']
+                type: 'MO',
+                text: 'Hej. Undskyld, hvor er [blank_0]?',
+                blanks: [
+                    { 
+                        answer: 'tomaterne', 
+                        options: ['tomater', 'tomaterne', 'tomat'],
+                        feedback: 'Husk at bruge <b>bestemt form</b>, fordi du spørger til nogle specifikke tomater. (Se evt. fladen <a href="#" class="feedback-link" style="color: #ff9800; text-decoration: underline;">"En kat / katten?"</a>)'
+                    }
+                ]
               },
               pronunciation: {
                 target: 'Hej. Undskyld, hvor er tomaterne?',
@@ -100,9 +118,13 @@ export function renderInteractiveStoryView(container, navigateFn) {
               trps: 'Spørg om prisen på et kilo tomater.',
               construction: {
                 type: 'MO',
-                text: 'Hvad koster [blank_0] kilo tomater?',
+                text: 'Hvad koster et kilo [blank_0]?',
                 blanks: [
-                    { answer: 'et', options: ['et', 'en', 'to'] }
+                    { 
+                        answer: 'tomater', 
+                        options: ['tomater', 'tomaterne', 'tomat'],
+                        feedback: 'Husk at bruge <b>ubestemt form</b>, fordi du spørger til prisen på tomater generelt og ikke nogle specifikke tomater. (Se evt. fladen <a href="#" class="feedback-link" style="color: #ff9800; text-decoration: underline;">"En kat / katten?"</a>)'
+                    }
                 ]
               },
               pronunciation: {
@@ -112,18 +134,18 @@ export function renderInteractiveStoryView(container, navigateFn) {
             },
             { type: 'npc', name: 'Grønthandler', text: 'De koster 25 kroner for et kilo. De er meget friske i dag.' },
             { type: 'user_action',
-              trps: 'Bestil et kilo røde tomater og en stor agurk.',
+              trps: 'Bestil et kilo røde tomater og et kilo grønne agurker.',
               construction: {
                 type: 'MO',
-                text: 'Jeg vil gerne bede om et kilo af de [blank_0] tomater og [blank_1] stor agurk.',
+                text: 'Jeg vil gerne bede om et kilo af de [blank_0] tomater og et kilo af de [blank_1] agurker.',
                 blanks: [
-                    { answer: 'røde', options: ['røde', 'rød', 'rødt'] },
-                    { answer: 'en', options: ['en', 'et', 'to'] }
+                    { answer: 'røde', options: ['rød', 'røde', 'rødt'] },
+                    { answer: 'grønne', options: ['grøn', 'grønne', 'grønt'] }
                 ]
               },
               pronunciation: {
-                target: 'Jeg vil gerne bede om et kilo af de røde tomater og en stor agurk.',
-                focus: ['røde', 'agurk']
+                target: 'Jeg vil gerne bede om et kilo af de røde tomater og et kilo af de grønne agurker.',
+                focus: ['røde', 'grønne', 'agurker']
               }
             },
             { type: 'npc', name: 'Grønthandler', text: 'Værsgo. Det bliver 30 kroner i alt. Hav en god dag!' },
@@ -448,11 +470,25 @@ export function renderInteractiveStoryView(container, navigateFn) {
                         select.classList.add('correct');
                         select.classList.remove('wrong');
                         select.disabled = true; // Lock it in
+                        feedbackContainer.textContent = '';
                         checkMOCorrectness();
                     } else if (select.value !== '') {
                         select.classList.add('wrong');
+                        if (blankData.feedback) {
+                            feedbackContainer.innerHTML = blankData.feedback;
+                            const link = feedbackContainer.querySelector('.feedback-link');
+                            if (link) {
+                                link.onclick = (e) => {
+                                    e.preventDefault();
+                                    navigateFn('bestemthed');
+                                };
+                            }
+                        } else {
+                            feedbackContainer.textContent = 'Prøv igen.';
+                        }
                     } else {
                         select.classList.remove('wrong', 'correct');
+                        feedbackContainer.textContent = '';
                     }
                 };
                 textContainer.appendChild(select);
@@ -463,10 +499,18 @@ export function renderInteractiveStoryView(container, navigateFn) {
             }
         });
 
+        const feedbackContainer = document.createElement('div');
+        feedbackContainer.className = 'mo-feedback';
+        feedbackContainer.style.color = '#ff9800';
+        feedbackContainer.style.fontSize = '0.95rem';
+        feedbackContainer.style.marginTop = '10px';
+        feedbackContainer.style.minHeight = '1.5rem';
+
         function checkMOCorrectness() {
             const selects = textContainer.querySelectorAll('select');
             const allCorrect = Array.from(selects).every(s => s.classList.contains('correct'));
             if (allCorrect) {
+                feedbackContainer.textContent = '';
                 setTimeout(() => {
                     appState.currentPhase = 'pronunciation';
                     renderStory();
@@ -475,6 +519,7 @@ export function renderInteractiveStoryView(container, navigateFn) {
         }
 
         container.appendChild(textContainer);
+        container.appendChild(feedbackContainer);
     }
 
     // --- PRONUNCIATION ---
@@ -606,7 +651,7 @@ export function renderInteractiveStoryView(container, navigateFn) {
             };
 
             function evaluatePronunciation(spoken) {
-                const spokenArr = spoken.toLowerCase().replace(/[.,!?]/g, '').split(' ').filter(w => w).map(w => w === 'kr' ? 'kroner' : w);
+                const spokenArr = spoken.toLowerCase().replace(/[.,!?]/g, '').split(' ').filter(w => w).map(w => w === 'kr' ? 'kroner' : (w === 'kg' ? 'kilo' : w));
                 let correctCnt = 0;
                 
                 // Calculate total target words that require focus

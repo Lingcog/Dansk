@@ -1,11 +1,41 @@
 import { translations as baseTranslations } from './translations.js';
 import { talemaaderTranslations } from './talemaader_translations.js';
 
+// Model A: De autoritative danske sprogskole-fagtermer.
+// Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
+export const MODEL_A_GRAMMAR_TERMS = {
+    // 1. del (Enkel model)
+    part1_g1: "Substantiv / Pronomen",
+    part1_g2: "Verbum",
+    part1_g3: "Præposition (sted)",
+    part1_g4: "Tidsadverbium",
+    part1_builder_g1: "Substantiv / Pronomen",
+    part1_builder_g2: "Verbum",
+    part1_builder_g3: "Præposition (sted)",
+    part1_builder_g4: "Tidsadverbium",
+
+    // 2. del (Udvidet model - 7 trin)
+    part2_g1: "Adjektiv",
+    part2_g2: "Substantiv / Pronomen",
+    part2_g3: "Verbum",
+    part2_g4: "Centraladverbium",
+    part2_g5: "Mådesadverbium",
+    part2_g6: "Præposition (sted)",
+    part2_g7: "Konjunktion + ledsætning",
+
+    // Fokus på tid (Inversion)
+    tid_g1: "Tidsadverbium",
+    tid_g2: "Verbum (inversion: 2. plads!)",
+    tid_g3: "Substantiv / Pronomen (subjekt)",
+    tid_g4: "Præposition (sted)"
+};
+
 export const translations = {};
 Object.keys(baseTranslations).forEach(lang => {
     translations[lang] = {
         ...baseTranslations[lang],
-        ...(talemaaderTranslations[lang] || {})
+        ...(talemaaderTranslations[lang] || {}),
+        ...MODEL_A_GRAMMAR_TERMS
     };
 });
 

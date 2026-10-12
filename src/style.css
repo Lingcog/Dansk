@@ -773,3 +773,162 @@ footer a:hover {
 .choice-btn:active {
     transform: scale(0.97);
 }
+
+/* ======================================================== */
+/* Grammar Mode Toggle & Badges                             */
+/* ======================================================== */
+.grammar-toggle-bar {
+    display: flex;
+    justify-content: center;
+    margin: 0.6rem 0 1.2rem 0;
+}
+
+.grammar-toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e0e0e0;
+    padding: 0.55rem 1.2rem;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.grammar-toggle-pill:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+.grammar-toggle-pill.active {
+    background: rgba(76, 175, 80, 0.18);
+    border-color: #4CAF50;
+    color: #ffffff;
+    box-shadow: 0 2px 12px rgba(76, 175, 80, 0.25);
+}
+
+.grammar-toggle-pill .toggle-icon {
+    font-size: 1.15rem;
+}
+
+.grammar-toggle-pill .toggle-badge {
+    padding: 0.15rem 0.55rem;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.25s;
+}
+
+.grammar-toggle-pill .toggle-badge.off {
+    background: rgba(255, 255, 255, 0.15);
+    color: #bbb;
+}
+
+.grammar-toggle-pill .toggle-badge.on {
+    background: #4CAF50;
+    color: #fff;
+}
+
+/* Grammar Badges on Cards */
+.grammar-badge {
+    display: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.22rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(255, 213, 79, 0.15);
+    color: #FFD54F;
+    border: 1px solid rgba(255, 213, 79, 0.45);
+    margin-top: 0.4rem;
+    width: fit-content;
+    letter-spacing: 0.3px;
+}
+
+.grammar-mode-active .grammar-badge {
+    display: inline-block;
+    animation: fadeInGrammar 0.25s ease;
+}
+
+/* Inline badge for question titles in builder */
+.grammar-badge-inline {
+    display: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    background: rgba(255, 213, 79, 0.18);
+    color: #FFD54F;
+    border: 1px solid rgba(255, 213, 79, 0.4);
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.grammar-mode-active .grammar-badge-inline {
+    display: inline-block;
+    animation: fadeInGrammar 0.25s ease;
+}
+
+/* Hint in puzzle slots */
+.grammar-hint-slot {
+    display: none;
+    font-size: 0.75rem;
+    color: #FFD54F;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+.grammar-mode-active .grammar-hint-slot {
+    display: block;
+    animation: fadeInGrammar 0.25s ease;
+}
+
+/* Informative extra box in Part 1 */
+.grammar-extra-info {
+    display: none;
+    background: rgba(255, 213, 79, 0.08);
+    border: 1px solid rgba(255, 213, 79, 0.35);
+    border-radius: 12px;
+    padding: 1.1rem 1.4rem;
+    margin: 1.5rem 0;
+    text-align: left;
+}
+
+.grammar-mode-active .grammar-extra-info {
+    display: block;
+    animation: fadeInGrammar 0.25s ease;
+}
+
+.grammar-extra-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #FFD54F;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.grammar-extra-info p {
+    margin: 0.35rem 0;
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    line-height: 1.4;
+}
+
+.grammar-extra-info small {
+    color: #ffca28;
+    display: block;
+    margin-top: 0.6rem;
+    font-style: italic;
+}
+
+@keyframes fadeInGrammar {
+    from { opacity: 0; transform: translateY(-3px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -36,6 +36,12 @@ export function renderSamtaleTraeningView(container, navigateFn) {
             icon: '💼',
             titleKey: 'samtaleArbejde',
             action: () => navigateFn('samtale_arbejde_menu')
+        },
+        {
+            icon: '🏫',
+            titleKey: 'samtaleSprogskole',
+            title: 'Samtale om Sprogskole',
+            action: () => navigateFn('samtale_sprogskole_menu')
         }
     ];
 

@@ -29,7 +29,7 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
     viewContainer.appendChild(exerciseArea);
 
     const adjData = [
-        { positive: 'højt', comparative: 'højere', superlative: 'højest', example: 'Bjerget er [word].' },
+        { positive: 'højt', comparative: 'højere', superlative: 'højest', example: 'Træet er [word].' },
         { positive: 'stort', comparative: 'større', superlative: 'størst', example: 'Huset er [word].' },
         { positive: 'grønt', comparative: 'grønnere', superlative: 'grønnest', example: 'Græsset er [word].' }
     ];

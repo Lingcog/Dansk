@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Undervisningsark: Spørgsmål (Sara)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+
+        body {
+            background: #fff;
+            color: #333;
+            width: 210mm;
+            height: 297mm; /* A4 height */
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 20pt;
+            margin-bottom: 10pt;
+            color: #2c3e50;
+        }
+
+        .instructions {
+            text-align: center;
+            font-size: 11pt;
+            margin-bottom: 15pt;
+            color: #555;
+            font-style: italic;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-rows: repeat(7, 1fr);
+            height: calc(100% - 60pt); /* Reserve space for header */
+            gap: 10pt;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 45mm; /* Text column is long, image column is square */
+            gap: 10pt;
+            border: 2px solid #e0e0e0;
+            border-radius: 8pt;
+            overflow: hidden;
+        }
+
+        .col-text {
+            padding: 15pt;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 2px dashed #e0e0e0;
+            background: #fafafa;
+        }
+
+        .col-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5pt;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+        }
+
+        .col-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .question {
+            font-size: 16pt;
+            font-weight: 600;
+            margin-bottom: 8pt;
+            line-height: 1.4;
+            color: #2c3e50;
+        }
+
+        .question:last-child {
+            margin-bottom: 0;
+        }
+
+        .blank {
+            display: inline-block;
+            min-width: 50px;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+
+        /* Hide anything not related to the page when viewing in browser */
+        @media screen {
+            body {
+                margin: 20px auto;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mundtlig træning: Stil spørgsmål</h1>
+    <p class="instructions">Indsæt et passende pronomen eller subjekt (f.eks. hun, Sara, fødselsdagen) i det tomme felt, når du stiller spørgsmålet.</p>
+
+    <div class="grid-container">
+        <!-- Situation 1 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvornår har ________ fødselsdag?</div>
+                <div class="question">Har ________ fødselsdag den ________?</div>
+                <div class="question">Holder ________ fødselsdag?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_time_18.png" alt="Illustration 1">
+            </div>
+        </div>
+
+        <!-- Situation 2 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvem inviterer ________ til fest?</div>
+                <div class="question">Inviterer ________ familie og venner?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_friends.png" alt="Illustration 2">
+            </div>
+        </div>
+
+        <!-- Situation 3 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvad vil ________ have til ________ fødselsdag?</div>
+                <div class="question">Vil ________ have en ny telefon?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_phone.png" alt="Illustration 3">
+            </div>
+        </div>
+
+        <!-- Situation 4 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvad serverer ________?</div>
+                <div class="question">Serverer ________ kage?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_cake.png" alt="Illustration 4">
+            </div>
+        </div>
+
+        <!-- Situation 5 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvor holder ________ fødselsdag/fest?</div>
+                <div class="question">Holder ________ fødselsdag/fest i lejligheden?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_apartment.png" alt="Illustration 5">
+            </div>
+        </div>
+
+        <!-- Situation 6 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvad elsker ________ til fest?</div>
+                <div class="question">Elsker ________ musik?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_music.png" alt="Illustration 6">
+            </div>
+        </div>
+
+        <!-- Situation 7 -->
+        <div class="row">
+            <div class="col-text">
+                <div class="question">Hvornår slutter ________ fødselsdag/fest?</div>
+                <div class="question">Slutter ________ fødselsdag/fest klokken 23?</div>
+            </div>
+            <div class="col-image">
+                <img src="assets/sara_time_23.png" alt="Illustration 7">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

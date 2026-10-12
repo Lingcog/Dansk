@@ -1,3 +1,4 @@
+import { renderOrdstillingAltIntroView } from './views/OrdstillingAltIntroView.js';
 import { renderIdiomMadErMedicin, renderIdiomHjerterumHusrum, renderIdiomUglerIMosen, renderIdiomArmeneNed } from './views/TestPDFViews.js';
 import './style.css';
 import { baseUrl } from './utils/config.js';
@@ -7,9 +8,14 @@ import { renderMainView } from './views/MainView.js';
 import { renderNotesView } from './views/NotesView.js';
 import { renderDagensOpgaveView } from './views/DagensOpgaveView.js';
 import { renderWordLearningView } from './views/WordLearningView.js';
+import { renderTop100SubstantiverMenuView } from './views/Top100SubstantiverMenuView.js';
+import { renderByrummetView } from './views/ByrummetView.js';
+import { renderKoekkenHjemmetView } from './views/KoekkenHjemmetView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
 import { renderSamtaleBoligMenuView } from './views/SamtaleBoligMenuView.js';
 import { renderSamtaleArbejdeMenuView } from './views/SamtaleArbejdeMenuView.js';
+import { renderSamtaleSprogskoleMenuView } from './views/SamtaleSprogskoleMenuView.js';
+import { renderAiConversationSprogskoleView } from './views/AiConversationSprogskoleView.js';
 import { renderHverdagssamtaleView } from './views/HverdagssamtaleView.js';
 import { renderAiConversationView } from './views/AiConversationView.js';
 import { renderAiConversationArbejdeView } from './views/AiConversationArbejdeView.js';
@@ -28,6 +34,8 @@ import { renderKlageView } from './views/KlageView.js';
 import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { renderOrdstillingView } from './views/OrdstillingView.js';
+import { renderOrdstillingIntroView } from './views/OrdstillingIntroView.js';
+
 import { renderGrammatikView } from './views/GrammatikView.js';
 import { renderUdtaleView } from './views/UdtaleView.js';
 import { renderUdtaleMenuView } from './views/UdtaleMenuView.js';
@@ -98,6 +106,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'word_learning') {
     appState.currentView = 'word_learning';
     renderWordLearningView(appDiv, navigate);
+  } else if (viewTarget === 'top100_substantiver') {
+    appState.currentView = 'top100_substantiver';
+    renderTop100SubstantiverMenuView(appDiv, navigate);
+  } else if (viewTarget === 'byrummet_vrimmel') {
+    appState.currentView = 'byrummet_vrimmel';
+    renderByrummetView(appDiv, navigate);
+  } else if (viewTarget === 'koekken_hjemmet') {
+    appState.currentView = 'koekken_hjemmet';
+    renderKoekkenHjemmetView(appDiv, navigate);
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);
@@ -119,6 +136,12 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'samtale_arbejde_menu') {
     appState.currentView = 'samtale_arbejde_menu';
     renderSamtaleArbejdeMenuView(appDiv, navigate);
+  } else if (viewTarget === 'samtale_sprogskole_menu') {
+    appState.currentView = 'samtale_sprogskole_menu';
+    renderSamtaleSprogskoleMenuView(appDiv, navigate);
+  } else if (viewTarget === 'samtale_ai_sprogskole') {
+    appState.currentView = 'samtale_ai_sprogskole';
+    renderAiConversationSprogskoleView(appDiv, navigate, extraData);
   } else if (viewTarget === 'samtale_ai_arbejde') {
     appState.currentView = 'samtale_ai_arbejde';
     renderAiConversationArbejdeView(appDiv, navigate, extraData);
@@ -170,6 +193,14 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'ordstilling') {
     appState.currentView = 'ordstilling';
     renderOrdstillingView(appDiv, navigate, extraData);
+} else if (viewTarget === 'ordstilling_alt_intro') {
+    appState.currentView = 'ordstilling_alt_intro';
+    // extraData could hold the type, or we could pass subPath
+    const type = extraData.subPath || 'tid';
+    renderOrdstillingAltIntroView(appDiv, navigate, type);
+  } else if (viewTarget === 'ordstilling_intro') {
+    appState.currentView = 'ordstilling_intro';
+    renderOrdstillingIntroView(appDiv, navigate);
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
     renderGrammatikView(appDiv, navigate, extraData);
@@ -334,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
   handleRouting();
 });
 
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(function(registrations) {
     for(let registration of registrations) {
@@ -341,5 +373,12 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+if ('caches' in window) {
+  caches.keys().then(function(names) {
+    for (let name of names)
+      caches.delete(name);
+  });
+}
+
 // Cache buster Sun Sep 27 12:00:31 CEST 2026
 console.log('Cache buster Sun Sep 27 12:00:45 CEST 2026');

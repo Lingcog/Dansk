@@ -180,7 +180,7 @@ export const conjunctionData = {
         },
         'fordi_derfor': {
             title: "Fordi / derfor",
-            illustration: "tekstflow_dynamik.png",
+            illustration: "fordi_derfor_guide.png",
             explanation: "<strong>Fordi / derfor</strong><br><em>'Fordi' peger bagud mod årsagen til det skete. 'Derfor' skubber handlingen frem mod konsekvensen.</em>",
             questions: [
                 {
@@ -232,7 +232,7 @@ export const conjunctionData = {
         },
         'selvom_alligevel': {
             title: "Selvom / alligevel",
-            illustration: "tekstflow_dynamik.png",
+            illustration: "selvom_alligevel_guide.png",
             explanation: "<strong>Selvom / Alligevel</strong><br><em>'Selvom' er muren / forhindringen. 'Alligevel' er bolden, der kommer igennem muren (handlingen gennemføres trods forhindringen).</em>",
             questions: [
                 {

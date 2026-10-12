@@ -235,6 +235,44 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
                 </div>
             </div>
 
+            
+            <!-- SIDE 1.5: Bogstavelig oversættelse -->
+            <div style="background: #fdfbf7; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; text-align: center; border: 4px solid #fde047;">
+                <h2 style="font-size: 2.2rem; color: #854d0e; margin-bottom: 30px;">Bogstavelig oversættelse</h2>
+                <p style="font-size: 1.2rem; color: #713f12; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Hvordan oversætter man <strong>"Hvor der er hjerterum, er der husrum"</strong> direkte til dit modersmål, ord for ord? Vælg dit sprog for at se det!
+                </p>
+                
+                <div style="background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; font-size: 1.2rem;">
+                        <div style="border-bottom: 2px solid #fef08a; padding-bottom: 10px;">
+                            <span style="color: #991b1b; font-weight: bold;">Hvor:</span>
+                            <span style="color: #4b5563; float: right;" id="literal-where">...</span>
+                        </div>
+                        <div style="border-bottom: 2px solid #fef08a; padding-bottom: 10px;">
+                            <span style="color: #991b1b; font-weight: bold;">Der er:</span>
+                            <span style="color: #4b5563; float: right;" id="literal-there-is">...</span>
+                        </div>
+                        <div style="border-bottom: 2px solid #fef08a; padding-bottom: 10px;">
+                            <span style="color: #991b1b; font-weight: bold;">Hjerterum:</span>
+                            <span style="color: #4b5563; float: right;" id="literal-heart-room">...</span>
+                        </div>
+                        <div style="border-bottom: 2px solid #fef08a; padding-bottom: 10px;">
+                            <span style="color: #991b1b; font-weight: bold;">Er der:</span>
+                            <span style="color: #4b5563; float: right;" id="literal-is-there">...</span>
+                        </div>
+                        <div style="border-bottom: 2px solid #fef08a; padding-bottom: 10px; grid-column: 1 / -1;">
+                            <span style="color: #991b1b; font-weight: bold;">Husrum:</span>
+                            <span style="color: #4b5563; float: right;" id="literal-house-room">...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 30px; color: #854d0e; font-style: italic; font-size: 1.1rem;" id="literal-full">
+                    Samlet: "..."
+                </p>
+            </div>
+
             <!-- SIDE 2 & 3: Sprog interaktiv vælger -->
             <div style="background: white; border-radius: 20px; padding: 50px 30px; margin-bottom: 60px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
                 <h2 style="font-size: 2.2rem; color: #2d3748; text-align: center; margin-bottom: 20px;">${getTranslation('hjerterum_world_title') || 'Hvordan siger man det ude i verden?'}</h2>
@@ -322,6 +360,26 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
         { lang: 'Arabisk', flag: '🇸🇦', original: 'Al-bayt baytak', danish: 'Huset er dit hus.' }
     ];
 
+    
+        const literalData = {
+            'Engelsk': { where: 'Where', there_is: 'there is', heart_room: 'heart room', is_there: 'is there', house_room: 'house room', full: 'Where there is room in the heart, there is room in the house.' },
+            'Rumænsk': { where: 'Unde', there_is: 'este', heart_room: 'spațiu în inimă', is_there: 'este', house_room: 'spațiu în casă', full: 'Unde este spațiu în inimă, este spațiu în casă.' },
+            'Urdu': { where: 'جہاں', there_is: 'ہے', heart_room: 'دل میں جگہ', is_there: 'ہے', house_room: 'گھر میں جگہ', full: 'جہاں دل میں جگہ ہے، وہاں گھر میں جگہ ہے۔' },
+            'Kinesisk': { where: '哪里', there_is: '有', heart_room: '心中的空间', is_there: '有', house_room: '家里的空间', full: '哪里有心中的空间，哪里就有家里的空间。' },
+            'Thai': { where: 'ที่ไหน', there_is: 'มี', heart_room: 'พื้นที่ในใจ', is_there: 'มี', house_room: 'พื้นที่ในบ้าน', full: 'ที่ไหนมีพื้นที่ในใจ ที่นั่นมีพื้นที่ในบ้าน' },
+            'Vietnamesisk': { where: 'Nơi nào', there_is: 'có', heart_room: 'chỗ trong tim', is_there: 'có', house_room: 'chỗ trong nhà', full: 'Nơi nào có chỗ trong tim, nơi đó có chỗ trong nhà.' },
+            'Portugisisk': { where: 'Onde', there_is: 'há', heart_room: 'espaço no coração', is_there: 'há', house_room: 'espaço na casa', full: 'Onde há espaço no coração, há espaço na casa.' },
+            'Farsi': { where: 'جایی که', there_is: 'هست', heart_room: 'جای دل', is_there: 'هست', house_room: 'جای خانه', full: 'جایی که در دل جا هست، در خانه هم جا هست.' },
+            'Arabisk': { where: 'حيثما', there_is: 'يوجد', heart_room: 'متسع في القلب', is_there: 'يوجد', house_room: 'متسع في المنزل', full: 'حيثما يوجد متسع في القلب، يوجد متسع في المنزل.' }
+        };
+
+        const litWhere = document.getElementById('literal-where');
+        const litThere = document.getElementById('literal-there-is');
+        const litHeart = document.getElementById('literal-heart-room');
+        const litIs = document.getElementById('literal-is-there');
+        const litHouse = document.getElementById('literal-house-room');
+        const litFull = document.getElementById('literal-full');
+
     const btnContainer = document.getElementById('lang-buttons');
     const display = document.getElementById('idiom-display');
     const placeholder = document.getElementById('idiom-placeholder');
@@ -349,6 +407,17 @@ export function renderIdiomHjerterumHusrum(container, navigateFn) {
             setTimeout(() => {
                 flagEl.textContent = item.flag;
                 origEl.textContent = `"${item.original}"`;
+
+            if (literalData[item.lang]) {
+                const l = literalData[item.lang];
+                litWhere.textContent = l.where;
+                litThere.textContent = l.there_is;
+                litHeart.textContent = l.heart_room;
+                litIs.textContent = l.is_there;
+                litHouse.textContent = l.house_room;
+                litFull.textContent = `Samlet oversættelse: "${l.full}"`;
+            }
+
                 danishEl.textContent = `Betyder: "${item.danish}"`;
                 display.style.opacity = '1';
                 display.style.transition = 'opacity 0.3s ease';

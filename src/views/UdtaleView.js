@@ -143,6 +143,23 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     const micBtn = document.createElement('button');
     micBtn.className = 'mic-btn';
     micBtn.innerHTML = '🎤';
+
+    const listenBtn = document.createElement('button');
+    listenBtn.className = 'gemini-btn';
+    listenBtn.innerHTML = '🔊 Lyt';
+    listenBtn.style.marginTop = '1rem';
+    listenBtn.style.display = 'none';
+
+    listenBtn.onclick = () => {
+        const data = activeData[currentLetter];
+        const currentSub = data.subCategories[currentSubCategory];
+        const ex = currentSub.exercises[currentIndex];
+        if (ex.audioFile) {
+            const audio = new Audio(baseUrl + 'assets/audio/' + ex.audioFile);
+            audio.play().catch(e => console.error(e));
+        }
+    };
+
     
     const statusText = document.createElement('div');
     statusText.className = 'mic-status';
@@ -166,10 +183,21 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     streakContainer.style.textAlign = 'center';
     streakContainer.style.display = 'none';
 
+    
     exerciseArea.appendChild(sentenceDisplay);
     exerciseArea.appendChild(progressContainer);
-    exerciseArea.appendChild(micBtn);
+    
+    const btnRow = document.createElement('div');
+    btnRow.style.display = 'flex';
+    btnRow.style.gap = '1rem';
+    btnRow.style.justifyContent = 'center';
+    btnRow.style.alignItems = 'center';
+    btnRow.appendChild(listenBtn);
+    btnRow.appendChild(micBtn);
+    
+    exerciseArea.appendChild(btnRow);
     exerciseArea.appendChild(statusText);
+
     exerciseArea.appendChild(resultBox);
     exerciseArea.appendChild(streakContainer);
     viewContainer.appendChild(exerciseArea);
@@ -292,11 +320,19 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
     }
 
     function renderCurrentExercise() {
+        
         const data = activeData[currentLetter];
         const currentSub = data.subCategories[currentSubCategory];
         const ex = currentSub.exercises[currentIndex];
         
+        if (ex.audioFile) {
+            listenBtn.style.display = 'block';
+        } else {
+            listenBtn.style.display = 'none';
+        }
+        
         catTitle.textContent = t('udtale_' + currentSub.id + '_title', currentSub.title);
+
         
         // Prøv først at hente oversættelsen baseret på den eksakte danske tekst
         let hintText = getTranslation(ex.hint);
@@ -457,6 +493,8 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
 
         const spans = sentenceDisplay.querySelectorAll('.udtale-word');
         let spokenIndex = 0;
+        const wordResults = [];
+        const originalWords = ex.text.split(' ');
 
         targetWords.forEach((word, index) => {
             const span = spans[index];
@@ -472,6 +510,12 @@ export function renderUdtaleView(container, navigateFn, extraData = {}) {
                     break;
                 }
             }
+
+            wordResults.push({
+                word: originalWords[index] || word,
+                matched: foundMatch,
+                isTarget: isTargetWord
+            });
 
             if (isTargetWord) {
                 const segments = span.querySelectorAll('.udtale-segment');

@@ -216,76 +216,76 @@ export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
         'haardt_r': {
             title: "Hårdt 'r'",
             sentences: [
-                "Rulle en rotte",
-                "Røve en ræv",
-                "Riste en rose",
-                "Rense en reje",
-                "Rive min ryg",
-                "Ryste din rust",
-                "Råbe på Rom"
+                { text: "Rulle en rotte", audioFile: "vokaler_r_1_rulle_en_rotte.m4a" },
+                { text: "Røve en ræv", audioFile: "vokaler_r_2_roeve_en_raev.m4a" },
+                { text: "Riste en rose", audioFile: "vokaler_r_3_riste_en_rose.m4a" },
+                { text: "Rense en reje", audioFile: "vokaler_r_4_rense_en_reje.m4a" },
+                { text: "Rive min ryg", audioFile: "vokaler_r_5_rive_min_ryg.m4a" },
+                { text: "Ryste din rust", audioFile: "vokaler_r_6_ryste_din_rust.m4a" },
+                { text: "Råbe på Rom", audioFile: "vokaler_r_7_raabe_paa_rom.m4a" }
             ]
         },
         'vokalisk_r': {
             title: "Vokalisk 'r'",
             sentences: [
-                "En bager der smager",
-                "En lærer der bærer",
-                "En køber der løber",
-                "En murer der skurer",
-                "En svømmer der drømmer",
-                "En maler der taler"
+                { text: "En bager der smager", audioFile: "vokaler_r_8_en_bager_der_smager.m4a" },
+                { text: "En lærer der bærer", audioFile: "vokaler_r_9_en_laerer_der_baerer.m4a" },
+                { text: "En køber der løber", audioFile: "vokaler_r_10_en_koeber_der_loeber.m4a" },
+                { text: "En murer der skurer", audioFile: "vokaler_r_11_en_murer_der_skurer.m4a" },
+                { text: "En svømmer der drømmer", audioFile: "vokaler_r_12_en_svoemmer_der_droemmer.m4a" },
+                { text: "En maler der taler", audioFile: "vokaler_r_13_en_maler_der_taler.m4a" }
             ]
         },
         'haardt_d': {
             title: "Hårdt 'd'",
             sentences: [
-                "Danse med en dåse",
-                "Dyppe en due",
-                "Dele din dyne",
-                "Drille en drage",
-                "Dække en dør",
-                "Dreje en dal",
-                "Dømme en dukke",
-                "Drikke en dam",
-                "Døbe en dolk",
-                "Dampe din dug"
+                { text: "Danse med en dåse", audioFile: "vokaler_d_1_danse_med_en_daase.m4a" },
+                { text: "Dyppe en due", audioFile: "vokaler_d_2_dyppe_en_due.m4a" },
+                { text: "Dele din dyne", audioFile: "vokaler_d_3_dele_din_dyne.m4a" },
+                { text: "Drille en drage", audioFile: "vokaler_d_4_drille_en_drage.m4a" },
+                { text: "Dække en dør", audioFile: "vokaler_d_5_daekke_en_doer.m4a" },
+                { text: "Dreje en dal", audioFile: "vokaler_d_6_dreje_en_dal.m4a" },
+                { text: "Dømme en dukke", audioFile: "vokaler_d_7_doemme_en_dukke.m4a" },
+                { text: "Drikke en dam", audioFile: "vokaler_d_8_drikke_en_dam.m4a" },
+                { text: "Døbe en dolk", audioFile: "vokaler_d_9_doebe_en_dolk.m4a" },
+                { text: "Dampe din dug", audioFile: "vokaler_d_10_dampe_din_dug.m4a" }
             ]
         },
         'bloedt_d': {
             title: "Blødt 'd'",
             sentences: [
-                "En glad mand i et bad",
-                "En rød glød",
-                "Et blødt brød",
-                "En blid strid",
-                "Træde i noget smadder",
-                "Gide en bide"
+                { text: "Bade i en flod", audioFile: "vokaler_d_11_bade_i_en_flod.m4a" },
+                { text: "Bide i et brød", audioFile: "vokaler_d_12_bide_i_et_broed.m4a" },
+                { text: "Møde en smed", audioFile: "vokaler_d_13_moede_en_smed.m4a" },
+                { text: "Skyde med et spyd", audioFile: "vokaler_d_14_skyde_med_et_spyd.m4a" },
+                { text: "Svede i et bad", audioFile: "vokaler_d_15_svede_i_et_bad.m4a" },
+                { text: "Træde på et blad", audioFile: "vokaler_d_16_traede_paa_et_blad.m4a" }
             ]
         },
         'haardt_g': {
             title: "Hårdt 'g'",
             sentences: [
-                "Gribe en ged",
-                "Gemme en gås",
-                "Gætte en gris",
-                "Gnide en gren",
-                "Grave en gaffel",
-                "Grille en gryde",
-                "Glemme en gade",
-                "Guffe en globus",
-                "Give en gople",
-                "Gø ad en gæst"
+                { text: "Gribe en ged", audioFile: "vokaler_g_1_gribe_en_ged.m4a" },
+                { text: "Gemme en gås", audioFile: "vokaler_g_2_gemme_en_gaas.m4a" },
+                { text: "Gætte en gris", audioFile: "vokaler_g_3_gaette_en_gris.m4a" },
+                { text: "Gnide en gren", audioFile: "vokaler_g_4_gnide_en_gren.m4a" },
+                { text: "Grave en gaffel", audioFile: "vokaler_g_5_grave_en_gaffel.m4a" },
+                { text: "Grille en gryde", audioFile: "vokaler_g_6_grille_en_gryde.m4a" },
+                { text: "Glemme en gade", audioFile: "vokaler_g_7_glemme_en_gade.m4a" },
+                { text: "Guffe en globus", audioFile: "vokaler_g_8_guffe_en_globus.m4a" },
+                { text: "Give en gople", audioFile: "vokaler_g_9_give_en_gople.m4a" },
+                { text: "Gø ad en gæst", audioFile: "vokaler_g_10_goe_ad_en_gaest.m4a" }
             ]
         },
         'stumt_g': {
             title: "Stumt 'g'",
             sentences: [
-                "At bage en kage",
-                "Søge og spøge",
-                "Farlig og ærlig",
-                "Dejligt og belejligt",
-                "At koge en låge",
-                "En syg myg"
+                { text: "Sælge en bolig", audioFile: "vokaler_g_11_saelge_en_bolig.m4a" },
+                { text: "Stryge et flag", audioFile: "vokaler_g_12_stryge_et_flag.m4a" },
+                { text: "Søge en læge", audioFile: "vokaler_g_13_soege_en_laege.m4a" },
+                { text: "Bage en kage", audioFile: "vokaler_g_14_bage_en_kage.m4a" },
+                { text: "Ryge en smøg", audioFile: "vokaler_g_15_ryge_en_smoeg.m4a" },
+                { text: "Jage en måge", audioFile: "vokaler_g_16_jage_en_maage.m4a" }
             ]
         }
     };
@@ -421,12 +421,41 @@ export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
     }
 
     function renderExercise() {
-        const sentence = datasets[currentSetId].sentences[currentIndex];
+        const rawItem = datasets[currentSetId].sentences[currentIndex];
+        const sentence = typeof rawItem === 'string' ? rawItem : rawItem.text;
+        const audioFile = typeof rawItem === 'object' ? rawItem.audioFile : null;
         
         const headerText = document.createElement('div');
         headerText.className = 'vokaler-header-text';
         headerText.textContent = sentence;
         viewContainer.appendChild(headerText);
+
+        // Circular Feedback Container
+        const circularContainer = document.createElement('div');
+        circularContainer.className = 'vokaler-circular-container';
+        circularContainer.style.display = 'none';
+        circularContainer.style.flexDirection = 'column';
+        circularContainer.style.alignItems = 'center';
+        circularContainer.style.margin = '0.5rem 0 1.5rem 0';
+        circularContainer.style.width = '100%';
+        circularContainer.innerHTML = `
+            <div style="position: relative; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center;">
+                <svg style="transform: rotate(-90deg); width: 100%; height: 100%;" viewBox="0 0 140 140">
+                    <circle cx="70" cy="70" r="56" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="11" />
+                    <circle id="vokaler-circle-arc" cx="70" cy="70" r="56" fill="none" stroke="#eab308" stroke-width="11"
+                            stroke-dasharray="351.86" stroke-dashoffset="351.86" stroke-linecap="round"
+                            style="transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease, filter 0.3s ease;" />
+                </svg>
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                    <span id="vokaler-circle-score" style="font-size: 2.3rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">0%</span>
+                </div>
+            </div>
+            <div id="vokaler-word-chips" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 14px; width: 100%; max-width: 440px;"></div>
+            <div id="vokaler-heard-box" style="margin-top: 14px; padding: 6px 20px; border-radius: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); text-align: center; max-width: 90%; display: none;">
+                <span id="vokaler-heard-text" style="font-size: 1.35rem; color: #ffffff; font-style: italic; font-weight: 600; letter-spacing: 0.01em;">""</span>
+            </div>
+        `;
+        viewContainer.appendChild(circularContainer);
 
         const actionArea = document.createElement('div');
         actionArea.className = 'vokaler-action-area';
@@ -436,6 +465,12 @@ export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
         listenBtn.className = 'vokaler-listen-btn';
         listenBtn.innerHTML = '🔊 Lyt til sætning';
         listenBtn.onclick = () => {
+            if (audioFile) {
+                synth.cancel();
+                const audio = new Audio(baseUrl + 'assets/audio/' + audioFile);
+                audio.play().catch(e => console.error(e));
+                return;
+            }
             synth.cancel();
             if (!voice) loadVoices();
             const utterance = new SpeechSynthesisUtterance(sentence);
@@ -498,19 +533,117 @@ export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
                 
                 attempts++;
 
-                if (transcriptClean.includes(targetClean) || targetClean.includes(transcriptClean) && transcriptClean.length > targetClean.length - 3) {
-                    // Close enough match
+                const words = sentence.split(' ');
+                const spokenList = transcript.toLowerCase().replace(/[.,!?]/g, '').split(/\s+/).filter(Boolean);
+                
+                const wordData = words.map(rawWord => {
+                    const cleanWord = normalize(rawWord);
+                    let wordScore = 0;
+                    for (const spk of spokenList) {
+                        const cleanSpk = normalize(spk);
+                        if (cleanSpk === cleanWord) {
+                            wordScore = 100;
+                            break;
+                        } else if (cleanWord.length > 2 && (cleanSpk.includes(cleanWord) || cleanWord.includes(cleanSpk))) {
+                            const ratio = Math.min(cleanSpk.length, cleanWord.length) / Math.max(cleanSpk.length, cleanWord.length);
+                            wordScore = Math.max(wordScore, Math.round(ratio * 90));
+                        }
+                    }
+                    return { word: rawWord, score: wordScore };
+                });
+
+                let overallScore = Math.round(wordData.reduce((acc, w) => acc + w.score, 0) / wordData.length);
+                if (transcriptClean.includes(targetClean) || (targetClean.includes(transcriptClean) && transcriptClean.length > targetClean.length - 3)) {
+                    overallScore = 100;
+                    wordData.forEach(w => w.score = 100);
+                }
+
+                circularContainer.style.display = 'flex';
+                const arc = circularContainer.querySelector('#vokaler-circle-arc');
+                const scoreNum = circularContainer.querySelector('#vokaler-circle-score');
+                const chips = circularContainer.querySelector('#vokaler-word-chips');
+
+                // Trefarvet regel:
+                // Rød: 0 - 30%
+                // Gul: 31 - 79%
+                // Grøn: 80 - 100%
+                let strokeColor = '#ef4444';
+                let glowFilter = 'drop-shadow(0 0 12px rgba(239, 68, 68, 0.75))';
+
+                if (overallScore >= 80) {
+                    strokeColor = '#22c55e';
+                    glowFilter = 'drop-shadow(0 0 12px rgba(34, 197, 94, 0.75))';
+                } else if (overallScore > 30) {
+                    strokeColor = '#eab308';
+                    glowFilter = 'drop-shadow(0 0 12px rgba(234, 179, 8, 0.75))';
+                }
+
+                const circ = 351.86;
+                const offset = circ - (overallScore / 100) * circ;
+
+                arc.style.strokeDashoffset = offset;
+                arc.style.stroke = strokeColor;
+                arc.style.filter = glowFilter;
+                scoreNum.textContent = overallScore + '%';
+
+                // Ord-feedback brikker i bunden
+                chips.innerHTML = '';
+                wordData.forEach(item => {
+                    const chip = document.createElement('div');
+                    chip.style.display = 'flex';
+                    chip.style.flexDirection = 'column';
+                    chip.style.alignItems = 'center';
+                    chip.style.padding = '6px 14px';
+                    chip.style.borderRadius = '8px';
+                    chip.style.minWidth = '75px';
+                    chip.style.transition = 'all 0.3s ease';
+
+                    let chipBg = 'rgba(239, 68, 68, 0.15)';
+                    let chipBorder = 'rgba(239, 68, 68, 0.5)';
+                    let chipText = '#fca5a5';
+
+                    if (item.score >= 80) {
+                        chipBg = 'rgba(34, 197, 94, 0.18)';
+                        chipBorder = 'rgba(34, 197, 94, 0.6)';
+                        chipText = '#86efac';
+                    } else if (item.score > 30) {
+                        chipBg = 'rgba(234, 179, 8, 0.18)';
+                        chipBorder = 'rgba(234, 179, 8, 0.6)';
+                        chipText = '#fde047';
+                    }
+
+                    chip.style.background = chipBg;
+                    chip.style.border = `1px solid ${chipBorder}`;
+                    chip.innerHTML = `
+                        <span style="font-size: 0.95rem; font-weight: 600; color: #ffffff;">${item.word}</span>
+                        <span style="font-size: 0.75rem; font-weight: 700; color: ${chipText}; margin-top: 2px;">${item.score}%</span>
+                    `;
+                    chips.appendChild(chip);
+                });
+
+                // Opdater feedback-sætning med hvad systemet hørte
+                const heardBox = circularContainer.querySelector('#vokaler-heard-box');
+                const heardText = circularContainer.querySelector('#vokaler-heard-text');
+                if (transcript && transcript.trim()) {
+                    heardBox.style.display = 'block';
+                    heardText.textContent = `"${transcript}"`;
+                } else {
+                    heardBox.style.display = 'none';
+                }
+
+                if (overallScore >= 80) {
                     if (attempts === 1) score++;
-                    feedbackText.style.color = '#4caf50';
-                    feedbackText.textContent = 'Flot udtalt!';
+                    feedbackText.style.display = 'none';
                     skipBtn.style.display = 'none';
                     nextBtn.style.display = 'block';
                 } else {
-                    feedbackText.style.color = '#ff9800';
-                    feedbackText.textContent = `Jeg hørte "${transcript}". Prøv igen!`;
+                    feedbackText.style.display = 'none';
+                    skipBtn.style.display = 'block';
+                    nextBtn.style.display = 'none';
                 }
             };
             recognition.onerror = (event) => {
+                feedbackText.style.display = 'block';
                 feedbackText.style.color = '#f44336';
                 if (event.error === 'no-speech') {
                     feedbackText.textContent = 'Jeg hørte ikke noget. Prøv at tale tættere på mikrofonen.';
@@ -534,6 +667,8 @@ export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
                     recognition.start();
                     isListening = true;
                     micBtn.classList.add('listening');
+                    circularContainer.style.display = 'none';
+                    feedbackText.style.display = 'block';
                     feedbackText.style.color = '#ffffff';
                     feedbackText.textContent = 'Lytter...';
                 } catch (e) {

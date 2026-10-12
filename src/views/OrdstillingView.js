@@ -2,6 +2,7 @@ import { navigate } from '../main.js';
 import { baseUrl } from '../utils/config.js';
 import { getLang, getTranslation } from '../utils/i18n.js';
 import { ordstillingData } from '../utils/ordstillingData.js';
+import { createGrammarToggle } from '../utils/grammarToggle.js';
 
 export function renderOrdstillingView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -29,6 +30,10 @@ export function renderOrdstillingView(container, navigateFn) {
     title.textContent = getTranslation('ordstilling');
     viewContainer.appendChild(title);
 
+    // Grammar Terms Toggle
+    const grammarToggle = createGrammarToggle(viewContainer);
+    viewContainer.appendChild(grammarToggle);
+
     const menuArea = document.createElement('div');
     const gameArea = document.createElement('div');
     gameArea.style.display = 'none';
@@ -39,34 +44,75 @@ export function renderOrdstillingView(container, navigateFn) {
     intro.textContent = "Træn ordstilling: Inversion og centraladverbiernes placering.";
     menuArea.appendChild(intro);
 
-    const levels = [
+    const standardLevels = [
         { key: 'hovedsaetninger', icon: '🏠' },
         { key: 'ledsaetninger', icon: '🧩' },
         { key: 'inversion', icon: '🔄' },
-        { key: 'master', icon: '👑' }
+        { key: 'master', icon: '🏆' }
+    ];
+
+    const altLevels = [
+        { key: 'alt_tid', icon: '🕒' },
+        { key: 'alt_holdning', icon: '🌤️' },
+        { key: 'alt_sted', icon: '📍' }
     ];
 
     const grid = document.createElement('div');
     grid.className = 'grid';
-    levels.forEach(l => {
+    const introCard = document.createElement('div');
+    introCard.className = 'card special-highlight';
+    introCard.style.gridColumn = '1 / -1';
+    introCard.style.background = 'rgba(76, 175, 80, 0.15)';
+    introCard.style.border = '2px solid rgba(76, 175, 80, 0.4)';
+    introCard.onclick = () => navigateFn('ordstilling_intro');
+    introCard.innerHTML = `
+        <div class="card-icon" style="font-size: 3rem;">📷</div>
+        <div class="card-title">${getTranslation("ordstilling_intro_title")}</div>
+        <div class="card-desc" style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;">${getTranslation("ordstilling_intro_subtitle")}</div>
+    `;
+    grid.appendChild(introCard);
+
+    standardLevels.forEach(l => {
         const categoryData = ordstillingData[l.key];
         const card = document.createElement('div');
         card.className = 'card';
         card.onclick = () => startExercise(l.key);
-
-        const icon = document.createElement('div');
-        icon.className = 'card-icon';
-        icon.textContent = l.icon;
-
-        const cardTitle = document.createElement('div');
-        cardTitle.className = 'card-title';
-        cardTitle.textContent = categoryData.title;
-
-        card.appendChild(icon);
-        card.appendChild(cardTitle);
+        card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${categoryData.title}</div>`;
         grid.appendChild(card);
     });
+    
     menuArea.appendChild(grid);
+    
+    const altHeader = document.createElement('h2');
+    altHeader.textContent = "Alternative sætninger";
+    altHeader.style.marginTop = '2.5rem';
+    altHeader.style.marginBottom = '0.5rem';
+    altHeader.style.textAlign = 'center';
+    menuArea.appendChild(altHeader);
+    
+    const altSub = document.createElement('p');
+    altSub.textContent = "Verbet står altid på 2. plads når man begynder uden subjekt.";
+    altSub.className = 'subtitle';
+    altSub.style.marginBottom = '1.5rem';
+    menuArea.appendChild(altSub);
+    
+    const altGrid = document.createElement('div');
+    altGrid.className = 'grid';
+    
+    altLevels.forEach(l => {
+        const categoryData = ordstillingData[l.key];
+        const card = document.createElement('div');
+        card.className = 'card';
+        
+        // Extract type from key (e.g. 'alt_tid' -> 'tid')
+        const type = l.key.split('_')[1];
+        card.onclick = () => navigateFn('ordstilling_alt_intro', { subPath: type });
+        
+        card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${categoryData.title}</div>`;
+        altGrid.appendChild(card);
+    });
+
+    menuArea.appendChild(altGrid);
     viewContainer.appendChild(menuArea);
 
     // --- Game Logic ---
@@ -171,7 +217,10 @@ export function renderOrdstillingView(container, navigateFn) {
                 poolArr.forEach(c => c.classList.replace('result-chip', 'pool'));
                 
                 if (poolArr.length === 0) {
-                    if (selectedArr.join(' ') === currentSentence.correct) {
+                    const answer = selectedArr.join(' ');
+                    const isCorrect = Array.isArray(currentSentence.correct) ? currentSentence.correct.includes(answer) : answer === currentSentence.correct;
+                    
+                    if (isCorrect) {
                         feedback.textContent = getTranslation('correctOrder') || 'Helt rigtigt!';
                         feedback.className = 'game-feedback success';
                         nextBtn.style.display = 'inline-block';

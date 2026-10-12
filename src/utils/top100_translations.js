@@ -15,8 +15,8 @@
 export const top100Translations = {
   da: {
     // Hub
-    top100_hub_title: "🏆 De 100 mest almindelige substantiver",
-    top100_hub_desc: "Disse 100 navneord udgør over halvdelen af alle substantiver, du møder i hverdagen. I stedet for at lære dem fra en kedelig liste, udforsker du dem i levende vrimlebilleder med <strong>farve-radar (EN/ET)</strong>, detektiv-missioner og sætningsbygning.",
+    top100_hub_title: "🏆 Lær de 100 mest almindelige danske hverdagsord",
+    top100_hub_desc: "Lær ordene ved at lave sjove øvelser. I stedet for at lære dem fra en kedelig liste, udforsker du dem i levende vrimlebilleder med <strong>farve-radar (EN/ET)</strong>, detektiv-missioner og sætningsbygning.",
     top100_hub_class_badge: "🟢 Ordklasse: Substantiver (Navneord i grøn farve)",
     top100_legend_substantiv: "Substantiv",
     top100_legend_verbum: "Verbum",
@@ -51,8 +51,8 @@ export const top100Translations = {
     top100_tag_learning: "📖 Læring",
     top100_tag_tech: "💻 Teknologi",
     top100_tag_time: "⏰ Tidsudtryk",
-    top100SubstantiverTitle: "Lær de 100 mest almindelige danske substantiver",
-    top100SubstantiverDesc: "Udforsk over 50 % af alle hverdagsord i levende vrimlebilleder med farve-radar, kønstræning og sætningsbygger.",
+    top100SubstantiverTitle: "Lær de 100 mest almindelige danske hverdagsord",
+    top100SubstantiverDesc: "Lær ordene ved at lave sjove øvelser.",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "Se rent billede:",
@@ -181,8 +181,8 @@ export const top100Translations = {
 
   en: {
     // Hub
-    top100_hub_title: "🏆 The 100 Most Common Danish Nouns",
-    top100_hub_desc: "These 100 nouns make up over half of all nouns you encounter in daily life. Instead of memorizing a boring list, you explore them through interactive picture scenes with <strong>color radar (EN/ET)</strong>, detective missions, and sentence building.",
+    top100_hub_title: "🏆 Learn the 100 Most Common Danish Everyday Words",
+    top100_hub_desc: "Learn the words by doing fun exercises. Instead of memorizing a boring list, explore them through interactive picture scenes with <strong>color radar (EN/ET)</strong>, detective missions, and sentence building.",
     top100_hub_class_badge: "🟢 Part of Speech: Nouns (Substantiver in green)",
     top100_legend_substantiv: "Noun",
     top100_legend_verbum: "Verb",
@@ -217,8 +217,8 @@ export const top100Translations = {
     top100_tag_learning: "📖 Learning",
     top100_tag_tech: "💻 Technology",
     top100_tag_time: "⏰ Time expressions",
-    top100SubstantiverTitle: "Learn the 100 Most Common Danish Nouns",
-    top100SubstantiverDesc: "Explore over 50% of everyday words in vivid picture scenes with color radar, gender sorting, and sentence builders.",
+    top100SubstantiverTitle: "Learn the 100 Most Common Danish Everyday Words",
+    top100SubstantiverDesc: "Learn the words by doing fun exercises.",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "View pure image:",
@@ -347,8 +347,8 @@ export const top100Translations = {
 
   es: {
     // Hub
-    top100_hub_title: "🏆 Los 100 sustantivos más comunes en danés",
-    top100_hub_desc: "Estos 100 nombres representan más de la mitad de todos los sustantivos del día a día. En lugar de memorizar una lista aburrida, los exploras en escenas ilustradas con <strong>radar de color (EN/ET)</strong>, misiones de detectives y construcción de oraciones.",
+    top100_hub_title: "🏆 Aprende las 100 palabras cotidianas más comunes en danés",
+    top100_hub_desc: "Aprende las palabras haciendo ejercicios divertidos. En lugar de memorizar una lista aburrida, las exploras en escenas ilustradas con <strong>radar de color (EN/ET)</strong>, misiones de detectives y construcción de oraciones.",
     top100_hub_class_badge: "🟢 Categoría gramatical: Sustantivos (Substantiver en verde)",
     top100_legend_substantiv: "Sustantivo",
     top100_legend_verbum: "Verbo",
@@ -383,8 +383,8 @@ export const top100Translations = {
     top100_tag_learning: "📖 Aprendizaje",
     top100_tag_tech: "💻 Tecnología",
     top100_tag_time: "⏰ Expresiones de tiempo",
-    top100SubstantiverTitle: "Aprende los 100 sustantivos daneses más comunes",
-    top100SubstantiverDesc: "Explora más del 50% de las palabras cotidianas en escenas ilustradas vivas con radar de color, clasificación de género y construcción de oraciones.",
+    top100SubstantiverTitle: "Aprende las 100 palabras cotidianas más comunes en danés",
+    top100SubstantiverDesc: "Aprende las palabras haciendo ejercicios divertidos.",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "Ver imagen limpia:",
@@ -513,8 +513,8 @@ export const top100Translations = {
 
   zh: {
     // Hub
-    top100_hub_title: "🏆 最常用的100个丹麦语名词",
-    top100_hub_desc: "这100个名词构成了日常生活中遇到的名词的一半以上。不要死记硬背枯燥的词汇表，而是通过生动的情景画卷结合<strong>颜色雷达（EN/ET词性）</strong>、侦探任务和造句练习来深度掌握。",
+    top100_hub_title: "🏆 学习最常用的100个丹麦日常词汇",
+    top100_hub_desc: "通过有趣的练习轻松掌握词汇。不要死记硬背枯燥的词汇表，而是通过生动的情景画卷结合<strong>颜色雷达（EN/ET词性）</strong>、侦探任务和造句练习来深度掌握。",
     top100_hub_class_badge: "🟢 语法词类：名词 (Substantiver 以绿色标注)",
     top100_legend_substantiv: "名词",
     top100_legend_verbum: "动词",
@@ -549,8 +549,8 @@ export const top100Translations = {
     top100_tag_learning: "📖 学习",
     top100_tag_tech: "💻 科技",
     top100_tag_time: "⏰ 时间表达",
-    top100SubstantiverTitle: "学习最常用的100个丹麦语名词",
-    top100SubstantiverDesc: "在生动的生活画卷中探索超过50%的日常高频词，配备颜色雷达、词性归类与造句练习。",
+    top100SubstantiverTitle: "学习最常用的100个丹麦日常词汇",
+    top100SubstantiverDesc: "通过有趣的练习轻松掌握词汇。",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "纯净原图模式：",

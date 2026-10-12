@@ -1,4 +1,5 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
+import { byrumWordTranslations } from '../utils/top100_translations.js';
 
 /**
  * ByrummetView - Didaktisk vrimlebillede for semantisk felt: Byrummet (byen, gaden, hverdagen)
@@ -611,8 +612,8 @@ export function renderByrummetView(container, navigateFn) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'byrum-hero-header';
     heroHeader.innerHTML = `
-        <h1>🏙️ Byrummet (Byen, gaden & hverdagen)</h1>
-        <p>Her finder du <strong>60–70 % af de mest brugte danske substantiver</strong>! Mød menneskene på gaden, transportmidler, skolen, butikken, tid og penge i et levende vrimlebillede.</p>
+        <h1>${getTranslation('byrum_hero_title')}</h1>
+        <p>${getTranslation('byrum_hero_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -620,11 +621,11 @@ export function renderByrummetView(container, navigateFn) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'byrum-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Udforsk billedet', icon: '🔍' },
-        { id: 'tab_detektiv', label: '2. Detektiv-missionen', icon: '🕵️' },
-        { id: 'tab_historie', label: '3. Mikro-historie', icon: '💭' },
-        { id: 'tab_kontekst', label: '4. Kontekst-skiftet', icon: '🔄' },
-        { id: 'tab_saetning', label: '5. Find verbet & Byg', icon: '✍️' }
+        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: '🔍' },
+        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: '🕵️' },
+        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: '💭' },
+        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: '🔄' },
+        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: '✍️' }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -703,25 +704,25 @@ export function renderByrummetView(container, navigateFn) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> Se rent billede: <strong id="pure-mode-status-byrum">FRA</strong>`;
+    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status-byrum">${getTranslation('vrimmel_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status-byrum').textContent = pureModeActive ? 'TIL 🖼️' : 'FRA';
+        pureBtn.querySelector('#pure-mode-status-byrum').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
     };
 
     const radarBtn = document.createElement('button');
     radarBtn.className = 'radar-toggle-btn';
-    radarBtn.innerHTML = `<span>📡</span> Farve-radar (EN / ET): <strong id="radar-status-byrum">FRA</strong>`;
+    radarBtn.innerHTML = `<span>📡</span> ${getTranslation('vrimmel_radar_btn')} <strong id="radar-status-byrum">${getTranslation('vrimmel_status_off')}</strong>`;
 
     const radarLegend = document.createElement('div');
     radarLegend.className = 'radar-legend';
     radarLegend.innerHTML = `
-        <div class="legend-item"><div class="legend-dot-en"></div> <strong>EN</strong> (blå)</div>
-        <div class="legend-item"><div class="legend-dot-et"></div> <strong>ET</strong> (orange)</div>
+        <div class="legend-item"><div class="legend-dot-en"></div> <strong>${getTranslation('vrimmel_legend_en')}</strong></div>
+        <div class="legend-item"><div class="legend-dot-et"></div> <strong>${getTranslation('vrimmel_legend_et')}</strong></div>
     `;
 
     radarToggleWrapper.appendChild(pureBtn);
@@ -745,9 +746,9 @@ export function renderByrummetView(container, navigateFn) {
     detailBox.className = 'hotspot-detail-card';
     detailBox.innerHTML = `
         <div>
-            <div class="detail-word-badge badge-en">Klik på en cirkel i byrummet</div>
-            <div class="detail-main-word">Gå på opdagelse i byen!</div>
-            <div class="detail-forms">Lær om ordet hedder <strong>en</strong> eller <strong>et</strong>, lyt til udtalen og træn med mikrofonen.</div>
+            <div class="detail-word-badge badge-en">${getTranslation('byrum_default_badge')}</div>
+            <div class="detail-main-word">${getTranslation('byrum_default_title')}</div>
+            <div class="detail-forms">${getTranslation('byrum_default_desc')}</div>
         </div>
     `;
 
@@ -762,23 +763,32 @@ export function renderByrummetView(container, navigateFn) {
         spot.title = bw.word;
 
         spot.onclick = () => {
+            const lang = getLang();
+            const wordTrans = byrumWordTranslations[bw.word]?.[lang] || (lang !== 'da' ? byrumWordTranslations[bw.word]?.['en'] : null);
+            const transMeaning = wordTrans?.meaning;
+            const transSentence = wordTrans?.sentence;
+
             detailBox.innerHTML = `
                 <div style="flex: 1; min-width: 250px;">
                     <div>
-                        <span class="badge-substantiv">Substantiv</span>
-                        <span class="detail-word-badge badge-${bw.gender}">🏷️ ${bw.gender.toUpperCase()}-ord (${bw.gender === 'en' ? 'Fælleskøn' : 'Intetkøn'})</span>
+                        <span class="badge-substantiv">${getTranslation('vrimmel_badge_substantiv')}</span>
+                        <span class="detail-word-badge badge-${bw.gender}">${bw.gender === 'en' ? getTranslation('vrimmel_badge_en') : getTranslation('vrimmel_badge_et')}</span>
                     </div>
-                    <div class="detail-main-word">${bw.icon} ${bw.word}</div>
-                    <div class="detail-forms">Bestemt: <strong>${bw.bestemt}</strong> | Flertal: <strong>${bw.flertal}</strong></div>
+                    <div class="detail-main-word">
+                        ${bw.icon} ${bw.word}
+                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
+                    </div>
+                    <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${bw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${bw.flertal}</strong></div>
                     <div class="detail-sentence">"${bw.sentence}"</div>
+                    ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                         <button class="listen-word-btn" id="listen-byrum-word">
-                            <span>🔊</span> Hør udtale
+                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
                         </button>
                         <button class="mic-speak-btn" id="mic-byrum-word">
-                            <span>🎤</span> Prøv at udtale
+                            <span>🎤</span> ${getTranslation('vrimmel_mic_btn')}
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback-byrum"></div>
@@ -801,7 +811,7 @@ export function renderByrummetView(container, navigateFn) {
             if (!SpeechRecognition) {
                 micBtn.onclick = () => {
                     feedbackBox.className = 'speech-feedback-box incorrect';
-                    feedbackBox.textContent = 'Tale-genkendelse understøttes i Chrome, Safari og Edge.';
+                    feedbackBox.textContent = getTranslation('vrimmel_mic_unsupported');
                 };
             } else {
                 let rec = null;
@@ -820,9 +830,9 @@ export function renderByrummetView(container, navigateFn) {
                         rec.onstart = () => {
                             isListening = true;
                             micBtn.classList.add('listening');
-                            micBtn.innerHTML = `<span>🔴</span> Lytter...`;
+                            micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening')}`;
                             feedbackBox.className = 'speech-feedback-box listening';
-                            feedbackBox.textContent = `Sig ordet: "${bw.clean}"...`;
+                            feedbackBox.textContent = `${getTranslation('vrimmel_mic_prompt')} "${bw.clean}"...`;
                         };
 
                         rec.onresult = (evt) => {
@@ -837,18 +847,18 @@ export function renderByrummetView(container, navigateFn) {
 
                             if (isMatch) {
                                 feedbackBox.className = 'speech-feedback-box correct';
-                                feedbackBox.innerHTML = `🎉 Flot! Du sagde: <strong>"${spoken}"</strong> ✓`;
+                                feedbackBox.innerHTML = `${getTranslation('vrimmel_mic_correct')} <strong>"${spoken}"</strong> ✓`;
                                 speakDanish("Rigtigt");
                             } else {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
-                                feedbackBox.innerHTML = `🤔 Du sagde: <em>"${spoken}"</em>. Prøv igen!`;
+                                feedbackBox.innerHTML = getTranslation('vrimmel_mic_incorrect').replace('{spoken}', spoken);
                             }
                         };
 
                         rec.onerror = (err) => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> Prøv at udtale`;
+                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
                             if (err.error !== 'no-speech') {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.textContent = `Mikrofon: ${err.error}`;
@@ -858,7 +868,7 @@ export function renderByrummetView(container, navigateFn) {
                         rec.onend = () => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> Prøv at udtale`;
+                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
                         };
 
                         rec.start();
@@ -886,7 +896,7 @@ export function renderByrummetView(container, navigateFn) {
         radarActive = !radarActive;
         stage.classList.toggle('radar-active', radarActive);
         radarBtn.classList.toggle('active', radarActive);
-        radarBtn.querySelector('#radar-status-byrum').textContent = radarActive ? 'TIL ⚡' : 'FRA';
+        radarBtn.querySelector('#radar-status-byrum').textContent = radarActive ? `${getTranslation('vrimmel_status_on')} ⚡` : getTranslation('vrimmel_status_off');
 
         renderedHotspots.forEach(({ el, bw }) => {
             el.textContent = radarActive ? bw.gender.toUpperCase() : '?';
@@ -907,10 +917,10 @@ export function renderByrummetView(container, navigateFn) {
     sortHeader.className = 'sorting-header-row';
     sortHeader.innerHTML = `
         <div>
-            <h3 style="font-size: 1.3rem; margin: 0;">📦 Sorter alle 24 ord i EN- og ET-kassen</h3>
-            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">Vælg et ord nedenfor og klik på kassen. Træn kønnet på de vigtigste hverdagsord!</p>
+            <h3 style="font-size: 1.3rem; margin: 0;">📦 ${getTranslation('sort_byrum_title')}</h3>
+            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
         </div>
-        <div class="sort-progress-badge" id="byrum-sort-progress">0 / ${byrumWords.length} sorteret</div>
+        <div class="sort-progress-badge" id="byrum-sort-progress">${getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', byrumWords.length)}</div>
     `;
     sortingBox.appendChild(sortHeader);
 
@@ -919,11 +929,11 @@ export function renderByrummetView(container, navigateFn) {
 
     const binEn = document.createElement('div');
     binEn.className = 'sort-bin bin-en';
-    binEn.innerHTML = `<div class="bin-title bin-title-en">🔵 EN-kassen (Klik her)</div><div class="bin-items-list" id="bin-byrum-en"></div>`;
+    binEn.innerHTML = `<div class="bin-title bin-title-en">${getTranslation('sort_bin_en_title')}</div><div class="bin-items-list" id="bin-byrum-en"></div>`;
 
     const binEt = document.createElement('div');
     binEt.className = 'sort-bin bin-et';
-    binEt.innerHTML = `<div class="bin-title bin-title-et">🟠 ET-kassen (Klik her)</div><div class="bin-items-list" id="bin-byrum-et"></div>`;
+    binEt.innerHTML = `<div class="bin-title bin-title-et">${getTranslation('sort_bin_et_title')}</div><div class="bin-items-list" id="bin-byrum-et"></div>`;
 
     binsContainer.appendChild(binEn);
     binsContainer.appendChild(binEt);
@@ -968,7 +978,7 @@ export function renderByrummetView(container, navigateFn) {
             binListEl.appendChild(placedChip);
 
             byrumPlacedCount++;
-            sortHeader.querySelector('#byrum-sort-progress').textContent = `${byrumPlacedCount} / ${byrumWords.length} sorteret`;
+            sortHeader.querySelector('#byrum-sort-progress').textContent = getTranslation('sort_progress_text').replace('{n}', byrumPlacedCount).replace('{total}', byrumWords.length);
 
             wordsBank.querySelectorAll('.sort-word-chip').forEach(c => {
                 if (c.textContent === selectedSortWord.clean) {
@@ -978,7 +988,7 @@ export function renderByrummetView(container, navigateFn) {
             });
 
             if (byrumPlacedCount === byrumWords.length) {
-                sortHeader.querySelector('#byrum-sort-progress').innerHTML = `🎉 Alle 24 ord sorteret!`;
+                sortHeader.querySelector('#byrum-sort-progress').innerHTML = getTranslation('sort_all_complete');
             }
 
             selectedSortWord = null;
@@ -996,13 +1006,13 @@ export function renderByrummetView(container, navigateFn) {
 
     const resetBtn = document.createElement('button');
     resetBtn.className = 'reset-sort-btn';
-    resetBtn.innerHTML = `🔄 Nulstil sortering`;
+    resetBtn.innerHTML = getTranslation('sort_reset_btn');
     resetBtn.onclick = () => {
         byrumPlacedCount = 0;
         selectedSortWord = null;
         binEn.querySelector('#bin-byrum-en').innerHTML = '';
         binEt.querySelector('#bin-byrum-et').innerHTML = '';
-        sortHeader.querySelector('#byrum-sort-progress').textContent = `0 / ${byrumWords.length} sorteret`;
+        sortHeader.querySelector('#byrum-sort-progress').textContent = getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', byrumWords.length);
         renderByrumBank();
     };
     resetBar.appendChild(resetBtn);
@@ -1021,33 +1031,19 @@ export function renderByrummetView(container, navigateFn) {
 
     const byrumMissions = [
         {
-            title: "Find 3 transportmidler eller ting på vejen 🚗",
+            title: getTranslation('byrum_m1_title'),
             targetCount: 3,
             options: [
                 { text: "en bil", correct: true },
                 { text: "et hus", correct: false },
-                { text: "en tur (på cykel)", correct: true },
+                { text: "en tur", correct: true },
                 { text: "en læge", correct: false },
                 { text: "en vej", correct: true },
                 { text: "en sol", correct: false }
-            ],
-            feedback: "🎉 Perfekt! Bil, cykeltur og vej er byens transportnet."
+            ]
         },
         {
-            title: "Find 3 steder eller bygninger i byen 🏫",
-            targetCount: 3,
-            options: [
-                { text: "en by", correct: true },
-                { text: "en hund", correct: false },
-                { text: "en skole", correct: true },
-                { text: "en plads", correct: true },
-                { text: "en krone", correct: false },
-                { text: "et barn", correct: false }
-            ],
-            feedback: "🎉 Helt rigtigt! Byen, skolen og torvepladsen danner byens rum."
-        },
-        {
-            title: "Find 3 personer på gaden 👥",
+            title: getTranslation('byrum_m2_title'),
             targetCount: 3,
             options: [
                 { text: "en læge", correct: true },
@@ -1056,21 +1052,31 @@ export function renderByrummetView(container, navigateFn) {
                 { text: "en bil", correct: false },
                 { text: "en ven", correct: true },
                 { text: "et vindue", correct: false }
-            ],
-            feedback: "🎉 Flot fundet! Lægen, manden og vennerne færdes i byen."
+            ]
         },
         {
-            title: "Find 3 ting, der handler om tid eller penge ⏰🪙",
+            title: getTranslation('byrum_m3_title'),
             targetCount: 3,
             options: [
-                { text: "en tid / en time", correct: true },
+                { text: "en by", correct: true },
+                { text: "en hund", correct: false },
+                { text: "en skole", correct: true },
+                { text: "en plads", correct: true },
+                { text: "en krone", correct: false },
+                { text: "et barn", correct: false }
+            ]
+        },
+        {
+            title: getTranslation('byrum_m4_title'),
+            targetCount: 3,
+            options: [
+                { text: "en tid", correct: true },
                 { text: "en dør", correct: false },
-                { text: "penge (mønter)", correct: true },
+                { text: "penge", correct: true },
                 { text: "en krone", correct: true },
                 { text: "en pige", correct: false },
                 { text: "en hund", correct: false }
-            ],
-            feedback: "🎉 Super godt! Tid, time, kroner og penge styrer hverdagen."
+            ]
         }
     ];
 
@@ -1086,9 +1092,9 @@ export function renderByrummetView(container, navigateFn) {
         const header = document.createElement('div');
         header.className = 'mission-header';
         header.innerHTML = `
-            <div class="mission-badge">🕵️ Detektiv-mission ${currMissionIdx + 1} af ${byrumMissions.length}</div>
+            <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${byrumMissions.length}</div>
             <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem;">${m.title}</div>
-            <div style="font-size: 0.95rem; color: #94a3b8;">Klik på de 3 rigtige ord herunder:</div>
+            <div style="font-size: 0.95rem; color: #94a3b8;">${getTranslation('byrum_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);
 
@@ -1100,10 +1106,14 @@ export function renderByrummetView(container, navigateFn) {
         feedbackEl.style.minHeight = '50px';
         feedbackEl.style.marginTop = '1rem';
 
+        const lang = getLang();
+
         m.options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'clue-btn';
-            btn.textContent = opt.text;
+            const wordTrans = byrumWordTranslations[opt.text]?.[lang] || (lang !== 'da' ? byrumWordTranslations[opt.text]?.['en'] : null);
+            const transMeaning = wordTrans?.meaning;
+            btn.innerHTML = `<span>${opt.text}</span>${transMeaning ? `<span style="font-size:0.8rem; opacity:0.8; font-weight:normal;">(${transMeaning})</span>` : ''}`;
 
             btn.onclick = () => {
                 if (btn.classList.contains('selected-correct') || btn.classList.contains('selected-wrong')) return;
@@ -1116,10 +1126,10 @@ export function renderByrummetView(container, navigateFn) {
                     if (selectedCount === m.targetCount) {
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                Rigtigt! ✓
+                                ${getTranslation('byrum_detektiv_complete')}
                             </div>
                             <button class="mission-next-btn" id="next-byrum-mission">
-                                ${currMissionIdx < byrumMissions.length - 1 ? 'Næste mission ➔' : 'Start forfra 🔄'}
+                                ${currMissionIdx < byrumMissions.length - 1 ? getTranslation('byrum_detektiv_next') : getTranslation('byrum_detektiv_restart')}
                             </button>
                         `;
                         speakDanish("Rigtigt");
@@ -1154,14 +1164,14 @@ export function renderByrummetView(container, navigateFn) {
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
     storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">💭 Mikro-historie: Bilen holder i vejsiden</h2>
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('byrum_story_title')}</h2>
         <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            Se på manden ved den blå bil til højre i byrummet. Sådan kobles konkrete situationer til abstrakte ord:
+            ${getTranslation('byrum_story_desc')}
         </p>
 
         <!-- Trin 1 -->
         <div class="story-step-card active-step" id="byrum-story-1">
-            <h4>Trin 1: Hvilken konkret maskine kørte manden i?</h4>
+            <h4>${getTranslation('byrum_story_s1_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="true">En bil 🚗</button>
                 <button class="story-opt-btn" data-correct="false">En seng 🛏️</button>
@@ -1171,7 +1181,7 @@ export function renderByrummetView(container, navigateFn) {
 
         <!-- Trin 2 -->
         <div class="story-step-card" id="byrum-story-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>Trin 2: Hvad skete der i motoren, da bilen stoppede?</h4>
+            <h4>${getTranslation('byrum_story_s2_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="false">En ferie 🏖️</button>
                 <button class="story-opt-btn" data-correct="true">En fejl (et uheld) ⚙️</button>
@@ -1181,7 +1191,7 @@ export function renderByrummetView(container, navigateFn) {
 
         <!-- Trin 3 -->
         <div class="story-step-card" id="byrum-story-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>Trin 3: Hvad har manden nu, da han ikke kan køre videre?</h4>
+            <h4>${getTranslation('byrum_story_s3_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
                 <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
@@ -1191,7 +1201,7 @@ export function renderByrummetView(container, navigateFn) {
 
         <!-- Trin 4 -->
         <div class="story-step-card" id="byrum-story-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>Trin 4: Hvad tænker manden for at løse situationen?</h4>
+            <h4>${getTranslation('byrum_story_s4_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="false">Han spiser en is</button>
                 <button class="story-opt-btn" data-correct="true">Han får en tanke om at ringe efter en mekaniker 💡</button>
@@ -1199,7 +1209,7 @@ export function renderByrummetView(container, navigateFn) {
         </div>
 
         <div id="byrum-story-summary" style="display: none;" class="story-explanation-box">
-            💡 <strong>Didaktisk pointe:</strong> Abstrakte begreber som <em>en fejl</em>, <em>et problem</em> og <em>en tanke</em> er nemme at huske, når de knytter sig til en reel hændelse i hverdagen!
+            ${getTranslation('byrum_story_pedagogy')}
         </div>
     `;
 
@@ -1245,23 +1255,30 @@ export function renderByrummetView(container, navigateFn) {
     contextCard.className = 'context-card';
     contextCard.innerHTML = `
         <div class="context-word-banner">
-            <h2>Målord: "en skole" og "penge"</h2>
-            <p style="color: #94a3b8;">Samme ord bruges på forskellige måder i samfundet:</p>
+            <h2>${getTranslation('byrum_context_title')}</h2>
+            <p style="color: #94a3b8;">${getTranslation('byrum_context_desc')}</p>
         </div>
 
         <div class="context-scenes-grid">
             <div class="scene-role-card">
-                <h4 style="color: #38bdf8;">🏫 1. Ordet "en skole"</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">Hvad er en skoles vigtigste funktion i hverdagen?</p>
-                <button class="role-choice-btn" data-correct="true">A) Børn og voksne lærer sprog, fag og færdigheder</button>
-                <button class="role-choice-btn" data-correct="false">B) Man reparerer biler indeni klassen</button>
+                <h4 style="color: #38bdf8;">${getTranslation('byrum_context_s1_title')}</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('byrum_context_s1_q')}</p>
+                <button class="role-choice-btn" data-correct="true">${getTranslation('byrum_context_s1_a')}</button>
+                <button class="role-choice-btn" data-correct="false">${getTranslation('byrum_context_s1_b')}</button>
             </div>
 
             <div class="scene-role-card">
-                <h4 style="color: #f59e0b;">🪙 2. Ordet "penge"</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">Hvordan bruger man penge i byrummet?</p>
-                <button class="role-choice-btn" data-correct="true">A) Man betaler med mønter eller kort, når man køber varer</button>
-                <button class="role-choice-btn" data-correct="false">B) Man spiser mønterne som mad</button>
+                <h4 style="color: #f59e0b;">${getTranslation('byrum_context_s2_title')}</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('byrum_context_s2_q')}</p>
+                <button class="role-choice-btn" data-correct="true">${getTranslation('byrum_context_s2_a')}</button>
+                <button class="role-choice-btn" data-correct="false">${getTranslation('byrum_context_s2_b')}</button>
+            </div>
+
+            <div class="scene-role-card">
+                <h4 style="color: #10b981;">${getTranslation('byrum_context_s3_title')}</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('byrum_context_s3_q')}</p>
+                <button class="role-choice-btn" data-correct="true">${getTranslation('byrum_context_s3_a')}</button>
+                <button class="role-choice-btn" data-correct="false">${getTranslation('byrum_context_s3_b')}</button>
             </div>
         </div>
     `;
@@ -1340,44 +1357,44 @@ export function renderByrummetView(container, navigateFn) {
 
         sentenceCard.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div class="mission-badge">✍️ Sætningsbygger ${currByrumSentenceIdx + 1} af ${byrumSentenceTasks.length}</div>
-                <h3 style="font-size: 1.6rem; color: white;">Vælg det rigtige verbum og dan en byrums-sætning:</h3>
+                <div class="mission-badge">${getTranslation('builder_badge').replace('{current}', currByrumSentenceIdx + 1).replace('{total}', byrumSentenceTasks.length)}</div>
+                <h3 style="font-size: 1.6rem; color: white;">${getTranslation('builder_byrum_title')}</h3>
             </div>
 
             <!-- Grammatisk farveforklaring -->
             <div class="grammar-legend-bar">
-                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>Substantiv</strong> (grøn)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>Verbum</strong> (rød)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>Adjektiv</strong> (orange)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>Sted</strong> (blå)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>${getTranslation('top100_legend_substantiv')}</strong> (${getTranslation('top100_legend_green')})</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>${getTranslation('top100_legend_verbum')}</strong> (${getTranslation('top100_legend_red')})</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>${getTranslation('top100_legend_adjektiv')}</strong> (${getTranslation('top100_legend_orange')})</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>${getTranslation('top100_legend_sted')}</strong> (${getTranslation('top100_legend_blue')})</div>
             </div>
 
             <div class="builder-slots-row">
                 <div class="builder-slot-box slot-subjekt">
-                    <span class="slot-role-tag">Substantiv</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_substantiv')}</span>
                     <span>${task.subjekt}</span>
                 </div>
                 <div class="builder-slot-box slot-verbum" id="slot-v-byrum">
-                    <span class="slot-role-tag">Verbum</span>
-                    <span>❓ Vælg verbum</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span>
+                    <span>${getTranslation('builder_choose_verb_slot')}</span>
                 </div>
                 <div class="builder-slot-box slot-objekt">
-                    <span class="slot-role-tag">Substantiv</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_substantiv')}</span>
                     <span>${task.objekt}</span>
                 </div>
                 <div class="builder-slot-box slot-adverbial">
-                    <span class="slot-role-tag">Sted</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_sted')}</span>
                     <span>${task.adverbial}</span>
                 </div>
             </div>
 
             <div class="words-selection-tray">
-                <div class="tray-group-title">Hvilket verbum passer til handlingen? (🔴 Verbum)</div>
+                <div class="tray-group-title">${getTranslation('builder_tray_title')}</div>
                 <div class="tray-chips-list" id="verb-chips-byrum"></div>
             </div>
 
             <div class="live-sentence-preview" id="preview-box-byrum">
-                <span id="preview-text-byrum">Vælg et verbum for at høre sætningen...</span>
+                <span id="preview-text-byrum">${getTranslation('builder_preview_default')}</span>
             </div>
 
             <div style="text-align: center;" id="action-area-byrum"></div>
@@ -1397,7 +1414,7 @@ export function renderByrummetView(container, navigateFn) {
                 const actionArea = sentenceCard.querySelector('#action-area-byrum');
 
                 if (v === task.verbum) {
-                    slotV.innerHTML = `<span class="slot-role-tag">Verbum</span><span>${v} ✓</span>`;
+                    slotV.innerHTML = `<span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span><span>${v} ✓</span>`;
                     slotV.style.background = 'rgba(239, 68, 68, 0.35)';
                     slotV.style.borderColor = '#ef4444';
                     slotV.style.color = '#fca5a5';
@@ -1412,10 +1429,10 @@ export function renderByrummetView(container, navigateFn) {
 
                     actionArea.innerHTML = `
                         <button class="listen-word-btn" style="display: inline-flex; margin-right: 0.8rem;" id="listen-byrum-sent">
-                            🔊 Hør udtale
+                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
                         </button>
                         <button class="mission-next-btn" style="margin-top: 0;" id="next-byrum-sent-task">
-                            ${currByrumSentenceIdx < byrumSentenceTasks.length - 1 ? 'Næste sætning ➔' : 'Start forfra 🔄'}
+                            ${currByrumSentenceIdx < byrumSentenceTasks.length - 1 ? getTranslation('builder_next_btn') : getTranslation('builder_restart_btn')}
                         </button>
                     `;
                     actionArea.querySelector('#listen-byrum-sent').onclick = () => speakDanish(task.correctText);
@@ -1424,10 +1441,10 @@ export function renderByrummetView(container, navigateFn) {
                         renderByrumSentenceBuilder();
                     };
                 } else {
-                    slotV.innerHTML = `<span class="slot-role-tag">Verbum</span><span>${v} ✕</span>`;
+                    slotV.innerHTML = `<span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span><span>${v} ✕</span>`;
                     slotV.style.borderColor = '#ef4444';
                     slotV.style.color = '#f87171';
-                    previewText.textContent = `Nej, "${task.subjekt} ${v} ${task.objekt}" passer ikke. Prøv et andet verbum!`;
+                    previewText.textContent = getTranslation('builder_wrong_feedback');
                     speakDanish(`Nej, prøv et andet verbum`);
                 }
             };

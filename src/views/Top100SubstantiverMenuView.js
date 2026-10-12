@@ -227,17 +227,17 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'hub-hero';
     hero.innerHTML = `
-        <h1>🏆 De 100 mest almindelige substantiver</h1>
-        <p>Disse 100 navneord udgør over halvdelen af alle substantiver, du møder i hverdagen. I stedet for at lære dem fra en kedelig liste, udforsker du dem i levende vrimlebilleder med <strong>farve-radar (EN/ET)</strong>, detektiv-missioner og sætningsbygning.</p>
+        <h1>${getTranslation('top100_hub_title')}</h1>
+        <p>${getTranslation('top100_hub_desc')}</p>
         <div class="hub-facts-badge">
-            <span>🟢</span> <strong>Ordklasse: Substantiver</strong> (Navneord i grøn farve)
+            <span>🟢</span> <strong>${getTranslation('top100_hub_class_badge')}</strong>
         </div>
         <div class="grammar-system-banner">
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong>Substantiv</strong> (grøn)</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong>Verbum</strong> (rød)</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong>Adjektiv</strong> (orange)</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong>Sted</strong> (blå)</div>
-            <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong>Tid</strong> (lilla)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong>${getTranslation('top100_legend_substantiv')}</strong> (${getTranslation('top100_legend_green')})</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong>${getTranslation('top100_legend_verbum')}</strong> (${getTranslation('top100_legend_red')})</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong>${getTranslation('top100_legend_adjektiv')}</strong> (${getTranslation('top100_legend_orange')})</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong>${getTranslation('top100_legend_sted')}</strong> (${getTranslation('top100_legend_blue')})</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong>${getTranslation('top100_legend_tid')}</strong> (${getTranslation('top100_legend_purple')})</div>
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -252,19 +252,19 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     cardByrum.innerHTML = `
         <div class="scene-card-img-wrap">
             <img src="assets/byrum_vrimmel.jpg" alt="Byrummet vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-scene-1">🏙️ Scene 1: Ca. 60–70 % af ordene</div>
+            <div class="scene-pill-badge badge-scene-1">${getTranslation('top100_scene1_badge')}</div>
         </div>
         <div class="scene-card-content">
-            <h3>🏙️ Byrummet</h3>
-            <p>Udforsk gaden, torvet, skolen, butikken og menneskene i byen. Lær centrale højfrekvente ord som <em>mand, kvinde, bil, vej, skole, tid, penge, læge</em> og <em>tur</em>.</p>
+            <h3>${getTranslation('top100_scene1_title')}</h3>
+            <p>${getTranslation('top100_scene1_desc')}</p>
             <div class="scene-features-tags">
-                <span class="feature-tag tag-substantiv">🟢 24 Substantiver</span>
-                <span class="feature-tag">📡 Farve-radar EN/ET</span>
-                <span class="feature-tag">🕵️ Detektiv-mission</span>
-                <span class="feature-tag">💭 Mikro-historie</span>
-                <span class="feature-tag">✍️ Sætningsbygger</span>
+                <span class="feature-tag tag-substantiv">🟢 24 ${getTranslation('top100_legend_substantiv')}er</span>
+                <span class="feature-tag">${getTranslation('top100_tag_farve_radar')}</span>
+                <span class="feature-tag">${getTranslation('top100_tag_detektiv')}</span>
+                <span class="feature-tag">${getTranslation('top100_tag_historie')}</span>
+                <span class="feature-tag">${getTranslation('top100_tag_bygger')}</span>
             </div>
-            <button class="scene-action-btn">Gå til Byrummet ➔</button>
+            <button class="scene-action-btn">${getTranslation('top100_scene1_btn')}</button>
         </div>
     `;
     cardByrum.onclick = () => navigateFn('byrummet_vrimmel');
@@ -276,19 +276,19 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     cardKoekken.innerHTML = `
         <div class="scene-card-img-wrap">
             <img src="assets/koekken_vrimmel.jpg" alt="Køkkenet og hjemmet vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-scene-2">🍳 Scene 2: Hjemmet & Familien</div>
+            <div class="scene-pill-badge badge-scene-2">${getTranslation('top100_scene2_badge')}</div>
         </div>
         <div class="scene-card-content">
-            <h3>🍳 Køkkenet & Hjemmet</h3>
-            <p>Udforsk familiens måltid, maden, møblerne og tøjet i det nære miljø. Lær ord som <em>mor, far, barn, bord, stol, kop, kaffe, mad, seng, hund</em> og <em>problem</em>.</p>
+            <h3>${getTranslation('top100_scene2_title')}</h3>
+            <p>${getTranslation('top100_scene2_desc')}</p>
             <div class="scene-features-tags">
-                <span class="feature-tag tag-substantiv">🟢 20 Substantiver</span>
-                <span class="feature-tag">📡 Farve-radar EN/ET</span>
-                <span class="feature-tag">📦 20-ords kassesortering</span>
+                <span class="feature-tag tag-substantiv">🟢 20 ${getTranslation('top100_legend_substantiv')}er</span>
+                <span class="feature-tag">${getTranslation('top100_tag_farve_radar')}</span>
+                <span class="feature-tag">${getTranslation('top100_tag_sorting')}</span>
                 <span class="feature-tag">💭 Kaffen vælter!</span>
-                <span class="feature-tag">✍️ Sætningsbygger</span>
+                <span class="feature-tag">${getTranslation('top100_tag_bygger')}</span>
             </div>
-            <button class="scene-action-btn">Gå til Køkkenet ➔</button>
+            <button class="scene-action-btn">${getTranslation('top100_scene2_btn')}</button>
         </div>
     `;
     cardKoekken.onclick = () => navigateFn('koekken_hjemmet');
@@ -300,17 +300,17 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     cardKlasse.innerHTML = `
         <div class="scene-card-img-wrap" style="background: linear-gradient(135deg, #1e1b4b, #312e81); display: flex; align-items: center; justify-content: center;">
             <div style="font-size: 4rem;">🏫</div>
-            <div class="scene-pill-badge badge-scene-3">📚 Scene 3: Viden & Sprog</div>
+            <div class="scene-pill-badge badge-scene-3">${getTranslation('top100_scene3_badge')}</div>
         </div>
         <div class="scene-card-content">
-            <h3>🏫 Undervisningslokalet & Kontoret</h3>
-            <p>Læring, sprog, teknologi og tid. Dækker ord som <em>lærer, elev, bog, computer, papir, opgave, spørgsmål, svar</em> og <em>arbejde</em>.</p>
+            <h3>${getTranslation('top100_scene3_title')}</h3>
+            <p>${getTranslation('top100_scene3_desc')}</p>
             <div class="scene-features-tags">
                 <span class="feature-tag">📖 Læring</span>
                 <span class="feature-tag">💻 Teknologi</span>
                 <span class="feature-tag">⏰ Tidsudtryk</span>
             </div>
-            <button class="scene-action-btn">Kommer snart 🔒</button>
+            <button class="scene-action-btn">${getTranslation('top100_scene3_btn')}</button>
         </div>
     `;
     grid.appendChild(cardKlasse);

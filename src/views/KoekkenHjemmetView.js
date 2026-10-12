@@ -1,4 +1,5 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
+import { kitchenWordTranslations } from '../utils/top100_translations.js';
 
 /**
  * KoekkenHjemmetView - Test-prototype for semantisk ordforråd: Køkkenet & Hjemmet
@@ -900,8 +901,8 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'kv-hero-header';
     heroHeader.innerHTML = `
-        <h1>🍳 Køkkenet & Hjemmet</h1>
-        <p>Lær de mest brugte danske navneord i et levende vrimlebillede. Mestr <strong>EN</strong> og <strong>ET</strong> med farve-radaren, løs detektiv-missioner og byg rigtige sætninger.</p>
+        <h1>${getTranslation('koekken_hero_title')}</h1>
+        <p>${getTranslation('koekken_hero_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -909,11 +910,11 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'kv-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Udforsk billedet', icon: '🔍' },
-        { id: 'tab_detektiv', label: '2. Detektiv-missionen', icon: '🕵️' },
-        { id: 'tab_historie', label: '3. Mikro-historie', icon: '💭' },
-        { id: 'tab_kontekst', label: '4. Kontekst-skiftet', icon: '🔄' },
-        { id: 'tab_saetning', label: '5. Find verbet & Byg', icon: '✍️' }
+        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: '🔍' },
+        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: '🕵️' },
+        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: '💭' },
+        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: '🔄' },
+        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: '✍️' }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -987,25 +988,25 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> Se rent billede: <strong id="pure-mode-status">FRA</strong>`;
+    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status">${getTranslation('vrimmel_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status').textContent = pureModeActive ? 'TIL 🖼️' : 'FRA';
+        pureBtn.querySelector('#pure-mode-status').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
     };
 
     const radarBtn = document.createElement('button');
     radarBtn.className = 'radar-toggle-btn';
-    radarBtn.innerHTML = `<span>📡</span> Farve-radar (EN / ET): <strong id="radar-status">FRA</strong>`;
+    radarBtn.innerHTML = `<span>📡</span> ${getTranslation('vrimmel_radar_btn')} <strong id="radar-status">${getTranslation('vrimmel_status_off')}</strong>`;
 
     const radarLegend = document.createElement('div');
     radarLegend.className = 'radar-legend';
     radarLegend.innerHTML = `
-        <div class="legend-item"><div class="legend-dot-en"></div> <strong>EN</strong> (blå)</div>
-        <div class="legend-item"><div class="legend-dot-et"></div> <strong>ET</strong> (orange)</div>
+        <div class="legend-item"><div class="legend-dot-en"></div> <strong>${getTranslation('vrimmel_legend_en')}</strong></div>
+        <div class="legend-item"><div class="legend-dot-et"></div> <strong>${getTranslation('vrimmel_legend_et')}</strong></div>
     `;
 
     radarToggleWrapper.appendChild(pureBtn);
@@ -1029,9 +1030,9 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     detailBox.className = 'hotspot-detail-card';
     detailBox.innerHTML = `
         <div>
-            <div class="detail-word-badge badge-en">Klik på en cirkel i billedet</div>
-            <div class="detail-main-word">Gå på opdagelse i køkkenet!</div>
-            <div class="detail-forms">Hør udtalen, træn med mikrofonen og lær om ordet hedder <strong>en</strong> eller <strong>et</strong>.</div>
+            <div class="detail-word-badge badge-en">${getTranslation('koekken_default_badge')}</div>
+            <div class="detail-main-word">${getTranslation('koekken_default_title')}</div>
+            <div class="detail-forms">${getTranslation('koekken_default_desc')}</div>
         </div>
     `;
 
@@ -1046,23 +1047,32 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         spot.title = kw.word;
 
         spot.onclick = () => {
+            const lang = getLang();
+            const wordTrans = kitchenWordTranslations[kw.word]?.[lang] || (lang !== 'da' ? kitchenWordTranslations[kw.word]?.['en'] : null);
+            const transMeaning = wordTrans?.meaning;
+            const transSentence = wordTrans?.sentence;
+
             detailBox.innerHTML = `
                 <div style="flex: 1; min-width: 250px;">
                     <div>
-                        <span class="badge-substantiv">Substantiv</span>
-                        <span class="detail-word-badge badge-${kw.gender}">🏷️ ${kw.gender.toUpperCase()}-ord (${kw.gender === 'en' ? 'Fælleskøn' : 'Intetkøn'})</span>
+                        <span class="badge-substantiv">${getTranslation('vrimmel_badge_substantiv')}</span>
+                        <span class="detail-word-badge badge-${kw.gender}">${kw.gender === 'en' ? getTranslation('vrimmel_badge_en') : getTranslation('vrimmel_badge_et')}</span>
                     </div>
-                    <div class="detail-main-word">${kw.icon} ${kw.word}</div>
-                    <div class="detail-forms">Bestemt: <strong>${kw.bestemt}</strong> | Flertal: <strong>${kw.flertal}</strong></div>
+                    <div class="detail-main-word">
+                        ${kw.icon} ${kw.word}
+                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
+                    </div>
+                    <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${kw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${kw.flertal}</strong></div>
                     <div class="detail-sentence">"${kw.sentence}"</div>
+                    ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                         <button class="listen-word-btn" id="listen-curr-word">
-                            <span>🔊</span> Hør udtale
+                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
                         </button>
                         <button class="mic-speak-btn" id="mic-curr-word">
-                            <span>🎤</span> Prøv at udtale
+                            <span>🎤</span> ${getTranslation('vrimmel_mic_btn')}
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback"></div>
@@ -1085,7 +1095,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             if (!SpeechRecognition) {
                 micBtn.onclick = () => {
                     feedbackBox.className = 'speech-feedback-box incorrect';
-                    feedbackBox.textContent = 'Tale-genkendelse understøttes i Chrome, Safari og Edge.';
+                    feedbackBox.textContent = getTranslation('vrimmel_mic_unsupported');
                 };
             } else {
                 let rec = null;
@@ -1104,9 +1114,9 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                         rec.onstart = () => {
                             isListening = true;
                             micBtn.classList.add('listening');
-                            micBtn.innerHTML = `<span>🔴</span> Lytter...`;
+                            micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening')}`;
                             feedbackBox.className = 'speech-feedback-box listening';
-                            feedbackBox.textContent = `Sig ordet: "${kw.clean}"...`;
+                            feedbackBox.textContent = `${getTranslation('vrimmel_mic_prompt')} "${kw.clean}"...`;
                         };
 
                         rec.onresult = (evt) => {
@@ -1121,18 +1131,18 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
                             if (isMatch) {
                                 feedbackBox.className = 'speech-feedback-box correct';
-                                feedbackBox.innerHTML = `🎉 Flot! Du sagde: <strong>"${spoken}"</strong> ✓`;
+                                feedbackBox.innerHTML = `${getTranslation('vrimmel_mic_correct')} <strong>"${spoken}"</strong> ✓`;
                                 speakDanish("Rigtigt");
                             } else {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
-                                feedbackBox.innerHTML = `🤔 Du sagde: <em>"${spoken}"</em>. Prøv igen!`;
+                                feedbackBox.innerHTML = getTranslation('vrimmel_mic_incorrect').replace('{spoken}', spoken);
                             }
                         };
 
                         rec.onerror = (err) => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> Prøv at udtale`;
+                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
                             if (err.error !== 'no-speech') {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.textContent = `Mikrofon: ${err.error}`;
@@ -1142,7 +1152,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                         rec.onend = () => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> Prøv at udtale`;
+                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
                         };
 
                         rec.start();
@@ -1170,7 +1180,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         radarActive = !radarActive;
         stage.classList.toggle('radar-active', radarActive);
         radarBtn.classList.toggle('active', radarActive);
-        radarBtn.querySelector('#radar-status').textContent = radarActive ? 'TIL ⚡' : 'FRA';
+        radarBtn.querySelector('#radar-status').textContent = radarActive ? `${getTranslation('vrimmel_status_on')} ⚡` : getTranslation('vrimmel_status_off');
 
         // Update hotspot labels
         renderedHotspots.forEach(({ el, kw }) => {
@@ -1192,10 +1202,10 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     sortHeader.className = 'sorting-header-row';
     sortHeader.innerHTML = `
         <div>
-            <h3>📦 Sorter alle 20 ord i EN- og ET-kassen</h3>
-            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">Vælg et ord nedenfor og klik på den rigtige kasse. Træn indtil alle 20 ord er på plads!</p>
+            <h3>📦 ${getTranslation('sort_kitchen_title')}</h3>
+            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
         </div>
-        <div class="sort-progress-badge" id="sort-progress-text">0 / 20 sorteret</div>
+        <div class="sort-progress-badge" id="sort-progress-text">${getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', 20)}</div>
     `;
     sortingBox.appendChild(sortHeader);
 
@@ -1204,11 +1214,11 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     const binEn = document.createElement('div');
     binEn.className = 'sort-bin bin-en';
-    binEn.innerHTML = `<div class="bin-title bin-title-en">🔵 EN-kassen (Klik for at placere)</div><div class="bin-items-list" id="bin-en-items"></div>`;
+    binEn.innerHTML = `<div class="bin-title bin-title-en">${getTranslation('sort_bin_en_title')}</div><div class="bin-items-list" id="bin-en-items"></div>`;
 
     const binEt = document.createElement('div');
     binEt.className = 'sort-bin bin-et';
-    binEt.innerHTML = `<div class="bin-title bin-title-et">🟠 ET-kassen (Klik for at placere)</div><div class="bin-items-list" id="bin-et-items"></div>`;
+    binEt.innerHTML = `<div class="bin-title bin-title-et">${getTranslation('sort_bin_et_title')}</div><div class="bin-items-list" id="bin-et-items"></div>`;
 
     binsContainer.appendChild(binEn);
     binsContainer.appendChild(binEt);
@@ -1277,7 +1287,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             binListEl.appendChild(placedChip);
 
             placedCount++;
-            sortHeader.querySelector('#sort-progress-text').textContent = `${placedCount} / ${allSortingWords.length} sorteret`;
+            sortHeader.querySelector('#sort-progress-text').textContent = getTranslation('sort_progress_text').replace('{n}', placedCount).replace('{total}', allSortingWords.length);
 
             // Disable button in bank
             wordsBank.querySelectorAll('.sort-word-chip').forEach(c => {
@@ -1288,7 +1298,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             });
 
             if (placedCount === allSortingWords.length) {
-                sortHeader.querySelector('#sort-progress-text').innerHTML = `🎉 Alle 20 ord sorteret!`;
+                sortHeader.querySelector('#sort-progress-text').innerHTML = getTranslation('sort_all_complete');
             }
 
             currentSelectedWord = null;
@@ -1305,13 +1315,13 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     const resetBtn = document.createElement('button');
     resetBtn.className = 'reset-sort-btn';
-    resetBtn.innerHTML = `🔄 Nulstil sortering`;
+    resetBtn.innerHTML = getTranslation('sort_reset_btn');
     resetBtn.onclick = () => {
         placedCount = 0;
         currentSelectedWord = null;
         binEn.querySelector('#bin-en-items').innerHTML = '';
         binEt.querySelector('#bin-et-items').innerHTML = '';
-        sortHeader.querySelector('#sort-progress-text').textContent = `0 / ${allSortingWords.length} sorteret`;
+        sortHeader.querySelector('#sort-progress-text').textContent = getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', allSortingWords.length);
         renderSortingBank();
     };
 
@@ -1330,7 +1340,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     const missions = [
         {
-            title: "Find 3 ting, man kan drikke ☕",
+            title: getTranslation('koekken_m1_title'),
             targetCount: 3,
             options: [
                 { text: "en kaffe", correct: true },
@@ -1339,24 +1349,22 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                 { text: "en stol", correct: false },
                 { text: "en kop te", correct: true },
                 { text: "en sko", correct: false }
-            ],
-            feedback: "🎉 Fantastisk! Kaffe, te og vand slukker tørsten i køkkenet."
+            ]
         },
         {
-            title: "Find 3 ting, man kan spise 🍽️",
+            title: getTranslation('koekken_m2_title'),
             targetCount: 3,
             options: [
-                { text: "en mad (rugbrød)", correct: true },
+                { text: "en mad", correct: true },
                 { text: "en seng", correct: false },
                 { text: "et kød", correct: true },
                 { text: "et vindue", correct: false },
                 { text: "en fisk", correct: true },
                 { text: "en hund", correct: false }
-            ],
-            feedback: "🎉 Flot fundet! Rugbrødsmadder, kød og fisk er god mad."
+            ]
         },
         {
-            title: "Find 3 personer eller familiemedlemmer 👨‍👩‍👧",
+            title: getTranslation('koekken_m3_title'),
             targetCount: 3,
             options: [
                 { text: "en mor", correct: true },
@@ -1365,11 +1373,10 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                 { text: "et barn", correct: true },
                 { text: "en kop", correct: false },
                 { text: "et tøj", correct: false }
-            ],
-            feedback: "🎉 Perfekt! Moren, faren og barnet danner en familie."
+            ]
         },
         {
-            title: "Find 3 møbler i hjemmet 🪑",
+            title: getTranslation('koekken_m4_title'),
             targetCount: 3,
             options: [
                 { text: "et bord", correct: true },
@@ -1378,8 +1385,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                 { text: "en seng", correct: true },
                 { text: "en fisk", correct: false },
                 { text: "et glas", correct: false }
-            ],
-            feedback: "🎉 Helt rigtigt! Bord, stol og seng er de vigtigste møbler."
+            ]
         }
     ];
 
@@ -1396,9 +1402,9 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         const header = document.createElement('div');
         header.className = 'mission-header';
         header.innerHTML = `
-            <div class="mission-badge">🕵️ Detektiv-mission ${currentMissionIdx + 1} af ${missions.length}</div>
+            <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currentMissionIdx + 1} / ${missions.length}</div>
             <div class="mission-title">${m.title}</div>
-            <div class="mission-counter">Klik på de 3 rigtige ord herunder:</div>
+            <div class="mission-counter">${getTranslation('koekken_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);
 
@@ -1408,10 +1414,14 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         const feedbackEl = document.createElement('div');
         feedbackEl.className = 'mission-feedback';
 
+        const lang = getLang();
+
         m.options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'clue-btn';
-            btn.textContent = opt.text;
+            const wordTrans = kitchenWordTranslations[opt.text]?.[lang] || (lang !== 'da' ? kitchenWordTranslations[opt.text]?.['en'] : null);
+            const transMeaning = wordTrans?.meaning;
+            btn.innerHTML = `<span>${opt.text}</span>${transMeaning ? `<span style="font-size:0.8rem; opacity:0.8; font-weight:normal;">(${transMeaning})</span>` : ''}`;
 
             btn.onclick = () => {
                 if (btn.classList.contains('selected-correct') || btn.classList.contains('selected-wrong')) return;
@@ -1424,10 +1434,10 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                     if (selectedCount === m.targetCount) {
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                Rigtigt! ✓
+                                ${getTranslation('koekken_detektiv_complete')}
                             </div>
                             <button class="mission-next-btn" id="next-mission-btn">
-                                ${currentMissionIdx < missions.length - 1 ? 'Næste mission ➔' : 'Start forfra 🔄'}
+                                ${currentMissionIdx < missions.length - 1 ? getTranslation('koekken_detektiv_next') : getTranslation('koekken_detektiv_restart')}
                             </button>
                         `;
                         speakDanish("Rigtigt");
@@ -1464,14 +1474,14 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
     storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">💭 Mikro-historie: Kaffen vælter!</h2>
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('koekken_story_title')}</h2>
         <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            Se på kvinden til højre i billedet. Sådan forvandler en konkret hændelse sig til abstrakte ord:
+            ${getTranslation('koekken_story_desc')}
         </p>
 
         <!-- Trin 1: Konkret genstand -->
         <div class="story-step-card active-step" id="story-step-1">
-            <h4>Trin 1: Hvilken konkret genstand holdt kvinden i hånden?</h4>
+            <h4>${getTranslation('koekken_story_s1_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="true">En kop kaffe ☕</button>
                 <button class="story-opt-btn" data-correct="false">En sko 👟</button>
@@ -1482,7 +1492,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
         <!-- Trin 2: Hændelsen -->
         <div class="story-step-card" id="story-step-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>Trin 2: Hvad skete der lige pludselig med kaffen?</h4>
+            <h4>${getTranslation('koekken_story_s2_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="false">En ferie 🏖️</button>
                 <button class="story-opt-btn" data-correct="true">Et uheld (en fejl) 💥</button>
@@ -1493,7 +1503,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
         <!-- Trin 3: Abstraktionen -->
         <div class="story-step-card" id="story-step-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>Trin 3: Hvad har kvinden nu, da bordet er vådt?</h4>
+            <h4>${getTranslation('koekken_story_s3_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
                 <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
@@ -1504,7 +1514,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
         <!-- Trin 4: Løsningen -->
         <div class="story-step-card" id="story-step-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>Trin 4: Hvad gør hun for at løse problemet?</h4>
+            <h4>${getTranslation('koekken_story_s4_q')}</h4>
             <div class="story-options-row">
                 <button class="story-opt-btn" data-correct="false">Hun sover i sengen</button>
                 <button class="story-opt-btn" data-correct="true">Hun tørrer op med en klud 🧽</button>
@@ -1513,7 +1523,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         </div>
 
         <div id="story-final-summary" style="display: none;" class="story-explanation-box">
-            💡 <strong>Pædagogisk pointe:</strong> Abstrakte ord som <em>et problem</em>, <em>en fejl</em> og <em>et uheld</em> er ikke tomme ord på en liste. De opstår altid ud fra en konkret handling i virkeligheden!
+            ${getTranslation('koekken_story_pedagogy')}
         </div>
     `;
 
@@ -1560,33 +1570,33 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     contextCard.className = 'context-card';
     contextCard.innerHTML = `
         <div class="context-word-banner">
-            <h2>Målord: "et bord"</h2>
-            <p style="color: #94a3b8;">Ordet <strong>et bord</strong> optræder i mange forskellige miljøer. Hvad gør man ved bordet?</p>
+            <h2>${getTranslation('koekken_context_title')}</h2>
+            <p style="color: #94a3b8;">${getTranslation('koekken_context_desc')}</p>
         </div>
 
         <div class="context-scenes-grid">
             <!-- Scene 1: I køkkenet -->
             <div class="scene-role-card">
-                <h4>🍳 1. I køkkenet & hjemmet</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">Hvad laver familien ved bordet her?</p>
-                <button class="role-choice-btn" data-correct="true">A) Familien spiser mad og taler sammen</button>
-                <button class="role-choice-btn" data-correct="false">B) Man kører i bil på bordet</button>
+                <h4>${getTranslation('koekken_context_s1_title')}</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('koekken_context_s1_q')}</p>
+                <button class="role-choice-btn" data-correct="true">${getTranslation('koekken_context_s1_a')}</button>
+                <button class="role-choice-btn" data-correct="false">${getTranslation('koekken_context_s1_b')}</button>
             </div>
 
             <!-- Scene 2: I undervisningslokalet -->
             <div class="scene-role-card">
-                <h4>🏫 2. I klasselokalet / på kontoret</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">Hvad laver eleven eller medarbejderen ved bordet?</p>
-                <button class="role-choice-btn" data-correct="true">A) Eleven arbejder på sin computer og læser i bogen</button>
-                <button class="role-choice-btn" data-correct="false">B) Eleven sover under sengen</button>
+                <h4>${getTranslation('koekken_context_s2_title')}</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('koekken_context_s2_q')}</p>
+                <button class="role-choice-btn" data-correct="true">${getTranslation('koekken_context_s2_a')}</button>
+                <button class="role-choice-btn" data-correct="false">${getTranslation('koekken_context_s2_b')}</button>
             </div>
 
             <!-- Scene 3: I byrummet / på caféen -->
             <div class="scene-role-card">
-                <h4>🏙️ 3. I byrummet på caféen</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">Hvad sker der ved cafébordet på gaden?</p>
-                <button class="role-choice-btn" data-correct="true">A) Gæsten betaler med mønter (penge) og drikker kaffe</button>
-                <button class="role-choice-btn" data-correct="false">B) Lægen opererer en patient</button>
+                <h4>${getTranslation('koekken_context_s3_title')}</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('koekken_context_s3_q')}</p>
+                <button class="role-choice-btn" data-correct="true">${getTranslation('koekken_context_s3_a')}</button>
+                <button class="role-choice-btn" data-correct="false">${getTranslation('koekken_context_s3_b')}</button>
             </div>
         </div>
     `;
@@ -1666,46 +1676,46 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
         sentenceCard.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div class="mission-badge">✍️ Sætningsbygger ${currSentenceIdx + 1} af ${sentenceTasks.length}</div>
-                <h3 style="font-size: 1.6rem; color: white;">Vælg det rigtige verbum og byg sætningen:</h3>
+                <div class="mission-badge">${getTranslation('builder_badge').replace('{current}', currSentenceIdx + 1).replace('{total}', sentenceTasks.length)}</div>
+                <h3 style="font-size: 1.6rem; color: white;">${getTranslation('builder_kitchen_title')}</h3>
             </div>
 
             <!-- Grammatisk farveforklaring -->
             <div class="grammar-legend-bar">
-                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>Substantiv</strong> (grøn)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>Verbum</strong> (rød)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>Adjektiv</strong> (orange)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>Sted</strong> (blå)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>${getTranslation('top100_legend_substantiv')}</strong> (${getTranslation('top100_legend_green')})</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>${getTranslation('top100_legend_verbum')}</strong> (${getTranslation('top100_legend_red')})</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>${getTranslation('top100_legend_adjektiv')}</strong> (${getTranslation('top100_legend_orange')})</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>${getTranslation('top100_legend_sted')}</strong> (${getTranslation('top100_legend_blue')})</div>
             </div>
 
             <!-- Slots container -->
             <div class="builder-slots-row" id="sentence-slots">
                 <div class="builder-slot-box slot-subjekt">
-                    <span class="slot-role-tag">Substantiv</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_substantiv')}</span>
                     <span>${task.subjekt}</span>
                 </div>
                 <div class="builder-slot-box slot-verbum" id="slot-v">
-                    <span class="slot-role-tag">Verbum</span>
-                    <span>❓ Vælg verbum</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span>
+                    <span>${getTranslation('builder_choose_verb_slot')}</span>
                 </div>
                 <div class="builder-slot-box slot-objekt">
-                    <span class="slot-role-tag">Substantiv</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_substantiv')}</span>
                     <span>${task.objekt}</span>
                 </div>
                 <div class="builder-slot-box slot-adverbial">
-                    <span class="slot-role-tag">Sted</span>
+                    <span class="slot-role-tag">${getTranslation('builder_slot_sted')}</span>
                     <span>${task.adverbial}</span>
                 </div>
             </div>
 
             <!-- Verbs selection -->
             <div class="words-selection-tray">
-                <div class="tray-group-title">Hvilket verbum passer til handlingen? (🔴 Verbum)</div>
+                <div class="tray-group-title">${getTranslation('builder_tray_title')}</div>
                 <div class="tray-chips-list" id="verb-chips-list"></div>
             </div>
 
             <div class="live-sentence-preview" id="sentence-preview-box">
-                <span id="preview-text">Vælg et verbum for at høre sætningen...</span>
+                <span id="preview-text">${getTranslation('builder_preview_default')}</span>
             </div>
 
             <div style="text-align: center;" id="sentence-action-area"></div>
@@ -1725,7 +1735,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                 const actionArea = sentenceCard.querySelector('#sentence-action-area');
 
                 if (v === task.verbum) {
-                    slotV.innerHTML = `<span class="slot-role-tag">Verbum</span><span>${v} ✓</span>`;
+                    slotV.innerHTML = `<span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span><span>${v} ✓</span>`;
                     slotV.style.background = 'rgba(239, 68, 68, 0.35)';
                     slotV.style.borderColor = '#ef4444';
                     slotV.style.color = '#fca5a5';
@@ -1740,10 +1750,10 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
                     actionArea.innerHTML = `
                         <button class="listen-word-btn" style="display: inline-flex; margin-right: 0.8rem;" id="listen-full-sentence">
-                            🔊 Hør udtale
+                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
                         </button>
                         <button class="mission-next-btn" style="margin-top: 0;" id="next-sentence-task">
-                            ${currSentenceIdx < sentenceTasks.length - 1 ? 'Næste sætning ➔' : 'Start forfra 🔄'}
+                            ${currSentenceIdx < sentenceTasks.length - 1 ? getTranslation('builder_next_btn') : getTranslation('builder_restart_btn')}
                         </button>
                     `;
                     actionArea.querySelector('#listen-full-sentence').onclick = () => speakDanish(task.correctText);
@@ -1752,10 +1762,10 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                         renderSentenceBuilder();
                     };
                 } else {
-                    slotV.innerHTML = `<span class="slot-role-tag">Verbum</span><span>${v} ✕</span>`;
+                    slotV.innerHTML = `<span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span><span>${v} ✕</span>`;
                     slotV.style.borderColor = '#ef4444';
                     slotV.style.color = '#f87171';
-                    previewText.textContent = `Nej, "${task.subjekt} ${v} ${task.objekt}" giver ikke mening her. Prøv et andet verbum!`;
+                    previewText.textContent = getTranslation('builder_wrong_feedback');
                     speakDanish(`Nej, prøv et andet verbum`);
                 }
             };

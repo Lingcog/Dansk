@@ -1,5 +1,6 @@
 import { translations as baseTranslations } from './translations.js';
 import { talemaaderTranslations } from './talemaader_translations.js';
+import { top100Translations } from './top100_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -35,6 +36,7 @@ Object.keys(baseTranslations).forEach(lang => {
     translations[lang] = {
         ...baseTranslations[lang],
         ...(talemaaderTranslations[lang] || {}),
+        ...(top100Translations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

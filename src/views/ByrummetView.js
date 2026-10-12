@@ -1082,9 +1082,7 @@ export function renderByrummetView(container, navigateFn) {
         m.options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'clue-btn';
-            const wordTrans = byrumWordTranslations[opt.text]?.[lang] || (lang !== 'da' ? byrumWordTranslations[opt.text]?.['en'] : null);
-            const transMeaning = wordTrans?.meaning;
-            btn.innerHTML = `<span>${opt.text}</span>${transMeaning ? `<span style="font-size:0.8rem; opacity:0.8; font-weight:normal;">(${transMeaning})</span>` : ''}`;
+            btn.innerHTML = `<span>${opt.text}</span>`;
 
             btn.onclick = () => {
                 if (btn.classList.contains('selected-correct') || btn.classList.contains('selected-wrong')) return;

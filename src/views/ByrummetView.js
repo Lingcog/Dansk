@@ -282,6 +282,19 @@ export function renderByrummetView(container, navigateFn) {
             text-transform: uppercase;
             margin-bottom: 0.5rem;
         }
+        .badge-substantiv {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            margin-right: 0.4rem;
+        }
         .badge-en { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
         .badge-et { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid #ea580c; }
         .detail-main-word { font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.3rem; }
@@ -533,22 +546,64 @@ export function renderByrummetView(container, navigateFn) {
         }
         .builder-slot-box {
             padding: 0.7rem 1.2rem; border-radius: 10px; font-weight: 700; font-size: 1.05rem;
-            display: flex; align-items: center; gap: 0.5rem;
+            display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem;
         }
-        .slot-subjekt { background: rgba(56, 189, 248, 0.25); color: #38bdf8; border: 1px solid #0284c7; }
-        .slot-verbum { background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid #ef4444; }
-        .slot-objekt { background: rgba(249, 115, 22, 0.25); color: #fb923c; border: 1px solid #ea580c; }
-        .slot-adverbial { background: rgba(34, 197, 94, 0.25); color: #4ade80; border: 1px solid #22c55e; }
+        /* Grammatisk farvesystematik:
+           🟢 Substantiv/Pronomen (Subjekt & Objekt): Grøn
+           🔴 Verbum: Rød
+           🟠 Adjektiv: Orange
+           🔵 Sted / Præposition: Blå
+           🟣 Tid: Lilla
+        */
+        .slot-subjekt { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .slot-verbum { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        .slot-objekt { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .slot-adverbial { background: rgba(2, 132, 199, 0.2); color: #60a5fa; border: 1px solid #0284c7; }
+        .slot-role-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            margin-bottom: 0.2rem;
+        }
+        .grammar-legend-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.4rem;
+            padding: 0.6rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+        }
+        .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+        .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-adjektiv { background: #f97316; box-shadow: 0 0 6px rgba(249, 115, 22, 0.6); }
+        .chip-sted { background: #0284c7; box-shadow: 0 0 6px rgba(2, 132, 199, 0.6); }
+        .chip-tid { background: #8b5cf6; box-shadow: 0 0 6px rgba(139, 92, 246, 0.6); }
+
         .tray-chips-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem; }
         .tray-chip-btn {
-            background: #1e293b; border: 1px solid #475569; color: white; padding: 0.6rem 1rem;
+            background: #1e293b; border: 1px solid rgba(239, 68, 68, 0.4); color: white; padding: 0.6rem 1rem;
             border-radius: 10px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
         }
-        .tray-chip-btn:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .tray-chip-btn:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); transform: translateY(-2px); }
         .live-sentence-preview {
             background: #0f172a; border: 1px solid #334155; border-radius: 14px; padding: 1.2rem;
             text-align: center; font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin-bottom: 1.5rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;
         }
+        .grammar-word { font-weight: 800; }
+        .word-substantiv { color: #4ade80; }
+        .word-verbum { color: #f87171; }
+        .word-adjektiv { color: #fb923c; }
+        .word-sted { color: #60a5fa; }
+        .word-tid { color: #c084fc; }
     `;
     viewContainer.appendChild(style);
 
@@ -709,7 +764,10 @@ export function renderByrummetView(container, navigateFn) {
         spot.onclick = () => {
             detailBox.innerHTML = `
                 <div style="flex: 1; min-width: 250px;">
-                    <div class="detail-word-badge badge-${bw.gender}">🏷️ ${bw.gender.toUpperCase()}-ord (${bw.gender === 'en' ? 'Fælleskøn' : 'Intetkøn'})</div>
+                    <div>
+                        <span class="badge-substantiv">Substantiv</span>
+                        <span class="detail-word-badge badge-${bw.gender}">🏷️ ${bw.gender.toUpperCase()}-ord (${bw.gender === 'en' ? 'Fælleskøn' : 'Intetkøn'})</span>
+                    </div>
                     <div class="detail-main-word">${bw.icon} ${bw.word}</div>
                     <div class="detail-forms">Bestemt: <strong>${bw.bestemt}</strong> | Flertal: <strong>${bw.flertal}</strong></div>
                     <div class="detail-sentence">"${bw.sentence}"</div>
@@ -1286,15 +1344,35 @@ export function renderByrummetView(container, navigateFn) {
                 <h3 style="font-size: 1.6rem; color: white;">Vælg det rigtige verbum og dan en byrums-sætning:</h3>
             </div>
 
+            <!-- Grammatisk farveforklaring -->
+            <div class="grammar-legend-bar">
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>Substantiv</strong> (grøn)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>Verbum</strong> (rød)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-adjektiv"></span> <strong>Adjektiv</strong> (orange)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>Sted</strong> (blå)</div>
+            </div>
+
             <div class="builder-slots-row">
-                <div class="builder-slot-box slot-subjekt">${task.subjekt}</div>
-                <div class="builder-slot-box slot-verbum" id="slot-v-byrum">❓ Vælg verbum</div>
-                <div class="builder-slot-box slot-objekt">${task.objekt}</div>
-                <div class="builder-slot-box slot-adverbial">${task.adverbial}</div>
+                <div class="builder-slot-box slot-subjekt">
+                    <span class="slot-role-tag">Substantiv</span>
+                    <span>${task.subjekt}</span>
+                </div>
+                <div class="builder-slot-box slot-verbum" id="slot-v-byrum">
+                    <span class="slot-role-tag">Verbum</span>
+                    <span>❓ Vælg verbum</span>
+                </div>
+                <div class="builder-slot-box slot-objekt">
+                    <span class="slot-role-tag">Substantiv</span>
+                    <span>${task.objekt}</span>
+                </div>
+                <div class="builder-slot-box slot-adverbial">
+                    <span class="slot-role-tag">Sted</span>
+                    <span>${task.adverbial}</span>
+                </div>
             </div>
 
             <div class="words-selection-tray">
-                <div class="tray-group-title">Hvilket verbum passer til handlingen?</div>
+                <div class="tray-group-title">Hvilket verbum passer til handlingen? (🔴 Verbum)</div>
                 <div class="tray-chips-list" id="verb-chips-byrum"></div>
             </div>
 
@@ -1319,12 +1397,17 @@ export function renderByrummetView(container, navigateFn) {
                 const actionArea = sentenceCard.querySelector('#action-area-byrum');
 
                 if (v === task.verbum) {
-                    slotV.textContent = v;
-                    slotV.style.background = 'rgba(34, 197, 94, 0.35)';
-                    slotV.style.borderColor = '#22c55e';
-                    slotV.style.color = '#4ade80';
+                    slotV.innerHTML = `<span class="slot-role-tag">Verbum</span><span>${v} ✓</span>`;
+                    slotV.style.background = 'rgba(239, 68, 68, 0.35)';
+                    slotV.style.borderColor = '#ef4444';
+                    slotV.style.color = '#fca5a5';
 
-                    previewText.innerHTML = `🎉 <strong>${task.correctText}</strong>`;
+                    previewText.innerHTML = `
+                        🎉 <span class="grammar-word word-substantiv">${task.subjekt}</span> 
+                        <span class="grammar-word word-verbum">${task.verbum}</span> 
+                        <span class="grammar-word word-substantiv">${task.objekt}</span> 
+                        <span class="grammar-word word-sted">${task.adverbial}</span>.
+                    `;
                     speakDanish(task.correctText);
 
                     actionArea.innerHTML = `
@@ -1341,7 +1424,7 @@ export function renderByrummetView(container, navigateFn) {
                         renderByrumSentenceBuilder();
                     };
                 } else {
-                    slotV.textContent = `${v} ✕`;
+                    slotV.innerHTML = `<span class="slot-role-tag">Verbum</span><span>${v} ✕</span>`;
                     slotV.style.borderColor = '#ef4444';
                     slotV.style.color = '#f87171';
                     previewText.textContent = `Nej, "${task.subjekt} ${v} ${task.objekt}" passer ikke. Prøv et andet verbum!`;

@@ -164,8 +164,8 @@ export function renderWordLearningView(container, navigateFn) {
       const choice = document.createElement('div');
       choice.className = `task-choice-card ${task.highlight ? 'highlight-choice' : ''}`;
       if (task.highlight) {
-        choice.style.border = '2px solid #38bdf8';
-        choice.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(30, 41, 59, 0.9))';
+        choice.style.border = '2px solid #22c55e';
+        choice.style.background = 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(30, 41, 59, 0.9))';
       }
       choice.onclick = () => {
         if (task.id === 'exercise_top100_substantiver') {
@@ -249,7 +249,7 @@ export function renderWordLearningView(container, navigateFn) {
     nodes.forEach(n => {
       const el = document.createElement('div');
       el.className = n.class;
-      el.innerHTML = `<img src="${baseUrl}${n.img}" alt="${n.label}"><div class="word">${n.label}</div>`;
+      el.innerHTML = `<img src="${baseUrl}${n.img}" alt="${n.label}"><div class="word">${n.label}</div><span style="font-size: 0.68rem; font-weight: 700; color: #4ade80; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; border-radius: 4px; padding: 1px 6px; margin-top: 4px;">Substantiv</span>`;
       if (n.hint) el.innerHTML += `<div class="hint">${n.hint}</div>`;
       networkContainer.appendChild(el);
     });

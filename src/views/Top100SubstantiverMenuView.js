@@ -53,13 +53,44 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid #0284c7;
-            color: #38bdf8;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid #22c55e;
+            color: #4ade80;
             padding: 0.5rem 1.2rem;
             border-radius: 20px;
             font-size: 0.95rem;
             font-weight: 700;
+        }
+        .tag-substantiv {
+            background: rgba(34, 197, 94, 0.2) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+            font-weight: 700 !important;
+        }
+        .grammar-system-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin: 1rem auto 2.5rem;
+            padding: 0.8rem 1.4rem;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            max-width: 850px;
+            font-size: 0.9rem;
+        }
+        .grammar-system-item {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .grammar-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: inline-block;
         }
 
         .hub-scenes-grid {
@@ -199,7 +230,14 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
         <h1>🏆 De 100 mest almindelige substantiver</h1>
         <p>Disse 100 navneord udgør over halvdelen af alle substantiver, du møder i hverdagen. I stedet for at lære dem fra en kedelig liste, udforsker du dem i levende vrimlebilleder med <strong>farve-radar (EN/ET)</strong>, detektiv-missioner og sætningsbygning.</p>
         <div class="hub-facts-badge">
-            <span>💡</span> 3 semantiske verdener dækker hele dit hverdagsordforråd
+            <span>🟢</span> <strong>Ordklasse: Substantiver</strong> (Navneord i grøn farve)
+        </div>
+        <div class="grammar-system-banner">
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong>Substantiv</strong> (grøn)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong>Verbum</strong> (rød)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong>Adjektiv</strong> (orange)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong>Sted</strong> (blå)</div>
+            <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong>Tid</strong> (lilla)</div>
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -220,6 +258,7 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <h3>🏙️ Byrummet</h3>
             <p>Udforsk gaden, torvet, skolen, butikken og menneskene i byen. Lær centrale højfrekvente ord som <em>mand, kvinde, bil, vej, skole, tid, penge, læge</em> og <em>tur</em>.</p>
             <div class="scene-features-tags">
+                <span class="feature-tag tag-substantiv">🟢 24 Substantiver</span>
                 <span class="feature-tag">📡 Farve-radar EN/ET</span>
                 <span class="feature-tag">🕵️ Detektiv-mission</span>
                 <span class="feature-tag">💭 Mikro-historie</span>
@@ -243,6 +282,7 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <h3>🍳 Køkkenet & Hjemmet</h3>
             <p>Udforsk familiens måltid, maden, møblerne og tøjet i det nære miljø. Lær ord som <em>mor, far, barn, bord, stol, kop, kaffe, mad, seng, hund</em> og <em>problem</em>.</p>
             <div class="scene-features-tags">
+                <span class="feature-tag tag-substantiv">🟢 20 Substantiver</span>
                 <span class="feature-tag">📡 Farve-radar EN/ET</span>
                 <span class="feature-tag">📦 20-ords kassesortering</span>
                 <span class="feature-tag">💭 Kaffen vælter!</span>

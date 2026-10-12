@@ -442,7 +442,7 @@
             font-weight: 700;
         }
         .grammar-system-banner {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             gap: 1rem 1.5rem;
             justify-content: center;
@@ -453,6 +453,10 @@
             padding: 0.8rem 1.2rem;
             margin: 1rem auto 1.5rem auto;
             max-width: 820px;
+        }
+        .grammar-mode-active .grammar-system-banner {
+            display: flex;
+            animation: fadeInGrammar 0.25s ease;
         }
         .grammar-system-item {
             display: flex;
@@ -3940,7 +3944,7 @@
         <div class="card-desc" style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;">${e("ordstilling_intro_subtitle")}</div>
     `,d.appendChild(A),i.forEach(s=>{const g=He[s.key],p=document.createElement("div");p.className="card",p.onclick=()=>m(s.key),p.innerHTML=`<div class="card-icon">${s.icon}</div><div class="card-title">${g.title}</div>`,d.appendChild(p)}),u.appendChild(d);const w=document.createElement("h2");w.textContent="Alternative sætninger",w.style.marginTop="2.5rem",w.style.marginBottom="0.5rem",w.style.textAlign="center",u.appendChild(w);const E=document.createElement("p");E.textContent="Verbet står altid på 2. plads når man begynder uden subjekt.",E.className="subtitle",E.style.marginBottom="1.5rem",u.appendChild(E);const b=document.createElement("div");b.className="grid",l.forEach(s=>{const g=He[s.key],p=document.createElement("div");p.className="card";const f=s.key.split("_")[1];p.onclick=()=>c("ordstilling_alt_intro",{subPath:f}),p.innerHTML=`<div class="card-icon">${s.icon}</div><div class="card-title">${g.title}</div>`,b.appendChild(p)}),u.appendChild(b),t.appendChild(u);function m(s){u.style.display="none",o.style.display="block",o.innerHTML="";const g=He[s];n.textContent=g.title;const p=g.sentences;let f=Math.floor(Math.random()*p.length),x,D,z;function j(){x=p[f],D=[...x.draggable],z=[...D].sort(()=>Math.random()-.5)}const T=document.createElement("div");T.className="pedagogical-frame",T.innerHTML=g.explanation;const S=document.createElement("div");S.className="split-sentence-area";const H=document.createElement("span");H.className="locked-text";const N=document.createElement("div");N.className="result-sentence-area";const q=document.createElement("span");q.className="locked-text",S.appendChild(H),S.appendChild(N),S.appendChild(q);const L=document.createElement("div");L.className="word-pool";const k=document.createElement("div");k.className="game-feedback";const C=document.createElement("div");C.className="game-controls";const B=document.createElement("button");B.className="gemini-btn",B.textContent=e("next"),B.style.display="none",B.onclick=()=>{f=(f+1)%p.length,P()};function P(){j(),o.innerHTML="",o.appendChild(T),H.textContent=x.lockedPrefix,q.textContent=x.lockedSuffix,o.appendChild(S),o.appendChild(L),o.appendChild(k),C.innerHTML="",C.appendChild(B),o.appendChild(C),B.style.display="none",k.textContent="",L.innerHTML="",N.innerHTML="",z.forEach(G=>{const M=document.createElement("div");M.className="word-chip pool",M.textContent=G,M.onclick=()=>{M.parentElement===L?(N.appendChild(M),M.classList.replace("pool","result-chip")):(L.appendChild(M),M.classList.replace("result-chip","pool")),K()},L.appendChild(M)});function K(){const G=Array.from(N.children).map(F=>F.textContent),M=Array.from(L.children);if(Array.from(N.children).forEach(F=>F.classList.replace("pool","result-chip")),M.forEach(F=>F.classList.replace("result-chip","pool")),M.length===0){const F=G.join(" ");(Array.isArray(x.correct)?x.correct.includes(F):F===x.correct)?(k.textContent=e("correctOrder")||"Helt rigtigt!",k.className="game-feedback success",B.style.display="inline-block"):(k.textContent=x.hint,k.className="game-feedback error",B.style.display="none")}else k.textContent="",B.style.display="none"}window.Sortable&&(new window.Sortable(L,{group:"main-ordstilling",animation:150,onEnd:K}),new window.Sortable(N,{group:"main-ordstilling",animation:150,onEnd:K}))}P()}if(t.appendChild(o),y.appendChild(t),!document.getElementById("ordstilling-styles")){const s=document.createElement("style");s.id="ordstilling-styles",s.textContent=`
             .grammar-system-banner {
-                display: flex;
+                display: none;
                 flex-wrap: wrap;
                 gap: 1rem 1.5rem;
                 justify-content: center;
@@ -3951,6 +3955,10 @@
                 padding: 0.8rem 1.2rem;
                 margin: 1rem auto 1.5rem auto;
                 max-width: 820px;
+            }
+            .grammar-mode-active .grammar-system-banner {
+                display: flex;
+                animation: fadeInGrammar 0.25s ease;
             }
             .grammar-system-item {
                 display: flex;
@@ -4394,7 +4402,7 @@
                 font-weight: 700;
             }
             .grammar-system-banner {
-                display: flex;
+                display: none;
                 flex-wrap: wrap;
                 gap: 1rem 1.5rem;
                 justify-content: center;
@@ -4405,6 +4413,10 @@
                 padding: 0.8rem 1.2rem;
                 margin: 1rem auto 1.5rem auto;
                 max-width: 820px;
+            }
+            .grammar-mode-active .grammar-system-banner {
+                display: flex;
+                animation: fadeInGrammar 0.25s ease;
             }
             .grammar-system-item {
                 display: flex;

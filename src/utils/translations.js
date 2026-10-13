@@ -658,6 +658,8 @@ export const translations = {
     laerNyeOrd: "Lær nye ord",
     top100SubstantiverTitle: "De 100 mest almindelige hverdagsord",
     top100SubstantiverDesc: "Lær ordene ved at lave sjove øvelser.",
+    top100VerberTitle: "Lær et af de mest almindelige verber",
+    top100VerberDesc: "Lær de 100 mest brugte verber i dansk gennem levende vrimlescener og øvelser i synonymer og antonymer.",
     laerKoekkenVrimmel: "Køkkenet & Hjemmet (Vrimlebillede)",
     laerKoekkenVrimmelDesc: "Udforsk de 100 vigtigste hverdagsord med farve-radar (EN/ET), detektiv-missioner og sætningsbygger.",
     laerEtNytOrd: "Lær et nyt ord",

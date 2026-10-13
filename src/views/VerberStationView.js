@@ -2,7 +2,8 @@ import { getTranslation } from '../utils/i18n.js';
 
 /**
  * VerberStationView - Didaktisk vrimlebillede for Scene 1: Banegården / Rejsen
- * Dækker 33 højfrekvente verber (bevægelse, rejse, transport, transaktioner).
+ * Dækker 33 højfrekvente verber med infinitiv, nutid og datid.
+ * 7 interaktive opgaveflader for maksimal pædagogisk progression.
  */
 export function renderVerberStationView(container, navigateFn) {
     container.innerHTML = '';
@@ -21,7 +22,7 @@ export function renderVerberStationView(container, navigateFn) {
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
-    // TTS Audio Helper (ONLY used for målordet in Tab 1)
+    // TTS Audio Helper (KUN brugt til målordet i Tab 1)
     function speakDanish(text) {
         if (!('speechSynthesis' in window)) return;
         window.speechSynthesis.cancel();
@@ -65,7 +66,7 @@ export function renderVerberStationView(container, navigateFn) {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 0.6rem;
+            gap: 0.5rem;
             margin-bottom: 2rem;
             background: rgba(30, 41, 59, 0.7);
             padding: 0.5rem;
@@ -76,15 +77,15 @@ export function renderVerberStationView(container, navigateFn) {
             background: transparent;
             color: #94a3b8;
             border: none;
-            padding: 0.7rem 1.2rem;
+            padding: 0.65rem 1.1rem;
             border-radius: 12px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             cursor: pointer;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
         .verber-tab-btn:hover {
             color: white;
@@ -159,80 +160,92 @@ export function renderVerberStationView(container, navigateFn) {
         }
         .vrimmel-stage img {
             width: 100%;
-            height: auto;
             display: block;
             object-fit: cover;
         }
-        .vrimmel-stage.pure-mode .vrimmel-hotspot {
-            display: none !important;
-        }
 
-        /* Hotspot Dot (Red for Verbs) */
         .vrimmel-hotspot {
             position: absolute;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
             transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.85);
+            border: 2px solid white;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
             font-weight: 800;
-            transition: all 0.2s ease;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
+            transition: all 0.25s ease;
             z-index: 10;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: 2px solid white;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
-            animation: pulseRed 1.8s infinite;
         }
-        .vrimmel-hotspot:hover, .vrimmel-hotspot.active {
+        .vrimmel-hotspot:hover {
+            transform: translate(-50%, -50%) scale(1.25);
+            background: #ef4444;
+            box-shadow: 0 0 20px #ef4444;
+        }
+        .vrimmel-hotspot.active {
             transform: translate(-50%, -50%) scale(1.3);
-            background: #dc2626;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 1);
-            z-index: 20;
+            background: #f59e0b;
+            border-color: #fef08a;
+            box-shadow: 0 0 22px #f59e0b;
         }
-        @keyframes pulseRed {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.7); }
-            50% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 18px rgba(239, 68, 68, 1); }
+        .pure-mode .vrimmel-hotspot {
+            opacity: 0 !important;
+            pointer-events: none !important;
         }
 
-        /* Detail card */
+        /* Detail card below vrimmel */
         .hotspot-detail-card {
-            background: #1e293b;
-            border: 1px solid #475569;
+            background: #0f172a;
             border-radius: 16px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+            padding: 1.4rem;
+            margin-top: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
+            align-items: center;
             flex-wrap: wrap;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            gap: 1.2rem;
         }
         .badge-verbum {
             background: rgba(239, 68, 68, 0.2);
             color: #f87171;
             border: 1px solid #ef4444;
-            padding: 0.35rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            padding: 0.25rem 0.7rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 0.5rem;
         }
-        .detail-main-word { font-size: 1.7rem; font-weight: 800; color: white; margin-bottom: 0.3rem; }
-        .detail-forms { font-size: 1.05rem; color: #cbd5e1; margin-bottom: 0.5rem; }
-        .detail-sentence { font-size: 1.05rem; color: #e2e8f0; font-style: italic; }
+        .detail-main-word {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin: 0.4rem 0 0.2rem;
+        }
+        .detail-forms {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+        .detail-forms strong {
+            color: #38bdf8;
+        }
+        .detail-sentence {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            font-style: italic;
+        }
         .listen-word-btn {
             background: #ef4444;
             color: white;
             border: none;
-            padding: 0.8rem 1.4rem;
+            padding: 0.7rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
             font-size: 1rem;
@@ -244,9 +257,9 @@ export function renderVerberStationView(container, navigateFn) {
         }
         .listen-word-btn:hover { background: #dc2626; transform: scale(1.05); }
 
-        /* Detective Mission */
-        .mission-card {
-            max-width: 800px;
+        /* Shared Card Layout for Exercises */
+        .exercise-card {
+            max-width: 820px;
             margin: 0 auto;
             background: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -272,16 +285,17 @@ export function renderVerberStationView(container, navigateFn) {
             border: 1px solid #334155;
             padding: 1.2rem;
             border-radius: 14px;
-            margin: 1.5rem 0;
+            margin: 1.2rem 0 1.5rem;
             font-size: 1.25rem;
             font-weight: 600;
             color: #f8fafc;
+            line-height: 1.5;
         }
         .mission-options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1.2rem;
         }
         .mission-opt-btn {
             background: #0f172a;
@@ -289,7 +303,7 @@ export function renderVerberStationView(container, navigateFn) {
             color: white;
             padding: 1rem;
             border-radius: 14px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -324,7 +338,90 @@ export function renderVerberStationView(container, navigateFn) {
             background: #dc2626;
         }
 
-        /* Story */
+        /* 2. Visual Detective Viewfinder */
+        .detective-zoom-frame {
+            position: relative;
+            width: 100%;
+            max-width: 580px;
+            height: 240px;
+            margin: 0 auto 1.2rem;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 2px solid #ef4444;
+            background-repeat: no-repeat;
+            background-size: 340%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .zoom-crosshair-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 3. Context Actions (Find 3 handlinger) */
+        .context-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .context-chip-btn {
+            background: #0f172a;
+            border: 2px solid #334155;
+            color: white;
+            padding: 1.1rem 0.8rem;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .context-chip-btn:hover {
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+        }
+        .context-chip-btn.found {
+            background: rgba(34, 197, 94, 0.25) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+            cursor: default;
+        }
+        .context-chip-btn.wrong-shake {
+            background: rgba(239, 68, 68, 0.25) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+            animation: shakeChip 0.4s ease;
+        }
+        @keyframes shakeChip {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        .context-progress-pill {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+
+        /* 4. Story */
         .story-container {
             max-width: 800px;
             margin: 0 auto;
@@ -391,7 +488,7 @@ export function renderVerberStationView(container, navigateFn) {
             text-align: center;
         }
 
-        /* Synonyms & Antonyms */
+        /* 5. Synonyms & Antonyms */
         .synonym-card {
             max-width: 800px;
             margin: 0 auto;
@@ -431,7 +528,7 @@ export function renderVerberStationView(container, navigateFn) {
             color: #ef4444;
         }
 
-        /* Sentence Builder */
+        /* 6. Sentence Builder */
         .sentence-builder-card {
             max-width: 850px;
             margin: 0 auto;
@@ -477,47 +574,145 @@ export function renderVerberStationView(container, navigateFn) {
         .grammar-legend-bar {
             display: flex;
             justify-content: center;
+            gap: 1rem;
             flex-wrap: wrap;
-            gap: 1.2rem;
-            margin-bottom: 1.4rem;
-            padding: 0.6rem 1rem;
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
         }
-        .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
-        .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .grammar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+        .legend-chip {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
         .chip-substantiv { background: #22c55e; }
         .chip-verbum { background: #ef4444; }
         .chip-sted { background: #0284c7; }
-
-        .words-selection-tray { margin-bottom: 1.5rem; }
-        .tray-group-title { font-size: 0.95rem; font-weight: 700; color: #cbd5e1; margin-bottom: 0.6rem; }
-        .tray-chips-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .words-selection-tray {
+            background: #0f172a;
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+        }
+        .tray-group-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+        .tray-chips-list {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
         .tray-chip-btn {
             background: #1e293b;
-            border: 1px solid rgba(239, 68, 68, 0.4);
             color: white;
-            padding: 0.6rem 1.1rem;
+            border: 1px solid #475569;
+            padding: 0.7rem 1.2rem;
             border-radius: 10px;
-            font-size: 1rem;
             font-weight: 700;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .tray-chip-btn:hover { background: #ef4444; }
+        .tray-chip-btn:hover {
+            border-color: #ef4444;
+            transform: translateY(-2px);
+        }
         .live-sentence-preview {
             background: #0f172a;
-            border: 1px solid #334155;
-            padding: 1.2rem;
+            border: 2px solid #334155;
             border-radius: 14px;
-            font-size: 1.2rem;
-            color: #f8fafc;
-            min-height: 50px;
+            padding: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            min-height: 55px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        /* 7. Time Training (Nutid vs. Datid) */
+        .time-marker-badge {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid #a855f7;
+            color: #c084fc;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .time-sentence-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            padding: 1.4rem;
+            border-radius: 16px;
+            margin: 1.2rem 0 1.5rem;
+            font-size: 1.35rem;
+            line-height: 1.6;
+            color: #f8fafc;
+        }
+        .time-sentence-box mark {
+            background: rgba(168, 85, 247, 0.25);
+            color: #d8b4fe;
+            border-radius: 6px;
+            padding: 0.1rem 0.4rem;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            font-weight: 800;
+        }
+        .time-options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .time-opt-btn {
+            background: #0f172a;
+            border: 2px solid #334155;
+            color: white;
+            padding: 1.2rem;
+            border-radius: 14px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .time-opt-btn span.form-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        .time-opt-btn:hover {
+            border-color: #a855f7;
+            transform: translateY(-2px);
+        }
+        .time-opt-btn.correct {
+            background: rgba(34, 197, 94, 0.25) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+        }
+        .time-opt-btn.wrong {
+            background: rgba(239, 68, 68, 0.25) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
         }
     `;
     viewContainer.appendChild(style);
@@ -531,15 +726,17 @@ export function renderVerberStationView(container, navigateFn) {
     `;
     viewContainer.appendChild(heroHeader);
 
-    // Tabs Menu
+    // 7 Tabs Navigation
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'verber-tabs';
     const tabs = [
         { id: 'tab_vrimmel', label: '1. Vrimlebillede', icon: '🔍' },
-        { id: 'tab_detektiv', label: '2. Detektiv', icon: '🕵️' },
-        { id: 'tab_historie', label: '3. Historie', icon: '💭' },
-        { id: 'tab_synonym_antonym', label: '4. Synonymer & Antonymer', icon: '🔄' },
-        { id: 'tab_saetning', label: '5. Sætningsbygger', icon: '✍️' }
+        { id: 'tab_detektiv', label: '2. Visuel Detektiv', icon: '🕵️' },
+        { id: 'tab_handlinger', label: '3. Find handlinger', icon: '🎯' },
+        { id: 'tab_historie', label: '4. Historie', icon: '💭' },
+        { id: 'tab_synonym_antonym', label: '5. Synonymer & Antonymer', icon: '🔄' },
+        { id: 'tab_saetning', label: '6. Sætningsbygger', icon: '✍️' },
+        { id: 'tab_tid_boejning', label: '7. Nutid & Datid', icon: '⏱️' }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -568,46 +765,46 @@ export function renderVerberStationView(container, navigateFn) {
     }
 
     // ========================================================
-    // --- 33 VERBER PÅ BANEGÅRDEN (Scene 1)
+    // --- 33 VERBER PÅ BANEGÅRDEN (Scene 1) med DATID
     // ========================================================
     const stationVerber = [
-        { word: 'at være', nutid: 'er', x: 52, y: 35, sentence: 'Toget er på perron 2.' },
-        { word: 'at have', nutid: 'har', x: 35, y: 72, sentence: 'Manden har en kuffert.' },
-        { word: 'at kunne', nutid: 'kan', x: 82, y: 65, sentence: 'Han kan nå toget.' },
-        { word: 'at skulle', nutid: 'skal', x: 60, y: 60, sentence: 'Passagererne skal rejse til Odense.' },
-        { word: 'at ville', nutid: 'vil', x: 22, y: 68, sentence: 'Kvinden vil købe en kaffe.' },
-        { word: 'at blive', nutid: 'bliver', x: 70, y: 22, sentence: 'Toget bliver forsinket fem minutter.' },
-        { word: 'at få', nutid: 'får', x: 18, y: 70, sentence: 'Hun får sin billet.' },
-        { word: 'at komme', nutid: 'kommer', x: 88, y: 40, sentence: 'Toget kommer ind på sporet.' },
-        { word: 'at gå', nutid: 'går', x: 48, y: 75, sentence: 'Folk går hurtigt mod udgangen.' },
-        { word: 'at tage', nutid: 'tager', x: 75, y: 70, sentence: 'Han tager sin rygsæk på.' },
-        { word: 'at lade', nutid: 'lader', x: 42, y: 65, sentence: 'Han lader døren stå åben.' },
-        { word: 'at stå', nutid: 'står', x: 58, y: 55, sentence: 'Folk står og venter på perronen.' },
-        { word: 'at give', nutid: 'giver', x: 15, y: 68, sentence: 'Ekspedienten giver kunden kaffen.' },
-        { word: 'at køre', nutid: 'kører', x: 92, y: 30, sentence: 'Toget kører mod København.' },
-        { word: 'at falde', nutid: 'falder', x: 65, y: 82, sentence: 'En avis falder ned på gulvet.' },
-        { word: 'at gælde', nutid: 'gælder', x: 25, y: 50, sentence: 'Billetten gælder i to timer.' },
-        { word: 'at betale', nutid: 'betaler', x: 12, y: 72, sentence: 'Kunden betaler med sit kort.' },
-        { word: 'at købe', nutid: 'køber', x: 10, y: 65, sentence: 'Manden køber en billet i automaten.' },
-        { word: 'at vente', nutid: 'venter', x: 62, y: 45, sentence: 'Kvinden venter på sin ven.' },
-        { word: 'at hente', nutid: 'henter', x: 40, y: 80, sentence: 'Faren henter sin datter på stationen.' },
-        { word: 'at bringe', nutid: 'bringer', x: 30, y: 75, sentence: 'Buddet bringer pakker ud.' },
-        { word: 'at trække', nutid: 'trækker', x: 38, y: 70, sentence: 'Kvinden trækker en rullekuffert.' },
-        { word: 'at mangle', nutid: 'mangler', x: 80, y: 78, sentence: 'Han mangler sit rejsekort.' },
-        { word: 'at rejse', nutid: 'rejser', x: 55, y: 50, sentence: 'De rejser sammen til Jylland.' },
-        { word: 'at flytte', nutid: 'flytter', x: 28, y: 85, sentence: 'Familien flytter til en ny by.' },
-        { word: 'at virke', nutid: 'virker', x: 22, y: 45, sentence: 'Billetautomaten virker fint i dag.' },
-        { word: 'at stoppe', nutid: 'stopper', x: 85, y: 35, sentence: 'Toget stopper ved perronen.' },
-        { word: 'at vælge', nutid: 'vælger', x: 16, y: 58, sentence: 'Han vælger en plads ved vinduet.' },
-        { word: 'at sælge', nutid: 'sælger', x: 8, y: 68, sentence: 'Kiosken sælger aviser og kaffe.' },
-        { word: 'at ske', nutid: 'sker', x: 50, y: 25, sentence: 'Hvad sker der på storskærmen?' },
-        { word: 'at følge', nutid: 'følger', x: 45, y: 68, sentence: 'Hunden følger efter sin ejer.' },
-        { word: 'at begynde', nutid: 'begynder', x: 50, y: 15, sentence: 'Rejsen begynder nu.' },
-        { word: 'at handle', nutid: 'handler', x: 5, y: 75, sentence: 'De handler i stationsbutikken.' }
+        { word: 'at være', nutid: 'er', datid: 'var', x: 52, y: 35, sentence: 'Toget er på perron 2.' },
+        { word: 'at have', nutid: 'har', datid: 'havde', x: 35, y: 72, sentence: 'Manden har en kuffert.' },
+        { word: 'at kunne', nutid: 'kan', datid: 'kunne', x: 82, y: 65, sentence: 'Han kan nå toget.' },
+        { word: 'at skulle', nutid: 'skal', datid: 'skulle', x: 60, y: 60, sentence: 'Passagererne skal rejse til Odense.' },
+        { word: 'at ville', nutid: 'vil', datid: 'ville', x: 22, y: 68, sentence: 'Kvinden vil købe en kaffe.' },
+        { word: 'at blive', nutid: 'bliver', datid: 'blev', x: 70, y: 22, sentence: 'Toget bliver forsinket fem minutter.' },
+        { word: 'at få', nutid: 'får', datid: 'fik', x: 18, y: 70, sentence: 'Hun får sin billet.' },
+        { word: 'at komme', nutid: 'kommer', datid: 'kom', x: 88, y: 40, sentence: 'Toget kommer ind på sporet.' },
+        { word: 'at gå', nutid: 'går', datid: 'gik', x: 48, y: 75, sentence: 'Folk går hurtigt mod udgangen.' },
+        { word: 'at tage', nutid: 'tager', datid: 'tog', x: 75, y: 70, sentence: 'Han tager sin rygsæk på.' },
+        { word: 'at lade', nutid: 'lader', datid: 'lod', x: 42, y: 65, sentence: 'Han lader døren stå åben.' },
+        { word: 'at stå', nutid: 'står', datid: 'stod', x: 58, y: 55, sentence: 'Folk står og venter på perronen.' },
+        { word: 'at give', nutid: 'giver', datid: 'gav', x: 15, y: 68, sentence: 'Ekspedienten giver kunden kaffen.' },
+        { word: 'at køre', nutid: 'kører', datid: 'kørte', x: 92, y: 30, sentence: 'Toget kører mod København.' },
+        { word: 'at falde', nutid: 'falder', datid: 'faldt', x: 65, y: 82, sentence: 'En avis falder ned på gulvet.' },
+        { word: 'at gælde', nutid: 'gælder', datid: 'gjaldt', x: 25, y: 50, sentence: 'Billetten gælder i to timer.' },
+        { word: 'at betale', nutid: 'betaler', datid: 'betalte', x: 12, y: 72, sentence: 'Kunden betaler med sit kort.' },
+        { word: 'at købe', nutid: 'køber', datid: 'købte', x: 10, y: 65, sentence: 'Manden køber en billet i automaten.' },
+        { word: 'at vente', nutid: 'venter', datid: 'ventede', x: 62, y: 45, sentence: 'Kvinden venter på sin ven.' },
+        { word: 'at hente', nutid: 'henter', datid: 'hentede', x: 40, y: 80, sentence: 'Faren henter sin datter på stationen.' },
+        { word: 'at bringe', nutid: 'bringer', datid: 'bragte', x: 30, y: 75, sentence: 'Buddet bringer pakker ud.' },
+        { word: 'at trække', nutid: 'trækker', datid: 'trak', x: 38, y: 70, sentence: 'Kvinden trækker en rullekuffert.' },
+        { word: 'at mangle', nutid: 'mangler', datid: 'manglede', x: 80, y: 78, sentence: 'Han mangler sit rejsekort.' },
+        { word: 'at rejse', nutid: 'rejser', datid: 'rejste', x: 55, y: 50, sentence: 'De rejser sammen til Jylland.' },
+        { word: 'at flytte', nutid: 'flytter', datid: 'flyttede', x: 28, y: 85, sentence: 'Familien flytter til en ny by.' },
+        { word: 'at virke', nutid: 'virker', datid: 'virkede', x: 22, y: 45, sentence: 'Billetautomaten virker fint i dag.' },
+        { word: 'at stoppe', nutid: 'stopper', datid: 'stoppede', x: 85, y: 35, sentence: 'Toget stopper ved perronen.' },
+        { word: 'at vælge', nutid: 'vælger', datid: 'valgte', x: 16, y: 58, sentence: 'Han vælger en plads ved vinduet.' },
+        { word: 'at sælge', nutid: 'sælger', datid: 'solgte', x: 8, y: 68, sentence: 'Kiosken sælger aviser og kaffe.' },
+        { word: 'at ske', nutid: 'sker', datid: 'skete', x: 50, y: 25, sentence: 'Hvad sker der på storskærmen?' },
+        { word: 'at følge', nutid: 'følger', datid: 'fulgte', x: 45, y: 68, sentence: 'Hunden følger efter sin ejer.' },
+        { word: 'at begynde', nutid: 'begynder', datid: 'begyndte', x: 50, y: 15, sentence: 'Rejsen begynder nu.' },
+        { word: 'at handle', nutid: 'handler', datid: 'handlede', x: 5, y: 75, sentence: 'De handler i stationsbutikken.' }
     ];
 
     // ========================================================
-    // --- 1. TAB: VRIMLEBILLEDE MED HOTSPOTS
+    // --- 1. TAB: VRIMLEBILLEDE MED HOTSPOTS (MÅLORD + DATID)
     // ========================================================
     const vrimmelPanel = document.createElement('div');
     vrimmelPanel.className = 'verber-panel active';
@@ -656,19 +853,19 @@ export function renderVerberStationView(container, navigateFn) {
         dot.style.left = `${item.x}%`;
         dot.style.top = `${item.y}%`;
         dot.textContent = '●';
-        dot.title = `${item.word} (${item.nutid})`;
+        dot.title = `${item.word} (${item.nutid} / ${item.datid})`;
 
         dot.onclick = () => {
             stage.querySelectorAll('.vrimmel-hotspot').forEach(d => d.classList.remove('active'));
             dot.classList.add('active');
 
-            // Show detail card
+            // Show detail card med nutid og datid
             detailCard.style.display = 'flex';
             detailCard.innerHTML = `
                 <div>
                     <span class="badge-verbum">🔴 Verbum</span>
                     <div class="detail-main-word">${item.word}</div>
-                    <div class="detail-forms">Nutid: <strong>${item.nutid}</strong></div>
+                    <div class="detail-forms">Nutid: <strong>${item.nutid}</strong> &nbsp;|&nbsp; Datid: <strong>${item.datid}</strong></div>
                     <div class="detail-sentence">"${item.sentence}"</div>
                 </div>
                 <div>
@@ -679,7 +876,7 @@ export function renderVerberStationView(container, navigateFn) {
             `;
 
             detailCard.querySelector('#listen-station-verb-btn').onclick = () => {
-                speakDanish(`${item.word}. ${item.nutid}. ${item.sentence}`);
+                speakDanish(`${item.word}. Nutid: ${item.nutid}. Datid: ${item.datid}. ${item.sentence}`);
             };
 
             // Speak word on click in Tab 1
@@ -695,68 +892,84 @@ export function renderVerberStationView(container, navigateFn) {
     panelsHolder.appendChild(vrimmelPanel);
 
     // ========================================================
-    // --- 2. TAB: DETEKTIV (Find handlingen - INGEN TTS)
+    // --- 2. TAB: VISUEL DETEKTIV (Model 1 - Billedudsnit)
     // ========================================================
     const detektivPanel = document.createElement('div');
     detektivPanel.className = 'verber-panel';
     detektivPanel.dataset.panel = 'tab_detektiv';
 
-    const stationMissions = [
+    const stationVisualMissions = [
         {
             title: "Mission 1 af 4",
-            clue: "Find personen der trækker sin kuffert hen over perronen:",
+            cropX: 38,
+            cropY: 70,
+            question: "Kig på personen med den store rullekuffert på perronen. Hvad gør personen?",
             options: [
-                { text: "at trække (trækker) 🧳", correct: true },
-                { text: "at sove (sover) 🛌", correct: false },
-                { text: "at spise (spiser) 🥪", correct: false }
+                { text: "Trækker kufferten hen over perronen 🧳", correct: true },
+                { text: "Sover på en bænk ved sporet 🛌", correct: false },
+                { text: "Spiser en sandwich i kiosken 🥪", correct: false }
             ]
         },
         {
             title: "Mission 2 af 4",
-            clue: "Find kunden der betaler for kaffen og avisen i kiosken:",
+            cropX: 12,
+            cropY: 72,
+            question: "Kig på kunden ved kassen i stationskiosken. Hvad gør kunden?",
             options: [
-                { text: "at køre (kører) 🚗", correct: false },
-                { text: "at betale (betaler) 💳", correct: true },
-                { text: "at stoppe (stopper) 🛑", correct: false }
+                { text: "Kører i bus mod byen 🚌", correct: false },
+                { text: "Betaler med sit kort for varerne 💳", correct: true },
+                { text: "Løber en tur i parken 🏃", correct: false }
             ]
         },
         {
             title: "Mission 3 af 4",
-            clue: "Find toget der ankommer og kører ind til perronen:",
+            cropX: 88,
+            cropY: 38,
+            question: "Kig på toget for enden af sporet. Hvad gør toget?",
             options: [
-                { text: "at læse (læser) 📖", correct: false },
-                { text: "at køre (kører) 🚆", correct: true },
-                { text: "at skrive (skriver) ✍️", correct: false }
+                { text: "Læser en avis 📖", correct: false },
+                { text: "Kører ind til perronen 🚆", correct: true },
+                { text: "Skriver en besked på tavlen ✍️", correct: false }
             ]
         },
         {
             title: "Mission 4 af 4",
-            clue: "Find kvinden der står og venter på sin ven:",
+            cropX: 62,
+            cropY: 45,
+            question: "Kig på kvinden der kigger på sit armbåndsur. Hvad gør hun?",
             options: [
-                { text: "at vente (venter) ⏳", correct: true },
-                { text: "at flytte (flytter) 📦", correct: false },
-                { text: "at svømme (svømmer) 🏊", correct: false }
+                { text: "Venter tålmodigt på sit tog ⏳", correct: true },
+                { text: "Flytter møbler til en ny lejlighed 📦", correct: false },
+                { text: "Svømmer i svømmehallen 🏊", correct: false }
             ]
         }
     ];
 
-    let currStationMissionIdx = 0;
-    const missionCard = document.createElement('div');
-    missionCard.className = 'mission-card';
+    let currStationVisualIdx = 0;
+    const visualMissionCard = document.createElement('div');
+    visualMissionCard.className = 'exercise-card';
 
-    function renderStationMission() {
-        missionCard.innerHTML = '';
-        const mission = stationMissions[currStationMissionIdx];
+    function renderStationVisualMission() {
+        visualMissionCard.innerHTML = '';
+        const mission = stationVisualMissions[currStationVisualIdx];
 
         const badge = document.createElement('div');
         badge.className = 'mission-badge';
-        badge.textContent = mission.title;
-        missionCard.appendChild(badge);
+        badge.textContent = `${mission.title} • Visuel Detektiv`;
+        visualMissionCard.appendChild(badge);
+
+        // Zoom viewfinder frame
+        const zoomFrame = document.createElement('div');
+        zoomFrame.className = 'detective-zoom-frame';
+        zoomFrame.style.backgroundImage = "url('assets/verber_station_vrimmel.jpg')";
+        zoomFrame.style.backgroundPosition = `${mission.cropX}% ${mission.cropY}%`;
+        zoomFrame.innerHTML = `<div class="zoom-crosshair-badge">🎯 Fokus på handlingen</div>`;
+        visualMissionCard.appendChild(zoomFrame);
 
         const clueBox = document.createElement('div');
         clueBox.className = 'mission-clue-box';
-        clueBox.textContent = mission.clue;
-        missionCard.appendChild(clueBox);
+        clueBox.textContent = mission.question;
+        visualMissionCard.appendChild(clueBox);
 
         const grid = document.createElement('div');
         grid.className = 'mission-options-grid';
@@ -777,13 +990,13 @@ export function renderVerberStationView(container, navigateFn) {
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
                             ✓ Rigtigt svaret!
                         </div>
-                        <button class="mission-next-btn" id="next-station-mission-btn">
-                            ${currStationMissionIdx < stationMissions.length - 1 ? 'Næste mission ➔' : 'Gennemført! Start forfra 🔄'}
+                        <button class="mission-next-btn" id="next-visual-station-btn">
+                            ${currStationVisualIdx < stationVisualMissions.length - 1 ? 'Næste mission ➔' : 'Gennemført! Start forfra 🔄'}
                         </button>
                     `;
-                    feedbackBox.querySelector('#next-station-mission-btn').onclick = () => {
-                        currStationMissionIdx = (currStationMissionIdx + 1) % stationMissions.length;
-                        renderStationMission();
+                    feedbackBox.querySelector('#next-visual-station-btn').onclick = () => {
+                        currStationVisualIdx = (currStationVisualIdx + 1) % stationVisualMissions.length;
+                        renderStationVisualMission();
                     };
                 } else {
                     btn.classList.add('wrong');
@@ -798,16 +1011,147 @@ export function renderVerberStationView(container, navigateFn) {
             grid.appendChild(btn);
         });
 
-        missionCard.appendChild(grid);
-        missionCard.appendChild(feedbackBox);
+        visualMissionCard.appendChild(grid);
+        visualMissionCard.appendChild(feedbackBox);
     }
 
-    renderStationMission();
-    detektivPanel.appendChild(missionCard);
+    renderStationVisualMission();
+    detektivPanel.appendChild(visualMissionCard);
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================
-    // --- 3. TAB: HISTORIE (Byg en lille historie - INGEN TTS)
+    // --- 3. TAB: FIND HANDLINGER I KONTEKST (Model 2)
+    // ========================================================
+    const handlingerPanel = document.createElement('div');
+    handlingerPanel.className = 'verber-panel';
+    handlingerPanel.dataset.panel = 'tab_handlinger';
+
+    const stationContextTasks = [
+        {
+            title: "Opgave 1 af 3: I kiosken på banegården",
+            prompt: "Find 3 handlinger, man kan gøre i kiosken på banegården:",
+            targetCount: 3,
+            options: [
+                { text: "at købe 🛒", correct: true },
+                { text: "at sove 🛌", correct: false },
+                { text: "at betale 💳", correct: true },
+                { text: "at svømme 🏊", correct: false },
+                { text: "at vælge 🍫", correct: true },
+                { text: "at cykle 🚲", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 2 af 3: Rejsen og transporten",
+            prompt: "Find 3 handlinger, der handler om transport og bevægelse:",
+            targetCount: 3,
+            options: [
+                { text: "at spise 🍽️", correct: false },
+                { text: "at køre 🚆", correct: true },
+                { text: "at rejse ✈️", correct: true },
+                { text: "at male 🎨", correct: false },
+                { text: "at gå 🚶", correct: true },
+                { text: "at synge 🎵", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 3 af 3: På perronen",
+            prompt: "Find 3 handlinger, en passager gør på perronen:",
+            targetCount: 3,
+            options: [
+                { text: "at vente ⏳", correct: true },
+                { text: "at trække (kuffert) 🧳", correct: true },
+                { text: "at hente (en ven) 🤝", correct: true },
+                { text: "at lave mad 🍳", correct: false },
+                { text: "at sove i seng 🛏️", correct: false },
+                { text: "at bygge hus 🔨", correct: false }
+            ]
+        }
+    ];
+
+    let currContextTaskIdx = 0;
+    const contextCard = document.createElement('div');
+    contextCard.className = 'exercise-card';
+
+    function renderStationContextTask() {
+        contextCard.innerHTML = '';
+        const task = stationContextTasks[currContextTaskIdx];
+        let foundCount = 0;
+
+        const badge = document.createElement('div');
+        badge.className = 'mission-badge';
+        badge.textContent = task.title;
+        contextCard.appendChild(badge);
+
+        const clueBox = document.createElement('div');
+        clueBox.className = 'mission-clue-box';
+        clueBox.textContent = task.prompt;
+        contextCard.appendChild(clueBox);
+
+        const progressPill = document.createElement('div');
+        progressPill.className = 'context-progress-pill';
+        progressPill.textContent = `Fundet: 0 af ${task.targetCount}`;
+        contextCard.appendChild(progressPill);
+
+        const chipsGrid = document.createElement('div');
+        chipsGrid.className = 'context-chips-grid';
+
+        const feedbackBox = document.createElement('div');
+        feedbackBox.style.marginTop = '1.2rem';
+
+        task.options.forEach(opt => {
+            const chip = document.createElement('button');
+            chip.className = 'context-chip-btn';
+            chip.textContent = opt.text;
+
+            chip.onclick = () => {
+                if (chip.classList.contains('found')) return;
+
+                if (opt.correct) {
+                    chip.classList.add('found');
+                    foundCount++;
+                    progressPill.textContent = `Fundet: ${foundCount} af ${task.targetCount}`;
+
+                    if (foundCount === task.targetCount) {
+                        chipsGrid.querySelectorAll('.context-chip-btn').forEach(b => {
+                            if (!b.classList.contains('found')) b.style.opacity = '0.4';
+                        });
+                        feedbackBox.innerHTML = `
+                            <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
+                                ✓ Rigtigt svaret! Du fandt alle 3 handlinger!
+                            </div>
+                            <button class="mission-next-btn" id="next-context-station-btn">
+                                ${currContextTaskIdx < stationContextTasks.length - 1 ? 'Næste opgave ➔' : 'Gennemført! Start forfra 🔄'}
+                            </button>
+                        `;
+                        feedbackBox.querySelector('#next-context-station-btn').onclick = () => {
+                            currContextTaskIdx = (currContextTaskIdx + 1) % stationContextTasks.length;
+                            renderStationContextTask();
+                        };
+                    }
+                } else {
+                    chip.classList.add('wrong-shake');
+                    feedbackBox.innerHTML = `
+                        <div style="color: #f87171; font-size: 1.05rem; font-weight: 700;">
+                            ✗ Ikke i denne situation. Prøv igen!
+                        </div>
+                    `;
+                    setTimeout(() => chip.classList.remove('wrong-shake'), 600);
+                }
+            };
+
+            chipsGrid.appendChild(chip);
+        });
+
+        contextCard.appendChild(chipsGrid);
+        contextCard.appendChild(feedbackBox);
+    }
+
+    renderStationContextTask();
+    handlingerPanel.appendChild(contextCard);
+    panelsHolder.appendChild(handlingerPanel);
+
+    // ========================================================
+    // --- 4. TAB: HISTORIE (Byg en historie - INGEN TTS)
     // ========================================================
     const historiePanel = document.createElement('div');
     historiePanel.className = 'verber-panel';
@@ -1050,7 +1394,7 @@ export function renderVerberStationView(container, navigateFn) {
     panelsHolder.appendChild(historiePanel);
 
     // ========================================================
-    // --- 4. TAB: SYNONYMER & ANTONYMER (INGEN TTS)
+    // --- 5. TAB: SYNONYMER & ANTONYMER (INGEN TTS)
     // ========================================================
     const synonymPanel = document.createElement('div');
     synonymPanel.className = 'verber-panel';
@@ -1098,23 +1442,13 @@ export function renderVerberStationView(container, navigateFn) {
             ]
         },
         {
-            type: 'antonym',
+            type: 'synonym',
             word: 'at begynde',
-            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at stoppe 🛑', correct: true },
-                { text: 'at starte ▶️', correct: false },
-                { text: 'at fortsætte ➡️', correct: false }
-            ]
-        },
-        {
-            type: 'antonym',
-            word: 'at give',
-            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
-            options: [
-                { text: 'at få / modtage 🎁', correct: true },
-                { text: 'at række frem 🤲', correct: false },
-                { text: 'at vise 👁️', correct: false }
+                { text: 'at starte 🎬', correct: true },
+                { text: 'at slutte 🛑', correct: false },
+                { text: 'at glemme ❓', correct: false }
             ]
         }
     ];
@@ -1127,22 +1461,21 @@ export function renderVerberStationView(container, navigateFn) {
         synonymCard.innerHTML = '';
         const task = stationSynonymTasks[currStationSynonymIdx];
 
-        const isSynonym = task.type === 'synonym';
-        const typeBadge = document.createElement('div');
-        typeBadge.className = `synonym-type-badge ${isSynonym ? 'badge-type-synonym' : 'badge-type-antonym'}`;
-        typeBadge.textContent = isSynonym ? '🔗 Find Synonym (Samme betydning)' : '⚡ Find Antonym (Modsætning)';
-        synonymCard.appendChild(typeBadge);
+        const badge = document.createElement('div');
+        badge.className = `synonym-type-badge ${task.type === 'synonym' ? 'badge-type-synonym' : 'badge-type-antonym'}`;
+        badge.textContent = task.type === 'synonym' ? 'Synonym (Betyder næsten det samme)' : 'Antonym (Det modsatte)';
+        synonymCard.appendChild(badge);
 
         const promptText = document.createElement('p');
-        promptText.style.color = '#cbd5e1';
+        promptText.style.color = '#94a3b8';
         promptText.style.fontSize = '1.1rem';
         promptText.textContent = task.prompt;
         synonymCard.appendChild(promptText);
 
-        const wordEl = document.createElement('div');
-        wordEl.className = 'synonym-target-word';
-        wordEl.innerHTML = `<span>${task.word}</span>`;
-        synonymCard.appendChild(wordEl);
+        const targetWord = document.createElement('div');
+        targetWord.className = 'synonym-target-word';
+        targetWord.innerHTML = `<span>${task.word}</span>`;
+        synonymCard.appendChild(targetWord);
 
         const grid = document.createElement('div');
         grid.className = 'mission-options-grid';
@@ -1163,11 +1496,11 @@ export function renderVerberStationView(container, navigateFn) {
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
                             ✓ Rigtigt svaret!
                         </div>
-                        <button class="mission-next-btn" id="next-synonym-task-btn">
-                            ${currStationSynonymIdx < stationSynonymTasks.length - 1 ? 'Næste opgave ➔' : 'Gennemført! Start forfra 🔄'}
+                        <button class="mission-next-btn" id="next-station-synonym-btn">
+                            ${currStationSynonymIdx < stationSynonymTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
                         </button>
                     `;
-                    feedbackBox.querySelector('#next-synonym-task-btn').onclick = () => {
+                    feedbackBox.querySelector('#next-station-synonym-btn').onclick = () => {
                         currStationSynonymIdx = (currStationSynonymIdx + 1) % stationSynonymTasks.length;
                         renderStationSynonymTask();
                     };
@@ -1193,7 +1526,7 @@ export function renderVerberStationView(container, navigateFn) {
     panelsHolder.appendChild(synonymPanel);
 
     // ========================================================
-    // --- 5. TAB: SÆTNINGSBYGGER (Sæt verbet ind - INGEN TTS)
+    // --- 6. TAB: SÆTNINGSBYGGER (Grammatisk puslespil - INGEN TTS)
     // ========================================================
     const saetningPanel = document.createElement('div');
     saetningPanel.className = 'verber-panel';
@@ -1203,37 +1536,30 @@ export function renderVerberStationView(container, navigateFn) {
         {
             subjekt: "Toget",
             correctVerb: "kører",
-            objekt: "mod København",
-            adverbial: "om morgenen",
-            wrongVerbs: ["koger", "læser"]
+            wrongVerbs: ["spiser", "sover", "skriver"],
+            objekt: "mod Odense",
+            adverbial: "klokken to"
         },
         {
-            subjekt: "Manden",
+            subjekt: "Kunden",
             correctVerb: "betaler",
-            objekt: "for sin billet",
-            adverbial: "i automaten",
-            wrongVerbs: ["sover", "spiser"]
+            wrongVerbs: ["cykler", "svømmer", "læser"],
+            objekt: "med sit kort",
+            adverbial: "i kiosken"
         },
         {
             subjekt: "Kvinden",
             correctVerb: "trækker",
-            objekt: "sin kuffert",
-            adverbial: "på perronen",
-            wrongVerbs: ["kaster", "drikker"]
+            wrongVerbs: ["kaster", "falder", "synger"],
+            objekt: "en tung kuffert",
+            adverbial: "over perronen"
         },
         {
-            subjekt: "Passagererne",
-            correctVerb: "venter",
-            objekt: "på toget",
-            adverbial: "på stationen",
-            wrongVerbs: ["svømmer", "danser"]
-        },
-        {
-            subjekt: "Faren",
-            correctVerb: "henter",
-            objekt: "sin datter",
-            adverbial: "ved udgangen",
-            wrongVerbs: ["steger", "vasker"]
+            subjekt: "Manden",
+            correctVerb: "køber",
+            wrongVerbs: ["flyver", "drikker", "glemmer"],
+            objekt: "en togbillet",
+            adverbial: "i automaten"
         }
     ];
 
@@ -1338,6 +1664,180 @@ export function renderVerberStationView(container, navigateFn) {
     renderStationSentenceBuilder();
     saetningPanel.appendChild(sentenceCard);
     panelsHolder.appendChild(saetningPanel);
+
+    // ========================================================
+    // --- 7. TAB: NUTID & DATID (Tidsmarkør-træning - INGEN TTS)
+    // ========================================================
+    const tidBoejningPanel = document.createElement('div');
+    tidBoejningPanel.className = 'verber-panel';
+    tidBoejningPanel.dataset.panel = 'tab_tid_boejning';
+
+    const stationTidTasks = [
+        {
+            marker: "I går",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I går",
+            sentenceAfter: "Jens sin tunge kuffert hurtigt gennem banegården.",
+            baseVerb: "at trække",
+            options: [
+                { text: "trak", form: "Datid", correct: true },
+                { text: "trækker", form: "Nutid", correct: false }
+            ],
+            explanation: '"I går" viser, at handlingen skete i fortiden, så verbet skal stå i datid (trak).'
+        },
+        {
+            marker: "Lige nu",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "Lige nu",
+            sentenceAfter: "Anna på perron 2 og venter på toget.",
+            baseVerb: "at stå",
+            options: [
+                { text: "står", form: "Nutid", correct: true },
+                { text: "stod", form: "Datid", correct: false }
+            ],
+            explanation: '"Lige nu" viser, at handlingen sker i dette øjeblik, så verbet skal stå i nutid (står).'
+        },
+        {
+            marker: "I morges",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I morges",
+            sentenceAfter: "kunden med sit betalingskort i stationskiosken.",
+            baseVerb: "at betale",
+            options: [
+                { text: "betalte", form: "Datid", correct: true },
+                { text: "betaler", form: "Nutid", correct: false }
+            ],
+            explanation: '"I morges" viser, at handlingen skete tidligere på dagen (fortid), så verbet skal stå i datid (betalte).'
+        },
+        {
+            marker: "Hver dag",
+            hint: "peger på en vane / nutid ➔ Nutid",
+            sentenceBefore: "Hver dag",
+            sentenceAfter: "toget mod Odense klokken otte.",
+            baseVerb: "at køre",
+            options: [
+                { text: "kører", form: "Nutid", correct: true },
+                { text: "kørte", form: "Datid", correct: false }
+            ],
+            explanation: '"Hver dag" viser en gentagen vane i nutid, så verbet skal stå i nutid (kører).'
+        },
+        {
+            marker: "Sidste uge",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "Sidste uge",
+            sentenceAfter: "familien til Jylland med toget.",
+            baseVerb: "at rejse",
+            options: [
+                { text: "rejste", form: "Datid", correct: true },
+                { text: "rejser", form: "Nutid", correct: false }
+            ],
+            explanation: '"Sidste uge" viser en afsluttet handling i fortiden, så verbet skal stå i datid (rejste).'
+        },
+        {
+            marker: "I dag",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "I dag",
+            sentenceAfter: "billetautomaten heldigvis helt perfekt.",
+            baseVerb: "at virke",
+            options: [
+                { text: "virker", form: "Nutid", correct: true },
+                { text: "virkede", form: "Datid", correct: false }
+            ],
+            explanation: '"I dag" angiver nutid, så verbet skal stå i nutid (virker).'
+        }
+    ];
+
+    let currTidTaskIdx = 0;
+    const tidCard = document.createElement('div');
+    tidCard.className = 'exercise-card';
+
+    function renderStationTidTask() {
+        tidCard.innerHTML = '';
+        const task = stationTidTasks[currTidTaskIdx];
+
+        const badge = document.createElement('div');
+        badge.className = 'time-marker-badge';
+        badge.textContent = `Opgave ${currTidTaskIdx + 1} af ${stationTidTasks.length} • Tidsmarkør: "${task.marker}"`;
+        tidCard.appendChild(badge);
+
+        const heading = document.createElement('h3');
+        heading.style.fontSize = '1.35rem';
+        heading.style.color = '#f8fafc';
+        heading.style.margin = '0.5rem 0 0.8rem';
+        heading.textContent = `Vælg den rigtige form af ${task.baseVerb}:`;
+        tidCard.appendChild(heading);
+
+        const sentenceBox = document.createElement('div');
+        sentenceBox.className = 'time-sentence-box';
+        sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> ________ ${task.sentenceAfter} <span style="color: #94a3b8; font-size: 1.05rem;">(${task.baseVerb})</span>`;
+        tidCard.appendChild(sentenceBox);
+
+        const hintInfo = document.createElement('div');
+        hintInfo.style.color = '#c084fc';
+        hintInfo.style.fontSize = '0.95rem';
+        hintInfo.style.fontWeight = '600';
+        hintInfo.style.marginBottom = '1rem';
+        hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+        tidCard.appendChild(hintInfo);
+
+        const optionsGrid = document.createElement('div');
+        optionsGrid.className = 'time-options-grid';
+
+        const feedbackBox = document.createElement('div');
+        feedbackBox.style.marginTop = '1.2rem';
+
+        task.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'time-opt-btn';
+            btn.innerHTML = `
+                <span>${opt.text}</span>
+                <span class="form-label">${opt.form}</span>
+            `;
+
+            btn.onclick = () => {
+                if (opt.correct) {
+                    btn.classList.add('correct');
+                    optionsGrid.querySelectorAll('.time-opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                    sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> <strong style="color: #4ade80; text-decoration: underline;">${opt.text}</strong> ${task.sentenceAfter}`;
+                    feedbackBox.innerHTML = `
+                        <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+                            ✓ Rigtigt svaret!
+                        </div>
+                        <div style="color: #94a3b8; font-size: 1rem; margin-bottom: 1rem;">
+                            ${task.explanation}
+                        </div>
+                        <button class="mission-next-btn" id="next-tid-station-btn">
+                            ${currTidTaskIdx < stationTidTasks.length - 1 ? 'Næste opgave ➔' : 'Gennemført! Start forfra 🔄'}
+                        </button>
+                    `;
+                    feedbackBox.querySelector('#next-tid-station-btn').onclick = () => {
+                        currTidTaskIdx = (currTidTaskIdx + 1) % stationTidTasks.length;
+                        renderStationTidTask();
+                    };
+                } else {
+                    btn.classList.add('wrong');
+                    feedbackBox.innerHTML = `
+                        <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
+                            ✗ Forkert svaret. Prøv igen!
+                        </div>
+                        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
+                            Kig på tidsmarkøren "${task.marker}" - peger den på nuet eller fortiden?
+                        </div>
+                    `;
+                    setTimeout(() => btn.classList.remove('wrong'), 700);
+                }
+            };
+
+            optionsGrid.appendChild(btn);
+        });
+
+        tidCard.appendChild(optionsGrid);
+        tidCard.appendChild(feedbackBox);
+    }
+
+    renderStationTidTask();
+    tidBoejningPanel.appendChild(tidCard);
+    panelsHolder.appendChild(tidBoejningPanel);
 
     container.appendChild(viewContainer);
 }

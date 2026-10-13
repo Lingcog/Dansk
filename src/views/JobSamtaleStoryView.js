@@ -411,13 +411,135 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
         trpsBox.innerHTML = `💭 <em>${step.trps}</em>`;
         actionBox.appendChild(trpsBox);
 
-        // 2. Pronunciation Phase (Direkte udtaletræning - intet puslespil)
-        const pronBox = document.createElement('div');
-        pronBox.className = 'pron-box';
-        renderPronunciation(pronBox, step);
-        actionBox.appendChild(pronBox);
+        // 2. Construction Phase (Ordpuslespil OP)
+        const constructBox = document.createElement('div');
+        constructBox.className = 'construct-box';
+        if (appState.currentPhase === 'trps' || appState.currentPhase === 'construction') {
+            appState.currentPhase = 'construction';
+            renderOrdstilling(constructBox, step);
+        } else {
+            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 0.8rem 0; font-size: 1.1rem;">✓ Sætning bygget korrekt!</div>`;
+        }
+        actionBox.appendChild(constructBox);
+
+        // 3. Pronunciation Phase (Udtaletræning)
+        if (appState.currentPhase === 'pronunciation') {
+            const pronBox = document.createElement('div');
+            pronBox.className = 'pron-box';
+            renderPronunciation(pronBox, step);
+            actionBox.appendChild(pronBox);
+        }
 
         chatContainer.appendChild(actionBox);
+    }
+
+    // --- CONSTRUCT OP ---
+    function renderOrdstilling(container, step) {
+        const targetWords = step.construction.words;
+        
+        if (!appState.shuffledWords) {
+            let shuffled = [...targetWords].sort(() => Math.random() - 0.5);
+            if (shuffled.join(' ') === targetWords.join(' ') && targetWords.length > 1) {
+                shuffled.reverse();
+            }
+            appState.shuffledWords = shuffled;
+            appState.selectedWords = [];
+        }
+
+        const instructionP = document.createElement('p');
+        instructionP.style.color = 'var(--text-muted)';
+        instructionP.style.fontSize = '1rem';
+        instructionP.style.marginBottom = '0.5rem';
+        instructionP.textContent = 'Klik på ordene nedenfor i den rigtige rækkefølge for at bygge replikken:';
+        container.appendChild(instructionP);
+
+        const dropZone = document.createElement('div');
+        dropZone.className = 'op-dropzone';
+        
+        const poolZone = document.createElement('div');
+        poolZone.className = 'op-poolzone';
+        
+        const controlArea = document.createElement('div');
+        controlArea.style.display = 'flex';
+        controlArea.style.justifyContent = 'center';
+        controlArea.style.alignItems = 'center';
+        controlArea.style.gap = '1rem';
+        controlArea.style.marginTop = '0.8rem';
+
+        const resetWordsBtn = document.createElement('button');
+        resetWordsBtn.className = 'back-btn';
+        resetWordsBtn.style.fontSize = '0.85rem';
+        resetWordsBtn.style.padding = '0.3rem 0.8rem';
+        resetWordsBtn.textContent = 'Nulstil ord ↺';
+        resetWordsBtn.onclick = () => {
+            appState.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
+            appState.selectedWords = [];
+            updateOPUI();
+        };
+        controlArea.appendChild(resetWordsBtn);
+
+        const feedbackArea = document.createElement('div');
+        feedbackArea.style.textAlign = 'center';
+        feedbackArea.style.marginTop = '0.5rem';
+        feedbackArea.style.fontSize = '1.05rem';
+        feedbackArea.style.fontWeight = 'bold';
+
+        function updateOPUI() {
+            dropZone.innerHTML = '';
+            poolZone.innerHTML = '';
+
+            appState.selectedWords.forEach((word, idx) => {
+                const wBtn = document.createElement('button');
+                wBtn.className = 'op-word selected';
+                wBtn.textContent = word;
+                wBtn.onclick = () => {
+                    appState.selectedWords.splice(idx, 1);
+                    appState.shuffledWords.push(word);
+                    updateOPUI();
+                };
+                dropZone.appendChild(wBtn);
+            });
+
+            appState.shuffledWords.forEach((word, idx) => {
+                const wBtn = document.createElement('button');
+                wBtn.className = 'op-word pool';
+                wBtn.textContent = word;
+                wBtn.onclick = () => {
+                    appState.shuffledWords.splice(idx, 1);
+                    appState.selectedWords.push(word);
+                    updateOPUI();
+                };
+                poolZone.appendChild(wBtn);
+            });
+
+            // Check correctness when all words are placed
+            if (appState.shuffledWords.length === 0) {
+                const selectedStr = appState.selectedWords.join(' ');
+                const isCorrect = selectedStr === targetWords.join(' ') || (step.construction.altWords && selectedStr === step.construction.altWords.join(' '));
+                if (isCorrect) {
+                    dropZone.style.border = '2px solid #4caf50';
+                    feedbackArea.innerHTML = '<span style="color: #4caf50;">✓ Rigtig ordstilling! Gør dig klar til at udtale den.</span>';
+                    setTimeout(() => {
+                        appState.currentPhase = 'pronunciation';
+                        appState.shuffledWords = null;
+                        renderStory();
+                    }, 600);
+                } else {
+                    dropZone.style.border = '2px solid #ff5e5b';
+                    feedbackArea.innerHTML = '<span style="color: #ff5e5b;">✗ Ikke helt den rigtige rækkefølge. Klik på ordene eller nulstil for at rette.</span>';
+                }
+            } else {
+                dropZone.style.border = '2px dashed rgba(255,255,255,0.25)';
+                feedbackArea.innerHTML = '';
+            }
+        }
+
+        updateOPUI();
+        
+        container.appendChild(dropZone);
+        container.appendChild(poolZone);
+        container.appendChild(controlArea);
+        container.appendChild(feedbackArea);
     }
 
     // --- PRONUNCIATION PHASE ---

@@ -721,8 +721,8 @@ export function renderVerberKlasseView(container, navigateFn) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'verber-hero-header';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('top100_verber_scene2_title')}</h1>
-        <p>${getTranslation('top100_verber_scene2_desc')}</p>
+        <h1>${getTranslation('top100_verber_scene3_title')}</h1>
+        <p>${getTranslation('top100_verber_scene3_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -765,42 +765,29 @@ export function renderVerberKlasseView(container, navigateFn) {
     }
 
     // ========================================================
-    // --- 33 VERBER I KLASSEVÆRELSET & KONTORET med DATID
+    // --- 20 VERBER I KLASSEVÆRELSET & KONTORET (Scene 3) med DATID
     // ========================================================
     const klasseVerber = [
         { word: 'at sige', nutid: 'siger', datid: 'sagde', x: 48, y: 45, sentence: 'Læreren siger godmorgen til klassen.' },
-        { word: 'at gøre', nutid: 'gør', datid: 'gjorde', x: 35, y: 65, sentence: 'Eleverne gør deres opgaver færdige.' },
-        { word: 'at vise', nutid: 'viser', datid: 'viste', x: 52, y: 28, sentence: 'Læreren viser et billede på tavlen.' },
-        { word: 'at bruge', nutid: 'bruger', datid: 'brugte', x: 72, y: 70, sentence: 'Manden bruger sin bærbare computer.' },
-        { word: 'at lægge', nutid: 'lægger', datid: 'lagde', x: 25, y: 75, sentence: 'Hun lægger bogen på bordet.' },
-        { word: 'at synes', nutid: 'synes', datid: 'syntes', x: 30, y: 60, sentence: 'Han synes dansk er spændende.' },
-        { word: 'at sætte', nutid: 'sætter', datid: 'satte', x: 62, y: 65, sentence: 'Hun sætter stolen på plads.' },
-        { word: 'at mene', nutid: 'mener', datid: 'mente', x: 40, y: 55, sentence: 'Hvad mener du om teksten?' },
-        { word: 'at skrive', nutid: 'skriver', datid: 'skrev', x: 20, y: 70, sentence: 'Eleven skriver en sætning med blyant.' },
-        { word: 'at høre', nutid: 'hører', datid: 'hørte', x: 78, y: 55, sentence: 'Eleverne hører en dansk lydfil.' },
+        { word: 'at tale', nutid: 'taler', datid: 'talte', x: 45, y: 52, sentence: 'Kursisterne taler dansk i timerne.' },
         { word: 'at spørge', nutid: 'spørger', datid: 'spurgte', x: 38, y: 50, sentence: 'En elev spørger læreren om et ord.' },
+        { word: 'at svare', nutid: 'svarer', datid: 'svarede', x: 58, y: 48, sentence: 'Læreren svarer venligt på spørgsmålet.' },
+        { word: 'at høre', nutid: 'hører', datid: 'hørte', x: 78, y: 55, sentence: 'Eleverne hører en dansk lydfil.' },
+        { word: 'at læse', nutid: 'læser', datid: 'læste', x: 22, y: 65, sentence: 'Kvinden læser en historie i bogen.' },
+        { word: 'at skrive', nutid: 'skriver', datid: 'skrev', x: 20, y: 70, sentence: 'Eleven skriver en sætning med blyant.' },
         { word: 'at tænke', nutid: 'tænker', datid: 'tænkte', x: 65, y: 50, sentence: 'Hun tænker over det svære spørgsmål.' },
         { word: 'at forstå', nutid: 'forstår', datid: 'forstod', x: 44, y: 60, sentence: 'Nu forstår alle grammatikken.' },
-        { word: 'at kende', nutid: 'kender', datid: 'kendte', x: 55, y: 62, sentence: 'De kender hinanden fra sprogskolen.' },
-        { word: 'at kalde', nutid: 'kalder', datid: 'kaldte', x: 50, y: 40, sentence: 'Hvad kalder man dette ord på dansk?' },
-        { word: 'at arbejde', nutid: 'arbejder', datid: 'arbejdede', x: 85, y: 65, sentence: 'De to kolleger arbejder sammen i gruppen.' },
-        { word: 'at tale', nutid: 'taler', datid: 'talte', x: 45, y: 52, sentence: 'Kursisterne taler dansk i timerne.' },
-        { word: 'at læse', nutid: 'læser', datid: 'læste', x: 22, y: 65, sentence: 'Kvinden læser en historie i bogen.' },
-        { word: 'at svare', nutid: 'svarer', datid: 'svarede', x: 58, y: 48, sentence: 'Læreren svarer venligt på spørgsmålet.' },
-        { word: 'at skabe', nutid: 'skaber', datid: 'skabte', x: 80, y: 35, sentence: 'De skaber en god stemning i klassen.' },
-        { word: 'at huske', nutid: 'husker', datid: 'huskede', x: 68, y: 45, sentence: 'Husk at skrive lektier til i morgen!' },
-        { word: 'at bestemme', nutid: 'bestemmer', datid: 'bestemte', x: 50, y: 32, sentence: 'Læreren bestemmer hvem der starter.' },
         { word: 'at lære', nutid: 'lærer', datid: 'lærte', x: 32, y: 68, sentence: 'De lærer mange nye danske ord.' },
+        { word: 'at huske', nutid: 'husker', datid: 'huskede', x: 68, y: 45, sentence: 'Husk at skrive lektier til i morgen!' },
         { word: 'at glemme', nutid: 'glemmer', datid: 'glemte', x: 15, y: 80, sentence: 'Hun glemmer sit penalhus på bordet.' },
+        { word: 'at forklare', nutid: 'forklarer', datid: 'forklarede', x: 42, y: 48, sentence: 'Underviseren forklarer reglen en gang til.' },
+        { word: 'at vise', nutid: 'viser', datid: 'viste', x: 52, y: 28, sentence: 'Læreren viser et billede på tavlen.' },
+        { word: 'at bruge', nutid: 'bruger', datid: 'brugte', x: 72, y: 70, sentence: 'Manden bruger sin bærbare computer.' },
+        { word: 'at arbejde', nutid: 'arbejder', datid: 'arbejdede', x: 85, y: 65, sentence: 'De to kolleger arbejder sammen i gruppen.' },
         { word: 'at sende', nutid: 'sender', datid: 'sendte', x: 75, y: 75, sentence: 'Kollegaen sender en vigtig e-mail.' },
         { word: 'at søge', nutid: 'søger', datid: 'søgte', x: 70, y: 68, sentence: 'Han søger efter et ord i ordbogen.' },
-        { word: 'at åbne', nutid: 'åbner', datid: 'åbnede', x: 10, y: 40, sentence: 'Læreren åbner vinduet i lokalet.' },
-        { word: 'at lukke', nutid: 'lukker', datid: 'lukkede', x: 12, y: 45, sentence: 'Han lukker døren stille.' },
-        { word: 'at forklare', nutid: 'forklarer', datid: 'forklarede', x: 42, y: 48, sentence: 'Underviseren forklarer reglen en gang til.' },
-        { word: 'at dele', nutid: 'deler', datid: 'delte', x: 36, y: 72, sentence: 'De to elever deler en ordbog.' },
-        { word: 'at ringe', nutid: 'ringer', datid: 'ringede', x: 90, y: 55, sentence: 'Telefonen ringer på kontoret.' },
-        { word: 'at starte', nutid: 'starter', datid: 'startede', x: 52, y: 20, sentence: 'Undervisningen starter præcis klokken ni.' },
-        { word: 'at slutte', nutid: 'slutter', datid: 'sluttede', x: 52, y: 22, sentence: 'Timen slutter klokken tolv.' }
+        { word: 'at mene', nutid: 'mener', datid: 'mente', x: 40, y: 55, sentence: 'Hvad mener du om teksten?' },
+        { word: 'at synes', nutid: 'synes', datid: 'syntes', x: 30, y: 60, sentence: 'Han synes dansk er spændende.' }
     ];
 
     // ========================================================
@@ -1251,7 +1238,7 @@ export function renderVerberKlasseView(container, navigateFn) {
                 {
                     q: "1. Hvad gør kollegaen først?",
                     options: [
-                        { text: "Hun åbner sin computer 💻", correct: true },
+                        { text: "Hun bruger sin computer 💻", correct: true },
                         { text: "Hun kaster computeren ud 🗑️", correct: false },
                         { text: "Hun tager skoene af 👟", correct: false }
                     ]
@@ -1413,22 +1400,22 @@ export function renderVerberKlasseView(container, navigateFn) {
         },
         {
             type: 'synonym',
-            word: 'at lytte',
+            word: 'at høre',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at høre efter 👂', correct: true },
+                { text: 'at lytte efter 👂', correct: true },
                 { text: 'at råbe højt 📢', correct: false },
                 { text: 'at løbe stærkt 🏃', correct: false }
             ]
         },
         {
-            type: 'antonym',
-            word: 'at åbne',
-            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            type: 'synonym',
+            word: 'at mene',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at lukke 🚪', correct: true },
-                { text: 'at kigge 👀', correct: false },
-                { text: 'at skrive ✍️', correct: false }
+                { text: 'at synes 🤔', correct: true },
+                { text: 'at glemme 💭', correct: false },
+                { text: 'at spise 🍽️', correct: false }
             ]
         },
         {
@@ -1453,10 +1440,10 @@ export function renderVerberKlasseView(container, navigateFn) {
         },
         {
             type: 'antonym',
-            word: 'at lægge',
+            word: 'at sende',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at tage (op) 🤲', correct: true },
+                { text: 'at modtage (få) 📥', correct: true },
                 { text: 'at gemme 📦', correct: false },
                 { text: 'at kaste 🤾', correct: false }
             ]

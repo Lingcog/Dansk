@@ -117,7 +117,9 @@ export function renderTop100VerberMenuView(container, navigateFn) {
         }
         .badge-verber-1 { border-color: #38bdf8; color: #38bdf8; }
         .badge-verber-2 { border-color: #f59e0b; color: #f59e0b; }
-        .badge-verber-3 { border-color: #22c55e; color: #4ade80; }
+        .badge-verber-3 { border-color: #a855f7; color: #c084fc; }
+        .badge-verber-4 { border-color: #22c55e; color: #4ade80; }
+        .badge-verber-5 { border-color: #ec4899; color: #f472b6; }
 
         .scene-card-content {
             padding: 1.5rem;
@@ -178,13 +180,13 @@ export function renderTop100VerberMenuView(container, navigateFn) {
     const grid = document.createElement('div');
     grid.className = 'hub-scenes-grid';
 
-    // 1. Scene 1: Banegården / Rejsen
-    const cardStation = document.createElement('div');
-    cardStation.className = 'scene-card';
-    cardStation.innerHTML = `
+    // 1. Scene 1: Byrummet & Gaden
+    const cardByrum = document.createElement('div');
+    cardByrum.className = 'scene-card';
+    cardByrum.innerHTML = `
         <div class="scene-card-img-wrap">
-            <img src="assets/verber_station_vrimmel.jpg" alt="Banegården vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-1">🚆 Scene 1 • 33 verber</div>
+            <img src="assets/verber_byrum_vrimmel.jpg" alt="Byrummet vrimlebillede" class="scene-card-img">
+            <div class="scene-pill-badge badge-verber-1">🏙️ Scene 1 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${getTranslation('top100_verber_scene1_title')}</h3>
@@ -192,16 +194,16 @@ export function renderTop100VerberMenuView(container, navigateFn) {
             <button class="scene-action-btn">${getTranslation('top100_verber_scene1_btn')}</button>
         </div>
     `;
-    cardStation.onclick = () => navigateFn('verber_station');
-    grid.appendChild(cardStation);
+    cardByrum.onclick = () => navigateFn('verber_byrum');
+    grid.appendChild(cardByrum);
 
-    // 2. Scene 2: Klasseværelset & Kontoret
-    const cardKlasse = document.createElement('div');
-    cardKlasse.className = 'scene-card';
-    cardKlasse.innerHTML = `
+    // 2. Scene 2: Hjemmet & Køkkenet
+    const cardHjem = document.createElement('div');
+    cardHjem.className = 'scene-card';
+    cardHjem.innerHTML = `
         <div class="scene-card-img-wrap">
-            <img src="assets/verber_klasse_vrimmel.jpg" alt="Klasseværelset vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-2">🏫 Scene 2 • 33 verber</div>
+            <img src="assets/verber_hjem_vrimmel.jpg" alt="Hjemmet vrimlebillede" class="scene-card-img">
+            <div class="scene-pill-badge badge-verber-2">🍳 Scene 2 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${getTranslation('top100_verber_scene2_title')}</h3>
@@ -209,16 +211,16 @@ export function renderTop100VerberMenuView(container, navigateFn) {
             <button class="scene-action-btn">${getTranslation('top100_verber_scene2_btn')}</button>
         </div>
     `;
-    cardKlasse.onclick = () => navigateFn('verber_klasse');
-    grid.appendChild(cardKlasse);
+    cardHjem.onclick = () => navigateFn('verber_hjem');
+    grid.appendChild(cardHjem);
 
-    // 3. Scene 3: Parken & Udendørscaféen
-    const cardPark = document.createElement('div');
-    cardPark.className = 'scene-card';
-    cardPark.innerHTML = `
+    // 3. Scene 3: Klasseværelset & Kontoret
+    const cardKlasse = document.createElement('div');
+    cardKlasse.className = 'scene-card';
+    cardKlasse.innerHTML = `
         <div class="scene-card-img-wrap">
-            <img src="assets/verber_park_vrimmel.jpg" alt="Parken vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-3">🌳 Scene 3 • 34 verber</div>
+            <img src="assets/verber_klasse_vrimmel.jpg" alt="Klasseværelset vrimlebillede" class="scene-card-img">
+            <div class="scene-pill-badge badge-verber-3">🏫 Scene 3 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${getTranslation('top100_verber_scene3_title')}</h3>
@@ -226,8 +228,42 @@ export function renderTop100VerberMenuView(container, navigateFn) {
             <button class="scene-action-btn">${getTranslation('top100_verber_scene3_btn')}</button>
         </div>
     `;
+    cardKlasse.onclick = () => navigateFn('verber_klasse');
+    grid.appendChild(cardKlasse);
+
+    // 4. Scene 4: Parken & Fritiden
+    const cardPark = document.createElement('div');
+    cardPark.className = 'scene-card';
+    cardPark.innerHTML = `
+        <div class="scene-card-img-wrap">
+            <img src="assets/verber_park_vrimmel.jpg" alt="Parken vrimlebillede" class="scene-card-img">
+            <div class="scene-pill-badge badge-verber-4">🌳 Scene 4 • 20 verber</div>
+        </div>
+        <div class="scene-card-content">
+            <h3>${getTranslation('top100_verber_scene4_title')}</h3>
+            <p>${getTranslation('top100_verber_scene4_desc')}</p>
+            <button class="scene-action-btn">${getTranslation('top100_verber_scene4_btn')}</button>
+        </div>
+    `;
     cardPark.onclick = () => navigateFn('verber_park');
     grid.appendChild(cardPark);
+
+    // 5. Scene 5: Banegården & Rejsen
+    const cardStation = document.createElement('div');
+    cardStation.className = 'scene-card';
+    cardStation.innerHTML = `
+        <div class="scene-card-img-wrap">
+            <img src="assets/verber_station_vrimmel.jpg" alt="Banegården vrimlebillede" class="scene-card-img">
+            <div class="scene-pill-badge badge-verber-5">🚆 Scene 5 • 20 verber</div>
+        </div>
+        <div class="scene-card-content">
+            <h3>${getTranslation('top100_verber_scene5_title')}</h3>
+            <p>${getTranslation('top100_verber_scene5_desc')}</p>
+            <button class="scene-action-btn">${getTranslation('top100_verber_scene5_btn')}</button>
+        </div>
+    `;
+    cardStation.onclick = () => navigateFn('verber_station');
+    grid.appendChild(cardStation);
 
     viewContainer.appendChild(grid);
     container.appendChild(viewContainer);

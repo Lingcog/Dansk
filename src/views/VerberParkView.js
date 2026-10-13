@@ -721,8 +721,8 @@ export function renderVerberParkView(container, navigateFn) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'verber-hero-header';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('top100_verber_scene3_title')}</h1>
-        <p>${getTranslation('top100_verber_scene3_desc')}</p>
+        <h1>${getTranslation('top100_verber_scene4_title')}</h1>
+        <p>${getTranslation('top100_verber_scene4_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -765,43 +765,29 @@ export function renderVerberParkView(container, navigateFn) {
     }
 
     // ========================================================
-    // --- 34 VERBER I PARKEN & CAFÉEN med DATID
+    // --- 20 VERBER I PARKEN & FRITIDEN (Scene 4) med DATID
     // ========================================================
     const parkVerber = [
-        { word: 'at se', nutid: 'ser', datid: 'så', x: 45, y: 35, sentence: 'Hun ser de smukke blomster i parken.' },
-        { word: 'at finde', nutid: 'finder', datid: 'fandt', x: 60, y: 75, sentence: 'Drengen finder en lille sten på stien.' },
-        { word: 'at holde', nutid: 'holder', datid: 'holdt', x: 35, y: 65, sentence: 'Manden holder en kop varm te i hånden.' },
-        { word: 'at tro', nutid: 'tror', datid: 'troede', x: 25, y: 55, sentence: 'Jeg tror solen skinner hele eftermiddagen.' },
-        { word: 'at ligge', nutid: 'ligger', datid: 'lå', x: 75, y: 80, sentence: 'Tæppet ligger på det grønne græs.' },
-        { word: 'at sidde', nutid: 'sidder', datid: 'sad', x: 30, y: 68, sentence: 'Vennerne sidder ved cafébordet.' },
-        { word: 'at leve', nutid: 'lever', datid: 'levede', x: 50, y: 25, sentence: 'Fuglene lever frit i træerne.' },
-        { word: 'at spille', nutid: 'spiller', datid: 'spillede', x: 82, y: 60, sentence: 'Børnene spiller bold på plænen.' },
-        { word: 'at prøve', nutid: 'prøver', datid: 'prøvede', x: 22, y: 72, sentence: 'Hun prøver en ny lækker kage.' },
-        { word: 'at fortælle', nutid: 'fortæller', datid: 'fortalte', x: 32, y: 62, sentence: 'Bedstefar fortæller en sjov historie.' },
-        { word: 'at opleve', nutid: 'oplever', datid: 'oplevede', x: 55, y: 45, sentence: 'De oplever den dejlige forårsdag.' },
-        { word: 'at ønske', nutid: 'ønsker', datid: 'ønskede', x: 28, y: 50, sentence: 'Hun ønsker sig en stor is.' },
-        { word: 'at spise', nutid: 'spiser', datid: 'spiste', x: 20, y: 65, sentence: 'Manden spiser en sandwich.' },
-        { word: 'at miste', nutid: 'mister', datid: 'mistede', x: 88, y: 75, sentence: 'Pas på ikke at miste din kasket i blæsten!' },
-        { word: 'at føle', nutid: 'føler', datid: 'følte', x: 48, y: 50, sentence: 'Hun føler varmen fra solen.' },
-        { word: 'at kigge', nutid: 'kigger', datid: 'kiggede', x: 40, y: 40, sentence: 'Parret kigger på svanerne i søen.' },
-        { word: 'at møde', nutid: 'møder', datid: 'mødte', x: 65, y: 55, sentence: 'Vennerne møder hinanden ved caféen.' },
-        { word: 'at elske', nutid: 'elsker', datid: 'elskede', x: 38, y: 58, sentence: 'De elsker at gå ture i parken.' },
-        { word: 'at drikke', nutid: 'drikker', datid: 'drak', x: 24, y: 68, sentence: 'Kvinden drikker en kold sodavand.' },
-        { word: 'at tabe', nutid: 'taber', datid: 'tabte', x: 80, y: 70, sentence: 'Pigen taber bolden på græsset.' },
-        { word: 'at ændre', nutid: 'ændrer', datid: 'ændrede', x: 55, y: 15, sentence: 'Vejret ændrer sig hurtigt.' },
-        { word: 'at passe', nutid: 'passer', datid: 'passede', x: 70, y: 65, sentence: 'Storesøster passer godt på sin lillebror.' },
-        { word: 'at bo', nutid: 'bor', datid: 'boede', x: 10, y: 25, sentence: 'Mange mennesker bor tæt på parken.' },
-        { word: 'at hjælpe', nutid: 'hjælper', datid: 'hjalp', x: 68, y: 72, sentence: 'Drengen hjælper sin ven op fra græsset.' },
-        { word: 'at mærke', nutid: 'mærker', datid: 'mærkede', x: 46, y: 60, sentence: 'Han mærker den bløde vind.' },
-        { word: 'at vinde', nutid: 'vinder', datid: 'vandt', x: 85, y: 58, sentence: 'Holdet vinder fodboldkampen!' },
-        { word: 'at vokse', nutid: 'vokser', datid: 'voksede', x: 62, y: 35, sentence: 'Træerne vokser sig store og grønne.' },
-        { word: 'at cykle', nutid: 'cykler', datid: 'cyklede', x: 40, y: 75, sentence: 'Manden cykler ad den brede grussti.' },
         { word: 'at løbe', nutid: 'løber', datid: 'løb', x: 78, y: 65, sentence: 'Løberen løber hurtigt forbi bænken.' },
+        { word: 'at spille', nutid: 'spiller', datid: 'spillede', x: 82, y: 60, sentence: 'Børnene spiller bold på plænen.' },
+        { word: 'at vinde', nutid: 'vinder', datid: 'vandt', x: 85, y: 58, sentence: 'Holdet vinder fodboldkampen!' },
+        { word: 'at tabe', nutid: 'taber', datid: 'tabte', x: 80, y: 70, sentence: 'Pigen taber bolden på græsset.' },
         { word: 'at kaste', nutid: 'kaster', datid: 'kastede', x: 86, y: 50, sentence: 'Drengen kaster en pind til sin hund.' },
         { word: 'at gribe', nutid: 'griber', datid: 'greb', x: 88, y: 55, sentence: 'Hunden griber pinden i luften.' },
-        { word: 'at smile', nutid: 'smiler', datid: 'smilede', x: 32, y: 65, sentence: 'De smiler til hinanden i forårssolen.' },
+        { word: 'at nyde', nutid: 'nyder', datid: 'nød', x: 26, y: 60, sentence: 'Gæsterne nyder den dejlige formiddag.' },
+        { word: 'at føle', nutid: 'føler', datid: 'følte', x: 48, y: 50, sentence: 'Hun føler varmen fra solen.' },
+        { word: 'at mærke', nutid: 'mærker', datid: 'mærkede', x: 46, y: 60, sentence: 'Han mærker den bløde vind.' },
         { word: 'at skinne', nutid: 'skinner', datid: 'skinnede', x: 50, y: 10, sentence: 'Solen skinner fra en skyfri himmel.' },
-        { word: 'at nyde', nutid: 'nyder', datid: 'nød', x: 26, y: 60, sentence: 'Gæsterne nyder den dejlige formiddag.' }
+        { word: 'at vokse', nutid: 'vokser', datid: 'voksede', x: 62, y: 35, sentence: 'Træerne vokser sig store og grønne.' },
+        { word: 'at leve', nutid: 'lever', datid: 'levede', x: 50, y: 25, sentence: 'Fuglene lever frit i træerne.' },
+        { word: 'at elske', nutid: 'elsker', datid: 'elskede', x: 38, y: 58, sentence: 'De elsker at gå ture i den smukke park.' },
+        { word: 'at ønske', nutid: 'ønsker', datid: 'ønskede', x: 28, y: 50, sentence: 'Hun ønsker sig en dejlig sommer.' },
+        { word: 'at prøve', nutid: 'prøver', datid: 'prøvede', x: 22, y: 72, sentence: 'Hun prøver en ny rute gennem parken.' },
+        { word: 'at opleve', nutid: 'oplever', datid: 'oplevede', x: 55, y: 45, sentence: 'De oplever den dejlige forårsdag.' },
+        { word: 'at fortælle', nutid: 'fortæller', datid: 'fortalte', x: 32, y: 62, sentence: 'Bedstefar fortæller en sjov historie på bænken.' },
+        { word: 'at tro', nutid: 'tror', datid: 'troede', x: 25, y: 55, sentence: 'Jeg tror solen skinner hele eftermiddagen.' },
+        { word: 'at kende', nutid: 'kender', datid: 'kendte', x: 42, y: 65, sentence: 'De kender hinanden rigtig godt fra kvarteret.' },
+        { word: 'at ændre', nutid: 'ændrer', datid: 'ændrede', x: 55, y: 15, sentence: 'Vejret ændrer sig hurtigt over parken.' }
     ];
 
     // ========================================================
@@ -913,35 +899,35 @@ export function renderVerberParkView(container, navigateFn) {
         },
         {
             title: "Mission 2 af 4",
-            cropX: 30,
-            cropY: 68,
-            question: "Kig på vennerne ved det lille cafébord. Hvad gør de?",
+            cropX: 78,
+            cropY: 65,
+            question: "Kig på personen i sportstøjet på stien. Hvad gør personen?",
             options: [
-                { text: "Løber stærkt gennem skoven 🏃", correct: false },
-                { text: "Sidder ved bordet og drikker kaffe ☕", correct: true },
-                { text: "Sover i deres seng 🛌", correct: false }
+                { text: "Løber hurtigt forbi bænken 🏃", correct: true },
+                { text: "Ligger og sover på jorden 😴", correct: false },
+                { text: "Kører i en rød bus 🚌", correct: false }
             ]
         },
         {
             title: "Mission 3 af 4",
-            cropX: 45,
-            cropY: 35,
-            question: "Kig på kvinden der kigger ud over søen og blomsterne. Hvad gør hun?",
+            cropX: 86,
+            cropY: 50,
+            question: "Kig på drengen og hunden i det grønne. Hvad gør drengen?",
             options: [
-                { text: "Ser de smukke blomster og udsigten 🌸", correct: true },
-                { text: "Kaster med store sten 🪨", correct: false },
-                { text: "Bygger et stort murstenshus 🏠", correct: false }
+                { text: "Kaster en pind til hunden 🤾", correct: true },
+                { text: "Skriver med en kuglepen ✍️", correct: false },
+                { text: "Vasker vinduer med sæbe 🧽", correct: false }
             ]
         },
         {
             title: "Mission 4 af 4",
-            cropX: 40,
-            cropY: 75,
-            question: "Kig på personen på cykelstien. Hvad gør personen?",
+            cropX: 32,
+            cropY: 62,
+            question: "Kig på den ældre mand på bænken. Hvad gør han?",
             options: [
-                { text: "Læser en tyk bog i sengen 📖", correct: false },
-                { text: "Cykler ad grusstien i parken 🚲", correct: true },
-                { text: "Lukker vinduet på kontoret 🚪", correct: false }
+                { text: "Fortæller en historie til barnet 💬", correct: true },
+                { text: "Svømmer i det kolde vand 🏊", correct: false },
+                { text: "Taler i mikrofon på scenen 🎤", correct: false }
             ]
         }
     ];
@@ -1029,21 +1015,21 @@ export function renderVerberParkView(container, navigateFn) {
 
     const parkContextTasks = [
         {
-            title: "Opgave 1 af 3: Ved cafébordet i parken",
-            prompt: "Find 3 handlinger, man kan gøre ved bordet på caféen:",
+            title: "Opgave 1 af 3: Sanser og oplevelser i parken",
+            prompt: "Find 3 handlinger, der udtrykker sanser og følelser i naturen:",
             targetCount: 3,
             options: [
-                { text: "at spise 🍽️", correct: true },
-                { text: "at køre tog 🚆", correct: false },
-                { text: "at drikke ☕", correct: true },
-                { text: "at male væg 🎨", correct: false },
                 { text: "at nyde ☀️", correct: true },
-                { text: "at reparere bil 🚗", correct: false }
+                { text: "at betale penge 💳", correct: false },
+                { text: "at føle ❤️", correct: true },
+                { text: "at lukke dør 🚪", correct: false },
+                { text: "at mærke 🌬️", correct: true },
+                { text: "at købe billet 🎫", correct: false }
             ]
         },
         {
-            title: "Opgave 2 af 3: Boldspil og aktivitet på græsset",
-            prompt: "Find 3 handlinger, man kan gøre ved boldspil i parken:",
+            title: "Opgave 2 af 3: Sport og bevægelse på plænen",
+            prompt: "Find 3 handlinger, man gør under boldspil og sport i parken:",
             targetCount: 3,
             options: [
                 { text: "at sove 🛌", correct: false },
@@ -1051,20 +1037,20 @@ export function renderVerberParkView(container, navigateFn) {
                 { text: "at løbe 🏃", correct: true },
                 { text: "at skrive lektier ✍️", correct: false },
                 { text: "at vinde 🏆", correct: true },
-                { text: "at vaske gulv 🧽", correct: false }
+                { text: "at vaske op 🍽️", correct: false }
             ]
         },
         {
-            title: "Opgave 3 af 3: Sanser og oplevelser i naturen",
-            prompt: "Find 3 handlinger, der har med sanser og følelser at gøre:",
+            title: "Opgave 3 af 3: Leg med bold og hund",
+            prompt: "Find 3 handlinger, man gør når man kaster og leger i parken:",
             targetCount: 3,
             options: [
-                { text: "at se 👀", correct: true },
-                { text: "at betale penge 💳", correct: false },
-                { text: "at føle ❤️", correct: true },
-                { text: "at lukke dør 🚪", correct: false },
-                { text: "at mærke 🌬️", correct: true },
-                { text: "at købe billet 🎫", correct: false }
+                { text: "at kaste 🤾", correct: true },
+                { text: "at gribe 🐕", correct: true },
+                { text: "at tabe ❌", correct: true },
+                { text: "at køre tog 🚆", correct: false },
+                { text: "at taste kode 💻", correct: false },
+                { text: "at reparere cykel 🔧", correct: false }
             ]
         }
     ];
@@ -1160,117 +1146,117 @@ export function renderVerberParkView(container, navigateFn) {
 
     const parkStories = [
         {
-            title: "1. En eftermiddag i caféen",
-            steps: [
-                {
-                    q: "1. Hvad gør vennerne ved caféen?",
-                    options: [
-                        { text: "De møder hinanden med et kram 🫂", correct: true },
-                        { text: "De kaster kaffe på jorden ☕", correct: false },
-                        { text: "De sover under bordet 😴", correct: false }
-                    ]
-                },
-                {
-                    q: "2. Hvor sætter de sig hen?",
-                    options: [
-                        { text: "De sidder ved bordet i solen ☀️", correct: true },
-                        { text: "De svømmer i søen 🏊", correct: false },
-                        { text: "De klatrer op i et træ 🌳", correct: false }
-                    ]
-                },
-                {
-                    q: "3. Hvad gør de sammen?",
-                    options: [
-                        { text: "De drikker kaffe og smiler 😊", correct: true },
-                        { text: "De råber af hinanden 😡", correct: false },
-                        { text: "De løber væk i panik 🏃", correct: false }
-                    ]
-                }
-            ]
-        },
-        {
-            title: "2. Boldspil i parken",
+            title: "1. Boldspil i parken",
             steps: [
                 {
                     q: "1. Hvad laver børnene på græsplænen?",
                     options: [
                         { text: "De spiller bold sammen ⚽", correct: true },
                         { text: "De maler græsset blåt 🎨", correct: false },
-                        { text: "De læser lektier i stilhed 📖", correct: false }
+                        { text: "De sover under bordet 😴", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad sker der under spillet?",
+                    q: "2. Hvad gør Peter med bolden?",
                     options: [
-                        { text: "Peter taber bolden på stien ⚽", correct: true },
+                        { text: "Han kaster bolden til sin ven 🤾", correct: true },
+                        { text: "Han svømmer i søen 🏊", correct: false },
+                        { text: "Han klatrer op i et træ 🌳", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad sker der i kampen til sidst?",
+                    options: [
+                        { text: "Vores hold vinder kampen 🏆", correct: true },
                         { text: "Bolden forvandler sig til en fugl 🐦", correct: false },
-                        { text: "Solen forsvinder i jorden 🕳️", correct: false }
-                    ]
-                },
-                {
-                    q: "3. Hvad gør hans gode ven?",
-                    options: [
-                        { text: "Hans ven finder bolden og slår til den 👟", correct: true },
-                        { text: "Hans ven græder og går hjem 😢", correct: false },
-                        { text: "Hans ven kaster sine sko væk 👟", correct: false }
+                        { text: "De løber væk i panik 🏃", correct: false }
                     ]
                 }
             ]
         },
         {
-            title: "3. En tur i solen",
+            title: "2. Hunden henter pinden",
             steps: [
                 {
-                    q: "1. Hvad gør familien på en dejlig søndag?",
+                    q: "1. Hvad kaster drengen hen ad stien?",
                     options: [
-                        { text: "De går en tur i den grønne park 🌳", correct: true },
-                        { text: "De vasker deres bil 🚗", correct: false },
-                        { text: "De sover hele dagen 🛌", correct: false }
+                        { text: "Han kaster en lille pind 🤾", correct: true },
+                        { text: "Han kaster sine sko væk 👟", correct: false },
+                        { text: "Han kaster en bog i søen 📖", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad ser de oppe i luften?",
+                    q: "2. Hvad gør hunden i luften?",
                     options: [
-                        { text: "De ser de smukke fugle i træerne 🐦", correct: true },
+                        { text: "Hunden griber pinden med munden 🐕", correct: true },
+                        { text: "Hunden læser en avis 📰", correct: false },
+                        { text: "Hunden kører i bil 🚗", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør han over for sin hund bagefter?",
+                    options: [
+                        { text: "Han roser og elsker sin hund ❤️", correct: true },
+                        { text: "Han græder og går hjem 😢", correct: false },
+                        { text: "Han gemmer sig i en busk 🌳", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "3. En forårsdag i parken",
+            steps: [
+                {
+                    q: "1. Hvordan er vejret på himlen?",
+                    options: [
+                        { text: "Solen skinner fra en skyfri himmel ☀️", correct: true },
+                        { text: "Det sner voldsomt ❄️", correct: false },
+                        { text: "Månen falder ned 🌙", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad kan de besøgende mærke?",
+                    options: [
+                        { text: "De mærker den milde forårsvind 🌬️", correct: true },
                         { text: "De ser et spøgelse 👻", correct: false },
-                        { text: "De ser en ubåd 🚢", correct: false }
+                        { text: "De ser en ubåd i græsset 🚢", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvad køber de ved kiosken?",
+                    q: "3. Hvad gør folk i det grønne?",
                     options: [
-                        { text: "De spiser en lækker is sammen 🍦", correct: true },
-                        { text: "De spiser en kuffert 🧳", correct: false },
-                        { text: "De smider pengene i søen 🪙", correct: false }
+                        { text: "De nyder den dejlige dag 🌿", correct: true },
+                        { text: "De sover hele dagen i en seng 🛌", correct: false },
+                        { text: "De smider deres penge væk 🪙", correct: false }
                     ]
                 }
             ]
         },
         {
-            title: "4. En lille ulykke",
+            title: "4. En fortælling på bænken",
             steps: [
                 {
-                    q: "1. Hvad gør den lille dreng på stien?",
+                    q: "1. Hvad gør den gamle bedstefar på bænken?",
                     options: [
-                        { text: "Han løber hurtigt og falder 🏃", correct: true },
-                        { text: "Han sidder helt stille 🪑", correct: false },
-                        { text: "Han sover i en vogn 🛌", correct: false }
+                        { text: "Han fortæller en spændende historie 👴", correct: true },
+                        { text: "Han hopper op og ned på bænken 🦘", correct: false },
+                        { text: "Han sover i en barnevogn 👶", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad gør han da han slår sit knæ?",
+                    q: "2. Hvad gør børnene imens?",
                     options: [
-                        { text: "Han græder fordi det gør ondt 😭", correct: true },
-                        { text: "Han griner højt og hopper 🦘", correct: false },
-                        { text: "Han synger en sang 🎵", correct: false }
+                        { text: "De lytter og oplever historien ✨", correct: true },
+                        { text: "De råber og skriger højt 📢", correct: false },
+                        { text: "De kaster deres jakker i søen 🧥", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvad gør hans storesøster med det samme?",
+                    q: "3. Hvad ønsker de sig, da historien er slut?",
                     options: [
-                        { text: "Hun hjælper ham op og trøster ham 🤗", correct: true },
-                        { text: "Hun løber sin vej 🏃", correct: false },
-                        { text: "Hun tager hans sko af 👟", correct: false }
+                        { text: "De ønsker at høre mere 💭", correct: true },
+                        { text: "De løber deres vej i vrede 🏃", correct: false },
+                        { text: "De taber deres tasker 🎒", correct: false }
                     ]
                 }
             ]
@@ -1404,30 +1390,30 @@ export function renderVerberParkView(container, navigateFn) {
     const parkSynonymTasks = [
         {
             type: 'synonym',
-            word: 'at se',
+            word: 'at føle',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at kigge 👀', correct: true },
+                { text: 'at mærke 🌬️', correct: true },
                 { text: 'at høre 👂', correct: false },
                 { text: 'at smage 👅', correct: false }
             ]
         },
         {
             type: 'synonym',
-            word: 'at smile',
+            word: 'at prøve',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at grine 😊', correct: true },
+                { text: 'at forsøge 🎯', correct: true },
                 { text: 'at råbe 🗣️', correct: false },
                 { text: 'at sove 😴', correct: false }
             ]
         },
         {
             type: 'antonym',
-            word: 'at grine / smile',
+            word: 'at elske',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at græde 😢', correct: true },
+                { text: 'at hade 💔', correct: true },
                 { text: 'at synge 🎵', correct: false },
                 { text: 'at spise 🍽️', correct: false }
             ]
@@ -1444,20 +1430,20 @@ export function renderVerberParkView(container, navigateFn) {
         },
         {
             type: 'antonym',
-            word: 'at finde',
-            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            word: 'at kaste',
+            prompt: 'Hvilket verbum er et antonym / modstykke til:',
             options: [
-                { text: 'at miste 🔍', correct: true },
+                { text: 'at gribe 🤲', correct: true },
                 { text: 'at gemme 📦', correct: false },
                 { text: 'at se 👀', correct: false }
             ]
         },
         {
             type: 'antonym',
-            word: 'at sove',
+            word: 'at leve',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at vågne ⏰', correct: true },
+                { text: 'at dø 🥀', correct: true },
                 { text: 'at hvile sig 🛋️', correct: false },
                 { text: 'at ligge ned 🛏️', correct: false }
             ]
@@ -1546,11 +1532,11 @@ export function renderVerberParkView(container, navigateFn) {
 
     const parkSentenceTasks = [
         {
-            subjekt: "Vennerne",
-            correctVerb: "sidder",
+            subjekt: "Gæsterne",
+            correctVerb: "nyder",
             wrongVerbs: ["cykler", "læser"],
-            objekt: "ved cafébordet",
-            adverbial: "i solen"
+            objekt: "den dejlige sol",
+            adverbial: "i parken"
         },
         {
             subjekt: "Børnene",
@@ -1560,25 +1546,25 @@ export function renderVerberParkView(container, navigateFn) {
             adverbial: "på plænen"
         },
         {
-            subjekt: "Manden",
-            correctVerb: "spiser",
+            subjekt: "Løberen",
+            correctVerb: "løber",
             wrongVerbs: ["sover", "svømmer"],
-            objekt: "en sandwich",
-            adverbial: "på bænken"
+            objekt: "en lang tur",
+            adverbial: "på grusstien"
         },
         {
-            subjekt: "Hunden",
-            correctVerb: "sover",
+            subjekt: "Drengen",
+            correctVerb: "kaster",
             wrongVerbs: ["flyver", "kører"],
-            objekt: "i skyggen",
-            adverbial: "under træet"
+            objekt: "en pind",
+            adverbial: "til hunden"
         },
         {
-            subjekt: "Pigen",
-            correctVerb: "smiler",
-            wrongVerbs: ["kaster", "steger"],
-            objekt: "til sin ven",
-            adverbial: "i parken"
+            subjekt: "Bedstefar",
+            correctVerb: "fortæller",
+            wrongVerbs: ["steger", "vasker"],
+            objekt: "en sjov historie",
+            adverbial: "på bænken"
         }
     ];
 
@@ -1696,13 +1682,13 @@ export function renderVerberParkView(container, navigateFn) {
             marker: "I går aftes",
             hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I går aftes",
-            sentenceAfter: "vennerne længe ved cafébordet i haven.",
-            baseVerb: "at sidde",
+            sentenceAfter: "vi en fantastisk solnedgang over søen.",
+            baseVerb: "at opleve",
             options: [
-                { text: "sad", form: "Datid", correct: true },
-                { text: "sidder", form: "Nutid", correct: false }
+                { text: "oplevede", form: "Datid", correct: true },
+                { text: "oplever", form: "Nutid", correct: false }
             ],
-            explanation: '"I går aftes" viser, at handlingen skete i fortiden, så verbet skal stå i datid (sad).'
+            explanation: '"I går aftes" viser, at handlingen skete i fortiden, så verbet skal stå i datid (oplevede).'
         },
         {
             marker: "Lige nu",
@@ -1732,7 +1718,7 @@ export function renderVerberParkView(container, navigateFn) {
             marker: "Hver eftermiddag",
             hint: "peger på en vane / nutid ➔ Nutid",
             sentenceBefore: "Hver eftermiddag",
-            sentenceAfter: "gæsterne en kop varm te på terrassen.",
+            sentenceAfter: "gæsterne den friske luft på terrassen.",
             baseVerb: "at nyde",
             options: [
                 { text: "nyder", form: "Nutid", correct: true },
@@ -1756,13 +1742,13 @@ export function renderVerberParkView(container, navigateFn) {
             marker: "I dag",
             hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dag",
-            sentenceAfter: "børnene hurtigt rundt ad grusstierne.",
-            baseVerb: "at cykle",
+            sentenceAfter: "motionisterne hurtigt rundt ad grusstierne.",
+            baseVerb: "at løbe",
             options: [
-                { text: "cykler", form: "Nutid", correct: true },
-                { text: "cyklede", form: "Datid", correct: false }
+                { text: "løber", form: "Nutid", correct: true },
+                { text: "løb", form: "Datid", correct: false }
             ],
-            explanation: '"I dag" angiver nutid, så verbet skal stå i nutid (cykler).'
+            explanation: '"I dag" angiver nutid, så verbet skal stå i nutid (løber).'
         }
     ];
 

@@ -35,7 +35,7 @@ export function renderHistorierMenuView(container, navigateFn) {
         {
             icon: '💼',
             title: 'Tilbage på job efter sygdom',
-            desc: 'Interaktiv arbejdssamtale i 9 replikskifter (DU3 Modul 3). Byg dine replikker og træn udtale og lenisering af D, R og G.',
+            desc: 'Realistisk arbejdssamtale i 9 replikskifter (DU3 Modul 1-2). Byg dine replikker og træn udtale og lenisering af D, R og G.',
             action: () => navigateFn('interactive_story')
         }
     ];

@@ -57,7 +57,7 @@ export function renderInteractiveStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Interaktiv samtale i 9 replikskifter (DU3 Modul 3) • Træning i udtale og lenisering af D, R og G';
+    subTitle.textContent = 'Realistisk samtale på arbejdspladsen i 9 replikskifter (DU3 Modul 1-2) • Træning i udtale og lenisering af D, R og G';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -77,27 +77,27 @@ export function renderInteractiveStoryView(container, navigateFn) {
             // --- NARRATIVE INTRO ---
             { 
                 type: 'narrative', 
-                text: '📍 Scene: Mandag morgen på kontoret. Du har været sygemeldt i en uge med influenza og rygsmerter. Din afdelingsleder, Lene, møder dig ved kaffemaskinen.' 
+                text: '📍 Scene: Mandag morgen ved kaffemaskinen på kontoret. Du er tilbage på arbejde efter at have været syg i en uge. Din afdelingsleder, Lene, møder dig.' 
             },
 
             // --- REPLIKSKIFTE 1 ---
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: `Godmorgen ${uName}! Hvor er det dejligt at se dig igen ved kaffemaskinen.` 
+                text: `Godmorgen ${uName}! Hvor er det dejligt at se dig igen.` 
             },
             { 
                 type: 'user_action',
                 stepNum: 1,
-                trps: 'Hils på Lene og sig, at du er glad for at være tilbage.',
-                fonetikTip: 'Hårdt g i "Godmorgen" • Blødt d i "glad" • Vokalisk r i "være"',
+                trps: 'Hils på Lene og sig, at du er glad for at være her.',
+                fonetikTip: 'Hårdt g i "Godmorgen" • Blødt d i "glad" • Vokalisk r i "være" og "her"',
                 construction: {
                     type: 'OP',
-                    words: ['Godmorgen', 'Lene,', 'jeg', 'er', 'glad', 'for', 'at', 'være', 'tilbage.']
+                    words: ['Godmorgen', 'Lene.', 'Jeg', 'er', 'glad', 'for', 'at', 'være', 'her.']
                 },
                 pronunciation: {
-                    target: 'Godmorgen Lene, jeg er glad for at være tilbage.',
-                    focus: ['godmorgen', 'glad', 'være']
+                    target: 'Godmorgen Lene. Jeg er glad for at være her.',
+                    focus: ['godmorgen', 'glad', 'være', 'her']
                 }
             },
 
@@ -105,20 +105,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Selv tak! Hvordan har du det egentlig i dag? Er du helt ovenpå igen?' 
+                text: 'Hvordan har du det? Vil du have en kop varm kaffe?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 2,
-                trps: 'Svar, at det går rigtig godt, og at du er helt rask nu.',
-                fonetikTip: 'Hårdt d i "Det" • Hårdt g i "går" & "godt" • Hårdt r i "rask" • G som j-lyd i "rigtig"',
+                trps: 'Sig tak, at det går godt, men at du drikker koldt vand.',
+                fonetikTip: 'Hårdt d i "Det" • Hårdt g i "godt" • Hårdt r i "drikker" • Stumt d i "koldt" (-ld) og "vand" (-nd)',
                 construction: {
                     type: 'OP',
-                    words: ['Det', 'går', 'rigtig', 'godt,', 'og', 'jeg', 'er', 'helt', 'rask', 'nu.']
+                    words: ['Det', 'går', 'godt,', 'men', 'jeg', 'drikker', 'koldt', 'vand.']
                 },
                 pronunciation: {
-                    target: 'Det går rigtig godt, og jeg er helt rask nu.',
-                    focus: ['det', 'går', 'rigtig', 'godt', 'rask']
+                    target: 'Det går godt, men jeg drikker koldt vand.',
+                    focus: ['det', 'går', 'godt', 'drikker', 'koldt', 'vand']
                 }
             },
 
@@ -126,20 +126,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Hvor dejligt at høre! Men husk nu at passe på dig selv. Hvad sagde lægen i fredags?' 
+                text: 'Helt i orden. Er du helt frisk og rask nu?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 3,
-                trps: 'Fortæl, hvad lægen sagde, at du skal gøre i et par dage.',
-                fonetikTip: 'Stumt g i "Lægen", "tage" & "dage" • Hårdt r i "roligt" • Hårdt d i "dage"',
+                trps: 'Svar, at du er helt rask og frisk nu.',
+                fonetikTip: 'Hårdt r i "rask" • Vokalisk r i "er"',
                 construction: {
                     type: 'OP',
-                    words: ['Lægen', 'sagde,', 'at', 'jeg', 'skal', 'tage', 'det', 'roligt', 'i', 'to', 'dage.']
+                    words: ['Ja,', 'jeg', 'er', 'helt', 'rask', 'og', 'frisk', 'nu.']
                 },
                 pronunciation: {
-                    target: 'Lægen sagde, at jeg skal tage det roligt i to dage.',
-                    focus: ['lægen', 'tage', 'roligt', 'dage']
+                    target: 'Ja, jeg er helt rask og frisk nu.',
+                    focus: ['rask', 'frisk']
                 }
             },
 
@@ -147,20 +147,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Det skal du helt sikkert lytte til. Gik du også en lille tur i weekenden for at få frisk luft?' 
+                text: 'Hvor godt at høre! Hvad sagde lægen til dig i fredags?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 4,
-                trps: 'Sig, at du gik en lang tur, og at det hjalp meget.',
-                fonetikTip: 'Hårdt g i "gik" • G som ng-lyd i "lang" • G som j-lyd i "meget"',
+                trps: 'Fortæl, hvad lægen sagde (rolige dage).',
+                fonetikTip: 'Stumt g i "Lægen", "tag" og "dage" • Hårdt r i "rolige" • Hårdt d i "dage"',
                 construction: {
                     type: 'OP',
-                    words: ['Ja,', 'jeg', 'gik', 'en', 'lang', 'tur,', 'og', 'det', 'hjalp', 'meget.']
+                    words: ['Lægen', 'sagde:', 'tag', 'to', 'rolige', 'dage.']
                 },
                 pronunciation: {
-                    target: 'Ja, jeg gik en lang tur, og det hjalp meget.',
-                    focus: ['gik', 'lang', 'meget']
+                    target: 'Lægen sagde: tag to rolige dage.',
+                    focus: ['lægen', 'tag', 'rolige', 'dage']
                 }
             },
 
@@ -168,20 +168,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Frisk luft er altid godt for kroppen. Hvad tænker du om arbejdet i dag?' 
+                text: 'Det er fornuftigt. Gik du en tur i weekenden for at få luft?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 5,
-                trps: 'Sig, at du gerne vil sidde ved dit bord med koldt vand.',
-                fonetikTip: 'Blødt d i "sidde" • Stumt d i "bord" (-rd) og "koldt" (-ld)',
+                trps: 'Sig, at du gik en lang tur i går.',
+                fonetikTip: 'Hårdt g i "gik" • G som ng-lyd i "lang" • Vokalisk r i "går"',
                 construction: {
                     type: 'OP',
-                    words: ['Jeg', 'vil', 'gerne', 'sidde', 'ved', 'mit', 'bord', 'med', 'koldt', 'vand.']
+                    words: ['Ja,', 'jeg', 'gik', 'en', 'lang', 'tur', 'i', 'går.']
                 },
                 pronunciation: {
-                    target: 'Jeg vil gerne sidde ved mit bord med koldt vand.',
-                    focus: ['sidde', 'bord', 'koldt']
+                    target: 'Ja, jeg gik en lang tur i går.',
+                    focus: ['gik', 'lang', 'tur', 'går']
                 }
             },
 
@@ -189,20 +189,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Det er en god og rolig start. Tror du, du kan kigge på den nye rapport, vi talte om?' 
+                text: 'Var det koldt udenfor? Regnede det meget i går?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 6,
-                trps: 'Svar, at du regner med at finde fejlene i rapporten.',
-                fonetikTip: 'G som j-lyd i "regner" • Stumt d i "finde" (-nd) • Hårdt r i "rapporten"',
+                trps: 'Sig, at det regnede rigtig meget her.',
+                fonetikTip: 'G som j-lyd i "regnede", "rigtig" og "meget" • Hårdt r i "rigtig"',
                 construction: {
                     type: 'OP',
-                    words: ['Ja,', 'jeg', 'regner', 'med', 'at', 'finde', 'fejlene', 'i', 'rapporten.']
+                    words: ['Ja,', 'det', 'regnede', 'rigtig', 'meget', 'her.']
                 },
                 pronunciation: {
-                    target: 'Ja, jeg regner med at finde fejlene i rapporten.',
-                    focus: ['regner', 'finde', 'rapporten']
+                    target: 'Ja, det regnede rigtig meget her.',
+                    focus: ['regnede', 'rigtig', 'meget']
                 }
             },
 
@@ -210,20 +210,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Super. Skal jeg forklare de nye retningslinjer, eller vil du hellere læse dem selv?' 
+                text: 'Typisk dansk vejr! Vil du sidde ved dit skrivebord nu?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 7,
-                trps: 'Sig, at du har brug for at læse om det i en bog.',
-                fonetikTip: 'G som w-lyd i "brug" og "bog" (efter bagtungevokalerne u og o)',
+                trps: 'Sig, at du gerne vil sidde ved dit bord.',
+                fonetikTip: 'Hårdt g i "gerne" • Blødt d i "sidde" • Stumt d i "bord" (-rd)',
                 construction: {
                     type: 'OP',
-                    words: ['Jeg', 'har', 'brug', 'for', 'at', 'læse', 'om', 'det', 'i', 'en', 'bog.']
+                    words: ['Ja,', 'jeg', 'vil', 'gerne', 'sidde', 'ved', 'mit', 'bord.']
                 },
                 pronunciation: {
-                    target: 'Jeg har brug for at læse om det i en bog.',
-                    focus: ['brug', 'bog']
+                    target: 'Ja, jeg vil gerne sidde ved mit bord.',
+                    focus: ['gerne', 'sidde', 'bord']
                 }
             },
 
@@ -231,20 +231,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Selvfølgelig! Husk, at vi også har et kort afdelingsmøde klokken 13.' 
+                text: 'Fint. Du kan kigge i den nye personalehåndbog her.' 
             },
             { 
                 type: 'user_action',
                 stepNum: 8,
-                trps: 'Sig, at der er mange vigtige ting, I skal dele på mødet.',
-                fonetikTip: 'G som ng-lyd i "mange" & "ting" • G som j-lyd i "vigtige" • Blødt d i "mødet" • Hårdt d i "dele"',
+                trps: 'Sig tak, og at du har brug for den bog.',
+                fonetikTip: 'G som w-lyd i "brug" og "bog" (efter bagtungevokalerne u og o)',
                 construction: {
                     type: 'OP',
-                    words: ['Der', 'er', 'mange', 'vigtige', 'ting,', 'vi', 'skal', 'dele', 'på', 'mødet.']
+                    words: ['Tak,', 'jeg', 'har', 'brug', 'for', 'den', 'bog.']
                 },
                 pronunciation: {
-                    target: 'Der er mange vigtige ting, vi skal dele på mødet.',
-                    focus: ['mange', 'vigtige', 'ting', 'dele', 'mødet']
+                    target: 'Tak, jeg har brug for den bog.',
+                    focus: ['brug', 'bog']
                 }
             },
 
@@ -252,20 +252,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Lige præcis. Og husk, at du har lov til at gå tidligt hjem, hvis du bliver træt.' 
+                text: 'Tag det roligt. Husk at gå tidligt hjem, hvis du bliver træt!' 
             },
             { 
                 type: 'user_action',
                 stepNum: 9,
-                trps: 'Sig tak og fortæl, at du kun bliver her til middag i dag.',
-                fonetikTip: 'Vokalisk r i "bliver" & "her" • Blødt d i "middag" • Hårdt d i "dag"',
+                trps: 'Sig mange tak, og at du kun arbejder til middag i dag.',
+                fonetikTip: 'G som ng-lyd i "Mange" • Vokalisk r i "arbejder" • Blødt d i "middag" • Hårdt d i "dag"',
                 construction: {
                     type: 'OP',
-                    words: ['Mange', 'tak,', 'så', 'jeg', 'bliver', 'her', 'kun', 'til', 'middag', 'i', 'dag.']
+                    words: ['Mange', 'tak,', 'jeg', 'arbejder', 'kun', 'til', 'middag', 'i', 'dag.']
                 },
                 pronunciation: {
-                    target: 'Mange tak, så jeg bliver her kun til middag i dag.',
-                    focus: ['bliver', 'her', 'middag', 'dag']
+                    target: 'Mange tak, jeg arbejder kun til middag i dag.',
+                    focus: ['mange', 'arbejder', 'middag', 'dag']
                 }
             },
 
@@ -273,11 +273,11 @@ export function renderInteractiveStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Det er en helt perfekt aftale. Rigtig god arbejdslyst, og pas godt på dig selv!' 
+                text: 'Det er en perfekt aftale. Rigtig god arbejdslyst, og pas godt på dig selv!' 
             },
             { 
                 type: 'narrative', 
-                text: '🏆 Flot klaret! Du har gennemført samtalen på 9 replikskifter og mestret lenisering og udtale af D, R og G på DU3 Modul 3!' 
+                text: '🏆 Flot klaret! Du har gennemført den realistiske arbejdssamtale i 9 replikskifter og mestret lenisering og udtale af D, R og G!' 
             }
         ];
     }
@@ -300,11 +300,11 @@ export function renderInteractiveStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Velkommen til Arbejdssamtalen';
+        h1.textContent = 'Velkommen til Samtalen på jobbet';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Du er tilbage på job efter en uges sygemelding. Gennemspil dialogen med din leder Lene i 9 replikskifter: Byg sætningerne og træn leniseringen af D, R og G.';
+        p.textContent = 'Du er tilbage på job efter en uges sygemelding. Gennemspil dialogen med din leder Lene i 9 korte replikskifter (DU3 Modul 1-2): Byg sætningerne og træn leniseringen af D, R og G.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';
@@ -437,7 +437,6 @@ export function renderInteractiveStoryView(container, navigateFn) {
         const targetWords = step.construction.words;
         
         if (!appState.shuffledWords) {
-            // Shuffle ensuring different order from original
             let shuffled = [...targetWords].sort(() => Math.random() - 0.5);
             if (shuffled.join(' ') === targetWords.join(' ') && targetWords.length > 1) {
                 shuffled.reverse();
@@ -586,7 +585,7 @@ export function renderInteractiveStoryView(container, navigateFn) {
         const targetWords = step.pronunciation.target.split(' ');
         
         sentenceDisplay.innerHTML = targetWords.map(w => {
-            const clean = w.toLowerCase().replace(/[.,!?]/g, '');
+            const clean = w.toLowerCase().replace(/[.,!?:]/g, '');
             const isFocus = step.pronunciation.focus.some(f => clean.includes(f.toLowerCase()));
             return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}" title="${isFocus ? 'Fokusord for udtale' : ''}">${w}</span>`;
         }).join(' ');
@@ -728,10 +727,9 @@ export function renderInteractiveStoryView(container, navigateFn) {
             };
 
             function evaluatePronunciation(spoken) {
-                const spokenArr = spoken.toLowerCase().replace(/[.,!?]/g, '').split(/\s+/).filter(w => w);
+                const spokenArr = spoken.toLowerCase().replace(/[.,!?:;]/g, '').split(/\s+/).filter(w => w);
                 let correctCount = 0;
                 
-                // Focus items
                 const focusWords = step.pronunciation.focus.map(f => f.toLowerCase());
                 const totalReq = focusWords.length > 0 ? focusWords.length : targetWords.length;
                 
@@ -739,7 +737,7 @@ export function renderInteractiveStoryView(container, navigateFn) {
                 const spans = sentenceDisplay.querySelectorAll('.udtale-word');
 
                 targetWords.forEach((word, idx) => {
-                    const clean = word.toLowerCase().replace(/[.,!?]/g, '');
+                    const clean = word.toLowerCase().replace(/[.,!?:;]/g, '');
                     const isFocus = focusWords.some(f => clean.includes(f));
                     
                     let found = false;

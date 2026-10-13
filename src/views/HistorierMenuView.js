@@ -33,9 +33,9 @@ export function renderHistorierMenuView(container, navigateFn) {
             action: () => navigateFn('branching_story', { storyId: 'anna_rat' })
         },
         {
-            icon: '📖',
-            title: 'Din dagligdag',
-            desc: 'Gennemspil hverdags-situationer, byg sætningerne selv, og øv udtalen.',
+            icon: '💼',
+            title: 'Tilbage på job efter sygdom',
+            desc: 'Interaktiv arbejdssamtale i 9 replikskifter (DU3 Modul 3). Byg dine replikker og træn udtale og lenisering af D, R og G.',
             action: () => navigateFn('interactive_story')
         }
     ];

@@ -5,6 +5,16 @@ export function renderInteractiveStoryView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container story-view-container';
 
+    function speakDanish(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'da-DK';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
     // Top bar
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
@@ -19,22 +29,42 @@ export function renderInteractiveStoryView(container, navigateFn) {
     resetBtn.style.color = '#ff5e5b';
     resetBtn.innerHTML = `↻ Start forfra`;
     resetBtn.onclick = () => {
-        if(confirm('Er du sikker på, at du vil starte historien forfra?')) {
-            localStorage.removeItem('story_progress');
+        if (confirm('Er du sikker på, at du vil starte samtalen forfra?')) {
+            localStorage.removeItem('story_job_progress');
             currentStepIndex = 0;
             appState.currentPhase = 'trps';
+            appState.shuffledWords = null;
+            appState.selectedWords = [];
             renderStory();
         }
     };
-    resetBtn.style.display = 'none'; // Hidden on start screen
+    resetBtn.style.display = 'none';
     topBar.appendChild(resetBtn);
 
     viewContainer.appendChild(topBar);
 
+    // Title & subtitle header
+    const headerDiv = document.createElement('div');
+    headerDiv.style.textAlign = 'center';
+    headerDiv.style.marginBottom = '1.5rem';
+
+    const mainTitle = document.createElement('h1');
+    mainTitle.textContent = '💼 Tilbage på job efter sygdom';
+    mainTitle.style.marginBottom = '0.4rem';
+    headerDiv.appendChild(mainTitle);
+
+    const subTitle = document.createElement('p');
+    subTitle.className = 'subtitle';
+    subTitle.style.margin = '0 auto';
+    subTitle.style.maxWidth = '700px';
+    subTitle.textContent = 'Interaktiv samtale i 9 replikskifter (DU3 Modul 3) • Træning i udtale og lenisering af D, R og G';
+    headerDiv.appendChild(subTitle);
+
+    viewContainer.appendChild(headerDiv);
+
     let userName = localStorage.getItem('story_username') || '';
-    let currentStepIndex = parseInt(localStorage.getItem('story_progress') || '0', 10);
+    let currentStepIndex = parseInt(localStorage.getItem('story_job_progress') || '0', 10);
     
-    // Will be populated after name is known
     let storyData = [];
 
     const contentArea = document.createElement('div');
@@ -42,180 +72,222 @@ export function renderInteractiveStoryView(container, navigateFn) {
     viewContainer.appendChild(contentArea);
 
     function initStoryData() {
+        const uName = userName || 'kursist';
         storyData = [
-            // --- SCENE 1 ---
-            { type: 'narrative', text: '📍 Scene 1: Sprogskolen. Et lyst klasselokale. Du sidder ved et bord. Mateo, en ny kursist, sætter sig ved siden af dig.' },
-            { type: 'user_action', 
-              trps: 'Præsenter dig selv og spørg, hvad han hedder.', 
-              construction: {
-                type: 'OP', 
-                words: ['Hej,', 'jeg', 'hedder', `${userName}.`, 'Hvad', 'hedder', 'du?']
-              },
-              pronunciation: {
-                target: `Hej, jeg hedder ${userName}. Hvad hedder du?`,
-                focus: ['hedder']
-              }
+            // --- NARRATIVE INTRO ---
+            { 
+                type: 'narrative', 
+                text: '📍 Scene: Mandag morgen på kontoret. Du har været sygemeldt i en uge med influenza og rygsmerter. Din afdelingsleder, Lene, møder dig ved kaffemaskinen.' 
             },
-            { type: 'npc', name: 'Mateo', text: `Hej ${userName}. Jeg hedder Mateo. Jeg er ny her på holdet.` },
-            { type: 'user_action',
-              trps: 'Byd ham velkommen og spørg, hvor han kommer fra.',
-              construction: {
-                type: 'OP',
-                words: ['Velkommen', 'til!', 'Hvor', 'kommer', 'du', 'fra?']
-              },
-              pronunciation: {
-                target: 'Velkommen til! Hvor kommer du fra?',
-                focus: [] // full sentence
-              }
-            },
-            { type: 'npc', name: 'Mateo', text: 'Jeg kommer fra Spanien. Og hvad med dig? Hvor kommer du fra?' },
-            { type: 'user_action',
-              trps: 'Fortæl ham, hvilket land du kommer fra.',
-              construction: {
-                type: 'OP',
-                words: ['Jeg', 'kommer', 'fra', '[dit land]']
-              },
-              pronunciation: {
-                target: 'Jeg kommer fra [dit land]',
-                focus: ['kommer', 'fra']
-              }
-            },
-            { type: 'user_action',
-              trps: 'Spørg hvor længe han har boet her i Danmark.',
-              construction: {
-                type: 'OP',
-                words: ['Hvor', 'længe', 'har', 'du', 'boet', 'her', 'i', 'Danmark?']
-              },
-              pronunciation: {
-                target: 'Hvor længe har du boet her i Danmark?',
-                focus: []
-              }
-            },
-            { type: 'npc', name: 'Mateo', text: 'Jeg har boet her i syv måneder.' },
 
-            // --- SCENE 2 ---
-            { type: 'narrative', text: '📍 Scene 2: Grønthandleren. Du er hos den lokale grønthandler for at købe ind.' },
-            { type: 'user_action',
-              trps: 'Du vil gerne vide, hvor tomaterne er. Hvordan spørger du?',
-              construction: {
-                type: 'MO',
-                text: 'Hej. Undskyld, hvor er [blank_0]?',
-                blanks: [
-                    { 
-                        answer: 'tomaterne', 
-                        options: ['tomater', 'tomaterne', 'tomat'],
-                        feedback: 'Husk at bruge <b>bestemt form</b>, fordi du spørger til nogle specifikke tomater. (Se evt. fladen <a href="#" class="feedback-link" style="color: #ff9800; text-decoration: underline;">"En kat / katten?"</a>)'
-                    }
-                ]
-              },
-              pronunciation: {
-                target: 'Hej. Undskyld, hvor er tomaterne?',
-                focus: ['tomaterne']
-              }
+            // --- REPLIKSKIFTE 1 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: `Godmorgen ${uName}! Hvor er det dejligt at se dig igen ved kaffemaskinen.` 
             },
-            { type: 'npc', name: 'Grønthandler', text: 'De står lige derovre i den røde kasse.' },
-            { type: 'user_action',
-              trps: 'Spørg om prisen på et kilo tomater.',
-              construction: {
-                type: 'MO',
-                text: 'Hvad koster et kilo [blank_0]?',
-                blanks: [
-                    { 
-                        answer: 'tomater', 
-                        options: ['tomater', 'tomaterne', 'tomat'],
-                        feedback: 'Husk at bruge <b>ubestemt form</b>, fordi du spørger til prisen på tomater generelt og ikke nogle specifikke tomater. (Se evt. fladen <a href="#" class="feedback-link" style="color: #ff9800; text-decoration: underline;">"En kat / katten?"</a>)'
-                    }
-                ]
-              },
-              pronunciation: {
-                target: 'Hvad koster et kilo tomater?',
-                focus: ['kilo', 'tomater']
-              }
+            { 
+                type: 'user_action',
+                stepNum: 1,
+                trps: 'Hils på Lene og sig, at du er glad for at være tilbage.',
+                fonetikTip: 'Hårdt g i "Godmorgen" • Blødt d i "glad" • Vokalisk r i "være"',
+                construction: {
+                    type: 'OP',
+                    words: ['Godmorgen', 'Lene,', 'jeg', 'er', 'glad', 'for', 'at', 'være', 'tilbage.']
+                },
+                pronunciation: {
+                    target: 'Godmorgen Lene, jeg er glad for at være tilbage.',
+                    focus: ['godmorgen', 'glad', 'være']
+                }
             },
-            { type: 'npc', name: 'Grønthandler', text: 'De koster 25 kroner for et kilo. De er meget friske i dag.' },
-            { type: 'user_action',
-              trps: 'Bestil et kilo røde tomater og et kilo grønne agurker.',
-              construction: {
-                type: 'MO',
-                text: 'Jeg vil gerne bede om et kilo af de [blank_0] tomater og et kilo af de [blank_1] agurker.',
-                blanks: [
-                    { answer: 'røde', options: ['rød', 'røde', 'rødt'] },
-                    { answer: 'grønne', options: ['grøn', 'grønne', 'grønt'] }
-                ]
-              },
-              pronunciation: {
-                target: 'Jeg vil gerne bede om et kilo af de røde tomater og et kilo af de grønne agurker.',
-                focus: ['røde', 'grønne', 'agurker']
-              }
-            },
-            { type: 'npc', name: 'Grønthandler', text: 'Værsgo. Det bliver 30 kroner i alt. Hav en god dag!' },
 
-            // --- SCENE 3 ---
-            { type: 'narrative', text: '📍 Scene 3: Hjemme i køkkenet. Du står og laver aftensmad. Din veninde Sofie ringer.' },
-            { type: 'npc', name: 'Sofie', text: `Hej ${userName}, det er Sofie! Hvad laver du?` },
-            { type: 'user_action',
-              trps: 'Fortæl, at du står i køkkenet og laver aftensmad.',
-              construction: {
-                type: 'OP',
-                words: ['Jeg', 'står', 'i', 'køkkenet', 'og', 'laver', 'aftensmad.']
-              },
-              pronunciation: {
-                target: 'Jeg står i køkkenet og laver aftensmad.',
-                focus: ['aftensmad']
-              }
+            // --- REPLIKSKIFTE 2 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Selv tak! Hvordan har du det egentlig i dag? Er du helt ovenpå igen?' 
             },
-            { type: 'npc', name: 'Sofie', text: 'Uh, det lyder lækkert. Hvad laver du for noget mad?' },
-            { type: 'user_action',
-              trps: 'Fortæl, at du laver pasta med hjemmelavet tomatsovs og hvidløg.',
-              construction: {
-                type: 'MO',
-                text: 'Jeg laver pasta med hjemmelavet tomatsovs og [blank_0].',
-                blanks: [
-                    { answer: 'hvidløg', options: ['hvidløg', 'sortløg', 'rødløg'] }
-                ]
-              },
-              pronunciation: {
-                target: 'Jeg laver pasta med hjemmelavet tomatsovs og hvidløg.',
-                focus: ['hvidløg'] // stumt d/g
-              }
+            { 
+                type: 'user_action',
+                stepNum: 2,
+                trps: 'Svar, at det går rigtig godt, og at du er helt rask nu.',
+                fonetikTip: 'Hårdt d i "Det" • Hårdt g i "går" & "godt" • Hårdt r i "rask" • G som j-lyd i "rigtig"',
+                construction: {
+                    type: 'OP',
+                    words: ['Det', 'går', 'rigtig', 'godt,', 'og', 'jeg', 'er', 'helt', 'rask', 'nu.']
+                },
+                pronunciation: {
+                    target: 'Det går rigtig godt, og jeg er helt rask nu.',
+                    focus: ['det', 'går', 'rigtig', 'godt', 'rask']
+                }
             },
-            { type: 'npc', name: 'Sofie', text: 'Mums! Jeg elsker pasta. Spiser du ofte pasta?' },
-            { type: 'user_action',
-              trps: 'Svar at du tit spiser det, og spørg hende.',
-              construction: {
-                type: 'OP',
-                words: ['Ja,', 'jeg', 'spiser', 'det', 'ret', 'tit,', 'og', 'hvad', 'med', 'dig?']
-              },
-              pronunciation: {
-                target: 'Ja, jeg spiser det ret tit, og hvad med dig?',
-                focus: []
-              }
+
+            // --- REPLIKSKIFTE 3 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Hvor dejligt at høre! Men husk nu at passe på dig selv. Hvad sagde lægen i fredags?' 
             },
-            { type: 'npc', name: 'Sofie', text: 'Jeg spiser nogle gange pasta. ' },
-            { type: 'user_action',
-              trps: 'Inviter hende over til mad (ren mundtlig øvelse).',
-              construction: {
-                type: 'HIDDEN_OP',
-                words: ['Vil', 'du', 'komme', 'over', 'og', 'spise', 'med?', 'Der', 'er', 'rigeligt', 'mad!'],
-                fallbackLink: 'lav_sporgsmal'
-              },
-              pronunciation: {
-                target: 'Vil du komme over og spise med? Der er rigeligt mad!',
-                focus: ['mad']
-              }
+            { 
+                type: 'user_action',
+                stepNum: 3,
+                trps: 'Fortæl, hvad lægen sagde, at du skal gøre i et par dage.',
+                fonetikTip: 'Stumt g i "Lægen", "tage" & "dage" • Hårdt r i "roligt" • Hårdt d i "dage"',
+                construction: {
+                    type: 'OP',
+                    words: ['Lægen', 'sagde,', 'at', 'jeg', 'skal', 'tage', 'det', 'roligt', 'i', 'to', 'dage.']
+                },
+                pronunciation: {
+                    target: 'Lægen sagde, at jeg skal tage det roligt i to dage.',
+                    focus: ['lægen', 'tage', 'roligt', 'dage']
+                }
             },
-            { type: 'npc', name: 'Sofie', text: 'Ja tak! Jeg er der om ti minutter!' },
-            { type: 'narrative', text: '🏆 Historien er slut! Du klarede alle opgaver.' }
+
+            // --- REPLIKSKIFTE 4 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Det skal du helt sikkert lytte til. Gik du også en lille tur i weekenden for at få frisk luft?' 
+            },
+            { 
+                type: 'user_action',
+                stepNum: 4,
+                trps: 'Sig, at du gik en lang tur, og at det hjalp meget.',
+                fonetikTip: 'Hårdt g i "gik" • G som ng-lyd i "lang" • G som j-lyd i "meget"',
+                construction: {
+                    type: 'OP',
+                    words: ['Ja,', 'jeg', 'gik', 'en', 'lang', 'tur,', 'og', 'det', 'hjalp', 'meget.']
+                },
+                pronunciation: {
+                    target: 'Ja, jeg gik en lang tur, og det hjalp meget.',
+                    focus: ['gik', 'lang', 'meget']
+                }
+            },
+
+            // --- REPLIKSKIFTE 5 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Frisk luft er altid godt for kroppen. Hvad tænker du om arbejdet i dag?' 
+            },
+            { 
+                type: 'user_action',
+                stepNum: 5,
+                trps: 'Sig, at du gerne vil sidde ved dit bord med koldt vand.',
+                fonetikTip: 'Blødt d i "sidde" • Stumt d i "bord" (-rd) og "koldt" (-ld)',
+                construction: {
+                    type: 'OP',
+                    words: ['Jeg', 'vil', 'gerne', 'sidde', 'ved', 'mit', 'bord', 'med', 'koldt', 'vand.']
+                },
+                pronunciation: {
+                    target: 'Jeg vil gerne sidde ved mit bord med koldt vand.',
+                    focus: ['sidde', 'bord', 'koldt']
+                }
+            },
+
+            // --- REPLIKSKIFTE 6 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Det er en god og rolig start. Tror du, du kan kigge på den nye rapport, vi talte om?' 
+            },
+            { 
+                type: 'user_action',
+                stepNum: 6,
+                trps: 'Svar, at du regner med at finde fejlene i rapporten.',
+                fonetikTip: 'G som j-lyd i "regner" • Stumt d i "finde" (-nd) • Hårdt r i "rapporten"',
+                construction: {
+                    type: 'OP',
+                    words: ['Ja,', 'jeg', 'regner', 'med', 'at', 'finde', 'fejlene', 'i', 'rapporten.']
+                },
+                pronunciation: {
+                    target: 'Ja, jeg regner med at finde fejlene i rapporten.',
+                    focus: ['regner', 'finde', 'rapporten']
+                }
+            },
+
+            // --- REPLIKSKIFTE 7 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Super. Skal jeg forklare de nye retningslinjer, eller vil du hellere læse dem selv?' 
+            },
+            { 
+                type: 'user_action',
+                stepNum: 7,
+                trps: 'Sig, at du har brug for at læse om det i en bog.',
+                fonetikTip: 'G som w-lyd i "brug" og "bog" (efter bagtungevokalerne u og o)',
+                construction: {
+                    type: 'OP',
+                    words: ['Jeg', 'har', 'brug', 'for', 'at', 'læse', 'om', 'det', 'i', 'en', 'bog.']
+                },
+                pronunciation: {
+                    target: 'Jeg har brug for at læse om det i en bog.',
+                    focus: ['brug', 'bog']
+                }
+            },
+
+            // --- REPLIKSKIFTE 8 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Selvfølgelig! Husk, at vi også har et kort afdelingsmøde klokken 13.' 
+            },
+            { 
+                type: 'user_action',
+                stepNum: 8,
+                trps: 'Sig, at der er mange vigtige ting, I skal dele på mødet.',
+                fonetikTip: 'G som ng-lyd i "mange" & "ting" • G som j-lyd i "vigtige" • Blødt d i "mødet" • Hårdt d i "dele"',
+                construction: {
+                    type: 'OP',
+                    words: ['Der', 'er', 'mange', 'vigtige', 'ting,', 'vi', 'skal', 'dele', 'på', 'mødet.']
+                },
+                pronunciation: {
+                    target: 'Der er mange vigtige ting, vi skal dele på mødet.',
+                    focus: ['mange', 'vigtige', 'ting', 'dele', 'mødet']
+                }
+            },
+
+            // --- REPLIKSKIFTE 9 ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Lige præcis. Og husk, at du har lov til at gå tidligt hjem, hvis du bliver træt.' 
+            },
+            { 
+                type: 'user_action',
+                stepNum: 9,
+                trps: 'Sig tak og fortæl, at du kun bliver her til middag i dag.',
+                fonetikTip: 'Vokalisk r i "bliver" & "her" • Blødt d i "middag" • Hårdt d i "dag"',
+                construction: {
+                    type: 'OP',
+                    words: ['Mange', 'tak,', 'så', 'jeg', 'bliver', 'her', 'kun', 'til', 'middag', 'i', 'dag.']
+                },
+                pronunciation: {
+                    target: 'Mange tak, så jeg bliver her kun til middag i dag.',
+                    focus: ['bliver', 'her', 'middag', 'dag']
+                }
+            },
+
+            // --- FINAL NPC & OUTRO ---
+            { 
+                type: 'npc', 
+                name: 'Lene (Leder)', 
+                text: 'Det er en helt perfekt aftale. Rigtig god arbejdslyst, og pas godt på dig selv!' 
+            },
+            { 
+                type: 'narrative', 
+                text: '🏆 Flot klaret! Du har gennemført samtalen på 9 replikskifter og mestret lenisering og udtale af D, R og G på DU3 Modul 3!' 
+            }
         ];
     }
 
     // --- State Management ---
     const appState = {
         currentPhase: 'trps', // 'trps' -> 'construction' -> 'pronunciation' -> 'done'
-        constructionPassed: false,
-        selectedWords: [], // for OP
-        pronunciationFails: 0, // Track fails for fallback
-        opFails: 0 // Track fails for OP link
+        selectedWords: [],
+        shuffledWords: null,
+        pronunciationFails: 0
     };
 
     function renderStartScreen() {
@@ -223,32 +295,36 @@ export function renderInteractiveStoryView(container, navigateFn) {
         const card = document.createElement('div');
         card.className = 'exercise-card';
         card.style.textAlign = 'center';
+        card.style.maxWidth = '550px';
+        card.style.margin = '2rem auto';
+        card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Velkommen til Historien';
+        h1.textContent = 'Velkommen til Arbejdssamtalen';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Indtast dit navn for at starte. Du vil spille hovedrollen i historien.';
-        p.style.marginBottom = '2rem';
+        p.textContent = 'Du er tilbage på job efter en uges sygemelding. Gennemspil dialogen med din leder Lene i 9 replikskifter: Byg sætningerne og træn leniseringen af D, R og G.';
+        p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
+        p.style.lineHeight = '1.6';
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = 'Dit navn...';
+        input.placeholder = 'Indtast dit navn...';
         input.className = 'story-input';
+        if (userName) input.value = userName;
 
         const btn = document.createElement('button');
         btn.className = 'gemini-btn';
-        btn.textContent = 'Start Historien';
+        btn.textContent = 'Start Samtalen ➔';
         btn.style.marginTop = '1.5rem';
         btn.onclick = () => {
-            if (input.value.trim().length > 0) {
-                userName = input.value.trim();
-                localStorage.setItem('story_username', userName);
-                initStoryData();
-                renderStory();
-            }
+            const val = input.value.trim();
+            userName = val.length > 0 ? val : 'Kursist';
+            localStorage.setItem('story_username', userName);
+            initStoryData();
+            renderStory();
         };
 
         card.appendChild(h1);
@@ -260,20 +336,20 @@ export function renderInteractiveStoryView(container, navigateFn) {
     }
 
     function renderStory() {
-        resetBtn.style.display = 'block'; // Show reset button when story is active
+        resetBtn.style.display = 'block';
         contentArea.innerHTML = '';
         
         const chatContainer = document.createElement('div');
         chatContainer.className = 'chat-container';
         contentArea.appendChild(chatContainer);
 
-        // Auto-advance past narrative and npc steps until we hit a user_action
+        // Advance currentStepIndex past npc/narrative until we hit user_action or reach the end
         while (currentStepIndex < storyData.length && storyData[currentStepIndex].type !== 'user_action') {
-            if (currentStepIndex === storyData.length - 1) break; // End of story
+            if (currentStepIndex === storyData.length - 1) break;
             currentStepIndex++;
         }
 
-        // Render past steps
+        // Render history up to currentStepIndex
         for (let i = 0; i <= currentStepIndex; i++) {
             if (i >= storyData.length) break;
             const step = storyData[i];
@@ -292,56 +368,60 @@ export function renderInteractiveStoryView(container, navigateFn) {
             }
             else if (step.type === 'user_action') {
                 if (i < currentStepIndex) {
-                    // Past user action - just show the completed text
+                    // Past completed user action
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
                     bubble.innerHTML = `<strong>${userName}:</strong> ${step.pronunciation.target}`;
                     chatContainer.appendChild(bubble);
                 } else {
-                    // CURRENT STEP
+                    // Current active turn
                     renderCurrentAction(chatContainer, step);
                 }
             }
         }
         
-        // Auto scroll to bottom
         setTimeout(() => {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 100);
+        }, 120);
     }
 
     function renderCurrentAction(chatContainer, step) {
         const actionBox = document.createElement('div');
         actionBox.className = 'action-box';
         
-        // 1. TRPS (Thought Bubble)
+        // Progress badge (Replikskifte X af 9)
+        if (step.stepNum) {
+            const stepBadge = document.createElement('div');
+            stepBadge.style.display = 'inline-block';
+            stepBadge.style.background = 'rgba(255, 204, 0, 0.2)';
+            stepBadge.style.color = '#ffcc00';
+            stepBadge.style.padding = '0.3rem 0.8rem';
+            stepBadge.style.borderRadius = '12px';
+            stepBadge.style.fontSize = '0.9rem';
+            stepBadge.style.fontWeight = 'bold';
+            stepBadge.style.marginBottom = '1rem';
+            stepBadge.textContent = `Replikskifte ${step.stepNum} af 9`;
+            actionBox.appendChild(stepBadge);
+        }
+
+        // 1. TRPS (Tankeboble)
         const trpsBox = document.createElement('div');
         trpsBox.className = 'trps-box';
         trpsBox.innerHTML = `💭 <em>${step.trps}</em>`;
         actionBox.appendChild(trpsBox);
 
-        // 2. Construction Phase
+        // 2. Construction Phase (Ordpuslespil OP)
         const constructBox = document.createElement('div');
         constructBox.className = 'construct-box';
         if (appState.currentPhase === 'trps' || appState.currentPhase === 'construction') {
-            if (step.construction.type === 'HIDDEN_OP') {
-                appState.currentPhase = 'pronunciation';
-                constructBox.style.display = 'none';
-            } else {
-                appState.currentPhase = 'construction';
-                if (step.construction.type === 'OP') {
-                    renderOrdstilling(constructBox, step);
-                } else if (step.construction.type === 'MO') {
-                    renderManglerOrd(constructBox, step);
-                }
-            }
-        } else if (step.construction.type !== 'HIDDEN_OP') {
-            // Already constructed, show the correct sentence
-            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 1rem 0;">✓ Sætning bygget!</div>`;
+            appState.currentPhase = 'construction';
+            renderOrdstilling(constructBox, step);
+        } else {
+            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 0.8rem 0; font-size: 1.1rem;">✓ Sætning bygget korrekt!</div>`;
         }
         actionBox.appendChild(constructBox);
 
-        // 3. Pronunciation Phase
+        // 3. Pronunciation Phase (Udtaletræning)
         if (appState.currentPhase === 'pronunciation') {
             const pronBox = document.createElement('div');
             pronBox.className = 'pron-box';
@@ -356,11 +436,22 @@ export function renderInteractiveStoryView(container, navigateFn) {
     function renderOrdstilling(container, step) {
         const targetWords = step.construction.words;
         
-        // Only shuffle on first render
         if (!appState.shuffledWords) {
-            appState.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
+            // Shuffle ensuring different order from original
+            let shuffled = [...targetWords].sort(() => Math.random() - 0.5);
+            if (shuffled.join(' ') === targetWords.join(' ') && targetWords.length > 1) {
+                shuffled.reverse();
+            }
+            appState.shuffledWords = shuffled;
             appState.selectedWords = [];
         }
+
+        const instructionP = document.createElement('p');
+        instructionP.style.color = 'var(--text-muted)';
+        instructionP.style.fontSize = '1rem';
+        instructionP.style.marginBottom = '0.5rem';
+        instructionP.textContent = 'Klik på ordene nedenfor i den rigtige rækkefølge for at bygge replikken:';
+        container.appendChild(instructionP);
 
         const dropZone = document.createElement('div');
         dropZone.className = 'op-dropzone';
@@ -368,10 +459,30 @@ export function renderInteractiveStoryView(container, navigateFn) {
         const poolZone = document.createElement('div');
         poolZone.className = 'op-poolzone';
         
+        const controlArea = document.createElement('div');
+        controlArea.style.display = 'flex';
+        controlArea.style.justifyContent = 'center';
+        controlArea.style.alignItems = 'center';
+        controlArea.style.gap = '1rem';
+        controlArea.style.marginTop = '0.8rem';
+
+        const resetWordsBtn = document.createElement('button');
+        resetWordsBtn.className = 'back-btn';
+        resetWordsBtn.style.fontSize = '0.85rem';
+        resetWordsBtn.style.padding = '0.3rem 0.8rem';
+        resetWordsBtn.textContent = 'Nulstil ord ↺';
+        resetWordsBtn.onclick = () => {
+            appState.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
+            appState.selectedWords = [];
+            updateOPUI();
+        };
+        controlArea.appendChild(resetWordsBtn);
+
         const feedbackArea = document.createElement('div');
         feedbackArea.style.textAlign = 'center';
-        feedbackArea.style.marginTop = '1rem';
-        feedbackArea.style.fontSize = '1.1rem';
+        feedbackArea.style.marginTop = '0.5rem';
+        feedbackArea.style.fontSize = '1.05rem';
+        feedbackArea.style.fontWeight = 'bold';
 
         function updateOPUI() {
             dropZone.innerHTML = '';
@@ -401,128 +512,35 @@ export function renderInteractiveStoryView(container, navigateFn) {
                 poolZone.appendChild(wBtn);
             });
 
-            // Check if correct
+            // Check correctness when all words are placed
             if (appState.shuffledWords.length === 0) {
                 if (appState.selectedWords.join(' ') === targetWords.join(' ')) {
                     dropZone.style.border = '2px solid #4caf50';
-                    feedbackArea.innerHTML = '';
+                    feedbackArea.innerHTML = '<span style="color: #4caf50;">✓ Rigtig ordstilling! Gør dig klar til at udtale den.</span>';
                     setTimeout(() => {
                         appState.currentPhase = 'pronunciation';
-                        appState.shuffledWords = null; // reset
+                        appState.shuffledWords = null;
                         renderStory();
-                    }, 500);
+                    }, 600);
                 } else {
                     dropZone.style.border = '2px solid #ff5e5b';
-                    appState.opFails++;
-                    if (appState.opFails >= 2 && step.construction.fallbackLink) {
-                        feedbackArea.innerHTML = `<span style="color:#ffcc00">Driller det? <a href="#" id="fb-link" style="color:white; text-decoration:underline;">Klik her for at træne ordstilling i spørgsmål</a>.</span>`;
-                        setTimeout(() => {
-                            document.getElementById('fb-link').onclick = (e) => {
-                                e.preventDefault();
-                                navigateFn(step.construction.fallbackLink);
-                            };
-                        }, 0);
-                    }
+                    feedbackArea.innerHTML = '<span style="color: #ff5e5b;">✗ Ikke helt den rigtige rækkefølge. Klik på ordene eller nulstil for at rette.</span>';
                 }
             } else {
-                dropZone.style.border = '2px dashed rgba(255,255,255,0.2)';
+                dropZone.style.border = '2px dashed rgba(255,255,255,0.25)';
+                feedbackArea.innerHTML = '';
             }
         }
+
         updateOPUI();
         
-        container.appendChild(document.createElement('br'));
         container.appendChild(dropZone);
         container.appendChild(poolZone);
+        container.appendChild(controlArea);
         container.appendChild(feedbackArea);
     }
 
-    // --- CONSTRUCT MO ---
-    function renderManglerOrd(container, step) {
-        const textContainer = document.createElement('div');
-        textContainer.className = 'grammatik-text-container';
-        textContainer.style.margin = '1rem 0';
-        textContainer.style.fontSize = '1.2rem';
-
-        const parts = step.construction.text.split(/(\[blank_\d+\])/);
-        parts.forEach(part => {
-            const match = part.match(/\[blank_(\d+)\]/);
-            if (match) {
-                const idx = parseInt(match[1]);
-                const blankData = step.construction.blanks[idx];
-                
-                const select = document.createElement('select');
-                select.className = 'grammatik-select';
-                select.dataset.idx = idx;
-                
-                const defOpt = document.createElement('option');
-                defOpt.value = ''; defOpt.textContent = '...';
-                select.appendChild(defOpt);
-
-                const opts = [...blankData.options].sort(() => Math.random() - 0.5);
-                opts.forEach(o => {
-                    const opt = document.createElement('option');
-                    opt.value = o; opt.textContent = o;
-                    select.appendChild(opt);
-                });
-
-                select.onchange = () => {
-                    if (select.value === blankData.answer) {
-                        select.classList.add('correct');
-                        select.classList.remove('wrong');
-                        select.disabled = true; // Lock it in
-                        feedbackContainer.textContent = '';
-                        checkMOCorrectness();
-                    } else if (select.value !== '') {
-                        select.classList.add('wrong');
-                        if (blankData.feedback) {
-                            feedbackContainer.innerHTML = blankData.feedback;
-                            const link = feedbackContainer.querySelector('.feedback-link');
-                            if (link) {
-                                link.onclick = (e) => {
-                                    e.preventDefault();
-                                    navigateFn('bestemthed');
-                                };
-                            }
-                        } else {
-                            feedbackContainer.textContent = 'Prøv igen.';
-                        }
-                    } else {
-                        select.classList.remove('wrong', 'correct');
-                        feedbackContainer.textContent = '';
-                    }
-                };
-                textContainer.appendChild(select);
-            } else {
-                const span = document.createElement('span');
-                span.textContent = part;
-                textContainer.appendChild(span);
-            }
-        });
-
-        const feedbackContainer = document.createElement('div');
-        feedbackContainer.className = 'mo-feedback';
-        feedbackContainer.style.color = '#ff9800';
-        feedbackContainer.style.fontSize = '0.95rem';
-        feedbackContainer.style.marginTop = '10px';
-        feedbackContainer.style.minHeight = '1.5rem';
-
-        function checkMOCorrectness() {
-            const selects = textContainer.querySelectorAll('select');
-            const allCorrect = Array.from(selects).every(s => s.classList.contains('correct'));
-            if (allCorrect) {
-                feedbackContainer.textContent = '';
-                setTimeout(() => {
-                    appState.currentPhase = 'pronunciation';
-                    renderStory();
-                }, 500);
-            }
-        }
-
-        container.appendChild(textContainer);
-        container.appendChild(feedbackContainer);
-    }
-
-    // --- PRONUNCIATION ---
+    // --- PRONUNCIATION PHASE ---
     function renderPronunciation(container, step) {
         const pronCont = document.createElement('div');
         pronCont.style.display = 'flex';
@@ -530,30 +548,78 @@ export function renderInteractiveStoryView(container, navigateFn) {
         pronCont.style.alignItems = 'center';
         pronCont.style.gap = '1rem';
         pronCont.style.padding = '1.5rem';
-        pronCont.style.background = 'rgba(0,0,0,0.1)';
+        pronCont.style.background = 'rgba(0,0,0,0.2)';
+        pronCont.style.border = '1px solid rgba(255, 204, 0, 0.3)';
         pronCont.style.borderRadius = '16px';
         pronCont.style.marginTop = '1rem';
 
         const instruction = document.createElement('div');
-        instruction.innerHTML = `<strong>Udtale-test:</strong> Tryk på mikrofonen og læs din sætning højt.`;
+        instruction.style.fontSize = '1.1rem';
+        instruction.innerHTML = `<strong>🎤 Udtale-træning:</strong> Læs din replik højt med mikrofonen.`;
+        pronCont.appendChild(instruction);
+
+        // Phonetic tip banner
+        if (step.fonetikTip) {
+            const tipBox = document.createElement('div');
+            tipBox.style.background = 'rgba(255, 204, 0, 0.12)';
+            tipBox.style.border = '1px solid rgba(255, 204, 0, 0.3)';
+            tipBox.style.borderRadius = '10px';
+            tipBox.style.padding = '0.6rem 1rem';
+            tipBox.style.color = '#ffcc00';
+            tipBox.style.fontSize = '0.95rem';
+            tipBox.style.textAlign = 'center';
+            tipBox.style.width = '100%';
+            tipBox.style.maxWidth = '600px';
+            tipBox.innerHTML = `💡 <strong>Fokus:</strong> ${step.fonetikTip}`;
+            pronCont.appendChild(tipBox);
+        }
         
+        // Target sentence display
         const sentenceDisplay = document.createElement('div');
         sentenceDisplay.className = 'udtale-sentence';
-        sentenceDisplay.style.fontSize = '1.5rem';
+        sentenceDisplay.style.fontSize = '1.4rem';
         sentenceDisplay.style.fontWeight = 'bold';
         sentenceDisplay.style.textAlign = 'center';
+        sentenceDisplay.style.margin = '0.5rem 0';
+        sentenceDisplay.style.lineHeight = '1.6';
         
+        const targetWords = step.pronunciation.target.split(' ');
+        
+        sentenceDisplay.innerHTML = targetWords.map(w => {
+            const clean = w.toLowerCase().replace(/[.,!?]/g, '');
+            const isFocus = step.pronunciation.focus.some(f => clean.includes(f.toLowerCase()));
+            return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}" title="${isFocus ? 'Fokusord for udtale' : ''}">${w}</span>`;
+        }).join(' ');
+        pronCont.appendChild(sentenceDisplay);
+
+        // Model audio listen button
+        const audioRow = document.createElement('div');
+        audioRow.style.display = 'flex';
+        audioRow.style.gap = '1rem';
+        audioRow.style.alignItems = 'center';
+
+        const listenBtn = document.createElement('button');
+        listenBtn.className = 'back-btn';
+        listenBtn.style.fontSize = '0.95rem';
+        listenBtn.style.padding = '0.4rem 1rem';
+        listenBtn.innerHTML = '🔊 Hør udtale';
+        listenBtn.onclick = () => speakDanish(step.pronunciation.target);
+        audioRow.appendChild(listenBtn);
+        pronCont.appendChild(audioRow);
+
+        // Progress bar container
         const progressContainer = document.createElement('div');
         progressContainer.style.width = '100%';
         progressContainer.style.maxWidth = '400px';
         progressContainer.style.display = 'none';
         progressContainer.style.alignItems = 'center';
         progressContainer.style.gap = '1rem';
-        progressContainer.style.margin = '1rem 0';
+        progressContainer.style.margin = '0.5rem 0';
         
         const label = document.createElement('span');
         label.textContent = 'Mestring:';
         label.style.fontWeight = 'bold';
+        label.style.fontSize = '0.95rem';
         
         const barWrapper = document.createElement('div');
         barWrapper.style.flex = '1';
@@ -566,83 +632,94 @@ export function renderInteractiveStoryView(container, navigateFn) {
         progressBar.style.height = '100%';
         progressBar.style.width = '0%';
         progressBar.style.background = 'linear-gradient(90deg, #ff5e5b, #4caf50)';
-        progressBar.style.transition = 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        progressBar.style.transition = 'width 0.4s ease';
         
         const scoreText = document.createElement('span');
         scoreText.textContent = '0%';
         scoreText.style.fontWeight = 'bold';
         scoreText.style.minWidth = '45px';
+        scoreText.style.fontSize = '0.95rem';
 
         barWrapper.appendChild(progressBar);
         progressContainer.appendChild(label);
         progressContainer.appendChild(barWrapper);
         progressContainer.appendChild(scoreText);
-
-        // Format sentence with target focus
-        const targetWords = step.pronunciation.target.split(' ');
-        const isHiddenOP = step.construction.type === 'HIDDEN_OP';
-        
-        sentenceDisplay.innerHTML = targetWords.map(w => {
-            const clean = w.toLowerCase().replace(/[.,!?]/g, '');
-            const isFocus = step.pronunciation.focus.some(f => clean.includes(f.toLowerCase()));
-            const displayText = isHiddenOP ? w.replace(/[a-zA-ZæøåÆØÅ0-9]/g, '_') : w;
-            return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}">${displayText}</span>`;
-        }).join(' ');
+        pronCont.appendChild(progressContainer);
 
         const micBtn = document.createElement('button');
         micBtn.className = 'mic-btn';
         micBtn.innerHTML = '🎤';
+        pronCont.appendChild(micBtn);
         
         const statusText = document.createElement('div');
         statusText.style.color = 'var(--text-muted)';
-        statusText.textContent = 'Klar...';
+        statusText.style.fontSize = '1rem';
+        statusText.textContent = 'Tryk på mikrofonen og tal...';
+        pronCont.appendChild(statusText);
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
-        nextBtn.textContent = 'Videre i historien ➔';
+        nextBtn.textContent = 'Videre i samtalen ➔';
         nextBtn.style.display = 'none';
         nextBtn.onclick = () => {
             currentStepIndex++;
-            localStorage.setItem('story_progress', currentStepIndex);
+            localStorage.setItem('story_job_progress', currentStepIndex);
             appState.currentPhase = 'trps';
-            appState.pronunciationFails = 0; // Reset for next step
-            appState.opFails = 0; // Reset
+            appState.shuffledWords = null;
+            appState.selectedWords = [];
+            appState.pronunciationFails = 0;
             renderStory();
         };
+        pronCont.appendChild(nextBtn);
 
         const skipBtn = document.createElement('button');
         skipBtn.className = 'back-btn';
-        skipBtn.textContent = 'Spring over (kun for test)';
+        skipBtn.style.fontSize = '0.85rem';
+        skipBtn.textContent = 'Spring over (kun ved mikrofonfejl)';
         skipBtn.onclick = nextBtn.onclick;
+        pronCont.appendChild(skipBtn);
 
-        // Speech Logic
+        // Speech Logic using Web Speech API
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            statusText.textContent = 'Browser understøtter ikke mikrofon. Tryk Spring over.';
-            skipBtn.style.display = 'block';
+            statusText.textContent = 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
+            skipBtn.style.display = 'inline-block';
         } else {
             const recognition = new SpeechRecognition();
             recognition.lang = 'da-DK';
+            recognition.interimResults = false;
             let isListening = false;
 
             micBtn.onclick = () => {
-                if (isListening) { recognition.stop(); return; }
+                if (isListening) {
+                    recognition.stop();
+                    return;
+                }
                 try {
                     recognition.start();
                     isListening = true;
                     micBtn.classList.add('listening');
-                    statusText.innerHTML = 'Lytter... Tal nu (stopper af sig selv)';
+                    statusText.innerHTML = 'Lytter... Tal nu!';
                     progressContainer.style.display = 'none';
                     progressBar.style.width = '0%';
                     scoreText.textContent = '0%';
                     Array.from(sentenceDisplay.querySelectorAll('.udtale-word')).forEach(s => s.classList.remove('correct', 'incorrect'));
-                } catch(e) {}
+                } catch(e) {
+                    isListening = false;
+                    micBtn.classList.remove('listening');
+                }
             };
 
             recognition.onresult = (e) => {
                 const spoken = e.results[0][0].transcript;
-                statusText.innerHTML = `Behandler...`;
+                statusText.innerHTML = `Behandler udtale...`;
                 evaluatePronunciation(spoken);
+            };
+
+            recognition.onerror = () => {
+                micBtn.classList.remove('listening');
+                isListening = false;
+                statusText.innerHTML = 'Kunne ikke opfatte tale. Prøv igen!';
             };
 
             recognition.onend = () => {
@@ -651,34 +728,23 @@ export function renderInteractiveStoryView(container, navigateFn) {
             };
 
             function evaluatePronunciation(spoken) {
-                const spokenArr = spoken.toLowerCase().replace(/[.,!?]/g, '').split(' ').filter(w => w).map(w => w === 'kr' ? 'kroner' : (w === 'kg' ? 'kilo' : w));
-                let correctCnt = 0;
+                const spokenArr = spoken.toLowerCase().replace(/[.,!?]/g, '').split(/\s+/).filter(w => w);
+                let correctCount = 0;
                 
-                // Calculate total target words that require focus
-                let totalReq = 0;
-                targetWords.forEach(w => {
-                    const clean = w.toLowerCase().replace(/[.,!?]/g, '');
-                    if (step.pronunciation.focus.length > 0) {
-                        if (step.pronunciation.focus.some(f => clean.includes(f.toLowerCase()))) {
-                            totalReq++;
-                        }
-                    } else {
-                        totalReq++;
-                    }
-                });
-                
-                if (totalReq === 0) totalReq = 1; // Fallback
+                // Focus items
+                const focusWords = step.pronunciation.focus.map(f => f.toLowerCase());
+                const totalReq = focusWords.length > 0 ? focusWords.length : targetWords.length;
                 
                 let sIdx = 0;
                 const spans = sentenceDisplay.querySelectorAll('.udtale-word');
 
                 targetWords.forEach((word, idx) => {
                     const clean = word.toLowerCase().replace(/[.,!?]/g, '');
-                    const isFocus = step.pronunciation.focus.length > 0 ? step.pronunciation.focus.some(f => clean.includes(f.toLowerCase())) : true;
+                    const isFocus = focusWords.some(f => clean.includes(f));
                     
                     let found = false;
                     for (let i = sIdx; i < Math.min(sIdx + 3, spokenArr.length); i++) {
-                        if (spokenArr[i] === clean || (clean.length>3 && spokenArr[i].length>3 && (spokenArr[i].includes(clean) || clean.includes(spokenArr[i])))) {
+                        if (spokenArr[i] === clean || (clean.length > 3 && spokenArr[i].length > 3 && (spokenArr[i].includes(clean) || clean.includes(spokenArr[i])))) {
                             found = true;
                             sIdx = i + 1;
                             break;
@@ -686,82 +752,57 @@ export function renderInteractiveStoryView(container, navigateFn) {
                     }
 
                     if (found) {
-                        if (isFocus) correctCnt++;
+                        if (isFocus) correctCount++;
                         spans[idx].classList.add('correct');
-                        if (isHiddenOP) spans[idx].textContent = word; // Reveal correct words
+                        spans[idx].classList.remove('incorrect');
                     } else if (isFocus) {
                         spans[idx].classList.add('incorrect');
+                        spans[idx].classList.remove('correct');
                     }
                 });
 
-                const score = totalReq === 0 ? 100 : Math.round((correctCnt / totalReq) * 100);
-                
+                const score = Math.min(100, Math.round((correctCount / totalReq) * 100));
                 progressContainer.style.display = 'flex';
                 
                 setTimeout(() => {
                     progressBar.style.width = score + '%';
                     scoreText.textContent = score + '%';
-                    const spokenHTML = `<div style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; font-size: 1.1rem; color: #ffffff; text-align: center;">Du sagde:<br/><span style="color: #ffcc00; font-size: 1.3rem; font-weight: bold; line-height: 1.8;">"${spoken}"</span></div>`;
+                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">Du sagde:<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
                     
-                    if (score >= 80) {
+                    if (score >= 65) {
                         progressBar.style.background = '#4caf50';
-                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">Flot udtalt!</span>${spokenHTML}`;
-                        
-                        if (isHiddenOP) {
-                            const spans = sentenceDisplay.querySelectorAll('.udtale-word');
-                            targetWords.forEach((w, i) => spans[i].textContent = w);
-                        }
-                        
+                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">✓ Flot udtalt!</span>${spokenHTML}`;
                         micBtn.style.display = 'none';
                         skipBtn.style.display = 'none';
                         nextBtn.style.display = 'inline-block';
                     } else {
                         progressBar.style.background = '#ff5e5b';
                         appState.pronunciationFails++;
-                        if (appState.pronunciationFails >= 2 && step.construction.type === 'HIDDEN_OP') {
-                            // Fallback triggered!
-                            progressBar.style.background = '#ffcc00';
-                            statusText.innerHTML = `<span style="color:#ffcc00; font-weight: bold;">Det var tæt på! Lad os prøve at bygge sætningen først som hjælp.</span>${spokenHTML}`;
-                            
-                            setTimeout(() => {
-                                step.construction.type = 'OP'; // Downgrade to standard OP
-                                appState.currentPhase = 'construction';
-                                appState.pronunciationFails = 0; // reset
-                                renderStory(); // Rerender to show OP
-                            }, 3000);
-                        } else {
-                            statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">Næsten! Prøv igen.</span>${spokenHTML}`;
-                        }
+                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">Næsten! Prøv igen og fokuser på de understregede ord.</span>${spokenHTML}`;
                     }
                 }, 100);
             }
         }
 
-        pronCont.appendChild(instruction);
-        pronCont.appendChild(sentenceDisplay);
-        pronCont.appendChild(progressContainer);
-        pronCont.appendChild(micBtn);
-        pronCont.appendChild(statusText);
-        pronCont.appendChild(nextBtn);
-        pronCont.appendChild(skipBtn);
         container.appendChild(pronCont);
     }
 
-    // Only inject CSS once
+    // Inject styles
     if (!document.getElementById('story-styles')) {
         const style = document.createElement('style');
         style.id = 'story-styles';
         style.textContent = `
             .story-input {
-                padding: 1rem;
-                font-size: 1.2rem;
+                padding: 0.9rem 1.2rem;
+                font-size: 1.15rem;
                 border-radius: 12px;
                 border: 2px solid rgba(255,255,255,0.2);
-                background: rgba(0,0,0,0.2);
+                background: rgba(0,0,0,0.25);
                 color: white;
                 width: 80%;
-                max-width: 300px;
+                max-width: 320px;
                 outline: none;
+                transition: border-color 0.2s;
             }
             .story-input:focus {
                 border-color: #ffcc00;
@@ -769,34 +810,37 @@ export function renderInteractiveStoryView(container, navigateFn) {
             .chat-container {
                 display: flex;
                 flex-direction: column;
-                gap: 1.5rem;
+                gap: 1.4rem;
                 padding-bottom: 5rem;
+                max-width: 800px;
+                margin: 0 auto;
             }
             .chat-bubble {
-                padding: 1rem 1.5rem;
+                padding: 1.1rem 1.5rem;
                 border-radius: 20px;
-                max-width: 80%;
+                max-width: 85%;
                 font-size: 1.15rem;
-                line-height: 1.5;
-                animation: fadeIn 0.4s ease-out forwards;
+                line-height: 1.55;
+                animation: fadeIn 0.35s ease-out forwards;
             }
             .chat-bubble.narrative {
-                background: rgba(255,255,255,0.1);
+                background: rgba(255,255,255,0.08);
                 color: #e0e0e0;
                 align-self: center;
                 font-style: italic;
                 text-align: center;
                 border: 1px solid rgba(255,255,255,0.15);
+                max-width: 90%;
             }
             .chat-bubble.npc {
                 background: rgba(255, 204, 0, 0.15);
-                border: 1px solid rgba(255, 204, 0, 0.3);
+                border: 1px solid rgba(255, 204, 0, 0.35);
                 align-self: flex-start;
                 border-bottom-left-radius: 4px;
             }
             .chat-bubble.user.past {
                 background: rgba(76, 175, 80, 0.15);
-                border: 1px solid rgba(76, 175, 80, 0.3);
+                border: 1px solid rgba(76, 175, 80, 0.35);
                 align-self: flex-end;
                 border-bottom-right-radius: 4px;
             }
@@ -804,52 +848,55 @@ export function renderInteractiveStoryView(container, navigateFn) {
                 align-self: center;
                 width: 100%;
                 background: rgba(255,255,255,0.05);
-                border: 2px solid rgba(255,255,255,0.1);
+                border: 2px solid rgba(255,204,0,0.3);
                 border-radius: 24px;
-                padding: 1.5rem;
-                animation: fadeIn 0.5s ease;
+                padding: 1.8rem;
+                animation: fadeIn 0.4s ease;
             }
             .trps-box {
-                font-size: 1.2rem;
+                font-size: 1.25rem;
                 color: #ffcc00;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.2rem;
                 text-align: center;
             }
             .op-dropzone {
-                min-height: 60px;
+                min-height: 65px;
                 border: 2px dashed rgba(255,255,255,0.3);
-                border-radius: 12px;
+                border-radius: 14px;
                 padding: 1rem;
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.5rem;
+                gap: 0.6rem;
                 margin-bottom: 1rem;
                 transition: border-color 0.3s;
+                background: rgba(0,0,0,0.15);
+                align-items: center;
             }
             .op-poolzone {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.5rem;
+                gap: 0.6rem;
                 justify-content: center;
             }
             .op-word {
-                padding: 0.6rem 1rem;
+                padding: 0.65rem 1.1rem;
                 font-size: 1.1rem;
-                border-radius: 8px;
+                border-radius: 10px;
                 border: none;
                 cursor: pointer;
                 font-family: inherit;
-                transition: transform 0.1s;
+                transition: transform 0.1s, background 0.2s;
             }
-            .op-word:active { transform: scale(0.9); }
+            .op-word:active { transform: scale(0.92); }
             .op-word.pool {
                 background: var(--card-bg);
                 color: white;
-                border: 1px solid rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.25);
             }
             .op-word.selected {
                 background: #4caf50;
                 color: white;
+                box-shadow: 0 2px 8px rgba(76,175,80,0.3);
             }
         `;
         document.head.appendChild(style);

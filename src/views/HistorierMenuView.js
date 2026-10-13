@@ -47,7 +47,7 @@ export function renderHistorierMenuView(container, navigateFn) {
         {
             icon: '🛠️',
             title: 'Workshop',
-            desc: 'Workshop-udgave af samtalen i 9 replikskifter (DU3 Modul 1-2). Træning i udtale og lenisering af D, R og G.',
+            desc: 'Trinvis udtaleworkshop i 9 replikskifter (DU3 Modul 1-2). Direkte fokus på udtale og lenisering af D, R og G uden puslespil.',
             action: () => navigateFn('workshop_story')
         }
     ];

@@ -89,15 +89,15 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 1,
-                trps: 'Hils på Lene og sig, at du er glad for at være her.',
-                fonetikTip: 'Hårdt g i "Godmorgen" • Blødt d i "glad" • Vokalisk r i "være" og "her"',
+                trps: 'Hils på Lene og sig, at du er glad for at være tilbage igen.',
+                fonetikTip: 'Hårdt g i "Godmorgen" • Blødt d i "glad" • Vokalisk r i "være" • Blødt/stumt g i "tilbage" og "igen"',
                 construction: {
                     type: 'OP',
-                    words: ['Godmorgen', 'Lene.', 'Jeg', 'er', 'glad', 'for', 'at', 'være', 'her.']
+                    words: ['Godmorgen', 'Lene.', 'Jeg', 'er', 'glad', 'for', 'at', 'være', 'tilbage', 'igen.']
                 },
                 pronunciation: {
-                    target: 'Godmorgen Lene. Jeg er glad for at være her.',
-                    focus: ['godmorgen', 'glad', 'være', 'her']
+                    target: 'Godmorgen Lene. Jeg er glad for at være tilbage igen.',
+                    focus: ['godmorgen', 'glad', 'være', 'tilbage', 'igen']
                 }
             },
 
@@ -110,15 +110,15 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 2,
-                trps: 'Sig tak, at det går godt, men at du drikker koldt vand.',
-                fonetikTip: 'Hårdt d i "Det" • Hårdt g i "godt" • Hårdt r i "drikker" • Stumt d i "koldt" (-ld) og "vand" (-nd)',
+                trps: 'Sig, at det går godt, men at du har brug for koldt vand.',
+                fonetikTip: 'Hårdt d i "Det" • Hårdt g i "godt" • G som w-lyd i "brug" • Stumt d i "koldt" (-ld) og "vand" (-nd)',
                 construction: {
                     type: 'OP',
-                    words: ['Det', 'går', 'godt,', 'men', 'jeg', 'drikker', 'koldt', 'vand.']
+                    words: ['Det', 'går', 'godt,', 'men', 'jeg', 'har', 'brug', 'for', 'koldt', 'vand.']
                 },
                 pronunciation: {
-                    target: 'Det går godt, men jeg drikker koldt vand.',
-                    focus: ['det', 'går', 'godt', 'drikker', 'koldt', 'vand']
+                    target: 'Det går godt, men jeg har brug for koldt vand.',
+                    focus: ['det', 'går', 'godt', 'brug', 'koldt', 'vand']
                 }
             },
 
@@ -131,15 +131,16 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 3,
-                trps: 'Svar, at du er helt rask og frisk nu.',
-                fonetikTip: 'Hårdt r i "rask" • Vokalisk r i "er"',
+                trps: 'Svar, at du er helt frisk og rask nu.',
+                fonetikTip: 'Hårdt r i "frisk" og "rask" • Vokalisk r i "er"',
                 construction: {
                     type: 'OP',
-                    words: ['Ja,', 'jeg', 'er', 'helt', 'rask', 'og', 'frisk', 'nu.']
+                    words: ['Ja,', 'jeg', 'er', 'helt', 'frisk', 'og', 'rask', 'nu.'],
+                    altWords: ['Ja,', 'jeg', 'er', 'helt', 'rask', 'og', 'frisk', 'nu.']
                 },
                 pronunciation: {
-                    target: 'Ja, jeg er helt rask og frisk nu.',
-                    focus: ['rask', 'frisk']
+                    target: 'Ja, jeg er helt frisk og rask nu.',
+                    focus: ['frisk', 'rask']
                 }
             },
 
@@ -513,7 +514,9 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
 
             // Check correctness when all words are placed
             if (appState.shuffledWords.length === 0) {
-                if (appState.selectedWords.join(' ') === targetWords.join(' ')) {
+                const selectedStr = appState.selectedWords.join(' ');
+                const isCorrect = selectedStr === targetWords.join(' ') || (step.construction.altWords && selectedStr === step.construction.altWords.join(' '));
+                if (isCorrect) {
                     dropZone.style.border = '2px solid #4caf50';
                     feedbackArea.innerHTML = '<span style="color: #4caf50;">✓ Rigtig ordstilling! Gør dig klar til at udtale den.</span>';
                     setTimeout(() => {
@@ -740,14 +743,7 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
                     const clean = word.toLowerCase().replace(/[.,!?:;]/g, '');
                     const isFocus = focusWords.some(f => clean.includes(f));
                     
-                    let found = false;
-                    for (let i = sIdx; i < Math.min(sIdx + 3, spokenArr.length); i++) {
-                        if (spokenArr[i] === clean || (clean.length > 3 && spokenArr[i].length > 3 && (spokenArr[i].includes(clean) || clean.includes(spokenArr[i])))) {
-                            found = true;
-                            sIdx = i + 1;
-                            break;
-                        }
-                    }
+                    let found = spokenArr.some(sw => sw === clean || (clean.length > 3 && sw.length > 3 && (sw.includes(clean) || clean.includes(sw))));
 
                     if (found) {
                         if (isFocus) correctCount++;

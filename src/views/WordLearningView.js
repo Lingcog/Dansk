@@ -153,7 +153,8 @@ export function renderWordLearningView(container, navigateFn) {
     grid.className = 'task-selection-grid';
 
     const tasks = [
-      { id: 'exercise_top100_substantiver', title: 'top100SubstantiverTitle', desc: 'top100SubstantiverDesc', icon: '🏆', highlight: true },
+      { id: 'exercise_top100_substantiver', title: 'top100SubstantiverTitle', desc: 'top100SubstantiverDesc', icon: '🏆', highlight: 'substantiv' },
+      { id: 'exercise_top100_verber', title: 'top100VerberTitle', desc: 'top100VerberDesc', icon: '⚡', highlight: 'verbum' },
       { id: 'exercise_semantic', title: 'laerEtNytOrd', desc: 'laerEtNytOrdDesc', icon: '🎨' },
       { id: 'exercise_naboord', title: 'laerNaboord', desc: 'laerNaboordDesc', icon: '👯' },
       { id: 'exercise_ordfamilier', title: 'laerOrdfamilier', desc: 'laerOrdfamilierDesc', icon: '🌳' },
@@ -163,13 +164,18 @@ export function renderWordLearningView(container, navigateFn) {
     tasks.forEach(task => {
       const choice = document.createElement('div');
       choice.className = `task-choice-card ${task.highlight ? 'highlight-choice' : ''}`;
-      if (task.highlight) {
+      if (task.highlight === 'substantiv') {
         choice.style.border = '2px solid #22c55e';
         choice.style.background = 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(30, 41, 59, 0.9))';
+      } else if (task.highlight === 'verbum') {
+        choice.style.border = '2px solid #ef4444';
+        choice.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(30, 41, 59, 0.9))';
       }
       choice.onclick = () => {
         if (task.id === 'exercise_top100_substantiver') {
           navigateFn('top100_substantiver');
+        } else if (task.id === 'exercise_top100_verber') {
+          navigateFn('top100_verber');
         } else {
           currentState = task.id;
           render();

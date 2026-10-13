@@ -9,6 +9,10 @@ import { renderNotesView } from './views/NotesView.js';
 import { renderDagensOpgaveView } from './views/DagensOpgaveView.js';
 import { renderWordLearningView } from './views/WordLearningView.js';
 import { renderTop100SubstantiverMenuView } from './views/Top100SubstantiverMenuView.js';
+import { renderTop100VerberMenuView } from './views/Top100VerberMenuView.js';
+import { renderVerberStationView } from './views/VerberStationView.js';
+import { renderVerberKlasseView } from './views/VerberKlasseView.js';
+import { renderVerberParkView } from './views/VerberParkView.js';
 import { renderByrummetView } from './views/ByrummetView.js';
 import { renderKoekkenHjemmetView } from './views/KoekkenHjemmetView.js';
 import { renderKlasseKontorView } from './views/KlasseKontorView.js';
@@ -112,6 +116,18 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'top100_substantiver') {
     appState.currentView = 'top100_substantiver';
     renderTop100SubstantiverMenuView(appDiv, navigate);
+  } else if (viewTarget === 'top100_verber') {
+    appState.currentView = 'top100_verber';
+    renderTop100VerberMenuView(appDiv, navigate);
+  } else if (viewTarget === 'verber_station') {
+    appState.currentView = 'verber_station';
+    renderVerberStationView(appDiv, navigate);
+  } else if (viewTarget === 'verber_klasse') {
+    appState.currentView = 'verber_klasse';
+    renderVerberKlasseView(appDiv, navigate);
+  } else if (viewTarget === 'verber_park') {
+    appState.currentView = 'verber_park';
+    renderVerberParkView(appDiv, navigate);
   } else if (viewTarget === 'byrummet_vrimmel') {
     appState.currentView = 'byrummet_vrimmel';
     renderByrummetView(appDiv, navigate);

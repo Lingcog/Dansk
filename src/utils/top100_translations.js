@@ -60,6 +60,23 @@ export const top100Translations = {
     top100SubstantiverTitle: "De 100 mest almindelige hverdagsord",
     top100SubstantiverDesc: "Lær ordene ved at lave sjove øvelser.",
 
+    // Top 100 Verber
+    top100VerberTitle: "Lær et af de mest almindelige verber",
+    top100VerberDesc: "Lær de 100 mest brugte verber i dansk gennem levende vrimlescener og øvelser i synonymer og antonymer.",
+    top100_verber_hub_title: "De 100 mest almindelige verber",
+    top100_verber_hub_desc: "Verber er sprogets motor og udtrykker handlinger, bevægelser, tilstande og relationer. Udforsk de 100 mest almindelige verber fordelt på tre levende scener.",
+    top100_verber_hub_class_badge: "🔴 Ordklasse: Verber (Udsagnsord i rød farve)",
+    top100_verber_scene1_title: "🚆 Banegården & Rejsen",
+    top100_verber_scene1_desc: "Transport, rejse og transaktioner: at rejse, at køre, at komme, at gå, at tage, at betale, at købe, at hente, at vente, at trække...",
+    top100_verber_scene1_btn: "Gå til banegården ➔",
+    top100_verber_scene2_title: "🏫 Klasseværelset & Kontoret",
+    top100_verber_scene2_desc: "Kommunikation, sprog og tænkning: at tale, at skrive, at læse, at spørge, at svare, at tænke, at forstå, at lære, at huske...",
+    top100_verber_scene2_btn: "Gå til klasseværelset ➔",
+    top100_verber_scene3_title: "🌳 Parken & Udendørscaféen",
+    top100_verber_scene3_desc: "Sanser, følelser, relationer og mad/drikke: at se, at sidde, at spise, at drikke, at møde, at elske, at smile, at grine, at græde...",
+    top100_verber_scene3_btn: "Gå til parken ➔",
+    tab_label_synonym_antonym: "4. Synonymer & Antonymer",
+
     // Common Controls & Badges
     vrimmel_pure_btn: "Se rent billede:",
     vrimmel_radar_btn: "Farve-radar (EN / ET):",
@@ -345,6 +362,23 @@ export const top100Translations = {
     top100_tag_time: "⏰ Time expressions",
     top100SubstantiverTitle: "The 100 Most Common Everyday Words",
     top100SubstantiverDesc: "Learn the words by doing fun exercises.",
+
+    // Top 100 Verber
+    top100VerberTitle: "Learn the Most Common Verbs",
+    top100VerberDesc: "Master the 100 most frequent Danish verbs through rich illustrated scenes and exercises in synonyms and antonyms.",
+    top100_verber_hub_title: "The 100 Most Common Verbs",
+    top100_verber_hub_desc: "Verbs are the engine of speech, expressing actions, movements, and states. Explore the 100 most frequent verbs across three scenes.",
+    top100_verber_hub_class_badge: "🔴 Word Class: Verbs (Red color)",
+    top100_verber_scene1_title: "🚆 The Train Station & Travel",
+    top100_verber_scene1_desc: "Transport, travel, and transactions: to travel, to drive, to come, to go, to take, to pay, to buy, to pick up, to wait...",
+    top100_verber_scene1_btn: "Go to the station ➔",
+    top100_verber_scene2_title: "🏫 The Classroom & Office",
+    top100_verber_scene2_desc: "Communication, language, and thought: to speak, to write, to read, to ask, to answer, to think, to understand, to learn...",
+    top100_verber_scene2_btn: "Go to the classroom ➔",
+    top100_verber_scene3_title: "🌳 The Park & Outdoor Café",
+    top100_verber_scene3_desc: "Senses, emotions, relations, food & drinks: to see, to sit, to eat, to drink, to meet, to love, to smile, to laugh, to cry...",
+    top100_verber_scene3_btn: "Go to the park ➔",
+    tab_label_synonym_antonym: "4. Synonyms & Antonyms",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "View pure image:",
@@ -632,6 +666,23 @@ export const top100Translations = {
     top100SubstantiverTitle: "Las 100 palabras cotidianas más comunes",
     top100SubstantiverDesc: "Aprende las palabras haciendo ejercicios divertidos.",
 
+    // Top 100 Verber
+    top100VerberTitle: "Aprende los verbos más comunes",
+    top100VerberDesc: "Aprende los 100 verbos más usados en danés mediante escenas ilustradas y ejercicios de sinónimos y antónimos.",
+    top100_verber_hub_title: "Los 100 verbos más comunes",
+    top100_verber_hub_desc: "Los verbos son el motor del lenguaje, expresando acciones, movimientos y estados. Explora los 100 verbos más frecuentes en tres escenas.",
+    top100_verber_hub_class_badge: "🔴 Clase de palabra: Verbos (Color rojo)",
+    top100_verber_scene1_title: "🚆 La estación y el viaje",
+    top100_verber_scene1_desc: "Transporte, viaje y transacciones: viajar, conducir, venir, ir, tomar, pagar, comprar, recoger, esperar...",
+    top100_verber_scene1_btn: "Ir a la estación ➔",
+    top100_verber_scene2_title: "🏫 El aula y la oficina",
+    top100_verber_scene2_desc: "Comunicación, lenguaje y pensamiento: hablar, escribir, leer, preguntar, responder, pensar, entender, aprender...",
+    top100_verber_scene2_btn: "Ir al aula ➔",
+    top100_verber_scene3_title: "🌳 El parque y el café al aire libre",
+    top100_verber_scene3_desc: "Sentidos, emociones, relaciones, comida y bebida: ver, sentarse, comer, beber, encontrarse, amar, sonreír, reír, llorar...",
+    top100_verber_scene3_btn: "Ir al parque ➔",
+    tab_label_synonym_antonym: "4. Sinónimos y antónimos",
+
     // Common Controls & Badges
     vrimmel_pure_btn: "Ver imagen limpia:",
     vrimmel_radar_btn: "Radar de color (EN / ET):",
@@ -917,6 +968,23 @@ export const top100Translations = {
     top100_tag_time: "⏰ 时间表达",
     top100SubstantiverTitle: "最常用的100个日常词汇",
     top100SubstantiverDesc: "通过有趣的练习轻松掌握词汇。",
+
+    // Top 100 Verber
+    top100VerberTitle: "掌握最常用的动词",
+    top100VerberDesc: "通过生动的场景图和同义词、反义词练习掌握丹麦语中最常用的100个动词。",
+    top100_verber_hub_title: "最常用的100个动词",
+    top100_verber_hub_desc: "动词是语言的引擎，表达行动、状态与变化。在三个精美场景中探索100个常用动词。",
+    top100_verber_hub_class_badge: "🔴 词类：动词 (红色)",
+    top100_verber_scene1_title: "🚆 火车站与旅途",
+    top100_verber_scene1_desc: "交通、出行与日常事务：旅行、行驶、来、去、乘坐、支付、购买、接人、等待...",
+    top100_verber_scene1_btn: "前往火车站 ➔",
+    top100_verber_scene2_title: "🏫 教室与办公室",
+    top100_verber_scene2_desc: "交流、思考与学习：说话、写字、阅读、提问、回答、思考、理解、学习...",
+    top100_verber_scene2_btn: "前往教室 ➔",
+    top100_verber_scene3_title: "🌳 公园与露天咖啡厅",
+    top100_verber_scene3_desc: "感官、情感与生活：看、坐、吃、喝、遇见、爱、微笑、大笑、哭泣...",
+    top100_verber_scene3_btn: "前往公园 ➔",
+    tab_label_synonym_antonym: "4. 同义词与反义词",
 
     // Common Controls & Badges
     vrimmel_pure_btn: "纯净原图模式：",

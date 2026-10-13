@@ -51,6 +51,7 @@ import { renderUdtaleMenuView } from './views/UdtaleMenuView.js';
 import { renderLegMedUdtaleView } from './views/LegMedUdtaleView.js';
 import { renderInteractiveStoryView } from './views/InteractiveStoryView.js';
 import { renderJobSamtaleStoryView } from './views/JobSamtaleStoryView.js';
+import { renderJobWorkshopStoryView } from './views/JobWorkshopStoryView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
 import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
@@ -268,6 +269,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'job_story') {
     appState.currentView = 'job_story';
     renderJobSamtaleStoryView(appDiv, navigate);
+  } else if (viewTarget === 'workshop_story' || viewTarget === 'workshop') {
+    appState.currentView = 'workshop_story';
+    renderJobWorkshopStoryView(appDiv, navigate);
   } else if (viewTarget === 'branching_story') {
     appState.currentView = 'branching_story';
     renderBranchingStoryView(appDiv, navigate, extraData);

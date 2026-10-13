@@ -588,27 +588,27 @@ export function renderNaturFritidView(container, navigateFn) {
     // --- 21 NØGLEORD I NATUREN OG FRITIDEN
     // ========================================================
     const naturWords = [
-        { word: 'en fugl', clean: 'fugl', gender: 'en', bestemt: 'fuglen', flertal: 'fugle', x: 18, y: 10, icon: '🐦', sentence: 'En hvid fugl flyver højt oppe på himlen.' },
-        { word: 'en luft', clean: 'luft', gender: 'en', bestemt: 'luften', flertal: 'lufte', x: 25, y: 24, icon: '🌬️', sentence: 'Der er frisk luft ude ved havet og skoven.' },
-        { word: 'et vejr', clean: 'vejr', gender: 'et', bestemt: 'vejret', flertal: 'vejr', x: 41, y: 11, icon: '🌤️', sentence: 'Det er dejligt vejr til en tur i parken.' },
-        { word: 'et vand', clean: 'vand', gender: 'et', bestemt: 'vandet', flertal: 'vande', x: 10, y: 41, icon: '🌊', sentence: 'Det blå vand skvulper stille ind mod kysten.' },
-        { word: 'en strand', clean: 'strand', gender: 'en', bestemt: 'stranden', flertal: 'strande', x: 26, y: 46, icon: '🏖️', sentence: 'Børnene løber og leger på den lyse strand.' },
-        { word: 'en bold', clean: 'bold', gender: 'en', bestemt: 'bolden', flertal: 'bolde', x: 14.5, y: 71, icon: '⚽', sentence: 'Drengen og pigen spiller med en rund bold.' },
-        { word: 'en blomst', clean: 'blomst', gender: 'en', bestemt: 'blomsten', flertal: 'blomster', x: 21, y: 86, icon: '🌸', sentence: 'Røde og gule blomster vokser i det grønne græs.' },
-        { word: 'en skov', clean: 'skov', gender: 'en', bestemt: 'skoven', flertal: 'skove', x: 73, y: 20, icon: '🌲', sentence: 'Der ligger en grøn skov med mange træer i baggrunden.' },
-        { word: 'en musik', clean: 'musik', gender: 'en', bestemt: 'musikken', flertal: 'musik', x: 37, y: 47, icon: '🎵', sentence: 'Der strømmer glad musik ud fra den lille højtaler.' },
-        { word: 'en ferie', clean: 'ferie', gender: 'en', bestemt: 'ferien', flertal: 'ferier', x: 48, y: 45, icon: '🏖️', sentence: 'Vennerne nyder deres sommer og holder ferie sammen.' },
-        { word: 'en fest', clean: 'fest', gender: 'en', bestemt: 'festen', flertal: 'fester', x: 57, y: 48, icon: '🎉', sentence: 'De fejrer fødselsdag og holder en hyggelig fest i det fri.' },
-        { word: 'et hjerte', clean: 'hjerte', gender: 'et', bestemt: 'hjertet', flertal: 'hjerter', x: 60.5, y: 31, icon: '❤️', sentence: 'Den røde ballon er formet som et stort hjerte.' },
-        { word: 'en gave', clean: 'gave', gender: 'en', bestemt: 'gaven', flertal: 'gaver', x: 51, y: 59, icon: '🎁', sentence: 'Midt på tæppet står en flot gave med rødt bånd.' },
-        { word: 'en film', clean: 'film', gender: 'en', bestemt: 'filmen', flertal: 'film', x: 46.5, y: 71.5, icon: '🎬', sentence: 'På skærmen kan man vælge at se en god film.' },
-        { word: 'et spil', clean: 'spil', gender: 'et', bestemt: 'spillet', flertal: 'spil', x: 53.5, y: 67, icon: '🎲', sentence: 'Vennerne hygger sig med et sjovt brætspil på tæppet.' },
-        { word: 'et liv', clean: 'liv', gender: 'et', bestemt: 'livet', flertal: 'liv', x: 64, y: 55, icon: '🌱', sentence: 'Der er masser af glæde og godt liv i parken.' },
-        { word: 'et menneske', clean: 'menneske', gender: 'et', bestemt: 'mennesket', flertal: 'mennesker', x: 76.5, y: 53, icon: '🧑', sentence: 'Et venligt menneske stopper op for at hjælpe løberen.' },
-        { word: 'en hånd', clean: 'hånd', gender: 'en', bestemt: 'hånden', flertal: 'hænder', x: 83, y: 61, icon: '🫱', sentence: 'Han rækker sin hånd frem for at hjælpe sin ven.' },
-        { word: 'et hoved', clean: 'hoved', gender: 'et', bestemt: 'hovedet', flertal: 'hoveder', x: 88.5, y: 50, icon: '🗣️', sentence: 'Løberen bøjer sit hoved ned og kigger på benet.' },
-        { word: 'et øje', clean: 'øje', gender: 'et', bestemt: 'øjet', flertal: 'øjne', x: 87.5, y: 53.5, icon: '👁️', sentence: 'Han kigger bekymret ned med hvert øje.' },
-        { word: 'en fod', clean: 'fod', gender: 'en', bestemt: 'foden', flertal: 'fødder', x: 83.5, y: 77.5, icon: '🦶', sentence: 'Løberen er vrikket om og har ondt i sin fod.' }
+        { word: 'en fugl', clean: 'fugl', gender: 'en', bestemt: 'fuglen', flertal: 'fugle', x: 18, y: 10, icon: '🐦', sentence: 'En fugl flyver på himlen.' },
+        { word: 'en luft', clean: 'luft', gender: 'en', bestemt: 'luften', flertal: 'lufte', x: 25, y: 24, icon: '🌬️', sentence: 'Luften er frisk ude ved havet.' },
+        { word: 'et vejr', clean: 'vejr', gender: 'et', bestemt: 'vejret', flertal: 'vejr', x: 41, y: 11, icon: '🌤️', sentence: 'Det er godt vejr i dag.' },
+        { word: 'et vand', clean: 'vand', gender: 'et', bestemt: 'vandet', flertal: 'vande', x: 10, y: 41, icon: '🌊', sentence: 'Vandet er koldt.' },
+        { word: 'en strand', clean: 'strand', gender: 'en', bestemt: 'stranden', flertal: 'strande', x: 26, y: 46, icon: '🏖️', sentence: 'Børnene leger på en strand.' },
+        { word: 'en bold', clean: 'bold', gender: 'en', bestemt: 'bolden', flertal: 'bolde', x: 14.5, y: 71, icon: '⚽', sentence: 'De spiller med en bold.' },
+        { word: 'en blomst', clean: 'blomst', gender: 'en', bestemt: 'blomsten', flertal: 'blomster', x: 21, y: 86, icon: '🌸', sentence: 'Hun plukker en blomst.' },
+        { word: 'en skov', clean: 'skov', gender: 'en', bestemt: 'skoven', flertal: 'skove', x: 73, y: 20, icon: '🌲', sentence: 'De går en tur i en skov.' },
+        { word: 'en musik', clean: 'musik', gender: 'en', bestemt: 'musikken', flertal: 'musik', x: 37, y: 47, icon: '🎵', sentence: 'De lytter til musik.' },
+        { word: 'en ferie', clean: 'ferie', gender: 'en', bestemt: 'ferien', flertal: 'ferier', x: 48, y: 45, icon: '🏖️', sentence: 'Familien holder ferie.' },
+        { word: 'en fest', clean: 'fest', gender: 'en', bestemt: 'festen', flertal: 'fester', x: 57, y: 48, icon: '🎉', sentence: 'De holder en fest.' },
+        { word: 'et hjerte', clean: 'hjerte', gender: 'et', bestemt: 'hjertet', flertal: 'hjerter', x: 60.5, y: 31, icon: '❤️', sentence: 'Ballonen ligner et hjerte.' },
+        { word: 'en gave', clean: 'gave', gender: 'en', bestemt: 'gaven', flertal: 'gaver', x: 51, y: 59, icon: '🎁', sentence: 'Hun åbner en gave.' },
+        { word: 'en film', clean: 'film', gender: 'en', bestemt: 'filmen', flertal: 'film', x: 46.5, y: 71.5, icon: '🎬', sentence: 'De ser en film.' },
+        { word: 'et spil', clean: 'spil', gender: 'et', bestemt: 'spillet', flertal: 'spil', x: 53.5, y: 67, icon: '🎲', sentence: 'De spiller et spil.' },
+        { word: 'et liv', clean: 'liv', gender: 'et', bestemt: 'livet', flertal: 'liv', x: 64, y: 55, icon: '🌱', sentence: 'Der er liv i parken.' },
+        { word: 'et menneske', clean: 'menneske', gender: 'et', bestemt: 'mennesket', flertal: 'mennesker', x: 76.5, y: 53, icon: '🧑', sentence: 'Et venligt menneske hjælper.' },
+        { word: 'en hånd', clean: 'hånd', gender: 'en', bestemt: 'hånden', flertal: 'hænder', x: 83, y: 61, icon: '🫱', sentence: 'Han rækker en hånd frem.' },
+        { word: 'et hoved', clean: 'hoved', gender: 'et', bestemt: 'hovedet', flertal: 'hoveder', x: 88.5, y: 50, icon: '🗣️', sentence: 'Han har ondt i hovedet.' },
+        { word: 'et øje', clean: 'øje', gender: 'et', bestemt: 'øjet', flertal: 'øjne', x: 87.5, y: 53.5, icon: '👁️', sentence: 'Han lukker et øje.' },
+        { word: 'en fod', clean: 'fod', gender: 'en', bestemt: 'foden', flertal: 'fødder', x: 83.5, y: 77.5, icon: '🦶', sentence: 'Han har ondt i foden.' }
     ];
 
     // ========================================================

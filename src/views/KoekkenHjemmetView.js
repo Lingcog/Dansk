@@ -947,26 +947,26 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     // --- NØGLEORD DATA (Præcis 20 ord fra top 100 frekvensliste)
     // ========================================================
     const kitchenWords = [
-        { word: 'en sol', clean: 'sol', gender: 'en', bestemt: 'solen', flertal: 'sole', x: 8.8, y: 18, icon: '☀️', sentence: 'Solen skinner varmt ind ad vinduet.' },
-        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 15, y: 11, icon: '🪟', sentence: 'Solen skinner ind ad det store vindue.' },
-        { word: 'et træ', clean: 'træ', gender: 'et', bestemt: 'træet', flertal: 'træer', x: 19.5, y: 23, icon: '🌳', sentence: 'Der står et smukt grønt træ i haven.' },
-        { word: 'en hund', clean: 'hund', gender: 'en', bestemt: 'hunden', flertal: 'hunde', x: 11.5, y: 70, icon: '🐕', sentence: 'Hunden sidder pænt ved siden af madskålen.' },
-        { word: 'en kat', clean: 'kat', gender: 'en', bestemt: 'katten', flertal: 'katte', x: 18.5, y: 67, icon: '🐈', sentence: 'Katten kigger nysgerrigt på hunden.' },
-        { word: 'et barn', clean: 'barn', gender: 'et', bestemt: 'barnet', flertal: 'børn', x: 28.5, y: 55, icon: '👶', sentence: 'Barnet sidder glad i højstolen.' },
-        { word: 'en mor', clean: 'mor', gender: 'en', bestemt: 'moren', flertal: 'mødre', x: 34, y: 44, icon: '👩', sentence: 'Moren hælder vand op i et glas.' },
-        { word: 'en far', clean: 'far', gender: 'en', bestemt: 'faren', flertal: 'fædre', x: 49, y: 46, icon: '👨', sentence: 'Faren taler ved spisebordet.' },
+        { word: 'en sol', clean: 'sol', gender: 'en', bestemt: 'solen', flertal: 'sole', x: 8.8, y: 18, icon: '☀️', sentence: 'Solen skinner ind ad vinduet.' },
+        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 15, y: 11, icon: '🪟', sentence: 'Hun åbner et vindue.' },
+        { word: 'et træ', clean: 'træ', gender: 'et', bestemt: 'træet', flertal: 'træer', x: 19.5, y: 23, icon: '🌳', sentence: 'Der står et træ i haven.' },
+        { word: 'en hund', clean: 'hund', gender: 'en', bestemt: 'hunden', flertal: 'hunde', x: 11.5, y: 70, icon: '🐕', sentence: 'Hunden spiser mad.' },
+        { word: 'en kat', clean: 'kat', gender: 'en', bestemt: 'katten', flertal: 'katte', x: 18.5, y: 67, icon: '🐈', sentence: 'Katten kigger på madskålen.' },
+        { word: 'et barn', clean: 'barn', gender: 'et', bestemt: 'barnet', flertal: 'børn', x: 28.5, y: 55, icon: '👶', sentence: 'Barnet spiser mad.' },
+        { word: 'en mor', clean: 'mor', gender: 'en', bestemt: 'moren', flertal: 'mødre', x: 34, y: 44, icon: '👩', sentence: 'Moren laver mad.' },
+        { word: 'en far', clean: 'far', gender: 'en', bestemt: 'faren', flertal: 'fædre', x: 49, y: 46, icon: '👨', sentence: 'Faren taler ved bordet.' },
         { word: 'en seng', clean: 'seng', gender: 'en', bestemt: 'sengen', flertal: 'senge', x: 60, y: 38, icon: '🛏️', sentence: 'Sengen står inde i soveværelset.' },
-        { word: 'et tøj', clean: 'tøj', gender: 'et', bestemt: 'tøjet', flertal: 'tøj', x: 71, y: 32, icon: '🧥', sentence: 'Tøjet og jakken hænger på knagen.' },
-        { word: 'en sko', clean: 'sko', gender: 'en', bestemt: 'skoen', flertal: 'sko', x: 71, y: 53, icon: '👟', sentence: 'Skoene står ordentligt på skohylden.' },
+        { word: 'et tøj', clean: 'tøj', gender: 'et', bestemt: 'tøjet', flertal: 'tøj', x: 71, y: 32, icon: '🧥', sentence: 'Tøjet hænger på en knage.' },
+        { word: 'en sko', clean: 'sko', gender: 'en', bestemt: 'skoen', flertal: 'sko', x: 71, y: 53, icon: '👟', sentence: 'Skoene står på gulvet.' },
         { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 29, y: 83, icon: '🪑', sentence: 'Drengen sidder på en stol.' },
-        { word: 'en mad', clean: 'mad', gender: 'en', bestemt: 'maden', flertal: 'madder', x: 38, y: 64, icon: '🍞', sentence: 'De spiser mad og rugbrød sammen.' },
-        { word: 'en kop', clean: 'kop', gender: 'en', bestemt: 'koppen', flertal: 'kopper', x: 42, y: 58, icon: '☕', sentence: 'Der står en kop kaffe på bordet.' },
-        { word: 'et kød', clean: 'kød', gender: 'et', bestemt: 'kødet', flertal: 'kød', x: 44.5, y: 68, icon: '🥩', sentence: 'Der er kød og pålæg på bordet.' },
-        { word: 'en fisk', clean: 'fisk', gender: 'en', bestemt: 'fisken', flertal: 'fisk', x: 47.5, y: 70, icon: '🐟', sentence: 'De spiser frisk fisk til frokost.' },
-        { word: 'et glas', clean: 'glas', gender: 'et', bestemt: 'glasset', flertal: 'glas', x: 54.5, y: 64, icon: '🥛', sentence: 'Moren hælder et glas koldt vand op.' },
-        { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 57, y: 68, icon: '🪑', sentence: 'Familien sidder samlet ved bordet.' },
-        { word: 'en kaffe', clean: 'kaffe', gender: 'en', bestemt: 'kaffen', flertal: 'kaffe', x: 90.5, y: 49, icon: '☕', sentence: 'Kaffemaskinen brygger varm kaffe.' },
-        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 93, y: 79, icon: '⚠️', sentence: 'Kaffen væltede – det er et problem og et uheld!' }
+        { word: 'en mad', clean: 'mad', gender: 'en', bestemt: 'maden', flertal: 'madder', x: 38, y: 64, icon: '🍞', sentence: 'De spiser mad sammen.' },
+        { word: 'en kop', clean: 'kop', gender: 'en', bestemt: 'koppen', flertal: 'kopper', x: 42, y: 58, icon: '☕', sentence: 'Hun drikker en kop kaffe.' },
+        { word: 'et kød', clean: 'kød', gender: 'et', bestemt: 'kødet', flertal: 'kød', x: 44.5, y: 68, icon: '🥩', sentence: 'De spiser kød til aften.' },
+        { word: 'en fisk', clean: 'fisk', gender: 'en', bestemt: 'fisken', flertal: 'fisk', x: 47.5, y: 70, icon: '🐟', sentence: 'De spiser fisk til frokost.' },
+        { word: 'et glas', clean: 'glas', gender: 'et', bestemt: 'glasset', flertal: 'glas', x: 54.5, y: 64, icon: '🥛', sentence: 'Hun drikker et glas vand.' },
+        { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 57, y: 68, icon: '🪑', sentence: 'Familien sidder ved bordet.' },
+        { word: 'en kaffe', clean: 'kaffe', gender: 'en', bestemt: 'kaffen', flertal: 'kaffe', x: 90.5, y: 49, icon: '☕', sentence: 'Faren drikker varm kaffe.' },
+        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 93, y: 79, icon: '⚠️', sentence: 'Kaffen vælter – det er et problem.' }
     ];
 
     // ========================================================

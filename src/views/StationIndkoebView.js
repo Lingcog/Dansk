@@ -588,27 +588,27 @@ export function renderStationIndkoebView(container, navigateFn) {
     // --- 21 NØGLEORD VED STATIONEN, INDKØB OG TIDEN
     // ========================================================
     const stationWords = [
-        { word: 'en butik', clean: 'butik', gender: 'en', bestemt: 'butikken', flertal: 'butikker', x: 20, y: 12, icon: '🏪', sentence: 'På hjørnet ved stationen ligger en travl butik med madvarer.' },
-        { word: 'en verden', clean: 'verden', gender: 'en', bestemt: 'verdenen', flertal: 'verdener', x: 6, y: 24, icon: '🌍', sentence: 'Globussen viser lande og kontinenter i hele verden.' },
-        { word: 'et land', clean: 'land', gender: 'et', bestemt: 'landet', flertal: 'lande', x: 9.5, y: 23, icon: '🇩🇰', sentence: 'Danmark er et lille land med rødt og hvidt flag.' },
-        { word: 'et år', clean: 'år', gender: 'et', bestemt: 'året', flertal: 'år', x: 8, y: 33, icon: '📅', sentence: 'Kalenderen på væggen viser måned og år.' },
-        { word: 'en måned', clean: 'måned', gender: 'en', bestemt: 'måneden', flertal: 'måneder', x: 4.5, y: 33, icon: '🗓️', sentence: 'Maj er en skøn og lys måned i foråret.' },
-        { word: 'en uge', clean: 'uge', gender: 'en', bestemt: 'ugen', flertal: 'uger', x: 6, y: 39, icon: '📆', sentence: 'En hel række i kalenderen svarer til en uge med syv dage.' },
-        { word: 'en dag', clean: 'dag', gender: 'en', bestemt: 'dagen', flertal: 'dage', x: 6.5, y: 36, icon: '☀️', sentence: 'Dagen i dag er markeret med et felt i kalenderen.' },
-        { word: 'et brød', clean: 'brød', gender: 'et', bestemt: 'brødet', flertal: 'brød', x: 6.5, y: 81, icon: '🍞', sentence: 'Der ligger et friskbagt brød på træbrættet.' },
-        { word: 'en pris', clean: 'pris', gender: 'en', bestemt: 'prisen', flertal: 'priser', x: 13.5, y: 91.5, icon: '🏷️', sentence: 'Det lille skilt viser varens pris i kroner.' },
-        { word: 'en mælk', clean: 'mælk', gender: 'en', bestemt: 'mælken', flertal: 'mælk', x: 15, y: 78, icon: '🥛', sentence: 'En kold karton mælk står klar på disken.' },
-        { word: 'en flaske', clean: 'flaske', gender: 'en', bestemt: 'flasken', flertal: 'flasker', x: 19.5, y: 71, icon: '🍾', sentence: 'Bag mælken står en klar flaske med vand.' },
-        { word: 'et æble', clean: 'æble', gender: 'et', bestemt: 'æblet', flertal: 'æbler', x: 22.5, y: 76, icon: '🍎', sentence: 'Kurven er fyldt med røde og friske æbler.' },
-        { word: 'en pose', clean: 'pose', gender: 'en', bestemt: 'posen', flertal: 'poser', x: 29, y: 63, icon: '🛍️', sentence: 'Kvinden bærer sine indkøb i en brun papirpose.' },
-        { word: 'en bus', clean: 'bus', gender: 'en', bestemt: 'bussen', flertal: 'busser', x: 43.5, y: 47, icon: '🚌', sentence: 'Den gule bus kører passagerer ind til centrum.' },
-        { word: 'en cykel', clean: 'cykel', gender: 'en', bestemt: 'cyklen', flertal: 'cykler', x: 53, y: 63, icon: '🚲', sentence: 'En blå cykel står parkeret i cykelstativet ved perronen.' },
-        { word: 'en time', clean: 'time', gender: 'en', bestemt: 'timen', flertal: 'timer', x: 48.5, y: 15.5, icon: '🕐', sentence: 'Stationsuret viser hver time og hvert minut.' },
-        { word: 'en morgen', clean: 'morgen', gender: 'en', bestemt: 'morgenen', flertal: 'morgener', x: 57, y: 7.5, icon: '🌅', sentence: 'Mange pendlere rejser på arbejde tidligt om morgenen.' },
-        { word: 'en aften', clean: 'aften', gender: 'en', bestemt: 'aftenen', flertal: 'aftener', x: 66.5, y: 7.5, icon: '🌆', sentence: 'Om aftenen kører togene passagererne hjem igen.' },
-        { word: 'en nat', clean: 'nat', gender: 'en', bestemt: 'natten', flertal: 'nætter', x: 71, y: 7.5, icon: '🌙', sentence: 'Når det bliver mørk nat, er der stille på stationen.' },
-        { word: 'et tog', clean: 'tog', gender: 'et', bestemt: 'toget', flertal: 'tog', x: 88, y: 46, icon: '🚆', sentence: 'Det røde tog kører langs perronen på spor 3.' },
-        { word: 'en billet', clean: 'billet', gender: 'en', bestemt: 'billetten', flertal: 'billetter', x: 81.5, y: 76, icon: '🎫', sentence: 'Kvinden står med sin billet i hånden og kigger på uret.' }
+        { word: 'en butik', clean: 'butik', gender: 'en', bestemt: 'butikken', flertal: 'butikker', x: 20, y: 12, icon: '🏪', sentence: 'Manden handler i en butik.' },
+        { word: 'en verden', clean: 'verden', gender: 'en', bestemt: 'verdenen', flertal: 'verdener', x: 6, y: 24, icon: '🌍', sentence: 'Der er mange lande i verden.' },
+        { word: 'et land', clean: 'land', gender: 'et', bestemt: 'landet', flertal: 'lande', x: 9.5, y: 23, icon: '🇩🇰', sentence: 'Danmark er et lille land.' },
+        { word: 'et år', clean: 'år', gender: 'et', bestemt: 'året', flertal: 'år', x: 8, y: 33, icon: '📅', sentence: 'Et år har tolv måneder.' },
+        { word: 'en måned', clean: 'måned', gender: 'en', bestemt: 'måneden', flertal: 'måneder', x: 4.5, y: 33, icon: '🗓️', sentence: 'Maj er en forårsmåned.' },
+        { word: 'en uge', clean: 'uge', gender: 'en', bestemt: 'ugen', flertal: 'uger', x: 6, y: 39, icon: '📆', sentence: 'En uge har syv dage.' },
+        { word: 'en dag', clean: 'dag', gender: 'en', bestemt: 'dagen', flertal: 'dage', x: 6.5, y: 36, icon: '☀️', sentence: 'Det er tirsdag i dag.' },
+        { word: 'et brød', clean: 'brød', gender: 'et', bestemt: 'brødet', flertal: 'brød', x: 6.5, y: 81, icon: '🍞', sentence: 'Hun køber et frisk brød.' },
+        { word: 'en pris', clean: 'pris', gender: 'en', bestemt: 'prisen', flertal: 'priser', x: 13.5, y: 91.5, icon: '🏷️', sentence: 'Skiltet viser varens pris.' },
+        { word: 'en mælk', clean: 'mælk', gender: 'en', bestemt: 'mælken', flertal: 'mælk', x: 15, y: 78, icon: '🥛', sentence: 'Hun køber en karton mælk.' },
+        { word: 'en flaske', clean: 'flaske', gender: 'en', bestemt: 'flasken', flertal: 'flasker', x: 19.5, y: 71, icon: '🍾', sentence: 'Der står en flaske vand.' },
+        { word: 'et æble', clean: 'æble', gender: 'et', bestemt: 'æblet', flertal: 'æbler', x: 22.5, y: 76, icon: '🍎', sentence: 'Drengen spiser et æble.' },
+        { word: 'en pose', clean: 'pose', gender: 'en', bestemt: 'posen', flertal: 'poser', x: 29, y: 63, icon: '🛍️', sentence: 'Hun bærer en pose.' },
+        { word: 'en bus', clean: 'bus', gender: 'en', bestemt: 'bussen', flertal: 'busser', x: 43.5, y: 47, icon: '🚌', sentence: 'Bussen kører ind til byen.' },
+        { word: 'en cykel', clean: 'cykel', gender: 'en', bestemt: 'cyklen', flertal: 'cykler', x: 53, y: 63, icon: '🚲', sentence: 'En cykel holder ved stationen.' },
+        { word: 'en time', clean: 'time', gender: 'en', bestemt: 'timen', flertal: 'timer', x: 48.5, y: 15.5, icon: '🕐', sentence: 'Toget kører om en time.' },
+        { word: 'en morgen', clean: 'morgen', gender: 'en', bestemt: 'morgenen', flertal: 'morgener', x: 57, y: 7.5, icon: '🌅', sentence: 'Hun rejser tidligt om morgenen.' },
+        { word: 'en aften', clean: 'aften', gender: 'en', bestemt: 'aftenen', flertal: 'aftener', x: 66.5, y: 7.5, icon: '🌆', sentence: 'Toget kører om aftenen.' },
+        { word: 'en nat', clean: 'nat', gender: 'en', bestemt: 'natten', flertal: 'nætter', x: 71, y: 7.5, icon: '🌙', sentence: 'Det er mørkt om natten.' },
+        { word: 'et tog', clean: 'tog', gender: 'et', bestemt: 'toget', flertal: 'tog', x: 88, y: 46, icon: '🚆', sentence: 'Toget holder ved perronen.' },
+        { word: 'en billet', clean: 'billet', gender: 'en', bestemt: 'billetten', flertal: 'billetter', x: 81.5, y: 76, icon: '🎫', sentence: 'Hun viser sin billet.' }
     ];
 
     // ========================================================

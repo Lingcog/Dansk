@@ -569,31 +569,43 @@ export function renderOrdstillingIntroView(container, navigateFn) {
 
                 // Update bank
                 bankContainer.innerHTML = '';
+                const usedWords = [...userSlots].filter(Boolean);
+                const availableCounts = {};
+                task.scrambled.forEach(w => availableCounts[w] = (availableCounts[w] || 0) + 1);
+                usedWords.forEach(w => {
+                    if (availableCounts[w]) availableCounts[w]--;
+                });
+
                 task.scrambled.forEach((word) => {
-                    const isPlaced = userSlots.includes(word);
                     const btn = document.createElement('button');
-                    btn.className = `puzzle-word-btn ${isPlaced ? 'placed' : ''}`;
+                    btn.className = 'puzzle-word-btn';
                     btn.textContent = word;
-                    btn.disabled = isPlaced;
+
+                    const isAvailable = (availableCounts[word] || 0) > 0;
+                    if (!isAvailable) {
+                        btn.disabled = true;
+                        btn.classList.add('placed');
+                    }
 
                     btn.onclick = () => {
                         const emptyIdx = userSlots.indexOf(null);
                         if (emptyIdx !== -1) {
                             userSlots[emptyIdx] = word;
                             updateSlotsAndBank();
-                            checkAnswer();
                         }
                     };
                     bankContainer.appendChild(btn);
                 });
+
+                // Auto-evaluate when all 4 slots are filled, or clear feedback
+                if (!userSlots.includes(null)) {
+                    checkAnswer();
+                } else {
+                    feedbackBox.innerHTML = '';
+                }
             }
 
             function checkAnswer() {
-                if (userSlots.includes(null)) {
-                    feedbackBox.innerHTML = '';
-                    return;
-                }
-
                 // All filled: check correctness
                 const isCorrect = userSlots.every((w, i) => w === task.correct[i]);
                 const sentence = `${userSlots[0]} ${userSlots[1]} ${userSlots[2]} ${userSlots[3]}.`;
@@ -639,6 +651,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             updateSlotsAndBank();
         }
 
+        renderCurrentTask();
         container.appendChild(puzzleWrapper);
     }
 
@@ -3039,8 +3052,10 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 border-radius: 12px;
                 min-height: 70px;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                gap: 4px;
                 padding: 0.6rem;
                 text-align: center;
                 transition: all 0.25s;
@@ -3053,9 +3068,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 cursor: pointer;
             }
             .puzzle-slot.slot-0.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+            .puzzle-slot.slot-0.filled .slot-text { color: #4ade80; }
             .puzzle-slot.slot-1.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            .puzzle-slot.slot-1.filled .slot-text { color: #f87171; }
             .puzzle-slot.slot-2.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+            .puzzle-slot.slot-2.filled .slot-text { color: #60a5fa; }
             .puzzle-slot.slot-3.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+            .puzzle-slot.slot-3.filled .slot-text { color: #c084fc; }
 
             .puzzle-slots-5 {
                 grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));

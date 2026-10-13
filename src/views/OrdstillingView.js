@@ -65,6 +65,7 @@ export function renderOrdstillingView(container, navigateFn) {
 
     const altLevels = [
         { key: 'alt_tid', icon: '🕒' },
+        { key: 'alt_konjunktion', icon: '🔗' },
         { key: 'alt_holdning', icon: '🌤️' },
         { key: 'alt_sted', icon: '📍' }
     ];

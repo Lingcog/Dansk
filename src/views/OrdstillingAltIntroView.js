@@ -7,6 +7,10 @@ export function renderOrdstillingAltIntroView(container, navigateFn, type = 'tid
         renderFokusPaaTid(container, navigateFn);
         return;
     }
+    if (type === 'konjunktion') {
+        renderFokusPaaKonjunktion(container, navigateFn);
+        return;
+    }
     if (type === 'sted') {
         renderFokusPaaSted(container, navigateFn);
         return;
@@ -1135,6 +1139,563 @@ function setupTidPuzzleExercise(container) {
 }
 
 // ========================================================
+// --- FOKUS PÅ KONJUNKTIONER: 4 ENKLE LED (INVERSION)
+// ========================================================
+function renderFokusPaaKonjunktion(container, navigateFn) {
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container';
+
+    // Top bar with back button
+    const topBar = document.createElement('div');
+    topBar.className = 'top-bar';
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-btn';
+    backBtn.innerHTML = `← ${getTranslation('back')}`;
+    backBtn.onclick = () => navigateFn('ordstilling');
+    topBar.appendChild(backBtn);
+    viewContainer.appendChild(topBar);
+
+    // Title
+    const title = document.createElement('h1');
+    title.textContent = getTranslation('konj_page_title');
+    viewContainer.appendChild(title);
+
+    // Grammar Terms Toggle
+    const grammarToggle = createGrammarToggle(viewContainer);
+    viewContainer.appendChild(grammarToggle);
+
+    // Grammar System Banner
+    const grammarBanner = document.createElement('div');
+    grammarBanner.className = 'grammar-system-banner';
+    grammarBanner.innerHTML = `
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #06b6d4;"></span> <strong style="color: #38bdf8;">Konjunktion + ledsætning</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+    `;
+    viewContainer.appendChild(grammarBanner);
+
+    // Hero Explanation Card
+    const introCard = document.createElement('div');
+    introCard.className = 'intro-hero-card';
+    introCard.innerHTML = `
+        <h2>${getTranslation('konj_hero_title')}</h2>
+        <p class="hero-desc">
+            ${getTranslation('konj_hero_desc')}
+        </p>
+    `;
+    viewContainer.appendChild(introCard);
+
+    // Hero Image with 4 multilingual frames & dynamic overlay (conjunction/subclause first)
+    const imgWrapper = document.createElement('div');
+    imgWrapper.className = 'hero-image-wrapper photo-overlay-container';
+    imgWrapper.innerHTML = `
+        <div class="photo-overlay-wrap">
+            <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('konj_hero_img_alt')}" class="hero-image">
+            <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
+                <defs>
+                    <marker id="arrowhead-konj-cyan" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#06b6d4" />
+                    </marker>
+                    <marker id="arrowhead-konj-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+                    </marker>
+                    <marker id="arrowhead-konj-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
+                    </marker>
+                    <marker id="arrowhead-konj-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                    </marker>
+                </defs>
+                <!-- Arrow 1: Fra Boks 1 (Ledsætning) til himmel/baggrund -->
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#06b6d4" stroke-width="4" marker-end="url(#arrowhead-konj-cyan)" />
+                <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
+                <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-konj-red)" />
+                <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
+                <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-konj-green)" />
+                <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-konj-blue)" />
+            </svg>
+            <!-- Box 1: Hvornår eller hvorfor? (Ledsætning forrest = 1. plads!) -->
+            <div class="photo-bubble bubble-4">
+                <div class="bubble-q">1. ${getTranslation('konj_q1')}</div>
+                <div class="bubble-ans ans-cyan">Da det regnede,</div>
+            </div>
+            <!-- Box 2: Hvad laver personen eller tingen? (Handlingen er altid nr. 2!) -->
+            <div class="photo-bubble bubble-2">
+                <div class="bubble-q">2. ${getTranslation('konj_q2')}</div>
+                <div class="bubble-ans ans-red">cyklede</div>
+            </div>
+            <!-- Box 3: Hvad eller hvem taler vi om? (Personen rykker om bagved) -->
+            <div class="photo-bubble bubble-1">
+                <div class="bubble-q">3. ${getTranslation('konj_q3')}</div>
+                <div class="bubble-ans ans-green">en kvinde</div>
+            </div>
+            <!-- Box 4: Hvor sker det? (Stedet til sidst) -->
+            <div class="photo-bubble bubble-3">
+                <div class="bubble-q">4. ${getTranslation('konj_q4')}</div>
+                <div class="bubble-ans ans-blue">på gaden</div>
+            </div>
+        </div>
+    `;
+    const photoWrap = imgWrapper.querySelector('.photo-overlay-wrap');
+    const toggleBar = createCleanIllustrationToggle(photoWrap);
+    imgWrapper.insertBefore(toggleBar, photoWrap);
+
+    viewContainer.appendChild(imgWrapper);
+
+    // 4-Step Overview Grid
+    const stepGrid = document.createElement('div');
+    stepGrid.className = 'simple-steps-grid';
+
+    const stepItems = [
+        {
+            num: '1',
+            q: getTranslation('konj_q1'),
+            ans: 'Da det regnede,',
+            colorClass: 'step-cyan',
+            icon: '🔗',
+            note: getTranslation('konj_note_1'),
+            grammar: getTranslation('konj_g1')
+        },
+        {
+            num: '2',
+            q: getTranslation('konj_q2'),
+            ans: 'cyklede',
+            colorClass: 'step-red',
+            icon: '🚲',
+            note: getTranslation('konj_note_2'),
+            grammar: getTranslation('konj_g2')
+        },
+        {
+            num: '3',
+            q: getTranslation('konj_q3'),
+            ans: 'en kvinde',
+            colorClass: 'step-green',
+            icon: '👤',
+            note: getTranslation('konj_note_3'),
+            grammar: getTranslation('konj_g3')
+        },
+        {
+            num: '4',
+            q: getTranslation('konj_q4'),
+            ans: 'på gaden',
+            colorClass: 'step-blue',
+            icon: '📍',
+            note: getTranslation('konj_note_4'),
+            grammar: getTranslation('konj_g4')
+        }
+    ];
+
+    stepItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `simple-step-card ${item.colorClass}`;
+        card.innerHTML = `
+            <div class="step-badge">${item.num}</div>
+            <div class="step-card-content">
+                <div class="step-q">${item.icon} ${item.q}</div>
+                <div class="step-ans">${item.ans}</div>
+                <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
+                <div class="grammar-badge">🏷️ ${item.grammar}</div>
+            </div>
+        `;
+        stepGrid.appendChild(card);
+    });
+    viewContainer.appendChild(stepGrid);
+
+    // Result sentence banner
+    const resultBox = document.createElement('div');
+    resultBox.className = 'finished-sentence-banner';
+    resultBox.innerHTML = `
+        <div class="banner-label">${getTranslation('konj_finished_label')}</div>
+        <div class="banner-sentence">
+            <span class="word-cyan">Da det regnede,</span> 
+            <span class="word-red">cyklede</span> 
+            <span class="word-green">en kvinde</span> 
+            <span class="word-blue">på gaden</span>.
+        </div>
+        <button class="listen-btn" title="${getTranslation('konj_listen_btn')}">
+            <span>🔊</span> ${getTranslation('konj_listen_btn')}
+        </button>
+    `;
+    const listenBtn = resultBox.querySelector('.listen-btn');
+    listenBtn.onclick = () => speakDanish("Da det regnede, cyklede en kvinde på gaden");
+    viewContainer.appendChild(resultBox);
+
+    // --- PRØV SELV AT LAVE EN SÆTNING ---
+    const tryHeader = document.createElement('div');
+    tryHeader.className = 'section-divider';
+    tryHeader.innerHTML = `
+        <h2>${getTranslation('konj_try_title')}</h2>
+        <p>${getTranslation('konj_try_desc')}</p>
+    `;
+    viewContainer.appendChild(tryHeader);
+
+    // Sub-tabs: 1) Trin-for-trin bygger 2) Puslespil
+    const exerciseTabs = document.createElement('div');
+    exerciseTabs.className = 'exercise-sub-tabs';
+    const ex1TabBtn = document.createElement('button');
+    ex1TabBtn.className = 'ex-sub-tab active';
+    ex1TabBtn.textContent = getTranslation('konj_tab_builder');
+
+    const ex2TabBtn = document.createElement('button');
+    ex2TabBtn.className = 'ex-sub-tab';
+    ex2TabBtn.textContent = getTranslation('konj_tab_puzzle');
+
+    exerciseTabs.appendChild(ex1TabBtn);
+    exerciseTabs.appendChild(ex2TabBtn);
+    viewContainer.appendChild(exerciseTabs);
+
+    const builderContainer = document.createElement('div');
+    builderContainer.className = 'exercise-panel active';
+
+    const puzzleContainer = document.createElement('div');
+    puzzleContainer.className = 'exercise-panel';
+    puzzleContainer.style.display = 'none';
+
+    viewContainer.appendChild(builderContainer);
+    viewContainer.appendChild(puzzleContainer);
+
+    ex1TabBtn.onclick = () => {
+        ex1TabBtn.classList.add('active');
+        ex2TabBtn.classList.remove('active');
+        builderContainer.style.display = 'block';
+        puzzleContainer.style.display = 'none';
+    };
+
+    ex2TabBtn.onclick = () => {
+        ex2TabBtn.classList.add('active');
+        ex1TabBtn.classList.remove('active');
+        puzzleContainer.style.display = 'block';
+        builderContainer.style.display = 'none';
+    };
+
+    setupKonjunktionStepBuilder(builderContainer);
+    setupKonjunktionPuzzleExercise(puzzleContainer);
+
+    container.appendChild(viewContainer);
+    ensureIntroStyles();
+}
+
+function setupKonjunktionStepBuilder(container) {
+    const categories = [
+        {
+            q: `1. ${getTranslation('konj_q1')} (${getTranslation('konj_builder_hint_1')})`,
+            colorClass: "step-cyan",
+            grammar: getTranslation('konj_g1'),
+            options: ["Da det regnede,", "Når solen skinner,", "Selvom det var koldt,", "Fordi hun havde travlt,", "Hvis vejret er godt,", "Mens det sneede,"]
+        },
+        {
+            q: `2. ${getTranslation('konj_q2')} (${getTranslation('konj_builder_hint_2')})`,
+            colorClass: "step-red",
+            grammar: getTranslation('konj_g2'),
+            options: ["cykler", "løber", "arbejder", "kører", "venter", "drikker kaffe"]
+        },
+        {
+            q: `3. ${getTranslation('konj_q3')} (${getTranslation('konj_builder_hint_3')})`,
+            colorClass: "step-green",
+            grammar: getTranslation('konj_g3'),
+            options: ["en kvinde", "en mand", "en hund", "læreren", "bussen", "folk"]
+        },
+        {
+            q: `4. ${getTranslation('konj_q4')} (${getTranslation('konj_builder_hint_4')})`,
+            colorClass: "step-blue",
+            grammar: getTranslation('konj_g4'),
+            options: ["på gaden", "i parken", "på skolen", "på stationen", "derhjemme", "i haven"]
+        }
+    ];
+
+    let selections = ["Da det regnede,", "cyklede", "en kvinde", "på gaden"];
+
+    const card = document.createElement('div');
+    card.className = 'step-builder-card';
+
+    const outputBox = document.createElement('div');
+    outputBox.className = 'builder-live-sentence';
+
+    function updateLiveSentence() {
+        outputBox.innerHTML = `
+            <div class="live-label">${getTranslation('konj_builder_live_label')}</div>
+            <div class="live-text">
+                <span class="word-cyan">${selections[0]}</span> 
+                <span class="word-red">${selections[1]}</span> 
+                <span class="word-green">${selections[2]}</span> 
+                <span class="word-blue">${selections[3]}</span>.
+            </div>
+            <button class="listen-btn-small" title="${getTranslation('konj_listen_pronunciation')}">🔊 ${getTranslation('konj_listen_pronunciation')}</button>
+        `;
+        const listenBtn = outputBox.querySelector('.listen-btn-small');
+        listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
+    }
+
+    const questionsList = document.createElement('div');
+    questionsList.className = 'builder-questions-list';
+
+    categories.forEach((cat, catIdx) => {
+        const qRow = document.createElement('div');
+        qRow.className = `builder-q-row ${cat.colorClass}`;
+
+        const qTitle = document.createElement('div');
+        qTitle.className = 'builder-q-title';
+        qTitle.innerHTML = `${cat.q} <span class="grammar-badge-inline">${cat.grammar}</span>`;
+        qRow.appendChild(qTitle);
+
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'builder-btn-grid';
+
+        cat.options.forEach(opt => {
+            const optBtn = document.createElement('button');
+            optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
+            optBtn.textContent = opt;
+
+            optBtn.onclick = () => {
+                selections[catIdx] = opt;
+                qRow.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('selected'));
+                optBtn.classList.add('selected');
+                updateLiveSentence();
+            };
+            optionsWrapper.appendChild(optBtn);
+        });
+
+        qRow.appendChild(optionsWrapper);
+        questionsList.appendChild(qRow);
+    });
+
+    card.appendChild(questionsList);
+    card.appendChild(outputBox);
+    container.appendChild(card);
+
+    updateLiveSentence();
+}
+
+function setupKonjunktionPuzzleExercise(container) {
+    const tasks = [
+        {
+            correct: ["Da det regnede,", "cyklede", "en kvinde", "på gaden"],
+            scrambled: ["på gaden", "Da det regnede,", "en kvinde", "cyklede"]
+        },
+        {
+            correct: ["Når solen skinner,", "løber", "en mand", "i parken"],
+            scrambled: ["en mand", "Når solen skinner,", "i parken", "løber"]
+        },
+        {
+            correct: ["Selvom det var koldt,", "arbejdede", "læreren", "i haven"],
+            scrambled: ["læreren", "i haven", "Selvom det var koldt,", "arbejdede"]
+        },
+        {
+            correct: ["Fordi bussen var forsinket,", "ventede", "folk", "på stationen"],
+            scrambled: ["på stationen", "ventede", "Fordi bussen var forsinket,", "folk"]
+        },
+        {
+            correct: ["Hvis det sner,", "kører", "bussen", "forsigtigt på vejen"],
+            scrambled: ["forsigtigt på vejen", "bussen", "Hvis det sner,", "kører"]
+        },
+        {
+            correct: ["Da klokken blev otte,", "ankom", "toget", "på perronen"],
+            scrambled: ["ankom", "på perronen", "Da klokken blev otte,", "toget"]
+        },
+        {
+            correct: ["Mens forældrene lavede mad,", "legede", "børnene", "i stuen"],
+            scrambled: ["børnene", "Mens forældrene lavede mad,", "i stuen", "legede"]
+        },
+        {
+            correct: ["Selvom hun var træt,", "læste", "pigen", "en bog i sengen"],
+            scrambled: ["en bog i sengen", "læste", "Selvom hun var træt,", "pigen"]
+        },
+        {
+            correct: ["Fordi det var weekend,", "sov", "familien", "længe derhjemme"],
+            scrambled: ["længe derhjemme", "familien", "Fordi det var weekend,", "sov"]
+        },
+        {
+            correct: ["Når timerne er slut,", "cykler", "eleverne", "hjem fra skolen"],
+            scrambled: ["eleverne", "hjem fra skolen", "Når timerne er slut,", "cykler"]
+        }
+    ];
+
+    let currentTaskIdx = 0;
+    let userSlots = [null, null, null, null];
+    const completedTasks = new Set();
+
+    const puzzleWrapper = document.createElement('div');
+    puzzleWrapper.className = 'puzzle-wrapper';
+
+    function renderCurrentTask() {
+        puzzleWrapper.innerHTML = '';
+        userSlots = [null, null, null, null];
+
+        const task = tasks[currentTaskIdx];
+
+        const header = document.createElement('div');
+        header.className = 'puzzle-header';
+
+        const pillsRow = document.createElement('div');
+        pillsRow.className = 'puzzle-pills-row';
+        tasks.forEach((_, tIdx) => {
+            const pill = document.createElement('button');
+            pill.className = `puzzle-pill ${tIdx === currentTaskIdx ? 'active' : ''} ${completedTasks.has(tIdx) ? 'completed' : ''}`;
+            pill.textContent = tIdx + 1;
+            pill.title = `${getTranslation('konj_puzzle_pill_title')} ${tIdx + 1}`;
+            pill.onclick = () => {
+                currentTaskIdx = tIdx;
+                renderCurrentTask();
+            };
+            pillsRow.appendChild(pill);
+        });
+        header.appendChild(pillsRow);
+
+        const counterEl = document.createElement('div');
+        counterEl.className = 'puzzle-counter';
+        counterEl.textContent = getTranslation('konj_puzzle_counter', { current: currentTaskIdx + 1, total: tasks.length });
+        header.appendChild(counterEl);
+
+        const guideEl = document.createElement('div');
+        guideEl.className = 'puzzle-guide';
+        guideEl.innerHTML = `
+            ${getTranslation('konj_puzzle_guide')}
+            <br><small>${getTranslation('konj_puzzle_guide_sub')}</small>
+        `;
+        header.appendChild(guideEl);
+
+        puzzleWrapper.appendChild(header);
+
+        const slotsContainer = document.createElement('div');
+        slotsContainer.className = 'puzzle-slots';
+
+        const slotPrompts = [
+            { text: getTranslation('konj_slot_hint_1'), grammar: getTranslation('konj_g1') },
+            { text: getTranslation('konj_slot_hint_2'), grammar: getTranslation('konj_g2') },
+            { text: getTranslation('konj_slot_hint_3'), grammar: getTranslation('konj_g3') },
+            { text: getTranslation('konj_slot_hint_4'), grammar: getTranslation('konj_g4') }
+        ];
+
+        slotPrompts.forEach((promptItem, idx) => {
+            const slot = document.createElement('div');
+            const colorClass = idx === 0 ? 'konj-slot-cyan' : idx === 1 ? 'konj-slot-red' : idx === 2 ? 'konj-slot-green' : 'konj-slot-blue';
+            slot.className = `puzzle-slot ${colorClass}`;
+            slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+            slot.dataset.idx = idx;
+
+            slot.onclick = () => {
+                if (userSlots[idx]) {
+                    userSlots[idx] = null;
+                    updateSlotsAndBank();
+                }
+            };
+
+            slotsContainer.appendChild(slot);
+        });
+        puzzleWrapper.appendChild(slotsContainer);
+
+        const bankContainer = document.createElement('div');
+        bankContainer.className = 'puzzle-bank';
+        puzzleWrapper.appendChild(bankContainer);
+
+        const feedbackBox = document.createElement('div');
+        feedbackBox.className = 'puzzle-feedback';
+        puzzleWrapper.appendChild(feedbackBox);
+
+        function updateSlotsAndBank() {
+            slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
+                const word = userSlots[idx];
+                if (word) {
+                    slotEl.classList.add('filled');
+                    slotEl.innerHTML = `
+                        <span class="slot-number">${idx + 1}</span>
+                        <span class="slot-text">${word}</span>
+                        <span class="slot-remove">✕</span>
+                    `;
+                } else {
+                    slotEl.classList.remove('filled');
+                    slotEl.innerHTML = `<span class="slot-hint">${slotPrompts[idx].text}</span><span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>`;
+                }
+            });
+
+            bankContainer.innerHTML = '';
+            const usedWords = [...userSlots].filter(Boolean);
+            const availableCounts = {};
+            task.scrambled.forEach(w => availableCounts[w] = (availableCounts[w] || 0) + 1);
+            usedWords.forEach(w => {
+                if (availableCounts[w]) availableCounts[w]--;
+            });
+
+            task.scrambled.forEach((word) => {
+                const btn = document.createElement('button');
+                btn.className = 'puzzle-word-btn';
+                btn.textContent = word;
+
+                const isAvailable = (availableCounts[word] || 0) > 0;
+                if (!isAvailable) {
+                    btn.disabled = true;
+                    btn.classList.add('placed');
+                }
+
+                btn.onclick = () => {
+                    const emptyIdx = userSlots.indexOf(null);
+                    if (emptyIdx !== -1) {
+                        userSlots[emptyIdx] = word;
+                        updateSlotsAndBank();
+                    }
+                };
+                bankContainer.appendChild(btn);
+            });
+
+            if (!userSlots.includes(null)) {
+                checkAnswer();
+            } else {
+                feedbackBox.innerHTML = '';
+            }
+        }
+
+        function checkAnswer() {
+            const isCorrect = userSlots.every((w, i) => w === task.correct[i]);
+            const sentence = `${userSlots[0]} ${userSlots[1]} ${userSlots[2]} ${userSlots[3]}.`;
+
+            if (isCorrect) {
+                completedTasks.add(currentTaskIdx);
+                pillsRow.querySelectorAll('.puzzle-pill').forEach((pill, idx) => {
+                    if (completedTasks.has(idx)) pill.classList.add('completed');
+                });
+
+                feedbackBox.innerHTML = `
+                    <div class="feedback-msg success">
+                        ${getTranslation('konj_puzzle_correct')} "<strong>${sentence}</strong>"
+                    </div>
+                    <div class="puzzle-action-row">
+                        <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${getTranslation('konj_listen_pronunciation')}</button>
+                        <button class="next-task-btn" id="puzzle-next-btn">
+                            ${currentTaskIdx < tasks.length - 1 ? getTranslation('konj_next_task') : getTranslation('konj_start_over')}
+                        </button>
+                    </div>
+                `;
+                feedbackBox.querySelector('#puzzle-listen-btn').onclick = () => speakDanish(sentence);
+                feedbackBox.querySelector('#puzzle-next-btn').onclick = () => {
+                    currentTaskIdx = (currentTaskIdx + 1) % tasks.length;
+                    renderCurrentTask();
+                };
+            } else {
+                feedbackBox.innerHTML = `
+                    <div class="feedback-msg error">
+                        ${getTranslation('konj_puzzle_error')}
+                    </div>
+                    <button class="retry-task-btn" id="puzzle-retry-btn">${getTranslation('konj_retry')}</button>
+                `;
+                feedbackBox.querySelector('#puzzle-retry-btn').onclick = () => {
+                    userSlots = [null, null, null, null];
+                    feedbackBox.innerHTML = '';
+                    updateSlotsAndBank();
+                };
+            }
+        }
+
+        updateSlotsAndBank();
+    }
+
+    renderCurrentTask();
+    container.appendChild(puzzleWrapper);
+}
+
+// ========================================================
 // --- FOKUS PÅ HOLDNING: 4 ENKLE SPØRGSMÅL (IDENTISK MED 1. DEL)
 // ========================================================
 function renderFokusPaaHoldning(container, navigateFn) {
@@ -2107,8 +2668,10 @@ function ensureIntroStyles() {
             border-radius: 12px;
             min-height: 70px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 4px;
             padding: 0.6rem;
             text-align: center;
             transition: all 0.25s;
@@ -2121,6 +2684,16 @@ function ensureIntroStyles() {
         .puzzle-slot.tid-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.tid-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
         .puzzle-slot.tid-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+
+        /* Konjunktion slot colors */
+        .puzzle-slot.konj-slot-cyan.filled { border-color: #06b6d4; background: rgba(6, 182, 212, 0.15); }
+        .puzzle-slot.konj-slot-cyan.filled .slot-text { color: #38bdf8; }
+        .puzzle-slot.konj-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+        .puzzle-slot.konj-slot-red.filled .slot-text { color: #f87171; }
+        .puzzle-slot.konj-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+        .puzzle-slot.konj-slot-green.filled .slot-text { color: #4ade80; }
+        .puzzle-slot.konj-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+        .puzzle-slot.konj-slot-blue.filled .slot-text { color: #60a5fa; }
 
         /* Sted slot colors */
         .puzzle-slot.sted-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }

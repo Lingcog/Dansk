@@ -182,6 +182,20 @@ export const ordstillingData = {
             }
         ]
     },
+    alt_konjunktion: {
+        title: "Fokus på konjunktioner",
+        illustration: "foto_metafor.jpg",
+        explanation: "<strong>Reglen for konjunktioner:</strong> Når en ledsætning indledes med en konjunktion (fx 'Da det regnede,'), tæller hele ledsætningen som 1. plads. Derfor skal handlings-motoren (verbet) stå på 2. plads – lige efter ledsætningen!",
+        sentences: [
+            {
+                lockedPrefix: "Da det regnede,",
+                lockedSuffix: ".",
+                draggable: ["cyklede", "en", "kvinde", "på gaden"],
+                correct: "cyklede en kvinde på gaden",
+                hint: "Husk at verbet (cyklede) skal stå lige efter ledsætningen på 2. plads, efterfulgt af subjektet (en kvinde)."
+            }
+        ]
+    },
     alt_holdning: {
         title: "Fokus på holdning",
         illustration: "foto_metafor.jpg",

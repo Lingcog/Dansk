@@ -43,7 +43,13 @@ export const MODEL_A_GRAMMAR_TERMS = {
     tid_g1: "Tidsadverbium",
     tid_g2: "Verbum (inversion: 2. plads!)",
     tid_g3: "Substantiv / Pronomen (subjekt)",
-    tid_g4: "Præposition (sted)"
+    tid_g4: "Præposition (sted)",
+
+    // Fokus på konjunktioner (Inversion)
+    konj_g1: "Konjunktion + ledsætning (1. plads)",
+    konj_g2: "Verbum (inversion: 2. plads!)",
+    konj_g3: "Substantiv / Pronomen (subjekt)",
+    konj_g4: "Præposition (sted)"
 };
 
 export const translations = {};

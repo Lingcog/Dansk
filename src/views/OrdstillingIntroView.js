@@ -1,6 +1,7 @@
 import { navigate } from '../main.js';
 import { getTranslation } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
+import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
 
 export function renderOrdstillingIntroView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -154,6 +155,10 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 </div>
             </div>
         `;
+        const photoWrap1 = imgWrapper.querySelector('.photo-overlay-wrap');
+        const toggleBar1 = createCleanIllustrationToggle(photoWrap1);
+        imgWrapper.insertBefore(toggleBar1, photoWrap1);
+
         part1Container.appendChild(imgWrapper);
 
         // 4 Step Overview Grid
@@ -713,6 +718,10 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 </div>
             </div>
         `;
+        const photoWrap2 = imgWrapper.querySelector('.photo-overlay-wrap');
+        const toggleBar2 = createCleanIllustrationToggle(photoWrap2);
+        imgWrapper.insertBefore(toggleBar2, photoWrap2);
+
         part2Container.appendChild(imgWrapper);
 
         // 7-Step Overview Grid

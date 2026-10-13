@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
+import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
 
 export function renderOrdstillingAltIntroView(container, navigateFn, type = 'tid') {
     if (type === 'tid') {
@@ -133,6 +134,10 @@ function renderFokusPaaSted(container, navigateFn) {
             </div>
         </div>
     `;
+    const photoWrap = imgWrapper.querySelector('.photo-overlay-wrap');
+    const toggleBar = createCleanIllustrationToggle(photoWrap);
+    imgWrapper.insertBefore(toggleBar, photoWrap);
+
     viewContainer.appendChild(imgWrapper);
 
     // 4-Step Overview Grid
@@ -684,6 +689,10 @@ function renderFokusPaaTid(container, navigateFn) {
             </div>
         </div>
     `;
+    const photoWrap = imgWrapper.querySelector('.photo-overlay-wrap');
+    const toggleBar = createCleanIllustrationToggle(photoWrap);
+    imgWrapper.insertBefore(toggleBar, photoWrap);
+
     viewContainer.appendChild(imgWrapper);
 
     // 4-Step Overview Grid
@@ -1229,6 +1238,10 @@ function renderFokusPaaHoldning(container, navigateFn) {
             </div>
         </div>
     `;
+    const photoWrap = imgWrapper.querySelector('.photo-overlay-wrap');
+    const toggleBar = createCleanIllustrationToggle(photoWrap);
+    imgWrapper.insertBefore(toggleBar, photoWrap);
+
     viewContainer.appendChild(imgWrapper);
 
     // 4-Step Overview Grid

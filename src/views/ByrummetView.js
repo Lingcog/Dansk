@@ -858,7 +858,6 @@ export function renderByrummetView(container, navigateFn) {
                             if (isMatch) {
                                 feedbackBox.className = 'speech-feedback-box correct';
                                 feedbackBox.innerHTML = `${getTranslation('vrimmel_mic_correct')} <strong>"${spoken}"</strong> ✓`;
-                                speakDanish("Rigtigt");
                             } else {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.innerHTML = getTranslation('vrimmel_mic_incorrect').replace('{spoken}', spoken);
@@ -1117,25 +1116,34 @@ export function renderByrummetView(container, navigateFn) {
                 if (opt.correct) {
                     btn.classList.add('selected-correct');
                     selectedCount++;
-                    speakDanish(opt.text);
 
                     if (selectedCount === m.targetCount) {
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ${getTranslation('byrum_detektiv_complete')}
+                                ✓ Rigtigt svaret! ${getTranslation('byrum_detektiv_complete')}
                             </div>
                             <button class="mission-next-btn" id="next-byrum-mission">
                                 ${currMissionIdx < byrumMissions.length - 1 ? getTranslation('byrum_detektiv_next') : getTranslation('byrum_detektiv_restart')}
                             </button>
                         `;
-                        speakDanish("Rigtigt");
                         feedbackEl.querySelector('#next-byrum-mission').onclick = () => {
                             currMissionIdx = (currMissionIdx + 1) % byrumMissions.length;
                             renderByrumMission();
                         };
+                    } else {
+                        feedbackEl.innerHTML = `
+                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
+                                ✓ Rigtigt svaret! (${selectedCount} af ${m.targetCount})
+                            </div>
+                        `;
                     }
                 } else {
                     btn.classList.add('selected-wrong');
+                    feedbackEl.innerHTML = `
+                        <div style="color: #f87171; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
+                            ✗ Forkert svaret. Prøv igen!
+                        </div>
+                    `;
                     setTimeout(() => btn.classList.remove('selected-wrong'), 800);
                 }
             };
@@ -1351,6 +1359,9 @@ export function renderByrummetView(container, navigateFn) {
             const optRow = document.createElement('div');
             optRow.className = 'story-options-row';
 
+            const stepFeedback = document.createElement('div');
+            stepFeedback.className = 'story-step-feedback';
+
             step.options.forEach(opt => {
                 const optBtn = document.createElement('button');
                 optBtn.className = 'story-opt-btn';
@@ -1359,7 +1370,7 @@ export function renderByrummetView(container, navigateFn) {
                 optBtn.onclick = () => {
                     if (opt.correct) {
                         optBtn.classList.add('correct');
-                        speakDanish(opt.text);
+                        stepFeedback.innerHTML = `<div style="color: #4ade80; font-weight: 700; margin-top: 0.6rem;">✓ Rigtigt svaret!</div>`;
 
                         optRow.querySelectorAll('.story-opt-btn').forEach(b => {
                             b.style.pointerEvents = 'none';
@@ -1376,11 +1387,10 @@ export function renderByrummetView(container, navigateFn) {
                                 completeBox.style.display = 'block';
                                 completeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                             }
-                            speakDanish("Flot klaret! Du har gennemført historien.");
                         }
                     } else {
                         optBtn.classList.add('wrong');
-                        speakDanish("Prøv igen!");
+                        stepFeedback.innerHTML = `<div style="color: #f87171; font-weight: 700; margin-top: 0.6rem;">✗ Forkert svaret. Prøv igen!</div>`;
                         setTimeout(() => optBtn.classList.remove('wrong'), 700);
                     }
                 };
@@ -1388,6 +1398,7 @@ export function renderByrummetView(container, navigateFn) {
             });
 
             stepCard.appendChild(optRow);
+            stepCard.appendChild(stepFeedback);
             stepsHolder.appendChild(stepCard);
         });
         storyContainer.appendChild(stepsHolder);
@@ -1403,9 +1414,6 @@ export function renderByrummetView(container, navigateFn) {
                 🎉 Flot klaret! Du har gennemført historien.
             </div>
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
-                <button class="story-opt-btn" id="btn-listen-byrum-story" style="background: #0284c7; color: white;">
-                    🔊 Lyt til hele historien
-                </button>
                 <button class="story-opt-btn" id="btn-next-byrum-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
                     ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
                 </button>
@@ -1413,9 +1421,6 @@ export function renderByrummetView(container, navigateFn) {
         `;
         storyContainer.appendChild(completeBox);
 
-        completeBox.querySelector('#btn-listen-byrum-story').onclick = () => {
-            speakDanish(story.fullStoryText);
-        };
         completeBox.querySelector('#btn-next-byrum-story').onclick = () => {
             currByrumStoryIdx = (currByrumStoryIdx + 1) % byrumStories.length;
             renderActiveByrumStory();
@@ -1514,7 +1519,6 @@ export function renderByrummetView(container, navigateFn) {
             categoryCard.querySelector('#byrum-category-next-tab-btn').onclick = () => {
                 switchTab('tab_saetning');
             };
-            speakDanish("Flot klaret! Du har gennemført alle opgaver med overemner og underemner.");
             return;
         }
 
@@ -1567,10 +1571,9 @@ export function renderByrummetView(container, navigateFn) {
                     if (opt.correct) {
                         btn.classList.add('selected-correct');
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
-                        speakDanish(`Rigtigt! ${opt.text}`);
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt! Overemnet er ${opt.text}
+                                ✓ Rigtigt svaret! Overemnet er ${opt.text}
                             </div>
                             <button class="mission-next-btn" id="next-category-btn">Næste opgave ➔</button>
                         `;
@@ -1580,7 +1583,11 @@ export function renderByrummetView(container, navigateFn) {
                         };
                     } else {
                         btn.classList.add('selected-wrong');
-                        speakDanish("Prøv igen!");
+                        feedbackEl.innerHTML = `
+                            <div style="color: #f87171; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
+                                ✗ Forkert svaret. Prøv igen!
+                            </div>
+                        `;
                         setTimeout(() => btn.classList.remove('selected-wrong'), 700);
                     }
                 };
@@ -1630,13 +1637,11 @@ export function renderByrummetView(container, navigateFn) {
                     if (opt.correct) {
                         btn.classList.add('selected-correct');
                         selectedCount++;
-                        speakDanish(opt.text);
 
                         if (selectedCount === task.targetCount) {
-                            speakDanish("Flot! Du fandt alle tre underemner.");
                             feedbackEl.innerHTML = `
                                 <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                    🎉 Flot! Du fandt alle 3 underemner.
+                                    🎉 Rigtigt svaret! Du fandt alle 3 underemner.
                                 </div>
                                 <button class="mission-next-btn" id="next-category-btn">
                                     ${currByrumCategoryIdx < byrumCategoryTasks.length - 1 ? 'Næste opgave ➔' : 'Se resultat 🎉'}
@@ -1646,10 +1651,20 @@ export function renderByrummetView(container, navigateFn) {
                                 currByrumCategoryIdx++;
                                 renderByrumCategoryTask();
                             };
+                        } else {
+                            feedbackEl.innerHTML = `
+                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
+                                    ✓ Rigtigt svaret! (${selectedCount} af ${task.targetCount})
+                                </div>
+                            `;
                         }
                     } else {
                         btn.classList.add('selected-wrong');
-                        speakDanish("Prøv igen!");
+                        feedbackEl.innerHTML = `
+                            <div style="color: #f87171; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
+                                ✗ Forkert svaret. Prøv igen!
+                            </div>
+                        `;
                         setTimeout(() => btn.classList.remove('selected-wrong'), 700);
                     }
                 };
@@ -1788,22 +1803,22 @@ export function renderByrummetView(container, navigateFn) {
                     slotV.style.color = '#fca5a5';
 
                     previewText.innerHTML = `
-                        🎉 <span class="grammar-word word-substantiv">${task.subjekt}</span> 
-                        <span class="grammar-word word-verbum">${task.verbum}</span> 
-                        <span class="grammar-word word-substantiv">${task.objekt}</span> 
-                        <span class="grammar-word word-sted">${task.adverbial}</span>.
+                        <div style="color: #4ade80; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">
+                            ✓ Rigtigt svaret!
+                        </div>
+                        <div style="font-size: 1.25rem;">
+                            <span class="grammar-word word-substantiv">${task.subjekt}</span> 
+                            <span class="grammar-word word-verbum">${task.verbum}</span> 
+                            <span class="grammar-word word-substantiv">${task.objekt}</span> 
+                            <span class="grammar-word word-sted">${task.adverbial}</span>.
+                        </div>
                     `;
-                    speakDanish(task.correctText);
 
                     actionArea.innerHTML = `
-                        <button class="listen-word-btn" style="display: inline-flex; margin-right: 0.8rem;" id="listen-byrum-sent">
-                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
-                        </button>
                         <button class="mission-next-btn" style="margin-top: 0;" id="next-byrum-sent-task">
                             ${currByrumSentenceIdx < byrumSentenceTasks.length - 1 ? getTranslation('builder_next_btn') : getTranslation('builder_restart_btn')}
                         </button>
                     `;
-                    actionArea.querySelector('#listen-byrum-sent').onclick = () => speakDanish(task.correctText);
                     actionArea.querySelector('#next-byrum-sent-task').onclick = () => {
                         currByrumSentenceIdx = (currByrumSentenceIdx + 1) % byrumSentenceTasks.length;
                         renderByrumSentenceBuilder();
@@ -1812,8 +1827,14 @@ export function renderByrummetView(container, navigateFn) {
                     slotV.innerHTML = `<span class="slot-role-tag">${getTranslation('builder_slot_verbum')}</span><span>${v} ✕</span>`;
                     slotV.style.borderColor = '#ef4444';
                     slotV.style.color = '#f87171';
-                    previewText.textContent = getTranslation('builder_wrong_feedback');
-                    speakDanish(`Nej, prøv et andet verbum`);
+                    previewText.innerHTML = `
+                        <div style="color: #f87171; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">
+                            ✗ Forkert svaret.
+                        </div>
+                        <div style="color: #94a3b8; font-size: 1rem;">
+                            ${getTranslation('builder_wrong_feedback')}
+                        </div>
+                    `;
                 }
             };
             verbChipsList.appendChild(btn);

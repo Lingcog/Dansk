@@ -719,69 +719,76 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         }
 
         /* =========================================
-           TAB 4: KONTEKST-SKIFTET
+           TAB 4: OVEREMNE OG UNDEREMNE (Model C)
            ========================================= */
-        .context-card {
+        .category-card {
             max-width: 800px;
             margin: 0 auto;
             background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 2rem;
-        }
-        .context-word-banner {
             text-align: center;
+        }
+        .category-badge {
+            display: inline-block;
+            background: #8b5cf6;
+            color: white;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+        .category-subwords-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin: 1.2rem 0 1.6rem;
+        }
+        .category-word-chip {
             background: #0f172a;
             border: 2px solid #38bdf8;
-            padding: 1.2rem;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-        }
-        .context-word-banner h2 {
-            font-size: 1.8rem;
-            color: #38bdf8;
-            margin-bottom: 0.3rem;
-        }
-        .context-scenes-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
-        }
-        .scene-role-card {
-            background: #1e293b;
-            border-radius: 14px;
-            padding: 1.2rem;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .scene-role-card h4 {
-            color: #f59e0b;
+            color: #f8fafc;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 700;
             font-size: 1.1rem;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
-        .role-choice-btn {
-            display: block;
-            width: 100%;
-            background: #334155;
+        .category-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+        .category-opt-btn {
+            background: #1e293b;
+            border: 2px solid #334155;
             color: white;
-            border: none;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            text-align: left;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            font-weight: 600;
+            padding: 1.1rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-align: center;
         }
-        .role-choice-btn:hover {
-            background: #475569;
+        .category-opt-btn:hover {
+            border-color: #38bdf8;
+            transform: translateY(-2px);
         }
-        .role-choice-btn.correct {
-            background: #22c55e !important;
-            color: #0f172a;
+        .category-opt-btn.selected-correct {
+            background: rgba(34, 197, 94, 0.25) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+        }
+        .category-opt-btn.selected-wrong {
+            background: rgba(239, 68, 68, 0.25) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
         }
 
         /* =========================================
@@ -1733,59 +1740,242 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     panelsHolder.appendChild(historiePanel);
 
     // ========================================================
-    // --- 4. DEL: KONTEKST-SKIFTET (SAMME ORD I FLERE SCENER)
+    // --- 4. DEL: OVEREMNE OG UNDEREMNE (Model C)
     // ========================================================
     const kontekstPanel = document.createElement('div');
     kontekstPanel.className = 'kv-panel';
     kontekstPanel.dataset.panel = 'tab_kontekst';
 
-    const contextCard = document.createElement('div');
-    contextCard.className = 'context-card';
-    contextCard.innerHTML = `
-        <div class="context-word-banner">
-            <h2>${getTranslation('koekken_context_title')}</h2>
-            <p style="color: #94a3b8;">${getTranslation('koekken_context_desc')}</p>
-        </div>
+    const kitchenCategoryTasks = [
+        {
+            type: "find_overemne",
+            subwords: ["et bord 🪑", "en stol 🪑", "en seng 🛏️"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Møbler 🪑", correct: true },
+                { text: "Transport 🚗", correct: false },
+                { text: "Vejr ☀️", correct: false }
+            ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en hund 🐕", "en kat 🐈", "en fisk 🐟"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Dyr og kæledyr 🐾", correct: true },
+                { text: "Bygninger 🏢", correct: false },
+                { text: "Tøj 👟", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Service og køkkenting 🍽️",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en tallerken 🍽️", correct: true },
+                { text: "en kop ☕", correct: true },
+                { text: "et glas 🥛", correct: true },
+                { text: "et træ 🌳", correct: false },
+                { text: "en cykel 🚲", correct: false },
+                { text: "en sol ☀️", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Mad og drikke 🍞",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "brød 🍞", correct: true },
+                { text: "mælk 🥛", correct: true },
+                { text: "kaffe ☕", correct: true },
+                { text: "en lampe 💡", correct: false },
+                { text: "en dør 🚪", correct: false },
+                { text: "en radio 📻", correct: false }
+            ]
+        }
+    ];
 
-        <div class="context-scenes-grid">
-            <!-- Scene 1: I køkkenet -->
-            <div class="scene-role-card">
-                <h4>${getTranslation('koekken_context_s1_title')}</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('koekken_context_s1_q')}</p>
-                <button class="role-choice-btn" data-correct="true">${getTranslation('koekken_context_s1_a')}</button>
-                <button class="role-choice-btn" data-correct="false">${getTranslation('koekken_context_s1_b')}</button>
-            </div>
+    let currKitchenCategoryIdx = 0;
+    const categoryCard = document.createElement('div');
+    categoryCard.className = 'category-card';
 
-            <!-- Scene 2: I undervisningslokalet -->
-            <div class="scene-role-card">
-                <h4>${getTranslation('koekken_context_s2_title')}</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('koekken_context_s2_q')}</p>
-                <button class="role-choice-btn" data-correct="true">${getTranslation('koekken_context_s2_a')}</button>
-                <button class="role-choice-btn" data-correct="false">${getTranslation('koekken_context_s2_b')}</button>
-            </div>
+    function renderKitchenCategoryTask() {
+        categoryCard.innerHTML = '';
 
-            <!-- Scene 3: I byrummet / på caféen -->
-            <div class="scene-role-card">
-                <h4>${getTranslation('koekken_context_s3_title')}</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${getTranslation('koekken_context_s3_q')}</p>
-                <button class="role-choice-btn" data-correct="true">${getTranslation('koekken_context_s3_a')}</button>
-                <button class="role-choice-btn" data-correct="false">${getTranslation('koekken_context_s3_b')}</button>
-            </div>
-        </div>
-    `;
+        if (currKitchenCategoryIdx >= kitchenCategoryTasks.length) {
+            categoryCard.innerHTML = `
+                <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">🎉</div>
+                <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">Flot klaret!</h2>
+                <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.6rem;">
+                    Du har gennemført alle opgaver med overemne og underemne.
+                </p>
+                <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="mission-next-btn" id="restart-kitchen-category-btn" style="background: #475569; color: white;">
+                        Start forfra 🔄
+                    </button>
+                    <button class="mission-next-btn" id="kitchen-category-next-tab-btn" style="background: #22c55e; color: #0f172a;">
+                        Gå til 5. Find verbet ➔
+                    </button>
+                </div>
+            `;
+            categoryCard.querySelector('#restart-kitchen-category-btn').onclick = () => {
+                currKitchenCategoryIdx = 0;
+                renderKitchenCategoryTask();
+            };
+            categoryCard.querySelector('#kitchen-category-next-tab-btn').onclick = () => {
+                switchTab('tab_saetning');
+            };
+            speakDanish("Flot klaret! Du har gennemført alle opgaver med overemner og underemner.");
+            return;
+        }
 
-    contextCard.querySelectorAll('.role-choice-btn').forEach(btn => {
-        btn.onclick = () => {
-            if (btn.dataset.correct === 'true') {
-                btn.classList.add('correct');
-                speakDanish(btn.textContent);
-            } else {
-                speakDanish("Nej, det passer ikke til denne scene. Prøv igen!");
-            }
-        };
-    });
+        const task = kitchenCategoryTasks[currKitchenCategoryIdx];
+        let selectedCount = 0;
 
-    kontekstPanel.appendChild(contextCard);
+        const badge = document.createElement('div');
+        badge.className = 'category-badge';
+        badge.textContent = `🏷️ Opgave ${currKitchenCategoryIdx + 1} af ${kitchenCategoryTasks.length}`;
+        categoryCard.appendChild(badge);
+
+        if (task.type === 'find_overemne') {
+            const promptTitle = document.createElement('h3');
+            promptTitle.style.fontSize = '1.35rem';
+            promptTitle.style.color = '#94a3b8';
+            promptTitle.style.margin = '0.3rem 0 0.8rem';
+            promptTitle.textContent = 'Underemner:';
+            categoryCard.appendChild(promptTitle);
+
+            const wordsRow = document.createElement('div');
+            wordsRow.className = 'category-subwords-row';
+            task.subwords.forEach(w => {
+                const chip = document.createElement('span');
+                chip.className = 'category-word-chip';
+                chip.textContent = w;
+                wordsRow.appendChild(chip);
+            });
+            categoryCard.appendChild(wordsRow);
+
+            const qEl = document.createElement('div');
+            qEl.style.fontSize = '1.25rem';
+            qEl.style.fontWeight = '800';
+            qEl.style.color = '#f8fafc';
+            qEl.style.marginBottom = '1.2rem';
+            qEl.textContent = task.question;
+            categoryCard.appendChild(qEl);
+
+            const grid = document.createElement('div');
+            grid.className = 'category-options-grid';
+
+            const feedbackEl = document.createElement('div');
+            feedbackEl.style.marginTop = '1.2rem';
+
+            task.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'category-opt-btn';
+                btn.textContent = opt.text;
+
+                btn.onclick = () => {
+                    if (opt.correct) {
+                        btn.classList.add('selected-correct');
+                        grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                        speakDanish(`Rigtigt! ${opt.text}`);
+                        feedbackEl.innerHTML = `
+                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
+                                ✓ Rigtigt! Overemnet er ${opt.text}
+                            </div>
+                            <button class="mission-next-btn" id="next-category-btn">Næste opgave ➔</button>
+                        `;
+                        feedbackEl.querySelector('#next-category-btn').onclick = () => {
+                            currKitchenCategoryIdx++;
+                            renderKitchenCategoryTask();
+                        };
+                    } else {
+                        btn.classList.add('selected-wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => btn.classList.remove('selected-wrong'), 700);
+                    }
+                };
+                grid.appendChild(btn);
+            });
+
+            categoryCard.appendChild(grid);
+            categoryCard.appendChild(feedbackEl);
+        } else {
+            // task.type === 'find_underemner'
+            const promptTitle = document.createElement('div');
+            promptTitle.style.fontSize = '0.95rem';
+            promptTitle.style.color = '#94a3b8';
+            promptTitle.style.textTransform = 'uppercase';
+            promptTitle.style.letterSpacing = '0.5px';
+            promptTitle.textContent = 'Overemne:';
+            categoryCard.appendChild(promptTitle);
+
+            const mainCategoryTitle = document.createElement('h2');
+            mainCategoryTitle.style.fontSize = '1.8rem';
+            mainCategoryTitle.style.color = '#38bdf8';
+            mainCategoryTitle.style.margin = '0.3rem 0 0.8rem';
+            mainCategoryTitle.textContent = task.overemne;
+            categoryCard.appendChild(mainCategoryTitle);
+
+            const qEl = document.createElement('p');
+            qEl.style.color = '#cbd5e1';
+            qEl.style.fontSize = '1.05rem';
+            qEl.style.marginBottom = '1.2rem';
+            qEl.textContent = task.question;
+            categoryCard.appendChild(qEl);
+
+            const grid = document.createElement('div');
+            grid.className = 'category-options-grid';
+
+            const feedbackEl = document.createElement('div');
+            feedbackEl.style.marginTop = '1.2rem';
+
+            task.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'category-opt-btn';
+                btn.textContent = opt.text;
+
+                btn.onclick = () => {
+                    if (btn.classList.contains('selected-correct') || btn.classList.contains('selected-wrong')) return;
+
+                    if (opt.correct) {
+                        btn.classList.add('selected-correct');
+                        selectedCount++;
+                        speakDanish(opt.text);
+
+                        if (selectedCount === task.targetCount) {
+                            speakDanish("Flot! Du fandt alle tre underemner.");
+                            feedbackEl.innerHTML = `
+                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
+                                    🎉 Flot! Du fandt alle 3 underemner.
+                                </div>
+                                <button class="mission-next-btn" id="next-category-btn">
+                                    ${currKitchenCategoryIdx < kitchenCategoryTasks.length - 1 ? 'Næste opgave ➔' : 'Se resultat 🎉'}
+                                </button>
+                            `;
+                            feedbackEl.querySelector('#next-category-btn').onclick = () => {
+                                currKitchenCategoryIdx++;
+                                renderKitchenCategoryTask();
+                            };
+                        }
+                    } else {
+                        btn.classList.add('selected-wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => btn.classList.remove('selected-wrong'), 700);
+                    }
+                };
+                grid.appendChild(btn);
+            });
+
+            categoryCard.appendChild(grid);
+            categoryCard.appendChild(feedbackEl);
+        }
+    }
+
+    renderKitchenCategoryTask();
+    kontekstPanel.appendChild(categoryCard);
     panelsHolder.appendChild(kontekstPanel);
 
     // ========================================================

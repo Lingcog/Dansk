@@ -85,7 +85,7 @@ export const top100Translations = {
     tab_label_vrimmel: "1. Udforsk billedet",
     tab_label_detektiv: "2. Find ord der hænger sammen",
     tab_label_historie: "3. En lille historie",
-    tab_label_kontekst: "4. Sammenhæng",
+    tab_label_kontekst: "4. Overemne og underemne",
     tab_label_saetning: "5. Find verbet",
 
     // Sorting

@@ -22,7 +22,15 @@ export const MODEL_A_GRAMMAR_TERMS = {
     part2_adv_g4: "Præposition (sted)",
     part2_adv_g5: "Tidsadverbium",
 
-    // 3. del (Udvidet model - 7 trin)
+    // 3. del (Hjælpeverber - 6 led)
+    part3_modal_g1: "Substantiv / Pronomen",
+    part3_modal_g2: "Hjælpeverbum (modal)",
+    part3_modal_g3: "Centraladverbium",
+    part3_modal_g4: "Hovedverbum (infinitiv)",
+    part3_modal_g5: "Præposition (sted)",
+    part3_modal_g6: "Tidsadverbium",
+
+    // 4. del (Udvidet model - 7 trin)
     part2_g1: "Adjektiv",
     part2_g2: "Substantiv / Pronomen",
     part2_g3: "Verbum",

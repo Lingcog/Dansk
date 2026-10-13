@@ -39,7 +39,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     `;
     viewContainer.appendChild(grammarBanner);
 
-    // Navigation Tabs: 1. del vs. 2. del vs. 3. del
+    // Navigation Tabs: 1. del vs. 2. del vs. 3. del vs. 4. del
     const tabsContainer = document.createElement('div');
     tabsContainer.className = 'intro-tabs-nav';
 
@@ -55,9 +55,14 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     tab3Btn.className = 'intro-tab-btn';
     tab3Btn.innerHTML = `<strong>${getTranslation('intro_tab_part3')}</strong> <span>${getTranslation('intro_tab_part3_sub')}</span>`;
 
+    const tab4Btn = document.createElement('button');
+    tab4Btn.className = 'intro-tab-btn';
+    tab4Btn.innerHTML = `<strong>${getTranslation('intro_tab_part4')}</strong> <span>${getTranslation('intro_tab_part4_sub')}</span>`;
+
     tabsContainer.appendChild(tab1Btn);
     tabsContainer.appendChild(tab2Btn);
     tabsContainer.appendChild(tab3Btn);
+    tabsContainer.appendChild(tab4Btn);
     viewContainer.appendChild(tabsContainer);
 
     // Main content areas
@@ -72,36 +77,31 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     part3Container.className = 'intro-part-container';
     part3Container.style.display = 'none';
 
+    const part4Container = document.createElement('div');
+    part4Container.className = 'intro-part-container';
+    part4Container.style.display = 'none';
+
     viewContainer.appendChild(part1Container);
     viewContainer.appendChild(part2Container);
     viewContainer.appendChild(part3Container);
+    viewContainer.appendChild(part4Container);
 
-    tab1Btn.onclick = () => {
-        tab1Btn.classList.add('active');
-        tab2Btn.classList.remove('active');
-        tab3Btn.classList.remove('active');
-        part1Container.style.display = 'block';
-        part2Container.style.display = 'none';
-        part3Container.style.display = 'none';
-    };
+    function showPart(partNum) {
+        tab1Btn.classList.toggle('active', partNum === 1);
+        tab2Btn.classList.toggle('active', partNum === 2);
+        tab3Btn.classList.toggle('active', partNum === 3);
+        tab4Btn.classList.toggle('active', partNum === 4);
 
-    tab2Btn.onclick = () => {
-        tab2Btn.classList.add('active');
-        tab1Btn.classList.remove('active');
-        tab3Btn.classList.remove('active');
-        part2Container.style.display = 'block';
-        part1Container.style.display = 'none';
-        part3Container.style.display = 'none';
-    };
+        part1Container.style.display = partNum === 1 ? 'block' : 'none';
+        part2Container.style.display = partNum === 2 ? 'block' : 'none';
+        part3Container.style.display = partNum === 3 ? 'block' : 'none';
+        part4Container.style.display = partNum === 4 ? 'block' : 'none';
+    }
 
-    tab3Btn.onclick = () => {
-        tab3Btn.classList.add('active');
-        tab1Btn.classList.remove('active');
-        tab2Btn.classList.remove('active');
-        part3Container.style.display = 'block';
-        part1Container.style.display = 'none';
-        part2Container.style.display = 'none';
-    };
+    tab1Btn.onclick = () => showPart(1);
+    tab2Btn.onclick = () => showPart(2);
+    tab3Btn.onclick = () => showPart(3);
+    tab4Btn.onclick = () => showPart(4);
 
     // Helper: TTS speech
     function speakDanish(text) {
@@ -1238,10 +1238,670 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         container.appendChild(puzzleWrapper);
     }
 
-    // ==========================================
-    // --- 3. DEL: UDVIDET MODEL (7 TRIN) -------
-    // ==========================================
+    // ========================================================
+    // --- 3. DEL: HJÆLPEVERBER (6 LED) -----------------------
+    // ========================================================
     function setupPart3() {
+        const introCard = document.createElement('div');
+        introCard.className = 'intro-hero-card';
+        introCard.innerHTML = `
+            <h2>${getTranslation('part3_modal_hero_title')}</h2>
+            <p class="hero-desc">
+                ${getTranslation('part3_modal_hero_desc')}
+            </p>
+        `;
+        part3Container.appendChild(introCard);
+
+        // Hero Image with 6 frames & overlay
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'hero-image-wrapper photo-overlay-container';
+        imgWrapper.innerHTML = `
+            <div class="photo-overlay-wrap">
+                <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('part3_modal_hero_img_alt')}" class="hero-image">
+                <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
+                    <defs>
+                        <marker id="arrowhead-6-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
+                        </marker>
+                        <marker id="arrowhead-6-pink" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#f43f5e" />
+                        </marker>
+                        <marker id="arrowhead-6-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
+                        </marker>
+                        <marker id="arrowhead-6-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+                        </marker>
+                        <marker id="arrowhead-6-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                        </marker>
+                        <marker id="arrowhead-6-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+                        </marker>
+                    </defs>
+                    <!-- Arrow 1: Hvem (Subjekt) -> kvinde -->
+                    <line x1="430" y1="120" x2="600" y2="250" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-6-green)" />
+                    <!-- Arrow 6: Hvornår (Tid) -> himmel -->
+                    <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-6-purple)" />
+                    <!-- Arrow 2: Hjælpeverbum (Kraft/styring) -> overkrop/styr -->
+                    <line x1="930" y1="260" x2="710" y2="300" stroke="#f43f5e" stroke-width="4" marker-end="url(#arrowhead-6-pink)" />
+                    <!-- Arrow 3: Centraladverbium (Modificerer) -> mellem styring og pedaler -->
+                    <line x1="930" y1="410" x2="750" y2="400" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-6-yellow)" />
+                    <!-- Arrow 4: Hovedverbum (Handlingen i infinitiv) -> pedaler/hjul -->
+                    <line x1="930" y1="560" x2="760" y2="490" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-6-red)" />
+                    <!-- Arrow 5: Sted -> vejbanen -->
+                    <line x1="300" y1="620" x2="520" y2="620" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-6-blue)" />
+                </svg>
+                <!-- Box 1: Subjekt -->
+                <div class="photo-bubble bubble-6-subjekt">
+                    <div class="bubble-q">1. ${getTranslation('part3_modal_q1')}</div>
+                    <div class="bubble-ans ans-green">En kvinde</div>
+                </div>
+                <!-- Box 6: Tid -->
+                <div class="photo-bubble bubble-6-tid">
+                    <div class="bubble-q">6. ${getTranslation('part3_modal_q6')}</div>
+                    <div class="bubble-ans ans-purple">om morgenen</div>
+                </div>
+                <!-- Box 2: Hjælpeverbum -->
+                <div class="photo-bubble bubble-6-modal">
+                    <div class="bubble-q">2. ${getTranslation('part3_modal_q2')}</div>
+                    <div class="bubble-ans ans-pink">kan / skal / vil / må / bør</div>
+                </div>
+                <!-- Box 3: Centraladverbium -->
+                <div class="photo-bubble bubble-6-adv">
+                    <div class="bubble-q">3. ${getTranslation('part3_modal_q3')}</div>
+                    <div class="bubble-ans ans-yellow">ikke / faktisk / vist</div>
+                </div>
+                <!-- Box 4: Hovedverbum -->
+                <div class="photo-bubble bubble-6-hovedverb">
+                    <div class="bubble-q">4. ${getTranslation('part3_modal_q4')}</div>
+                    <div class="bubble-ans ans-red">cykle</div>
+                </div>
+                <!-- Box 5: Sted -->
+                <div class="photo-bubble bubble-6-sted">
+                    <div class="bubble-q">5. ${getTranslation('part3_modal_q5')}</div>
+                    <div class="bubble-ans ans-blue">på gaden</div>
+                </div>
+            </div>
+        `;
+        const photoWrap = imgWrapper.querySelector('.photo-overlay-wrap');
+        const toggleBar = createCleanIllustrationToggle(photoWrap);
+        imgWrapper.insertBefore(toggleBar, photoWrap);
+
+        part3Container.appendChild(imgWrapper);
+
+        // 6 Step Overview Grid
+        const stepGrid = document.createElement('div');
+        stepGrid.className = 'simple-steps-grid steps-grid-6';
+
+        const stepItems = [
+            {
+                num: '1',
+                q: getTranslation('part3_modal_q1'),
+                ans: 'En kvinde',
+                colorClass: 'step-green',
+                icon: '👤',
+                note: 'Hovedpersonen',
+                grammar: getTranslation('part3_modal_g1')
+            },
+            {
+                num: '2',
+                q: getTranslation('part3_modal_q2'),
+                ans: 'kan / skal / vil / må / bør',
+                colorClass: 'step-pink',
+                icon: '⚡',
+                note: getTranslation('part3_modal_note_2'),
+                grammar: getTranslation('part3_modal_g2')
+            },
+            {
+                num: '3',
+                q: getTranslation('part3_modal_q3'),
+                ans: 'ikke / altid / gerne',
+                colorClass: 'step-yellow',
+                icon: '🛡️',
+                note: getTranslation('part3_modal_note_3'),
+                grammar: getTranslation('part3_modal_g3')
+            },
+            {
+                num: '4',
+                q: getTranslation('part3_modal_q4'),
+                ans: 'cykle (infinitiv)',
+                colorClass: 'step-red',
+                icon: '🚲',
+                note: getTranslation('part3_modal_note_4'),
+                grammar: getTranslation('part3_modal_g4')
+            },
+            {
+                num: '5',
+                q: getTranslation('part3_modal_q5'),
+                ans: 'på gaden',
+                colorClass: 'step-blue',
+                icon: '📍',
+                note: 'Baggrund / ramme',
+                grammar: getTranslation('part3_modal_g5')
+            },
+            {
+                num: '6',
+                q: getTranslation('part3_modal_q6'),
+                ans: 'om morgenen',
+                colorClass: 'step-purple',
+                icon: '⏰',
+                note: 'Tidspunkt',
+                grammar: getTranslation('part3_modal_g6')
+            }
+        ];
+
+        stepItems.forEach(item => {
+            const card = document.createElement('div');
+            card.className = `simple-step-card ${item.colorClass}`;
+            card.innerHTML = `
+                <div class="step-badge">${item.num}</div>
+                <div class="step-card-content">
+                    <div class="step-q">${item.icon} ${item.q}</div>
+                    <div class="step-ans">${item.ans}</div>
+                    <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
+                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                </div>
+            `;
+            stepGrid.appendChild(card);
+        });
+        part3Container.appendChild(stepGrid);
+
+        // Pedagogical Explanation Box: Hvad er "kraften" bag modalverberne?
+        const modCard = document.createElement('div');
+        modCard.className = 'modifier-explanation-card';
+        modCard.innerHTML = `
+            <h3>${getTranslation('part3_modal_box_title')}</h3>
+            <p>${getTranslation('part3_modal_box_desc')}</p>
+            <div class="modifier-examples-list">
+                <div class="mod-ex-item"><span class="mod-tag ans-pink">kan</span> <span>${getTranslation('part3_modal_box_kan')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-pink">skal</span> <span>${getTranslation('part3_modal_box_skal')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-pink">vil</span> <span>${getTranslation('part3_modal_box_vil')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-pink">må</span> <span>${getTranslation('part3_modal_box_maa')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-pink">bør</span> <span>${getTranslation('part3_modal_box_boer')}</span></div>
+            </div>
+            <div class="modifier-rule-badge">
+                ${getTranslation('part3_modal_box_rule')}
+            </div>
+        `;
+        part3Container.appendChild(modCard);
+
+        // Interactive Result sentence banner with dynamic modal + adverb switchers
+        const resultBox = document.createElement('div');
+        resultBox.className = 'finished-sentence-banner';
+
+        let currentModal = 'kan';
+        let currentAdv = 'ikke';
+        const modalOptions = ['kan', 'skal', 'vil', 'må', 'bør'];
+        const advOptions = ['ikke', 'gerne', 'altid', 'aldrig', 'faktisk', 'vist'];
+
+        function updateSentenceBanner() {
+            resultBox.innerHTML = `
+                <div class="banner-label">${getTranslation('part3_modal_finished_label')}</div>
+                <div class="banner-sentence">
+                    <span class="word-green">En kvinde</span> 
+                    <strong class="word-pink modal-pulse">${currentModal}</strong> 
+                    <strong class="word-yellow adv-pulse">${currentAdv}</strong> 
+                    <span class="word-red">cykle</span> 
+                    <span class="word-blue">på gaden</span> 
+                    <span class="word-purple">om morgenen</span>.
+                </div>
+                <div class="adv-switcher-row">
+                    <span class="adv-switcher-hint">${getTranslation('part3_modal_switch_label')}</span>
+                    <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: center; width: 100%;">
+                        <div class="modal-chips-wrap"></div>
+                        <div class="adv-chips-wrap"></div>
+                    </div>
+                </div>
+                <button class="listen-btn" title="Lyt til sætningen">
+                    <span>🔊</span> ${getTranslation('part1_listen_btn')}
+                </button>
+            `;
+
+            const modalChipsWrap = resultBox.querySelector('.modal-chips-wrap');
+            modalOptions.forEach(opt => {
+                const chip = document.createElement('button');
+                chip.className = `modal-quick-chip ${opt === currentModal ? 'active' : ''}`;
+                chip.textContent = opt;
+                chip.onclick = () => {
+                    currentModal = opt;
+                    updateSentenceBanner();
+                };
+                modalChipsWrap.appendChild(chip);
+            });
+
+            const advChipsWrap = resultBox.querySelector('.adv-chips-wrap');
+            advOptions.forEach(opt => {
+                const chip = document.createElement('button');
+                chip.className = `adv-quick-chip ${opt === currentAdv ? 'active' : ''}`;
+                chip.textContent = opt;
+                chip.onclick = () => {
+                    currentAdv = opt;
+                    updateSentenceBanner();
+                };
+                advChipsWrap.appendChild(chip);
+            });
+
+            const listenBtn = resultBox.querySelector('.listen-btn');
+            listenBtn.onclick = () => speakDanish(`En kvinde ${currentModal} ${currentAdv} cykle på gaden om morgenen`);
+        }
+
+        updateSentenceBanner();
+        part3Container.appendChild(resultBox);
+
+        // --- PRØV SELV AT LAVE EN SÆTNING (6 LED) ---
+        const tryHeader = document.createElement('div');
+        tryHeader.className = 'section-divider';
+        tryHeader.innerHTML = `
+            <h2>${getTranslation('part3_modal_try_title')}</h2>
+            <p>${getTranslation('part3_modal_try_desc')}</p>
+        `;
+        part3Container.appendChild(tryHeader);
+
+        // Sub-tabs: 1) Trin-for-trin bygger 2) Puslespil
+        const exerciseTabs = document.createElement('div');
+        exerciseTabs.className = 'exercise-sub-tabs';
+        const ex1TabBtn = document.createElement('button');
+        ex1TabBtn.className = 'ex-sub-tab active';
+        ex1TabBtn.textContent = getTranslation('part3_modal_tab_builder');
+
+        const ex2TabBtn = document.createElement('button');
+        ex2TabBtn.className = 'ex-sub-tab';
+        ex2TabBtn.textContent = getTranslation('part3_modal_tab_puzzle');
+
+        exerciseTabs.appendChild(ex1TabBtn);
+        exerciseTabs.appendChild(ex2TabBtn);
+        part3Container.appendChild(exerciseTabs);
+
+        const builderContainer = document.createElement('div');
+        builderContainer.className = 'exercise-panel active';
+
+        const puzzleContainer = document.createElement('div');
+        puzzleContainer.className = 'exercise-panel';
+        puzzleContainer.style.display = 'none';
+
+        part3Container.appendChild(builderContainer);
+        part3Container.appendChild(puzzleContainer);
+
+        ex1TabBtn.onclick = () => {
+            ex1TabBtn.classList.add('active');
+            ex2TabBtn.classList.remove('active');
+            builderContainer.style.display = 'block';
+            puzzleContainer.style.display = 'none';
+        };
+
+        ex2TabBtn.onclick = () => {
+            ex2TabBtn.classList.add('active');
+            ex1TabBtn.classList.remove('active');
+            puzzleContainer.style.display = 'block';
+            builderContainer.style.display = 'none';
+        };
+
+        // --- EXERCISE 1: 6-STEP BUILDER ---
+        setup6StepBuilder(builderContainer);
+
+        // --- EXERCISE 2: 6-STEP PUZZLE ---
+        setup6StepPuzzleExercise(puzzleContainer);
+    }
+
+    // Step-by-step 6-question builder
+    function setup6StepBuilder(container) {
+        const categories = [
+            {
+                q: getTranslation('part3_modal_builder_q1'),
+                colorClass: "step-green",
+                grammar: getTranslation('part3_modal_g1'),
+                options: ["En kvinde", "En mand", "En hund", "En dreng", "En pige", "Bussen", "Lægen", "Familien"]
+            },
+            {
+                q: getTranslation('part3_modal_builder_q2'),
+                colorClass: "step-pink",
+                grammar: getTranslation('part3_modal_g2'),
+                options: ["kan", "skal", "vil", "må", "bør"]
+            },
+            {
+                q: getTranslation('part3_modal_builder_q3'),
+                colorClass: "step-yellow",
+                grammar: getTranslation('part3_modal_g3'),
+                options: ["ikke", "faktisk", "vist", "altid", "aldrig", "ofte", "gerne"]
+            },
+            {
+                q: getTranslation('part3_modal_builder_q4'),
+                colorClass: "step-red",
+                grammar: getTranslation('part3_modal_g4'),
+                options: ["cykle", "løbe", "drikke kaffe", "spise mad", "læse en bog", "køre", "arbejde"]
+            },
+            {
+                q: getTranslation('part3_modal_builder_q5'),
+                colorClass: "step-blue",
+                grammar: getTranslation('part3_modal_g5'),
+                options: ["på gaden", "i parken", "på caféen", "i skolen", "i haven", "i køkkenet"]
+            },
+            {
+                q: getTranslation('part3_modal_builder_q6'),
+                colorClass: "step-purple",
+                grammar: getTranslation('part3_modal_g6'),
+                options: ["om morgenen", "om aftenen", "hver dag", "lige nu", "i dag", "om natten"]
+            }
+        ];
+
+        let selections = ["En kvinde", "kan", "ikke", "cykle", "på gaden", "om morgenen"];
+
+        const card = document.createElement('div');
+        card.className = 'step-builder-card';
+
+        const outputBox = document.createElement('div');
+        outputBox.className = 'builder-live-sentence';
+
+        function updateLiveSentence() {
+            outputBox.innerHTML = `
+                <div class="live-label">${getTranslation('part3_modal_builder_live_label')}</div>
+                <div class="live-text">
+                    <span class="word-green">${selections[0]}</span> 
+                    <span class="word-pink">${selections[1]}</span> 
+                    <span class="word-yellow">${selections[2]}</span> 
+                    <span class="word-red">${selections[3]}</span> 
+                    <span class="word-blue">${selections[4]}</span> 
+                    <span class="word-purple">${selections[5]}</span>.
+                </div>
+                <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+            `;
+            const listenBtn = outputBox.querySelector('.listen-btn-small');
+            listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]} ${selections[4]} ${selections[5]}`);
+        }
+
+        const questionsList = document.createElement('div');
+        questionsList.className = 'builder-questions-list';
+
+        categories.forEach((cat, catIdx) => {
+            const qRow = document.createElement('div');
+            qRow.className = `builder-q-row ${cat.colorClass}`;
+
+            const qTitle = document.createElement('div');
+            qTitle.className = 'builder-q-title';
+            qTitle.innerHTML = `${cat.q} <span class="grammar-badge-inline">${cat.grammar}</span>`;
+            qRow.appendChild(qTitle);
+
+            const optionsWrapper = document.createElement('div');
+            optionsWrapper.className = 'builder-btn-grid';
+
+            cat.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
+                optBtn.textContent = opt;
+
+                optBtn.onclick = () => {
+                    selections[catIdx] = opt;
+                    qRow.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('selected'));
+                    optBtn.classList.add('selected');
+                    updateLiveSentence();
+                };
+                optionsWrapper.appendChild(optBtn);
+            });
+
+            qRow.appendChild(optionsWrapper);
+            questionsList.appendChild(qRow);
+        });
+
+        card.appendChild(questionsList);
+        card.appendChild(outputBox);
+        container.appendChild(card);
+
+        updateLiveSentence();
+    }
+
+    // Puzzle Exercise for 6 steps (10 tasks)
+    function setup6StepPuzzleExercise(container) {
+        const tasks = [
+            {
+                correct: ["En kvinde", "kan", "ikke", "cykle", "på gaden", "om morgenen"],
+                scrambled: ["cykle", "kan", "En kvinde", "på gaden", "ikke", "om morgenen"]
+            },
+            {
+                correct: ["En mand", "skal", "faktisk", "drikke kaffe", "på caféen", "om morgenen"],
+                scrambled: ["på caféen", "drikke kaffe", "skal", "faktisk", "om morgenen", "En mand"]
+            },
+            {
+                correct: ["En pige", "vil", "gerne", "læse en bog", "i skolen", "i dag"],
+                scrambled: ["vil", "i dag", "læse en bog", "En pige", "gerne", "i skolen"]
+            },
+            {
+                correct: ["Bussen", "må", "ikke", "køre", "på gaden", "om natten"],
+                scrambled: ["ikke", "om natten", "Bussen", "køre", "må", "på gaden"]
+            },
+            {
+                correct: ["En dreng", "bør", "altid", "lave lektier", "i stuen", "om eftermiddagen"],
+                scrambled: ["lave lektier", "altid", "bør", "i stuen", "En dreng", "om eftermiddagen"]
+            },
+            {
+                correct: ["Familien", "vil", "aldrig", "spise mad", "på restaurant", "om aftenen"],
+                scrambled: ["aldrig", "vil", "Familien", "om aftenen", "spise mad", "på restaurant"]
+            },
+            {
+                correct: ["Lægen", "skal", "vist", "arbejde", "på hospitalet", "i dag"],
+                scrambled: ["arbejde", "vist", "på hospitalet", "skal", "Lægen", "i dag"]
+            },
+            {
+                correct: ["En hund", "må", "gerne", "løbe", "i parken", "hver dag"],
+                scrambled: ["løbe", "hver dag", "gerne", "må", "En hund", "i parken"]
+            },
+            {
+                correct: ["Studenten", "kan", "ofte", "studere", "på biblioteket", "om aftenen"],
+                scrambled: ["studere", "på biblioteket", "ofte", "kan", "om aftenen", "Studenten"]
+            },
+            {
+                correct: ["Toget", "vil", "faktisk", "ankomme", "på stationen", "til tiden"],
+                scrambled: ["ankomme", "faktisk", "til tiden", "Toget", "vil", "på stationen"]
+            }
+        ];
+
+        let currentTaskIdx = 0;
+        let userSlots = [null, null, null, null, null, null];
+        const completedTasks = new Set();
+
+        const puzzleWrapper = document.createElement('div');
+        puzzleWrapper.className = 'puzzle-wrapper';
+
+        function renderCurrentTask() {
+            puzzleWrapper.innerHTML = '';
+            userSlots = [null, null, null, null, null, null];
+
+            const task = tasks[currentTaskIdx];
+
+            const header = document.createElement('div');
+            header.className = 'puzzle-header';
+
+            // Navigation pills (1 to 10)
+            const pillsRow = document.createElement('div');
+            pillsRow.className = 'puzzle-pills-row';
+            tasks.forEach((_, tIdx) => {
+                const pill = document.createElement('button');
+                pill.className = `puzzle-pill ${tIdx === currentTaskIdx ? 'active' : ''} ${completedTasks.has(tIdx) ? 'completed' : ''}`;
+                pill.textContent = tIdx + 1;
+                pill.title = `${getTranslation('part1_puzzle_pill_title')} ${tIdx + 1}`;
+                pill.onclick = () => {
+                    currentTaskIdx = tIdx;
+                    renderCurrentTask();
+                };
+                pillsRow.appendChild(pill);
+            });
+            header.appendChild(pillsRow);
+
+            const counterEl = document.createElement('div');
+            counterEl.className = 'puzzle-counter';
+            counterEl.textContent = getTranslation('part1_puzzle_counter', { current: currentTaskIdx + 1, total: tasks.length });
+            header.appendChild(counterEl);
+
+            const guide = document.createElement('div');
+            guide.className = 'puzzle-guide';
+            guide.innerHTML = `
+                <div>${getTranslation('part3_modal_puzzle_guide')}</div>
+                <small>${getTranslation('part3_modal_puzzle_guide_sub')}</small>
+            `;
+            header.appendChild(guide);
+
+            puzzleWrapper.appendChild(header);
+
+            // Slots display (6 slots)
+            const slotsContainer = document.createElement('div');
+            slotsContainer.className = 'puzzle-slots puzzle-slots-6';
+
+            const slotPrompts = [
+                { text: `1. Hvem / hvad?`, grammar: getTranslation('part3_modal_g1') },
+                { text: `2. Hjælpeverbum (kraft)`, grammar: getTranslation('part3_modal_g2') },
+                { text: `3. Centraladverbium`, grammar: getTranslation('part3_modal_g3') },
+                { text: `4. Hovedverbum (infinitiv)`, grammar: getTranslation('part3_modal_g4') },
+                { text: `5. Hvor?`, grammar: getTranslation('part3_modal_g5') },
+                { text: `6. Hvornår?`, grammar: getTranslation('part3_modal_g6') }
+            ];
+
+            const slotColorClasses = [
+                "slot6-green",
+                "slot6-modal",
+                "slot6-yellow",
+                "slot6-verb",
+                "slot6-blue",
+                "slot6-purple"
+            ];
+
+            slotPrompts.forEach((promptItem, idx) => {
+                const slot = document.createElement('div');
+                slot.className = `puzzle-slot ${slotColorClasses[idx]}`;
+                slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+                slot.dataset.idx = idx;
+
+                slot.onclick = () => {
+                    if (userSlots[idx]) {
+                        userSlots[idx] = null;
+                        updateSlotsAndBank();
+                    }
+                };
+
+                slotsContainer.appendChild(slot);
+            });
+            puzzleWrapper.appendChild(slotsContainer);
+
+            // Word bank
+            const bankContainer = document.createElement('div');
+            bankContainer.className = 'puzzle-bank';
+            puzzleWrapper.appendChild(bankContainer);
+
+            // Feedback and controls
+            const feedbackBox = document.createElement('div');
+            feedbackBox.className = 'puzzle-feedback';
+            puzzleWrapper.appendChild(feedbackBox);
+
+            function updateSlotsAndBank() {
+                // Update slots UI
+                const slotEls = slotsContainer.querySelectorAll('.puzzle-slot');
+                slotEls.forEach((el, idx) => {
+                    const word = userSlots[idx];
+                    if (word) {
+                        el.innerHTML = `
+                            <span class="slot-number">${idx + 1}</span>
+                            <span class="slot-filled-word">${word}</span>
+                            <span class="slot-remove">✕</span>
+                        `;
+                        el.classList.add('filled');
+                    } else {
+                        el.innerHTML = `
+                            <span class="slot-hint">${slotPrompts[idx].text}</span>
+                            <span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>
+                        `;
+                        el.classList.remove('filled');
+                    }
+                });
+
+                // Update Word Bank UI
+                bankContainer.innerHTML = '';
+                const usedWords = [...userSlots].filter(Boolean);
+
+                const availableCounts = {};
+                task.scrambled.forEach(w => availableCounts[w] = (availableCounts[w] || 0) + 1);
+                usedWords.forEach(w => {
+                    if (availableCounts[w]) availableCounts[w]--;
+                });
+
+                task.scrambled.forEach((word) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'puzzle-word-btn';
+                    btn.textContent = word;
+
+                    const isAvailable = (availableCounts[word] || 0) > 0;
+                    if (!isAvailable) {
+                        btn.disabled = true;
+                    }
+
+                    btn.onclick = () => {
+                        const firstEmptyIdx = userSlots.indexOf(null);
+                        if (firstEmptyIdx !== -1) {
+                            userSlots[firstEmptyIdx] = word;
+                            updateSlotsAndBank();
+                        }
+                    };
+                    bankContainer.appendChild(btn);
+                });
+
+                // Check answer if all filled
+                if (!userSlots.includes(null)) {
+                    checkAnswer();
+                } else {
+                    feedbackBox.innerHTML = '';
+                }
+            }
+
+            function checkAnswer() {
+                const isCorrect = userSlots.every((w, idx) => w === task.correct[idx]);
+                const sentence = userSlots.join(' ') + '.';
+
+                if (isCorrect) {
+                    completedTasks.add(currentTaskIdx);
+                    pillsRow.querySelectorAll('.puzzle-pill').forEach((pill, idx) => {
+                        if (completedTasks.has(idx)) pill.classList.add('completed');
+                    });
+
+                    feedbackBox.innerHTML = `
+                        <div class="feedback-msg success">
+                            ${getTranslation('part3_modal_puzzle_correct')} "<strong>${sentence}</strong>"
+                        </div>
+                        <div class="puzzle-action-row">
+                            <button class="listen-btn-small" id="puzzle-6-listen-btn">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                            <button class="next-task-btn" id="puzzle-6-next-btn">
+                                ${currentTaskIdx < tasks.length - 1 ? getTranslation('part1_next_task') : getTranslation('part1_start_over')}
+                            </button>
+                        </div>
+                    `;
+                    feedbackBox.querySelector('#puzzle-6-listen-btn').onclick = () => speakDanish(sentence);
+                    feedbackBox.querySelector('#puzzle-6-next-btn').onclick = () => {
+                        currentTaskIdx = (currentTaskIdx + 1) % tasks.length;
+                        renderCurrentTask();
+                    };
+                } else {
+                    feedbackBox.innerHTML = `
+                        <div class="feedback-msg error">
+                            ${getTranslation('part3_modal_puzzle_error')}
+                        </div>
+                        <button class="retry-task-btn" id="puzzle-6-retry-btn">${getTranslation('part1_retry')}</button>
+                    `;
+                    feedbackBox.querySelector('#puzzle-6-retry-btn').onclick = () => {
+                        userSlots = [null, null, null, null, null, null];
+                        feedbackBox.innerHTML = '';
+                        updateSlotsAndBank();
+                    };
+                }
+            }
+
+            updateSlotsAndBank();
+        }
+
+        renderCurrentTask();
+        container.appendChild(puzzleWrapper);
+    }
+
+    // ==========================================
+    // --- 4. DEL: UDVIDET MODEL (7 TRIN) -------
+    // ==========================================
+    function setupPart4() {
         const introCard = document.createElement('div');
         introCard.className = 'intro-hero-card';
         introCard.innerHTML = `
@@ -1250,7 +1910,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 ${getTranslation('part2_hero_desc')}
             </p>
         `;
-        part3Container.appendChild(introCard);
+        part4Container.appendChild(introCard);
 
         // Hero Image with 7 frames & dynamic overlay
         const imgWrapper = document.createElement('div');
@@ -1338,7 +1998,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         const toggleBar2 = createCleanIllustrationToggle(photoWrap2);
         imgWrapper.insertBefore(toggleBar2, photoWrap2);
 
-        part3Container.appendChild(imgWrapper);
+        part4Container.appendChild(imgWrapper);
 
         // 7-Step Overview Grid
         const stepGrid = document.createElement('div');
@@ -1368,7 +2028,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             `;
             stepGrid.appendChild(card);
         });
-        part3Container.appendChild(stepGrid);
+        part4Container.appendChild(stepGrid);
 
         // Result sentence banner
         const resultBox = document.createElement('div');
@@ -1390,7 +2050,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
         listenBtn.onclick = () => speakDanish("Den travle kvinde cykler heldigvis forsigtigt på gaden, mens det sner");
-        part3Container.appendChild(resultBox);
+        part4Container.appendChild(resultBox);
 
         // Section Divider
         const tryHeader = document.createElement('div');
@@ -1399,7 +2059,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             <h2>${getTranslation('part2_try_title')}</h2>
             <p>${getTranslation('part2_try_desc')}</p>
         `;
-        part3Container.appendChild(tryHeader);
+        part4Container.appendChild(tryHeader);
 
         // Sub-tabs: 1) Trin-for-trin bygger 2) Puslespil
         const exerciseTabs = document.createElement('div');
@@ -1414,7 +2074,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
 
         exerciseTabs.appendChild(ex1TabBtn);
         exerciseTabs.appendChild(ex2TabBtn);
-        part3Container.appendChild(exerciseTabs);
+        part4Container.appendChild(exerciseTabs);
 
         const builderContainer = document.createElement('div');
         builderContainer.className = 'exercise-panel active';
@@ -1423,8 +2083,8 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         puzzleContainer.className = 'exercise-panel';
         puzzleContainer.style.display = 'none';
 
-        part3Container.appendChild(builderContainer);
-        part3Container.appendChild(puzzleContainer);
+        part4Container.appendChild(builderContainer);
+        part4Container.appendChild(puzzleContainer);
 
         ex1TabBtn.onclick = () => {
             ex1TabBtn.classList.add('active');
@@ -1799,10 +2459,11 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         container.appendChild(puzzleWrapper);
     }
 
-    // Initialize all 3 parts
+    // Initialize all 4 parts
     setupPart1();
     setupPart2();
     setupPart3();
+    setupPart4();
 
     container.appendChild(viewContainer);
 
@@ -1986,7 +2647,8 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .ans-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid #8b5cf6; }
             .ans-yellow { background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid #eab308; }
             .ans-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
-            .ans-pink { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
+            .ans-pink { background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid #f43f5e; }
+            .word-pink { color: #f43f5e; }
 
             .bubble-1 { top: 9%; left: 16%; }
             .bubble-4 { top: 9%; right: 18%; }
@@ -1998,6 +2660,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .bubble-5-verb { top: 38%; right: 5%; }
             .bubble-5-adv { top: 58%; right: 5%; }
             .bubble-5-sted { bottom: 10%; left: 6%; }
+
+            .bubble-6-subjekt { top: 7%; left: 14%; }
+            .bubble-6-tid { top: 7%; right: 14%; }
+            .bubble-6-modal { top: 28%; right: 4%; }
+            .bubble-6-adv { top: 48%; right: 4%; }
+            .bubble-6-hovedverb { top: 68%; right: 4%; }
+            .bubble-6-sted { bottom: 10%; left: 6%; }
 
             .bubble-7-holdning { top: 6%; left: 3%; }
             .bubble-7-adjektiv { top: 25%; left: 2%; }
@@ -2018,6 +2687,12 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 .bubble-5-verb { top: 35%; right: 2%; }
                 .bubble-5-adv { top: 54%; right: 2%; }
                 .bubble-5-sted { bottom: 5%; left: 2%; }
+                .bubble-6-subjekt { top: 4%; left: 3%; }
+                .bubble-6-tid { top: 4%; right: 3%; }
+                .bubble-6-modal { top: 25%; right: 2%; }
+                .bubble-6-adv { top: 44%; right: 2%; }
+                .bubble-6-hovedverb { top: 63%; right: 2%; }
+                .bubble-6-sted { bottom: 4%; left: 2%; }
                 .bubble-7-holdning { top: 4%; left: 2%; }
                 .bubble-7-adjektiv { top: 22%; left: 2%; }
                 .bubble-7-substantiv { top: 4%; left: 32%; }
@@ -2053,7 +2728,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .simple-step-card.step-blue { border-color: #0284c7; background: rgba(2, 132, 199, 0.1); }
             .simple-step-card.step-purple { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
             .simple-step-card.step-yellow { border-color: #eab308; background: rgba(234, 179, 8, 0.1); }
-            .simple-step-card.step-pink { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
+            .simple-step-card.step-pink { border-color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
             .simple-step-card.step-cyan { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
 
             .step-green .step-badge { background: #22c55e; }
@@ -2062,7 +2737,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .step-blue .step-badge { background: #0284c7; }
             .step-purple .step-badge { background: #8b5cf6; }
             .step-yellow .step-badge { background: #eab308; }
-            .step-pink .step-badge { background: #06b6d4; }
+            .step-pink .step-badge { background: #f43f5e; }
             .step-cyan .step-badge { background: #06b6d4; }
 
             .step-card-content {
@@ -2222,7 +2897,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .builder-q-row.step-blue { border-left-color: #0284c7; }
             .builder-q-row.step-purple { border-left-color: #8b5cf6; }
             .builder-q-row.step-yellow { border-left-color: #eab308; }
-            .builder-q-row.step-pink { border-left-color: #06b6d4; }
+            .builder-q-row.step-pink { border-left-color: #f43f5e; }
             .builder-q-row.step-cyan { border-left-color: #06b6d4; }
 
             .builder-q-title {
@@ -2395,6 +3070,20 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
             }
 
+            .steps-grid-6 {
+                grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) !important;
+            }
+
+            .puzzle-slots-6 {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            }
+            .puzzle-slot.slot6-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+            .puzzle-slot.slot6-modal.filled { border-color: #f43f5e; background: rgba(244, 63, 94, 0.15); }
+            .puzzle-slot.slot6-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+            .puzzle-slot.slot6-verb.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            .puzzle-slot.slot6-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+            .puzzle-slot.slot6-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+
             /* Modifier Explanation Card & Adverb Switcher */
             .modifier-explanation-card {
                 background: rgba(234, 179, 8, 0.08);
@@ -2494,6 +3183,43 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 animation: advPulse 0.3s ease;
             }
             @keyframes advPulse {
+                0% { transform: scale(0.9); }
+                50% { transform: scale(1.15); }
+                100% { transform: scale(1); }
+            }
+
+            .modal-chips-wrap {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            .modal-quick-chip {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1.5px solid rgba(244, 63, 94, 0.4);
+                color: #fda4af;
+                padding: 0.35rem 0.9rem;
+                border-radius: 20px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .modal-quick-chip:hover {
+                background: rgba(244, 63, 94, 0.2);
+                transform: translateY(-1px);
+            }
+            .modal-quick-chip.active {
+                background: #f43f5e;
+                color: #ffffff;
+                border-color: #fb7185;
+                box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+            }
+            .modal-pulse {
+                display: inline-block;
+                animation: modalPulse 0.3s ease;
+            }
+            @keyframes modalPulse {
                 0% { transform: scale(0.9); }
                 50% { transform: scale(1.15); }
                 100% { transform: scale(1); }

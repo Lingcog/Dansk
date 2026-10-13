@@ -33,10 +33,16 @@ export function renderHistorierMenuView(container, navigateFn) {
             action: () => navigateFn('branching_story', { storyId: 'anna_rat' })
         },
         {
+            icon: '📖',
+            title: 'Din dagligdag',
+            desc: 'Gennemspil hverdags-situationer (sprogskolen, grønthandleren og køkkenet), byg sætningerne selv, og øv udtalen.',
+            action: () => navigateFn('interactive_story')
+        },
+        {
             icon: '💼',
             title: 'Tilbage på job efter sygdom',
             desc: 'Realistisk arbejdssamtale i 9 replikskifter (DU3 Modul 1-2). Byg dine replikker og træn udtale og lenisering af D, R og G.',
-            action: () => navigateFn('interactive_story')
+            action: () => navigateFn('job_story')
         }
     ];
 

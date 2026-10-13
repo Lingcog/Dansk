@@ -153,15 +153,15 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 4,
-                trps: 'Fortæl, hvad lægen sagde (rolige dage).',
-                fonetikTip: 'Stumt g i "Lægen", "tag" og "dage" • Hårdt r i "rolige" • Hårdt d i "dage"',
+                trps: 'Fortæl, hvad lægen sagde (tag fri et par dage).',
+                fonetikTip: 'Stumt g i "Lægen", "tag" og "dage" • Hårdt d i "dage" • Hårdt r i "fri"',
                 construction: {
                     type: 'OP',
-                    words: ['Lægen', 'sagde:', 'tag', 'to', 'rolige', 'dage.']
+                    words: ['Lægen', 'sagde:', 'tag', 'fri', 'et', 'par', 'dage.']
                 },
                 pronunciation: {
-                    target: 'Lægen sagde: tag to rolige dage.',
-                    focus: ['lægen', 'tag', 'rolige', 'dage']
+                    target: 'Lægen sagde: tag fri et par dage.',
+                    focus: ['lægen', 'tag', 'fri', 'par', 'dage']
                 }
             },
 
@@ -169,20 +169,20 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Det er fornuftigt. Gik du en tur i weekenden for at få luft?' 
+                text: 'Det er fornuftigt. Gik du en tur i weekenden?' 
             },
             { 
                 type: 'user_action',
                 stepNum: 5,
-                trps: 'Sig, at du gik en lang tur i går.',
-                fonetikTip: 'Hårdt g i "gik" • G som ng-lyd i "lang" • Vokalisk r i "går"',
+                trps: 'Svar, at det gjorde du.',
+                fonetikTip: 'Hårdt d i "det" • Stumt d i "gjorde" (-rde) • G som j-lyd i "gjorde" og "jeg"',
                 construction: {
                     type: 'OP',
-                    words: ['Ja,', 'jeg', 'gik', 'en', 'lang', 'tur', 'i', 'går.']
+                    words: ['Ja,', 'det', 'gjorde', 'jeg.']
                 },
                 pronunciation: {
-                    target: 'Ja, jeg gik en lang tur i går.',
-                    focus: ['gik', 'lang', 'tur', 'går']
+                    target: 'Ja, det gjorde jeg.',
+                    focus: ['det', 'gjorde', 'jeg']
                 }
             },
 
@@ -211,20 +211,20 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Lene (Leder)', 
-                text: 'Typisk dansk vejr! Vil du sidde ved dit skrivebord nu?' 
+                text: 'Nå, vi ses snart til mødet klokken 10.' 
             },
             { 
                 type: 'user_action',
                 stepNum: 7,
-                trps: 'Sig, at du gerne vil sidde ved dit bord.',
-                fonetikTip: 'Hårdt g i "gerne" • Blødt d i "sidde" • Stumt d i "bord" (-rd)',
+                trps: 'Svar, at I ses snart.',
+                fonetikTip: 'Vokalisk/hårdt r i "snart"',
                 construction: {
                     type: 'OP',
-                    words: ['Ja,', 'jeg', 'vil', 'gerne', 'sidde', 'ved', 'mit', 'bord.']
+                    words: ['Ja,', 'vi', 'ses', 'snart.']
                 },
                 pronunciation: {
-                    target: 'Ja, jeg vil gerne sidde ved mit bord.',
-                    focus: ['gerne', 'sidde', 'bord']
+                    target: 'Ja, vi ses snart.',
+                    focus: ['ses', 'snart']
                 }
             },
 
@@ -237,15 +237,15 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 8,
-                trps: 'Sig tak, og at du har brug for den bog.',
-                fonetikTip: 'G som w-lyd i "brug" og "bog" (efter bagtungevokalerne u og o)',
+                trps: 'Sig tak, og at du har kigget i bogen.',
+                fonetikTip: 'G som w-lyd i "bogen" (efter o) • Vokalisk r i "har"',
                 construction: {
                     type: 'OP',
-                    words: ['Tak,', 'jeg', 'har', 'brug', 'for', 'den', 'bog.']
+                    words: ['Tak,', 'jeg', 'har', 'kigget', 'i', 'bogen.']
                 },
                 pronunciation: {
-                    target: 'Tak, jeg har brug for den bog.',
-                    focus: ['brug', 'bog']
+                    target: 'Tak, jeg har kigget i bogen.',
+                    focus: ['kigget', 'bogen', 'har']
                 }
             },
 

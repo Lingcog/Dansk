@@ -32,13 +32,14 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     grammarBanner.innerHTML = `
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #facc15;">Centraladverbium</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
 
-    // Navigation Tabs: 1. del vs. 2. del
+    // Navigation Tabs: 1. del vs. 2. del vs. 3. del
     const tabsContainer = document.createElement('div');
     tabsContainer.className = 'intro-tabs-nav';
 
@@ -50,8 +51,13 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     tab2Btn.className = 'intro-tab-btn';
     tab2Btn.innerHTML = `<strong>${getTranslation('intro_tab_part2')}</strong> <span>${getTranslation('intro_tab_part2_sub')}</span>`;
 
+    const tab3Btn = document.createElement('button');
+    tab3Btn.className = 'intro-tab-btn';
+    tab3Btn.innerHTML = `<strong>${getTranslation('intro_tab_part3')}</strong> <span>${getTranslation('intro_tab_part3_sub')}</span>`;
+
     tabsContainer.appendChild(tab1Btn);
     tabsContainer.appendChild(tab2Btn);
+    tabsContainer.appendChild(tab3Btn);
     viewContainer.appendChild(tabsContainer);
 
     // Main content areas
@@ -62,21 +68,39 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     part2Container.className = 'intro-part-container';
     part2Container.style.display = 'none';
 
+    const part3Container = document.createElement('div');
+    part3Container.className = 'intro-part-container';
+    part3Container.style.display = 'none';
+
     viewContainer.appendChild(part1Container);
     viewContainer.appendChild(part2Container);
+    viewContainer.appendChild(part3Container);
 
     tab1Btn.onclick = () => {
         tab1Btn.classList.add('active');
         tab2Btn.classList.remove('active');
+        tab3Btn.classList.remove('active');
         part1Container.style.display = 'block';
         part2Container.style.display = 'none';
+        part3Container.style.display = 'none';
     };
 
     tab2Btn.onclick = () => {
         tab2Btn.classList.add('active');
         tab1Btn.classList.remove('active');
+        tab3Btn.classList.remove('active');
         part2Container.style.display = 'block';
         part1Container.style.display = 'none';
+        part3Container.style.display = 'none';
+    };
+
+    tab3Btn.onclick = () => {
+        tab3Btn.classList.add('active');
+        tab1Btn.classList.remove('active');
+        tab2Btn.classList.remove('active');
+        part3Container.style.display = 'block';
+        part1Container.style.display = 'none';
+        part2Container.style.display = 'none';
     };
 
     // Helper: TTS speech
@@ -615,17 +639,609 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             updateSlotsAndBank();
         }
 
+        container.appendChild(puzzleWrapper);
+    }
+
+    // ========================================================
+    // --- 2. DEL: CENTRALT ADVERBIUM (5 LED) -----------------
+    // ========================================================
+    function setupPart2() {
+        const introCard = document.createElement('div');
+        introCard.className = 'intro-hero-card';
+        introCard.innerHTML = `
+            <h2>${getTranslation('part2_adv_hero_title')}</h2>
+            <p class="hero-desc">
+                ${getTranslation('part2_adv_hero_desc')}
+            </p>
+        `;
+        part2Container.appendChild(introCard);
+
+        // Hero Image with 5 frames & overlay
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'hero-image-wrapper photo-overlay-container';
+        imgWrapper.innerHTML = `
+            <div class="photo-overlay-wrap">
+                <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('part2_adv_hero_img_alt')}" class="hero-image">
+                <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
+                    <defs>
+                        <marker id="arrowhead-5-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
+                        </marker>
+                        <marker id="arrowhead-5-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+                        </marker>
+                        <marker id="arrowhead-5-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
+                        </marker>
+                        <marker id="arrowhead-5-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                        </marker>
+                        <marker id="arrowhead-5-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+                        </marker>
+                    </defs>
+                    <!-- Arrow 1: Hvem (Substantiv) -> kvinde -->
+                    <line x1="430" y1="130" x2="620" y2="330" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-5-green)" />
+                    <!-- Arrow 5: Hvornår (Tid) -> himmel -->
+                    <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-5-purple)" />
+                    <!-- Arrow 2: Handling (Verbum) -> cykel/pedaler -->
+                    <line x1="910" y1="350" x2="750" y2="430" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-5-red)" />
+                    <!-- Arrow 3: Centraladverbium (modificerer verbet) -> handling/cykel -->
+                    <line x1="910" y1="520" x2="780" y2="490" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-5-yellow)" />
+                    <!-- Arrow 4: Sted -> vejbanen -->
+                    <line x1="300" y1="620" x2="520" y2="620" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-5-blue)" />
+                </svg>
+                <!-- Box 1: Subjekt -->
+                <div class="photo-bubble bubble-5-subjekt">
+                    <div class="bubble-q">1. ${getTranslation('part2_adv_q1')}</div>
+                    <div class="bubble-ans ans-green">En kvinde</div>
+                </div>
+                <!-- Box 5: Tid -->
+                <div class="photo-bubble bubble-5-tid">
+                    <div class="bubble-q">5. ${getTranslation('part2_adv_q5')}</div>
+                    <div class="bubble-ans ans-purple">om morgenen</div>
+                </div>
+                <!-- Box 2: Verbum -->
+                <div class="photo-bubble bubble-5-verb">
+                    <div class="bubble-q">2. ${getTranslation('part2_adv_q2')}</div>
+                    <div class="bubble-ans ans-red">cykler</div>
+                </div>
+                <!-- Box 3: Centraladverbium (Modificerer verbet) -->
+                <div class="photo-bubble bubble-5-adv">
+                    <div class="bubble-q">3. ${getTranslation('part2_adv_q3')}</div>
+                    <div class="bubble-ans ans-yellow">ikke / faktisk / vist</div>
+                </div>
+                <!-- Box 4: Sted -->
+                <div class="photo-bubble bubble-5-sted">
+                    <div class="bubble-q">4. ${getTranslation('part2_adv_q4')}</div>
+                    <div class="bubble-ans ans-blue">på gaden</div>
+                </div>
+            </div>
+        `;
+        const photoWrap = imgWrapper.querySelector('.photo-overlay-wrap');
+        const toggleBar = createCleanIllustrationToggle(photoWrap);
+        imgWrapper.insertBefore(toggleBar, photoWrap);
+
+        part2Container.appendChild(imgWrapper);
+
+        // 5 Step Overview Grid
+        const stepGrid = document.createElement('div');
+        stepGrid.className = 'simple-steps-grid steps-grid-5';
+
+        const stepItems = [
+            {
+                num: '1',
+                q: getTranslation('part2_adv_q1'),
+                ans: 'En kvinde',
+                colorClass: 'step-green',
+                icon: '👤',
+                note: 'Hovedpersonen',
+                grammar: getTranslation('part2_adv_g1')
+            },
+            {
+                num: '2',
+                q: getTranslation('part2_adv_q2'),
+                ans: 'cykler',
+                colorClass: 'step-red',
+                icon: '🚲',
+                note: 'Handlingen (2. plads)',
+                grammar: getTranslation('part2_adv_g2')
+            },
+            {
+                num: '3',
+                q: getTranslation('part2_adv_q3'),
+                ans: 'ikke / faktisk / vist',
+                colorClass: 'step-yellow',
+                icon: '⚡',
+                note: getTranslation('part2_adv_note_3'),
+                grammar: getTranslation('part2_adv_g3')
+            },
+            {
+                num: '4',
+                q: getTranslation('part2_adv_q4'),
+                ans: 'på gaden',
+                colorClass: 'step-blue',
+                icon: '📍',
+                note: 'Baggrund / ramme',
+                grammar: getTranslation('part2_adv_g4')
+            },
+            {
+                num: '5',
+                q: getTranslation('part2_adv_q5'),
+                ans: 'om morgenen',
+                colorClass: 'step-purple',
+                icon: '⏰',
+                note: 'Tidspunkt',
+                grammar: getTranslation('part2_adv_g5')
+            }
+        ];
+
+        stepItems.forEach(item => {
+            const card = document.createElement('div');
+            card.className = `simple-step-card ${item.colorClass}`;
+            card.innerHTML = `
+                <div class="step-badge">${item.num}</div>
+                <div class="step-card-content">
+                    <div class="step-q">${item.icon} ${item.q}</div>
+                    <div class="step-ans">${item.ans}</div>
+                    <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
+                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                </div>
+            `;
+            stepGrid.appendChild(card);
+        });
+        part2Container.appendChild(stepGrid);
+
+        // Pedagogical Explanation Box: Hvad betyder det at modificere verbet?
+        const modCard = document.createElement('div');
+        modCard.className = 'modifier-explanation-card';
+        modCard.innerHTML = `
+            <h3>${getTranslation('part2_adv_box_title')}</h3>
+            <p>${getTranslation('part2_adv_box_desc')}</p>
+            <div class="modifier-examples-list">
+                <div class="mod-ex-item"><span class="mod-tag ans-yellow">ikke</span> <span>${getTranslation('part2_adv_box_ikke')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-yellow">faktisk</span> <span>${getTranslation('part2_adv_box_faktisk')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-yellow">vist</span> <span>${getTranslation('part2_adv_box_vist')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-yellow">altid / aldrig</span> <span>${getTranslation('part2_adv_box_altid')}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-yellow">gerne / måske</span> <span>${getTranslation('part2_adv_box_gerne')}</span></div>
+            </div>
+            <div class="modifier-rule-badge">
+                ${getTranslation('part2_adv_box_rule')}
+            </div>
+        `;
+        part2Container.appendChild(modCard);
+
+        // Interactive Result sentence banner with dynamic adverb switcher
+        const resultBox = document.createElement('div');
+        resultBox.className = 'finished-sentence-banner';
+        
+        let currentAdv = 'ikke';
+        const advOptions = ['ikke', 'faktisk', 'vist', 'altid', 'aldrig', 'gerne', 'ofte'];
+
+        function updateAdvBanner() {
+            resultBox.innerHTML = `
+                <div class="banner-label">${getTranslation('part2_adv_finished_label')}</div>
+                <div class="banner-sentence">
+                    <span class="word-green">En kvinde</span> 
+                    <span class="word-red">cykler</span> 
+                    <strong class="word-yellow adv-pulse">${currentAdv}</strong> 
+                    <span class="word-blue">på gaden</span> 
+                    <span class="word-purple">om morgenen</span>.
+                </div>
+                <div class="adv-switcher-row">
+                    <span class="adv-switcher-hint">${getTranslation('part2_adv_switch_label')}</span>
+                    <div class="adv-chips-wrap"></div>
+                </div>
+                <button class="listen-btn" title="Lyt til sætningen">
+                    <span>🔊</span> ${getTranslation('part1_listen_btn')}
+                </button>
+            `;
+
+            const chipsWrap = resultBox.querySelector('.adv-chips-wrap');
+            advOptions.forEach(opt => {
+                const chip = document.createElement('button');
+                chip.className = `adv-quick-chip ${opt === currentAdv ? 'active' : ''}`;
+                chip.textContent = opt;
+                chip.onclick = () => {
+                    currentAdv = opt;
+                    updateAdvBanner();
+                };
+                chipsWrap.appendChild(chip);
+            });
+
+            const listenBtn = resultBox.querySelector('.listen-btn');
+            listenBtn.onclick = () => speakDanish(`En kvinde cykler ${currentAdv} på gaden om morgenen`);
+        }
+
+        updateAdvBanner();
+        part2Container.appendChild(resultBox);
+
+        // --- PRØV SELV AT LAVE EN SÆTNING (5 LED) ---
+        const tryHeader = document.createElement('div');
+        tryHeader.className = 'section-divider';
+        tryHeader.innerHTML = `
+            <h2>${getTranslation('part2_adv_try_title')}</h2>
+            <p>${getTranslation('part2_adv_try_desc')}</p>
+        `;
+        part2Container.appendChild(tryHeader);
+
+        // Sub-tabs: 1) Trin-for-trin bygger 2) Puslespil
+        const exerciseTabs = document.createElement('div');
+        exerciseTabs.className = 'exercise-sub-tabs';
+        const ex1TabBtn = document.createElement('button');
+        ex1TabBtn.className = 'ex-sub-tab active';
+        ex1TabBtn.textContent = getTranslation('part2_adv_tab_builder');
+
+        const ex2TabBtn = document.createElement('button');
+        ex2TabBtn.className = 'ex-sub-tab';
+        ex2TabBtn.textContent = getTranslation('part2_adv_tab_puzzle');
+
+        exerciseTabs.appendChild(ex1TabBtn);
+        exerciseTabs.appendChild(ex2TabBtn);
+        part2Container.appendChild(exerciseTabs);
+
+        const builderContainer = document.createElement('div');
+        builderContainer.className = 'exercise-panel active';
+
+        const puzzleContainer = document.createElement('div');
+        puzzleContainer.className = 'exercise-panel';
+        puzzleContainer.style.display = 'none';
+
+        part2Container.appendChild(builderContainer);
+        part2Container.appendChild(puzzleContainer);
+
+        ex1TabBtn.onclick = () => {
+            ex1TabBtn.classList.add('active');
+            ex2TabBtn.classList.remove('active');
+            builderContainer.style.display = 'block';
+            puzzleContainer.style.display = 'none';
+        };
+
+        ex2TabBtn.onclick = () => {
+            ex2TabBtn.classList.add('active');
+            ex1TabBtn.classList.remove('active');
+            puzzleContainer.style.display = 'block';
+            builderContainer.style.display = 'none';
+        };
+
+        // --- EXERCISE 1: 5-STEP BUILDER ---
+        setup5StepBuilder(builderContainer);
+
+        // --- EXERCISE 2: 5-STEP PUZZLE ---
+        setup5StepPuzzleExercise(puzzleContainer);
+    }
+
+    // Step-by-step 5-question builder
+    function setup5StepBuilder(container) {
+        const categories = [
+            {
+                q: getTranslation('part2_adv_builder_q1'),
+                colorClass: "step-green",
+                grammar: getTranslation('part2_adv_g1'),
+                options: ["En kvinde", "En mand", "En hund", "En dreng", "En pige", "Bussen", "Lægen", "Familien"]
+            },
+            {
+                q: getTranslation('part2_adv_builder_q2'),
+                colorClass: "step-red",
+                grammar: getTranslation('part2_adv_g2'),
+                options: ["cykler", "løber", "drikker kaffe", "spiser mad", "læser en bog", "kører", "arbejder"]
+            },
+            {
+                q: getTranslation('part2_adv_builder_q3'),
+                colorClass: "step-yellow",
+                grammar: getTranslation('part2_adv_g3'),
+                options: ["ikke", "faktisk", "vist", "altid", "aldrig", "ofte", "gerne", "måske"]
+            },
+            {
+                q: getTranslation('part2_adv_builder_q4'),
+                colorClass: "step-blue",
+                grammar: getTranslation('part2_adv_g4'),
+                options: ["på gaden", "i parken", "på caféen", "i skolen", "i haven", "i køkkenet"]
+            },
+            {
+                q: getTranslation('part2_adv_builder_q5'),
+                colorClass: "step-purple",
+                grammar: getTranslation('part2_adv_g5'),
+                options: ["om morgenen", "om aftenen", "hver dag", "lige nu", "i dag", "om natten"]
+            }
+        ];
+
+        let selections = ["En kvinde", "cykler", "ikke", "på gaden", "om morgenen"];
+
+        const card = document.createElement('div');
+        card.className = 'step-builder-card';
+
+        const outputBox = document.createElement('div');
+        outputBox.className = 'builder-live-sentence';
+
+        function updateLiveSentence() {
+            outputBox.innerHTML = `
+                <div class="live-label">${getTranslation('part2_adv_builder_live_label')}</div>
+                <div class="live-text">
+                    <span class="word-green">${selections[0]}</span> 
+                    <span class="word-red">${selections[1]}</span> 
+                    <span class="word-yellow">${selections[2]}</span> 
+                    <span class="word-blue">${selections[3]}</span> 
+                    <span class="word-purple">${selections[4]}</span>.
+                </div>
+                <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+            `;
+            const listenBtn = outputBox.querySelector('.listen-btn-small');
+            listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]} ${selections[4]}`);
+        }
+
+        const questionsList = document.createElement('div');
+        questionsList.className = 'builder-questions-list';
+
+        categories.forEach((cat, catIdx) => {
+            const qRow = document.createElement('div');
+            qRow.className = `builder-q-row ${cat.colorClass}`;
+
+            const qTitle = document.createElement('div');
+            qTitle.className = 'builder-q-title';
+            qTitle.innerHTML = `${cat.q} <span class="grammar-badge-inline">${cat.grammar}</span>`;
+            qRow.appendChild(qTitle);
+
+            const optionsWrapper = document.createElement('div');
+            optionsWrapper.className = 'builder-btn-grid';
+
+            cat.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
+                optBtn.textContent = opt;
+
+                optBtn.onclick = () => {
+                    selections[catIdx] = opt;
+                    qRow.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('selected'));
+                    optBtn.classList.add('selected');
+                    updateLiveSentence();
+                };
+                optionsWrapper.appendChild(optBtn);
+            });
+
+            qRow.appendChild(optionsWrapper);
+            questionsList.appendChild(qRow);
+        });
+
+        card.appendChild(questionsList);
+        card.appendChild(outputBox);
+        container.appendChild(card);
+
+        updateLiveSentence();
+    }
+
+    // Puzzle Exercise for 5 steps (10 tasks)
+    function setup5StepPuzzleExercise(container) {
+        const tasks = [
+            {
+                correct: ["En kvinde", "cykler", "ikke", "på gaden", "om morgenen"],
+                scrambled: ["på gaden", "ikke", "En kvinde", "om morgenen", "cykler"]
+            },
+            {
+                correct: ["En mand", "drikker kaffe", "faktisk", "på caféen", "om morgenen"],
+                scrambled: ["faktisk", "på caféen", "drikker kaffe", "om morgenen", "En mand"]
+            },
+            {
+                correct: ["En hund", "løber", "altid", "i parken", "hver dag"],
+                scrambled: ["i parken", "altid", "En hund", "hver dag", "løber"]
+            },
+            {
+                correct: ["En pige", "læser en bog", "gerne", "i skolen", "i dag"],
+                scrambled: ["gerne", "i dag", "En pige", "læser en bog", "i skolen"]
+            },
+            {
+                correct: ["Bussen", "kører", "aldrig", "på gaden", "om natten"],
+                scrambled: ["om natten", "aldrig", "kører", "på gaden", "Bussen"]
+            },
+            {
+                correct: ["En familie", "spiser aftensmad", "ofte", "i køkkenet", "om aftenen"],
+                scrambled: ["ofte", "spiser aftensmad", "i køkkenet", "En familie", "om aftenen"]
+            },
+            {
+                correct: ["En dreng", "spiller fodbold", "vist", "i haven", "om eftermiddagen"],
+                scrambled: ["i haven", "vist", "En dreng", "spiller fodbold", "om eftermiddagen"]
+            },
+            {
+                correct: ["Lægen", "taler i telefon", "måske", "på hospitalet", "lige nu"],
+                scrambled: ["måske", "lige nu", "taler i telefon", "på hospitalet", "Lægen"]
+            },
+            {
+                correct: ["En kat", "sover", "altid", "i sengen", "om dagen"],
+                scrambled: ["sover", "om dagen", "altid", "i sengen", "En kat"]
+            },
+            {
+                correct: ["Toget", "ankommer", "faktisk", "på stationen", "til tiden"],
+                scrambled: ["til tiden", "faktisk", "Toget", "ankommer", "på stationen"]
+            }
+        ];
+
+        let currentTaskIdx = 0;
+        let userSlots = [null, null, null, null, null];
+        const completedTasks = new Set();
+
+        const puzzleWrapper = document.createElement('div');
+        puzzleWrapper.className = 'puzzle-wrapper';
+
+        function renderCurrentTask() {
+            puzzleWrapper.innerHTML = '';
+            userSlots = [null, null, null, null, null];
+
+            const task = tasks[currentTaskIdx];
+
+            const header = document.createElement('div');
+            header.className = 'puzzle-header';
+
+            // Navigation pills (1 to 10)
+            const pillsRow = document.createElement('div');
+            pillsRow.className = 'puzzle-pills-row';
+            tasks.forEach((_, tIdx) => {
+                const pill = document.createElement('button');
+                pill.className = `puzzle-pill ${tIdx === currentTaskIdx ? 'active' : ''} ${completedTasks.has(tIdx) ? 'completed' : ''}`;
+                pill.textContent = tIdx + 1;
+                pill.title = `${getTranslation('part1_puzzle_pill_title')} ${tIdx + 1}`;
+                pill.onclick = () => {
+                    currentTaskIdx = tIdx;
+                    renderCurrentTask();
+                };
+                pillsRow.appendChild(pill);
+            });
+            header.appendChild(pillsRow);
+
+            const counterEl = document.createElement('div');
+            counterEl.className = 'puzzle-counter';
+            counterEl.textContent = getTranslation('part1_puzzle_counter', { current: currentTaskIdx + 1, total: tasks.length });
+            header.appendChild(counterEl);
+
+            const guide = document.createElement('div');
+            guide.className = 'puzzle-guide';
+            guide.innerHTML = `
+                <div>${getTranslation('part2_adv_puzzle_guide')}</div>
+                <small>${getTranslation('part2_adv_puzzle_guide_sub')}</small>
+            `;
+            header.appendChild(guide);
+
+            puzzleWrapper.appendChild(header);
+
+            // Slots display
+            const slotsContainer = document.createElement('div');
+            slotsContainer.className = 'puzzle-slots puzzle-slots-5';
+
+            const slotPrompts = [
+                { text: `1. Hvem / hvad?`, grammar: getTranslation('part2_adv_g1') },
+                { text: `2. Hvad laver?`, grammar: getTranslation('part2_adv_g2') },
+                { text: `3. Centraladverbium`, grammar: getTranslation('part2_adv_g3') },
+                { text: `4. Hvor?`, grammar: getTranslation('part2_adv_g4') },
+                { text: `5. Hvornår?`, grammar: getTranslation('part2_adv_g5') }
+            ];
+
+            const slotColorClasses = [
+                "slot5-green",
+                "slot5-red",
+                "slot5-yellow",
+                "slot5-blue",
+                "slot5-purple"
+            ];
+
+            slotPrompts.forEach((promptItem, idx) => {
+                const slot = document.createElement('div');
+                slot.className = `puzzle-slot ${slotColorClasses[idx]}`;
+                slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+                slot.dataset.idx = idx;
+
+                slot.onclick = () => {
+                    if (userSlots[idx]) {
+                        userSlots[idx] = null;
+                        updateSlotsAndBank();
+                    }
+                };
+
+                slotsContainer.appendChild(slot);
+            });
+            puzzleWrapper.appendChild(slotsContainer);
+
+            // Word bank
+            const bankContainer = document.createElement('div');
+            bankContainer.className = 'puzzle-bank';
+            puzzleWrapper.appendChild(bankContainer);
+
+            // Feedback and controls
+            const feedbackBox = document.createElement('div');
+            feedbackBox.className = 'puzzle-feedback';
+            puzzleWrapper.appendChild(feedbackBox);
+
+            function updateSlotsAndBank() {
+                slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
+                    const word = userSlots[idx];
+                    if (word) {
+                        slotEl.classList.add('filled');
+                        slotEl.innerHTML = `
+                            <span class="slot-number">${idx + 1}</span>
+                            <span class="slot-text">${word}</span>
+                            <span class="slot-remove">✕</span>
+                        `;
+                    } else {
+                        slotEl.classList.remove('filled');
+                        slotEl.innerHTML = `<span class="slot-hint">${slotPrompts[idx].text}</span><span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>`;
+                    }
+                });
+
+                bankContainer.innerHTML = '';
+                task.scrambled.forEach((word) => {
+                    const isPlaced = userSlots.includes(word);
+                    const btn = document.createElement('button');
+                    btn.className = `puzzle-word-btn ${isPlaced ? 'placed' : ''}`;
+                    btn.textContent = word;
+                    btn.disabled = isPlaced;
+
+                    btn.onclick = () => {
+                        const firstEmptyIdx = userSlots.indexOf(null);
+                        if (firstEmptyIdx !== -1) {
+                            userSlots[firstEmptyIdx] = word;
+                            updateSlotsAndBank();
+                            checkAnswer();
+                        }
+                    };
+                    bankContainer.appendChild(btn);
+                });
+            }
+
+            function checkAnswer() {
+                if (userSlots.includes(null)) {
+                    feedbackBox.innerHTML = '';
+                    return;
+                }
+
+                const isCorrect = userSlots.every((w, i) => w === task.correct[i]);
+                const sentence = userSlots.join(' ');
+
+                if (isCorrect) {
+                    completedTasks.add(currentTaskIdx);
+                    pillsRow.querySelectorAll('.puzzle-pill').forEach((pill, idx) => {
+                        if (completedTasks.has(idx)) pill.classList.add('completed');
+                    });
+
+                    feedbackBox.innerHTML = `
+                        <div class="feedback-msg success">
+                            ${getTranslation('part2_adv_puzzle_correct')} "<strong>${sentence}</strong>"
+                        </div>
+                        <div class="puzzle-action-row">
+                            <button class="listen-btn-small" id="puzzle-5-listen-btn">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                            <button class="next-task-btn" id="puzzle-5-next-btn">
+                                ${currentTaskIdx < tasks.length - 1 ? getTranslation('part1_next_task') : getTranslation('part1_start_over')}
+                            </button>
+                        </div>
+                    `;
+                    feedbackBox.querySelector('#puzzle-5-listen-btn').onclick = () => speakDanish(sentence);
+                    feedbackBox.querySelector('#puzzle-5-next-btn').onclick = () => {
+                        currentTaskIdx = (currentTaskIdx + 1) % tasks.length;
+                        renderCurrentTask();
+                    };
+                } else {
+                    feedbackBox.innerHTML = `
+                        <div class="feedback-msg error">
+                            ${getTranslation('part2_adv_puzzle_error')}
+                        </div>
+                        <button class="retry-task-btn" id="puzzle-5-retry-btn">${getTranslation('part1_retry')}</button>
+                    `;
+                    feedbackBox.querySelector('#puzzle-5-retry-btn').onclick = () => {
+                        userSlots = [null, null, null, null, null];
+                        feedbackBox.innerHTML = '';
+                        updateSlotsAndBank();
+                    };
+                }
+            }
+
+            updateSlotsAndBank();
+        }
+
         renderCurrentTask();
         container.appendChild(puzzleWrapper);
     }
 
     // ==========================================
-    // --- 2. DEL: UDVIDET MODEL (7 TRIN) -------
+    // --- 3. DEL: UDVIDET MODEL (7 TRIN) -------
     // ==========================================
-    // ==========================================
-    // --- 2. DEL: UDVIDET MODEL (7 TRIN) -------
-    // ==========================================
-    function setupPart2() {
+    function setupPart3() {
         const introCard = document.createElement('div');
         introCard.className = 'intro-hero-card';
         introCard.innerHTML = `
@@ -634,7 +1250,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 ${getTranslation('part2_hero_desc')}
             </p>
         `;
-        part2Container.appendChild(introCard);
+        part3Container.appendChild(introCard);
 
         // Hero Image with 7 frames & dynamic overlay
         const imgWrapper = document.createElement('div');
@@ -722,7 +1338,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         const toggleBar2 = createCleanIllustrationToggle(photoWrap2);
         imgWrapper.insertBefore(toggleBar2, photoWrap2);
 
-        part2Container.appendChild(imgWrapper);
+        part3Container.appendChild(imgWrapper);
 
         // 7-Step Overview Grid
         const stepGrid = document.createElement('div');
@@ -752,7 +1368,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             `;
             stepGrid.appendChild(card);
         });
-        part2Container.appendChild(stepGrid);
+        part3Container.appendChild(stepGrid);
 
         // Result sentence banner
         const resultBox = document.createElement('div');
@@ -774,7 +1390,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
         listenBtn.onclick = () => speakDanish("Den travle kvinde cykler heldigvis forsigtigt på gaden, mens det sner");
-        part2Container.appendChild(resultBox);
+        part3Container.appendChild(resultBox);
 
         // Section Divider
         const tryHeader = document.createElement('div');
@@ -783,7 +1399,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             <h2>${getTranslation('part2_try_title')}</h2>
             <p>${getTranslation('part2_try_desc')}</p>
         `;
-        part2Container.appendChild(tryHeader);
+        part3Container.appendChild(tryHeader);
 
         // Sub-tabs: 1) Trin-for-trin bygger 2) Puslespil
         const exerciseTabs = document.createElement('div');
@@ -798,7 +1414,7 @@ export function renderOrdstillingIntroView(container, navigateFn) {
 
         exerciseTabs.appendChild(ex1TabBtn);
         exerciseTabs.appendChild(ex2TabBtn);
-        part2Container.appendChild(exerciseTabs);
+        part3Container.appendChild(exerciseTabs);
 
         const builderContainer = document.createElement('div');
         builderContainer.className = 'exercise-panel active';
@@ -807,8 +1423,8 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         puzzleContainer.className = 'exercise-panel';
         puzzleContainer.style.display = 'none';
 
-        part2Container.appendChild(builderContainer);
-        part2Container.appendChild(puzzleContainer);
+        part3Container.appendChild(builderContainer);
+        part3Container.appendChild(puzzleContainer);
 
         ex1TabBtn.onclick = () => {
             ex1TabBtn.classList.add('active');
@@ -1183,9 +1799,10 @@ export function renderOrdstillingIntroView(container, navigateFn) {
         container.appendChild(puzzleWrapper);
     }
 
-    // Initialize both parts
+    // Initialize all 3 parts
     setupPart1();
     setupPart2();
+    setupPart3();
 
     container.appendChild(viewContainer);
 
@@ -1376,6 +1993,12 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .bubble-2 { top: 48%; right: 5%; }
             .bubble-3 { bottom: 12%; left: 6%; }
 
+            .bubble-5-subjekt { top: 8%; left: 14%; }
+            .bubble-5-tid { top: 8%; right: 14%; }
+            .bubble-5-verb { top: 38%; right: 5%; }
+            .bubble-5-adv { top: 58%; right: 5%; }
+            .bubble-5-sted { bottom: 10%; left: 6%; }
+
             .bubble-7-holdning { top: 6%; left: 3%; }
             .bubble-7-adjektiv { top: 25%; left: 2%; }
             .bubble-7-substantiv { top: 6%; left: 36%; }
@@ -1390,6 +2013,11 @@ export function renderOrdstillingIntroView(container, navigateFn) {
                 .bubble-4 { top: 6%; right: 6%; }
                 .bubble-2 { top: 45%; right: 2%; }
                 .bubble-3 { bottom: 8%; left: 2%; }
+                .bubble-5-subjekt { top: 5%; left: 4%; }
+                .bubble-5-tid { top: 5%; right: 4%; }
+                .bubble-5-verb { top: 35%; right: 2%; }
+                .bubble-5-adv { top: 54%; right: 2%; }
+                .bubble-5-sted { bottom: 5%; left: 2%; }
                 .bubble-7-holdning { top: 4%; left: 2%; }
                 .bubble-7-adjektiv { top: 22%; left: 2%; }
                 .bubble-7-substantiv { top: 4%; left: 32%; }
@@ -1753,6 +2381,123 @@ export function renderOrdstillingIntroView(container, navigateFn) {
             .puzzle-slot.slot-1.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
             .puzzle-slot.slot-2.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
             .puzzle-slot.slot-3.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+
+            .puzzle-slots-5 {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+            .puzzle-slot.slot5-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+            .puzzle-slot.slot5-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            .puzzle-slot.slot5-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+            .puzzle-slot.slot5-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+            .puzzle-slot.slot5-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+
+            .steps-grid-5 {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+            }
+
+            /* Modifier Explanation Card & Adverb Switcher */
+            .modifier-explanation-card {
+                background: rgba(234, 179, 8, 0.08);
+                border: 2px solid rgba(234, 179, 8, 0.35);
+                border-radius: 16px;
+                padding: 1.5rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            }
+            .modifier-explanation-card h3 {
+                margin: 0 0 0.75rem 0;
+                color: #fde047;
+                font-size: 1.3rem;
+            }
+            .modifier-explanation-card p {
+                color: #e2e8f0;
+                line-height: 1.6;
+                margin: 0 0 1.2rem 0;
+                font-size: 1.05rem;
+            }
+            .modifier-examples-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                background: rgba(0, 0, 0, 0.25);
+                padding: 1rem 1.25rem;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .mod-ex-item {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                font-size: 1rem;
+                color: #f1f5f9;
+            }
+            .mod-tag {
+                padding: 3px 10px;
+                border-radius: 6px;
+                font-weight: 700;
+                font-size: 0.95rem;
+                min-width: 110px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            .modifier-rule-badge {
+                margin-top: 1.25rem;
+                padding: 0.85rem 1.2rem;
+                background: rgba(16, 185, 129, 0.15);
+                border: 1px solid rgba(16, 185, 129, 0.4);
+                border-radius: 10px;
+                color: #6ee7b7;
+                font-size: 1.05rem;
+                font-weight: 600;
+            }
+            .adv-switcher-row {
+                margin: 1.2rem 0 0.8rem 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .adv-switcher-hint {
+                font-size: 0.95rem;
+                color: #cbd5e1;
+                font-weight: 600;
+            }
+            .adv-chips-wrap {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            .adv-quick-chip {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1.5px solid rgba(234, 179, 8, 0.4);
+                color: #fde047;
+                padding: 0.35rem 0.9rem;
+                border-radius: 20px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .adv-quick-chip:hover {
+                background: rgba(234, 179, 8, 0.2);
+                transform: translateY(-1px);
+            }
+            .adv-quick-chip.active {
+                background: #eab308;
+                color: #0f172a;
+                border-color: #facc15;
+                box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
+            }
+            .adv-pulse {
+                display: inline-block;
+                animation: advPulse 0.3s ease;
+            }
+            @keyframes advPulse {
+                0% { transform: scale(0.9); }
+                50% { transform: scale(1.15); }
+                100% { transform: scale(1); }
+            }
 
             .puzzle-slots-7 {
                 grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));

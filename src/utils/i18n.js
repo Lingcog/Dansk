@@ -15,7 +15,14 @@ export const MODEL_A_GRAMMAR_TERMS = {
     part1_builder_g3: "Præposition (sted)",
     part1_builder_g4: "Tidsadverbium",
 
-    // 2. del (Udvidet model - 7 trin)
+    // 2. del (Centralt adverbium - 5 led)
+    part2_adv_g1: "Substantiv / Pronomen",
+    part2_adv_g2: "Verbum",
+    part2_adv_g3: "Centraladverbium",
+    part2_adv_g4: "Præposition (sted)",
+    part2_adv_g5: "Tidsadverbium",
+
+    // 3. del (Udvidet model - 7 trin)
     part2_g1: "Adjektiv",
     part2_g2: "Substantiv / Pronomen",
     part2_g3: "Verbum",

@@ -501,8 +501,20 @@ export function renderByrummetView(container, navigateFn) {
             max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
         }
+        .story-nav-pills {
+            display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
+        }
+        .story-nav-btn {
+            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+        }
+        .story-nav-btn:hover { border-color: #38bdf8; color: white; transform: translateY(-2px); }
+        .story-nav-btn.active {
+            background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+        }
         .story-step-card {
             background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #38bdf8;
+            transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
@@ -511,9 +523,10 @@ export function renderByrummetView(container, navigateFn) {
         }
         .story-opt-btn:hover { background: #475569; }
         .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
+        .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
         .story-explanation-box {
-            background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 12px;
-            padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.95rem; color: #fde68a;
+            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; border-radius: 14px;
+            padding: 1.2rem; margin-top: 1.5rem; font-size: 1rem; color: #4ade80; text-align: center;
         }
 
         /* Context */
@@ -1124,92 +1137,278 @@ export function renderByrummetView(container, navigateFn) {
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================
-    // --- 3. DEL: MIKRO-HISTORIE (Bilen holder stille)
+    // --- 3. DEL: EN LILLE HISTORIE (4 ENKLE HISTORIER) ---
     // ========================================================
     const historiePanel = document.createElement('div');
     historiePanel.className = 'byrum-panel';
     historiePanel.dataset.panel = 'tab_historie';
 
+    const byrumStories = [
+        {
+            title: "1. Bilen stopper",
+            fullStoryText: "En bil kører på vejen. Der er en fejl på bilen. Manden har et problem. Han ringer efter hjælp.",
+            steps: [
+                {
+                    q: "1. Hvad kører på vejen?",
+                    options: [
+                        { text: "En bil 🚗", correct: true },
+                        { text: "En seng 🛏️", correct: false },
+                        { text: "Et træ 🌳", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad sker der?",
+                    options: [
+                        { text: "En ferie 🏖️", correct: false },
+                        { text: "Der er en fejl ⚙️", correct: true },
+                        { text: "En kage 🍰", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad har manden?",
+                    options: [
+                        { text: "Et problem ⚠️", correct: true },
+                        { text: "En gave 🎁", correct: false },
+                        { text: "En sol ☀️", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør manden?",
+                    options: [
+                        { text: "Han spiser en is 🍦", correct: false },
+                        { text: "Han ringer efter hjælp 💡", correct: true }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "2. En kaffe med en ven",
+            fullStoryText: "De mødes på pladsen. De går på café. Kunden bruger penge. De drikker kaffe.",
+            steps: [
+                {
+                    q: "1. Hvor mødes de?",
+                    options: [
+                        { text: "På pladsen 🏛️", correct: true },
+                        { text: "I sengen 🛏️", correct: false },
+                        { text: "I skoven 🌲", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvor går de hen?",
+                    options: [
+                        { text: "Hjem i seng 😴", correct: false },
+                        { text: "På en café ☕", correct: true },
+                        { text: "I skole 🏫", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør kunden?",
+                    options: [
+                        { text: "Kunden sover 💤", correct: false },
+                        { text: "Kunden bruger penge 🪙", correct: true },
+                        { text: "Kunden løber 🏃", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør de bagefter?",
+                    options: [
+                        { text: "De drikker kaffe ☕", correct: true },
+                        { text: "De køber en bil 🚗", correct: false },
+                        { text: "De vasker op 🧼", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "3. På vej i skole",
+            fullStoryText: "Pigen åbner døren. Hun cykler på vejen. Hun møder sine venner.",
+            steps: [
+                {
+                    q: "1. Hvad åbner pigen?",
+                    options: [
+                        { text: "Fjernsynet 📺", correct: false },
+                        { text: "Døren 🚪", correct: true },
+                        { text: "En sko 👟", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør hun?",
+                    options: [
+                        { text: "Hun sover 🛌", correct: false },
+                        { text: "Hun cykler på vejen 🚲", correct: true },
+                        { text: "Hun svømmer 🏊", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvem møder hun?",
+                    options: [
+                        { text: "Sine venner 🎒", correct: true },
+                        { text: "En kat 🐈", correct: false },
+                        { text: "En læge 🩺", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "4. En tur med hunden",
+            fullStoryText: "Manden går en tur med en hund. De ser et stort træ. Familien smiler til hunden.",
+            steps: [
+                {
+                    q: "1. Hvem går en tur?",
+                    options: [
+                        { text: "Manden og en hund 🐕", correct: true },
+                        { text: "En læge og en bil 🚗", correct: false },
+                        { text: "En kat og en fisk 🐟", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad ser de?",
+                    options: [
+                        { text: "En seng 🛏️", correct: false },
+                        { text: "Et stort træ 🌳", correct: true },
+                        { text: "Et komfur 🍳", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør familien?",
+                    options: [
+                        { text: "De sover 😴", correct: false },
+                        { text: "De smiler til hunden 😊", correct: true },
+                        { text: "De løber væk 🏃", correct: false }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let currByrumStoryIdx = 0;
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
-    storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('byrum_story_title')}</h2>
-        <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            ${getTranslation('byrum_story_desc')}
-        </p>
 
-        <!-- Trin 1 -->
-        <div class="story-step-card active-step" id="byrum-story-1">
-            <h4>${getTranslation('byrum_story_s1_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">En bil 🚗</button>
-                <button class="story-opt-btn" data-correct="false">En seng 🛏️</button>
-                <button class="story-opt-btn" data-correct="false">Et træ 🌳</button>
-            </div>
-        </div>
+    function renderActiveByrumStory() {
+        storyContainer.innerHTML = '';
+        const story = byrumStories[currByrumStoryIdx];
 
-        <!-- Trin 2 -->
-        <div class="story-step-card" id="byrum-story-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('byrum_story_s2_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">En ferie 🏖️</button>
-                <button class="story-opt-btn" data-correct="true">En fejl (et uheld) ⚙️</button>
-                <button class="story-opt-btn" data-correct="false">En kage 🍰</button>
-            </div>
-        </div>
-
-        <!-- Trin 3 -->
-        <div class="story-step-card" id="byrum-story-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('byrum_story_s3_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
-                <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
-                <button class="story-opt-btn" data-correct="false">En sol ☀️</button>
-            </div>
-        </div>
-
-        <!-- Trin 4 -->
-        <div class="story-step-card" id="byrum-story-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('byrum_story_s4_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">Han spiser en is</button>
-                <button class="story-opt-btn" data-correct="true">Han får en tanke om at ringe efter en mekaniker 💡</button>
-            </div>
-        </div>
-
-        <div id="byrum-story-summary" style="display: none;" class="story-explanation-box">
-            ${getTranslation('byrum_story_pedagogy')}
-        </div>
-    `;
-
-    function setupByrumStoryCard(stepNum, nextStepNum) {
-        const card = storyContainer.querySelector(`#byrum-story-${stepNum}`);
-        card.querySelectorAll('.story-opt-btn').forEach(btn => {
+        const navBar = document.createElement('div');
+        navBar.className = 'story-nav-pills';
+        byrumStories.forEach((s, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `story-nav-btn ${idx === currByrumStoryIdx ? 'active' : ''}`;
+            btn.textContent = `Historie ${idx + 1}`;
             btn.onclick = () => {
-                if (btn.dataset.correct === 'true') {
-                    btn.classList.add('correct');
-                    speakDanish(btn.textContent);
-                    if (nextStepNum) {
-                        const nextCard = storyContainer.querySelector(`#byrum-story-${nextStepNum}`);
-                        nextCard.style.opacity = '1';
-                        nextCard.style.pointerEvents = 'auto';
-                        nextCard.classList.add('active-step');
-                    } else {
-                        storyContainer.querySelector('#byrum-story-summary').style.display = 'block';
-                        speakDanish("Flot klaret! Manden løser sit problem.");
-                    }
-                } else {
-                    speakDanish("Nej, prøv at overveje situationen!");
-                }
+                currByrumStoryIdx = idx;
+                renderActiveByrumStory();
             };
+            navBar.appendChild(btn);
         });
+        storyContainer.appendChild(navBar);
+
+        const titleEl = document.createElement('h2');
+        titleEl.style.fontSize = '1.8rem';
+        titleEl.style.marginBottom = '0.4rem';
+        titleEl.style.textAlign = 'center';
+        titleEl.textContent = story.title;
+        storyContainer.appendChild(titleEl);
+
+        const descEl = document.createElement('p');
+        descEl.style.color = '#94a3b8';
+        descEl.style.textAlign = 'center';
+        descEl.style.marginBottom = '1.8rem';
+        descEl.textContent = 'Vælg det rigtige ord for at bygge historien:';
+        storyContainer.appendChild(descEl);
+
+        const stepsHolder = document.createElement('div');
+        stepsHolder.className = 'story-steps-list';
+
+        story.steps.forEach((step, sIdx) => {
+            const stepCard = document.createElement('div');
+            stepCard.className = `story-step-card ${sIdx === 0 ? 'active-step' : ''}`;
+            stepCard.id = `byrum-step-${sIdx}`;
+            if (sIdx > 0) {
+                stepCard.style.opacity = '0.35';
+                stepCard.style.pointerEvents = 'none';
+            }
+
+            const qEl = document.createElement('h4');
+            qEl.style.marginBottom = '0.6rem';
+            qEl.textContent = step.q;
+            stepCard.appendChild(qEl);
+
+            const optRow = document.createElement('div');
+            optRow.className = 'story-options-row';
+
+            step.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'story-opt-btn';
+                optBtn.textContent = opt.text;
+
+                optBtn.onclick = () => {
+                    if (opt.correct) {
+                        optBtn.classList.add('correct');
+                        speakDanish(opt.text);
+
+                        optRow.querySelectorAll('.story-opt-btn').forEach(b => {
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        const nextStepCard = stepsHolder.querySelector(`#byrum-step-${sIdx + 1}`);
+                        if (nextStepCard) {
+                            nextStepCard.style.opacity = '1';
+                            nextStepCard.style.pointerEvents = 'auto';
+                            nextStepCard.classList.add('active-step');
+                        } else {
+                            const completeBox = storyContainer.querySelector('#byrum-story-complete-box');
+                            if (completeBox) {
+                                completeBox.style.display = 'block';
+                                completeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                            speakDanish("Flot klaret! Du har gennemført historien.");
+                        }
+                    } else {
+                        optBtn.classList.add('wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => optBtn.classList.remove('wrong'), 700);
+                    }
+                };
+                optRow.appendChild(optBtn);
+            });
+
+            stepCard.appendChild(optRow);
+            stepsHolder.appendChild(stepCard);
+        });
+        storyContainer.appendChild(stepsHolder);
+
+        const completeBox = document.createElement('div');
+        completeBox.id = 'byrum-story-complete-box';
+        completeBox.className = 'story-explanation-box';
+        completeBox.style.display = 'none';
+
+        const isLastStory = currByrumStoryIdx === byrumStories.length - 1;
+        completeBox.innerHTML = `
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+                🎉 Flot klaret! Du har gennemført historien.
+            </div>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                <button class="story-opt-btn" id="btn-listen-byrum-story" style="background: #0284c7; color: white;">
+                    🔊 Lyt til hele historien
+                </button>
+                <button class="story-opt-btn" id="btn-next-byrum-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
+                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                </button>
+            </div>
+        `;
+        storyContainer.appendChild(completeBox);
+
+        completeBox.querySelector('#btn-listen-byrum-story').onclick = () => {
+            speakDanish(story.fullStoryText);
+        };
+        completeBox.querySelector('#btn-next-byrum-story').onclick = () => {
+            currByrumStoryIdx = (currByrumStoryIdx + 1) % byrumStories.length;
+            renderActiveByrumStory();
+        };
     }
 
-    setupByrumStoryCard(1, 2);
-    setupByrumStoryCard(2, 3);
-    setupByrumStoryCard(3, 4);
-    setupByrumStoryCard(4, null);
-
+    renderActiveByrumStory();
     historiePanel.appendChild(storyContainer);
     panelsHolder.appendChild(historiePanel);
 

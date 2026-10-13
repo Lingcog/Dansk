@@ -439,8 +439,20 @@ export function renderKlasseKontorView(container, navigateFn) {
             max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
         }
+        .story-nav-pills {
+            display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
+        }
+        .story-nav-btn {
+            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+        }
+        .story-nav-btn:hover { border-color: #38bdf8; color: white; transform: translateY(-2px); }
+        .story-nav-btn.active {
+            background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+        }
         .story-step-card {
             background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #38bdf8;
+            transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
@@ -449,9 +461,10 @@ export function renderKlasseKontorView(container, navigateFn) {
         }
         .story-opt-btn:hover { background: #475569; }
         .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
+        .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
         .story-explanation-box {
-            background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 12px;
-            padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.95rem; color: #fde68a;
+            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; border-radius: 14px;
+            padding: 1.2rem; margin-top: 1.5rem; font-size: 1rem; color: #4ade80; text-align: center;
         }
 
         /* Context */
@@ -1041,92 +1054,278 @@ export function renderKlasseKontorView(container, navigateFn) {
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================
-    // --- 3. DEL: EN LILLE HISTORIE (Computeren der driller)
+    // --- 3. DEL: EN LILLE HISTORIE (4 ENKLE HISTORIER) ---
     // ========================================================
     const historiePanel = document.createElement('div');
     historiePanel.className = 'klasse-panel';
     historiePanel.dataset.panel = 'tab_historie';
 
+    const klasseStories = [
+        {
+            title: "1. Computeren driller",
+            fullStoryText: "Manden arbejder ved en computer. Der er en fejl på skærmen. Manden har et problem med computeren. Han stiller et spørgsmål og får hjælp.",
+            steps: [
+                {
+                    q: "1. Hvad arbejder han ved?",
+                    options: [
+                        { text: "En computer 💻", correct: true },
+                        { text: "En seng 🛏️", correct: false },
+                        { text: "Et træ 🌳", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad sker der?",
+                    options: [
+                        { text: "En ferie 🏖️", correct: false },
+                        { text: "Der er en fejl ⚙️", correct: true },
+                        { text: "En kage 🍰", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad har manden?",
+                    options: [
+                        { text: "Et problem med computeren ⚠️", correct: true },
+                        { text: "En gave 🎁", correct: false },
+                        { text: "En sol ☀️", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør han?",
+                    options: [
+                        { text: "Han sover på gulvet 😴", correct: false },
+                        { text: "Han stiller et spørgsmål 💡", correct: true }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "2. Kursisterne lærer dansk",
+            fullStoryText: "Læreren skriver på tavlen. Kursisterne læser i en bog. En elev stiller et spørgsmål. Læreren giver et svar.",
+            steps: [
+                {
+                    q: "1. Hvad gør læreren?",
+                    options: [
+                        { text: "Læreren skriver på tavlen 🟩", correct: true },
+                        { text: "Læreren sover 😴", correct: false },
+                        { text: "Læreren spiser is 🍦", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad læser kursisterne i?",
+                    options: [
+                        { text: "De kigger på en sko 👟", correct: false },
+                        { text: "De læser i en bog 📖", correct: true },
+                        { text: "De læser på et træ 🌳", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør en elev?",
+                    options: [
+                        { text: "Eleven stiller et spørgsmål ❓", correct: true },
+                        { text: "Eleven løber hjem 🏃", correct: false },
+                        { text: "Eleven gemmer sig 🙈", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør læreren?",
+                    options: [
+                        { text: "Læreren giver et svar ✅", correct: true },
+                        { text: "Læreren slukker lyset 💡", correct: false },
+                        { text: "Læreren går 🚪", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "3. Et møde på kontoret",
+            fullStoryText: "To kolleger har et møde. De kigger på et papir. En kollega får en god idé.",
+            steps: [
+                {
+                    q: "1. Hvad har de to kolleger?",
+                    options: [
+                        { text: "De har et møde 🤝", correct: true },
+                        { text: "De holder en fest 🎉", correct: false },
+                        { text: "De sover 😴", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad kigger de på?",
+                    options: [
+                        { text: "En hund 🐕", correct: false },
+                        { text: "Et papir 📄", correct: true },
+                        { text: "En bil 🚗", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad får kollegaen?",
+                    options: [
+                        { text: "En god idé 💡", correct: true },
+                        { text: "En kop te ☕", correct: false },
+                        { text: "En ny sko 👟", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "4. Opgaven er færdig",
+            fullStoryText: "Hun tager en blyant fra tasken. Hun skriver ord med blyanten. Hun løser opgaven.",
+            steps: [
+                {
+                    q: "1. Hvor tager hun blyanten fra?",
+                    options: [
+                        { text: "Fra tasken 🎒", correct: true },
+                        { text: "Fra køleskabet ❄️", correct: false },
+                        { text: "Fra haven 🌲", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør hun?",
+                    options: [
+                        { text: "Hun klipper papiret ✂️", correct: false },
+                        { text: "Hun skriver ord med en blyant ✏️", correct: true },
+                        { text: "Hun sover 😴", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad sker der til sidst?",
+                    options: [
+                        { text: "Hun glemmer opgaven ❌", correct: false },
+                        { text: "Hun løser opgaven 📝", correct: true },
+                        { text: "Hun går hjem 🏃", correct: false }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let currKlasseStoryIdx = 0;
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
-    storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('klasse_story_title')}</h2>
-        <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            ${getTranslation('klasse_story_desc')}
-        </p>
 
-        <!-- Trin 1 -->
-        <div class="story-step-card active-step" id="klasse-story-1">
-            <h4>${getTranslation('klasse_story_s1_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">En computer 💻</button>
-                <button class="story-opt-btn" data-correct="false">En seng 🛏️</button>
-                <button class="story-opt-btn" data-correct="false">Et træ 🌳</button>
-            </div>
-        </div>
+    function renderActiveKlasseStory() {
+        storyContainer.innerHTML = '';
+        const story = klasseStories[currKlasseStoryIdx];
 
-        <!-- Trin 2 -->
-        <div class="story-step-card" id="klasse-story-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('klasse_story_s2_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">En ferie 🏖️</button>
-                <button class="story-opt-btn" data-correct="true">En fejl (et uheld) ⚙️</button>
-                <button class="story-opt-btn" data-correct="false">En kage 🍰</button>
-            </div>
-        </div>
-
-        <!-- Trin 3 -->
-        <div class="story-step-card" id="klasse-story-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('klasse_story_s3_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
-                <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
-                <button class="story-opt-btn" data-correct="false">En sol ☀️</button>
-            </div>
-        </div>
-
-        <!-- Trin 4 -->
-        <div class="story-step-card" id="klasse-story-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('klasse_story_s4_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">Han sover på gulvet</button>
-                <button class="story-opt-btn" data-correct="true">Han stiller et spørgsmål og får et svar 💡</button>
-            </div>
-        </div>
-
-        <div id="klasse-story-summary" style="display: none;" class="story-explanation-box">
-            ${getTranslation('klasse_story_pedagogy')}
-        </div>
-    `;
-
-    function setupKlasseStoryCard(stepNum, nextStepNum) {
-        const card = storyContainer.querySelector(`#klasse-story-${stepNum}`);
-        card.querySelectorAll('.story-opt-btn').forEach(btn => {
+        const navBar = document.createElement('div');
+        navBar.className = 'story-nav-pills';
+        klasseStories.forEach((s, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `story-nav-btn ${idx === currKlasseStoryIdx ? 'active' : ''}`;
+            btn.textContent = `Historie ${idx + 1}`;
             btn.onclick = () => {
-                if (btn.dataset.correct === 'true') {
-                    btn.classList.add('correct');
-                    speakDanish(btn.textContent);
-                    if (nextStepNum) {
-                        const nextCard = storyContainer.querySelector(`#klasse-story-${nextStepNum}`);
-                        nextCard.style.opacity = '1';
-                        nextCard.style.pointerEvents = 'auto';
-                        nextCard.classList.add('active-step');
-                    } else {
-                        storyContainer.querySelector('#klasse-story-summary').style.display = 'block';
-                        speakDanish("Flot klaret! Manden løser sit problem.");
-                    }
-                } else {
-                    speakDanish("Nej, prøv at overveje situationen!");
-                }
+                currKlasseStoryIdx = idx;
+                renderActiveKlasseStory();
             };
+            navBar.appendChild(btn);
         });
+        storyContainer.appendChild(navBar);
+
+        const titleEl = document.createElement('h2');
+        titleEl.style.fontSize = '1.8rem';
+        titleEl.style.marginBottom = '0.4rem';
+        titleEl.style.textAlign = 'center';
+        titleEl.textContent = story.title;
+        storyContainer.appendChild(titleEl);
+
+        const descEl = document.createElement('p');
+        descEl.style.color = '#94a3b8';
+        descEl.style.textAlign = 'center';
+        descEl.style.marginBottom = '1.8rem';
+        descEl.textContent = 'Vælg det rigtige ord for at bygge historien:';
+        storyContainer.appendChild(descEl);
+
+        const stepsHolder = document.createElement('div');
+        stepsHolder.className = 'story-steps-list';
+
+        story.steps.forEach((step, sIdx) => {
+            const stepCard = document.createElement('div');
+            stepCard.className = `story-step-card ${sIdx === 0 ? 'active-step' : ''}`;
+            stepCard.id = `klasse-step-${sIdx}`;
+            if (sIdx > 0) {
+                stepCard.style.opacity = '0.35';
+                stepCard.style.pointerEvents = 'none';
+            }
+
+            const qEl = document.createElement('h4');
+            qEl.style.marginBottom = '0.6rem';
+            qEl.textContent = step.q;
+            stepCard.appendChild(qEl);
+
+            const optRow = document.createElement('div');
+            optRow.className = 'story-options-row';
+
+            step.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'story-opt-btn';
+                optBtn.textContent = opt.text;
+
+                optBtn.onclick = () => {
+                    if (opt.correct) {
+                        optBtn.classList.add('correct');
+                        speakDanish(opt.text);
+
+                        optRow.querySelectorAll('.story-opt-btn').forEach(b => {
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        const nextStepCard = stepsHolder.querySelector(`#klasse-step-${sIdx + 1}`);
+                        if (nextStepCard) {
+                            nextStepCard.style.opacity = '1';
+                            nextStepCard.style.pointerEvents = 'auto';
+                            nextStepCard.classList.add('active-step');
+                        } else {
+                            const completeBox = storyContainer.querySelector('#klasse-story-complete-box');
+                            if (completeBox) {
+                                completeBox.style.display = 'block';
+                                completeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                            speakDanish("Flot klaret! Du har gennemført historien.");
+                        }
+                    } else {
+                        optBtn.classList.add('wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => optBtn.classList.remove('wrong'), 700);
+                    }
+                };
+                optRow.appendChild(optBtn);
+            });
+
+            stepCard.appendChild(optRow);
+            stepsHolder.appendChild(stepCard);
+        });
+        storyContainer.appendChild(stepsHolder);
+
+        const completeBox = document.createElement('div');
+        completeBox.id = 'klasse-story-complete-box';
+        completeBox.className = 'story-explanation-box';
+        completeBox.style.display = 'none';
+
+        const isLastStory = currKlasseStoryIdx === klasseStories.length - 1;
+        completeBox.innerHTML = `
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+                🎉 Flot klaret! Du har gennemført historien.
+            </div>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                <button class="story-opt-btn" id="btn-listen-klasse-story" style="background: #0284c7; color: white;">
+                    🔊 Lyt til hele historien
+                </button>
+                <button class="story-opt-btn" id="btn-next-klasse-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
+                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                </button>
+            </div>
+        `;
+        storyContainer.appendChild(completeBox);
+
+        completeBox.querySelector('#btn-listen-klasse-story').onclick = () => {
+            speakDanish(story.fullStoryText);
+        };
+        completeBox.querySelector('#btn-next-klasse-story').onclick = () => {
+            currKlasseStoryIdx = (currKlasseStoryIdx + 1) % klasseStories.length;
+            renderActiveKlasseStory();
+        };
     }
 
-    setupKlasseStoryCard(1, 2);
-    setupKlasseStoryCard(2, 3);
-    setupKlasseStoryCard(3, 4);
-    setupKlasseStoryCard(4, null);
-
+    renderActiveKlasseStory();
     historiePanel.appendChild(storyContainer);
     panelsHolder.appendChild(historiePanel);
 

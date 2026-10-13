@@ -439,8 +439,20 @@ export function renderStationIndkoebView(container, navigateFn) {
             max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
         }
+        .story-nav-pills {
+            display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
+        }
+        .story-nav-btn {
+            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+        }
+        .story-nav-btn:hover { border-color: #f59e0b; color: white; transform: translateY(-2px); }
+        .story-nav-btn.active {
+            background: #d97706; color: white; border-color: #f59e0b; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+        }
         .story-step-card {
             background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #f59e0b;
+            transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
@@ -449,9 +461,10 @@ export function renderStationIndkoebView(container, navigateFn) {
         }
         .story-opt-btn:hover { background: #475569; }
         .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
+        .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
         .story-explanation-box {
-            background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 12px;
-            padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.95rem; color: #fde68a;
+            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; border-radius: 14px;
+            padding: 1.2rem; margin-top: 1.5rem; font-size: 1rem; color: #4ade80; text-align: center;
         }
 
         /* Context */
@@ -1038,92 +1051,294 @@ export function renderStationIndkoebView(container, navigateFn) {
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================
-    // --- 3. DEL: EN LILLE HISTORIE (Toget der er kørt)
+    // --- 3. DEL: EN LILLE HISTORIE (4 ENKLE HISTORIER) ---
     // ========================================================
     const historiePanel = document.createElement('div');
     historiePanel.className = 'station-panel';
     historiePanel.dataset.panel = 'tab_historie';
 
+    const stationStories = [
+        {
+            title: "1. Toget er forsinket",
+            fullStoryText: "Kvinden venter på et tog. Toget er forsinket. Hun har et problem. Hun tager bussen med sin billet.",
+            steps: [
+                {
+                    q: "1. Hvad venter kvinden på?",
+                    options: [
+                        { text: "Et tog 🚆", correct: true },
+                        { text: "En seng 🛏️", correct: false },
+                        { text: "Et træ 🌳", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad sker der med tiden?",
+                    options: [
+                        { text: "En fest 🎉", correct: false },
+                        { text: "Toget er forsinket ⏰", correct: true },
+                        { text: "En blomst 🌸", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad har hun nu?",
+                    options: [
+                        { text: "Et problem ⚠️", correct: true },
+                        { text: "En gave 🎁", correct: false },
+                        { text: "Et æble 🍎", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør hun?",
+                    options: [
+                        { text: "Hun sover på perronen 😴", correct: false },
+                        { text: "Hun tager bussen med sin billet 💡", correct: true }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "2. En tur i butikken",
+            fullStoryText: "Manden handler i en butik. Han køber mælk og brød. Skiltet viser varens pris. Kunden lægger maden i en pose.",
+            steps: [
+                {
+                    q: "1. Hvor handler manden?",
+                    options: [
+                        { text: "I en butik 🏪", correct: true },
+                        { text: "I skoven 🌲", correct: false },
+                        { text: "På stranden 🏖️", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad køber han?",
+                    options: [
+                        { text: "En cykel 🚲", correct: false },
+                        { text: "Mælk og brød 🍞", correct: true },
+                        { text: "En seng 🛏️", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad viser skiltet?",
+                    options: [
+                        { text: "Varens pris 🏷️", correct: true },
+                        { text: "Et tog 🚆", correct: false },
+                        { text: "En sang 🎵", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvor lægger kunden maden?",
+                    options: [
+                        { text: "På gulvet 🗑️", correct: false },
+                        { text: "I en pose 🛍️", correct: true },
+                        { text: "I lommen 👖", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "3. Morgentoget på arbejde",
+            fullStoryText: "Hun rejser tidligt om morgenen. Cyklen står ved stationen. Hun viser sin billet. Toget kører til tiden.",
+            steps: [
+                {
+                    q: "1. Hvornår rejser hun?",
+                    options: [
+                        { text: "Tidligt om morgenen 🌅", correct: true },
+                        { text: "Midt om natten 🌙", correct: false },
+                        { text: "Aldrig 🛑", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvor står cyklen?",
+                    options: [
+                        { text: "I stuen 🛋️", correct: false },
+                        { text: "Ved stationen 🚲", correct: true },
+                        { text: "I vandet 🌊", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad viser hun?",
+                    options: [
+                        { text: "Sin billet 🎫", correct: true },
+                        { text: "Et æble 🍎", correct: false },
+                        { text: "En sko 👟", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør toget?",
+                    options: [
+                        { text: "Toget stopper for altid 🛑", correct: false },
+                        { text: "Toget kører til tiden 🚆", correct: true },
+                        { text: "Toget sover 💤", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "4. Planlæg en tur",
+            fullStoryText: "Det er tirsdag i dag. Maj er en forårsmåned. Familien vil rejse rundt i Danmark. Toget kører om en time.",
+            steps: [
+                {
+                    q: "1. Hvilken dag er det?",
+                    options: [
+                        { text: "Det er tirsdag i dag 📅", correct: true },
+                        { text: "Det er jul 🎄", correct: false },
+                        { text: "Det er nat 🌌", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvilken måned rejser de i?",
+                    options: [
+                        { text: "December er kold ❄️", correct: false },
+                        { text: "Maj er en forårsmåned 🗓️", correct: true },
+                        { text: "Natten er lang 🌃", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvor vil de rejse hen?",
+                    options: [
+                        { text: "Rundt i Danmark 🇩🇰", correct: true },
+                        { text: "Til månen 🌕", correct: false },
+                        { text: "I kælderen 🗝️", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvornår kører toget?",
+                    options: [
+                        { text: "Toget kørte for et år siden ⏳", correct: false },
+                        { text: "Toget kører om en time ⏰", correct: true },
+                        { text: "Aldrig 🛑", correct: false }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let currStationStoryIdx = 0;
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
-    storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('station_story_title')}</h2>
-        <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            ${getTranslation('station_story_desc')}
-        </p>
 
-        <!-- Trin 1 -->
-        <div class="story-step-card active-step" id="station-story-1">
-            <h4>${getTranslation('station_story_s1_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">Et tog 🚆</button>
-                <button class="story-opt-btn" data-correct="false">En seng 🛏️</button>
-                <button class="story-opt-btn" data-correct="false">Et træ 🌳</button>
-            </div>
-        </div>
+    function renderActiveStationStory() {
+        storyContainer.innerHTML = '';
+        const story = stationStories[currStationStoryIdx];
 
-        <!-- Trin 2 -->
-        <div class="story-step-card" id="station-story-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('station_story_s2_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">En fest 🎉</button>
-                <button class="story-opt-btn" data-correct="true">En fejl med tiden (hun kommer for sent) ⏰</button>
-                <button class="story-opt-btn" data-correct="false">En blomst 🌸</button>
-            </div>
-        </div>
-
-        <!-- Trin 3 -->
-        <div class="story-step-card" id="station-story-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('station_story_s3_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
-                <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
-                <button class="story-opt-btn" data-correct="false">Et æble 🍎</button>
-            </div>
-        </div>
-
-        <!-- Trin 4 -->
-        <div class="story-step-card" id="station-story-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('station_story_s4_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">Hun går i seng på perronen</button>
-                <button class="story-opt-btn" data-correct="true">Hun bruger sin billet til at tage bussen i stedet 💡</button>
-            </div>
-        </div>
-
-        <div id="station-story-summary" style="display: none;" class="story-explanation-box">
-            ${getTranslation('station_story_pedagogy')}
-        </div>
-    `;
-
-    function setupStationStoryCard(stepNum, nextStepNum) {
-        const card = storyContainer.querySelector(`#station-story-${stepNum}`);
-        card.querySelectorAll('.story-opt-btn').forEach(btn => {
+        const navBar = document.createElement('div');
+        navBar.className = 'story-nav-pills';
+        stationStories.forEach((s, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `story-nav-btn ${idx === currStationStoryIdx ? 'active' : ''}`;
+            btn.textContent = `Historie ${idx + 1}`;
             btn.onclick = () => {
-                if (btn.dataset.correct === 'true') {
-                    btn.classList.add('correct');
-                    speakDanish(btn.textContent);
-                    if (nextStepNum) {
-                        const nextCard = storyContainer.querySelector(`#station-story-${nextStepNum}`);
-                        nextCard.style.opacity = '1';
-                        nextCard.style.pointerEvents = 'auto';
-                        nextCard.classList.add('active-step');
-                    } else {
-                        storyContainer.querySelector('#station-story-summary').style.display = 'block';
-                        speakDanish("Flot klaret! Kvinden tager bussen med sin billet.");
-                    }
-                } else {
-                    speakDanish("Nej, prøv at overveje situationen!");
-                }
+                currStationStoryIdx = idx;
+                renderActiveStationStory();
             };
+            navBar.appendChild(btn);
         });
+        storyContainer.appendChild(navBar);
+
+        const titleEl = document.createElement('h2');
+        titleEl.style.fontSize = '1.8rem';
+        titleEl.style.marginBottom = '0.4rem';
+        titleEl.style.textAlign = 'center';
+        titleEl.textContent = story.title;
+        storyContainer.appendChild(titleEl);
+
+        const descEl = document.createElement('p');
+        descEl.style.color = '#94a3b8';
+        descEl.style.textAlign = 'center';
+        descEl.style.marginBottom = '1.8rem';
+        descEl.textContent = 'Vælg det rigtige ord for at bygge historien:';
+        storyContainer.appendChild(descEl);
+
+        const stepsHolder = document.createElement('div');
+        stepsHolder.className = 'story-steps-list';
+
+        story.steps.forEach((step, sIdx) => {
+            const stepCard = document.createElement('div');
+            stepCard.className = `story-step-card ${sIdx === 0 ? 'active-step' : ''}`;
+            stepCard.id = `station-step-${sIdx}`;
+            if (sIdx > 0) {
+                stepCard.style.opacity = '0.35';
+                stepCard.style.pointerEvents = 'none';
+            }
+
+            const qEl = document.createElement('h4');
+            qEl.style.marginBottom = '0.6rem';
+            qEl.textContent = step.q;
+            stepCard.appendChild(qEl);
+
+            const optRow = document.createElement('div');
+            optRow.className = 'story-options-row';
+
+            step.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'story-opt-btn';
+                optBtn.textContent = opt.text;
+
+                optBtn.onclick = () => {
+                    if (opt.correct) {
+                        optBtn.classList.add('correct');
+                        speakDanish(opt.text);
+
+                        optRow.querySelectorAll('.story-opt-btn').forEach(b => {
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        const nextStepCard = stepsHolder.querySelector(`#station-step-${sIdx + 1}`);
+                        if (nextStepCard) {
+                            nextStepCard.style.opacity = '1';
+                            nextStepCard.style.pointerEvents = 'auto';
+                            nextStepCard.classList.add('active-step');
+                        } else {
+                            const completeBox = storyContainer.querySelector('#station-story-complete-box');
+                            if (completeBox) {
+                                completeBox.style.display = 'block';
+                                completeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                            speakDanish("Flot klaret! Du har gennemført historien.");
+                        }
+                    } else {
+                        optBtn.classList.add('wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => optBtn.classList.remove('wrong'), 700);
+                    }
+                };
+                optRow.appendChild(optBtn);
+            });
+
+            stepCard.appendChild(optRow);
+            stepsHolder.appendChild(stepCard);
+        });
+        storyContainer.appendChild(stepsHolder);
+
+        const completeBox = document.createElement('div');
+        completeBox.id = 'station-story-complete-box';
+        completeBox.className = 'story-explanation-box';
+        completeBox.style.display = 'none';
+
+        const isLastStory = currStationStoryIdx === stationStories.length - 1;
+        completeBox.innerHTML = `
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+                🎉 Flot klaret! Du har gennemført historien.
+            </div>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                <button class="story-opt-btn" id="btn-listen-station-story" style="background: #0284c7; color: white;">
+                    🔊 Lyt til hele historien
+                </button>
+                <button class="story-opt-btn" id="btn-next-station-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
+                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                </button>
+            </div>
+        `;
+        storyContainer.appendChild(completeBox);
+
+        completeBox.querySelector('#btn-listen-station-story').onclick = () => {
+            speakDanish(story.fullStoryText);
+        };
+        completeBox.querySelector('#btn-next-station-story').onclick = () => {
+            currStationStoryIdx = (currStationStoryIdx + 1) % stationStories.length;
+            renderActiveStationStory();
+        };
     }
 
-    setupStationStoryCard(1, 2);
-    setupStationStoryCard(2, 3);
-    setupStationStoryCard(3, 4);
-    setupStationStoryCard(4, null);
-
+    renderActiveStationStory();
     historiePanel.appendChild(storyContainer);
     panelsHolder.appendChild(historiePanel);
 

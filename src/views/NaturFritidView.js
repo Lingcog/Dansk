@@ -439,8 +439,20 @@ export function renderNaturFritidView(container, navigateFn) {
             max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
         }
+        .story-nav-pills {
+            display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
+        }
+        .story-nav-btn {
+            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+        }
+        .story-nav-btn:hover { border-color: #10b981; color: white; transform: translateY(-2px); }
+        .story-nav-btn.active {
+            background: #059669; color: white; border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        }
         .story-step-card {
             background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #10b981;
+            transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
@@ -449,9 +461,10 @@ export function renderNaturFritidView(container, navigateFn) {
         }
         .story-opt-btn:hover { background: #475569; }
         .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
+        .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
         .story-explanation-box {
-            background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 12px;
-            padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.95rem; color: #fde68a;
+            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; border-radius: 14px;
+            padding: 1.2rem; margin-top: 1.5rem; font-size: 1rem; color: #4ade80; text-align: center;
         }
 
         /* Context */
@@ -1038,92 +1051,278 @@ export function renderNaturFritidView(container, navigateFn) {
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================
-    // --- 3. DEL: EN LILLE HISTORIE (Løberen der vrikker om)
+    // --- 3. DEL: EN LILLE HISTORIE (4 ENKLE HISTORIER) ---
     // ========================================================
     const historiePanel = document.createElement('div');
     historiePanel.className = 'natur-panel';
     historiePanel.dataset.panel = 'tab_historie';
 
+    const naturStories = [
+        {
+            title: "1. Løberen slår foden",
+            fullStoryText: "Han har ondt i foden. Der skete et uheld på stien. Løberen har et problem. En ven hjælper ham.",
+            steps: [
+                {
+                    q: "1. Hvor har løberen ondt?",
+                    options: [
+                        { text: "I foden 🦶", correct: true },
+                        { text: "I bogen 📖", correct: false },
+                        { text: "I bilen 🚗", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad skete der?",
+                    options: [
+                        { text: "En ferie 🏖️", correct: false },
+                        { text: "Et uheld på stien 💥", correct: true },
+                        { text: "En kage 🍰", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad har løberen?",
+                    options: [
+                        { text: "Et problem ⚠️", correct: true },
+                        { text: "En gave 🎁", correct: false },
+                        { text: "En bold ⚽", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvem hjælper ham?",
+                    options: [
+                        { text: "En kat løber forbi 🐈", correct: false },
+                        { text: "En ven giver en hånd 💡", correct: true }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "2. En dag i parken",
+            fullStoryText: "Der er sol og godt vejr i dag. Luften er frisk ude ved havet. De lytter til musik. Pigen finder en smuk blomst.",
+            steps: [
+                {
+                    q: "1. Hvordan er vejret?",
+                    options: [
+                        { text: "Godt vejr og sol 🌤️", correct: true },
+                        { text: "Sne og frost ❄️", correct: false },
+                        { text: "Det er nat 🌙", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvordan er luften?",
+                    options: [
+                        { text: "Luften er mørk 🌑", correct: false },
+                        { text: "Luften er frisk ude ved havet 🌊", correct: true },
+                        { text: "Luften er meget kold 🧊", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad lytter de til?",
+                    options: [
+                        { text: "De lytter til musik 🎵", correct: true },
+                        { text: "De lytter til et tog 🚆", correct: false },
+                        { text: "De lytter til en bil 🚗", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad finder pigen?",
+                    options: [
+                        { text: "En computer 💻", correct: false },
+                        { text: "En smuk blomst 🌸", correct: true },
+                        { text: "En seng 🛏️", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "3. Bold på stranden",
+            fullStoryText: "Børnene leger på stranden. Vandet er friskt. De spiller med en bold.",
+            steps: [
+                {
+                    q: "1. Hvor leger børnene?",
+                    options: [
+                        { text: "På stranden 🏖️", correct: true },
+                        { text: "I et skab 🚪", correct: false },
+                        { text: "På et tag 🏠", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvordan er vandet?",
+                    options: [
+                        { text: "Vandet er varmt som kaffe ☕", correct: false },
+                        { text: "Vandet er friskt 🌊", correct: true },
+                        { text: "Vandet er tørt 🏜️", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad leger de med?",
+                    options: [
+                        { text: "En blyant ✏️", correct: false },
+                        { text: "En bold ⚽", correct: true },
+                        { text: "En computer 💻", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "4. Fest under træet",
+            fullStoryText: "Familien holder en fest under træet. Pigen åbner en gave. De spiller et spil sammen.",
+            steps: [
+                {
+                    q: "1. Hvad holder familien?",
+                    options: [
+                        { text: "En fest 🎉", correct: true },
+                        { text: "En pause i sengen 🛏️", correct: false },
+                        { text: "Et møde på kontoret 💼", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad åbner pigen?",
+                    options: [
+                        { text: "Et vindue 🪟", correct: false },
+                        { text: "En gave 🎁", correct: true },
+                        { text: "En dør 🚪", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør de sammen?",
+                    options: [
+                        { text: "De sover 💤", correct: false },
+                        { text: "De spiller et spil 🎲", correct: true },
+                        { text: "De løber væk 🏃", correct: false }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let currNaturStoryIdx = 0;
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
-    storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('natur_story_title')}</h2>
-        <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            ${getTranslation('natur_story_desc')}
-        </p>
 
-        <!-- Trin 1 -->
-        <div class="story-step-card active-step" id="natur-story-1">
-            <h4>${getTranslation('natur_story_s1_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">En fod 🦶</button>
-                <button class="story-opt-btn" data-correct="false">En bog 📖</button>
-                <button class="story-opt-btn" data-correct="false">En bil 🚗</button>
-            </div>
-        </div>
+    function renderActiveNaturStory() {
+        storyContainer.innerHTML = '';
+        const story = naturStories[currNaturStoryIdx];
 
-        <!-- Trin 2 -->
-        <div class="story-step-card" id="natur-story-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('natur_story_s2_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">En ferie 🏖️</button>
-                <button class="story-opt-btn" data-correct="true">Et uheld (han vrikker om) 💥</button>
-                <button class="story-opt-btn" data-correct="false">En kage 🍰</button>
-            </div>
-        </div>
-
-        <!-- Trin 3 -->
-        <div class="story-step-card" id="natur-story-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('natur_story_s3_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
-                <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
-                <button class="story-opt-btn" data-correct="false">En musik 🎵</button>
-            </div>
-        </div>
-
-        <!-- Trin 4 -->
-        <div class="story-step-card" id="natur-story-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('natur_story_s4_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">Han løber videre</button>
-                <button class="story-opt-btn" data-correct="true">En ven rækker ham en hånd og hjælper 💡</button>
-            </div>
-        </div>
-
-        <div id="natur-story-summary" style="display: none;" class="story-explanation-box">
-            ${getTranslation('natur_story_pedagogy')}
-        </div>
-    `;
-
-    function setupNaturStoryCard(stepNum, nextStepNum) {
-        const card = storyContainer.querySelector(`#natur-story-${stepNum}`);
-        card.querySelectorAll('.story-opt-btn').forEach(btn => {
+        const navBar = document.createElement('div');
+        navBar.className = 'story-nav-pills';
+        naturStories.forEach((s, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `story-nav-btn ${idx === currNaturStoryIdx ? 'active' : ''}`;
+            btn.textContent = `Historie ${idx + 1}`;
             btn.onclick = () => {
-                if (btn.dataset.correct === 'true') {
-                    btn.classList.add('correct');
-                    speakDanish(btn.textContent);
-                    if (nextStepNum) {
-                        const nextCard = storyContainer.querySelector(`#natur-story-${nextStepNum}`);
-                        nextCard.style.opacity = '1';
-                        nextCard.style.pointerEvents = 'auto';
-                        nextCard.classList.add('active-step');
-                    } else {
-                        storyContainer.querySelector('#natur-story-summary').style.display = 'block';
-                        speakDanish("Flot klaret! Vennen rækker ham en hånd og hjælper.");
-                    }
-                } else {
-                    speakDanish("Nej, prøv at overveje situationen!");
-                }
+                currNaturStoryIdx = idx;
+                renderActiveNaturStory();
             };
+            navBar.appendChild(btn);
         });
+        storyContainer.appendChild(navBar);
+
+        const titleEl = document.createElement('h2');
+        titleEl.style.fontSize = '1.8rem';
+        titleEl.style.marginBottom = '0.4rem';
+        titleEl.style.textAlign = 'center';
+        titleEl.textContent = story.title;
+        storyContainer.appendChild(titleEl);
+
+        const descEl = document.createElement('p');
+        descEl.style.color = '#94a3b8';
+        descEl.style.textAlign = 'center';
+        descEl.style.marginBottom = '1.8rem';
+        descEl.textContent = 'Vælg det rigtige ord for at bygge historien:';
+        storyContainer.appendChild(descEl);
+
+        const stepsHolder = document.createElement('div');
+        stepsHolder.className = 'story-steps-list';
+
+        story.steps.forEach((step, sIdx) => {
+            const stepCard = document.createElement('div');
+            stepCard.className = `story-step-card ${sIdx === 0 ? 'active-step' : ''}`;
+            stepCard.id = `natur-step-${sIdx}`;
+            if (sIdx > 0) {
+                stepCard.style.opacity = '0.35';
+                stepCard.style.pointerEvents = 'none';
+            }
+
+            const qEl = document.createElement('h4');
+            qEl.style.marginBottom = '0.6rem';
+            qEl.textContent = step.q;
+            stepCard.appendChild(qEl);
+
+            const optRow = document.createElement('div');
+            optRow.className = 'story-options-row';
+
+            step.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'story-opt-btn';
+                optBtn.textContent = opt.text;
+
+                optBtn.onclick = () => {
+                    if (opt.correct) {
+                        optBtn.classList.add('correct');
+                        speakDanish(opt.text);
+
+                        optRow.querySelectorAll('.story-opt-btn').forEach(b => {
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        const nextStepCard = stepsHolder.querySelector(`#natur-step-${sIdx + 1}`);
+                        if (nextStepCard) {
+                            nextStepCard.style.opacity = '1';
+                            nextStepCard.style.pointerEvents = 'auto';
+                            nextStepCard.classList.add('active-step');
+                        } else {
+                            const completeBox = storyContainer.querySelector('#natur-story-complete-box');
+                            if (completeBox) {
+                                completeBox.style.display = 'block';
+                                completeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                            speakDanish("Flot klaret! Du har gennemført historien.");
+                        }
+                    } else {
+                        optBtn.classList.add('wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => optBtn.classList.remove('wrong'), 700);
+                    }
+                };
+                optRow.appendChild(optBtn);
+            });
+
+            stepCard.appendChild(optRow);
+            stepsHolder.appendChild(stepCard);
+        });
+        storyContainer.appendChild(stepsHolder);
+
+        const completeBox = document.createElement('div');
+        completeBox.id = 'natur-story-complete-box';
+        completeBox.className = 'story-explanation-box';
+        completeBox.style.display = 'none';
+
+        const isLastStory = currNaturStoryIdx === naturStories.length - 1;
+        completeBox.innerHTML = `
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+                🎉 Flot klaret! Du har gennemført historien.
+            </div>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                <button class="story-opt-btn" id="btn-listen-natur-story" style="background: #0284c7; color: white;">
+                    🔊 Lyt til hele historien
+                </button>
+                <button class="story-opt-btn" id="btn-next-natur-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
+                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                </button>
+            </div>
+        `;
+        storyContainer.appendChild(completeBox);
+
+        completeBox.querySelector('#btn-listen-natur-story').onclick = () => {
+            speakDanish(story.fullStoryText);
+        };
+        completeBox.querySelector('#btn-next-natur-story').onclick = () => {
+            currNaturStoryIdx = (currNaturStoryIdx + 1) % naturStories.length;
+            renderActiveNaturStory();
+        };
     }
 
-    setupNaturStoryCard(1, 2);
-    setupNaturStoryCard(2, 3);
-    setupNaturStoryCard(3, 4);
-    setupNaturStoryCard(4, null);
-
+    renderActiveNaturStory();
     historiePanel.appendChild(storyContainer);
     panelsHolder.appendChild(historiePanel);
 

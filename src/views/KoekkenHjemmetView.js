@@ -642,7 +642,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
         }
 
         /* =========================================
-           TAB 3: MIKRO-HISTORIE
+           TAB 3: EN LILLE HISTORIE
            ========================================= */
         .story-container {
             max-width: 800px;
@@ -651,6 +651,17 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 2rem;
+        }
+        .story-nav-pills {
+            display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
+        }
+        .story-nav-btn {
+            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+        }
+        .story-nav-btn:hover { border-color: #38bdf8; color: white; transform: translateY(-2px); }
+        .story-nav-btn.active {
+            background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
         }
         .story-step-card {
             background: #1e293b;
@@ -692,14 +703,19 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             background: #22c55e !important;
             color: #0f172a;
         }
+        .story-opt-btn.wrong {
+            background: #ef4444 !important;
+            color: white;
+        }
         .story-explanation-box {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid #f59e0b;
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
-            margin-top: 1rem;
-            font-size: 0.95rem;
-            color: #fde68a;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid #22c55e;
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #4ade80;
+            text-align: center;
         }
 
         /* =========================================
@@ -1433,97 +1449,286 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================
-    // --- 3. DEL: MIKRO-HISTORIE (FRA KONKRET TIL ABSTRAKT)
+    // --- 3. DEL: EN LILLE HISTORIE (4 ENKLE HISTORIER) ---
     // ========================================================
     const historiePanel = document.createElement('div');
     historiePanel.className = 'kv-panel';
     historiePanel.dataset.panel = 'tab_historie';
 
+    const kitchenStories = [
+        {
+            title: "1. Kaffen vælter",
+            fullStoryText: "En kop kaffe står på bordet. Der sker et uheld. Der er et problem. Kvinden bruger en klud.",
+            steps: [
+                {
+                    q: "1. Hvad står på bordet?",
+                    options: [
+                        { text: "En kop kaffe ☕", correct: true },
+                        { text: "En sko 👟", correct: false },
+                        { text: "Et træ 🌳", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad sker der?",
+                    options: [
+                        { text: "En ferie 🏖️", correct: false },
+                        { text: "Et uheld 💥", correct: true },
+                        { text: "En hund 🐕", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad er der nu?",
+                    options: [
+                        { text: "Et problem ⚠️", correct: true },
+                        { text: "En gave 🎁", correct: false },
+                        { text: "Et barn 👶", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør kvinden?",
+                    options: [
+                        { text: "Hun sover i sengen 🛏️", correct: false },
+                        { text: "Hun bruger en klud 🧽", correct: true }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "2. Godmorgen i huset",
+            fullStoryText: "Barnet vågner i sengen. Barnet tager sko på. Barnet sidder på en stol. Familien spiser mad.",
+            steps: [
+                {
+                    q: "1. Hvor vågner barnet?",
+                    options: [
+                        { text: "I sengen 🛏️", correct: true },
+                        { text: "I køleskabet ❄️", correct: false },
+                        { text: "På bordet 🪵", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad tager barnet på?",
+                    options: [
+                        { text: "En tallerken 🍽️", correct: false },
+                        { text: "Tøj og sko 👟", correct: true },
+                        { text: "En lampe 💡", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvor sidder barnet?",
+                    options: [
+                        { text: "I vasken 🧼", correct: false },
+                        { text: "På en stol 🪑", correct: true },
+                        { text: "Under sengen 🛏️", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør familien?",
+                    options: [
+                        { text: "De spiser mad 🍞", correct: true },
+                        { text: "De sover igen 😴", correct: false },
+                        { text: "De køber et hus 🏠", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "3. Aftensmad sammen",
+            fullStoryText: "Moren laver mad. Familien spiser fisk. De drikker et glas vand. Faren taler ved bordet.",
+            steps: [
+                {
+                    q: "1. Hvem laver mad?",
+                    options: [
+                        { text: "Moren laver mad 👩", correct: true },
+                        { text: "Hunden 🐕", correct: false },
+                        { text: "Katten 🐈", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad spiser de?",
+                    options: [
+                        { text: "De spiser papir 📄", correct: false },
+                        { text: "De spiser fisk 🐟", correct: true },
+                        { text: "De spiser sko 👟", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad drikker de?",
+                    options: [
+                        { text: "En gryde 🍲", correct: false },
+                        { text: "Et glas vand 🥛", correct: true },
+                        { text: "En kop te ☕", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør faren?",
+                    options: [
+                        { text: "Faren sover 💤", correct: false },
+                        { text: "Faren taler ved bordet 👨", correct: true },
+                        { text: "Faren løber 🏃", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "4. Katten vil have mad",
+            fullStoryText: "Katten kigger på madskålen. Faren giver katten mad. Dyrene spiser mad.",
+            steps: [
+                {
+                    q: "1. Hvor kigger katten hen?",
+                    options: [
+                        { text: "På madskålen 🐈", correct: true },
+                        { text: "På et tog 🚆", correct: false },
+                        { text: "På en cykel 🚲", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør faren?",
+                    options: [
+                        { text: "Han taber koppen 💥", correct: false },
+                        { text: "Han giver katten mad 🥣", correct: true },
+                        { text: "Han går i seng 🛏️", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør katten og hunden?",
+                    options: [
+                        { text: "De læser en bog 📖", correct: false },
+                        { text: "De spiser mad 🐕", correct: true },
+                        { text: "De sover på bordet 😴", correct: false }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let currKitchenStoryIdx = 0;
     const storyContainer = document.createElement('div');
     storyContainer.className = 'story-container';
-    storyContainer.innerHTML = `
-        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; text-align: center;">${getTranslation('koekken_story_title')}</h2>
-        <p style="color: #94a3b8; text-align: center; margin-bottom: 1.8rem;">
-            ${getTranslation('koekken_story_desc')}
-        </p>
 
-        <!-- Trin 1: Konkret genstand -->
-        <div class="story-step-card active-step" id="story-step-1">
-            <h4>${getTranslation('koekken_story_s1_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">En kop kaffe ☕</button>
-                <button class="story-opt-btn" data-correct="false">En sko 👟</button>
-                <button class="story-opt-btn" data-correct="false">Et træ 🌳</button>
-            </div>
-            <div class="story-feedback-area"></div>
-        </div>
+    function renderActiveKitchenStory() {
+        storyContainer.innerHTML = '';
+        const story = kitchenStories[currKitchenStoryIdx];
 
-        <!-- Trin 2: Hændelsen -->
-        <div class="story-step-card" id="story-step-2" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('koekken_story_s2_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">En ferie 🏖️</button>
-                <button class="story-opt-btn" data-correct="true">Et uheld (en fejl) 💥</button>
-                <button class="story-opt-btn" data-correct="false">En hund 🐕</button>
-            </div>
-            <div class="story-feedback-area"></div>
-        </div>
-
-        <!-- Trin 3: Abstraktionen -->
-        <div class="story-step-card" id="story-step-3" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('koekken_story_s3_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="true">Et problem ⚠️</button>
-                <button class="story-opt-btn" data-correct="false">En gave 🎁</button>
-                <button class="story-opt-btn" data-correct="false">Et barn 👶</button>
-            </div>
-            <div class="story-feedback-area"></div>
-        </div>
-
-        <!-- Trin 4: Løsningen -->
-        <div class="story-step-card" id="story-step-4" style="opacity: 0.4; pointer-events: none;">
-            <h4>${getTranslation('koekken_story_s4_q')}</h4>
-            <div class="story-options-row">
-                <button class="story-opt-btn" data-correct="false">Hun sover i sengen</button>
-                <button class="story-opt-btn" data-correct="true">Hun tørrer op med en klud 🧽</button>
-            </div>
-            <div class="story-feedback-area"></div>
-        </div>
-
-        <div id="story-final-summary" style="display: none;" class="story-explanation-box">
-            ${getTranslation('koekken_story_pedagogy')}
-        </div>
-    `;
-
-    // Hook up Story Steps logic
-    function setupStoryCard(stepNum, nextStepNum) {
-        const card = storyContainer.querySelector(`#story-step-${stepNum}`);
-        card.querySelectorAll('.story-opt-btn').forEach(btn => {
+        const navBar = document.createElement('div');
+        navBar.className = 'story-nav-pills';
+        kitchenStories.forEach((s, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `story-nav-btn ${idx === currKitchenStoryIdx ? 'active' : ''}`;
+            btn.textContent = `Historie ${idx + 1}`;
             btn.onclick = () => {
-                if (btn.dataset.correct === 'true') {
-                    btn.classList.add('correct');
-                    speakDanish(btn.textContent);
-                    if (nextStepNum) {
-                        const nextCard = storyContainer.querySelector(`#story-step-${nextStepNum}`);
-                        nextCard.style.opacity = '1';
-                        nextCard.style.pointerEvents = 'auto';
-                        nextCard.classList.add('active-step');
-                    } else {
-                        storyContainer.querySelector('#story-final-summary').style.display = 'block';
-                        speakDanish("Flot klaret! Problemet er løst.");
-                    }
-                } else {
-                    speakDanish("Nej, tænk på situationen og prøv igen.");
-                }
+                currKitchenStoryIdx = idx;
+                renderActiveKitchenStory();
             };
+            navBar.appendChild(btn);
         });
+        storyContainer.appendChild(navBar);
+
+        const titleEl = document.createElement('h2');
+        titleEl.style.fontSize = '1.8rem';
+        titleEl.style.marginBottom = '0.4rem';
+        titleEl.style.textAlign = 'center';
+        titleEl.textContent = story.title;
+        storyContainer.appendChild(titleEl);
+
+        const descEl = document.createElement('p');
+        descEl.style.color = '#94a3b8';
+        descEl.style.textAlign = 'center';
+        descEl.style.marginBottom = '1.8rem';
+        descEl.textContent = 'Vælg det rigtige ord for at bygge historien:';
+        storyContainer.appendChild(descEl);
+
+        const stepsHolder = document.createElement('div');
+        stepsHolder.className = 'story-steps-list';
+
+        story.steps.forEach((step, sIdx) => {
+            const stepCard = document.createElement('div');
+            stepCard.className = `story-step-card ${sIdx === 0 ? 'active-step' : ''}`;
+            stepCard.id = `koekken-step-${sIdx}`;
+            if (sIdx > 0) {
+                stepCard.style.opacity = '0.35';
+                stepCard.style.pointerEvents = 'none';
+            }
+
+            const qEl = document.createElement('h4');
+            qEl.style.marginBottom = '0.6rem';
+            qEl.textContent = step.q;
+            stepCard.appendChild(qEl);
+
+            const optRow = document.createElement('div');
+            optRow.className = 'story-options-row';
+
+            step.options.forEach(opt => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'story-opt-btn';
+                optBtn.textContent = opt.text;
+
+                optBtn.onclick = () => {
+                    if (opt.correct) {
+                        optBtn.classList.add('correct');
+                        speakDanish(opt.text);
+
+                        optRow.querySelectorAll('.story-opt-btn').forEach(b => {
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        const nextStepCard = stepsHolder.querySelector(`#koekken-step-${sIdx + 1}`);
+                        if (nextStepCard) {
+                            nextStepCard.style.opacity = '1';
+                            nextStepCard.style.pointerEvents = 'auto';
+                            nextStepCard.classList.add('active-step');
+                        } else {
+                            const completeBox = storyContainer.querySelector('#koekken-story-complete-box');
+                            if (completeBox) {
+                                completeBox.style.display = 'block';
+                                completeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                            speakDanish("Flot klaret! Du har gennemført historien.");
+                        }
+                    } else {
+                        optBtn.classList.add('wrong');
+                        speakDanish("Prøv igen!");
+                        setTimeout(() => optBtn.classList.remove('wrong'), 700);
+                    }
+                };
+                optRow.appendChild(optBtn);
+            });
+
+            stepCard.appendChild(optRow);
+            stepsHolder.appendChild(stepCard);
+        });
+        storyContainer.appendChild(stepsHolder);
+
+        const completeBox = document.createElement('div');
+        completeBox.id = 'koekken-story-complete-box';
+        completeBox.className = 'story-explanation-box';
+        completeBox.style.display = 'none';
+
+        const isLastStory = currKitchenStoryIdx === kitchenStories.length - 1;
+        completeBox.innerHTML = `
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+                🎉 Flot klaret! Du har gennemført historien.
+            </div>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                <button class="story-opt-btn" id="btn-listen-koekken-story" style="background: #0284c7; color: white;">
+                    🔊 Lyt til hele historien
+                </button>
+                <button class="story-opt-btn" id="btn-next-koekken-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
+                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                </button>
+            </div>
+        `;
+        storyContainer.appendChild(completeBox);
+
+        completeBox.querySelector('#btn-listen-koekken-story').onclick = () => {
+            speakDanish(story.fullStoryText);
+        };
+        completeBox.querySelector('#btn-next-koekken-story').onclick = () => {
+            currKitchenStoryIdx = (currKitchenStoryIdx + 1) % kitchenStories.length;
+            renderActiveKitchenStory();
+        };
     }
 
-    setupStoryCard(1, 2);
-    setupStoryCard(2, 3);
-    setupStoryCard(3, 4);
-    setupStoryCard(4, null);
-
+    renderActiveKitchenStory();
     historiePanel.appendChild(storyContainer);
     panelsHolder.appendChild(historiePanel);
 

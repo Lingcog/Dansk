@@ -9,18 +9,18 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← Tilbage';
+    backBtn.textContent = '← ' + (getTranslation('back') || 'Tilbage');
     backBtn.onclick = () => navigateFn('lav_sporgsmal');
     topBar.appendChild(backBtn);
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = 'Målrettet Træning';
+    title.textContent = getTranslation('sporgsmal_target_training_title') || 'Målrettet Træning';
     title.style.textAlign = 'center';
     
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Vælg hvad du vil træne.';
+    subtitle.textContent = getTranslation('sporgsmal_choose_training') || 'Vælg hvad du vil træne.';
     subtitle.style.textAlign = 'center';
 
     // Options Container
@@ -28,7 +28,7 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
     optionsContainer.style.display = 'flex';
     optionsContainer.style.flexDirection = 'column';
     optionsContainer.style.gap = '2rem';
-    optionsContainer.style.marginTop = '3rem';
+    optionsContainer.style.marginTop = '2.5rem';
     
     // --- Option 1: Hv-Betydning ---
     const hvCard = document.createElement('div');
@@ -39,11 +39,11 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
     hvCard.onclick = () => navigateFn('sporgsmal_hv_betydning');
     
     const hvTitle = document.createElement('h2');
-    hvTitle.textContent = 'Betydning af Hv-ord';
+    hvTitle.textContent = getTranslation('sporgsmal_hv_title') || 'Betydning af Hv-ord';
     hvTitle.style.marginBottom = '1rem';
     
     const hvDesc = document.createElement('p');
-    hvDesc.textContent = 'Træn hvilket spørgeord, der passer til situationen (fx Hvad, Hvor, Hvornår).';
+    hvDesc.textContent = getTranslation('sporgsmal_hv_desc') || 'Træn hvilket spørgeord, der passer til situationen (fx Hvad, Hvor, Hvornår).';
     hvDesc.style.color = 'var(--text-muted)';
     hvDesc.style.lineHeight = '1.5';
     
@@ -60,11 +60,11 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
     ordCard.onclick = () => navigateFn('sporgsmal_ordstilling');
     
     const ordTitle = document.createElement('h2');
-    ordTitle.textContent = 'Ordstilling i Spørgsmål';
+    ordTitle.textContent = getTranslation('sporgsmal_ord_title') || 'Ordstilling i Spørgsmål';
     ordTitle.style.marginBottom = '1rem';
     
     const ordDesc = document.createElement('p');
-    ordDesc.textContent = 'Træn hvordan man bygger sætningen korrekt op i spørgsmål.';
+    ordDesc.textContent = getTranslation('sporgsmal_ord_desc') || 'Træn hvordan man bygger sætningen korrekt op i spørgsmål.';
     ordDesc.style.color = 'var(--text-muted)';
     ordDesc.style.lineHeight = '1.5';
     

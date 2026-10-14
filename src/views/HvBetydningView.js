@@ -9,13 +9,13 @@ export function renderHvBetydningView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← Tilbage';
+    backBtn.textContent = '← ' + (getTranslation('back') || 'Tilbage');
     backBtn.onclick = () => navigateFn('traen_sporgsmal_menu');
     topBar.appendChild(backBtn);
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = 'Træn betydning af Hv-ord';
+    title.textContent = getTranslation('hv_view_title') || 'Træn betydning af Hv-ord';
     title.style.textAlign = 'center';
 
     const exerciseContainer = document.createElement('div');
@@ -25,60 +25,60 @@ export function renderHvBetydningView(container, navigateFn) {
     // Quiz data based on Anna situations
     const questions = [
         {
-            situation: 'Anna køber frugt og kød.',
-            goal: 'Du vil spørge ind til <strong>tingene</strong> hun køber.',
+            situationKey: 'hv_sit_1',
+            goalKey: 'hv_goal_1',
             sentenceParts: ['[ ? ]', ' køber Anna?'],
             options: ['Hvem', 'Hvad', 'Hvornår', 'Hvor'],
             correct: 'Hvad',
-            explanation: 'Man bruger "Hvad" til at spørge om ting.'
+            explanationKey: 'hv_exp_1'
         },
         {
-            situation: 'Anna betaler 100 kroner.',
-            goal: 'Du vil spørge ind til <strong>prisen</strong>.',
+            situationKey: 'hv_sit_2',
+            goalKey: 'hv_goal_2',
             sentenceParts: ['[ ? ]', ' betaler Anna?'],
             options: ['Hvor', 'Hvordan', 'Hvor meget', 'Hvad'],
             correct: 'Hvor meget',
-            explanation: 'Man bruger "Hvor meget" til at spørge om pris eller mængde.'
+            explanationKey: 'hv_exp_2'
         },
         {
-            situation: 'Anna køber ind i Netto.',
-            goal: 'Du vil spørge ind til <strong>stedet</strong>.',
+            situationKey: 'hv_sit_3',
+            goalKey: 'hv_goal_3',
             sentenceParts: ['[ ? ]', ' køber Anna ind?'],
             options: ['Hvornår', 'Hvor', 'Hvem', 'Hvorhen'],
             correct: 'Hvor',
-            explanation: 'Man bruger "Hvor" til at spørge om et sted (placering).'
+            explanationKey: 'hv_exp_3'
         },
         {
-            situation: 'Anna køber ind kl. 14.',
-            goal: 'Du vil spørge ind til <strong>tidspunktet</strong>.',
+            situationKey: 'hv_sit_4',
+            goalKey: 'hv_goal_4',
             sentenceParts: ['[ ? ]', ' køber Anna ind?'],
             options: ['Hvordan', 'Hvad tid', 'Hvornår', 'Hvilken'],
             correct: 'Hvornår',
-            explanation: 'Man bruger "Hvornår" til at spørge om tid/tidspunkt.'
+            explanationKey: 'hv_exp_4'
         },
         {
-            situation: 'Anna betaler med kort.',
-            goal: 'Du vil spørge ind til <strong>betalingsmetoden</strong>.',
+            situationKey: 'hv_sit_5',
+            goalKey: 'hv_goal_5',
             sentenceParts: ['[ ? ]', ' betaler Anna?'],
             options: ['Hvad', 'Hvorfor', 'Hvem', 'Hvordan'],
             correct: 'Hvordan',
-            explanation: 'Man bruger "Hvordan" til at spørge om måden man gør noget på.'
+            explanationKey: 'hv_exp_5'
         },
         {
-            situation: 'Anna kører i bil til Netto.',
-            goal: 'Du vil spørge ind til <strong>transportmidlet</strong>.',
+            situationKey: 'hv_sit_6',
+            goalKey: 'hv_goal_6',
             sentenceParts: ['[ ? ]', ' kommer Anna til Netto?'],
             options: ['Hvor', 'Hvordan', 'Hvornår', 'Hvad'],
             correct: 'Hvordan',
-            explanation: 'Man bruger også "Hvordan" til at spørge om transport.'
+            explanationKey: 'hv_exp_6'
         },
         {
-            situation: 'Anna køber ind sammen med en veninde.',
-            goal: 'Du vil spørge ind til <strong>personen</strong> hun er med.',
+            situationKey: 'hv_sit_7',
+            goalKey: 'hv_goal_7',
             sentenceParts: ['[ ? ]', ' køber Anna ind sammen med?'],
             options: ['Hvem', 'Hvilken', 'Hvad', 'Hvordan'],
             correct: 'Hvem',
-            explanation: 'Man bruger "Hvem" til at spørge om personer.'
+            explanationKey: 'hv_exp_7'
         }
     ];
 
@@ -90,13 +90,13 @@ export function renderHvBetydningView(container, navigateFn) {
         if (currentIndex >= questions.length) {
             // Done
             const doneMsg = document.createElement('h2');
-            doneMsg.textContent = '🏆 Fantastisk! Du har nu trænet betydningen af Hv-ord!';
+            doneMsg.textContent = getTranslation('hv_done_title') || '🏆 Fantastisk! Du har nu trænet betydningen af Hv-ord!';
             doneMsg.style.textAlign = 'center';
             doneMsg.style.marginTop = '2rem';
             
             const againBtn = document.createElement('button');
             againBtn.className = 'primary-btn';
-            againBtn.textContent = 'Prøv igen';
+            againBtn.textContent = getTranslation('hv_try_again') || 'Prøv igen';
             againBtn.style.marginTop = '2rem';
             againBtn.onclick = () => {
                 currentIndex = 0;
@@ -111,13 +111,13 @@ export function renderHvBetydningView(container, navigateFn) {
         const q = questions[currentIndex];
         
         const sit = document.createElement('p');
-        sit.innerHTML = `📍 <em>${q.situation}</em>`;
+        sit.innerHTML = `📍 <em>${getTranslation(q.situationKey)}</em>`;
         sit.style.fontSize = '1.1rem';
         sit.style.color = '#fff';
         sit.style.opacity = '0.9';
         
         const goal = document.createElement('p');
-        goal.innerHTML = `🎯 ${q.goal}`;
+        goal.innerHTML = `🎯 ${getTranslation(q.goalKey)}`;
         goal.style.fontSize = '1.2rem';
         goal.style.margin = '1rem 0 2rem 0';
         
@@ -149,7 +149,6 @@ export function renderHvBetydningView(container, navigateFn) {
         feedbackBox.style.marginTop = '2rem';
         feedbackBox.style.minHeight = '100px';
         
-        // Shuffle options just to be nice, or keep them as is
         q.options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'choice-btn';
@@ -163,7 +162,6 @@ export function renderHvBetydningView(container, navigateFn) {
             btn.textContent = opt;
             
             btn.onclick = () => {
-                // disable all
                 Array.from(optionsGrid.children).forEach(c => c.style.pointerEvents = 'none');
                 
                 if (opt === q.correct) {
@@ -174,8 +172,8 @@ export function renderHvBetydningView(container, navigateFn) {
                     
                     feedbackBox.innerHTML = `
                         <div style="background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; padding: 1rem; border-radius: 8px;">
-                            <h3 style="color: #4caf50; margin: 0 0 0.5rem 0;">Korrekt!</h3>
-                            <p style="margin: 0;">${q.explanation}</p>
+                            <h3 style="color: #4caf50; margin: 0 0 0.5rem 0;">${getTranslation('hv_correct') || 'Korrekt!'}</h3>
+                            <p style="margin: 0;">${getTranslation(q.explanationKey)}</p>
                         </div>
                     `;
                     
@@ -187,7 +185,6 @@ export function renderHvBetydningView(container, navigateFn) {
                     btn.style.background = '#f44336';
                     btn.style.borderColor = '#f44336';
                     
-                    // highlight correct one
                     Array.from(optionsGrid.children).forEach(c => {
                         if (c.textContent === q.correct) {
                             c.style.background = '#4caf50';
@@ -200,8 +197,8 @@ export function renderHvBetydningView(container, navigateFn) {
                     
                     feedbackBox.innerHTML = `
                         <div style="background: rgba(244, 67, 54, 0.2); border: 1px solid #f44336; padding: 1rem; border-radius: 8px;">
-                            <h3 style="color: #ffcdd2; margin: 0 0 0.5rem 0;">Desværre forkert</h3>
-                            <p style="margin: 0;">Det rigtige svar er <strong>${q.correct}</strong>. ${q.explanation}</p>
+                            <h3 style="color: #ffcdd2; margin: 0 0 0.5rem 0;">${getTranslation('hv_wrong') || 'Desværre forkert'}</h3>
+                            <p style="margin: 0;">${getTranslation('hv_correct_answer_is') || 'Det rigtige svar er'} <strong>${q.correct}</strong>. ${getTranslation(q.explanationKey)}</p>
                         </div>
                     `;
                     

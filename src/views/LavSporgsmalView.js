@@ -196,11 +196,11 @@ export function renderLavSporgsmalView(container, navigateFn) {
     targetCard.onclick = () => navigateFn('traen_sporgsmal_menu');
     
     const targetTitle = document.createElement('h2');
-    targetTitle.textContent = 'Målrettet Træning';
+    targetTitle.textContent = getTranslation('sporgsmal_target_training_title') || 'Målrettet Træning';
     targetTitle.style.marginBottom = '1rem';
     
     const targetDesc = document.createElement('p');
-    targetDesc.textContent = 'Træn specifikke elementer, fx betydningen af Hv-ord eller ordstilling i spørgsmål.';
+    targetDesc.textContent = getTranslation('sporgsmal_target_training_desc') || 'Træn specifikke elementer, fx betydningen af Hv-ord eller ordstilling i spørgsmål.';
     targetDesc.style.color = 'var(--text-muted)';
     targetDesc.style.lineHeight = '1.5';
     

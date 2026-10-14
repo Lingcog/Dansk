@@ -91,10 +91,10 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 2,
-                fonetikTip: 'Stumt g i "jeg" [ja] • Hårdt r i "ringer" • Vokalisk r i "for"',
+                fonetikTip: 'Stumt g i "jeg" [ja] • Hårdt r i "ringer" • Stumt d i "melde"',
                 pronunciation: {
                     target: 'Jeg ringer for at melde mig syg i dag.',
-                    focus: ['ringer', 'melde', 'syg', 'dag']
+                    focus: ['jeg', 'ringer', 'melde']
                 }
             },
             { 
@@ -107,10 +107,10 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 3,
-                fonetikTip: 'Vokalisk r i "feber", "har" og "muskelsmerter" • Blødt d i "hovedpine"',
+                fonetikTip: 'Vokalisk r i "har", "feber" og "muskelsmerter" • Blødt d i "hovedpine"',
                 pronunciation: {
                     target: 'Jeg har høj feber, hovedpine og muskelsmerter.',
-                    focus: ['feber', 'hovedpine', 'muskelsmerter']
+                    focus: ['har', 'feber', 'muskelsmerter', 'hovedpine']
                 }
             },
             { 
@@ -123,10 +123,10 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 4,
-                fonetikTip: 'Stumt g i "jeg" [ja] og "lægen" • Hårdt r i "ringede" • Vokalisk r i "morges"',
+                fonetikTip: 'Stumt g i "lægen" • Blødt g i "ringede" • Stumt g i "morges"',
                 pronunciation: {
                     target: 'Ja, jeg ringede til lægen i morges.',
-                    focus: ['ringede', 'lægen', 'morges']
+                    focus: ['lægen', 'ringede', 'morges']
                 }
             },
             { 
@@ -139,10 +139,10 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 5,
-                fonetikTip: 'Stumt g i "Lægen", "sagde" og "jeg" [ja] • Vokalisk r i "har"',
+                fonetikTip: 'Stumt g i "Lægen", "sagde" og stumt d i "sagde"',
                 pronunciation: {
                     target: 'Lægen sagde, at jeg nok har influenza.',
-                    focus: ['lægen', 'sagde', 'har']
+                    focus: ['lægen', 'sagde']
                 }
             },
             { 
@@ -155,10 +155,10 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 6,
-                fonetikTip: 'Stumt g i "lægen" • Blødt d i "mod" • Vokalisk r i "feberen" og "smerten"',
+                fonetikTip: 'Stumt g i "lægen" • Stumt g i "noget" • Vokalisk r i "feberen" og "smerten"',
                 pronunciation: {
                     target: 'Ja, lægen gav mig noget mod feberen og smerten.',
-                    focus: ['lægen', 'mod', 'feberen', 'smerten']
+                    focus: ['lægen', 'noget', 'feberen', 'smerten']
                 }
             },
             { 
@@ -171,7 +171,7 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 7,
-                fonetikTip: 'Hårdt r i "ringer" • Hårdt g i "igen" • Vokalisk r i "morgen"',
+                fonetikTip: 'Ng-lyd i "ringer" • Hårdt g i "igen" • Stumt g i "morgen" • Blødt d i "-et" i "opdateret"',
                 pronunciation: {
                     target: 'Tak, jeg ringer til dig igen i morgen og holder dig opdateret.',
                     focus: ['ringer', 'igen', 'morgen', 'opdateret']

@@ -426,18 +426,12 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             stepBadge.style.borderRadius = '12px';
             stepBadge.style.fontSize = '0.9rem';
             stepBadge.style.fontWeight = 'bold';
-            stepBadge.style.marginBottom = '1rem';
+            stepBadge.style.marginBottom = '0.8rem';
             stepBadge.textContent = `Replikskifte ${step.stepNum} af 9`;
             actionBox.appendChild(stepBadge);
         }
 
-        // 1. TRPS (Tankeboble)
-        const trpsBox = document.createElement('div');
-        trpsBox.className = 'trps-box';
-        trpsBox.innerHTML = `💭 <em>${step.trps}</em>`;
-        actionBox.appendChild(trpsBox);
-
-        // 2. Pronunciation Phase (Direkte udtaletræning - intet puslespil)
+        // Pronunciation Phase (Direkte udtaletræning - intet puslespil og ingen opfordringsboble)
         const pronBox = document.createElement('div');
         pronBox.className = 'pron-box';
         renderPronunciation(pronBox, step);
@@ -457,7 +451,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         pronCont.style.background = 'rgba(0,0,0,0.2)';
         pronCont.style.border = '1px solid rgba(255, 204, 0, 0.3)';
         pronCont.style.borderRadius = '16px';
-        pronCont.style.marginTop = '1rem';
+        pronCont.style.marginTop = '0.4rem';
 
         const instruction = document.createElement('div');
         instruction.style.fontSize = '1.1rem';

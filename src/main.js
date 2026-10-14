@@ -54,6 +54,8 @@ import { renderJobSamtaleStoryView } from './views/JobSamtaleStoryView.js';
 import { renderJobWorkshopStoryView } from './views/JobWorkshopStoryView.js';
 import { renderLaegeSamtaleStoryView } from './views/LaegeSamtaleStoryView.js';
 import { renderLaegeWorkshopStoryView } from './views/LaegeWorkshopStoryView.js';
+import { renderChefSamtaleStoryView } from './views/ChefSamtaleStoryView.js';
+import { renderChefWorkshopStoryView } from './views/ChefWorkshopStoryView.js';
 import { renderDialogerUdtaleMenuView } from './views/DialogerUdtaleMenuView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
@@ -275,12 +277,18 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'laege_story') {
     appState.currentView = 'laege_story';
     renderLaegeSamtaleStoryView(appDiv, navigate);
+  } else if (viewTarget === 'chef_story') {
+    appState.currentView = 'chef_story';
+    renderChefSamtaleStoryView(appDiv, navigate);
   } else if (viewTarget === 'dialoger_udtale') {
     appState.currentView = 'dialoger_udtale';
     renderDialogerUdtaleMenuView(appDiv, navigate);
   } else if (viewTarget === 'dialog_laege') {
     appState.currentView = 'dialog_laege';
     renderLaegeWorkshopStoryView(appDiv, navigate);
+  } else if (viewTarget === 'dialog_chef') {
+    appState.currentView = 'dialog_chef';
+    renderChefWorkshopStoryView(appDiv, navigate);
   } else if (viewTarget === 'dialog_job' || viewTarget === 'workshop_story' || viewTarget === 'workshop') {
     appState.currentView = 'dialog_job';
     renderJobWorkshopStoryView(appDiv, navigate);

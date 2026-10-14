@@ -44,8 +44,9 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
         {
             icon: '📞',
             title: '2. Den ansatte ringer til chefen',
-            desc: 'Meld dig syg til din leder og aftal de næste par dage. (Kommer snart)',
-            status: 'coming_soon'
+            desc: '7 replikskifter: Meld dig syg til chefen. Træn udtalen og leniseringen af D, R og G uden puslespil.',
+            status: 'active',
+            action: () => navigateFn('dialog_chef')
         },
         {
             icon: '💊',

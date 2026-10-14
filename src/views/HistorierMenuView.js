@@ -45,6 +45,12 @@ export function renderHistorierMenuView(container, navigateFn) {
             action: () => navigateFn('laege_story')
         },
         {
+            icon: '📞',
+            title: '2. Den ansatte ringer til chefen',
+            desc: 'Serie: Sygdom & job (Del 2). Byg replikkerne i ordpuslespillet og meld dig syg hos chefen.',
+            action: () => navigateFn('chef_story')
+        },
+        {
             icon: '💼',
             title: '4. Tilbage på job efter sygdom',
             desc: 'Serie: Sygdom & job (Del 4). Byg dine replikker i ordpuslespillet og tal med din leder Lene.',

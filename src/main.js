@@ -247,7 +247,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
     renderGrammatikView(appDiv, navigate, extraData);
-  } else if (viewTarget === 'traen_udtale') {
+  } else if (viewTarget === 'traen_udtale' || viewTarget === 'udtale_menu') {
     appState.currentView = 'traen_udtale';
     renderUdtaleMenuView(appDiv, navigate);
   } else if (viewTarget === 'traen_bogstaver') {
@@ -384,6 +384,11 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'idiom_mader_medicin') {
     appState.currentView = 'idiom_mader_medicin';
     renderIdiomMadErMedicin(appDiv, navigate);
+  } else {
+    // Fallback: If an unknown target is requested, avoid a blank page and navigate to main
+    console.warn(`Ukendt viewTarget: ${viewTarget}, omdirigerer til hovedmenuen ('main')`);
+    appState.currentView = 'main';
+    renderMainView(appDiv, navigate);
   }
 }
 

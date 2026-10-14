@@ -10,7 +10,7 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
-    backBtn.onclick = () => navigateFn('udtale_menu');
+    backBtn.onclick = () => navigateFn('traen_udtale');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 

@@ -453,11 +453,6 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         pronCont.style.borderRadius = '16px';
         pronCont.style.marginTop = '0.4rem';
 
-        const instruction = document.createElement('div');
-        instruction.style.fontSize = '1.1rem';
-        instruction.innerHTML = `<strong>🎤 Udtale-træning:</strong> Læs din replik højt med mikrofonen.`;
-        pronCont.appendChild(instruction);
-
         // Phonetic tip banner
         if (step.fonetikTip) {
             const tipBox = document.createElement('div');

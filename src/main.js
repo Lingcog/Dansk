@@ -269,8 +269,8 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'job_story') {
     appState.currentView = 'job_story';
     renderJobSamtaleStoryView(appDiv, navigate);
-  } else if (viewTarget === 'workshop_story' || viewTarget === 'workshop') {
-    appState.currentView = 'workshop_story';
+  } else if (viewTarget === 'dialoger_udtale' || viewTarget === 'workshop_story' || viewTarget === 'workshop') {
+    appState.currentView = 'dialoger_udtale';
     renderJobWorkshopStoryView(appDiv, navigate);
   } else if (viewTarget === 'branching_story') {
     appState.currentView = 'branching_story';

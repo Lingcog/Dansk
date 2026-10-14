@@ -43,12 +43,6 @@ export function renderHistorierMenuView(container, navigateFn) {
             title: 'Tilbage på job efter sygdom',
             desc: 'Realistisk arbejdssamtale i 9 replikskifter (DU3 Modul 1-2). Byg dine replikker og træn udtale og lenisering af D, R og G.',
             action: () => navigateFn('job_story')
-        },
-        {
-            icon: '🛠️',
-            title: 'Workshop',
-            desc: 'Trinvis udtaleworkshop i 9 replikskifter (DU3 Modul 1-2). Direkte fokus på udtale og lenisering af D, R og G uden puslespil.',
-            action: () => navigateFn('workshop_story')
         }
     ];
 

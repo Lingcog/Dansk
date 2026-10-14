@@ -21,7 +21,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
-    backBtn.onclick = () => navigateFn('historier_menu');
+    backBtn.onclick = () => navigateFn('udtale_menu');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
@@ -29,7 +29,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     resetBtn.style.color = '#ff5e5b';
     resetBtn.innerHTML = `↻ Start forfra`;
     resetBtn.onclick = () => {
-        if (confirm('Er du sikker på, at du vil starte workshoppen forfra?')) {
+        if (confirm('Er du sikker på, at du vil starte dialogen forfra?')) {
             localStorage.removeItem('story_workshop_progress');
             currentStepIndex = 0;
             appState.currentPhase = 'trps';
@@ -49,7 +49,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     headerDiv.style.marginBottom = '1.5rem';
 
     const mainTitle = document.createElement('h1');
-    mainTitle.textContent = '🛠️ Workshop';
+    mainTitle.textContent = '💬 Dialoger - træn udtale i rigtige dialoger';
     mainTitle.style.marginBottom = '0.4rem';
     headerDiv.appendChild(mainTitle);
 
@@ -57,7 +57,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Workshop: Tilbage på job efter sygdom (DU3 Modul 1-2) • Træning i udtale og lenisering af D, R og G';
+    subTitle.textContent = 'Tilbage på job efter sygdom (DU3 Modul 1-2) • Træning i udtale og lenisering af D, R og G';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -298,11 +298,11 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Velkommen til Udtale-Workshoppen';
+        h1.textContent = 'Dialoger - træn udtale i rigtige dialoger';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Trinvis arbejdssamtale i 9 replikskifter (DU3 Modul 1-2): Lyt til sætningerne, brug mikrofonen og træn udtalen af D, R og G.';
+        p.textContent = 'Trinvis arbejdssamtale i 9 replikskifter (DU3 Modul 1-2): Lyt til sætningerne, brug mikrofonen og træn udtalen af D, R og G uden skrive- og pusleopgaver.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';
@@ -378,6 +378,35 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             }
         }
         
+        // When finished all steps, show completion buttons
+        if (currentStepIndex >= storyData.length - 1) {
+            const finishCard = document.createElement('div');
+            finishCard.style.textAlign = 'center';
+            finishCard.style.marginTop = '2rem';
+            finishCard.style.display = 'flex';
+            finishCard.style.justifyContent = 'center';
+            finishCard.style.gap = '1rem';
+            finishCard.style.flexWrap = 'wrap';
+
+            const backToUdtaleBtn = document.createElement('button');
+            backToUdtaleBtn.className = 'gemini-btn';
+            backToUdtaleBtn.textContent = '← Tilbage til Træn udtale';
+            backToUdtaleBtn.onclick = () => navigateFn('udtale_menu');
+
+            const restartBtn = document.createElement('button');
+            restartBtn.className = 'back-btn';
+            restartBtn.textContent = '↻ Prøv dialogen igen';
+            restartBtn.onclick = () => {
+                localStorage.removeItem('story_workshop_progress');
+                currentStepIndex = 0;
+                renderStory();
+            };
+
+            finishCard.appendChild(backToUdtaleBtn);
+            finishCard.appendChild(restartBtn);
+            chatContainer.appendChild(finishCard);
+        }
+
         setTimeout(() => {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }, 120);

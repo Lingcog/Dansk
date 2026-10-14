@@ -1141,7 +1141,7 @@ export function renderByrummetView(container, navigateFn) {
                     btn.classList.add('selected-wrong');
                     feedbackEl.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                            ✗ Forkert svaret. Prøv igen!
+                            ✗ ${getTranslation('top100_wrong_try_again')}
                         </div>
                     `;
                     setTimeout(() => btn.classList.remove('selected-wrong'), 800);
@@ -1390,7 +1390,7 @@ export function renderByrummetView(container, navigateFn) {
                         }
                     } else {
                         optBtn.classList.add('wrong');
-                        stepFeedback.innerHTML = `<div style="color: #f87171; font-weight: 700; margin-top: 0.6rem;">✗ Forkert svaret. Prøv igen!</div>`;
+                        stepFeedback.innerHTML = `<div style="color: #f87171; font-weight: 700; margin-top: 0.6rem;">✗ ${getTranslation('top100_wrong_try_again')}</div>`;
                         setTimeout(() => optBtn.classList.remove('wrong'), 700);
                     }
                 };
@@ -1499,16 +1499,16 @@ export function renderByrummetView(container, navigateFn) {
         if (currByrumCategoryIdx >= byrumCategoryTasks.length) {
             categoryCard.innerHTML = `
                 <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">🎉</div>
-                <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">Flot klaret!</h2>
+                <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">${getTranslation('top100_category_complete_title')}</h2>
                 <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.6rem;">
-                    Du har gennemført alle opgaver med overemne og underemne.
+                    ${getTranslation('top100_category_complete_desc')}
                 </p>
                 <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
                     <button class="mission-next-btn" id="restart-byrum-category-btn" style="background: #475569; color: white;">
-                        Start forfra 🔄
+                        ${getTranslation('top100_start_over_btn')}
                     </button>
                     <button class="mission-next-btn" id="byrum-category-next-tab-btn" style="background: #22c55e; color: #0f172a;">
-                        Gå til 5. Find verbet ➔
+                        ${getTranslation('top100_goto_saetning_btn')}
                     </button>
                 </div>
             `;
@@ -1527,7 +1527,7 @@ export function renderByrummetView(container, navigateFn) {
 
         const badge = document.createElement('div');
         badge.className = 'category-badge';
-        badge.textContent = `🏷️ Opgave ${currByrumCategoryIdx + 1} af ${byrumCategoryTasks.length}`;
+        badge.textContent = `🏷️ ${getTranslation('top100_task_counter').replace('{current}', currByrumCategoryIdx + 1).replace('{total}', byrumCategoryTasks.length)}`;
         categoryCard.appendChild(badge);
 
         if (task.type === 'find_overemne') {
@@ -1535,7 +1535,7 @@ export function renderByrummetView(container, navigateFn) {
             promptTitle.style.fontSize = '1.35rem';
             promptTitle.style.color = '#94a3b8';
             promptTitle.style.margin = '0.3rem 0 0.8rem';
-            promptTitle.textContent = 'Underemner:';
+            promptTitle.textContent = getTranslation('top100_underemner_label');
             categoryCard.appendChild(promptTitle);
 
             const wordsRow = document.createElement('div');
@@ -1553,7 +1553,7 @@ export function renderByrummetView(container, navigateFn) {
             qEl.style.fontWeight = '800';
             qEl.style.color = '#f8fafc';
             qEl.style.marginBottom = '1.2rem';
-            qEl.textContent = task.question;
+            qEl.textContent = getTranslation('top100_q_find_overemne');
             categoryCard.appendChild(qEl);
 
             const grid = document.createElement('div');
@@ -1565,7 +1565,7 @@ export function renderByrummetView(container, navigateFn) {
             task.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'category-opt-btn';
-                btn.textContent = opt.text;
+                btn.textContent = getTranslation(opt.text);
 
                 btn.onclick = () => {
                     if (opt.correct) {
@@ -1573,9 +1573,9 @@ export function renderByrummetView(container, navigateFn) {
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! Overemnet er ${opt.text}
+                                ✓ ${getTranslation("top100_correct_overemne_prefix")} ${getTranslation(opt.text)}
                             </div>
-                            <button class="mission-next-btn" id="next-category-btn">Næste opgave ➔</button>
+                            <button class="mission-next-btn" id="next-category-btn">${getTranslation('top100_next_task_btn')}</button>
                         `;
                         feedbackEl.querySelector('#next-category-btn').onclick = () => {
                             currByrumCategoryIdx++;
@@ -1585,7 +1585,7 @@ export function renderByrummetView(container, navigateFn) {
                         btn.classList.add('selected-wrong');
                         feedbackEl.innerHTML = `
                             <div style="color: #f87171; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ✗ Forkert svaret. Prøv igen!
+                                ✗ ${getTranslation('top100_wrong_try_again')}
                             </div>
                         `;
                         setTimeout(() => btn.classList.remove('selected-wrong'), 700);
@@ -1603,21 +1603,21 @@ export function renderByrummetView(container, navigateFn) {
             promptTitle.style.color = '#94a3b8';
             promptTitle.style.textTransform = 'uppercase';
             promptTitle.style.letterSpacing = '0.5px';
-            promptTitle.textContent = 'Overemne:';
+            promptTitle.textContent = getTranslation('top100_overemne_label');
             categoryCard.appendChild(promptTitle);
 
             const mainCategoryTitle = document.createElement('h2');
             mainCategoryTitle.style.fontSize = '1.8rem';
             mainCategoryTitle.style.color = '#38bdf8';
             mainCategoryTitle.style.margin = '0.3rem 0 0.8rem';
-            mainCategoryTitle.textContent = task.overemne;
+            mainCategoryTitle.textContent = getTranslation(task.overemne);
             categoryCard.appendChild(mainCategoryTitle);
 
             const qEl = document.createElement('p');
             qEl.style.color = '#cbd5e1';
             qEl.style.fontSize = '1.05rem';
             qEl.style.marginBottom = '1.2rem';
-            qEl.textContent = task.question;
+            qEl.textContent = getTranslation('top100_q_find_underemner');
             categoryCard.appendChild(qEl);
 
             const grid = document.createElement('div');
@@ -1629,7 +1629,7 @@ export function renderByrummetView(container, navigateFn) {
             task.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'category-opt-btn';
-                btn.textContent = opt.text;
+                btn.textContent = getTranslation(opt.text);
 
                 btn.onclick = () => {
                     if (btn.classList.contains('selected-correct') || btn.classList.contains('selected-wrong')) return;
@@ -1641,10 +1641,10 @@ export function renderByrummetView(container, navigateFn) {
                         if (selectedCount === task.targetCount) {
                             feedbackEl.innerHTML = `
                                 <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                    🎉 Rigtigt svaret! Du fandt alle 3 underemner.
+                                    🎉 ${getTranslation('top100_correct_all_underemner')}
                                 </div>
                                 <button class="mission-next-btn" id="next-category-btn">
-                                    ${currByrumCategoryIdx < byrumCategoryTasks.length - 1 ? 'Næste opgave ➔' : 'Se resultat 🎉'}
+                                    ${currByrumCategoryIdx < byrumCategoryTasks.length - 1 ? getTranslation('top100_next_task_btn') : getTranslation('top100_see_result_btn')}
                                 </button>
                             `;
                             feedbackEl.querySelector('#next-category-btn').onclick = () => {
@@ -1662,7 +1662,7 @@ export function renderByrummetView(container, navigateFn) {
                         btn.classList.add('selected-wrong');
                         feedbackEl.innerHTML = `
                             <div style="color: #f87171; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ✗ Forkert svaret. Prøv igen!
+                                ✗ ${getTranslation('top100_wrong_try_again')}
                             </div>
                         `;
                         setTimeout(() => btn.classList.remove('selected-wrong'), 700);

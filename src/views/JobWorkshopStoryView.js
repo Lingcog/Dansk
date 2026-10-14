@@ -90,7 +90,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 1,
                 trps: 'Hils på Lene og sig, at du er glad for at være tilbage igen.',
-                fonetikTip: 'Hårdt g i "Godmorgen" • Blødt d i "glad" • Vokalisk r i "være" • Blødt/stumt g i "tilbage" og "igen"',
+                fonetikTip: 'Blødt d i "glad" • Vokalisk r i "være" • stumt g i "tilbage" og hårdt g i "igen"',
                 construction: {
                     type: 'OP',
                     words: ['Godmorgen', 'Lene.', 'Jeg', 'er', 'glad', 'for', 'at', 'være', 'tilbage', 'igen.']
@@ -111,7 +111,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 2,
                 trps: 'Sig, at det går godt, men at du har brug for koldt vand.',
-                fonetikTip: 'Hårdt d i "Det" • Hårdt g i "godt" • G som w-lyd i "brug" • Stumt d i "koldt" (-ld) og "vand" (-nd)',
+                fonetikTip: 'Stumt G som i "brug" • Stumt d i "koldt" (-ld) og "vand" (-nd)',
                 construction: {
                     type: 'OP',
                     words: ['Det', 'går', 'godt,', 'men', 'jeg', 'har', 'brug', 'for', 'koldt', 'vand.']
@@ -132,7 +132,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 3,
                 trps: 'Svar, at du er helt frisk og rask nu.',
-                fonetikTip: 'Hårdt r i "frisk" og "rask" • Vokalisk r i "er"',
+                fonetikTip: 'Vokalisk r i "er" • Hårdt r i "frisk" og "rask"',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'jeg', 'er', 'helt', 'frisk', 'og', 'rask', 'nu.'],
@@ -154,7 +154,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 4,
                 trps: 'Fortæl, hvad lægen sagde (tag fri et par dage).',
-                fonetikTip: 'Stumt g i "Lægen", "tag" og "dage" • Hårdt d i "dage" • Hårdt r i "fri"',
+                fonetikTip: 'Stumt g i "Lægen", "tag" og "dage" • Hårdt r i "fri"',
                 construction: {
                     type: 'OP',
                     words: ['Lægen', 'sagde:', 'tag', 'fri', 'et', 'par', 'dage.']
@@ -175,7 +175,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 5,
                 trps: 'Svar, at det gjorde du.',
-                fonetikTip: 'Hårdt d i "det" • Stumt d i "gjorde" (-rde) • G som j-lyd i "gjorde" og "jeg"',
+                fonetikTip: 'Stumt d i "gjorde" (-rde) • G som j-lyd i "gjorde" og stumt G i "jeg" [ja]',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'det', 'gjorde', 'jeg.']
@@ -196,7 +196,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 6,
                 trps: 'Sig, at det regnede rigtig meget her.',
-                fonetikTip: 'G som j-lyd i "regnede", "rigtig" og "meget" • Hårdt r i "rigtig"',
+                fonetikTip: 'G som j-lyd i "regnede", stumt G i "rigtig" og "meget" • Hårdt r i "rigtig"',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'det', 'regnede', 'rigtig', 'meget', 'her.']
@@ -217,7 +217,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 7,
                 trps: 'Svar, at I ses snart.',
-                fonetikTip: 'Vokalisk/hårdt r i "snart"',
+                fonetikTip: 'Vokalisk r i "snart"',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'vi', 'ses', 'snart.']
@@ -238,7 +238,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 8,
                 trps: 'Sig tak, og at du har kigget i bogen.',
-                fonetikTip: 'G som w-lyd i "bogen" (efter o) • Vokalisk r i "har"',
+                fonetikTip: 'Vokalisk r i "har" • G som w-lyd i "bogen" (efter o)',
                 construction: {
                     type: 'OP',
                     words: ['Tak,', 'jeg', 'har', 'kigget', 'i', 'bogen.']
@@ -259,7 +259,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 9,
                 trps: 'Sig mange tak, og at du kun arbejder til middag i dag.',
-                fonetikTip: 'G som ng-lyd i "Mange" • Vokalisk r i "arbejder" • Blødt d i "middag" • Hårdt d i "dag"',
+                fonetikTip: 'G som ng-lyd i "Mange" • Vokalisk r i "arbejder" • Hårdt d i "middag"',
                 construction: {
                     type: 'OP',
                     words: ['Mange', 'tak,', 'jeg', 'arbejder', 'kun', 'til', 'middag', 'i', 'dag.']

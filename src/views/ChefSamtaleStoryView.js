@@ -1,7 +1,8 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderChefSamtaleStoryView(container, navigateFn) {
+    const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container story-view-container';
 
@@ -20,16 +21,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
     backBtn.onclick = () => navigateFn('historier_menu');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
     resetBtn.className = 'back-btn';
     resetBtn.style.color = '#ff5e5b';
-    resetBtn.innerHTML = `↻ Start forfra`;
+    resetBtn.innerHTML = isEn ? `↻ Start over` : `↻ Start forfra`;
     resetBtn.onclick = () => {
-        if (confirm('Er du sikker på, at du vil starte samtalen med chefen forfra?')) {
+        if (confirm(isEn ? 'Are you sure you want to start the dialogue with your boss over?' : 'Er du sikker på, at du vil starte samtalen med chefen forfra?')) {
             localStorage.removeItem('story_chef_progress');
             currentStepIndex = 0;
             appState.currentPhase = 'construction';
@@ -49,7 +50,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
     headerDiv.style.marginBottom = '1.5rem';
 
     const mainTitle = document.createElement('h1');
-    mainTitle.textContent = '📞 2. Den ansatte ringer til chefen';
+    mainTitle.textContent = isEn ? '📞 2. The employee calls the boss' : '📞 2. Den ansatte ringer til chefen';
     mainTitle.style.marginBottom = '0.4rem';
     headerDiv.appendChild(mainTitle);
 
@@ -57,7 +58,9 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Serie: Sygdom & job (Del 2 af 4) • Byg sætningerne i ordpuslespillet og meld dig syg hos din chef';
+    subTitle.textContent = isEn
+        ? 'Series: Illness & Job (Part 2 of 4) • Build lines in the word puzzle and call in sick to your boss'
+        : 'Serie: Sygdom & job (Del 2 af 4) • Byg sætningerne i ordpuslespillet og meld dig syg hos din chef';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -77,13 +80,15 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             // --- NARRATIVE INTRO ---
             { 
                 type: 'narrative', 
-                text: '📍 Scene: Mandag formiddag. Du har talt med lægen og ringer nu til din chef for at melde dig syg i dag.' 
+                text: '📍 Scene: Mandag formiddag. Du har talt med lægen og ringer nu til din chef for at melde dig syg i dag.',
+                textEn: '📍 Scene: Monday morning. You have spoken with the doctor and are now calling your boss to report in sick today.'
             },
 
             // --- REPLIKSKIFTE 1 ---
             { 
                 type: 'user_action',
                 stepNum: 1,
+                translationEn: `Hi boss, it's ${u}.`,
                 construction: {
                     type: 'OP',
                     words: ['Hej', 'chef,', 'det', 'er', `${u}.`]
@@ -95,14 +100,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: `Hej ${u}, hvordan går det?` 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: `Hej ${u}, hvordan går det?`,
+                translationEn: `Hi ${u}, how are you doing?`
             },
 
             // --- REPLIKSKIFTE 2 ---
             { 
                 type: 'user_action',
                 stepNum: 2,
+                translationEn: 'I am calling to call in sick today.',
                 construction: {
                     type: 'OP',
                     words: ['Jeg', 'ringer', 'for', 'at', 'melde', 'mig', 'syg', 'i', 'dag.']
@@ -114,14 +121,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: 'Hej, det er jeg ked af at høre. Hvad er der galt?' 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: 'Hej, det er jeg ked af at høre. Hvad er der galt?',
+                translationEn: 'Hello, I\'m sorry to hear that. What is wrong?'
             },
 
             // --- REPLIKSKIFTE 3 ---
             { 
                 type: 'user_action',
                 stepNum: 3,
+                translationEn: 'I have a high fever, a headache, and muscle aches.',
                 construction: {
                     type: 'OP',
                     words: ['Jeg', 'har', 'høj', 'feber,', 'hovedpine', 'og', 'muskelsmerter.']
@@ -133,14 +142,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: 'Det lyder alvorligt. Har du været til lægen?' 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: 'Det lyder alvorligt. Har du været til lægen?',
+                translationEn: 'That sounds serious. Have you seen the doctor?'
             },
 
             // --- REPLIKSKIFTE 4 ---
             { 
                 type: 'user_action',
                 stepNum: 4,
+                translationEn: 'Yes, I called the doctor this morning.',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'jeg', 'ringede', 'til', 'lægen', 'i', 'morges.']
@@ -152,14 +163,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: 'Hvad sagde lægen?' 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: 'Hvad sagde lægen?',
+                translationEn: 'What did the doctor say?'
             },
 
             // --- REPLIKSKIFTE 5 ---
             { 
                 type: 'user_action',
                 stepNum: 5,
+                translationEn: 'The doctor said I probably have the flu.',
                 construction: {
                     type: 'OP',
                     words: ['Lægen', 'sagde,', 'at', 'jeg', 'nok', 'har', 'influenza.']
@@ -171,14 +184,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: 'Det er godt, at du ved hvad du fejler. Har du fået noget medicin?' 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: 'Det er godt, at du ved hvad du fejler. Har du fået noget medicin?',
+                translationEn: 'It\'s good that you know what\'s wrong. Have you received any medicine?'
             },
 
             // --- REPLIKSKIFTE 6 ---
             { 
                 type: 'user_action',
                 stepNum: 6,
+                translationEn: 'Yes, the doctor gave me something for the fever and pain.',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'lægen', 'gav', 'mig', 'noget', 'mod', 'feberen', 'og', 'smerten.']
@@ -190,14 +205,16 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: 'Det lyder som en hård omgang. Bliv hjemme og pas godt på dig selv.' 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: 'Det lyder som en hård omgang. Bliv hjemme og pas godt på dig selv.',
+                translationEn: 'That sounds like a tough bout. Stay home and take good care of yourself.'
             },
 
             // --- REPLIKSKIFTE 7 ---
             { 
                 type: 'user_action',
                 stepNum: 7,
+                translationEn: 'Thank you, I will call you again tomorrow and keep you updated.',
                 construction: {
                     type: 'OP',
                     words: ['Tak,', 'jeg', 'ringer', 'til', 'dig', 'igen', 'i', 'morgen', 'og', 'holder', 'dig', 'opdateret.']
@@ -211,12 +228,14 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             // --- AFSLUTNING ---
             { 
                 type: 'npc', 
-                name: 'Chef', 
-                text: 'Alletiders. God bedring, og lad mig vide, hvis du har brug for noget.' 
+                name: isEn ? 'Boss' : 'Chef', 
+                text: 'Alletiders. God bedring, og lad mig vide, hvis du har brug for noget.',
+                translationEn: 'Great. Get well soon, and let me know if you need anything.'
             },
             { 
                 type: 'narrative', 
-                text: '🏆 Flot klaret! Du har gennemført samtalen med chefen i 7 replikskifter og bygget alle sætninger korrekt.' 
+                text: '🏆 Flot klaret! Du har gennemført samtalen med chefen i 7 replikskifter og bygget alle sætninger korrekt.',
+                textEn: '🏆 Well done! You have completed the conversation with your boss in 7 exchanges and built all sentences correctly.'
             }
         ];
     }
@@ -240,28 +259,30 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Den ansatte ringer til chefen';
+        h1.textContent = isEn ? 'The employee calls the boss' : 'Den ansatte ringer til chefen';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Serie: Sygdom & job (Del 2 af 4) • Byg dine replikker i ordpuslespillet og meld dig syg hos din chef i 7 replikskifter.';
+        p.textContent = isEn
+            ? 'Series: Illness & Job (Part 2 of 4) • Build your lines in the word puzzle and call in sick to your boss in a realistic phone conversation.'
+            : 'Serie: Sygdom & job (Del 2 af 4) • Byg dine replikker i ordpuslespillet og meld dig syg hos din chef i en realistisk telefonsamtale.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = 'Indtast dit fornavn...';
+        input.placeholder = isEn ? 'Enter your first name...' : 'Indtast dit fornavn...';
         input.className = 'story-input';
         if (userName) input.value = userName;
 
         const btn = document.createElement('button');
         btn.className = 'gemini-btn';
-        btn.textContent = 'Start Samtalen ➔';
+        btn.textContent = isEn ? 'Start Conversation ➔' : 'Start Samtalen ➔';
         btn.style.marginTop = '1.5rem';
         btn.onclick = () => {
             const val = input.value.trim();
-            userName = val.length > 0 ? val : 'Kursist';
+            userName = val.length > 0 ? val : (isEn ? 'Student' : 'Kursist');
             localStorage.setItem('story_username', userName);
             initStoryData(userName);
             renderStory();
@@ -295,18 +316,21 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             if (step.type === 'narrative') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble narrative';
-                bubble.textContent = step.text;
+                bubble.textContent = (isEn && step.textEn) ? step.textEn : step.text;
                 chatContainer.appendChild(bubble);
             } 
             else if (step.type === 'npc') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble npc';
                 bubble.style.cursor = 'pointer';
-                bubble.title = 'Tryk for at høre chefens replik';
+                bubble.title = isEn ? "Click to hear the boss's line" : 'Tryk for at høre chefens replik';
                 bubble.innerHTML = `
                     <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                        <div><strong>${step.name}:</strong> ${step.text}</div>
-                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                        <div>
+                            <strong>${step.name}:</strong> ${step.text}
+                            ${step.translationEn ? `<div class="sub-translation" style="font-size: 0.95rem; font-style: italic; opacity: 0.85; margin-top: 0.25rem; color: #cbd5e1;">${step.translationEn}</div>` : ''}
+                        </div>
+                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                     </div>
                 `;
                 bubble.onclick = () => speakDanish(step.text);
@@ -317,11 +341,14 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
                     bubble.style.cursor = 'pointer';
-                    bubble.title = 'Tryk for at høre din replik igen';
+                    bubble.title = isEn ? 'Click to hear your line again' : 'Tryk for at høre din replik igen';
                     bubble.innerHTML = `
                         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                            <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
-                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                            <div>
+                                <strong>${userName}:</strong> ${step.pronunciation.target}
+                                ${step.translationEn ? `<div class="sub-translation" style="font-size: 0.95rem; font-style: italic; opacity: 0.85; margin-top: 0.25rem; color: #e2e8f0;">${step.translationEn}</div>` : ''}
+                            </div>
+                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                         </div>
                     `;
                     bubble.onclick = () => speakDanish(step.pronunciation.target);
@@ -343,12 +370,12 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
 
             const backToMenuBtn = document.createElement('button');
             backToMenuBtn.className = 'gemini-btn';
-            backToMenuBtn.textContent = '← Tilbage til Historier';
+            backToMenuBtn.textContent = isEn ? '← Back to Stories' : '← Tilbage til Historier';
             backToMenuBtn.onclick = () => navigateFn('historier_menu');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';
-            restartBtn.textContent = '↻ Prøv samtalen igen';
+            restartBtn.textContent = isEn ? '↻ Try conversation again' : '↻ Prøv samtalen igen';
             restartBtn.onclick = () => {
                 localStorage.removeItem('story_chef_progress');
                 currentStepIndex = 0;
@@ -372,7 +399,6 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         const actionBox = document.createElement('div');
         actionBox.className = 'action-box';
         
-        // Progress badge (Replikskifte X af 7)
         if (step.stepNum) {
             const stepBadge = document.createElement('div');
             stepBadge.style.display = 'inline-block';
@@ -383,21 +409,19 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             stepBadge.style.fontSize = '0.9rem';
             stepBadge.style.fontWeight = 'bold';
             stepBadge.style.marginBottom = '0.8rem';
-            stepBadge.textContent = `Replikskifte ${step.stepNum} af 7`;
+            stepBadge.textContent = isEn ? `Exchange ${step.stepNum} of 7` : `Replikskifte ${step.stepNum} af 7`;
             actionBox.appendChild(stepBadge);
         }
 
-        // 1. Construction Phase (Ordpuslespil OP)
         const constructBox = document.createElement('div');
         constructBox.className = 'construct-box';
         if (appState.currentPhase === 'construction') {
             renderOrdstilling(constructBox, step);
         } else {
-            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem;">✓ Sætning bygget korrekt!</div>`;
+            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem;">${isEn ? '✓ Sentence built correctly!' : '✓ Sætning bygget korrekt!'}</div>`;
         }
         actionBox.appendChild(constructBox);
 
-        // 2. Pronunciation Phase (Udtaletræning - UDEN fonetiktips)
         if (appState.currentPhase === 'pronunciation') {
             const pronBox = document.createElement('div');
             pronBox.className = 'pron-box';
@@ -408,7 +432,6 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         chatContainer.appendChild(actionBox);
     }
 
-    // --- CONSTRUCT OP (Ordpuslespil) ---
     function renderOrdstilling(container, step) {
         const targetWords = step.construction.words;
         
@@ -425,8 +448,20 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         instructionP.style.color = 'var(--text-muted)';
         instructionP.style.fontSize = '1rem';
         instructionP.style.marginBottom = '0.5rem';
-        instructionP.textContent = 'Klik på ordene nedenfor i den rigtige rækkefølge for at bygge replikken:';
+        instructionP.textContent = isEn 
+            ? 'Click the words below in the correct order to build the sentence:' 
+            : 'Klik på ordene nedenfor i den rigtige rækkefølge for at bygge replikken:';
         container.appendChild(instructionP);
+
+        if (step.translationEn) {
+            const hintP = document.createElement('p');
+            hintP.style.color = '#94a3b8';
+            hintP.style.fontStyle = 'italic';
+            hintP.style.fontSize = '1rem';
+            hintP.style.marginBottom = '0.8rem';
+            hintP.textContent = `Meaning: "${step.translationEn}"`;
+            container.appendChild(hintP);
+        }
 
         const dropZone = document.createElement('div');
         dropZone.className = 'op-dropzone';
@@ -445,7 +480,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         resetWordsBtn.className = 'back-btn';
         resetWordsBtn.style.fontSize = '0.85rem';
         resetWordsBtn.style.padding = '0.3rem 0.8rem';
-        resetWordsBtn.textContent = 'Nulstil ord ↺';
+        resetWordsBtn.textContent = isEn ? 'Reset words ↺' : 'Nulstil ord ↺';
         resetWordsBtn.onclick = () => {
             appState.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
             appState.selectedWords = [];
@@ -492,7 +527,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
                 const isCorrect = selectedStr === targetWords.join(' ') || (step.construction.altWords && selectedStr === step.construction.altWords.join(' '));
                 if (isCorrect) {
                     dropZone.style.border = '2px solid #4caf50';
-                    feedbackArea.innerHTML = '<span style="color: #4caf50;">✓ Rigtig ordstilling! Gør dig klar til at sige replikken.</span>';
+                    feedbackArea.innerHTML = `<span style="color: #4caf50;">${isEn ? '✓ Correct word order! Get ready to speak the line.' : '✓ Rigtig ordstilling! Gør dig klar til at sige replikken.'}</span>`;
                     setTimeout(() => {
                         appState.currentPhase = 'pronunciation';
                         appState.shuffledWords = null;
@@ -500,7 +535,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
                     }, 500);
                 } else {
                     dropZone.style.border = '2px solid #ff5e5b';
-                    feedbackArea.innerHTML = '<span style="color: #ff5e5b;">✗ Ikke helt den rigtige rækkefølge. Klik på ordene eller nulstil for at rette.</span>';
+                    feedbackArea.innerHTML = `<span style="color: #ff5e5b;">${isEn ? '✗ Not quite the right order. Click words or reset to correct.' : '✗ Ikke helt den rigtige rækkefølge. Klik på ordene eller nulstil for at rette.'}</span>`;
                 }
             } else {
                 dropZone.style.border = '2px dashed rgba(255,255,255,0.25)';
@@ -516,7 +551,6 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         container.appendChild(feedbackArea);
     }
 
-    // --- PRONUNCIATION PHASE (Uden fonetiktips) ---
     function renderPronunciation(container, step) {
         const pronCont = document.createElement('div');
         pronCont.style.display = 'flex';
@@ -529,7 +563,6 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         pronCont.style.borderRadius = '16px';
         pronCont.style.marginTop = '0.5rem';
 
-        // Target sentence display
         const sentenceDisplay = document.createElement('div');
         sentenceDisplay.className = 'udtale-sentence';
         sentenceDisplay.style.fontSize = '1.35rem';
@@ -544,7 +577,6 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         }).join(' ');
         pronCont.appendChild(sentenceDisplay);
 
-        // Model audio listen button
         const audioRow = document.createElement('div');
         audioRow.style.display = 'flex';
         audioRow.style.gap = '1rem';
@@ -554,12 +586,11 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         listenBtn.className = 'back-btn';
         listenBtn.style.fontSize = '0.95rem';
         listenBtn.style.padding = '0.4rem 1rem';
-        listenBtn.innerHTML = '🔊 Hør udtale';
+        listenBtn.innerHTML = `🔊 ${isEn ? 'Listen to pronunciation' : 'Hør udtale'}`;
         listenBtn.onclick = () => speakDanish(step.pronunciation.target);
         audioRow.appendChild(listenBtn);
         pronCont.appendChild(audioRow);
 
-        // Progress bar container
         const progressContainer = document.createElement('div');
         progressContainer.style.width = '100%';
         progressContainer.style.maxWidth = '400px';
@@ -569,7 +600,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         progressContainer.style.margin = '0.5rem 0';
         
         const label = document.createElement('span');
-        label.textContent = 'Mestring:';
+        label.textContent = isEn ? 'Mastery:' : 'Mestring:';
         label.style.fontWeight = 'bold';
         label.style.fontSize = '0.95rem';
         
@@ -606,12 +637,12 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         const statusText = document.createElement('div');
         statusText.style.color = 'var(--text-muted)';
         statusText.style.fontSize = '1rem';
-        statusText.textContent = 'Tryk på mikrofonen og tal...';
+        statusText.textContent = isEn ? 'Press the microphone and speak...' : 'Tryk på mikrofonen og tal...';
         pronCont.appendChild(statusText);
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
-        nextBtn.textContent = 'Videre i samtalen ➔';
+        nextBtn.textContent = isEn ? 'Next exchange ➔' : 'Videre i samtalen ➔';
         nextBtn.style.display = 'none';
         nextBtn.onclick = () => {
             currentStepIndex++;
@@ -627,13 +658,15 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
         const skipBtn = document.createElement('button');
         skipBtn.className = 'back-btn';
         skipBtn.style.fontSize = '0.85rem';
-        skipBtn.textContent = 'Spring over (kun ved mikrofonfejl)';
+        skipBtn.textContent = isEn ? 'Skip (only in case of microphone issues)' : 'Spring over (kun ved mikrofonfejl)';
         skipBtn.onclick = nextBtn.onclick;
         pronCont.appendChild(skipBtn);
 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            statusText.textContent = 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
+            statusText.textContent = isEn 
+                ? 'Browser does not support microphone. Click "Skip" to proceed.' 
+                : 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
             skipBtn.style.display = 'inline-block';
         } else {
             const recognition = new SpeechRecognition();
@@ -650,7 +683,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
                     recognition.start();
                     isListening = true;
                     micBtn.classList.add('listening');
-                    statusText.innerHTML = 'Lytter... Tal nu!';
+                    statusText.innerHTML = isEn ? 'Listening... Speak now!' : 'Lytter... Tal nu!';
                     progressContainer.style.display = 'none';
                     progressBar.style.width = '0%';
                     scoreText.textContent = '0%';
@@ -663,14 +696,14 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
 
             recognition.onresult = (e) => {
                 const spoken = e.results[0][0].transcript;
-                statusText.innerHTML = `Behandler udtale...`;
+                statusText.innerHTML = isEn ? 'Processing pronunciation...' : 'Behandler udtale...';
                 evaluatePronunciation(spoken);
             };
 
             recognition.onerror = () => {
                 micBtn.classList.remove('listening');
                 isListening = false;
-                statusText.innerHTML = 'Kunne ikke opfatte tale. Prøv igen!';
+                statusText.innerHTML = isEn ? 'Could not capture speech. Please try again!' : 'Kunne ikke opfatte tale. Prøv igen!';
             };
 
             recognition.onend = () => {
@@ -709,18 +742,18 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
                 setTimeout(() => {
                     progressBar.style.width = score + '%';
                     scoreText.textContent = score + '%';
-                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">Du sagde:<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
+                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">${isEn ? 'You said:' : 'Du sagde:'}<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
                     
                     if (score >= 60) {
                         progressBar.style.background = '#4caf50';
-                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">✓ Flot udtalt!</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">${isEn ? '✓ Great pronunciation!' : '✓ Flot udtalt!'}</span>${spokenHTML}`;
                         micBtn.style.display = 'none';
                         skipBtn.style.display = 'none';
                         nextBtn.style.display = 'inline-block';
                     } else {
                         progressBar.style.background = '#ff5e5b';
                         appState.pronunciationFails++;
-                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">Prøv igen! Lyt gerne til udtalen først.</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">${isEn ? 'Try again! Feel free to listen to the pronunciation first.' : 'Prøv igen! Lyt gerne til udtalen først.'}</span>${spokenHTML}`;
                     }
                 }, 100);
             }

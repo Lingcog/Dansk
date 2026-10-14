@@ -1,7 +1,8 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderJobWorkshopStoryView(container, navigateFn) {
+    const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container story-view-container';
 
@@ -20,21 +21,18 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
     backBtn.onclick = () => navigateFn('dialoger_sygdom_job');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
     resetBtn.className = 'back-btn';
     resetBtn.style.color = '#ff5e5b';
-    resetBtn.innerHTML = `↻ Start forfra`;
+    resetBtn.innerHTML = isEn ? `↻ Start over` : `↻ Start forfra`;
     resetBtn.onclick = () => {
-        if (confirm('Er du sikker på, at du vil starte dialogen forfra?')) {
+        if (confirm(isEn ? 'Are you sure you want to start the dialogue over?' : 'Er du sikker på, at du vil starte dialogen forfra?')) {
             localStorage.removeItem('story_workshop_progress');
             currentStepIndex = 0;
-            appState.currentPhase = 'trps';
-            appState.shuffledWords = null;
-            appState.selectedWords = [];
             renderStory();
         }
     };
@@ -49,7 +47,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     headerDiv.style.marginBottom = '1.5rem';
 
     const mainTitle = document.createElement('h1');
-    mainTitle.textContent = '💬 Dialoger: Tilbage på job efter sygdom';
+    mainTitle.textContent = isEn ? '💬 Dialogues: Back to work after illness' : '💬 Dialoger: Tilbage på job efter sygdom';
     mainTitle.style.marginBottom = '0.4rem';
     headerDiv.appendChild(mainTitle);
 
@@ -57,7 +55,9 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Serie: Sygdom & job (Del 4 af 4) • Træning i udtale og lenisering af D, R og G uden puslespil';
+    subTitle.textContent = isEn
+        ? 'Series: Illness & Job (Part 4 of 4) • Pronunciation and lenition training for D, R, and G without puzzles'
+        : 'Serie: Sygdom & job (Del 4 af 4) • Træning i udtale og lenisering af D, R og G uden puslespil';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -72,29 +72,28 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     viewContainer.appendChild(contentArea);
 
     function initStoryData() {
-        const uName = userName || 'kursist';
+        const uName = userName || (isEn ? 'Student' : 'kursist');
         storyData = [
             // --- NARRATIVE INTRO ---
             { 
                 type: 'narrative', 
-                text: '📍 Scene: Mandag morgen ved kaffemaskinen på kontoret. Du er tilbage på arbejde efter at have været syg i en uge. Din afdelingsleder, Lene, møder dig.' 
+                text: '📍 Scene: Mandag morgen ved kaffemaskinen på kontoret. Du er tilbage på arbejde efter at have været syg i en uge. Din afdelingsleder, Lene, møder dig.',
+                textEn: '📍 Scene: Monday morning by the coffee machine at the office. You are back at work after being ill for a week. Your department manager, Lene, greets you.'
             },
 
             // --- REPLIKSKIFTE 1 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: `Godmorgen ${uName}! Hvor er det dejligt at se dig igen.` 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: `Godmorgen ${uName}! Hvor er det dejligt at se dig igen.`,
+                translationEn: `Good morning ${uName}! How lovely to see you again.`
             },
             { 
                 type: 'user_action',
                 stepNum: 1,
-                trps: 'Hils på Lene og sig, at du er glad for at være tilbage igen.',
                 fonetikTip: 'Blødt d i "glad" • Vokalisk r i "være" • stumt g i "tilbage" og hårdt g i "igen"',
-                construction: {
-                    type: 'OP',
-                    words: ['Godmorgen', 'Lene.', 'Jeg', 'er', 'glad', 'for', 'at', 'være', 'tilbage', 'igen.']
-                },
+                fonetikTipEn: 'Soft \'d\' in "glad" • Vocalic \'r\' in "være" • Silent \'g\' in "tilbage" and hard \'g\' in "igen"',
+                translationEn: 'Good morning Lene. I am glad to be back again.',
                 pronunciation: {
                     target: 'Godmorgen Lene. Jeg er glad for at være tilbage igen.',
                     focus: ['godmorgen', 'glad', 'være', 'tilbage', 'igen']
@@ -104,18 +103,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 2 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Hvordan har du det? Vil du have en kop varm kaffe?' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Hvordan har du det? Vil du have en kop varm kaffe?',
+                translationEn: 'How are you feeling? Would you like a cup of hot coffee?'
             },
             { 
                 type: 'user_action',
                 stepNum: 2,
-                trps: 'Sig, at det går godt, men at du har brug for koldt vand.',
                 fonetikTip: 'Stumt G som i "brug" • Stumt d i "koldt" (-ld) og "vand" (-nd)',
-                construction: {
-                    type: 'OP',
-                    words: ['Det', 'går', 'godt,', 'men', 'jeg', 'har', 'brug', 'for', 'koldt', 'vand.']
-                },
+                fonetikTipEn: 'Silent \'g\' in "brug" • Silent \'d\' in "koldt" (-ld) and "vand" (-nd)',
+                translationEn: 'I\'m doing well, but I need some cold water.',
                 pronunciation: {
                     target: 'Det går godt, men jeg har brug for koldt vand.',
                     focus: ['det', 'går', 'godt', 'brug', 'koldt', 'vand']
@@ -125,19 +122,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 3 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Helt i orden. Er du helt frisk og rask nu?' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Helt i orden. Er du helt frisk og rask nu?',
+                translationEn: 'All right. Are you feeling completely fresh and healthy now?'
             },
             { 
                 type: 'user_action',
                 stepNum: 3,
-                trps: 'Svar, at du er helt frisk og rask nu.',
                 fonetikTip: 'Vokalisk r i "er" • Hårdt r i "frisk" og "rask"',
-                construction: {
-                    type: 'OP',
-                    words: ['Ja,', 'jeg', 'er', 'helt', 'frisk', 'og', 'rask', 'nu.'],
-                    altWords: ['Ja,', 'jeg', 'er', 'helt', 'rask', 'og', 'frisk', 'nu.']
-                },
+                fonetikTipEn: 'Vocalic \'r\' in "er" • Hard \'r\' in "frisk" and "rask"',
+                translationEn: 'Yes, I am completely fresh and well now.',
                 pronunciation: {
                     target: 'Ja, jeg er helt frisk og rask nu.',
                     focus: ['frisk', 'rask']
@@ -147,18 +141,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 4 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Hvor godt at høre! Hvad sagde lægen til dig i fredags?' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Hvor godt at høre! Hvad sagde lægen til dig i fredags?',
+                translationEn: 'So good to hear! What did the doctor tell you on Friday?'
             },
             { 
                 type: 'user_action',
                 stepNum: 4,
-                trps: 'Fortæl, hvad lægen sagde (tag fri et par dage).',
                 fonetikTip: 'Stumt g i "Lægen", "tag" og "dage" • Hårdt r i "fri"',
-                construction: {
-                    type: 'OP',
-                    words: ['Lægen', 'sagde:', 'tag', 'fri', 'et', 'par', 'dage.']
-                },
+                fonetikTipEn: 'Silent \'g\' in "lægen", "tag", and "dage" • Hard \'r\' in "fri"',
+                translationEn: 'The doctor said: take a few days off.',
                 pronunciation: {
                     target: 'Lægen sagde: tag fri et par dage.',
                     focus: ['lægen', 'tag', 'fri', 'par', 'dage']
@@ -168,18 +160,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 5 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Det er fornuftigt. Gik du en tur i weekenden?' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Det er fornuftigt. Gik du en tur i weekenden?',
+                translationEn: 'That\'s sensible. Did you go for a walk over the weekend?'
             },
             { 
                 type: 'user_action',
                 stepNum: 5,
-                trps: 'Svar, at det gjorde du.',
                 fonetikTip: 'Stumt d i "gjorde" (-rde) • G som j-lyd i "gjorde" og stumt G i "jeg" [ja]',
-                construction: {
-                    type: 'OP',
-                    words: ['Ja,', 'det', 'gjorde', 'jeg.']
-                },
+                fonetikTipEn: 'Silent \'d\' in "gjorde" (-rde) • \'g\' as \'j\' sound in "gjorde" • Silent \'g\' in "jeg" [ja]',
+                translationEn: 'Yes, I did.',
                 pronunciation: {
                     target: 'Ja, det gjorde jeg.',
                     focus: ['det', 'gjorde', 'jeg']
@@ -189,18 +179,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 6 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Var det koldt udenfor? Regnede det meget i går?' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Var det koldt udenfor? Regnede det meget i går?',
+                translationEn: 'Was it cold outside? Did it rain a lot yesterday?'
             },
             { 
                 type: 'user_action',
                 stepNum: 6,
-                trps: 'Sig, at det regnede rigtig meget her.',
                 fonetikTip: 'G som j-lyd i "regnede", stumt G i "rigtig" og "meget" • Hårdt r i "rigtig"',
-                construction: {
-                    type: 'OP',
-                    words: ['Ja,', 'det', 'regnede', 'rigtig', 'meget', 'her.']
-                },
+                fonetikTipEn: '\'g\' as \'j\' sound in "regnede" • Silent \'g\' in "rigtig" and "meget" • Hard \'r\' in "rigtig"',
+                translationEn: 'Yes, it rained very much here.',
                 pronunciation: {
                     target: 'Ja, det regnede rigtig meget her.',
                     focus: ['regnede', 'rigtig', 'meget']
@@ -210,18 +198,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 7 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Nå, vi ses snart til mødet klokken 10.' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Nå, vi ses snart til mødet klokken 10.',
+                translationEn: 'Well, see you soon at the meeting at 10.'
             },
             { 
                 type: 'user_action',
                 stepNum: 7,
-                trps: 'Svar, at I ses snart.',
                 fonetikTip: 'Vokalisk r i "snart"',
-                construction: {
-                    type: 'OP',
-                    words: ['Ja,', 'vi', 'ses', 'snart.']
-                },
+                fonetikTipEn: 'Vocalic \'r\' in "snart"',
+                translationEn: 'Yes, see you soon.',
                 pronunciation: {
                     target: 'Ja, vi ses snart.',
                     focus: ['ses', 'snart']
@@ -231,18 +217,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 8 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Fint. Du kan kigge i den nye personalehåndbog her.' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Fint. Du kan kigge i den nye personalehåndbog her.',
+                translationEn: 'Great. You can take a look at the new employee handbook here.'
             },
             { 
                 type: 'user_action',
                 stepNum: 8,
-                trps: 'Sig tak, og at du har kigget i bogen.',
                 fonetikTip: 'Vokalisk r i "har" • G som w-lyd i "bogen" (efter o)',
-                construction: {
-                    type: 'OP',
-                    words: ['Tak,', 'jeg', 'har', 'kigget', 'i', 'bogen.']
-                },
+                fonetikTipEn: 'Vocalic \'r\' in "har" • \'g\' as \'w\' sound in "bogen" (after \'o\')',
+                translationEn: 'Thank you, I have looked in the handbook.',
                 pronunciation: {
                     target: 'Tak, jeg har kigget i bogen.',
                     focus: ['kigget', 'bogen', 'har']
@@ -252,18 +236,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- REPLIKSKIFTE 9 ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Tag det roligt. Husk at gå tidligt hjem, hvis du bliver træt!' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Tag det roligt. Husk at gå tidligt hjem, hvis du bliver træt!',
+                translationEn: 'Take it easy. Remember to go home early if you get tired!'
             },
             { 
                 type: 'user_action',
                 stepNum: 9,
-                trps: 'Sig mange tak, og at du kun arbejder til middag i dag.',
                 fonetikTip: 'G som ng-lyd i "Mange" • Vokalisk r i "arbejder" • Hårdt d i "middag"',
-                construction: {
-                    type: 'OP',
-                    words: ['Mange', 'tak,', 'jeg', 'arbejder', 'kun', 'til', 'middag', 'i', 'dag.']
-                },
+                fonetikTipEn: '\'g\' as \'ng\' sound in "Mange" • Vocalic \'r\' in "arbejder" • Hard \'d\' in "middag"',
+                translationEn: 'Thank you very much, I am only working until noon today.',
                 pronunciation: {
                     target: 'Mange tak, jeg arbejder kun til middag i dag.',
                     focus: ['mange', 'arbejder', 'middag', 'dag']
@@ -273,12 +255,14 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             // --- FINAL NPC & OUTRO ---
             { 
                 type: 'npc', 
-                name: 'Lene (Leder)', 
-                text: 'Det er en perfekt aftale. Rigtig god arbejdslyst, og pas godt på dig selv!' 
+                name: isEn ? 'Lene (Manager)' : 'Lene (Leder)', 
+                text: 'Det er en perfekt aftale. Rigtig god arbejdslyst, og pas godt på dig selv!',
+                translationEn: 'That\'s a perfect arrangement. Have a great working day, and take good care of yourself!'
             },
             { 
                 type: 'narrative', 
-                text: '🏆 Flot klaret! Du har gennemført den realistiske arbejdssamtale i 9 replikskifter og mestret lenisering og udtale af D, R og G!' 
+                text: '🏆 Flot klaret! Du har gennemført den realistiske arbejdssamtale i 9 replikskifter og mestret lenisering og udtale af D, R og G!',
+                textEn: '🏆 Well done! You have completed the realistic workplace conversation in 9 exchanges and mastered lenition and pronunciation of D, R, and G!'
             }
         ];
     }
@@ -298,28 +282,30 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Tilbage på job efter sygdom';
+        h1.textContent = isEn ? 'Back to work after illness' : 'Tilbage på job efter sygdom';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Serie: Sygdom & job (Del 4 af 4) • Trinvis samtaletræning i 9 replikskifter: Lyt til udtalen, træn med mikrofonen og lær lenisering af D, R og G uden puslespil.';
+        p.textContent = isEn
+            ? 'Series: Illness & Job (Part 4 of 4) • Step-by-step dialogue practice in 9 exchanges: Listen to pronunciation, practice with the microphone, and learn lenition of D, R, and G.'
+            : 'Serie: Sygdom & job (Del 4 af 4) • Trinvis samtaletræning i 9 replikskifter: Lyt til udtalen, træn med mikrofonen og lær lenisering af D, R og G uden puslespil.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = 'Indtast dit navn...';
+        input.placeholder = isEn ? 'Enter your name...' : 'Indtast dit navn...';
         input.className = 'story-input';
         if (userName) input.value = userName;
 
         const btn = document.createElement('button');
         btn.className = 'gemini-btn';
-        btn.textContent = 'Start Samtalen ➔';
+        btn.textContent = isEn ? 'Start Conversation ➔' : 'Start Samtalen ➔';
         btn.style.marginTop = '1.5rem';
         btn.onclick = () => {
             const val = input.value.trim();
-            userName = val.length > 0 ? val : 'Kursist';
+            userName = val.length > 0 ? val : (isEn ? 'Student' : 'Kursist');
             localStorage.setItem('story_username', userName);
             initStoryData();
             renderStory();
@@ -355,18 +341,21 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             if (step.type === 'narrative') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble narrative';
-                bubble.textContent = step.text;
+                bubble.textContent = (isEn && step.textEn) ? step.textEn : step.text;
                 chatContainer.appendChild(bubble);
             } 
             else if (step.type === 'npc') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble npc';
                 bubble.style.cursor = 'pointer';
-                bubble.title = 'Tryk for at høre Lenes replik';
+                bubble.title = isEn ? "Click to hear Lene's line" : 'Tryk for at høre Lenes replik';
                 bubble.innerHTML = `
                     <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                        <div><strong>${step.name}:</strong> ${step.text}</div>
-                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                        <div>
+                            <strong>${step.name}:</strong> ${step.text}
+                            ${step.translationEn ? `<div class="sub-translation" style="font-size: 0.95rem; font-style: italic; opacity: 0.85; margin-top: 0.25rem; color: #cbd5e1;">${step.translationEn}</div>` : ''}
+                        </div>
+                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                     </div>
                 `;
                 bubble.onclick = () => speakDanish(step.text);
@@ -378,11 +367,14 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
                     bubble.style.cursor = 'pointer';
-                    bubble.title = 'Tryk for at høre din replik igen';
+                    bubble.title = isEn ? 'Click to hear your line again' : 'Tryk for at høre din replik igen';
                     bubble.innerHTML = `
                         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                            <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
-                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                            <div>
+                                <strong>${userName}:</strong> ${step.pronunciation.target}
+                                ${step.translationEn ? `<div class="sub-translation" style="font-size: 0.95rem; font-style: italic; opacity: 0.85; margin-top: 0.25rem; color: #e2e8f0;">${step.translationEn}</div>` : ''}
+                            </div>
+                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                         </div>
                     `;
                     bubble.onclick = () => speakDanish(step.pronunciation.target);
@@ -406,12 +398,12 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
 
             const backToDialogerBtn = document.createElement('button');
             backToDialogerBtn.className = 'gemini-btn';
-            backToDialogerBtn.textContent = '← Tilbage til Sygdom & job';
+            backToDialogerBtn.textContent = isEn ? '← Back to Illness & Job' : '← Tilbage til Sygdom & job';
             backToDialogerBtn.onclick = () => navigateFn('dialoger_sygdom_job');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';
-            restartBtn.textContent = '↻ Prøv dialogen igen';
+            restartBtn.textContent = isEn ? '↻ Try dialogue again' : '↻ Prøv dialogen igen';
             restartBtn.onclick = () => {
                 localStorage.removeItem('story_workshop_progress');
                 currentStepIndex = 0;
@@ -443,7 +435,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             stepBadge.style.fontSize = '0.9rem';
             stepBadge.style.fontWeight = 'bold';
             stepBadge.style.marginBottom = '0.8rem';
-            stepBadge.textContent = `Replikskifte ${step.stepNum} af 9`;
+            stepBadge.textContent = isEn ? `Exchange ${step.stepNum} of 9` : `Replikskifte ${step.stepNum} af 9`;
             actionBox.appendChild(stepBadge);
         }
 
@@ -456,7 +448,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         chatContainer.appendChild(actionBox);
     }
 
-    // --- PRONUNCIATION PHASE ---
+    // --- PRONUNCIATION PHASE (Med fonetiktips) ---
     function renderPronunciation(container, step) {
         const pronCont = document.createElement('div');
         pronCont.style.display = 'flex';
@@ -470,7 +462,8 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         pronCont.style.marginTop = '0.4rem';
 
         // Phonetic tip banner
-        if (step.fonetikTip) {
+        const activeTip = (isEn && step.fonetikTipEn) ? step.fonetikTipEn : step.fonetikTip;
+        if (activeTip) {
             const tipBox = document.createElement('div');
             tipBox.style.background = 'rgba(255, 204, 0, 0.12)';
             tipBox.style.border = '1px solid rgba(255, 204, 0, 0.3)';
@@ -481,7 +474,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             tipBox.style.textAlign = 'center';
             tipBox.style.width = '100%';
             tipBox.style.maxWidth = '600px';
-            tipBox.innerHTML = `💡 <strong>Fokus:</strong> ${step.fonetikTip}`;
+            tipBox.innerHTML = `💡 <strong>${isEn ? 'Focus:' : 'Fokus:'}</strong> ${activeTip}`;
             pronCont.appendChild(tipBox);
         }
         
@@ -491,7 +484,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         sentenceDisplay.style.fontSize = '1.4rem';
         sentenceDisplay.style.fontWeight = 'bold';
         sentenceDisplay.style.textAlign = 'center';
-        sentenceDisplay.style.margin = '0.5rem 0';
+        sentenceDisplay.style.margin = '0.5rem 0 0.2rem 0';
         sentenceDisplay.style.lineHeight = '1.6';
         
         const targetWords = step.pronunciation.target.split(' ');
@@ -499,9 +492,21 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         sentenceDisplay.innerHTML = targetWords.map(w => {
             const clean = w.toLowerCase().replace(/[.,!?:]/g, '');
             const isFocus = step.pronunciation.focus.some(f => clean.includes(f.toLowerCase()));
-            return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}" title="${isFocus ? 'Fokusord for udtale' : ''}">${w}</span>`;
+            return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}" title="${isFocus ? (isEn ? 'Focus word for pronunciation' : 'Fokusord for udtale') : ''}">${w}</span>`;
         }).join(' ');
         pronCont.appendChild(sentenceDisplay);
+
+        // English translation below target sentence
+        if (step.translationEn) {
+            const transDisplay = document.createElement('div');
+            transDisplay.style.fontSize = '1.05rem';
+            transDisplay.style.fontStyle = 'italic';
+            transDisplay.style.color = '#94a3b8';
+            transDisplay.style.textAlign = 'center';
+            transDisplay.style.marginBottom = '0.5rem';
+            transDisplay.textContent = `"${step.translationEn}"`;
+            pronCont.appendChild(transDisplay);
+        }
 
         // Model audio listen button
         const audioRow = document.createElement('div');
@@ -513,7 +518,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         listenBtn.className = 'back-btn';
         listenBtn.style.fontSize = '0.95rem';
         listenBtn.style.padding = '0.4rem 1rem';
-        listenBtn.innerHTML = '🔊 Hør udtale';
+        listenBtn.innerHTML = `🔊 ${isEn ? 'Listen to pronunciation' : 'Hør udtale'}`;
         listenBtn.onclick = () => speakDanish(step.pronunciation.target);
         audioRow.appendChild(listenBtn);
         pronCont.appendChild(audioRow);
@@ -528,7 +533,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         progressContainer.style.margin = '0.5rem 0';
         
         const label = document.createElement('span');
-        label.textContent = 'Mestring:';
+        label.textContent = isEn ? 'Mastery:' : 'Mestring:';
         label.style.fontWeight = 'bold';
         label.style.fontSize = '0.95rem';
         
@@ -565,19 +570,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         const statusText = document.createElement('div');
         statusText.style.color = 'var(--text-muted)';
         statusText.style.fontSize = '1rem';
-        statusText.textContent = 'Tryk på mikrofonen og tal...';
+        statusText.textContent = isEn ? 'Press the microphone and speak...' : 'Tryk på mikrofonen og tal...';
         pronCont.appendChild(statusText);
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
-        nextBtn.textContent = 'Videre i samtalen ➔';
+        nextBtn.textContent = isEn ? 'Next exchange ➔' : 'Videre i samtalen ➔';
         nextBtn.style.display = 'none';
         nextBtn.onclick = () => {
             currentStepIndex++;
             localStorage.setItem('story_workshop_progress', currentStepIndex);
-            appState.currentPhase = 'trps';
-            appState.shuffledWords = null;
-            appState.selectedWords = [];
             appState.pronunciationFails = 0;
             renderStory();
         };
@@ -586,14 +588,16 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         const skipBtn = document.createElement('button');
         skipBtn.className = 'back-btn';
         skipBtn.style.fontSize = '0.85rem';
-        skipBtn.textContent = 'Spring over (kun ved mikrofonfejl)';
+        skipBtn.textContent = isEn ? 'Skip (only in case of microphone issues)' : 'Spring over (kun ved mikrofonfejl)';
         skipBtn.onclick = nextBtn.onclick;
         pronCont.appendChild(skipBtn);
 
         // Speech Logic using Web Speech API
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            statusText.textContent = 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
+            statusText.textContent = isEn 
+                ? 'Browser does not support microphone. Click "Skip" to proceed.' 
+                : 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
             skipBtn.style.display = 'inline-block';
         } else {
             const recognition = new SpeechRecognition();
@@ -610,7 +614,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                     recognition.start();
                     isListening = true;
                     micBtn.classList.add('listening');
-                    statusText.innerHTML = 'Lytter... Tal nu!';
+                    statusText.innerHTML = isEn ? 'Listening... Speak now!' : 'Lytter... Tal nu!';
                     progressContainer.style.display = 'none';
                     progressBar.style.width = '0%';
                     scoreText.textContent = '0%';
@@ -623,14 +627,14 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
 
             recognition.onresult = (e) => {
                 const spoken = e.results[0][0].transcript;
-                statusText.innerHTML = `Behandler udtale...`;
+                statusText.innerHTML = isEn ? 'Processing pronunciation...' : 'Behandler udtale...';
                 evaluatePronunciation(spoken);
             };
 
             recognition.onerror = () => {
                 micBtn.classList.remove('listening');
                 isListening = false;
-                statusText.innerHTML = 'Kunne ikke opfatte tale. Prøv igen!';
+                statusText.innerHTML = isEn ? 'Could not capture speech. Please try again!' : 'Kunne ikke opfatte tale. Prøv igen!';
             };
 
             recognition.onend = () => {
@@ -645,7 +649,6 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 const focusWords = step.pronunciation.focus.map(f => f.toLowerCase());
                 const totalReq = focusWords.length > 0 ? focusWords.length : targetWords.length;
                 
-                let sIdx = 0;
                 const spans = sentenceDisplay.querySelectorAll('.udtale-word');
 
                 targetWords.forEach((word, idx) => {
@@ -670,18 +673,18 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 setTimeout(() => {
                     progressBar.style.width = score + '%';
                     scoreText.textContent = score + '%';
-                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">Du sagde:<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
+                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">${isEn ? 'You said:' : 'Du sagde:'}<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
                     
                     if (score >= 65) {
                         progressBar.style.background = '#4caf50';
-                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">✓ Flot udtalt!</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">${isEn ? '✓ Great pronunciation!' : '✓ Flot udtalt!'}</span>${spokenHTML}`;
                         micBtn.style.display = 'none';
                         skipBtn.style.display = 'none';
                         nextBtn.style.display = 'inline-block';
                     } else {
                         progressBar.style.background = '#ff5e5b';
                         appState.pronunciationFails++;
-                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">Næsten! Prøv igen og fokuser på de understregede ord.</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">${isEn ? 'Almost! Try again and focus on the highlighted words.' : 'Næsten! Prøv igen og fokuser på de understregede ord.'}</span>${spokenHTML}`;
                     }
                 }, 100);
             }
@@ -755,51 +758,6 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 border-radius: 24px;
                 padding: 1.8rem;
                 animation: fadeIn 0.4s ease;
-            }
-            .trps-box {
-                font-size: 1.25rem;
-                color: #ffcc00;
-                margin-bottom: 1.2rem;
-                text-align: center;
-            }
-            .op-dropzone {
-                min-height: 65px;
-                border: 2px dashed rgba(255,255,255,0.3);
-                border-radius: 14px;
-                padding: 1rem;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.6rem;
-                margin-bottom: 1rem;
-                transition: border-color 0.3s;
-                background: rgba(0,0,0,0.15);
-                align-items: center;
-            }
-            .op-poolzone {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.6rem;
-                justify-content: center;
-            }
-            .op-word {
-                padding: 0.65rem 1.1rem;
-                font-size: 1.1rem;
-                border-radius: 10px;
-                border: none;
-                cursor: pointer;
-                font-family: inherit;
-                transition: transform 0.1s, background 0.2s;
-            }
-            .op-word:active { transform: scale(0.92); }
-            .op-word.pool {
-                background: var(--card-bg);
-                color: white;
-                border: 1px solid rgba(255,255,255,0.25);
-            }
-            .op-word.selected {
-                background: #4caf50;
-                color: white;
-                box-shadow: 0 2px 8px rgba(76,175,80,0.3);
             }
         `;
         document.head.appendChild(style);

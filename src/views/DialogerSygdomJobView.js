@@ -1,6 +1,7 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 export function renderDialogerSygdomJobView(container, navigateFn) {
+    const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -9,43 +10,45 @@ export function renderDialogerSygdomJobView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
     backBtn.onclick = () => navigateFn('dialoger_udtale');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
     // Header Title
     const title = document.createElement('h1');
-    title.textContent = '🩺 Sygdom & job';
+    title.textContent = isEn ? '🩺 Illness & Job' : '🩺 Sygdom & job';
     viewContainer.appendChild(title);
 
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Trinvis samtaletræning i 4 dele: Fra opkald til lægen og chefen til tilbage på job';
+    subtitle.textContent = isEn 
+        ? 'Step-by-step dialogue training in 4 parts: From calling the doctor and boss to returning to work'
+        : 'Trinvis samtaletræning i 4 dele: Fra opkald til lægen og chefen til tilbage på job';
     viewContainer.appendChild(subtitle);
 
     // Cards Data
     const cardsData = [
         {
             icon: '🩺',
-            title: '1. En ansat ringer til lægen',
+            title: isEn ? '1. An employee calls the doctor' : '1. En ansat ringer til lægen',
             status: 'active',
             action: () => navigateFn('dialog_laege')
         },
         {
             icon: '📞',
-            title: '2. Den ansatte ringer til chefen',
+            title: isEn ? '2. The employee calls the boss' : '2. Den ansatte ringer til chefen',
             status: 'active',
             action: () => navigateFn('dialog_chef')
         },
         {
             icon: '💊',
-            title: '3. På apoteket',
+            title: isEn ? '3. At the pharmacy' : '3. På apoteket',
             status: 'coming_soon'
         },
         {
             icon: '💼',
-            title: '4. Tilbage på job efter sygdom',
+            title: isEn ? '4. Back to work after illness' : '4. Tilbage på job efter sygdom',
             status: 'active',
             action: () => navigateFn('dialog_job')
         }
@@ -79,7 +82,7 @@ export function renderDialogerSygdomJobView(container, navigateFn) {
             badge.style.padding = '0.2rem 0.5rem';
             badge.style.borderRadius = '8px';
             badge.style.marginLeft = '0.5rem';
-            badge.textContent = 'Kommer snart';
+            badge.textContent = isEn ? 'Coming soon' : 'Kommer snart';
             cardTitle.appendChild(badge);
         }
 

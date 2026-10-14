@@ -1,7 +1,8 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderLaegeSamtaleStoryView(container, navigateFn) {
+    const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container story-view-container';
 
@@ -20,16 +21,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
     backBtn.onclick = () => navigateFn('historier_menu');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
     resetBtn.className = 'back-btn';
     resetBtn.style.color = '#ff5e5b';
-    resetBtn.innerHTML = `↻ Start forfra`;
+    resetBtn.innerHTML = isEn ? `↻ Start over` : `↻ Start forfra`;
     resetBtn.onclick = () => {
-        if (confirm('Er du sikker på, at du vil starte samtalen med lægen forfra?')) {
+        if (confirm(isEn ? 'Are you sure you want to start the dialogue with the doctor over?' : 'Er du sikker på, at du vil starte samtalen med lægen forfra?')) {
             localStorage.removeItem('story_laege_progress');
             currentStepIndex = 0;
             appState.currentPhase = 'construction';
@@ -49,7 +50,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
     headerDiv.style.marginBottom = '1.5rem';
 
     const mainTitle = document.createElement('h1');
-    mainTitle.textContent = '🩺 En ansat ringer til lægen';
+    mainTitle.textContent = isEn ? '🩺 An employee calls the doctor' : '🩺 En ansat ringer til lægen';
     mainTitle.style.marginBottom = '0.4rem';
     headerDiv.appendChild(mainTitle);
 
@@ -57,7 +58,9 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Serie: Sygdom & job (Del 1 af 4) • Byg sætningerne i ordpuslespillet og tal med lægen om symptomer';
+    subTitle.textContent = isEn
+        ? 'Series: Illness & Job (Part 1 of 4) • Build lines in the word puzzle and talk with the doctor about symptoms'
+        : 'Serie: Sygdom & job (Del 1 af 4) • Byg sætningerne i ordpuslespillet og tal med lægen om symptomer';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -84,7 +87,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
     downloadInfo.style.color = '#ffcc00';
     downloadInfo.style.fontWeight = 'bold';
     downloadInfo.style.fontSize = '0.95rem';
-    downloadInfo.innerHTML = '<span>📥</span> <span>Print-ark til undervisere (Peer Listening):</span>';
+    downloadInfo.innerHTML = `<span>📥</span> <span>${isEn ? 'Print sheets for teachers (Peer Listening):' : 'Print-ark til undervisere (Peer Listening):'}</span>`;
 
     const downloadLinks = document.createElement('div');
     downloadLinks.style.display = 'flex';
@@ -93,16 +96,18 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
 
     downloadLinks.innerHTML = `
         <a href="${baseUrl}docs/Makker_Lytteark_Samtale1_Dansk.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
-            <span>📄</span> Hent Word (Dansk)
+            <span>📄</span> ${isEn ? 'Download Word (Danish)' : 'Hent Word (Dansk)'}
         </a>
         <a href="${baseUrl}docs/Makker_Lytteark_Samtale1_English.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
-            <span>📄</span> Hent Word (Engelsk)
+            <span>📄</span> ${isEn ? 'Download Word (English)' : 'Hent Word (Engelsk)'}
         </a>
     `;
 
     downloadBox.appendChild(downloadInfo);
     downloadBox.appendChild(downloadLinks);
     viewContainer.appendChild(downloadBox);
+
+    let userName = localStorage.getItem('story_username') || '';
 
     const contentArea = document.createElement('div');
     contentArea.className = 'story-content-area';
@@ -117,13 +122,15 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             // --- NARRATIVE INTRO ---
             { 
                 type: 'narrative', 
-                text: '📍 Scene: Mandag morgen. Du er vågnet med høj feber og ringer til din læge for at få en vurdering og rådgivning.' 
+                text: '📍 Scene: Mandag morgen. Du er vågnet med høj feber og ringer til din læge for at få en vurdering og rådgivning.',
+                textEn: '📍 Scene: Monday morning. You have woken up with a high fever and call your doctor for an assessment and medical advice.'
             },
 
             // --- REPLIKSKIFTE 1 ---
             { 
                 type: 'user_action',
                 stepNum: 1,
+                translationEn: `Hello, my name is ${u}.`,
                 construction: {
                     type: 'OP',
                     words: ['Hej,', 'jeg', 'hedder', `${u}.`]
@@ -135,14 +142,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: `Hej ${u}. Hvad kan jeg gøre for dig?` 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: `Hej ${u}. Hvad kan jeg gøre for dig?`,
+                translationEn: `Hi ${u}. What can I do for you?`
             },
 
             // --- REPLIKSKIFTE 2 ---
             { 
                 type: 'user_action',
                 stepNum: 2,
+                translationEn: 'I am calling because I feel really ill.',
                 construction: {
                     type: 'OP',
                     words: ['Jeg', 'ringer', 'fordi', 'jeg', 'har', 'det', 'virkelig', 'dårligt.']
@@ -154,14 +163,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: 'Hvad er dine symptomer?' 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: 'Hvad er dine symptomer?',
+                translationEn: 'What are your symptoms?'
             },
 
             // --- REPLIKSKIFTE 3 ---
             { 
                 type: 'user_action',
                 stepNum: 3,
+                translationEn: 'I have a high fever, a headache, and muscle aches.',
                 construction: {
                     type: 'OP',
                     words: ['Jeg', 'har', 'høj', 'feber,', 'hovedpine', 'og', 'muskelsmerter.']
@@ -173,14 +184,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: 'Hoster du også?' 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: 'Hoster du også?',
+                translationEn: 'Are you coughing as well?'
             },
 
             // --- REPLIKSKIFTE 4 ---
             { 
                 type: 'user_action',
                 stepNum: 4,
+                translationEn: 'Yes, I am.',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'det', 'gør', 'jeg.']
@@ -192,14 +205,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: 'Hoster du slim op?' 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: 'Hoster du slim op?',
+                translationEn: 'Are you coughing up phlegm?'
             },
 
             // --- REPLIKSKIFTE 5 ---
             { 
                 type: 'user_action',
                 stepNum: 5,
+                translationEn: 'Yes, there is some greenish phlegm.',
                 construction: {
                     type: 'OP',
                     words: ['Ja,', 'der', 'er', 'lidt', 'grønt', 'slim.']
@@ -211,14 +226,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: 'Har du andre symptomer som kvalme eller diarré?' 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: 'Har du andre symptomer som kvalme eller diarré?',
+                translationEn: 'Do you have other symptoms like nausea or diarrhea?'
             },
 
             // --- REPLIKSKIFTE 6 ---
             { 
                 type: 'user_action',
                 stepNum: 6,
+                translationEn: 'No, only fatigue and a sore throat.',
                 construction: {
                     type: 'OP',
                     words: ['Nej,', 'kun', 'træthed', 'og', 'ondt', 'i', 'halsen.']
@@ -230,14 +247,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             },
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: 'Jeg vil udskrive nogle medikamenter til dig mod feberen og hosten. Sørg for at drikke masser af væske og få hvile.' 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: 'Jeg vil udskrive nogle medikamenter til dig mod feberen og hosten. Sørg for at drikke masser af væske og få hvile.',
+                translationEn: 'I will prescribe some medication for your fever and cough. Make sure to drink plenty of fluids and get plenty of rest.'
             },
 
             // --- REPLIKSKIFTE 7 ---
             { 
                 type: 'user_action',
                 stepNum: 7,
+                translationEn: 'Thank you, I will do that.',
                 construction: {
                     type: 'OP',
                     words: ['Tak,', 'det', 'vil', 'jeg', 'gøre.']
@@ -248,15 +267,17 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
                 }
             },
 
-            // --- AFSPLUTNING ---
+            // --- AFSLUTNING ---
             { 
                 type: 'npc', 
-                name: 'Læge', 
-                text: 'Rigtig god bedring. Ring endelig igen, hvis det bliver værre!' 
+                name: isEn ? 'Doctor' : 'Læge', 
+                text: 'Rigtig god bedring. Ring endelig igen, hvis det bliver værre!',
+                translationEn: 'Get well soon. Please call again if it gets worse!'
             },
             { 
                 type: 'narrative', 
-                text: '🏆 Flot klaret! Du har gennemført samtalen med lægen i 7 replikskifter og bygget alle sætninger korrekt.' 
+                text: '🏆 Flot klaret! Du har gennemført samtalen med lægen i 7 replikskifter og bygget alle sætninger korrekt.',
+                textEn: '🏆 Well done! You have completed the conversation with the doctor in 7 exchanges and built all sentences correctly.'
             }
         ];
     }
@@ -280,28 +301,30 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'En ansat ringer til lægen';
+        h1.textContent = isEn ? 'An employee calls the doctor' : 'En ansat ringer til lægen';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Serie: Sygdom & job (Del 1 af 4) • Byg dine replikker i ordpuslespillet og gennemfør en realistisk telefonsamtale med lægen.';
+        p.textContent = isEn
+            ? 'Series: Illness & Job (Part 1 of 4) • Build your lines in the word puzzle and complete a realistic phone conversation with the doctor.'
+            : 'Serie: Sygdom & job (Del 1 af 4) • Byg dine replikker i ordpuslespillet og gennemfør en realistisk telefonsamtale med lægen.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = 'Indtast dit fornavn...';
+        input.placeholder = isEn ? 'Enter your first name...' : 'Indtast dit fornavn...';
         input.className = 'story-input';
         if (userName) input.value = userName;
 
         const btn = document.createElement('button');
         btn.className = 'gemini-btn';
-        btn.textContent = 'Start Samtalen ➔';
+        btn.textContent = isEn ? 'Start Conversation ➔' : 'Start Samtalen ➔';
         btn.style.marginTop = '1.5rem';
         btn.onclick = () => {
             const val = input.value.trim();
-            userName = val.length > 0 ? val : 'Kursist';
+            userName = val.length > 0 ? val : (isEn ? 'Student' : 'Kursist');
             localStorage.setItem('story_username', userName);
             initStoryData(userName);
             renderStory();
@@ -337,18 +360,21 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             if (step.type === 'narrative') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble narrative';
-                bubble.textContent = step.text;
+                bubble.textContent = (isEn && step.textEn) ? step.textEn : step.text;
                 chatContainer.appendChild(bubble);
             } 
             else if (step.type === 'npc') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble npc';
                 bubble.style.cursor = 'pointer';
-                bubble.title = 'Tryk for at høre lægens replik';
+                bubble.title = isEn ? "Click to hear the doctor's line" : 'Tryk for at høre lægens replik';
                 bubble.innerHTML = `
                     <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                        <div><strong>${step.name}:</strong> ${step.text}</div>
-                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                        <div>
+                            <strong>${step.name}:</strong> ${step.text}
+                            ${step.translationEn ? `<div class="sub-translation" style="font-size: 0.95rem; font-style: italic; opacity: 0.85; margin-top: 0.25rem; color: #cbd5e1;">${step.translationEn}</div>` : ''}
+                        </div>
+                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                     </div>
                 `;
                 bubble.onclick = () => speakDanish(step.text);
@@ -360,11 +386,14 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
                     bubble.style.cursor = 'pointer';
-                    bubble.title = 'Tryk for at høre din replik igen';
+                    bubble.title = isEn ? 'Click to hear your line again' : 'Tryk for at høre din replik igen';
                     bubble.innerHTML = `
                         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                            <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
-                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                            <div>
+                                <strong>${userName}:</strong> ${step.pronunciation.target}
+                                ${step.translationEn ? `<div class="sub-translation" style="font-size: 0.95rem; font-style: italic; opacity: 0.85; margin-top: 0.25rem; color: #e2e8f0;">${step.translationEn}</div>` : ''}
+                            </div>
+                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                         </div>
                     `;
                     bubble.onclick = () => speakDanish(step.pronunciation.target);
@@ -388,12 +417,12 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
 
             const backToMenuBtn = document.createElement('button');
             backToMenuBtn.className = 'gemini-btn';
-            backToMenuBtn.textContent = '← Tilbage til Historier';
+            backToMenuBtn.textContent = isEn ? '← Back to Stories' : '← Tilbage til Historier';
             backToMenuBtn.onclick = () => navigateFn('historier_menu');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';
-            restartBtn.textContent = '↻ Prøv samtalen igen';
+            restartBtn.textContent = isEn ? '↻ Try conversation again' : '↻ Prøv samtalen igen';
             restartBtn.onclick = () => {
                 localStorage.removeItem('story_laege_progress');
                 currentStepIndex = 0;
@@ -428,7 +457,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
             stepBadge.style.fontSize = '0.9rem';
             stepBadge.style.fontWeight = 'bold';
             stepBadge.style.marginBottom = '0.8rem';
-            stepBadge.textContent = `Replikskifte ${step.stepNum} af 7`;
+            stepBadge.textContent = isEn ? `Exchange ${step.stepNum} of 7` : `Replikskifte ${step.stepNum} af 7`;
             actionBox.appendChild(stepBadge);
         }
 
@@ -438,7 +467,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         if (appState.currentPhase === 'construction') {
             renderOrdstilling(constructBox, step);
         } else {
-            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem;">✓ Sætning bygget korrekt!</div>`;
+            constructBox.innerHTML = `<div style="color: #4caf50; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem;">${isEn ? '✓ Sentence built correctly!' : '✓ Sætning bygget korrekt!'}</div>`;
         }
         actionBox.appendChild(constructBox);
 
@@ -470,8 +499,21 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         instructionP.style.color = 'var(--text-muted)';
         instructionP.style.fontSize = '1rem';
         instructionP.style.marginBottom = '0.5rem';
-        instructionP.textContent = 'Klik på ordene nedenfor i den rigtige rækkefølge for at bygge replikken:';
+        instructionP.textContent = isEn 
+            ? 'Click the words below in the correct order to build the sentence:' 
+            : 'Klik på ordene nedenfor i den rigtige rækkefølge for at bygge replikken:';
         container.appendChild(instructionP);
+
+        // English hint for sentence meaning
+        if (step.translationEn) {
+            const hintP = document.createElement('p');
+            hintP.style.color = '#94a3b8';
+            hintP.style.fontStyle = 'italic';
+            hintP.style.fontSize = '1rem';
+            hintP.style.marginBottom = '0.8rem';
+            hintP.textContent = `Meaning: "${step.translationEn}"`;
+            container.appendChild(hintP);
+        }
 
         const dropZone = document.createElement('div');
         dropZone.className = 'op-dropzone';
@@ -490,7 +532,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         resetWordsBtn.className = 'back-btn';
         resetWordsBtn.style.fontSize = '0.85rem';
         resetWordsBtn.style.padding = '0.3rem 0.8rem';
-        resetWordsBtn.textContent = 'Nulstil ord ↺';
+        resetWordsBtn.textContent = isEn ? 'Reset words ↺' : 'Nulstil ord ↺';
         resetWordsBtn.onclick = () => {
             appState.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
             appState.selectedWords = [];
@@ -538,7 +580,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
                 const isCorrect = selectedStr === targetWords.join(' ') || (step.construction.altWords && selectedStr === step.construction.altWords.join(' '));
                 if (isCorrect) {
                     dropZone.style.border = '2px solid #4caf50';
-                    feedbackArea.innerHTML = '<span style="color: #4caf50;">✓ Rigtig ordstilling! Gør dig klar til at sige replikken.</span>';
+                    feedbackArea.innerHTML = `<span style="color: #4caf50;">${isEn ? '✓ Correct word order! Get ready to speak the line.' : '✓ Rigtig ordstilling! Gør dig klar til at sige replikken.'}</span>`;
                     setTimeout(() => {
                         appState.currentPhase = 'pronunciation';
                         appState.shuffledWords = null;
@@ -546,7 +588,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
                     }, 500);
                 } else {
                     dropZone.style.border = '2px solid #ff5e5b';
-                    feedbackArea.innerHTML = '<span style="color: #ff5e5b;">✗ Ikke helt den rigtige rækkefølge. Klik på ordene eller nulstil for at rette.</span>';
+                    feedbackArea.innerHTML = `<span style="color: #ff5e5b;">${isEn ? '✗ Not quite the right order. Click words or reset to correct.' : '✗ Ikke helt den rigtige rækkefølge. Klik på ordene eller nulstil for at rette.'}</span>`;
                 }
             } else {
                 dropZone.style.border = '2px dashed rgba(255,255,255,0.25)';
@@ -600,7 +642,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         listenBtn.className = 'back-btn';
         listenBtn.style.fontSize = '0.95rem';
         listenBtn.style.padding = '0.4rem 1rem';
-        listenBtn.innerHTML = '🔊 Hør udtale';
+        listenBtn.innerHTML = `🔊 ${isEn ? 'Listen to pronunciation' : 'Hør udtale'}`;
         listenBtn.onclick = () => speakDanish(step.pronunciation.target);
         audioRow.appendChild(listenBtn);
         pronCont.appendChild(audioRow);
@@ -615,7 +657,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         progressContainer.style.margin = '0.5rem 0';
         
         const label = document.createElement('span');
-        label.textContent = 'Mestring:';
+        label.textContent = isEn ? 'Mastery:' : 'Mestring:';
         label.style.fontWeight = 'bold';
         label.style.fontSize = '0.95rem';
         
@@ -652,12 +694,12 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         const statusText = document.createElement('div');
         statusText.style.color = 'var(--text-muted)';
         statusText.style.fontSize = '1rem';
-        statusText.textContent = 'Tryk på mikrofonen og tal...';
+        statusText.textContent = isEn ? 'Press the microphone and speak...' : 'Tryk på mikrofonen og tal...';
         pronCont.appendChild(statusText);
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
-        nextBtn.textContent = 'Videre i samtalen ➔';
+        nextBtn.textContent = isEn ? 'Next exchange ➔' : 'Videre i samtalen ➔';
         nextBtn.style.display = 'none';
         nextBtn.onclick = () => {
             currentStepIndex++;
@@ -673,14 +715,16 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
         const skipBtn = document.createElement('button');
         skipBtn.className = 'back-btn';
         skipBtn.style.fontSize = '0.85rem';
-        skipBtn.textContent = 'Spring over (kun ved mikrofonfejl)';
+        skipBtn.textContent = isEn ? 'Skip (only in case of microphone issues)' : 'Spring over (kun ved mikrofonfejl)';
         skipBtn.onclick = nextBtn.onclick;
         pronCont.appendChild(skipBtn);
 
         // Speech Logic using Web Speech API
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            statusText.textContent = 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
+            statusText.textContent = isEn 
+                ? 'Browser does not support microphone. Click "Skip" to proceed.' 
+                : 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
             skipBtn.style.display = 'inline-block';
         } else {
             const recognition = new SpeechRecognition();
@@ -697,7 +741,7 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
                     recognition.start();
                     isListening = true;
                     micBtn.classList.add('listening');
-                    statusText.innerHTML = 'Lytter... Tal nu!';
+                    statusText.innerHTML = isEn ? 'Listening... Speak now!' : 'Lytter... Tal nu!';
                     progressContainer.style.display = 'none';
                     progressBar.style.width = '0%';
                     scoreText.textContent = '0%';
@@ -710,14 +754,14 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
 
             recognition.onresult = (e) => {
                 const spoken = e.results[0][0].transcript;
-                statusText.innerHTML = `Behandler udtale...`;
+                statusText.innerHTML = isEn ? 'Processing pronunciation...' : 'Behandler udtale...';
                 evaluatePronunciation(spoken);
             };
 
             recognition.onerror = () => {
                 micBtn.classList.remove('listening');
                 isListening = false;
-                statusText.innerHTML = 'Kunne ikke opfatte tale. Prøv igen!';
+                statusText.innerHTML = isEn ? 'Could not capture speech. Please try again!' : 'Kunne ikke opfatte tale. Prøv igen!';
             };
 
             recognition.onend = () => {
@@ -756,18 +800,18 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
                 setTimeout(() => {
                     progressBar.style.width = score + '%';
                     scoreText.textContent = score + '%';
-                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">Du sagde:<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
+                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">${isEn ? 'You said:' : 'Du sagde:'}<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
                     
                     if (score >= 60) {
                         progressBar.style.background = '#4caf50';
-                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">✓ Flot udtalt!</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">${isEn ? '✓ Great pronunciation!' : '✓ Flot udtalt!'}</span>${spokenHTML}`;
                         micBtn.style.display = 'none';
                         skipBtn.style.display = 'none';
                         nextBtn.style.display = 'inline-block';
                     } else {
                         progressBar.style.background = '#ff5e5b';
                         appState.pronunciationFails++;
-                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">Prøv igen! Lyt gerne til udtalen først.</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">${isEn ? 'Try again! Feel free to listen to the pronunciation first.' : 'Prøv igen! Lyt gerne til udtalen først.'}</span>${spokenHTML}`;
                     }
                 }, 100);
             }

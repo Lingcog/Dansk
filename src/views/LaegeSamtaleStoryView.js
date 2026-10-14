@@ -92,14 +92,11 @@ export function renderLaegeSamtaleStoryView(container, navigateFn) {
     downloadLinks.style.flexWrap = 'wrap';
 
     downloadLinks.innerHTML = `
-        <a href="${baseUrl}docs/Peer_Listening_Sheet_Samtale1_Dansk.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+        <a href="${baseUrl}docs/Makker_Lytteark_Samtale1_Dansk.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
             <span>📄</span> Hent Word (Dansk)
         </a>
-        <a href="${baseUrl}docs/Peer_Listening_Sheet_Samtale1_English.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+        <a href="${baseUrl}docs/Makker_Lytteark_Samtale1_English.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
             <span>📄</span> Hent Word (Engelsk)
-        </a>
-        <a href="${baseUrl}docs/Peer_Listening_Sheet_Samtale1_Dansk.pdf" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
-            <span>📑</span> Hent PDF
         </a>
     `;
 

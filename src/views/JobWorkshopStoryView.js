@@ -298,11 +298,11 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Dialoger - træn udtale i rigtige dialoger';
+        h1.textContent = 'Tilbage på job efter sygdom';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Trinvis arbejdssamtale i 9 replikskifter (DU3 Modul 1-2): Lyt til sætningerne, brug mikrofonen og træn udtalen af D, R og G uden skrive- og pusleopgaver.';
+        p.textContent = 'Serie: Sygdom & job (Del 4 af 4) • Trinvis samtaletræning i 9 replikskifter: Lyt til udtalen, træn med mikrofonen og lær lenisering af D, R og G uden puslespil.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';

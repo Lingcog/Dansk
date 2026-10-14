@@ -19,11 +19,6 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     title.textContent = '💬 Dialoger - træn udtale i rigtige dialoger';
     viewContainer.appendChild(title);
 
-    const subtitle = document.createElement('p');
-    subtitle.className = 'subtitle';
-    subtitle.textContent = 'Træn udtale og lenisering af D, R og G i virkelighedsnære samtaler (DU3 Modul 1-2). Direkte samtaletræning med mikrofon uden pusleopgaver.';
-    viewContainer.appendChild(subtitle);
-
     // Section title
     const sectionHeader = document.createElement('h2');
     sectionHeader.style.margin = '2rem 0 1rem 0';

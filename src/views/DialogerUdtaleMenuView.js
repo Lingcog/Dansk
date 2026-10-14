@@ -24,8 +24,14 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     subtitle.textContent = 'Træn udtale og lenisering af D, R og G i virkelighedsnære samtaler';
     viewContainer.appendChild(subtitle);
 
-    // Cards Data (Temaer / Serier i Dialoger)
+    // Cards Data (Temaer / Dialoger)
     const cardsData = [
+        {
+            icon: '🤝',
+            title: 'Præsenter dig for en anden',
+            status: 'active',
+            action: () => navigateFn('dialog_praesenter')
+        },
         {
             icon: '🩺',
             title: 'Sygdom & job',

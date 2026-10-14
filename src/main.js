@@ -56,6 +56,7 @@ import { renderLaegeSamtaleStoryView } from './views/LaegeSamtaleStoryView.js';
 import { renderLaegeWorkshopStoryView } from './views/LaegeWorkshopStoryView.js';
 import { renderChefSamtaleStoryView } from './views/ChefSamtaleStoryView.js';
 import { renderChefWorkshopStoryView } from './views/ChefWorkshopStoryView.js';
+import { renderPraesenterWorkshopStoryView } from './views/PraesenterWorkshopStoryView.js';
 import { renderDialogerUdtaleMenuView } from './views/DialogerUdtaleMenuView.js';
 import { renderDialogerSygdomJobView } from './views/DialogerSygdomJobView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
@@ -284,6 +285,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'dialoger_udtale') {
     appState.currentView = 'dialoger_udtale';
     renderDialogerUdtaleMenuView(appDiv, navigate);
+  } else if (viewTarget === 'dialog_praesenter') {
+    appState.currentView = 'dialog_praesenter';
+    renderPraesenterWorkshopStoryView(appDiv, navigate);
   } else if (viewTarget === 'dialoger_sygdom_job') {
     appState.currentView = 'dialoger_sygdom_job';
     renderDialogerSygdomJobView(appDiv, navigate);

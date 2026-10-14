@@ -361,7 +361,15 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             else if (step.type === 'npc') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble npc';
-                bubble.innerHTML = `<strong>${step.name}:</strong> ${step.text}`;
+                bubble.style.cursor = 'pointer';
+                bubble.title = 'Tryk for at høre Lenes replik';
+                bubble.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
+                        <div><strong>${step.name}:</strong> ${step.text}</div>
+                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                    </div>
+                `;
+                bubble.onclick = () => speakDanish(step.text);
                 chatContainer.appendChild(bubble);
             }
             else if (step.type === 'user_action') {
@@ -369,7 +377,15 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                     // Past completed user action
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
-                    bubble.innerHTML = `<strong>${userName}:</strong> ${step.pronunciation.target}`;
+                    bubble.style.cursor = 'pointer';
+                    bubble.title = 'Tryk for at høre din replik igen';
+                    bubble.innerHTML = `
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
+                            <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
+                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                        </div>
+                    `;
+                    bubble.onclick = () => speakDanish(step.pronunciation.target);
                     chatContainer.appendChild(bubble);
                 } else {
                     // Current active turn
@@ -402,7 +418,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
                 renderStory();
             };
 
-            finishCard.appendChild(backToUdtaleBtn);
+            finishCard.appendChild(backToDialogerBtn);
             finishCard.appendChild(restartBtn);
             chatContainer.appendChild(finishCard);
         }

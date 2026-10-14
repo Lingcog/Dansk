@@ -74,6 +74,12 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
     function initStoryData(uName) {
         const u = uName || 'Peter';
         storyData = [
+            // --- NARRATIVE INTRO ---
+            { 
+                type: 'narrative', 
+                text: '📍 Scene: Mandag formiddag. Du har talt med lægen og ringer nu til din chef for at melde dig syg i dag.' 
+            },
+
             // --- REPLIKSKIFTE 1 ---
             { 
                 type: 'user_action',
@@ -295,14 +301,30 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
             else if (step.type === 'npc') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble npc';
-                bubble.innerHTML = `<strong>${step.name}:</strong> ${step.text}`;
+                bubble.style.cursor = 'pointer';
+                bubble.title = 'Tryk for at høre chefens replik';
+                bubble.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
+                        <div><strong>${step.name}:</strong> ${step.text}</div>
+                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                    </div>
+                `;
+                bubble.onclick = () => speakDanish(step.text);
                 chatContainer.appendChild(bubble);
             }
             else if (step.type === 'user_action') {
                 if (i < currentStepIndex) {
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
-                    bubble.innerHTML = `<strong>${userName}:</strong> ${step.pronunciation.target}`;
+                    bubble.style.cursor = 'pointer';
+                    bubble.title = 'Tryk for at høre din replik igen';
+                    bubble.innerHTML = `
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
+                            <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
+                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                        </div>
+                    `;
+                    bubble.onclick = () => speakDanish(step.pronunciation.target);
                     chatContainer.appendChild(bubble);
                 } else {
                     renderCurrentAction(chatContainer, step);

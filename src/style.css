@@ -1040,3 +1040,89 @@ footer a:hover {
 .photo-overlay-wrap.pure-mode .photo-bubble {
     display: none !important;
 }
+
+/* =========================================
+   Interactive Dialogue & Workshop Speech Bubbles
+   ========================================= */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    padding-bottom: 5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.chat-bubble {
+    padding: 1.1rem 1.5rem;
+    border-radius: 20px;
+    max-width: 85%;
+    font-size: 1.15rem;
+    line-height: 1.55;
+    animation: fadeIn 0.35s ease-out forwards;
+    position: relative;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-bubble:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.chat-bubble.narrative {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+    align-self: center;
+    font-style: italic;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 90%;
+    border-radius: 16px;
+    padding: 0.9rem 1.4rem;
+}
+
+.chat-bubble.npc {
+    background: rgba(255, 204, 0, 0.15);
+    border: 1px solid rgba(255, 204, 0, 0.4);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    color: #ffffff;
+}
+
+.chat-bubble.user.past {
+    background: rgba(76, 175, 80, 0.18);
+    border: 1px solid rgba(76, 175, 80, 0.45);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    color: #ffffff;
+}
+
+.action-box {
+    align-self: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 204, 0, 0.35);
+    border-radius: 24px;
+    padding: 1.8rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease;
+}
+
+.story-input {
+    padding: 0.9rem 1.2rem;
+    font-size: 1.15rem;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    width: 80%;
+    max-width: 320px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.story-input:focus {
+    border-color: #ffcc00;
+}

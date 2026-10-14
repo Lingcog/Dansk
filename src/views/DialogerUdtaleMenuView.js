@@ -19,6 +19,11 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     title.textContent = '💬 Dialoger - træn udtale i rigtige dialoger';
     viewContainer.appendChild(title);
 
+    const subtitle = document.createElement('p');
+    subtitle.className = 'subtitle';
+    subtitle.textContent = 'Træn udtale og lenisering af D, R og G i virkelighedsnære samtaler';
+    viewContainer.appendChild(subtitle);
+
     // Section title
     const sectionHeader = document.createElement('h2');
     sectionHeader.style.margin = '2rem 0 1rem 0';
@@ -32,27 +37,23 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
         {
             icon: '🩺',
             title: '1. En ansat ringer til lægen',
-            desc: '7 replikskifter: Ring til lægen med feber, hoste og symptomer. Lær udtalen af blødt d, vokalisk r og stumt g.',
             status: 'active',
             action: () => navigateFn('dialog_laege')
         },
         {
             icon: '📞',
             title: '2. Den ansatte ringer til chefen',
-            desc: '7 replikskifter: Meld dig syg til chefen. Træn udtalen og leniseringen af D, R og G uden puslespil.',
             status: 'active',
             action: () => navigateFn('dialog_chef')
         },
         {
             icon: '💊',
             title: '3. På apoteket',
-            desc: 'Hent receptpligtig medicin mod feber og få vejledning af farmaceuten. (Kommer snart)',
             status: 'coming_soon'
         },
         {
             icon: '💼',
             title: '4. Tilbage på job efter sygdom',
-            desc: '9 replikskifter: Første dag tilbage på jobbet. Tal med lederen Lene om opgaver og et par rolige dage.',
             status: 'active',
             action: () => navigateFn('dialog_job')
         }
@@ -90,13 +91,16 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
             cardTitle.appendChild(badge);
         }
 
-        const cardDesc = document.createElement('div');
-        cardDesc.className = 'card-desc';
-        cardDesc.textContent = data.desc;
-
         card.appendChild(icon);
         card.appendChild(cardTitle);
-        card.appendChild(cardDesc);
+
+        if (data.desc) {
+            const cardDesc = document.createElement('div');
+            cardDesc.className = 'card-desc';
+            cardDesc.textContent = data.desc;
+            card.appendChild(cardDesc);
+        }
+
         grid.appendChild(card);
     });
 

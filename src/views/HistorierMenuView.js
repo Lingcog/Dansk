@@ -45,27 +45,11 @@ export function renderHistorierMenuView(container, navigateFn) {
         },
         {
             icon: '🩺',
-            title: isEn ? '1. An employee calls the doctor' : '1. En ansat ringer til lægen',
+            title: isEn ? 'Illness and job' : 'Sygdom og job',
             desc: isEn 
-                ? 'Series: Illness & Job (Part 1). Build lines in the word puzzle and speak with the doctor about symptoms.'
-                : 'Serie: Sygdom & job (Del 1). Byg replikkerne i ordpuslespillet og tal med lægen om symptomer.',
-            action: () => navigateFn('laege_story')
-        },
-        {
-            icon: '📞',
-            title: isEn ? '2. The employee calls the boss' : '2. Den ansatte ringer til chefen',
-            desc: isEn 
-                ? 'Series: Illness & Job (Part 2). Build lines in the word puzzle and call in sick to the boss.'
-                : 'Serie: Sygdom & job (Del 2). Byg replikkerne i ordpuslespillet og meld dig syg hos chefen.',
-            action: () => navigateFn('chef_story')
-        },
-        {
-            icon: '💼',
-            title: isEn ? '4. Back to work after illness' : '4. Tilbage på job efter sygdom',
-            desc: isEn 
-                ? 'Series: Illness & Job (Part 4). Build your lines in the word puzzle and talk with your manager Lene.'
-                : 'Serie: Sygdom & job (Del 4). Byg dine replikker i ordpuslespillet og tal med din leder Lene.',
-            action: () => navigateFn('job_story')
+                ? 'Series in 4 parts: The doctor, the boss, the pharmacy, and back to work. Build lines in the word puzzle and converse.'
+                : 'Serie i 4 dele: Lægen, chefen, apoteket og tilbage på job. Byg sætningerne i ordpuslespillet og tal med personerne.',
+            action: () => navigateFn('historier_sygdom_job')
         }
     ];
 

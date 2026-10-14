@@ -22,7 +22,7 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
-    backBtn.onclick = () => navigateFn('historier_menu');
+    backBtn.onclick = () => navigateFn('historier_sygdom_job');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
@@ -459,8 +459,8 @@ export function renderJobSamtaleStoryView(container, navigateFn) {
 
             const backToHistorierBtn = document.createElement('button');
             backToHistorierBtn.className = 'gemini-btn';
-            backToHistorierBtn.textContent = isEn ? '← Back to Stories' : '← Tilbage til Historier';
-            backToHistorierBtn.onclick = () => navigateFn('historier_menu');
+            backToHistorierBtn.textContent = isEn ? '← Back to Illness and Job' : '← Tilbage til Sygdom og job';
+            backToHistorierBtn.onclick = () => navigateFn('historier_sygdom_job');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';

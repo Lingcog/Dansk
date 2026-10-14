@@ -61,6 +61,7 @@ import { renderDialogerUdtaleMenuView } from './views/DialogerUdtaleMenuView.js'
 import { renderDialogerSygdomJobView } from './views/DialogerSygdomJobView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
+import { renderHistorierSygdomJobView } from './views/HistorierSygdomJobView.js';
 import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
 import { renderPronomenView } from './views/PronomenView.js';
 import { renderGroundingView } from './views/GroundingView.js';
@@ -270,6 +271,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'historier_menu') {
     appState.currentView = 'historier_menu';
     renderHistorierMenuView(appDiv, navigate);
+  } else if (viewTarget === 'historier_sygdom_job') {
+    appState.currentView = 'historier_sygdom_job';
+    renderHistorierSygdomJobView(appDiv, navigate);
   } else if (viewTarget === 'interactive_story') {
     appState.currentView = 'interactive_story';
     renderInteractiveStoryView(appDiv, navigate);

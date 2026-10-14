@@ -22,7 +22,7 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
-    backBtn.onclick = () => navigateFn('historier_menu');
+    backBtn.onclick = () => navigateFn('historier_sygdom_job');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
@@ -412,8 +412,8 @@ export function renderChefSamtaleStoryView(container, navigateFn) {
 
             const backToMenuBtn = document.createElement('button');
             backToMenuBtn.className = 'gemini-btn';
-            backToMenuBtn.textContent = isEn ? '← Back to Stories' : '← Tilbage til Historier';
-            backToMenuBtn.onclick = () => navigateFn('historier_menu');
+            backToMenuBtn.textContent = isEn ? '← Back to Illness and Job' : '← Tilbage til Sygdom og job';
+            backToMenuBtn.onclick = () => navigateFn('historier_sygdom_job');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';

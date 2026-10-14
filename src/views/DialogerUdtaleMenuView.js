@@ -24,38 +24,13 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     subtitle.textContent = 'Træn udtale og lenisering af D, R og G i virkelighedsnære samtaler';
     viewContainer.appendChild(subtitle);
 
-    // Section title
-    const sectionHeader = document.createElement('h2');
-    sectionHeader.style.margin = '2rem 0 1rem 0';
-    sectionHeader.style.fontSize = '1.35rem';
-    sectionHeader.style.color = '#ffcc00';
-    sectionHeader.textContent = '📋 Serie: Sygdom & job';
-    viewContainer.appendChild(sectionHeader);
-
-    // Cards Data
+    // Cards Data (Temaer / Serier i Dialoger)
     const cardsData = [
         {
             icon: '🩺',
-            title: '1. En ansat ringer til lægen',
+            title: 'Sygdom & job',
             status: 'active',
-            action: () => navigateFn('dialog_laege')
-        },
-        {
-            icon: '📞',
-            title: '2. Den ansatte ringer til chefen',
-            status: 'active',
-            action: () => navigateFn('dialog_chef')
-        },
-        {
-            icon: '💊',
-            title: '3. På apoteket',
-            status: 'coming_soon'
-        },
-        {
-            icon: '💼',
-            title: '4. Tilbage på job efter sygdom',
-            status: 'active',
-            action: () => navigateFn('dialog_job')
+            action: () => navigateFn('dialoger_sygdom_job')
         }
     ];
 

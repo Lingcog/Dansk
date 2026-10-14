@@ -21,7 +21,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
-    backBtn.onclick = () => navigateFn('dialoger_udtale');
+    backBtn.onclick = () => navigateFn('dialoger_sygdom_job');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
@@ -406,8 +406,8 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
 
             const backToDialogerBtn = document.createElement('button');
             backToDialogerBtn.className = 'gemini-btn';
-            backToDialogerBtn.textContent = '← Tilbage til Dialoger';
-            backToDialogerBtn.onclick = () => navigateFn('dialoger_udtale');
+            backToDialogerBtn.textContent = '← Tilbage til Sygdom & job';
+            backToDialogerBtn.onclick = () => navigateFn('dialoger_sygdom_job');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';

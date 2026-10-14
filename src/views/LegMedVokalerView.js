@@ -366,6 +366,23 @@ export function renderLegMedVokalerView(container, navigateFn, extraData = {}) {
         title.textContent = 'Leg med vokaler';
         menuContainer.appendChild(title);
 
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'vokaler-illustration-container';
+        imgContainer.style.width = '100%';
+        imgContainer.style.maxWidth = '380px';
+        imgContainer.style.textAlign = 'center';
+        imgContainer.style.margin = '0 auto 0.5rem auto';
+
+        const img = document.createElement('img');
+        img.src = `${baseUrl}dansk_vokaltrappe_trans.png`;
+        img.alt = 'Dansk Vokaltrappe';
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+
+        imgContainer.appendChild(img);
+        menuContainer.appendChild(imgContainer);
+
         const menuConfig = [
             { title: 'Træn R-lyden', subs: [{id: 'haardt_r', label: 'Hårdt "r"'}, {id: 'vokalisk_r', label: 'Vokalisk "r"'}] },
             { title: 'Træn D-lyden', subs: [{id: 'haardt_d', label: 'Hårdt "d"'}, {id: 'bloedt_d', label: 'Blødt "d"'}] },

@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderPraesenterWorkshopStoryView(container, navigateFn) {
@@ -15,21 +15,23 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         }
     }
 
+    const isEn = getLang() === 'en';
+
     // Top bar
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
     backBtn.onclick = () => navigateFn('dialoger_udtale');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
     resetBtn.className = 'back-btn';
     resetBtn.style.color = '#ff5e5b';
-    resetBtn.innerHTML = `↻ Start forfra`;
+    resetBtn.innerHTML = isEn ? `↻ Start over` : `↻ Start forfra`;
     resetBtn.onclick = () => {
-        if (confirm('Er du sikker på, at du vil starte dialogen forfra?')) {
+        if (confirm(isEn ? 'Are you sure you want to start the dialogue over?' : 'Er du sikker på, at du vil starte dialogen forfra?')) {
             localStorage.removeItem('story_praesenter_workshop_progress');
             currentStepIndex = 0;
             renderStory();
@@ -46,7 +48,7 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
     headerDiv.style.marginBottom = '1.5rem';
 
     const mainTitle = document.createElement('h1');
-    mainTitle.textContent = '💬 Dialoger: Præsenter dig for en anden';
+    mainTitle.textContent = isEn ? '💬 Dialogues: Introduce yourself to someone' : '💬 Dialoger: Præsenter dig for en anden';
     mainTitle.style.marginBottom = '0.4rem';
     headerDiv.appendChild(mainTitle);
 
@@ -54,7 +56,9 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Hverdagssamtale på sprogskolen • Træning i udtale og lenisering af D, R og G uden puslespil';
+    subTitle.textContent = isEn
+        ? 'Everyday conversation at language school • Pronunciation and lenition training for D, R, and G without puzzles'
+        : 'Hverdagssamtale på sprogskolen • Træning i udtale og lenisering af D, R og G uden puslespil';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -77,7 +81,8 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             // --- NARRATIVE INTRO ---
             { 
                 type: 'narrative', 
-                text: '📍 Scene: Sprogskolen. Et lyst klasselokale. Du sidder ved et bord. Mateo, en ny kursist, sætter sig ved siden af dig.' 
+                text: '📍 Scene: Sprogskolen. Et lyst klasselokale. Du sidder ved et bord. Mateo, en ny kursist, sætter sig ved siden af dig.',
+                textEn: '📍 Scene: The language school. A bright classroom. You are sitting at a table. Mateo, a new student, sits down next to you.'
             },
 
             // --- REPLIKSKIFTE 1 ---
@@ -85,6 +90,8 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 1,
                 fonetikTip: 'Stumt g i "jeg" [ja] • Blødt d i "hedder" • Stumt d i "hvad"',
+                fonetikTipEn: 'Silent \'g\' in "jeg" [ja] • Soft \'d\' in "hedder" • Silent \'d\' in "hvad"',
+                translationEn: `Hi, my name is ${u}. What is your name?`,
                 pronunciation: {
                     target: `Hej, jeg hedder ${u}. Hvad hedder du?`,
                     focus: ['jeg', 'hedder', 'hvad']
@@ -93,7 +100,8 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Mateo', 
-                text: `Hej ${u}. Jeg hedder Mateo. Jeg er ny her på holdet.` 
+                text: `Hej ${u}. Jeg hedder Mateo. Jeg er ny her på holdet.`,
+                translationEn: `Hi ${u}. My name is Mateo. I'm new here in the class.`
             },
 
             // --- REPLIKSKIFTE 2 ---
@@ -101,6 +109,8 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 2,
                 fonetikTip: 'Vokalisk r i "hvor" og "kommer" • Hårdt r i "fra"',
+                fonetikTipEn: 'Vocalic \'r\' in "hvor" and "kommer" • Hard \'r\' in "fra"',
+                translationEn: 'Welcome! Where do you come from?',
                 pronunciation: {
                     target: 'Velkommen til! Hvor kommer du fra?',
                     focus: ['velkommen', 'hvor', 'kommer', 'fra']
@@ -109,23 +119,27 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Mateo', 
-                text: 'Jeg kommer fra Spanien. Og hvad med dig? Hvor kommer du fra?' 
+                text: 'Jeg kommer fra Spanien. Og hvad med dig? Hvor kommer du fra?',
+                translationEn: 'I come from Spain. And what about you? Where are you from?'
             },
 
             // --- REPLIKSKIFTE 3 ---
             { 
                 type: 'user_action',
                 stepNum: 3,
-                fonetikTip: 'Vokalisk r i "kommer" • Hårdt r i "fra"',
+                fonetikTip: 'Stumt g i "jeg" [ja] • Vokalisk r i "kommer" • Hårdt r i "fra"',
+                fonetikTipEn: 'Silent \'g\' in "jeg" [ja] • Vocalic \'r\' in "kommer" • Hard \'r\' in "fra"',
+                translationEn: `I come from ${c}.`,
                 pronunciation: {
                     target: `Jeg kommer fra ${c}.`,
-                    focus: ['kommer', 'fra']
+                    focus: ['jeg', 'kommer', 'fra']
                 }
             },
             { 
                 type: 'npc', 
                 name: 'Mateo', 
-                text: 'Spændende! Hvor længe har du boet her i Danmark?' 
+                text: 'Spændende! Hvor længe har du boet her i Danmark?',
+                translationEn: 'Exciting! How long have you lived here in Denmark?'
             },
 
             // --- REPLIKSKIFTE 4 ---
@@ -133,6 +147,8 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
                 type: 'user_action',
                 stepNum: 4,
                 fonetikTip: 'Vokalisk r i "har", "her" og "år" • Blødt d i "boet"',
+                fonetikTipEn: 'Vocalic \'r\' in "har", "her", and "år" • Soft \'d\' in "boet"',
+                translationEn: 'I have lived here for a year.',
                 pronunciation: {
                     target: 'Jeg har boet her i et år.',
                     focus: ['har', 'boet', 'her', 'år']
@@ -141,14 +157,17 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Mateo', 
-                text: 'Jeg har kun boet her i syv måneder. Det er hyggeligt at hilse på dig!' 
+                text: 'Jeg har kun boet her i syv måneder. Det er hyggeligt at hilse på dig!',
+                translationEn: 'I have only lived here for seven months. It\'s nice to meet you!'
             },
 
             // --- REPLIKSKIFTE 5 ---
             { 
                 type: 'user_action',
                 stepNum: 5,
-                fonetikTip: 'Stumt g i "lige" • Blødt d i "måde"',
+                fonetikTip: 'Stumt g i "lige" • Blødt d i "måde" • Hårdt r i "ses"',
+                fonetikTipEn: 'Silent \'g\' in "lige" • Soft \'d\' in "måde" • Hard \'r\' in "ses"',
+                translationEn: 'Likewise! See you during the break.',
                 pronunciation: {
                     target: 'I lige måde! Vi ses i pausen.',
                     focus: ['lige', 'måde', 'ses']
@@ -159,11 +178,13 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'npc', 
                 name: 'Mateo', 
-                text: 'Ja, det gør vi. Hav en rigtig god time!' 
+                text: 'Ja, det gør vi. Hav en rigtig god time!',
+                translationEn: 'Yes, see you then. Have a really good class!'
             },
             { 
                 type: 'narrative', 
-                text: '🏆 Flot klaret! Du har præsenteret dig for en anden kursist og trænet udtale af D, R og G!' 
+                text: '🏆 Flot klaret! Du har præsenteret dig for en anden kursist og trænet udtale af D, R og G!',
+                textEn: '🏆 Well done! You have introduced yourself to another student and practiced the pronunciation of D, R, and G!'
             }
         ];
     }
@@ -184,39 +205,41 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = 'Præsenter dig for en anden';
+        h1.textContent = isEn ? 'Introduce yourself to someone' : 'Præsenter dig for en anden';
         h1.style.marginBottom = '1rem';
 
         const p = document.createElement('p');
-        p.textContent = 'Trinvis samtaletræning på sprogskolen (5 replikskifter): Mød din nye holdkammerat Mateo. Lyt til udtalen, træn med mikrofonen og lær lenisering af D, R og G uden puslespil.';
+        p.textContent = isEn
+            ? 'Step-by-step conversation practice at language school (5 exchanges): Meet your new classmate Mateo. Listen to the pronunciation, practice with the microphone, and learn lenition of D, R, and G without puzzles.'
+            : 'Trinvis samtaletræning på sprogskolen (5 replikskifter): Mød din nye holdkammerat Mateo. Lyt til udtalen, træn med mikrofonen og lær lenisering af D, R og G uden puslespil.';
         p.style.marginBottom = '1.8rem';
         p.style.color = 'var(--text-muted)';
         p.style.lineHeight = '1.6';
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = 'Indtast dit fornavn...';
+        input.placeholder = isEn ? 'Enter your first name...' : 'Indtast dit fornavn...';
         input.className = 'story-input';
         if (userName) input.value = userName;
 
         const countryInput = document.createElement('input');
         countryInput.type = 'text';
-        countryInput.placeholder = 'Hvilket land kommer du fra? (f.eks. Spanien, Polen, Ukraine)';
+        countryInput.placeholder = isEn ? 'Which country are you from? (e.g. Spain, Poland, Ukraine)' : 'Hvilket land kommer du fra? (f.eks. Spanien, Polen, Ukraine)';
         countryInput.className = 'story-input';
         countryInput.style.marginTop = '0.8rem';
         if (userCountry) countryInput.value = userCountry;
 
         const btn = document.createElement('button');
         btn.className = 'gemini-btn';
-        btn.textContent = 'Start Samtalen ➔';
+        btn.textContent = isEn ? 'Start Conversation ➔' : 'Start Samtalen ➔';
         btn.style.marginTop = '1.5rem';
         btn.onclick = () => {
             const val = input.value.trim();
-            userName = val.length > 0 ? val : 'Kursist';
+            userName = val.length > 0 ? val : (isEn ? 'Student' : 'Kursist');
             localStorage.setItem('story_username', userName);
 
             const cVal = countryInput.value.trim();
-            userCountry = cVal.length > 0 ? cVal : 'Spanien';
+            userCountry = cVal.length > 0 ? cVal : (isEn ? 'Spain' : 'Spanien');
             localStorage.setItem('story_user_country', userCountry);
 
             initStoryData(userName, userCountry);
@@ -253,18 +276,22 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             if (step.type === 'narrative') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble narrative';
-                bubble.textContent = step.text;
+                bubble.textContent = isEn && step.textEn ? step.textEn : step.text;
                 chatContainer.appendChild(bubble);
             } 
             else if (step.type === 'npc') {
                 const bubble = document.createElement('div');
                 bubble.className = 'chat-bubble npc';
                 bubble.style.cursor = 'pointer';
-                bubble.title = 'Tryk for at høre Mateos replik';
+                bubble.title = isEn ? "Click to hear Mateo's line" : 'Tryk for at høre Mateos replik';
+                const translationHtml = step.translationEn ? `<div style="font-size: 0.92rem; color: #a0aec0; margin-top: 0.35rem; font-style: italic;">"${step.translationEn}"</div>` : '';
                 bubble.innerHTML = `
                     <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                        <div><strong>${step.name}:</strong> ${step.text}</div>
-                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                        <div>
+                            <div><strong>${step.name}:</strong> ${step.text}</div>
+                            ${translationHtml}
+                        </div>
+                        <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                     </div>
                 `;
                 bubble.onclick = () => speakDanish(step.text);
@@ -275,11 +302,15 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble user past';
                     bubble.style.cursor = 'pointer';
-                    bubble.title = 'Tryk for at høre din replik igen';
+                    bubble.title = isEn ? 'Click to hear your line again' : 'Tryk for at høre din replik igen';
+                    const translationHtml = step.translationEn ? `<div style="font-size: 0.92rem; color: rgba(255,255,255,0.7); margin-top: 0.35rem; font-style: italic;">"${step.translationEn}"</div>` : '';
                     bubble.innerHTML = `
                         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;">
-                            <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
-                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="Hør oplæsning">🔊</button>
+                            <div>
+                                <div><strong>${userName}:</strong> ${step.pronunciation.target}</div>
+                                ${translationHtml}
+                            </div>
+                            <button class="sound-icon-btn" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;" title="${isEn ? 'Listen' : 'Hør oplæsning'}">🔊</button>
                         </div>
                     `;
                     bubble.onclick = () => speakDanish(step.pronunciation.target);
@@ -301,12 +332,12 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
 
             const backToDialogerBtn = document.createElement('button');
             backToDialogerBtn.className = 'gemini-btn';
-            backToDialogerBtn.textContent = '← Tilbage til Dialoger';
+            backToDialogerBtn.textContent = isEn ? '← Back to Dialogues' : '← Tilbage til Dialoger';
             backToDialogerBtn.onclick = () => navigateFn('dialoger_udtale');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';
-            restartBtn.textContent = '↻ Prøv samtalen igen';
+            restartBtn.textContent = isEn ? '↻ Try the conversation again' : '↻ Prøv samtalen igen';
             restartBtn.onclick = () => {
                 localStorage.removeItem('story_praesenter_workshop_progress');
                 currentStepIndex = 0;
@@ -338,7 +369,7 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             stepBadge.style.fontSize = '0.9rem';
             stepBadge.style.fontWeight = 'bold';
             stepBadge.style.marginBottom = '0.8rem';
-            stepBadge.textContent = `Replikskifte ${step.stepNum} af 5`;
+            stepBadge.textContent = isEn ? `Exchange ${step.stepNum} of 5` : `Replikskifte ${step.stepNum} af 5`;
             actionBox.appendChild(stepBadge);
         }
 
@@ -376,7 +407,9 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
             tipBox.style.textAlign = 'center';
             tipBox.style.width = '100%';
             tipBox.style.maxWidth = '600px';
-            tipBox.innerHTML = `💡 <strong>Fokus:</strong> ${step.fonetikTip}`;
+            const tipText = isEn && step.fonetikTipEn ? step.fonetikTipEn : step.fonetikTip;
+            const focusLabel = isEn ? 'Focus:' : 'Fokus:';
+            tipBox.innerHTML = `💡 <strong>${focusLabel}</strong> ${tipText}`;
             pronCont.appendChild(tipBox);
         }
         
@@ -386,7 +419,7 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         sentenceDisplay.style.fontSize = '1.4rem';
         sentenceDisplay.style.fontWeight = 'bold';
         sentenceDisplay.style.textAlign = 'center';
-        sentenceDisplay.style.margin = '0.5rem 0';
+        sentenceDisplay.style.margin = '0.5rem 0 0.2rem 0';
         sentenceDisplay.style.lineHeight = '1.6';
         
         const targetWords = step.pronunciation.target.split(' ');
@@ -394,9 +427,23 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         sentenceDisplay.innerHTML = targetWords.map(w => {
             const clean = w.toLowerCase().replace(/[.,!?:]/g, '');
             const isFocus = step.pronunciation.focus.some(f => clean.includes(f.toLowerCase()));
-            return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}" title="${isFocus ? 'Fokusord for udtale' : ''}">${w}</span>`;
+            const focusTitle = isEn ? 'Focus word for pronunciation' : 'Fokusord for udtale';
+            return `<span class="udtale-word ${isFocus ? 'target-focus' : ''}" title="${isFocus ? focusTitle : ''}">${w}</span>`;
         }).join(' ');
         pronCont.appendChild(sentenceDisplay);
+
+        // English translation subtitle
+        if (step.translationEn) {
+            const transSubtitle = document.createElement('div');
+            transSubtitle.style.fontSize = '1.05rem';
+            transSubtitle.style.color = '#cbd5e1';
+            transSubtitle.style.marginTop = '-0.2rem';
+            transSubtitle.style.marginBottom = '0.6rem';
+            transSubtitle.style.fontStyle = 'italic';
+            transSubtitle.style.textAlign = 'center';
+            transSubtitle.textContent = `"${step.translationEn}"`;
+            pronCont.appendChild(transSubtitle);
+        }
 
         // Audio listen button
         const audioRow = document.createElement('div');
@@ -408,7 +455,7 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         listenBtn.className = 'back-btn';
         listenBtn.style.fontSize = '0.95rem';
         listenBtn.style.padding = '0.4rem 1rem';
-        listenBtn.innerHTML = '🔊 Hør udtale';
+        listenBtn.innerHTML = `🔊 ${isEn ? 'Listen to pronunciation' : 'Hør udtale'}`;
         listenBtn.onclick = () => speakDanish(step.pronunciation.target);
         audioRow.appendChild(listenBtn);
         pronCont.appendChild(audioRow);
@@ -472,12 +519,12 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         const statusText = document.createElement('div');
         statusText.style.color = 'var(--text-muted)';
         statusText.style.fontSize = '1rem';
-        statusText.textContent = 'Tryk på mikrofonen og tal...';
+        statusText.textContent = isEn ? 'Press the microphone and speak...' : 'Tryk på mikrofonen og tal...';
         pronCont.appendChild(statusText);
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
-        nextBtn.textContent = 'Videre i samtalen ➔';
+        nextBtn.textContent = isEn ? 'Continue conversation ➔' : 'Videre i samtalen ➔';
         nextBtn.style.display = 'none';
         nextBtn.onclick = () => {
             currentStepIndex++;
@@ -490,14 +537,16 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
         const skipBtn = document.createElement('button');
         skipBtn.className = 'back-btn';
         skipBtn.style.fontSize = '0.85rem';
-        skipBtn.textContent = 'Spring over (kun ved mikrofonfejl)';
+        skipBtn.textContent = isEn ? 'Skip (microphone issue only)' : 'Spring over (kun ved mikrofonfejl)';
         skipBtn.onclick = nextBtn.onclick;
         pronCont.appendChild(skipBtn);
 
         // Speech Logic using Web Speech API
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            statusText.textContent = 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
+            statusText.textContent = isEn
+                ? 'Browser does not support microphone. Press "Skip" to continue.'
+                : 'Browser understøtter ikke mikrofon. Tryk "Spring over" for at fortsætte.';
             skipBtn.style.display = 'inline-block';
         } else {
             const recognition = new SpeechRecognition();
@@ -514,7 +563,7 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
                     recognition.start();
                     isListening = true;
                     micBtn.classList.add('listening');
-                    statusText.innerHTML = 'Lytter... Tal nu!';
+                    statusText.innerHTML = isEn ? 'Listening... Speak now!' : 'Lytter... Tal nu!';
                     progressContainer.style.display = 'none';
                     progressBar.style.width = '0%';
                     scoreText.textContent = '0%';
@@ -527,14 +576,14 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
 
             recognition.onresult = (e) => {
                 const spoken = e.results[0][0].transcript;
-                statusText.innerHTML = `Behandler udtale...`;
+                statusText.innerHTML = isEn ? `Evaluating pronunciation...` : `Behandler udtale...`;
                 evaluatePronunciation(spoken);
             };
 
             recognition.onerror = () => {
                 micBtn.classList.remove('listening');
                 isListening = false;
-                statusText.innerHTML = 'Kunne ikke opfatte tale. Prøv igen!';
+                statusText.innerHTML = isEn ? 'Could not understand speech. Please try again!' : 'Kunne ikke opfatte tale. Prøv igen!';
             };
 
             recognition.onend = () => {
@@ -573,18 +622,19 @@ export function renderPraesenterWorkshopStoryView(container, navigateFn) {
                 setTimeout(() => {
                     progressBar.style.width = score + '%';
                     scoreText.textContent = score + '%';
-                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">Du sagde:<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
+                    const youSaid = isEn ? 'You said:' : 'Du sagde:';
+                    const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">${youSaid}<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
                     
                     if (score >= 60) {
                         progressBar.style.background = '#4caf50';
-                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">✓ Flot udtalt!</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">${isEn ? '✓ Great pronunciation!' : '✓ Flot udtalt!'}</span>${spokenHTML}`;
                         micBtn.style.display = 'none';
                         skipBtn.style.display = 'none';
                         nextBtn.style.display = 'inline-block';
                     } else {
                         progressBar.style.background = '#ff5e5b';
                         appState.pronunciationFails++;
-                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">Næsten! Prøv igen og fokuser på de markerede ord.</span>${spokenHTML}`;
+                        statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">${isEn ? 'Almost! Try again and focus on the highlighted words.' : 'Næsten! Prøv igen og fokuser på de markerede ord.'}</span>${spokenHTML}`;
                     }
                 }, 100);
             }

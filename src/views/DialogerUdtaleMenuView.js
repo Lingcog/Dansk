@@ -1,6 +1,7 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 export function renderDialogerUdtaleMenuView(container, navigateFn) {
+    const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -9,32 +10,32 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
     backBtn.onclick = () => navigateFn('traen_udtale');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
     // Header Title
     const title = document.createElement('h1');
-    title.textContent = '💬 Dialoger - træn udtale i rigtige dialoger';
+    title.textContent = isEn ? '💬 Dialogues - practice pronunciation in real dialogues' : '💬 Dialoger - træn udtale i rigtige dialoger';
     viewContainer.appendChild(title);
 
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Træn udtale og lenisering af D, R og G i virkelighedsnære samtaler';
+    subtitle.textContent = isEn ? 'Practice pronunciation and lenition of D, R, and G in real-life conversations' : 'Træn udtale og lenisering af D, R og G i virkelighedsnære samtaler';
     viewContainer.appendChild(subtitle);
 
     // Cards Data (Temaer / Dialoger)
     const cardsData = [
         {
             icon: '🤝',
-            title: 'Præsenter dig for en anden',
+            title: isEn ? 'Introduce yourself to someone' : 'Præsenter dig for en anden',
             status: 'active',
             action: () => navigateFn('dialog_praesenter')
         },
         {
             icon: '🩺',
-            title: 'Sygdom & job',
+            title: isEn ? 'Illness & job' : 'Sygdom & job',
             status: 'active',
             action: () => navigateFn('dialoger_sygdom_job')
         }

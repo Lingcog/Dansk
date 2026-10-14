@@ -91,7 +91,7 @@ export function renderLaegeWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 2,
-                fonetikTip: 'Stumt g i "jeg" [ja] og "dårligt" • Hårdt r i "ringer" • Vokalisk r i "har", "virkelig" og "dårligt"',
+                fonetikTip: 'Stumt g i "jeg" [ja] og "virkelig" • Hårdt r i "ringer" • Vokalisk r i "har"',
                 pronunciation: {
                     target: 'Jeg ringer fordi jeg har det virkelig dårligt.',
                     focus: ['ringer', 'fordi', 'har', 'virkelig', 'dårligt']
@@ -107,7 +107,7 @@ export function renderLaegeWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 3,
-                fonetikTip: 'Blødt d i "hovedpine" • Vokalisk r i "feber", "har" og "muskelsmerter"',
+                fonetikTip: 'Vokalisk r i "feber", "har" og "muskelsmerter" • Blødt d i "hovedpine"',
                 pronunciation: {
                     target: 'Jeg har høj feber, hovedpine og muskelsmerter.',
                     focus: ['feber', 'hovedpine', 'muskelsmerter']
@@ -123,7 +123,7 @@ export function renderLaegeWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 4,
-                fonetikTip: 'G som j-lyd i "gør" • Stumt g i "jeg" [ja] • Vokalisk r i "gør"',
+                fonetikTip: 'Vokalisk r i "gør" • Stumt g i "jeg" [ja]',
                 pronunciation: {
                     target: 'Ja, det gør jeg.',
                     focus: ['det', 'gør', 'jeg']
@@ -139,7 +139,7 @@ export function renderLaegeWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 5,
-                fonetikTip: 'Hårdt g og hårdt r i "grønt" • Vokalisk r i "der" og "er" • Stumt d i "lidt"',
+                fonetikTip: 'Hårdt g og hårdt r i "grønt" • Vokalisk r i "der" og "er"',
                 pronunciation: {
                     target: 'Ja, der er lidt grønt slim.',
                     focus: ['der', 'er', 'lidt', 'grønt']
@@ -171,7 +171,7 @@ export function renderLaegeWorkshopStoryView(container, navigateFn) {
             { 
                 type: 'user_action',
                 stepNum: 7,
-                fonetikTip: 'G som j-lyd i "gøre" • Stumt g i "jeg" [ja] • Vokalisk r i "gøre"',
+                fonetikTip: 'Stumt g i "jeg" [ja] • Vokalisk r i "gøre"',
                 pronunciation: {
                     target: 'Tak, det vil jeg gøre.',
                     focus: ['det', 'jeg', 'gøre']

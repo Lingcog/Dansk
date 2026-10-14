@@ -39,9 +39,15 @@ export function renderHistorierMenuView(container, navigateFn) {
             action: () => navigateFn('interactive_story')
         },
         {
+            icon: '🩺',
+            title: '1. En ansat ringer til lægen',
+            desc: 'Serie: Sygdom & job (Del 1). Byg replikkerne i ordpuslespillet og tal med lægen om symptomer.',
+            action: () => navigateFn('laege_story')
+        },
+        {
             icon: '💼',
-            title: 'Tilbage på job efter sygdom',
-            desc: 'Realistisk arbejdssamtale i 9 replikskifter (DU3 Modul 1-2). Byg dine replikker og træn udtale og lenisering af D, R og G.',
+            title: '4. Tilbage på job efter sygdom',
+            desc: 'Serie: Sygdom & job (Del 4). Byg dine replikker i ordpuslespillet og tal med din leder Lene.',
             action: () => navigateFn('job_story')
         }
     ];

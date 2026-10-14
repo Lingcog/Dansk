@@ -35,7 +35,7 @@ export function renderUdtaleMenuView(container, navigateFn) {
         {
             icon: '💬',
             title: 'Dialoger - træn udtale i rigtige dialoger',
-            desc: 'Trinvis samtale i 9 replikskifter (DU3 Modul 1-2). Fokus på udtale og lenisering af D, R og G uden puslespil.',
+            desc: 'Trinvis samtaletræning i hverdagssituationer (DU3 Modul 1-2). Fokus på udtale og lenisering af D, R og G uden puslespil.',
             action: () => navigateFn('dialoger_udtale')
         },
         {

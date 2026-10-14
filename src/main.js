@@ -52,6 +52,9 @@ import { renderLegMedUdtaleView } from './views/LegMedUdtaleView.js';
 import { renderInteractiveStoryView } from './views/InteractiveStoryView.js';
 import { renderJobSamtaleStoryView } from './views/JobSamtaleStoryView.js';
 import { renderJobWorkshopStoryView } from './views/JobWorkshopStoryView.js';
+import { renderLaegeSamtaleStoryView } from './views/LaegeSamtaleStoryView.js';
+import { renderLaegeWorkshopStoryView } from './views/LaegeWorkshopStoryView.js';
+import { renderDialogerUdtaleMenuView } from './views/DialogerUdtaleMenuView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
 import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
@@ -269,8 +272,17 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'job_story') {
     appState.currentView = 'job_story';
     renderJobSamtaleStoryView(appDiv, navigate);
-  } else if (viewTarget === 'dialoger_udtale' || viewTarget === 'workshop_story' || viewTarget === 'workshop') {
+  } else if (viewTarget === 'laege_story') {
+    appState.currentView = 'laege_story';
+    renderLaegeSamtaleStoryView(appDiv, navigate);
+  } else if (viewTarget === 'dialoger_udtale') {
     appState.currentView = 'dialoger_udtale';
+    renderDialogerUdtaleMenuView(appDiv, navigate);
+  } else if (viewTarget === 'dialog_laege') {
+    appState.currentView = 'dialog_laege';
+    renderLaegeWorkshopStoryView(appDiv, navigate);
+  } else if (viewTarget === 'dialog_job' || viewTarget === 'workshop_story' || viewTarget === 'workshop') {
+    appState.currentView = 'dialog_job';
     renderJobWorkshopStoryView(appDiv, navigate);
   } else if (viewTarget === 'branching_story') {
     appState.currentView = 'branching_story';

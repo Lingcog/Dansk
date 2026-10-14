@@ -21,7 +21,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
-    backBtn.onclick = () => navigateFn('udtale_menu');
+    backBtn.onclick = () => navigateFn('dialoger_udtale');
     topBar.appendChild(backBtn);
     
     const resetBtn = document.createElement('button');
@@ -49,7 +49,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     headerDiv.style.marginBottom = '1.5rem';
 
     const mainTitle = document.createElement('h1');
-    mainTitle.textContent = '💬 Dialoger - træn udtale i rigtige dialoger';
+    mainTitle.textContent = '💬 Dialoger: Tilbage på job efter sygdom';
     mainTitle.style.marginBottom = '0.4rem';
     headerDiv.appendChild(mainTitle);
 
@@ -57,7 +57,7 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
     subTitle.className = 'subtitle';
     subTitle.style.margin = '0 auto';
     subTitle.style.maxWidth = '700px';
-    subTitle.textContent = 'Tilbage på job efter sygdom (DU3 Modul 1-2) • Træning i udtale og lenisering af D, R og G';
+    subTitle.textContent = 'Serie: Sygdom & job (Del 4 af 4) • Træning i udtale og lenisering af D, R og G uden puslespil';
     headerDiv.appendChild(subTitle);
 
     viewContainer.appendChild(headerDiv);
@@ -388,10 +388,10 @@ export function renderJobWorkshopStoryView(container, navigateFn) {
             finishCard.style.gap = '1rem';
             finishCard.style.flexWrap = 'wrap';
 
-            const backToUdtaleBtn = document.createElement('button');
-            backToUdtaleBtn.className = 'gemini-btn';
-            backToUdtaleBtn.textContent = '← Tilbage til Træn udtale';
-            backToUdtaleBtn.onclick = () => navigateFn('udtale_menu');
+            const backToDialogerBtn = document.createElement('button');
+            backToDialogerBtn.className = 'gemini-btn';
+            backToDialogerBtn.textContent = '← Tilbage til Dialoger';
+            backToDialogerBtn.onclick = () => navigateFn('dialoger_udtale');
 
             const restartBtn = document.createElement('button');
             restartBtn.className = 'back-btn';

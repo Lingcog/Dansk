@@ -59,6 +59,51 @@ export function renderLaegeWorkshopStoryView(container, navigateFn) {
 
     viewContainer.appendChild(headerDiv);
 
+    // Teacher Material Download Box
+    const downloadBox = document.createElement('div');
+    downloadBox.className = 'teacher-download-box';
+    downloadBox.style.maxWidth = '750px';
+    downloadBox.style.margin = '0 auto 1.5rem auto';
+    downloadBox.style.background = 'rgba(255, 255, 255, 0.05)';
+    downloadBox.style.border = '1px solid rgba(255, 204, 0, 0.3)';
+    downloadBox.style.borderRadius = '14px';
+    downloadBox.style.padding = '0.9rem 1.4rem';
+    downloadBox.style.display = 'flex';
+    downloadBox.style.alignItems = 'center';
+    downloadBox.style.justifyContent = 'space-between';
+    downloadBox.style.flexWrap = 'wrap';
+    downloadBox.style.gap = '0.8rem';
+
+    const downloadInfo = document.createElement('div');
+    downloadInfo.style.display = 'flex';
+    downloadInfo.style.alignItems = 'center';
+    downloadInfo.style.gap = '0.5rem';
+    downloadInfo.style.color = '#ffcc00';
+    downloadInfo.style.fontWeight = 'bold';
+    downloadInfo.style.fontSize = '0.95rem';
+    downloadInfo.innerHTML = '<span>📥</span> <span>Print-ark til undervisere (Peer Listening):</span>';
+
+    const downloadLinks = document.createElement('div');
+    downloadLinks.style.display = 'flex';
+    downloadLinks.style.gap = '0.6rem';
+    downloadLinks.style.flexWrap = 'wrap';
+
+    downloadLinks.innerHTML = `
+        <a href="${baseUrl}docs/Peer_Listening_Sheet_Samtale1_Dansk.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+            <span>📄</span> Hent Word (Dansk)
+        </a>
+        <a href="${baseUrl}docs/Peer_Listening_Sheet_Samtale1_English.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+            <span>📄</span> Hent Word (Engelsk)
+        </a>
+        <a href="${baseUrl}docs/Peer_Listening_Sheet_Samtale1_Dansk.pdf" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+            <span>📑</span> Hent PDF
+        </a>
+    `;
+
+    downloadBox.appendChild(downloadInfo);
+    downloadBox.appendChild(downloadLinks);
+    viewContainer.appendChild(downloadBox);
+
     let userName = localStorage.getItem('story_username') || '';
 
     const contentArea = document.createElement('div');

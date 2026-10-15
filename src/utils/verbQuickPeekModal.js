@@ -251,27 +251,207 @@ export const byrumVerbsRegistry = {
         "translations": {
             "en": "to live / reside", "de": "wohnen", "es": "vivir", "ar": "يسكن", "fa": "زندگی کردن", "ku": "man", "tr": "yaşamak", "uk": "жити", "ru": "жить", "vi": "sống", "zh": "居住", "th": "อาศัยอยู่", "pt": "morar", "ur": "رہنا", "ne": "बस्नु", "ps": "اوسېدل"
         }
+    },
+    "skinne": {
+        "clean": "skinne",
+        "word": "at skinne",
+        "nutid": "skinner",
+        "datid": "skinnede",
+        "icon": "☀️",
+        "x": 65, "y": 8,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Solen skinner over byen.",
+        "meaning": "Lyser varmt og klart fra himlen.",
+        "translations": {
+            "en": "to shine", "de": "scheinen", "es": "brillar", "ar": "يشرق / يلمع", "fa": "درخشیدن", "ku": "biriqîn", "tr": "parlamak", "uk": "світити", "ru": "светить", "vi": "tỏa sáng", "zh": "照耀 / 发光", "th": "ส่องแสง", "pt": "brilhar", "ur": "چمکنا", "ne": "चम्कनु", "ps": "ځلېدل"
+        }
+    },
+    "vise": {
+        "clean": "vise",
+        "word": "at vise",
+        "nutid": "viser",
+        "datid": "viste",
+        "icon": "⏰",
+        "x": 56, "y": 17,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Uret viser tiden.",
+        "meaning": "Peger på eller demonstrerer noget for øjet.",
+        "translations": {
+            "en": "to show", "de": "zeigen", "es": "mostrar", "ar": "يُظهر / يُبين", "fa": "نشان دادن", "ku": "nîşandan", "tr": "göstermek", "uk": "показувати", "ru": "показывать", "vi": "chỉ / hiển thị", "zh": "显示 / 展示", "th": "แสดง / ชี้บอก", "pt": "mostrar", "ur": "دکھانا", "ne": "देखाउनु", "ps": "ښودل"
+        }
+    },
+    "sidde": {
+        "clean": "sidde",
+        "word": "at sidde",
+        "nutid": "sidder",
+        "datid": "sad",
+        "icon": "☕",
+        "x": 21, "y": 32,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "De sidder på en café.",
+        "meaning": "Hvile kroppen på en stol eller bænk.",
+        "translations": {
+            "en": "to sit", "de": "sitzen", "es": "sentarse", "ar": "يجلس", "fa": "نشستن", "ku": "rûniştin", "tr": "oturmak", "uk": "сидіти", "ru": "сидеть", "vi": "ngồi", "zh": "坐", "th": "นั่ง", "pt": "sentar", "ur": "بیٹھنا", "ne": "बस्नु", "ps": "کښېناستل"
+        }
+    },
+    "bruge": {
+        "clean": "bruge",
+        "word": "at bruge",
+        "nutid": "bruger",
+        "datid": "brugte",
+        "icon": "🪙",
+        "x": 8.5, "y": 63,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Kunden bruger penge.",
+        "meaning": "Anvende penge, tid eller genstande.",
+        "translations": {
+            "en": "to use / spend", "de": "benutzen / ausgeben", "es": "usar / gastar", "ar": "يستخدم / ينفق", "fa": "استفاده کردن / خرج کردن", "ku": "bikar anîn", "tr": "kullanmak / harcamak", "uk": "використовувати / витрачати", "ru": "использовать / тратить", "vi": "dùng / tiêu", "zh": "使用 / 花费", "th": "ใช้ / จ่าย", "pt": "usar / gastar", "ur": "استعمال کرنا / خرچ کرنا", "ne": "प्रयोग गर्नु", "ps": "کارول / لګول"
+        }
+    },
+    "koste": {
+        "clean": "koste",
+        "word": "at koste",
+        "nutid": "koster",
+        "datid": "kostede",
+        "icon": "🏷️",
+        "x": 5.5, "y": 55,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Brødet koster tyve kroner.",
+        "meaning": "Have en bestemt salgspris i kroner.",
+        "translations": {
+            "en": "to cost", "de": "kosten", "es": "costar", "ar": "يكلف", "fa": "قیمت داشتن / ارزیدن", "ku": "bihabûn", "tr": "tutmak / mal olmak", "uk": "коштувати", "ru": "стоить", "vi": "có giá", "zh": "价值 / 售价", "th": "ราคา", "pt": "custar", "ur": "قیمت ہونا", "ne": "मूल्य पर्नु", "ps": "بیه لرل"
+        }
+    },
+    "stå": {
+        "clean": "stå",
+        "word": "at stå",
+        "nutid": "står",
+        "datid": "stod",
+        "icon": "🌳",
+        "x": 78.5, "y": 71,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Der står et stort træ og en mand på gaden.",
+        "meaning": "Være placeret oprejst på fødderne eller jorden.",
+        "translations": {
+            "en": "to stand", "de": "stehen", "es": "estar de pie / estar", "ar": "يقف", "fa": "ایستادن", "ku": "rawestîn", "tr": "ayakta durmak", "uk": "стояти", "ru": "стоять", "vi": "đứng", "zh": "站立 / 位于", "th": "ยืน / ตั้งอยู่", "pt": "ficar de pé / estar", "ur": "کھڑا ہونا", "ne": "उभिनु", "ps": "درېدل"
+        }
+    },
+    "smile": {
+        "clean": "smile",
+        "word": "at smile",
+        "nutid": "smiler",
+        "datid": "smilede",
+        "icon": "😊",
+        "x": 55.5, "y": 63,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Barnet smiler glad.",
+        "meaning": "Vise glæde med munden og ansigtet.",
+        "translations": {
+            "en": "to smile", "de": "lächeln", "es": "sonreír", "ar": "يبتسم", "fa": "لبخند زدن", "ku": "bişirîn", "tr": "gülümsemek", "uk": "усміхатися", "ru": "улыбаться", "vi": "mỉm cười", "zh": "微笑", "th": "ยิ้ม", "pt": "sorrir", "ur": "مسکرانا", "ne": "मुस्कुराउनु", "ps": "مسکېدل"
+        }
+    },
+    "lege": {
+        "clean": "lege",
+        "word": "at lege",
+        "nutid": "leger",
+        "datid": "legede",
+        "icon": "👦",
+        "x": 62.5, "y": 58,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "En dreng leger i solen på pladsen.",
+        "meaning": "Have det sjovt og lege med venner eller legetøj.",
+        "translations": {
+            "en": "to play (for children)", "de": "spielen", "es": "jugar", "ar": "يلعب", "fa": "بازی کردن", "ku": "lîstin", "tr": "oynamak", "uk": "гратися", "ru": "играть", "vi": "chơi đùa", "zh": "玩耍", "th": "เล่น", "pt": "brincar", "ur": "کھیلنا", "ne": "खेल्नु", "ps": "لوبې کول"
+        }
+    },
+    "tale": {
+        "clean": "tale",
+        "word": "at tale",
+        "nutid": "taler",
+        "datid": "talte",
+        "icon": "🗣️",
+        "x": 93, "y": 60,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Hun taler venligt med en ven.",
+        "meaning": "Bruge stemmen og ord til at samtale.",
+        "translations": {
+            "en": "to speak / talk", "de": "sprechen / reden", "es": "hablar", "ar": "يتكلم / يتحدث", "fa": "صحبت کردن", "ku": "axaftin", "tr": "konuşmak", "uk": "говорити", "ru": "говорить", "vi": "nói chuyện", "zh": "说话 / 交谈", "th": "พูดคุย", "pt": "falar / conversar", "ur": "بات کرنا", "ne": "बोल्नु", "ps": "خبرې کول"
+        }
+    },
+    "holde": {
+        "clean": "holde",
+        "word": "at holde",
+        "nutid": "holder",
+        "datid": "holdt",
+        "icon": "🛑",
+        "x": 71, "y": 76,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "En bil holder ved vejen.",
+        "meaning": "Stå stille eller parkere med et køretøj.",
+        "translations": {
+            "en": "to stop / park (vehicle)", "de": "halten / anhalten", "es": "parar / estacionar", "ar": "يقف (مركبة)", "fa": "توقف کردن (خودرو)", "ku": "sekinandin", "tr": "durmak (araç)", "uk": "зупинятися (авто)", "ru": "останавливаться (авто)", "vi": "đỗ xe / dừng lại", "zh": "停放 / 停下", "th": "จอด", "pt": "parar / estacionar", "ur": "گاڑی روکنا", "ne": "रोकिनु", "ps": "موټر درول"
+        }
+    },
+    "drikke": {
+        "clean": "drikke",
+        "word": "at drikke",
+        "nutid": "drikker",
+        "datid": "drak",
+        "icon": "☕",
+        "x": 21, "y": 32,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "De drikker varm kaffe.",
+        "meaning": "Indtage kaffe eller anden væske.",
+        "translations": {
+            "en": "to drink", "de": "trinken", "es": "beber", "ar": "يشرب", "fa": "نوشیدن", "ku": "vexwarin", "tr": "içmek", "uk": "пити", "ru": "пить", "vi": "uống", "zh": "喝", "th": "ดื่ม", "pt": "beber", "ur": "پینا", "ne": "पिउनु", "ps": "څښل"
+        }
+    },
+    "krydse": {
+        "clean": "krydse",
+        "word": "at krydse",
+        "nutid": "krydser",
+        "datid": "krydsede",
+        "icon": "🚶",
+        "x": 78, "y": 44,
+        "sceneImage": "assets/byrum_vrimmel.jpg",
+        "sentence": "Manden krydser gaden ved fodgængerfeltet.",
+        "meaning": "Gå tværs over vejen.",
+        "translations": {
+            "en": "to cross", "de": "überqueren", "es": "cruzar", "ar": "يعبر", "fa": "عبور کردن", "ku": "derbasbûn", "tr": "karşıya geçmek", "uk": "переходити", "ru": "переходить", "vi": "băng qua", "zh": "穿过 / 过马路", "th": "ข้าม", "pt": "cruzar / atravessar", "ur": "پار کرنا", "ne": "पार गर्नु", "ps": "پورې وتل"
+        }
     }
 };
 
 // Aliases matching verbs in different sentence builder forms
-const verbAliasMap = {
-    "kører": "køre", "kører i": "køre", "køre": "køre", "kørte": "køre",
-    "går": "gå", "går en tur på": "gå", "går med": "gå", "gå": "gå", "gik": "gå",
-    "møder": "møde", "møde": "møde", "mødte": "møde",
-    "kigger": "kigge", "kigger på": "kigge", "kigge": "kigge", "kiggede": "kigge",
-    "venter": "vente", "venter på": "vente", "vente": "vente", "ventede": "vente",
-    "betaler": "betale", "betaler med": "betale", "betale": "betale", "betalte": "betale",
-    "åbner": "åbne", "åbne": "åbne", "åbnede": "åbne",
-    "har": "have", "have": "have", "havde": "have",
-    "cykler": "cykle", "cykle": "cykle", "cyklede": "cykle",
-    "stopper": "stoppe", "stoppe": "stoppe", "stoppede": "stoppe",
-    "kommer": "komme", "komme": "komme", "kom": "komme",
-    "ser": "se", "se": "se", "så": "se",
-    "finder": "finde", "finde": "finde", "fandt": "finde",
-    "handler": "handle", "handle": "handle", "handlede": "handle",
-    "hjælper": "hjælpe", "hjælpe": "hjælpe", "hjalp": "hjælpe",
-    "bor": "bo", "bo": "bo", "boede": "bo"
+export const verbAliasMap = {
+    "kører": "køre", "kører i": "køre", "køre": "køre", "kørte": "køre", "kørt": "køre",
+    "går": "gå", "går en tur på": "gå", "går en tur": "gå", "går med": "gå", "går på": "gå", "gå": "gå", "gik": "gå", "gået": "gå",
+    "møder": "møde", "møde": "møde", "mødte": "møde", "mødt": "møde", "mødes": "møde",
+    "kigger": "kigge", "kigger på": "kigge", "kigge": "kigge", "kiggede": "kigge", "kigget": "kigge",
+    "venter": "vente", "venter på": "vente", "vente": "vente", "ventede": "vente", "ventet": "vente",
+    "betaler": "betale", "betaler med": "betale", "betale": "betale", "betalte": "betale", "betalt": "betale",
+    "åbner": "åbne", "åbne": "åbne", "åbnede": "åbne", "åbnet": "åbne",
+    "har": "have", "have": "have", "havde": "have", "haft": "have",
+    "cykler": "cykle", "cykle": "cykle", "cyklede": "cykle", "cyklet": "cykle", "cykler på": "cykle",
+    "stopper": "stoppe", "stoppe": "stoppe", "stoppede": "stoppe", "stoppet": "stoppe",
+    "kommer": "komme", "komme": "komme", "kom": "komme", "kommet": "komme",
+    "ser": "se", "se": "se", "så": "se", "set": "se",
+    "finder": "finde", "finde": "finde", "fandt": "finde", "fundet": "finde",
+    "handler": "handle", "handle": "handle", "handlede": "handle", "handlet": "handle",
+    "hjælper": "hjælpe", "hjælpe": "hjælpe", "hjalp": "hjælpe", "hjulpet": "hjælpe",
+    "bor": "bo", "bo": "bo", "boede": "bo", "boet": "bo",
+    "skinner": "skinne", "skinne": "skinne", "skinnede": "skinne",
+    "viser": "vise", "vise": "vise", "viste": "vise", "vist": "vise",
+    "sidder": "sidde", "sidde": "sidde", "sad": "sidde", "siddet": "sidde",
+    "bruger": "bruge", "bruge": "bruge", "brugte": "bruge", "brugt": "bruge",
+    "koster": "koste", "koste": "koste", "kostede": "koste", "kostet": "koste",
+    "står": "stå", "stå": "stå", "stod": "stå", "stået": "stå",
+    "smiler": "smile", "smile": "smile", "smilede": "smile", "smilet": "smile",
+    "leger": "lege", "lege": "lege", "legede": "lege", "leget": "lege",
+    "taler": "tale", "tale": "tale", "talte": "tale", "talt": "tale",
+    "holder": "holde", "holde": "holde", "holdt": "holde", "holder på": "holde", "holder ved": "holde",
+    "drikker": "drikke", "drikke": "drikke", "drak": "drikke", "drukket": "drikke",
+    "krydser": "krydse", "krydse": "krydse", "krydsede": "krydse", "krydset": "krydse"
 };
 
 let stylesInjected = false;
@@ -532,6 +712,32 @@ function ensureVerbQuickPeekStyles() {
             color: white;
             border-color: #ef4444;
         }
+
+        .verb-cross-link {
+            color: #f87171;
+            font-weight: 700;
+            border-bottom: 1.5px dashed rgba(239, 68, 68, 0.7);
+            cursor: pointer;
+            padding: 1px 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            text-decoration: none;
+        }
+        .verb-cross-link:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border-bottom-style: solid;
+            border-bottom-color: #ef4444;
+            transform: translateY(-1px);
+        }
+        .verb-cross-link .vlink-icon {
+            font-size: 0.72rem;
+            opacity: 0.85;
+            margin-left: 2px;
+        }
     `;
     document.head.appendChild(style);
     stylesInjected = true;
@@ -655,3 +861,44 @@ export function openVerbQuickPeekModal(verbTextOrKey, navigateFn = null) {
     document.body.appendChild(overlay);
     speakDanish(verb.nutid);
 }
+
+// Build regex for all verb aliases, sorted by length descending so longer multi-word phrases match first
+const sortedVerbAliases = Object.keys(verbAliasMap).sort((a, b) => b.length - a.length);
+const verbPattern = new RegExp(`\\b(${sortedVerbAliases.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`, 'gi');
+
+export function formatVerbLinks(text) {
+    if (!text || typeof text !== 'string') return text;
+    ensureVerbQuickPeekStyles();
+
+    return text.replace(/(<[^>]+>)|([^<]+)/g, (match, tag, textChunk) => {
+        if (tag) return tag;
+        return textChunk.replace(verbPattern, (m) => {
+            const clean = m.toLowerCase();
+            const verbKey = verbAliasMap[clean];
+            if (!verbKey) return m;
+            const verbObj = byrumVerbsRegistry[verbKey] || { word: `at ${verbKey}` };
+            return `<span class="verb-cross-link" data-verb="${verbKey}" title="Gå til verbumfladen for '${verbObj.word}' ↗️">${m} <small class="vlink-icon">↗️</small></span>`;
+        });
+    });
+}
+
+export function attachVerbLinkListeners(containerEl, navigateFn, currentTab = 'tab_vrimmel') {
+    if (!containerEl || !navigateFn) return;
+    ensureVerbQuickPeekStyles();
+
+    containerEl.querySelectorAll('.verb-cross-link').forEach(el => {
+        el.onclick = (e) => {
+            e.stopPropagation();
+            const verbKey = el.dataset.verb;
+            if (verbKey) {
+                navigateFn('verber_byrum', {
+                    targetVerb: verbKey,
+                    returnView: 'byrummet_vrimmel',
+                    returnTab: currentTab,
+                    returnLabel: 'Byrummet (Substantiver)'
+                });
+            }
+        };
+    });
+}
+

@@ -1,6 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { byrumWordTranslations } from '../utils/top100_translations.js';
-import { openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
+import { formatVerbLinks, attachVerbLinkListeners, openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
 
 /**
  * ByrummetView - Didaktisk vrimlebillede for semantisk felt: Byrummet (byen, gaden, hverdagen)
@@ -1379,7 +1379,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                     </div>
                     <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${bw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${bw.flertal}</strong></div>
-                    <div class="detail-sentence">"${bw.sentence}"</div>
+                    <div class="detail-sentence">"${formatVerbLinks(bw.sentence)}"</div>
                     ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
@@ -1394,6 +1394,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     <div class="speech-feedback-box" id="speech-feedback-byrum"></div>
                 </div>
             `;
+
+            attachVerbLinkListeners(detailBox, navigateFn, 'tab_vrimmel');
 
             detailBox.querySelector('#listen-byrum-word').onclick = () => {
                 if (bw.audioFile) {
@@ -1973,9 +1975,24 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const descEl = document.createElement('p');
         descEl.style.color = '#94a3b8';
         descEl.style.textAlign = 'center';
-        descEl.style.marginBottom = '1.8rem';
-        descEl.textContent = 'Vælg det rigtige ord for at bygge historien:';
+        descEl.style.marginBottom = '1.2rem';
+        descEl.textContent = 'Læs historien eller vælg det rigtige svar:';
         storyContainer.appendChild(descEl);
+
+        if (story.fullStoryText) {
+            const storyBox = document.createElement('div');
+            storyBox.className = 'story-text-preview-box';
+            storyBox.style.background = 'rgba(15, 23, 42, 0.65)';
+            storyBox.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+            storyBox.style.borderRadius = '14px';
+            storyBox.style.padding = '1rem 1.4rem';
+            storyBox.style.marginBottom = '1.8rem';
+            storyBox.style.fontSize = '1.08rem';
+            storyBox.style.lineHeight = '1.65';
+            storyBox.style.color = '#e2e8f0';
+            storyBox.innerHTML = `📖 <strong>Historie:</strong> ${formatVerbLinks(story.fullStoryText)}`;
+            storyContainer.appendChild(storyBox);
+        }
 
         const stepsHolder = document.createElement('div');
         stepsHolder.className = 'story-steps-list';
@@ -1991,7 +2008,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
             const qEl = document.createElement('h4');
             qEl.style.marginBottom = '0.6rem';
-            qEl.textContent = step.q;
+            qEl.innerHTML = formatVerbLinks(step.q);
             stepCard.appendChild(qEl);
 
             const optRow = document.createElement('div');
@@ -2063,6 +2080,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             currByrumStoryIdx = (currByrumStoryIdx + 1) % byrumStories.length;
             renderActiveByrumStory();
         };
+        attachVerbLinkListeners(storyContainer, navigateFn, 'tab_historie');
     }
 
     renderActiveByrumStory();
@@ -2497,13 +2515,20 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         function updateSentence() {
             liveSentenceEl.innerHTML = `
                 <span class="grammar-word word-substantiv">${selected[0]}</span>
-                <span class="grammar-word word-verbum clickable-verb-peek" title="Klik for at undersøge verbet">${selected[1]} <small style="font-size: 0.75rem; opacity: 0.85;">ℹ️</small></span>
+                <span class="grammar-word word-verbum clickable-verb-peek" title="Gå til verbumfladen for '${selected[1]}' ↗️">${selected[1]} <small style="font-size: 0.78rem; opacity: 0.9;">↗️</small></span>
                 <span class="grammar-word word-substantiv">${selected[2]}</span>
                 <span class="grammar-word word-sted">${selected[3]}</span>.
             `;
             const verbWordEl = liveSentenceEl.querySelector('.clickable-verb-peek');
             if (verbWordEl) {
-                verbWordEl.onclick = () => openVerbQuickPeekModal(selected[1], navigateFn);
+                verbWordEl.onclick = () => {
+                    navigateFn('verber_byrum', {
+                        targetVerb: selected[1],
+                        returnView: 'byrummet_vrimmel',
+                        returnTab: 'tab_saetning',
+                        returnLabel: 'Byrummet (Sætningsbyggeren)'
+                    });
+                };
             }
         }
 
@@ -2532,12 +2557,17 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 btn.className = `sb-chip-btn ${selected[catIdx] === opt ? 'selected' : ''}`;
                 
                 if (cat.id === 'verbum') {
-                    btn.innerHTML = `<span>${opt}</span> <span class="verb-quick-info-btn" title="Hvad betyder '${opt}'? Klik for ordforklaring">ℹ️</span>`;
+                    btn.innerHTML = `<span>${opt}</span> <span class="verb-quick-info-btn" title="Gå til verbumfladen for '${opt}' ↗️">↗️</span>`;
                     const infoBtn = btn.querySelector('.verb-quick-info-btn');
                     if (infoBtn) {
                         infoBtn.onclick = (e) => {
                             e.stopPropagation();
-                            openVerbQuickPeekModal(opt, navigateFn);
+                            navigateFn('verber_byrum', {
+                                targetVerb: opt,
+                                returnView: 'byrummet_vrimmel',
+                                returnTab: 'tab_saetning',
+                                returnLabel: 'Byrummet (Sætningsbyggeren)'
+                            });
                         };
                     }
                 } else {
@@ -2692,9 +2722,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     <span class="sb-chip-role">1. Hvem?</span>
                     <span>${task.subjekt}</span>
                 </div>
-                <div class="sb-context-chip verbum clickable-verb-peek" title="Klik for at undersøge verbet" style="cursor: pointer;">
+                <div class="sb-context-chip verbum clickable-verb-peek" title="Gå til verbumfladen for '${task.verbum}' ↗️" style="cursor: pointer;">
                     <span class="sb-chip-role">2. Handling</span>
-                    <span>${task.verbum} <span class="verb-chip-info-tag">ℹ️</span></span>
+                    <span>${task.verbum} <span class="verb-chip-info-tag">↗️</span></span>
                 </div>
                 <div class="sb-context-chip sted">
                     <span class="sb-chip-role">4. Hvor?</span>
@@ -2705,7 +2735,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         const verbumChip = contextCard.querySelector('.sb-context-chip.verbum');
         if (verbumChip) {
-            verbumChip.onclick = () => openVerbQuickPeekModal(task.verbum, navigateFn);
+            verbumChip.onclick = () => {
+                navigateFn('verber_byrum', {
+                    targetVerb: task.verbum,
+                    returnView: 'byrummet_vrimmel',
+                    returnTab: 'tab_saetning',
+                    returnLabel: 'Byrummet (Sætningsbyggeren)'
+                });
+            };
         }
 
         challengeContainer.appendChild(contextCard);
@@ -2978,6 +3015,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 found.el.classList.add('b-test-spotlight');
             }, 350);
         }
+    }
+
+    // Restore active tab if returning from VerberByrumView
+    if (extraData && extraData.activeTab) {
+        switchTab(extraData.activeTab);
     }
 
     container.appendChild(viewContainer);

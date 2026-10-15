@@ -23,6 +23,30 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
+    // Return banner if navigated from Substantivfladen (e.g. Byrummet)
+    if (extraData && extraData.returnView) {
+        const returnBanner = document.createElement('div');
+        returnBanner.className = 'verb-return-nav-banner';
+        const cleanName = extraData.targetVerb ? extraData.targetVerb.replace(/^at\s+/, '') : '';
+        const targetTitle = cleanName ? `Du undersøger verbet: "at ${cleanName}"` : 'Velkommen til Verbumfladen';
+        returnBanner.innerHTML = `
+            <div class="vrn-left">
+                <span class="vrn-pill">🔴 Verbum-flade</span>
+                <div class="vrn-text">
+                    <span class="vrn-title"><strong>${targetTitle}</strong></span>
+                    <span class="vrn-sub">Se handlingen på billedet nedenfor med nutid og datid.</span>
+                </div>
+            </div>
+            <button class="vrn-back-btn" id="vrn-back-to-substantiv">
+                ⬅ Tilbage til ${extraData.returnLabel || 'Byrummet (Substantiver)'}
+            </button>
+        `;
+        returnBanner.querySelector('#vrn-back-to-substantiv').onclick = () => {
+            navigateFn(extraData.returnView, { activeTab: extraData.returnTab || 'tab_vrimmel' });
+        };
+        viewContainer.appendChild(returnBanner);
+    }
+
     // TTS Audio Helper (KUN brugt til målordet i Tab 1)
     function speakDanish(text) {
         if (!('speechSynthesis' in window)) return;
@@ -38,8 +62,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     let currByrumVisualIdx = 0;
     let currentByrumChallengeIdx = 0;
 
-
-
     // Styles
     const style = document.createElement('style');
     style.textContent = `
@@ -49,6 +71,71 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
         }
+
+        .verb-return-nav-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(15, 23, 42, 0.95));
+            border: 1.5px solid rgba(239, 68, 68, 0.55);
+            border-radius: 16px;
+            padding: 0.9rem 1.4rem;
+            margin-bottom: 1.8rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.25);
+            animation: fadeIn 0.3s ease;
+        }
+        .vrn-left {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+        .vrn-pill {
+            background: #ef4444;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        }
+        .vrn-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .vrn-title {
+            font-size: 1.1rem;
+            color: #f8fafc;
+        }
+        .vrn-sub {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+        .vrn-back-btn {
+            background: #0f172a;
+            border: 1.5px solid #ef4444;
+            color: #fca5a5;
+            padding: 0.65rem 1.25rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .vrn-back-btn:hover {
+            background: #ef4444;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+        }
+
 
         .verber-hero-header {
             text-align: center;
@@ -3043,6 +3130,27 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 currByrumVisualIdx = parseInt(extraData.taskIdx, 10) || 0;
                 renderByrumVisualMission();
             }
+        }
+    }
+
+    // Auto-focus target verb if navigated from Substantivfladen (e.g. Byrummet)
+    if (extraData && extraData.targetVerb) {
+        const cleanTarget = extraData.targetVerb.toLowerCase().replace(/^at\s+/, '').trim();
+        const foundIndex = byrumVerber.findIndex(v => 
+            v.word.toLowerCase().includes(cleanTarget) ||
+            v.nutid.toLowerCase() === cleanTarget ||
+            v.datid.toLowerCase() === cleanTarget
+        );
+        if (foundIndex !== -1) {
+            switchTab('tab_vrimmel');
+            setTimeout(() => {
+                const hotspots = stage.querySelectorAll('.vrimmel-hotspot');
+                if (hotspots[foundIndex]) {
+                    hotspots[foundIndex].click();
+                    hotspots[foundIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    hotspots[foundIndex].classList.add('b-test-spotlight');
+                }
+            }, 300);
         }
     }
 

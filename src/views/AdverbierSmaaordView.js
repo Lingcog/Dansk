@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 /**
  * AdverbierSmaaordView - Felt 5: De 5 Magiske Småord (Modalpartiklerne i dialog)
@@ -60,222 +60,702 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     // 18 Words Data for Felt 5
     const ADVERBIER_SMAAORD_DATA = [
         {
-            id: 'jo',
-            word: 'jo',
-            category: 'magiske',
-            x: 19,
-            y: 46,
-            meaning: 'Fælles viden / selvfølge',
-            sceneDesc: 'Kollegaen ler og minder bordet om, at de jo alle kender den sjove historie.',
-            sentence: 'Det ved vi jo alle.',
-            contextSentence: 'Du behøver ikke forklare det, for det ved vi jo alle.',
-            ruleHint: 'Bruges når både taler og lytter kender svaret i forvejen ("vi er enige").'
+                "id": "jo",
+                "word": "jo",
+                "category": "magiske",
+                "x": 19,
+                "y": 46,
+                "meaning": "Fælles viden / selvfølge",
+                "sceneDesc": "Kollegaen ler og minder bordet om, at de jo alle kender den sjove historie.",
+                "sentence": "Det ved vi jo alle.",
+                "contextSentence": "Du behøver ikke forklare det, for det ved vi jo alle.",
+                "ruleHint": "Bruges når både taler og lytter kender svaret i forvejen (\"vi er enige\").",
+                "translations": {
+                        "en": {
+                                "word": "as you know / obviously (shared knowledge)",
+                                "sentence": "You don't need to explain, for as we all know."
+                        },
+                        "de": {
+                                "word": "ja / doch (gemeinsames Wissen)",
+                                "sentence": "Du brauchst es nicht erklären, das wissen wir ja alle."
+                        },
+                        "es": {
+                                "word": "como ya sabes / obviamente",
+                                "sentence": "No necesitas explicarlo, porque como todos sabemos."
+                        },
+                        "ar": {
+                                "word": "كما تعلم / بالطبع (معرفة مشتركة)",
+                                "sentence": "لا داعي للشرح، فكلنا نعرف ذلك بالطبع."
+                        },
+                        "tr": {
+                                "word": "bildiğin gibi / zaten",
+                                "sentence": "Açıklamana gerek yok, bunu hepimiz biliyoruz zaten."
+                        },
+                        "uk": {
+                                "word": "як відомо / ж (спільне знання)",
+                                "sentence": "Тобі не треба пояснювати, ми ж усі це знаємо."
+                        }
+                }
         },
         {
-            id: 'da',
-            word: 'da',
-            category: 'magiske',
-            x: 9,
-            y: 45,
-            meaning: 'Selvfølgelighed & opmuntring',
-            sceneDesc: 'Manden slår ud med hånden og opmuntrer venligt: "Det kan du da sagtens!"',
-            sentence: 'Det kan du da sagtens!',
-            contextSentence: 'Vær ikke bange for opgaven – det kan du da sagtens klare!',
-            ruleHint: 'Fjerner tvivl og opmuntrer modtageren ("selvfølgelig, vær ikke genert!").'
+                "id": "da",
+                "word": "da",
+                "category": "magiske",
+                "x": 9,
+                "y": 45,
+                "meaning": "Selvfølgelighed & opmuntring",
+                "sceneDesc": "Manden slår ud med hånden og opmuntrer venligt: \"Det kan du da sagtens!\"",
+                "sentence": "Det kan du da sagtens!",
+                "contextSentence": "Vær ikke bange for opgaven – det kan du da sagtens klare!",
+                "ruleHint": "Fjerner tvivl og opmuntrer modtageren (\"selvfølgelig, vær ikke genert!\").",
+                "translations": {
+                        "en": {
+                                "word": "of course / surely (encouragement)",
+                                "sentence": "Don't fear the task – you can surely manage that!"
+                        },
+                        "de": {
+                                "word": "doch / natürlich / freilich",
+                                "sentence": "Hab keine Angst vor der Aufgabe – das schaffst du doch mit Leichtigkeit!"
+                        },
+                        "es": {
+                                "word": "por supuesto / claro que sí",
+                                "sentence": "No temas la tarea, ¡claro que puedes hacerlo!"
+                        },
+                        "ar": {
+                                "word": "بالتأكيد / بكل سرور",
+                                "sentence": "لا تخف من المهمة، يمكنك بالتأكيد القيام بذلك بسهولة!"
+                        },
+                        "tr": {
+                                "word": "elbette / tabii ki",
+                                "sentence": "Görevden korkma, bunu kesinlikle kolayca yapabilirsin!"
+                        },
+                        "uk": {
+                                "word": "звісно / авжеж",
+                                "sentence": "Не бійся завдання – ти ж звісно впораєшся!"
+                        }
+                }
         },
         {
-            id: 'nok',
-            word: 'nok',
-            category: 'magiske',
-            x: 26,
-            y: 48,
-            meaning: 'Eget logisk gæt & trøst',
-            sceneDesc: 'Manden med kaffen smiler beroligende: "Det skal nok gå fint."',
-            sentence: 'Det skal nok gå.',
-            contextSentence: 'Tag det roligt foran præsentationen, det skal nok gå fint.',
-            ruleHint: 'Udtrykker talerens eget logiske gæt eller en varm beroligelse.'
+                "id": "nok",
+                "word": "nok",
+                "category": "magiske",
+                "x": 26,
+                "y": 48,
+                "meaning": "Eget logisk gæt & trøst",
+                "sceneDesc": "Manden med kaffen smiler beroligende: \"Det skal nok gå fint.\"",
+                "sentence": "Det skal nok gå.",
+                "contextSentence": "Tag det roligt foran præsentationen, det skal nok gå fint.",
+                "ruleHint": "Udtrykker talerens eget logiske gæt eller en varm beroligelse.",
+                "translations": {
+                        "en": {
+                                "word": "probably / it will be fine",
+                                "sentence": "Take it easy before the presentation, it will all go fine."
+                        },
+                        "de": {
+                                "word": "wohl / schon (Beruhigung)",
+                                "sentence": "Bleib ruhig vor der Präsentation, es wird schon gut gehen."
+                        },
+                        "es": {
+                                "word": "seguramente / todo irá bien",
+                                "sentence": "Tranquilo antes de la presentación, seguro que todo saldrá bien."
+                        },
+                        "ar": {
+                                "word": "على الأرجح / سيكون كل شيء بخير",
+                                "sentence": "اهدأ قبل العرض، سوف تسير الأمور على ما يرام."
+                        },
+                        "tr": {
+                                "word": "büyük ihtimalle / hallolur",
+                                "sentence": "Sunumdan önce sakin ol, her şey yoluna girecektir."
+                        },
+                        "uk": {
+                                "word": "напевно / все буде гаразд",
+                                "sentence": "Заспокойся перед презентацією, все напевно буде добре."
+                        }
+                }
         },
         {
-            id: 'bare',
-            word: 'bare',
-            category: 'stemning',
-            x: 6,
-            y: 79,
-            meaning: 'Høflig tilladelse / opmuntring',
-            sceneDesc: 'Kvinden byder venligt: "Tag bare den sidste kanelsnegl!"',
-            sentence: 'Tag bare en stol.',
-            contextSentence: 'Der er masser af plads ved bordet, så tag bare en stol.',
-            ruleHint: 'Giver grønt lys og fjerner tøven ("du gør det bare uden bekymring").'
+                "id": "bare",
+                "word": "bare",
+                "category": "stemning",
+                "x": 6,
+                "y": 79,
+                "meaning": "Høflig tilladelse / opmuntring",
+                "sceneDesc": "Kvinden byder venligt: \"Tag bare den sidste kanelsnegl!\"",
+                "sentence": "Tag bare en stol.",
+                "contextSentence": "Der er masser af plads ved bordet, så tag bare en stol.",
+                "ruleHint": "Giver grønt lys og fjerner tøven (\"du gør det bare uden bekymring\").",
+                "translations": {
+                        "en": {
+                                "word": "just / feel free (permission)",
+                                "sentence": "There is plenty of room at the table, so just take a chair."
+                        },
+                        "de": {
+                                "word": "nur / ruhig (Erlaubnis)",
+                                "sentence": "Es gibt viel Platz am Tisch, nimm dir ruhig einen Stuhl."
+                        },
+                        "es": {
+                                "word": "solo / con confianza",
+                                "sentence": "Hay mucho espacio en la mesa, toma una silla con confianza."
+                        },
+                        "ar": {
+                                "word": "فقط / تفضل براحتك",
+                                "sentence": "يوجد متسع على الطاولة، تفضل وخذ كرسيًا بكل بساطة."
+                        },
+                        "tr": {
+                                "word": "sadece / rahatça al",
+                                "sentence": "Masada bolca yer var, rahatça bir sandalye al."
+                        },
+                        "uk": {
+                                "word": "просто / вільно",
+                                "sentence": "За столом багато місця, просто візьми стілець."
+                        }
+                }
         },
         {
-            id: 'lige',
-            word: 'lige',
-            category: 'stemning',
-            x: 17,
-            y: 80,
-            meaning: 'Høflighedsdæmper / hurtig handling',
-            sceneDesc: 'Manden rækker ud og spørger: "Må jeg lige låne servietterne?"',
-            sentence: 'Må jeg lige låne den?',
-            contextSentence: 'Undskyld forstyrrelsen, må jeg lige låne din saks et øjeblik?',
-            ruleHint: 'Gør en anmodning blød, høflig og uformel på ægte dansk.'
+                "id": "lige",
+                "word": "lige",
+                "category": "stemning",
+                "x": 17,
+                "y": 80,
+                "meaning": "Høflighedsdæmper / hurtig handling",
+                "sceneDesc": "Manden rækker ud og spørger: \"Må jeg lige låne servietterne?\"",
+                "sentence": "Må jeg lige låne den?",
+                "contextSentence": "Undskyld forstyrrelsen, må jeg lige låne din saks et øjeblik?",
+                "ruleHint": "Gør en anmodning blød, høflig og uformel på ægte dansk.",
+                "translations": {
+                        "en": {
+                                "word": "just / for a moment (polite softener)",
+                                "sentence": "Excuse the interruption, may I just borrow your scissors for a moment?"
+                        },
+                        "de": {
+                                "word": "mal / kurz (Höflichkeitsformel)",
+                                "sentence": "Entschuldige die Störung, darf ich mir mal kurz deine Schere leihen?"
+                        },
+                        "es": {
+                                "word": "un momento / solo",
+                                "sentence": "Disculpa la molestia, ¿me prestas tus tijeras un segundo?"
+                        },
+                        "ar": {
+                                "word": "لحظة / لو سمحت",
+                                "sentence": "عذرًا على الإزعاج، هل يمكنني استعارة مقصك للحظة؟"
+                        },
+                        "tr": {
+                                "word": "hemen / bir saniye",
+                                "sentence": "Kusura bakmayın, makasınızı bir saniyeliğine ödünç alabilir miyim?"
+                        },
+                        "uk": {
+                                "word": "на хвилинку / просто",
+                                "sentence": "Вибачте, що турбую, можна я позичу ваші ножиці на хвилинку?"
+                        }
+                }
         },
         {
-            id: 'mon',
-            word: 'mon',
-            category: 'talesprog',
-            x: 62,
-            y: 26,
-            meaning: 'Undren / retorisk spørgsmål',
-            sceneDesc: 'Kollegaen kigger nysgerrigt på kaffemaskinen: "Mon der er mere kaffe?"',
-            sentence: 'Mon det regner i morgen?',
-            contextSentence: 'Himlen ser lidt grå ud. Mon det regner i morgen?',
-            ruleHint: 'Stiller et åbent, tænksomt spørgsmål ("gad vide om...?").'
+                "id": "mon",
+                "word": "mon",
+                "category": "talesprog",
+                "x": 62,
+                "y": 26,
+                "meaning": "Undren / retorisk spørgsmål",
+                "sceneDesc": "Kollegaen kigger nysgerrigt på kaffemaskinen: \"Mon der er mere kaffe?\"",
+                "sentence": "Mon det regner i morgen?",
+                "contextSentence": "Himlen ser lidt grå ud. Mon det regner i morgen?",
+                "ruleHint": "Stiller et åbent, tænksomt spørgsmål (\"gad vide om...?\").",
+                "translations": {
+                        "en": {
+                                "word": "I wonder if / could it be",
+                                "sentence": "The sky looks a bit grey. I wonder if it will rain tomorrow?"
+                        },
+                        "de": {
+                                "word": "wohl / ob wohl",
+                                "sentence": "Der Himmel sieht grau aus. Ob es morgen wohl regnet?"
+                        },
+                        "es": {
+                                "word": "¿será que...?",
+                                "sentence": "El cielo se ve gris. ¿Será que llueve mañana?"
+                        },
+                        "ar": {
+                                "word": "يا ترى هل...",
+                                "sentence": "السماء تبدو رمادية، يا ترى هل ستمطر غدًا؟"
+                        },
+                        "tr": {
+                                "word": "acaba",
+                                "sentence": "Gökyüzü biraz gri görünüyor. Acaba yarın yağmur yağar mı?"
+                        },
+                        "uk": {
+                                "word": "цікаво, чи...",
+                                "sentence": "Небо трохи сіре. Цікаво, чи піде завтра дощ?"
+                        }
+                }
         },
         {
-            id: 'skam',
-            word: 'skam',
-            category: 'stemning',
-            x: 76,
-            y: 26,
-            meaning: 'Høflig understregning / beroligelse',
-            sceneDesc: 'Manden rækker en kop frem og smiler: "Det er skam friskbrygget kaffe."',
-            sentence: 'Det gør skam ingenting.',
-            contextSentence: 'Du skal ikke sige undskyld, det gør skam ingenting.',
-            ruleHint: 'Høflig, pæn bekræftelse der beroliger modtageren.'
+                "id": "skam",
+                "word": "skam",
+                "category": "stemning",
+                "x": 76,
+                "y": 26,
+                "meaning": "Høflig understregning / beroligelse",
+                "sceneDesc": "Manden rækker en kop frem og smiler: \"Det er skam friskbrygget kaffe.\"",
+                "sentence": "Det gør skam ingenting.",
+                "contextSentence": "Du skal ikke sige undskyld, det gør skam ingenting.",
+                "ruleHint": "Høflig, pæn bekræftelse der beroliger modtageren.",
+                "translations": {
+                        "en": {
+                                "word": "really / indeed (polite reassurance)",
+                                "sentence": "You don't need to apologize, it really doesn't matter at all."
+                        },
+                        "de": {
+                                "word": "durchaus / wirklich (höflich)",
+                                "sentence": "Du brauchst dich nicht entschuldigen, das macht wirklich gar nichts."
+                        },
+                        "es": {
+                                "word": "de verdad / ciertamente",
+                                "sentence": "No tienes que disculparte, de verdad que no pasa nada."
+                        },
+                        "ar": {
+                                "word": "حقًا / بكل تأكيد (بأدب)",
+                                "sentence": "لا داعي للاعتذار، فالأمر لا بأس به حقًا."
+                        },
+                        "tr": {
+                                "word": "gerçekten / kesinlikle",
+                                "sentence": "Özür dilemene gerek yok, gerçekten hiç sorun değil."
+                        },
+                        "uk": {
+                                "word": "справді / дійсно",
+                                "sentence": "Не варто вибачатися, це справді нічого страшного."
+                        }
+                }
         },
         {
-            id: 'vist',
-            word: 'vist',
-            category: 'magiske',
-            x: 53,
-            y: 25,
-            meaning: 'Ekstern kilde / rygte / usikker erindring',
-            sceneDesc: 'Kollegaen deler et rygte: "Chefens møde er vist aflyst i dag."',
-            sentence: 'Han kommer vist for sent.',
-            contextSentence: 'Jeg hørte nogen nævne, at bussen vist er forsinket.',
-            ruleHint: 'Viser at du har hørt det udefra eller ikke vil lægge hovedet på blokken.'
+                "id": "vist",
+                "word": "vist",
+                "category": "magiske",
+                "x": 53,
+                "y": 25,
+                "meaning": "Ekstern kilde / rygte / usikker erindring",
+                "sceneDesc": "Kollegaen deler et rygte: \"Chefens møde er vist aflyst i dag.\"",
+                "sentence": "Han kommer vist for sent.",
+                "contextSentence": "Jeg hørte nogen nævne, at bussen vist er forsinket.",
+                "ruleHint": "Viser at du har hørt det udefra eller ikke vil lægge hovedet på blokken.",
+                "translations": {
+                        "en": {
+                                "word": "apparently / I hear (external rumor)",
+                                "sentence": "I heard someone mention that the bus is delayed, apparently."
+                        },
+                        "de": {
+                                "word": "wohl / angeblich",
+                                "sentence": "Ich habe gehört, dass der Bus wohl Verspätung hat."
+                        },
+                        "es": {
+                                "word": "al parecer / según parece",
+                                "sentence": "Escuché a alguien mencionar que el autobús al parecer viene retrasado."
+                        },
+                        "ar": {
+                                "word": "يبدو أن / على ما يبدو",
+                                "sentence": "سمعت أحدهم يذكر أن الحافلة متأخرة على ما يبدو."
+                        },
+                        "tr": {
+                                "word": "görünüşe göre / sanırım",
+                                "sentence": "Birinin otobüsün görünüşe göre geciktiğini söylediğini duydum."
+                        },
+                        "uk": {
+                                "word": "мабуть / здається (за чутками)",
+                                "sentence": "Я чув, як хтось сказав, що автобус, здається, запізнюється."
+                        }
+                }
         },
         {
-            id: 'sgu',
-            word: 'sgu',
-            category: 'talesprog',
-            x: 48,
-            y: 26,
-            meaning: 'Uformel emphase i talesprog',
-            sceneDesc: 'Kollegaen ler overrasket og udbryder: "Det var sgu en god idé!"',
-            sentence: 'Det passer sgu!',
-            contextSentence: 'Jeg troede ikke på det først, men det passer sgu.',
-            ruleHint: 'Meget udbredt uformelt hverdagsord, der giver sætningen saft og kraft.'
+                "id": "sgu",
+                "word": "sgu",
+                "category": "talesprog",
+                "x": 48,
+                "y": 26,
+                "meaning": "Uformel emphase i talesprog",
+                "sceneDesc": "Kollegaen ler overrasket og udbryder: \"Det var sgu en god idé!\"",
+                "sentence": "Det passer sgu!",
+                "contextSentence": "Jeg troede ikke på det først, men det passer sgu.",
+                "ruleHint": "Meget udbredt uformelt hverdagsord, der giver sætningen saft og kraft.",
+                "translations": {
+                        "en": {
+                                "word": "damn well / truly (informal emphasis)",
+                                "sentence": "I didn't believe it at first, but it is damn well true."
+                        },
+                        "de": {
+                                "word": "verdammt noch mal / echt",
+                                "sentence": "Ich habe es erst nicht geglaubt, aber es stimmt echt."
+                        },
+                        "es": {
+                                "word": "vaya que sí / ciertamente",
+                                "sentence": "No lo creía al principio, pero vaya que es verdad."
+                        },
+                        "ar": {
+                                "word": "حقًا / بالتأكيد (عامية)",
+                                "sentence": "لم أصدق ذلك في البداية، لكنه صحيح حقًا."
+                        },
+                        "tr": {
+                                "word": "kesinlikle / valla",
+                                "sentence": "Önce inanmadım ama valla doğru."
+                        },
+                        "uk": {
+                                "word": "їй-богу / точно",
+                                "sentence": "Спочатку я не повірив, але це їй-богу правда."
+                        }
+                }
         },
         {
-            id: 'godt',
-            word: 'godt',
-            category: 'stemning',
-            x: 32,
-            y: 28,
-            meaning: 'Indrømmelse / accept',
-            sceneDesc: 'Manden i baggrunden nikker: "Jeg ved godt, det var en svær opgave."',
-            sentence: 'Jeg ved godt, det er svært.',
-            contextSentence: 'Selvom du er træt, ved jeg godt, at du gør dit bedste.',
-            ruleHint: 'Udtrykker forståelse, sympati eller indrømmelse.'
+                "id": "godt",
+                "word": "godt",
+                "category": "stemning",
+                "x": 32,
+                "y": 28,
+                "meaning": "Indrømmelse / accept",
+                "sceneDesc": "Manden i baggrunden nikker: \"Jeg ved godt, det var en svær opgave.\"",
+                "sentence": "Jeg ved godt, det er svært.",
+                "contextSentence": "Selvom du er træt, ved jeg godt, at du gør dit bedste.",
+                "ruleHint": "Udtrykker forståelse, sympati eller indrømmelse.",
+                "translations": {
+                        "en": {
+                                "word": "well / indeed (acknowledgment)",
+                                "sentence": "Even though you are tired, I know well that you do your best."
+                        },
+                        "de": {
+                                "word": "wohl / schon (Verständnis)",
+                                "sentence": "Obwohl du müde bist, weiß ich wohl, dass du dein Bestes gibst."
+                        },
+                        "es": {
+                                "word": "bien / ya sé",
+                                "sentence": "Aunque estés cansado, bien sé que haces lo mejor que puedes."
+                        },
+                        "ar": {
+                                "word": "تمامًا / أعلم جيدًا",
+                                "sentence": "على الرغم من أنك متعب، أعلم جيدًا أنك تبذل قصارى جهدك."
+                        },
+                        "tr": {
+                                "word": "gayet iyi / bilincindeyim",
+                                "sentence": "Yorgun olsan da elinden geleni yaptığını gayet iyi biliyorum."
+                        },
+                        "uk": {
+                                "word": "добре / чудово розумію",
+                                "sentence": "Хоч ти й втомився, я добре знаю, що ти стараєшся."
+                        }
+                }
         },
         {
-            id: 'ellers',
-            word: 'ellers',
-            category: 'valg',
-            x: 40,
-            y: 27,
-            meaning: 'I øvrigt / normalt / betingelse',
-            sceneDesc: 'Kollegaen spørger interesseret: "Hvordan går det ellers med projektet?"',
-            sentence: 'Hvordan går det ellers?',
-            contextSentence: 'Bortset fra det travle møde, hvordan går det ellers med arbejdet?',
-            ruleHint: 'Skifter samtaleemne venligt ("hvad med alt det andet?").'
+                "id": "ellers",
+                "word": "ellers",
+                "category": "valg",
+                "x": 40,
+                "y": 27,
+                "meaning": "I øvrigt / normalt / betingelse",
+                "sceneDesc": "Kollegaen spørger interesseret: \"Hvordan går det ellers med projektet?\"",
+                "sentence": "Hvordan går det ellers?",
+                "contextSentence": "Bortset fra det travle møde, hvordan går det ellers med arbejdet?",
+                "ruleHint": "Skifter samtaleemne venligt (\"hvad med alt det andet?\").",
+                "translations": {
+                        "en": {
+                                "word": "otherwise / by the way",
+                                "sentence": "Apart from the busy meeting, how is work going otherwise?"
+                        },
+                        "de": {
+                                "word": "sonst / übrigens",
+                                "sentence": "Abgesehen von dem stressigen Meeting, wie läuft die Arbeit sonst?"
+                        },
+                        "es": {
+                                "word": "por lo demás / en general",
+                                "sentence": "Aparte de la reunión ocupada, ¿cómo va el trabajo por lo demás?"
+                        },
+                        "ar": {
+                                "word": "على أي حال / بخلاف ذلك",
+                                "sentence": "بصرف النظر عن الاجتماع المزدحم، كيف يسير العمل بخلاف ذلك؟"
+                        },
+                        "tr": {
+                                "word": "bunun dışında / genel olarak",
+                                "sentence": "Yoğun toplantı dışında, genel olarak işler nasıl gidiyor?"
+                        },
+                        "uk": {
+                                "word": "інакше / взагалі",
+                                "sentence": "Крім напруженої зустрічі, як взагалі йде робота?"
+                        }
+                }
         },
         {
-            id: 'vel',
-            word: 'vel',
-            category: 'magiske',
-            x: 38,
-            y: 55,
-            meaning: 'Appel om bekræftelse / "ikke sandt?"',
-            sceneDesc: 'Kvinden med brillerne kigger spørgende: "Du har vel ikke glemt rapporten?"',
-            sentence: 'Du er vel ikke sur?',
-            contextSentence: 'Jeg kom lidt for sent, men du er vel ikke sur over det?',
-            ruleHint: 'Søger bekræftelse fra den anden person ("det er sådan, ikke sandt?").'
+                "id": "vel",
+                "word": "vel",
+                "category": "magiske",
+                "x": 38,
+                "y": 55,
+                "meaning": "Appel om bekræftelse / \"ikke sandt?\"",
+                "sceneDesc": "Kvinden med brillerne kigger spørgende: \"Du har vel ikke glemt rapporten?\"",
+                "sentence": "Du er vel ikke sur?",
+                "contextSentence": "Jeg kom lidt for sent, men du er vel ikke sur over det?",
+                "ruleHint": "Søger bekræftelse fra den anden person (\"det er sådan, ikke sandt?\").",
+                "translations": {
+                        "en": {
+                                "word": "presumably / right? (seeking confirmation)",
+                                "sentence": "I was a bit late, but you aren't angry about that, are you?"
+                        },
+                        "de": {
+                                "word": "wohl / doch (Bestätigung)",
+                                "sentence": "Ich kam etwas zu spät, aber du bist wohl nicht sauer deswegen, oder?"
+                        },
+                        "es": {
+                                "word": "¿verdad? / supongo que...",
+                                "sentence": "Llegué un poco tarde, pero no estás enfadado por eso, ¿verdad?"
+                        },
+                        "ar": {
+                                "word": "أليس كذلك؟ / لعلك...",
+                                "sentence": "تأخرت قليلًا، لكنك لست غاضبًا من ذلك، أليس كذلك؟"
+                        },
+                        "tr": {
+                                "word": "herhalde / değil mi?",
+                                "sentence": "Biraz geç kaldım ama buna kızgın değilsin, değil mi?"
+                        },
+                        "uk": {
+                                "word": "мабуть / чи не так?",
+                                "sentence": "Я трохи запізнився, але ти ж не сердишся через це, правда?"
+                        }
+                }
         },
         {
-            id: 'nu',
-            word: 'nu',
-            category: 'talesprog',
-            x: 48,
-            y: 52,
-            meaning: 'Dæmpende samtale-markør',
-            sceneDesc: 'Manden gestikulerer roligt: "Hør nu lige her, det var sådan det skete."',
-            sentence: 'Hør nu her.',
-            contextSentence: 'Inden du bliver urolig, så hør nu lige hvad der skete.',
-            ruleHint: 'Fanger opmærksomheden eller dæmper en diskussion i hverdagen.'
+                "id": "nu",
+                "word": "nu",
+                "category": "talesprog",
+                "x": 48,
+                "y": 52,
+                "meaning": "Dæmpende samtale-markør",
+                "sceneDesc": "Manden gestikulerer roligt: \"Hør nu lige her, det var sådan det skete.\"",
+                "sentence": "Hør nu her.",
+                "contextSentence": "Inden du bliver urolig, så hør nu lige hvad der skete.",
+                "ruleHint": "Fanger opmærksomheden eller dæmper en diskussion i hverdagen.",
+                "translations": {
+                        "en": {
+                                "word": "now / listen here (conversation marker)",
+                                "sentence": "Before you get anxious, just listen now to what happened."
+                        },
+                        "de": {
+                                "word": "nun / mal (Gesprächsmarker)",
+                                "sentence": "Bevor du dich aufregst, hör jetzt mal zu, was passiert ist."
+                        },
+                        "es": {
+                                "word": "ahora / oye bien",
+                                "sentence": "Antes de que te preocupes, escucha ahora lo que sucedió."
+                        },
+                        "ar": {
+                                "word": "الآن / استمع هنا",
+                                "sentence": "قبل أن تقلق، استمع إليّ الآن لما حدث."
+                        },
+                        "tr": {
+                                "word": "şimdi / dinle bak",
+                                "sentence": "Endişelenmeden önce, ne olduğunu şimdi dinle."
+                        },
+                        "uk": {
+                                "word": "ну ж бо / послухай",
+                                "sentence": "Перш ніж хвилюватися, послухай-но зараз, що сталося."
+                        }
+                }
         },
         {
-            id: 'heller',
-            word: 'heller',
-            category: 'valg',
-            x: 59,
-            y: 48,
-            meaning: 'Negativ enighed ("heller ikke")',
-            sceneDesc: 'Kollegaen hvisker samstemmende: "Jeg forstår det heller ikke helt."',
-            sentence: 'Jeg ved det heller ikke.',
-            contextSentence: 'Du spurgte om retningen, men jeg ved det heller ikke.',
-            ruleHint: 'Bruges altid med nægtelse ("heller ikke") for at vise fælles enighed.'
+                "id": "heller",
+                "word": "heller",
+                "category": "valg",
+                "x": 59,
+                "y": 48,
+                "meaning": "Negativ enighed (\"heller ikke\")",
+                "sceneDesc": "Kollegaen hvisker samstemmende: \"Jeg forstår det heller ikke helt.\"",
+                "sentence": "Jeg ved det heller ikke.",
+                "contextSentence": "Du spurgte om retningen, men jeg ved det heller ikke.",
+                "ruleHint": "Bruges altid med nægtelse (\"heller ikke\") for at vise fælles enighed.",
+                "translations": {
+                        "en": {
+                                "word": "neither / either (negative agreement)",
+                                "sentence": "You asked about the direction, but I don't know either."
+                        },
+                        "de": {
+                                "word": "auch nicht (Verneinung)",
+                                "sentence": "Du hast nach der Richtung gefragt, aber ich weiß es auch nicht."
+                        },
+                        "es": {
+                                "word": "tampoco",
+                                "sentence": "Preguntaste por la dirección, pero yo tampoco lo sé."
+                        },
+                        "ar": {
+                                "word": "ولا أنا / أيضًا لا",
+                                "sentence": "سألت عن الاتجاه، لكني لا أعلم ذلك أيضًا."
+                        },
+                        "tr": {
+                                "word": "de ... değil / ben de",
+                                "sentence": "Yönü sordun ama ben de bilmiyorum."
+                        },
+                        "uk": {
+                                "word": "теж не / також не",
+                                "sentence": "Ти запитав про дорогу, але я теж не знаю."
+                        }
+                }
         },
         {
-            id: 'engang',
-            word: 'engang',
-            category: 'valg',
-            x: 66,
-            y: 49,
-            meaning: 'Forstærket benægtelse ("ikke engang")',
-            sceneDesc: 'Kollegaen med orange hår spærrer øjnene op: "Ikke engang chefen vidste det!"',
-            sentence: 'Ikke engang min bror vidste det.',
-            contextSentence: 'Nyheden var så hemmelig, at ikke engang lederen vidste det.',
-            ruleHint: 'Understreger det uventede i en benægtelse (svarer til "not even").'
+                "id": "engang",
+                "word": "engang",
+                "category": "valg",
+                "x": 66,
+                "y": 49,
+                "meaning": "Forstærket benægtelse (\"ikke engang\")",
+                "sceneDesc": "Kollegaen med orange hår spærrer øjnene op: \"Ikke engang chefen vidste det!\"",
+                "sentence": "Ikke engang min bror vidste det.",
+                "contextSentence": "Nyheden var så hemmelig, at ikke engang lederen vidste det.",
+                "ruleHint": "Understreger det uventede i en benægtelse (svarer til \"not even\").",
+                "translations": {
+                        "en": {
+                                "word": "even (not even)",
+                                "sentence": "The news was so secret that not even the manager knew it."
+                        },
+                        "de": {
+                                "word": "einmal (nicht einmal)",
+                                "sentence": "Die Nachricht war so geheim, dass nicht einmal der Chef es wusste."
+                        },
+                        "es": {
+                                "word": "ni siquiera",
+                                "sentence": "La noticia era tan secreta que ni siquiera el jefe lo sabía."
+                        },
+                        "ar": {
+                                "word": "حتى (ولا حتى)",
+                                "sentence": "كان الخبر سريًا لدرجة أن المدير نفسه لم يكن يعلم به."
+                        },
+                        "tr": {
+                                "word": "bile (bile değil)",
+                                "sentence": "Haber o kadar gizliydi ki müdür bile bilmiyordu."
+                        },
+                        "uk": {
+                                "word": "навіть (навіть не)",
+                                "sentence": "Новина була настільки таємною, що навіть керівник не знав."
+                        }
+                }
         },
         {
-            id: 'endda',
-            word: 'endda',
-            category: 'talesprog',
-            x: 61,
-            y: 68,
-            meaning: 'Overraskende tilføjelse / tilmed',
-            sceneDesc: 'Manden i den grønne trøje nikker anerkendende: "Han kom endda før tid!"',
-            sentence: 'Han kom endda til tiden.',
-            contextSentence: 'Toget var forsinket, men han nåede frem og kom endda før tid.',
-            ruleHint: 'Tilføjer en positiv eller overraskende bonus (svarer til "tilmed / even").'
+                "id": "endda",
+                "word": "endda",
+                "category": "talesprog",
+                "x": 61,
+                "y": 68,
+                "meaning": "Overraskende tilføjelse / tilmed",
+                "sceneDesc": "Manden i den grønne trøje nikker anerkendende: \"Han kom endda før tid!\"",
+                "sentence": "Han kom endda til tiden.",
+                "contextSentence": "Toget var forsinket, men han nåede frem og kom endda før tid.",
+                "ruleHint": "Tilføjer en positiv eller overraskende bonus (svarer til \"tilmed / even\").",
+                "translations": {
+                        "en": {
+                                "word": "even / furthermore",
+                                "sentence": "The train was delayed, but he made it and even arrived ahead of time."
+                        },
+                        "de": {
+                                "word": "sogar / obendrein",
+                                "sentence": "Der Zug hatte Verspätung, aber er schaffte es und kam sogar vor der Zeit an."
+                        },
+                        "es": {
+                                "word": "incluso / además",
+                                "sentence": "El tren se retrasó, pero llegó e incluso antes de tiempo."
+                        },
+                        "ar": {
+                                "word": "حتى / علاوة على ذلك",
+                                "sentence": "تأخر القطار، لكنه وصل بل وجاء قبل الموعد."
+                        },
+                        "tr": {
+                                "word": "hatta / üstelik",
+                                "sentence": "Tren gecikti ama o başardı ve hatta vaktinden önce geldi."
+                        },
+                        "uk": {
+                                "word": "навіть / до того ж",
+                                "sentence": "Потяг затримався, але він встиг і навіть прибув раніше часу."
+                        }
+                }
         },
         {
-            id: 'hellere',
-            word: 'hellere',
-            category: 'valg',
-            x: 77,
-            y: 64,
-            meaning: 'Præference ("vil hellere")',
-            sceneDesc: 'Manden tænker højt: "Jeg vil hellere tage cyklen i dag end bussen."',
-            sentence: 'Jeg vil hellere have kaffe.',
-            contextSentence: 'Mange tak for tilbuddet om te, men jeg vil hellere have kaffe.',
-            ruleHint: 'Udtrykker et personligt valg mellem to muligheder (komparativ).'
+                "id": "hellere",
+                "word": "hellere",
+                "category": "valg",
+                "x": 77,
+                "y": 64,
+                "meaning": "Præference (\"vil hellere\")",
+                "sceneDesc": "Manden tænker højt: \"Jeg vil hellere tage cyklen i dag end bussen.\"",
+                "sentence": "Jeg vil hellere have kaffe.",
+                "contextSentence": "Mange tak for tilbuddet om te, men jeg vil hellere have kaffe.",
+                "ruleHint": "Udtrykker et personligt valg mellem to muligheder (komparativ).",
+                "translations": {
+                        "en": {
+                                "word": "rather / prefer",
+                                "sentence": "Many thanks for the offer of tea, but I would rather have coffee."
+                        },
+                        "de": {
+                                "word": "lieber",
+                                "sentence": "Vielen Dank für den Tee, aber ich möchte lieber Kaffee."
+                        },
+                        "es": {
+                                "word": "más bien / preferir",
+                                "sentence": "Muchas gracias por ofrecer té, pero prefiero café."
+                        },
+                        "ar": {
+                                "word": "أفضل بالأحرى",
+                                "sentence": "شكرًا جزيلاً على تقديم الشاي، لكني أفضل القهوة بالأحرى."
+                        },
+                        "tr": {
+                                "word": "tercihen / daha ziyade",
+                                "sentence": "Çay teklifi için çok teşekkürler ama kahveyi tercih ederim."
+                        },
+                        "uk": {
+                                "word": "краще / скоріше",
+                                "sentence": "Дуже дякую за пропозицію чаю, але я краще вип'ю кави."
+                        }
+                }
         },
         {
-            id: 'helst',
-            word: 'helst',
-            category: 'valg',
-            x: 90,
-            y: 64,
-            meaning: 'Stærkeste præference ("vil helst")',
-            sceneDesc: 'Kvinden med tommelfingeren op smiler: "Jeg vil helst sidde ved vinduet."',
-            sentence: 'Jeg vil helst blive hjemme.',
-            contextSentence: 'Vejret er koldt og blæsende, så jeg vil helst blive hjemme i dag.',
-            ruleHint: 'Superlativ af præference: Den absolut bedste løsning for taleren.'
+                "id": "helst",
+                "word": "helst",
+                "category": "valg",
+                "x": 90,
+                "y": 64,
+                "meaning": "Stærkeste præference (\"vil helst\")",
+                "sceneDesc": "Kvinden med tommelfingeren op smiler: \"Jeg vil helst sidde ved vinduet.\"",
+                "sentence": "Jeg vil helst blive hjemme.",
+                "contextSentence": "Vejret er koldt og blæsende, så jeg vil helst blive hjemme i dag.",
+                "ruleHint": "Superlativ af præference: Den absolut bedste løsning for taleren.",
+                "translations": {
+                        "en": {
+                                "word": "prefer most / preferably",
+                                "sentence": "The weather is cold and windy, so I would preferably stay home today."
+                        },
+                        "de": {
+                                "word": "am liebsten",
+                                "sentence": "Das Wetter ist kalt und stürmisch, daher möchte ich heute am liebsten zu Hause bleiben."
+                        },
+                        "es": {
+                                "word": "de preferencia / lo que más prefiero",
+                                "sentence": "El tiempo está frío y ventoso, así que preferiría quedarme en casa hoy."
+                        },
+                        "ar": {
+                                "word": "الأفضل على الإطلاق",
+                                "sentence": "الطقس بارد وعاصف، لذا فإنني أفضل البقاء في المنزل اليوم."
+                        },
+                        "tr": {
+                                "word": "en çok / en iyisi",
+                                "sentence": "Hava soğuk ve rüzgarlı, bu yüzden bugün en çok evde kalmak isterim."
+                        },
+                        "uk": {
+                                "word": "найбільше / найохочіше",
+                                "sentence": "Погода холодна та вітряна, тому я найохочіше залишився б удома."
+                        }
+                }
         }
-    ];
+];
+
+    // Helper for translation
+    function getSmaaordTranslation(item) {
+        const lang = getLang();
+        if (item.translations && item.translations[lang]) {
+            return item.translations[lang];
+        }
+        if (item.translations && item.translations['en']) {
+            return item.translations['en'];
+        }
+        return { word: item.meaning, sentence: '' };
+    }
 
     // Styles
     const style = document.createElement('style');
@@ -528,6 +1008,192 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             border: 1px solid rgba(34, 211, 238, 0.4);
             pointer-events: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+
+
+        /* Inspector Card (Target Word Presentation below stage) */
+        .vrimmel-inspector {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.15);
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 2rem;
+            margin-top: 1.8rem;
+            animation: fadeIn 0.3s ease;
+        }
+        @media (max-width: 850px) {
+            .vrimmel-inspector {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        .inspector-left,
+        .inspector-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+        .inspector-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .inspector-badge-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .inspector-badge {
+            background: rgba(6, 182, 212, 0.2);
+            border: 1px solid #22d3ee;
+            color: #22d3ee;
+            padding: 0.35rem 0.85rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+        .inspector-word-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: white;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .inspector-audio-btn {
+            background: #334155;
+            color: #cbd5e1;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+        .inspector-audio-btn:hover {
+            background: #0891b2;
+            color: white;
+            transform: scale(1.1);
+        }
+        .inspector-trans-box {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(15, 23, 42, 0.85));
+            border: 1.5px solid #06b6d4;
+            border-radius: 14px;
+            padding: 0.9rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+        }
+        .trans-badge-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #22d3ee;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .trans-word-val {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+        .inspector-scene-box {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .scene-heading {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+        .scene-text {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .inspector-sentence-card {
+            background: rgba(6, 182, 212, 0.12);
+            border: 1.5px solid rgba(6, 182, 212, 0.35);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+        }
+        .sentence-quote-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.4;
+            margin: 0 0 0.4rem 0;
+        }
+        .sentence-trans-text {
+            font-size: 0.98rem;
+            color: #cbd5e1;
+            font-style: italic;
+            margin: 0 0 0.8rem 0;
+            line-height: 1.4;
+        }
+        .inspector-speak-btn {
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .inspector-speak-btn:hover {
+            background: #06b6d4;
+            transform: translateY(-2px);
+        }
+        .inspector-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: auto;
+        }
+        .inspector-btn-action {
+            flex: 1;
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .inspector-btn-action:hover {
+            background: #475569;
         }
 
         /* Tab 2: Aha-værkstedet */
@@ -1112,6 +1778,10 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     function renderTabVrimmel(parent) {
         parent.innerHTML = '';
 
+        if (!selectedWord) {
+            selectedWord = ADVERBIER_SMAAORD_DATA[0];
+        }
+
         const layout = document.createElement('div');
         layout.className = 'vrimmel-layout';
 
@@ -1187,8 +1857,7 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
                 e.stopPropagation();
                 selectedWord = item;
                 speakDanish(item.sentence);
-                stage.querySelectorAll('.hotspot-pin').forEach(p => p.classList.remove('active'));
-                pin.classList.add('active');
+                renderTabVrimmel(parent);
             };
 
             stage.appendChild(pin);
@@ -1196,7 +1865,97 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
 
         stageCard.appendChild(stage);
         layout.appendChild(stageCard);
+
+        // Målords præsentation boks under vrimlebilledet
+        const inspector = document.createElement('div');
+        inspector.className = 'vrimmel-inspector';
+        inspector.id = 'smaaord-inspector-box';
+
+        const trans = getSmaaordTranslation(selectedWord);
+        const currentLang = getLang();
+        const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
+
+        const catNames = {
+            'magiske': 'De 5 Magiske Småord ⭐',
+            'stemning': 'Høflighed & Opmuntring',
+            'talesprog': 'Talesprog & Emphase',
+            'valg': 'Enighed & Præference'
+        };
+
+        inspector.innerHTML = `
+            <div class="inspector-left">
+                <div class="inspector-header">
+                    <div class="inspector-badge-row">
+                        <span class="inspector-badge">${catNames[selectedWord.category] || 'Samtalesmåord'}</span>
+                    </div>
+                    <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                </div>
+
+                <h2 class="inspector-word-title">
+                    <span>💬</span> ${selectedWord.word}
+                </h2>
+
+                <div class="inspector-trans-box">
+                    <div class="trans-badge-label">
+                        <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                    </div>
+                    <div class="trans-word-val">"${trans.word}"</div>
+                </div>
+
+                <div class="inspector-scene-box">
+                    <div class="scene-heading">📍 I frokoststuen</div>
+                    <p class="scene-text">${selectedWord.sceneDesc}</p>
+                </div>
+            </div>
+
+            <div class="inspector-right">
+                <div class="inspector-sentence-card">
+                    <div class="scene-heading" style="color: #22d3ee;">💬 Eksempelsætning</div>
+                    <p class="sentence-quote-text">"${selectedWord.contextSentence}"</p>
+                    ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
+                    <button class="inspector-speak-btn" id="inspector-action-speak">
+                        <span>🗣️</span> Hør sætning
+                    </button>
+                </div>
+
+                <div class="inspector-scene-box" style="border-left: 4px solid #06b6d4;">
+                    <div class="scene-heading" style="color: #22d3ee;">💡 Didaktisk samtale-regel</div>
+                    <p class="scene-text">${selectedWord.ruleHint}</p>
+                </div>
+
+                <div class="inspector-actions">
+                    <button class="inspector-btn-action" id="inspector-action-prev">
+                        ← Forrige ord
+                    </button>
+                    <button class="inspector-btn-action" style="background: #0891b2;" id="inspector-action-next">
+                        Næste ord ➔
+                    </button>
+                </div>
+            </div>
+        `;
+
+        layout.appendChild(inspector);
         parent.appendChild(layout);
+
+        // Bind events
+        inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(selectedWord.word);
+        inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(selectedWord.contextSentence);
+
+        inspector.querySelector('#inspector-action-prev').onclick = () => {
+            const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === selectedWord.id);
+            const prevIdx = (currentIdx - 1 + ADVERBIER_SMAAORD_DATA.length) % ADVERBIER_SMAAORD_DATA.length;
+            selectedWord = ADVERBIER_SMAAORD_DATA[prevIdx];
+            speakDanish(selectedWord.sentence);
+            renderTabVrimmel(parent);
+        };
+
+        inspector.querySelector('#inspector-action-next').onclick = () => {
+            const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === selectedWord.id);
+            const nextIdx = (currentIdx + 1) % ADVERBIER_SMAAORD_DATA.length;
+            selectedWord = ADVERBIER_SMAAORD_DATA[nextIdx];
+            speakDanish(selectedWord.sentence);
+            renderTabVrimmel(parent);
+        };
     }
 
     // ==========================================

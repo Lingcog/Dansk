@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 /**
  * AdverbierGradView - Felt 4: Grad & Intensitet (Hvor meget? Hvor kraftigt?)
@@ -62,286 +62,818 @@ export function renderAdverbierGradView(container, navigateFn) {
     // 20 Words Data for Felt 4 (Grad & Intensitet)
     const ADVERBIER_GRAD_DATA = [
         {
-            id: 'slet_ikke',
-            word: 'slet ikke',
-            tier: '0%',
-            category: 'nul',
-            x: 64,
-            y: 83,
-            sceneDesc: 'Drengen i den tynde trøje smiler og fryser slet ikke i det milde vejr.',
-            meaning: '0% / overhovedet intet',
-            sentence: 'Han fryser slet ikke.',
-            contextSentence: 'Det er lunt udenfor, så han fryser slet ikke.',
-            ruleHint: '"Slet ikke" forstærker benægtelsen 100% (absolut 0%).',
-            levelPercent: 0
+                "id": "slet_ikke",
+                "word": "slet ikke",
+                "tier": "0%",
+                "category": "nul",
+                "x": 64,
+                "y": 83,
+                "sceneDesc": "Drengen i den tynde trøje smiler og fryser slet ikke i det milde vejr.",
+                "meaning": "0% / overhovedet intet",
+                "sentence": "Han fryser slet ikke.",
+                "contextSentence": "Det er lunt udenfor, så han fryser slet ikke.",
+                "ruleHint": "\"Slet ikke\" forstærker benægtelsen 100% (absolut 0%).",
+                "levelPercent": 0,
+                "translations": {
+                        "en": {
+                                "word": "not at all",
+                                "sentence": "It is mild outside, so he is not cold at all."
+                        },
+                        "de": {
+                                "word": "gar nicht",
+                                "sentence": "Draußen ist es mild, also friert er gar nicht."
+                        },
+                        "es": {
+                                "word": "para nada / en absoluto",
+                                "sentence": "Hace buen tiempo afuera, así que no tiene frío para nada."
+                        },
+                        "ar": {
+                                "word": "على الإطلاق",
+                                "sentence": "الجو معتدل في الخارج، لذا فهو لا يشعر بالبرد على الإطلاق."
+                        },
+                        "tr": {
+                                "word": "hiç",
+                                "sentence": "Dışarısı ılık, bu yüzden hiç üşümüyor."
+                        },
+                        "uk": {
+                                "word": "зовсім ні",
+                                "sentence": "Надворі тепло, тому він зовсім не мерзне."
+                        }
+                }
         },
         {
-            id: 'overhovedet_ikke',
-            word: 'overhovedet ikke',
-            tier: '0%',
-            category: 'nul',
-            x: 29,
-            y: 57,
-            sceneDesc: 'Den lille dreng bærer sin lette rygsæk uden besvær – den er overhovedet ikke tung.',
-            meaning: 'Absolut 0% / under ingen omstændigheder',
-            sentence: 'Tasken er overhovedet ikke tung.',
-            contextSentence: 'Han er stærk, og rygsækken er overhovedet ikke tung.',
-            ruleHint: 'Bruges til at understrege, at der er nul tvivl eller modstand.',
-            levelPercent: 0
+                "id": "overhovedet_ikke",
+                "word": "overhovedet ikke",
+                "tier": "0%",
+                "category": "nul",
+                "x": 29,
+                "y": 57,
+                "sceneDesc": "Den lille dreng bærer sin lette rygsæk uden besvær – den er overhovedet ikke tung.",
+                "meaning": "Absolut 0% / under ingen omstændigheder",
+                "sentence": "Tasken er overhovedet ikke tung.",
+                "contextSentence": "Han er stærk, og rygsækken er overhovedet ikke tung.",
+                "ruleHint": "Bruges til at understrege, at der er nul tvivl eller modstand.",
+                "levelPercent": 0,
+                "translations": {
+                        "en": {
+                                "word": "not at all / absolutely not",
+                                "sentence": "He is strong, and the backpack is not heavy at all."
+                        },
+                        "de": {
+                                "word": "überhaupt nicht",
+                                "sentence": "Er ist stark, und der Rucksack ist überhaupt nicht schwer."
+                        },
+                        "es": {
+                                "word": "en lo absoluto",
+                                "sentence": "Él es fuerte, y la mochila no pesa en lo absoluto."
+                        },
+                        "ar": {
+                                "word": "إطلاقًا / بتاتًا",
+                                "sentence": "إنه قوي، وحقيبة الظهر ليست ثقيلة إطلاقًا."
+                        },
+                        "tr": {
+                                "word": "kesinlikle hiç",
+                                "sentence": "O güçlü ve sırt çantası kesinlikle hiç ağır değil."
+                        },
+                        "uk": {
+                                "word": "взагалі ні",
+                                "sentence": "Він сильний, і рюкзак взагалі не важкий."
+                        }
+                }
         },
         {
-            id: 'naesten_ikke',
-            word: 'næsten ikke',
-            tier: '5%',
-            category: 'lav',
-            x: 18,
-            y: 92,
-            sceneDesc: 'Tallerkenen er tømt, og der er næsten ikke flere jordbær tilbage.',
-            meaning: 'Minimal grad / kun en mikroskopisk mængde',
-            sentence: 'Der er næsten ikke noget tilbage.',
-            contextSentence: 'Kagen var god, så der er næsten ikke noget tilbage.',
-            ruleHint: 'Betyder at der kun mangler en brøkdel for at være helt tomt.',
-            levelPercent: 5
+                "id": "naesten_ikke",
+                "word": "næsten ikke",
+                "tier": "5%",
+                "category": "lav",
+                "x": 18,
+                "y": 92,
+                "sceneDesc": "Tallerkenen er tømt, og der er næsten ikke flere jordbær tilbage.",
+                "meaning": "Minimal grad / kun en mikroskopisk mængde",
+                "sentence": "Der er næsten ikke noget tilbage.",
+                "contextSentence": "Kagen var god, så der er næsten ikke noget tilbage.",
+                "ruleHint": "Betyder at der kun mangler en brøkdel for at være helt tomt.",
+                "levelPercent": 5,
+                "translations": {
+                        "en": {
+                                "word": "hardly / barely",
+                                "sentence": "The cake was good, so there is hardly anything left."
+                        },
+                        "de": {
+                                "word": "kaum / fast gar nicht",
+                                "sentence": "Der Kuchen war gut, also ist kaum noch etwas übrig."
+                        },
+                        "es": {
+                                "word": "apenas / casi nada",
+                                "sentence": "El pastel estaba bueno, así que casi no queda nada."
+                        },
+                        "ar": {
+                                "word": "بالكاد",
+                                "sentence": "الكعكة كانت لذيذة، لذلك لم يتبق شيء تقريبًا."
+                        },
+                        "tr": {
+                                "word": "neredeyse hiç",
+                                "sentence": "Kek güzeldi, bu yüzden neredeyse hiç kalmadı."
+                        },
+                        "uk": {
+                                "word": "майже ні / ледве",
+                                "sentence": "Торт був смачний, тому майже нічого не залишилося."
+                        }
+                }
         },
         {
-            id: 'en_smule',
-            word: 'en smule',
-            tier: '15%',
-            category: 'lav',
-            x: 14,
-            y: 69,
-            sceneDesc: 'Cafégæsten venter lidt, da kaffen kun er en smule varm.',
-            meaning: 'En anelse / meget lille grad',
-            sentence: 'Kaffen er en smule kold.',
-            contextSentence: 'Han har siddet længe, så kaffen er en smule kold.',
-            ruleHint: '"En smule" bruges ofte om små afvigelser eller fine nuancer.',
-            levelPercent: 15
+                "id": "en_smule",
+                "word": "en smule",
+                "tier": "15%",
+                "category": "lav",
+                "x": 14,
+                "y": 69,
+                "sceneDesc": "Cafégæsten venter lidt, da kaffen kun er en smule varm.",
+                "meaning": "En anelse / meget lille grad",
+                "sentence": "Kaffen er en smule kold.",
+                "contextSentence": "Han har siddet længe, så kaffen er en smule kold.",
+                "ruleHint": "\"En smule\" bruges ofte om små afvigelser eller fine nuancer.",
+                "levelPercent": 15,
+                "translations": {
+                        "en": {
+                                "word": "a tiny bit / a little bit",
+                                "sentence": "He has been sitting long, so the coffee is a tiny bit cold."
+                        },
+                        "de": {
+                                "word": "ein bisschen / eine Kleinigkeit",
+                                "sentence": "Er sitzt schon lange, daher ist der Kaffee ein bisschen kalt."
+                        },
+                        "es": {
+                                "word": "un poquito",
+                                "sentence": "Lleva mucho tiempo sentado, así que el café está un poquito frío."
+                        },
+                        "ar": {
+                                "word": "قليلًا جدًا",
+                                "sentence": "لقد جلس طويلًا، لذا فإن القهوة باردة قليلًا."
+                        },
+                        "tr": {
+                                "word": "birazcık / azıcık",
+                                "sentence": "Uzun süredir oturuyor, bu yüzden kahve birazcık soğuk."
+                        },
+                        "uk": {
+                                "word": "трішечки / крихітку",
+                                "sentence": "Він довго сидить, тому кава трішечки охолола."
+                        }
+                }
         },
         {
-            id: 'lidt',
-            word: 'lidt',
-            tier: '25%',
-            category: 'lav',
-            x: 34,
-            y: 81,
-            sceneDesc: 'Kvinden med koppen nyder sin te – den er lidt varm, men lige til at drikke.',
-            meaning: 'Svag grad / behersket mængde',
-            sentence: 'Teen er lidt varm.',
-            contextSentence: 'Hun drikker i rolige slurke, fordi teen er lidt varm.',
-            ruleHint: 'Et af de mest brugte danske ord. Beskriver en lille, behagelig eller moderat grad.',
-            levelPercent: 25
+                "id": "lidt",
+                "word": "lidt",
+                "tier": "25%",
+                "category": "lav",
+                "x": 34,
+                "y": 81,
+                "sceneDesc": "Kvinden med koppen nyder sin te – den er lidt varm, men lige til at drikke.",
+                "meaning": "Svag grad / behersket mængde",
+                "sentence": "Teen er lidt varm.",
+                "contextSentence": "Hun drikker i rolige slurke, fordi teen er lidt varm.",
+                "ruleHint": "Et af de mest brugte danske ord. Beskriver en lille, behagelig eller moderat grad.",
+                "levelPercent": 25,
+                "translations": {
+                        "en": {
+                                "word": "a bit / a little",
+                                "sentence": "She drinks in calm sips because the tea is a little warm."
+                        },
+                        "de": {
+                                "word": "ein wenig / etwas",
+                                "sentence": "Sie trinkt in Ruhe, weil der Tee etwas warm ist."
+                        },
+                        "es": {
+                                "word": "un poco",
+                                "sentence": "Bebe a sorbos tranquilos porque el té está un poco caliente."
+                        },
+                        "ar": {
+                                "word": "قليلًا",
+                                "sentence": "إنها تشرب بهدوء لأن الشاي دافئ قليلًا."
+                        },
+                        "tr": {
+                                "word": "biraz",
+                                "sentence": "Sakin yudumlarla içiyor çünkü çay biraz sıcak."
+                        },
+                        "uk": {
+                                "word": "трохи",
+                                "sentence": "Вона п'є спокійними ковтками, тому що чай трохи теплий."
+                        }
+                }
         },
         {
-            id: 'noget',
-            word: 'noget',
-            tier: '40%',
-            category: 'mellem',
-            x: 58,
-            y: 53,
-            sceneDesc: 'Cyklen med de store flyttekasser er noget tung at styre.',
-            meaning: 'En vis grad / i nogen grad',
-            sentence: 'Cyklen er noget tung.',
-            contextSentence: 'Der er mange kasser på ladet, så cyklen er noget tung.',
-            ruleHint: '"Noget" foran et adjektiv svarer til "en del" eller "moderat".',
-            levelPercent: 40
+                "id": "noget",
+                "word": "noget",
+                "tier": "40%",
+                "category": "mellem",
+                "x": 58,
+                "y": 53,
+                "sceneDesc": "Cyklen med de store flyttekasser er noget tung at styre.",
+                "meaning": "En vis grad / i nogen grad",
+                "sentence": "Cyklen er noget tung.",
+                "contextSentence": "Der er mange kasser på ladet, så cyklen er noget tung.",
+                "ruleHint": "\"Noget\" foran et adjektiv svarer til \"en del\" eller \"moderat\".",
+                "levelPercent": 40,
+                "translations": {
+                        "en": {
+                                "word": "somewhat / rather / a bit",
+                                "sentence": "There are many boxes on the cargo, so the bike is rather heavy."
+                        },
+                        "de": {
+                                "word": "etwas / ziemlich",
+                                "sentence": "Auf der Ladefläche stehen viele Kisten, daher ist das Fahrrad ziemlich schwer."
+                        },
+                        "es": {
+                                "word": "algo / bastante",
+                                "sentence": "Hay muchas cajas en la plataforma, por lo que la bicicleta es algo pesada."
+                        },
+                        "ar": {
+                                "word": "نوعًا ما",
+                                "sentence": "هناك العديد من الصناديق، لذا فإن الدراجة ثقيلة نوعًا ما."
+                        },
+                        "tr": {
+                                "word": "epeyce / bir hayli",
+                                "sentence": "Kasada çok kutu var, bu yüzden bisiklet epeyce ağır."
+                        },
+                        "uk": {
+                                "word": "дещо / декілька",
+                                "sentence": "Там багато коробок, тому велосипед дещо важкий."
+                        }
+                }
         },
         {
-            id: 'nogenlunde',
-            word: 'nogenlunde',
-            tier: '50%',
-            category: 'mellem',
-            x: 54,
-            y: 77,
-            sceneDesc: 'Drengen i jakken har det nogenlunde trods den kølige vind.',
-            meaning: 'Middelmådigt / tilfredsstillende / okay',
-            sentence: 'Han har det nogenlunde.',
-            contextSentence: 'Vinden blæser, men med jakken på har han det nogenlunde.',
-            ruleHint: 'Betyder ca. 50%. Hverken fantastisk eller elendigt, men acceptabelt.',
-            levelPercent: 50
+                "id": "nogenlunde",
+                "word": "nogenlunde",
+                "tier": "50%",
+                "category": "mellem",
+                "x": 54,
+                "y": 77,
+                "sceneDesc": "Drengen i jakken har det nogenlunde trods den kølige vind.",
+                "meaning": "Middelmådigt / tilfredsstillende / okay",
+                "sentence": "Han har det nogenlunde.",
+                "contextSentence": "Vinden blæser, men med jakken på har han det nogenlunde.",
+                "ruleHint": "Betyder ca. 50%. Hverken fantastisk eller elendigt, men acceptabelt.",
+                "levelPercent": 50,
+                "translations": {
+                        "en": {
+                                "word": "fairly / reasonably / okay",
+                                "sentence": "The wind is blowing, but with the jacket on he is doing reasonably well."
+                        },
+                        "de": {
+                                "word": "einigermaßen / passabel",
+                                "sentence": "Der Wind weht, aber mit der Jacke geht es ihm einigermaßen gut."
+                        },
+                        "es": {
+                                "word": "más o menos / regular",
+                                "sentence": "El viento sopla, pero con la chaqueta le va más o menos bien."
+                        },
+                        "ar": {
+                                "word": "إلى حد ما / لا بأس به",
+                                "sentence": "الرياح تهب، ولكن مع السترة فإن حاله لا بأس به."
+                        },
+                        "tr": {
+                                "word": "şöyle böyle / fena değil",
+                                "sentence": "Rüzgar esiyor ama ceketle durumu fena değil."
+                        },
+                        "uk": {
+                                "word": "більш-менш / непогано",
+                                "sentence": "Вітер дме, але в куртці йому більш-менш нормально."
+                        }
+                }
         },
         {
-            id: 'ganske',
-            word: 'ganske',
-            tier: '60%',
-            category: 'mellem',
-            x: 74,
-            y: 43,
-            sceneDesc: 'Bageren viser sit brød frem – det er ganske sprødt og friskt.',
-            meaning: 'Pæn grad / ret / absolut acceptabelt',
-            sentence: 'Brødet er ganske sprødt.',
-            contextSentence: 'Bageren er stolt, for brødet er ganske sprødt.',
-            ruleHint: '"Ganske" bruges ofte i høfligt eller nuanceret dansk som "ganske udmærket".',
-            levelPercent: 60
+                "id": "ganske",
+                "word": "ganske",
+                "tier": "60%",
+                "category": "mellem",
+                "x": 74,
+                "y": 43,
+                "sceneDesc": "Bageren viser sit brød frem – det er ganske sprødt og friskt.",
+                "meaning": "Pæn grad / ret / absolut acceptabelt",
+                "sentence": "Brødet er ganske sprødt.",
+                "contextSentence": "Bageren er stolt, for brødet er ganske sprødt.",
+                "ruleHint": "\"Ganske\" bruges ofte i høfligt eller nuanceret dansk som \"ganske udmærket\".",
+                "levelPercent": 60,
+                "translations": {
+                        "en": {
+                                "word": "quite / pretty",
+                                "sentence": "The baker is proud because the bread is quite crispy."
+                        },
+                        "de": {
+                                "word": "durchaus / ziemlich",
+                                "sentence": "Der Bäcker ist stolz, denn das Brot ist ziemlich knusprig."
+                        },
+                        "es": {
+                                "word": "bastante / francamente",
+                                "sentence": "El panadero está orgulloso porque el pan está bastante crujiente."
+                        },
+                        "ar": {
+                                "word": "تمامًا / إلى حد كبير",
+                                "sentence": "الخباز فخور لأن الخبز مقرمش تمامًا."
+                        },
+                        "tr": {
+                                "word": "oldukça / gayet",
+                                "sentence": "Fırıncı gururlu çünkü ekmek gayet çıtır."
+                        },
+                        "uk": {
+                                "word": "досить / цілком",
+                                "sentence": "Пекар пишається, бо хліб цілком хрусткий."
+                        }
+                }
         },
         {
-            id: 'temmelig',
-            word: 'temmelig',
-            tier: '70%',
-            category: 'mellem',
-            x: 79,
-            y: 37,
-            sceneDesc: 'Termometret viser +5 grader – det er temmelig koldt for årstiden.',
-            meaning: 'Mere end middel / mærkbar grad',
-            sentence: 'Vejret er temmelig koldt.',
-            contextSentence: 'Måleren viser kun 5 grader, så vejret er temmelig koldt.',
-            ruleHint: '"Temmelig" angiver, at det overstiger det sædvanlige, uden at være ekstremt.',
-            levelPercent: 70
+                "id": "temmelig",
+                "word": "temmelig",
+                "tier": "70%",
+                "category": "mellem",
+                "x": 79,
+                "y": 37,
+                "sceneDesc": "Termometret viser +5 grader – det er temmelig koldt for årstiden.",
+                "meaning": "Mere end middel / mærkbar grad",
+                "sentence": "Vejret er temmelig koldt.",
+                "contextSentence": "Måleren viser kun 5 grader, så vejret er temmelig koldt.",
+                "ruleHint": "\"Temmelig\" angiver, at det overstiger det sædvanlige, uden at være ekstremt.",
+                "levelPercent": 70,
+                "translations": {
+                        "en": {
+                                "word": "fairly / quite / rather",
+                                "sentence": "The meter shows only 5 degrees, so the weather is rather cold."
+                        },
+                        "de": {
+                                "word": "ziemlich",
+                                "sentence": "Das Thermometer zeigt nur 5 Grad, daher ist das Wetter ziemlich kalt."
+                        },
+                        "es": {
+                                "word": "bastante",
+                                "sentence": "El termómetro marca solo 5 grados, así que el tiempo es bastante frío."
+                        },
+                        "ar": {
+                                "word": "إلى حد بعيد",
+                                "sentence": "المقياس يظهر 5 درجات فقط، لذا فإن الطقس بارد إلى حد بعيد."
+                        },
+                        "tr": {
+                                "word": "oldukça",
+                                "sentence": "Gösterge sadece 5 dereceyi gösteriyor, bu yüzden hava oldukça soğuk."
+                        },
+                        "uk": {
+                                "word": "досить-таки",
+                                "sentence": "Термометр показує лише 5 градусів, тому погода досить холодна."
+                        }
+                }
         },
         {
-            id: 'ret',
-            word: 'ret',
-            tier: '75%',
-            category: 'mellem',
-            x: 85,
-            y: 49,
-            sceneDesc: 'Musikeren med harmonikaen er dygtig og spiller ret godt.',
-            meaning: 'I høj grad / temmelig / pænt meget',
-            sentence: 'Musikeren spiller ret godt.',
-            contextSentence: 'Folk stopper op og lytter, fordi han spiller ret godt.',
-            ruleHint: 'Danskerne elsker "ret": "ret godt", "ret dyrt", "ret spændende".',
-            levelPercent: 75
+                "id": "ret",
+                "word": "ret",
+                "tier": "75%",
+                "category": "mellem",
+                "x": 85,
+                "y": 49,
+                "sceneDesc": "Musikeren med harmonikaen er dygtig og spiller ret godt.",
+                "meaning": "I høj grad / temmelig / pænt meget",
+                "sentence": "Musikeren spiller ret godt.",
+                "contextSentence": "Folk stopper op og lytter, fordi han spiller ret godt.",
+                "ruleHint": "Danskerne elsker \"ret\": \"ret godt\", \"ret dyrt\", \"ret spændende\".",
+                "levelPercent": 75,
+                "translations": {
+                        "en": {
+                                "word": "pretty / quite",
+                                "sentence": "People stop and listen because he plays pretty well."
+                        },
+                        "de": {
+                                "word": "recht / ziemlich",
+                                "sentence": "Die Leute bleiben stehen und hören zu, weil er recht gut spielt."
+                        },
+                        "es": {
+                                "word": "bastante",
+                                "sentence": "La gente se detiene a escuchar porque toca bastante bien."
+                        },
+                        "ar": {
+                                "word": "بشكل جيد إلى حد ما",
+                                "sentence": "الناس يتوقفون ويستمعون لأنه يعزف جيدًا إلى حد ما."
+                        },
+                        "tr": {
+                                "word": "epey / oldukça",
+                                "sentence": "İnsanlar durup dinliyor çünkü oldukça iyi çalıyor."
+                        },
+                        "uk": {
+                                "word": "досить",
+                                "sentence": "Люди зупиняються послухати, бо він грає досить добре."
+                        }
+                }
         },
         {
-            id: 'meget',
-            word: 'meget',
-            tier: '85%',
-            category: 'hoej',
-            x: 72,
-            y: 77,
-            sceneDesc: 'Manden smiler bredt med sin isvaffel – han er meget glad for is.',
-            meaning: 'Høj intensitet (positiv eller neutral)',
-            sentence: 'Han er meget glad.',
-            contextSentence: 'Det er sommer, og han er meget glad for sin store is.',
-            ruleHint: '⚠️ VIGTIGT: "Meget" er neutralt eller positivt. Hvis der opstår et problem, bruger vi "for"!',
-            levelPercent: 85
+                "id": "meget",
+                "word": "meget",
+                "tier": "85%",
+                "category": "hoej",
+                "x": 72,
+                "y": 77,
+                "sceneDesc": "Manden smiler bredt med sin isvaffel – han er meget glad for is.",
+                "meaning": "Høj intensitet (positiv eller neutral)",
+                "sentence": "Han er meget glad.",
+                "contextSentence": "Det er sommer, og han er meget glad for sin store is.",
+                "ruleHint": "⚠️ VIGTIGT: \"Meget\" er neutralt eller positivt. Hvis der opstår et problem, bruger vi \"for\"!",
+                "levelPercent": 85,
+                "translations": {
+                        "en": {
+                                "word": "very / a lot",
+                                "sentence": "It is summer, and he is very happy about his big ice cream."
+                        },
+                        "de": {
+                                "word": "sehr / viel",
+                                "sentence": "Es ist Sommer und er freut sich sehr über sein großes Eis."
+                        },
+                        "es": {
+                                "word": "muy / mucho",
+                                "sentence": "Es verano y está muy contento con su helado grande."
+                        },
+                        "ar": {
+                                "word": "جدًا",
+                                "sentence": "إنه الصيف، وهو سعيد جدًا بالآيس كريم الكبير."
+                        },
+                        "tr": {
+                                "word": "çok",
+                                "sentence": "Yaz mevsimi ve büyük dondurmasından dolayı çok mutlu."
+                        },
+                        "uk": {
+                                "word": "дуже",
+                                "sentence": "Зараз літо, і він дуже радий своєму великому морозиву."
+                        }
+                }
         },
         {
-            id: 'virkelig',
-            word: 'virkelig',
-            tier: '90%',
-            category: 'hoej',
-            x: 54,
-            y: 84,
-            sceneDesc: 'Drengen med det store halstørklæde ryster – han fryser virkelig meget.',
-            meaning: 'Oprigtigt / med stor styrke',
-            sentence: 'Han fryser virkelig meget.',
-            contextSentence: 'Kindernes farve er bleg, for han fryser virkelig meget.',
-            ruleHint: 'Understreger at udsagnet er 100% sandt og intenst følt.',
-            levelPercent: 90
+                "id": "virkelig",
+                "word": "virkelig",
+                "tier": "90%",
+                "category": "hoej",
+                "x": 54,
+                "y": 84,
+                "sceneDesc": "Drengen med det store halstørklæde ryster – han fryser virkelig meget.",
+                "meaning": "Oprigtigt / med stor styrke",
+                "sentence": "Han fryser virkelig meget.",
+                "contextSentence": "Kindernes farve er bleg, for han fryser virkelig meget.",
+                "ruleHint": "Understreger at udsagnet er 100% sandt og intenst følt.",
+                "levelPercent": 90,
+                "translations": {
+                        "en": {
+                                "word": "really / truly",
+                                "sentence": "His cheeks are pale because he is really freezing."
+                        },
+                        "de": {
+                                "word": "wirklich / echt",
+                                "sentence": "Seine Wangen sind blass, denn er friert wirklich sehr."
+                        },
+                        "es": {
+                                "word": "realmente / de verdad",
+                                "sentence": "Tiene las mejillas pálidas porque realmente tiene mucho frío."
+                        },
+                        "ar": {
+                                "word": "حقًا / فعلًا",
+                                "sentence": "وجنتاه شاحبتان لأنه يشعر بالبرد حقًا."
+                        },
+                        "tr": {
+                                "word": "gerçekten",
+                                "sentence": "Yanakları solgun çünkü gerçekten çok üşüyor."
+                        },
+                        "uk": {
+                                "word": "справді / дійсно",
+                                "sentence": "Його щоки бліді, бо він дійсно дуже мерзне."
+                        }
+                }
         },
         {
-            id: 'utroligt',
-            word: 'utroligt',
-            tier: '95%',
-            category: 'hoej',
-            x: 78,
-            y: 73,
-            sceneDesc: 'Isvaflen har tre kæmpe kugler – den er utroligt stor!',
-            meaning: 'Ekstraordinært / så meget at det næsten ikke er til at tro',
-            sentence: 'Isvaflen er utroligt stor.',
-            contextSentence: 'Kuglerne tårner sig op, så isvaflen er utroligt stor.',
-            ruleHint: 'Bruges som stærk forstærker foran adjektiver: "utroligt smuk", "utroligt billig".',
-            levelPercent: 95
+                "id": "utroligt",
+                "word": "utroligt",
+                "tier": "95%",
+                "category": "hoej",
+                "x": 78,
+                "y": 73,
+                "sceneDesc": "Isvaflen har tre kæmpe kugler – den er utroligt stor!",
+                "meaning": "Ekstraordinært / så meget at det næsten ikke er til at tro",
+                "sentence": "Isvaflen er utroligt stor.",
+                "contextSentence": "Kuglerne tårner sig op, så isvaflen er utroligt stor.",
+                "ruleHint": "Bruges som stærk forstærker foran adjektiver: \"utroligt smuk\", \"utroligt billig\".",
+                "levelPercent": 95,
+                "translations": {
+                        "en": {
+                                "word": "incredibly / unbelievably",
+                                "sentence": "The scoops tower up, so the ice cream is incredibly big."
+                        },
+                        "de": {
+                                "word": "unglaublich",
+                                "sentence": "Die Kugeln türmen sich auf, daher ist das Eis unglaublich groß."
+                        },
+                        "es": {
+                                "word": "increíblemente",
+                                "sentence": "Las bolas de helado se amontonan, así que el helado es increíblemente grande."
+                        },
+                        "ar": {
+                                "word": "بشكل لا يصدق",
+                                "sentence": "الكرات متراكمة، لذا فإن الآيس كريم كبير بشكل لا يصدق."
+                        },
+                        "tr": {
+                                "word": "inanılmaz derecede",
+                                "sentence": "Toplar üst üste yığılmış, bu yüzden dondurma inanılmaz büyük."
+                        },
+                        "uk": {
+                                "word": "неймовірно",
+                                "sentence": "Кульки височіють, тому морозиво неймовірно велике."
+                        }
+                }
         },
         {
-            id: 'uhyre',
-            word: 'uhyre',
-            tier: '95%',
-            category: 'hoej',
-            x: 43,
-            y: 49,
-            sceneDesc: 'Rejsende sveder og stønner – den store kuffert er uhyre tung.',
-            meaning: 'Yderst / ekstremt kraftigt',
-            sentence: 'Kufferten er uhyre tung.',
-            contextSentence: 'Han kan knap gå fremad, for kufferten er uhyre tung.',
-            ruleHint: 'Et stærkt forstærkende ord, der lægger vægt på enorm intensitet.',
-            levelPercent: 95
+                "id": "uhyre",
+                "word": "uhyre",
+                "tier": "95%",
+                "category": "hoej",
+                "x": 43,
+                "y": 49,
+                "sceneDesc": "Rejsende sveder og stønner – den store kuffert er uhyre tung.",
+                "meaning": "Yderst / ekstremt kraftigt",
+                "sentence": "Kufferten er uhyre tung.",
+                "contextSentence": "Han kan knap gå fremad, for kufferten er uhyre tung.",
+                "ruleHint": "Et stærkt forstærkende ord, der lægger vægt på enorm intensitet.",
+                "levelPercent": 95,
+                "translations": {
+                        "en": {
+                                "word": "extremely / immensely",
+                                "sentence": "He can hardly walk forward because the suitcase is extremely heavy."
+                        },
+                        "de": {
+                                "word": "äußerst / ungemein",
+                                "sentence": "Er kann kaum vorwärtsgehen, denn der Koffer ist äußerst schwer."
+                        },
+                        "es": {
+                                "word": "sumamente / en extremo",
+                                "sentence": "Apenas puede avanzar porque la maleta es sumamente pesada."
+                        },
+                        "ar": {
+                                "word": "للغاية / بشكل هائل",
+                                "sentence": "بالكاد يستطيع التقدم للأمام لأن الحقيبة ثقيلة للغاية."
+                        },
+                        "tr": {
+                                "word": "son derece / aşırı",
+                                "sentence": "Zorla ilerliyor çünkü bavul son derece ağır."
+                        },
+                        "uk": {
+                                "word": "надзвичайно",
+                                "sentence": "Він ледве йде вперед, бо валіза надзвичайно важка."
+                        }
+                }
         },
         {
-            id: 'naesten',
-            word: 'næsten',
-            tier: '90%',
-            category: 'hoej',
-            x: 77,
-            y: 83,
-            sceneDesc: 'Den øverste iskugle hælder til siden og er næsten smeltet.',
-            meaning: 'Lige ved / mangler kun en lille smule',
-            sentence: 'Isen er næsten smeltet.',
-            contextSentence: 'Solen varmer, så isen er næsten smeltet.',
-            ruleHint: 'Viser at tilstanden er 90-95% opnået.',
-            levelPercent: 90
+                "id": "naesten",
+                "word": "næsten",
+                "tier": "90%",
+                "category": "hoej",
+                "x": 77,
+                "y": 83,
+                "sceneDesc": "Den øverste iskugle hælder til siden og er næsten smeltet.",
+                "meaning": "Lige ved / mangler kun en lille smule",
+                "sentence": "Isen er næsten smeltet.",
+                "contextSentence": "Solen varmer, så isen er næsten smeltet.",
+                "ruleHint": "Viser at tilstanden er 90-95% opnået.",
+                "levelPercent": 90,
+                "translations": {
+                        "en": {
+                                "word": "almost / nearly",
+                                "sentence": "The sun warms up, so the ice cream is almost melted."
+                        },
+                        "de": {
+                                "word": "fast / beinahe",
+                                "sentence": "Die Sonne wärmt, daher ist das Eis fast geschmolzen."
+                        },
+                        "es": {
+                                "word": "casi",
+                                "sentence": "El sol calienta, así que el helado está casi derretido."
+                        },
+                        "ar": {
+                                "word": "تقريبًا",
+                                "sentence": "الشمس دافئة، لذا فإن الآيس كريم ذاب تقريبًا."
+                        },
+                        "tr": {
+                                "word": "neredeyse",
+                                "sentence": "Güneş ısıtıyor, bu yüzden dondurma neredeyse eridi."
+                        },
+                        "uk": {
+                                "word": "майже",
+                                "sentence": "Сонце гріє, тому морозиво майже розтануло."
+                        }
+                }
         },
         {
-            id: 'helt',
-            word: 'helt',
-            tier: '100%',
-            category: 'fuld',
-            x: 7,
-            y: 88,
-            sceneDesc: 'Kagen i bagerens vindue er helt dækket af friske jordbær.',
-            meaning: '100% / fuldstændig / totalt',
-            sentence: 'Kagen er helt dækket.',
-            contextSentence: 'Man kan slet ikke se bunden, for kagen er helt dækket af bær.',
-            ruleHint: '"Helt" bruges foran adjektiver: "helt ny", "helt sikker", "helt færdig".',
-            levelPercent: 100
+                "id": "helt",
+                "word": "helt",
+                "tier": "100%",
+                "category": "fuld",
+                "x": 7,
+                "y": 88,
+                "sceneDesc": "Kagen i bagerens vindue er helt dækket af friske jordbær.",
+                "meaning": "100% / fuldstændig / totalt",
+                "sentence": "Kagen er helt dækket.",
+                "contextSentence": "Man kan slet ikke se bunden, for kagen er helt dækket af bær.",
+                "ruleHint": "\"Helt\" bruges foran adjektiver: \"helt ny\", \"helt sikker\", \"helt færdig\".",
+                "levelPercent": 100,
+                "translations": {
+                        "en": {
+                                "word": "completely / entirely",
+                                "sentence": "You cannot see the base at all, for the cake is completely covered with berries."
+                        },
+                        "de": {
+                                "word": "vollständig / ganz",
+                                "sentence": "Man sieht den Boden gar nicht, denn der Kuchen ist ganz mit Beeren bedeckt."
+                        },
+                        "es": {
+                                "word": "completamente",
+                                "sentence": "No se puede ver la base, porque el pastel está completamente cubierto de bayas."
+                        },
+                        "ar": {
+                                "word": "تمامًا / كليًا",
+                                "sentence": "لا يمكنك رؤية القاعدة، فالكعكة مغطاة بالكامل بالتوت."
+                        },
+                        "tr": {
+                                "word": "tamamen",
+                                "sentence": "Tabanı hiç görünmüyor çünkü kek tamamen meyvelerle kaplı."
+                        },
+                        "uk": {
+                                "word": "повністю / цілком",
+                                "sentence": "Основи зовсім не видно, бо торт повністю вкритий ягодами."
+                        }
+                }
         },
         {
-            id: 'fuldstaendig',
-            word: 'fuldstændig',
-            tier: '100%',
-            category: 'fuld',
-            x: 19,
-            y: 93,
-            sceneDesc: 'Kagetallerkenen er slikket ren – den er fuldstændig tom.',
-            meaning: 'Uden undtagelse / totalt dækkende',
-            sentence: 'Tallerkenen er fuldstændig tom.',
-            contextSentence: 'Gæsten spiste alt op, så tallerkenen er fuldstændig tom.',
-            ruleHint: 'Et stærkt adverbium for absolut 100% fuldkommenhed.',
-            levelPercent: 100
+                "id": "fuldstaendig",
+                "word": "fuldstændig",
+                "tier": "100%",
+                "category": "fuld",
+                "x": 19,
+                "y": 93,
+                "sceneDesc": "Kagetallerkenen er slikket ren – den er fuldstændig tom.",
+                "meaning": "Uden undtagelse / totalt dækkende",
+                "sentence": "Tallerkenen er fuldstændig tom.",
+                "contextSentence": "Gæsten spiste alt op, så tallerkenen er fuldstændig tom.",
+                "ruleHint": "Et stærkt adverbium for absolut 100% fuldkommenhed.",
+                "levelPercent": 100,
+                "translations": {
+                        "en": {
+                                "word": "completely / totally",
+                                "sentence": "The guest ate everything, so the plate is completely empty."
+                        },
+                        "de": {
+                                "word": "vollständig / total",
+                                "sentence": "Der Gast hat alles aufgegessen, daher ist der Teller vollkommen leer."
+                        },
+                        "es": {
+                                "word": "totalmente",
+                                "sentence": "El cliente se comió todo, así que el plato está totalmente vacío."
+                        },
+                        "ar": {
+                                "word": "بشكل كامل / تمامًا",
+                                "sentence": "أكل الضيف كل شيء، فالطبق فارغ تمامًا."
+                        },
+                        "tr": {
+                                "word": "tamamıyla",
+                                "sentence": "Misafir her şeyi yedi, bu yüzden tabak tamamıyla boş."
+                        },
+                        "uk": {
+                                "word": "цілковито / повністю",
+                                "sentence": "Гість з'їв усе, тому тарілка цілком порожня."
+                        }
+                }
         },
         {
-            id: 'totalt',
-            word: 'totalt',
-            tier: '100%',
-            category: 'fuld',
-            x: 58,
-            y: 43,
-            sceneDesc: 'Cykelladets kasser er stablet højt op – det er totalt overfyldt.',
-            meaning: 'Gennemført / absolut 100%',
-            sentence: 'Ladet er totalt overfyldt.',
-            contextSentence: 'Der kan ikke være én æske mere, for ladet er totalt overfyldt.',
-            ruleHint: 'Meget udbredt i moderne dansk til at udtrykke fuld styrke.',
-            levelPercent: 100
+                "id": "totalt",
+                "word": "totalt",
+                "tier": "100%",
+                "category": "fuld",
+                "x": 58,
+                "y": 43,
+                "sceneDesc": "Cykelladets kasser er stablet højt op – det er totalt overfyldt.",
+                "meaning": "Gennemført / absolut 100%",
+                "sentence": "Ladet er totalt overfyldt.",
+                "contextSentence": "Der kan ikke være én æske mere, for ladet er totalt overfyldt.",
+                "ruleHint": "Meget udbredt i moderne dansk til at udtrykke fuld styrke.",
+                "levelPercent": 100,
+                "translations": {
+                        "en": {
+                                "word": "totally / utterly",
+                                "sentence": "There cannot be one more box, for the cargo bed is totally overfilled."
+                        },
+                        "de": {
+                                "word": "total / absolut",
+                                "sentence": "Es passt keine Schachtel mehr hinein, denn die Ladefläche ist total überfüllt."
+                        },
+                        "es": {
+                                "word": "totalmente",
+                                "sentence": "No cabe ni una caja más, porque la caja de carga está totalmente desbordada."
+                        },
+                        "ar": {
+                                "word": "كليًا",
+                                "sentence": "لا يمكن وضع صندوق آخر، لأن الصندوق ممتلئ كليًا."
+                        },
+                        "tr": {
+                                "word": "tümüyle",
+                                "sentence": "Bir kutu daha sığmaz çünkü kasa tümüyle aşırı dolu."
+                        },
+                        "uk": {
+                                "word": "тотально",
+                                "sentence": "Більше жодної коробки не поміститься, бо вантажне відділення тотально переповнене."
+                        }
+                }
         },
         {
-            id: 'for',
-            word: 'for',
-            tier: '>100%',
-            category: 'overskud',
-            x: 14,
-            y: 77,
-            sceneDesc: 'Manden puster desperat på kaffen – den er for varm til at drikke nu!',
-            meaning: 'Over grænsen / skaber et problem',
-            sentence: 'Kaffen er for varm.',
-            contextSentence: 'Han brænder tungen, fordi kaffen er for varm.',
-            ruleHint: '⚠️ NØGLEREGEL: "For" betyder at en grænse er overskredet med negativ følge (kan ikke drikkes).',
-            levelPercent: 110
+                "id": "for",
+                "word": "for",
+                "tier": ">100%",
+                "category": "overskud",
+                "x": 14,
+                "y": 77,
+                "sceneDesc": "Manden puster desperat på kaffen – den er for varm til at drikke nu!",
+                "meaning": "Over grænsen / skaber et problem",
+                "sentence": "Kaffen er for varm.",
+                "contextSentence": "Han brænder tungen, fordi kaffen er for varm.",
+                "ruleHint": "⚠️ NØGLEREGEL: \"For\" betyder at en grænse er overskredet med negativ følge (kan ikke drikkes).",
+                "levelPercent": 110,
+                "translations": {
+                        "en": {
+                                "word": "too (creates a problem / exceeds limit)",
+                                "sentence": "He burns his tongue because the coffee is too hot."
+                        },
+                        "de": {
+                                "word": "zu (Problem entsteht / Grenze überschritten)",
+                                "sentence": "Er verbrennt sich die Zunge, weil der Kaffee zu heiß ist."
+                        },
+                        "es": {
+                                "word": "demasiado (crea un problema)",
+                                "sentence": "Se quema la lengua porque el café está demasiado caliente."
+                        },
+                        "ar": {
+                                "word": "أكثر من اللازم (يسبب مشكلة)",
+                                "sentence": "إنه يحرق لسانه لأن القهوة ساخنة أكثر من اللازم."
+                        },
+                        "tr": {
+                                "word": "fazla (sorun yaratan / sınırı aşan)",
+                                "sentence": "Dili yanıyor çünkü kahve fazla sıcak."
+                        },
+                        "uk": {
+                                "word": "занадто (створює проблему)",
+                                "sentence": "Він обпікає язик, бо кава занадто гаряча."
+                        }
+                }
         },
         {
-            id: 'alt_for',
-            word: 'alt for',
-            tier: '>>100%',
-            category: 'overskud',
-            x: 91,
-            y: 86,
-            sceneDesc: 'Børnene åbner munden med tårer i øjnene – chilien er alt for stærk!',
-            meaning: 'Kraftigt overskud / uacceptabel eller uløselig situation',
-            sentence: 'Maden er alt for stærk.',
-            contextSentence: 'De skal have mælk med det samme, for chilien er alt for stærk.',
-            ruleHint: '"Alt for" forstærker problemet: "alt for dyr", "alt for tung", "alt for hurtigt".',
-            levelPercent: 130
+                "id": "alt_for",
+                "word": "alt for",
+                "tier": ">>100%",
+                "category": "overskud",
+                "x": 91,
+                "y": 86,
+                "sceneDesc": "Børnene åbner munden med tårer i øjnene – chilien er alt for stærk!",
+                "meaning": "Kraftigt overskud / uacceptabel eller uløselig situation",
+                "sentence": "Maden er alt for stærk.",
+                "contextSentence": "De skal have mælk med det samme, for chilien er alt for stærk.",
+                "ruleHint": "\"Alt for\" forstærker problemet: \"alt for dyr\", \"alt for tung\", \"alt for hurtigt\".",
+                "levelPercent": 130,
+                "translations": {
+                        "en": {
+                                "word": "way too / far too (serious problem)",
+                                "sentence": "They need milk immediately, because the chili is way too spicy."
+                        },
+                        "de": {
+                                "word": "viel zu (starkes Problem)",
+                                "sentence": "Sie brauchen sofort Milch, denn das Chili ist viel zu scharf."
+                        },
+                        "es": {
+                                "word": "demasiado / excesivamente (grave problema)",
+                                "sentence": "Necesitan leche de inmediato, porque el chile es demasiado picante."
+                        },
+                        "ar": {
+                                "word": "بشكل مفرط للغاية (مشكلة خطيرة)",
+                                "sentence": "يحتاجون إلى الحليب فورًا، لأن الفلفل الحار لا يُطاق."
+                        },
+                        "tr": {
+                                "word": "fazlasıyla aşırı (ciddi sorun)",
+                                "sentence": "Hemen süte ihtiyaçları var çünkü acı biber fazlasıyla aşırı acı."
+                        },
+                        "uk": {
+                                "word": "надто сильно / аж занадто (серйозна проблема)",
+                                "sentence": "Їм терміново потрібне молоко, бо чилі аж занадто гострий."
+                        }
+                }
         }
-    ];
+];
+
+    // Helper for translation
+    function getGradTranslation(item) {
+        const lang = getLang();
+        if (item.translations && item.translations[lang]) {
+            return item.translations[lang];
+        }
+        if (item.translations && item.translations['en']) {
+            return item.translations['en'];
+        }
+        return { word: item.meaning, sentence: '' };
+    }
 
     // Styles
     const style = document.createElement('style');
@@ -604,66 +1136,179 @@ export function renderAdverbierGradView(container, navigateFn) {
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
 
-        /* Inspector Card */
+        /* Inspector Card (2 columns placed cleanly below stage) */
         .vrimmel-inspector {
             background: #1e293b;
             border-radius: 20px;
-            padding: 1.8rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(168, 85, 247, 0.15);
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 2rem;
+            margin-top: 1.8rem;
+            animation: fadeIn 0.3s ease;
+        }
+        @media (max-width: 850px) {
+            .vrimmel-inspector {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        .inspector-left,
+        .inspector-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
         }
         .inspector-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.6rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding-bottom: 0.8rem;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .inspector-badge-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
         }
         .inspector-badge {
             background: rgba(168, 85, 247, 0.2);
             border: 1px solid #c084fc;
             color: #c084fc;
-            padding: 0.3rem 0.8rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+        .inspector-cat-badge {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 0.35rem 0.85rem;
             border-radius: 12px;
             font-size: 0.85rem;
             font-weight: 800;
         }
         .inspector-word-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             color: white;
             margin: 0;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.7rem;
         }
         .inspector-audio-btn {
             background: #334155;
             color: #cbd5e1;
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
         .inspector-audio-btn:hover {
             background: #9333ea;
             color: white;
             transform: scale(1.1);
         }
-
-        /* Thermometer Meter Box */
+        .inspector-trans-box {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(15, 23, 42, 0.85));
+            border: 1.5px solid #a855f7;
+            border-radius: 14px;
+            padding: 0.9rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+        }
+        .trans-badge-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .trans-word-val {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+        .inspector-scene-box {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .scene-heading {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+        .scene-text {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .inspector-sentence-card {
+            background: rgba(168, 85, 247, 0.12);
+            border: 1.5px solid rgba(168, 85, 247, 0.35);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+        }
+        .sentence-quote-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.4;
+            margin: 0 0 0.4rem 0;
+        }
+        .sentence-trans-text {
+            font-size: 0.98rem;
+            color: #cbd5e1;
+            font-style: italic;
+            margin: 0 0 0.8rem 0;
+            line-height: 1.4;
+        }
+        .inspector-speak-btn {
+            background: #9333ea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .inspector-speak-btn:hover {
+            background: #a855f7;
+            transform: translateY(-2px);
+        }
         .grad-meter-box {
             background: rgba(15, 23, 42, 0.6);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            margin-bottom: 1.2rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .meter-label-row {
@@ -689,40 +1334,20 @@ export function renderAdverbierGradView(container, navigateFn) {
             transition: width 0.4s ease;
             background: linear-gradient(90deg, #38bdf8, #a855f7, #ef4444);
         }
-
-        .inspector-scene-box {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 14px;
-            padding: 1rem 1.2rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .scene-heading {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
-        }
-        .scene-text {
-            font-size: 1.05rem;
-            color: #f8fafc;
-            line-height: 1.5;
-            margin: 0;
-        }
-
         .inspector-actions {
             display: flex;
             gap: 0.8rem;
+            margin-top: auto;
         }
         .inspector-btn-action {
             flex: 1;
             background: #334155;
             color: white;
             border: none;
-            padding: 0.8rem;
+            padding: 0.85rem;
             border-radius: 12px;
             font-weight: 700;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
@@ -1838,7 +2463,7 @@ export function renderAdverbierGradView(container, navigateFn) {
         const layout = document.createElement('div');
         layout.className = 'vrimmel-layout';
 
-        // Left: Stage Card
+        // Stage Card (Full Width)
         const stageCard = document.createElement('div');
         stageCard.className = 'vrimmel-stage-card';
 
@@ -1868,19 +2493,19 @@ export function renderAdverbierGradView(container, navigateFn) {
             filtersDiv.appendChild(btn);
         });
 
-        const pureBtn = document.createElement('button');
-        pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>👁️</span> ${isPureMode ? 'Vis hotspots' : 'Ren illustration'}`;
-        pureBtn.onclick = () => {
+        const pureToggleBtn = document.createElement('button');
+        pureToggleBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
+        pureToggleBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureToggleBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
         };
 
         controlsBar.appendChild(filtersDiv);
-        controlsBar.appendChild(pureBtn);
+        controlsBar.appendChild(pureToggleBtn);
         stageCard.appendChild(controlsBar);
 
-        // Stage Container
+        // Stage with wimmelbild image
         const stage = document.createElement('div');
         stage.className = 'vrimmel-stage';
 
@@ -1908,8 +2533,7 @@ export function renderAdverbierGradView(container, navigateFn) {
                     e.stopPropagation();
                     selectedWord = item;
                     speakDanish(item.word);
-                    stage.querySelectorAll('.hotspot-pin').forEach(p => p.classList.remove('active'));
-                    pin.classList.add('active');
+                    renderTabVrimmel(parent);
                 };
 
                 stage.appendChild(pin);
@@ -1918,7 +2542,112 @@ export function renderAdverbierGradView(container, navigateFn) {
 
         stageCard.appendChild(stage);
         layout.appendChild(stageCard);
+
+        // Målords præsentationsboks placeret smukt under vrimlebilledet
+        const inspector = document.createElement('div');
+        inspector.className = 'vrimmel-inspector';
+        inspector.id = 'grad-inspector-box';
+
+        const trans = getGradTranslation(selectedWord);
+        const currentLang = getLang();
+        const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
+        const pctWidth = Math.min(100, (selectedWord.levelPercent / 120) * 100);
+
+        const categoryLabels = {
+            'nul': '0% (slet ikke)',
+            'lav': 'Lav styrke (5-25%)',
+            'mellem': 'Mellem styrke (40-75%)',
+            'hoej': 'Høj styrke (85-95%)',
+            'fuld': 'Fuld styrke (100%)',
+            'overskud': '⚠️ Over grænsen (>100%)'
+        };
+        const catText = categoryLabels[selectedWord.category] || selectedWord.tier;
+
+        inspector.innerHTML = `
+            <div class="inspector-left">
+                <div class="inspector-header">
+                    <div class="inspector-badge-row">
+                        <span class="inspector-badge">Intensitet: ${selectedWord.tier}</span>
+                        <span class="inspector-cat-badge">${catText}</span>
+                    </div>
+                    <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                </div>
+
+                <h2 class="inspector-word-title">
+                    <span>🌡️</span> ${selectedWord.word}
+                </h2>
+
+                <div class="inspector-trans-box">
+                    <div class="trans-badge-label">
+                        <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                    </div>
+                    <div class="trans-word-val">"${trans.word}"</div>
+                </div>
+
+                <div class="inspector-scene-box">
+                    <div class="scene-heading">📍 Situation på torvet</div>
+                    <p class="scene-text">${selectedWord.sceneDesc}</p>
+                </div>
+            </div>
+
+            <div class="inspector-right">
+                <div class="inspector-sentence-card">
+                    <div class="scene-heading" style="color: #c084fc;">💬 Eksempelsætning</div>
+                    <p class="sentence-quote-text">"${selectedWord.contextSentence}"</p>
+                    ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
+                    <button class="inspector-speak-btn" id="inspector-action-speak">
+                        <span>🗣️</span> Hør sætning
+                    </button>
+                </div>
+
+                <div class="grad-meter-box">
+                    <div class="meter-label-row">
+                        <span>Skala: ${selectedWord.levelPercent}%</span>
+                        <span>${selectedWord.levelPercent > 100 ? '⚠️ Grænsen overskredet!' : selectedWord.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
+                    </div>
+                    <div class="meter-track">
+                        <div class="meter-fill" style="width: ${pctWidth}%;"></div>
+                    </div>
+                </div>
+
+                <div class="inspector-scene-box" style="border-left: 4px solid #a855f7;">
+                    <div class="scene-heading" style="color: #c084fc;">💡 Grammatisk tip</div>
+                    <p class="scene-text">${selectedWord.ruleHint}</p>
+                </div>
+
+                <div class="inspector-actions">
+                    <button class="inspector-btn-action" id="inspector-action-prev">
+                        ← Forrige ord
+                    </button>
+                    <button class="inspector-btn-action" style="background: #9333ea;" id="inspector-action-next">
+                        Næste ord ➔
+                    </button>
+                </div>
+            </div>
+        `;
+
+        layout.appendChild(inspector);
         parent.appendChild(layout);
+
+        // Bind events
+        inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(selectedWord.word);
+        inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(selectedWord.contextSentence);
+
+        inspector.querySelector('#inspector-action-prev').onclick = () => {
+            const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === selectedWord.id);
+            const prevIdx = (currentIdx - 1 + ADVERBIER_GRAD_DATA.length) % ADVERBIER_GRAD_DATA.length;
+            selectedWord = ADVERBIER_GRAD_DATA[prevIdx];
+            speakDanish(selectedWord.word);
+            renderTabVrimmel(parent);
+        };
+
+        inspector.querySelector('#inspector-action-next').onclick = () => {
+            const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === selectedWord.id);
+            const nextIdx = (currentIdx + 1) % ADVERBIER_GRAD_DATA.length;
+            selectedWord = ADVERBIER_GRAD_DATA[nextIdx];
+            speakDanish(selectedWord.word);
+            renderTabVrimmel(parent);
+        };
     }
 
     // ==========================================

@@ -9,10 +9,10 @@ import { getTranslation } from '../utils/i18n.js';
  * 
  * 20 mådesadverbier trænet i 5 didaktiske tabs:
  * 1. Det Interaktive Byrum & Vrimlebillede (20 hotspots, -t reglen, audio, pure mode)
- * 2. Detektiven (-t reglen: Ting vs. Handling / Adjektiv vs. Adverbium)
- * 3. Aha-værkstedet (-t Transformeren & Mådes-kontraster)
+ * 2. Aha-værkstedet (-t Transformeren & Mådes-kontraster)
+ * 3. -t Detektiven (Ting vs. Handling / Adjektiv vs. Adverbium)
  * 4. Sætningsbyggeren (To-trins model: Hvem? Hvad laver? Hvordan? Hvor? + Puslespil med tydelig ⭐ markering)
- * 5. Kontekst-testen (A1/A2 enkle hverdagssituationer)
+ * 5. Kontekst-testen (14 varierede A1/A2 hverdagssituationer)
  */
 export function renderAdverbierMaadeView(container, navigateFn) {
     container.innerHTML = '';
@@ -691,154 +691,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             background: #475569;
         }
 
-        /* Tab 2: Detektiv (-t reglen) */
-        .detektiv-container {
-            background: #1e293b;
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        .detektiv-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .detektiv-header h2 {
-            font-size: 1.8rem;
-            color: #f472b6;
-            margin-bottom: 0.5rem;
-        }
-        .detektiv-progress {
-            display: flex;
-            justify-content: space-between;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        .detektiv-card {
-            background: #0f172a;
-            border-radius: 16px;
-            padding: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 1.5rem;
-        }
-        .detektiv-context-tag {
-            display: inline-block;
-            background: rgba(236, 72, 153, 0.15);
-            color: #f472b6;
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-        }
-        .detektiv-prompt-sentence {
-            font-size: 1.35rem;
-            color: #f8fafc;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .detektiv-blank {
-            display: inline-block;
-            min-width: 120px;
-            border-bottom: 3px solid #ec4899;
-            color: #f472b6;
-            font-weight: 800;
-            text-align: center;
-            padding: 0 0.5rem;
-        }
-        .detektiv-question-hint {
-            background: rgba(30, 41, 59, 0.7);
-            border-left: 4px solid #38bdf8;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            color: #bae6fd;
-            margin-bottom: 1.5rem;
-        }
-        .detektiv-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-        @media (max-width: 600px) {
-            .detektiv-options { grid-template-columns: 1fr; }
-        }
-        .detektiv-opt-btn {
-            background: #334155;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            padding: 1.2rem;
-            border-radius: 14px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .detektiv-opt-btn:hover:not(:disabled) {
-            background: #475569;
-            border-color: #ec4899;
-            transform: translateY(-2px);
-        }
-        .detektiv-opt-sub {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-        .detektiv-opt-btn.correct {
-            background: #15803d !important;
-            border-color: #22c55e !important;
-        }
-        .detektiv-opt-btn.wrong {
-            background: #b91c1c !important;
-            border-color: #ef4444 !important;
-            opacity: 0.6;
-        }
-        .detektiv-feedback {
-            padding: 1.2rem 1.4rem;
-            border-radius: 14px;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.3s ease;
-        }
-        .detektiv-feedback.correct {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1.5px solid #22c55e;
-            color: #dcfce7;
-        }
-        .detektiv-feedback.wrong {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1.5px solid #ef4444;
-            color: #fee2e2;
-        }
-        .detektiv-next-btn {
-            background: #ec4899;
-            color: white;
-            border: none;
-            padding: 0.9rem 2.2rem;
-            border-radius: 12px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: block;
-            margin-left: auto;
-            transition: all 0.2s;
-        }
-        .detektiv-next-btn:hover {
-            background: #db2777;
-            transform: translateY(-2px);
-        }
-
-        /* Tab 3: Aha-værkstedet (-t Transformeren & Parringer) */
+        /* Tab 2: Aha-værkstedet (-t Transformeren & Parringer) */
         .vaerksted-container {
             background: #1e293b;
             border-radius: 20px;
@@ -1006,6 +859,153 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             cursor: default;
         }
 
+        /* Tab 3: Detektiv (-t reglen) */
+        .detektiv-container {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .detektiv-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .detektiv-header h2 {
+            font-size: 1.8rem;
+            color: #f472b6;
+            margin-bottom: 0.5rem;
+        }
+        .detektiv-progress {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .detektiv-card {
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 1.5rem;
+        }
+        .detektiv-context-tag {
+            display: inline-block;
+            background: rgba(236, 72, 153, 0.15);
+            color: #f472b6;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .detektiv-prompt-sentence {
+            font-size: 1.35rem;
+            color: #f8fafc;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .detektiv-blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 3px solid #ec4899;
+            color: #f472b6;
+            font-weight: 800;
+            text-align: center;
+            padding: 0 0.5rem;
+        }
+        .detektiv-question-hint {
+            background: rgba(30, 41, 59, 0.7);
+            border-left: 4px solid #38bdf8;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #bae6fd;
+            margin-bottom: 1.5rem;
+        }
+        .detektiv-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 600px) {
+            .detektiv-options { grid-template-columns: 1fr; }
+        }
+        .detektiv-opt-btn {
+            background: #334155;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            padding: 1.2rem;
+            border-radius: 14px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .detektiv-opt-btn:hover:not(:disabled) {
+            background: #475569;
+            border-color: #ec4899;
+            transform: translateY(-2px);
+        }
+        .detektiv-opt-sub {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .detektiv-opt-btn.correct {
+            background: #15803d !important;
+            border-color: #22c55e !important;
+        }
+        .detektiv-opt-btn.wrong {
+            background: #b91c1c !important;
+            border-color: #ef4444 !important;
+            opacity: 0.6;
+        }
+        .detektiv-feedback {
+            padding: 1.2rem 1.4rem;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .detektiv-feedback.correct {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1.5px solid #22c55e;
+            color: #dcfce7;
+        }
+        .detektiv-feedback.wrong {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid #ef4444;
+            color: #fee2e2;
+        }
+        .detektiv-next-btn {
+            background: #ec4899;
+            color: white;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            transition: all 0.2s;
+        }
+        .detektiv-next-btn:hover {
+            background: #db2777;
+            transform: translateY(-2px);
+        }
+
         /* Tab 4: Sætningsbyggeren */
         .saetning-container {
             background: #1e293b;
@@ -1015,13 +1015,13 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             max-width: 1000px;
             margin: 0 auto;
         }
-        .sb-nav {
+        .sb-sub-nav {
             display: flex;
             gap: 1rem;
             justify-content: center;
             margin-bottom: 2rem;
         }
-        .sb-nav-btn {
+        .sb-sub-btn {
             background: #334155;
             color: #cbd5e1;
             border: 2px solid transparent;
@@ -1031,14 +1031,17 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .sb-nav-btn.active {
+        .sb-sub-btn.active {
             background: rgba(236, 72, 153, 0.2);
             border-color: #ec4899;
             color: #f472b6;
         }
 
-        /* Step 1 Question Categories */
+        /* Sektion 1 Category Rows */
         .category-builder-rows {
             display: flex;
             flex-direction: column;
@@ -1160,12 +1163,162 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             transform: scale(1.05);
         }
 
-        /* Puzzle Architecture Flow Diagram */
-        .sb-structure-diagram {
+        /* Sektion 2 Challenge & Puslespil */
+        .sb-task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .sb-task-pills {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .sb-task-pill {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #334155;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .sb-task-pill:hover {
+            background: #475569;
+            transform: scale(1.08);
+        }
+        .sb-task-pill.active {
+            background: #ec4899;
+            color: white;
+            border-color: #f472b6;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+        }
+        .sb-task-pill.done {
+            border-color: #22c55e;
+            color: #86efac;
+        }
+        .sb-context-card {
             background: #0f172a;
+            border-radius: 16px;
+            padding: 1.3rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .sb-context-title {
+            font-size: 1.1rem;
+            color: #fce7f3;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .sb-context-elements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .sb-context-chip {
+            background: #1e293b;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            gap: 0.5rem;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .sb-context-chip.subjekt { border-left: 3px solid #60a5fa; color: #93c5fd; }
+        .sb-context-chip.verbum { border-left: 3px solid #34d399; color: #86efac; }
+        .sb-context-chip.rest { border-left: 3px solid #fbbf24; color: #fde68a; }
+        .sb-chip-role {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        .sb-question-box {
+            background: rgba(236, 72, 153, 0.1);
+            border: 1.5px solid #ec4899;
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-question-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+        }
+        .sb-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .sb-option-btn {
+            background: #334155;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            padding: 1rem;
+            border-radius: 14px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .sb-option-btn:hover {
+            background: #475569;
+            border-color: #ec4899;
+            transform: translateY(-2px);
+        }
+        .sb-option-btn.correct {
+            background: #15803d !important;
+            border-color: #22c55e !important;
+            color: white !important;
+        }
+        .sb-option-btn.incorrect {
+            background: #b91c1c !important;
+            border-color: #ef4444 !important;
+        }
+
+        /* Puzzle Section */
+        .sb-puzzle-section {
+            background: #0f172a;
+            border-radius: 18px;
+            padding: 2rem;
+            border: 2px solid #ec4899;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.35s ease;
+        }
+        .sb-puzzle-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f472b6;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sb-puzzle-desc {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        /* Architecture Flow Diagram */
+        .sb-structure-diagram {
+            background: #1e293b;
             border: 2px solid rgba(255, 255, 255, 0.12);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.4rem;
             margin-bottom: 1.8rem;
         }
         .structure-diagram-header {
@@ -1187,7 +1340,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         }
         .structure-diagram-hint {
             color: #94a3b8;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-style: italic;
         }
         .structure-diagram-flow {
@@ -1200,11 +1353,11 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         }
         .flow-step {
             flex: 1;
-            min-width: 140px;
-            background: #1e293b;
+            min-width: 130px;
+            background: #0f172a;
             border: 2px solid rgba(255, 255, 255, 0.15);
             border-radius: 14px;
-            padding: 1rem 0.6rem;
+            padding: 0.9rem 0.5rem;
             text-align: center;
             position: relative;
         }
@@ -1214,23 +1367,21 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
         }
         .flow-num {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 800;
             color: #94a3b8;
             margin-bottom: 0.25rem;
         }
-        .flow-step.active-target .flow-num {
-            color: #f472b6;
-        }
+        .flow-step.active-target .flow-num { color: #f472b6; }
         .flow-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: white;
         }
         .flow-target-tag {
             background: #ec4899;
             color: white;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 800;
             padding: 0.2rem 0.5rem;
             border-radius: 6px;
@@ -1255,7 +1406,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #0f172a;
+            background: #1e293b;
             border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
@@ -1277,11 +1428,11 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         .sb-puzzle-slot.filled {
             border-style: solid;
             border-color: #38bdf8;
-            background: #1e293b;
+            background: #0f172a;
         }
         .sb-puzzle-slot.target-adverbium-slot.filled {
             border-color: #ec4899;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), #1e293b);
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), #0f172a);
         }
         .slot-target-callout {
             position: absolute;
@@ -1312,7 +1463,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             flex-wrap: wrap;
             gap: 0.8rem;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
         }
         .sb-puzzle-chip {
             background: #334155;
@@ -1342,30 +1493,20 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             opacity: 0.25;
             pointer-events: none;
         }
-
-        /* Step 2 Challenge Tasks */
-        .challenge-task-nav {
-            display: flex;
-            gap: 0.6rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .task-nav-pill {
-            background: #334155;
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            font-weight: 700;
+        .reset-slots-btn {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.55rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .task-nav-pill.active {
-            background: #ec4899;
+        .reset-slots-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
             color: white;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
         }
 
         /* Tab 5: Kontekst Testen */
@@ -1479,16 +1620,16 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     `;
     viewContainer.appendChild(hero);
 
-    // Tabs Navigation
+    // Tabs Navigation (Re-ordered: Aha-værkstedet as Tab 2, -t Detektiven as Tab 3)
     const tabsNav = document.createElement('div');
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
         { id: 'tab_vrimmel', label: '1. Vrimlebillede (20 ord)', icon: '🖼️' },
-        { id: 'tab_detektiv', label: '2. -t Detektiven', icon: '🔍' },
-        { id: 'tab_vaerksted', label: '3. Aha-værkstedet', icon: '💡' },
+        { id: 'tab_vaerksted', label: '2. Aha-værkstedet', icon: '💡' },
+        { id: 'tab_detektiv', label: '3. -t Detektiven', icon: '🔍' },
         { id: 'tab_saetning', label: '4. Sætningsbyggeren', icon: '🧱' },
-        { id: 'tab_kontekst', label: '5. Kontekst-testen', icon: '🎯' }
+        { id: 'tab_kontekst', label: '5. Kontekst-testen (14 opg.)', icon: '🎯' }
     ];
 
     const tabButtons = {};
@@ -1519,10 +1660,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         tabContentContainer.innerHTML = '';
         if (currentTab === 'tab_vrimmel') {
             renderTabVrimmel(tabContentContainer);
-        } else if (currentTab === 'tab_detektiv') {
-            renderTabDetektiv(tabContentContainer);
         } else if (currentTab === 'tab_vaerksted') {
             renderTabVaerksted(tabContentContainer);
+        } else if (currentTab === 'tab_detektiv') {
+            renderTabDetektiv(tabContentContainer);
         } else if (currentTab === 'tab_saetning') {
             renderTabSaetning(tabContentContainer);
         } else if (currentTab === 'tab_kontekst') {
@@ -1534,6 +1675,9 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     // TAB 1: DET INTERAKTIVE BYRUM & VRIMLEBILLEDE
     // ==========================================
     function renderTabVrimmel(container) {
+        // Clear container completely to avoid any duplicate rendering
+        container.innerHTML = '';
+
         const layout = document.createElement('div');
         layout.className = 'vrimmel-layout';
 
@@ -1673,15 +1817,15 @@ export function renderAdverbierMaadeView(container, navigateFn) {
                     <button class="inspector-btn-action" id="insp-speak-sentence">
                         <span>🗣️</span> Hør sætning
                     </button>
-                    <button class="inspector-btn-action" id="insp-go-detektiv">
-                        <span>🔍</span> Træn i Detektiven
+                    <button class="inspector-btn-action" id="insp-go-vaerksted">
+                        <span>💡</span> Træn i Aha-værkstedet
                     </button>
                 </div>
             `;
 
             inspectorCard.querySelector('#inspector-play-btn').onclick = () => speakDanish(word.word);
             inspectorCard.querySelector('#insp-speak-sentence').onclick = () => speakDanish(word.sentence);
-            inspectorCard.querySelector('#insp-go-detektiv').onclick = () => switchTab('tab_detektiv');
+            inspectorCard.querySelector('#insp-go-vaerksted').onclick = () => switchTab('tab_vaerksted');
         }
 
         updateInspector();
@@ -1689,234 +1833,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 2: DETEKTIVEN (-t reglen: Ting vs. Handling)
-    // ==========================================
-    const DETEKTIV_TASKS = [
-        {
-            id: 1,
-            sceneContext: 'Motorvejen og byen',
-            sentenceParts: ['Bussen kører meget ', ' på motorvejen.'],
-            correctWord: 'hurtigt',
-            distractorWord: 'hurtig',
-            targetType: 'handling',
-            hint: 'Spørg dig selv: Beskriver ordet bussen (en ting) eller måden den kører på (en handling)?',
-            feedbackCorrect: '💡 Fantastisk! Ordet beskriver verbet "kører" (handlingen) – derfor skal vi sætte -t på: hurtig + t = hurtigt!',
-            feedbackWrong: '⚠️ Prøv igen! Hvis det beskriver en handling (kører), skal vi sætte -t på ordet.'
-        },
-        {
-            id: 2,
-            sceneContext: 'Busstoppestedet',
-            sentenceParts: ['Det er en virkelig ', ' bus.'],
-            correctWord: 'hurtig',
-            distractorWord: 'hurtigt',
-            targetType: 'ting',
-            hint: 'Beskriver ordet bussen selv, eller hvordan den kører?',
-            feedbackCorrect: '💡 Præcis! Her beskriver ordet selve bussen (substantivet/tingen). Derfor er det et adjektiv UDEN adverbie-t: en hurtig bus!',
-            feedbackWrong: '⚠️ Pas på! Her taler vi om tingen (bussen), ikke handlingen at køre. Så skal der ikke -t på.'
-        },
-        {
-            id: 3,
-            sceneContext: 'Koncerten i parken',
-            sentenceParts: ['Anna synger utrolig ', ' foran publikum.'],
-            correctWord: 'smukt',
-            distractorWord: 'smuk',
-            targetType: 'handling',
-            hint: 'Beskriver ordet sangstemmen/handlingen at synge, eller Anna selv?',
-            feedbackCorrect: '💡 Lige i øjet! Ordet beskriver verbet "synger" (handlingen). Smuk + t = smukt!',
-            feedbackWrong: '⚠️ Ikke helt. Ordet knytter sig til verbet "synger", så vi skal have -t på.'
-        },
-        {
-            id: 4,
-            sceneContext: 'Køkkenet og middagen',
-            sentenceParts: ['Suppen smager virkelig ', ' i dag.'],
-            correctWord: 'godt',
-            distractorWord: 'god',
-            targetType: 'handling',
-            hint: 'Hvordan smager den? Beskriver fornemmelsen/handlingen.',
-            feedbackCorrect: '💡 Rigtigt! "Godt" beskriver måden noget smager eller udføres på: "smager godt", "laver mad godt"!',
-            feedbackWrong: '⚠️ Husk: "En god suppe" (ting), men "suppen smager godt" (handling/sansning).'
-        },
-        {
-            id: 5,
-            sceneContext: 'Biblioteket og caféen',
-            sentenceParts: ['Gæsterne sidder og læser ', ' ved bordet.'],
-            correctWord: 'stille',
-            distractorWord: 'stillet',
-            targetType: 'special',
-            hint: 'Læg mærke til ordets endelse – ender det allerede på -e?',
-            feedbackCorrect: '💡 Brilliant! "Stille" ender allerede på -e og får aldrig et ekstra -t: "at sidde stille".',
-            feedbackWrong: '⚠️ Pas på særreglen: "Stille" ender på -e og får IKKE ekstra -t.'
-        },
-        {
-            id: 6,
-            sceneContext: 'Byggepladsen',
-            sentenceParts: ['Håndværkeren slår ', ' med hammeren.'],
-            correctWord: 'hårdt',
-            distractorWord: 'hård',
-            targetType: 'handling',
-            hint: 'Beskriver ordet hammerens kraft (handlingen at slå), eller stenen?',
-            feedbackCorrect: '💡 Helt rigtigt! Det beskriver handlingen "slår". Hård + t = hårdt!',
-            feedbackWrong: '⚠️ Prøv igen. Det er måden han slår på, så vi skal have -t på.'
-        },
-        {
-            id: 7,
-            sceneContext: 'Klassen',
-            sentenceParts: ['Læreren forklarer lektien meget ', '.'],
-            correctWord: 'tydeligt',
-            distractorWord: 'tydelig',
-            targetType: 'handling',
-            hint: 'Hvordan forklarer hun? Beskriver handlingen "forklarer".',
-            feedbackCorrect: '💡 Korrekt! Ordet beskriver måden hun forklarer på (verbum). Tydelig + t = tydeligt!',
-            feedbackWrong: '⚠️ Hun forklarer på en tydelig måde: forklare tydeligt!'
-        },
-        {
-            id: 8,
-            sceneContext: 'Stuen med glas og kopper',
-            sentenceParts: ['Drengen bar koppen meget ', ' hen til bordet.'],
-            correctWord: 'forsigtigt',
-            distractorWord: 'forsigtig',
-            targetType: 'handling',
-            hint: 'Hvordan bar han den? Han passede på under handlingen.',
-            feedbackCorrect: '💡 Super flot! Han bar den forsigtigt. Ordet beskriver verbet "bar".',
-            feedbackWrong: '⚠️ Han udførte handlingen med stor omhu: bar forsigtigt!'
-        }
-    ];
-
-    let detektivIndex = 0;
-    let detektivScore = 0;
-    let detektivAnswered = false;
-
-    function renderTabDetektiv(container) {
-        const detektivWrap = document.createElement('div');
-        detektivWrap.className = 'detektiv-container';
-
-        const task = DETEKTIV_TASKS[detektivIndex];
-
-        detektivWrap.innerHTML = `
-            <div class="detektiv-header">
-                <h2>🔍 -t Detektiven: Ting eller Handling?</h2>
-                <p style="color: #94a3b8; margin: 0;">Træn den gyldne regel: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>?</p>
-            </div>
-
-            <div class="detektiv-progress">
-                <span>Opgave ${detektivIndex + 1} af ${DETEKTIV_TASKS.length}</span>
-                <span>Score: ${detektivScore} point ⭐</span>
-            </div>
-
-            <div class="detektiv-card">
-                <div class="detektiv-context-tag">📍 Kontekst: ${task.sceneContext}</div>
-                <div class="detektiv-prompt-sentence">
-                    ${task.sentenceParts[0]}<span class="detektiv-blank" id="detektiv-blank">_____</span>${task.sentenceParts[1]}
-                </div>
-                <div class="detektiv-question-hint">
-                    💡 <strong>Detektivens ledetråd:</strong> ${task.hint}
-                </div>
-
-                <div class="detektiv-options" id="detektiv-options-grid"></div>
-                <div id="detektiv-feedback-box"></div>
-                <button class="detektiv-next-btn" id="detektiv-next-btn" style="display: none;">
-                    ${detektivIndex < DETEKTIV_TASKS.length - 1 ? 'Næste opgave ➔' : 'Se samlet resultat 🏆'}
-                </button>
-            </div>
-        `;
-
-        const optionsGrid = detektivWrap.querySelector('#detektiv-options-grid');
-        const feedbackBox = detektivWrap.querySelector('#detektiv-feedback-box');
-        const nextBtn = detektivWrap.querySelector('#detektiv-next-btn');
-        const blankSpan = detektivWrap.querySelector('#detektiv-blank');
-
-        const choices = [
-            { word: task.correctWord, isCorrect: true, sub: task.correctWord.endsWith('t') ? 'Handling (+t)' : 'Særform' },
-            { word: task.distractorWord, isCorrect: false, sub: task.distractorWord.endsWith('t') ? 'Handling (+t)' : 'Ting (grundform)' }
-        ];
-        // Shuffle options
-        choices.sort(() => (task.id % 2 === 0 ? 1 : -1));
-
-        choices.forEach(ch => {
-            const btn = document.createElement('button');
-            btn.className = 'detektiv-opt-btn';
-            btn.innerHTML = `
-                <span>${ch.word}</span>
-                <span class="detektiv-opt-sub">${ch.sub}</span>
-            `;
-
-            btn.onclick = () => {
-                if (detektivAnswered) return;
-                detektivAnswered = true;
-
-                blankSpan.textContent = ch.word;
-
-                if (ch.isCorrect) {
-                    btn.classList.add('correct');
-                    detektivScore += 10;
-                    feedbackBox.className = 'detektiv-feedback correct';
-                    feedbackBox.innerHTML = task.feedbackCorrect;
-                    speakDanish(ch.word);
-                } else {
-                    btn.classList.add('wrong');
-                    feedbackBox.className = 'detektiv-feedback wrong';
-                    feedbackBox.innerHTML = task.feedbackWrong;
-                    // Highlight correct button
-                    optionsGrid.querySelectorAll('.detektiv-opt-btn').forEach(b => {
-                        if (b.textContent.includes(task.correctWord)) b.classList.add('correct');
-                    });
-                }
-
-                nextBtn.style.display = 'block';
-            };
-
-            optionsGrid.appendChild(btn);
-        });
-
-        nextBtn.onclick = () => {
-            detektivAnswered = false;
-            if (detektivIndex < DETEKTIV_TASKS.length - 1) {
-                detektivIndex++;
-                renderTabDetektiv(container);
-            } else {
-                renderDetektivSummary(container);
-            }
-        };
-
-        container.appendChild(detektivWrap);
-    }
-
-    function renderDetektivSummary(container) {
-        const wrap = document.createElement('div');
-        wrap.className = 'detektiv-container';
-        wrap.style.textAlign = 'center';
-
-        const maxScore = DETEKTIV_TASKS.length * 10;
-        const pct = Math.round((detektivScore / maxScore) * 100);
-
-        wrap.innerHTML = `
-            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
-            <h2 style="font-size: 2.2rem; color: #f472b6; margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
-            <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
-                Du fik <strong>${detektivScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
-            </p>
-            <div style="background: rgba(15, 23, 42, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                ${pct >= 80 ? '🌟 Fantastisk! Du har fuldstændig knækket koden til hvornår danskerne sætter -t på handlinger.' : 'God indsats! Prøv igen for at få 100% styr på -t reglen.'}
-            </div>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">🔄 Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-vaerksted">Gå til Aha-værkstedet ➔</button>
-            </div>
-        `;
-
-        wrap.querySelector('#detektiv-retry-btn').onclick = () => {
-            detektivIndex = 0;
-            detektivScore = 0;
-            detektivAnswered = false;
-            renderTabDetektiv(container);
-        };
-        wrap.querySelector('#detektiv-go-vaerksted').onclick = () => switchTab('tab_vaerksted');
-
-        container.appendChild(wrap);
-    }
-
-    // ==========================================
-    // TAB 3: AHA-VÆRKSTEDET (-t Transformeren & Mådes-kontraster)
+    // TAB 2: AHA-VÆRKSTEDET (-t Transformeren & Mådes-kontraster)
     // ==========================================
     let vaerkstedSubTab = 'transformer'; // 'transformer' or 'pairs'
 
@@ -1989,6 +1906,8 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     let selectedRightId = null;
 
     function renderTabVaerksted(container) {
+        container.innerHTML = '';
+
         const wrap = document.createElement('div');
         wrap.className = 'vaerksted-container';
 
@@ -2172,11 +2091,241 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     }
 
     // ==========================================
+    // TAB 3: DETEKTIVEN (-t reglen: Ting vs. Handling)
+    // ==========================================
+    const DETEKTIV_TASKS = [
+        {
+            id: 1,
+            sceneContext: 'Motorvejen og byen',
+            sentenceParts: ['Bussen kører meget ', ' på motorvejen.'],
+            correctWord: 'hurtigt',
+            distractorWord: 'hurtig',
+            targetType: 'handling',
+            hint: 'Spørg dig selv: Beskriver ordet bussen (en ting) eller måden den kører på (en handling)?',
+            feedbackCorrect: '💡 Fantastisk! Ordet beskriver verbet "kører" (handlingen) – derfor skal vi sætte -t på: hurtig + t = hurtigt!',
+            feedbackWrong: '⚠️ Prøv igen! Hvis det beskriver en handling (kører), skal vi sætte -t på ordet.'
+        },
+        {
+            id: 2,
+            sceneContext: 'Busstoppestedet',
+            sentenceParts: ['Det er en virkelig ', ' bus.'],
+            correctWord: 'hurtig',
+            distractorWord: 'hurtigt',
+            targetType: 'ting',
+            hint: 'Beskriver ordet bussen selv, eller hvordan den kører?',
+            feedbackCorrect: '💡 Præcis! Her beskriver ordet selve bussen (substantivet/tingen). Derfor er det et adjektiv UDEN adverbie-t: en hurtig bus!',
+            feedbackWrong: '⚠️ Pas på! Her taler vi om tingen (bussen), ikke handlingen at køre. Så skal der ikke -t på.'
+        },
+        {
+            id: 3,
+            sceneContext: 'Koncerten i parken',
+            sentenceParts: ['Anna synger utrolig ', ' foran publikum.'],
+            correctWord: 'smukt',
+            distractorWord: 'smuk',
+            targetType: 'handling',
+            hint: 'Beskriver ordet sangstemmen/handlingen at synge, eller Anna selv?',
+            feedbackCorrect: '💡 Lige i øjet! Ordet beskriver verbet "synger" (handlingen). Smuk + t = smukt!',
+            feedbackWrong: '⚠️ Ikke helt. Ordet knytter sig til verbet "synger", så vi skal have -t på.'
+        },
+        {
+            id: 4,
+            sceneContext: 'Køkkenet og middagen',
+            sentenceParts: ['Suppen smager virkelig ', ' i dag.'],
+            correctWord: 'godt',
+            distractorWord: 'god',
+            targetType: 'handling',
+            hint: 'Hvordan smager den? Beskriver fornemmelsen/handlingen.',
+            feedbackCorrect: '💡 Rigtigt! "Godt" beskriver måden noget smager eller udføres på: "smager godt", "laver mad godt"!',
+            feedbackWrong: '⚠️ Husk: "En god suppe" (ting), men "suppen smager godt" (handling/sansning).'
+        },
+        {
+            id: 5,
+            sceneContext: 'Biblioteket og caféen',
+            sentenceParts: ['Gæsterne sidder og læser ', ' ved bordet.'],
+            correctWord: 'stille',
+            distractorWord: 'stillet',
+            targetType: 'special',
+            hint: 'Læg mærke til ordets endelse – ender det allerede på -e?',
+            feedbackCorrect: '💡 Brilliant! "Stille" ender allerede på -e og får aldrig et ekstra -t: "at sidde stille".',
+            feedbackWrong: '⚠️ Pas på særreglen: "Stille" ender på -e og får IKKE ekstra -t.'
+        },
+        {
+            id: 6,
+            sceneContext: 'Byggepladsen',
+            sentenceParts: ['Håndværkeren slår ', ' med hammeren.'],
+            correctWord: 'hårdt',
+            distractorWord: 'hård',
+            targetType: 'handling',
+            hint: 'Beskriver ordet hammerens kraft (handlingen at slå), eller stenen?',
+            feedbackCorrect: '💡 Helt rigtigt! Det beskriver handlingen "slår". Hård + t = hårdt!',
+            feedbackWrong: '⚠️ Prøv igen. Det er måden han slår på, så vi skal have -t på.'
+        },
+        {
+            id: 7,
+            sceneContext: 'Klassen',
+            sentenceParts: ['Læreren forklarer lektien meget ', '.'],
+            correctWord: 'tydeligt',
+            distractorWord: 'tydelig',
+            targetType: 'handling',
+            hint: 'Hvordan forklarer hun? Beskriver handlingen "forklarer".',
+            feedbackCorrect: '💡 Korrekt! Ordet beskriver måden hun forklarer på (verbum). Tydelig + t = tydeligt!',
+            feedbackWrong: '⚠️ Hun forklarer på en tydelig måde: forklare tydeligt!'
+        },
+        {
+            id: 8,
+            sceneContext: 'Stuen med glas og kopper',
+            sentenceParts: ['Drengen bar koppen meget ', ' hen til bordet.'],
+            correctWord: 'forsigtigt',
+            distractorWord: 'forsigtig',
+            targetType: 'handling',
+            hint: 'Hvordan bar han den? Han passede på under handlingen.',
+            feedbackCorrect: '💡 Super flot! Han bar den forsigtigt. Ordet beskriver verbet "bar".',
+            feedbackWrong: '⚠️ Han udførte handlingen med stor omhu: bar forsigtigt!'
+        }
+    ];
+
+    let detektivIndex = 0;
+    let detektivScore = 0;
+    let detektivAnswered = false;
+
+    function renderTabDetektiv(container) {
+        container.innerHTML = '';
+
+        const detektivWrap = document.createElement('div');
+        detektivWrap.className = 'detektiv-container';
+
+        const task = DETEKTIV_TASKS[detektivIndex];
+
+        detektivWrap.innerHTML = `
+            <div class="detektiv-header">
+                <h2>🔍 -t Detektiven: Ting eller Handling?</h2>
+                <p style="color: #94a3b8; margin: 0;">Træn den gyldne regel: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>?</p>
+            </div>
+
+            <div class="detektiv-progress">
+                <span>Opgave ${detektivIndex + 1} af ${DETEKTIV_TASKS.length}</span>
+                <span>Score: ${detektivScore} point ⭐</span>
+            </div>
+
+            <div class="detektiv-card">
+                <div class="detektiv-context-tag">📍 Kontekst: ${task.sceneContext}</div>
+                <div class="detektiv-prompt-sentence">
+                    ${task.sentenceParts[0]}<span class="detektiv-blank" id="detektiv-blank">_____</span>${task.sentenceParts[1]}
+                </div>
+                <div class="detektiv-question-hint">
+                    💡 <strong>Detektivens ledetråd:</strong> ${task.hint}
+                </div>
+
+                <div class="detektiv-options" id="detektiv-options-grid"></div>
+                <div id="detektiv-feedback-box"></div>
+                <button class="detektiv-next-btn" id="detektiv-next-btn" style="display: none;">
+                    ${detektivIndex < DETEKTIV_TASKS.length - 1 ? 'Næste opgave ➔' : 'Se samlet resultat 🏆'}
+                </button>
+            </div>
+        `;
+
+        const optionsGrid = detektivWrap.querySelector('#detektiv-options-grid');
+        const feedbackBox = detektivWrap.querySelector('#detektiv-feedback-box');
+        const nextBtn = detektivWrap.querySelector('#detektiv-next-btn');
+        const blankSpan = detektivWrap.querySelector('#detektiv-blank');
+
+        const choices = [
+            { word: task.correctWord, isCorrect: true, sub: task.correctWord.endsWith('t') ? 'Handling (+t)' : 'Særform' },
+            { word: task.distractorWord, isCorrect: false, sub: task.distractorWord.endsWith('t') ? 'Handling (+t)' : 'Ting (grundform)' }
+        ];
+        // Stable alternation
+        choices.sort(() => (task.id % 2 === 0 ? 1 : -1));
+
+        choices.forEach(ch => {
+            const btn = document.createElement('button');
+            btn.className = 'detektiv-opt-btn';
+            btn.innerHTML = `
+                <span>${ch.word}</span>
+                <span class="detektiv-opt-sub">${ch.sub}</span>
+            `;
+
+            btn.onclick = () => {
+                if (detektivAnswered) return;
+                detektivAnswered = true;
+
+                blankSpan.textContent = ch.word;
+
+                if (ch.isCorrect) {
+                    btn.classList.add('correct');
+                    detektivScore += 10;
+                    feedbackBox.className = 'detektiv-feedback correct';
+                    feedbackBox.innerHTML = task.feedbackCorrect;
+                    speakDanish(ch.word);
+                } else {
+                    btn.classList.add('wrong');
+                    feedbackBox.className = 'detektiv-feedback wrong';
+                    feedbackBox.innerHTML = task.feedbackWrong;
+                    optionsGrid.querySelectorAll('.detektiv-opt-btn').forEach(b => {
+                        if (b.textContent.includes(task.correctWord)) b.classList.add('correct');
+                    });
+                }
+
+                nextBtn.style.display = 'block';
+            };
+
+            optionsGrid.appendChild(btn);
+        });
+
+        nextBtn.onclick = () => {
+            detektivAnswered = false;
+            if (detektivIndex < DETEKTIV_TASKS.length - 1) {
+                detektivIndex++;
+                renderTabDetektiv(container);
+            } else {
+                renderDetektivSummary(container);
+            }
+        };
+
+        container.appendChild(detektivWrap);
+    }
+
+    function renderDetektivSummary(container) {
+        const wrap = document.createElement('div');
+        wrap.className = 'detektiv-container';
+        wrap.style.textAlign = 'center';
+
+        const maxScore = DETEKTIV_TASKS.length * 10;
+        const pct = Math.round((detektivScore / maxScore) * 100);
+
+        wrap.innerHTML = `
+            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
+            <h2 style="font-size: 2.2rem; color: #f472b6; margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
+            <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
+                Du fik <strong>${detektivScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
+            </p>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                ${pct >= 80 ? '🌟 Fantastisk! Du har fuldstændig knækket koden til hvornår danskerne sætter -t på handlinger.' : 'God indsats! Prøv igen for at få 100% styr på -t reglen.'}
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">🔄 Prøv igen</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren ➔</button>
+            </div>
+        `;
+
+        wrap.querySelector('#detektiv-retry-btn').onclick = () => {
+            detektivIndex = 0;
+            detektivScore = 0;
+            detektivAnswered = false;
+            renderTabDetektiv(container);
+        };
+        wrap.querySelector('#detektiv-go-saetning').onclick = () => switchTab('tab_saetning');
+
+        container.appendChild(wrap);
+    }
+
+    // ==========================================
     // TAB 4: SÆTNINGSBYGGEREN (To-trins modellen)
     // ==========================================
     let saetningSubTab = 'builder'; // 'builder' or 'puzzle'
+    let currentMaadeChallengeIdx = 0;
+    const completedMaadeChallenges = new Set();
 
-    // Step 1 Category Choices
+    // Sektion 1 Category Choices
     const BUILDER_CATEGORIES = {
         subjekt: [
             { text: 'Bussen', role: 'Subjekt (køretøj)' },
@@ -2227,12 +2376,14 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         rest: 'på vejen'
     };
 
-    // Step 2 Challenge Tasks with Puzzle Flow
-    const MAADE_PUZZLE_TASKS = [
+    // Sektion 2 Challenge Tasks with Puzzle Flow
+    const MAADE_CHALLENGE_TASKS = [
         {
             id: 1,
-            title: 'Opgave 1: Løberen i parken',
-            context: 'Løberen deltager i et vigtigt byløb og har masser af energi.',
+            context: 'Løberen deltager i et byløb og har masser af energi.',
+            subjekt: 'Løberen',
+            verbum: 'løber',
+            rest: 'gennem parken',
             questionPrompt: 'Hvordan løber han gennem parken?',
             correctAdv: 'hurtigt',
             distractors: ['langsomt', 'stille', 'grimt'],
@@ -2255,8 +2406,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         },
         {
             id: 2,
-            title: 'Opgave 2: Konditoren og kagen',
             context: 'Konditoren bruger mange timer på at dekorere bryllupskagen.',
+            subjekt: 'Konditoren',
+            verbum: 'pynter',
+            rest: 'den store kage',
             questionPrompt: 'Hvordan pynter hun kagen til gæsterne?',
             correctAdv: 'pænt',
             distractors: ['grimt', 'hårdt', 'forkert'],
@@ -2279,8 +2432,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         },
         {
             id: 3,
-            title: 'Opgave 3: Vejarbejderen med hammeren',
             context: 'Brostenene sidder fast i jorden og kræver store kræfter.',
+            subjekt: 'Manden',
+            verbum: 'slår',
+            rest: 'på de faste sten',
             questionPrompt: 'Hvordan slår han med den tunge hammer?',
             correctAdv: 'hårdt',
             distractors: ['blødt', 'stille', 'langsomt'],
@@ -2303,8 +2458,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         },
         {
             id: 4,
-            title: 'Opgave 4: Læreren foran eleverne',
             context: 'Eleverne skal lære de nye ord og lytter opmærksomt.',
+            subjekt: 'Læreren',
+            verbum: 'taler',
+            rest: 'foran alle eleverne',
             questionPrompt: 'Hvordan taler læreren foran klassen?',
             correctAdv: 'tydeligt',
             distractors: ['svært', 'stille', 'dårligt'],
@@ -2327,8 +2484,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         },
         {
             id: 5,
-            title: 'Opgave 5: Katten på havepuden',
             context: 'Katten hopper ned fra stakittet og rammer puden.',
+            subjekt: 'Katten',
+            verbum: 'lander',
+            rest: 'på den bløde pude',
             questionPrompt: 'Hvordan lander katten på puden?',
             correctAdv: 'blødt',
             distractors: ['hårdt', 'grimt', 'højt'],
@@ -2346,13 +2505,15 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. Hvor?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Præpositionsled]'],
-            chips: ['Katten', 'lander', 'blødt', 'på den lyserøde pude'],
-            correctSentence: ['Katten', 'lander', 'blødt', 'på den lyserøde pude']
+            chips: ['Katten', 'lander', 'blødt', 'på den bløde pude'],
+            correctSentence: ['Katten', 'lander', 'blødt', 'på den bløde pude']
         },
         {
             id: 6,
-            title: 'Opgave 6: Drengen med den store is',
-            context: 'Isen har fire store kugler og må ikke falde ned på jorden.',
+            context: 'Isen har fire store kugler og må ikke falde på jorden.',
+            subjekt: 'Drengen',
+            verbum: 'bærer',
+            rest: 'den store isvaffel',
             questionPrompt: 'Hvordan bærer drengen isen?',
             correctAdv: 'forsigtigt',
             distractors: ['hurtigt', 'hårdt', 'forkert'],
@@ -2375,413 +2536,429 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         }
     ];
 
-    let currentPuzzleTaskIdx = 0;
-    let puzzlePlacedWords = [];
-    let puzzleSelectedAdv = null;
-    let puzzleStepPhase = 1; // 1 = Vælg adverbium, 2 = Saml puslespil
+    function renderTabSaetning(parent) {
+        parent.innerHTML = '';
 
-    function renderTabSaetning(container) {
-        const wrap = document.createElement('div');
-        wrap.className = 'saetning-container';
+        const container = document.createElement('div');
+        container.className = 'saetning-container';
 
-        wrap.innerHTML = `
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem; color: #f472b6; margin-bottom: 0.5rem;">🧱 Sætningsbyggeren</h2>
-                <p style="color: #94a3b8; margin: 0;">Opbyg korrekte danske sætninger med hjælp fra de 4 vigtige spørgsmål.</p>
-            </div>
+        // Sub Navigation: 1. Udforsk sætningen vs 2. Pusleopgaven
+        const subNav = document.createElement('div');
+        subNav.className = 'sb-sub-nav';
 
-            <div class="sb-nav">
-                <button class="sb-nav-btn ${saetningSubTab === 'builder' ? 'active' : ''}" id="sb-nav-explore">
-                    🧩 Sektion 1: Udforsk sætningen (Hjælpespørgsmål)
-                </button>
-                <button class="sb-nav-btn ${saetningSubTab === 'puzzle' ? 'active' : ''}" id="sb-nav-puzzle">
-                    🎯 Sektion 2: Pusleopgaven (Udfordring)
-                </button>
-            </div>
+        const subTab1Btn = document.createElement('button');
+        subTab1Btn.className = `sb-sub-btn ${saetningSubTab === 'builder' ? 'active' : ''}`;
+        subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk sætningen (Hjælpespørgsmål)`;
 
-            <div id="sb-subcontent"></div>
-        `;
+        const subTab2Btn = document.createElement('button');
+        subTab2Btn.className = `sb-sub-btn ${saetningSubTab === 'puzzle' ? 'active' : ''}`;
+        subTab2Btn.innerHTML = `<span>🧩</span> 2. Pusleopgaven (Udfordring)`;
 
-        wrap.querySelector('#sb-nav-explore').onclick = () => {
+        subNav.appendChild(subTab1Btn);
+        subNav.appendChild(subTab2Btn);
+        container.appendChild(subNav);
+
+        const freeContainer = document.createElement('div');
+        freeContainer.style.display = saetningSubTab === 'builder' ? 'block' : 'none';
+
+        const challengeContainer = document.createElement('div');
+        challengeContainer.style.display = saetningSubTab === 'puzzle' ? 'block' : 'none';
+
+        container.appendChild(freeContainer);
+        container.appendChild(challengeContainer);
+
+        subTab1Btn.onclick = () => {
             saetningSubTab = 'builder';
-            renderTabSaetning(container);
+            subTab1Btn.classList.add('active');
+            subTab2Btn.classList.remove('active');
+            freeContainer.style.display = 'block';
+            challengeContainer.style.display = 'none';
         };
-        wrap.querySelector('#sb-nav-puzzle').onclick = () => {
+
+        subTab2Btn.onclick = () => {
             saetningSubTab = 'puzzle';
-            renderTabSaetning(container);
+            subTab2Btn.classList.add('active');
+            subTab1Btn.classList.remove('active');
+            freeContainer.style.display = 'none';
+            challengeContainer.style.display = 'block';
+            setupChallengeSection();
         };
 
-        const subContent = wrap.querySelector('#sb-subcontent');
+        // ==========================================
+        // SEKTION 1: UDFORSK SÆTNINGEN
+        // ==========================================
+        function setupFreeBuilder() {
+            freeContainer.innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med mådesadverbier</h3>
+                    <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                        Vælg ét element fra hver række herunder. Læg mærke til hjælpespørgsmålene, og lyt til hvordan sætningen lyder!
+                    </p>
+                </div>
 
-        if (saetningSubTab === 'builder') {
-            renderBuilderSection(subContent);
-        } else {
-            renderPuzzleSection(subContent);
-        }
-
-        container.appendChild(wrap);
-    }
-
-    function renderBuilderSection(subContainer) {
-        subContainer.innerHTML = `
-            <div class="category-builder-rows">
-                <!-- Row 1: Hvem taler vi om? -->
-                <div class="category-row-card">
-                    <div class="category-row-header">
-                        <div class="cat-badge-title cat-title-subjekt">
-                            <span>👤</span> 1. Hvem eller hvad taler vi om?
+                <div class="category-builder-rows">
+                    <!-- Row 1: Hvem taler vi om? -->
+                    <div class="category-row-card">
+                        <div class="category-row-header">
+                            <div class="cat-badge-title cat-title-subjekt">
+                                <span>👤</span> 1. Hvem eller hvad taler vi om?
+                            </div>
+                            <span class="cat-grammar-role">[Subjekt / Grundled]</span>
                         </div>
-                        <span class="cat-grammar-role">[Subjekt / Grundled]</span>
+                        <div class="category-options-flex" id="chips-subjekt"></div>
                     </div>
-                    <div class="category-options-flex" id="chips-subjekt"></div>
-                </div>
 
-                <!-- Row 2: Hvad laver personen? -->
-                <div class="category-row-card">
-                    <div class="category-row-header">
-                        <div class="cat-badge-title cat-title-verbum">
-                            <span>⚡</span> 2. Hvad laver personen eller tingen?
+                    <!-- Row 2: Hvad laver personen? -->
+                    <div class="category-row-card">
+                        <div class="category-row-header">
+                            <div class="cat-badge-title cat-title-verbum">
+                                <span>⚡</span> 2. Hvad laver personen eller tingen?
+                            </div>
+                            <span class="cat-grammar-role">[Verbum / Udsagnsled]</span>
                         </div>
-                        <span class="cat-grammar-role">[Verbum / Udsagnsled]</span>
+                        <div class="category-options-flex" id="chips-verbum"></div>
                     </div>
-                    <div class="category-options-flex" id="chips-verbum"></div>
-                </div>
 
-                <!-- Row 3: Hvordan foregår handlingen? -->
-                <div class="category-row-card" style="border: 1.5px solid #ec4899; background: rgba(236, 72, 153, 0.05);">
-                    <div class="category-row-header">
-                        <div class="cat-badge-title cat-title-maade">
-                            <span>⭐</span> 3. Hvordan foregår handlingen? (Mådesadverbium)
+                    <!-- Row 3: Hvordan foregår handlingen? -->
+                    <div class="category-row-card" style="border: 1.5px solid #ec4899; background: rgba(236, 72, 153, 0.05);">
+                        <div class="category-row-header">
+                            <div class="cat-badge-title cat-title-maade">
+                                <span>⭐</span> 3. Hvordan foregår handlingen? (Mådesadverbium)
+                            </div>
+                            <span class="cat-grammar-role" style="color: #f472b6; border: 1px solid #ec4899;">[Mådesadverbium med -t]</span>
                         </div>
-                        <span class="cat-grammar-role" style="color: #f472b6; border: 1px solid #ec4899;">[Mådesadverbium med -t]</span>
+                        <div class="category-options-flex" id="chips-maade"></div>
                     </div>
-                    <div class="category-options-flex" id="chips-maade"></div>
-                </div>
 
-                <!-- Row 4: Hvor eller hvad? -->
-                <div class="category-row-card">
-                    <div class="category-row-header">
-                        <div class="cat-badge-title cat-title-rest">
-                            <span>📍</span> 4. Hvor, hvad eller hvordan ellers?
+                    <!-- Row 4: Hvor eller hvad? -->
+                    <div class="category-row-card">
+                        <div class="category-row-header">
+                            <div class="cat-badge-title cat-title-rest">
+                                <span>📍</span> 4. Hvor, hvad eller hvordan ellers?
+                            </div>
+                            <span class="cat-grammar-role">[Restled / Præpositionsled / Objekt]</span>
                         </div>
-                        <span class="cat-grammar-role">[Restled / Præpositionsled / Objekt]</span>
+                        <div class="category-options-flex" id="chips-rest"></div>
                     </div>
-                    <div class="category-options-flex" id="chips-rest"></div>
-                </div>
-            </div>
-
-            <!-- Live Showcase -->
-            <div class="live-sentence-showcase">
-                <div class="live-sentence-label">Din sammensatte sætning:</div>
-                <div class="live-sentence-text" id="live-sentence-text"></div>
-                <div class="live-sentence-actions">
-                    <button class="live-audio-btn" id="live-audio-speak-btn">
-                        <span>🔊</span> Hør sætning
-                    </button>
-                </div>
-            </div>
-        `;
-
-        // Populate chips
-        const categories = ['subjekt', 'verbum', 'maade', 'rest'];
-        categories.forEach(cat => {
-            const container = subContainer.querySelector(`#chips-${cat}`);
-            BUILDER_CATEGORIES[cat].forEach(item => {
-                const btn = document.createElement('button');
-                btn.className = `cat-option-chip ${selectedBuilderWords[cat] === item.text ? 'selected' : ''}`;
-                btn.textContent = item.text;
-                btn.onclick = () => {
-                    selectedBuilderWords[cat] = item.text;
-                    updateLiveSentence();
-                    renderBuilderSection(subContainer);
-                };
-                container.appendChild(btn);
-            });
-        });
-
-        function updateLiveSentence() {
-            const display = subContainer.querySelector('#live-sentence-text');
-            display.innerHTML = `
-                <span class="live-word-subjekt">${selectedBuilderWords.subjekt}</span>
-                <span class="live-word-verbum">${selectedBuilderWords.verbum}</span>
-                <span class="live-word-maade">${selectedBuilderWords.maade}</span>
-                <span class="live-word-rest">${selectedBuilderWords.rest}.</span>
-            `;
-        }
-
-        updateLiveSentence();
-
-        subContainer.querySelector('#live-audio-speak-btn').onclick = () => {
-            const full = `${selectedBuilderWords.subjekt} ${selectedBuilderWords.verbum} ${selectedBuilderWords.maade} ${selectedBuilderWords.rest}.`;
-            speakDanish(full);
-        };
-    }
-
-    function renderPuzzleSection(subContainer) {
-        const task = MAADE_PUZZLE_TASKS[currentPuzzleTaskIdx];
-
-        subContainer.innerHTML = `
-            <!-- Task Navigation Pills -->
-            <div class="challenge-task-nav" id="puzzle-task-nav"></div>
-
-            <div style="background: #0f172a; border-radius: 18px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-                    <h3 style="font-size: 1.35rem; color: #f472b6; margin: 0;">${task.title}</h3>
-                    <span style="color: #94a3b8; font-size: 0.88rem; font-weight: 700;">
-                        ${puzzleStepPhase === 1 ? 'Trin 1: Vælg mådesadverbium' : 'Trin 2: Saml puslespillet'}
-                    </span>
                 </div>
 
-                <div style="background: rgba(30, 41, 59, 0.7); border-left: 4px solid #f472b6; padding: 1rem 1.2rem; border-radius: 8px; margin-bottom: 1.5rem; color: #fce7f3; font-size: 1.05rem;">
-                    <strong>Kontekst:</strong> ${task.context}
-                </div>
-
-                <div id="puzzle-phase-container"></div>
-            </div>
-        `;
-
-        // Render Task Nav Pills
-        const navPills = subContainer.querySelector('#puzzle-task-nav');
-        MAADE_PUZZLE_TASKS.forEach((t, idx) => {
-            const pill = document.createElement('button');
-            pill.className = `task-nav-pill ${currentPuzzleTaskIdx === idx ? 'active' : ''}`;
-            pill.textContent = `Udfordring ${idx + 1}`;
-            pill.onclick = () => {
-                currentPuzzleTaskIdx = idx;
-                puzzleStepPhase = 1;
-                puzzleSelectedAdv = null;
-                puzzlePlacedWords = [];
-                renderPuzzleSection(subContainer);
-            };
-            navPills.appendChild(pill);
-        });
-
-        const phaseContainer = subContainer.querySelector('#puzzle-phase-container');
-
-        if (puzzleStepPhase === 1) {
-            renderPhaseOne(phaseContainer, task);
-        } else {
-            renderPhaseTwo(phaseContainer, task);
-        }
-    }
-
-    function renderPhaseOne(phaseContainer, task) {
-        phaseContainer.innerHTML = `
-            <div style="font-size: 1.2rem; color: white; font-weight: 700; margin-bottom: 1.2rem; text-align: center;">
-                ❓ ${task.questionPrompt}
-            </div>
-
-            <div class="cloze-options-grid" id="phase1-options-grid"></div>
-            <div id="phase1-feedback-box"></div>
-        `;
-
-        const optionsGrid = phaseContainer.querySelector('#phase1-options-grid');
-        const feedbackBox = phaseContainer.querySelector('#phase1-feedback-box');
-
-        const allChoices = [task.correctAdv, ...task.distractors].sort(() => 0.5 - Math.random());
-
-        allChoices.forEach(choice => {
-            const btn = document.createElement('button');
-            btn.className = 'cloze-option-btn';
-            btn.textContent = choice;
-
-            btn.onclick = () => {
-                if (choice === task.correctAdv) {
-                    btn.classList.add('correct');
-                    puzzleSelectedAdv = choice;
-                    speakDanish(choice);
-
-                    feedbackBox.className = 'cloze-didactic-feedback';
-                    feedbackBox.innerHTML = `
-                        <strong>✓ Helt rigtigt!</strong> ${task.pedagogyNote}<br><br>
-                        <button class="detektiv-next-btn" style="margin: 0;" id="go-puzzle-btn">
-                            Fortsæt til puslespillet ➔
+                <!-- Live Showcase -->
+                <div class="live-sentence-showcase">
+                    <div class="live-sentence-label">Din sammensatte sætning:</div>
+                    <div class="live-sentence-text" id="live-sentence-text"></div>
+                    <div class="live-sentence-actions">
+                        <button class="live-audio-btn" id="live-audio-speak-btn">
+                            <span>🔊</span> Hør sætning
                         </button>
-                    `;
-
-                    feedbackBox.querySelector('#go-puzzle-btn').onclick = () => {
-                        puzzleStepPhase = 2;
-                        puzzlePlacedWords = [];
-                        renderPuzzleSection(phaseContainer.parentElement.parentElement);
-                    };
-                } else {
-                    btn.classList.add('wrong');
-                    feedbackBox.className = 'cloze-didactic-feedback';
-                    feedbackBox.style.borderColor = '#ef4444';
-                    feedbackBox.style.color = '#fee2e2';
-                    feedbackBox.textContent = `Prøv igen: ${choice} passer ikke til situationen.`;
-                }
-            };
-
-            optionsGrid.appendChild(btn);
-        });
-    }
-
-    function renderPhaseTwo(phaseContainer, task) {
-        phaseContainer.innerHTML = `
-            <div style="font-size: 1.15rem; color: #cbd5e1; margin-bottom: 1rem;">
-                Læg mærke til den fremhævede plads med <strong>⭐</strong> – der skal mådesadverbiet placeres. Klik på brikkerne i rigtig rækkefølge:
-            </div>
-
-            <!-- Architecture Flow Diagram -->
-            <div class="sb-structure-diagram">
-                <div class="structure-diagram-header">
-                    <span class="structure-diagram-badge">
-                        📌 ${task.structureTitle}
-                    </span>
-                    <span class="structure-diagram-hint">${task.structureNote}</span>
+                    </div>
                 </div>
-                <div class="structure-diagram-flow">
-                    ${task.flowSteps.map((step, sIdx) => `
-                        <div class="flow-step ${step.isTarget ? 'active-target' : ''}">
-                            <div style="font-size: 1.25rem;">${step.icon}</div>
-                            <div class="flow-num">${step.num}</div>
-                            <div class="flow-title">${step.title}</div>
-                            ${step.isTarget ? '<div class="flow-target-tag">HER STÅR ADVERBIET!</div>' : ''}
-                        </div>
-                        ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">➔</div>' : ''}
-                    `).join('')}
-                </div>
-            </div>
+            `;
 
-            <!-- Puzzle Slots -->
-            <div class="sb-puzzle-slots" id="puzzle-slots-grid"></div>
-
-            <!-- Chips Pool -->
-            <div class="sb-puzzle-chips" id="puzzle-chips-pool"></div>
-
-            <div id="puzzle-success-box"></div>
-        `;
-
-        const slotsGrid = phaseContainer.querySelector('#puzzle-slots-grid');
-        const chipsPool = phaseContainer.querySelector('#puzzle-chips-pool');
-        const successBox = phaseContainer.querySelector('#puzzle-success-box');
-
-        // Shuffled chips
-        const shuffled = [...task.chips].sort(() => 0.5 - Math.random());
-
-        function updateSlots() {
-            slotsGrid.innerHTML = '';
-            task.slots.forEach((slotLabel, idx) => {
-                const isAdvSlot = (idx === task.advSlotIndex);
-                const isFilled = Boolean(puzzlePlacedWords[idx]);
-
-                const slot = document.createElement('div');
-                slot.className = `sb-puzzle-slot ${isFilled ? 'filled' : ''} ${isAdvSlot ? 'target-adverbium-slot' : ''}`;
-
-                if (isAdvSlot) {
-                    const callout = document.createElement('div');
-                    callout.className = 'slot-target-callout';
-                    callout.textContent = isFilled ? '✓ Adverbium' : '⭐ Adverbiets plads ⭐';
-                    slot.appendChild(callout);
-                }
-
-                if (isFilled) {
-                    const span = document.createElement('span');
-                    span.style.marginTop = isAdvSlot ? '0.45rem' : '0';
-                    span.style.fontWeight = '800';
-                    span.style.fontSize = '1.1rem';
-                    if (isAdvSlot) span.style.color = '#f472b6';
-                    span.textContent = puzzlePlacedWords[idx];
-                    slot.appendChild(span);
-
-                    slot.onclick = () => {
-                        puzzlePlacedWords.splice(idx, 1);
-                        updateSlots();
-                        updateChips();
-                        successBox.innerHTML = '';
+            const categories = ['subjekt', 'verbum', 'maade', 'rest'];
+            categories.forEach(cat => {
+                const row = freeContainer.querySelector(`#chips-${cat}`);
+                BUILDER_CATEGORIES[cat].forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = `cat-option-chip ${selectedBuilderWords[cat] === item.text ? 'selected' : ''}`;
+                    btn.textContent = item.text;
+                    btn.onclick = () => {
+                        selectedBuilderWords[cat] = item.text;
+                        updateLiveSentence();
+                        setupFreeBuilder();
                     };
-                } else {
-                    const hintSpan = document.createElement('span');
-                    hintSpan.className = 'slot-hint';
-                    hintSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
-                    if (isAdvSlot) hintSpan.style.color = '#f472b6';
-                    hintSpan.textContent = slotLabel;
-                    slot.appendChild(hintSpan);
-
-                    const roleSpan = document.createElement('span');
-                    roleSpan.className = 'slot-role';
-                    roleSpan.textContent = task.roles[idx];
-                    slot.appendChild(roleSpan);
-                }
-
-                slotsGrid.appendChild(slot);
+                    row.appendChild(btn);
+                });
             });
 
-            checkCompletion();
+            function updateLiveSentence() {
+                const display = freeContainer.querySelector('#live-sentence-text');
+                if (display) {
+                    display.innerHTML = `
+                        <span class="live-word-subjekt">${selectedBuilderWords.subjekt}</span>
+                        <span class="live-word-verbum">${selectedBuilderWords.verbum}</span>
+                        <span class="live-word-maade">${selectedBuilderWords.maade}</span>
+                        <span class="live-word-rest">${selectedBuilderWords.rest}.</span>
+                    `;
+                }
+            }
+
+            updateLiveSentence();
+
+            freeContainer.querySelector('#live-audio-speak-btn').onclick = () => {
+                const full = `${selectedBuilderWords.subjekt} ${selectedBuilderWords.verbum} ${selectedBuilderWords.maade} ${selectedBuilderWords.rest}.`;
+                speakDanish(full);
+            };
         }
 
-        function updateChips() {
-            chipsPool.innerHTML = '';
-            shuffled.forEach(chipWord => {
-                const isAdv = (chipWord === task.advWord);
-                const isUsed = puzzlePlacedWords.includes(chipWord);
+        // ==========================================
+        // SEKTION 2: PUSLEOPGAVEN (UD FORDRING)
+        // ==========================================
+        function setupChallengeSection() {
+            challengeContainer.innerHTML = '';
 
+            const task = MAADE_CHALLENGE_TASKS[currentMaadeChallengeIdx];
+
+            // Header with pills
+            const header = document.createElement('div');
+            header.className = 'sb-task-header';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.innerHTML = `
+                <div style="font-size: 0.85rem; color: #f472b6; font-weight: 800; text-transform: uppercase;">
+                    Udfordring ${currentMaadeChallengeIdx + 1} af ${MAADE_CHALLENGE_TASKS.length}
+                </div>
+                <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg adverbiet & saml puslespillet</h3>
+            `;
+            header.appendChild(titleDiv);
+
+            const pills = document.createElement('div');
+            pills.className = 'sb-task-pills';
+            MAADE_CHALLENGE_TASKS.forEach((_, idx) => {
+                const pill = document.createElement('div');
+                pill.className = `sb-task-pill ${idx === currentMaadeChallengeIdx ? 'active' : ''} ${completedMaadeChallenges.has(idx) ? 'done' : ''}`;
+                pill.textContent = idx + 1;
+                pill.onclick = () => {
+                    currentMaadeChallengeIdx = idx;
+                    setupChallengeSection();
+                };
+                pills.appendChild(pill);
+            });
+            header.appendChild(pills);
+            challengeContainer.appendChild(header);
+
+            // Context card with helper question chips
+            const contextCard = document.createElement('div');
+            contextCard.className = 'sb-context-card';
+            contextCard.innerHTML = `
+                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-elements">
+                    <div class="sb-context-chip subjekt">
+                        <span class="sb-chip-role">1. Hvem?</span>
+                        <span>${task.subjekt}</span>
+                    </div>
+                    <div class="sb-context-chip verbum">
+                        <span class="sb-chip-role">2. Handling?</span>
+                        <span>${task.verbum}</span>
+                    </div>
+                    <div class="sb-context-chip rest">
+                        <span class="sb-chip-role">4. Hvor/Hvad?</span>
+                        <span>${task.rest}</span>
+                    </div>
+                </div>
+            `;
+            challengeContainer.appendChild(contextCard);
+
+            // Question box
+            const qBox = document.createElement('div');
+            qBox.className = 'sb-question-box';
+            qBox.innerHTML = `
+                <div style="font-size: 0.85rem; color: #f472b6; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
+                    Trin 1: Vælg det rigtige mådesadverbium
+                </div>
+                <div class="sb-question-text">${task.questionPrompt}</div>
+            `;
+            challengeContainer.appendChild(qBox);
+
+            // Options grid
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'sb-options-grid';
+
+            const puzzleContainer = document.createElement('div');
+            puzzleContainer.className = 'sb-puzzle-section';
+            puzzleContainer.style.display = 'none';
+
+            const allOptions = [task.correctAdv, ...task.distractors].sort(() => Math.random() - 0.5);
+
+            allOptions.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = `sb-puzzle-chip ${isAdv ? 'chip-is-adv' : ''} ${isUsed ? 'used' : ''}`;
-                btn.innerHTML = isAdv ? `<span>⭐</span> <span>${chipWord}</span>` : `<span>${chipWord}</span>`;
+                btn.className = 'sb-option-btn';
+                btn.textContent = opt;
 
                 btn.onclick = () => {
-                    if (puzzlePlacedWords.length < task.slots.length && !puzzlePlacedWords.includes(chipWord)) {
-                        puzzlePlacedWords.push(chipWord);
-                        updateSlots();
-                        updateChips();
+                    if (btn.classList.contains('correct')) return;
+
+                    if (opt === task.correctAdv) {
+                        btn.classList.add('correct');
+                        optionsGrid.querySelectorAll('.sb-option-btn').forEach(b => {
+                            if (b !== btn) b.style.opacity = '0.4';
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        speakDanish(opt);
+
+                        // Trigger Step 2: Puslespillet
+                        renderMaadePuzzleStep(puzzleContainer, task);
+                        puzzleContainer.style.display = 'block';
+                        if (typeof puzzleContainer.scrollIntoView === 'function') {
+                            puzzleContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    } else {
+                        btn.classList.add('incorrect');
+                        speakDanish("Prøv igen");
+                        setTimeout(() => btn.classList.remove('incorrect'), 600);
                     }
                 };
 
-                chipsPool.appendChild(btn);
+                optionsGrid.appendChild(btn);
             });
+
+            challengeContainer.appendChild(optionsGrid);
+            challengeContainer.appendChild(puzzleContainer);
         }
 
-        function checkCompletion() {
-            if (puzzlePlacedWords.length === task.correctSentence.length) {
-                const isCorrect = puzzlePlacedWords.every((w, i) => w === task.correctSentence[i]);
-                if (isCorrect) {
-                    const fullSentence = puzzlePlacedWords.join(' ') + '.';
-                    speakDanish(fullSentence);
+        // Step 2: Puslespil i udfordringen med tydelig grafisk visning af adverbiets placering
+        function renderMaadePuzzleStep(puzContainer, task) {
+            puzContainer.innerHTML = `
+                <div class="sb-puzzle-title">
+                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                </div>
+                <div class="sb-puzzle-desc">
+                    Læg mærke til den fremhævede plads med <strong>⭐</strong> – der skal mådesadverbiet placeres. Klik på brikkerne i den rigtige rækkefølge:
+                </div>
 
-                    successBox.className = 'cloze-didactic-feedback';
-                    successBox.style.borderColor = '#22c55e';
-                    successBox.style.background = 'rgba(34, 197, 94, 0.15)';
-                    successBox.style.color = '#dcfce7';
-                    successBox.innerHTML = `
-                        <div style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem;">
-                            🎉 Rigtigt samlet: "${fullSentence}"
-                        </div>
-                        <div style="font-size: 0.95rem; margin-bottom: 1rem;">
-                            Adverbiet <strong>"${task.advWord}"</strong> står korrekt på sin faste plads i sætningen!
-                        </div>
-                        <button class="detektiv-next-btn" style="margin: 0;" id="puzzle-next-task-btn">
-                            ${currentPuzzleTaskIdx < MAADE_PUZZLE_TASKS.length - 1 ? 'Næste pusleopgave ➔' : 'Gå til Kontekst-testen ➔'}
-                        </button>
-                    `;
+                <!-- Grafisk ordstillings-guide: Viser præcis hvor i sætningen adverbiet står -->
+                <div class="sb-structure-diagram">
+                    <div class="structure-diagram-header">
+                        <span class="structure-diagram-badge">
+                            📌 ${task.structureTitle}
+                        </span>
+                        <span class="structure-diagram-hint">${task.structureNote}</span>
+                    </div>
+                    <div class="structure-diagram-flow">
+                        ${task.flowSteps.map((step, sIdx) => `
+                            <div class="flow-step ${step.isTarget ? 'active-target' : ''}">
+                                <div style="font-size: 1.25rem;">${step.icon}</div>
+                                <div class="flow-num">${step.num}</div>
+                                <div class="flow-title">${step.title}</div>
+                                ${step.isTarget ? '<div class="flow-target-tag">HER STÅR ADVERBIET!</div>' : ''}
+                            </div>
+                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">➔</div>' : ''}
+                        `).join('')}
+                    </div>
+                </div>
 
-                    successBox.querySelector('#puzzle-next-task-btn').onclick = () => {
-                        if (currentPuzzleTaskIdx < MAADE_PUZZLE_TASKS.length - 1) {
-                            currentPuzzleTaskIdx++;
-                            puzzleStepPhase = 1;
-                            puzzlePlacedWords = [];
-                            renderPuzzleSection(phaseContainer.parentElement.parentElement);
-                        } else {
-                            switchTab('tab_kontekst');
+                <div class="sb-puzzle-slots" id="maade-puzzle-slots-grid"></div>
+                <div class="sb-puzzle-chips" id="maade-puzzle-chips-pool"></div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <button class="reset-slots-btn" id="maade-puzzle-reset-btn">↺ Nulstil brikker</button>
+                    <div id="maade-puzzle-status" style="font-weight: 700; color: #22c55e;"></div>
+                </div>
+            `;
+
+            const slotsGrid = puzContainer.querySelector('#maade-puzzle-slots-grid');
+            const chipsPool = puzContainer.querySelector('#maade-puzzle-chips-pool');
+            const resetBtn = puzContainer.querySelector('#maade-puzzle-reset-btn');
+            const statusEl = puzContainer.querySelector('#maade-puzzle-status');
+
+            let placedWords = [];
+            const shuffledChips = [...task.chips].sort(() => Math.random() - 0.5);
+
+            function updatePuzzleUI() {
+                slotsGrid.innerHTML = '';
+                task.slots.forEach((slotLabel, idx) => {
+                    const slot = document.createElement('div');
+                    const isAdvSlot = (idx === task.advSlotIndex);
+                    const isFilled = Boolean(placedWords[idx]);
+
+                    slot.className = `sb-puzzle-slot ${isFilled ? 'filled' : ''} ${isAdvSlot ? 'target-adverbium-slot' : ''}`;
+
+                    if (isAdvSlot) {
+                        const callout = document.createElement('div');
+                        callout.className = 'slot-target-callout';
+                        callout.innerHTML = isFilled ? '✓ Adverbium' : '⭐ Adverbiets plads ⭐';
+                        slot.appendChild(callout);
+                    }
+
+                    if (isFilled) {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
+                        wordSpan.style.fontWeight = '800';
+                        if (isAdvSlot) wordSpan.style.color = '#f472b6';
+                        wordSpan.textContent = placedWords[idx];
+                        slot.appendChild(wordSpan);
+
+                        slot.onclick = () => {
+                            placedWords.splice(idx, 1);
+                            updatePuzzleUI();
+                        };
+                    } else {
+                        const hintSpan = document.createElement('span');
+                        hintSpan.className = 'slot-hint';
+                        hintSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
+                        if (isAdvSlot) hintSpan.style.color = '#f472b6';
+                        hintSpan.textContent = slotLabel;
+                        slot.appendChild(hintSpan);
+
+                        const roleSpan = document.createElement('span');
+                        roleSpan.className = 'slot-role';
+                        roleSpan.textContent = task.roles[idx];
+                        slot.appendChild(roleSpan);
+                    }
+                    slotsGrid.appendChild(slot);
+                });
+
+                chipsPool.innerHTML = '';
+                shuffledChips.forEach(word => {
+                    const chip = document.createElement('button');
+                    const isAdvChip = (word === task.advWord);
+                    chip.className = `sb-puzzle-chip ${isAdvChip ? 'chip-is-adv' : ''} ${placedWords.includes(word) ? 'used' : ''}`;
+                    chip.innerHTML = isAdvChip
+                        ? `<span>⭐</span> <span>${word}</span>`
+                        : `<span>${word}</span>`;
+
+                    chip.onclick = () => {
+                        if (placedWords.length < task.slots.length && !placedWords.includes(word)) {
+                            placedWords.push(word);
+                            speakDanish(word);
+                            updatePuzzleUI();
                         }
                     };
+                    chipsPool.appendChild(chip);
+                });
+
+                if (placedWords.length === task.correctSentence.length) {
+                    const isCorrect = placedWords.every((w, i) => w === task.correctSentence[i]);
+                    if (isCorrect) {
+                        completedMaadeChallenges.add(currentMaadeChallengeIdx);
+                        statusEl.innerHTML = `
+                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="maade-task-next-btn">
+                                ${currentMaadeChallengeIdx < MAADE_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Gå til Kontekst-testen 🏆'}
+                            </button>
+                        `;
+                        speakDanish(placedWords.join(' '));
+
+                        puzContainer.querySelector('#maade-task-next-btn').onclick = () => {
+                            if (currentMaadeChallengeIdx < MAADE_CHALLENGE_TASKS.length - 1) {
+                                currentMaadeChallengeIdx++;
+                                setupChallengeSection();
+                            } else {
+                                switchTab('tab_kontekst');
+                            }
+                        };
+                    } else {
+                        statusEl.innerHTML = `<span style="color: #ef4444;">Ikke helt rigtig rækkefølge – prøv igen!</span>`;
+                    }
                 } else {
-                    successBox.className = 'cloze-didactic-feedback';
-                    successBox.style.borderColor = '#ef4444';
-                    successBox.style.background = 'rgba(239, 68, 68, 0.15)';
-                    successBox.style.color = '#fee2e2';
-                    successBox.textContent = 'Ordstillingen er ikke helt rigtig. Klik på en udfyldt plads for at tage et ord tilbage.';
+                    statusEl.innerHTML = '';
                 }
             }
+
+            resetBtn.onclick = () => {
+                placedWords = [];
+                updatePuzzleUI();
+            };
+
+            updatePuzzleUI();
         }
 
-        updateSlots();
-        updateChips();
+        setupFreeBuilder();
+        parent.appendChild(container);
     }
 
     // ==========================================
-    // TAB 5: KONTEKST-TESTEN (A1/A2 Hverdagssituationer)
+    // TAB 5: KONTEKST-TESTEN (14 Varierede Hverdagssituationer)
     // ==========================================
     const KONTEKST_TASKS = [
         {
@@ -2809,13 +2986,12 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             blank: '_____',
             correct: 'godt',
             options: ['godt', 'dårligt', 'hårdt'],
-            feedback: '💡 Rigtigt! Når mad smager fantastisk, har kokken lavet den godt!'
+            feedback: '💡 Rigtigt! Når kagen smager fantastisk, har konditoren bagt godt!'
         },
         {
             id: 4,
             scene: 'Byløbet',
-            sceneContext: 'Sport',
-            sentence: 'Han er i super god form og løber utrolig _____.',
+            sentence: 'Løberen er i super god form og løber utrolig _____.',
             blank: '_____',
             correct: 'hurtigt',
             options: ['hurtigt', 'langsomt', 'blødt'],
@@ -2823,7 +2999,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         },
         {
             id: 5,
-            scene: 'Flyttekasser med porcelæn',
+            scene: 'Flyttekassen med porcelæn',
             sentence: 'Hun passede meget på kopperne og bar kassen _____.',
             blank: '_____',
             correct: 'forsigtigt',
@@ -2837,7 +3013,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             blank: '_____',
             correct: 'tydeligt',
             options: ['tydeligt', 'stille', 'svært'],
-            feedback: '💡 Rigtigt! En klar stemme gør, at man taler tydeligt og er nem at forstå.'
+            feedback: '💡 Rigtigt! En klar stemme gør, at læreren taler tydeligt og er nem at forstå.'
         },
         {
             id: 7,
@@ -2846,7 +3022,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             blank: '_____',
             correct: 'nemt',
             options: ['nemt', 'svært', 'grimt'],
-            feedback: '💡 Rigtigt! Når noget ikke er svært, klarer man det nemt!'
+            feedback: '💡 Rigtigt! Når opgaven er let, klarer man den nemt.'
         },
         {
             id: 8,
@@ -2855,7 +3031,61 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             blank: '_____',
             correct: 'sammen',
             options: ['sammen', 'alene', 'forkert'],
-            feedback: '💡 Rigtigt! Gode venner leger sammen i fællesskab.'
+            feedback: '💡 Rigtigt! Gode venner hygger sig bedst, når de leger sammen.'
+        },
+        {
+            id: 9,
+            scene: 'Tømrerarbejdet',
+            sentence: 'Sømmet sidder meget fast, så tømreren må slå _____ med hammeren.',
+            blank: '_____',
+            correct: 'hårdt',
+            options: ['hårdt', 'blødt', 'stille'],
+            feedback: '💡 Rigtigt! Et genstridigt søm kræver stor fysisk kraft: at slå hårdt!'
+        },
+        {
+            id: 10,
+            scene: 'Kattens hop',
+            sentence: 'Katten hoppede ned fra havebordet og landede helt _____ på havepuden.',
+            blank: '_____',
+            correct: 'blødt',
+            options: ['blødt', 'hårdt', 'højt'],
+            feedback: '💡 Rigtigt! Katte lander lydløst og skånsomt: at lande blødt.'
+        },
+        {
+            id: 11,
+            scene: 'Trompetisten om aftenen',
+            sentence: 'Naboerne klagede, fordi musikeren spillede for _____ om aftenen.',
+            blank: '_____',
+            correct: 'højt',
+            options: ['højt', 'lavt', 'pænt'],
+            feedback: '💡 Rigtigt! Naboerne klagede over larmen, fordi han spillede med høj volumen: for højt!'
+        },
+        {
+            id: 12,
+            scene: 'Konditorens bryllupskage',
+            sentence: 'Konditoren brugte mange timer på at pynte kagen utroligt _____.',
+            blank: '_____',
+            correct: 'pænt',
+            options: ['pænt', 'grimt', 'svært'],
+            feedback: '💡 Rigtigt! Kagen blev pyntet med stor elegance og omhu: pænt!'
+        },
+        {
+            id: 13,
+            scene: 'Vejvisning i krydset',
+            sentence: 'Turisten kiggede på kortet og drejede heldigvis _____ i lyskrydset.',
+            blank: '_____',
+            correct: 'rigtigt',
+            options: ['rigtigt', 'forkert', 'dårligt'],
+            feedback: '💡 Rigtigt! Han fulgte kortet og fandt den rigtige vej: han drejede rigtigt!'
+        },
+        {
+            id: 14,
+            scene: 'Fred og ro i skoven',
+            sentence: 'Mads havde brug for ro og gik en lang tur i skoven helt _____.',
+            blank: '_____',
+            correct: 'alene',
+            options: ['alene', 'sammen', 'hårdt'],
+            feedback: '💡 Rigtigt! Han ville gerne være for sig selv i fred og ro: at gå alene.'
         }
     ];
 
@@ -2864,6 +3094,8 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     let kontekstAnswered = false;
 
     function renderTabKontekst(container) {
+        container.innerHTML = '';
+
         const wrap = document.createElement('div');
         wrap.className = 'kontekst-container';
 

@@ -479,13 +479,8 @@ export function renderAdverbierGradView(container, navigateFn) {
 
         /* Tab 1: Vrimmel Layout */
         .vrimmel-layout {
-            display: grid;
-            grid-template-columns: 1.6fr 1fr;
-            gap: 1.8rem;
-            align-items: start;
-        }
-        @media (max-width: 950px) {
-            .vrimmel-layout { grid-template-columns: 1fr; }
+            max-width: 1050px;
+            margin: 0 auto;
         }
 
         .vrimmel-stage-card {
@@ -1913,7 +1908,8 @@ export function renderAdverbierGradView(container, navigateFn) {
                     e.stopPropagation();
                     selectedWord = item;
                     speakDanish(item.word);
-                    renderTabVrimmel(parent);
+                    stage.querySelectorAll('.hotspot-pin').forEach(p => p.classList.remove('active'));
+                    pin.classList.add('active');
                 };
 
                 stage.appendChild(pin);
@@ -1922,92 +1918,7 @@ export function renderAdverbierGradView(container, navigateFn) {
 
         stageCard.appendChild(stage);
         layout.appendChild(stageCard);
-
-        // Right: Inspector Card
-        const inspector = document.createElement('div');
-        inspector.className = 'vrimmel-inspector';
-
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'inspector-header';
-        headerDiv.innerHTML = `
-            <span class="inspector-badge">Intensitet: ${selectedWord.tier}</span>
-            <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
-        `;
-
-        const titleH2 = document.createElement('h2');
-        titleH2.className = 'inspector-word-title';
-        titleH2.innerHTML = `<span>🌡️</span> ${selectedWord.word}`;
-
-        // Thermometer Visual Meter
-        const meterBox = document.createElement('div');
-        meterBox.className = 'grad-meter-box';
-        const pctWidth = Math.min(100, (selectedWord.levelPercent / 120) * 100);
-        meterBox.innerHTML = `
-            <div class="meter-label-row">
-                <span>Skala: ${selectedWord.levelPercent}%</span>
-                <span>${selectedWord.levelPercent > 100 ? '⚠️ Grænsen overskredet!' : selectedWord.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
-            </div>
-            <div class="meter-track">
-                <div class="meter-fill" style="width: ${pctWidth}%;"></div>
-            </div>
-        `;
-
-        const sceneBox = document.createElement('div');
-        sceneBox.className = 'inspector-scene-box';
-        sceneBox.innerHTML = `
-            <div class="scene-heading">📍 Situation på torvet</div>
-            <p class="scene-text">${selectedWord.sceneDesc}</p>
-        `;
-
-        const exBox = document.createElement('div');
-        exBox.className = 'inspector-scene-box';
-        exBox.style.background = 'rgba(168, 85, 247, 0.1)';
-        exBox.style.borderColor = 'rgba(168, 85, 247, 0.3)';
-        exBox.innerHTML = `
-            <div class="scene-heading" style="color: #c084fc;">💬 Eksempelsætning</div>
-            <p class="scene-text" style="font-weight: 700; color: #f8fafc;">"${selectedWord.contextSentence}"</p>
-        `;
-
-        const hintBox = document.createElement('div');
-        hintBox.className = 'inspector-scene-box';
-        hintBox.style.borderLeft = '4px solid #a855f7';
-        hintBox.innerHTML = `
-            <div class="scene-heading" style="color: #c084fc;">💡 Grammatisk tip</div>
-            <p class="scene-text" style="font-size: 0.95rem;">${selectedWord.ruleHint}</p>
-        `;
-
-        const actions = document.createElement('div');
-        actions.className = 'inspector-actions';
-        actions.innerHTML = `
-            <button class="inspector-btn-action" id="inspector-action-speak">
-                <span>🗣️</span> Hør sætning
-            </button>
-            <button class="inspector-btn-action" style="background: #9333ea;" id="inspector-action-next">
-                Næste ord ➔
-            </button>
-        `;
-
-        inspector.appendChild(headerDiv);
-        inspector.appendChild(titleH2);
-        inspector.appendChild(meterBox);
-        inspector.appendChild(sceneBox);
-        inspector.appendChild(exBox);
-        inspector.appendChild(hintBox);
-        inspector.appendChild(actions);
-
-        layout.appendChild(inspector);
         parent.appendChild(layout);
-
-        // Bind Inspector Events
-        inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(selectedWord.word);
-        inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(selectedWord.contextSentence);
-        inspector.querySelector('#inspector-action-next').onclick = () => {
-            const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === selectedWord.id);
-            const nextIdx = (currentIdx + 1) % ADVERBIER_GRAD_DATA.length;
-            selectedWord = ADVERBIER_GRAD_DATA[nextIdx];
-            speakDanish(selectedWord.word);
-            renderTabVrimmel(parent);
-        };
     }
 
     // ==========================================

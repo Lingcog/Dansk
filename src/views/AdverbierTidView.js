@@ -36,7 +36,7 @@ export function renderAdverbierTidView(container, navigateFn) {
         window.speechSynthesis.speak(utterance);
     }
 
-    // 19 Words Data for Felt 2 (Tid & Frekvens)
+    // 19 Words Data for Felt 2 (Tid & Frekvens) - Simple A1/A2 sentences
     const ADVERBIER_TID_DATA = [
         {
             id: 'nu',
@@ -48,9 +48,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 44,
             y: 64,
-            sceneDesc: 'Manden i jakkesæt kigger på sit armbåndsur lige i dette øjeblik og løber hurtigt.',
+            sceneDesc: 'Manden kigger på sit ur lige i dette øjeblik.',
             meaning: 'Lige i dette øjeblik / i nutiden',
-            sentence: 'Manden kigger på sit ur lige nu.',
+            sentence: 'Manden kigger på sit ur nu.',
             ruleHint: '"Nu" angiver nutid. Bruges ofte som 1. led i en sætning med inversion: "Nu har jeg travlt!"'
         },
         {
@@ -63,9 +63,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'frekvens',
             x: 17,
             y: 53,
-            sceneDesc: 'Bageren i sin hvide uniform smiler altid til kunder og naboer.',
+            sceneDesc: 'Bageren smiler altid til kunderne.',
             meaning: '100% af gangene / hver evig eneste dag uden undtagelse',
-            sentence: 'Bageren smiler altid til sine naboer om morgenen.',
+            sentence: 'Han smiler altid til mig.',
             ruleHint: 'Det højeste frekvensadverbium (100%). Modsat "aldrig". Står ofte som centraladverbium efter verbet.'
         },
         {
@@ -78,9 +78,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'frekvens',
             x: 92,
             y: 58,
-            sceneDesc: 'Familien på ladcyklen tager aldrig bilen i byens tætte myldretid.',
+            sceneDesc: 'Familien på cyklen tager aldrig bilen.',
             meaning: '0% af gangene / på intet tidspunkt',
-            sentence: 'Familien kører aldrig i bil i den travle bymidte.',
+            sentence: 'De kører aldrig i bil.',
             ruleHint: 'Det laveste frekvensadverbium (0%). Fungerer som benægtelse på samme plads som "ikke".'
         },
         {
@@ -93,10 +93,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'frekvens',
             x: 80,
             y: 66,
-            sceneDesc: 'Cyklisten i neongul jakke cykler ofte meget hurtigt gennem gaderne.',
+            sceneDesc: 'Manden cykler ofte gennem byen.',
             meaning: 'Mange gange / med kort tidsinterval',
-            sentence: 'Han cykler ofte meget hurtigt gennem byen.',
-            ruleHint: 'Angiver høj hyppighed. Er fuldstændig synonym med "tit".'
+            sentence: 'Vi cykler ofte på arbejde.',
+            ruleHint: 'Angiver høj hyppighed. Er synonym med "tit".'
         },
         {
             id: 'tit',
@@ -108,9 +108,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'frekvens',
             x: 28,
             y: 62,
-            sceneDesc: 'Postbuddet på sin røde budcykel standser tit foran bageriet.',
+            sceneDesc: 'Postbuddet kommer tit forbi her.',
             meaning: 'Ofte / mange gange i hverdagen',
-            sentence: 'Postbuddet kommer tit forbi med friske breve.',
+            sentence: 'Bussen kommer tit forbi.',
             ruleHint: 'Kort hverdagsord for "ofte". Bruges ekstremt meget i mundtligt dansk.'
         },
         {
@@ -123,9 +123,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'frekvens',
             x: 62,
             y: 48,
-            sceneDesc: 'Den gule bybus på kørebanen kommer sjældent for sent.',
+            sceneDesc: 'Den gule bybus kommer sjældent for sent.',
             meaning: 'Få gange / næsten aldrig',
-            sentence: 'Den gule bybus kommer sjældent for sent.',
+            sentence: 'Han kommer sjældent for sent.',
             ruleHint: 'Angiver lav hyppighed (ca. 10-20%). Det modsatte af "ofte" og "tit".'
         },
         {
@@ -138,10 +138,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 71,
             y: 31,
-            sceneDesc: 'DSB-toget oppe på viadukten er tæt på og ankommer snart til perronen.',
+            sceneDesc: 'Toget er tæt på og kommer snart.',
             meaning: 'Om kort tid / inden længe',
-            sentence: 'Toget ankommer snart til stationens perron.',
-            ruleHint: 'Viser at noget vil ske om kort tid ud i fremtiden (inden for få minutter eller dage).'
+            sentence: 'Toget kommer snart.',
+            ruleHint: 'Viser at noget vil ske om kort tid ud i fremtiden.'
         },
         {
             id: 'længe',
@@ -153,10 +153,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 65,
             y: 81,
-            sceneDesc: 'Studinen har siddet med sine bøger og mange kaffekopper i længe.',
+            sceneDesc: 'Kvinden har siddet på bænken længe.',
             meaning: 'I lang tid / med stor varighed',
-            sentence: 'Hun har siddet og læst på bænken i længe.',
-            ruleHint: 'Beskriver tidsrummets længde (varighed): "Hvor længe varer det? – Det varer længe."'
+            sentence: 'Hun har ventet længe på bænken.',
+            ruleHint: 'Beskriver tidsrummets længde (varighed): "Hvor længe venter du? – Jeg venter længe."'
         },
         {
             id: 'allerede',
@@ -168,10 +168,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 34,
             y: 46,
-            sceneDesc: 'Bageriet har allerede friskbagte rundstykker klar, selvom det er tidlig morgen.',
+            sceneDesc: 'Bageren har allerede frisk brød klar.',
             meaning: 'Tidligere end forventet',
-            sentence: 'Bageriet har allerede friskbagt brød klar.',
-            ruleHint: 'Vigtig didaktisk nuance! Viser overraskelse over, at noget sker FØR man forventede det.'
+            sentence: 'Bageren åbner allerede klokken 6.',
+            ruleHint: 'Vigtig didaktisk nuance! Viser at noget sker FØR man forventede det.'
         },
         {
             id: 'endnu',
@@ -183,10 +183,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 96,
             y: 47,
-            sceneDesc: 'Butikken med det lukkede skilt er ikke åbnet endnu.',
+            sceneDesc: 'Butikken er ikke åbnet endnu.',
             meaning: 'Indtil dette tidspunkt (især: "ikke endnu")',
-            sentence: 'Butikken er ikke åbnet endnu, men åbner kl. 9.',
-            ruleHint: '"Ikke endnu" = handlingen er ikke sket på nuværende tidspunkt, men forventes snart.'
+            sentence: 'Butikken er ikke åben endnu.',
+            ruleHint: '"Ikke endnu" = handlingen er ikke sket lige nu, men forventes snart.'
         },
         {
             id: 'stadig',
@@ -198,10 +198,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 59,
             y: 77,
-            sceneDesc: 'Den flittige studerende sidder stadig dybt fordybet i sine noter.',
+            sceneDesc: 'Kvinden sidder stadig og læser.',
             meaning: 'Fortsat / uændret uden stop',
-            sentence: 'Hun sidder stadig og forbereder sig til eksamen.',
-            ruleHint: 'Viser kontinuitet: En handling startede i fortiden og fortsætter uafbrudt i nutiden.'
+            sentence: 'Hun læser stadig i bogen.',
+            ruleHint: 'Viser kontinuitet: En handling startede før og fortsætter lige nu.'
         },
         {
             id: 'igen',
@@ -213,9 +213,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: null,
             x: 54,
             y: 56,
-            sceneDesc: 'Kvinden slår sin paraply op, da det begynder at dryppe igen.',
+            sceneDesc: 'Kvinden tager paraplyen frem igen.',
             meaning: 'En gang til / fornyet gentagelse',
-            sentence: 'Nu begynder det at regne igen over torvet.',
+            sentence: 'Nu regner det igen.',
             ruleHint: 'Viser gentagelse af noget, der allerede er sket før: "Prøv igen", "Det regner igen".'
         },
         {
@@ -228,10 +228,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 42,
             y: 70,
-            sceneDesc: 'Den travle pendler må af sted straks for ikke at misse sit tog.',
+            sceneDesc: 'Manden skynder sig af sted straks.',
             meaning: 'Lige med det samme / i dette sekund',
-            sentence: 'Han må løbe til toget straks for at nå det.',
-            ruleHint: 'Hurtigere og mere øjeblikkeligt end "snart". Betyder "uden forsinkelse".'
+            sentence: 'Jeg kommer straks!',
+            ruleHint: 'Hurtigere end "snart". Betyder "lige nu med det samme".'
         },
         {
             id: 'før',
@@ -243,9 +243,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 88,
             y: 84,
-            sceneDesc: 'Manden på bænken ser på et gammelt fotografi af, hvordan byen så ud før i tiden.',
+            sceneDesc: 'Manden ser på et billede fra før.',
             meaning: 'Tidligere i fortiden / førhen',
-            sentence: 'Sådan så torvet ud før i tiden.',
+            sentence: 'Jeg boede i Aarhus før.',
             ruleHint: 'Henviser til et tidligere tidspunkt i fortiden. Modsat "bagefter" og "nu".'
         },
         {
@@ -258,9 +258,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: null,
             x: 49,
             y: 22,
-            sceneDesc: 'Det høje tårnur på rådhuset har vist tiden i byen i mere end 100 år siden 1900.',
-            meaning: 'Fra et startpunkt i fortiden indtil nu / derefter',
-            sentence: 'Uret på tårnet har gået trofast siden år 1900.',
+            sceneDesc: 'Tårnuret har gået siden år 1900.',
+            meaning: 'Fra et startpunkt i fortiden indtil nu',
+            sentence: 'Uret har gået siden 1900.',
             ruleHint: 'Angiver startpunkt: "siden i morges", "siden 1900", eller tidsrum: "for længe siden".'
         },
         {
@@ -273,9 +273,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: 'tidspunkt',
             x: 9,
             y: 74,
-            sceneDesc: 'Personen henter morgenbrød først, og bagefter cykler han videre til arbejdet.',
+            sceneDesc: 'Først køber han brød, og bagefter går han.',
             meaning: 'Efter at noget andet er afsluttet',
-            sentence: 'Først henter han brød, og bagefter cykler han videre.',
+            sentence: 'Først spiser vi, og bagefter sover vi.',
             ruleHint: 'Kronologisk rækkefølge: Trin 1 sker først, og trin 2 sker bagefter.'
         },
         {
@@ -288,9 +288,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: null,
             x: 34,
             y: 31,
-            sceneDesc: 'De historiske byhuse med teglsten minder om, hvordan byen var engang.',
-            meaning: 'På et ubestemt tidspunkt i fortiden (eller fremtiden)',
-            sentence: 'Engang kørte der hestevogne og sporvogne i denne gade.',
+            sceneDesc: 'Byens huse viser, hvordan her var engang.',
+            meaning: 'På et ubestemt tidspunkt i fortiden',
+            sentence: 'Der var engang et gammelt slot her.',
             ruleHint: 'Klassisk historisk tidsmarkør: "Der var engang...", "Det var engang i 90\'erne".'
         },
         {
@@ -303,9 +303,9 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: null,
             x: 67,
             y: 13,
-            sceneDesc: 'Skyerne og solstrålerne over byen: Sommetider er det solrigt, og sommetider regner det.',
+            sceneDesc: 'Sommetider skinner solen over byen.',
             meaning: 'Nogle gange / af og til (ca. 50% af tilfældene)',
-            sentence: 'Sommetider skinner solen, og sommetider regner det.',
+            sentence: 'Sommetider skinner solen.',
             ruleHint: 'Mellemfrekvens (ca. 50%). Synonym med "nogle gange".'
         },
         {
@@ -318,10 +318,10 @@ export function renderAdverbierTidView(container, navigateFn) {
             pairType: null,
             x: 79,
             y: 46,
-            sceneDesc: 'Kiosken under viadukten holder foreløbig åbent indtil renoveringen begynder.',
+            sceneDesc: 'Kiosken holder foreløbig åbent.',
             meaning: 'Indtil videre / for nuværende',
-            sentence: 'Kiosken holder foreløbig åbent i formiddagstimerne.',
-            ruleHint: 'Betyder "for nuværende, men kan ændre sig senere": "Foreløbig ved vi ikke mere."'
+            sentence: 'Foreløbig bor jeg i København.',
+            ruleHint: 'Betyder "for nuværende, men det kan ændre sig senere".'
         }
     ];
 
@@ -884,7 +884,7 @@ export function renderAdverbierTidView(container, navigateFn) {
             transform: translateY(-2px);
         }
 
-        /* Tab 3: Frekvens-Barometret */
+        /* Tab 3: Frekvens-Barometret & Tidslinjen (Interaktive øvelser) */
         .barometer-container {
             background: #1e293b;
             border-radius: 20px;
@@ -907,21 +907,43 @@ export function renderAdverbierTidView(container, navigateFn) {
             color: #94a3b8;
             font-size: 1.05rem;
         }
+        .barometer-exercise-card {
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 1.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 2rem;
+        }
+        .barometer-card-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .barometer-card-desc {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+        }
         .frequency-ladder {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         .ladder-step {
-            background: #0f172a;
+            background: #1e293b;
             border-radius: 14px;
-            padding: 1rem 1.4rem;
+            padding: 0.9rem 1.3rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 2px dashed rgba(255, 255, 255, 0.15);
             transition: all 0.2s ease;
+            gap: 1rem;
         }
         .ladder-step.filled {
             border-style: solid;
@@ -929,126 +951,576 @@ export function renderAdverbierTidView(container, navigateFn) {
             background: rgba(245, 158, 11, 0.1);
         }
         .ladder-percent {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 900;
             color: #fbbf24;
-            min-width: 70px;
+            min-width: 65px;
         }
         .ladder-label {
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: #cbd5e1;
             flex-grow: 1;
-            padding: 0 1rem;
         }
         .ladder-target-slot {
-            min-width: 130px;
-            min-height: 40px;
-            background: #1e293b;
+            min-width: 140px;
+            min-height: 42px;
+            background: #0f172a;
             border-radius: 10px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border: 1.5px dashed rgba(255, 255, 255, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
             font-size: 1rem;
-            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0.4rem 0.8rem;
         }
-
-        /* Tab 4: Sætningsbyggeren */
-        .saetning-container {
-            background: #1e293b;
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .saetning-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .saetning-header h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-        .saetning-challenge-card {
-            background: #0f172a;
-            border-radius: 16px;
-            padding: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 1.5rem;
-        }
-        .saetning-focus-badge {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid #f59e0b;
-            color: #fbbf24;
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        .slots-drop-area {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            min-height: 70px;
-            background: #1e293b;
-            padding: 0.8rem;
-            border-radius: 14px;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            margin-bottom: 1.5rem;
-            align-items: center;
-        }
-        .slot-placeholder {
+        .ladder-target-slot.empty {
             color: #64748b;
-            font-size: 0.95rem;
-            margin: auto;
             font-style: italic;
+            font-size: 0.85rem;
         }
-        .chips-pool {
+        .ladder-target-slot.empty:hover {
+            border-color: #fbbf24;
+            background: rgba(245, 158, 11, 0.08);
+            color: #cbd5e1;
+        }
+        .ladder-target-slot.filled {
+            border-style: solid;
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.18);
+            color: #4ade80;
+        }
+        .barometer-pool-box {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .barometer-pool-title {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+        .barometer-chips-grid {
             display: flex;
-            gap: 0.8rem;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
+            gap: 0.6rem;
             justify-content: center;
         }
-        .saetning-chip {
+        .barometer-chip-btn {
             background: #334155;
             color: white;
             border: 1.5px solid rgba(255, 255, 255, 0.15);
-            padding: 0.7rem 1.2rem;
+            padding: 0.6rem 1.1rem;
             border-radius: 12px;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             user-select: none;
         }
-        .saetning-chip:hover {
+        .barometer-chip-btn:hover {
             background: #475569;
             border-color: #fbbf24;
             transform: translateY(-2px);
         }
-        .saetning-chip.slot-chip {
+        .barometer-chip-btn.selected {
             background: #d97706;
             border-color: #fbbf24;
+            color: white;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+            transform: scale(1.05);
         }
-        .saetning-feedback-box {
-            padding: 1rem 1.4rem;
+        .barometer-chip-btn.used {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .barometer-feedback-box {
+            min-height: 44px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .barometer-feedback-box.correct {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1.5px solid #22c55e;
+            color: #dcfce7;
+        }
+        .barometer-feedback-box.wrong {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid #ef4444;
+            color: #fee2e2;
+        }
+
+        /* Timeline exercise */
+        .timeline-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 700px) {
+            .timeline-slots-grid { grid-template-columns: 1fr; }
+        }
+        .timeline-slot-box {
+            background: #1e293b;
+            border-radius: 14px;
+            padding: 1.2rem 1rem;
+            text-align: center;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .timeline-slot-box.filled {
+            border-style: solid;
+            border-color: #38bdf8;
+            background: rgba(14, 165, 233, 0.15);
+        }
+        .timeline-slot-role {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+        .timeline-slot-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        /* Tab 4: Sætningsbyggeren (Fuld to-trins model som i verberne og Felt 1) */
+        .sentence-builder-card {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .sb-sub-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .sb-sub-btn {
+            background: rgba(15, 23, 42, 0.6);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            display: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .saetning-controls {
+        .sb-sub-btn:hover {
+            color: white;
+            border-color: #fbbf24;
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .sb-sub-btn.active {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: white;
+            border-color: #fbbf24;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        .grammar-legend-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+        }
+        .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+        .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-tid { background: #f59e0b; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
+        .chip-rest { background: #a855f7; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6); }
+
+        .sb-category-row {
+            margin-bottom: 1.3rem;
+            background: rgba(15, 23, 42, 0.45);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 4px solid #64748b;
+        }
+        .sb-cat-subjekt { border-left-color: #22c55e; }
+        .sb-cat-verbum { border-left-color: #ef4444; }
+        .sb-cat-tid { border-left-color: #f59e0b; }
+        .sb-cat-rest { border-left-color: #a855f7; }
+
+        .sb-category-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 0.7rem;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .sb-category-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sb-category-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+        }
+        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-cat-tid { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-cat-rest { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+        .sb-chips-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .sb-chip-btn {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #475569;
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .sb-chip-btn:hover {
+            color: white;
+            border-color: #94a3b8;
+            transform: translateY(-2px);
+        }
+        .sb-chip-btn.selected {
+            font-weight: 800;
+            transform: translateY(-2px);
+        }
+        .sb-cat-subjekt .sb-chip-btn.selected {
+            background: rgba(34, 197, 94, 0.25);
+            color: #4ade80;
+            border-color: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+        }
+        .sb-cat-verbum .sb-chip-btn.selected {
+            background: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            border-color: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+        }
+        .sb-cat-tid .sb-chip-btn.selected {
+            background: rgba(245, 158, 11, 0.25);
+            color: #fde68a;
+            border-color: #f59e0b;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+        .sb-cat-rest .sb-chip-btn.selected {
+            background: rgba(168, 85, 247, 0.25);
+            color: #d8b4fe;
+            border-color: #a855f7;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .sb-live-box {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 1.4rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .sb-live-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+        }
+        .sb-live-sentence {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .grammar-word { font-weight: 800; }
+        .word-substantiv { color: #4ade80; }
+        .word-verbum { color: #f87171; }
+        .word-tid { color: #fbbf24; }
+        .word-rest { color: #c084fc; }
+
+        .sb-listen-btn {
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid #f59e0b;
+            padding: 0.65rem 1.4rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sb-listen-btn:hover {
+            background: rgba(245, 158, 11, 0.15);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            transform: scale(1.03);
+        }
+
+        /* Task & Puzzle Mode */
+        .sb-task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .sb-task-pills {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+        .sb-task-pill {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #475569;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sb-task-pill.active {
+            border-color: #fbbf24;
+            color: white;
+            background: #d97706;
+        }
+        .sb-task-pill.done {
+            background: #22c55e;
+            color: #0f172a;
+            border-color: #22c55e;
+        }
+
+        .sb-context-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-context-title {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            margin-bottom: 0.8rem;
+        }
+        .sb-context-elements {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .sb-context-chip {
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .sb-context-chip.subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .sb-context-chip.tid { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .sb-context-chip.rest { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
+
+        .sb-question-box {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: 12px;
+            padding: 1rem 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .sb-question-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+        }
+        .sb-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-option-btn {
+            background: #1e293b;
+            color: white;
+            border: 2px solid #475569;
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .sb-option-btn:hover {
+            border-color: #fbbf24;
+            background: #334155;
+            transform: translateY(-2px);
+        }
+        .sb-option-btn.correct {
+            background: rgba(34, 197, 94, 0.25);
+            border-color: #22c55e;
+            color: #4ade80;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+        .sb-option-btn.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #f87171;
+        }
+
+        .sb-puzzle-section {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.35s ease;
+        }
+        .sb-puzzle-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sb-puzzle-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+        }
+        .sb-puzzle-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-puzzle-slot {
+            background: #0f172a;
+            border: 2px dashed #475569;
+            border-radius: 12px;
+            padding: 0.9rem;
+            min-height: 76px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            position: relative;
+        }
+        .sb-puzzle-slot .slot-hint {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+        .sb-puzzle-slot .slot-role {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.2rem;
+            opacity: 0.8;
+        }
+        .sb-puzzle-slot.filled {
+            border-style: solid;
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #fbbf24;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+        .sb-puzzle-chips {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .sb-puzzle-chip {
+            background: #334155;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sb-puzzle-chip:hover {
+            background: #475569;
+            border-color: #fbbf24;
+            transform: translateY(-2px);
+        }
+        .sb-puzzle-chip.used {
+            opacity: 0.25;
+            pointer-events: none;
         }
         .reset-slots-btn {
             background: transparent;
@@ -1063,21 +1535,6 @@ export function renderAdverbierTidView(container, navigateFn) {
         .reset-slots-btn:hover {
             color: white;
             border-color: white;
-        }
-        .check-saetning-btn {
-            background: #f59e0b;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .check-saetning-btn:hover {
-            background: #d97706;
-            transform: translateY(-2px);
         }
 
         /* Tab 5: Kontekst-testen (Model B) */
@@ -1633,7 +2090,7 @@ export function renderAdverbierTidView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 3: FREKVENS-BAROMETRET (100% TIL 0% SKALA)
+    // TAB 3: FREKVENS-BAROMETRET & TIDSLINJEN (INTERAKTIVE ØVELSER)
     // ==========================================
     const FREQUENCY_STEPS = [
         { percent: '100%', word: 'altid', label: 'Hver evig eneste gang uden undtagelse' },
@@ -1643,6 +2100,14 @@ export function renderAdverbierTidView(container, navigateFn) {
         { percent: '0%', word: 'aldrig', label: 'På intet tidspunkt overhovedet' }
     ];
 
+    // Tab 3 State
+    let ladderPlaced = { '100%': null, '75%': null, '50%': null, '20%': null, '0%': null };
+    let selectedLadderWord = null;
+
+    let timelinePlaced = [null, null, null]; // 0: Før, 1: Nu, 2: Bagefter
+    let selectedTimelineWord = null;
+    const TIMELINE_WORDS = ['Før', 'Nu', 'Bagefter'];
+
     function renderTabBarometer(parent) {
         const container = document.createElement('div');
         container.className = 'barometer-container';
@@ -1650,57 +2115,262 @@ export function renderAdverbierTidView(container, navigateFn) {
         const intro = document.createElement('div');
         intro.className = 'barometer-intro';
         intro.innerHTML = `
-            <h2>📊 Frekvens-Barometret</h2>
-            <p>I dansk samtale er det afgørende at kende de 5 klassiske frekvenstrin fra 100% (altid) til 0% (aldrig):</p>
+            <h2>📊 Frekvens-Trappen & Tidslinjen</h2>
+            <p>Træn dine tidsadverbier med to interaktive øvelser: Frekvensskalaen fra 100% til 0% og den kronologiske tidslinje!</p>
         `;
         container.appendChild(intro);
+
+        // ==========================================
+        // ØVELSE 1: FREKVENS-TRAPPEN (100% - 0%)
+        // ==========================================
+        const ladderCard = document.createElement('div');
+        ladderCard.className = 'barometer-exercise-card';
+        ladderCard.innerHTML = `
+            <div class="barometer-card-title">
+                <span>🪜</span> Øvelse 1: Frekvens-Trappen (100% til 0%)
+            </div>
+            <div class="barometer-card-desc">
+                Klik på et ord i puljen nedenfor, og klik derefter på det matchende trin på trappen:
+            </div>
+        `;
 
         const ladder = document.createElement('div');
         ladder.className = 'frequency-ladder';
 
         FREQUENCY_STEPS.forEach(step => {
             const row = document.createElement('div');
-            row.className = 'ladder-step filled';
-            row.innerHTML = `
-                <div class="ladder-percent">${step.percent}</div>
-                <div class="ladder-label">${step.label}</div>
-                <div class="ladder-target-slot" style="background: rgba(245, 158, 11, 0.2); border-color: #fbbf24; cursor: pointer;">
-                    ${step.word} 🔊
-                </div>
-            `;
-            row.querySelector('.ladder-target-slot').onclick = () => {
-                speakDanish(step.word);
+            const isFilled = ladderPlaced[step.percent] !== null;
+            row.className = `ladder-step ${isFilled ? 'filled' : ''}`;
+
+            const percentEl = document.createElement('div');
+            percentEl.className = 'ladder-percent';
+            percentEl.textContent = step.percent;
+            row.appendChild(percentEl);
+
+            const labelEl = document.createElement('div');
+            labelEl.className = 'ladder-label';
+            labelEl.textContent = step.label;
+            row.appendChild(labelEl);
+
+            const slotEl = document.createElement('div');
+            slotEl.className = `ladder-target-slot ${isFilled ? 'filled' : 'empty'}`;
+            slotEl.innerHTML = isFilled ? `${ladderPlaced[step.percent]} 🔊` : 'Klik for at placere';
+
+            slotEl.onclick = () => {
+                if (isFilled) {
+                    // Click filled slot to remove back to pool
+                    ladderPlaced[step.percent] = null;
+                    renderTabBarometer(parent);
+                } else if (selectedLadderWord) {
+                    // Try to place selected word
+                    handleLadderPlacement(step, ladderFeedback);
+                }
             };
+
+            row.appendChild(slotEl);
             ladder.appendChild(row);
         });
-        container.appendChild(ladder);
+        ladderCard.appendChild(ladder);
 
-        // Tidslinje-kort: Før ➔ Nu ➔ Bagefter
-        const timelineCard = document.createElement('div');
-        timelineCard.style.background = '#0f172a';
-        timelineCard.style.borderRadius = '16px';
-        timelineCard.style.padding = '1.5rem';
-        timelineCard.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-        timelineCard.style.textAlign = 'center';
-        timelineCard.innerHTML = `
-            <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #38bdf8;">⏰ Tidslinjen: Kronologisk rækkefølge</h3>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                <div style="background: #334155; padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 800; border: 1.5px solid #64748b; color: #94a3b8;">
-                    1. FØR (Fortid)
-                </div>
-                <span style="font-size: 1.5rem; color: #fbbf24;">➔</span>
-                <div style="background: #0284c7; padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 800; border: 1.5px solid #38bdf8; color: white;">
-                    2. NU (Nutid)
-                </div>
-                <span style="font-size: 1.5rem; color: #fbbf24;">➔</span>
-                <div style="background: #d97706; padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 800; border: 1.5px solid #fbbf24; color: white;">
-                    3. BAGEFTER (Fremtid / Næste skridt)
-                </div>
+        // Ladder Chips Pool
+        const ladderPoolBox = document.createElement('div');
+        ladderPoolBox.className = 'barometer-pool-box';
+
+        const placedWords = Object.values(ladderPlaced).filter(Boolean);
+        const ladderRemaining = FREQUENCY_STEPS.map(s => s.word).filter(w => !placedWords.includes(w));
+
+        ladderPoolBox.innerHTML = `
+            <div class="barometer-pool-title">
+                Ord der skal placeres (${ladderRemaining.length} tilbage):
             </div>
-            <p style="color: #94a3b8; font-size: 0.95rem; max-width: 600px; margin: 0 auto;">
-                <em>"<strong>Før</strong> spiste vi morgenmad. Lige <strong>nu</strong> cykler vi, og <strong>bagefter</strong> skal vi arbejde."</em>
-            </p>
+            <div class="barometer-chips-grid" id="ladder-chips-grid"></div>
         `;
+
+        const ladderChipsGrid = ladderPoolBox.querySelector('#ladder-chips-grid');
+        FREQUENCY_STEPS.forEach(s => {
+            const btn = document.createElement('button');
+            const isUsed = placedWords.includes(s.word);
+            const isSelected = selectedLadderWord === s.word;
+            btn.className = `barometer-chip-btn ${isUsed ? 'used' : ''} ${isSelected ? 'selected' : ''}`;
+            btn.textContent = s.word;
+
+            btn.onclick = () => {
+                if (isUsed) return;
+                selectedLadderWord = s.word;
+                speakDanish(s.word);
+                renderTabBarometer(parent);
+            };
+
+            ladderChipsGrid.appendChild(btn);
+        });
+        ladderCard.appendChild(ladderPoolBox);
+
+        // Ladder Feedback & Reset
+        const ladderFeedback = document.createElement('div');
+        ladderFeedback.className = 'barometer-feedback-box';
+        const allLadderDone = Object.values(ladderPlaced).every(Boolean);
+
+        if (allLadderDone) {
+            ladderFeedback.className = 'barometer-feedback-box correct';
+            ladderFeedback.innerHTML = `
+                <span>🎉 Fantastisk! Du har placeret alle 5 frekvenstrin 100% korrekt!</span>
+                <button class="reset-slots-btn" id="reset-ladder-btn" style="color: white; border-color: white;">↺ Start forfra</button>
+            `;
+        } else if (selectedLadderWord) {
+            ladderFeedback.innerHTML = `
+                <span style="color: #fbbf24;">Valgt ord: <strong>"${selectedLadderWord}"</strong>. Klik nu på det rigtige procent-trin ovenfor!</span>
+            `;
+        } else {
+            ladderFeedback.innerHTML = `
+                <span style="color: #94a3b8;">Vælg et ord i puljen for at komme i gang.</span>
+            `;
+        }
+        ladderCard.appendChild(ladderFeedback);
+
+        if (ladderFeedback.querySelector('#reset-ladder-btn')) {
+            ladderFeedback.querySelector('#reset-ladder-btn').onclick = () => {
+                ladderPlaced = { '100%': null, '75%': null, '50%': null, '20%': null, '0%': null };
+                selectedLadderWord = null;
+                renderTabBarometer(parent);
+            };
+        }
+
+        container.appendChild(ladderCard);
+
+        function handleLadderPlacement(targetStep, feedbackEl) {
+            if (selectedLadderWord === targetStep.word) {
+                ladderPlaced[targetStep.percent] = selectedLadderWord;
+                speakDanish(selectedLadderWord);
+                selectedLadderWord = null;
+                renderTabBarometer(parent);
+            } else {
+                feedbackEl.className = 'barometer-feedback-box wrong';
+                feedbackEl.innerHTML = `
+                    <span>💡 Prøv igen: <strong>"${selectedLadderWord}"</strong> passer ikke til ${targetStep.percent}. Læs beskrivelsen!</span>
+                `;
+            }
+        }
+
+        // ==========================================
+        // ØVELSE 2: TIDSLINJEN (FØR ➔ NU ➔ BAGEFTER)
+        // ==========================================
+        const timelineCard = document.createElement('div');
+        timelineCard.className = 'barometer-exercise-card';
+        timelineCard.innerHTML = `
+            <div class="barometer-card-title">
+                <span>⏰</span> Øvelse 2: Tidslinjen – Kronologisk rækkefølge
+            </div>
+            <div class="barometer-card-desc">
+                Sortér de tre tidsmarkører i den rigtige rækkefølge fra fortid til fremtid:
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 0.9rem 1.2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid #38bdf8; font-size: 1rem; color: #cbd5e1;">
+                <em>"<strong>_____</strong> spiste vi morgenmad. Lige <strong>_____</strong> cykler vi, og <strong>_____</strong> skal vi arbejde."</em>
+            </div>
+        `;
+
+        const timelineSlots = document.createElement('div');
+        timelineSlots.className = 'timeline-slots-grid';
+
+        const TIMELINE_SLOT_CONFIG = [
+            { idx: 0, target: 'Før', label: '1. Fortid (Hvad skete tidligere?)' },
+            { idx: 1, target: 'Nu', label: '2. Nutid (Lige i dette øjeblik)' },
+            { idx: 2, target: 'Bagefter', label: '3. Næste skridt (Efterfølgende)' }
+        ];
+
+        TIMELINE_SLOT_CONFIG.forEach(slotConf => {
+            const slotBox = document.createElement('div');
+            const val = timelinePlaced[slotConf.idx];
+            slotBox.className = `timeline-slot-box ${val ? 'filled' : ''}`;
+            slotBox.innerHTML = `
+                <div class="timeline-slot-role">${slotConf.label}</div>
+                <div class="timeline-slot-value">${val ? `${val} 🔊` : '<span style="color: #64748b; font-style: italic; font-size: 0.9rem;">Klik for at placere</span>'}</div>
+            `;
+
+            slotBox.onclick = () => {
+                if (val) {
+                    timelinePlaced[slotConf.idx] = null;
+                    renderTabBarometer(parent);
+                } else if (selectedTimelineWord) {
+                    if (selectedTimelineWord === slotConf.target) {
+                        timelinePlaced[slotConf.idx] = selectedTimelineWord;
+                        speakDanish(selectedTimelineWord);
+                        selectedTimelineWord = null;
+                        renderTabBarometer(parent);
+                    } else {
+                        timelineFeedback.className = 'barometer-feedback-box wrong';
+                        timelineFeedback.innerHTML = `
+                            <span>💡 Prøv igen: <strong>"${selectedTimelineWord}"</strong> passer ikke til ${slotConf.label}.</span>
+                        `;
+                    }
+                }
+            };
+
+            timelineSlots.appendChild(slotBox);
+        });
+        timelineCard.appendChild(timelineSlots);
+
+        // Timeline Chips Pool
+        const timelinePoolBox = document.createElement('div');
+        timelinePoolBox.className = 'barometer-pool-box';
+
+        const timelineRemaining = TIMELINE_WORDS.filter(w => !timelinePlaced.includes(w));
+        timelinePoolBox.innerHTML = `
+            <div class="barometer-pool-title">
+                Tidsbrikker (${timelineRemaining.length} tilbage):
+            </div>
+            <div class="barometer-chips-grid" id="timeline-chips-grid"></div>
+        `;
+
+        const timelineGrid = timelinePoolBox.querySelector('#timeline-chips-grid');
+        TIMELINE_WORDS.forEach(word => {
+            const btn = document.createElement('button');
+            const isUsed = timelinePlaced.includes(word);
+            const isSelected = selectedTimelineWord === word;
+            btn.className = `barometer-chip-btn ${isUsed ? 'used' : ''} ${isSelected ? 'selected' : ''}`;
+            btn.textContent = word;
+
+            btn.onclick = () => {
+                if (isUsed) return;
+                selectedTimelineWord = word;
+                speakDanish(word);
+                renderTabBarometer(parent);
+            };
+
+            timelineGrid.appendChild(btn);
+        });
+        timelineCard.appendChild(timelinePoolBox);
+
+        // Timeline Feedback
+        const timelineFeedback = document.createElement('div');
+        timelineFeedback.className = 'barometer-feedback-box';
+        const allTimelineDone = timelinePlaced.every(Boolean);
+
+        if (allTimelineDone) {
+            timelineFeedback.className = 'barometer-feedback-box correct';
+            timelineFeedback.innerHTML = `
+                <span>🎉 Rigtigt! "Før spiste vi morgenmad. Lige nu cykler vi, og bagefter skal vi arbejde."</span>
+                <button class="reset-slots-btn" id="reset-timeline-btn" style="color: white; border-color: white;">↺ Start forfra</button>
+            `;
+            speakDanish("Før spiste vi morgenmad. Lige nu cykler vi, og bagefter skal vi arbejde.");
+        } else if (selectedTimelineWord) {
+            timelineFeedback.innerHTML = `
+                <span style="color: #38bdf8;">Valgt ord: <strong>"${selectedTimelineWord}"</strong>. Klik på det rigtige trin på tidslinjen ovenfor!</span>
+            `;
+        } else {
+            timelineFeedback.innerHTML = `
+                <span style="color: #94a3b8;">Vælg en tidsbrik for at placere den i kronologisk orden.</span>
+            `;
+        }
+        timelineCard.appendChild(timelineFeedback);
+
+        if (timelineFeedback.querySelector('#reset-timeline-btn')) {
+            timelineFeedback.querySelector('#reset-timeline-btn').onclick = () => {
+                timelinePlaced = [null, null, null];
+                selectedTimelineWord = null;
+                renderTabBarometer(parent);
+            };
+        }
+
         container.appendChild(timelineCard);
 
         parent.innerHTML = '';
@@ -1708,182 +2378,482 @@ export function renderAdverbierTidView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 4: SÆTNINGSBYGGEREN (ORDSTILLING & INVERSION)
+    // TAB 4: SÆTNINGSBYGGEREN (UDFORSK & OPGAVE/PUSLESPIL)
     // ==========================================
-    let saetningIdx = 0;
+    let currentTidSubTab = 'free'; // 'free' or 'challenge'
+    let currentTidChallengeIdx = 0;
+    const completedTidChallenges = new Set();
 
-    const SAETNING_CHALLENGES = [
+    const TID_FREE_CATEGORIES = [
         {
-            focus: 'Centraladverbium i fremsættende hovedsætning (altid)',
-            slots: ['Subjekt', 'Verbum', 'Centraladverbium', 'Præposition'],
-            chips: ['Bageren', 'smiler', 'altid', 'til naboerne'],
-            correct: ['Bageren', 'smiler', 'altid', 'til naboerne'],
-            explanation: 'Perfekt! I en almindelig fremsættende hovedsætning placeres centraladverbiet "altid" lige efter verbet: Subjekt ➔ Verbum ➔ Centraladverbium.'
+            id: 'subjekt',
+            title: '1. Hvem eller hvad taler vi om?',
+            role: 'Subjekt',
+            catClass: 'sb-cat-subjekt',
+            badgeClass: 'badge-cat-subjekt',
+            icon: '👤',
+            options: ['Peter', 'Bussen', 'Toget', 'Vi', 'Manden', 'Hun', 'Bageren', 'Familien']
         },
         {
-            focus: 'Centraladverbium med benægtelse (aldrig)',
-            slots: ['Subjekt', 'Verbum', 'Centraladverbium', 'Præposition'],
-            chips: ['De', 'kører', 'aldrig', 'i bil'],
-            correct: ['De', 'kører', 'aldrig', 'i bil'],
-            explanation: 'Helt rigtigt! "Aldrig" følger præcis samme faste plads som "ikke" (centraladverbiets plads).'
+            id: 'verbum',
+            title: '2. Hvad laver personen eller tingen?',
+            role: 'Verbum (Handling)',
+            catClass: 'sb-cat-verbum',
+            badgeClass: 'badge-cat-verbum',
+            icon: '⚡',
+            options: ['spiser', 'ankommer', 'cykler', 'drikker kaffe', 'kører', 'arbejder', 'venter', 'smiler']
         },
         {
-            focus: 'Inversion med tid på 1. plads (Nu)',
-            slots: ['Tid (1. plads)', 'Verbum (2. plads)', 'Subjekt (3. plads)', 'Adjektiv'],
-            chips: ['Nu', 'har', 'manden', 'travlt'],
-            correct: ['Nu', 'har', 'manden', 'travlt'],
-            explanation: 'Fremragende inversion! Når tidsadverbiet "Nu" sættes forrest for at give fokus, bytter subjekt og verbum plads: "Nu har manden travlt!"'
+            id: 'tid',
+            title: '3. Hvor tit eller hvornår sker det?',
+            role: 'Tidsadverbium',
+            catClass: 'sb-cat-tid',
+            badgeClass: 'badge-cat-tid',
+            icon: '⏰',
+            options: ['nu', 'altid', 'aldrig', 'ofte', 'tit', 'snart', 'stadig', 'igen', 'straks', 'bagefter']
         },
         {
-            focus: 'Inversion med tid på 1. plads (Bagefter)',
-            slots: ['Tid (1. plads)', 'Verbum (2. plads)', 'Subjekt (3. plads)', 'Sted'],
-            chips: ['Bagefter', 'cykler', 'hun', 'hjem'],
-            correct: ['Bagefter', 'cykler', 'hun', 'hjem'],
-            explanation: 'Flot! "Bagefter cykler hun hjem." Verbet "cykler" står fast på plads 2.'
-        },
-        {
-            focus: 'Centraladverbium med nær fremtid (snart)',
-            slots: ['Subjekt', 'Verbum', 'Centraladverbium', 'Præposition'],
-            chips: ['Toget', 'ankommer', 'snart', 'til stationen'],
-            correct: ['Toget', 'ankommer', 'snart', 'til stationen'],
-            explanation: 'Korrekt! Tidsadverbiet "snart" placeres naturligt mellem verbet og præpositionsleddet.'
-        },
-        {
-            focus: 'Inversion med mellemliggende frekvens (Sommetider)',
-            slots: ['Tid (1. plads)', 'Verbum (2. plads)', 'Subjekt (3. plads)', 'Objekt'],
-            chips: ['Sommetider', 'drikker', 'vi', 'en kop kaffe'],
-            correct: ['Sommetider', 'drikker', 'vi', 'en kop kaffe'],
-            explanation: 'Perfekt! "Sommetider drikker vi en kop kaffe." V2-reglen overholdes fejlfrit!'
+            id: 'rest',
+            title: '4. Hvad er resten af situationen?',
+            role: 'Restled / Objekt',
+            catClass: 'sb-cat-rest',
+            badgeClass: 'badge-cat-rest',
+            icon: '📍',
+            options: ['frokost', 'til stationen', 'på arbejde', 'om morgenen', 'i byen', 'på bænken', 'i dag', 'med venner']
         }
     ];
 
-    let currentPlacedSlots = [];
+    const TID_CHALLENGE_TASKS = [
+        {
+            context: 'Bageren er glad og hilser på alle naboer hver evig eneste morgen.',
+            subjekt: 'Bageren',
+            verbum: 'smiler',
+            rest: 'til naboerne',
+            questionPrompt: 'Hvilket tidsadverbium betyder 100% af gangene (hver dag uden undtagelse)?',
+            correctAdv: 'altid',
+            distractors: ['aldrig', 'sjældent', 'nu'],
+            pedagogyNote: '"Altid" angiver 100% frekvens og står lige efter verbet som centraladverbium.',
+            slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit?', '4. Til hvem?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Restled]'],
+            chips: ['Bageren', 'smiler', 'altid', 'til naboerne'],
+            correctSentence: ['Bageren', 'smiler', 'altid', 'til naboerne']
+        },
+        {
+            context: 'Klokken er 12, og Peter skal have mad i en fart.',
+            subjekt: 'Peter',
+            verbum: 'spiser',
+            rest: 'frokost',
+            questionPrompt: 'Vi starter sætningen med "Nu" for at give fokus. Hvilket ord skal stå på 2. pladsen?',
+            correctAdv: 'spiser',
+            distractors: ['spise', 'sov', 'læste'],
+            pedagogyNote: 'Inversion (V2-reglen): Når tidsadverbiet "Nu" står forrest, skal verbet rykke ind på 2. pladsen!',
+            slots: ['1. Hvornår (Fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvad?'],
+            roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Objekt]'],
+            chips: ['Nu', 'spiser', 'Peter', 'frokost'],
+            correctSentence: ['Nu', 'spiser', 'Peter', 'frokost']
+        },
+        {
+            context: 'Familien elsker at cykle og har slet ikke nogen bil.',
+            subjekt: 'De',
+            verbum: 'kører',
+            rest: 'i bil',
+            questionPrompt: 'Hvilket tidsadverbium angiver 0% af gangene (på intet tidspunkt)?',
+            correctAdv: 'aldrig',
+            distractors: ['altid', 'ofte', 'snart'],
+            pedagogyNote: '"Aldrig" angiver 0% frekvens og fungerer som benægtelse på centraladverbiets plads.',
+            slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit?', '4. Hvordan?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
+            chips: ['De', 'kører', 'aldrig', 'i bil'],
+            correctSentence: ['De', 'kører', 'aldrig', 'i bil']
+        },
+        {
+            context: 'Passagererne står på perronen, og toget ruller ind om et øjeblik.',
+            subjekt: 'Toget',
+            verbum: 'ankommer',
+            rest: 'til stationen',
+            questionPrompt: 'Hvilket tidsadverbium viser, at noget sker om ganske kort tid (nær fremtid)?',
+            correctAdv: 'snart',
+            distractors: ['længe', 'før', 'aldrig'],
+            pedagogyNote: '"Snart" angiver nær fremtid (inden for kort tid).',
+            slots: ['1. Hvad?', '2. Handling?', '3. Hvornår?', '4. Hvorhen?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
+            chips: ['Toget', 'ankommer', 'snart', 'til stationen'],
+            correctSentence: ['Toget', 'ankommer', 'snart', 'til stationen']
+        },
+        {
+            context: 'Mette drikker kaffe først, og derefter skal hun cykle på arbejde.',
+            subjekt: 'Mette',
+            verbum: 'cykler',
+            rest: 'på arbejde',
+            questionPrompt: 'Vi sætter tidsadverbiet "Bagefter" forrest. Hvilket led skal stå lige efter på 2. pladsen?',
+            correctAdv: 'cykler',
+            distractors: ['Mette', 'arbejde', 'kaffe'],
+            pedagogyNote: 'V2-reglen! Med "Bagefter" på 1. plads SKAL verbet "cykler" stå på 2. pladsen før subjektet.',
+            slots: ['1. Hvornår (Fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvorhen?'],
+            roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Præposition]'],
+            chips: ['Bagefter', 'cykler', 'Mette', 'på arbejde'],
+            correctSentence: ['Bagefter', 'cykler', 'Mette', 'på arbejde']
+        },
+        {
+            context: 'Klokken er 18, og Sara sidder ufortrødent med sin spændende bog.',
+            subjekt: 'Sara',
+            verbum: 'læser',
+            rest: 'i bogen',
+            questionPrompt: 'Hvilket tidsadverbium viser, at handlingen fortsætter uafbrudt fra før?',
+            correctAdv: 'stadig',
+            distractors: ['snart', 'før', 'endnu'],
+            pedagogyNote: '"Stadig" udtrykker kontinuitet – handlingen startede i fortiden og fortsætter lige nu.',
+            slots: ['1. Hvem?', '2. Handling?', '3. Tidsnuance?', '4. Hvad?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
+            chips: ['Sara', 'læser', 'stadig', 'i bogen'],
+            correctSentence: ['Sara', 'læser', 'stadig', 'i bogen']
+        }
+    ];
+
+    let currentTidFreeSelected = ['Peter', 'spiser', 'nu', 'frokost'];
 
     function renderTabSaetning(parent) {
         const container = document.createElement('div');
-        container.className = 'saetning-container';
+        container.className = 'sentence-builder-card';
 
-        const challenge = SAETNING_CHALLENGES[saetningIdx];
+        // Sub Navigation: 1. Udforsk & Byg selv vs 2. Opgave & Puslespil
+        const subNav = document.createElement('div');
+        subNav.className = 'sb-sub-nav';
 
-        // Header
-        const header = document.createElement('div');
-        header.className = 'saetning-header';
-        header.innerHTML = `
-            <h2>🧱 Sætningsbyggeren</h2>
-            <p>Træn tidsadverbiets faste placering: som centraladverbium (efter verbet) eller forrest med inversion!</p>
-        `;
-        container.appendChild(header);
+        const subTab1Btn = document.createElement('button');
+        subTab1Btn.className = `sb-sub-btn ${currentTidSubTab === 'free' ? 'active' : ''}`;
+        subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
 
-        // Card
-        const card = document.createElement('div');
-        card.className = 'saetning-challenge-card';
+        const subTab2Btn = document.createElement('button');
+        subTab2Btn.className = `sb-sub-btn ${currentTidSubTab === 'challenge' ? 'active' : ''}`;
+        subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
 
-        const focusBadge = document.createElement('div');
-        focusBadge.className = 'saetning-focus-badge';
-        focusBadge.textContent = `Opgave ${saetningIdx + 1} af ${SAETNING_CHALLENGES.length}: ${challenge.focus}`;
-        card.appendChild(focusBadge);
+        subNav.appendChild(subTab1Btn);
+        subNav.appendChild(subTab2Btn);
+        container.appendChild(subNav);
 
-        // Drop Area
-        const dropArea = document.createElement('div');
-        dropArea.className = 'slots-drop-area';
+        const freeContainer = document.createElement('div');
+        freeContainer.style.display = currentTidSubTab === 'free' ? 'block' : 'none';
 
-        if (currentPlacedSlots.length === 0) {
-            dropArea.innerHTML = `<span class="slot-placeholder">Klik på ordene nedenfor i den rigtige rækkefølge...</span>`;
-        } else {
-            currentPlacedSlots.forEach((word, idx) => {
-                const chip = document.createElement('div');
-                chip.className = 'saetning-chip slot-chip';
-                chip.innerHTML = `<span>${word}</span> <span style="font-size: 0.8rem; opacity: 0.7;">✕</span>`;
-                chip.onclick = () => {
-                    currentPlacedSlots.splice(idx, 1);
-                    renderTabSaetning(parent);
-                };
-                dropArea.appendChild(chip);
-            });
-        }
-        card.appendChild(dropArea);
+        const challengeContainer = document.createElement('div');
+        challengeContainer.style.display = currentTidSubTab === 'challenge' ? 'block' : 'none';
 
-        // Chips Pool
-        const remainingChips = challenge.chips.filter(c => !currentPlacedSlots.includes(c));
-        const pool = document.createElement('div');
-        pool.className = 'chips-pool';
+        container.appendChild(freeContainer);
+        container.appendChild(challengeContainer);
 
-        remainingChips.forEach(word => {
-            const chip = document.createElement('div');
-            chip.className = 'saetning-chip';
-            chip.textContent = word;
-            chip.onclick = () => {
-                currentPlacedSlots.push(word);
-                speakDanish(word);
-                renderTabSaetning(parent);
-            };
-            pool.appendChild(chip);
-        });
-        card.appendChild(pool);
-
-        // Feedback
-        const feedbackBox = document.createElement('div');
-        feedbackBox.className = 'saetning-feedback-box';
-        card.appendChild(feedbackBox);
-
-        // Controls
-        const controls = document.createElement('div');
-        controls.className = 'saetning-controls';
-
-        const resetBtn = document.createElement('button');
-        resetBtn.className = 'reset-slots-btn';
-        resetBtn.textContent = '↺ Nulstil brikker';
-        resetBtn.onclick = () => {
-            currentPlacedSlots = [];
-            renderTabSaetning(parent);
+        subTab1Btn.onclick = () => {
+            currentTidSubTab = 'free';
+            subTab1Btn.classList.add('active');
+            subTab2Btn.classList.remove('active');
+            freeContainer.style.display = 'block';
+            challengeContainer.style.display = 'none';
         };
-        controls.appendChild(resetBtn);
 
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'check-saetning-btn';
-        checkBtn.textContent = currentPlacedSlots.length === challenge.correct.length ? 'Tjek sætning ✓' : 'Udfyld alle pladser';
-        checkBtn.disabled = currentPlacedSlots.length !== challenge.correct.length;
+        subTab2Btn.onclick = () => {
+            currentTidSubTab = 'challenge';
+            subTab2Btn.classList.add('active');
+            subTab1Btn.classList.remove('active');
+            freeContainer.style.display = 'none';
+            challengeContainer.style.display = 'block';
+            setupChallengeSection();
+        };
 
-        checkBtn.onclick = () => {
-            const isCorrect = currentPlacedSlots.every((w, i) => w === challenge.correct[i]);
-            feedbackBox.style.display = 'block';
+        // ==========================================
+        // SUB-TAB 1: UDFORSK & BYG SELV
+        // ==========================================
+        function setupFreeBuilder() {
+            freeContainer.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med tidsadverbier</h3>
+                    <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                        Vælg ét element fra hver række herunder. Læg mærke til hjælpespørgsmålene, og lyt til hvordan sætningen lyder!
+                    </p>
+                </div>
 
-            if (isCorrect) {
-                feedbackBox.style.background = 'rgba(34, 197, 94, 0.15)';
-                feedbackBox.style.border = '1.5px solid #22c55e';
-                feedbackBox.style.color = '#dcfce7';
-                feedbackBox.innerHTML = `
-                    <div style="font-weight: 800; margin-bottom: 0.4rem;">🎉 Fuldstændig rigtigt!</div>
-                    <p style="margin-bottom: 0.8rem;">${challenge.explanation}</p>
-                    <button class="detektiv-next-btn" id="next-saetning-btn">
-                        ${saetningIdx < SAETNING_CHALLENGES.length - 1 ? 'Næste sætning ➔' : 'Gennemfør 🏆'}
+                <div class="grammar-legend-bar">
+                    <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> 1. Hvem (Subjekt)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> 2. Handling (Verbum)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-tid"></span> 3. Hvornår / Hvor tit (Tid)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-rest"></span> 4. Resten (Objekt / Præposition)</div>
+                </div>
+
+                <div id="tid-free-builder-rows"></div>
+
+                <div class="sb-live-box">
+                    <div class="sb-live-label">Din samlede sætning</div>
+                    <div class="sb-live-sentence" id="tid-free-live-sentence"></div>
+                    <button class="sb-listen-btn" id="tid-free-listen-btn">
+                        <span>🔊</span> Hør udtale
                     </button>
-                `;
-                speakDanish(currentPlacedSlots.join(' '));
-                feedbackBox.querySelector('#next-saetning-btn').onclick = () => {
-                    currentPlacedSlots = [];
-                    if (saetningIdx < SAETNING_CHALLENGES.length - 1) {
-                        saetningIdx++;
-                        renderTabSaetning(parent);
-                    } else {
-                        saetningIdx = 0;
-                        switchTab('tab_kontekst');
-                    }
-                };
-            } else {
-                feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
-                feedbackBox.style.border = '1.5px solid #ef4444';
-                feedbackBox.style.color = '#fee2e2';
-                feedbackBox.innerHTML = `
-                    <div style="font-weight: 800; margin-bottom: 0.4rem;">💡 Prøv igen:</div>
-                    <p>Husk V2-reglen: Hvis tidsadverbiet står forrest, skal verbet være på plads 2!</p>
+                </div>
+            `;
+
+            const rowsContainer = freeContainer.querySelector('#tid-free-builder-rows');
+            const liveSentenceEl = freeContainer.querySelector('#tid-free-live-sentence');
+            const listenBtn = freeContainer.querySelector('#tid-free-listen-btn');
+
+            function updateLiveSentence() {
+                liveSentenceEl.innerHTML = `
+                    <span class="grammar-word word-substantiv">${currentTidFreeSelected[0]}</span>
+                    <span class="grammar-word word-verbum">${currentTidFreeSelected[1]}</span>
+                    <span class="grammar-word word-tid">${currentTidFreeSelected[2]}</span>
+                    <span class="grammar-word word-rest">${currentTidFreeSelected[3]}</span>.
                 `;
             }
-        };
-        controls.appendChild(checkBtn);
-        card.appendChild(controls);
 
-        container.appendChild(card);
+            listenBtn.onclick = () => {
+                speakDanish(`${currentTidFreeSelected[0]} ${currentTidFreeSelected[1]} ${currentTidFreeSelected[2]} ${currentTidFreeSelected[3]}`);
+            };
+
+            TID_FREE_CATEGORIES.forEach((cat, catIdx) => {
+                const row = document.createElement('div');
+                row.className = `sb-category-row ${cat.catClass}`;
+                row.innerHTML = `
+                    <div class="sb-category-header">
+                        <div class="sb-category-title">
+                            <span>${cat.icon}</span> ${cat.title}
+                        </div>
+                        <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
+                    </div>
+                    <div class="sb-chips-grid"></div>
+                `;
+
+                const grid = row.querySelector('.sb-chips-grid');
+                cat.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = `sb-chip-btn ${currentTidFreeSelected[catIdx] === opt ? 'selected' : ''}`;
+                    btn.textContent = opt;
+
+                    btn.onclick = () => {
+                        currentTidFreeSelected[catIdx] = opt;
+                        grid.querySelectorAll('.sb-chip-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        updateLiveSentence();
+                        speakDanish(opt);
+                    };
+                    grid.appendChild(btn);
+                });
+
+                rowsContainer.appendChild(row);
+            });
+
+            updateLiveSentence();
+        }
+
+        // ==========================================
+        // SUB-TAB 2: OPGAVE & PUSLESPIL
+        // ==========================================
+        function setupChallengeSection() {
+            challengeContainer.innerHTML = '';
+            const task = TID_CHALLENGE_TASKS[currentTidChallengeIdx];
+
+            // Task header with numbered navigation pills
+            const header = document.createElement('div');
+            header.className = 'sb-task-header';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.innerHTML = `
+                <div style="font-size: 0.85rem; color: #fbbf24; font-weight: 800; text-transform: uppercase;">
+                    Udfordring ${currentTidChallengeIdx + 1} af ${TID_CHALLENGE_TASKS.length}
+                </div>
+                <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg adverbiet & saml puslespillet</h3>
+            `;
+            header.appendChild(titleDiv);
+
+            const pills = document.createElement('div');
+            pills.className = 'sb-task-pills';
+            TID_CHALLENGE_TASKS.forEach((_, idx) => {
+                const pill = document.createElement('div');
+                pill.className = `sb-task-pill ${idx === currentTidChallengeIdx ? 'active' : ''} ${completedTidChallenges.has(idx) ? 'done' : ''}`;
+                pill.textContent = idx + 1;
+                pill.onclick = () => {
+                    currentTidChallengeIdx = idx;
+                    setupChallengeSection();
+                };
+                pills.appendChild(pill);
+            });
+            header.appendChild(pills);
+            challengeContainer.appendChild(header);
+
+            // Step 1: Context card with helper question chips
+            const contextCard = document.createElement('div');
+            contextCard.className = 'sb-context-card';
+            contextCard.innerHTML = `
+                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-elements">
+                    <div class="sb-context-chip subjekt">
+                        <span class="sb-chip-role">1. Hvem?</span>
+                        <span>${task.subjekt}</span>
+                    </div>
+                    <div class="sb-context-chip verbum">
+                        <span class="sb-chip-role">2. Handling?</span>
+                        <span>${task.verbum}</span>
+                    </div>
+                    <div class="sb-context-chip rest">
+                        <span class="sb-chip-role">4. Rest?</span>
+                        <span>${task.rest}</span>
+                    </div>
+                </div>
+            `;
+            challengeContainer.appendChild(contextCard);
+
+            // Question box
+            const qBox = document.createElement('div');
+            qBox.className = 'sb-question-box';
+            qBox.innerHTML = `
+                <div style="font-size: 0.85rem; color: #fbbf24; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
+                    Trin 1: Vælg det rigtige ord
+                </div>
+                <div class="sb-question-text">${task.questionPrompt}</div>
+            `;
+            challengeContainer.appendChild(qBox);
+
+            // Options grid
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'sb-options-grid';
+
+            const puzzleContainer = document.createElement('div');
+            puzzleContainer.className = 'sb-puzzle-section';
+            puzzleContainer.style.display = 'none';
+
+            const allOptions = [task.correctAdv, ...task.distractors].sort(() => Math.random() - 0.5);
+
+            allOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'sb-option-btn';
+                btn.textContent = opt;
+
+                btn.onclick = () => {
+                    if (btn.classList.contains('correct')) return;
+
+                    if (opt === task.correctAdv) {
+                        btn.classList.add('correct');
+                        optionsGrid.querySelectorAll('.sb-option-btn').forEach(b => {
+                            if (b !== btn) b.style.opacity = '0.4';
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        speakDanish(opt);
+
+                        // Trigger Step 2: Puslespillet
+                        renderTidPuzzleStep(puzzleContainer, task);
+                        puzzleContainer.style.display = 'block';
+                        if (typeof puzzleContainer.scrollIntoView === 'function') {
+                            puzzleContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    } else {
+                        btn.classList.add('incorrect');
+                        speakDanish("Prøv igen");
+                        setTimeout(() => btn.classList.remove('incorrect'), 600);
+                    }
+                };
+
+                optionsGrid.appendChild(btn);
+            });
+
+            challengeContainer.appendChild(optionsGrid);
+            challengeContainer.appendChild(puzzleContainer);
+        }
+
+        // Step 2: Puslespil i udfordringen
+        function renderTidPuzzleStep(puzContainer, task) {
+            puzContainer.innerHTML = `
+                <div class="sb-puzzle-title">
+                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                </div>
+                <div class="sb-puzzle-desc">
+                    Klik på brikkerne i den rigtige rækkefølge for at udfylde pladserne:
+                </div>
+
+                <div class="sb-puzzle-slots" id="tid-puzzle-slots-grid"></div>
+                <div class="sb-puzzle-chips" id="tid-puzzle-chips-pool"></div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <button class="reset-slots-btn" id="tid-puzzle-reset-btn">↺ Nulstil brikker</button>
+                    <div id="tid-puzzle-status" style="font-weight: 700; color: #22c55e;"></div>
+                </div>
+            `;
+
+            const slotsGrid = puzContainer.querySelector('#tid-puzzle-slots-grid');
+            const chipsPool = puzContainer.querySelector('#tid-puzzle-chips-pool');
+            const resetBtn = puzContainer.querySelector('#tid-puzzle-reset-btn');
+            const statusEl = puzContainer.querySelector('#tid-puzzle-status');
+
+            let placedWords = [];
+            const shuffledChips = [...task.chips].sort(() => Math.random() - 0.5);
+
+            function updatePuzzleUI() {
+                slotsGrid.innerHTML = '';
+                task.slots.forEach((slotLabel, idx) => {
+                    const slot = document.createElement('div');
+                    slot.className = `sb-puzzle-slot ${placedWords[idx] ? 'filled' : ''}`;
+                    if (placedWords[idx]) {
+                        slot.innerHTML = `<span>${placedWords[idx]}</span>`;
+                        slot.onclick = () => {
+                            placedWords.splice(idx, 1);
+                            updatePuzzleUI();
+                        };
+                    } else {
+                        slot.innerHTML = `
+                            <span class="slot-hint">${slotLabel}</span>
+                            <span class="slot-role">${task.roles[idx]}</span>
+                        `;
+                    }
+                    slotsGrid.appendChild(slot);
+                });
+
+                chipsPool.innerHTML = '';
+                shuffledChips.forEach(word => {
+                    const chip = document.createElement('button');
+                    chip.className = `sb-puzzle-chip ${placedWords.includes(word) ? 'used' : ''}`;
+                    chip.textContent = word;
+                    chip.onclick = () => {
+                        if (placedWords.length < task.slots.length && !placedWords.includes(word)) {
+                            placedWords.push(word);
+                            speakDanish(word);
+                            updatePuzzleUI();
+                        }
+                    };
+                    chipsPool.appendChild(chip);
+                });
+
+                if (placedWords.length === task.correctSentence.length) {
+                    const isCorrect = placedWords.every((w, i) => w === task.correctSentence[i]);
+                    if (isCorrect) {
+                        completedTidChallenges.add(currentTidChallengeIdx);
+                        statusEl.innerHTML = `
+                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="tid-task-next-btn">
+                                ${currentTidChallengeIdx < TID_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Afslut puslespil 🏆'}
+                            </button>
+                        `;
+                        speakDanish(placedWords.join(' '));
+
+                        puzContainer.querySelector('#tid-task-next-btn').onclick = () => {
+                            if (currentTidChallengeIdx < TID_CHALLENGE_TASKS.length - 1) {
+                                currentTidChallengeIdx++;
+                                setupChallengeSection();
+                            } else {
+                                statusEl.innerHTML = `<span style="color: #fbbf24;">Alle 6 tids-udfordringer gennemført flot! 🌟</span>`;
+                            }
+                        };
+                    } else {
+                        statusEl.innerHTML = `<span style="color: #ef4444;">Ikke helt rigtig rækkefølge – prøv igen!</span>`;
+                    }
+                } else {
+                    statusEl.innerHTML = '';
+                }
+            }
+
+            resetBtn.onclick = () => {
+                placedWords = [];
+                updatePuzzleUI();
+            };
+
+            updatePuzzleUI();
+        }
+
+        setupFreeBuilder();
         parent.innerHTML = '';
         parent.appendChild(container);
     }
@@ -1895,86 +2865,87 @@ export function renderAdverbierTidView(container, navigateFn) {
     let clozeScore = 0;
     let clozeAnswered = false;
 
+    // Simple A1/A2 context sentences
     const CLOZE_QUESTIONS = [
         {
-            sentenceBefore: 'Klokken er kun 6 om morgenen, men Peter er',
+            sentenceBefore: 'Klokken er kun 6, men Peter er',
             sentenceAfter: 'vågen og spiser morgenmad.',
             options: ['allerede', 'endnu', 'før'],
             correct: 'allerede',
-            feedback: 'Korrekt! "Allerede" bruges om noget, der sker før forventet tid (tidligere end normalt).'
+            feedback: 'Korrekt! "Allerede" bruges om noget, der sker før forventet tid.'
         },
         {
-            sentenceBefore: 'Klokken er 11, men butikken er ikke åbnet',
+            sentenceBefore: 'Butikken er ikke åben',
             sentenceAfter: 'i dag.',
             options: ['allerede', 'endnu', 'stadig'],
             correct: 'endnu',
-            feedback: 'Korrekt! Sammen med benægtelse ("ikke") hedder det altid "ikke endnu".'
+            feedback: 'Korrekt! Sammen med "ikke" hedder det altid "ikke endnu".'
         },
         {
-            sentenceBefore: 'Er du på kontoret',
-            sentenceAfter: '? Skulle du ikke være gået hjem for to timer siden?',
-            options: ['snart', 'stadig', 'endnu'],
+            sentenceBefore: 'Er du',
+            sentenceAfter: 'på arbejde? Klokken er mange!',
+            options: ['stadig', 'snart', 'endnu'],
             correct: 'stadig',
-            feedback: 'Rigtigt! "Stadig" viser, at en tilstand fra før fortsætter uafbrudt.'
+            feedback: 'Rigtigt! "Stadig" viser, at en tilstand fortsætter uden stop.'
         },
         {
-            sentenceBefore: 'Vent lige to sekunder på mig, jeg kommer',
+            sentenceBefore: 'Vent lige på mig, jeg kommer',
             sentenceAfter: '!',
             options: ['straks', 'længe', 'før'],
             correct: 'straks',
-            feedback: 'Flot! "Straks" betyder lige i dette øjeblik / med det samme uden forsinkelse.'
+            feedback: 'Flot! "Straks" betyder lige med det samme uden forsinkelse.'
         },
         {
-            sentenceBefore: 'Bussen var meget forsinket, så vi måtte vente',
-            sentenceAfter: 'ude i kulden.',
-            options: ['snart', 'længe', 'straks'],
+            sentenceBefore: 'Vi ventede',
+            sentenceAfter: 'på bussen i regnvejret.',
+            options: ['længe', 'snart', 'straks'],
             correct: 'længe',
-            feedback: 'Korrekt! "Længe" angiver tidsmæssig varighed (at vente i lang tid).'
+            feedback: 'Korrekt! "Længe" angiver en lang tidsmæssig varighed.'
         },
         {
             sentenceBefore: 'Jeg drikker',
-            sentenceAfter: 'kaffe om morgenen, hver eneste dag uden undtagelse.',
-            options: ['sommetider', 'altid', 'sjældent'],
+            sentenceAfter: 'kaffe om morgenen, hver dag.',
+            options: ['altid', 'sommetider', 'sjældent'],
             correct: 'altid',
             feedback: 'Korrekt! 100% af gangene hedder "altid".'
         },
         {
             sentenceBefore: 'Han spiser',
-            sentenceAfter: 'svinekød, for det kan han slet ikke lide.',
+            sentenceAfter: 'fisk, for han kan slet ikke lide det.',
             options: ['aldrig', 'ofte', 'tit'],
             correct: 'aldrig',
             feedback: 'Korrekt! 0% af gangene hedder "aldrig".'
         },
         {
-            sentenceBefore: 'Først spiser vi aftensmad, og',
-            sentenceAfter: 'går vi en tur i skoven.',
-            options: ['før', 'bagefter', 'siden'],
+            sentenceBefore: 'Først spiser vi, og',
+            sentenceAfter: 'går vi en tur.',
+            options: ['bagefter', 'før', 'siden'],
             correct: 'bagefter',
-            feedback: 'Rigtigt! "Bagefter" angiver det efterfølgende trin i rækkefølgen.'
+            feedback: 'Rigtigt! "Bagefter" viser det efterfølgende trin i rækkefølgen.'
         },
         {
             sentenceBefore: 'Toget kommer',
-            sentenceAfter: ', det er allerede ved at køre ind på sporet.',
+            sentenceAfter: ', se ud på sporet!',
             options: ['snart', 'længe', 'før'],
             correct: 'snart',
-            feedback: 'Korrekt! "Snart" viser, at handlingen indtræffer om kort tid i fremtiden.'
+            feedback: 'Korrekt! "Snart" viser at det sker om kort tid i fremtiden.'
         },
         {
-            sentenceBefore: 'Vi spiser for det meste pasta, men',
-            sentenceAfter: 'laver vi også suppe.',
-            options: ['altid', 'sommetider', 'aldrig'],
+            sentenceBefore: 'Sommetider cykler jeg, og',
+            sentenceAfter: 'tager jeg bussen.',
+            options: ['sommetider', 'altid', 'aldrig'],
             correct: 'sommetider',
-            feedback: 'Korrekt! "Sommetider" viser en mellemliggende frekvens (af og til / 50%).'
+            feedback: 'Korrekt! "Sommetider" viser 50% frekvens (nogle gange).'
         },
         {
-            sentenceBefore: 'Uret på rådhuset har gået pålideligt',
-            sentenceAfter: 'år 1920.',
+            sentenceBefore: 'Uret har gået trofast',
+            sentenceAfter: 'år 1900.',
             options: ['siden', 'før', 'bagefter'],
             correct: 'siden',
-            feedback: 'Flot! "Siden" angiver et startpunkt i fortiden, der fortsætter ind i nutiden.'
+            feedback: 'Flot! "Siden" angiver et startpunkt i fortiden indtil nu.'
         },
         {
-            sentenceBefore: 'Øv, nu tabte jeg mine nøgler',
+            sentenceBefore: 'Nej, nu tabte jeg nøglerne',
             sentenceAfter: '! Det er anden gang i dag.',
             options: ['igen', 'snart', 'endnu'],
             correct: 'igen',

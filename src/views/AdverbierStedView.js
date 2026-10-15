@@ -1004,110 +1004,423 @@ export function renderAdverbierStedView(container, navigateFn) {
             margin-bottom: 1.5rem;
         }
 
-        /* Tab 4: Sætningsbyggeren */
-        .saetning-container {
-            background: #1e293b;
+        /* Tab 4: Sætningsbyggeren (Fuld to-trins model som i verberne) */
+        .sentence-builder-card {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            max-width: 900px;
-            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .saetning-header {
-            text-align: center;
+        .sb-sub-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
             margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
         }
-        .saetning-header h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-        .saetning-header p {
+        .sb-sub-btn {
+            background: rgba(15, 23, 42, 0.6);
             color: #94a3b8;
-            font-size: 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.4rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .saetning-challenge-card {
-            background: #0f172a;
-            border-radius: 16px;
-            padding: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .sb-sub-btn:hover {
+            color: white;
+            border-color: #38bdf8;
+            background: rgba(14, 165, 233, 0.1);
+        }
+        .sb-sub-btn.active {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+        }
+        .grammar-legend-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
             margin-bottom: 1.5rem;
-        }
-        .saetning-focus-badge {
-            display: inline-block;
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
+            padding: 0.6rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 0.85rem;
+        }
+        .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+        .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-sted { background: #0ea5e9; box-shadow: 0 0 6px rgba(14, 165, 233, 0.6); }
+        .chip-rest { background: #a855f7; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6); }
+
+        .sb-category-row {
+            margin-bottom: 1.3rem;
+            background: rgba(15, 23, 42, 0.45);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 4px solid #64748b;
+        }
+        .sb-cat-subjekt { border-left-color: #22c55e; }
+        .sb-cat-verbum { border-left-color: #ef4444; }
+        .sb-cat-sted { border-left-color: #0ea5e9; }
+        .sb-cat-rest { border-left-color: #a855f7; }
+
+        .sb-category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.7rem;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .sb-category-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sb-category-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+        }
+        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-cat-sted { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
+        .badge-cat-rest { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+        .sb-chips-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .sb-chip-btn {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #475569;
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .sb-chip-btn:hover {
+            color: white;
+            border-color: #94a3b8;
+            transform: translateY(-2px);
+        }
+        .sb-chip-btn.selected {
+            font-weight: 800;
+            transform: translateY(-2px);
+        }
+        .sb-cat-subjekt .sb-chip-btn.selected {
+            background: rgba(34, 197, 94, 0.25);
+            color: #4ade80;
+            border-color: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+        }
+        .sb-cat-verbum .sb-chip-btn.selected {
+            background: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            border-color: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+        }
+        .sb-cat-sted .sb-chip-btn.selected {
+            background: rgba(14, 165, 233, 0.25);
+            color: #7dd3fc;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+        }
+        .sb-cat-rest .sb-chip-btn.selected {
+            background: rgba(168, 85, 247, 0.25);
+            color: #d8b4fe;
+            border-color: #a855f7;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .sb-live-box {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 1.4rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .sb-live-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+        }
+        .sb-live-sentence {
+            font-size: 1.35rem;
             font-weight: 800;
             margin-bottom: 1rem;
-        }
-        .slots-drop-area {
             display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            min-height: 70px;
-            background: #1e293b;
-            padding: 0.8rem;
-            border-radius: 14px;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            margin-bottom: 1.5rem;
             align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
-        .slot-placeholder {
-            color: #64748b;
-            font-size: 0.95rem;
-            margin: auto;
-            font-style: italic;
+        .grammar-word { font-weight: 800; }
+        .word-substantiv { color: #4ade80; }
+        .word-verbum { color: #f87171; }
+        .word-sted { color: #38bdf8; }
+        .word-rest { color: #c084fc; }
+
+        .sb-listen-btn {
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid #0ea5e9;
+            padding: 0.65rem 1.4rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .chips-pool {
+        .sb-listen-btn:hover {
+            background: rgba(14, 165, 233, 0.15);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+            transform: scale(1.03);
+        }
+
+        /* Task & Puzzle Mode */
+        .sb-task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .sb-task-pills {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+        .sb-task-pill {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #475569;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sb-task-pill.active {
+            border-color: #38bdf8;
+            color: white;
+            background: #0284c7;
+        }
+        .sb-task-pill.done {
+            background: #22c55e;
+            color: #0f172a;
+            border-color: #22c55e;
+        }
+
+        .sb-context-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-context-title {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            margin-bottom: 0.8rem;
+        }
+        .sb-context-elements {
             display: flex;
             gap: 0.8rem;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            justify-content: center;
+            margin-bottom: 0.5rem;
         }
-        .saetning-chip {
+        .sb-context-chip {
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .sb-context-chip.subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .sb-context-chip.sted { background: rgba(14, 165, 233, 0.15); color: #7dd3fc; border: 1px solid rgba(14, 165, 233, 0.3); }
+        .sb-context-chip.rest { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
+
+        .sb-question-box {
+            background: rgba(14, 165, 233, 0.08);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            border-radius: 12px;
+            padding: 1rem 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .sb-question-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+        }
+        .sb-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-option-btn {
+            background: #1e293b;
+            color: white;
+            border: 2px solid #475569;
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .sb-option-btn:hover {
+            border-color: #38bdf8;
+            background: #334155;
+            transform: translateY(-2px);
+        }
+        .sb-option-btn.correct {
+            background: rgba(34, 197, 94, 0.25);
+            border-color: #22c55e;
+            color: #4ade80;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+        .sb-option-btn.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #f87171;
+        }
+
+        .sb-puzzle-section {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.35s ease;
+        }
+        .sb-puzzle-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sb-puzzle-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+        }
+        .sb-puzzle-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .sb-puzzle-slot {
+            background: #0f172a;
+            border: 2px dashed #475569;
+            border-radius: 12px;
+            padding: 0.9rem;
+            min-height: 76px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            position: relative;
+        }
+        .sb-puzzle-slot .slot-hint {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+        .sb-puzzle-slot .slot-role {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.2rem;
+            opacity: 0.8;
+        }
+        .sb-puzzle-slot.filled {
+            border-style: solid;
+            background: rgba(14, 165, 233, 0.15);
+            border-color: #38bdf8;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+        .sb-puzzle-chips {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .sb-puzzle-chip {
             background: #334155;
             color: white;
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            padding: 0.7rem 1.2rem;
-            border-radius: 12px;
-            font-size: 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            user-select: none;
         }
-        .saetning-chip:hover {
+        .sb-puzzle-chip:hover {
             background: #475569;
             border-color: #38bdf8;
             transform: translateY(-2px);
         }
-        .saetning-chip.slot-chip {
-            background: #0284c7;
-            border-color: #38bdf8;
+        .sb-puzzle-chip.used {
+            opacity: 0.25;
+            pointer-events: none;
         }
-        .saetning-feedback-box {
-            padding: 1rem 1.4rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-        .saetning-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .reset-slots-btn {
-            background: transparent;
-            color: #94a3b8;
-            border: 1px solid #475569;
             padding: 0.7rem 1.2rem;
             border-radius: 10px;
             font-weight: 600;
@@ -1874,182 +2187,482 @@ export function renderAdverbierStedView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 4: SÆTNINGSBYGGEREN (ORDSTILLING & INVERSION)
+    // TAB 4: SÆTNINGSBYGGEREN (UDFORSK & OPGAVE/PUSLESPIL)
     // ==========================================
-    let saetningIdx = 0;
+    let currentStedSubTab = 'free'; // 'free' or 'challenge'
+    let currentStedChallengeIdx = 0;
+    const completedStedChallenges = new Set();
 
-    const SAETNING_CHALLENGES = [
+    const STED_FREE_CATEGORIES = [
         {
-            focus: 'Standard-rækkefølge (Subjekt - Verbum - Adverbium - Præp)',
-            slots: ['Subjekt', 'Verbum', 'Stedsadverbium', 'Præposition'],
-            chips: ['Hunden', 'hopper', 'ud', 'i haven'],
-            correct: ['Hunden', 'hopper', 'ud', 'i haven'],
-            explanation: 'Perfekt! I en almindelig fremsættende sætning kommer subjektet forrest, derefter verbet, og stedsadverbiets retning ("ud") før præpositionsleddet ("i haven").'
+            id: 'subjekt',
+            title: '1. Hvem eller hvad taler vi om?',
+            role: 'Subjekt',
+            catClass: 'sb-cat-subjekt',
+            badgeClass: 'badge-cat-subjekt',
+            icon: '👤',
+            options: ['Manden', 'Børnene', 'Hunden', 'Lucas', 'Emma', 'Mor', 'Postbuddet', 'Katten']
         },
         {
-            focus: 'Standard-rækkefølge med hvileadverbium',
-            slots: ['Subjekt', 'Verbum', 'Stedsadverbium', 'Præposition'],
-            chips: ['Vaskemaskinen', 'står', 'nede', 'i kælderen'],
-            correct: ['Vaskemaskinen', 'står', 'nede', 'i kælderen'],
-            explanation: 'Rigtigt! Hvileadverbiets placering ("nede") præciserer det præcise niveau før præpositionsleddet.'
+            id: 'verbum',
+            title: '2. Hvad laver personen eller dyret?',
+            role: 'Verbum (Handling)',
+            catClass: 'sb-cat-verbum',
+            badgeClass: 'badge-cat-verbum',
+            icon: '⚡',
+            options: ['går', 'cykler', 'løber', 'slapper af', 'solbader', 'springer', 'vinker', 'bærer vasketøj']
         },
         {
-            focus: 'Inversion (Stedsadverbium på 1. plads skaber inversion!)',
-            slots: ['Sted (1. plads)', 'Verbum (2. plads)', 'Subjekt (3. plads)', 'Restled'],
-            chips: ['Ude', 'leger', 'børnene', 'i haven'],
-            correct: ['Ude', 'leger', 'børnene', 'i haven'],
-            explanation: 'Fantastisk! Når stedsadverbiets hvileform "Ude" sættes forrest for at skabe fokus, gælder den gyldne regel: Verbet rykker altid ind på 2. pladsen (Inversion: Ude leger børnene)!'
+            id: 'sted',
+            title: '3. Hvorhen (retning) eller hvor (hvile)?',
+            role: 'Stedsadverbium',
+            catClass: 'sb-cat-sted',
+            badgeClass: 'badge-cat-sted',
+            icon: '🧭',
+            options: ['hjem', 'hjemme', 'ind', 'inde', 'ud', 'ude', 'op', 'oppe', 'ned', 'nede']
         },
         {
-            focus: 'Standard-rækkefølge med bevægelse hjem',
-            slots: ['Subjekt', 'Verbum', 'Stedsadverbium', 'Tid'],
-            chips: ['Mette', 'cykler', 'hjem', 'nu'],
-            correct: ['Mette', 'cykler', 'hjem', 'nu'],
-            explanation: 'Korrekt! "Mette cykler hjem nu." Retningsadverbiet "hjem" står før tidsadverbiets "nu".'
-        },
-        {
-            focus: 'Inversion med overetage (Oppe)',
-            slots: ['Sted (1. plads)', 'Verbum (2. plads)', 'Subjekt (3. plads)', 'Præposition'],
-            chips: ['Oppe', 'vinker', 'pigen', 'fra vinduet'],
-            correct: ['Oppe', 'vinker', 'pigen', 'fra vinduet'],
-            explanation: 'Flot inversion! "Oppe vinker pigen fra vinduet." Verbet "vinker" står fast på plads 2.'
-        },
-        {
-            focus: 'Inversion med indendørs ro (Inde)',
-            slots: ['Sted (1. plads)', 'Verbum (2. plads)', 'Subjekt (3. plads)', 'Objekt'],
-            chips: ['Inde', 'drikker', 'far', 'en kop kaffe'],
-            correct: ['Inde', 'drikker', 'far', 'en kop kaffe'],
-            explanation: 'Fremragende! "Inde drikker far en kop kaffe." Stedet er i fokus, så subjektet ("far") bytter plads med verbet.'
+            id: 'rest',
+            title: '4. Hvad er resten af situationen?',
+            role: 'Restled / Præposition',
+            catClass: 'sb-cat-rest',
+            badgeClass: 'badge-cat-rest',
+            icon: '📍',
+            options: ['i haven', 'i stuen', 'på sit værelse', 'i kælderen', 'ad trappen', 'efter arbejde', 'ved huset', 'på vejen']
         }
     ];
 
-    let currentPlacedSlots = [];
+    const STED_CHALLENGE_TASKS = [
+        {
+            context: 'Morgensolen skinner, og Lucas skal hente en bog på sit værelse.',
+            subjekt: 'Lucas',
+            verbum: 'går',
+            rest: 'ad trappen',
+            questionPrompt: 'Hvilket stedsadverbium viser retningen op mod 1. sal?',
+            correctAdv: 'op',
+            distractors: ['oppe', 'ned', 'nede'],
+            pedagogyNote: 'Lucas er i bevægelse opad mod værelset, så vi bruger den korte retningsform "op".',
+            slots: ['1. Hvem?', '2. Handling?', '3. Retning?', '4. Hvorhen?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Stedsadverbium]', '[Præposition]'],
+            chips: ['Lucas', 'går', 'op', 'ad trappen'],
+            correctSentence: ['Lucas', 'går', 'op', 'ad trappen']
+        },
+        {
+            context: 'Far sidder med en god bog og drikker varm kaffe i stuen.',
+            subjekt: 'Far',
+            verbum: 'slapper af',
+            rest: 'i stuen',
+            questionPrompt: 'Far befinder sig i sit eget hjem i ro. Hvilket hvileadverbium passer?',
+            correctAdv: 'hjemme',
+            distractors: ['hjem', 'ud', 'ude'],
+            pedagogyNote: 'Far befinder sig allerede inde i boligen i ro, så vi bruger formen med -e: "hjemme".',
+            slots: ['1. Hvem?', '2. Handling?', '3. Hvile?', '4. Hvor?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Stedsadverbium]', '[Præposition]'],
+            chips: ['Far', 'slapper af', 'hjemme', 'i stuen'],
+            correctSentence: ['Far', 'slapper af', 'hjemme', 'i stuen']
+        },
+        {
+            context: 'Hunden ser en kat i haven og farer ud gennem havedøren.',
+            subjekt: 'Hunden',
+            verbum: 'springer',
+            rest: 'i haven',
+            questionPrompt: 'Hunden krydser dørtærsklen i bevægelse mod haven. Hvilket ord passer?',
+            correctAdv: 'ud',
+            distractors: ['ude', 'ind', 'inde'],
+            pedagogyNote: 'Der er bevægelse ud af stuen og ud i det fri, så vi bruger den korte form "ud".',
+            slots: ['1. Hvem?', '2. Handling?', '3. Retning?', '4. Hvorhen?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Stedsadverbium]', '[Præposition]'],
+            chips: ['Hunden', 'springer', 'ud', 'i haven'],
+            correctSentence: ['Hunden', 'springer', 'ud', 'i haven']
+        },
+        {
+            context: 'Emma står ved kvistvinduet på øverste etage og vinker.',
+            subjekt: 'Emma',
+            verbum: 'kigger ud',
+            rest: 'fra vinduet',
+            questionPrompt: 'Emma står stille på 1. sal i overetagen. Hvilket hvileadverbium passer?',
+            correctAdv: 'oppe',
+            distractors: ['op', 'ned', 'nede'],
+            pedagogyNote: 'Stilstand på en høj etage eller position hedder "oppe".',
+            slots: ['1. Hvem?', '2. Handling?', '3. Hvile?', '4. Hvorfra?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Stedsadverbium]', '[Præposition]'],
+            chips: ['Emma', 'kigger ud', 'oppe', 'fra vinduet'],
+            correctSentence: ['Emma', 'kigger ud', 'oppe', 'fra vinduet']
+        },
+        {
+            context: 'Kvinden tager vasketøjskurven for at gå mod kælderen.',
+            subjekt: 'Kvinden',
+            verbum: 'går',
+            rest: 'i kælderen',
+            questionPrompt: 'Kvinden bevæger sig ned mod kælderen. Hvilket retningsadverbium passer?',
+            correctAdv: 'ned',
+            distractors: ['nede', 'op', 'oppe'],
+            pedagogyNote: 'Bevægelse nedad mod et lavere niveau er den korte form "ned".',
+            slots: ['1. Hvem?', '2. Handling?', '3. Retning?', '4. Hvorhen?'],
+            roles: ['[Subjekt]', '[Verbum]', '[Stedsadverbium]', '[Præposition]'],
+            chips: ['Kvinden', 'går', 'ned', 'i kælderen'],
+            correctSentence: ['Kvinden', 'går', 'ned', 'i kælderen']
+        },
+        {
+            context: 'Børnene har det sjovt på græsplænen i det gode vejr.',
+            subjekt: 'børnene',
+            verbum: 'leger',
+            rest: 'i haven',
+            questionPrompt: 'Vi starter sætningen med stedsadverbiet "Ude". Hvilket verbum passer på 2. pladsen?',
+            correctAdv: 'leger',
+            distractors: ['sover', 'bager', 'koger'],
+            pedagogyNote: 'Når stedsadverbiet "Ude" står forrest, skal verbet "leger" rykke ind på 2. pladsen (Inversion).',
+            slots: ['1. Sted (Fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvor?'],
+            roles: ['[Stedsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Præposition]'],
+            chips: ['Ude', 'leger', 'børnene', 'i haven'],
+            correctSentence: ['Ude', 'leger', 'børnene', 'i haven']
+        }
+    ];
+
+    let currentFreeSelected = ['Lucas', 'går', 'op', 'ad trappen'];
 
     function renderTabSaetning(parent) {
         const container = document.createElement('div');
-        container.className = 'saetning-container';
+        container.className = 'sentence-builder-card';
 
-        const challenge = SAETNING_CHALLENGES[saetningIdx];
+        // Sub Navigation: 1. Udforsk & Byg selv vs 2. Opgave & Puslespil
+        const subNav = document.createElement('div');
+        subNav.className = 'sb-sub-nav';
 
-        // Header
-        const header = document.createElement('div');
-        header.className = 'saetning-header';
-        header.innerHTML = `
-            <h2>🧱 Sætningsbyggeren</h2>
-            <p>Træn hvordan stedsadverbier placeres i danske sætninger – både i standard rækkefølge og ved inversion!</p>
-        `;
-        container.appendChild(header);
+        const subTab1Btn = document.createElement('button');
+        subTab1Btn.className = `sb-sub-btn ${currentStedSubTab === 'free' ? 'active' : ''}`;
+        subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
 
-        // Card
-        const card = document.createElement('div');
-        card.className = 'saetning-challenge-card';
+        const subTab2Btn = document.createElement('button');
+        subTab2Btn.className = `sb-sub-btn ${currentStedSubTab === 'challenge' ? 'active' : ''}`;
+        subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
 
-        const focusBadge = document.createElement('div');
-        focusBadge.className = 'saetning-focus-badge';
-        focusBadge.textContent = `Opgave ${saetningIdx + 1} af ${SAETNING_CHALLENGES.length}: ${challenge.focus}`;
-        card.appendChild(focusBadge);
+        subNav.appendChild(subTab1Btn);
+        subNav.appendChild(subTab2Btn);
+        container.appendChild(subNav);
 
-        // Drop Area / Slots
-        const dropArea = document.createElement('div');
-        dropArea.className = 'slots-drop-area';
+        const freeContainer = document.createElement('div');
+        freeContainer.style.display = currentStedSubTab === 'free' ? 'block' : 'none';
 
-        if (currentPlacedSlots.length === 0) {
-            dropArea.innerHTML = `<span class="slot-placeholder">Klik på ordene nedenfor i den rigtige rækkefølge...</span>`;
-        } else {
-            currentPlacedSlots.forEach((word, idx) => {
-                const chip = document.createElement('div');
-                chip.className = 'saetning-chip slot-chip';
-                chip.innerHTML = `<span>${word}</span> <span style="font-size: 0.8rem; opacity: 0.7;">✕</span>`;
-                chip.onclick = () => {
-                    currentPlacedSlots.splice(idx, 1);
-                    renderTabSaetning(parent);
-                };
-                dropArea.appendChild(chip);
-            });
-        }
-        card.appendChild(dropArea);
+        const challengeContainer = document.createElement('div');
+        challengeContainer.style.display = currentStedSubTab === 'challenge' ? 'block' : 'none';
 
-        // Chips Pool
-        const remainingChips = challenge.chips.filter(c => !currentPlacedSlots.includes(c));
-        const pool = document.createElement('div');
-        pool.className = 'chips-pool';
+        container.appendChild(freeContainer);
+        container.appendChild(challengeContainer);
 
-        remainingChips.forEach(word => {
-            const chip = document.createElement('div');
-            chip.className = 'saetning-chip';
-            chip.textContent = word;
-            chip.onclick = () => {
-                currentPlacedSlots.push(word);
-                speakDanish(word);
-                renderTabSaetning(parent);
-            };
-            pool.appendChild(chip);
-        });
-        card.appendChild(pool);
-
-        // Feedback
-        const feedbackBox = document.createElement('div');
-        feedbackBox.className = 'saetning-feedback-box';
-        card.appendChild(feedbackBox);
-
-        // Controls
-        const controls = document.createElement('div');
-        controls.className = 'saetning-controls';
-
-        const resetBtn = document.createElement('button');
-        resetBtn.className = 'reset-slots-btn';
-        resetBtn.textContent = '↺ Nulstil brikker';
-        resetBtn.onclick = () => {
-            currentPlacedSlots = [];
-            renderTabSaetning(parent);
+        subTab1Btn.onclick = () => {
+            currentStedSubTab = 'free';
+            subTab1Btn.classList.add('active');
+            subTab2Btn.classList.remove('active');
+            freeContainer.style.display = 'block';
+            challengeContainer.style.display = 'none';
         };
-        controls.appendChild(resetBtn);
 
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'check-saetning-btn';
-        checkBtn.textContent = currentPlacedSlots.length === challenge.correct.length ? 'Tjek sætning ✓' : 'Udfyld alle pladser';
-        checkBtn.disabled = currentPlacedSlots.length !== challenge.correct.length;
+        subTab2Btn.onclick = () => {
+            currentStedSubTab = 'challenge';
+            subTab2Btn.classList.add('active');
+            subTab1Btn.classList.remove('active');
+            freeContainer.style.display = 'none';
+            challengeContainer.style.display = 'block';
+            setupChallengeSection();
+        };
 
-        checkBtn.onclick = () => {
-            const isCorrect = currentPlacedSlots.every((w, i) => w === challenge.correct[i]);
-            feedbackBox.style.display = 'block';
+        // ==========================================
+        // SUB-TAB 1: UDFORSK & BYG SELV
+        // ==========================================
+        function setupFreeBuilder() {
+            freeContainer.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med stedsadverbier</h3>
+                    <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                        Vælg ét element fra hver række herunder. Læg mærke til spørgsmålene, og lyt til hvordan sætningen lyder!
+                    </p>
+                </div>
 
-            if (isCorrect) {
-                feedbackBox.style.background = 'rgba(34, 197, 94, 0.15)';
-                feedbackBox.style.border = '1.5px solid #22c55e';
-                feedbackBox.style.color = '#dcfce7';
-                feedbackBox.innerHTML = `
-                    <div style="font-weight: 800; margin-bottom: 0.4rem;">🎉 Fuldstændig rigtigt!</div>
-                    <p style="margin-bottom: 0.8rem;">${challenge.explanation}</p>
-                    <button class="detektiv-next-btn" id="next-saetning-btn">
-                        ${saetningIdx < SAETNING_CHALLENGES.length - 1 ? 'Næste sætning ➔' : 'Gennemfør 🏆'}
+                <div class="grammar-legend-bar">
+                    <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> 1. Hvem (Subjekt)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> 2. Handling (Verbum)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> 3. Retning/Hvile (Sted)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-rest"></span> 4. Hvor (Restled)</div>
+                </div>
+
+                <div id="sted-free-builder-rows"></div>
+
+                <div class="sb-live-box">
+                    <div class="sb-live-label">Din samlede sætning</div>
+                    <div class="sb-live-sentence" id="sted-free-live-sentence"></div>
+                    <button class="sb-listen-btn" id="sted-free-listen-btn">
+                        <span>🔊</span> Hør udtale
                     </button>
-                `;
-                speakDanish(currentPlacedSlots.join(' '));
-                feedbackBox.querySelector('#next-saetning-btn').onclick = () => {
-                    currentPlacedSlots = [];
-                    if (saetningIdx < SAETNING_CHALLENGES.length - 1) {
-                        saetningIdx++;
-                        renderTabSaetning(parent);
-                    } else {
-                        saetningIdx = 0;
-                        switchTab('tab_kontekst');
-                    }
-                };
-            } else {
-                feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
-                feedbackBox.style.border = '1.5px solid #ef4444';
-                feedbackBox.style.color = '#fee2e2';
-                feedbackBox.innerHTML = `
-                    <div style="font-weight: 800; margin-bottom: 0.4rem;">💡 Prøv igen:</div>
-                    <p>Husk på: Hvis stedsadverbiet står først, SKAL verbet være på 2. pladsen! Klik på et ord i sætningen for at fjerne det, eller tryk 'Nulstil'.</p>
+                </div>
+            `;
+
+            const rowsContainer = freeContainer.querySelector('#sted-free-free-rows') || freeContainer.querySelector('#sted-free-builder-rows');
+            const liveSentenceEl = freeContainer.querySelector('#sted-free-live-sentence');
+            const listenBtn = freeContainer.querySelector('#sted-free-listen-btn');
+
+            function updateLiveSentence() {
+                liveSentenceEl.innerHTML = `
+                    <span class="grammar-word word-substantiv">${currentFreeSelected[0]}</span>
+                    <span class="grammar-word word-verbum">${currentFreeSelected[1]}</span>
+                    <span class="grammar-word word-sted">${currentFreeSelected[2]}</span>
+                    <span class="grammar-word word-rest">${currentFreeSelected[3]}</span>.
                 `;
             }
-        };
-        controls.appendChild(checkBtn);
-        card.appendChild(controls);
 
-        container.appendChild(card);
+            listenBtn.onclick = () => {
+                speakDanish(`${currentFreeSelected[0]} ${currentFreeSelected[1]} ${currentFreeSelected[2]} ${currentFreeSelected[3]}`);
+            };
+
+            STED_FREE_CATEGORIES.forEach((cat, catIdx) => {
+                const row = document.createElement('div');
+                row.className = `sb-category-row ${cat.catClass}`;
+                row.innerHTML = `
+                    <div class="sb-category-header">
+                        <div class="sb-category-title">
+                            <span>${cat.icon}</span> ${cat.title}
+                        </div>
+                        <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
+                    </div>
+                    <div class="sb-chips-grid"></div>
+                `;
+
+                const grid = row.querySelector('.sb-chips-grid');
+                cat.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = `sb-chip-btn ${currentFreeSelected[catIdx] === opt ? 'selected' : ''}`;
+                    btn.textContent = opt;
+
+                    btn.onclick = () => {
+                        currentFreeSelected[catIdx] = opt;
+                        grid.querySelectorAll('.sb-chip-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        updateLiveSentence();
+                        speakDanish(opt);
+                    };
+                    grid.appendChild(btn);
+                });
+
+                rowsContainer.appendChild(row);
+            });
+
+            updateLiveSentence();
+        }
+
+        // ==========================================
+        // SUB-TAB 2: OPGAVE & PUSLESPIL
+        // ==========================================
+        function setupChallengeSection() {
+            challengeContainer.innerHTML = '';
+            const task = STED_CHALLENGE_TASKS[currentStedChallengeIdx];
+
+            // Task header with numbered navigation pills
+            const header = document.createElement('div');
+            header.className = 'sb-task-header';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.innerHTML = `
+                <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 800; text-transform: uppercase;">
+                    Udfordring ${currentStedChallengeIdx + 1} af ${STED_CHALLENGE_TASKS.length}
+                </div>
+                <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg adverbiet & saml puslespillet</h3>
+            `;
+            header.appendChild(titleDiv);
+
+            const pills = document.createElement('div');
+            pills.className = 'sb-task-pills';
+            STED_CHALLENGE_TASKS.forEach((_, idx) => {
+                const pill = document.createElement('div');
+                pill.className = `sb-task-pill ${idx === currentStedChallengeIdx ? 'active' : ''} ${completedStedChallenges.has(idx) ? 'done' : ''}`;
+                pill.textContent = idx + 1;
+                pill.onclick = () => {
+                    currentStedChallengeIdx = idx;
+                    setupChallengeSection();
+                };
+                pills.appendChild(pill);
+            });
+            header.appendChild(pills);
+            challengeContainer.appendChild(header);
+
+            // Step 1: Context card with helper question chips
+            const contextCard = document.createElement('div');
+            contextCard.className = 'sb-context-card';
+            contextCard.innerHTML = `
+                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-elements">
+                    <div class="sb-context-chip subjekt">
+                        <span class="sb-chip-role">1. Hvem?</span>
+                        <span>${task.subjekt}</span>
+                    </div>
+                    <div class="sb-context-chip verbum">
+                        <span class="sb-chip-role">2. Handling?</span>
+                        <span>${task.verbum}</span>
+                    </div>
+                    <div class="sb-context-chip rest">
+                        <span class="sb-chip-role">4. Hvor?</span>
+                        <span>${task.rest}</span>
+                    </div>
+                </div>
+            `;
+            challengeContainer.appendChild(contextCard);
+
+            // Question box
+            const qBox = document.createElement('div');
+            qBox.className = 'sb-question-box';
+            qBox.innerHTML = `
+                <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
+                    Trin 1: Vælg det rigtige adverbium
+                </div>
+                <div class="sb-question-text">${task.questionPrompt}</div>
+            `;
+            challengeContainer.appendChild(qBox);
+
+            // Options grid
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'sb-options-grid';
+
+            const puzzleContainer = document.createElement('div');
+            puzzleContainer.className = 'sb-puzzle-section';
+            puzzleContainer.style.display = 'none';
+
+            const allOptions = [task.correctAdv, ...task.distractors].sort(() => Math.random() - 0.5);
+
+            allOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'sb-option-btn';
+                btn.textContent = opt;
+
+                btn.onclick = () => {
+                    if (btn.classList.contains('correct')) return;
+
+                    if (opt === task.correctAdv) {
+                        btn.classList.add('correct');
+                        optionsGrid.querySelectorAll('.sb-option-btn').forEach(b => {
+                            if (b !== btn) b.style.opacity = '0.4';
+                            b.style.pointerEvents = 'none';
+                        });
+
+                        speakDanish(opt);
+
+                        // Trigger Step 2: Puslespillet
+                        renderStedPuzzleStep(puzzleContainer, task);
+                        puzzleContainer.style.display = 'block';
+                        if (typeof puzzleContainer.scrollIntoView === 'function') {
+                            puzzleContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    } else {
+                        btn.classList.add('incorrect');
+                        speakDanish("Prøv igen");
+                        setTimeout(() => btn.classList.remove('incorrect'), 600);
+                    }
+                };
+
+                optionsGrid.appendChild(btn);
+            });
+
+            challengeContainer.appendChild(optionsGrid);
+            challengeContainer.appendChild(puzzleContainer);
+        }
+
+        // Step 2: Puslespil i udfordringen
+        function renderStedPuzzleStep(puzContainer, task) {
+            puzContainer.innerHTML = `
+                <div class="sb-puzzle-title">
+                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                </div>
+                <div class="sb-puzzle-desc">
+                    Klik på brikkerne i den rigtige rækkefølge for at udfylde pladserne:
+                </div>
+
+                <div class="sb-puzzle-slots" id="sted-puzzle-slots-grid"></div>
+                <div class="sb-puzzle-chips" id="sted-puzzle-chips-pool"></div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;">
+                    <button class="reset-slots-btn" id="sted-puzzle-reset-btn">↺ Nulstil brikker</button>
+                    <div id="sted-puzzle-status" style="font-weight: 700; color: #22c55e;"></div>
+                </div>
+            `;
+
+            const slotsGrid = puzContainer.querySelector('#sted-puzzle-slots-grid');
+            const chipsPool = puzContainer.querySelector('#sted-puzzle-chips-pool');
+            const resetBtn = puzContainer.querySelector('#sted-puzzle-reset-btn');
+            const statusEl = puzContainer.querySelector('#sted-puzzle-status');
+
+            let placedWords = [];
+            const shuffledChips = [...task.chips].sort(() => Math.random() - 0.5);
+
+            function updatePuzzleUI() {
+                slotsGrid.innerHTML = '';
+                task.slots.forEach((slotLabel, idx) => {
+                    const slot = document.createElement('div');
+                    slot.className = `sb-puzzle-slot ${placedWords[idx] ? 'filled' : ''}`;
+                    if (placedWords[idx]) {
+                        slot.innerHTML = `<span>${placedWords[idx]}</span>`;
+                        slot.onclick = () => {
+                            placedWords.splice(idx, 1);
+                            updatePuzzleUI();
+                        };
+                    } else {
+                        slot.innerHTML = `
+                            <span class="slot-hint">${slotLabel}</span>
+                            <span class="slot-role">${task.roles[idx]}</span>
+                        `;
+                    }
+                    slotsGrid.appendChild(slot);
+                });
+
+                chipsPool.innerHTML = '';
+                shuffledChips.forEach(word => {
+                    const chip = document.createElement('button');
+                    chip.className = `sb-puzzle-chip ${placedWords.includes(word) ? 'used' : ''}`;
+                    chip.textContent = word;
+                    chip.onclick = () => {
+                        if (placedWords.length < task.slots.length && !placedWords.includes(word)) {
+                            placedWords.push(word);
+                            speakDanish(word);
+                            updatePuzzleUI();
+                        }
+                    };
+                    chipsPool.appendChild(chip);
+                });
+
+                if (placedWords.length === task.correctSentence.length) {
+                    const isCorrect = placedWords.every((w, i) => w === task.correctSentence[i]);
+                    if (isCorrect) {
+                        completedStedChallenges.add(currentStedChallengeIdx);
+                        statusEl.innerHTML = `
+                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="sted-task-next-btn">
+                                ${currentStedChallengeIdx < STED_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Afslut puslespil 🏆'}
+                            </button>
+                        `;
+                        speakDanish(placedWords.join(' '));
+
+                        puzContainer.querySelector('#sted-task-next-btn').onclick = () => {
+                            if (currentStedChallengeIdx < STED_CHALLENGE_TASKS.length - 1) {
+                                currentStedChallengeIdx++;
+                                setupChallengeSection();
+                            } else {
+                                statusEl.innerHTML = `<span style="color: #38bdf8;">Alle 6 udfordringer gennemført flot! 🌟</span>`;
+                            }
+                        };
+                    } else {
+                        statusEl.innerHTML = `<span style="color: #ef4444;">Ikke helt rigtig rækkefølge – prøv igen!</span>`;
+                    }
+                } else {
+                    statusEl.innerHTML = '';
+                }
+            }
+
+            resetBtn.onclick = () => {
+                placedWords = [];
+                updatePuzzleUI();
+            };
+
+            updatePuzzleUI();
+        }
+
+        setupFreeBuilder();
         parent.innerHTML = '';
         parent.appendChild(container);
     }

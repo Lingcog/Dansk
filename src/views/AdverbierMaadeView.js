@@ -1239,16 +1239,24 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         .sb-context-chip.maade { border-left: 3px solid #ec4899; color: #f472b6; }
         .sb-context-chip.rest { border-left: 3px solid #fbbf24; color: #fde68a; }
         .sb-context-chip.target-placeholder {
-            background: rgba(236, 72, 153, 0.15);
-            border: 2px dashed #ec4899;
-            color: #f472b6;
-            box-shadow: 0 0 12px rgba(236, 72, 153, 0.25);
+            background: rgba(236, 72, 153, 0.18) !important;
+            border: 2px dashed #ec4899 !important;
+            border-left: 4px solid #ec4899 !important;
+            color: #f472b6 !important;
+            box-shadow: 0 0 16px rgba(236, 72, 153, 0.35) !important;
+            animation: pulse-pink-slot 2s infinite ease-in-out;
+        }
+        @keyframes pulse-pink-slot {
+            0%, 100% { border-color: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.2); }
+            50% { border-color: #ec4899; box-shadow: 0 0 22px rgba(236, 72, 153, 0.55); }
         }
         .sb-context-chip.target-placeholder.chip-filled {
-            background: rgba(34, 197, 94, 0.2);
-            border: 2px solid #22c55e;
-            color: #4ade80;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.35);
+            background: rgba(34, 197, 94, 0.2) !important;
+            border: 2px solid #22c55e !important;
+            border-left: 4px solid #22c55e !important;
+            color: #4ade80 !important;
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.35) !important;
+            animation: none !important;
         }
         .sb-chip-role {
             font-size: 0.75rem;
@@ -2811,34 +2819,34 @@ export function renderAdverbierMaadeView(container, navigateFn) {
 
             // Build helper question chips (all 4 elements including the target adverb slot!)
             const chipsHtml = task.correctSentence.map((word, idx) => {
-                const slotLabel = task.slots[idx];
                 if (idx === advIdx) {
                     return `
-                        <div class="sb-context-chip maade target-placeholder" id="sb-context-chip-adv">
-                            <span class="sb-chip-role">${slotLabel}</span>
+                        <div class="sb-context-chip maade target-placeholder" id="sb-context-chip-adv" title="Her skal mådesadverbiet stå!">
+                            <span class="sb-chip-role">3. HVORDAN? (MÅDE) ⭐</span>
                             <span id="sb-chip-adv-val" style="font-weight: 800; letter-spacing: 2px;">________</span>
                         </div>
                     `;
                 }
                 const chipType = (idx === 0) ? 'subjekt' : (idx === 1) ? 'verbum' : 'rest';
+                const roleUpper = (idx === 0) ? '1. HVEM?' : (idx === 1) ? '2. HANDLING?' : '4. HVOR/HVAD?';
                 return `
                     <div class="sb-context-chip ${chipType}">
-                        <span class="sb-chip-role">${slotLabel}</span>
-                        <span>${word}</span>
+                        <span class="sb-chip-role">${roleUpper}</span>
+                        <span style="font-weight: 700;">${word}</span>
                     </div>
                 `;
             }).join('');
 
             contextCard.innerHTML = `
                 <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-elements" style="margin-bottom: 1rem;">
+                    ${chipsHtml}
+                </div>
                 <div class="sb-target-sentence-card">
                     <div class="sb-target-sentence-label">Sætning med tom plads til mådesadverbiet:</div>
                     <div class="sb-target-sentence-display" id="sb-target-sentence-display">
                         ${sentenceHtml}
                     </div>
-                </div>
-                <div class="sb-context-elements">
-                    ${chipsHtml}
                 </div>
             `;
             challengeContainer.appendChild(contextCard);

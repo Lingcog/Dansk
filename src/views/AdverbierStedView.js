@@ -2592,14 +2592,14 @@ export function renderAdverbierStedView(container, navigateFn) {
 
             contextCard.innerHTML = `
                 <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-elements" style="margin-bottom: 1rem;">
+                    ${chipsHtml}
+                </div>
                 <div class="sb-target-sentence-card">
                     <div class="sb-target-sentence-label">Sætning med tom plads til stedsadverbiet:</div>
                     <div class="sb-target-sentence-display" id="sb-target-sentence-display">
                         ${sentenceHtml}
                     </div>
-                </div>
-                <div class="sb-context-elements">
-                    ${chipsHtml}
                 </div>
             `;
             challengeContainer.appendChild(contextCard);

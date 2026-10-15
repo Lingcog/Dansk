@@ -1690,6 +1690,127 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             transform: translateY(-2px);
         }
 
+        /* Specialized Training Tabs */
+        .special-tab-container {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+        .special-intro-box {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .special-intro-box h2 {
+            font-size: 2.2rem;
+            color: #a5f3fc;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+        }
+        .special-intro-box p {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .special-rule-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2.2rem;
+        }
+        .special-rule-card {
+            background: #1e293b;
+            border-radius: 18px;
+            padding: 1.3rem 1.4rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .special-rule-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.25);
+        }
+        .special-rule-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .special-rule-word {
+            font-size: 1.4rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .special-rule-role {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .special-rule-desc {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+        .special-rule-example {
+            background: rgba(15, 23, 42, 0.75);
+            border-radius: 10px;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.95rem;
+            color: #f8fafc;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+        }
+        .rule-speak-btn {
+            background: #334155;
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .rule-speak-btn:hover {
+            background: #06b6d4;
+            transform: scale(1.1);
+        }
+
+        .exercise-dialog-quote {
+            font-size: 1.45rem;
+            color: white;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            background: rgba(15, 23, 42, 0.75);
+            padding: 1.5rem;
+            border-radius: 14px;
+            border-left: 5px solid #06b6d4;
+        }
+
+        .score-celebration-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            border: 2px solid #22d3ee;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.35);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
@@ -1735,11 +1856,13 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Frokoststuen (Vrimlebilledet)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. Aha-værkstedet ("Hvem ved hvad?")', icon: '🧠' },
-        { id: 'detektiv', label: '3. Dialog-Detektiven', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' }
+        { id: 'vrimmel', label: '1. Frokoststuen (Vrimmel)', icon: '🖼️' },
+        { id: 'vaerksted', label: '2. De 5 Magiske (Aha-matrix)', icon: '🧠' },
+        { id: 'hellere', label: '3. Heller, hellere, helst ⚖️', icon: '⚖️' },
+        { id: 'boosters', label: '4. Forstærkere (sgu, skam...) 💥', icon: '💥' },
+        { id: 'detektiv', label: '5. Dialog-Detektiven', icon: '🔍' },
+        { id: 'builder', label: '6. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'kontekst', label: '7. Kontekst-testen (16 opgaver)', icon: '🎯' }
     ];
 
     let currentTab = 'vrimmel';
@@ -1770,6 +1893,10 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             renderTabVrimmel(tabContent);
         } else if (tabId === 'vaerksted') {
             renderTabVaerksted(tabContent);
+        } else if (tabId === 'hellere') {
+            renderTabHellere(tabContent);
+        } else if (tabId === 'boosters') {
+            renderTabBoosters(tabContent);
         } else if (tabId === 'detektiv') {
             renderTabDetektiv(tabContent);
         } else if (tabId === 'builder') {
@@ -2190,7 +2317,570 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 3: DIALOG-DETEKTIVEN (10 dybdegående øvelser)
+    // TAB 3: HELLER, HELLERE ELLER HELST? (9 øvelser)
+    // ==========================================
+    const HELLERE_QUESTIONS = [
+        {
+            dialog: 'A: "Jeg har ikke læst den nye rapport endnu."<br>B: "Det har jeg ______ ikke."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'heller',
+            feedback: 'Korrekt! "Heller ikke" bruges altid ved benægtelse ("ikke") til at udtrykke negativ enighed (neither / nor).',
+            ruleHighlight: 'Negativ enighed ("... heller ikke")'
+        },
+        {
+            dialog: 'A: "Vil du have kaffe eller te?"<br>B: "Tak, jeg vil ______ have kaffe end te."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'hellere',
+            feedback: 'Korrekt! "Hellere ... end" er komparativ og bruges ved valg mellem to muligheder (would rather / prefer A over B).',
+            ruleHighlight: 'Valg mellem 2 ("A frem for B")'
+        },
+        {
+            dialog: 'A: "Hvor i lokalet vil du sidde?"<br>B: "Hvis jeg må vælge helt frit, vil jeg ______ sidde ved vinduet."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'helst',
+            feedback: 'Korrekt! "Helst" er superlativ og angiver den absolut bedste løsning / 1. prioritet (most prefer / ideally).',
+            ruleHighlight: 'Absolut 1. prioritet ("Allerhelst")'
+        },
+        {
+            dialog: 'A: "Jeg forstår slet ikke det nye IT-system."<br>B: "Nej, jeg forstår det ærlig talt ______ ikke!"',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'heller',
+            feedback: 'Korrekt! Sætningen indeholder "ikke", så her hedder det altid "heller" (negativ enighed).',
+            ruleHighlight: 'Negativ enighed med "ikke"'
+        },
+        {
+            dialog: 'A: "Skal vi tage bussen eller cykle i det fine vejr?"<br>B: "Solen skinner, så jeg cykler ______!"',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'hellere',
+            feedback: 'Korrekt! Valg af cyklen frem for bussen (to alternativer) ➔ "hellere".',
+            ruleHighlight: 'Komparativ præference'
+        },
+        {
+            dialog: 'A: "Hvilken ret på frokostmenuen frister dig mest?"<br>B: "Jeg vil ______ have dagens laks, den ser fantastisk ud."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'helst',
+            feedback: 'Korrekt! Din klare favorit blandt alle muligheder på menukortet ➔ "helst".',
+            ruleHighlight: 'Superlativ / Førstevalg'
+        },
+        {
+            dialog: 'A: "Peter kunne ikke komme til personalemødet i dag."<br>B: "Nej, og Maria kunne desværre ______ ikke nå det."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'heller',
+            feedback: 'Korrekt! Fælles benægtelse: Maria kunne heller ikke nå det.',
+            ruleHighlight: 'Fælles benægtelse ("heller ikke")'
+        },
+        {
+            dialog: 'A: "Skal vi gå i biografen eller blive hjemme og se en film?"<br>B: "Jeg vil ______ blive hjemme på sofaen i aften."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'hellere',
+            feedback: 'Korrekt! Sammenligning mellem to forslag ("blive hjemme frem for biografen") ➔ "hellere".',
+            ruleHighlight: 'Valg mellem 2 forslag'
+        },
+        {
+            dialog: 'A: "Hvad tid på dagen arbejder du bedst?"<br>B: "Jeg arbejder ______ om formiddagen, hvor jeg er mest frisk."',
+            options: ['heller', 'hellere', 'helst'],
+            correct: 'helst',
+            feedback: 'Korrekt! Din generelle, optimale præference over alle andre tider ➔ "helst".',
+            ruleHighlight: 'Overordnet favorit / 1. valg'
+        }
+    ];
+
+    let hellereIdx = 0;
+    let hellereScore = 0;
+    let hellereAnswers = new Array(HELLERE_QUESTIONS.length).fill(null);
+
+    function renderTabHellere(parent) {
+        parent.innerHTML = '';
+
+        const container = document.createElement('div');
+        container.className = 'special-tab-container';
+
+        // Introduktion og Regelkort
+        container.innerHTML = `
+            <div class="special-intro-box">
+                <h2>Heller, hellere eller helst? ⚖️</h2>
+                <p>
+                    Tre ord der lyder næsten ens, men har vidt forskellige funktioner. Lær den gyldne forskel på <strong>negativ enighed</strong> og <strong>personlig præference</strong>:
+                </p>
+            </div>
+
+            <!-- 3 Gyldne Regelkort -->
+            <div class="special-rule-cards-grid">
+                <div class="special-rule-card" style="border-color: rgba(239, 68, 68, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #f87171;">
+                            <span>🔴</span> heller
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444;">Negation</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bruges <strong>altid</strong> sammen med nægtelse (<em>ikke</em>, <em>aldrig</em>) for at udtrykke negativ enighed ("heller ikke" = neither / nor).
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #ef4444;">
+                        <span>"Det ved jeg <strong>heller</strong> ikke."</span>
+                        <button class="rule-speak-btn" data-speak="Det ved jeg heller ikke.">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(34, 211, 238, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #22d3ee;">
+                            <span>🟡</span> hellere
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid #06b6d4;">Komparativ</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bruges ved et <strong>valg mellem to alternativer</strong> ("A frem for B" / would rather / prefer).
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #06b6d4;">
+                        <span>"Jeg vil <strong>hellere</strong> have te end kaffe."</span>
+                        <button class="rule-speak-btn" data-speak="Jeg vil hellere have te end kaffe.">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(34, 197, 94, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #4ade80;">
+                            <span>🟢</span> helst
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e;">Superlativ</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bruges om den <strong>absolut bedste løsning</strong> / 1. prioritet blandt alle muligheder (most prefer / ideally).
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #22c55e;">
+                        <span>"Jeg vil <strong>helst</strong> blive hjemme i dag."</span>
+                        <button class="rule-speak-btn" data-speak="Jeg vil helst blive hjemme i dag.">🔊</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hellere-exercise-area"></div>
+        `;
+
+        // Bind audio on rule cards
+        container.querySelectorAll('.rule-speak-btn').forEach(b => {
+            b.onclick = () => speakDanish(b.getAttribute('data-speak'));
+        });
+
+        const exArea = container.querySelector('#hellere-exercise-area');
+        renderHellereQuestion(exArea, parent);
+
+        parent.appendChild(container);
+    }
+
+    function renderHellereQuestion(exArea, parentContainer) {
+        exArea.innerHTML = '';
+
+        if (hellereIdx >= HELLERE_QUESTIONS.length) {
+            // Result / Celebration
+            const resultCard = document.createElement('div');
+            resultCard.className = 'score-celebration-card';
+            resultCard.innerHTML = `
+                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉</div>
+                <h3 style="font-size: 2rem; color: #a5f3fc; margin-bottom: 0.6rem;">Fremragende klaret!</h3>
+                <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
+                    Du fik <strong>${hellereScore}</strong> ud af <strong>${HELLERE_QUESTIONS.length}</strong> rigtige i præference-testen.
+                </p>
+                <div style="background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
+                    ✔️ <strong>Huskereglen:</strong><br>
+                    • <em>ikke</em> / <em>aldrig</em> ➔ altid <strong>heller</strong><br>
+                    • Valg mellem to ting ➔ <strong>hellere</strong><br>
+                    • Førstevalg / favorit ➔ <strong>helst</strong>
+                </div>
+                <button class="action-btn-primary" id="hellere-restart-btn">
+                    <span>🔄</span> Start forfra
+                </button>
+            `;
+            resultCard.querySelector('#hellere-restart-btn').onclick = () => {
+                hellereIdx = 0;
+                hellereScore = 0;
+                hellereAnswers = new Array(HELLERE_QUESTIONS.length).fill(null);
+                renderTabHellere(parentContainer);
+            };
+            exArea.appendChild(resultCard);
+            return;
+        }
+
+        const q = HELLERE_QUESTIONS[hellereIdx];
+        const isAnswered = hellereAnswers[hellereIdx] !== null;
+
+        const card = document.createElement('div');
+        card.className = 'exercise-action-card';
+
+        card.innerHTML = `
+            <div class="progress-header">
+                <span>Spørgsmål ${hellereIdx + 1} af ${HELLERE_QUESTIONS.length}</span>
+                <span>Score: ${hellereScore} / ${HELLERE_QUESTIONS.length}</span>
+            </div>
+
+            <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" style="width: ${((hellereIdx + 1) / HELLERE_QUESTIONS.length) * 100}%;"></div>
+            </div>
+
+            <div class="detektiv-context-tag">
+                <span>⚖️</span> ${q.ruleHighlight}
+            </div>
+
+            <div class="exercise-dialog-quote">
+                ${q.dialog}
+            </div>
+
+            <div class="detektiv-options-grid" id="hellere-opts-grid"></div>
+
+            <div class="detektiv-feedback-box ${isAnswered ? 'show ' + (hellereAnswers[hellereIdx] === q.correct ? 'correct' : 'wrong') : ''}" id="hellere-fb">
+                ${isAnswered ? (hellereAnswers[hellereIdx] === q.correct ? `<strong>Flot!</strong> ${q.feedback}` : `<strong>Husk reglen:</strong> ${q.feedback}`) : ''}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                <button class="filter-btn" id="hellere-prev-btn" ${hellereIdx === 0 ? 'disabled style="opacity: 0.4;"' : ''}>
+                    ← Forrige
+                </button>
+                <button class="action-btn-primary" id="hellere-next-btn">
+                    ${hellereIdx < HELLERE_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                </button>
+            </div>
+        `;
+
+        const optsGrid = card.querySelector('#hellere-opts-grid');
+        const fb = card.querySelector('#hellere-fb');
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = `detektiv-opt-btn ${isAnswered ? (opt === q.correct ? 'correct' : (opt === hellereAnswers[hellereIdx] ? 'wrong' : '')) : ''}`;
+            btn.textContent = opt;
+
+            btn.onclick = () => {
+                if (hellereAnswers[hellereIdx] !== null) return;
+                hellereAnswers[hellereIdx] = opt;
+
+                if (opt === q.correct) {
+                    hellereScore++;
+                    btn.classList.add('correct');
+                    fb.className = 'detektiv-feedback-box show correct';
+                    fb.innerHTML = `<strong>Rigtigt!</strong> ${q.feedback}`;
+                    speakDanish(q.dialog.replace(/<[^>]*>?/gm, ' ').replace('______', opt));
+                } else {
+                    btn.classList.add('wrong');
+                    fb.className = 'detektiv-feedback-box show wrong';
+                    fb.innerHTML = `<strong>Ikke helt:</strong> ${q.feedback}`;
+                    // Highlight correct
+                    optsGrid.querySelectorAll('.detektiv-opt-btn').forEach(b => {
+                        if (b.textContent === q.correct) b.classList.add('correct');
+                    });
+                }
+            };
+
+            optsGrid.appendChild(btn);
+        });
+
+        card.querySelector('#hellere-prev-btn').onclick = () => {
+            if (hellereIdx > 0) {
+                hellereIdx--;
+                renderHellereQuestion(exArea, parentContainer);
+            }
+        };
+
+        card.querySelector('#hellere-next-btn').onclick = () => {
+            hellereIdx++;
+            renderHellereQuestion(exArea, parentContainer);
+        };
+
+        exArea.appendChild(card);
+    }
+
+    // ==========================================
+    // TAB 4: FORSTÆRKERNE (sgu, mon ikke, skam, sandelig) (9 øvelser)
+    // ==========================================
+    const BOOSTER_QUESTIONS = [
+        {
+            dialog: 'A: "Er du helt sikker på, at jeg må tage kage i kantinen?"<br>B: "Ja, det kan du ______ roligt tro på! Værsgo og tag et stykke."',
+            options: ['skam', 'sgu', 'mon ikke', 'vist'],
+            correct: 'skam',
+            feedback: 'Korrekt! "Skam" bruges som en høflig og venlig forsikring ("certainly / indeed"), der fjerner modpartens tøven eller beskedenhed.',
+            badge: '🤝 Høflig forsikring'
+        },
+        {
+            dialog: 'A: "Vejrudsigten truer med mørke skyer i eftermiddag."<br>B: "Bare rolig, ______ det holder tørvejr, indtil vi når frem?"',
+            options: ['mon ikke', 'skam', 'sgu', 'sandelig'],
+            correct: 'mon ikke',
+            feedback: 'Korrekt! "Mon ikke" bruges til at tænke højt og udtrykke en formodning, man har stor tillid til ("surely / won\'t it...").',
+            badge: '🔮 Håbefuld formodning'
+        },
+        {
+            dialog: 'Kollegaen smiler overvældet over nyheden:<br>"Hvad, fik du jobbet?! Det var ______ en fantastisk nyhed!"',
+            options: ['sgu', 'skam', 'mon ikke', 'nok'],
+            correct: 'sgu',
+            feedback: 'Korrekt! "Sgu" giver sætningen saft og kraft i uformelt hverdagssprog blandt venner og kolleger ("damn well / truly").',
+            badge: '🌶️ Uformel emphase'
+        },
+        {
+            dialog: 'Chefen roser teamet efter en stor indsats:<br>"I har ______ leveret et imponerende stykke arbejde i denne uge."',
+            options: ['sandelig', 'sgu', 'mon ikke', 'ellers'],
+            correct: 'sandelig',
+            feedback: 'Korrekt! "Sandelig" bruges i en mere formel eller eftertrykkelig tone til at udtrykke oprigtig beundring og sandhed ("indeed / truly").',
+            badge: '✨ Højtidelig bekræftelse'
+        },
+        {
+            dialog: 'A: "Undskyld hvis jeg forstyrrer dig midt i frokostpausen!"<br>B: "Du forstyrrer ______ overhovedet ikke, sæt dig bare ned!"',
+            options: ['skam', 'sgu', 'mon ikke', 'vel'],
+            correct: 'skam',
+            feedback: 'Korrekt! "Du forstyrrer skam overhovedet ikke" er den klassiske, venlige måde at fjerne en andens undskyldning på.',
+            badge: '🤝 Venlig beroligelse'
+        },
+        {
+            dialog: 'A: "Klokken er 14:25, og toget kører 14:30!"<br>B: "Slap bare af, ______ vi når det inden afgang?"',
+            options: ['mon ikke', 'skam', 'sgu', 'engang'],
+            correct: 'mon ikke',
+            feedback: 'Korrekt! "Mon ikke vi når det?" beroliger med en forventning om, at det nok skal lykkes.',
+            badge: '🔮 Tillidsfuld forventning'
+        },
+        {
+            dialog: 'Kollegaen leder forvirret i tasken og på skrivebordet:<br>"Hvor er mine nøgler? De lå ______ lige her for to minutter siden!"',
+            options: ['sgu', 'skam', 'mon ikke', 'vist'],
+            correct: 'sgu',
+            feedback: 'Korrekt! "De lå sgu lige her!" udtrykker ægte hverdags-forundring og tryk på udsagnet.',
+            badge: '🌶️ Hverdags-eftertryk'
+        },
+        {
+            dialog: 'A: "Vinteren i år har været ualmindelig kold og lang."<br>B: "Ja, det må man ______ sige!"',
+            options: ['sandelig', 'mon ikke', 'lige', 'ellers'],
+            correct: 'sandelig',
+            feedback: 'Korrekt! Den faste vending "Det må man sandelig sige!" understreger 100% oprigtig enighed.',
+            badge: '✨ Oprigtig enighed'
+        },
+        {
+            dialog: 'A: "Huskede du at betale regningen til tiden?"<br>B: "Ja da, den har jeg ______ betalt for længe siden!"',
+            options: ['skam', 'mon ikke', 'sgu', 'vel'],
+            correct: 'skam',
+            feedback: 'Korrekt! "Den har jeg skam betalt" forsikrer roligt og høfligt om, at sagen er i orden.',
+            badge: '🤝 Høflig forsikring'
+        }
+    ];
+
+    let boostersIdx = 0;
+    let boostersScore = 0;
+    let boostersAnswers = new Array(BOOSTER_QUESTIONS.length).fill(null);
+
+    function renderTabBoosters(parent) {
+        parent.innerHTML = '';
+
+        const container = document.createElement('div');
+        container.className = 'special-tab-container';
+
+        // Introduktion og Booster-oversigt
+        container.innerHTML = `
+            <div class="special-intro-box">
+                <h2>Forstærkende ord & samtale-boostere 💥</h2>
+                <p>
+                    Danskere krydrer deres sprog med småord, der viser entusiasme, høflig forsikring eller overbevisning. Mestre de fire mest almindelige hverdags-boostere:
+                </p>
+            </div>
+
+            <!-- 4 Booster Regelkort -->
+            <div class="special-rule-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));">
+                <div class="special-rule-card" style="border-color: rgba(249, 115, 22, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #fb923c;">
+                            <span>🌶️</span> sgu
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid #f97316;">Uformel</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Giver sætningen <strong>kraft og saft</strong> blandt venner og kolleger. Ikke et grimt bandeord, men et folkeligt eftertryk.
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #f97316;">
+                        <span>"Det passer <strong>sgu</strong>!"</span>
+                        <button class="rule-speak-btn" data-speak="Det passer sgu!">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(168, 85, 247, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #c084fc;">
+                            <span>🔮</span> mon ikke
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border: 1px solid #a855f7;">Formodning</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Udtrykker en <strong>håbefuld forventning med tillid</strong> ("surely / won't it..."). Tænker højt for at berolige.
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #a855f7;">
+                        <span>"<strong>Mon ikke</strong> det går?"</span>
+                        <button class="rule-speak-btn" data-speak="Mon ikke det går?">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(16, 185, 129, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #34d399;">
+                            <span>🤝</span> skam
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid #10b981;">Høflig</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        En <strong>venlig og beroligende forsikring</strong> ("certainly / indeed"), der fjerner tvivl eller undskyldninger.
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #10b981;">
+                        <span>"Det kan du <strong>skam</strong> godt!"</span>
+                        <button class="rule-speak-btn" data-speak="Det kan du skam godt!">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(234, 179, 8, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #facc15;">
+                            <span>✨</span> sandelig
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308;">Eftertryk</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        En <strong>højtidelig eller oprigtig bekræftelse</strong> ("truly / indeed"), der viser stærk anerkendelse eller enighed.
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #eab308;">
+                        <span>"Det var <strong>sandelig</strong> flot!"</span>
+                        <button class="rule-speak-btn" data-speak="Det var sandelig flot!">🔊</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="boosters-exercise-area"></div>
+        `;
+
+        // Bind audio on rule cards
+        container.querySelectorAll('.rule-speak-btn').forEach(b => {
+            b.onclick = () => speakDanish(b.getAttribute('data-speak'));
+        });
+
+        const exArea = container.querySelector('#boosters-exercise-area');
+        renderBoostersQuestion(exArea, parent);
+
+        parent.appendChild(container);
+    }
+
+    function renderBoostersQuestion(exArea, parentContainer) {
+        exArea.innerHTML = '';
+
+        if (boostersIdx >= BOOSTER_QUESTIONS.length) {
+            // Result / Celebration
+            const resultCard = document.createElement('div');
+            resultCard.className = 'score-celebration-card';
+            resultCard.innerHTML = `
+                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🌟</div>
+                <h3 style="font-size: 2rem; color: #a5f3fc; margin-bottom: 0.6rem;">Flot samtale-mesterskab!</h3>
+                <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
+                    Du fik <strong>${boostersScore}</strong> ud af <strong>${BOOSTER_QUESTIONS.length}</strong> rigtige i booster-testen.
+                </p>
+                <div style="background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
+                    ✔️ <strong>Hurtigt overblik over boosterne:</strong><br>
+                    • <strong>sgu:</strong> Uformel kraft og saft mellem venner<br>
+                    • <strong>mon ikke:</strong> Håbefuld formodning med tillid<br>
+                    • <strong>skam:</strong> Venlig og høflig forsikring<br>
+                    • <strong>sandelig:</strong> Oprigtig anerkendelse og stærk enighed
+                </div>
+                <button class="action-btn-primary" id="boosters-restart-btn">
+                    <span>🔄</span> Start forfra
+                </button>
+            `;
+            resultCard.querySelector('#boosters-restart-btn').onclick = () => {
+                boostersIdx = 0;
+                boostersScore = 0;
+                boostersAnswers = new Array(BOOSTER_QUESTIONS.length).fill(null);
+                renderTabBoosters(parentContainer);
+            };
+            exArea.appendChild(resultCard);
+            return;
+        }
+
+        const q = BOOSTER_QUESTIONS[boostersIdx];
+        const isAnswered = boostersAnswers[boostersIdx] !== null;
+
+        const card = document.createElement('div');
+        card.className = 'exercise-action-card';
+
+        card.innerHTML = `
+            <div class="progress-header">
+                <span>Spørgsmål ${boostersIdx + 1} af ${BOOSTER_QUESTIONS.length}</span>
+                <span>Score: ${boostersScore} / ${BOOSTER_QUESTIONS.length}</span>
+            </div>
+
+            <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" style="width: ${((boostersIdx + 1) / BOOSTER_QUESTIONS.length) * 100}%;"></div>
+            </div>
+
+            <div class="detektiv-context-tag">
+                ${q.badge}
+            </div>
+
+            <div class="exercise-dialog-quote">
+                ${q.dialog}
+            </div>
+
+            <div class="detektiv-options-grid" id="boosters-opts-grid"></div>
+
+            <div class="detektiv-feedback-box ${isAnswered ? 'show ' + (boostersAnswers[boostersIdx] === q.correct ? 'correct' : 'wrong') : ''}" id="boosters-fb">
+                ${isAnswered ? (boostersAnswers[boostersIdx] === q.correct ? `<strong>Flot!</strong> ${q.feedback}` : `<strong>Prøv igen:</strong> ${q.feedback}`) : ''}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                <button class="filter-btn" id="boosters-prev-btn" ${boostersIdx === 0 ? 'disabled style="opacity: 0.4;"' : ''}>
+                    ← Forrige
+                </button>
+                <button class="action-btn-primary" id="boosters-next-btn">
+                    ${boostersIdx < BOOSTER_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                </button>
+            </div>
+        `;
+
+        const optsGrid = card.querySelector('#boosters-opts-grid');
+        const fb = card.querySelector('#boosters-fb');
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = `detektiv-opt-btn ${isAnswered ? (opt === q.correct ? 'correct' : (opt === boostersAnswers[boostersIdx] ? 'wrong' : '')) : ''}`;
+            btn.textContent = opt;
+
+            btn.onclick = () => {
+                if (boostersAnswers[boostersIdx] !== null) return;
+                boostersAnswers[boostersIdx] = opt;
+
+                if (opt === q.correct) {
+                    boostersScore++;
+                    btn.classList.add('correct');
+                    fb.className = 'detektiv-feedback-box show correct';
+                    fb.innerHTML = `<strong>Rigtigt!</strong> ${q.feedback}`;
+                    speakDanish(q.dialog.replace(/<[^>]*>?/gm, ' ').replace('______', opt));
+                } else {
+                    btn.classList.add('wrong');
+                    fb.className = 'detektiv-feedback-box show wrong';
+                    fb.innerHTML = `<strong>Ikke helt:</strong> ${q.feedback}`;
+                    // Highlight correct
+                    optsGrid.querySelectorAll('.detektiv-opt-btn').forEach(b => {
+                        if (b.textContent === q.correct) b.classList.add('correct');
+                    });
+                }
+            };
+
+            optsGrid.appendChild(btn);
+        });
+
+        card.querySelector('#boosters-prev-btn').onclick = () => {
+            if (boostersIdx > 0) {
+                boostersIdx--;
+                renderBoostersQuestion(exArea, parentContainer);
+            }
+        };
+
+        card.querySelector('#boosters-next-btn').onclick = () => {
+            boostersIdx++;
+            renderBoostersQuestion(exArea, parentContainer);
+        };
+
+        exArea.appendChild(card);
+    }
+
+    // ==========================================
+    // TAB 5: DIALOG-DETEKTIVEN (10 dybdegående øvelser)
     // ==========================================
     const DETEKTIV_QUESTIONS = [
         {
@@ -2453,6 +3143,24 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             options: ['godt', 'sgu', 'mon', 'nu'],
             correctWord: 'godt',
             hint: 'Indrømmelse og sympati for situationen.'
+        },
+        {
+            subjekt: 'Jeg',
+            verbum: 'vil',
+            smaaord: 'hellere',
+            rest: 'have kaffe i dag',
+            options: ['heller', 'hellere', 'helst', 'nok'],
+            correctWord: 'hellere',
+            hint: 'Præference mellem to muligheder (kaffe frem for te).'
+        },
+        {
+            subjekt: 'Det',
+            verbum: 'var',
+            smaaord: 'sgu',
+            rest: 'en god idé',
+            options: ['sgu', 'skam', 'heller', 'vel'],
+            correctWord: 'sgu',
+            hint: 'Uformel emphase og folkelig understregning.'
         }
     ];
 
@@ -2769,6 +3477,18 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             options: ['Ellers', 'Heller', 'Bare'],
             correct: 'Ellers',
             feedback: '"Ellers" udtrykker konsekvensen, hvis man ikke skynder sig.'
+        },
+        {
+            dialog: 'A: "Forstyrrer jeg dig i frokostpausen?"<br>B: "Nej, du forstyrrer ______ overhovedet ikke!"',
+            options: ['skam', 'sgu', 'vel'],
+            correct: 'skam',
+            feedback: '"Du forstyrrer skam overhovedet ikke" er den høflige måde at berolige modparten på.'
+        },
+        {
+            dialog: 'A: "Tror du bussen kommer snart?"<br>B: "Tja, ______ den er her om et øjeblik?"',
+            options: ['mon ikke', 'skam', 'sgu'],
+            correct: 'mon ikke',
+            feedback: '"Mon ikke" udtrykker en håbefuld formodning og overbevisning.'
         }
     ];
 

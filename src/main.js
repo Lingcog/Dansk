@@ -10,6 +10,12 @@ import { renderDagensOpgaveView } from './views/DagensOpgaveView.js';
 import { renderWordLearningView } from './views/WordLearningView.js';
 import { renderTop100SubstantiverMenuView } from './views/Top100SubstantiverMenuView.js';
 import { renderTop100VerberMenuView } from './views/Top100VerberMenuView.js';
+import { renderTop100AdjektiverMenuView } from './views/Top100AdjektiverMenuView.js';
+import { renderAdjektiverFysikView } from './views/AdjektiverFysikView.js';
+import { renderAdjektiverTidView } from './views/AdjektiverTidView.js';
+import { renderAdjektiverKvalitetView } from './views/AdjektiverKvalitetView.js';
+import { renderAdjektiverFolelserView } from './views/AdjektiverFolelserView.js';
+import { renderAdjektiverTilstandeView } from './views/AdjektiverTilstandeView.js';
 import { renderVerberByrumView } from './views/VerberByrumView.js';
 import { renderVerberHjemView } from './views/VerberHjemView.js';
 import { renderVerberStationView } from './views/VerberStationView.js';
@@ -131,9 +137,27 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'top100_verber') {
     appState.currentView = 'top100_verber';
     renderTop100VerberMenuView(appDiv, navigate);
+  } else if (viewTarget === 'top100_adjektiver') {
+    appState.currentView = 'top100_adjektiver';
+    renderTop100AdjektiverMenuView(appDiv, navigate);
+  } else if (viewTarget === 'adjektiver_fysik') {
+    appState.currentView = 'adjektiver_fysik';
+    renderAdjektiverFysikView(appDiv, navigate);
+  } else if (viewTarget === 'adjektiver_tid') {
+    appState.currentView = 'adjektiver_tid';
+    renderAdjektiverTidView(appDiv, navigate);
+  } else if (viewTarget === 'adjektiver_kvalitet') {
+    appState.currentView = 'adjektiver_kvalitet';
+    renderAdjektiverKvalitetView(appDiv, navigate);
+  } else if (viewTarget === 'adjektiver_folelser') {
+    appState.currentView = 'adjektiver_folelser';
+    renderAdjektiverFolelserView(appDiv, navigate);
+  } else if (viewTarget === 'adjektiver_tilstande') {
+    appState.currentView = 'adjektiver_tilstande';
+    renderAdjektiverTilstandeView(appDiv, navigate);
   } else if (viewTarget === 'verber_byrum') {
     appState.currentView = 'verber_byrum';
-    renderVerberByrumView(appDiv, navigate);
+    renderVerberByrumView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verber_hjem') {
     appState.currentView = 'verber_hjem';
     renderVerberHjemView(appDiv, navigate);
@@ -148,7 +172,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderVerberStationView(appDiv, navigate);
   } else if (viewTarget === 'byrummet_vrimmel') {
     appState.currentView = 'byrummet_vrimmel';
-    renderByrummetView(appDiv, navigate);
+    renderByrummetView(appDiv, navigate, extraData);
   } else if (viewTarget === 'koekken_hjemmet') {
     appState.currentView = 'koekken_hjemmet';
     renderKoekkenHjemmetView(appDiv, navigate);

@@ -204,7 +204,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             id: 'adverbier_maade',
             badge: '⚡ Felt 3 • 20 ord',
             badgeClass: 'badge-adv-3',
-            img: 'assets/byrum_vrimmel.jpg',
+            img: 'assets/adverbier_maade_vrimmel.jpg',
             title: '3. Måde (-t reglen)',
             desc: 'Hvordan foregår handlingen? Forstå den gyldne regel: Ting (en hurtig bil) vs. Handling (kører hurtigt).',
             btnText: 'Udforsk mådesadverbier ➔'

@@ -2,6 +2,7 @@ import { translations as baseTranslations } from './translations.js';
 import { talemaaderTranslations } from './talemaader_translations.js';
 import { top100Translations } from './top100_translations.js';
 import { sporgsmalTranslations } from './sporgsmal_translations.js';
+import { verberTranslations } from './top100_verber_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -58,7 +59,8 @@ const allLangs = new Set([
     ...Object.keys(baseTranslations),
     ...Object.keys(top100Translations || {}),
     ...Object.keys(talemaaderTranslations || {}),
-    ...Object.keys(sporgsmalTranslations || {})
+    ...Object.keys(sporgsmalTranslations || {}),
+    ...Object.keys(verberTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -66,6 +68,7 @@ allLangs.forEach(lang => {
         ...(talemaaderTranslations[lang] || {}),
         ...(top100Translations[lang] || {}),
         ...(sporgsmalTranslations[lang] || {}),
+        ...(verberTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

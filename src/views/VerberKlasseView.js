@@ -1,4 +1,5 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
+import { verberWordTranslations } from '../utils/top100_verber_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 
 /**
@@ -1113,13 +1114,13 @@ export function renderVerberKlasseView(container, navigateFn) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'verber-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede', icon: '🔍' },
-        { id: 'tab_detektiv', label: '2. Visuel Detektiv', icon: '🕵️' },
-        { id: 'tab_handlinger', label: '3. Find handlinger', icon: '🎯' },
-        { id: 'tab_historie', label: '4. Historie', icon: '💭' },
-        { id: 'tab_synonym_antonym', label: '5. Synonymer & Antonymer', icon: '🔄' },
-        { id: 'tab_saetning', label: '6. Sætningsbygger', icon: '✍️' },
-        { id: 'tab_tid_boejning', label: '7. Nutid & Datid', icon: '⏱️' }
+        { id: 'tab_vrimmel', label: getTranslation('verber_tab_1'), icon: '🔍' },
+        { id: 'tab_detektiv', label: getTranslation('verber_tab_2'), icon: '🕵️' },
+        { id: 'tab_handlinger', label: getTranslation('verber_tab_3'), icon: '🎯' },
+        { id: 'tab_historie', label: getTranslation('verber_tab_4'), icon: '💭' },
+        { id: 'tab_synonym_antonym', label: getTranslation('verber_tab_5'), icon: '🔄' },
+        { id: 'tab_saetning', label: getTranslation('verber_tab_6'), icon: '✍️' },
+        { id: 'tab_tid_boejning', label: getTranslation('verber_tab_7'), icon: '⏱️' }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -1189,14 +1190,14 @@ export function renderVerberKlasseView(container, navigateFn) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> Se rent billede: <strong id="pure-mode-status-klasse">FRA</strong>`;
+    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('verber_pure_label')} <strong id="pure-mode-status-klasse">${getTranslation('verber_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status-klasse').textContent = pureModeActive ? 'TIL 🖼️' : 'FRA';
+        pureBtn.querySelector('#pure-mode-status-klasse').textContent = pureModeActive ? `${getTranslation('verber_status_on')} 🖼️` : getTranslation('verber_status_off');
     };
 
     controlBar.appendChild(pureBtn);
@@ -1230,20 +1231,30 @@ export function renderVerberKlasseView(container, navigateFn) {
             dot.classList.add('active');
 
             // Show detail card med nutid og datid
+            const lang = getLang();
+            const wordTrans = verberWordTranslations[item.word]?.[lang] || (lang !== 'da' ? verberWordTranslations[item.word]?.['en'] : null);
+            const transMeaning = wordTrans?.meaning;
+            const transSentence = wordTrans?.sentence;
+
             detailCard.style.display = 'flex';
             detailCard.innerHTML = `
                 <div>
-                    <span class="badge-verbum">🔴 Verbum</span>
-                    <div class="detail-main-word">${item.word}</div>
-                    <div class="detail-forms">Nutid: <strong>${item.nutid}</strong> &nbsp;|&nbsp; Datid: <strong>${item.datid}</strong></div>
-                    <div class="detail-sentence">"${item.sentence}"</div>
+                    <span class="badge-verbum">${getTranslation('verber_badge_verbum')}</span>
+                    <div class="detail-main-word">
+                        ${item.word}
+                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
+                    </div>
+                    <div class="detail-forms">${getTranslation('verber_form_nutid')} <strong>${item.nutid}</strong> &nbsp;|&nbsp; ${getTranslation('verber_form_datid')} <strong>${item.datid}</strong></div>
+                    <div class="detail-sentence">"${formatNounLinks(item.sentence)}"</div>
+                    ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div>
                     <button class="listen-word-btn" id="listen-klasse-verb-btn">
-                        <span>🔊</span> Hør målord
+                        <span>🔊</span> ${getTranslation('verber_listen_word')}
                     </button>
                 </div>
             `;
+            attachNounLinkListeners(detailCard, navigateFn, 'tab_vrimmel');
 
             detailCard.querySelector('#listen-klasse-verb-btn').onclick = () => {
                 speakDanish(item.word);
@@ -1403,10 +1414,10 @@ export function renderVerberKlasseView(container, navigateFn) {
                     grid.querySelectorAll('.mission-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
-                            ✓ Rigtigt svaret!
+                            ${getTranslation('verber_correct')}
                         </div>
                         <button class="mission-next-btn" id="next-visual-klasse-btn">
-                            ${currKlasseVisualIdx < klasseVisualMissions.length - 1 ? 'Næste mission ➔' : 'Gennemført! Start forfra 🔄'}
+                            ${currKlasseVisualIdx < klasseVisualMissions.length - 1 ? getTranslation('verber_next_mission') : getTranslation('verber_restart')}
                         </button>
                     `;
                     feedbackBox.querySelector('#next-visual-klasse-btn').onclick = () => {
@@ -1417,7 +1428,7 @@ export function renderVerberKlasseView(container, navigateFn) {
                     btn.classList.add('wrong');
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
-                            ✗ Forkert svaret. Prøv igen!
+                            ${getTranslation('verber_wrong')}
                         </div>
                     `;
                     setTimeout(() => btn.classList.remove('wrong'), 700);
@@ -1624,10 +1635,10 @@ export function renderVerberKlasseView(container, navigateFn) {
                         });
                         feedbackBox.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! Du fandt alle 3 handlinger!
+                                ${getTranslation('verber_correct')} Du fandt alle 3 handlinger!
                             </div>
                             <button class="mission-next-btn" id="next-context-klasse-btn">
-                                ${currContextTaskIdx < klasseContextTasks.length - 1 ? 'Næste opgave ➔' : 'Gennemført! Start forfra 🔄'}
+                                ${currContextTaskIdx < klasseContextTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
                             </button>
                         `;
                         feedbackBox.querySelector('#next-context-klasse-btn').onclick = () => {
@@ -1965,7 +1976,7 @@ export function renderVerberKlasseView(container, navigateFn) {
                 optBtn.onclick = () => {
                     if (opt.correct) {
                         optBtn.classList.add('correct');
-                        stepFeedback.innerHTML = `<div style="color: #4ade80; font-weight: 700; margin-top: 0.6rem;">✓ Rigtigt svaret!</div>`;
+                        stepFeedback.innerHTML = `<div style="color: #4ade80; font-weight: 700; margin-top: 0.6rem;">${getTranslation('verber_correct')}</div>`;
                         optRow.querySelectorAll('.story-opt-btn').forEach(b => b.style.pointerEvents = 'none');
 
                         const nextCard = stepsHolder.querySelector(`#klasse-step-${sIdx + 1}`);
@@ -1979,7 +1990,7 @@ export function renderVerberKlasseView(container, navigateFn) {
                         }
                     } else {
                         optBtn.classList.add('wrong');
-                        stepFeedback.innerHTML = `<div style="color: #f87171; font-weight: 700; margin-top: 0.6rem;">✗ Forkert svaret. Prøv igen!</div>`;
+                        stepFeedback.innerHTML = `<div style="color: #f87171; font-weight: 700; margin-top: 0.6rem;">${getTranslation('verber_wrong')}</div>`;
                         setTimeout(() => optBtn.classList.remove('wrong'), 700);
                     }
                 };
@@ -1999,10 +2010,10 @@ export function renderVerberKlasseView(container, navigateFn) {
         completeBox.style.display = 'none';
         completeBox.innerHTML = `
             <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: #4ade80;">
-                🎉 Flot klaret! Du har gennemført historien.
+                ${getTranslation('verber_story_complete')}
             </div>
             <button class="mission-next-btn" id="next-klasse-story-btn">
-                ${currKlasseStoryIdx < klasseStories.length - 1 ? 'Gå til næste historie ➔' : 'Start forfra 🔄'}
+                ${currKlasseStoryIdx < klasseStories.length - 1 ? getTranslation('verber_next_story') : getTranslation('verber_restart')}
             </button>
         `;
         storyContainer.appendChild(completeBox);
@@ -2189,10 +2200,10 @@ export function renderVerberKlasseView(container, navigateFn) {
                     grid.querySelectorAll('.mission-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
-                            ✓ Rigtigt svaret!
+                            ${getTranslation('verber_correct')}
                         </div>
                         <button class="mission-next-btn" id="next-klasse-synonym-btn">
-                            ${currKlasseSynonymIdx < klasseSynonymTasks.length - 1 ? 'Næste opgave ➔' : 'Gennemført! Start forfra 🔄'}
+                            ${currKlasseSynonymIdx < klasseSynonymTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
                         </button>
                     `;
                     feedbackBox.querySelector('#next-klasse-synonym-btn').onclick = () => {
@@ -2203,7 +2214,7 @@ export function renderVerberKlasseView(container, navigateFn) {
                     btn.classList.add('wrong');
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
-                            ✗ Forkert svaret. Prøv igen!
+                            ${getTranslation('verber_wrong')}
                         </div>
                     `;
                     setTimeout(() => btn.classList.remove('wrong'), 700);
@@ -2285,10 +2296,10 @@ export function renderVerberKlasseView(container, navigateFn) {
 
             <!-- Grammatisk farveforklaring -->
             <div class="grammar-legend-bar">
-                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>1. Hvem?</strong> (Subjekt - grøn)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> <strong>2. Handling</strong> (Verbum - rød)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> <strong>3. Hvilken ting?</strong> (Objekt - grøn)</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> <strong>4. Hvor?</strong> (Sted - blå)</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> ${getTranslation('verber_sb_legend_subjekt')}</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> ${getTranslation('verber_sb_legend_verbum')}</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> ${getTranslation('verber_sb_legend_objekt')}</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> ${getTranslation('verber_sb_legend_sted')}</div>
             </div>
 
             <div id="free-builder-rows-klasse-verb"></div>
@@ -2724,7 +2735,7 @@ export function renderVerberKlasseView(container, navigateFn) {
 
                 feedbackEl.innerHTML = `
                     <div class="sb-feedback-msg success">
-                        🎉 Fantastisk! "<strong>${fullSentence}</strong>" ✓
+                        ${getTranslation('verber_sb_success')} "<strong>${fullSentence}</strong>" ✓
                     </div>
                     <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
                         💡 ${task.pedagogyNote}
@@ -2734,7 +2745,7 @@ export function renderVerberKlasseView(container, navigateFn) {
                             <span>🔊</span> Hør sætningen igen
                         </button>
                         <button class="sb-action-btn" id="klasse-next-btn-verb">
-                            ${currentKlasseChallengeIdx < klasseChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentKlasseChallengeIdx < klasseChallengeTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
                         </button>
                     </div>
                 `;
@@ -2747,13 +2758,13 @@ export function renderVerberKlasseView(container, navigateFn) {
             } else {
                 feedbackEl.innerHTML = `
                     <div class="sb-feedback-msg error">
-                        ✗ Rækkefølgen er ikke helt rigtig.
+                        ${getTranslation('verber_sb_order_error')}
                     </div>
                     <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.6rem;">
-                        Husk den faste danske ordstilling: 1. Hvem (Subjekt) ➔ 2. Handling (Verbum) ➔ 3. Hvilken ting (Objekt) ➔ 4. Hvor (Sted).
+                        ${getTranslation('verber_sb_order_reminder')}
                     </div>
                     <button class="sb-action-btn" id="klasse-retry-btn-verb" style="background: #475569;">
-                        Nulstil brikker 🔄
+                        ${getTranslation('verber_sb_reset')}
                     </button>
                 `;
 
@@ -2981,13 +2992,13 @@ export function renderVerberKlasseView(container, navigateFn) {
                     sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> <strong style="color: #4ade80; text-decoration: underline;">${opt.text}</strong> ${task.sentenceAfter}`;
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
-                            ✓ Rigtigt svaret!
+                            ${getTranslation('verber_correct')}
                         </div>
                         <div style="color: #94a3b8; font-size: 1rem; margin-bottom: 1rem;">
                             ${task.explanation}
                         </div>
                         <button class="mission-next-btn" id="next-tid-klasse-btn">
-                            ${currTidTaskIdx < klasseTidTasks.length - 1 ? 'Næste opgave ➔' : 'Gennemført! Start forfra 🔄'}
+                            ${currTidTaskIdx < klasseTidTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
                         </button>
                     `;
                     feedbackBox.querySelector('#next-tid-klasse-btn').onclick = () => {
@@ -2998,10 +3009,10 @@ export function renderVerberKlasseView(container, navigateFn) {
                     btn.classList.add('wrong');
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
-                            ✗ Forkert svaret. Prøv igen!
+                            ${getTranslation('verber_wrong')}
                         </div>
                         <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-                            Kig på tidsmarkøren "${task.marker}" - peger den på nuet eller fortiden?
+                            ${getTranslation('verber_tid_marker_hint', { marker: task.marker })}
                         </div>
                     `;
                     setTimeout(() => btn.classList.remove('wrong'), 700);

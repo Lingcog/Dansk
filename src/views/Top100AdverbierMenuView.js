@@ -195,7 +195,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             id: 'adverbier_tid',
             badge: '⏳ Felt 2 • 19 ord',
             badgeClass: 'badge-adv-2',
-            img: 'assets/natur_fritid_vrimmel.jpg',
+            img: 'assets/adverbier_tid_vrimmel.jpg',
             title: '2. Tid & Frekvens',
             desc: 'Hvornår og hvor tit? Lær vaner (altid, ofte, sjældent, aldrig) og tidsforløb (nu, snart, allerede, endnu, stadig).',
             btnText: 'Udforsk tid & frekvens ➔'

@@ -1281,7 +1281,74 @@ export function renderAdverbierStedView(container, navigateFn) {
         .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
         .sb-context-chip.sted { background: rgba(14, 165, 233, 0.15); color: #7dd3fc; border: 1px solid rgba(14, 165, 233, 0.3); }
         .sb-context-chip.rest { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
-        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
+        .sb-context-chip.target-placeholder {
+            background: rgba(56, 189, 248, 0.15);
+            border: 2px dashed #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+        }
+        .sb-context-chip.target-placeholder.chip-filled {
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+            color: #4ade80;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.35);
+        }
+        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.85; }
+
+        .sb-target-sentence-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border: 2px solid rgba(56, 189, 248, 0.45);
+            border-radius: 14px;
+            padding: 1.1rem 1.4rem;
+            margin: 0.9rem 0 1.2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+        }
+        .sb-target-sentence-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #38bdf8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .sb-target-sentence-display {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .sb-sentence-word {
+            color: #f8fafc;
+        }
+        .sb-sentence-blank {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 110px;
+            padding: 0.2rem 1rem;
+            border: 2px dashed #38bdf8;
+            background: rgba(56, 189, 248, 0.16);
+            border-radius: 8px;
+            color: #38bdf8;
+            font-weight: 800;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+        }
+        .sb-sentence-blank.filled {
+            border: 2px solid #22c55e;
+            background: rgba(34, 197, 94, 0.22);
+            color: #4ade80;
+            letter-spacing: normal;
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.45);
+            transform: scale(1.04);
+        }
 
         .sb-question-box {
             background: rgba(14, 165, 233, 0.08);
@@ -2488,24 +2555,51 @@ export function renderAdverbierStedView(container, navigateFn) {
             header.appendChild(pills);
             challengeContainer.appendChild(header);
 
-            // Step 1: Context card with helper question chips
+            // Step 1: Context card with visual sentence preview (with target blank) and 4 question chips
             const contextCard = document.createElement('div');
             contextCard.className = 'sb-context-card';
+
+            const advIdx = (typeof task.advSlotIndex === 'number') ? task.advSlotIndex : 2;
+
+            // Build target sentence preview with highlighted blank slot for the adverb
+            const sentenceHtml = task.correctSentence.map((word, idx) => {
+                if (idx === advIdx) {
+                    return `<span class="sb-sentence-blank" id="sb-live-adv-blank">________</span>`;
+                }
+                const isLast = (idx === task.correctSentence.length - 1);
+                return `<span class="sb-sentence-word">${word}${isLast ? '.' : ''}</span>`;
+            }).join(' ');
+
+            // Build helper question chips (all 4 elements including the target adverb slot!)
+            const chipsHtml = task.correctSentence.map((word, idx) => {
+                const slotLabel = task.slots[idx];
+                if (idx === advIdx) {
+                    return `
+                        <div class="sb-context-chip sted target-placeholder" id="sb-context-chip-adv">
+                            <span class="sb-chip-role">${slotLabel}</span>
+                            <span id="sb-chip-adv-val" style="font-weight: 800; letter-spacing: 2px;">________</span>
+                        </div>
+                    `;
+                }
+                const chipType = (idx === 0) ? 'subjekt' : (idx === 1) ? 'verbum' : 'rest';
+                return `
+                    <div class="sb-context-chip ${chipType}">
+                        <span class="sb-chip-role">${slotLabel}</span>
+                        <span>${word}</span>
+                    </div>
+                `;
+            }).join('');
+
             contextCard.innerHTML = `
                 <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-target-sentence-card">
+                    <div class="sb-target-sentence-label">Sætning med tom plads til stedsadverbiet:</div>
+                    <div class="sb-target-sentence-display" id="sb-target-sentence-display">
+                        ${sentenceHtml}
+                    </div>
+                </div>
                 <div class="sb-context-elements">
-                    <div class="sb-context-chip subjekt">
-                        <span class="sb-chip-role">1. Hvem?</span>
-                        <span>${task.subjekt}</span>
-                    </div>
-                    <div class="sb-context-chip verbum">
-                        <span class="sb-chip-role">2. Handling?</span>
-                        <span>${task.verbum}</span>
-                    </div>
-                    <div class="sb-context-chip rest">
-                        <span class="sb-chip-role">4. Hvor?</span>
-                        <span>${task.rest}</span>
-                    </div>
+                    ${chipsHtml}
                 </div>
             `;
             challengeContainer.appendChild(contextCard);
@@ -2515,7 +2609,7 @@ export function renderAdverbierStedView(container, navigateFn) {
             qBox.className = 'sb-question-box';
             qBox.innerHTML = `
                 <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
-                    Trin 1: Vælg det rigtige adverbium
+                    Trin 1: Vælg det rigtige stedsadverbium
                 </div>
                 <div class="sb-question-text">${task.questionPrompt}</div>
             `;
@@ -2524,6 +2618,10 @@ export function renderAdverbierStedView(container, navigateFn) {
             // Options grid
             const optionsGrid = document.createElement('div');
             optionsGrid.className = 'sb-options-grid';
+
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'sb-pedagogy-feedback-container';
+            feedbackDiv.style.display = 'none';
 
             const puzzleContainer = document.createElement('div');
             puzzleContainer.className = 'sb-puzzle-section';
@@ -2546,14 +2644,51 @@ export function renderAdverbierStedView(container, navigateFn) {
                             b.style.pointerEvents = 'none';
                         });
 
+                        // 1. Fill live blank in sentence banner
+                        const liveBlank = contextCard.querySelector('#sb-live-adv-blank');
+                        if (liveBlank) {
+                            liveBlank.textContent = task.correctAdv;
+                            liveBlank.classList.add('filled');
+                        }
+
+                        // 2. Fill adverb chip in context elements
+                        const advChipVal = contextCard.querySelector('#sb-chip-adv-val');
+                        if (advChipVal) {
+                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">✓</span>`;
+                        }
+                        const advChip = contextCard.querySelector('#sb-context-chip-adv');
+                        if (advChip) {
+                            advChip.classList.add('chip-filled');
+                        }
+
+                        // 3. Show didactic feedback
+                        feedbackDiv.innerHTML = `
+                            <div class="sb-pedagogy-alert" style="margin-bottom: 1.2rem; padding: 1rem 1.4rem; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; border-radius: 12px; color: #f8fafc; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
+                                <div>
+                                    <strong style="color: #4ade80; font-size: 1.15rem;">🎉 Rigtigt stedsadverbium!</strong>
+                                    <div style="margin-top: 0.25rem; color: #cbd5e1;">${task.pedagogyNote}</div>
+                                </div>
+                                <button class="sb-listen-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;" id="sb-speak-target-btn">
+                                    <span>🔊</span> Hør sætning
+                                </button>
+                            </div>
+                        `;
+                        feedbackDiv.style.display = 'block';
+                        const speakBtn = feedbackDiv.querySelector('#sb-speak-target-btn');
+                        if (speakBtn) {
+                            speakBtn.onclick = () => speakDanish(task.correctSentence.join(' '));
+                        }
+
                         speakDanish(opt);
 
-                        // Trigger Step 2: Puslespillet
+                        // 4. Trigger Step 2: Puslespillet
                         renderStedPuzzleStep(puzzleContainer, task);
                         puzzleContainer.style.display = 'block';
-                        if (typeof puzzleContainer.scrollIntoView === 'function') {
-                            puzzleContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }
+                        setTimeout(() => {
+                            if (typeof puzzleContainer.scrollIntoView === 'function') {
+                                puzzleContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        }, 150);
                     } else {
                         btn.classList.add('incorrect');
                         speakDanish("Prøv igen");
@@ -2565,6 +2700,7 @@ export function renderAdverbierStedView(container, navigateFn) {
             });
 
             challengeContainer.appendChild(optionsGrid);
+            challengeContainer.appendChild(feedbackDiv);
             challengeContainer.appendChild(puzzleContainer);
         }
 

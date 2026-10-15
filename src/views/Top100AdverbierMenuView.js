@@ -119,8 +119,9 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         .badge-adv-2 { border-color: #f59e0b; color: #f59e0b; }
         .badge-adv-3 { border-color: #ec4899; color: #f472b6; }
         .badge-adv-4 { border-color: #a855f7; color: #c084fc; }
-        .badge-adv-5 { border-color: #22c55e; color: #4ade80; }
-        .badge-adv-6 { border-color: #eab308; color: #fde047; }
+        .badge-adv-5 { border-color: #06b6d4; color: #22d3ee; }
+        .badge-adv-6 { border-color: #22c55e; color: #4ade80; }
+        .badge-adv-7 { border-color: #eab308; color: #fde047; }
 
         .scene-card-content {
             padding: 1.5rem;
@@ -172,12 +173,12 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         <h1>De mest almindelige adverbier</h1>
         <p>Lær de afgørende ord, der skaber sammenhæng, beskriver måden, viser tid og retning samt udtrykker din holdning i dansk samtale.</p>
         <div class="hub-facts-badge">
-            <span>🧭</span> 6 semantiske felter • Nøglen til flydende dansk
+            <span>🧭</span> 7 semantiske felter • Nøglen til flydende dansk
         </div>
     `;
     viewContainer.appendChild(hero);
 
-    // Scenes Grid (3x2)
+    // Scenes Grid (3x2 or auto-fit)
     const grid = document.createElement('div');
     grid.className = 'hub-scenes-grid';
 
@@ -219,20 +220,29 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             btnText: 'Udforsk intensitetsskalaen ➔'
         },
         {
-            id: 'adverbier_holdning',
-            badge: '💬 Felt 5 • 20 ord',
+            id: 'adverbier_smaaord',
+            badge: '💬 Felt 5 • 18 ord',
             badgeClass: 'badge-adv-5',
+            img: 'assets/adverbier_smaaord_vrimmel.jpg',
+            title: '5. De 5 Magiske Småord',
+            desc: 'Modalpartiklerne i dialog: jo, da, nok, vel, vist. Lær hvem der ved hvad, og hvordan en enkelt stavelse ændrer hele tonen.',
+            btnText: 'Mestre samtale-småordene ➔'
+        },
+        {
+            id: 'adverbier_holdning',
+            badge: '🎲 Felt 6 • 20 ord',
+            badgeClass: 'badge-adv-6',
             img: 'assets/klasse_kontor_vrimmel.jpg',
-            title: '5. Holdning & Småord',
-            desc: 'Talerens stemme og de danske modalpartikler: heldigvis, desværre, selvfølgelig og de uundværlige småord (jo, vel, nok, vist).',
-            btnText: 'Udforsk talerens stemme ➔'
+            title: '6. Sikkerhed, Tvivl & Holdning',
+            desc: 'Sandsynlighedsskalaen fra helt sikkert til usandsynligt samt talerens vurdering: heldigvis, desværre, formentlig, umuligt.',
+            btnText: 'Udforsk holdning & sandsynlighed ➔'
         },
         {
             id: 'adverbier_konnektion',
-            badge: '🔗 Felt 6 • 19 ord',
-            badgeClass: 'badge-adv-6',
+            badge: '🔗 Felt 7 • 18 ord',
+            badgeClass: 'badge-adv-7',
             img: 'assets/station_indkoeb_vrimmel.jpg',
-            title: '6. Konnektion & Tekstbindere',
+            title: '7. Konnektion & Tekstbindere',
             desc: 'Skab logisk sammenhæng mellem sætninger og afsnit: derfor (årsag), alligevel (kontrast), nemlig (begrundelse) og ellers.',
             btnText: 'Udforsk tekstbindere ➔'
         }

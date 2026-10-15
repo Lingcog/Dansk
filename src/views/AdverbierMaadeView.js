@@ -1041,6 +1041,37 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             color: #f472b6;
         }
 
+        /* Grammar Legend Bar */
+        .grammar-legend-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+            padding: 0.7rem 1.2rem;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.88rem;
+        }
+        .grammar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+        .legend-chip {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .chip-legend-subjekt { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+        .chip-legend-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-legend-maade { background: #ec4899; box-shadow: 0 0 6px rgba(236, 72, 153, 0.6); }
+        .chip-legend-rest { background: #0ea5e9; box-shadow: 0 0 6px rgba(14, 165, 233, 0.6); }
+
         /* Sektion 1 Category Rows */
         .category-builder-rows {
             display: flex;
@@ -1053,7 +1084,13 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             border-radius: 16px;
             padding: 1.4rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #64748b;
         }
+        .category-row-card.cat-row-subjekt { border-left-color: #22c55e; }
+        .category-row-card.cat-row-verbum { border-left-color: #ef4444; }
+        .category-row-card.cat-row-maade { border-left-color: #ec4899; }
+        .category-row-card.cat-row-rest { border-left-color: #0ea5e9; }
+
         .category-row-header {
             display: flex;
             align-items: center;
@@ -1067,10 +1104,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             font-size: 1.1rem;
             font-weight: 800;
         }
-        .cat-title-subjekt { color: #60a5fa; }
-        .cat-title-verbum { color: #34d399; }
+        .cat-title-subjekt { color: #4ade80; }
+        .cat-title-verbum { color: #f87171; }
         .cat-title-maade { color: #f472b6; }
-        .cat-title-rest { color: #fbbf24; }
+        .cat-title-rest { color: #38bdf8; }
         .cat-grammar-role {
             font-size: 0.8rem;
             font-weight: 700;
@@ -1079,6 +1116,11 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             padding: 0.2rem 0.6rem;
             border-radius: 6px;
         }
+        .cat-grammar-role.badge-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .cat-grammar-role.badge-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .cat-grammar-role.badge-maade { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .cat-grammar-role.badge-rest { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
+
         .category-options-flex {
             display: flex;
             flex-wrap: wrap;
@@ -1096,20 +1138,42 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             transition: all 0.2s;
         }
         .cat-option-chip:hover {
-            border-color: #ec4899;
             transform: translateY(-2px);
         }
-        .cat-option-chip.selected {
-            background: #ec4899;
-            color: white;
-            border-color: #f472b6;
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        .cat-option-chip.chip-subjekt:hover { border-color: #22c55e; }
+        .cat-option-chip.chip-verbum:hover { border-color: #ef4444; }
+        .cat-option-chip.chip-maade:hover { border-color: #ec4899; }
+        .cat-option-chip.chip-rest:hover { border-color: #0ea5e9; }
+
+        .cat-option-chip.chip-subjekt.selected {
+            background: rgba(34, 197, 94, 0.25) !important;
+            color: #4ade80 !important;
+            border-color: #22c55e !important;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4) !important;
+        }
+        .cat-option-chip.chip-verbum.selected {
+            background: rgba(239, 68, 68, 0.25) !important;
+            color: #fca5a5 !important;
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
+        }
+        .cat-option-chip.chip-maade.selected {
+            background: rgba(236, 72, 153, 0.25) !important;
+            color: #f472b6 !important;
+            border-color: #ec4899 !important;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4) !important;
+        }
+        .cat-option-chip.chip-rest.selected {
+            background: rgba(14, 165, 233, 0.25) !important;
+            color: #7dd3fc !important;
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4) !important;
         }
 
         /* Live Sentence Showcase */
         .live-sentence-showcase {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(15, 23, 42, 0.95));
-            border: 2px solid #ec4899;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+            border: 2px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
@@ -1118,7 +1182,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
         .live-sentence-label {
             font-size: 0.85rem;
             font-weight: 800;
-            color: #f472b6;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             margin-bottom: 0.8rem;
@@ -1134,10 +1198,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             justify-content: center;
             gap: 0.6rem;
         }
-        .live-word-subjekt { color: #93c5fd; }
-        .live-word-verbum { color: #86efac; }
+        .live-word-subjekt { color: #4ade80; }
+        .live-word-verbum { color: #f87171; }
         .live-word-maade { color: #f472b6; text-decoration: underline; }
-        .live-word-rest { color: #fde68a; }
+        .live-word-rest { color: #38bdf8; }
 
         .live-sentence-actions {
             display: flex;
@@ -1234,10 +1298,10 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .sb-context-chip.subjekt { border-left: 3px solid #60a5fa; color: #93c5fd; }
-        .sb-context-chip.verbum { border-left: 3px solid #34d399; color: #86efac; }
+        .sb-context-chip.subjekt { border-left: 3px solid #22c55e; color: #4ade80; }
+        .sb-context-chip.verbum { border-left: 3px solid #ef4444; color: #f87171; }
         .sb-context-chip.maade { border-left: 3px solid #ec4899; color: #f472b6; }
-        .sb-context-chip.rest { border-left: 3px solid #fbbf24; color: #fde68a; }
+        .sb-context-chip.rest { border-left: 3px solid #0ea5e9; color: #38bdf8; }
         .sb-context-chip.target-placeholder {
             background: rgba(236, 72, 153, 0.18) !important;
             border: 2px dashed #ec4899 !important;
@@ -1442,6 +1506,14 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(15, 23, 42, 0.9));
             box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
         }
+        .flow-step.flow-subjekt { border-color: rgba(34, 197, 94, 0.4); }
+        .flow-step.flow-subjekt .flow-num { color: #4ade80; }
+        .flow-step.flow-verbum { border-color: rgba(239, 68, 68, 0.4); }
+        .flow-step.flow-verbum .flow-num { color: #f87171; }
+        .flow-step.flow-adverbium { border-color: rgba(236, 72, 153, 0.6); }
+        .flow-step.flow-adverbium .flow-num { color: #f472b6; }
+        .flow-step.flow-rest { border-color: rgba(14, 165, 233, 0.4); }
+        .flow-step.flow-rest .flow-num { color: #38bdf8; }
         .flow-num {
             font-size: 0.78rem;
             font-weight: 800;
@@ -1506,9 +1578,26 @@ export function renderAdverbierMaadeView(container, navigateFn) {
             border-color: #38bdf8;
             background: #0f172a;
         }
+        .sb-puzzle-slot.slot-type-subjekt.filled {
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+            background: rgba(34, 197, 94, 0.12) !important;
+        }
+        .sb-puzzle-slot.slot-type-verbum.filled {
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+            background: rgba(239, 68, 68, 0.12) !important;
+        }
+        .sb-puzzle-slot.slot-type-adverbium.filled,
         .sb-puzzle-slot.target-adverbium-slot.filled {
-            border-color: #ec4899;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), #0f172a);
+            border-color: #ec4899 !important;
+            color: #f472b6 !important;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), #0f172a) !important;
+        }
+        .sb-puzzle-slot.slot-type-rest.filled {
+            border-color: #0ea5e9 !important;
+            color: #7dd3fc !important;
+            background: rgba(14, 165, 233, 0.12) !important;
         }
         .slot-target-callout {
             position: absolute;
@@ -2672,47 +2761,54 @@ export function renderAdverbierMaadeView(container, navigateFn) {
                     </p>
                 </div>
 
+                <div class="grammar-legend-bar">
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-subjekt"></span> <span>1. Subjekt (Grøn)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-verbum"></span> <span>2. Verbum (Rød)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-maade"></span> <span>3. Mådesadverbium (Pink)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-rest"></span> <span>4. Restled (Blå)</span></div>
+                </div>
+
                 <div class="category-builder-rows">
                     <!-- Row 1: Hvem taler vi om? -->
-                    <div class="category-row-card">
+                    <div class="category-row-card cat-row-subjekt">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-subjekt">
                                 <span>👤</span> 1. Hvem eller hvad taler vi om?
                             </div>
-                            <span class="cat-grammar-role">[Subjekt / Grundled]</span>
+                            <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-subjekt"></div>
                     </div>
 
                     <!-- Row 2: Hvad laver personen? -->
-                    <div class="category-row-card">
+                    <div class="category-row-card cat-row-verbum">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-verbum">
                                 <span>⚡</span> 2. Hvad laver personen eller tingen?
                             </div>
-                            <span class="cat-grammar-role">[Verbum / Udsagnsled]</span>
+                            <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-verbum"></div>
                     </div>
 
                     <!-- Row 3: Hvordan foregår handlingen? -->
-                    <div class="category-row-card" style="border: 1.5px solid #ec4899; background: rgba(236, 72, 153, 0.05);">
+                    <div class="category-row-card cat-row-maade">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-maade">
                                 <span>⭐</span> 3. Hvordan foregår handlingen? (Mådesadverbium)
                             </div>
-                            <span class="cat-grammar-role" style="color: #f472b6; border: 1px solid #ec4899;">[Mådesadverbium med -t]</span>
+                            <span class="cat-grammar-role badge-maade">[Mådesadverbium med -t]</span>
                         </div>
                         <div class="category-options-flex" id="chips-maade"></div>
                     </div>
 
                     <!-- Row 4: Hvor eller hvad? -->
-                    <div class="category-row-card">
+                    <div class="category-row-card cat-row-rest">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-rest">
                                 <span>📍</span> 4. Hvor, hvad eller hvordan ellers?
                             </div>
-                            <span class="cat-grammar-role">[Restled / Præpositionsled / Objekt]</span>
+                            <span class="cat-grammar-role badge-rest">[Restled / Præpositionsled / Objekt]</span>
                         </div>
                         <div class="category-options-flex" id="chips-rest"></div>
                     </div>
@@ -2735,7 +2831,8 @@ export function renderAdverbierMaadeView(container, navigateFn) {
                 const row = freeContainer.querySelector(`#chips-${cat}`);
                 BUILDER_CATEGORIES[cat].forEach(item => {
                     const btn = document.createElement('button');
-                    btn.className = `cat-option-chip ${selectedBuilderWords[cat] === item.text ? 'selected' : ''}`;
+                    const isSelected = (selectedBuilderWords[cat] === item.text);
+                    btn.className = `cat-option-chip chip-${cat}${isSelected ? ' selected' : ''}`;
                     btn.textContent = item.text;
                     btn.onclick = () => {
                         selectedBuilderWords[cat] = item.text;
@@ -2971,7 +3068,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
                     </div>
                     <div class="structure-diagram-flow">
                         ${task.flowSteps.map((step, sIdx) => `
-                            <div class="flow-step ${step.isTarget ? 'active-target' : ''}">
+                            <div class="flow-step flow-${step.type} ${step.isTarget ? 'active-target' : ''}">
                                 <div style="font-size: 1.25rem;">${step.icon}</div>
                                 <div class="flow-num">${step.num}</div>
                                 <div class="flow-title">${step.title}</div>
@@ -3005,8 +3102,9 @@ export function renderAdverbierMaadeView(container, navigateFn) {
                     const slot = document.createElement('div');
                     const isAdvSlot = (idx === task.advSlotIndex);
                     const isFilled = Boolean(placedWords[idx]);
+                    const stepType = (task.flowSteps && task.flowSteps[idx]) ? task.flowSteps[idx].type : (idx === 0 ? 'subjekt' : idx === 1 ? 'verbum' : isAdvSlot ? 'adverbium' : 'rest');
 
-                    slot.className = `sb-puzzle-slot ${isFilled ? 'filled' : ''} ${isAdvSlot ? 'target-adverbium-slot' : ''}`;
+                    slot.className = `sb-puzzle-slot slot-type-${stepType} ${isFilled ? 'filled' : ''} ${isAdvSlot ? 'target-adverbium-slot' : ''}`;
 
                     if (isAdvSlot) {
                         const callout = document.createElement('div');

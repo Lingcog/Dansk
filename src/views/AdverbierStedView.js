@@ -483,36 +483,60 @@ export function renderAdverbierStedView(container, navigateFn) {
             transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
-            gap: 0.35rem;
-            padding: 0.35rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
+            gap: 0.25rem;
+            padding: 0.18rem 0.45rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-            transition: all 0.25s ease;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+            transition: all 0.2s ease;
             z-index: 10;
             white-space: nowrap;
+            letter-spacing: 0.2px;
+            backdrop-filter: blur(4px);
+        }
+        .hotspot-pin .pin-icon {
+            font-size: 0.65rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+        }
+        .hotspot-pin .pin-text {
+            line-height: 1.1;
         }
         .hotspot-pin:hover {
-            transform: translate(-50%, -50%) scale(1.15);
+            transform: translate(-50%, -50%) scale(1.1);
             z-index: 20;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
         }
         .hotspot-pin.active {
-            transform: translate(-50%, -50%) scale(1.22);
+            transform: translate(-50%, -50%) scale(1.15);
             z-index: 30;
-            box-shadow: 0 0 25px #38bdf8, 0 6px 20px rgba(0,0,0,0.9);
+            box-shadow: 0 0 16px #38bdf8, 0 4px 12px rgba(0, 0, 0, 0.8);
             border-color: #38bdf8;
         }
         .pin-retning {
-            background: #0284c7;
+            background: rgba(2, 132, 199, 0.92);
             color: white;
         }
         .pin-hvile {
-            background: #d97706;
+            background: rgba(217, 119, 6, 0.92);
             color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hotspot-pin {
+                padding: 0.12rem 0.35rem;
+                font-size: 0.62rem;
+                border-radius: 9px;
+                border-width: 1px;
+                gap: 0.18rem;
+            }
+            .hotspot-pin .pin-icon {
+                font-size: 0.55rem;
+            }
         }
 
         /* Inspector Card */
@@ -1330,7 +1354,7 @@ export function renderAdverbierStedView(container, navigateFn) {
                 pin.style.top = `${item.y}%`;
 
                 const icon = item.type === 'retning' ? '➔' : '📍';
-                pin.innerHTML = `<span>${icon}</span> <span>${item.word}</span>`;
+                pin.innerHTML = `<span class="pin-icon">${icon}</span><span class="pin-text">${item.word}</span>`;
 
                 pin.onclick = (e) => {
                     e.stopPropagation();

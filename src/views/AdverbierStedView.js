@@ -1590,6 +1590,10 @@ export function renderAdverbierStedView(container, navigateFn) {
 
     function renderActiveTab() {
         tabContentContainer.innerHTML = '';
+        const ruleBanner = hero.querySelector('.adv-rule-banner');
+        if (ruleBanner) {
+            ruleBanner.style.display = (currentTab === 'tab_vippe') ? 'none' : 'grid';
+        }
         if (currentTab === 'tab_vrimmel') {
             renderTabVrimmel(tabContentContainer);
         } else if (currentTab === 'tab_detektiv') {
@@ -2039,7 +2043,7 @@ export function renderAdverbierStedView(container, navigateFn) {
         intro.className = 'vippe-intro';
         intro.innerHTML = `
             <h2>⚖️ Retnings-Vippen</h2>
-            <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>Retning</strong> (kort form) eller <strong>Hvile</strong> (lang form med -e)?</p>
+            <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>Retning</strong> eller <strong>Hvile</strong>?</p>
         `;
         container.appendChild(intro);
 
@@ -2052,7 +2056,7 @@ export function renderAdverbierStedView(container, navigateFn) {
         zoneRetning.className = `vippe-drop-zone zone-retning ${selectedVippeWord ? 'highlight' : ''}`;
         zoneRetning.innerHTML = `
             <div class="zone-header">
-                <span class="zone-title" style="color: #38bdf8;">🚀 Retning (Kort form)</span>
+                <span class="zone-title" style="color: #38bdf8;">🚀 Retning</span>
                 <span style="font-weight: 800; font-size: 0.9rem; color: #38bdf8;">${vippeRetningList.length} ord</span>
             </div>
         `;
@@ -2079,7 +2083,7 @@ export function renderAdverbierStedView(container, navigateFn) {
         zoneHvile.className = `vippe-drop-zone zone-hvile ${selectedVippeWord ? 'highlight' : ''}`;
         zoneHvile.innerHTML = `
             <div class="zone-header">
-                <span class="zone-title" style="color: #fbbf24;">🏡 Hvile (Lang form med -e)</span>
+                <span class="zone-title" style="color: #fbbf24;">🏡 Hvile</span>
                 <span style="font-weight: 800; font-size: 0.9rem; color: #fbbf24;">${vippeHvileList.length} ord</span>
             </div>
         `;

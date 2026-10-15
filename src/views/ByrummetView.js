@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { byrumWordTranslations } from '../utils/top100_translations.js';
+import { openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
 
 /**
  * ByrummetView - Didaktisk vrimlebillede for semantisk felt: Byrummet (byen, gaden, hverdagen)
@@ -122,6 +123,90 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             from { transform: translate(-50%, -50%) scale(1.3); }
             to { transform: translate(-50%, -50%) scale(1.7); }
         }
+
+        /* Verb Bridge CTA Card (Model B) & Quick Peek (Model A) */
+        .verb-bridge-cta-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(249, 115, 22, 0.22));
+            border: 2px solid rgba(239, 68, 68, 0.55);
+            border-radius: 18px;
+            padding: 1.6rem 1.8rem;
+            margin: 1.4rem 0;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.25);
+            animation: fadeIn 0.35s ease;
+        }
+        .verb-bridge-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            font-weight: 800;
+            font-size: 0.82rem;
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.7rem;
+        }
+        .verb-bridge-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .verb-bridge-desc {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.55;
+            max-width: 640px;
+            margin: 0 auto 1.3rem;
+        }
+        .verb-bridge-action-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .verb-bridge-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+            background: linear-gradient(135deg, #f87171, #ef4444);
+        }
+        .verb-quick-info-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.35rem;
+            opacity: 0.75;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+        }
+        .verb-quick-info-btn:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        .clickable-verb-peek {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .clickable-verb-peek:hover {
+            color: #fca5a5 !important;
+            text-decoration: underline dotted #ef4444;
+        }
+        .verb-chip-info-tag {
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+            opacity: 0.85;
+        }
+
         .byrum-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -2412,10 +2497,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         function updateSentence() {
             liveSentenceEl.innerHTML = `
                 <span class="grammar-word word-substantiv">${selected[0]}</span>
-                <span class="grammar-word word-verbum">${selected[1]}</span>
+                <span class="grammar-word word-verbum clickable-verb-peek" title="Klik for at undersøge verbet">${selected[1]} <small style="font-size: 0.75rem; opacity: 0.85;">ℹ️</small></span>
                 <span class="grammar-word word-substantiv">${selected[2]}</span>
                 <span class="grammar-word word-sted">${selected[3]}</span>.
             `;
+            const verbWordEl = liveSentenceEl.querySelector('.clickable-verb-peek');
+            if (verbWordEl) {
+                verbWordEl.onclick = () => openVerbQuickPeekModal(selected[1], navigateFn);
+            }
         }
 
         listenBtn.onclick = () => {
@@ -2441,7 +2530,19 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             cat.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = `sb-chip-btn ${selected[catIdx] === opt ? 'selected' : ''}`;
-                btn.textContent = opt;
+                
+                if (cat.id === 'verbum') {
+                    btn.innerHTML = `<span>${opt}</span> <span class="verb-quick-info-btn" title="Hvad betyder '${opt}'? Klik for ordforklaring">ℹ️</span>`;
+                    const infoBtn = btn.querySelector('.verb-quick-info-btn');
+                    if (infoBtn) {
+                        infoBtn.onclick = (e) => {
+                            e.stopPropagation();
+                            openVerbQuickPeekModal(opt, navigateFn);
+                        };
+                    }
+                } else {
+                    btn.textContent = opt;
+                }
 
                 btn.onclick = () => {
                     selected[catIdx] = opt;
@@ -2591,9 +2692,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     <span class="sb-chip-role">1. Hvem?</span>
                     <span>${task.subjekt}</span>
                 </div>
-                <div class="sb-context-chip verbum">
+                <div class="sb-context-chip verbum clickable-verb-peek" title="Klik for at undersøge verbet" style="cursor: pointer;">
                     <span class="sb-chip-role">2. Handling</span>
-                    <span>${task.verbum}</span>
+                    <span>${task.verbum} <span class="verb-chip-info-tag">ℹ️</span></span>
                 </div>
                 <div class="sb-context-chip sted">
                     <span class="sb-chip-role">4. Hvor?</span>
@@ -2601,6 +2702,12 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 </div>
             </div>
         `;
+
+        const verbumChip = contextCard.querySelector('.sb-context-chip.verbum');
+        if (verbumChip) {
+            verbumChip.onclick = () => openVerbQuickPeekModal(task.verbum, navigateFn);
+        }
+
         challengeContainer.appendChild(contextCard);
 
         // Question box: Spørgsmål 3 (Genstand / Objekt)
@@ -2781,6 +2888,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 completedByrumChallenges.add(currentByrumChallengeIdx);
                 speakDanish(fullSentence);
 
+                const isAllDone = completedByrumChallenges.size >= byrumChallengeTasks.length;
+                const isLastTask = currentByrumChallengeIdx === byrumChallengeTasks.length - 1;
+
                 feedbackEl.innerHTML = `
                     <div class="sb-feedback-msg success">
                         🎉 Fantastisk! "<strong>${fullSentence}</strong>" ✓
@@ -2788,6 +2898,21 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
                         💡 ${task.pedagogyNote}
                     </div>
+
+                    ${(isAllDone || isLastTask) ? `
+                        <div class="verb-bridge-cta-card">
+                            <div class="verb-bridge-badge">🚀 Næste skridt i dit sprog</div>
+                            <h4 class="verb-bridge-title">Du mestrer byens ting – vil du mestre handlingerne?</h4>
+                            <p class="verb-bridge-desc">
+                                I dine sætninger brugte du handlinger som <strong>kører, møder, venter</strong> og <strong>kigger</strong>.<br>
+                                I <em>De 100 verber: Byrummet</em> kan du lære alle 20 handlinger i byen med vrimlebilleder, datid, synonymer og detektiv-missioner!
+                            </p>
+                            <button class="verb-bridge-action-btn" id="go-to-verber-byrum-cta">
+                                <span>🔴</span> Gå til "De 100 verber – Byrummet & Gaden" ➔
+                            </button>
+                        </div>
+                    ` : ''}
+
                     <div class="sb-action-row">
                         <button class="sb-listen-btn" id="byrum-listen-full">
                             <span>🔊</span> Hør sætningen igen
@@ -2797,6 +2922,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         </button>
                     </div>
                 `;
+
+                const ctaBtn = feedbackEl.querySelector('#go-to-verber-byrum-cta');
+                if (ctaBtn) {
+                    ctaBtn.onclick = () => navigateFn('verber_byrum');
+                }
 
                 feedbackEl.querySelector('#byrum-listen-full').onclick = () => speakDanish(fullSentence);
                 feedbackEl.querySelector('#byrum-next-btn').onclick = () => {

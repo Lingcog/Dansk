@@ -1074,6 +1074,54 @@ export function renderByrummetView(container, navigateFn) {
                 { text: "en pige", correct: false },
                 { text: "en hund", correct: false }
             ]
+        },
+        {
+            title: getTranslation("byrum_m5_title"),
+            targetCount: 3,
+            options: [
+                { text: "en familie", correct: true },
+                { text: "en vej", correct: false },
+                { text: "et barn", correct: true },
+                { text: "en bil", correct: false },
+                { text: "en dreng", correct: true },
+                { text: "en café", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("byrum_m6_title"),
+            targetCount: 3,
+            options: [
+                { text: "et hus", correct: true },
+                { text: "en dør", correct: true },
+                { text: "en sol", correct: false },
+                { text: "et vindue", correct: true },
+                { text: "en læge", correct: false },
+                { text: "en tur", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("byrum_m7_title"),
+            targetCount: 3,
+            options: [
+                { text: "en sol", correct: true },
+                { text: "penge", correct: false },
+                { text: "et træ", correct: true },
+                { text: "en skole", correct: false },
+                { text: "en tur", correct: true },
+                { text: "et problem", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("byrum_m8_title"),
+            targetCount: 3,
+            options: [
+                { text: "et arbejde", correct: true },
+                { text: "en pige", correct: false },
+                { text: "en læge", correct: true },
+                { text: "en plads", correct: false },
+                { text: "et problem", correct: true },
+                { text: "en krone", correct: false }
+            ]
         }
     ];
 
@@ -1486,6 +1534,54 @@ export function renderByrummetView(container, navigateFn) {
                 { text: "en dør 🚪", correct: false },
                 { text: "et vindue 🪟", correct: false }
             ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en mor 👩", "en far 👨", "et barn 🧒"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Familie 👨‍👩‍👧", correct: true },
+                { text: "Vejret 🌤️", correct: false },
+                { text: "Møbler 🪑", correct: false }
+            ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en sol ☀️", "et træ 🌳", "en vind 💨"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Natur og vejr ☀️", correct: true },
+                { text: "Skole 🏫", correct: false },
+                { text: "Transport 🚗", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Byens steder og rum 🏙️",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en by 🏙️", correct: true },
+                { text: "en plads ⛲", correct: true },
+                { text: "en café ☕", correct: true },
+                { text: "en seng 🛏️", correct: false },
+                { text: "et vindue 🪟", correct: false },
+                { text: "en fisk 🐟", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Husets dele 🏠",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en dør 🚪", correct: true },
+                { text: "et vindue 🪟", correct: true },
+                { text: "et tag 🏠", correct: true },
+                { text: "en bil 🚗", correct: false },
+                { text: "en læge 🧑‍⚕️", correct: false },
+                { text: "en hund 🐕", correct: false }
+            ]
         }
     ];
 
@@ -1727,6 +1823,46 @@ export function renderByrummetView(container, navigateFn) {
             adverbial: "ved caféen",
             correctText: "Kunden betaler med penge ved caféen.",
             wrongVerbs: ["løber", "hopper"]
+        },
+        {
+            subjekt: "Familien",
+            verbum: "bor i",
+            objekt: "et hus",
+            adverbial: "i den store by",
+            correctText: "Familien bor i et hus i den store by.",
+            wrongVerbs: ["koger", "flyver"]
+        },
+        {
+            subjekt: "Drengen",
+            verbum: "åbner",
+            objekt: "en dør",
+            adverbial: "til skolen",
+            correctText: "Drengen åbner en dør til skolen.",
+            wrongVerbs: ["drikker", "sover"]
+        },
+        {
+            subjekt: "Solen",
+            verbum: "skinner på",
+            objekt: "træet",
+            adverbial: "på pladsen",
+            correctText: "Solen skinner på træet på pladsen.",
+            wrongVerbs: ["spiser", "køber"]
+        },
+        {
+            subjekt: "Pigen",
+            verbum: "løser",
+            objekt: "et problem",
+            adverbial: "i fællesskab",
+            correctText: "Pigen løser et problem i fællesskab.",
+            wrongVerbs: ["cykler", "steger"]
+        },
+        {
+            subjekt: "Vennen",
+            verbum: "venter på",
+            objekt: "en ven",
+            adverbial: "foran caféen",
+            correctText: "Vennen venter på en ven foran caféen.",
+            wrongVerbs: ["bager", "læser"]
         }
     ];
 

@@ -993,6 +993,54 @@ export function renderKlasseKontorView(container, navigateFn) {
                 { text: "en tavle", correct: false },
                 { text: "en taske", correct: false }
             ]
+        },
+        {
+            title: getTranslation("klasse_m5_title"),
+            targetCount: 3,
+            options: [
+                { text: "et bord", correct: true },
+                { text: "en blyant", correct: false },
+                { text: "en stol", correct: true },
+                { text: "en elev", correct: false },
+                { text: "en lampe", correct: true },
+                { text: "et sprog", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("klasse_m6_title"),
+            targetCount: 3,
+            options: [
+                { text: "en taske", correct: true },
+                { text: "en tavle", correct: false },
+                { text: "en bog", correct: true },
+                { text: "et vindue", correct: false },
+                { text: "en blyant", correct: true },
+                { text: "et møde", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("klasse_m7_title"),
+            targetCount: 3,
+            options: [
+                { text: "et ur", correct: true },
+                { text: "en lærer", correct: false },
+                { text: "en opgave", correct: true },
+                { text: "en computer", correct: false },
+                { text: "et møde", correct: true },
+                { text: "et papir", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("klasse_m8_title"),
+            targetCount: 3,
+            options: [
+                { text: "en idé", correct: true },
+                { text: "en stol", correct: false },
+                { text: "et spørgsmål", correct: true },
+                { text: "en taske", correct: false },
+                { text: "et svar", correct: true },
+                { text: "en lampe", correct: false }
+            ]
         }
     ];
 
@@ -1406,6 +1454,54 @@ export function renderKlasseKontorView(container, navigateFn) {
                 { text: "en kat 🐈", correct: false },
                 { text: "en vej 🛣️", correct: false }
             ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["et bord 🪵", "en stol 🪑", "en reol 📚"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Møbler i lokalet 🪑", correct: true },
+                { text: "Mad 🍞", correct: false },
+                { text: "Dyr 🐾", correct: false }
+            ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en telefon 📱", "et brev ✉️", "en e-mail 📧"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Kommunikation 💬", correct: true },
+                { text: "Transport 🚗", correct: false },
+                { text: "Tøj 👟", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Udstyr i undervisningen 🎒",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en taske 🎒", correct: true },
+                { text: "en tavle 🧑‍🏫", correct: true },
+                { text: "en lampe 💡", correct: true },
+                { text: "en cykel 🚲", correct: false },
+                { text: "en hund 🐕", correct: false },
+                { text: "et brød 🍞", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Sprog og læring 📖",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "et sprog 🗣️", correct: true },
+                { text: "et spørgsmål ❓", correct: true },
+                { text: "et svar 💡", correct: true },
+                { text: "en seng 🛏️", correct: false },
+                { text: "et vindue 🪟", correct: false },
+                { text: "en kop ☕", correct: false }
+            ]
         }
     ];
 
@@ -1647,6 +1743,46 @@ export function renderKlasseKontorView(container, navigateFn) {
             adverbial: "ved bordet",
             correctText: "Manden arbejder på en computer ved bordet.",
             wrongVerbs: ["spiser", "flyver"]
+        },
+        {
+            subjekt: "Eleven",
+            verbum: "åbner",
+            objekt: "en bog",
+            adverbial: "i klassen",
+            correctText: "Eleven åbner en bog i klassen.",
+            wrongVerbs: ["koger", "spiser"]
+        },
+        {
+            subjekt: "Læreren",
+            verbum: "kigger på",
+            objekt: "et ur",
+            adverbial: "på væggen",
+            correctText: "Læreren kigger på et ur på væggen.",
+            wrongVerbs: ["drikker", "cykler"]
+        },
+        {
+            subjekt: "Sekretæren",
+            verbum: "sender",
+            objekt: "et brev",
+            adverbial: "fra kontoret",
+            correctText: "Sekretæren sender et brev fra kontoret.",
+            wrongVerbs: ["sover", "løber"]
+        },
+        {
+            subjekt: "Kursisten",
+            verbum: "lærer",
+            objekt: "et sprog",
+            adverbial: "på skolen",
+            correctText: "Kursisten lærer et sprog på skolen.",
+            wrongVerbs: ["steger", "hopper"]
+        },
+        {
+            subjekt: "Kollegaen",
+            verbum: "får",
+            objekt: "en god idé",
+            adverbial: "til opgaven",
+            correctText: "Kollegaen får en god idé til opgaven.",
+            wrongVerbs: ["bager", "svømmer"]
         }
     ];
 

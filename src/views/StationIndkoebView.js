@@ -990,6 +990,54 @@ export function renderStationIndkoebView(container, navigateFn) {
                 { text: "en mælk", correct: false },
                 { text: "et æble", correct: false }
             ]
+        },
+        {
+            title: getTranslation("station_m5_title"),
+            targetCount: 3,
+            options: [
+                { text: "en pose", correct: true },
+                { text: "et tog", correct: false },
+                { text: "en flaske", correct: true },
+                { text: "et år", correct: false },
+                { text: "et brød", correct: true },
+                { text: "en verden", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("station_m6_title"),
+            targetCount: 3,
+            options: [
+                { text: "en billet", correct: true },
+                { text: "en mælk", correct: false },
+                { text: "en cykel", correct: true },
+                { text: "en aften", correct: false },
+                { text: "en bus", correct: true },
+                { text: "et æble", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("station_m7_title"),
+            targetCount: 3,
+            options: [
+                { text: "en verden", correct: true },
+                { text: "et minut", correct: false },
+                { text: "et land", correct: true },
+                { text: "en mælk", correct: false },
+                { text: "en butik", correct: true },
+                { text: "en nat", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("station_m8_title"),
+            targetCount: 3,
+            options: [
+                { text: "en pris", correct: true },
+                { text: "en flaske", correct: false },
+                { text: "en time", correct: true },
+                { text: "en bus", correct: false },
+                { text: "en uge", correct: true },
+                { text: "et brød", correct: false }
+            ]
         }
     ];
 
@@ -1416,6 +1464,54 @@ export function renderStationIndkoebView(container, navigateFn) {
                 { text: "en kop ☕", correct: false },
                 { text: "en hund 🐕", correct: false }
             ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en morgen 🌅", "en aften 🌆", "en nat 🌙"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Døgnets tider 🌅", correct: true },
+                { text: "Møbler 🪑", correct: false },
+                { text: "Kroppen 🦶", correct: false }
+            ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en verden 🌍", "et land 🇩🇰", "en by 🏙️"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Geografi og verden 🌍", correct: true },
+                { text: "Mad 🍞", correct: false },
+                { text: "Teknologi 💻", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Dagligvarer i kurven 🥛",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en mælk 🥛", correct: true },
+                { text: "et brød 🍞", correct: true },
+                { text: "et æble 🍎", correct: true },
+                { text: "et tog 🚆", correct: false },
+                { text: "en cykel 🚲", correct: false },
+                { text: "et land 🌍", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Rejse og transport 🚲",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en cykel 🚲", correct: true },
+                { text: "en billet 🎫", correct: true },
+                { text: "en bus 🚌", correct: true },
+                { text: "en flaske 🍾", correct: false },
+                { text: "en seng 🛏️", correct: false },
+                { text: "et ur ⏰", correct: false }
+            ]
         }
     ];
 
@@ -1657,6 +1753,46 @@ export function renderStationIndkoebView(container, navigateFn) {
             adverbial: "med toget",
             correctText: "Pendleren rejser om morgenen med toget.",
             wrongVerbs: ["bager", "maler"]
+        },
+        {
+            subjekt: "Manden",
+            verbum: "drikker",
+            objekt: "en mælk",
+            adverbial: "til morgenmad",
+            correctText: "Manden drikker en mælk til morgenmad.",
+            wrongVerbs: ["cykler", "kører"]
+        },
+        {
+            subjekt: "Toget",
+            verbum: "ankommer",
+            objekt: "til perronen",
+            adverbial: "til tiden",
+            correctText: "Toget ankommer til perronen til tiden.",
+            wrongVerbs: ["spiser", "koger"]
+        },
+        {
+            subjekt: "Cykelrytteren",
+            verbum: "kører på",
+            objekt: "en cykel",
+            adverbial: "på cykelstien",
+            correctText: "Cykelrytteren kører på en cykel på cykelstien.",
+            wrongVerbs: ["sover", "bager"]
+        },
+        {
+            subjekt: "Turisten",
+            verbum: "oplever",
+            objekt: "verden",
+            adverbial: "på rejsen",
+            correctText: "Turisten oplever verden på rejsen.",
+            wrongVerbs: ["steger", "vasker"]
+        },
+        {
+            subjekt: "Kunden",
+            verbum: "spørger om",
+            objekt: "en pris",
+            adverbial: "ved kassen",
+            correctText: "Kunden spørger om en pris ved kassen.",
+            wrongVerbs: ["hopper", "flyver"]
         }
     ];
 

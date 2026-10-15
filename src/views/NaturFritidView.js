@@ -990,6 +990,54 @@ export function renderNaturFritidView(container, navigateFn) {
                 { text: "en fugl", correct: false },
                 { text: "et vejr", correct: false }
             ]
+        },
+        {
+            title: getTranslation("natur_m5_title"),
+            targetCount: 3,
+            options: [
+                { text: "et øje", correct: true },
+                { text: "en skov", correct: false },
+                { text: "et hoved", correct: true },
+                { text: "en bold", correct: false },
+                { text: "et hjerte", correct: true },
+                { text: "en ferie", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("natur_m6_title"),
+            targetCount: 3,
+            options: [
+                { text: "en luft", correct: true },
+                { text: "en gave", correct: false },
+                { text: "et vejr", correct: true },
+                { text: "et spil", correct: false },
+                { text: "et vand", correct: true },
+                { text: "en hånd", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("natur_m7_title"),
+            targetCount: 3,
+            options: [
+                { text: "en fugl", correct: true },
+                { text: "en film", correct: false },
+                { text: "en blomst", correct: true },
+                { text: "en strand", correct: false },
+                { text: "et menneske", correct: true },
+                { text: "en fod", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("natur_m8_title"),
+            targetCount: 3,
+            options: [
+                { text: "en musik", correct: true },
+                { text: "en luft", correct: false },
+                { text: "en film", correct: true },
+                { text: "et hoved", correct: false },
+                { text: "en ferie", correct: true },
+                { text: "et vand", correct: false }
+            ]
         }
     ];
 
@@ -1400,6 +1448,54 @@ export function renderNaturFritidView(container, navigateFn) {
                 { text: "en seng 🛏️", correct: false },
                 { text: "penge 🪙", correct: false }
             ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en luft 🌬️", "et vejr 🌦️", "en regn 🌧️"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Vejr og elementer 🌦️", correct: true },
+                { text: "Møbler 🪑", correct: false },
+                { text: "Tøj 👟", correct: false }
+            ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en film 🎬", "et spil 🎲", "en musik 🎵"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Underholdning 🎬", correct: true },
+                { text: "Kroppen 🦶", correct: false },
+                { text: "Mad 🍞", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Kroppen og sundhed 🫀",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "et hjerte 🫀", correct: true },
+                { text: "et øje 👁️", correct: true },
+                { text: "en hånd 🖐️", correct: true },
+                { text: "en strand 🏖️", correct: false },
+                { text: "et vejr 🌦️", correct: false },
+                { text: "en bold ⚽", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Ferie og udflugt 🏖️",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en strand 🏖️", correct: true },
+                { text: "en skov 🌲", correct: true },
+                { text: "en ferie ✈️", correct: true },
+                { text: "en bog 📖", correct: false },
+                { text: "et kontor 💼", correct: false },
+                { text: "en bil 🚗", correct: false }
+            ]
         }
     ];
 
@@ -1641,6 +1737,46 @@ export function renderNaturFritidView(container, navigateFn) {
             adverbial: "i godt vejr",
             correctText: "Familien går en tur i skoven i godt vejr.",
             wrongVerbs: ["skriver", "betaler"]
+        },
+        {
+            subjekt: "Pigen",
+            verbum: "plukker",
+            objekt: "en blomst",
+            adverbial: "i haven",
+            correctText: "Pigen plukker en blomst i haven.",
+            wrongVerbs: ["koger", "læser"]
+        },
+        {
+            subjekt: "Mennesket",
+            verbum: "nyder",
+            objekt: "livet",
+            adverbial: "i naturen",
+            correctText: "Mennesket nyder livet i naturen.",
+            wrongVerbs: ["kører", "bager"]
+        },
+        {
+            subjekt: "Børnene",
+            verbum: "bader i",
+            objekt: "vandet",
+            adverbial: "ved stranden",
+            correctText: "Børnene bader i vandet ved stranden.",
+            wrongVerbs: ["skriver", "sover"]
+        },
+        {
+            subjekt: "Gæsten",
+            verbum: "åbner",
+            objekt: "en gave",
+            adverbial: "til festen",
+            correctText: "Gæsten åbner en gave til festen.",
+            wrongVerbs: ["flyver", "cykler"]
+        },
+        {
+            subjekt: "Familien",
+            verbum: "ser",
+            objekt: "en film",
+            adverbial: "om aftenen",
+            correctText: "Familien ser en film om aftenen.",
+            wrongVerbs: ["steger", "hopper"]
         }
     ];
 

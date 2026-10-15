@@ -1378,6 +1378,54 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                 { text: "en fisk", correct: false },
                 { text: "et glas", correct: false }
             ]
+        },
+        {
+            title: getTranslation("koekken_m5_title"),
+            targetCount: 3,
+            options: [
+                { text: "en hund", correct: true },
+                { text: "et bord", correct: false },
+                { text: "en kat", correct: true },
+                { text: "en kop", correct: false },
+                { text: "en fisk", correct: true },
+                { text: "en sol", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("koekken_m6_title"),
+            targetCount: 3,
+            options: [
+                { text: "et tøj", correct: true },
+                { text: "en sko", correct: true },
+                { text: "en jakke", correct: true },
+                { text: "en seng", correct: false },
+                { text: "en kaffe", correct: false },
+                { text: "et træ", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("koekken_m7_title"),
+            targetCount: 3,
+            options: [
+                { text: "et glas", correct: true },
+                { text: "en mad", correct: false },
+                { text: "en kop", correct: true },
+                { text: "en hund", correct: false },
+                { text: "en tallerken", correct: true },
+                { text: "et problem", correct: false }
+            ]
+        },
+        {
+            title: getTranslation("koekken_m8_title"),
+            targetCount: 3,
+            options: [
+                { text: "en sol", correct: true },
+                { text: "en stol", correct: false },
+                { text: "et træ", correct: true },
+                { text: "en seng", correct: false },
+                { text: "en fugl", correct: true },
+                { text: "et kød", correct: false }
+            ]
         }
     ];
 
@@ -1799,6 +1847,54 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
                 { text: "en dør 🚪", correct: false },
                 { text: "en radio 📻", correct: false }
             ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["en hund 🐕", "en kat 🐈", "en fisk 🐟"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Dyr og kæledyr 🐾", correct: true },
+                { text: "Tøj 👟", correct: false },
+                { text: "Transport 🚗", correct: false }
+            ]
+        },
+        {
+            type: "find_overemne",
+            subwords: ["et tøj 👕", "en sko 👟", "en jakke 🧥"],
+            question: "Hvilket overemne passer til disse underemner?",
+            options: [
+                { text: "Tøj og påklædning 👗", correct: true },
+                { text: "Møbler 🪑", correct: false },
+                { text: "Mad 🍞", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Morgenmad og drikkevarer ☕",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "kaffe ☕", correct: true },
+                { text: "en mad 🥪", correct: true },
+                { text: "et glas vand 🥛", correct: true },
+                { text: "en sko 👟", correct: false },
+                { text: "en seng 🛏️", correct: false },
+                { text: "et træ 🌳", correct: false }
+            ]
+        },
+        {
+            type: "find_underemner",
+            overemne: "Husets rum og inventar 🛋️",
+            targetCount: 3,
+            question: "Vælg de 3 underemner, der passer til overemnet:",
+            options: [
+                { text: "en seng 🛏️", correct: true },
+                { text: "en stol 🪑", correct: true },
+                { text: "et vindue 🪟", correct: true },
+                { text: "en kat 🐈", correct: false },
+                { text: "en fisk 🐟", correct: false },
+                { text: "et kød 🥩", correct: false }
+            ]
         }
     ];
 
@@ -2040,6 +2136,46 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             adverbial: "med kaffen",
             correctText: "Kvinden har et problem med kaffen.",
             wrongVerbs: ["hopper", "køber"]
+        },
+        {
+            subjekt: "Faren",
+            verbum: "laver",
+            objekt: "mad",
+            adverbial: "i køkkenet",
+            correctText: "Faren laver mad i køkkenet.",
+            wrongVerbs: ["sover", "kører"]
+        },
+        {
+            subjekt: "Barnet",
+            verbum: "tager",
+            objekt: "sko",
+            adverbial: "på fødderne",
+            correctText: "Barnet tager sko på fødderne.",
+            wrongVerbs: ["drikker", "koger"]
+        },
+        {
+            subjekt: "Katten",
+            verbum: "sover i",
+            objekt: "sengen",
+            adverbial: "hele dagen",
+            correctText: "Katten sover i sengen hele dagen.",
+            wrongVerbs: ["læser", "cykler"]
+        },
+        {
+            subjekt: "Moren",
+            verbum: "steger",
+            objekt: "kød",
+            adverbial: "på panden",
+            correctText: "Moren steger kød på panden.",
+            wrongVerbs: ["hopper", "løber"]
+        },
+        {
+            subjekt: "Gæsten",
+            verbum: "sætter",
+            objekt: "et glas",
+            adverbial: "på bordet",
+            correctText: "Gæsten sætter et glas på bordet.",
+            wrongVerbs: ["flyver", "svømmer"]
         }
     ];
 

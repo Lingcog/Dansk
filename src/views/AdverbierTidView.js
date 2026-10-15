@@ -1441,7 +1441,7 @@ export function renderAdverbierTidView(container, navigateFn) {
             animation: fadeIn 0.35s ease;
         }
         .sb-puzzle-title {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #f8fafc;
             margin-bottom: 0.4rem;
@@ -1450,22 +1450,128 @@ export function renderAdverbierTidView(container, navigateFn) {
             gap: 0.5rem;
         }
         .sb-puzzle-desc {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-bottom: 1.3rem;
+            line-height: 1.5;
         }
+
+        /* Ordstillings-diagram: Grafisk visning af hvor adverbiet skal stå */
+        .sb-structure-diagram {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            margin-bottom: 1.6rem;
+            border: 1.5px solid rgba(251, 191, 36, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .structure-diagram-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .structure-diagram-badge {
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-central {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            border: 1.5px solid #0ea5e9;
+        }
+        .badge-inversion {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1.5px solid #f59e0b;
+        }
+        .structure-diagram-hint {
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+        .structure-diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .flow-step {
+            flex: 1;
+            min-width: 140px;
+            background: #1e293b;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 0.7rem 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.2rem;
+            transition: all 0.2s ease;
+        }
+        .flow-step.step-subjekt { border-color: rgba(34, 197, 94, 0.4); }
+        .flow-step.step-verbum { border-color: rgba(239, 68, 68, 0.4); }
+        .flow-step.step-rest { border-color: rgba(168, 85, 247, 0.4); }
+        .flow-step.active-target {
+            background: rgba(245, 158, 11, 0.18);
+            border: 2px solid #fbbf24;
+            box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+            transform: scale(1.03);
+        }
+        .flow-num {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+        .flow-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: white;
+        }
+        .flow-step.active-target .flow-title {
+            color: #fbbf24;
+        }
+        .flow-target-tag {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: #0f172a;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .flow-arrow {
+            font-size: 1.3rem;
+            color: #64748b;
+            font-weight: 900;
+        }
+
         .sb-puzzle-slots {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 0.8rem;
+            gap: 0.9rem;
             margin-bottom: 1.5rem;
+            padding-top: 0.6rem;
         }
         .sb-puzzle-slot {
             background: #0f172a;
             border: 2px dashed #475569;
-            border-radius: 12px;
-            padding: 0.9rem;
-            min-height: 76px;
+            border-radius: 14px;
+            padding: 1.1rem 0.8rem 0.8rem;
+            min-height: 82px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -1475,48 +1581,95 @@ export function renderAdverbierTidView(container, navigateFn) {
             text-align: center;
             position: relative;
         }
+        .sb-puzzle-slot.slot-subjekt { border-color: rgba(34, 197, 94, 0.4); }
+        .sb-puzzle-slot.slot-verbum { border-color: rgba(239, 68, 68, 0.4); }
+        .sb-puzzle-slot.slot-rest { border-color: rgba(168, 85, 247, 0.4); }
+
+        /* Tydeligt fremhævet adverbium-slot */
+        .sb-puzzle-slot.target-adverbium-slot {
+            border: 2.5px dashed #fbbf24;
+            background: rgba(245, 158, 11, 0.12);
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+        }
+        .sb-puzzle-slot.target-adverbium-slot.filled {
+            border-style: solid;
+            border-color: #fbbf24;
+            background: rgba(245, 158, 11, 0.25);
+            box-shadow: 0 0 22px rgba(245, 158, 11, 0.55);
+        }
+        .slot-target-callout {
+            position: absolute;
+            top: -12px;
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: #0f172a;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 0.2rem 0.65rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+            z-index: 2;
+        }
+
         .sb-puzzle-slot .slot-hint {
-            font-size: 0.8rem;
-            color: #94a3b8;
+            font-size: 0.85rem;
+            color: #cbd5e1;
             font-weight: 700;
         }
         .sb-puzzle-slot .slot-role {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: 0.2rem;
-            opacity: 0.8;
+            opacity: 0.85;
+            color: #94a3b8;
         }
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: rgba(245, 158, 11, 0.15);
-            border-color: #fbbf24;
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #38bdf8;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 800;
         }
+
         .sb-puzzle-chips {
             display: flex;
-            gap: 0.6rem;
+            gap: 0.7rem;
             flex-wrap: wrap;
             justify-content: center;
             margin-bottom: 1.5rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: #1e293b;
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.6rem 1.1rem;
-            border-radius: 10px;
-            font-size: 1rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            padding: 0.65rem 1.2rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
         .sb-puzzle-chip:hover {
-            background: #475569;
-            border-color: #fbbf24;
+            background: #334155;
+            border-color: #38bdf8;
             transform: translateY(-2px);
+        }
+        .sb-puzzle-chip.chip-is-adv {
+            background: rgba(245, 158, 11, 0.18);
+            border-color: #fbbf24;
+            color: #fef08a;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+        }
+        .sb-puzzle-chip.chip-is-adv:hover {
+            background: #d97706;
+            color: white;
         }
         .sb-puzzle-chip.used {
             opacity: 0.25;
@@ -2433,7 +2586,18 @@ export function renderAdverbierTidView(container, navigateFn) {
             correctAdv: 'altid',
             distractors: ['aldrig', 'sjældent', 'nu'],
             pedagogyNote: '"Altid" angiver 100% frekvens og står lige efter verbet som centraladverbium.',
-            slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit?', '4. Til hvem?'],
+            advWord: 'altid',
+            advSlotIndex: 2,
+            structureType: 'central',
+            structureTitle: 'Normal ordstilling: Adverbiet står som centraladverbium',
+            structureNote: 'I en almindelig sætning står tidsadverbiet "altid" som centraladverbium på plads 3 lige efter verbet.',
+            flowSteps: [
+                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '4. plads', title: 'Restled', icon: '📍', type: 'rest', isTarget: false }
+            ],
+            slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit? ⭐', '4. Til hvem?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Restled]'],
             chips: ['Bageren', 'smiler', 'altid', 'til naboerne'],
             correctSentence: ['Bageren', 'smiler', 'altid', 'til naboerne']
@@ -2447,7 +2611,18 @@ export function renderAdverbierTidView(container, navigateFn) {
             correctAdv: 'spiser',
             distractors: ['spise', 'sov', 'læste'],
             pedagogyNote: 'Inversion (V2-reglen): Når tidsadverbiet "Nu" står forrest, skal verbet rykke ind på 2. pladsen!',
-            slots: ['1. Hvornår (Fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvad?'],
+            advWord: 'Nu',
+            advSlotIndex: 0,
+            structureType: 'inversion',
+            structureTitle: 'Inversion: Tidsadverbiet "Nu" står forrest på 1. plads',
+            structureNote: 'Når tidsadverbiet "Nu" står på 1. plads, skal verbet stå på 2. pladsen før subjektet (V2-reglen)!',
+            flowSteps: [
+                { num: '1. plads', title: 'Tidsadverbium (Fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '2. plads', title: 'Verbum (V2)', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
+                { num: '4. plads', title: 'Objekt', icon: '📍', type: 'rest', isTarget: false }
+            ],
+            slots: ['1. Hvornår (Fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvad?'],
             roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Objekt]'],
             chips: ['Nu', 'spiser', 'Peter', 'frokost'],
             correctSentence: ['Nu', 'spiser', 'Peter', 'frokost']
@@ -2461,7 +2636,18 @@ export function renderAdverbierTidView(container, navigateFn) {
             correctAdv: 'aldrig',
             distractors: ['altid', 'ofte', 'snart'],
             pedagogyNote: '"Aldrig" angiver 0% frekvens og fungerer som benægtelse på centraladverbiets plads.',
-            slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit?', '4. Hvordan?'],
+            advWord: 'aldrig',
+            advSlotIndex: 2,
+            structureType: 'central',
+            structureTitle: 'Normal ordstilling: "Aldrig" på centraladverbiets plads',
+            structureNote: '"Aldrig" angiver 0% og har præcis samme faste plads som "ikke" (plads 3 lige efter verbet).',
+            flowSteps: [
+                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '4. plads', title: 'Præposition', icon: '📍', type: 'rest', isTarget: false }
+            ],
+            slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit? ⭐', '4. Hvordan?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
             chips: ['De', 'kører', 'aldrig', 'i bil'],
             correctSentence: ['De', 'kører', 'aldrig', 'i bil']
@@ -2475,7 +2661,18 @@ export function renderAdverbierTidView(container, navigateFn) {
             correctAdv: 'snart',
             distractors: ['længe', 'før', 'aldrig'],
             pedagogyNote: '"Snart" angiver nær fremtid (inden for kort tid).',
-            slots: ['1. Hvad?', '2. Handling?', '3. Hvornår?', '4. Hvorhen?'],
+            advWord: 'snart',
+            advSlotIndex: 2,
+            structureType: 'central',
+            structureTitle: 'Normal ordstilling: Tidsadverbiet "snart" på plads 3',
+            structureNote: '"Snart" placeres som centraladverbium mellem verbet og præpositionsleddet.',
+            flowSteps: [
+                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '4. plads', title: 'Hvorhen?', icon: '📍', type: 'rest', isTarget: false }
+            ],
+            slots: ['1. Hvad?', '2. Handling?', '3. Hvornår? ⭐', '4. Hvorhen?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
             chips: ['Toget', 'ankommer', 'snart', 'til stationen'],
             correctSentence: ['Toget', 'ankommer', 'snart', 'til stationen']
@@ -2489,7 +2686,18 @@ export function renderAdverbierTidView(container, navigateFn) {
             correctAdv: 'cykler',
             distractors: ['Mette', 'arbejde', 'kaffe'],
             pedagogyNote: 'V2-reglen! Med "Bagefter" på 1. plads SKAL verbet "cykler" stå på 2. pladsen før subjektet.',
-            slots: ['1. Hvornår (Fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvorhen?'],
+            advWord: 'Bagefter',
+            advSlotIndex: 0,
+            structureType: 'inversion',
+            structureTitle: 'Inversion: Tidsadverbiet "Bagefter" står forrest på 1. plads',
+            structureNote: 'Når tidsadverbiet "Bagefter" starter sætningen, rykker verbet "cykler" frem på 2. pladsen!',
+            flowSteps: [
+                { num: '1. plads', title: 'Tidsadverbium (Fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '2. plads', title: 'Verbum (V2)', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
+                { num: '4. plads', title: 'Præposition', icon: '📍', type: 'rest', isTarget: false }
+            ],
+            slots: ['1. Hvornår (Fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvorhen?'],
             roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Præposition]'],
             chips: ['Bagefter', 'cykler', 'Mette', 'på arbejde'],
             correctSentence: ['Bagefter', 'cykler', 'Mette', 'på arbejde']
@@ -2503,7 +2711,18 @@ export function renderAdverbierTidView(container, navigateFn) {
             correctAdv: 'stadig',
             distractors: ['snart', 'før', 'endnu'],
             pedagogyNote: '"Stadig" udtrykker kontinuitet – handlingen startede i fortiden og fortsætter lige nu.',
-            slots: ['1. Hvem?', '2. Handling?', '3. Tidsnuance?', '4. Hvad?'],
+            advWord: 'stadig',
+            advSlotIndex: 2,
+            structureType: 'central',
+            structureTitle: 'Normal ordstilling: Tidsadverbiet "stadig" på plads 3',
+            structureNote: '"Stadig" udtrykker fortsat handling og placeres som centraladverbium lige efter verbet.',
+            flowSteps: [
+                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '4. plads', title: 'Hvad?', icon: '📍', type: 'rest', isTarget: false }
+            ],
+            slots: ['1. Hvem?', '2. Handling?', '3. Tidsnuance? ⭐', '4. Hvad?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
             chips: ['Sara', 'læser', 'stadig', 'i bogen'],
             correctSentence: ['Sara', 'læser', 'stadig', 'i bogen']
@@ -2755,14 +2974,37 @@ export function renderAdverbierTidView(container, navigateFn) {
             challengeContainer.appendChild(puzzleContainer);
         }
 
-        // Step 2: Puslespil i udfordringen
+        // Step 2: Puslespil i udfordringen med tydelig grafisk visning af adverbiets placering
         function renderTidPuzzleStep(puzContainer, task) {
+            const isInv = task.structureType === 'inversion';
+
             puzContainer.innerHTML = `
                 <div class="sb-puzzle-title">
                     <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
                 </div>
                 <div class="sb-puzzle-desc">
-                    Klik på brikkerne i den rigtige rækkefølge for at udfylde pladserne:
+                    Læg mærke til den fremhævede plads med <strong>⭐</strong> – der skal adverbiet placeres. Klik på brikkerne i den rigtige rækkefølge:
+                </div>
+
+                <!-- Grafisk ordstillings-guide: Viser præcis hvor i sætningen adverbiet står -->
+                <div class="sb-structure-diagram">
+                    <div class="structure-diagram-header">
+                        <span class="structure-diagram-badge ${isInv ? 'badge-inversion' : 'badge-central'}">
+                            ${isInv ? '⚡ INVERSION (Tidsadverbium forrest på 1. plads)' : '📌 NORMAL ORDSTILLING (Centraladverbium på 3. plads)'}
+                        </span>
+                        <span class="structure-diagram-hint">${task.structureNote}</span>
+                    </div>
+                    <div class="structure-diagram-flow">
+                        ${task.flowSteps.map((step, sIdx) => `
+                            <div class="flow-step ${step.isTarget ? 'active-target' : 'step-' + step.type}">
+                                <div style="font-size: 1.25rem;">${step.icon}</div>
+                                <div class="flow-num">${step.num}</div>
+                                <div class="flow-title">${step.title}</div>
+                                ${step.isTarget ? '<div class="flow-target-tag">HER STÅR ADVERBIET!</div>' : ''}
+                            </div>
+                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">➔</div>' : ''}
+                        `).join('')}
+                    </div>
                 </div>
 
                 <div class="sb-puzzle-slots" id="tid-puzzle-slots-grid"></div>
@@ -2786,18 +3028,43 @@ export function renderAdverbierTidView(container, navigateFn) {
                 slotsGrid.innerHTML = '';
                 task.slots.forEach((slotLabel, idx) => {
                     const slot = document.createElement('div');
-                    slot.className = `sb-puzzle-slot ${placedWords[idx] ? 'filled' : ''}`;
-                    if (placedWords[idx]) {
-                        slot.innerHTML = `<span>${placedWords[idx]}</span>`;
+                    const isAdvSlot = (idx === task.advSlotIndex);
+                    const isFilled = Boolean(placedWords[idx]);
+                    const roleType = task.flowSteps[idx].type;
+
+                    slot.className = `sb-puzzle-slot ${isFilled ? 'filled' : ''} ${isAdvSlot ? 'target-adverbium-slot' : 'slot-' + roleType}`;
+
+                    if (isAdvSlot) {
+                        const callout = document.createElement('div');
+                        callout.className = 'slot-target-callout';
+                        callout.innerHTML = isFilled ? '✓ Adverbium' : '⭐ Adverbiets plads ⭐';
+                        slot.appendChild(callout);
+                    }
+
+                    if (isFilled) {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
+                        wordSpan.style.fontWeight = '800';
+                        if (isAdvSlot) wordSpan.style.color = '#fbbf24';
+                        wordSpan.textContent = placedWords[idx];
+                        slot.appendChild(wordSpan);
+
                         slot.onclick = () => {
                             placedWords.splice(idx, 1);
                             updatePuzzleUI();
                         };
                     } else {
-                        slot.innerHTML = `
-                            <span class="slot-hint">${slotLabel}</span>
-                            <span class="slot-role">${task.roles[idx]}</span>
-                        `;
+                        const hintSpan = document.createElement('span');
+                        hintSpan.className = 'slot-hint';
+                        hintSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
+                        if (isAdvSlot) hintSpan.style.color = '#fbbf24';
+                        hintSpan.textContent = slotLabel;
+                        slot.appendChild(hintSpan);
+
+                        const roleSpan = document.createElement('span');
+                        roleSpan.className = 'slot-role';
+                        roleSpan.textContent = task.roles[idx];
+                        slot.appendChild(roleSpan);
                     }
                     slotsGrid.appendChild(slot);
                 });
@@ -2805,8 +3072,12 @@ export function renderAdverbierTidView(container, navigateFn) {
                 chipsPool.innerHTML = '';
                 shuffledChips.forEach(word => {
                     const chip = document.createElement('button');
-                    chip.className = `sb-puzzle-chip ${placedWords.includes(word) ? 'used' : ''}`;
-                    chip.textContent = word;
+                    const isAdvChip = (word === task.advWord);
+                    chip.className = `sb-puzzle-chip ${isAdvChip ? 'chip-is-adv' : ''} ${placedWords.includes(word) ? 'used' : ''}`;
+                    chip.innerHTML = isAdvChip
+                        ? `<span>⭐</span> <span>${word}</span>`
+                        : `<span>${word}</span>`;
+
                     chip.onclick = () => {
                         if (placedWords.length < task.slots.length && !placedWords.includes(word)) {
                             placedWords.push(word);

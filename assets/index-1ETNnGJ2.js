@@ -3804,14 +3804,14 @@
                     </div>
                 `}).join("");ve.innerHTML=`
                 <div class="sb-context-title">📍 <em>${m.context}</em></div>
+                <div class="sb-context-elements" style="margin-bottom: 1rem;">
+                    ${o}
+                </div>
                 <div class="sb-target-sentence-card">
                     <div class="sb-target-sentence-label">Sætning med tom plads til stedsadverbiet:</div>
                     <div class="sb-target-sentence-display" id="sb-target-sentence-display">
                         ${A}
                     </div>
-                </div>
-                <div class="sb-context-elements">
-                    ${o}
                 </div>
             `,Y.appendChild(ve);const s=document.createElement("div");s.className="sb-question-box",s.innerHTML=`
                 <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
@@ -5544,14 +5544,14 @@
                     </div>
                 `}).join("");z.innerHTML=`
                 <div class="sb-context-title">📍 <em>${I.context}</em></div>
+                <div class="sb-context-elements" style="margin-bottom: 1rem;">
+                    ${o}
+                </div>
                 <div class="sb-target-sentence-card">
                     <div class="sb-target-sentence-label">Sætning med tom plads til tidsadverbiet:</div>
                     <div class="sb-target-sentence-display" id="sb-target-sentence-display">
                         ${A}
                     </div>
-                </div>
-                <div class="sb-context-elements">
-                    ${o}
                 </div>
             `,ge.appendChild(z);const s=document.createElement("div");s.className="sb-question-box",s.innerHTML=`
                 <div style="font-size: 0.85rem; color: #fbbf24; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
@@ -6542,16 +6542,24 @@
         .sb-context-chip.maade { border-left: 3px solid #ec4899; color: #f472b6; }
         .sb-context-chip.rest { border-left: 3px solid #fbbf24; color: #fde68a; }
         .sb-context-chip.target-placeholder {
-            background: rgba(236, 72, 153, 0.15);
-            border: 2px dashed #ec4899;
-            color: #f472b6;
-            box-shadow: 0 0 12px rgba(236, 72, 153, 0.25);
+            background: rgba(236, 72, 153, 0.18) !important;
+            border: 2px dashed #ec4899 !important;
+            border-left: 4px solid #ec4899 !important;
+            color: #f472b6 !important;
+            box-shadow: 0 0 16px rgba(236, 72, 153, 0.35) !important;
+            animation: pulse-pink-slot 2s infinite ease-in-out;
+        }
+        @keyframes pulse-pink-slot {
+            0%, 100% { border-color: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.2); }
+            50% { border-color: #ec4899; box-shadow: 0 0 22px rgba(236, 72, 153, 0.55); }
         }
         .sb-context-chip.target-placeholder.chip-filled {
-            background: rgba(34, 197, 94, 0.2);
-            border: 2px solid #22c55e;
-            color: #4ade80;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.35);
+            background: rgba(34, 197, 94, 0.2) !important;
+            border: 2px solid #22c55e !important;
+            border-left: 4px solid #22c55e !important;
+            color: #4ade80 !important;
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.35) !important;
+            animation: none !important;
         }
         .sb-chip-role {
             font-size: 0.75rem;
@@ -7219,26 +7227,26 @@
                     Udfordring ${ie+1} af ${X.length}
                 </div>
                 <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg adverbiet & saml puslespillet</h3>
-            `,A.appendChild(o);const s=document.createElement("div");s.className="sb-task-pills",X.forEach((pe,fe)=>{const xe=document.createElement("div");xe.className=`sb-task-pill ${fe===ie?"active":""} ${W.has(fe)?"done":""}`,xe.textContent=fe+1,xe.onclick=()=>{ie=fe,ke()},s.appendChild(xe)}),A.appendChild(s),I.appendChild(A);const d=document.createElement("div");d.className="sb-context-card";const b=typeof z.advSlotIndex=="number"?z.advSlotIndex:2,_=z.correctSentence.map((pe,fe)=>{if(fe===b)return'<span class="sb-sentence-blank" id="sb-live-adv-blank">________</span>';const xe=fe===z.correctSentence.length-1;return`<span class="sb-sentence-word">${pe}${xe?".":""}</span>`}).join(" "),R=z.correctSentence.map((pe,fe)=>{const xe=z.slots[fe];return fe===b?`
-                        <div class="sb-context-chip maade target-placeholder" id="sb-context-chip-adv">
-                            <span class="sb-chip-role">${xe}</span>
+            `,A.appendChild(o);const s=document.createElement("div");s.className="sb-task-pills",X.forEach((pe,fe)=>{const xe=document.createElement("div");xe.className=`sb-task-pill ${fe===ie?"active":""} ${W.has(fe)?"done":""}`,xe.textContent=fe+1,xe.onclick=()=>{ie=fe,ke()},s.appendChild(xe)}),A.appendChild(s),I.appendChild(A);const d=document.createElement("div");d.className="sb-context-card";const b=typeof z.advSlotIndex=="number"?z.advSlotIndex:2,_=z.correctSentence.map((pe,fe)=>{if(fe===b)return'<span class="sb-sentence-blank" id="sb-live-adv-blank">________</span>';const xe=fe===z.correctSentence.length-1;return`<span class="sb-sentence-word">${pe}${xe?".":""}</span>`}).join(" "),R=z.correctSentence.map((pe,fe)=>fe===b?`
+                        <div class="sb-context-chip maade target-placeholder" id="sb-context-chip-adv" title="Her skal mådesadverbiet stå!">
+                            <span class="sb-chip-role">3. HVORDAN? (MÅDE) ⭐</span>
                             <span id="sb-chip-adv-val" style="font-weight: 800; letter-spacing: 2px;">________</span>
                         </div>
                     `:`
                     <div class="sb-context-chip ${fe===0?"subjekt":fe===1?"verbum":"rest"}">
-                        <span class="sb-chip-role">${xe}</span>
-                        <span>${pe}</span>
+                        <span class="sb-chip-role">${fe===0?"1. HVEM?":fe===1?"2. HANDLING?":"4. HVOR/HVAD?"}</span>
+                        <span style="font-weight: 700;">${pe}</span>
                     </div>
-                `}).join("");d.innerHTML=`
+                `).join("");d.innerHTML=`
                 <div class="sb-context-title">📍 <em>${z.context}</em></div>
+                <div class="sb-context-elements" style="margin-bottom: 1rem;">
+                    ${R}
+                </div>
                 <div class="sb-target-sentence-card">
                     <div class="sb-target-sentence-label">Sætning med tom plads til mådesadverbiet:</div>
                     <div class="sb-target-sentence-display" id="sb-target-sentence-display">
                         ${_}
                     </div>
-                </div>
-                <div class="sb-context-elements">
-                    ${R}
                 </div>
             `,I.appendChild(d);const S=document.createElement("div");S.className="sb-question-box",S.innerHTML=`
                 <div style="font-size: 0.85rem; color: #f472b6; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">

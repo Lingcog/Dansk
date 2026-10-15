@@ -213,7 +213,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             id: 'adverbier_grad',
             badge: '🌡️ Felt 4 • 20 ord',
             badgeClass: 'badge-adv-4',
-            img: 'assets/koekken_vrimmel.jpg',
+            img: 'assets/adverbier_grad_vrimmel.jpg',
             title: '4. Grad & Intensitet',
             desc: 'Hvor meget gælder det? Træn skalaen fra 0% til over 100% (slet ikke, lidt, ret, meget, for varmt).',
             btnText: 'Udforsk intensitetsskalaen ➔'

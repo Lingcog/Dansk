@@ -1148,6 +1148,17 @@ export function renderAdverbierGradView(container, navigateFn) {
             gap: 2rem;
             margin-top: 1.8rem;
             animation: fadeIn 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        .vrimmel-inspector.updated {
+            animation: inspectorPulse 0.4s ease-out;
+            border-color: #c084fc;
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.45), 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        @keyframes inspectorPulse {
+            0% { transform: translateY(6px) scale(0.99); }
+            50% { transform: translateY(-2px) scale(1.01); }
+            100% { transform: translateY(0) scale(1); }
         }
         @media (max-width: 850px) {
             .vrimmel-inspector {
@@ -2524,6 +2535,7 @@ export function renderAdverbierGradView(container, navigateFn) {
                 pin.className = `hotspot-pin ${selectedWord.id === item.id ? 'active' : ''}`;
                 pin.style.left = `${item.x}%`;
                 pin.style.top = `${item.y}%`;
+                pin.dataset.id = item.id;
                 pin.innerHTML = `
                     <span>${idx + 1}</span>
                     <span class="hotspot-label">${item.word}</span>
@@ -2531,9 +2543,8 @@ export function renderAdverbierGradView(container, navigateFn) {
 
                 pin.onclick = (e) => {
                     e.stopPropagation();
-                    selectedWord = item;
+                    updateInspector(item, true);
                     speakDanish(item.word);
-                    renderTabVrimmel(parent);
                 };
 
                 stage.appendChild(pin);
@@ -2547,107 +2558,128 @@ export function renderAdverbierGradView(container, navigateFn) {
         const inspector = document.createElement('div');
         inspector.className = 'vrimmel-inspector';
         inspector.id = 'grad-inspector-box';
-
-        const trans = getGradTranslation(selectedWord);
-        const currentLang = getLang();
-        const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
-        const pctWidth = Math.min(100, (selectedWord.levelPercent / 120) * 100);
-
-        const categoryLabels = {
-            'nul': '0% (slet ikke)',
-            'lav': 'Lav styrke (5-25%)',
-            'mellem': 'Mellem styrke (40-75%)',
-            'hoej': 'Høj styrke (85-95%)',
-            'fuld': 'Fuld styrke (100%)',
-            'overskud': '⚠️ Over grænsen (>100%)'
-        };
-        const catText = categoryLabels[selectedWord.category] || selectedWord.tier;
-
-        inspector.innerHTML = `
-            <div class="inspector-left">
-                <div class="inspector-header">
-                    <div class="inspector-badge-row">
-                        <span class="inspector-badge">Intensitet: ${selectedWord.tier}</span>
-                        <span class="inspector-cat-badge">${catText}</span>
-                    </div>
-                    <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
-                </div>
-
-                <h2 class="inspector-word-title">
-                    <span>🌡️</span> ${selectedWord.word}
-                </h2>
-
-                <div class="inspector-trans-box">
-                    <div class="trans-badge-label">
-                        <span>🌐</span> OVERSÆTTELSE (${langLabel})
-                    </div>
-                    <div class="trans-word-val">"${trans.word}"</div>
-                </div>
-
-                <div class="inspector-scene-box">
-                    <div class="scene-heading">📍 Situation på torvet</div>
-                    <p class="scene-text">${selectedWord.sceneDesc}</p>
-                </div>
-            </div>
-
-            <div class="inspector-right">
-                <div class="inspector-sentence-card">
-                    <div class="scene-heading" style="color: #c084fc;">💬 Eksempelsætning</div>
-                    <p class="sentence-quote-text">"${selectedWord.contextSentence}"</p>
-                    ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
-                    <button class="inspector-speak-btn" id="inspector-action-speak">
-                        <span>🗣️</span> Hør sætning
-                    </button>
-                </div>
-
-                <div class="grad-meter-box">
-                    <div class="meter-label-row">
-                        <span>Skala: ${selectedWord.levelPercent}%</span>
-                        <span>${selectedWord.levelPercent > 100 ? '⚠️ Grænsen overskredet!' : selectedWord.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
-                    </div>
-                    <div class="meter-track">
-                        <div class="meter-fill" style="width: ${pctWidth}%;"></div>
-                    </div>
-                </div>
-
-                <div class="inspector-scene-box" style="border-left: 4px solid #a855f7;">
-                    <div class="scene-heading" style="color: #c084fc;">💡 Grammatisk tip</div>
-                    <p class="scene-text">${selectedWord.ruleHint}</p>
-                </div>
-
-                <div class="inspector-actions">
-                    <button class="inspector-btn-action" id="inspector-action-prev">
-                        ← Forrige ord
-                    </button>
-                    <button class="inspector-btn-action" style="background: #9333ea;" id="inspector-action-next">
-                        Næste ord ➔
-                    </button>
-                </div>
-            </div>
-        `;
-
         layout.appendChild(inspector);
         parent.appendChild(layout);
 
-        // Bind events
-        inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(selectedWord.word);
-        inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(selectedWord.contextSentence);
+        function updateInspector(item, shouldScroll = false) {
+            selectedWord = item;
 
-        inspector.querySelector('#inspector-action-prev').onclick = () => {
-            const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === selectedWord.id);
-            const prevIdx = (currentIdx - 1 + ADVERBIER_GRAD_DATA.length) % ADVERBIER_GRAD_DATA.length;
-            selectedWord = ADVERBIER_GRAD_DATA[prevIdx];
-            speakDanish(selectedWord.word);
-            renderTabVrimmel(parent);
-        };
+            // Opdater aktiv pin markør på vrimlebilledet
+            stage.querySelectorAll('.hotspot-pin').forEach(p => {
+                p.classList.toggle('active', p.dataset.id === item.id);
+            });
 
-        inspector.querySelector('#inspector-action-next').onclick = () => {
-            const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === selectedWord.id);
-            const nextIdx = (currentIdx + 1) % ADVERBIER_GRAD_DATA.length;
-            selectedWord = ADVERBIER_GRAD_DATA[nextIdx];
-            speakDanish(selectedWord.word);
-            renderTabVrimmel(parent);
-        };
+            const trans = getGradTranslation(item);
+            const currentLang = getLang();
+            const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
+            const pctWidth = Math.min(100, (item.levelPercent / 120) * 100);
+
+            const categoryLabels = {
+                'nul': '0% (slet ikke)',
+                'lav': 'Lav styrke (5-25%)',
+                'mellem': 'Mellem styrke (40-75%)',
+                'hoej': 'Høj styrke (85-95%)',
+                'fuld': 'Fuld styrke (100%)',
+                'overskud': '⚠️ Over grænsen (>100%)'
+            };
+            const catText = categoryLabels[item.category] || item.tier;
+
+            inspector.innerHTML = `
+                <div class="inspector-left">
+                    <div class="inspector-header">
+                        <div class="inspector-badge-row">
+                            <span class="inspector-badge" style="background: rgba(168, 85, 247, 0.25); border: 1.5px solid #c084fc; color: #c084fc; font-weight: 800;">📍 Målord: ${item.word}</span>
+                            <span class="inspector-badge">Intensitet: ${item.tier}</span>
+                            <span class="inspector-cat-badge">${catText}</span>
+                        </div>
+                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                    </div>
+
+                    <h2 class="inspector-word-title">
+                        <span>🌡️</span> ${item.word}
+                    </h2>
+
+                    <div class="inspector-trans-box">
+                        <div class="trans-badge-label">
+                            <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                        </div>
+                        <div class="trans-word-val">"${trans.word}"</div>
+                    </div>
+
+                    <div class="inspector-scene-box">
+                        <div class="scene-heading">📍 Situation på torvet</div>
+                        <p class="scene-text">${item.sceneDesc}</p>
+                    </div>
+                </div>
+
+                <div class="inspector-right">
+                    <div class="inspector-sentence-card">
+                        <div class="scene-heading" style="color: #c084fc;">💬 Eksempelsætning</div>
+                        <p class="sentence-quote-text">"${item.contextSentence}"</p>
+                        ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
+                        <button class="inspector-speak-btn" id="inspector-action-speak">
+                            <span>🗣️</span> Hør sætning
+                        </button>
+                    </div>
+
+                    <div class="grad-meter-box">
+                        <div class="meter-label-row">
+                            <span>Skala: ${item.levelPercent}%</span>
+                            <span>${item.levelPercent > 100 ? '⚠️ Grænsen overskredet!' : item.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
+                        </div>
+                        <div class="meter-track">
+                            <div class="meter-fill" style="width: ${pctWidth}%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="inspector-scene-box" style="border-left: 4px solid #a855f7;">
+                        <div class="scene-heading" style="color: #c084fc;">💡 Grammatisk tip</div>
+                        <p class="scene-text">${item.ruleHint}</p>
+                    </div>
+
+                    <div class="inspector-actions">
+                        <button class="inspector-btn-action" id="inspector-action-prev">
+                            ← Forrige ord
+                        </button>
+                        <button class="inspector-btn-action" style="background: #9333ea;" id="inspector-action-next">
+                            Næste ord ➔
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Bind events
+            inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(item.word);
+            inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(item.contextSentence);
+
+            inspector.querySelector('#inspector-action-prev').onclick = () => {
+                const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === item.id);
+                const prevIdx = (currentIdx - 1 + ADVERBIER_GRAD_DATA.length) % ADVERBIER_GRAD_DATA.length;
+                const prevItem = ADVERBIER_GRAD_DATA[prevIdx];
+                updateInspector(prevItem, true);
+                speakDanish(prevItem.word);
+            };
+
+            inspector.querySelector('#inspector-action-next').onclick = () => {
+                const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === item.id);
+                const nextIdx = (currentIdx + 1) % ADVERBIER_GRAD_DATA.length;
+                const nextItem = ADVERBIER_GRAD_DATA[nextIdx];
+                updateInspector(nextItem, true);
+                speakDanish(nextItem.word);
+            };
+
+            // Trigger animation pulse så brugeren tydeligt ser den dukker frem
+            inspector.classList.remove('updated');
+            void inspector.offsetWidth;
+            inspector.classList.add('updated');
+
+            if (shouldScroll) {
+                inspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Initialiser inspektøren med det valgte ord
+        updateInspector(selectedWord, false);
     }
 
     // ==========================================

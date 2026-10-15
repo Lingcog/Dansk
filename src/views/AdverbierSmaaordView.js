@@ -1023,6 +1023,17 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             gap: 2rem;
             margin-top: 1.8rem;
             animation: fadeIn 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        .vrimmel-inspector.updated {
+            animation: inspectorPulse 0.4s ease-out;
+            border-color: #22d3ee;
+            box-shadow: 0 0 35px rgba(34, 211, 238, 0.45), 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        @keyframes inspectorPulse {
+            0% { transform: translateY(6px) scale(0.99); }
+            50% { transform: translateY(-2px) scale(1.01); }
+            100% { transform: translateY(0) scale(1); }
         }
         @media (max-width: 850px) {
             .vrimmel-inspector {
@@ -1848,6 +1859,7 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             pin.className = `hotspot-pin ${selectedWord && selectedWord.id === item.id ? 'active' : ''}`;
             pin.style.left = `${item.x}%`;
             pin.style.top = `${item.y}%`;
+            pin.dataset.id = item.id;
             pin.innerHTML = `
                 <span>${idx + 1}</span>
                 ${!isPureMode ? `<span class="hotspot-label">${item.word}</span>` : ''}
@@ -1855,9 +1867,8 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
 
             pin.onclick = (e) => {
                 e.stopPropagation();
-                selectedWord = item;
+                updateInspector(item, true);
                 speakDanish(item.sentence);
-                renderTabVrimmel(parent);
             };
 
             stage.appendChild(pin);
@@ -1870,92 +1881,113 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
         const inspector = document.createElement('div');
         inspector.className = 'vrimmel-inspector';
         inspector.id = 'smaaord-inspector-box';
-
-        const trans = getSmaaordTranslation(selectedWord);
-        const currentLang = getLang();
-        const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
-
-        const catNames = {
-            'magiske': 'De 5 Magiske Småord ⭐',
-            'stemning': 'Høflighed & Opmuntring',
-            'talesprog': 'Talesprog & Emphase',
-            'valg': 'Enighed & Præference'
-        };
-
-        inspector.innerHTML = `
-            <div class="inspector-left">
-                <div class="inspector-header">
-                    <div class="inspector-badge-row">
-                        <span class="inspector-badge">${catNames[selectedWord.category] || 'Samtalesmåord'}</span>
-                    </div>
-                    <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
-                </div>
-
-                <h2 class="inspector-word-title">
-                    <span>💬</span> ${selectedWord.word}
-                </h2>
-
-                <div class="inspector-trans-box">
-                    <div class="trans-badge-label">
-                        <span>🌐</span> OVERSÆTTELSE (${langLabel})
-                    </div>
-                    <div class="trans-word-val">"${trans.word}"</div>
-                </div>
-
-                <div class="inspector-scene-box">
-                    <div class="scene-heading">📍 I frokoststuen</div>
-                    <p class="scene-text">${selectedWord.sceneDesc}</p>
-                </div>
-            </div>
-
-            <div class="inspector-right">
-                <div class="inspector-sentence-card">
-                    <div class="scene-heading" style="color: #22d3ee;">💬 Eksempelsætning</div>
-                    <p class="sentence-quote-text">"${selectedWord.contextSentence}"</p>
-                    ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
-                    <button class="inspector-speak-btn" id="inspector-action-speak">
-                        <span>🗣️</span> Hør sætning
-                    </button>
-                </div>
-
-                <div class="inspector-scene-box" style="border-left: 4px solid #06b6d4;">
-                    <div class="scene-heading" style="color: #22d3ee;">💡 Didaktisk samtale-regel</div>
-                    <p class="scene-text">${selectedWord.ruleHint}</p>
-                </div>
-
-                <div class="inspector-actions">
-                    <button class="inspector-btn-action" id="inspector-action-prev">
-                        ← Forrige ord
-                    </button>
-                    <button class="inspector-btn-action" style="background: #0891b2;" id="inspector-action-next">
-                        Næste ord ➔
-                    </button>
-                </div>
-            </div>
-        `;
-
         layout.appendChild(inspector);
         parent.appendChild(layout);
 
-        // Bind events
-        inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(selectedWord.word);
-        inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(selectedWord.contextSentence);
+        function updateInspector(item, shouldScroll = false) {
+            selectedWord = item;
 
-        inspector.querySelector('#inspector-action-prev').onclick = () => {
-            const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === selectedWord.id);
-            const prevIdx = (currentIdx - 1 + ADVERBIER_SMAAORD_DATA.length) % ADVERBIER_SMAAORD_DATA.length;
-            selectedWord = ADVERBIER_SMAAORD_DATA[prevIdx];
-            speakDanish(selectedWord.sentence);
-            renderTabVrimmel(parent);
-        };
+            // Opdater aktiv pin markør på vrimlebilledet
+            stage.querySelectorAll('.hotspot-pin').forEach(p => {
+                p.classList.toggle('active', p.dataset.id === item.id);
+            });
 
-        inspector.querySelector('#inspector-action-next').onclick = () => {
-            const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === selectedWord.id);
-            const nextIdx = (currentIdx + 1) % ADVERBIER_SMAAORD_DATA.length;
-            selectedWord = ADVERBIER_SMAAORD_DATA[nextIdx];
-            speakDanish(selectedWord.sentence);
-            renderTabVrimmel(parent);
-        };
+            const trans = getSmaaordTranslation(item);
+            const currentLang = getLang();
+            const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
+
+            const catNames = {
+                'magiske': 'De 5 Magiske Småord ⭐',
+                'stemning': 'Høflighed & Opmuntring',
+                'talesprog': 'Talesprog & Emphase',
+                'valg': 'Enighed & Præference'
+            };
+
+            inspector.innerHTML = `
+                <div class="inspector-left">
+                    <div class="inspector-header">
+                        <div class="inspector-badge-row">
+                            <span class="inspector-badge" style="background: rgba(6, 182, 212, 0.25); border: 1.5px solid #22d3ee; color: #22d3ee; font-weight: 800;">📍 Målord: ${item.word}</span>
+                            <span class="inspector-badge">${catNames[item.category] || 'Samtalesmåord'}</span>
+                        </div>
+                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                    </div>
+
+                    <h2 class="inspector-word-title">
+                        <span>💬</span> ${item.word}
+                    </h2>
+
+                    <div class="inspector-trans-box">
+                        <div class="trans-badge-label">
+                            <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                        </div>
+                        <div class="trans-word-val">"${trans.word}"</div>
+                    </div>
+
+                    <div class="inspector-scene-box">
+                        <div class="scene-heading">📍 I frokoststuen</div>
+                        <p class="scene-text">${item.sceneDesc}</p>
+                    </div>
+                </div>
+
+                <div class="inspector-right">
+                    <div class="inspector-sentence-card">
+                        <div class="scene-heading" style="color: #22d3ee;">💬 Eksempelsætning</div>
+                        <p class="sentence-quote-text">"${item.contextSentence}"</p>
+                        ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
+                        <button class="inspector-speak-btn" id="inspector-action-speak">
+                            <span>🗣️</span> Hør sætning
+                        </button>
+                    </div>
+
+                    <div class="inspector-scene-box" style="border-left: 4px solid #06b6d4;">
+                        <div class="scene-heading" style="color: #22d3ee;">💡 Didaktisk samtale-regel</div>
+                        <p class="scene-text">${item.ruleHint}</p>
+                    </div>
+
+                    <div class="inspector-actions">
+                        <button class="inspector-btn-action" id="inspector-action-prev">
+                            ← Forrige ord
+                        </button>
+                        <button class="inspector-btn-action" style="background: #0891b2;" id="inspector-action-next">
+                            Næste ord ➔
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Bind events
+            inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(item.word);
+            inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(item.contextSentence);
+
+            inspector.querySelector('#inspector-action-prev').onclick = () => {
+                const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === item.id);
+                const prevIdx = (currentIdx - 1 + ADVERBIER_SMAAORD_DATA.length) % ADVERBIER_SMAAORD_DATA.length;
+                const prevItem = ADVERBIER_SMAAORD_DATA[prevIdx];
+                updateInspector(prevItem, true);
+                speakDanish(prevItem.sentence);
+            };
+
+            inspector.querySelector('#inspector-action-next').onclick = () => {
+                const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === item.id);
+                const nextIdx = (currentIdx + 1) % ADVERBIER_SMAAORD_DATA.length;
+                const nextItem = ADVERBIER_SMAAORD_DATA[nextIdx];
+                updateInspector(nextItem, true);
+                speakDanish(nextItem.sentence);
+            };
+
+            // Trigger animation pulse så brugeren tydeligt ser den dukker frem
+            inspector.classList.remove('updated');
+            void inspector.offsetWidth;
+            inspector.classList.add('updated');
+
+            if (shouldScroll) {
+                inspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Initialiser inspektøren med det valgte ord
+        updateInspector(selectedWord, false);
     }
 
     // ==========================================

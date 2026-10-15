@@ -2562,36 +2562,60 @@
             transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
-            gap: 0.35rem;
-            padding: 0.35rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
+            gap: 0.25rem;
+            padding: 0.18rem 0.45rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-            transition: all 0.25s ease;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+            transition: all 0.2s ease;
             z-index: 10;
             white-space: nowrap;
+            letter-spacing: 0.2px;
+            backdrop-filter: blur(4px);
+        }
+        .hotspot-pin .pin-icon {
+            font-size: 0.65rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+        }
+        .hotspot-pin .pin-text {
+            line-height: 1.1;
         }
         .hotspot-pin:hover {
-            transform: translate(-50%, -50%) scale(1.15);
+            transform: translate(-50%, -50%) scale(1.1);
             z-index: 20;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
         }
         .hotspot-pin.active {
-            transform: translate(-50%, -50%) scale(1.22);
+            transform: translate(-50%, -50%) scale(1.15);
             z-index: 30;
-            box-shadow: 0 0 25px #38bdf8, 0 6px 20px rgba(0,0,0,0.9);
+            box-shadow: 0 0 16px #38bdf8, 0 4px 12px rgba(0, 0, 0, 0.8);
             border-color: #38bdf8;
         }
         .pin-retning {
-            background: #0284c7;
+            background: rgba(2, 132, 199, 0.92);
             color: white;
         }
         .pin-hvile {
-            background: #d97706;
+            background: rgba(217, 119, 6, 0.92);
             color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hotspot-pin {
+                padding: 0.12rem 0.35rem;
+                font-size: 0.62rem;
+                border-radius: 9px;
+                border-width: 1px;
+                gap: 0.18rem;
+            }
+            .hotspot-pin .pin-icon {
+                font-size: 0.55rem;
+            }
         }
 
         /* Inspector Card */
@@ -3285,7 +3309,7 @@
                 <span><strong>Hvile:</strong> Stilstand på stedet = LANG FORM med -E (hjemme, inde, ude, oppe, nede, fremme, henne)</span>
             </div>
         </div>
-    `,t.appendChild(x);const w=document.createElement("div");w.className="adv-tabs-nav";const M=[{id:"tab_vrimmel",label:"1. Vrimlebillede (18 ord)",icon:"🖼️"},{id:"tab_detektiv",label:"2. Adverbie-Detektiven",icon:"🔍"},{id:"tab_vippe",label:"3. Retnings-Vippen (-e reglen)",icon:"⚖️"},{id:"tab_saetning",label:"4. Sætningsbyggeren",icon:"🧱"},{id:"tab_kontekst",label:"5. Kontekst-testen",icon:"🎯"}],W={};M.forEach(K=>{const Z=document.createElement("button");Z.className=`adv-tab-btn ${K.id===D?"active":""}`,Z.innerHTML=`<span>${K.icon}</span> <span>${K.label}</span>`,Z.onclick=()=>B(K.id),W[K.id]=Z,w.appendChild(Z)}),t.appendChild(w);const U=document.createElement("div");U.className="adv-tab-content",t.appendChild(U);function B(K){D=K,Object.keys(W).forEach(Z=>{W[Z].classList.toggle("active",Z===K)}),u()}function u(){U.innerHTML="",D==="tab_vrimmel"?l(U):D==="tab_detektiv"?c(U):D==="tab_vippe"?Q(U):D==="tab_saetning"?E(U):D==="tab_kontekst"&&re(U)}function l(K){const Z=document.createElement("div");Z.className="tab-vrimmel-wrapper";const ie=document.createElement("div");ie.className="vrimmel-toolbar";const se=document.createElement("div");se.className="filter-group",[{id:"all",label:"Vis alle (18)"},{id:"retning",label:"🚀 Kun Retning (10)"},{id:"hvile",label:"🏡 Kun Hvile (8)"}].forEach(q=>{const $=document.createElement("button");$.className=`filter-btn ${_===q.id?"active":""}`,$.textContent=q.label,$.onclick=()=>{_=q.id,l(K)},se.appendChild($)}),ie.appendChild(se);const oe=document.createElement("button");oe.className="toggle-pins-btn",oe.innerHTML=`<span>${h?"👁️ Skjul markører":"👁️ Vis markører"}</span>`,oe.onclick=()=>{h=!h,l(K)},ie.appendChild(oe),Z.appendChild(ie);const he=document.createElement("div");he.className="vrimmel-stage-container";const ve=document.createElement("img");ve.className="vrimmel-bg-img",ve.src="assets/adverbier_sted_vrimmel.jpg",ve.alt="Tværsnit af dansk hus med stedsadverbier i aktion",he.appendChild(ve),h&&z.forEach(q=>{if(_==="retning"&&q.type!=="retning"||_==="hvile"&&q.type!=="hvile")return;const $=document.createElement("div");$.className=`hotspot-pin ${q.type==="retning"?"pin-retning":"pin-hvile"} ${q.id===C?"active":""}`,$.style.left=`${q.x}%`,$.style.top=`${q.y}%`;const d=q.type==="retning"?"➔":"📍";$.innerHTML=`<span>${d}</span> <span>${q.word}</span>`,$.onclick=g=>{g.stopPropagation(),C=q.id,a(q.word),l(K)},he.appendChild($)}),Z.appendChild(he);const pe=z.find(q=>q.id===C)||z[0],le=document.createElement("div");le.className="inspector-card";const ue=document.createElement("div");ue.className="inspector-left";const ce=document.createElement("div");ce.className="inspector-word-header",ce.innerHTML=`
+    `,t.appendChild(x);const w=document.createElement("div");w.className="adv-tabs-nav";const M=[{id:"tab_vrimmel",label:"1. Vrimlebillede (18 ord)",icon:"🖼️"},{id:"tab_detektiv",label:"2. Adverbie-Detektiven",icon:"🔍"},{id:"tab_vippe",label:"3. Retnings-Vippen (-e reglen)",icon:"⚖️"},{id:"tab_saetning",label:"4. Sætningsbyggeren",icon:"🧱"},{id:"tab_kontekst",label:"5. Kontekst-testen",icon:"🎯"}],W={};M.forEach(K=>{const Z=document.createElement("button");Z.className=`adv-tab-btn ${K.id===D?"active":""}`,Z.innerHTML=`<span>${K.icon}</span> <span>${K.label}</span>`,Z.onclick=()=>B(K.id),W[K.id]=Z,w.appendChild(Z)}),t.appendChild(w);const U=document.createElement("div");U.className="adv-tab-content",t.appendChild(U);function B(K){D=K,Object.keys(W).forEach(Z=>{W[Z].classList.toggle("active",Z===K)}),u()}function u(){U.innerHTML="",D==="tab_vrimmel"?l(U):D==="tab_detektiv"?c(U):D==="tab_vippe"?Q(U):D==="tab_saetning"?E(U):D==="tab_kontekst"&&re(U)}function l(K){const Z=document.createElement("div");Z.className="tab-vrimmel-wrapper";const ie=document.createElement("div");ie.className="vrimmel-toolbar";const se=document.createElement("div");se.className="filter-group",[{id:"all",label:"Vis alle (18)"},{id:"retning",label:"🚀 Kun Retning (10)"},{id:"hvile",label:"🏡 Kun Hvile (8)"}].forEach(q=>{const $=document.createElement("button");$.className=`filter-btn ${_===q.id?"active":""}`,$.textContent=q.label,$.onclick=()=>{_=q.id,l(K)},se.appendChild($)}),ie.appendChild(se);const oe=document.createElement("button");oe.className="toggle-pins-btn",oe.innerHTML=`<span>${h?"👁️ Skjul markører":"👁️ Vis markører"}</span>`,oe.onclick=()=>{h=!h,l(K)},ie.appendChild(oe),Z.appendChild(ie);const he=document.createElement("div");he.className="vrimmel-stage-container";const ve=document.createElement("img");ve.className="vrimmel-bg-img",ve.src="assets/adverbier_sted_vrimmel.jpg",ve.alt="Tværsnit af dansk hus med stedsadverbier i aktion",he.appendChild(ve),h&&z.forEach(q=>{if(_==="retning"&&q.type!=="retning"||_==="hvile"&&q.type!=="hvile")return;const $=document.createElement("div");$.className=`hotspot-pin ${q.type==="retning"?"pin-retning":"pin-hvile"} ${q.id===C?"active":""}`,$.style.left=`${q.x}%`,$.style.top=`${q.y}%`;const d=q.type==="retning"?"➔":"📍";$.innerHTML=`<span class="pin-icon">${d}</span><span class="pin-text">${q.word}</span>`,$.onclick=g=>{g.stopPropagation(),C=q.id,a(q.word),l(K)},he.appendChild($)}),Z.appendChild(he);const pe=z.find(q=>q.id===C)||z[0],le=document.createElement("div");le.className="inspector-card";const ue=document.createElement("div");ue.className="inspector-left";const ce=document.createElement("div");ce.className="inspector-word-header",ce.innerHTML=`
             <div class="inspector-word-title">${pe.word}</div>
             <div class="adv-type-badge ${pe.type==="retning"?"badge-retning":"badge-hvile"}">
                 ${pe.typeLabel}

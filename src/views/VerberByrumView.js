@@ -887,7 +887,7 @@ export function renderVerberByrumView(container, navigateFn) {
 
     const byrumVisualMissions = [
         {
-            title: "Mission 1 af 4",
+            title: "Mission 1 af 8",
             cropX: 35,
             cropY: 68,
             question: "Kig på personen i den blå jakke på cykelstien. Hvad gør han?",
@@ -898,7 +898,7 @@ export function renderVerberByrumView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 2 af 4",
+            title: "Mission 2 af 8",
             cropX: 48,
             cropY: 46,
             question: "Kig på de to personer midt på gaden. Hvad gør de?",
@@ -909,7 +909,7 @@ export function renderVerberByrumView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 3 af 4",
+            title: "Mission 3 af 8",
             cropX: 67,
             cropY: 72,
             question: "Kig på kvinden der sidder på bænken og ser på sit ur. Hvad gør hun?",
@@ -920,7 +920,7 @@ export function renderVerberByrumView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 4 af 4",
+            title: "Mission 4 af 8",
             cropX: 86,
             cropY: 76,
             question: "Kig på kvinden i den gule jakke ved blomsterne. Hvad gør hun?",
@@ -928,6 +928,50 @@ export function renderVerberByrumView(container, navigateFn) {
                 { text: "Lukker butiksdøren i regnen 🚪", correct: false },
                 { text: "Ser og dufter til de smukke blomster 🌸", correct: true },
                 { text: "Sover i sin seng 🛌", correct: false }
+            ]
+        },
+        {
+            title: "Mission 5 af 8",
+            cropX: 60,
+            cropY: 48,
+            question: "Kig på personen der går roligt over vejen. Hvad gør han?",
+            options: [
+                { text: "Går en tur gennem gaden 🚶", correct: true },
+                { text: "Svømmer i en sø 🏊", correct: false },
+                { text: "Klatrer i et højt træ 🌳", correct: false }
+            ]
+        },
+        {
+            title: "Mission 6 af 8",
+            cropX: 82,
+            cropY: 28,
+            question: "Kig på den store gule bybus ved stoppestedet. Hvad gør chaufføren?",
+            options: [
+                { text: "Kører bussen frem til passagererne 🚌", correct: true },
+                { text: "Sover på bagsædet 🛌", correct: false },
+                { text: "Maler bussen med pensel 🎨", correct: false }
+            ]
+        },
+        {
+            title: "Mission 7 af 8",
+            cropX: 27,
+            cropY: 48,
+            question: "Kig på manden foran butiksvinduet. Hvad gør han?",
+            options: [
+                { text: "Kigger nysgerrigt på varerne i vinduet 👀", correct: true },
+                { text: "Flyver med en drage 🪁", correct: false },
+                { text: "Stryger sit tøj 👔", correct: false }
+            ]
+        },
+        {
+            title: "Mission 8 af 8",
+            cropX: 78,
+            cropY: 44,
+            question: "Kig på bilen der holder stille foran det røde lys. Hvad gør føreren?",
+            options: [
+                { text: "Stopper bilen ved lyskrydset 🛑", correct: true },
+                { text: "Drikker en kop varm suppe 🍲", correct: false },
+                { text: "Spiller guitar på taget 🎸", correct: false }
             ]
         }
     ];
@@ -1015,7 +1059,7 @@ export function renderVerberByrumView(container, navigateFn) {
 
     const byrumContextTasks = [
         {
-            title: "Opgave 1 af 3: Transport og bevægelse i byen",
+            title: "Opgave 1 af 10: Transport og bevægelse i byen",
             prompt: "Find 3 handlinger, der handler om transport og bevægelse i byen:",
             targetCount: 3,
             options: [
@@ -1028,7 +1072,7 @@ export function renderVerberByrumView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 2 af 3: Møder og kontakt på gaden",
+            title: "Opgave 2 af 10: Møder og kontakt på gaden",
             prompt: "Find 3 handlinger, man gør når man møder andre på gaden:",
             targetCount: 3,
             options: [
@@ -1041,7 +1085,7 @@ export function renderVerberByrumView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 3 af 3: Indkøb og ærinder i byen",
+            title: "Opgave 3 af 10: Indkøb og ærinder i byen",
             prompt: "Find 3 handlinger, man gør når man har ærinder i butikkerne:",
             targetCount: 3,
             options: [
@@ -1051,6 +1095,97 @@ export function renderVerberByrumView(container, navigateFn) {
                 { text: "at finde 🔍", correct: true },
                 { text: "at sove i seng 🛏️", correct: false },
                 { text: "at danse 💃", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 4 af 10: Færdsel og sikkerhed på vejen",
+            prompt: "Find 3 handlinger, der handler om sikkerhed i trafikken:",
+            targetCount: 3,
+            options: [
+                { text: "at stoppe 🛑", correct: true },
+                { text: "at passe på ⚠️", correct: true },
+                { text: "at sove 😴", correct: false },
+                { text: "at kigge sig for 👀", correct: true },
+                { text: "at spise kage 🍰", correct: false },
+                { text: "at synge højt 🎤", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 5 af 10: Hjælp og venlighed mellem mennesker",
+            prompt: "Find 3 handlinger, der viser hjælpsomhed og venlighed i byen:",
+            targetCount: 3,
+            options: [
+                { text: "at hjælpe 🤝", correct: true },
+                { text: "at råbe af folk 📢", correct: false },
+                { text: "at smile 😊", correct: true },
+                { text: "at tabe sine ting 💔", correct: false },
+                { text: "at følge nogen over vejen 🚶‍♂️", correct: true },
+                { text: "at glemme nøgler ❓", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 6 af 10: At miste og lede efter ting",
+            prompt: "Find 3 handlinger, man gør hvis man har tabt sine nøgler:",
+            targetCount: 3,
+            options: [
+                { text: "at miste 🔑", correct: true },
+                { text: "at danse 💃", correct: false },
+                { text: "at kigge grundigt efter 👀", correct: true },
+                { text: "at cykle hurtigt 🚲", correct: false },
+                { text: "at finde nøglerne 🔍", correct: true },
+                { text: "at sove på bænken 🛏️", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 7 af 10: Beboelse og hverdag i byen",
+            prompt: "Find 3 handlinger, der handler om at leve og bo i byen:",
+            targetCount: 3,
+            options: [
+                { text: "at bo i lejlighed 🏠", correct: true },
+                { text: "at flyve i rummet 🚀", correct: false },
+                { text: "at komme hjem 🏡", correct: true },
+                { text: "at gå på trapper 🚶", correct: true },
+                { text: "at sejle i kano 🛶", correct: false },
+                { text: "at klatre på bjerge 🧗", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 8 af 10: Post og pakker i gadebilledet",
+            prompt: "Find 3 handlinger, der handler om at modtage og bringe pakker:",
+            targetCount: 3,
+            options: [
+                { text: "at hente en pakke 📦", correct: true },
+                { text: "at svømme 🏊", correct: false },
+                { text: "at bringe et brev ud ✉️", correct: true },
+                { text: "at stege kød 🍳", correct: false },
+                { text: "at vente ved pakkeboksen ⏳", correct: true },
+                { text: "at synge opera 🎵", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 9 af 10: At observere og holde øje",
+            prompt: "Find 3 handlinger, der handler om at bruge øjnene i byrummet:",
+            targetCount: 3,
+            options: [
+                { text: "at se 👀", correct: true },
+                { text: "at spise sandwich 🥪", correct: false },
+                { text: "at kigge i butiksruder 🔎", correct: true },
+                { text: "at sove til middag 🛌", correct: false },
+                { text: "at passe på lyssignalet 🚦", correct: true },
+                { text: "at vaske gulv 🧼", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 10 af 10: På farten til fods og på to hjul",
+            prompt: "Find 3 handlinger, når man bevæger sig gennem byen:",
+            targetCount: 3,
+            options: [
+                { text: "at gå en tur 🚶", correct: true },
+                { text: "at cykle på cykelstien 🚲", correct: true },
+                { text: "at bage boller 🥐", correct: false },
+                { text: "at køre med bussen 🚌", correct: true },
+                { text: "at sidde i en sofa 🛋️", correct: false },
+                { text: "at tegne huse ✏️", correct: false }
             ]
         }
     ];
@@ -1260,6 +1395,122 @@ export function renderVerberByrumView(container, navigateFn) {
                     ]
                 }
             ]
+        },
+        {
+            title: "5. Den glemte paraply",
+            steps: [
+                {
+                    q: "1. Hvad gør Sarah, da det pludselig begynder at regne?",
+                    options: [
+                        { text: "Hun går hurtigt ind på den hyggelige café ☕", correct: true },
+                        { text: "Hun lægger sig til at sove på fortovet 🛌", correct: false },
+                        { text: "Hun klatrer op i en lygtepæl 💈", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør hun ved kassen, da hun bestiller kaffe?",
+                    options: [
+                        { text: "Hun kigger i sin taske og finder pengene frem 🪙", correct: true },
+                        { text: "Hun smider kaffen på gulvet ☕", correct: false },
+                        { text: "Hun løber ud af bagdøren 🏃", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad opdager tjeneren, da Sarah forlader caféen?",
+                    options: [
+                        { text: "Tjeneren ser hendes glemte paraply og bringer den til hende ☂️", correct: true },
+                        { text: "Tjeneren kaster med kopper 💥", correct: false },
+                        { text: "Tjeneren maler væggen rød 🎨", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "6. Den lille bortløbne hund",
+            steps: [
+                {
+                    q: "1. Hvad ser Mads løbe forvirret rundt på gågaden?",
+                    options: [
+                        { text: "Han ser en lille hund, der leder efter sin ejer 🐶", correct: true },
+                        { text: "Han ser en vild tiger i fuld fart 🐯", correct: false },
+                        { text: "Han ser en flyvende tallerken 🛸", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør han for at hjælpe hunden?",
+                    options: [
+                        { text: "Han stopper op og kalder roligt på den 🐕", correct: true },
+                        { text: "Han sparker til en lygtepæl 🥾", correct: false },
+                        { text: "Han hopper i havnebassinet 🌊", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad sker der, da ejeren kommer løbende?",
+                    options: [
+                        { text: "Ejeren smiler taknemmeligt og henter sin hund 🤝", correct: true },
+                        { text: "Ejeren bygger et sandslot 🏖️", correct: false },
+                        { text: "Ejeren kører væk i en traktor 🚜", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "7. Indkøbsturen til weekenden",
+            steps: [
+                {
+                    q: "1. Hvor cykler familien hen lørdag formiddag?",
+                    options: [
+                        { text: "De cykler hen til supermarkedet på torvet 🛒", correct: true },
+                        { text: "De cykler direkte ud i havet 🌊", correct: false },
+                        { text: "De cykler op på taget af rådhuset 🏛️", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør de inde i butikken?",
+                    options: [
+                        { text: "De handler friske grøntsager og brød 🍞", correct: true },
+                        { text: "De leger gemmeleg i fryseren ❄️", correct: false },
+                        { text: "De synger i en megafon 📢", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør de, da de kommer hjem med bæreposerne?",
+                    options: [
+                        { text: "De sætter maden på plads i køleskabet 🥗", correct: true },
+                        { text: "De kaster poserne ud ad vinduet 🪟", correct: false },
+                        { text: "De klipper poserne i små stykker ✂️", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "8. En hjælpende hånd ved krydset",
+            steps: [
+                {
+                    q: "1. Hvem venter tålmodigt ved det røde lyssignal?",
+                    options: [
+                        { text: "En ældre mand med en tung indkøbstaske 🛍️", correct: true },
+                        { text: "En pingvin i smoking 🐧", correct: false },
+                        { text: "En klovn på stylter 🎪", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør en ung kvinde, da lyset skifter til grønt?",
+                    options: [
+                        { text: "Hun hjælper manden og følger ham sikkert over vejen 🚶‍♂️", correct: true },
+                        { text: "Hun løber væk i panik 🏃", correct: false },
+                        { text: "Hun lægger sig til at sove 😴", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør den ældre mand som tak?",
+                    options: [
+                        { text: "Han smiler varmt og takker for hjælpen 😊", correct: true },
+                        { text: "Han kaster sin taske i kanalen 🌊", correct: false },
+                        { text: "Han råber ad en bus 🚌", correct: false }
+                    ]
+                }
+            ]
         }
     ];
 
@@ -1437,6 +1688,76 @@ export function renderVerberByrumView(container, navigateFn) {
                 { text: 'at grine 😄', correct: false },
                 { text: 'at gå 🚶', correct: false }
             ]
+        },
+        {
+            type: 'synonym',
+            word: 'at køre',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at transportere sig 🚗', correct: true },
+                { text: 'at sove 🛌', correct: false },
+                { text: 'at spise 🍽️', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at komme',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at gå væk / forlade 🚪', correct: true },
+                { text: 'at ankomme 🛬', correct: false },
+                { text: 'at smile 😊', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at hjælpe',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at assistere / støtte 🤝', correct: true },
+                { text: 'at drille 😜', correct: false },
+                { text: 'at sove 😴', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at hente',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at aflevere 📦', correct: true },
+                { text: 'at tage 🤲', correct: false },
+                { text: 'at løbe 🏃', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at bo',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at have hjemme 🏠', correct: true },
+                { text: 'at rejse ✈️', correct: false },
+                { text: 'at spise 🥪', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at starte',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at stoppe / standse 🛑', correct: true },
+                { text: 'at begynde 🏁', correct: false },
+                { text: 'at køre 🚙', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at bringe',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at levere / aflevere 📬', correct: true },
+                { text: 'at miste ❌', correct: false },
+                { text: 'at synge 🎵', correct: false }
+            ]
         }
     ];
 
@@ -1548,6 +1869,34 @@ export function renderVerberByrumView(container, navigateFn) {
             wrongVerbs: ["læser i", "drikker af"],
             objekt: "bussen",
             adverbial: "ved stoppestedet"
+        },
+        {
+            subjekt: "Børnene",
+            correctVerb: "går",
+            wrongVerbs: ["koger", "bager"],
+            objekt: "i skole",
+            adverbial: "sammen hver morgen"
+        },
+        {
+            subjekt: "Chaufføren",
+            correctVerb: "stopper",
+            wrongVerbs: ["drikker", "sover"],
+            objekt: "bussen",
+            adverbial: "ved det røde lys"
+        },
+        {
+            subjekt: "Turisten",
+            correctVerb: "kigger på",
+            wrongVerbs: ["hopper over", "steger"],
+            objekt: "kortet",
+            adverbial: "på byens torv"
+        },
+        {
+            subjekt: "Naboen",
+            correctVerb: "hjælper med",
+            wrongVerbs: ["cykler i", "flyver over"],
+            objekt: "de tunge poser",
+            adverbial: "på trappen"
         }
     ];
 
@@ -1732,6 +2081,78 @@ export function renderVerberByrumView(container, navigateFn) {
                 { text: "ventede", form: "Datid", correct: false }
             ],
             explanation: '"Nu" angiver nutid, så verbet skal stå i nutid (venter).'
+        },
+        {
+            marker: "Sidste sommer",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "Sidste sommer",
+            sentenceAfter: "hun i en hyggelig lejlighed midt i byen.",
+            baseVerb: "at bo",
+            options: [
+                { text: "boede", form: "Datid", correct: true },
+                { text: "bor", form: "Nutid", correct: false }
+            ],
+            explanation: '"Sidste sommer" viser fortid, så verbet skal stå i datid (boede).'
+        },
+        {
+            marker: "I dette øjeblik",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "I dette øjeblik",
+            sentenceAfter: "to venner varmt til hinanden på fortovet.",
+            baseVerb: "at smile",
+            options: [
+                { text: "smiler", form: "Nutid", correct: true },
+                { text: "smilede", form: "Datid", correct: false }
+            ],
+            explanation: '"I dette øjeblik" viser nutid, så verbet skal stå i nutid (smiler).'
+        },
+        {
+            marker: "I forgårs",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I forgårs",
+            sentenceAfter: "Mads sin pung i bussen.",
+            baseVerb: "at miste",
+            options: [
+                { text: "mistede", form: "Datid", correct: true },
+                { text: "mister", form: "Nutid", correct: false }
+            ],
+            explanation: '"I forgårs" angiver en afsluttet handling i fortiden, så verbet skal stå i datid (mistede).'
+        },
+        {
+            marker: "Altid",
+            hint: "peger på en generel regel / nutid ➔ Nutid",
+            sentenceBefore: "Bilisterne",
+            sentenceAfter: "altid pænt for fodgængerne ved overgangen.",
+            baseVerb: "at stoppe",
+            options: [
+                { text: "stopper", form: "Nutid", correct: true },
+                { text: "stoppede", form: "Datid", correct: false }
+            ],
+            explanation: '"Altid" udtrykker en generel regel i nutid, så verbet skal stå i nutid (stopper).'
+        },
+        {
+            marker: "I morges kl. 8",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I morges kl. 8",
+            sentenceAfter: "børnene glade hen til skolen.",
+            baseVerb: "at gå",
+            options: [
+                { text: "gik", form: "Datid", correct: true },
+                { text: "går", form: "Nutid", correct: false }
+            ],
+            explanation: '"I morges" peger på en bestemt tid i fortiden, så verbet skal stå i datid (gik).'
+        },
+        {
+            marker: "Lige straks",
+            hint: "nutid om nær fremtid ➔ Nutid",
+            sentenceBefore: "Lige straks",
+            sentenceAfter: "den næste bus om hjørnet.",
+            baseVerb: "at komme",
+            options: [
+                { text: "kommer", form: "Nutid", correct: true },
+                { text: "kom", form: "Datid", correct: false }
+            ],
+            explanation: '"Lige straks" bruges med nutidsform (kommer) til at udtrykke en forestående handling.'
         }
     ];
 

@@ -887,7 +887,7 @@ export function renderVerberHjemView(container, navigateFn) {
 
     const hjemVisualMissions = [
         {
-            title: "Mission 1 af 4",
+            title: "Mission 1 af 8",
             cropX: 20,
             cropY: 65,
             question: "Kig på kvinden ved køkkenbordet. Hvad gør hun?",
@@ -898,7 +898,7 @@ export function renderVerberHjemView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 2 af 4",
+            title: "Mission 2 af 8",
             cropX: 32,
             cropY: 40,
             question: "Kig på manden ved det store blå køleskab. Hvad gør han?",
@@ -909,7 +909,7 @@ export function renderVerberHjemView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 3 af 4",
+            title: "Mission 3 af 8",
             cropX: 84,
             cropY: 60,
             question: "Kig på kvinden i den gule lænestol. Hvad gør hun?",
@@ -920,7 +920,7 @@ export function renderVerberHjemView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 4 af 4",
+            title: "Mission 4 af 8",
             cropX: 62,
             cropY: 30,
             question: "Kig på personen i døråbningen til soveværelset. Hvad gør hun?",
@@ -928,6 +928,50 @@ export function renderVerberHjemView(container, navigateFn) {
                 { text: "Køber en togbillet 🎫", correct: false },
                 { text: "Er lige vågnet og strækker armene 🌅", correct: true },
                 { text: "Laver mad i en gryde 🍲", correct: false }
+            ]
+        },
+        {
+            title: "Mission 5 af 8",
+            cropX: 48,
+            cropY: 56,
+            question: "Kig på personen der dækker bordet i spisestuen. Hvad gør personen?",
+            options: [
+                { text: "Sætter tallerkener og glas på bordet 🍽️", correct: true },
+                { text: "Sover på gulvet 🛌", correct: false },
+                { text: "Vasker en bil 🚗", correct: false }
+            ]
+        },
+        {
+            title: "Mission 6 af 8",
+            cropX: 55,
+            cropY: 62,
+            question: "Kig på barnet der rækker skålen videre. Hvad gør barnet?",
+            options: [
+                { text: "Deler maden med sin familie 🥗", correct: true },
+                { text: "Kaster maden ud af vinduet 🪟", correct: false },
+                { text: "Løber en tur i skoven 🏃", correct: false }
+            ]
+        },
+        {
+            title: "Mission 7 af 8",
+            cropX: 20,
+            cropY: 68,
+            question: "Kig på personen ved køkkenvasken. Hvad gør han?",
+            options: [
+                { text: "Står op og skyller grøntsager i vasken 🚰", correct: true },
+                { text: "Flyver med en drage 🪁", correct: false },
+                { text: "Kører på motorcykel 🏍️", correct: false }
+            ]
+        },
+        {
+            title: "Mission 8 af 8",
+            cropX: 88,
+            cropY: 82,
+            question: "Kig på katten på det bløde tæppe ved sofaen. Hvad gør den?",
+            options: [
+                { text: "Ligger trygt og slapper af 🐈", correct: true },
+                { text: "Cykler på to hjul 🚲", correct: false },
+                { text: "Taler i mobiltelefon 📱", correct: false }
             ]
         }
     ];
@@ -1015,7 +1059,7 @@ export function renderVerberHjemView(container, navigateFn) {
 
     const hjemContextTasks = [
         {
-            title: "Opgave 1 af 3: Morgenmad i køkkenet",
+            title: "Opgave 1 af 10: Morgenmad i køkkenet",
             prompt: "Find 3 handlinger, man gør ved morgenmaden i køkkenet:",
             targetCount: 3,
             options: [
@@ -1028,7 +1072,7 @@ export function renderVerberHjemView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 2 af 3: Afslapning i stuen",
+            title: "Opgave 2 af 10: Afslapning i stuen",
             prompt: "Find 3 handlinger, man gør for at slappe af i stuen:",
             targetCount: 3,
             options: [
@@ -1041,7 +1085,7 @@ export function renderVerberHjemView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 3 af 3: Orden og ting i hjemmet",
+            title: "Opgave 3 af 10: Orden og ting i hjemmet",
             prompt: "Find 3 handlinger, man gør når man flytter og ordner ting i hjemmet:",
             targetCount: 3,
             options: [
@@ -1051,6 +1095,97 @@ export function renderVerberHjemView(container, navigateFn) {
                 { text: "at flytte 🛋️", correct: true },
                 { text: "at flyve ✈️", correct: false },
                 { text: "at danse opera 💃", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 4 af 10: Tilberedning af måltider",
+            prompt: "Find 3 handlinger, man gør når man laver mad i køkkenet:",
+            targetCount: 3,
+            options: [
+                { text: "at lave mad 🍳", correct: true },
+                { text: "at åbne en dåse 🥫", correct: true },
+                { text: "at sove 🛌", correct: false },
+                { text: "at smage på saucen 👅", correct: true },
+                { text: "at cykle 🚲", correct: false },
+                { text: "at danse 💃", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 5 af 10: Kropsstillinger i hjemmet",
+            prompt: "Find 3 handlinger, der beskriver hvordan kroppen placeres:",
+            targetCount: 3,
+            options: [
+                { text: "at sidde 🪑", correct: true },
+                { text: "at flyve ✈️", correct: false },
+                { text: "at stå 🧍", correct: true },
+                { text: "at svømme 🏊", correct: false },
+                { text: "at ligge 🛌", correct: true },
+                { text: "at male 🎨", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 6 af 10: Placering og oprydning",
+            prompt: "Find 3 handlinger, når man sætter ting på plads i hjemmet:",
+            targetCount: 3,
+            options: [
+                { text: "at sætte en kop ☕", correct: true },
+                { text: "at synge højt 🎤", correct: false },
+                { text: "at lægge en bog 📖", correct: true },
+                { text: "at græde 😢", correct: false },
+                { text: "at tage tallerkener 🍽️", correct: true },
+                { text: "at løbe maraton 🏃", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 7 af 10: Døre, skabe og vinduer",
+            prompt: "Find 3 handlinger med låger og vinduer i huset:",
+            targetCount: 3,
+            options: [
+                { text: "at åbne 🚪", correct: true },
+                { text: "at spise 🥪", correct: false },
+                { text: "at lukke 🔐", correct: true },
+                { text: "at holde døren 🚪", correct: true },
+                { text: "at koge vand 🍲", correct: false },
+                { text: "at bide 🦷", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 8 af 10: Fællesskab og samtale ved bordet",
+            prompt: "Find 3 handlinger, familien gør sammen under aftensmaden:",
+            targetCount: 3,
+            options: [
+                { text: "at dele maden 🥗", correct: true },
+                { text: "at sove 😴", correct: false },
+                { text: "at give saltet videre 🧂", correct: true },
+                { text: "at have det hyggeligt 🕯️", correct: true },
+                { text: "at køre bil 🚗", correct: false },
+                { text: "at svømme 🌊", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 9 af 10: Kontakt til familie og venner",
+            prompt: "Find 3 handlinger, man gør for at tale med bedsteforældrene:",
+            targetCount: 3,
+            options: [
+                { text: "at ringe op 📞", correct: true },
+                { text: "at stege kød 🥩", correct: false },
+                { text: "at svare i telefonen 🗣️", correct: true },
+                { text: "at tale sammen 💬", correct: true },
+                { text: "at ligge i sengen 🛏️", correct: false },
+                { text: "at bage brød 🍞", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 10 af 10: Drikkevarer og forfriskninger",
+            prompt: "Find 3 handlinger, når man slukker tørsten i køkkenet:",
+            targetCount: 3,
+            options: [
+                { text: "at drikke vand 🥛", correct: true },
+                { text: "at hælde kaffe op 🫖", correct: true },
+                { text: "at tage et rent glas 🥤", correct: true },
+                { text: "at hoppe 🦘", correct: false },
+                { text: "at sove 🛌", correct: false },
+                { text: "at tabe ting 💔", correct: false }
             ]
         }
     ];
@@ -1260,6 +1395,122 @@ export function renderVerberHjemView(container, navigateFn) {
                     ]
                 }
             ]
+        },
+        {
+            title: "5. Pandekager en søndag",
+            steps: [
+                {
+                    q: "1. Hvad laver far og datter i køkkenet søndag formiddag?",
+                    options: [
+                        { text: "De rører en stor skål pandekagedej sammen 🥞", correct: true },
+                        { text: "De bygger en murstensvæg 🧱", correct: false },
+                        { text: "De reparerer en cykel på bordet 🚲", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad åbner datteren for at hente frisk mælk?",
+                    options: [
+                        { text: "Hun åbner det kolde køleskab 🥛", correct: true },
+                        { text: "Hun åbner kaminen 🔥", correct: false },
+                        { text: "Hun åbner en paraply ☂️", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør de, da pandekagerne er bagt gyldne?",
+                    options: [
+                        { text: "De sætter sig ved spisebordet og spiser med syltetøj 🍓", correct: true },
+                        { text: "De kaster dem ud i haven 🌳", correct: false },
+                        { text: "De gemmer dem under sengen 🛏️", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "6. En varm kop aften-te",
+            steps: [
+                {
+                    q: "1. Hvad koger moren i elkanden efter aftensmaden?",
+                    options: [
+                        { text: "Hun koger vand til en beroligende kop te 🫖", correct: true },
+                        { text: "Hun koger havvand 🌊", correct: false },
+                        { text: "Hun koger sten 🪨", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvor sætter hun sig for at slappe af?",
+                    options: [
+                        { text: "Hun sætter sig i den bløde lænestol i stuen 🛋️", correct: true },
+                        { text: "Hun sætter sig på tagryggen 🏠", correct: false },
+                        { text: "Hun sætter sig i en vandpyt 🌧️", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør hun, mens hun drikker sin te?",
+                    options: [
+                        { text: "Hun læser et kapitel i en god bog 📖", correct: true },
+                        { text: "Hun spiller trommer 🥁", correct: false },
+                        { text: "Hun støvsuger haven 🌾", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "7. Oprydning efter festen",
+            steps: [
+                {
+                    q: "1. Hvad gør forældrene, efter fødselsdagsgæsterne er gået hjem?",
+                    options: [
+                        { text: "De tager tallerkener og fade af bordet 🍽️", correct: true },
+                        { text: "De hopper på spisebordet 🤾", correct: false },
+                        { text: "De sover under sofaen 🛋️", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvor lægger de det rene viskestykke?",
+                    options: [
+                        { text: "De lægger det pænt ved siden af vasken 🧽", correct: true },
+                        { text: "De kaster det i ovnen 🔥", correct: false },
+                        { text: "De smider det ud af vinduet 🪟", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad lukker de omhyggeligt, inden de går i seng?",
+                    options: [
+                        { text: "De lukker vinduet og låser hoveddøren 🚪", correct: true },
+                        { text: "De lukker øjnene og danser 💃", correct: false },
+                        { text: "De lukker for radioen med en hammer 🔨", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "8. Telefonopkaldet til mormor",
+            steps: [
+                {
+                    q: "1. Hvem ringer barnebarnet til om eftermiddagen?",
+                    options: [
+                        { text: "Han ringer op til sin mormor på landet 👵", correct: true },
+                        { text: "Han ringer til politiet for sjov 🚓", correct: false },
+                        { text: "Han ringer til julemanden 🎅", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad fortæller han glad om i telefonen?",
+                    options: [
+                        { text: "Han fortæller om sin gode dag og en ny ven 💬", correct: true },
+                        { text: "Han hvisker hemmeligheder til en plante 🪴", correct: false },
+                        { text: "Han råber ad fjernsynet 📺", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad aftaler de to at gøre i næste weekend?",
+                    options: [
+                        { text: "De aftaler at bage kanelsnegle sammen 🥐", correct: true },
+                        { text: "De aftaler at flyve til månen 🌕", correct: false },
+                        { text: "De aftaler at bygge en ubåd 🚤", correct: false }
+                    ]
+                }
+            ]
         }
     ];
 
@@ -1437,6 +1688,76 @@ export function renderVerberHjemView(container, navigateFn) {
                 { text: 'at vaske tøj 🧺', correct: false },
                 { text: 'at sove 😴', correct: false }
             ]
+        },
+        {
+            type: 'synonym',
+            word: 'at lave mad',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at tilberede mad 🍳', correct: true },
+                { text: 'at sove 🛌', correct: false },
+                { text: 'at cykle 🚲', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at åbne',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at lukke 🚪', correct: true },
+                { text: 'at kigge 👀', correct: false },
+                { text: 'at hente 🛍️', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at give',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at modtage / tage 🤲', correct: true },
+                { text: 'at smile 😊', correct: false },
+                { text: 'at gå 🚶', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at sidde',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at tage plads på 🪑', correct: true },
+                { text: 'at løbe 🏃', correct: false },
+                { text: 'at koge 🍲', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at stå',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at ligge / sidde 🛌', correct: true },
+                { text: 'at råbe 📢', correct: false },
+                { text: 'at spise 🍽️', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at ringe',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at telefonere 📞', correct: true },
+                { text: 'at male 🎨', correct: false },
+                { text: 'at sove 😴', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at sætte',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at fjerne / tage væk ❌', correct: true },
+                { text: 'at stille 🥛', correct: false },
+                { text: 'at kigge 👀', correct: false }
+            ]
         }
     ];
 
@@ -1548,6 +1869,34 @@ export function renderVerberHjemView(container, navigateFn) {
             wrongVerbs: ["drikker", "synger"],
             objekt: "en flot vase",
             adverbial: "på reolen"
+        },
+        {
+            subjekt: "Faren",
+            correctVerb: "laver",
+            wrongVerbs: ["sover", "cykler"],
+            objekt: "mad",
+            adverbial: "i køkkenet hver aften"
+        },
+        {
+            subjekt: "Sønnen",
+            correctVerb: "åbner",
+            wrongVerbs: ["drikker", "koger"],
+            objekt: "køleskabet",
+            adverbial: "efter skole"
+        },
+        {
+            subjekt: "Bedstemoren",
+            correctVerb: "sidder i",
+            wrongVerbs: ["hopper på", "steger i"],
+            objekt: "lænestolen",
+            adverbial: "med en god kop kaffe"
+        },
+        {
+            subjekt: "Familien",
+            correctVerb: "deler",
+            wrongVerbs: ["taber", "glemmer"],
+            objekt: "den varme kage",
+            adverbial: "ved spisebordet"
         }
     ];
 
@@ -1732,6 +2081,78 @@ export function renderVerberHjemView(container, navigateFn) {
                 { text: "spiste", form: "Datid", correct: false }
             ],
             explanation: '"Nu" angiver nutid, så verbet skal stå i nutid (spiser).'
+        },
+        {
+            marker: "I aftes",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I aftes",
+            sentenceAfter: "mor en lækker grøntsagssuppe til os alle.",
+            baseVerb: "at lave mad",
+            options: [
+                { text: "lavede", form: "Datid", correct: true },
+                { text: "laver", form: "Nutid", correct: false }
+            ],
+            explanation: '"I aftes" viser fortid, så verbet skal stå i datid (lavede).'
+        },
+        {
+            marker: "Lige nu",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "Lige nu",
+            sentenceAfter: "katten og sover i den bløde sofa.",
+            baseVerb: "at ligge",
+            options: [
+                { text: "ligger", form: "Nutid", correct: true },
+                { text: "lå", form: "Datid", correct: false }
+            ],
+            explanation: '"Lige nu" viser nutid, så verbet skal stå i nutid (ligger).'
+        },
+        {
+            marker: "For en time siden",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "For en time siden",
+            sentenceAfter: "de døren til haven op for at lufte ud.",
+            baseVerb: "at åbne",
+            options: [
+                { text: "åbnede", form: "Datid", correct: true },
+                { text: "åbner", form: "Nutid", correct: false }
+            ],
+            explanation: '"For en time siden" angiver fortid, så verbet skal stå i datid (åbnede).'
+        },
+        {
+            marker: "Hver morgen",
+            hint: "peger på en vane / nutid ➔ Nutid",
+            sentenceBefore: "Hver morgen",
+            sentenceAfter: "hun et stort glas koldt vand før morgenmaden.",
+            baseVerb: "at drikke",
+            options: [
+                { text: "drikker", form: "Nutid", correct: true },
+                { text: "drak", form: "Datid", correct: false }
+            ],
+            explanation: '"Hver morgen" udtrykker en vane i nutid, så verbet skal stå i nutid (drikker).'
+        },
+        {
+            marker: "I morges",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I morges",
+            sentenceAfter: "drengen sin varme jakke på før han gik ud.",
+            baseVerb: "at tage",
+            options: [
+                { text: "tog", form: "Datid", correct: true },
+                { text: "tager", form: "Nutid", correct: false }
+            ],
+            explanation: '"I morges" peger på fortid, så verbet skal stå i datid (tog).'
+        },
+        {
+            marker: "I dette øjeblik",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "I dette øjeblik",
+            sentenceAfter: "telefonen ude i entréen.",
+            baseVerb: "at ringe",
+            options: [
+                { text: "ringer", form: "Nutid", correct: true },
+                { text: "ringede", form: "Datid", correct: false }
+            ],
+            explanation: '"I dette øjeblik" angiver nutid, så verbet skal stå i nutid (ringer).'
         }
     ];
 

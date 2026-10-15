@@ -887,7 +887,7 @@ export function renderVerberKlasseView(container, navigateFn) {
 
     const klasseVisualMissions = [
         {
-            title: "Mission 1 af 4",
+            title: "Mission 1 af 8",
             cropX: 52,
             cropY: 28,
             question: "Kig på læreren foran den store tavle. Hvad gør læreren?",
@@ -898,7 +898,7 @@ export function renderVerberKlasseView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 2 af 4",
+            title: "Mission 2 af 8",
             cropX: 20,
             cropY: 70,
             question: "Kig på eleven med blyanten i hånden. Hvad gør eleven?",
@@ -909,7 +909,7 @@ export function renderVerberKlasseView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 3 af 4",
+            title: "Mission 3 af 8",
             cropX: 72,
             cropY: 70,
             question: "Kig på personen foran computerskærmen. Hvad gør han?",
@@ -920,7 +920,7 @@ export function renderVerberKlasseView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 4 af 4",
+            title: "Mission 4 af 8",
             cropX: 38,
             cropY: 50,
             question: "Kig på eleven der rækker hånden op mod læreren. Hvad gør eleven?",
@@ -928,6 +928,50 @@ export function renderVerberKlasseView(container, navigateFn) {
                 { text: "Lukker døren forsigtigt 🚪", correct: false },
                 { text: "Spørger læreren om et ord ❓", correct: true },
                 { text: "Løber en tur i skoven 🏃", correct: false }
+            ]
+        },
+        {
+            title: "Mission 5 af 8",
+            cropX: 45,
+            cropY: 52,
+            question: "Kig på de to kursister ved bordet. Hvad gør de sammen?",
+            options: [
+                { text: "Taler sammen om den svære opgave 💬", correct: true },
+                { text: "Sover på bordet 🛌", correct: false },
+                { text: "Spiser en stor middag 🍽️", correct: false }
+            ]
+        },
+        {
+            title: "Mission 6 af 8",
+            cropX: 22,
+            cropY: 65,
+            question: "Kig på eleven der sidder bøjet over den tykke ordbog. Hvad gør eleven?",
+            options: [
+                { text: "Læser en tekst og slår ord op 📖", correct: true },
+                { text: "Kaster med ordbogen 📚", correct: false },
+                { text: "Cykler på gangen 🚲", correct: false }
+            ]
+        },
+        {
+            title: "Mission 7 af 8",
+            cropX: 48,
+            cropY: 45,
+            question: "Kig på læreren der peger på tavlen. Hvad gør læreren for eleverne?",
+            options: [
+                { text: "Siger og forklarer en vigtig grammatikregel 🧑‍🏫", correct: true },
+                { text: "Vasker vinduer med sæbe 🪟", correct: false },
+                { text: "Danser tango foran klassen 💃", correct: false }
+            ]
+        },
+        {
+            title: "Mission 8 af 8",
+            cropX: 32,
+            cropY: 68,
+            question: "Kig på kursisten der lytter koncentreret med høretelefoner. Hvad gør han?",
+            options: [
+                { text: "Hører en dansk lydfil og lærer udtalen 🎧", correct: true },
+                { text: "Spiller høj rockmusik for alle 🎸", correct: false },
+                { text: "Bager boller i klassen 🥐", correct: false }
             ]
         }
     ];
@@ -1015,7 +1059,7 @@ export function renderVerberKlasseView(container, navigateFn) {
 
     const klasseContextTasks = [
         {
-            title: "Opgave 1 af 3: Læreren i undervisningen",
+            title: "Opgave 1 af 10: Læreren i undervisningen",
             prompt: "Find 3 handlinger, læreren gør i undervisningen:",
             targetCount: 3,
             options: [
@@ -1028,7 +1072,7 @@ export function renderVerberKlasseView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 2 af 3: Kursisterne arbejder med sproget",
+            title: "Opgave 2 af 10: Kursisterne arbejder med sproget",
             prompt: "Find 3 handlinger, kursisterne gør med det danske sprog:",
             targetCount: 3,
             options: [
@@ -1041,7 +1085,7 @@ export function renderVerberKlasseView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 3 af 3: Ved computeren på kontoret",
+            title: "Opgave 3 af 10: Ved computeren på kontoret",
             prompt: "Find 3 handlinger, man gør foran computeren på kontoret:",
             targetCount: 3,
             options: [
@@ -1051,6 +1095,97 @@ export function renderVerberKlasseView(container, navigateFn) {
                 { text: "at bruge (pc) 💻", correct: true },
                 { text: "at sove i seng 🛏️", correct: false },
                 { text: "at klatre i træer 🌲", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 4 af 10: Mundtlig dialog og samtale",
+            prompt: "Find 3 handlinger, man bruger i en mundtlig samtale:",
+            targetCount: 3,
+            options: [
+                { text: "at tale 🗣️", correct: true },
+                { text: "at sove 🛌", correct: false },
+                { text: "at sige 💬", correct: true },
+                { text: "at svømme 🏊", correct: false },
+                { text: "at lytte 👂", correct: true },
+                { text: "at male 🎨", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 5 af 10: Skriftlig kommunikation",
+            prompt: "Find 3 handlinger, der handler om at skrive og læse:",
+            targetCount: 3,
+            options: [
+                { text: "at skrive ✍️", correct: true },
+                { text: "at køre bil 🚗", correct: false },
+                { text: "at læse 📖", correct: true },
+                { text: "at stege kød 🍳", correct: false },
+                { text: "at sende en mail ✉️", correct: true },
+                { text: "at synge 🎤", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 6 af 10: Hukommelse og glemsel",
+            prompt: "Find 3 handlinger, der har med hukommelsen at gøre:",
+            targetCount: 3,
+            options: [
+                { text: "at huske 🧠", correct: true },
+                { text: "at spise sandwich 🥪", correct: false },
+                { text: "at glemme ❓", correct: true },
+                { text: "at repetere ordene 🔄", correct: true },
+                { text: "at hoppe 🦘", correct: false },
+                { text: "at vaske gulv 🧼", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 7 af 10: Meninger og synspunkter",
+            prompt: "Find 3 handlinger, man bruger til at udtrykke sin holdning:",
+            targetCount: 3,
+            options: [
+                { text: "at synes 💭", correct: true },
+                { text: "at cykle 🚲", correct: false },
+                { text: "at mene 🗣️", correct: true },
+                { text: "at tro 🤔", correct: true },
+                { text: "at sove 😴", correct: false },
+                { text: "at bage 🍞", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 8 af 10: Informationssøgning og IT",
+            prompt: "Find 3 handlinger, når man arbejder ved computeren:",
+            targetCount: 3,
+            options: [
+                { text: "at søge oplysninger 🔍", correct: true },
+                { text: "at bruge musen 💻", correct: true },
+                { text: "at svømme 🌊", correct: false },
+                { text: "at skrive på tastatur ⌨️", correct: true },
+                { text: "at klatre 🧗", correct: false },
+                { text: "at danse 💃", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 9 af 10: Læring og forståelse",
+            prompt: "Find 3 handlinger, der fører til ny viden:",
+            targetCount: 3,
+            options: [
+                { text: "at lære nyt 📚", correct: true },
+                { text: "at forstå reglen 💡", correct: true },
+                { text: "at råbe højt 📢", correct: false },
+                { text: "at tænke sig om 🧠", correct: true },
+                { text: "at tabe ting 💔", correct: false },
+                { text: "at sove 🛌", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 10 af 10: Undervisning og instruktion",
+            prompt: "Find 3 handlinger, som en underviser typisk udfører:",
+            targetCount: 3,
+            options: [
+                { text: "at forklare stoffet 🧑‍🏫", correct: true },
+                { text: "at vise et eksempel 🖥️", correct: true },
+                { text: "at sove på bordet 😴", correct: false },
+                { text: "at stille et spørgsmål ❓", correct: true },
+                { text: "at stege bøffer 🥩", correct: false },
+                { text: "at løbe væk 🏃", correct: false }
             ]
         }
     ];
@@ -1260,6 +1395,122 @@ export function renderVerberKlasseView(container, navigateFn) {
                     ]
                 }
             ]
+        },
+        {
+            title: "5. Den vigtige aflevering",
+            steps: [
+                {
+                    q: "1. Hvad skriver kursisten færdig på sin bærbare computer?",
+                    options: [
+                        { text: "Hun skriver sin store månedsopgave i dansk 📄", correct: true },
+                        { text: "Hun skriver et brev til en trold 🧙", correct: false },
+                        { text: "Hun tegner et billede af en ost 🧀", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvem spørger hun om hjælp til et svært ord?",
+                    options: [
+                        { text: "Hun spørger sin lærer ved tavlen 🧑‍🏫", correct: true },
+                        { text: "Hun spørger lampen i loftet 💡", correct: false },
+                        { text: "Hun spørger gulvtæppet 🧶", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvor sender hun opgaven hen bagefter?",
+                    options: [
+                        { text: "Hun sender den som PDF-fil til skolens portal ✉️", correct: true },
+                        { text: "Hun kaster den ud af vinduet 🪟", correct: false },
+                        { text: "Hun gemmer den i en skraldespand 🗑️", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "6. Gruppearbejdet i pausen",
+            steps: [
+                {
+                    q: "1. Hvad taler de tre kursister sammen om i pausen?",
+                    options: [
+                        { text: "De taler sammen om de nye verber og deres bøjning 💬", correct: true },
+                        { text: "De taler om at flyve til Mars 🚀", correct: false },
+                        { text: "De diskuterer dinosaurernes madvaner 🦖", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad søger de efter på internettet?",
+                    options: [
+                        { text: "De søger efter gode eksempelsætninger 💻", correct: true },
+                        { text: "De leder efter en bortløben elefant 🐘", correct: false },
+                        { text: "De køber 500 kilo mel 🌾", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad viser de foran klassen efter pausen?",
+                    options: [
+                        { text: "De viser en flot planche med bøjningsformer 📊", correct: true },
+                        { text: "De viser et tryllekunst med en hat 🎩", correct: false },
+                        { text: "De sover foran tavlen 😴", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "7. Den glemte blyant",
+            steps: [
+                {
+                    q: "1. Hvad opdager Ali i tasken, da timen starter?",
+                    options: [
+                        { text: "Han opdager, at han har glemt sit penalhus derhjemme ✏️", correct: true },
+                        { text: "Han opdager en levende krabbe i tasken 🦀", correct: false },
+                        { text: "Han opdager en stor vandmelon 🍉", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad gør hans venlige sidemand straks?",
+                    options: [
+                        { text: "Sidemanden smiler og låner ham en god blyant 🤝", correct: true },
+                        { text: "Sidemanden råber ad ham 📢", correct: false },
+                        { text: "Sidemanden løber ud af lokalet 🏃", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad skriver Ali flittigt i sin skrivebog?",
+                    options: [
+                        { text: "Han skriver alle de nye gloser pænt ned 📝", correct: true },
+                        { text: "Han river siderne ud 📄", correct: false },
+                        { text: "Han maler bogen helt sort 🎨", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "8. Den mundtlige prøve",
+            steps: [
+                {
+                    q: "1. Hvad tænker Maria grundigt over før prøven?",
+                    options: [
+                        { text: "Hun tænker over de emner, læreren har gennemgået 🤔", correct: true },
+                        { text: "Hun tænker på en ny bil 🏎️", correct: false },
+                        { text: "Hun tænker på at bestige et bjerg 🏔️", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvordan svarer hun, da læreren stiller et spørgsmål?",
+                    options: [
+                        { text: "Hun svarer roligt og tydeligt på godt dansk 🗣️", correct: true },
+                        { text: "Hun synger en vuggevise 🎶", correct: false },
+                        { text: "Hun gemmer sig under bordet 🙈", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad siger læreren til hende med et smil bagefter?",
+                    options: [
+                        { text: "Læreren roser hende for hendes flotte indsats 🌟", correct: true },
+                        { text: "Læreren giver hende en bøde 🧾", correct: false },
+                        { text: "Læreren slukker lyset og går 🚪", correct: false }
+                    ]
+                }
+            ]
         }
     ];
 
@@ -1447,6 +1698,66 @@ export function renderVerberKlasseView(container, navigateFn) {
                 { text: 'at gemme 📦', correct: false },
                 { text: 'at kaste 🤾', correct: false }
             ]
+        },
+        {
+            type: 'synonym',
+            word: 'at forklare',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at redegøre for / udlægge 🗣️', correct: true },
+                { text: 'at sove 🛌', correct: false },
+                { text: 'at spise 🍽️', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at huske',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at glemme ❓', correct: true },
+                { text: 'at tænke 🧠', correct: false },
+                { text: 'at smile 😊', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at tænke',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at overveje / reflektere 🤔', correct: true },
+                { text: 'at løbe 🏃', correct: false },
+                { text: 'at male 🎨', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at spørge',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at svare 💬', correct: true },
+                { text: 'at kigge 👀', correct: false },
+                { text: 'at råbe 📢', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at bruge',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at anvende / benytte 💻', correct: true },
+                { text: 'at miste ❌', correct: false },
+                { text: 'at synge 🎵', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at forstå',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at misforstå 🤷', correct: true },
+                { text: 'at vide 💡', correct: false },
+                { text: 'at høre 👂', correct: false }
+            ]
         }
     ];
 
@@ -1565,6 +1876,27 @@ export function renderVerberKlasseView(container, navigateFn) {
             wrongVerbs: ["spiser", "vasker"],
             objekt: "en vigtig e-mail",
             adverbial: "fra kontoret"
+        },
+        {
+            subjekt: "Eleven",
+            correctVerb: "læser",
+            wrongVerbs: ["koger", "cykler"],
+            objekt: "i den tykke bog",
+            adverbial: "hver eftermiddag"
+        },
+        {
+            subjekt: "Læreren",
+            correctVerb: "forklarer",
+            wrongVerbs: ["spiser", "sover"],
+            objekt: "grammatikken",
+            adverbial: "ved den store tavle"
+        },
+        {
+            subjekt: "Kursisterne",
+            correctVerb: "forstår",
+            wrongVerbs: ["bager", "flyver"],
+            objekt: "betydningen",
+            adverbial: "efter mange øvelser"
         }
     ];
 
@@ -1749,6 +2081,78 @@ export function renderVerberKlasseView(container, navigateFn) {
                 { text: "forstod", form: "Datid", correct: false }
             ],
             explanation: '"Nu" angiver nutid, så verbet skal stå i nutid (forstår).'
+        },
+        {
+            marker: "I går aftes",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I går aftes",
+            sentenceAfter: "hun tre kapitler i lærebogen før sengetid.",
+            baseVerb: "at læse",
+            options: [
+                { text: "læste", form: "Datid", correct: true },
+                { text: "læser", form: "Nutid", correct: false }
+            ],
+            explanation: '"I går aftes" peger på fortiden, så verbet skal stå i datid (læste).'
+        },
+        {
+            marker: "Lige nu",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "Lige nu",
+            sentenceAfter: "kursisterne flittigt på deres fælles projekt.",
+            baseVerb: "at arbejde",
+            options: [
+                { text: "arbejder", form: "Nutid", correct: true },
+                { text: "arbejdede", form: "Datid", correct: false }
+            ],
+            explanation: '"Lige nu" angiver nutid, så verbet skal stå i nutid (arbejder).'
+        },
+        {
+            marker: "I sidste uge",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I sidste uge",
+            sentenceAfter: "vi et helt nyt emne om det danske arbejdsmarked.",
+            baseVerb: "at lære",
+            options: [
+                { text: "lærte", form: "Datid", correct: true },
+                { text: "lærer", form: "Nutid", correct: false }
+            ],
+            explanation: '"I sidste uge" angiver fortid, så verbet skal stå i datid (lærte).'
+        },
+        {
+            marker: "Hver dag",
+            hint: "peger på en vane / nutid ➔ Nutid",
+            sentenceBefore: "Hver dag",
+            sentenceAfter: "læreren nye nyttige ord på tavlen.",
+            baseVerb: "at skrive",
+            options: [
+                { text: "skriver", form: "Nutid", correct: true },
+                { text: "skrev", form: "Datid", correct: false }
+            ],
+            explanation: '"Hver dag" viser en vane i nutid, så verbet skal stå i nutid (skriver).'
+        },
+        {
+            marker: "I morges",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I morges",
+            sentenceAfter: "eleven et klogt spørgsmål til læreren.",
+            baseVerb: "at stille",
+            options: [
+                { text: "stillede", form: "Datid", correct: true },
+                { text: "stiller", form: "Nutid", correct: false }
+            ],
+            explanation: '"I morges" peger på fortid, så verbet skal stå i datid (stillede).'
+        },
+        {
+            marker: "I dette øjeblik",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "I dette øjeblik",
+            sentenceAfter: "kursisten grundigt over svaret.",
+            baseVerb: "at tænke",
+            options: [
+                { text: "tænker", form: "Nutid", correct: true },
+                { text: "tænkte", form: "Datid", correct: false }
+            ],
+            explanation: '"I dette øjeblik" angiver nutid, så verbet skal stå i nutid (tænker).'
         }
     ];
 

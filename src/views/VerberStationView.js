@@ -887,7 +887,7 @@ export function renderVerberStationView(container, navigateFn) {
 
     const stationVisualMissions = [
         {
-            title: "Mission 1 af 4",
+            title: "Mission 1 af 8",
             cropX: 38,
             cropY: 70,
             question: "Kig på personen med den store rullekuffert på perronen. Hvad gør personen?",
@@ -898,7 +898,7 @@ export function renderVerberStationView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 2 af 4",
+            title: "Mission 2 af 8",
             cropX: 12,
             cropY: 72,
             question: "Kig på kunden ved kassen i stationskiosken. Hvad gør kunden?",
@@ -909,7 +909,7 @@ export function renderVerberStationView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 3 af 4",
+            title: "Mission 3 af 8",
             cropX: 10,
             cropY: 65,
             question: "Kig på manden ved automaten. Hvad gør han?",
@@ -920,7 +920,7 @@ export function renderVerberStationView(container, navigateFn) {
             ]
         },
         {
-            title: "Mission 4 af 4",
+            title: "Mission 4 af 8",
             cropX: 55,
             cropY: 50,
             question: "Kig på passagererne med billetterne på perronen. Hvad skal de?",
@@ -928,6 +928,50 @@ export function renderVerberStationView(container, navigateFn) {
                 { text: "Skal rejse med toget mod Jylland 🚆", correct: true },
                 { text: "Flytter møbler til en ny lejlighed 📦", correct: false },
                 { text: "Svømmer i svømmehallen 🏊", correct: false }
+            ]
+        },
+        {
+            title: "Mission 5 af 8",
+            cropX: 50,
+            cropY: 15,
+            question: "Kig på det store røde lyntog ved perronen. Hvad gør toget?",
+            options: [
+                { text: "Begynder sin rejse til tiden mod vest 🚆", correct: true },
+                { text: "Sover i en hængekøje 🛌", correct: false },
+                { text: "Vasker op med sæbe 🧼", correct: false }
+            ]
+        },
+        {
+            title: "Mission 6 af 8",
+            cropX: 16,
+            cropY: 58,
+            question: "Kig på pendlere der tjekker den store afgangsskærm. Hvad gør de?",
+            options: [
+                { text: "Vælger den hurtigste rute og afgang 🕒", correct: true },
+                { text: "Danser på skinnerne 💃", correct: false },
+                { text: "Spiser en hel fødselsdagskage 🎂", correct: false }
+            ]
+        },
+        {
+            title: "Mission 7 af 8",
+            cropX: 8,
+            cropY: 68,
+            question: "Kig på ekspedienten bag disken i stationskiosken. Hvad gør han?",
+            options: [
+                { text: "Sælger kaffe og aviser til de rejsende ☕", correct: true },
+                { text: "Kaster med varerne 📦", correct: false },
+                { text: "Løber væk fra forretningen 🏃", correct: false }
+            ]
+        },
+        {
+            title: "Mission 8 af 8",
+            cropX: 25,
+            cropY: 50,
+            question: "Kig på kontrolløren der tjekker passagerernes billetter. Hvad undersøger han?",
+            options: [
+                { text: "Undersøger om billetten gælder til denne zone 🎫", correct: true },
+                { text: "Kører på en hvid hest 🐎", correct: false },
+                { text: "Svømmer over togsporene 🏊", correct: false }
             ]
         }
     ];
@@ -1015,7 +1059,7 @@ export function renderVerberStationView(container, navigateFn) {
 
     const stationContextTasks = [
         {
-            title: "Opgave 1 af 3: I kiosken på banegården",
+            title: "Opgave 1 af 10: I kiosken på banegården",
             prompt: "Find 3 handlinger, man kan gøre i kiosken på banegården:",
             targetCount: 3,
             options: [
@@ -1028,7 +1072,7 @@ export function renderVerberStationView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 2 af 3: Billetautomaten og regler",
+            title: "Opgave 2 af 10: Billetautomaten og regler",
             prompt: "Find 3 handlinger, der handler om billetter og automater:",
             targetCount: 3,
             options: [
@@ -1041,7 +1085,7 @@ export function renderVerberStationView(container, navigateFn) {
             ]
         },
         {
-            title: "Opgave 3 af 3: Rejsen og afgangen",
+            title: "Opgave 3 af 10: Rejsen og afgangen",
             prompt: "Find 3 handlinger, der har med rejsen og afgangen at gøre:",
             targetCount: 3,
             options: [
@@ -1051,6 +1095,97 @@ export function renderVerberStationView(container, navigateFn) {
                 { text: "at lave mad 🍳", correct: false },
                 { text: "at sove i seng 🛏️", correct: false },
                 { text: "at bygge hus 🔨", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 4 af 10: Penge, varer og betaling",
+            prompt: "Find 3 handlinger, der handler om handel og køb på stationen:",
+            targetCount: 3,
+            options: [
+                { text: "at betale med kort 💳", correct: true },
+                { text: "at sove 🛌", correct: false },
+                { text: "at købe en sandwich 🛍️", correct: true },
+                { text: "at sælge billetter 🏷️", correct: true },
+                { text: "at cykle på taget 🚲", correct: false },
+                { text: "at synge højt 🎵", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 5 af 10: Tidens start og afslutning",
+            prompt: "Find 3 handlinger, der markerer begyndelse eller ende på en tur:",
+            targetCount: 3,
+            options: [
+                { text: "at starte rejsen ⏱️", correct: true },
+                { text: "at spise kage 🍽️", correct: false },
+                { text: "at begynde til tiden 🏁", correct: true },
+                { text: "at slutte rejsen 🛑", correct: true },
+                { text: "at male et billede 🎨", correct: false },
+                { text: "at hoppe i trampolin 🦘", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 6 af 10: Teknik og funktion på stationen",
+            prompt: "Find 3 handlinger eller tilstande om automater og billetter:",
+            targetCount: 3,
+            options: [
+                { text: "at virke perfekt ⚙️", correct: true },
+                { text: "at gælde hele dagen 🎫", correct: true },
+                { text: "at danse 💃", correct: false },
+                { text: "at mangle papir 🔋", correct: true },
+                { text: "at svømme 🏊", correct: false },
+                { text: "at bage brød 🥐", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 7 af 10: Valg og beslutninger på rejsen",
+            prompt: "Find 3 handlinger, man gør når man planlægger sin rute:",
+            targetCount: 3,
+            options: [
+                { text: "at vælge afgang 🗺️", correct: true },
+                { text: "at sove på bænken 😴", correct: false },
+                { text: "at bestemme rejsetidspunkt 🤔", correct: true },
+                { text: "at kalde på hjælp 📢", correct: true },
+                { text: "at koge kartofler 🍲", correct: false },
+                { text: "at stege kød 🥩", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 8 af 10: Bagage og kufferter på perronen",
+            prompt: "Find 3 handlinger med kufferter og tasker på stationen:",
+            targetCount: 3,
+            options: [
+                { text: "at trække rullekufferten 🧳", correct: true },
+                { text: "at svømme 🌊", correct: false },
+                { text: "at bære den tunge taske 🎒", correct: true },
+                { text: "at synge opera 🎤", correct: false },
+                { text: "at løfte kufferten ind 💼", correct: true },
+                { text: "at male bænken 🎨", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 9 af 10: Ankomst og modtagelse",
+            prompt: "Find 3 handlinger, når man når frem til destinationen:",
+            targetCount: 3,
+            options: [
+                { text: "at få hjælp til bagagen 🤝", correct: true },
+                { text: "at blive mødt af venner 🧑‍🤝‍🧑", correct: true },
+                { text: "at sove på gaden 🛏️", correct: false },
+                { text: "at rejse videre med bus 🚅", correct: true },
+                { text: "at stege bøffer 🍳", correct: false },
+                { text: "at glemme sit navn ❓", correct: false }
+            ]
+        },
+        {
+            title: "Opgave 10 af 10: Offentlig transport i hverdagen",
+            prompt: "Find 3 handlinger, som rejsende gør hver dag:",
+            targetCount: 3,
+            options: [
+                { text: "at rejse med tog 🚆", correct: true },
+                { text: "at vise sin gyldige billet 🎫", correct: true },
+                { text: "at bage boller 🍞", correct: false },
+                { text: "at stige på toget 🚪", correct: true },
+                { text: "at klatre i master 🧗", correct: false },
+                { text: "at danse vals 💃", correct: false }
             ]
         }
     ];
@@ -1260,6 +1395,122 @@ export function renderVerberStationView(container, navigateFn) {
                     ]
                 }
             ]
+        },
+        {
+            title: "5. Det forsinkede lyntog",
+            steps: [
+                {
+                    q: "1. Hvad kigger de mange pendlere op på i hallen?",
+                    options: [
+                        { text: "De kigger på den store digitale afgangsskærm 🕒", correct: true },
+                        { text: "De kigger på en svævende luftballon 🎈", correct: false },
+                        { text: "De kigger på loftslamperne 💡", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad meddeler stationshøjttaleren om toget mod Odense?",
+                    options: [
+                        { text: "Toget starter med 10 minutters forsinkelse 📢", correct: true },
+                        { text: "Toget er forvandlet til en hest 🐴", correct: false },
+                        { text: "Toget kører baglæns til Kina 🌏", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad gør passagererne, da toget endelig ruller ind?",
+                    options: [
+                        { text: "De stiger på og finder deres reserverede pladser 💺", correct: true },
+                        { text: "De kaster deres kufferter i skraldespanden 🗑️", correct: false },
+                        { text: "De lægger sig på perronen 😴", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "6. Den glemte pung ved automaten",
+            steps: [
+                {
+                    q: "1. Hvad skal Lotte vælge på billetautomatens touchskærm?",
+                    options: [
+                        { text: "Hun skal vælge en returbillet til Århus 🎫", correct: true },
+                        { text: "Hun skal vælge en pizza med ananas 🍕", correct: false },
+                        { text: "Hun skal vælge en ny frakke 🧥", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad opdager hun med forskrækkelse, da hun vil betale?",
+                    options: [
+                        { text: "Hun opdager, at hun mangler sit betalingskort 💳", correct: true },
+                        { text: "Hun opdager at hun har vinger 🦅", correct: false },
+                        { text: "Hun opdager en levende fisk i lommen 🐟", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvem hjælper hende og rækker pungen frem med et smil?",
+                    options: [
+                        { text: "En venlig mand bagved finder den på hylden og giver den til hende 🤝", correct: true },
+                        { text: "En tryllekunstner med en kanin 🐇", correct: false },
+                        { text: "En politibetjent på rulleskøjter 🛼", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "7. Kiosken på spor 2",
+            steps: [
+                {
+                    q: "1. Hvad vil den rejsende købe i kiosken før afgang?",
+                    options: [
+                        { text: "Han vil købe en kop varm kaffe og en flaske kildevand ☕", correct: true },
+                        { text: "Han vil købe en flyvemaskine ✈️", correct: false },
+                        { text: "Han vil købe et klaver 🎹", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvordan betaler han for varerne ved kassen?",
+                    options: [
+                        { text: "Han betaler hurtigt og kontaktløst med sin mobiltelefon 📱", correct: true },
+                        { text: "Han betaler med muslingeskaller 🐚", correct: false },
+                        { text: "Han synger en sang for kassedamen 🎤", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvor trækker han sin kuffert hen bagefter?",
+                    options: [
+                        { text: "Han trækker kufferten hen foran togvognens dør 🧳", correct: true },
+                        { text: "Han trækker den ud på motorvejen 🛣️", correct: false },
+                        { text: "Han gemmer den i et dueslag 🕊️", correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "8. Den store togrejse ud i Europa",
+            steps: [
+                {
+                    q: "1. Hvor drømmer de to venner om at rejse hen til sommer?",
+                    options: [
+                        { text: "De vil rejse hele vejen gennem Europa med tog 🌍", correct: true },
+                        { text: "De vil rejse til Nordpolen i en robåd 🚣", correct: false },
+                        { text: "De vil grave en tunnel til Australien 🦘", correct: false }
+                    ]
+                },
+                {
+                    q: "2. Hvad bestemmer de sig for at købe i billetkontoret?",
+                    options: [
+                        { text: "De køber et Interrail-pas, der gælder i en måned 🎫", correct: true },
+                        { text: "De køber en pose gulerødder 🥕", correct: false },
+                        { text: "De køber en brugt cykelpumpe 🚲", correct: false }
+                    ]
+                },
+                {
+                    q: "3. Hvad oplever de, da nattoget ruller afsted?",
+                    options: [
+                        { text: "De oplever suset og glæden ved eventyr og nye kulturer 🌄", correct: true },
+                        { text: "De mister alle deres tænder 🦷", correct: false },
+                        { text: "De sover igennem hele rejsen i en kuffert 🧳", correct: false }
+                    ]
+                }
+            ]
         }
     ];
 
@@ -1447,6 +1698,66 @@ export function renderVerberStationView(container, navigateFn) {
                 { text: 'at nægte 🙅', correct: false },
                 { text: 'at sove 😴', correct: false }
             ]
+        },
+        {
+            type: 'antonym',
+            word: 'at købe',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at sælge 🏷️', correct: true },
+                { text: 'at betale 💳', correct: false },
+                { text: 'at smile 😊', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at starte',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at slutte 🛑', correct: true },
+                { text: 'at begynde 🏁', correct: false },
+                { text: 'at rejse 🚆', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at begynde',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at starte / indlede 🏁', correct: true },
+                { text: 'at slutte 🛑', correct: false },
+                { text: 'at sove 🛌', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at vælge',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at udvælge / foretrække 🎯', correct: true },
+                { text: 'at miste ❌', correct: false },
+                { text: 'at råbe 📢', correct: false }
+            ]
+        },
+        {
+            type: 'antonym',
+            word: 'at mangle',
+            prompt: 'Hvilket verbum er et antonym (det modsatte af):',
+            options: [
+                { text: 'at have rigeligt af / besidde ✅', correct: true },
+                { text: 'at lede efter 🔍', correct: false },
+                { text: 'at tabe 💔', correct: false }
+            ]
+        },
+        {
+            type: 'synonym',
+            word: 'at bestemme',
+            prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
+            options: [
+                { text: 'at beslutte / afgøre ⚖️', correct: true },
+                { text: 'at tvivle ❓', correct: false },
+                { text: 'at glemme ❌', correct: false }
+            ]
         }
     ];
 
@@ -1564,6 +1875,27 @@ export function renderVerberStationView(container, navigateFn) {
             wrongVerbs: ["slutter", "hopper"],
             objekt: "med afgang",
             adverbial: "fra spor 2"
+        },
+        {
+            subjekt: "Kunden",
+            correctVerb: "betaler for",
+            wrongVerbs: ["sover på", "cykler i"],
+            objekt: "billetten",
+            adverbial: "ved automaten"
+        },
+        {
+            subjekt: "Toget",
+            correctVerb: "starter",
+            wrongVerbs: ["drikker", "koger"],
+            objekt: "rejsen",
+            adverbial: "præcis klokken to"
+        },
+        {
+            subjekt: "Passageren",
+            correctVerb: "vælger",
+            wrongVerbs: ["steger", "hopper"],
+            objekt: "en vinduesplads",
+            adverbial: "i stillezonen"
         }
     ];
 
@@ -1748,6 +2080,78 @@ export function renderVerberStationView(container, navigateFn) {
                 { text: "virkede", form: "Datid", correct: false }
             ],
             explanation: '"I dag" angiver nutid, så verbet skal stå i nutid (virker).'
+        },
+        {
+            marker: "I forgårs",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I forgårs",
+            sentenceAfter: "hun en togbillet på internettet.",
+            baseVerb: "at købe",
+            options: [
+                { text: "købte", form: "Datid", correct: true },
+                { text: "køber", form: "Nutid", correct: false }
+            ],
+            explanation: '"I forgårs" peger på fortiden, så verbet skal stå i datid (købte).'
+        },
+        {
+            marker: "Lige nu",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "Lige nu",
+            sentenceAfter: "toget roligt ind på perron 3.",
+            baseVerb: "at rulle",
+            options: [
+                { text: "ruller", form: "Nutid", correct: true },
+                { text: "rullede", form: "Datid", correct: false }
+            ],
+            explanation: '"Lige nu" angiver nutid, så verbet skal stå i nutid (ruller).'
+        },
+        {
+            marker: "Sidste måned",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "Sidste måned",
+            sentenceAfter: "de med tog hele vejen til Berlin.",
+            baseVerb: "at rejse",
+            options: [
+                { text: "rejste", form: "Datid", correct: true },
+                { text: "rejser", form: "Nutid", correct: false }
+            ],
+            explanation: '"Sidste måned" angiver fortid, så verbet skal stå i datid (rejste).'
+        },
+        {
+            marker: "Hver eftermiddag",
+            hint: "peger på en vane / nutid ➔ Nutid",
+            sentenceBefore: "Hver eftermiddag",
+            sentenceAfter: "lyntoget fra spor 1 klokken fire.",
+            baseVerb: "at afgå",
+            options: [
+                { text: "afgår", form: "Nutid", correct: true },
+                { text: "afgik", form: "Datid", correct: false }
+            ],
+            explanation: '"Hver eftermiddag" udtrykker en gentagen vane i nutid, så verbet skal stå i nutid (afgår).'
+        },
+        {
+            marker: "I morges",
+            hint: "peger på fortiden ➔ Datid",
+            sentenceBefore: "I morges",
+            sentenceAfter: "rejsen præcis til tiden fra spor 2.",
+            baseVerb: "at begynde",
+            options: [
+                { text: "begyndte", form: "Datid", correct: true },
+                { text: "begynder", form: "Nutid", correct: false }
+            ],
+            explanation: '"I morges" peger på fortid, så verbet skal stå i datid (begyndte).'
+        },
+        {
+            marker: "I dette øjeblik",
+            hint: "peger på nutiden ➔ Nutid",
+            sentenceBefore: "I dette øjeblik",
+            sentenceAfter: "automaten perfekt efter reparationen.",
+            baseVerb: "at virke",
+            options: [
+                { text: "virker", form: "Nutid", correct: true },
+                { text: "virkede", form: "Datid", correct: false }
+            ],
+            explanation: '"I dette øjeblik" angiver nutid, så verbet skal stå i nutid (virker).'
         }
     ];
 

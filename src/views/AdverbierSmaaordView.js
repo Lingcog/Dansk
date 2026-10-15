@@ -23,12 +23,14 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 17. hellere (Præference: "vil hellere")
  * 18. helst (Stærkeste præference: "vil helst")
  * 
- * 5 didaktiske tabs:
+ * 7 didaktiske tabs:
  * 1. Det Interaktive Samtalerum & Vrimlebillede (18 hotspots, filter, ren illustration uden forstyrrende sideboks)
  * 2. Aha-værkstedet ("Hvem ved hvad?" Matrix & Sætnings-Transformeren)
- * 3. Dialog-Detektiven (10 nuancerede udfordringer bygget på AdverbDialogExerciseView.js)
- * 4. Sætningsbyggeren (To-trins model med faste grammatiske farver: Subjekt = Grøn, Verbum = Rød, Småord = Turkis/Cyan, Rest = Blå)
+ * 3. Dialog-Detektiven (10 nuancerede gåder bygget på AdverbDialogExerciseView.js)
+ * 4. Sætningsbyggeren & Puslespillet (To-trins model: Subjekt = Grøn, Verbum = Rød, Småord = Turkis, Rest = Blå)
  * 5. Kontekst-testen (14 autentiske hverdagsdialoger)
+ * 6. Heller, hellere, helst (9 øvelser i præference og negation)
+ * 7. Forstærkende ord (9 øvelser i sgu, mon ikke, skam, sandelig)
  */
 export function renderAdverbierSmaaordView(container, navigateFn) {
     container.innerHTML = '';
@@ -1856,13 +1858,13 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Frokoststuen (Vrimmel)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. De 5 Magiske (Aha-matrix)', icon: '🧠' },
-        { id: 'hellere', label: '3. Heller, hellere, helst ⚖️', icon: '⚖️' },
-        { id: 'boosters', label: '4. Forstærkere (sgu, skam...) 💥', icon: '💥' },
-        { id: 'detektiv', label: '5. Dialog-Detektiven', icon: '🔍' },
-        { id: 'builder', label: '6. Sætningsbyggeren & Puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '7. Kontekst-testen (16 opgaver)', icon: '🎯' }
+        { id: 'vrimmel', label: '1. Frokoststuen (Vrimlebilledet)', icon: '🖼️' },
+        { id: 'vaerksted', label: '2. Aha-værkstedet ("Hvem ved hvad?")', icon: '🧠' },
+        { id: 'detektiv', label: '3. Dialog-Detektiven (10 gåder)', icon: '🔍' },
+        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
+        { id: 'hellere', label: '6. Heller, hellere, helst ⚖️', icon: '⚖️' },
+        { id: 'boosters', label: '7. Forstærkere (sgu, mon ikke, skam...) 💥', icon: '💥' }
     ];
 
     let currentTab = 'vrimmel';
@@ -1893,16 +1895,16 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             renderTabVrimmel(tabContent);
         } else if (tabId === 'vaerksted') {
             renderTabVaerksted(tabContent);
-        } else if (tabId === 'hellere') {
-            renderTabHellere(tabContent);
-        } else if (tabId === 'boosters') {
-            renderTabBoosters(tabContent);
         } else if (tabId === 'detektiv') {
             renderTabDetektiv(tabContent);
         } else if (tabId === 'builder') {
             renderTabBuilder(tabContent);
         } else if (tabId === 'kontekst') {
             renderTabKontekst(tabContent);
+        } else if (tabId === 'hellere') {
+            renderTabHellere(tabContent);
+        } else if (tabId === 'boosters') {
+            renderTabBoosters(tabContent);
         }
     }
 
@@ -2317,7 +2319,7 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 3: HELLER, HELLERE ELLER HELST? (9 øvelser)
+    // TAB 6: HELLER, HELLERE ELLER HELST? (9 øvelser)
     // ==========================================
     const HELLERE_QUESTIONS = [
         {
@@ -2590,7 +2592,7 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 4: FORSTÆRKERNE (sgu, mon ikke, skam, sandelig) (9 øvelser)
+    // TAB 7: FORSTÆRKERNE (sgu, mon ikke, skam, sandelig) (9 øvelser)
     // ==========================================
     const BOOSTER_QUESTIONS = [
         {
@@ -2880,7 +2882,7 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     }
 
     // ==========================================
-    // TAB 5: DIALOG-DETEKTIVEN (10 dybdegående øvelser)
+    // TAB 3: DIALOG-DETEKTIVEN (10 dybdegående gåder)
     // ==========================================
     const DETEKTIV_QUESTIONS = [
         {
@@ -3017,8 +3019,8 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
 
         container.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.5rem; color: #a5f3fc; margin: 0;">Dialog-Detektiven</h3>
-                <span style="color: #94a3b8; font-weight: 800;">Opgave ${detektivIdx + 1} af ${DETEKTIV_QUESTIONS.length}</span>
+                <h3 style="font-size: 1.5rem; color: #a5f3fc; margin: 0;">Dialog-Detektiven (10 gåder)</h3>
+                <span style="color: #94a3b8; font-weight: 800;">Gåde ${detektivIdx + 1} af ${DETEKTIV_QUESTIONS.length}</span>
             </div>
 
             <div class="detektiv-card">
@@ -3477,18 +3479,6 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
             options: ['Ellers', 'Heller', 'Bare'],
             correct: 'Ellers',
             feedback: '"Ellers" udtrykker konsekvensen, hvis man ikke skynder sig.'
-        },
-        {
-            dialog: 'A: "Forstyrrer jeg dig i frokostpausen?"<br>B: "Nej, du forstyrrer ______ overhovedet ikke!"',
-            options: ['skam', 'sgu', 'vel'],
-            correct: 'skam',
-            feedback: '"Du forstyrrer skam overhovedet ikke" er den høflige måde at berolige modparten på.'
-        },
-        {
-            dialog: 'A: "Tror du bussen kommer snart?"<br>B: "Tja, ______ den er her om et øjeblik?"',
-            options: ['mon ikke', 'skam', 'sgu'],
-            correct: 'mon ikke',
-            feedback: '"Mon ikke" udtrykker en håbefuld formodning og overbevisning.'
         }
     ];
 

@@ -11,6 +11,8 @@ import { renderWordLearningView } from './views/WordLearningView.js';
 import { renderTop100SubstantiverMenuView } from './views/Top100SubstantiverMenuView.js';
 import { renderTop100VerberMenuView } from './views/Top100VerberMenuView.js';
 import { renderTop100AdjektiverMenuView } from './views/Top100AdjektiverMenuView.js';
+import { renderTop100AdverbierMenuView } from './views/Top100AdverbierMenuView.js';
+import { renderAdverbierStedView } from './views/AdverbierStedView.js';
 import { renderAdjektiverFysikView } from './views/AdjektiverFysikView.js';
 import { renderAdjektiverTidView } from './views/AdjektiverTidView.js';
 import { renderAdjektiverKvalitetView } from './views/AdjektiverKvalitetView.js';
@@ -140,6 +142,12 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'top100_adjektiver') {
     appState.currentView = 'top100_adjektiver';
     renderTop100AdjektiverMenuView(appDiv, navigate);
+  } else if (viewTarget === 'top100_adverbier') {
+    appState.currentView = 'top100_adverbier';
+    renderTop100AdverbierMenuView(appDiv, navigate);
+  } else if (viewTarget === 'adverbier_sted') {
+    appState.currentView = 'adverbier_sted';
+    renderAdverbierStedView(appDiv, navigate);
   } else if (viewTarget === 'adjektiver_fysik') {
     appState.currentView = 'adjektiver_fysik';
     renderAdjektiverFysikView(appDiv, navigate);

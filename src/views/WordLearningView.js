@@ -156,6 +156,7 @@ export function renderWordLearningView(container, navigateFn) {
       { id: 'exercise_top100_substantiver', title: 'top100SubstantiverTitle', desc: 'top100SubstantiverDesc', icon: '🏆', highlight: 'substantiv' },
       { id: 'exercise_top100_verber', title: 'top100VerberTitle', desc: 'top100VerberDesc', icon: '⚡', highlight: 'verbum' },
       { id: 'exercise_top100_adjektiver', title: 'top100AdjektiverTitle', desc: 'top100AdjektiverDesc', icon: '🎨', highlight: 'adjektiv' },
+      { id: 'exercise_top100_adverbier', title: 'top100AdverbierTitle', desc: 'top100AdverbierDesc', icon: '🧭', highlight: 'adverbium' },
       { id: 'exercise_semantic', title: 'laerEtNytOrd', desc: 'laerEtNytOrdDesc', icon: '✨' },
       { id: 'exercise_naboord', title: 'laerNaboord', desc: 'laerNaboordDesc', icon: '👯' },
       { id: 'exercise_ordfamilier', title: 'laerOrdfamilier', desc: 'laerOrdfamilierDesc', icon: '🌳' },
@@ -174,6 +175,9 @@ export function renderWordLearningView(container, navigateFn) {
       } else if (task.highlight === 'adjektiv') {
         choice.style.border = '2px solid #a855f7';
         choice.style.background = 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(30, 41, 59, 0.9))';
+      } else if (task.highlight === 'adverbium') {
+        choice.style.border = '2px solid #0ea5e9';
+        choice.style.background = 'linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(30, 41, 59, 0.9))';
       }
       choice.onclick = () => {
         if (task.id === 'exercise_top100_substantiver') {
@@ -182,6 +186,8 @@ export function renderWordLearningView(container, navigateFn) {
           navigateFn('top100_verber');
         } else if (task.id === 'exercise_top100_adjektiver') {
           navigateFn('top100_adjektiver');
+        } else if (task.id === 'exercise_top100_adverbier') {
+          navigateFn('top100_adverbier');
         } else {
           currentState = task.id;
           render();

@@ -863,7 +863,7 @@ export function renderVerberHjemView(container, navigateFn) {
             `;
 
             detailCard.querySelector('#listen-hjem-verb-btn').onclick = () => {
-                speakDanish(`${item.word}. Nutid: ${item.nutid}. Datid: ${item.datid}. ${item.sentence}`);
+                speakDanish(item.word);
             };
 
             // Speak word on click in Tab 1

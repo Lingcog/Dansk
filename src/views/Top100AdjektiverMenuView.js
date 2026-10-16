@@ -97,19 +97,6 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
         .adj-scene-card:hover:not(.disabled) .adj-scene-card-img {
             transform: scale(1.05);
         }
-        .adj-scene-card-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #f8fafc;
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-        }
         .adj-scene-card-content {
             padding: 1.5rem;
             display: flex;
@@ -277,7 +264,6 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
         card.innerHTML = `
             <div class="adj-scene-card-img-wrap">
                 <img src="${f.img}" alt="${f.title}" class="adj-scene-card-img" />
-                <div class="adj-scene-card-badge">${f.badge}</div>
             </div>
             <div class="adj-scene-card-content">
                 <div class="adj-scene-card-title">${f.title}</div>

@@ -81,22 +81,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     `;
     derErCard.onclick = () => navigateFn('pronomen', { subPath: 'der_er_det_er' });
 
-    const adverbChoiceCard = document.createElement('div');
-    adverbChoiceCard.className = 'card';
-    adverbChoiceCard.innerHTML = `
-        <div class="card-icon">💨</div>
-        <div class="card-title">${getTranslation('advChoiceTitle')}</div>
-    `;
-    adverbChoiceCard.onclick = () => navigateFn('pronomen', { subPath: 'adverbier_menu' });
-
-    const conjunctionChoiceCard = document.createElement('div');
-    conjunctionChoiceCard.className = 'card';
-    conjunctionChoiceCard.innerHTML = `
-        <div class="card-icon">🔗</div>
-        <div class="card-title">${getTranslation('conjunctionChoiceTitle')}</div>
-    `;
-    conjunctionChoiceCard.onclick = () => navigateFn('konjunktioner');
-
     const bestemthedCard = document.createElement('div');
     bestemthedCard.className = 'card';
     bestemthedCard.innerHTML = `
@@ -108,8 +92,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     grid1.appendChild(pronomenCard);
     grid1.appendChild(verbumCard);
     grid1.appendChild(derErCard);
-    grid1.appendChild(adverbChoiceCard);
-    grid1.appendChild(conjunctionChoiceCard);
     grid1.appendChild(bestemthedCard);
     level1Area.appendChild(grid1);
 
@@ -945,7 +927,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
     } else if (viewMode === 'adverbier_dialog') {
         startAdverbDialogExercise();
     } else if (viewMode === 'konjunktioner') {
-        startConjunctionChoiceExercise();
+        navigateFn('top_konjunktioner');
     } else if (viewMode === 'der_er_det_er' || subPath === 'der_er_det_er') {
         startDerErExplanation();
     } else if (subPath === 'adjektiv_comparison') {
@@ -985,7 +967,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
     } else if (subPath === 'artikler_menu') {
         showLevel2('artikler_menu');
     } else if (subPath === 'adverbier_menu') {
-        showLevel2('adverbier_menu');
+        navigateFn('top100_adverbier');
     } else {
         renderStep();
     }

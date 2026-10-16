@@ -255,9 +255,9 @@ export function initAdverbDialogExerciseView(container, navigateFn) {
 
         document.getElementById('adv-back-btn').addEventListener('click', () => {
             if (navigateFn) {
-                navigateFn('pronomen', { subPath: 'adverbier_menu' });
+                navigateFn('top100_adverbier');
             } else {
-                window.location.hash = `/${appState.lang}/pronomen`;
+                window.location.hash = `/${appState.lang}/top100_adverbier`;
             }
         });
 

@@ -2006,7 +2006,7 @@ export function renderNaturFritidView(container, navigateFn) {
             task.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'category-opt-btn';
-                btn.textContent = getTranslation(opt.text);
+                btn.textContent = opt.text;
 
                 btn.onclick = () => {
                     if (opt.correct) {
@@ -2014,7 +2014,7 @@ export function renderNaturFritidView(container, navigateFn) {
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ ${getTranslation("top100_correct_overemne_prefix")} ${getTranslation(opt.text)}
+                                ✓ ${getTranslation("top100_correct_overemne_prefix")} ${opt.text}
                             </div>
                             <button class="mission-next-btn" id="next-category-btn">${getTranslation('top100_next_task_btn')}</button>
                         `;
@@ -2051,7 +2051,7 @@ export function renderNaturFritidView(container, navigateFn) {
             mainCategoryTitle.style.fontSize = '1.8rem';
             mainCategoryTitle.style.color = '#10b981';
             mainCategoryTitle.style.margin = '0.3rem 0 0.8rem';
-            mainCategoryTitle.textContent = getTranslation(task.overemne);
+            mainCategoryTitle.textContent = task.overemne;
             categoryCard.appendChild(mainCategoryTitle);
 
             const qEl = document.createElement('p');
@@ -2070,7 +2070,7 @@ export function renderNaturFritidView(container, navigateFn) {
             task.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'category-opt-btn';
-                btn.textContent = getTranslation(opt.text);
+                btn.textContent = opt.text;
 
                 btn.onclick = () => {
                     if (btn.classList.contains('selected-correct') || btn.classList.contains('selected-wrong')) return;

@@ -97,6 +97,7 @@ import { renderConjunctionBridgeView } from './views/ConjunctionBridgeView.js';
 import { renderAdjectiveComparisonView } from './views/AdjectiveComparisonView.js';
 import { renderVerbumMenuView } from './views/VerbumMenuView.js';
 import { renderTrorSynesMenerView } from './views/TrorSynesMenerView.js';
+import { renderPunktetOgBroenView } from './views/PunktetOgBroenView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
@@ -431,6 +432,10 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       navigate('top100_verber', {}, true);
       return;
     }
+    if (categoryId === 'tider' || categoryId === 'punktet_og_broen') {
+      navigate('punktet_og_broen', {}, true);
+      return;
+    }
     const view = new VerbumLearningView(navigate, categoryId, extraData?.backView);
     appDiv.appendChild(view.render());
   } else if (viewTarget === 'verbum_menu') {
@@ -439,6 +444,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'tror_synes_mener') {
     appState.currentView = 'tror_synes_mener';
     renderTrorSynesMenerView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'punktet_og_broen') {
+    appState.currentView = 'punktet_og_broen';
+    renderPunktetOgBroenView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

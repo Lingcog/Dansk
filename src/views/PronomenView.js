@@ -175,7 +175,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
             items = [
                 { key: 'top100_verber_hub_title', type: 'top100_verber', icon: '✨' },
                 { title: 'Tror / synes / mener / ved', type: 'tror_synes_mener', icon: '🤔' },
-                { key: 'verberTider', type: 'tider', icon: '🌉', img: 'verber_kategorier.png' }
+                { title: 'Datid vs. førnutid (Punktet & broen)', type: 'punktet_og_broen', icon: '🌉' }
             ];
         }
 
@@ -206,6 +206,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
                         navigateFn('top100_verber');
                     } else if (item.type === 'tror_synes_mener') {
                         navigateFn('tror_synes_mener');
+                    } else if (item.type === 'punktet_og_broen' || item.type === 'tider') {
+                        navigateFn('punktet_og_broen');
                     } else {
                         navigateFn('verbum_learning', { subPath: item.type, backView: 'pronomen' });
                     }
@@ -941,6 +943,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 navigateFn('top100_verber', {}, true);
             } else if (type === 'tror_synes_mener') {
                 navigateFn('tror_synes_mener', {}, true);
+            } else if (type === 'punktet_og_broen' || type === 'tider') {
+                navigateFn('punktet_og_broen', {}, true);
             } else {
                 navigateFn('verbum_learning', { subPath: type, backView: 'pronomen' }, true);
             }

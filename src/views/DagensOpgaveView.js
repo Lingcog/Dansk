@@ -56,6 +56,14 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('tror_synes_mener')
         },
         {
+            icon: '🌉',
+            titleKey: 'punktetOgBroenTitle',
+            descKey: 'punktetOgBroenDesc',
+            fallbackTitle: 'Datid vs. førnutid (Punktet & Broen)',
+            fallbackDesc: 'Lær hvornår handlingen er lukket i fortiden, og hvornår den rækker ind i nutiden.',
+            action: () => navigateFn('punktet_og_broen')
+        },
+        {
             icon: '🫂',
             titleKey: 'hvilketOrd',
             descKey: 'hvilketOrdDesc',

@@ -1378,7 +1378,7 @@ export function renderKlasseKontorView(container, navigateFn) {
 
     const klasseMissions = [
         {
-            title: getTranslation('klasse_m1_title'),
+            title: "Find 3 ting, man læser eller skriver med 📖✏️",
             targetCount: 3,
             options: [
                 { text: "en bog", correct: true },
@@ -1390,7 +1390,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('klasse_m2_title'),
+            title: "Find 3 ord om sprog og kommunikation 💬",
             targetCount: 3,
             options: [
                 { text: "et spørgsmål", correct: true },
@@ -1402,7 +1402,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('klasse_m3_title'),
+            title: "Find 3 personer eller aktiviteter i lokalet 🧑‍🏫🤝",
             targetCount: 3,
             options: [
                 { text: "en lærer", correct: true },
@@ -1414,7 +1414,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('klasse_m4_title'),
+            title: "Find 3 ting med teknologi eller kontor 💻✉️",
             targetCount: 3,
             options: [
                 { text: "en computer", correct: true },
@@ -1426,7 +1426,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("klasse_m5_title"),
+            title: "Find 3 møbler eller inventar i lokalet 🪑💡",
             targetCount: 3,
             options: [
                 { text: "et bord", correct: true },
@@ -1438,7 +1438,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("klasse_m6_title"),
+            title: "Find 3 ting i skoletasken 🎒📚",
             targetCount: 3,
             options: [
                 { text: "en taske", correct: true },
@@ -1450,7 +1450,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("klasse_m7_title"),
+            title: "Find 3 ord om tid og planlægning ⏰📅",
             targetCount: 3,
             options: [
                 { text: "et ur", correct: true },
@@ -1462,7 +1462,7 @@ export function renderKlasseKontorView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("klasse_m8_title"),
+            title: "Find 3 ord om tanker og idéer 💡❓",
             targetCount: 3,
             options: [
                 { text: "en idé", correct: true },

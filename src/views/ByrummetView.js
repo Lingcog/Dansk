@@ -1620,7 +1620,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const byrumMissions = [
         {
-            title: getTranslation('byrum_m1_title'),
+            title: "Find 3 transportmidler på vejen 🚗",
             targetCount: 3,
             options: [
                 { text: "en bil", correct: true },
@@ -1632,7 +1632,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation('byrum_m2_title'),
+            title: "Find 3 personer eller roller i byrummet 🧑‍🤝‍🧑",
             targetCount: 3,
             options: [
                 { text: "en læge", correct: true },
@@ -1644,7 +1644,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation('byrum_m3_title'),
+            title: "Find 3 steder eller bygninger 🏢",
             targetCount: 3,
             options: [
                 { text: "en by", correct: true },
@@ -1656,7 +1656,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation('byrum_m4_title'),
+            title: "Find 3 ting med tid eller økonomi ⏰💰",
             targetCount: 3,
             options: [
                 { text: "en tid", correct: true },
@@ -1668,7 +1668,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation("byrum_m5_title"),
+            title: "Find 3 familiemedlemmer eller børn 👨‍👩‍👧",
             targetCount: 3,
             options: [
                 { text: "en familie", correct: true },
@@ -1680,7 +1680,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation("byrum_m6_title"),
+            title: "Find 3 ting på en bygning eller et hus 🏠🚪",
             targetCount: 3,
             options: [
                 { text: "et hus", correct: true },
@@ -1692,7 +1692,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation("byrum_m7_title"),
+            title: "Find 3 ting i naturen eller vejret ☀️🌳",
             targetCount: 3,
             options: [
                 { text: "en sol", correct: true },
@@ -1704,7 +1704,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: getTranslation("byrum_m8_title"),
+            title: "Find 3 ord om arbejde og udfordringer 💼🧩",
             targetCount: 3,
             options: [
                 { text: "et arbejde", correct: true },

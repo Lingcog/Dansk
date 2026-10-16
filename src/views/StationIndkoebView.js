@@ -1375,7 +1375,7 @@ export function renderStationIndkoebView(container, navigateFn) {
 
     const stationMissions = [
         {
-            title: getTranslation('station_m1_title'),
+            title: "Find 3 madvarer i butikken 🍞🍎",
             targetCount: 3,
             options: [
                 { text: "et brød", correct: true },
@@ -1387,7 +1387,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('station_m2_title'),
+            title: "Find 3 transportmidler på stationen 🚆🚌",
             targetCount: 3,
             options: [
                 { text: "et tog", correct: true },
@@ -1399,7 +1399,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('station_m3_title'),
+            title: "Find 3 tider på døgnet 🌅🌙",
             targetCount: 3,
             options: [
                 { text: "en morgen", correct: true },
@@ -1411,7 +1411,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('station_m4_title'),
+            title: "Find 3 ord fra kalenderen 📅",
             targetCount: 3,
             options: [
                 { text: "et år", correct: true },
@@ -1423,7 +1423,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("station_m5_title"),
+            title: "Find 3 ting man pakker eller bærer varer i 🛍️🍾",
             targetCount: 3,
             options: [
                 { text: "en pose", correct: true },
@@ -1435,7 +1435,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("station_m6_title"),
+            title: "Find 3 ord om rejse og billetter 🎫🚲",
             targetCount: 3,
             options: [
                 { text: "en billet", correct: true },
@@ -1447,7 +1447,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("station_m7_title"),
+            title: "Find 3 ord om geografi og samfund 🌍🗺️",
             targetCount: 3,
             options: [
                 { text: "en verden", correct: true },
@@ -1459,7 +1459,7 @@ export function renderStationIndkoebView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("station_m8_title"),
+            title: "Find 3 ord om priser og tidsenheder 🏷️⏳",
             targetCount: 3,
             options: [
                 { text: "en pris", correct: true },

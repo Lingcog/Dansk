@@ -1699,7 +1699,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     const missions = [
         {
-            title: getTranslation('koekken_m1_title'),
+            title: "Find 3 ting, man kan drikke ☕",
             targetCount: 3,
             options: [
                 { text: "en kaffe", correct: true },
@@ -1711,7 +1711,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('koekken_m2_title'),
+            title: "Find 3 ting, man kan spise 🍽️",
             targetCount: 3,
             options: [
                 { text: "en mad", correct: true },
@@ -1723,7 +1723,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('koekken_m3_title'),
+            title: "Find 3 personer eller familiemedlemmer 👨‍👩‍👧",
             targetCount: 3,
             options: [
                 { text: "en mor", correct: true },
@@ -1735,7 +1735,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('koekken_m4_title'),
+            title: "Find 3 møbler i hjemmet 🪑",
             targetCount: 3,
             options: [
                 { text: "et bord", correct: true },
@@ -1747,7 +1747,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("koekken_m5_title"),
+            title: "Find 3 dyr eller kæledyr 🐕🐈",
             targetCount: 3,
             options: [
                 { text: "en hund", correct: true },
@@ -1759,7 +1759,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("koekken_m6_title"),
+            title: "Find 3 ting man kan have på 👕👟",
             targetCount: 3,
             options: [
                 { text: "et tøj", correct: true },
@@ -1771,7 +1771,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("koekken_m7_title"),
+            title: "Find 3 genstande af glas eller porcelæn 🥛☕",
             targetCount: 3,
             options: [
                 { text: "et glas", correct: true },
@@ -1783,7 +1783,7 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("koekken_m8_title"),
+            title: "Find 3 ting man ser ud ad vinduet ☀️🌳",
             targetCount: 3,
             options: [
                 { text: "en sol", correct: true },

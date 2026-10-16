@@ -1375,7 +1375,7 @@ export function renderNaturFritidView(container, navigateFn) {
 
     const naturMissions = [
         {
-            title: getTranslation('natur_m1_title'),
+            title: "Find 3 dele af kroppen 🫱🦶",
             targetCount: 3,
             options: [
                 { text: "en hånd", correct: true },
@@ -1387,7 +1387,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('natur_m2_title'),
+            title: "Find 3 ting i naturen og landskabet 🌲🏖️",
             targetCount: 3,
             options: [
                 { text: "en skov", correct: true },
@@ -1399,7 +1399,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('natur_m3_title'),
+            title: "Find 3 ord om fest og ferie 🎉🎁",
             targetCount: 3,
             options: [
                 { text: "en fest", correct: true },
@@ -1411,7 +1411,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation('natur_m4_title'),
+            title: "Find 3 ting til leg og underholdning ⚽🎲",
             targetCount: 3,
             options: [
                 { text: "en bold", correct: true },
@@ -1423,7 +1423,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("natur_m5_title"),
+            title: "Find 3 ord om sanser og hovedet 👁️🧠",
             targetCount: 3,
             options: [
                 { text: "et øje", correct: true },
@@ -1435,7 +1435,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("natur_m6_title"),
+            title: "Find 3 elementer i vejret og luften 🌬️💧",
             targetCount: 3,
             options: [
                 { text: "en luft", correct: true },
@@ -1447,7 +1447,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("natur_m7_title"),
+            title: "Find 3 levende væsner i naturen 🐦🌿",
             targetCount: 3,
             options: [
                 { text: "en fugl", correct: true },
@@ -1459,7 +1459,7 @@ export function renderNaturFritidView(container, navigateFn) {
             ]
         },
         {
-            title: getTranslation("natur_m8_title"),
+            title: "Find 3 ord om kultur og fritid 🎵🎬",
             targetCount: 3,
             options: [
                 { text: "en musik", correct: true },

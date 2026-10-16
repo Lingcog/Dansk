@@ -49,18 +49,6 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
-        .hub-facts-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-            padding: 0.5rem 1.3rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
 
         .hub-scenes-grid {
             display: grid;
@@ -102,26 +90,6 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         .scene-card:hover .scene-card-img {
             transform: scale(1.05);
         }
-        .scene-pill-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            padding: 0.35rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #f1f5f9;
-        }
-        .badge-adv-1 { border-color: #38bdf8; color: #38bdf8; }
-        .badge-adv-2 { border-color: #f59e0b; color: #f59e0b; }
-        .badge-adv-3 { border-color: #ec4899; color: #f472b6; }
-        .badge-adv-4 { border-color: #a855f7; color: #c084fc; }
-        .badge-adv-5 { border-color: #06b6d4; color: #22d3ee; }
-        .badge-adv-6 { border-color: #22c55e; color: #4ade80; }
-        .badge-adv-7 { border-color: #eab308; color: #fde047; }
 
         .scene-card-content {
             padding: 1.5rem;
@@ -172,9 +140,6 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
     hero.innerHTML = `
         <h1>De mest almindelige adverbier</h1>
         <p>Lær de afgørende ord, der skaber sammenhæng, beskriver måden, viser tid og retning samt udtrykker din holdning i dansk samtale.</p>
-        <div class="hub-facts-badge">
-            <span>🧭</span> 7 semantiske felter • Nøglen til flydende dansk
-        </div>
     `;
     viewContainer.appendChild(hero);
 
@@ -254,7 +219,6 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         card.innerHTML = `
             <div class="scene-card-img-wrap">
                 <img src="${f.img}" alt="${f.title}" class="scene-card-img">
-                <div class="scene-pill-badge ${f.badgeClass}">${f.badge}</div>
             </div>
             <div class="scene-card-content">
                 <h3>${f.title}</h3>

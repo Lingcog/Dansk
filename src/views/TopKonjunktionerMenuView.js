@@ -314,15 +314,15 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         },
         {
             id: 'konj_felt_8_tekstflow',
-            badge: '📖 Felt 8 • Kulminationen: Tekstflow & Historier',
+            badge: '🚦 Felt 8 • Særskilt Flade (Tekstens Trafik & Tekstflow)',
             badgeClass: 'badge-konj-1',
             isSpecial: true,
-            img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '8. Tekstflow & Historier (Sæt det hele sammen!)',
-            desc: 'Se hvordan alle bindeordene arbejder sammen i 3 levende hverdagsfortællinger med fuldt tekstflow: Mathias i snevejret 🚲, Anna i drivhuset 🌿 og Lars på caféen ☕. Oplev hvordan konjunktioner skaber flydende dansk!',
-            chips: ['📖 Tekstflow', 'Historie 1: Mathias i sneen 🚲', 'Historie 2: Anna i drivhuset 🌿', 'Historie 3: Lars på caféen ☕', 'Sammenhængende dansk'],
-            btnText: 'Åbn Tekstflow & Historier 📖 ➔',
-            action: () => navigateFn('conjunction_choice', { subPath: 'traening3', from: 'top_konjunktioner' })
+            img: 'assets/tekstens_trafik_vrimmel.jpg',
+            title: '8. Tekstens Trafik 🚦 & Sammenhængende Tekstflow',
+            desc: 'Nytænkt flade med 6 øvelsesbaner: Det interaktive trafikkort, 4 rige hverdagsfortællinger, trafikprop-reparation, staccato-til-flow og lyn-dueller. Lær hvordan bindeord styrer fart, retning og sammenhæng!',
+            chips: ['🚦 Tekstens Trafik', '🗺️ Interaktivt Trafikkort', '📖 4 Historier', '🚧 Ret Trafikproppen', '🔀 Fra Staccato til Flow', '⚡ Trafik-Duellen', '🧲 "IKKE" & Inversion'],
+            btnText: 'Åbn "Tekstens Trafik"-Fladen 🚦 ➔',
+            action: () => navigateFn('konjunktioner_tekstflow', { from: 'top_konjunktioner' })
         }
     ];
 

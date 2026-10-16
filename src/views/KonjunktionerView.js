@@ -94,8 +94,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     tekstflowTopBtn.style.background = 'rgba(16, 185, 129, 0.2)';
     tekstflowTopBtn.style.borderColor = '#10b981';
     tekstflowTopBtn.style.color = '#6ee7b7';
-    tekstflowTopBtn.innerHTML = `📖 9. Tekstflow & Historier ➔`;
-    tekstflowTopBtn.onclick = () => switchTab('tekstflow');
+    tekstflowTopBtn.innerHTML = `🚦 Felt 8: Tekstens Trafik ➔`;
+    tekstflowTopBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_all' });
     rightTopBtns.appendChild(tekstflowTopBtn);
 
     topBar.appendChild(rightTopBtns);
@@ -3240,14 +3240,22 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         introCard.className = 'special-intro-card';
         introCard.innerHTML = `
             <div class="special-intro-badge" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7;">
-                📖 KULMINATIONEN: FRA ISOLEREDE REGLER TIL FLYDENDE TEKSTFLOW
+                🚦 KULMINATIONEN: FRA ISOLEREDE REGLER TIL TEKSTENS TRAFIK & FLYDENDE TEKSTFLOW
             </div>
-            <h2 class="special-intro-title">Konjunktioner i Sammenhængende Tekst</h2>
+            <h2 class="special-intro-title">Konjunktioner i Sammenhængende Tekst & Tekstens Trafik 🚦</h2>
             <p class="special-intro-desc">
-                Konjunktioner er sprogets lim! I virkelighedens hverdagsdansk bruger vi bindeord til at skabe årsagskæder, kontraster og tidsforløb i hele historier.
-                Vælg en af de tre fortællinger og sæt de rigtige bindeord ind for at få teksten til at flyde naturligt.
+                Konjunktioner er sprogets færdselsregler! I virkelighedens hverdagsdansk bruger vi bindeord til at skabe årsagskæder, kontraster og tidsforløb i hele historier.
             </p>
+            <div style="margin-top: 1.2rem; text-align: center;">
+                <button type="button" id="btn-open-traffic-flade" class="action-btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 0.85rem 1.8rem; font-size: 1rem; border-radius: 12px; cursor: pointer;">
+                    🚦 Åbn den fulde særskilte flade: Tekstens Trafik (6 Øvelsesbaner & Vrimlebillede) ➔
+                </button>
+            </div>
         `;
+        const openTrafficBtn = introCard.querySelector('#btn-open-traffic-flade');
+        if (openTrafficBtn) {
+            openTrafficBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_all' });
+        }
         container.appendChild(introCard);
 
         // Story Switcher Buttons

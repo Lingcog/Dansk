@@ -62,8 +62,8 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     toTekstflowBtn.style.background = 'rgba(99, 102, 241, 0.15)';
     toTekstflowBtn.style.borderColor = '#6366f1';
     toTekstflowBtn.style.color = '#a5b4fc';
-    toTekstflowBtn.innerHTML = `📖 Tekstflow & Historier ➔`;
-    toTekstflowBtn.onclick = () => navigateFn('konjunktioner_all', { tab: 'tekstflow', from: 'konjunktioner_da_naar' });
+    toTekstflowBtn.innerHTML = `🚦 Felt 8: Tekstens Trafik ➔`;
+    toTekstflowBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_da_naar' });
     otherPairsDiv.appendChild(toTekstflowBtn);
 
     topBar.appendChild(otherPairsDiv);

@@ -26,6 +26,7 @@ import { renderKonjunktionerAtView } from './views/KonjunktionerAtView.js';
 import { renderKonjunktionerDaNaarView } from './views/KonjunktionerDaNaarView.js';
 import { renderKonjunktionerSelvomAlligevelView } from './views/KonjunktionerSelvomAlligevelView.js';
 import { renderKonjunktionerFordiDerforView } from './views/KonjunktionerFordiDerforView.js';
+import { renderKonjunktionerTekstflowView } from './views/KonjunktionerTekstflowView.js';
 import { renderAdjektiverFysikView } from './views/AdjektiverFysikView.js';
 import { renderAdjektiverTidView } from './views/AdjektiverTidView.js';
 import { renderAdjektiverKvalitetView } from './views/AdjektiverKvalitetView.js';
@@ -198,6 +199,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'konjunktioner_fordi_derfor') {
     appState.currentView = 'konjunktioner_fordi_derfor';
     renderKonjunktionerFordiDerforView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_tekstflow') {
+    appState.currentView = 'konjunktioner_tekstflow';
+    renderKonjunktionerTekstflowView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_fysik') {
     appState.currentView = 'adjektiver_fysik';
     renderAdjektiverFysikView(appDiv, navigate, extraData);

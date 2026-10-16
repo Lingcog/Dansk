@@ -741,7 +741,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         { id: 'builder', label: '6. Sætningsbyggeren (Ledsætning & Inversion)', icon: '🧩' }
     ];
 
-    let currentTab = (extraData && extraData.tab) ? extraData.tab : 'vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
 
     tabs.forEach(t => {
         const btn = document.createElement('button');
@@ -758,6 +758,8 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/konjunktioner_da_naar/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#dn-tab-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');

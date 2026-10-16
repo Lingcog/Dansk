@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 
 /**
@@ -11,7 +11,7 @@ import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeek
  * 5. Kongruens-byggeren (Fælde-træning: -t, -e og ubøjelige adjektiver som "gratis")
  * 6. Kontekst & Historie (Hverdagssituationer fra butikker, arbejde og hverdagsøkonomi)
  */
-export function renderAdjektiverKvalitetView(container, navigateFn) {
+export function renderAdjektiverKvalitetView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -639,6 +639,8 @@ export function renderAdjektiverKvalitetView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adjektiver_kvalitet/' + tabId);
         tabsMenu.querySelectorAll('.adj-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -1947,6 +1949,9 @@ export function renderAdjektiverKvalitetView(container, navigateFn) {
 
     renderStoryTask();
     panelsHolder.appendChild(panelHistorie);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_kontrast';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

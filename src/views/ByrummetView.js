@@ -1262,6 +1262,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/byrummet_vrimmel/' + tabId);
         tabsMenu.querySelectorAll('.byrum-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -3018,9 +3020,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     }
 
     // Restore active tab if returning from VerberByrumView
-    if (extraData && extraData.activeTab) {
-        switchTab(extraData.activeTab);
-    }
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

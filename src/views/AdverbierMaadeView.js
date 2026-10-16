@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 /**
  * AdverbierMaadeView - Felt 3: Måde (-t reglen)
@@ -14,7 +14,7 @@ import { getTranslation } from '../utils/i18n.js';
  * 4. Sætningsbyggeren (To-trins model: Hvem? Hvad laver? Hvordan? Hvor? + Puslespil med tydelig ⭐ markering)
  * 5. Kontekst-testen (14 varierede A1/A2 hverdagssituationer)
  */
-export function renderAdverbierMaadeView(container, navigateFn) {
+export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -326,7 +326,7 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     ];
 
     // State
-    let currentTab = 'tab_vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';
     let selectedWordId = 'hurtigt';
     let isPureMode = false;
     let wordFilter = 'all'; // 'all', 't_rule', 'special'
@@ -1815,6 +1815,8 @@ export function renderAdverbierMaadeView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_maade/' + tabId);
         Object.keys(tabButtons).forEach(id => {
             tabButtons[id].classList.toggle('active', id === tabId);
         });
@@ -3458,6 +3460,6 @@ export function renderAdverbierMaadeView(container, navigateFn) {
     }
 
     // Initialize first tab
-    renderActiveTab();
+    switchTab(currentTab);
     container.appendChild(viewContainer);
 }

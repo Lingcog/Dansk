@@ -1,7 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
-export function renderAdjectiveComparisonView(container, navigateFn) {
+export function renderAdjectiveComparisonView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adj-comparison-view';
 
@@ -151,6 +151,8 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
     viewContainer.appendChild(part3Container);
 
     function showPart(partNum) {
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adjective_comparison/part' + partNum);
         tab1Btn.classList.toggle('active', partNum === 1);
         tab2Btn.classList.toggle('active', partNum === 2);
         tab3Btn.classList.toggle('active', partNum === 3);
@@ -1280,6 +1282,13 @@ export function renderAdjectiveComparisonView(container, navigateFn) {
     setupPart1();
     setupPart2();
     setupPart3();
+
+    let initPart = 1;
+    if (extraData && extraData.subPath) {
+        if (extraData.subPath === 'part2' || extraData.subPath === '2') initPart = 2;
+        else if (extraData.subPath === 'part3' || extraData.subPath === '3') initPart = 3;
+    }
+    showPart(initPart);
 
     container.appendChild(viewContainer);
 

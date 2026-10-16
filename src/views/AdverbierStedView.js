@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 /**
  * AdverbierStedView - Felt 1: Sted (Retning vs. Hvile)
@@ -9,7 +9,7 @@ import { getTranslation } from '../utils/i18n.js';
  * 4. Sætningsbyggeren (Stedsadverbiets faste placering og inversion)
  * 5. Kontekst-testen (Model C: Retnings-testen med cloze & didaktisk feedback)
  */
-export function renderAdverbierStedView(container, navigateFn) {
+export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -311,7 +311,7 @@ export function renderAdverbierStedView(container, navigateFn) {
     ];
 
     // State management
-    let currentTab = 'tab_vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';
     let selectedWordId = 'hjem';
     let filterMode = 'all'; // 'all', 'retning', 'hvile'
     let showPins = true;
@@ -1649,6 +1649,8 @@ export function renderAdverbierStedView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_sted/' + tabId);
         Object.keys(tabButtons).forEach(id => {
             tabButtons[id].classList.toggle('active', id === tabId);
         });
@@ -3030,6 +3032,6 @@ export function renderAdverbierStedView(container, navigateFn) {
     }
 
     // Initialize with Tab 1
-    renderActiveTab();
+    switchTab(currentTab);
     container.appendChild(viewContainer);
 }

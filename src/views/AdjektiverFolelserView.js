@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 
 /**
@@ -11,7 +11,7 @@ import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeek
  * 5. Kongruens-byggeren (Fælde-træning: "glad" uden -t, "træt" med -tte, og ubøjelige "bange")
  * 6. Kontekst & Historie (Hverdagssituationer fra familien, venskaber og fritid)
  */
-export function renderAdjektiverFolelserView(container, navigateFn) {
+export function renderAdjektiverFolelserView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -639,6 +639,8 @@ export function renderAdjektiverFolelserView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adjektiver_folelser/' + tabId);
         tabsMenu.querySelectorAll('.adj-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -1947,6 +1949,9 @@ export function renderAdjektiverFolelserView(container, navigateFn) {
 
     renderStoryTask();
     panelsHolder.appendChild(panelHistorie);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_kontrast';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

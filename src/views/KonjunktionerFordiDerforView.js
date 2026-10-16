@@ -630,7 +630,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
         { id: 'builder', label: '6. Sætningsbyggeren & Puslespillet', icon: '🧩' }
     ];
 
-    let currentTab = (extraData && extraData.tab) ? extraData.tab : 'vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
 
     tabs.forEach(t => {
         const btn = document.createElement('button');
@@ -647,6 +647,8 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/konjunktioner_fordi_derfor/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#fd-tab-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');

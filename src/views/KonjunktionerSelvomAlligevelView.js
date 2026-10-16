@@ -630,7 +630,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         { id: 'builder', label: '6. Sætningsbyggeren & Puslespillet', icon: '🧩' }
     ];
 
-    let currentTab = (extraData && extraData.tab) ? extraData.tab : 'vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
 
     tabs.forEach(t => {
         const btn = document.createElement('button');
@@ -647,6 +647,8 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/konjunktioner_selvom_alligevel/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#sa-tab-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');

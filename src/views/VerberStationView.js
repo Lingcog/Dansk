@@ -7,7 +7,7 @@ import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeek
  * Dækker 33 højfrekvente verber med infinitiv, nutid og datid.
  * 7 interaktive opgaveflader for maksimal pædagogisk progression.
  */
-export function renderVerberStationView(container, navigateFn) {
+export function renderVerberStationView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1119,6 +1119,8 @@ export function renderVerberStationView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/verber_station/' + tabId);
         tabsMenu.querySelectorAll('.verber-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -3007,6 +3009,9 @@ export function renderVerberStationView(container, navigateFn) {
     renderStationTidTask();
     tidBoejningPanel.appendChild(tidCard);
     panelsHolder.appendChild(tidBoejningPanel);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

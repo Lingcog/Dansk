@@ -95,6 +95,7 @@ import { renderConjunctionBridgeView } from './views/ConjunctionBridgeView.js';
 import { renderAdjectiveComparisonView } from './views/AdjectiveComparisonView.js';
 import { renderVerbumMenuView } from './views/VerbumMenuView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
+import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
 import { renderDanskKulturView } from './views/DanskKulturView.js';
 import { renderTalemaaderView } from './views/TalemaaderView.js';
@@ -159,28 +160,28 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderTop100AdverbierMenuView(appDiv, navigate);
   } else if (viewTarget === 'adverbier_sted') {
     appState.currentView = 'adverbier_sted';
-    renderAdverbierStedView(appDiv, navigate);
+    renderAdverbierStedView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverbier_tid') {
     appState.currentView = 'adverbier_tid';
-    renderAdverbierTidView(appDiv, navigate);
+    renderAdverbierTidView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverbier_maade') {
     appState.currentView = 'adverbier_maade';
-    renderAdverbierMaadeView(appDiv, navigate);
+    renderAdverbierMaadeView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverbier_grad') {
     appState.currentView = 'adverbier_grad';
-    renderAdverbierGradView(appDiv, navigate);
+    renderAdverbierGradView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverbier_smaaord') {
     appState.currentView = 'adverbier_smaaord';
-    renderAdverbierSmaaordView(appDiv, navigate);
+    renderAdverbierSmaaordView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverbier_holdning') {
     appState.currentView = 'adverbier_holdning';
-    renderAdverbierHoldningView(appDiv, navigate);
+    renderAdverbierHoldningView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adverbier_konnektion') {
     appState.currentView = 'adverbier_konnektion';
-    renderAdverbierKonnektionView(appDiv, navigate);
+    renderAdverbierKonnektionView(appDiv, navigate, extraData);
   } else if (viewTarget === 'top_konjunktioner') {
     appState.currentView = 'top_konjunktioner';
-    renderTopKonjunktionerMenuView(appDiv, navigate);
+    renderTopKonjunktionerMenuView(appDiv, navigate, extraData);
   } else if (viewTarget === 'konjunktioner_all') {
     appState.currentView = 'konjunktioner_all';
     renderKonjunktionerView(appDiv, navigate, extraData);
@@ -198,49 +199,49 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderKonjunktionerFordiDerforView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_fysik') {
     appState.currentView = 'adjektiver_fysik';
-    renderAdjektiverFysikView(appDiv, navigate);
+    renderAdjektiverFysikView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_tid') {
     appState.currentView = 'adjektiver_tid';
-    renderAdjektiverTidView(appDiv, navigate);
+    renderAdjektiverTidView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_kvalitet') {
     appState.currentView = 'adjektiver_kvalitet';
-    renderAdjektiverKvalitetView(appDiv, navigate);
+    renderAdjektiverKvalitetView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_folelser') {
     appState.currentView = 'adjektiver_folelser';
-    renderAdjektiverFolelserView(appDiv, navigate);
+    renderAdjektiverFolelserView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_tilstande') {
     appState.currentView = 'adjektiver_tilstande';
-    renderAdjektiverTilstandeView(appDiv, navigate);
+    renderAdjektiverTilstandeView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verber_byrum') {
     appState.currentView = 'verber_byrum';
     renderVerberByrumView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verber_hjem') {
     appState.currentView = 'verber_hjem';
-    renderVerberHjemView(appDiv, navigate);
+    renderVerberHjemView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verber_klasse') {
     appState.currentView = 'verber_klasse';
-    renderVerberKlasseView(appDiv, navigate);
+    renderVerberKlasseView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verber_park') {
     appState.currentView = 'verber_park';
-    renderVerberParkView(appDiv, navigate);
+    renderVerberParkView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verber_station') {
     appState.currentView = 'verber_station';
-    renderVerberStationView(appDiv, navigate);
+    renderVerberStationView(appDiv, navigate, extraData);
   } else if (viewTarget === 'byrummet_vrimmel') {
     appState.currentView = 'byrummet_vrimmel';
     renderByrummetView(appDiv, navigate, extraData);
   } else if (viewTarget === 'koekken_hjemmet') {
     appState.currentView = 'koekken_hjemmet';
-    renderKoekkenHjemmetView(appDiv, navigate);
+    renderKoekkenHjemmetView(appDiv, navigate, extraData);
   } else if (viewTarget === 'klasse_kontor') {
     appState.currentView = 'klasse_kontor';
-    renderKlasseKontorView(appDiv, navigate);
+    renderKlasseKontorView(appDiv, navigate, extraData);
   } else if (viewTarget === 'natur_fritid') {
     appState.currentView = 'natur_fritid';
-    renderNaturFritidView(appDiv, navigate);
+    renderNaturFritidView(appDiv, navigate, extraData);
   } else if (viewTarget === 'station_indkoeb') {
     appState.currentView = 'station_indkoeb';
-    renderStationIndkoebView(appDiv, navigate);
+    renderStationIndkoebView(appDiv, navigate, extraData);
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);
@@ -326,7 +327,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderOrdstillingAltIntroView(appDiv, navigate, type);
   } else if (viewTarget === 'ordstilling_intro') {
     appState.currentView = 'ordstilling_intro';
-    renderOrdstillingIntroView(appDiv, navigate);
+    renderOrdstillingIntroView(appDiv, navigate, extraData);
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
     renderGrammatikView(appDiv, navigate, extraData);
@@ -430,7 +431,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderGroundingView(appDiv, navigate);
   } else if (viewTarget === 'bestemthed') {
     appState.currentView = 'bestemthed';
-    renderBestemthedView(appDiv, navigate);
+    renderBestemthedView(appDiv, navigate, extraData);
   } else if (viewTarget === 'artikler') {
     appState.currentView = 'artikler';
     renderArtiklerView(appDiv, navigate);
@@ -448,7 +449,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderConjunctionBridgeView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjective_comparison') {
     appState.currentView = 'adjective_comparison';
-    renderAdjectiveComparisonView(appDiv, navigate);
+    renderAdjectiveComparisonView(appDiv, navigate, extraData);
   } else if (viewTarget === 'conjunction_choice') {
     appState.currentView = 'conjunction_choice';
     initConjunctionChoiceExerciseView(appDiv, navigate, extraData);
@@ -523,6 +524,7 @@ function handleRouting() {
 // Boot up
 document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', handleRouting);
+  window.addEventListener('popstate', handleRouting);
   handleRouting();
 });
 

@@ -1,9 +1,9 @@
 import { navigate } from '../main.js';
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
 import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
 
-export function renderOrdstillingIntroView(container, navigateFn) {
+export function renderOrdstillingIntroView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -87,6 +87,8 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     viewContainer.appendChild(part4Container);
 
     function showPart(partNum) {
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/ordstilling_intro/part' + partNum);
         tab1Btn.classList.toggle('active', partNum === 1);
         tab2Btn.classList.toggle('active', partNum === 2);
         tab3Btn.classList.toggle('active', partNum === 3);
@@ -2477,6 +2479,14 @@ export function renderOrdstillingIntroView(container, navigateFn) {
     setupPart2();
     setupPart3();
     setupPart4();
+
+    let initPart = 1;
+    if (extraData && extraData.subPath) {
+        if (extraData.subPath === 'part2' || extraData.subPath === '2') initPart = 2;
+        else if (extraData.subPath === 'part3' || extraData.subPath === '3') initPart = 3;
+        else if (extraData.subPath === 'part4' || extraData.subPath === '4') initPart = 4;
+    }
+    showPart(initPart);
 
     container.appendChild(viewContainer);
 

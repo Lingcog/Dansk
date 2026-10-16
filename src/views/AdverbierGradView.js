@@ -32,7 +32,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 4. Sætningsbyggeren (To-trins model med faste grammatiske farver: Grøn, Rød, Lilla, Blå)
  * 5. Kontekst-testen (14 varierede A1/A2 hverdagssituationer)
  */
-export function renderAdverbierGradView(container, navigateFn) {
+export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -2420,7 +2420,7 @@ export function renderAdverbierGradView(container, navigateFn) {
         { id: 'tab_kontekst', label: '5. Kontekst-testen', icon: '📝' }
     ];
 
-    let currentTab = 'tab_vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';
     const tabButtons = {};
 
     tabsConfig.forEach(t => {
@@ -2440,6 +2440,8 @@ export function renderAdverbierGradView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_grad/' + tabId);
         Object.keys(tabButtons).forEach(id => {
             tabButtons[id].classList.toggle('active', id === tabId);
         });
@@ -4068,6 +4070,6 @@ export function renderAdverbierGradView(container, navigateFn) {
     }
 
     // Initialize first tab
-    renderActiveTab();
+    switchTab(currentTab);
     container.appendChild(viewContainer);
 }

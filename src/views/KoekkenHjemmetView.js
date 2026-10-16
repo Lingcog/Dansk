@@ -5,7 +5,7 @@ import { kitchenWordTranslations } from '../utils/top100_translations.js';
  * KoekkenHjemmetView - Test-prototype for semantisk ordforråd: Køkkenet & Hjemmet
  * Implementerer 4-trins modellen + kønstræning (farve-radar) + detektiv + mikro-historie + sætningsbygger.
  */
-export function renderKoekkenHjemmetView(container, navigateFn) {
+export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1325,6 +1325,8 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/koekken_hjemmet/' + tabId);
         tabsMenu.querySelectorAll('.kv-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -3030,6 +3032,9 @@ export function renderKoekkenHjemmetView(container, navigateFn) {
 
     saetningPanel.appendChild(sentenceCard);
     panelsHolder.appendChild(saetningPanel);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

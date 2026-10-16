@@ -35,7 +35,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 7. Social Tone: Heldigvis, desværre & forhåbentlig 🎭 (8 øvelser)
  * 8. Bevis-Detektiven (sandsynligvis, formentlig, åbenbart, tilsyneladende) 🔬 (10 øvelser)
  */
-export function renderAdverbierHoldningView(container, navigateFn) {
+export function renderAdverbierHoldningView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1566,6 +1566,8 @@ export function renderAdverbierHoldningView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_holdning/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#tab-btn-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');
@@ -3609,6 +3611,6 @@ export function renderAdverbierHoldningView(container, navigateFn) {
     }
 
     // Initial render
-    switchTab('vrimmel');
+    switchTab((extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel');
     container.appendChild(viewContainer);
 }

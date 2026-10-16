@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 
 /**
  * AdverbierTidView - Felt 2: Tid & Frekvens (Hvornår, hvor længe, hvor tit)
@@ -9,7 +9,7 @@ import { getTranslation } from '../utils/i18n.js';
  * 4. Sætningsbyggeren (Centraladverbium & inversion ved tid på 1. plads)
  * 5. Tids-Nuancen (Model B: Cloze med forvekslingspar f.eks. allerede/endnu/stadig)
  */
-export function renderAdverbierTidView(container, navigateFn) {
+export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -326,7 +326,7 @@ export function renderAdverbierTidView(container, navigateFn) {
     ];
 
     // State
-    let currentTab = 'tab_vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';
     let selectedWordId = 'nu';
     let filterMode = 'all'; // 'all', 'frekvens', 'tidspunkt'
     let showPins = true;
@@ -1892,6 +1892,8 @@ export function renderAdverbierTidView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_tid/' + tabId);
         Object.keys(tabButtons).forEach(id => {
             tabButtons[id].classList.toggle('active', id === tabId);
         });
@@ -3488,6 +3490,6 @@ export function renderAdverbierTidView(container, navigateFn) {
     }
 
     // Initialize with Tab 1
-    renderActiveTab();
+    switchTab(currentTab);
     container.appendChild(viewContainer);
 }

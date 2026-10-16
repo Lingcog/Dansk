@@ -5,7 +5,7 @@ import { klasseWordTranslations } from '../utils/top100_translations.js';
  * KlasseKontorView - Didaktisk vrimlebillede for semantisk felt: Undervisningslokalet og kontoret
  * Dækker centrale højfrekvente substantiver om læring, sprog, teknologi og arbejde.
  */
-export function renderKlasseKontorView(container, navigateFn) {
+export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1034,6 +1034,8 @@ export function renderKlasseKontorView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/klasse_kontor/' + tabId);
         tabsMenu.querySelectorAll('.klasse-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -2678,6 +2680,9 @@ export function renderKlasseKontorView(container, navigateFn) {
 
     saetningPanel.appendChild(sentenceCard);
     panelsHolder.appendChild(saetningPanel);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

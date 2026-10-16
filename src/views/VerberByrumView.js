@@ -1235,6 +1235,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/verber_byrum/' + tabId);
         tabsMenu.querySelectorAll('.verber-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -3128,8 +3130,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     panelsHolder.appendChild(tidBoejningPanel);
 
     // Restore state if returning from Mulighed B or another deep link
-    if (extraData && extraData.activeTab) {
-        switchTab(extraData.activeTab);
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
+    if (extraData && (extraData.activeTab || extraData.subPath)) {
         if (extraData.activeTab === 'tab_saetning') {
             subTab2Btn.click();
             if (extraData.taskIdx !== undefined) {

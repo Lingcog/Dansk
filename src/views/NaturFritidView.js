@@ -5,7 +5,7 @@ import { naturWordTranslations } from '../utils/top100_translations.js';
  * NaturFritidView - Didaktisk vrimlebillede for semantisk felt: Naturen og fritiden
  * Dækker 21 centrale højfrekvente substantiver om natur, krop, vejr, fejring og fritid.
  */
-export function renderNaturFritidView(container, navigateFn) {
+export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1034,6 +1034,8 @@ export function renderNaturFritidView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/natur_fritid/' + tabId);
         tabsMenu.querySelectorAll('.natur-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -2671,6 +2673,9 @@ export function renderNaturFritidView(container, navigateFn) {
     setupNaturChallenge();
     saetningPanel.appendChild(sentenceCard);
     panelsHolder.appendChild(saetningPanel);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

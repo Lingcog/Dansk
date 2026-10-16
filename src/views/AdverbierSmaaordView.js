@@ -32,7 +32,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 6. Heller, hellere, helst (9 øvelser i præference og negation)
  * 7. Forstærkende ord (9 øvelser i sgu, mon ikke, skam, sandelig)
  */
-export function renderAdverbierSmaaordView(container, navigateFn) {
+export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1886,6 +1886,8 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_smaaord/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#tab-btn-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');
@@ -3578,6 +3580,6 @@ export function renderAdverbierSmaaordView(container, navigateFn) {
     }
 
     // Initial render
-    switchTab('vrimmel');
+    switchTab((extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel');
     container.appendChild(viewContainer);
 }

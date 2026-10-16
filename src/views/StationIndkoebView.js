@@ -5,7 +5,7 @@ import { stationWordTranslations } from '../utils/top100_translations.js';
  * StationIndkoebView - Didaktisk vrimlebillede for semantisk felt: Stationen, indkøb og tiden
  * Dækker 21 centrale højfrekvente substantiver om station, transport, dagligvarer, kalender og tid på døgnet.
  */
-export function renderStationIndkoebView(container, navigateFn) {
+export function renderStationIndkoebView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1034,6 +1034,8 @@ export function renderStationIndkoebView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/station_indkoeb/' + tabId);
         tabsMenu.querySelectorAll('.station-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -2687,6 +2689,9 @@ export function renderStationIndkoebView(container, navigateFn) {
     setupStationChallenge();
     saetningPanel.appendChild(sentenceCard);
     panelsHolder.appendChild(saetningPanel);
+
+    const initialTab = (extraData && (extraData.subPath || extraData.activeTab || extraData.tab)) || 'tab_vrimmel';
+    switchTab(initialTab);
 
     container.appendChild(viewContainer);
 }

@@ -42,7 +42,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 7. Kontrast-Mesteren: Alligevel, derimod, til gengæld & tværtimod ⚖️ (8 øvelser)
  * 8. Alternativ & Forbehold: Ellers, i stedet, i hvert fald & i det mindste 🛡️ (10 øvelser)
  */
-export function renderAdverbierKonnektionView(container, navigateFn) {
+export function renderAdverbierKonnektionView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -1558,6 +1558,8 @@ export function renderAdverbierKonnektionView(container, navigateFn) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/adverbier_konnektion/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#tab-btn-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');
@@ -3344,6 +3346,6 @@ export function renderAdverbierKonnektionView(container, navigateFn) {
     }
 
     // Initial render
-    switchTab('vrimmel');
+    switchTab((extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel');
     container.appendChild(viewContainer);
 }

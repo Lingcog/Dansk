@@ -1504,6 +1504,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
     function switchTab(tabId) {
         currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', '#/' + lang + '/konjunktioner_all/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#tab-btn-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');
@@ -3209,6 +3211,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // Initial render
-    switchTab((extraData && extraData.tab) ? extraData.tab : 'vrimmel');
+    switchTab((extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel');
     container.appendChild(viewContainer);
 }

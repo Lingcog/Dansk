@@ -68,18 +68,6 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
-        .konj-hub-facts-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10b981;
-            color: #6ee7b7;
-            padding: 0.5rem 1.3rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
 
         .konj-scenes-grid {
             display: grid;
@@ -134,23 +122,6 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         .konj-scene-card:hover .konj-card-img {
             transform: scale(1.05);
         }
-        .konj-pill-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(8px);
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: #f1f5f9;
-        }
-        .badge-konj-1 { border-color: #22c55e; color: #86efac; }
-        .badge-konj-2 { border-color: #06b6d4; color: #67e8f9; }
-        .badge-konj-3 { border-color: #a855f7; color: #d8b4fe; }
-        .badge-konj-4 { border-color: #f59e0b; color: #fde68a; }
 
         .konj-card-content {
             padding: 1.6rem;
@@ -221,9 +192,6 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     hero.innerHTML = `
         <h1>Helsætnings- & Ledsætningskonjunktioner</h1>
         <p>Lær hvordan danske sætninger bindes sammen: Hvornår står <em>ikke</em> efter verbet (helsætning), hvornår rykker <em>ikke</em> frem før verbet (ledsætning), og hvordan mestrer man alle de forskellige konstruktioner med <strong><em>at</em></strong>?</p>
-        <div class="konj-hub-facts-badge">
-            <span>🌉</span> 8 felter • Fra isolerede regler og vrimlebilleder til sammenhængende Tekstflow & Historier!
-        </div>
     `;
     viewContainer.appendChild(hero);
 
@@ -332,7 +300,6 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         card.innerHTML = `
             <div class="konj-card-img-wrap">
                 <img src="${f.img}" alt="${f.title}" class="konj-card-img">
-                <div class="konj-pill-badge ${f.badgeClass}">${f.badge}</div>
             </div>
             <div class="konj-card-content">
                 <h3>${f.title}</h3>

@@ -71,7 +71,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
         <div class="card-icon">🏃</div>
         <div class="card-title">${getTranslation('gårGikGået')}</div>
     `;
-    verbumCard.onclick = () => navigateFn('pronomen', { subPath: 'v' });
+    verbumCard.onclick = () => navigateFn('top100_verber');
 
     const derErCard = document.createElement('div');
     derErCard.className = 'card';
@@ -173,9 +173,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
             ];
         } else {
             items = [
-                { key: 'top100_verber_hub_title', type: 'top100_verber', icon: '✨' },
-                { title: 'Tror / synes / mener / ved', type: 'tror_synes_mener', icon: '🤔' },
-                { title: 'Datid vs. førnutid (Punktet & broen)', type: 'punktet_og_broen', icon: '🌉' }
+                { key: 'top100_verber_hub_title', type: 'top100_verber', icon: '✨' }
             ];
         }
 
@@ -949,7 +947,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 navigateFn('verbum_learning', { subPath: type, backView: 'pronomen' }, true);
             }
         } else {
-            showLevel2('verbum');
+            navigateFn('top100_verber', {}, true);
         }
     } else if (subPath === 'p' || subPath.startsWith('p/')) {
         const parts = subPath.split('/');

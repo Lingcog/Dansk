@@ -57,9 +57,9 @@ export function renderDagensOpgaveView(container, navigateFn) {
         },
         {
             icon: '🌉',
-            titleKey: 'punktetOgBroenTitle',
+            titleKey: 'verberTider',
             descKey: 'punktetOgBroenDesc',
-            fallbackTitle: 'Datid vs. førnutid (Punktet & Broen)',
+            fallbackTitle: 'Datid vs. Førnutid (punktet & broen)',
             fallbackDesc: 'Lær hvornår handlingen er lukket i fortiden, og hvornår den rækker ind i nutiden.',
             action: () => navigateFn('punktet_og_broen')
         },

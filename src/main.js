@@ -399,8 +399,8 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     appState.currentView = 'pronomen';
     renderPronomenView(appDiv, navigate, extraData);
   } else if (viewTarget === 'verbum') {
-    appState.currentView = 'verbum';
-    renderPronomenView(appDiv, navigate, { category: 'verbum', ...extraData });
+    appState.currentView = 'top100_verber';
+    renderTop100VerberMenuView(appDiv, navigate);
   } else if (viewTarget === 'pronominer_subjekt') {
     appState.currentView = 'pronominer_subjekt';
     renderPronomenView(appDiv, navigate, { viewMode: 'subjekt', ...extraData });

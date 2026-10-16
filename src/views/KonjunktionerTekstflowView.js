@@ -44,49 +44,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     backBtn.innerHTML = `← Tilbage til Konjunktioner-fladen`;
     backBtn.onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     topBar.appendChild(backBtn);
-
-    const bridgeNav = document.createElement('div');
-    bridgeNav.style.display = 'flex';
-    bridgeNav.style.gap = '0.5rem';
-    bridgeNav.style.flexWrap = 'wrap';
-
-    const btnDaNaar = document.createElement('button');
-    btnDaNaar.className = 'back-btn';
-    btnDaNaar.style.background = 'rgba(16, 185, 129, 0.15)';
-    btnDaNaar.style.borderColor = '#10b981';
-    btnDaNaar.style.color = '#6ee7b7';
-    btnDaNaar.innerHTML = `📅 Da / Når ➔`;
-    btnDaNaar.onclick = () => navigateFn('konjunktioner_da_naar', { from: 'konjunktioner_tekstflow' });
-    bridgeNav.appendChild(btnDaNaar);
-
-    const btnFordi = document.createElement('button');
-    btnFordi.className = 'back-btn';
-    btnFordi.style.background = 'rgba(56, 189, 248, 0.15)';
-    btnFordi.style.borderColor = '#38bdf8';
-    btnFordi.style.color = '#7dd3fc';
-    btnFordi.innerHTML = `➡️ Fordi / Derfor ➔`;
-    btnFordi.onclick = () => navigateFn('konjunktioner_fordi_derfor', { from: 'konjunktioner_tekstflow' });
-    bridgeNav.appendChild(btnFordi);
-
-    const btnSelvom = document.createElement('button');
-    btnSelvom.className = 'back-btn';
-    btnSelvom.style.background = 'rgba(249, 115, 22, 0.15)';
-    btnSelvom.style.borderColor = '#f97316';
-    btnSelvom.style.color = '#fdba74';
-    btnSelvom.innerHTML = `🧱 Selvom / Alligevel ➔`;
-    btnSelvom.onclick = () => navigateFn('konjunktioner_selvom_alligevel', { from: 'konjunktioner_tekstflow' });
-    bridgeNav.appendChild(btnSelvom);
-
-    const btnFelt4 = document.createElement('button');
-    btnFelt4.className = 'back-btn';
-    btnFelt4.style.background = 'rgba(245, 158, 11, 0.15)';
-    btnFelt4.style.borderColor = '#f59e0b';
-    btnFelt4.style.color = '#fde68a';
-    btnFelt4.innerHTML = `🌟 Felt 4: "AT" ➔`;
-    btnFelt4.onclick = () => navigateFn('konjunktioner_at', { from: 'konjunktioner_tekstflow' });
-    bridgeNav.appendChild(btnFelt4);
-
-    topBar.appendChild(bridgeNav);
     viewContainer.appendChild(topBar);
 
     // TTS Audio Helper
@@ -514,10 +471,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     const hero = document.createElement('div');
     hero.className = 'tf-hero';
     hero.innerHTML = `
-        <div class="tf-hero-tag">
-            <span>🚦</span> Felt 8 • Tekstens Trafik & Tekstflow
-        </div>
-        <h1>TEKSTENS TRAFIK 🚦 & DET FLYDENDE SPROG</h1>
+        <h1>Tekstens trafik og det flydende sprog</h1>
         <p>Bindeord er sprogets færdselsregler og trafikskilte: De bestemmer, om teksten kører ligeud på motorvejen (<strong>og</strong>), tager et skarpt sving (<strong>men</strong>), tanker brændstof på årsagen (<strong>fordi</strong>), skyder konsekvensen afsted med en pil (<strong>derfor</strong>), bygger en vejspærring (<strong>selvom</strong>), gennembryder forhindringen (<strong>alligevel</strong>), tager en rundkørsel for vaner (<strong>når</strong>) eller sætter en GPS-tegnestift i fortiden (<strong>da</strong>)!</p>
     `;
     viewContainer.appendChild(hero);

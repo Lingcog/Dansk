@@ -42,15 +42,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     backBtn.onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     topBar.appendChild(backBtn);
 
-    const allKonjBtn = document.createElement('button');
-    allKonjBtn.className = 'back-btn';
-    allKonjBtn.style.background = 'rgba(16, 185, 129, 0.15)';
-    allKonjBtn.style.borderColor = '#10b981';
-    allKonjBtn.style.color = '#6ee7b7';
-    allKonjBtn.innerHTML = `🌉 Se Felt 1-3: Øvrige Konjunktioner (og, men, fordi, når/da...) ➔`;
-    allKonjBtn.onclick = () => navigateFn('konjunktioner_all', { from: 'top_konjunktioner' });
-    topBar.appendChild(allKonjBtn);
-
     viewContainer.appendChild(topBar);
 
     // TTS Audio Helper
@@ -1425,10 +1416,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     const hero = document.createElement('div');
     hero.className = 'at-hero';
     hero.innerHTML = `
-        <div class="at-hero-tag">
-            <span>🌟</span> Felt 4 • Særskilt Fokusfelt • 18 Konstruktioner
-        </div>
-        <h1>Ordet "AT" i alle sætningskonstruktioner</h1>
+        <h1>Ordet "at" i alle sætningskonstruktioner</h1>
         <p>De to bogstaver <strong><em>at</em></strong> er et af dansk grammatiks mest drilske ord, fordi det både fungerer som <strong>ledsætningskonjunktion</strong> (<em>siger, at du...</em>), som <strong>infinitivmærke</strong> (<em>elsker at svømme</em>), sammen med <strong>præpositioner</strong> (<em>god til at / glad for, at</em>) og i <strong>sammensatte bindeord</strong> (<em>for at, uden at, ved at, så...at</em>).</p>
     `;
     viewContainer.appendChild(hero);
@@ -1657,8 +1645,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     <div class="inspector-sentence-card">
                         <div class="trans-badge-label" style="margin-bottom:0.4rem;">💬 SÆTNINGSEKSEMPEL</div>
                         <div class="sentence-quote-text">"${item.sentence}"</div>
-                        <div class="sentence-trans-text">"${item.contextSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#fde68a;">🌍 "${trans.sentence}"</div>` : ''}
+                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#fde68a; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="insp-speak-sent">
                             <span>🔊</span> Lyt til helsætningen
                         </button>
@@ -1677,7 +1664,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             `;
 
             inspector.querySelector('#insp-speak-word').onclick = () => speakDanish(item.sentence);
-            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.sentence);
 
             inspector.querySelector('#insp-prev-btn').onclick = () => {
                 const idx = visibleWords.findIndex(w => w.id === item.id);

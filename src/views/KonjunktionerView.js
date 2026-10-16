@@ -66,40 +66,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     };
     topBar.appendChild(backBtn);
 
-    const rightTopBtns = document.createElement('div');
-    rightTopBtns.style.display = 'flex';
-    rightTopBtns.style.gap = '0.6rem';
-    rightTopBtns.style.flexWrap = 'wrap';
-
-    const atFocusBtn = document.createElement('button');
-    atFocusBtn.className = 'back-btn';
-    atFocusBtn.style.background = 'rgba(245, 158, 11, 0.2)';
-    atFocusBtn.style.borderColor = '#f59e0b';
-    atFocusBtn.style.color = '#fde68a';
-    atFocusBtn.innerHTML = `🌟 Særskilt Felt 4: Ordet "AT" i alle konstruktioner ➔`;
-    atFocusBtn.onclick = () => navigateFn('konjunktioner_at', { from: 'top_konjunktioner' });
-    rightTopBtns.appendChild(atFocusBtn);
-
-    const bridgeBtn = document.createElement('button');
-    bridgeBtn.className = 'back-btn';
-    bridgeBtn.style.background = 'rgba(234, 179, 8, 0.18)';
-    bridgeBtn.style.borderColor = '#eab308';
-    bridgeBtn.style.color = '#fde047';
-    bridgeBtn.innerHTML = `🔗 Felt 7: Konnektive Adverbier ➔`;
-    bridgeBtn.onclick = () => navigateFn('adverbier_konnektion');
-    rightTopBtns.appendChild(bridgeBtn);
-
-    const tekstflowTopBtn = document.createElement('button');
-    tekstflowTopBtn.className = 'back-btn';
-    tekstflowTopBtn.style.background = 'rgba(16, 185, 129, 0.2)';
-    tekstflowTopBtn.style.borderColor = '#10b981';
-    tekstflowTopBtn.style.color = '#6ee7b7';
-    tekstflowTopBtn.innerHTML = `🚦 Felt 8: Tekstens Trafik ➔`;
-    tekstflowTopBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_all' });
-    rightTopBtns.appendChild(tekstflowTopBtn);
-
-    topBar.appendChild(rightTopBtns);
-
     viewContainer.appendChild(topBar);
 
     // TTS Audio Helper
@@ -128,12 +94,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Solen skinner fra en skyfri himmel, og fuglene synger lystigt i de grønne træer.',
             ruleHint: 'Binder to ligeværdige helsætninger sammen. Står i forbinderfeltet (F0) og ændrer IKKE ordstillingen ("ikke" står efter verbet).',
             translations: {
-                en: { word: 'and', sentence: 'The sun is shining from a cloudless sky, and the birds are singing in the green trees.' },
-                de: { word: 'und', sentence: 'Die Sonne scheint vom Himmel, und die Vögel singen in den grünen Bäumen.' },
-                es: { word: 'y / e', sentence: 'El sol brilla en el cielo despejado y los pájaros cantan en los árboles verdes.' },
-                ar: { word: 'وَ (حرف عطف)', sentence: 'الشمس مشرقة في السماء الصافية، والطيور تغرد في الأشجار الخضراء.' },
-                tr: { word: 've', sentence: 'Güneş bulutsuz gökyüzünde parlıyor ve kuşlar yeşil ağaçlarda ötüyor.' },
-                uk: { word: 'і / та / й', sentence: 'Сонце світить з безхмарного неба, і пташки співають у зелених деревах.' }
+                en: { word: "and", sentence: "The sun is shining, and the birds are singing." },
+                de: { word: "und", sentence: "Die Sonne scheint, und die Vögel singen." },
+                es: { word: "y / e", sentence: "El sol brilla y los pájaros cantan." },
+                ar: { word: "وَ (حرف عطف)", sentence: "الشمس تشرق والطيور تغرد." },
+                tr: { word: "ve", sentence: "Güneş parlıyor ve kuşlar ötüyor." },
+                uk: { word: "і / та / й", sentence: "Сонце світить, і пташки співають." }
             }
         },
         {
@@ -149,12 +115,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Der falder lidt regn i parken, men parret går ikke hjem endnu.',
             ruleHint: 'Skaber kontrast mellem to helsætninger. Da det er en helsætningskonjunktion, står "ikke" EFTER verbet ("..., men vi går ikke hjem").',
             translations: {
-                en: { word: 'but', sentence: 'A little rain is falling in the park, but the couple is not going home yet.' },
-                de: { word: 'aber / sondern', sentence: 'Es regnet ein wenig im Park, aber das Paar geht noch nicht nach Hause.' },
-                es: { word: 'pero / sino', sentence: 'Cae un poco de lluvia en el parque, pero la pareja aún no se va a casa.' },
-                ar: { word: 'لٰكِنْ / بَلْ', sentence: 'يهطل بعض المطر في الحديقة، لكن الزوجين لا يعودان إلى المنزل بعد.' },
-                tr: { word: 'ama / fakat / ancak', sentence: 'Parkta biraz yağmur yağıyor ama çift henüz eve gitmiyor.' },
-                uk: { word: 'але / проте', sentence: 'У парку трохи дощить, але пара ще не йде додому.' }
+                en: { word: "but", sentence: "It is raining a little, but we are not going home." },
+                de: { word: "aber / sondern", sentence: "Es regnet ein wenig, aber wir gehen nicht nach Hause." },
+                es: { word: "pero / sino", sentence: "Llueve un poco, pero no nos vamos a casa." },
+                ar: { word: "لٰكِنْ / بَلْ", sentence: "إنها تمطر قليلًا، لكننا لا نذهب إلى المنزل." },
+                tr: { word: "ama / fakat / ancak", sentence: "Biraz yağmur yağıyor ama eve gitmiyoruz." },
+                uk: { word: "але / проте", sentence: "Трохи дощить, але ми не йдемо додому." }
             }
         },
         {
@@ -170,12 +136,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Vil du gerne have en friskbrygget kop kaffe, eller vil du hellere drikke grøn te?',
             ruleHint: 'Giver et valg mellem to muligheder. Binder ord eller helsætninger sammen uden at ændre ordstillingen.',
             translations: {
-                en: { word: 'or', sentence: 'Would you like a freshly brewed cup of coffee, or would you rather drink green tea?' },
-                de: { word: 'oder', sentence: 'Möchtest du eine Tasse Kaffee, oder trinkst du lieber grünen Tee?' },
-                es: { word: 'o / u', sentence: '¿Quieres una taza de café recién hecho o prefieres tomar té verde?' },
-                ar: { word: 'أَوْ / أَمْ', sentence: 'هل تود فنجان قهوة طازجًا، أم تفضل شرب الشاي الأخضر؟' },
-                tr: { word: 'veya / ya da / yoksa', sentence: 'Taze demlenmiş bir fincan kahve mi istersiniz, yoksa yeşil çay mı tercih edersiniz?' },
-                uk: { word: 'або / чи', sentence: 'Бажаєте свіжозварену чашку кави чи волієте пити зелений чай?' }
+                en: { word: "or", sentence: "Do you want coffee, or do you prefer tea?" },
+                de: { word: "oder", sentence: "Möchtest du Kaffee, oder bevorzugst du Tee?" },
+                es: { word: "o / u", sentence: "¿Quieres café o prefieres té?" },
+                ar: { word: "أَوْ / أَمْ", sentence: "هل تريد قهوة، أم تفضل الشاي؟" },
+                tr: { word: "veya / ya da / yoksa", sentence: "Kahve mi istersin, yoksa çayı mı tercih edersin?" },
+                uk: { word: "або / чи", sentence: "Ти хочеш кави чи віддаєш перевагу чаю?" }
             }
         },
         {
@@ -191,12 +157,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Han kan ikke tage på arbejde i dag, for han er ikke rask og har høj feber.',
             ruleHint: 'PAS PÅ! "For" betyder næsten det samme som "fordi", MEN "for" indleder en HELSÆTNING! Derfor står "ikke" EFTER verbet: "..., for han ER IKKE rask."',
             translations: {
-                en: { word: 'for / because (coordinating)', sentence: 'He cannot go to work today, for he is not well and has a high fever.' },
-                de: { word: 'denn (Hauptsatz!)', sentence: 'Er kann heute nicht zur Arbeit gehen, denn er ist nicht gesund.' },
-                es: { word: 'pues / puesto que', sentence: 'No puede ir a trabajar hoy, pues no se encuentra bien y tiene fiebre.' },
-                ar: { word: 'لِأَنَّ / فَـ (في جملة رئيسية)', sentence: 'لا يستطيع الذهاب إلى العمل اليوم، فهو ليس بصحة جيدة ويعاني من الحمى.' },
-                tr: { word: 'çünkü (ana cümle bağlacı)', sentence: 'Bugün işe gidemiyor, çünkü iyi değil ve yüksek ateşi var.' },
-                uk: { word: 'бо / адже (сурядний сполучник)', sentence: 'Він не може піти на роботу сьогодні, бо він не здоровий і має високу температуру.' }
+                en: { word: "for / because (coordinating)", sentence: "He stays in bed, for he is not well." },
+                de: { word: "denn (Hauptsatz!)", sentence: "Er bleibt im Bett, denn er ist nicht gesund." },
+                es: { word: "pues / puesto que", sentence: "Se queda en la cama, pues no está bien." },
+                ar: { word: "لِأَنَّ / فَـ (في جملة رئيسية)", sentence: "يبقى في السرير، فهو ليس بخير." },
+                tr: { word: "çünkü (ana cümle bağlacı)", sentence: "Yatakta kalıyor, çünkü iyi değil." },
+                uk: { word: "бо / адже (сурядний сполучник)", sentence: "Він залишається в ліжку, бо він не здоровий." }
             }
         },
         {
@@ -212,12 +178,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Det øsregner udenfor hele morgenen, så pendlerne tager den gule bus på arbejde.',
             ruleHint: 'PAS PÅ TVILLINGEN "derfor"! Efter konjunktionen "så" er der INGEN inversion (Subjekt før Verbum: "..., så jeg tager bussen"). Efter adverbiet "derfor" er der inversion ("Derfor tager jeg bussen").',
             translations: {
-                en: { word: 'so (result, no inversion)', sentence: 'It is pouring rain outside all morning, so the commuters take the yellow bus to work.' },
-                de: { word: 'also / sodass (ohne Inversion)', sentence: 'Es gießt draußen in Strömen, also nehmen die Pendler den gelben Bus.' },
-                es: { word: 'así que / de modo que', sentence: 'Llueve a cántaros toda la mañana, así que los pasajeros toman el autobús amarillo.' },
-                ar: { word: 'لِذَا / فـَ (نتيجة بدون قلب الفعل)', sentence: 'إنها تمطر بغزارة طوال الصباح، لذا يركب المسافرون الحافلة الصفراء إلى العمل.' },
-                tr: { word: 'bu yüzden / öyle ki (devriksiz)', sentence: 'Bütün sabah dışarıda sağanak yağmur var, bu yüzden yolcular sarı otobüse biniyor.' },
-                uk: { word: 'тож / тому (без інверсії)', sentence: 'Надворі весь ранок ллє дощ, тож пасажири сідають у жовтий автобус.' }
+                en: { word: "so (result, no inversion)", sentence: "It is raining heavily, so I take the bus." },
+                de: { word: "also / sodass (ohne Inversion)", sentence: "Es regnet stark, also nehme ich den Bus." },
+                es: { word: "así que / de modo que", sentence: "Llueve mucho, así que tomo el autobús." },
+                ar: { word: "لِذَا / فـَ (نتيجة بدون قلب الفعل)", sentence: "تمطر بغزارة، لذا سأستقل الحافلة." },
+                tr: { word: "bu yüzden / öyle ki (devriksiz)", sentence: "Şiddetli yağmur yağıyor, bu yüzden otobüse biniyorum." },
+                uk: { word: "тож / тому (без інверсії)", sentence: "Йде сильний дощ, тож я сідаю на автобус." }
             }
         },
 
@@ -235,12 +201,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Han ligger under den varme dyne hele dagen, fordi han ikke føler sig rask nok til at arbejde.',
             ruleHint: 'GYLDEN REGEL: "Fordi" indleder en LEDSÆTNING! I en ledsætning står "ikke" (og altid/aldrig/ofte) altid FØR verbet: "... fordi han IKKE ER rask."',
             translations: {
-                en: { word: 'because (subordinating)', sentence: 'He stays under the warm duvet all day because he does not feel well enough to work.' },
-                de: { word: 'weil / da (Nebensatz!)', sentence: 'Er bleibt den ganzen Tag im Bett, weil er sich nicht gesund genug fühlt.' },
-                es: { word: 'porque (oración subordinada)', sentence: 'Se queda bajo el edredón todo el día porque no se siente lo bastante bien para trabajar.' },
-                ar: { word: 'لِأَنَّ (في جملة فرعية)', sentence: 'يبقى تحت اللحاف الدافئ طوال اليوم لأنه لا يشعر بصحة كافية للعمل.' },
-                tr: { word: '-diği için / çünkü (yan cümle)', sentence: 'Çalışacak kadar iyi hissetmediği için bütün gün sıcak yorganın altında yatıyor.' },
-                uk: { word: 'тому що / оскільки (підрядний)', sentence: 'Він лежить під теплою ковдрою весь день, тому що не почувається достатньо здоровим.' }
+                en: { word: "because (subordinating)", sentence: "He stays home because he is not well." },
+                de: { word: "weil / da (Nebensatz!)", sentence: "Er bleibt zu Hause, weil er nicht gesund ist." },
+                es: { word: "porque (oración subordinada)", sentence: "Se queda en casa porque no está bien." },
+                ar: { word: "لِأَنَّ (في جملة فرعية)", sentence: "يبقى في المنزل لأنه ليس بخير." },
+                tr: { word: "-diği için / çünkü (yan cümle)", sentence: "İyi olmadığı için evde kalıyor." },
+                uk: { word: "тому що / оскільки (підрядний)", sentence: "Він залишається вдома, тому що він не здоровий." }
             }
         },
         {
@@ -256,12 +222,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'De lufter glad deres to hunde i parken, selvom solen ikke skinner på denne side.',
             ruleHint: 'Ledsætnings-tvillingen til adverbiet "alligevel". Efter "selvom" står "ikke" FØR verbet: "... selvom det IKKE ER tørvejr."',
             translations: {
-                en: { word: 'even though / although', sentence: 'They happily walk their two dogs in the park, even though the sun is not shining.' },
-                de: { word: 'obwohl / wenngleich', sentence: 'Sie gehen im Park spazieren, obwohl die Sonne auf dieser Seite nicht scheint.' },
-                es: { word: 'aunque / a pesar de que', sentence: 'Pasean alegremente a sus perros por el parque, aunque no brilla el sol.' },
-                ar: { word: 'عَلَى الرَّغْمِ مِنْ أَنَّ / رَغْمَ أَنَّ', sentence: 'ينزهان كلبيهما في الحديقة بسعادة، رغم أن الشمس لا تشرق في هذا الجانب.' },
-                tr: { word: '-e rağmen / her ne kadar ... olsa da', sentence: 'Bu tarafta güneş parlamamasına rağmen parkta köpeklerini keyifle gezdiriyorlar.' },
-                uk: { word: 'хоча / незважаючи на те що', sentence: 'Вони радо вигулюють собак у парку, хоча сонце з цього боку не світить.' }
+                en: { word: "even though / although", sentence: "They go for a walk, even though it is not dry weather." },
+                de: { word: "obwohl / wenngleich", sentence: "Sie machen einen Spaziergang, obwohl es nicht trocken ist." },
+                es: { word: "aunque / a pesar de que", sentence: "Dan un paseo, aunque no hace tiempo seco." },
+                ar: { word: "عَلَى الرَّغْمِ مِنْ أَنَّ / رَغْمَ أَنَّ", sentence: "يذهبون في نزهة، على الرغم من أن الجو ليس جافًا." },
+                tr: { word: "-e rağmen / her ne kadar ... olsa da", sentence: "Hava kuru olmasa da yürüyüşe çıkıyorlar." },
+                uk: { word: "хоча / незважаючи на те що", sentence: "Вони йдуть на прогулянку, хоча погода не суха." }
             }
         },
         {
@@ -277,12 +243,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Familien planlægger en udflugt til stranden på søndag, hvis vejret ikke bliver dårligt.',
             ruleHint: 'Udtrykker en betingelse. I ledsætningen står "ikke" før verbet. Hvis ledsætningen står forrest ("Hvis det ikke regner, ..."), kommer der INVERSION i hovedsætningen ("... tager vi på stranden")!',
             translations: {
-                en: { word: 'if (condition)', sentence: 'The family is planning a trip to the beach on Sunday if the weather does not turn bad.' },
-                de: { word: 'wenn / falls', sentence: 'Die Familie plant am Sonntag einen Ausflug zum Strand, falls das Wetter nicht schlecht wird.' },
-                es: { word: 'si (condición)', sentence: 'La familia planea una excursión a la playa el domingo si no hace mal tiempo.' },
-                ar: { word: 'إِذَا / إِنْ (شرطية)', sentence: 'تخطط العائلة لرحلة إلى الشاطئ يوم الأحد إذا لم يكن الطقس سيئًا.' },
-                tr: { word: 'eğer / şayet (-se/-sa)', sentence: 'Hava kötü olmazsa aile pazar günü plaja bir gezi planlıyor.' },
-                uk: { word: 'якщо (умова)', sentence: 'Родина планує поїздку на пляж у неділю, якщо погода не зіпсується.' }
+                en: { word: "if (condition)", sentence: "We will go to the beach if it does not rain." },
+                de: { word: "wenn / falls", sentence: "Wir fahren an den Strand, wenn es nicht regnet." },
+                es: { word: "si (condición)", sentence: "Iremos a la playa si no llueve." },
+                ar: { word: "إِذَا / إِنْ (شرطية)", sentence: "سنذهب إلى الشاطئ إذا لم تمطر." },
+                tr: { word: "eğer / şayet (-se/-sa)", sentence: "Yağmur yağmazsa plaja gideriz." },
+                uk: { word: "якщо (умова)", sentence: "Ми підемо на пляж, якщо не буде дощу." }
             }
         },
         {
@@ -298,12 +264,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Cyklisten ved kanalen har lige skrevet en besked om, at han ikke bliver forsinket.',
             ruleHint: 'Bruges efter verber som "sige, tro, vide, mene, høre, se" når man gengiver et udsagn. Husk ledsætningsordstilling: "... at han IKKE KOMMER for sent."',
             translations: {
-                en: { word: 'that (complementizer)', sentence: 'The cyclist by the canal just sent a message saying that he will not be delayed.' },
-                de: { word: 'dass', sentence: 'Der Radfahrer am Kanal hat gerade geschrieben, dass er sich nicht verspätet.' },
-                es: { word: 'que (declarativo)', sentence: 'El ciclista del canal acaba de enviar un mensaje diciendo que no llegará tarde.' },
-                ar: { word: 'أَنَّ', sentence: 'أرسل راكب الدراجة عند القناة رسالة للتو تفيد بأنه لن يتأخر.' },
-                tr: { word: '-diğini / ki (bildirme bağlacı)', sentence: 'Kanal kenarındaki bisikletli, gecikmeyeceğini belirten bir mesaj gönderdi.' },
-                uk: { word: 'що (з\'ясувальний сполучник)', sentence: 'Велосипедист біля каналу щойно написав повідомлення, що він не запізниться.' }
+                en: { word: "that (complementizer)", sentence: "He says that he will not be late." },
+                de: { word: "dass", sentence: "Er sagt, dass er nicht zu spät kommt." },
+                es: { word: "que (declarativo)", sentence: "Dice que no llegará tarde." },
+                ar: { word: "أَنَّ", sentence: "يقول إنه لن يتأخر." },
+                tr: { word: "-diğini / ki (bildirme bağlacı)", sentence: "Geç kalmayacağını söylüyor." },
+                uk: { word: "що (з'ясувальний сполучник)", sentence: "Він каже, що не запізниться." }
             }
         },
         {
@@ -319,12 +285,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Kvinden i caféen tjekker sin telefon, fordi hun er i tvivl om, om veninden ikke har fundet vej.',
             ruleHint: 'Bruges ved JA/NEJ-spørgsmål og tvivl (efter "spørge, ikke vide, være i tvivl"). Sammenlign: "Jeg ved, AT han kommer" (fakta) vs. "Jeg ved ikke, OM han kommer" (tvivl).',
             translations: {
-                en: { word: 'whether / if (indirect question)', sentence: 'The woman in the café checks her phone because she is unsure whether her friend is coming.' },
-                de: { word: 'ob (indirekte Frage)', sentence: 'Die Frau im Café schaut auf ihr Handy, weil sie nicht weiß, ob ihre Freundin heute kommt.' },
-                es: { word: 'si (pregunta indirecta / duda)', sentence: 'La mujer en el café mira su teléfono porque no sabe si su amiga vendrá hoy.' },
-                ar: { word: 'مَا إِذَا / هَلْ (للتساؤل والشك)', sentence: 'تتفقد المرأة في المقهى هاتفها لأنها لا تعرف ما إذا كانت صديقتها ستأتي اليوم.' },
-                tr: { word: '-ip -mediğini (dolaylı soru / şüphe)', sentence: 'Kafedeki kadın, arkadaşının bugün gelip gelmeyeceğini bilmediği için telefonuna bakıyor.' },
-                uk: { word: 'чи (непряме питання / сумнів)', sentence: 'Жінка в кафе дивиться на телефон, бо не знає, чи прийде сьогодні її подруга.' }
+                en: { word: "whether / if (indirect question)", sentence: "She does not know whether her friend is coming today." },
+                de: { word: "ob (indirekte Frage)", sentence: "Sie weiß nicht, ob die Freundin heute kommt." },
+                es: { word: "si (pregunta indirecta / duda)", sentence: "Ella no sabe si su amiga vendrá hoy." },
+                ar: { word: "مَا إِذَا / هَلْ (للتساؤل والشك)", sentence: "هي لا تعرف ما إذا كانت صديقتها ستأتي اليوم." },
+                tr: { word: "-ip -mediğini (dolaylı soru / şüphe)", sentence: "Arkadaşının bugün gelip gelmeyeceğini bilmiyor." },
+                uk: { word: "чи (непряме питання / сумнів)", sentence: "Вона не знає, чи прийде подруга сьогодні." }
             }
         },
 
@@ -342,12 +308,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Når sommerferien starter i juli, tager hele familien altid i sommerhus ved vandet.',
             ruleHint: 'KEND FORSKELLEN PÅ "NÅR" OG "DA": Brug "når" om 1) FREMTID ("Når jeg bliver gammel...") og 2) GENTAGELSE/VANE ("Altid når det regner...").',
             translations: {
-                en: { word: 'when / whenever (present, future, habit)', sentence: 'When the summer holiday starts in July, the whole family always goes to the beach.' },
-                de: { word: 'wenn / immer wenn (Gegenwart, Zukunft, Gewohnheit)', sentence: 'Wenn im Juli die Sommerferien beginnen, fährt die Familie immer ans Meer.' },
-                es: { word: 'cuando / siempre que (presente, futuro, hábito)', sentence: 'Cuando empiezan las vacaciones de verano en julio, la familia siempre va a la playa.' },
-                ar: { word: 'عِنْدَمَا / كُلَّمَا (للمضارع والمستقبل والعادة)', sentence: 'عندما تبدأ العطلة الصيفية في يوليو، تذهب العائلة دائمًا إلى الشاطئ.' },
-                tr: { word: '-diği zaman / her ...-diğinde (geniş ve gelecek zaman)', sentence: 'Temmuzda yaz tatili başladığında tüm aile her zaman sahile gider.' },
-                uk: { word: 'коли / щоразу коли (теперішнє, майбутнє, звичка)', sentence: 'Коли в липні починаються літні канікули, вся родина завжди їде на пляж.' }
+                en: { word: "when / whenever (present, future, habit)", sentence: "When the sun shines, we eat on the balcony." },
+                de: { word: "wenn / immer wenn (Gegenwart, Zukunft, Gewohnheit)", sentence: "Wenn die Sonne scheint, essen wir auf dem Balkon." },
+                es: { word: "cuando / siempre que (presente, futuro, hábito)", sentence: "Cuando brilla el sol, comemos en el balcón." },
+                ar: { word: "عِنْدَمَا / كُلَّمَا (للمضارع والمستقبل والعادة)", sentence: "عندما تشرق الشمس، نأكل على الشرفة." },
+                tr: { word: "-diği zaman / her ...-diğinde (geniş ve gelecek zaman)", sentence: "Güneş parladığında balkonda yemek yeriz." },
+                uk: { word: "коли / щоразу коли (теперішнє, майбутнє, звичка)", sentence: "Коли світить сонце, ми їмо на балконі." }
             }
         },
         {
@@ -363,12 +329,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Moren peger på fotografiet og fortæller, hvad hun lavede, da hun var en lille pige.',
             ruleHint: 'Brug KUN tids-konjunktionen "da" om noget, der skete én bestemt gang eller i én afsluttet periode i FORTIDEN ("Da jeg kom hjem i går...", "Da jeg var barn...").',
             translations: {
-                en: { word: 'when (single past event/period)', sentence: 'The mother points to the photo and tells what she did when she was a little girl.' },
-                de: { word: 'als (einmalig in der Vergangenheit)', sentence: 'Die Mutter zeigt auf das Foto und erzählt, wo sie wohnte, als sie ein Kind war.' },
-                es: { word: 'cuando (evento único en el pasado)', sentence: 'La madre señala la foto y cuenta dónde vivía cuando era una niña pequeña.' },
-                ar: { word: 'لَمَّا / عِنْدَمَا (لحدث محدد في الماضي)', sentence: 'تشير الأم إلى الصورة وتحكي ماذا فعلت عندما كانت طفلة صغيرة.' },
-                tr: { word: '-diğinde / -diği zaman (geçmişte tek bir olay/dönem)', sentence: 'Anne fotoğrafa işaret ediyor ve küçük bir kızken nerede yaşadığını anlatıyor.' },
-                uk: { word: 'коли (одноразова подія або період у минулому)', sentence: 'Мати показує на фотографію і розповідає, де вона жила, коли була маленькою дівчинкою.' }
+                en: { word: "when (single past event/period)", sentence: "When I was a child, we lived in Odense." },
+                de: { word: "als (einmalig in der Vergangenheit)", sentence: "Als ich ein Kind war, wohnten wir in Odense." },
+                es: { word: "cuando (evento único en el pasado)", sentence: "Cuando yo era niño, vivíamos en Odense." },
+                ar: { word: "لَمَّا / عِنْدَمَا (لحدث محدد في الماضي)", sentence: "عندما كنت طفلاً، كنا نعيش في أودنسي." },
+                tr: { word: "-diğinde / -diği zaman (geçmişte tek bir olay/dönem)", sentence: "Ben çocukken Odense'de yaşıyorduk." },
+                uk: { word: "коли (одноразова подія або період у минулому)", sentence: "Коли я був дитиною, ми жили в Оденсе." }
             }
         },
         {
@@ -384,12 +350,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Faren synger glad med på sin yndlingssang i høretelefonerne, mens han koger pasta til familien.',
             ruleHint: 'Viser at to handlinger foregår på nøjagtig samme tid. Indleder en ledsætning ("... mens han ikke kigger på uret").',
             translations: {
-                en: { word: 'while', sentence: 'The father happily sings along to his favorite song on his headphones while cooking pasta.' },
-                de: { word: 'während', sentence: 'Der Vater hört Musik über seine Kopfhörer, während er Nudeln für die Familie kocht.' },
-                es: { word: 'mientras', sentence: 'El padre escucha su canción favorita con los auriculares mientras cocina pasta.' },
-                ar: { word: 'بَيْنَمَا / أَثْنَاءَ مَا', sentence: 'يستمع الأب إلى الموسيقى عبر سماعات الرأس بينما يطبخ المعكرونة للعائلة.' },
-                tr: { word: '-iken / sırasında', sentence: 'Baba aile için makarna pişirirken kulaklıkla en sevdiği şarkıyı dinliyor.' },
-                uk: { word: 'поки / під час того як', sentence: 'Батько слухає улюблену пісню в навушниках, поки готує пасту для родини.' }
+                en: { word: "while", sentence: "He listens to music while he is cooking." },
+                de: { word: "während", sentence: "Er hört Musik, während er kocht." },
+                es: { word: "mientras", sentence: "Escucha música mientras cocina." },
+                ar: { word: "بَيْنَمَا / أَثْنَاءَ مَا", sentence: "يستمع إلى الموسيقى بينما يطبخ." },
+                tr: { word: "-iken / sırasında", sentence: "Yemek yaparken müzik dinliyor." },
+                uk: { word: "поки / під час того як", sentence: "Він слухає музику, поки готує їжу." }
             }
         },
         {
@@ -405,12 +371,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Han tjekker altid sine lommer og låser den blå hoveddør grundigt, inden han tager på arbejde.',
             ruleHint: 'Synonym med konjunktionen "før". Viser at handling A sker forud for handling B.',
             translations: {
-                en: { word: 'before', sentence: 'He always checks his pockets and locks the front door thoroughly before going to work.' },
-                de: { word: 'bevor / ehe', sentence: 'Er schließt die blaue Haustür immer gründlich ab, bevor er zur Arbeit geht.' },
-                es: { word: 'antes de que', sentence: 'Siempre revisa sus bolsillos y cierra bien la puerta antes de ir al trabajo.' },
-                ar: { word: 'قَبْلَ أَنْ', sentence: 'يتفقد جيوبه دائمًا ويقفل الباب الأمامي جيدًا قبل أن يذهب إلى العمل.' },
-                tr: { word: '-meden önce', sentence: 'İşe gitmeden önce her zaman ceplerini kontrol eder ve ön kapıyı kilitler.' },
-                uk: { word: 'перш ніж / до того як', sentence: 'Він завжди перевіряє кишені та замикає вхідні двері, перш ніж іти на роботу.' }
+                en: { word: "before", sentence: "Remember to lock the door before you leave." },
+                de: { word: "bevor / ehe", sentence: "Denk daran, die Tür abzuschließen, bevor du gehst." },
+                es: { word: "antes de que", sentence: "Recuerda cerrar la puerta con llave antes de irte." },
+                ar: { word: "قَبْلَ أَنْ", sentence: "تذكر أن تقفل الباب قبل أن تغادر." },
+                tr: { word: "-meden önce", sentence: "Çıkmadan önce kapıyı kilitlemeyi unutma." },
+                uk: { word: "перш ніж / до того як", sentence: "Не забудь замкнути двері, перш ніж підеш." }
             }
         },
         {
@@ -426,12 +392,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Børnene tegner og hygger ved spisebordet, efter at familien er blevet færdig med maden.',
             ruleHint: 'PAS PÅ: "Efter" alene er en præposition ("efter middagen"). Når der følger en hel ledsætning med subjekt og verbum, hedder konjunktionen "efter at"!',
             translations: {
-                en: { word: 'after (conjunction)', sentence: 'The children draw and relax at the table after the family has finished eating.' },
-                de: { word: 'nachdem', sentence: 'Die Kinder malen am Esstisch, nachdem die Familie mit dem Essen fertig ist.' },
-                es: { word: 'después de que', sentence: 'Los niños dibujan en la mesa después de que la familia ha terminado de comer.' },
-                ar: { word: 'بَعْدَ أَنْ', sentence: 'يرسم الأطفال ويستمتعون على الطاولة بعد أن انتهت العائلة من تناول الطعام.' },
-                tr: { word: '-dikten sonra', sentence: 'Aile yemeğini bitirdikten sonra çocuklar yemek masasında resim yapıyor.' },
-                uk: { word: 'після того як', sentence: 'Діти малюють за обіднім столом після того, як родина закінчила їсти.' }
+                en: { word: "after (conjunction)", sentence: "We drank coffee after we had eaten." },
+                de: { word: "nachdem", sentence: "Wir tranken Kaffee, nachdem wir gegessen hatten." },
+                es: { word: "después de que", sentence: "Tomamos café después de haber comido." },
+                ar: { word: "بَعْدَ أَنْ", sentence: "شربنا القهوة بعد أن تناولنا الطعام." },
+                tr: { word: "-dikten sonra", sentence: "Yemek yedikten sonra kahve içtik." },
+                uk: { word: "після того як", sentence: "Ми пили каву після того, як поїли." }
             }
         },
         {
@@ -447,12 +413,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Vi har kendt hinanden og boet i den samme gade ved kanalen, siden vi startede på studiet.',
             ruleHint: 'Forbinder et startpunkt i fortiden ("flyttede") med en tilstand i nutiden ("har boet").',
             translations: {
-                en: { word: 'since (time)', sentence: 'We have known each other and lived on the same canal street since we started studying.' },
-                de: { word: 'seit / seitdem', sentence: 'Wir wohnen in derselben Straße am Kanal, seitdem wir das Studium begonnen haben.' },
-                es: { word: 'desde que', sentence: 'Vivimos en la misma calle junto al canal desde que empezamos a estudiar.' },
-                ar: { word: 'مُنْذُ أَنْ', sentence: 'نحن نعيش في نفس الشارع عند القناة منذ أن بدأنا الدراسة.' },
-                tr: { word: '-diğinden beri', sentence: 'Okula başladığımızdan beri kanal kenarındaki aynı sokakta yaşıyoruz.' },
-                uk: { word: 'відтоді як / з того часу як', sentence: 'Ми живемо на одній вулиці біля каналу відтоді, як почали навчатися.' }
+                en: { word: "since (time)", sentence: "I have lived here since I moved to the city." },
+                de: { word: "seit / seitdem", sentence: "Ich wohne hier, seitdem ich in die Stadt gezogen bin." },
+                es: { word: "desde que", sentence: "Vivo aquí desde que me mudé a la ciudad." },
+                ar: { word: "مُنْذُ أَنْ", sentence: "أعيش هنا منذ أن انتقلت إلى المدينة." },
+                tr: { word: "-diğinden beri", sentence: "Şehre taşındığımdan beri burada yaşıyorum." },
+                uk: { word: "відтоді як / з того часу як", sentence: "Я живу тут відтоді, як переїхав до міста." }
             }
         },
         {
@@ -468,12 +434,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Passagererne bliver stående under perronens glastag, indtil toget ruller ind på stationen.',
             ruleHint: 'Markerer slutpunktet for en handling: Handlingen fortsætter, lige indtil noget nyt sker.',
             translations: {
-                en: { word: 'until', sentence: 'The passengers stay under the glass roof of the platform until the train rolls in.' },
-                de: { word: 'bis', sentence: 'Die Fahrgäste warten unter dem Glasdach am Bahnsteig, bis der Regen aufhört.' },
-                es: { word: 'hasta que', sentence: 'Los pasajeros esperan bajo el techo de cristal del andén hasta que pare la lluvia.' },
-                ar: { word: 'حَتَّى / إِلَى أَنْ', sentence: 'ينتظر الركاب تحت السقف الزجاجي للمحطة حتى يتوقف المطر.' },
-                tr: { word: '-e kadar / -inceye dek', sentence: 'Yolcular yağmur durana kadar istasyonun cam çatısı altında bekliyor.' },
-                uk: { word: 'поки не / доки не', sentence: 'Пасажири чекають під скляним дахом платформи, доки дощ не припиниться.' }
+                en: { word: "until", sentence: "We wait here until the rain stops." },
+                de: { word: "bis", sentence: "Wir warten hier, bis der Regen aufhört." },
+                es: { word: "hasta que", sentence: "Esperamos aquí hasta que pare la lluvia." },
+                ar: { word: "حَتَّى / إِلَى أَنْ", sentence: "ننتظر هنا حتى يتوقف المطر." },
+                tr: { word: "-e kadar / -inceye dek", sentence: "Yağmur durana kadar burada bekliyoruz." },
+                uk: { word: "поки не / доки не", sentence: "Ми чекаємо тут, поки дощ не припиниться." }
             }
         },
         {
@@ -489,12 +455,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             contextSentence: 'Han tager telefonen frem ved gaten og ringer til familien, så snart han er kommet ud af flyet.',
             ruleHint: 'Viser at handling 2 sker øjeblikkeligt efter handling 1 uden ventetid.',
             translations: {
-                en: { word: 'as soon as', sentence: 'He takes out his phone at the gate and calls his family as soon as he gets off the plane.' },
-                de: { word: 'sobald', sentence: 'Er nimmt am Gate sein Handy heraus und ruft an, sobald er aus dem Flugzeug steigt.' },
-                es: { word: 'tan pronto como / en cuanto', sentence: 'Saca el teléfono en la puerta de embarque y llama a casa en cuanto baja del avión.' },
-                ar: { word: 'بِمُجَرَّدِ أَنْ / فَوْرَ أَنْ', sentence: 'يخرج هاتفه عند البوابة ويتصل بعائلته بمجرد خروجه من الطائرة.' },
-                tr: { word: '-ir -mez / hemen ...-diğinde', sentence: 'Uçaktan iner inmez kapıda telefonunu çıkarıp ailesini arıyor.' },
-                uk: { word: 'щойно / як тільки', sentence: 'Він дістає телефон біля виходу і телефонує родині, щойно виходить з літака.' }
+                en: { word: "as soon as", sentence: "Call me as soon as you land!" },
+                de: { word: "sobald", sentence: "Ruf mich an, sobald du landest!" },
+                es: { word: "tan pronto como / en cuanto", sentence: "¡Llámame tan pronto como aterrices!" },
+                ar: { word: "بِمُجَرَّدِ أَنْ / فَوْرَ أَنْ", sentence: "اتصل بي بمجرد أن تهبط!" },
+                tr: { word: "-ir -mez / hemen ...-diğinde", sentence: "İner inmez beni ara!" },
+                uk: { word: "щойно / як тільки", sentence: "Зателефонуй мені, щойно приземлишся!" }
             }
         }
     ];
@@ -1452,34 +1418,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'konj-hero';
     hero.innerHTML = `
-        <div class="konj-hero-tag">
-            <span>🌉</span> Sætnings-Broerne • 18 Konjunktioner
-        </div>
-        <h1>Helsætnings- & Ledsætningskonjunktioner</h1>
+        <h1>Helsætnings- og ledsætningskonjunktioner</h1>
         <p>Mestre de ægte bindeord i dansk: De 5 sideordnende <strong>helsætningskonjunktioner</strong> (<em>og, men, eller, for, så</em>) og de 13 underordnende <strong>ledsætningskonjunktioner</strong> (<em>fordi, selvom, hvis, at, om, når, da, mens, inden...</em>).</p>
     `;
     viewContainer.appendChild(hero);
-
-    // Golden Rule Banner
-    const goldenBanner = document.createElement('div');
-    goldenBanner.className = 'golden-rule-banner-konj';
-    goldenBanner.innerHTML = `
-        <div class="rule-icon-konj">🧲</div>
-        <div class="rule-content-konj">
-            <h4>Den Gyldne "IKKE"-Regel: Helsætning vs. Ledsætning</h4>
-            <p>
-                I en <strong>Helsætning</strong> efter <em>og, men, eller, for, så</em> står <span style="color:#22d3ee; font-weight:800;">ikke</span> <strong>EFTER verbet</strong> (<em>"..., <strong>for</strong> han <span style="color:#fca5a5;">er</span> <span style="color:#22d3ee;">ikke</span> rask"</em>).<br>
-                I en <strong>Ledsætning</strong> efter <em>fordi, selvom, hvis, når, da, at, om</em> rykker <span style="color:#22d3ee; font-weight:800;">ikke</span> frem <strong>FØR verbet</strong> (<em>"..., <strong>fordi</strong> han <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">er</span> rask"</em>)!
-            </p>
-            <div class="rule-pills-row-konj">
-                <span class="rule-pill-konj">Helsætning (F0): og, men, eller, for, så</span>
-                <span class="rule-pill-konj">Ledsætning: Subjekt + IKKE + Verbum</span>
-                <span class="rule-pill-konj">Fortid (1 gang): da ↔ Nutid/Fremtid/Vane: når</span>
-                <span class="rule-pill-konj">Fakta: at ↔ Tvivl/Spørgsmål: om</span>
-            </div>
-        </div>
-    `;
-    viewContainer.appendChild(goldenBanner);
 
     // Tabs Navigation
     const nav = document.createElement('div');
@@ -1487,14 +1429,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
     const tabs = [
         { id: 'vrimmel', label: '1. Broernes verden (vrimlebilledet)', icon: '🖼️' },
-        { id: 'laboratorium', label: '2. Ordstillings-Laboratoriet ("Ikke"-Magneten)', icon: '🔬' },
-        { id: 'detektiv', label: '3. Konjunktions-Detektiven (10 gåder)', icon: '🔍' },
+        { id: 'laboratorium', label: '2. Ordstillings-laboratoriet ("ikke"-magneten)', icon: '🔬' },
+        { id: 'detektiv', label: '3. Konjunktions-detektiven (10 gåder)', icon: '🔍' },
         { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'tid', label: '6. Da eller når? og tidskonjunktioner ⏳', icon: '⏳' },
-        { id: 'aarsag', label: '7. Fordi, for, så eller derfor? ⚡', icon: '⚡' },
-        { id: 'atom', label: '8. At eller om? og hvis eller selvom? 🎯', icon: '🧭' },
-        { id: 'tekstflow', label: '9. Tekstflow og historier (kulminationen!) 📖', icon: '📖' }
+        { id: 'tid', label: '6. "Da" eller "når"? og tidskonjunktioner', icon: '⏳' },
+        { id: 'aarsag', label: '7. "Fordi", "for", "så" eller "derfor"?', icon: '⚡' },
+        { id: 'atom', label: '8. "At" eller "om"? og "hvis" eller "selvom"?', icon: '🧭' },
+        { id: 'tekstflow', label: '9. Tekstflow og historier', icon: '📖' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
@@ -1689,19 +1631,13 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     <div class="inspector-sentence-card">
                         <div class="trans-badge-label" style="margin-bottom:0.4rem;">💬 EKSEMPEL PÅ SÆTNINGSBRO</div>
                         <div class="sentence-quote-text">"${highlightedSentence}"</div>
-                        <div class="sentence-trans-text">"${item.contextSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="insp-speak-sent">
+                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
+                        <button class="inspector-speak-btn" id="insp-speak-sent" style="margin-top:0.8rem;">
                             <span>🔊</span> Lyt til eksemplet
                         </button>
                     </div>
 
-                    <div class="inspector-scene-box" style="border-left: 3px solid #eab308;">
-                        <div class="scene-heading" style="color: #fde047;">🧲 Syntaks & Ordstilling</div>
-                        <p class="scene-text">${item.ruleHint}</p>
-                    </div>
-
-                    <div class="inspector-actions">
+                    <div class="inspector-actions" style="margin-top: 1rem;">
                         <button class="inspector-btn-action" id="insp-prev-btn">⬅ Forrige ord</button>
                         <button class="inspector-btn-action" id="insp-next-btn" style="background:#059669;">Næste ord ➔</button>
                     </div>
@@ -1709,7 +1645,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             `;
 
             inspector.querySelector('#insp-speak-word').onclick = () => speakDanish(item.word);
-            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.sentence);
 
             inspector.querySelector('#insp-prev-btn').onclick = () => {
                 const idx = visibleWords.findIndex(w => w.id === item.id);

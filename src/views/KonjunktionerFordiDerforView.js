@@ -31,40 +31,6 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     backBtn.innerHTML = `← Tilbage til Konjunktioner-fladen`;
     backBtn.onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     topBar.appendChild(backBtn);
-
-    const otherPairsDiv = document.createElement('div');
-    otherPairsDiv.style.display = 'flex';
-    otherPairsDiv.style.gap = '0.5rem';
-    otherPairsDiv.style.flexWrap = 'wrap';
-
-    const toDaNaarBtn = document.createElement('button');
-    toDaNaarBtn.className = 'back-btn';
-    toDaNaarBtn.style.background = 'rgba(16, 185, 129, 0.15)';
-    toDaNaarBtn.style.borderColor = '#10b981';
-    toDaNaarBtn.style.color = '#6ee7b7';
-    toDaNaarBtn.innerHTML = `📅 Da / Når ➔`;
-    toDaNaarBtn.onclick = () => navigateFn('konjunktioner_da_naar', { from: 'top_konjunktioner' });
-    otherPairsDiv.appendChild(toDaNaarBtn);
-
-    const toSelvomBtn = document.createElement('button');
-    toSelvomBtn.className = 'back-btn';
-    toSelvomBtn.style.background = 'rgba(249, 115, 22, 0.15)';
-    toSelvomBtn.style.borderColor = '#f97316';
-    toSelvomBtn.style.color = '#fdba74';
-    toSelvomBtn.innerHTML = `🧱 Selvom / Alligevel ➔`;
-    toSelvomBtn.onclick = () => navigateFn('konjunktioner_selvom_alligevel', { from: 'top_konjunktioner' });
-    otherPairsDiv.appendChild(toSelvomBtn);
-
-    const toTekstflowBtn = document.createElement('button');
-    toTekstflowBtn.className = 'back-btn';
-    toTekstflowBtn.style.background = 'rgba(99, 102, 241, 0.15)';
-    toTekstflowBtn.style.borderColor = '#6366f1';
-    toTekstflowBtn.style.color = '#a5b4fc';
-    toTekstflowBtn.innerHTML = `🚦 Felt 8: Tekstens Trafik ➔`;
-    toTekstflowBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_fordi_derfor' });
-    otherPairsDiv.appendChild(toTekstflowBtn);
-
-    topBar.appendChild(otherPairsDiv);
     viewContainer.appendChild(topBar);
 
     function speakDanish(text) {
@@ -586,10 +552,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     const hero = document.createElement('div');
     hero.className = 'fd-hero';
     hero.innerHTML = `
-        <div class="fd-hero-tag">
-            <span>⛽➡️</span> Særskilt Flade • Årsag & Virkning
-        </div>
-        <h1>"FORDI" eller "DERFOR"?</h1>
+        <h1>"Fordi" eller "derfor"?</h1>
         <p>Kend forskellen på <strong>årsag</strong> og <strong>virkning</strong> – og pas på ordstillingen! <strong>⛽ <em>Fordi</em> introducerer årsagen i en ledsætning (<em>Subjekt + ikke + Verbum</em>)</strong>, mens <strong>➡️ <em>Derfor</em> introducerer virkningen/konsekvensen i en helsætning med Inversion (<em>Verbum + Subjekt</em>)!</strong></p>
     `;
     viewContainer.appendChild(hero);
@@ -778,7 +741,6 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
                     <div class="inspector-sentence-card">
                         <div style="font-size:0.75rem; font-weight:800; color:#7dd3fc; margin-bottom:0.3rem;">💬 EKSEMPELSÆTNINGER</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
-                        <div style="font-size:1rem; color:#cbd5e1; font-style:italic; margin-bottom:0.5rem;">"${item.contextSentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="fd-speak-btn">🔊 Lyt til udtale</button>
                     </div>
@@ -793,7 +755,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
                 </div>
             `;
 
-            inspector.querySelector('#fd-speak-btn').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#fd-speak-btn').onclick = () => speakDanish(item.sentence);
             inspector.querySelector('#fd-prev').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const prev = visibleWords[(i - 1 + visibleWords.length) % visibleWords.length];

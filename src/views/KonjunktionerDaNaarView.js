@@ -33,40 +33,6 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     backBtn.innerHTML = `← Tilbage til Konjunktioner-fladen`;
     backBtn.onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     topBar.appendChild(backBtn);
-
-    const otherPairsDiv = document.createElement('div');
-    otherPairsDiv.style.display = 'flex';
-    otherPairsDiv.style.gap = '0.5rem';
-    otherPairsDiv.style.flexWrap = 'wrap';
-
-    const toSelvomBtn = document.createElement('button');
-    toSelvomBtn.className = 'back-btn';
-    toSelvomBtn.style.background = 'rgba(249, 115, 22, 0.15)';
-    toSelvomBtn.style.borderColor = '#f97316';
-    toSelvomBtn.style.color = '#fdba74';
-    toSelvomBtn.innerHTML = `🧱 Selvom / Alligevel ➔`;
-    toSelvomBtn.onclick = () => navigateFn('konjunktioner_selvom_alligevel', { from: 'top_konjunktioner' });
-    otherPairsDiv.appendChild(toSelvomBtn);
-
-    const toFordiBtn = document.createElement('button');
-    toFordiBtn.className = 'back-btn';
-    toFordiBtn.style.background = 'rgba(56, 189, 248, 0.15)';
-    toFordiBtn.style.borderColor = '#38bdf8';
-    toFordiBtn.style.color = '#7dd3fc';
-    toFordiBtn.innerHTML = `➡️ Fordi / Derfor ➔`;
-    toFordiBtn.onclick = () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' });
-    otherPairsDiv.appendChild(toFordiBtn);
-
-    const toTekstflowBtn = document.createElement('button');
-    toTekstflowBtn.className = 'back-btn';
-    toTekstflowBtn.style.background = 'rgba(99, 102, 241, 0.15)';
-    toTekstflowBtn.style.borderColor = '#6366f1';
-    toTekstflowBtn.style.color = '#a5b4fc';
-    toTekstflowBtn.innerHTML = `🚦 Felt 8: Tekstens Trafik ➔`;
-    toTekstflowBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_da_naar' });
-    otherPairsDiv.appendChild(toTekstflowBtn);
-
-    topBar.appendChild(otherPairsDiv);
     viewContainer.appendChild(topBar);
 
     // TTS Audio Helper
@@ -690,10 +656,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     const hero = document.createElement('div');
     hero.className = 'dn-hero';
     hero.innerHTML = `
-        <div class="dn-hero-tag">
-            <span>📅</span> Særskilt Flade • Tidens Makkerpar
-        </div>
-        <h1>"DA" eller "NÅR"?</h1>
+        <h1>"Da" eller "når"?</h1>
         <p>På engelsk hedder begge ord <em>"when"</em>, men på dansk skelner vi skarpt mellem <strong>📌 Tegnestiften (<em>da</em> = én bestemt gang i fortiden)</strong>, <strong>🔁 Cirklen (<em>når</em> = gentagne vaner)</strong> og <strong>🏹 Pilen (<em>når</em> = fremtiden)</strong>.</p>
     `;
     viewContainer.appendChild(hero);
@@ -890,7 +853,6 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     <div class="inspector-sentence-card">
                         <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; margin-bottom:0.3rem;">💬 EKSEMPELSÆTNINGER</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
-                        <div style="font-size:1rem; color:#cbd5e1; font-style:italic; margin-bottom:0.5rem;">"${item.contextSentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="dn-speak-btn">🔊 Lyt til udtale</button>
                     </div>
@@ -905,7 +867,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                 </div>
             `;
 
-            inspector.querySelector('#dn-speak-btn').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#dn-speak-btn').onclick = () => speakDanish(item.sentence);
             inspector.querySelector('#dn-prev').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const prev = visibleWords[(i - 1 + visibleWords.length) % visibleWords.length];

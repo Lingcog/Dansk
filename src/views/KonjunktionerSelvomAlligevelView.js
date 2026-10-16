@@ -31,40 +31,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     backBtn.innerHTML = `← Tilbage til Konjunktioner-fladen`;
     backBtn.onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     topBar.appendChild(backBtn);
-
-    const otherPairsDiv = document.createElement('div');
-    otherPairsDiv.style.display = 'flex';
-    otherPairsDiv.style.gap = '0.5rem';
-    otherPairsDiv.style.flexWrap = 'wrap';
-
-    const toDaNaarBtn = document.createElement('button');
-    toDaNaarBtn.className = 'back-btn';
-    toDaNaarBtn.style.background = 'rgba(16, 185, 129, 0.15)';
-    toDaNaarBtn.style.borderColor = '#10b981';
-    toDaNaarBtn.style.color = '#6ee7b7';
-    toDaNaarBtn.innerHTML = `📅 Da / Når ➔`;
-    toDaNaarBtn.onclick = () => navigateFn('konjunktioner_da_naar', { from: 'top_konjunktioner' });
-    otherPairsDiv.appendChild(toDaNaarBtn);
-
-    const toFordiBtn = document.createElement('button');
-    toFordiBtn.className = 'back-btn';
-    toFordiBtn.style.background = 'rgba(56, 189, 248, 0.15)';
-    toFordiBtn.style.borderColor = '#38bdf8';
-    toFordiBtn.style.color = '#7dd3fc';
-    toFordiBtn.innerHTML = `➡️ Fordi / Derfor ➔`;
-    toFordiBtn.onclick = () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' });
-    otherPairsDiv.appendChild(toFordiBtn);
-
-    const toTekstflowBtn = document.createElement('button');
-    toTekstflowBtn.className = 'back-btn';
-    toTekstflowBtn.style.background = 'rgba(99, 102, 241, 0.15)';
-    toTekstflowBtn.style.borderColor = '#6366f1';
-    toTekstflowBtn.style.color = '#a5b4fc';
-    toTekstflowBtn.innerHTML = `🚦 Felt 8: Tekstens Trafik ➔`;
-    toTekstflowBtn.onclick = () => navigateFn('konjunktioner_tekstflow', { from: 'konjunktioner_selvom_alligevel' });
-    otherPairsDiv.appendChild(toTekstflowBtn);
-
-    topBar.appendChild(otherPairsDiv);
     viewContainer.appendChild(topBar);
 
     function speakDanish(text) {
@@ -586,10 +552,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     const hero = document.createElement('div');
     hero.className = 'sa-hero';
     hero.innerHTML = `
-        <div class="sa-hero-tag">
-            <span>🧱☄️</span> Særskilt Flade • Modstand & Gennembrud
-        </div>
-        <h1>"SELVOM" eller "ALLIGEVEL"?</h1>
+        <h1>"Selvom" eller "alligevel"?</h1>
         <p>Begge ord handler om at gøre noget <strong>på trods af en forhindring</strong> – men kognitivt og grammatisk står de to forskellige steder: <strong>🧱 <em>Selvom</em> bygger muren (forhindringen i en ledsætning)</strong>, mens <strong>☄️ <em>Alligevel</em> er bolden, der bryder igennem muren (i hovedsætningen)!</strong></p>
     `;
     viewContainer.appendChild(hero);
@@ -778,7 +741,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     <div class="inspector-sentence-card">
                         <div style="font-size:0.75rem; font-weight:800; color:#fdba74; margin-bottom:0.3rem;">💬 EKSEMPELSÆTNINGER</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
-                        <div style="font-size:1rem; color:#cbd5e1; font-style:italic; margin-bottom:0.5rem;">"${item.contextSentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="sa-speak-btn">🔊 Lyt til udtale</button>
                     </div>
@@ -793,7 +755,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                 </div>
             `;
 
-            inspector.querySelector('#sa-speak-btn').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#sa-speak-btn').onclick = () => speakDanish(item.sentence);
             inspector.querySelector('#sa-prev').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const prev = visibleWords[(i - 1 + visibleWords.length) % visibleWords.length];

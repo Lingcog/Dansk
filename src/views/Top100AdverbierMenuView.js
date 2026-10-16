@@ -239,9 +239,9 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_konnektion',
-            badge: '🔗 Felt 7 • 18 ord',
+            badge: '🔗 Felt 7 • 20 ord',
             badgeClass: 'badge-adv-7',
-            img: 'assets/station_indkoeb_vrimmel.jpg',
+            img: 'assets/adverbier_konnektion_vrimmel.jpg',
             title: '7. Konnektion & Tekstbindere',
             desc: 'Skab logisk sammenhæng mellem sætninger og afsnit: derfor (årsag), alligevel (kontrast), nemlig (begrundelse) og ellers.',
             btnText: 'Udforsk tekstbindere ➔'

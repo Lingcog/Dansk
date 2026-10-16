@@ -2137,7 +2137,7 @@ export function renderAdverbierHoldningView(container, navigateFn) {
         {
             context: '☕ Kaffemaskinen i pauserummet',
             prompt: 'Kaffemaskinen på kontoret er gået i stykker, og du overbringer den ærgerlige nyhed til dine tørstige kolleger:',
-            quote: 'Der er ______ ingen frisk kaffe i morges.',
+            quote: 'Der er ______ ingen frisk kaffe i dag.',
             options: ['desværre', 'heldigvis', 'selvfølgelig'],
             correct: 'desværre',
             hints: {

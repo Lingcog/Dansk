@@ -66,6 +66,90 @@ export function renderWordLearningView(container, navigateFn) {
         color: #94a3b8;
         margin-top: 0.2rem;
       }
+      /* Vrimlebillede Stage & Hotspots */
+      .byggeplads-stage {
+        position: relative;
+        width: 100%;
+        line-height: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 1.2rem;
+        border: 1.5px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      }
+      .byggeplads-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: brightness(0.98);
+        transition: filter 0.3s ease;
+      }
+      .hotspot-pin {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2.5px solid #ffffff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.95rem;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10;
+        animation: pulsePin 2.5s infinite;
+      }
+      @keyframes pulsePin {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(1.1); }
+      }
+      .hotspot-pin.pin-adj { background: #f97316; }
+      .hotspot-pin.pin-sub { background: #22c55e; }
+      .hotspot-pin.pin-vrb { background: #ef4444; }
+      .hotspot-pin.pin-adv { background: #38bdf8; }
+      .hotspot-pin.pin-konj { background: #a855f7; }
+      .hotspot-pin:hover, .hotspot-pin.active {
+        transform: translate(-50%, -50%) scale(1.3) !important;
+        z-index: 30;
+        box-shadow: 0 0 25px #ffffff, 0 0 15px currentColor;
+        border-color: #ffffff;
+      }
+      .hotspot-pill {
+        position: absolute;
+        bottom: 115%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.92);
+        backdrop-filter: blur(8px);
+        color: #ffffff;
+        border: 1.5px solid rgba(255,255,255,0.25);
+        padding: 0.25rem 0.65rem;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        opacity: 0.92;
+        transition: all 0.2s ease;
+      }
+      .hotspot-pin:hover .hotspot-pill, .hotspot-pin.active .hotspot-pill {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.1);
+        border-color: #ffffff;
+      }
+      @media (max-width: 600px) {
+        .hotspot-pin { width: 30px; height: 30px; font-size: 0.8rem; }
+        .hotspot-pill { font-size: 0.7rem; padding: 0.15rem 0.45rem; }
+      }
+
       .sentence-flow-box {
         position: relative;
         background: rgba(0, 0, 0, 0.25);
@@ -467,8 +551,43 @@ export function renderWordLearningView(container, navigateFn) {
             <span>✨</span>
             <span>Sprogets Byggeplads</span>
           </div>
-          <div class="byggeplads-subtitle">Tryk på en ordklasse for at se, hvordan ordene hænger sammen</div>
+          <div class="byggeplads-subtitle">Tryk på en ordklasse eller et pegefelt for at se, hvordan ordene hænger sammen</div>
         </div>
+      </div>
+
+      <!-- Vrimlebillede med 5 interaktive pegefelter -->
+      <div class="byggeplads-stage" id="byggeplads-stage">
+        <img src="assets/byggeplads_vrimmel.jpg" alt="Sprogets Byggeplads Vrimlebillede" class="byggeplads-img" />
+        
+        <!-- 1. 🟠 den røde (Adjektiv) -->
+        <button type="button" class="hotspot-pin pin-adj active" data-type="adjektiv" style="left: 42%; top: 78%;" title="🟠 den røde (Adjektiv)">
+          <span>🟠</span>
+          <div class="hotspot-pill">🟠 den røde</div>
+        </button>
+
+        <!-- 2. 🟢 bil (Substantiv) -->
+        <button type="button" class="hotspot-pin pin-sub" data-type="substantiv" style="left: 48%; top: 66%;" title="🟢 bil (Substantiv)">
+          <span>🟢</span>
+          <div class="hotspot-pill">🟢 bil</div>
+        </button>
+
+        <!-- 3. 🔴 kører (Verbum) -->
+        <button type="button" class="hotspot-pin pin-vrb" data-type="verbum" style="left: 54%; top: 70%;" title="🔴 kører (Verbum)">
+          <span>🔴</span>
+          <div class="hotspot-pill">🔴 kører</div>
+        </button>
+
+        <!-- 4. 🔵 hurtigt (Adverbium) -->
+        <button type="button" class="hotspot-pin pin-adv" data-type="adverbium" style="left: 26%; top: 88%;" title="🔵 hurtigt (Adverbium)">
+          <span>🔵</span>
+          <div class="hotspot-pill">🔵 hurtigt</div>
+        </button>
+
+        <!-- 5. 🟣 fordi... (Konjunktion) -->
+        <button type="button" class="hotspot-pin pin-konj" data-type="konjunktion" style="left: 84%; top: 60%;" title="🟣 fordi... (Konjunktion)">
+          <span>🟣</span>
+          <div class="hotspot-pill">🟣 fordi...</div>
+        </button>
       </div>
 
       <div class="sentence-flow-box">
@@ -514,39 +633,59 @@ export function renderWordLearningView(container, navigateFn) {
       </div>
     `;
 
-    // Chip click interactions
+    // Chip & Hotspot interactions
     let currentFlowTarget = 'top100_adjektiver';
     const chips = byggepladsCard.querySelectorAll('.flow-chip');
+    const pins = byggepladsCard.querySelectorAll('.hotspot-pin');
     const badgeEl = byggepladsCard.querySelector('#flow-badge');
     const textEl = byggepladsCard.querySelector('#flow-text');
     const ctaBtn = byggepladsCard.querySelector('#flow-cta');
 
-    chips.forEach(chip => {
-      chip.onclick = () => {
-        const type = chip.getAttribute('data-type');
-        const item = flowData[type];
-        if (!item) return;
+    function activateWordClass(type) {
+      const item = flowData[type];
+      if (!item) return;
 
-        chips.forEach(c => {
-          c.className = 'flow-chip';
-        });
-        chip.classList.add(item.chipClass);
-
-        badgeEl.textContent = item.badge;
-        badgeEl.style.background = item.color;
-        textEl.innerHTML = item.text;
-        ctaBtn.textContent = item.targetTitle;
-        currentFlowTarget = item.target;
-
-        // Highlight matching module card below
-        const matchingCard = document.getElementById(`module-card-${type}`);
-        if (matchingCard) {
-          matchingCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          matchingCard.style.transform = 'translateY(-8px) scale(1.02)';
-          setTimeout(() => {
-            matchingCard.style.transform = '';
-          }, 600);
+      // Update pins
+      pins.forEach(p => {
+        p.classList.remove('active');
+        if (p.getAttribute('data-type') === type) {
+          p.classList.add('active');
         }
+      });
+
+      // Update chips
+      chips.forEach(c => {
+        c.className = 'flow-chip';
+        if (c.getAttribute('data-type') === type) {
+          c.classList.add(item.chipClass);
+        }
+      });
+
+      badgeEl.textContent = item.badge;
+      badgeEl.style.background = item.color;
+      textEl.innerHTML = item.text;
+      ctaBtn.textContent = item.targetTitle;
+      currentFlowTarget = item.target;
+
+      // Highlight matching module card below
+      const matchingCard = document.getElementById(`module-card-${type}`);
+      if (matchingCard) {
+        matchingCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        matchingCard.style.transform = 'translateY(-8px) scale(1.02)';
+        setTimeout(() => {
+          matchingCard.style.transform = '';
+        }, 600);
+      }
+    }
+
+    chips.forEach(chip => {
+      chip.onclick = () => activateWordClass(chip.getAttribute('data-type'));
+    });
+
+    pins.forEach(pin => {
+      pin.onclick = (e) => {
+        e.stopPropagation();
+        activateWordClass(pin.getAttribute('data-type'));
       };
     });
 

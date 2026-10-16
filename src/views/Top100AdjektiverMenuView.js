@@ -10,15 +10,30 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container top100-adjektiver-hub';
 
-    // Top Bar with back button
+    // Top Bar with back button & guide bridge
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
+    topBar.style.display = 'flex';
+    topBar.style.justifyContent = 'space-between';
+    topBar.style.alignItems = 'center';
+    topBar.style.flexWrap = 'wrap';
+    topBar.style.gap = '0.8rem';
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back')}`;
     backBtn.onclick = () => navigateFn('word_learning');
     topBar.appendChild(backBtn);
+
+    const guideTopBtn = document.createElement('button');
+    guideTopBtn.className = 'back-btn';
+    guideTopBtn.style.background = 'rgba(234, 179, 8, 0.18)';
+    guideTopBtn.style.borderColor = '#eab308';
+    guideTopBtn.style.color = '#fde047';
+    guideTopBtn.innerHTML = `📏 Felt 6: Den Store Bøjningsguide (Gradbøjning & E-reglen) ➔`;
+    guideTopBtn.onclick = () => navigateFn('adjective_comparison', { from: 'top100_adjektiver' });
+    topBar.appendChild(guideTopBtn);
+
     viewContainer.appendChild(topBar);
 
     // Common styles
@@ -216,9 +231,9 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     hero.className = 'adj-hub-hero';
     hero.innerHTML = `
         <h1>De 100 mest almindelige adjektiver</h1>
-        <p>Adjektiver beskriver verden, tilfører nuancer og udtrykker kontraster. Udforsk de 100 mest almindelige danske adjektiver inddelt i 5 logiske semantiske felter med 20 adjektiver i hver.</p>
+        <p>Adjektiver beskriver verden, tilfører nuancer og udtrykker kontraster. Udforsk de 100 mest almindelige danske adjektiver inddelt i 5 semantiske felter – og mestr den komplette bøjningslære i Felt 6!</p>
         <div class="adj-hub-facts-badge">
-            <span>🟣</span> Ordklasse: Adjektiver (Tillægsord – beskriver substantiver)
+            <span>🟣</span> 6 felter: De 100 vigtigste adjektiver + Den store bøjningsguide (Gradbøjning & E-reglen)
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -272,6 +287,16 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
             img: 'assets/adjektiver_tilstande_venstre.jpg',
             active: true,
             btnText: 'Gå til felt 5 ➔'
+        },
+        {
+            id: 'adjective_comparison',
+            badge: '📏 Felt 6 • Bøjnings-Masteren (Gradbøjning & E-reglen)',
+            title: '6. Den Store Bøjningsguide: Gradbøjning & E-reglen',
+            desc: 'Komplet interaktiv bøjningsmotor: <strong>1. Positiv</strong> (<em>stor</em>) ➔ <strong>2. Komparativ</strong> med "end" (<em>større end</em>) ➔ <strong>3. Superlativ</strong> (<em>størst / den største</em>), samt formlen for hvorfor <em>den/min/denne/Peters</em> altid tvinger <strong>-e</strong> frem!',
+            img: 'assets/adjektiver_comparison_guide.jpg',
+            active: true,
+            btnText: 'Åbn Bøjningsguiden 📏 ➔',
+            action: () => navigateFn('adjective_comparison', { from: 'top100_adjektiver' })
         }
     ];
 
@@ -290,7 +315,7 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
             </div>
         `;
         if (f.active) {
-            card.onclick = () => navigateFn(f.id);
+            card.onclick = f.action || (() => navigateFn(f.id, { from: 'top100_adjektiver' }));
         }
         scenesGrid.appendChild(card);
     });

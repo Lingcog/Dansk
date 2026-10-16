@@ -20,11 +20,27 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
     // Top Bar
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
+    topBar.style.display = 'flex';
+    topBar.style.justifyContent = 'space-between';
+    topBar.style.alignItems = 'center';
+    topBar.style.flexWrap = 'wrap';
+    topBar.style.gap = '0.8rem';
+
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
-    backBtn.onclick = () => navigateFn('pronomen');
+    backBtn.onclick = () => navigateFn(extraData.from || 'top100_adjektiver');
     topBar.appendChild(backBtn);
+
+    const toHubBtn = document.createElement('button');
+    toHubBtn.className = 'back-btn';
+    toHubBtn.style.background = 'rgba(168, 85, 247, 0.2)';
+    toHubBtn.style.borderColor = '#a855f7';
+    toHubBtn.style.color = '#c084fc';
+    toHubBtn.innerHTML = `🟣 De 100 Adjektiver (Hub) ➔`;
+    toHubBtn.onclick = () => navigateFn('top100_adjektiver');
+    topBar.appendChild(toHubBtn);
+
     viewContainer.appendChild(topBar);
 
     // Header Title

@@ -81,14 +81,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     `;
     derErCard.onclick = () => navigateFn('pronomen', { subPath: 'der_er_det_er' });
 
-    const adjCompCard = document.createElement('div');
-    adjCompCard.className = 'card';
-    adjCompCard.innerHTML = `
-        <div class="card-icon">📈</div>
-        <div class="card-title">${getTranslation('soedSoedereSoedest')}</div>
-    `;
-    adjCompCard.onclick = () => navigateFn('adjective_comparison');
-
     const adverbChoiceCard = document.createElement('div');
     adverbChoiceCard.className = 'card';
     adverbChoiceCard.innerHTML = `
@@ -116,7 +108,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     grid1.appendChild(pronomenCard);
     grid1.appendChild(verbumCard);
     grid1.appendChild(derErCard);
-    grid1.appendChild(adjCompCard);
     grid1.appendChild(adverbChoiceCard);
     grid1.appendChild(conjunctionChoiceCard);
     grid1.appendChild(bestemthedCard);

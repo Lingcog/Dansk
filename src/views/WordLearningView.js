@@ -555,36 +555,36 @@ export function renderWordLearningView(container, navigateFn) {
         </div>
       </div>
 
-      <!-- Vrimlebillede med 5 interaktive pegefelter -->
+      <!-- Vrimlebillede med 5 spredte interaktive pegefelter -->
       <div class="byggeplads-stage" id="byggeplads-stage">
         <img src="assets/byggeplads_vrimmel.jpg" alt="Sprogets Byggeplads Vrimlebillede" class="byggeplads-img" />
         
-        <!-- 1. 🟠 den røde (Adjektiv) -->
-        <button type="button" class="hotspot-pin pin-adj active" data-type="adjektiv" style="left: 42%; top: 78%;" title="🟠 den røde (Adjektiv)">
+        <!-- 1. 🟠 den røde (Adjektiv - på bilens røde kølerhjelm) -->
+        <button type="button" class="hotspot-pin pin-adj active" data-type="adjektiv" style="left: 36%; top: 68%;" title="🟠 den røde (Adjektiv)">
           <span>🟠</span>
           <div class="hotspot-pill">🟠 den røde</div>
         </button>
 
-        <!-- 2. 🟢 bil (Substantiv) -->
-        <button type="button" class="hotspot-pin pin-sub" data-type="substantiv" style="left: 48%; top: 66%;" title="🟢 bil (Substantiv)">
+        <!-- 2. 🟢 bil (Substantiv - på bilens tag/kabine) -->
+        <button type="button" class="hotspot-pin pin-sub" data-type="substantiv" style="left: 47%; top: 45%;" title="🟢 bil (Substantiv)">
           <span>🟢</span>
           <div class="hotspot-pill">🟢 bil</div>
         </button>
 
-        <!-- 3. 🔴 kører (Verbum) -->
-        <button type="button" class="hotspot-pin pin-vrb" data-type="verbum" style="left: 54%; top: 70%;" title="🔴 kører (Verbum)">
+        <!-- 3. 🔴 kører (Verbum - på føreren og de rullende hjul) -->
+        <button type="button" class="hotspot-pin pin-vrb" data-type="verbum" style="left: 60%; top: 66%;" title="🔴 kører (Verbum)">
           <span>🔴</span>
           <div class="hotspot-pill">🔴 kører</div>
         </button>
 
-        <!-- 4. 🔵 hurtigt (Adverbium) -->
-        <button type="button" class="hotspot-pin pin-adv" data-type="adverbium" style="left: 26%; top: 88%;" title="🔵 hurtigt (Adverbium)">
+        <!-- 4. 🔵 hurtigt (Adverbium - i fartstriberne og hvirvlerne til venstre) -->
+        <button type="button" class="hotspot-pin pin-adv" data-type="adverbium" style="left: 17%; top: 86%;" title="🔵 hurtigt (Adverbium)">
           <span>🔵</span>
           <div class="hotspot-pill">🔵 hurtigt</div>
         </button>
 
-        <!-- 5. 🟣 fordi... (Konjunktion) -->
-        <button type="button" class="hotspot-pin pin-konj" data-type="konjunktion" style="left: 84%; top: 60%;" title="🟣 fordi... (Konjunktion)">
+        <!-- 5. 🟣 fordi... (Konjunktion - på broen og målet til højre) -->
+        <button type="button" class="hotspot-pin pin-konj" data-type="konjunktion" style="left: 87%; top: 48%;" title="🟣 fordi... (Konjunktion)">
           <span>🟣</span>
           <div class="hotspot-pill">🟣 fordi...</div>
         </button>

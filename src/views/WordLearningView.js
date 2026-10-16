@@ -278,7 +278,7 @@ export function renderWordLearningView(container, navigateFn) {
       /* Primary Modules Grid */
       .primary-modules-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.2rem;
         margin-bottom: 2.5rem;
       }
@@ -303,25 +303,74 @@ export function renderWordLearningView(container, navigateFn) {
       .module-top {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 0.8rem;
+        align-items: center;
+        margin-bottom: 0.9rem;
       }
       .module-icon {
-        font-size: 2.4rem;
+        font-size: 2.3rem;
       }
-      .module-badge {
+      .module-role-pill {
+        display: flex;
+        flex-direction: column;
+      }
+      .role-badge {
         font-size: 0.72rem;
         font-weight: 800;
-        padding: 0.2rem 0.6rem;
+        padding: 0.2rem 0.65rem;
         border-radius: 20px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        white-space: nowrap;
+        width: fit-content;
+      }
+      .role-hint {
+        font-size: 0.68rem;
+        color: #94a3b8;
+        font-weight: 600;
+        margin-top: 0.15rem;
+        padding-left: 0.2rem;
+      }
+      .progress-circle-wrap {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .progress-circle {
+        width: 42px;
+        height: 42px;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+      .progress-circle-bg {
+        stroke: rgba(255, 255, 255, 0.12);
+      }
+      .progress-circle-fill {
+        transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .progress-circle-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: #f8fafc;
+      }
+      .progress-circle-text.complete {
+        color: #eab308;
+        font-size: 0.95rem;
+        filter: drop-shadow(0 0 6px rgba(234, 179, 8, 0.6));
       }
       .module-title {
-        font-size: 1.25rem;
+        font-size: 1.22rem;
         font-weight: 800;
         color: white;
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.3rem;
       }
       .module-subtext {
         font-size: 0.78rem;
@@ -344,24 +393,28 @@ export function renderWordLearningView(container, navigateFn) {
         padding-top: 0.8rem;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
-      .module-progress-bar {
-        flex: 1;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 999px;
-        margin-right: 1rem;
-        overflow: hidden;
-      }
-      .module-progress-fill {
-        height: 100%;
-        border-radius: 999px;
-      }
       .module-open-link {
         font-size: 0.85rem;
         font-weight: 700;
         display: flex;
         align-items: center;
         gap: 0.3rem;
+      }
+      .byggeplads-golden-rule {
+        margin-top: 1rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px dashed rgba(255, 255, 255, 0.18);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.85rem;
+        color: #cbd5e1;
+        line-height: 1.45;
+      }
+      .byggeplads-golden-rule strong {
+        color: #fde047;
       }
 
       /* Secondary Collapsible Section */
@@ -631,6 +684,14 @@ export function renderWordLearningView(container, navigateFn) {
           <button type="button" class="explanation-cta-btn" id="flow-cta">Gå til Adjektiver ➔</button>
         </div>
       </div>
+
+      <!-- Den Gyldne Regel (Pædagogisk vejledning til begyndere) -->
+      <div class="byggeplads-golden-rule">
+        <span style="font-size: 1.4rem; flex-shrink: 0;">💡</span>
+        <div>
+          <strong>Den gyldne regel:</strong> Pluk lidt fra alle kasser! Lær 10 navneord, 10 verber og småordet <em>"ikke"</em> – så kan du allerede tale hverdagsdansk i dag. Du behøver ikke gøre én flade færdig før den næste.
+        </div>
+      </div>
     `;
 
     // Chip & Hotspot interactions
@@ -695,7 +756,38 @@ export function renderWordLearningView(container, navigateFn) {
 
     parent.appendChild(byggepladsCard);
 
-    // --- 2. DE 5 PRIMÆRE MODULKORT ---
+    // --- 2. DE 5 PRIMÆRE MODULKORT (FUNKTIONELLE BYGGEKLODSER) ---
+    function getModuleProgress(key, fallbackPct = 0) {
+      try {
+        const stored = localStorage.getItem(`lingcog_progress_${key}`);
+        if (stored !== null) {
+          const val = parseInt(stored, 10);
+          if (!isNaN(val)) return Math.min(100, Math.max(0, val));
+        }
+      } catch (e) {}
+      return fallbackPct;
+    }
+
+    function createCircleProgressSvg(percent, color) {
+      const radius = 16;
+      const circumference = 2 * Math.PI * radius; // ~100.53
+      const offset = circumference - (percent / 100) * circumference;
+      const isComplete = percent >= 100;
+      return `
+        <div class="progress-circle-wrap" title="${percent}% udforsket">
+          <svg class="progress-circle" viewBox="0 0 40 40">
+            <circle class="progress-circle-bg" cx="20" cy="20" r="${radius}" stroke-width="3.5" fill="none" />
+            <circle class="progress-circle-fill" cx="20" cy="20" r="${radius}" stroke-width="3.5" 
+                    stroke="${isComplete ? '#eab308' : color}" 
+                    stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-linecap="round" fill="none" />
+          </svg>
+          <div class="progress-circle-text ${isComplete ? 'complete' : ''}">
+            ${isComplete ? '★' : (percent === 0 ? '<span style="opacity:0.4; font-size: 0.65rem;">0%</span>' : percent + '%')}
+          </div>
+        </div>
+      `;
+    }
+
     const primaryModules = [
       {
         id: 'exercise_top100_substantiver',
@@ -704,11 +796,12 @@ export function renderWordLearningView(container, navigateFn) {
         icon: '🚗',
         title: '1. Substantiver',
         subtext: 'Tingene & personerne',
+        role: 'Byggeklodserne',
+        roleHint: 'Hvem & hvad?',
         desc: 'De 100 mest almindelige navneord fordelt på Byen, Hjemmet, Klassen, Naturen og Stationen.',
-        badge: '100 ord',
-        badgeBg: 'rgba(34, 197, 94, 0.2)',
         color: '#22c55e',
-        progress: '75%'
+        badgeBg: 'rgba(34, 197, 94, 0.15)',
+        fallbackProgress: 0
       },
       {
         id: 'exercise_top100_adjektiver',
@@ -717,11 +810,12 @@ export function renderWordLearningView(container, navigateFn) {
         icon: '🎨',
         title: '2. Adjektiver',
         subtext: 'Farver, former & følelser',
-        desc: 'Beskriver ting og personer: Fysisk, kvalitet, tid, følelser og tilstande. Knytter sig til substantivet.',
-        badge: '➔ Knytter til 🟢',
-        badgeBg: 'rgba(249, 115, 22, 0.2)',
+        role: 'Beskrivelsen',
+        roleHint: 'Egenskaber',
+        desc: 'Beskriver ting og personer (den <em>røde</em> bil). Knytter sig direkte til substantivet.',
         color: '#f97316',
-        progress: '45%'
+        badgeBg: 'rgba(249, 115, 22, 0.15)',
+        fallbackProgress: 0
       },
       {
         id: 'exercise_top100_verber',
@@ -729,12 +823,13 @@ export function renderWordLearningView(container, navigateFn) {
         target: 'top100_verber',
         icon: '🏃',
         title: '3. Verber',
-        subtext: 'Handlingerne & motoren',
-        desc: 'De 100 vigtigste hverdagsverber i nutid, datid og førnutid i hverdagen.',
-        badge: '100 ord',
-        badgeBg: 'rgba(239, 68, 68, 0.2)',
+        subtext: 'Handlingerne',
+        role: 'Motoren',
+        roleHint: 'Hvad sker der?',
+        desc: 'De 100 vigtigste hverdagsverber i nutid, datid og førnutid – sætningens drivkraft.',
         color: '#ef4444',
-        progress: '60%'
+        badgeBg: 'rgba(239, 68, 68, 0.15)',
+        fallbackProgress: 0
       },
       {
         id: 'exercise_top100_adverbier',
@@ -743,11 +838,12 @@ export function renderWordLearningView(container, navigateFn) {
         icon: '🧭',
         title: '4. Adverbier',
         subtext: 'Tid, sted, måde & holdning',
-        desc: 'Små og præcise ord der knytter sig til verbet: Sted, tid, måde, grad, holdning og konnektion.',
-        badge: '➔ Knytter til 🔴',
-        badgeBg: 'rgba(56, 189, 248, 0.2)',
+        role: 'De vigtige småord',
+        roleHint: 'Ikke, gerne, altid...',
+        desc: 'Livsnødvendige småord og justeringer der knytter sig til verbet (kører <em>ikke</em>, <em>hurtigt</em>).',
         color: '#38bdf8',
-        progress: '30%'
+        badgeBg: 'rgba(56, 189, 248, 0.15)',
+        fallbackProgress: 0
       },
       {
         id: 'exercise_top_konjunktioner',
@@ -755,12 +851,13 @@ export function renderWordLearningView(container, navigateFn) {
         target: 'top_konjunktioner',
         icon: '🌉',
         title: '5. Konjunktioner & "AT"',
-        subtext: 'Brobyggerne & bindeord',
+        subtext: 'Bindeordene',
+        role: 'Brobyggerne',
+        roleHint: 'Binder sætninger',
         desc: 'Bindeordene (og, men, fordi, da/når, selvom) og et særskilt kognitivt felt om brugen af "at".',
-        badge: 'Brobyggeren',
-        badgeBg: 'rgba(168, 85, 247, 0.2)',
         color: '#a855f7',
-        progress: '20%'
+        badgeBg: 'rgba(168, 85, 247, 0.15)',
+        fallbackProgress: 0
       }
     ];
 
@@ -768,25 +865,36 @@ export function renderWordLearningView(container, navigateFn) {
     primaryGrid.className = 'primary-modules-grid';
 
     primaryModules.forEach(mod => {
+      const pct = getModuleProgress(mod.key, mod.fallbackProgress);
+      const isComplete = pct >= 100;
+
       const card = document.createElement('div');
       card.className = 'module-card';
       card.id = `module-card-${mod.key}`;
-      card.style.borderColor = mod.color;
+      card.style.borderColor = isComplete ? '#eab30860' : `${mod.color}45`;
       card.style.background = `linear-gradient(145deg, ${mod.color}15, rgba(15, 23, 42, 0.85))`;
 
       card.innerHTML = `
         <div>
           <div class="module-top">
-            <span class="module-icon">${mod.icon}</span>
-            <span class="module-badge" style="background: ${mod.badgeBg}; color: ${mod.color}; border: 1px solid ${mod.color}50;">${mod.badge}</span>
+            <div style="display: flex; align-items: center; gap: 0.65rem;">
+              <span class="module-icon">${mod.icon}</span>
+              <div class="module-role-pill">
+                <span class="role-badge" style="background: ${mod.badgeBg}; color: ${mod.color}; border: 1px solid ${mod.color}50;">
+                  ${mod.role}
+                </span>
+                <span class="role-hint">${mod.roleHint}</span>
+              </div>
+            </div>
+            ${createCircleProgressSvg(pct, mod.color)}
           </div>
           <div class="module-title">${mod.title}</div>
           <div class="module-subtext">${mod.subtext}</div>
           <div class="module-desc">${mod.desc}</div>
         </div>
         <div class="module-footer">
-          <div class="module-progress-bar">
-            <div class="module-progress-fill" style="width: ${mod.progress}; background: ${mod.color};"></div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: ${isComplete ? '#eab308' : mod.color};">
+            ${isComplete ? '✓ Mestret' : (pct === 0 ? '<span style="color: #94a3b8; font-weight: 500;">Klar til start</span>' : `${pct}% udforsket`)}
           </div>
           <div class="module-open-link" style="color: ${mod.color};">
             <span>Åbn</span>

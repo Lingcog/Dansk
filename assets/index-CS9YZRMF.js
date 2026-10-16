@@ -1859,22 +1859,6 @@
         align-items: center;
         gap: 0.3rem;
       }
-      .byggeplads-golden-rule {
-        margin-top: 1rem;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px dashed rgba(255, 255, 255, 0.18);
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 0.85rem;
-        color: #cbd5e1;
-        line-height: 1.45;
-      }
-      .byggeplads-golden-rule strong {
-        color: #fde047;
-      }
 
       /* Secondary Collapsible Section */
       .secondary-section-toggle {
@@ -2070,14 +2054,6 @@
             <span class="explanation-text" id="flow-text">Beskriver <strong>substantivet</strong>: Hvilken bil? Den <em>røde</em> bil.</span>
           </div>
           <button type="button" class="explanation-cta-btn" id="flow-cta">Gå til Adjektiver ➔</button>
-        </div>
-      </div>
-
-      <!-- Den Gyldne Regel (Pædagogisk vejledning til begyndere) -->
-      <div class="byggeplads-golden-rule">
-        <span style="font-size: 1.4rem; flex-shrink: 0;">💡</span>
-        <div>
-          <strong>Den gyldne regel:</strong> Pluk lidt fra alle kasser! Lær 10 navneord, 10 verber og småordet <em>"ikke"</em> – så kan du allerede tale hverdagsdansk i dag. Du behøver ikke gøre én flade færdig før den næste.
         </div>
       </div>
     `;let K="top100_adjektiver";const O=c.querySelectorAll(".flow-chip"),se=c.querySelectorAll(".hotspot-pin"),ge=c.querySelector("#flow-badge"),X=c.querySelector("#flow-text"),w=c.querySelector("#flow-cta");function h(U){const ce=$[U];if(!ce)return;se.forEach(s=>{s.classList.remove("active"),s.getAttribute("data-type")===U&&s.classList.add("active")}),O.forEach(s=>{s.className="flow-chip",s.getAttribute("data-type")===U&&s.classList.add(ce.chipClass)}),ge.textContent=ce.badge,ge.style.background=ce.color,X.innerHTML=ce.text,w.textContent=ce.targetTitle,K=ce.target;const J=document.getElementById(`module-card-${U}`);J&&(J.scrollIntoView({behavior:"smooth",block:"nearest"}),J.style.transform="translateY(-8px) scale(1.02)",setTimeout(()=>{J.style.transform=""},600))}O.forEach(U=>{U.onclick=()=>h(U.getAttribute("data-type"))}),se.forEach(U=>{U.onclick=ce=>{ce.stopPropagation(),h(U.getAttribute("data-type"))}}),w.onclick=()=>{C(K)},T.appendChild(c);function F(U,ce=0){try{const J=localStorage.getItem(`lingcog_progress_${U}`);if(J!==null){const s=parseInt(J,10);if(!isNaN(s))return Math.min(100,Math.max(0,s))}}catch{}return ce}function L(U,ce){const s=2*Math.PI*16,u=s-U/100*s,y=U>=100;return`

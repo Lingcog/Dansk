@@ -25,7 +25,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 19. forhåbentlig (Håb og forventning for fremtiden)
  * 20. ærlig talt (Oprigtig mening uden filter)
  * 
- * 7 didaktiske tabs:
+ * 8 didaktiske tabs:
  * 1. Planlægningsrummet (Vrimlebilledet - 20 hotspots, filtre & målordspræsentation)
  * 2. Aha-værkstedet (Sandsynlighedsbarometret 0-100% & Holdningstransformeren)
  * 3. Holdnings-Detektiven (10 gåder bygget på sandsynlighed og sociale nuancer)
@@ -33,6 +33,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
  * 5. Kontekst-testen (14 autentiske hverdagsdialoger)
  * 6. Tvivlens Grader: Næppe, usandsynligt, umuligt 📉 (8 øvelser)
  * 7. Social Tone: Heldigvis, desværre & forhåbentlig 🎭 (8 øvelser)
+ * 8. Bevis-Detektiven (sandsynligvis, formentlig, åbenbart, tilsyneladende) 🔬 (10 øvelser)
  */
 export function renderAdverbierHoldningView(container, navigateFn) {
     container.innerHTML = '';
@@ -1542,7 +1543,8 @@ export function renderAdverbierHoldningView(container, navigateFn) {
         { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
         { id: 'tvivl', label: '6. Tvivlens Grader: Næppe, umuligt... 📉', icon: '📉' },
-        { id: 'tone', label: '7. Heldigvis & desværre (Social tone) 🎭', icon: '🎭' }
+        { id: 'tone', label: '7. Heldigvis & desværre (Social tone) 🎭', icon: '🎭' },
+        { id: 'beviser', label: '8. Bevis-Detektiven (70-90%) 🔬', icon: '🔬' }
     ];
 
     let currentTab = 'vrimmel';
@@ -1583,6 +1585,8 @@ export function renderAdverbierHoldningView(container, navigateFn) {
             renderTabTvivl(tabContent);
         } else if (tabId === 'tone') {
             renderTabTone(tabContent);
+        } else if (tabId === 'beviser') {
+            renderTabBeviser(tabContent);
         }
     }
 
@@ -3309,6 +3313,296 @@ export function renderAdverbierHoldningView(container, navigateFn) {
         card.querySelector('#tone-next-btn').onclick = () => {
             toneIdx++;
             renderToneQuestion(exArea, parentContainer);
+        };
+
+        exArea.appendChild(card);
+    }
+
+    // ==========================================
+    // TAB 8: BEVIS-DETEKTIVEN (70-90%) (10 øvelser)
+    // ==========================================
+    const BEVIS_QUESTIONS = [
+        {
+            dialog: 'A: "Skal vi pakke regnslag til udendørskoncerten?"<br>B: "Ja, ifølge radarmålingerne begynder det ______ at regne i eftermiddag."',
+            options: ['sandsynligvis', 'tilsyneladende', 'åbenbart'],
+            correct: 'sandsynligvis',
+            feedback: 'Korrekt! Du bygger på målinger, radardata og statistik – den klassiske kilde for "sandsynligvis".',
+            badge: '📊 Data & Målinger'
+        },
+        {
+            dialog: 'A: "Hvor blev Peter af? Vi skal holde statusmøde nu."<br>B: "Computeren er tændt og kaffen er stadig varm, så han er ______ lige gået på toilettet."',
+            options: ['formentlig', 'tilsyneladende', 'sandsynligvis'],
+            correct: 'formentlig',
+            feedback: 'Korrekt! Du finder fysiske spor (varm kaffe, tændt skærm) og drager en logisk slutning – kernen i "formentlig".',
+            badge: '🧠 Logiske indicier'
+        },
+        {
+            dialog: 'A: "Skal vi hente frisk brød hos bageren?"<br>B: "Nej, døren er låst og lyset er slukket, så butikken har ______ lukket tidligt i dag."',
+            options: ['åbenbart', 'tilsyneladende', 'formentlig'],
+            correct: 'åbenbart',
+            feedback: 'Korrekt! Låsen på døren og det slukkede lys er et uomtvisteligt, synligt bevis foran jer.',
+            badge: '💡 Synligt bevis'
+        },
+        {
+            dialog: 'A: "Ved du hvordan det gik Sofie til hendes mundtlige eksamen?"<br>B: "Hun smiler over hele hovedet, så det gik ______ rigtig godt."',
+            options: ['tilsyneladende', 'åbenbart', 'sandsynligvis'],
+            correct: 'tilsyneladende',
+            feedback: 'Korrekt! Det ser sådan ud på overfladen (smilet), men du kender ikke karakteren endnu og tager et lille forbehold.',
+            badge: '👀 Ydre overflade'
+        },
+        {
+            dialog: 'A: "Når vi frem til middagen klokken 18?"<br>B: "Trafikradioen melder om 15 km kø på motorvejen, så vi bliver ______ forsinket."',
+            options: ['sandsynligvis', 'tilsyneladende', 'åbenbart'],
+            correct: 'sandsynligvis',
+            feedback: 'Korrekt! Meldingen bygger på konkrete trafiktal og rejsetidsberegninger (høj sandsynlighed).',
+            badge: '📊 Trafiktal & data'
+        },
+        {
+            dialog: 'A: "Er Mikkel hjemme på sit værelse?"<br>B: "Nej, hans jakke er væk og cyklen mangler i skuret, så han er ______ cyklet til træning."',
+            options: ['formentlig', 'tilsyneladende', 'sandsynligvis'],
+            correct: 'formentlig',
+            feedback: 'Korrekt! Du observerer de manglende genstande og forbinder de logiske spor.',
+            badge: '🧠 Logisk deduktion'
+        },
+        {
+            dialog: 'A: "Hvorfor kommer toget ikke til perron 2?"<br>B: "Se på den røde tekst på skærmen! Toget er ______ blevet aflyst af DSB."',
+            options: ['åbenbart', 'tilsyneladende', 'sandsynligvis'],
+            correct: 'åbenbart',
+            feedback: 'Korrekt! Den røde tekst bekræfter kendsgerningen for alle – et klart afsløret bevis.',
+            badge: '💡 Konkret bevis'
+        },
+        {
+            dialog: 'A: "Hvad synes du om den brugte bil hos forhandleren?"<br>B: "Lakken skinner pænt og den ser ______ ud til at være i flot stand."',
+            options: ['tilsyneladende', 'åbenbart', 'formentlig'],
+            correct: 'tilsyneladende',
+            feedback: 'Korrekt! Overfladen er flot, men mekanikken er ikke testet – "tilsyneladende" tager netop dette forbehold.',
+            badge: '👀 Overflade (kan bedrage)'
+        },
+        {
+            dialog: 'A: "Tør vi tænde for fabrikkens store maskine igen?"<br>B: "Mekanikeren har udskiftet alle defekte dele, så den bør ______ køre uden problemer nu."',
+            options: ['rimeligvis', 'tilsyneladende', 'åbenbart'],
+            correct: 'rimeligvis',
+            feedback: 'Korrekt! "Rimeligvis" udtrykker en berettiget, fornuftig forventning baseret på grundigt forarbejde.',
+            badge: '⚖️ Sund fornuft'
+        },
+        {
+            dialog: 'A: "Fandt du noget ekstra printerpapir ude på lageret?"<br>B: "Kassen står helt tom på hylden, så vi er ______ løbet helt tør."',
+            options: ['åbenbart', 'tilsyneladende', 'sandsynligvis'],
+            correct: 'åbenbart',
+            feedback: 'Korrekt! Den tomme kasse beviser det direkte med dine egne øjne.',
+            badge: '💡 Synlig kendsgerning'
+        }
+    ];
+
+    let bevisIdx = 0;
+    let bevisScore = 0;
+    let bevisAnswers = new Array(BEVIS_QUESTIONS.length).fill(null);
+
+    function renderTabBeviser(parent) {
+        parent.innerHTML = '';
+
+        const container = document.createElement('div');
+        container.className = 'special-tab-container';
+
+        container.innerHTML = `
+            <div class="special-intro-box">
+                <h2>Bevis-Detektiven: Hvor har du det fra? 🔬</h2>
+                <p>
+                    I 70–90% spændet handler det ikke om 5% fra eller til. Det handler om dit <strong>bevisgrundlag</strong>! Hvilket ord matcher situationens videnskilde?
+                </p>
+            </div>
+
+            <div class="special-rule-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));">
+                <div class="special-rule-card" style="border-color: rgba(56, 189, 248, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #38bdf8;">
+                            <span>📊</span> sandsynligvis
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(14, 165, 233, 0.2); color: #7dd3fc; border: 1px solid #0284c7;">Data</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bygger på <strong>prognoser, målinger, statistik og trafiktal</strong>.
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #0284c7;">
+                        <span>"Ifølge radaren regner det <strong>sandsynligvis</strong>."</span>
+                        <button class="rule-speak-btn" data-speak="Ifølge radaren regner det sandsynligvis.">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(168, 85, 247, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #c084fc;">
+                            <span>🧠</span> formentlig
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border: 1px solid #a855f7;">Logik</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bygger på <strong>fysiske spor og logisk deduktion</strong> (varm kaffe, jakke på knagen).
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #a855f7;">
+                        <span>"Kaffen er varm, så han er <strong>formentlig</strong> her."</span>
+                        <button class="rule-speak-btn" data-speak="Kaffen er varm, så han er formentlig her.">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(34, 197, 94, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #86efac;">
+                            <span>💡</span> åbenbart
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e;">Bevis</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bygger på <strong>konkrete, synlige beviser og afslørede fakta</strong> (låst dør, rød tekst).
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #22c55e;">
+                        <span>"Døren er låst, så de har <strong>åbenbart</strong> lukket."</span>
+                        <button class="rule-speak-btn" data-speak="Døren er låst, så de har åbenbart lukket.">🔊</button>
+                    </div>
+                </div>
+
+                <div class="special-rule-card" style="border-color: rgba(234, 179, 8, 0.4);">
+                    <div class="special-rule-header">
+                        <div class="special-rule-word" style="color: #facc15;">
+                            <span>👀</span> tilsyneladende
+                        </div>
+                        <span class="special-rule-role" style="background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308;">Overflade</span>
+                    </div>
+                    <div class="special-rule-desc">
+                        Bygger på <strong>det umiddelbare ydre indtryk</strong>, som dog godt kan bedrage.
+                    </div>
+                    <div class="special-rule-example" style="border-left-color: #eab308;">
+                        <span>"Han smiler, så det gik <strong>tilsyneladende</strong> godt."</span>
+                        <button class="rule-speak-btn" data-speak="Han smiler, så det gik tilsyneladende godt.">🔊</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bevis-exercise-area"></div>
+        `;
+
+        container.querySelectorAll('.rule-speak-btn').forEach(b => {
+            b.onclick = () => speakDanish(b.getAttribute('data-speak'));
+        });
+
+        const exArea = container.querySelector('#bevis-exercise-area');
+        renderBevisQuestion(exArea, parent);
+
+        parent.appendChild(container);
+    }
+
+    function renderBevisQuestion(exArea, parentContainer) {
+        exArea.innerHTML = '';
+
+        if (bevisIdx >= BEVIS_QUESTIONS.length) {
+            const resultCard = document.createElement('div');
+            resultCard.className = 'score-celebration-card';
+            resultCard.innerHTML = `
+                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🔬</div>
+                <h3 style="font-size: 2rem; color: #86efac; margin-bottom: 0.6rem;">Formidabelt efterforsket!</h3>
+                <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
+                    Du fik <strong>${bevisScore}</strong> ud af <strong>${BEVIS_QUESTIONS.length}</strong> rigtige i bevis-testen.
+                </p>
+                <div style="background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
+                    ✔️ <strong>De 4 videnskilder:</strong><br>
+                    • <strong>sandsynligvis</strong> = Radardata, målinger & prognoser<br>
+                    • <strong>formentlig</strong> = Logiske indicier (varm kaffekop)<br>
+                    • <strong>åbenbart</strong> = Konkret bevis (låst dør, rød aflysning)<br>
+                    • <strong>tilsyneladende</strong> = Ydre overflade (et smil, nypoleret lak)
+                </div>
+                <button class="action-btn-primary" id="bevis-restart-btn">
+                    <span>🔄</span> Start forfra
+                </button>
+            `;
+            resultCard.querySelector('#bevis-restart-btn').onclick = () => {
+                bevisIdx = 0;
+                bevisScore = 0;
+                bevisAnswers = new Array(BEVIS_QUESTIONS.length).fill(null);
+                renderTabBeviser(parentContainer);
+            };
+            exArea.appendChild(resultCard);
+            return;
+        }
+
+        const q = BEVIS_QUESTIONS[bevisIdx];
+        const isAnswered = bevisAnswers[bevisIdx] !== null;
+
+        const card = document.createElement('div');
+        card.className = 'exercise-action-card';
+
+        card.innerHTML = `
+            <div class="progress-header">
+                <span>Spørgsmål ${bevisIdx + 1} af ${BEVIS_QUESTIONS.length}</span>
+                <span>Score: ${bevisScore} / ${BEVIS_QUESTIONS.length}</span>
+            </div>
+
+            <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" style="width: ${((bevisIdx + 1) / BEVIS_QUESTIONS.length) * 100}%;"></div>
+            </div>
+
+            <div class="detektiv-context-tag">${q.badge}</div>
+
+            <div class="exercise-dialog-quote">
+                ${q.dialog}
+            </div>
+
+            <div class="detektiv-options-grid" id="bevis-opts-grid"></div>
+
+            <div class="detektiv-feedback-box ${isAnswered ? 'show ' + (bevisAnswers[bevisIdx] === q.correct ? 'correct' : 'wrong') : ''}" id="bevis-fb">
+                ${isAnswered ? (bevisAnswers[bevisIdx] === q.correct ? `<strong>Rigtigt!</strong> ${q.feedback}` : `<strong>Husk reglen:</strong> ${q.feedback}`) : ''}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                <button class="filter-btn" id="bevis-prev-btn" ${bevisIdx === 0 ? 'disabled style="opacity: 0.4;"' : ''}>
+                    ← Forrige
+                </button>
+                <button class="action-btn-primary" id="bevis-next-btn">
+                    ${bevisIdx < BEVIS_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                </button>
+            </div>
+        `;
+
+        const optsGrid = card.querySelector('#bevis-opts-grid');
+        const fb = card.querySelector('#bevis-fb');
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = `detektiv-opt-btn ${isAnswered ? (opt === q.correct ? 'correct' : (opt === bevisAnswers[bevisIdx] ? 'wrong' : '')) : ''}`;
+            btn.textContent = opt;
+
+            btn.onclick = () => {
+                if (bevisAnswers[bevisIdx] !== null) return;
+                bevisAnswers[bevisIdx] = opt;
+
+                if (opt === q.correct) {
+                    bevisScore++;
+                    btn.classList.add('correct');
+                    fb.className = 'detektiv-feedback-box show correct';
+                    fb.innerHTML = `<strong>Rigtigt!</strong> ${q.feedback}`;
+                    speakDanish(q.dialog.replace(/<[^>]*>?/gm, ' ').replace('______', opt));
+                } else {
+                    btn.classList.add('wrong');
+                    fb.className = 'detektiv-feedback-box show wrong';
+                    fb.innerHTML = `<strong>Ikke helt:</strong> ${q.feedback}`;
+                    optsGrid.querySelectorAll('.detektiv-opt-btn').forEach(b => {
+                        if (b.textContent === q.correct) b.classList.add('correct');
+                    });
+                }
+            };
+
+            optsGrid.appendChild(btn);
+        });
+
+        card.querySelector('#bevis-prev-btn').onclick = () => {
+            if (bevisIdx > 0) {
+                bevisIdx--;
+                renderBevisQuestion(exArea, parentContainer);
+            }
+        };
+
+        card.querySelector('#bevis-next-btn').onclick = () => {
+            bevisIdx++;
+            renderBevisQuestion(exArea, parentContainer);
         };
 
         exArea.appendChild(card);

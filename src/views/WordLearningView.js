@@ -87,25 +87,23 @@ export function renderWordLearningView(container, navigateFn) {
       .hotspot-pin {
         position: absolute;
         transform: translate(-50%, -50%);
-        width: 36px;
-        height: 36px;
+        width: 22px;
+        height: 22px;
         border-radius: 50%;
-        border: 2.5px solid #ffffff;
+        border: 2px solid #ffffff;
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 900;
-        font-size: 0.95rem;
         cursor: pointer;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 10;
         animation: pulsePin 2.5s infinite;
       }
       @keyframes pulsePin {
         0%, 100% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.1); }
+        50% { transform: translate(-50%, -50%) scale(1.08); }
       }
       .hotspot-pin.pin-adj { background: #f97316; }
       .hotspot-pin.pin-sub { background: #22c55e; }
@@ -113,41 +111,50 @@ export function renderWordLearningView(container, navigateFn) {
       .hotspot-pin.pin-adv { background: #38bdf8; }
       .hotspot-pin.pin-konj { background: #a855f7; }
       .hotspot-pin:hover, .hotspot-pin.active {
-        transform: translate(-50%, -50%) scale(1.3) !important;
+        transform: translate(-50%, -50%) scale(1.15) !important;
         z-index: 30;
-        box-shadow: 0 0 25px #ffffff, 0 0 15px currentColor;
+        box-shadow: 0 0 14px #ffffff, 0 0 8px currentColor;
         border-color: #ffffff;
+      }
+      .hotspot-pin .pin-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: block;
+        pointer-events: none;
       }
       .hotspot-pill {
         position: absolute;
-        bottom: 115%;
+        bottom: 125%;
         left: 50%;
         transform: translateX(-50%);
-        background: rgba(15, 23, 42, 0.92);
+        background: rgba(15, 23, 42, 0.94);
         backdrop-filter: blur(8px);
         color: #ffffff;
-        border: 1.5px solid rgba(255,255,255,0.25);
-        padding: 0.25rem 0.65rem;
-        border-radius: 20px;
-        font-size: 0.78rem;
-        font-weight: 800;
+        border: 1px solid rgba(255,255,255,0.25);
+        padding: 0.12rem 0.42rem;
+        border-radius: 8px;
+        font-size: 0.64rem;
+        font-weight: 700;
         white-space: nowrap;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         pointer-events: none;
         display: flex;
         align-items: center;
-        gap: 0.3rem;
-        opacity: 0.92;
+        gap: 0.2rem;
+        opacity: 0.95;
         transition: all 0.2s ease;
       }
       .hotspot-pin:hover .hotspot-pill, .hotspot-pin.active .hotspot-pill {
         opacity: 1;
-        transform: translateX(-50%) scale(1.1);
         border-color: #ffffff;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.6);
       }
       @media (max-width: 600px) {
-        .hotspot-pin { width: 30px; height: 30px; font-size: 0.8rem; }
-        .hotspot-pill { font-size: 0.7rem; padding: 0.15rem 0.45rem; }
+        .hotspot-pin { width: 18px; height: 18px; border-width: 1.5px; }
+        .hotspot-pin .pin-dot { width: 4px; height: 4px; }
+        .hotspot-pill { font-size: 0.56rem; padding: 0.08rem 0.3rem; }
       }
 
       .sentence-flow-box {
@@ -384,21 +391,7 @@ export function renderWordLearningView(container, navigateFn) {
         font-size: 0.88rem;
         color: #cbd5e1;
         line-height: 1.45;
-        margin-bottom: 1.2rem;
-      }
-      .module-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 0.8rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .module-open-link {
-        font-size: 0.85rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
+        margin-bottom: 0;
       }
 
       /* Secondary Collapsible Section */
@@ -598,32 +591,32 @@ export function renderWordLearningView(container, navigateFn) {
         
         <!-- 1. 🟠 den røde (Adjektiv - på bilens røde kølerhjelm) -->
         <button type="button" class="hotspot-pin pin-adj active" data-type="adjektiv" style="left: 36%; top: 68%;" title="🟠 den røde (Adjektiv)">
-          <span>🟠</span>
-          <div class="hotspot-pill">🟠 den røde</div>
+          <span class="pin-dot"></span>
+          <div class="hotspot-pill">den røde</div>
         </button>
 
         <!-- 2. 🟢 bil (Substantiv - på bilens tag/kabine) -->
         <button type="button" class="hotspot-pin pin-sub" data-type="substantiv" style="left: 47%; top: 45%;" title="🟢 bil (Substantiv)">
-          <span>🟢</span>
-          <div class="hotspot-pill">🟢 bil</div>
+          <span class="pin-dot"></span>
+          <div class="hotspot-pill">bil</div>
         </button>
 
         <!-- 3. 🔴 kører (Verbum - på føreren og de rullende hjul) -->
         <button type="button" class="hotspot-pin pin-vrb" data-type="verbum" style="left: 60%; top: 66%;" title="🔴 kører (Verbum)">
-          <span>🔴</span>
-          <div class="hotspot-pill">🔴 kører</div>
+          <span class="pin-dot"></span>
+          <div class="hotspot-pill">kører</div>
         </button>
 
         <!-- 4. 🔵 hurtigt (Adverbium - i fartstriberne og hvirvlerne til venstre) -->
         <button type="button" class="hotspot-pin pin-adv" data-type="adverbium" style="left: 17%; top: 86%;" title="🔵 hurtigt (Adverbium)">
-          <span>🔵</span>
-          <div class="hotspot-pill">🔵 hurtigt</div>
+          <span class="pin-dot"></span>
+          <div class="hotspot-pill">hurtigt</div>
         </button>
 
         <!-- 5. 🟣 fordi... (Konjunktion - på broen og målet til højre) -->
         <button type="button" class="hotspot-pin pin-konj" data-type="konjunktion" style="left: 87%; top: 48%;" title="🟣 fordi... (Konjunktion)">
-          <span>🟣</span>
-          <div class="hotspot-pill">🟣 fordi...</div>
+          <span class="pin-dot"></span>
+          <div class="hotspot-pill">fordi...</div>
         </button>
       </div>
 
@@ -867,15 +860,6 @@ export function renderWordLearningView(container, navigateFn) {
           <div class="module-title">${mod.title}</div>
           <div class="module-subtext">${mod.subtext}</div>
           <div class="module-desc">${mod.desc}</div>
-        </div>
-        <div class="module-footer">
-          <div style="font-size: 0.8rem; font-weight: 700; color: ${isComplete ? '#eab308' : mod.color};">
-            ${isComplete ? '✓ Mestret' : (pct === 0 ? '<span style="color: #94a3b8; font-weight: 500;">Klar til start</span>' : `${pct}% udforsket`)}
-          </div>
-          <div class="module-open-link" style="color: ${mod.color};">
-            <span>Åbn</span>
-            <span>➔</span>
-          </div>
         </div>
       `;
 

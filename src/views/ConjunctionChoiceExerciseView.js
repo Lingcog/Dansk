@@ -147,14 +147,38 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
                     <div class="card" id="btn-da-naar">
                         <div class="card-icon">📅</div>
                         <h3 class="card-title">Da / når</h3>
+                        <p class="card-desc">Klassisk Træning 2 (3 sæt)</p>
                     </div>
                     <div class="card" id="btn-fordi-derfor">
                         <div class="card-icon">➡️</div>
                         <h3 class="card-title">Fordi / derfor</h3>
+                        <p class="card-desc">Klassisk Træning 2</p>
                     </div>
                     <div class="card" id="btn-selvom-alligevel">
                         <div class="card-icon">🧱</div>
                         <h3 class="card-title">Selvom / alligevel</h3>
+                        <p class="card-desc">Klassisk Træning 2</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2.2rem; padding-top: 1.5rem; border-top: 2px dashed rgba(99, 102, 241, 0.25);">
+                    <h3 style="margin: 0 0 0.8rem 0; color: #312e81; font-size: 1.15rem;">✨ Nye selvstændige Vrimlebillede-flader (inkl. disse illustrationer + 6 interaktive værksteder)</h3>
+                    <div class="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
+                        <div class="card" id="btn-vrimmel-da-naar" style="border: 2px solid #0284c7; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                            <div class="card-icon">📌🔁</div>
+                            <h3 class="card-title" style="color: #0369a1;">Da & Når (Fuld Flade)</h3>
+                            <p class="card-desc" style="color: #075985;">Vrimlebillede + Tegnestiften & Cirklen + Fortids-Duellen</p>
+                        </div>
+                        <div class="card" id="btn-vrimmel-fordi-derfor" style="border: 2px solid #d97706; background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);">
+                            <div class="card-icon">⛽➡️</div>
+                            <h3 class="card-title" style="color: #92400e;">Fordi & Derfor (Fuld Flade)</h3>
+                            <p class="card-desc" style="color: #78350f;">Vrimlebillede + Årsag & Virkning + Sætnings-Vendemaskinen</p>
+                        </div>
+                        <div class="card" id="btn-vrimmel-selvom-alligevel" style="border: 2px solid #dc2626; background: linear-gradient(135deg, #fef2f2 0%, #f5f3ff 100%);">
+                            <div class="card-icon">🧱☄️</div>
+                            <h3 class="card-title" style="color: #991b1b;">Selvom & Alligevel (Fuld Flade)</h3>
+                            <p class="card-desc" style="color: #7f1d1d;">Vrimlebillede + Muren & Bolden + Sætnings-Transformeren</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,6 +192,10 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
         document.getElementById('btn-da-naar').addEventListener('click', () => setupExercise('da_naar'));
         document.getElementById('btn-fordi-derfor').addEventListener('click', () => setupExercise('fordi_derfor'));
         document.getElementById('btn-selvom-alligevel').addEventListener('click', () => setupExercise('selvom_alligevel'));
+
+        document.getElementById('btn-vrimmel-da-naar').addEventListener('click', () => navigateFn('konjunktioner_da_naar'));
+        document.getElementById('btn-vrimmel-fordi-derfor').addEventListener('click', () => navigateFn('konjunktioner_fordi_derfor'));
+        document.getElementById('btn-vrimmel-selvom-alligevel').addEventListener('click', () => navigateFn('konjunktioner_selvom_alligevel'));
     }
 
     function renderExercise() {

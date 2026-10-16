@@ -222,7 +222,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         <h1>Helsætnings- & Ledsætningskonjunktioner</h1>
         <p>Lær hvordan danske sætninger bindes sammen: Hvornår står <em>ikke</em> efter verbet (helsætning), hvornår rykker <em>ikke</em> frem før verbet (ledsætning), og hvordan mestrer man alle de forskellige konstruktioner med <strong><em>at</em></strong>?</p>
         <div class="konj-hub-facts-badge">
-            <span>🌉</span> 4 specialiserede felter • Inkl. særskilt felt for ordet "AT"
+            <span>🌉</span> 7 specialiserede felter • Inkl. særskilte flader for "AT", "Da/Når", "Selvom/Alligevel" & "Fordi/Derfor"
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -271,10 +271,46 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             isSpecial: true,
             img: 'assets/konjunktioner_at_vrimmel.jpg',
             title: '4. Ordet "AT" i alle sætningskonstruktioner',
-            desc: 'Hvorfor er "at" så svært på dansk? Fordi det optræder i 5 vidt forskellige konstruktioner! Lær forskellen på konjunktionen "at", infinitivmærket "at" (vs. modalverber uden "at"), præposition + "at" og sammensatte bindeord.',
+            desc: 'Kognitiv ramme (Tankeboblen & Billedrammen) og træning i de 5 konstruktioner med "at": Konjunktionen "at", infinitivmærket "at" (vs. modalverber uden "at"), præposition + "at" og sammensatte bindeord.',
             chips: ['siger/tror, at + S + V', 'elsker at + infinitiv', 'kan/skal (UDEN at!)', 'glad for at / god til at', 'kom til at', 'for at / uden at / ved at', 'så ... at'],
             btnText: 'Åbn det særskilte "AT"-Felt 🌟 ➔',
             action: () => navigateFn('konjunktioner_at', { from: 'top_konjunktioner' })
+        },
+        {
+            id: 'konj_felt_5_da_naar',
+            badge: '📅 Felt 5 • Særskilt Flade (Vrimlebillede + Kognitiv Guide)',
+            badgeClass: 'badge-konj-1',
+            isSpecial: true,
+            img: 'assets/da_naar_vrimmel.jpg',
+            title: '5. "DA" og "NÅR" – Tegnestiften 📌, Cirklen 🔁 & Pilen 🏹',
+            desc: 'Særskilt flade med eget vrimlebillede og de 3 kognitive kalender-symboler: 📌 Tegnestiften (da = én gang i fortiden), 🔁 Cirklen (når = gentagne vaner) og 🏹 Pilen (når = fremtiden).',
+            chips: ['📌 da (fortid 1 gang)', '🔁 når (vane i nutid & fortid)', '🏹 når (fremtid)', 'Ledsætning + Inversion'],
+            btnText: 'Åbn "DA og NÅR"-Fladen 📅 ➔',
+            action: () => navigateFn('konjunktioner_da_naar', { from: 'top_konjunktioner' })
+        },
+        {
+            id: 'konj_felt_6_selvom_alligevel',
+            badge: '🧱☄️ Felt 6 • Særskilt Flade (Vrimlebillede + Mur & Bold)',
+            badgeClass: 'badge-konj-4',
+            isSpecial: true,
+            img: 'assets/selvom_alligevel_vrimmel.jpg',
+            title: '6. "SELVOM" og "ALLIGEVEL" – Muren 🧱 & Bolden ☄️',
+            desc: 'Særskilt flade med eget vrimlebillede og den kognitive Mur/Bold-illustration: 🧱 Selvom bygger forhindringen i en ledsætning, mens ☄️ Alligevel er bolden, der bryder igennem muren i hovedsætningen!',
+            chips: ['🧱 selvom (+ S + ikke + V)', '☄️ alligevel (på trods)', 'Sætnings-Transformeren', 'Inversion i front'],
+            btnText: 'Åbn "SELVOM og ALLIGEVEL"-Fladen 🧱 ➔',
+            action: () => navigateFn('konjunktioner_selvom_alligevel', { from: 'top_konjunktioner' })
+        },
+        {
+            id: 'konj_felt_7_fordi_derfor',
+            badge: '⛽➡️ Felt 7 • Særskilt Flade (Vrimlebillede + Årsag & Virkning)',
+            badgeClass: 'badge-konj-2',
+            isSpecial: true,
+            img: 'assets/fordi_derfor_vrimmel.jpg',
+            title: '7. "FORDI" og "DERFOR" – Årsag ⛽ vs. Virkning ➡️',
+            desc: 'Særskilt flade med eget vrimlebillede og Årsag/Virkning-illustrationen: ⛽ Virkning + FORDI ➔ Årsag (ledsætning med "ikke" før verbet) over for ➡️ Årsag. DERFOR ➔ Virkning (med Inversion)!',
+            chips: ['⛽ fordi (+ S + ikke + V)', '➡️ derfor (+ V + S = Inversion!)', 'Sætnings-Vendemaskinen', 'Årsag ↔ Virkning'],
+            btnText: 'Åbn "FORDI og DERFOR"-Fladen ➡️ ➔',
+            action: () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' })
         }
     ];
 

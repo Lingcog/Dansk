@@ -22,6 +22,9 @@ import { renderAdverbierKonnektionView } from './views/AdverbierKonnektionView.j
 import { renderTopKonjunktionerMenuView } from './views/TopKonjunktionerMenuView.js';
 import { renderKonjunktionerView } from './views/KonjunktionerView.js';
 import { renderKonjunktionerAtView } from './views/KonjunktionerAtView.js';
+import { renderKonjunktionerDaNaarView } from './views/KonjunktionerDaNaarView.js';
+import { renderKonjunktionerSelvomAlligevelView } from './views/KonjunktionerSelvomAlligevelView.js';
+import { renderKonjunktionerFordiDerforView } from './views/KonjunktionerFordiDerforView.js';
 import { renderAdjektiverFysikView } from './views/AdjektiverFysikView.js';
 import { renderAdjektiverTidView } from './views/AdjektiverTidView.js';
 import { renderAdjektiverKvalitetView } from './views/AdjektiverKvalitetView.js';
@@ -184,6 +187,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'konjunktioner_at') {
     appState.currentView = 'konjunktioner_at';
     renderKonjunktionerAtView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_da_naar') {
+    appState.currentView = 'konjunktioner_da_naar';
+    renderKonjunktionerDaNaarView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_selvom_alligevel') {
+    appState.currentView = 'konjunktioner_selvom_alligevel';
+    renderKonjunktionerSelvomAlligevelView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_fordi_derfor') {
+    appState.currentView = 'konjunktioner_fordi_derfor';
+    renderKonjunktionerFordiDerforView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_fysik') {
     appState.currentView = 'adjektiver_fysik';
     renderAdjektiverFysikView(appDiv, navigate);

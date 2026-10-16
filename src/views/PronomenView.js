@@ -65,14 +65,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     `;
     pronomenCard.onclick = () => navigateFn('pronomen', { subPath: 'p' });
 
-    const verbumCard = document.createElement('div');
-    verbumCard.className = 'card';
-    verbumCard.innerHTML = `
-        <div class="card-icon">🏃</div>
-        <div class="card-title">${getTranslation('gårGikGået')}</div>
-    `;
-    verbumCard.onclick = () => navigateFn('top100_verber');
-
     const derErCard = document.createElement('div');
     derErCard.className = 'card';
     derErCard.innerHTML = `
@@ -90,7 +82,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
     bestemthedCard.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
 
     grid1.appendChild(pronomenCard);
-    grid1.appendChild(verbumCard);
     grid1.appendChild(derErCard);
     grid1.appendChild(bestemthedCard);
     level1Area.appendChild(grid1);
@@ -145,8 +136,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
         if (category === 'pronomen') {
             title.textContent = 'Han / ham / hans (Pronominer)';
-        } else if (category === 'verbum') {
-            title.textContent = getTranslation('gårGikGået');
         } else if (category === 'artikler_menu') {
             title.textContent = 'En kat / katten? (Artikler & Bestemthed)';
         } else if (category === 'adverbier_menu') {
@@ -170,10 +159,6 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 { title: 'Holdninger - adverbier', type: 'adverbier_holdninger', icon: '💨' },
                 { title: 'Dialog - adverbier', type: 'adverbier_dialog', icon: '💬' },
                 { title: 'Tid - adverbier', type: 'adverbier_tid', icon: '⏱️' }
-            ];
-        } else {
-            items = [
-                { key: 'top100_verber_hub_title', type: 'top100_verber', icon: '✨' }
             ];
         }
 

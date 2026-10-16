@@ -2585,24 +2585,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
         .scene-card:hover .scene-card-img {
             transform: scale(1.05);
         }
-        .scene-pill-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            padding: 0.35rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #f1f5f9;
-        }
-        .badge-verber-1 { border-color: #38bdf8; color: #38bdf8; }
-        .badge-verber-2 { border-color: #f59e0b; color: #f59e0b; }
-        .badge-verber-3 { border-color: #a855f7; color: #c084fc; }
-        .badge-verber-4 { border-color: #22c55e; color: #4ade80; }
-        .badge-verber-5 { border-color: #ec4899; color: #f472b6; }
 
         .scene-card-content {
             padding: 1.5rem;
@@ -2650,7 +2632,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,t.appendChild(c);const q=document.createElement("div");q.className="hub-scenes-grid";const V=document.createElement("div");V.className="scene-card",V.innerHTML=`
         <div class="scene-card-img-wrap">
             <img src="assets/verber_byrum_vrimmel.jpg" alt="Byrummet vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-1">🏙️ Scene 1 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${e("top100_verber_scene1_title")}</h3>
@@ -2660,7 +2641,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,V.onclick=()=>w("verber_byrum"),q.appendChild(V);const y=document.createElement("div");y.className="scene-card",y.innerHTML=`
         <div class="scene-card-img-wrap">
             <img src="assets/verber_hjem_vrimmel.jpg" alt="Hjemmet vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-2">🍳 Scene 2 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${e("top100_verber_scene2_title")}</h3>
@@ -2670,7 +2650,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,y.onclick=()=>w("verber_hjem"),q.appendChild(y);const M=document.createElement("div");M.className="scene-card",M.innerHTML=`
         <div class="scene-card-img-wrap">
             <img src="assets/verber_klasse_vrimmel.jpg" alt="Klasseværelset vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-3">🏫 Scene 3 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${e("top100_verber_scene3_title")}</h3>
@@ -2680,7 +2659,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,M.onclick=()=>w("verber_klasse"),q.appendChild(M);const u=document.createElement("div");u.className="scene-card",u.innerHTML=`
         <div class="scene-card-img-wrap">
             <img src="assets/verber_park_vrimmel.jpg" alt="Parken vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-4">🌳 Scene 4 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${e("top100_verber_scene4_title")}</h3>
@@ -2690,7 +2668,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,u.onclick=()=>w("verber_park"),q.appendChild(u);const v=document.createElement("div");v.className="scene-card",v.innerHTML=`
         <div class="scene-card-img-wrap">
             <img src="assets/verber_station_vrimmel.jpg" alt="Banegården vrimlebillede" class="scene-card-img">
-            <div class="scene-pill-badge badge-verber-5">🚆 Scene 5 • 20 verber</div>
         </div>
         <div class="scene-card-content">
             <h3>${e("top100_verber_scene5_title")}</h3>

@@ -232,7 +232,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             id: 'adverbier_holdning',
             badge: '🎲 Felt 6 • 20 ord',
             badgeClass: 'badge-adv-6',
-            img: 'assets/klasse_kontor_vrimmel.jpg',
+            img: 'assets/adverbier_holdning_vrimmel.jpg',
             title: '6. Sikkerhed, Tvivl & Holdning',
             desc: 'Sandsynlighedsskalaen fra helt sikkert til usandsynligt samt talerens vurdering: heldigvis, desværre, formentlig, umuligt.',
             btnText: 'Udforsk holdning & sandsynlighed ➔'

@@ -10,29 +10,15 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container top100-adjektiver-hub';
 
-    // Top Bar with back button & guide bridge
+    // Top Bar with back button
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
-    topBar.style.display = 'flex';
-    topBar.style.justifyContent = 'space-between';
-    topBar.style.alignItems = 'center';
-    topBar.style.flexWrap = 'wrap';
-    topBar.style.gap = '0.8rem';
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back')}`;
     backBtn.onclick = () => navigateFn('word_learning');
     topBar.appendChild(backBtn);
-
-    const guideTopBtn = document.createElement('button');
-    guideTopBtn.className = 'back-btn';
-    guideTopBtn.style.background = 'rgba(234, 179, 8, 0.18)';
-    guideTopBtn.style.borderColor = '#eab308';
-    guideTopBtn.style.color = '#fde047';
-    guideTopBtn.innerHTML = `📏 Felt 6: Den Store Bøjningsguide (Gradbøjning & E-reglen) ➔`;
-    guideTopBtn.onclick = () => navigateFn('adjective_comparison', { from: 'top100_adjektiver' });
-    topBar.appendChild(guideTopBtn);
 
     viewContainer.appendChild(topBar);
 
@@ -63,18 +49,6 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
             max-width: 780px;
             margin: 0 auto 1.5rem;
             line-height: 1.6;
-        }
-        .adj-hub-facts-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(168, 85, 247, 0.15);
-            border: 1px solid #a855f7;
-            color: #c084fc;
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
         }
 
         .adj-scenes-grid {
@@ -232,9 +206,6 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     hero.innerHTML = `
         <h1>De 100 mest almindelige adjektiver</h1>
         <p>Adjektiver beskriver verden, tilfører nuancer og udtrykker kontraster. Udforsk de 100 mest almindelige danske adjektiver inddelt i 5 semantiske felter – og mestr den komplette bøjningslære i Felt 6!</p>
-        <div class="adj-hub-facts-badge">
-            <span>🟣</span> 6 felter: De 100 vigtigste adjektiver + Den store bøjningsguide (Gradbøjning & E-reglen)
-        </div>
     `;
     viewContainer.appendChild(hero);
 

@@ -10,29 +10,15 @@ export function renderTop100VerberMenuView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container top100-verber-hub';
 
-    // Top Bar with back button and grammar bridge
+    // Top Bar with back button
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
-    topBar.style.display = 'flex';
-    topBar.style.justifyContent = 'space-between';
-    topBar.style.alignItems = 'center';
-    topBar.style.flexWrap = 'wrap';
-    topBar.style.gap = '0.8rem';
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back')}`;
     backBtn.onclick = () => navigateFn('word_learning');
     topBar.appendChild(backBtn);
-
-    const grammarBridgeBtn = document.createElement('button');
-    grammarBridgeBtn.className = 'back-btn';
-    grammarBridgeBtn.style.background = 'rgba(245, 158, 11, 0.15)';
-    grammarBridgeBtn.style.borderColor = '#f59e0b';
-    grammarBridgeBtn.style.color = '#fbbf24';
-    grammarBridgeBtn.innerHTML = `🌉 ${getTranslation('verberTider')} ➔`;
-    grammarBridgeBtn.onclick = () => navigateFn('punktet_og_broen', { from: 'top100_verber' });
-    topBar.appendChild(grammarBridgeBtn);
 
     viewContainer.appendChild(topBar);
 
@@ -63,18 +49,6 @@ export function renderTop100VerberMenuView(container, navigateFn) {
             max-width: 750px;
             margin: 0 auto 1.5rem;
             line-height: 1.6;
-        }
-        .hub-facts-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid #ef4444;
-            color: #f87171;
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
         }
 
         .hub-scenes-grid {
@@ -185,9 +159,6 @@ export function renderTop100VerberMenuView(container, navigateFn) {
     hero.innerHTML = `
         <h1>${getTranslation('top100_verber_hub_title')}</h1>
         <p>${getTranslation('top100_verber_hub_desc')}</p>
-        <div class="hub-facts-badge">
-            ${getTranslation('top100_verber_hub_class_badge')}
-        </div>
     `;
     viewContainer.appendChild(hero);
 

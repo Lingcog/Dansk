@@ -211,7 +211,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             id: 'konj_felt_8_tekstflow',
             img: 'assets/tekstens_trafik_vrimmel.jpg',
             title: '8. Tekstens trafik og tekstflow',
-            desc: 'Kognitiv tekstforståelse: Se bindeord som sprogets trafiksignaler, der styrer retning, tempo og overgange i sammenhængende fortællinger og samtaler.',
+            desc: 'Kognitiv tekstforståelse: Se bindeord som sprogets trafiksignaler, der styrer retning og skaber et naturligt tekstflow.',
             btnText: 'Gå til felt 8 ➔',
             action: () => navigateFn('konjunktioner_tekstflow', { from: 'top_konjunktioner' })
         }

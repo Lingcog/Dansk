@@ -173,9 +173,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
             ];
         } else {
             items = [
+                { key: 'top100_verber_hub_title', type: 'top100_verber', icon: '✨' },
                 { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
-                { key: 'verberDatidRegelm', type: 'datid_regelm', icon: '🕰️', img: 'verber_kategorier.png' },
-                { key: 'verberDatid', type: 'datid', icon: '🕰️', img: 'verber_kategorier.png' },
                 { key: 'verberTider', type: 'tider', icon: '🌉', img: 'verber_kategorier.png' }
             ];
         }
@@ -205,6 +204,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
                 } else {
                     if (item.type === 'verber_nutid') {
                         navigateFn('verbum_menu');
+                    } else if (item.type === 'top100_verber') {
+                        navigateFn('top100_verber');
                     } else {
                         navigateFn('verbum_learning', { subPath: item.type, backView: 'pronomen' });
                     }
@@ -936,7 +937,9 @@ export function renderPronomenView(container, navigateFn, extraData) {
         const parts = subPath.split('/');
         if (parts.length > 1) {
             const type = parts[1];
-            if (type === 'verber_nutid') {
+            if (type === 'datid_regelm' || type === 'datid' || type === 'top100_verber') {
+                navigateFn('top100_verber', {}, true);
+            } else if (type === 'verber_nutid') {
                 navigateFn('verbum_menu', {}, true);
             } else {
                 navigateFn('verbum_learning', { subPath: type, backView: 'pronomen' }, true);

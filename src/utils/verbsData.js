@@ -306,68 +306,6 @@ export const verbsData = [
         ]
     },
     {
-        "id": "datid_regelm",
-        "title": "Datid (regelmæssige)",
-        "verbs": ["boede", "spillede", "snakkede", "arbejdede", "lyttede", "vaskede", "ventede", "hentede", "lavede", "købte"],
-        "exercises": [
-            {
-                "title": "Min historie - Sæt 1",
-                "instruction": "Vælg det rigtige verbum i regelmæssig datid (-ede eller -te).",
-                "segments": [
-                    { "type": "text", "content": "1. **[I lived in Odense]**\\nJeg " },
-                    { "type": "gap", "id": 0, "correct": "boede", "options": ["boede", "bor", "bliver", "arbejdede", "spillede"], "explanation": "hintContext" },
-                    { "type": "text", "content": " i Odense sidste år.\\n\\n2. **[We played football]**\\nVi " },
-                    { "type": "gap", "id": 1, "correct": "spillede", "options": ["boede", "spillede", "spiller", "arbejdede", "lavede"], "explanation": "hintContext" },
-                    { "type": "text", "content": " fodbold i tirsdags.\\n\\n3. **[I worked a lot]**\\nJeg " },
-                    { "type": "gap", "id": 2, "correct": "arbejdede", "options": ["boede", "spillede", "arbejdede", "arbejder", "lavede"], "explanation": "hintContext" },
-                    { "type": "text", "content": " meget i går.\\n\\n4. **[I made dinner]**\\nJeg " },
-                    { "type": "gap", "id": 3, "correct": "lavede", "options": ["lavede", "laver", "boede", "spillede", "arbejdede"], "explanation": "hintContext" },
-                    { "type": "text", "content": " mad til hele familien.\\n\\n5. **[I waited for the bus]**\\nJeg " },
-                    { "type": "gap", "id": 4, "correct": "ventede", "options": ["ventede", "venter", "boede", "spillede", "arbejdede"], "explanation": "hintContext" },
-                    { "type": "text", "content": " på bussen i 20 minutter." }
-                ],
-                "phase2_tasks": [
-                    { "correct": "boede", "definition": "At have haft sit hjem et sted i fortiden (regelmæssig).", "options": ["boede", "arbejdede", "spillede", "lavede", "ventede"], "explanation": "Korrekt!" },
-                    { "correct": "spillede", "definition": "At have deltaget i leg eller sport i fortiden.", "options": ["boede", "arbejdede", "spillede", "lavede", "ventede"], "explanation": "Korrekt!" },
-                    { "correct": "arbejdede", "definition": "At have udført sit job i fortiden.", "options": ["boede", "arbejdede", "spillede", "lavede", "ventede"], "explanation": "Korrekt!" },
-                    { "correct": "lavede", "definition": "At have fremstillet noget i fortiden (f.eks. mad).", "options": ["boede", "arbejdede", "spillede", "lavede", "ventede"], "explanation": "Korrekt!" },
-                    { "correct": "ventede", "definition": "At have brugt tid på at noget skulle ske i fortiden.", "options": ["boede", "arbejdede", "spillede", "lavede", "ventede"], "explanation": "Korrekt!" }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "datid",
-        "title": "Datid (uregelmæssige)",
-        "verbs": ["så", "gik", "kom", "tog", "spiste", "drak", "fik", "var", "havde", "skrev", "læste", "sang", "sov", "løb", "sad", "stod"],
-        "exercises": [
-            {
-                "title": "I går - Sæt 1",
-                "instruction": "Vælg det rigtige uregelmæssige verbum i datid.",
-                "segments": [
-                    { "type": "text", "content": "1. **[Yesterday I saw a movie]**\\nI går " },
-                    { "type": "gap", "id": 0, "correct": "så", "options": ["så", "ser", "seet", "tog", "gik"], "explanation": "hintContext" },
-                    { "type": "text", "content": " jeg en god film.\\n\\n2. **[We walked to the party]**\\nVi " },
-                    { "type": "gap", "id": 1, "correct": "gik", "options": ["så", "gik", "går", "gået", "kom"], "explanation": "hintContext" },
-                    { "type": "text", "content": " til fest i lørdags.\\n\\n3. **[He came late this morning]**\\nHan " },
-                    { "type": "gap", "id": 2, "correct": "kom", "options": ["kom", "kommer", "kommet", "så", "tog"], "explanation": "hintContext" },
-                    { "type": "text", "content": " for sent i morges.\\n\\n4. **[I took a cake with me]**\\nJeg " },
-                    { "type": "gap", "id": 3, "correct": "tog", "options": ["tog", "tager", "taget", "så", "gik"], "explanation": "hintContext" },
-                    { "type": "text", "content": " en kage med i går.\\n\\n5. **[We ate dinner at 18]**\\nVi " },
-                    { "type": "gap", "id": 4, "correct": "spiste", "options": ["spiser", "spist", "spiste", "kom", "tog"], "explanation": "hintContext" },
-                    { "type": "text", "content": " aftensmad klokken 18 i går." }
-                ],
-                "phase2_tasks": [
-                    { "correct": "så", "definition": "At have set noget i fortiden (datid af 'se').", "options": ["så", "ser", "seet", "tog", "gik"], "explanation": "Korrekt!" },
-                    { "correct": "gik", "definition": "At have gået et sted hen i fortiden (datid af 'gå').", "options": ["så", "gik", "går", "gået", "kom"], "explanation": "Korrekt!" },
-                    { "correct": "kom", "definition": "At være ankommet i fortiden (datid af 'komme').", "options": ["kom", "kommer", "kommet", "så", "tog"], "explanation": "Korrekt!" },
-                    { "correct": "tog", "definition": "At have taget noget i fortiden (datid af 'tage').", "options": ["tog", "tager", "taget", "så", "gik"], "explanation": "Korrekt!" },
-                    { "correct": "spiste", "definition": "At have indtaget mad i fortiden (datid af 'spise').", "options": ["spiser", "spist", "spiste", "kom", "tog"], "explanation": "Korrekt!" }
-                ]
-            }
-        ]
-    },
-    {
         "id": "tider",
         "title": "Datid vs. Førnutid",
         "verbs": ["var", "har været", "kom", "er kommet", "drak", "har drukket", "har boet", "boede", "har læst", "læste"],

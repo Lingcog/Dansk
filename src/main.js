@@ -426,6 +426,10 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'verbum_learning') {
     appState.currentView = 'verbum_learning';
     const categoryId = extraData.subPath || extraData.categoryId;
+    if (categoryId === 'datid_regelm' || categoryId === 'datid') {
+      navigate('top100_verber', {}, true);
+      return;
+    }
     const view = new VerbumLearningView(navigate, categoryId, extraData?.backView);
     appDiv.appendChild(view.render());
   } else if (viewTarget === 'verbum_menu') {

@@ -2888,18 +2888,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
-        .hub-facts-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-            padding: 0.5rem 1.3rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
 
         .hub-scenes-grid {
             display: grid;
@@ -2941,26 +2929,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
         .scene-card:hover .scene-card-img {
             transform: scale(1.05);
         }
-        .scene-pill-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            padding: 0.35rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #f1f5f9;
-        }
-        .badge-adv-1 { border-color: #38bdf8; color: #38bdf8; }
-        .badge-adv-2 { border-color: #f59e0b; color: #f59e0b; }
-        .badge-adv-3 { border-color: #ec4899; color: #f472b6; }
-        .badge-adv-4 { border-color: #a855f7; color: #c084fc; }
-        .badge-adv-5 { border-color: #06b6d4; color: #22d3ee; }
-        .badge-adv-6 { border-color: #22c55e; color: #4ade80; }
-        .badge-adv-7 { border-color: #eab308; color: #fde047; }
 
         .scene-card-content {
             padding: 1.5rem;
@@ -3005,13 +2973,9 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,t.appendChild(m);const c=document.createElement("div");c.className="hub-hero",c.innerHTML=`
         <h1>De mest almindelige adverbier</h1>
         <p>Lær de afgørende ord, der skaber sammenhæng, beskriver måden, viser tid og retning samt udtrykker din holdning i dansk samtale.</p>
-        <div class="hub-facts-badge">
-            <span>🧭</span> 7 semantiske felter • Nøglen til flydende dansk
-        </div>
     `,t.appendChild(c);const q=document.createElement("div");q.className="hub-scenes-grid",[{id:"adverbier_sted",badge:"📍 Felt 1 • 18 ord",badgeClass:"badge-adv-1",img:"assets/adverbier_sted_vrimmel.jpg",title:"1. Sted: Retning vs. Hvile",desc:"Mestre den berømte forskel mellem bevægelse mod et mål (hjem, ind, ud, op) og stilstand på stedet (hjemme, inde, ude, oppe).",btnText:"Udforsk retning & hvile ➔"},{id:"adverbier_tid",badge:"⏳ Felt 2 • 19 ord",badgeClass:"badge-adv-2",img:"assets/adverbier_tid_vrimmel.jpg",title:"2. Tid & Frekvens",desc:"Hvornår og hvor tit? Lær vaner (altid, ofte, sjældent, aldrig) og tidsforløb (nu, snart, allerede, endnu, stadig).",btnText:"Udforsk tid & frekvens ➔"},{id:"adverbier_maade",badge:"⚡ Felt 3 • 20 ord",badgeClass:"badge-adv-3",img:"assets/adverbier_maade_vrimmel.jpg",title:"3. Måde (-t reglen)",desc:"Hvordan foregår handlingen? Forstå den gyldne regel: Ting (en hurtig bil) vs. Handling (kører hurtigt).",btnText:"Udforsk mådesadverbier ➔"},{id:"adverbier_grad",badge:"🌡️ Felt 4 • 20 ord",badgeClass:"badge-adv-4",img:"assets/adverbier_grad_vrimmel.jpg",title:"4. Grad & Intensitet",desc:"Hvor meget gælder det? Træn skalaen fra 0% til over 100% (slet ikke, lidt, ret, meget, for varmt).",btnText:"Udforsk intensitetsskalaen ➔"},{id:"adverbier_smaaord",badge:"💬 Felt 5 • 18 ord",badgeClass:"badge-adv-5",img:"assets/adverbier_smaaord_vrimmel.jpg",title:"5. De 5 Magiske Småord",desc:"Modalpartiklerne i dialog: jo, da, nok, vel, vist. Lær hvem der ved hvad, og hvordan en enkelt stavelse ændrer hele tonen.",btnText:"Mestre samtale-småordene ➔"},{id:"adverbier_holdning",badge:"🎲 Felt 6 • 20 ord",badgeClass:"badge-adv-6",img:"assets/adverbier_holdning_vrimmel.jpg",title:"6. Sikkerhed, Tvivl & Holdning",desc:"Sandsynlighedsskalaen fra helt sikkert til usandsynligt samt talerens vurdering: heldigvis, desværre, formentlig, umuligt.",btnText:"Udforsk holdning & sandsynlighed ➔"},{id:"adverbier_konnektion",badge:"🔗 Felt 7 • 20 ord",badgeClass:"badge-adv-7",img:"assets/adverbier_konnektion_vrimmel.jpg",title:"7. Konnektion & Tekstbindere",desc:"Skab logisk sammenhæng mellem sætninger og afsnit: derfor (årsag), alligevel (kontrast), nemlig (begrundelse) og ellers.",btnText:"Udforsk tekstbindere ➔"}].forEach(y=>{const M=document.createElement("div");M.className="scene-card",M.innerHTML=`
             <div class="scene-card-img-wrap">
                 <img src="${y.img}" alt="${y.title}" class="scene-card-img">
-                <div class="scene-pill-badge ${y.badgeClass}">${y.badge}</div>
             </div>
             <div class="scene-card-content">
                 <h3>${y.title}</h3>

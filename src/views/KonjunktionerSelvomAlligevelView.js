@@ -276,9 +276,9 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     const style = document.createElement('style');
     style.textContent = `
         .selvom-alligevel-view {
-            max-width: 1240px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 4rem;
+            padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
         }
         .sa-hero { text-align: center; margin-bottom: 1.8rem; }
@@ -297,7 +297,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             margin-bottom: 0.8rem;
         }
         .sa-hero h1 {
-            font-size: 2.5rem;
+            font-size: 1.85rem;
             font-weight: 900;
             margin: 0 0 0.7rem;
             background: linear-gradient(135deg, #fdba74, #f97316, #38bdf8);
@@ -371,7 +371,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
         }
 
-        .vrimmel-layout { max-width: 1050px; margin: 0 auto; }
+        .vrimmel-layout { max-width: 860px; margin: 0 auto; }
         .vrimmel-stage-card {
             background: #1e293b;
             border-radius: 20px;

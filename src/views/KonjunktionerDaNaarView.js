@@ -341,9 +341,9 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     const style = document.createElement('style');
     style.textContent = `
         .da-naar-view {
-            max-width: 1240px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 4rem;
+            padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
         }
         .dn-hero {
@@ -365,7 +365,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             margin-bottom: 0.8rem;
         }
         .dn-hero h1 {
-            font-size: 2.5rem;
+            font-size: 1.85rem;
             font-weight: 900;
             margin: 0 0 0.7rem;
             background: linear-gradient(135deg, #fca5a5, #6ee7b7, #fde68a);
@@ -453,7 +453,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         }
 
         /* Vrimmel */
-        .vrimmel-layout { max-width: 1050px; margin: 0 auto; }
+        .vrimmel-layout { max-width: 860px; margin: 0 auto; }
         .vrimmel-stage-card {
             background: #1e293b;
             border-radius: 20px;

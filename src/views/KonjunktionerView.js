@@ -480,116 +480,58 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     const style = document.createElement('style');
     style.textContent = `
         .konjunktioner-view {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 5rem;
+            padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
         }
 
         .konj-hero {
             text-align: center;
-            margin-bottom: 2rem;
-        }
-        .konj-hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10b981;
-            color: #6ee7b7;
-            padding: 0.4rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
         }
         .konj-hero h1 {
-            font-size: 2.6rem;
+            font-size: 1.85rem;
             font-weight: 900;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.25;
             background: linear-gradient(135deg, #6ee7b7, #10b981, #0ea5e9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .konj-hero p {
             color: #94a3b8;
-            font-size: 1.15rem;
-            max-width: 850px;
-            margin: 0 auto 1.5rem;
-            line-height: 1.6;
-        }
-
-        .golden-rule-banner-konj {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
-            border: 2px solid #10b981;
-            border-radius: 20px;
-            padding: 1.4rem 2rem;
-            max-width: 980px;
-            margin: 0 auto 2.5rem;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .rule-icon-konj {
-            font-size: 2.8rem;
-            flex-shrink: 0;
-        }
-        .rule-content-konj h4 {
-            color: #6ee7b7;
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 0.35rem;
-        }
-        .rule-content-konj p {
-            color: #cbd5e1;
-            font-size: 0.98rem;
+            font-size: 0.95rem;
+            max-width: 680px;
+            margin: 0 auto 0.8rem;
             line-height: 1.5;
-            margin: 0;
-        }
-        .rule-pills-row-konj {
-            display: flex;
-            gap: 0.6rem;
-            margin-top: 0.8rem;
-            flex-wrap: wrap;
-        }
-        .rule-pill-konj {
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10b981;
-            color: #a7f3d0;
         }
 
         /* Tabs Navigation */
         .adv-tabs-nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 0.4rem;
             justify-content: center;
-            margin-bottom: 2.2rem;
+            margin-bottom: 1.2rem;
             background: rgba(15, 23, 42, 0.6);
-            padding: 0.6rem;
-            border-radius: 18px;
+            padding: 0.35rem;
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .adv-tab-btn {
             background: transparent;
             color: #94a3b8;
             border: none;
-            padding: 0.8rem 1.3rem;
-            border-radius: 12px;
-            font-size: 0.96rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.84rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.35rem;
         }
         .adv-tab-btn:hover {
             color: #f1f5f9;
@@ -598,17 +540,17 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .adv-tab-btn.active {
             background: #059669;
             color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
         }
 
         /* Vrimmel Layout */
         .vrimmel-layout {
-            max-width: 1050px;
+            max-width: 860px;
             margin: 0 auto;
         }
         .vrimmel-stage-card {
             background: #1e293b;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -617,24 +559,24 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 1.5rem;
+            padding: 0.5rem 0.8rem;
             background: rgba(15, 23, 42, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.5rem;
         }
         .vrimmel-filters {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
             flex-wrap: wrap;
         }
         .filter-btn {
             background: #334155;
             color: #cbd5e1;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.45rem 0.9rem;
-            border-radius: 10px;
-            font-size: 0.88rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
@@ -653,14 +595,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid #10b981;
             color: #a7f3d0;
-            padding: 0.45rem 1rem;
-            border-radius: 10px;
+            padding: 0.35rem 0.7rem;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
         .pure-toggle-btn.active {
             background: #047857;
@@ -684,33 +626,33 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: #059669;
-            border: 2.5px solid #ffffff;
+            border: 2px solid #ffffff;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 15px rgba(16, 185, 129, 0.6);
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(16, 185, 129, 0.5);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
         .hotspot-pin:hover {
-            transform: translate(-50%, -50%) scale(1.3);
+            transform: translate(-50%, -50%) scale(1.25);
             background: #10b981;
-            box-shadow: 0 0 25px #10b981;
+            box-shadow: 0 0 20px #10b981;
             z-index: 25;
         }
         .hotspot-pin.active {
-            transform: translate(-50%, -50%) scale(1.35);
+            transform: translate(-50%, -50%) scale(1.3);
             background: #eab308;
             border-color: #ffffff;
-            box-shadow: 0 0 30px #eab308;
+            box-shadow: 0 0 25px #eab308;
             z-index: 30;
         }
         .hotspot-label {
@@ -721,12 +663,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             background: rgba(15, 23, 42, 0.95);
             color: #a7f3d0;
             border: 1px solid #10b981;
-            padding: 0.2rem 0.55rem;
+            padding: 0.15rem 0.45rem;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             white-space: nowrap;
-            margin-top: 4px;
+            margin-top: 3px;
             pointer-events: none;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
@@ -735,23 +677,23 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .vrimmel-inspector {
             background: #1e293b;
             border: 2px solid #10b981;
-            border-radius: 20px;
-            margin-top: 1.5rem;
-            padding: 1.8rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+            padding: 1.2rem 1.4rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: grid;
             grid-template-columns: 1.1fr 1fr;
-            gap: 2rem;
+            gap: 1.4rem;
             align-items: start;
             animation: fadeIn 0.3s ease;
         }
-        @media (max-width: 850px) {
-            .vrimmel-inspector { grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (max-width: 800px) {
+            .vrimmel-inspector { grid-template-columns: 1fr; gap: 1rem; }
         }
         .inspector-left, .inspector-right {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.75rem;
         }
         .inspector-header {
             display: flex;
@@ -760,7 +702,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         }
         .inspector-badge-row {
             display: flex;
-            gap: 0.6rem;
+            gap: 0.5rem;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -768,9 +710,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             background: rgba(16, 185, 129, 0.2);
             border: 1px solid #10b981;
             color: #a7f3d0;
-            padding: 0.25rem 0.75rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 7px;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -778,102 +720,102 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             background: #059669;
             color: white;
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
         }
         .inspector-audio-btn:hover {
             background: #10b981;
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
         .inspector-word-title {
-            font-size: 2.2rem;
+            font-size: 1.65rem;
             font-weight: 900;
             color: white;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             margin: 0;
         }
         .inspector-trans-box {
             background: #0f172a;
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
-            border-left: 4px solid #10b981;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            border-left: 3px solid #10b981;
         }
         .trans-badge-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             color: #6ee7b7;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
         }
         .trans-word-val {
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #f8fafc;
         }
         .inspector-scene-box {
             background: rgba(15, 23, 42, 0.6);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .scene-heading {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             font-weight: 800;
             color: #94a3b8;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
         }
         .scene-text {
             color: #cbd5e1;
-            font-size: 0.98rem;
-            line-height: 1.5;
+            font-size: 0.88rem;
+            line-height: 1.45;
             margin: 0;
         }
         .inspector-sentence-card {
             background: #0f172a;
-            border-radius: 14px;
-            padding: 1.2rem;
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
             border: 1.5px solid rgba(16, 185, 129, 0.35);
         }
         .sentence-quote-text {
-            font-size: 1.2rem;
+            font-size: 1.12rem;
             font-weight: 700;
             color: white;
-            line-height: 1.5;
-            margin-bottom: 0.5rem;
+            line-height: 1.45;
+            margin-bottom: 0.4rem;
         }
         .sentence-trans-text {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: #94a3b8;
             font-style: italic;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
         }
         .inspector-speak-btn {
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid #10b981;
             color: #a7f3d0;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             transition: all 0.2s;
         }
         .inspector-speak-btn:hover {
@@ -882,23 +824,76 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         }
         .inspector-actions {
             display: flex;
-            gap: 0.8rem;
-            margin-top: 0.5rem;
+            gap: 0.6rem;
+            margin-top: 0.4rem;
         }
         .inspector-btn-action {
             flex: 1;
             background: #334155;
             color: white;
             border: none;
-            padding: 0.75rem;
-            border-radius: 10px;
+            padding: 0.65rem;
+            border-radius: 8px;
             font-weight: 700;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
         }
         .inspector-btn-action:hover {
             background: #475569;
+        }
+
+        /* Mobile Responsive Scaling */
+        @media (max-width: 768px) {
+            .konjunktioner-view {
+                padding: 0.6rem 0.6rem 2.5rem;
+            }
+            .konj-hero h1 {
+                font-size: 1.35rem;
+                line-height: 1.25;
+                word-break: break-word;
+            }
+            .konj-hero p {
+                font-size: 0.84rem;
+                line-height: 1.4;
+            }
+            .adv-tabs-nav {
+                gap: 0.25rem;
+                padding: 0.25rem;
+            }
+            .adv-tab-btn {
+                padding: 0.35rem 0.55rem;
+                font-size: 0.75rem;
+            }
+            .vrimmel-controls-bar {
+                padding: 0.35rem 0.5rem;
+                gap: 0.35rem;
+            }
+            .filter-btn, .pure-toggle-btn {
+                padding: 0.28rem 0.5rem;
+                font-size: 0.74rem;
+            }
+            .hotspot-pin {
+                width: 24px;
+                height: 24px;
+                font-size: 0.72rem;
+            }
+            .hotspot-label {
+                font-size: 0.65rem;
+                padding: 0.12rem 0.35rem;
+            }
+            .vrimmel-inspector {
+                grid-template-columns: 1fr;
+                padding: 0.9rem;
+                gap: 0.85rem;
+            }
+            .inspector-word-title {
+                font-size: 1.4rem;
+            }
+            .sentence-quote-text {
+                font-size: 1.05rem;
+            }
         }
 
         /* Tab 2: Laboratoriet */
@@ -1515,9 +1510,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         const filters = [
             { id: 'alle', label: 'Alle (18)' },
-            { id: 'helsaetning', label: '🟢 Helsætning: og, men, eller, for, så (5)' },
-            { id: 'ledsaetning_logik', label: '🔵 Ledsætning: fordi, selvom, hvis, at, om (5)' },
-            { id: 'ledsaetning_tid', label: '🟣 Ledsætning Tid: når, da, mens, inden... (8)' }
+            { id: 'helsaetning', label: 'Helsætning (5)' },
+            { id: 'ledsaetning_logik', label: 'Ledsætning: logik (5)' },
+            { id: 'ledsaetning_tid', label: 'Ledsætning: tid (8)' }
         ];
 
         filters.forEach(f => {

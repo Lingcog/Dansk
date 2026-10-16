@@ -240,9 +240,9 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     const style = document.createElement('style');
     style.textContent = `
         .tekstflow-view {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 4rem;
+            padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
         }
         .tf-hero {
@@ -265,7 +265,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             letter-spacing: 0.5px;
         }
         .tf-hero h1 {
-            font-size: 2.6rem;
+            font-size: 1.85rem;
             font-weight: 900;
             margin-bottom: 0.8rem;
             background: linear-gradient(135deg, #38bdf8 0%, #10b981 50%, #fde047 100%);

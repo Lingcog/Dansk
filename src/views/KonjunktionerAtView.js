@@ -478,9 +478,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     const style = document.createElement('style');
     style.textContent = `
         .konjunktioner-at-view {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 5rem;
+            padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
         }
 
@@ -504,7 +504,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             margin-bottom: 0.8rem;
         }
         .at-hero h1 {
-            font-size: 2.6rem;
+            font-size: 1.85rem;
             font-weight: 900;
             margin-bottom: 0.6rem;
             background: linear-gradient(135deg, #fde68a, #f59e0b, #ea580c);
@@ -599,8 +599,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         }
 
         /* Vrimmel Layout */
-        .vrimmel-layout {
-            max-width: 1050px;
+        .vrimmel-layout { max-width: 860px;
             margin: 0 auto;
         }
         .vrimmel-stage-card {

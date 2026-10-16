@@ -276,9 +276,9 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     const style = document.createElement('style');
     style.textContent = `
         .fordi-derfor-view {
-            max-width: 1240px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 4rem;
+            padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
         }
         .fd-hero { text-align: center; margin-bottom: 1.8rem; }
@@ -297,7 +297,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
             margin-bottom: 0.8rem;
         }
         .fd-hero h1 {
-            font-size: 2.5rem;
+            font-size: 1.85rem;
             font-weight: 900;
             margin: 0 0 0.7rem;
             background: linear-gradient(135deg, #7dd3fc, #38bdf8, #fb923c);
@@ -371,7 +371,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
             box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
         }
 
-        .vrimmel-layout { max-width: 1050px; margin: 0 auto; }
+        .vrimmel-layout { max-width: 860px; margin: 0 auto; }
         .vrimmel-stage-card {
             background: #1e293b;
             border-radius: 20px;

@@ -33,38 +33,302 @@ export function renderWordLearningView(container, navigateFn) {
     // Common Styles
     const style = document.createElement('style');
     style.textContent = `
-      .word-learning-container h1 { margin-bottom: 2rem; }
-      .task-selection-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .task-choice-card {
-        background: var(--card-bg);
+      .word-learning-container h1 { margin-bottom: 1.5rem; text-align: center; }
+      
+      /* Byggeplads Card */
+      .byggeplads-card {
+        background: rgba(15, 23, 42, 0.75);
+        border: 1.5px solid rgba(255, 255, 255, 0.15);
         border-radius: 20px;
-        padding: 2rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        backdrop-filter: blur(12px);
+      }
+      .byggeplads-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .byggeplads-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #f8fafc;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .byggeplads-subtitle {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        margin-top: 0.2rem;
+      }
+      .sentence-flow-box {
+        position: relative;
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1.5rem 1rem 1rem;
+      }
+      .svg-curve-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .pulsing-curve {
+        stroke-dasharray: 6;
+        animation: pulseDash 25s linear infinite;
+      }
+      @keyframes pulseDash {
+        to { stroke-dashoffset: -1000; }
+      }
+      .chips-row {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 1.2rem;
+      }
+      .flow-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 1.1rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 700;
         cursor: pointer;
-        border: 2px solid rgba(255,255,255,0.1);
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
+        user-select: none;
+        border-width: 2px;
+        border-style: solid;
+        background: rgba(15, 23, 42, 0.8);
+      }
+      .flow-chip:hover {
+        transform: translateY(-2px) scale(1.03);
+      }
+      .flow-chip.active-adj {
+        border-color: #f97316;
+        color: #fb923c;
+        box-shadow: 0 0 16px rgba(249, 115, 22, 0.5);
+      }
+      .flow-chip.active-sub {
+        border-color: #22c55e;
+        color: #4ade80;
+        box-shadow: 0 0 16px rgba(34, 197, 94, 0.5);
+      }
+      .flow-chip.active-vrb {
+        border-color: #ef4444;
+        color: #f87171;
+        box-shadow: 0 0 16px rgba(239, 68, 68, 0.5);
+      }
+      .flow-chip.active-adv {
+        border-color: #38bdf8;
+        color: #38bdf8;
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+      }
+      .flow-chip.active-konj {
+        border-color: #a855f7;
+        color: #c084fc;
+        box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+      }
+      .flow-explanation {
+        position: relative;
+        z-index: 2;
+        background: rgba(30, 41, 59, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .explanation-content {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .explanation-badge {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: white;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        white-space: nowrap;
+      }
+      .explanation-text {
+        font-size: 0.9rem;
+        color: #f1f5f9;
+        line-height: 1.4;
+      }
+      .explanation-cta-btn {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.35rem 0.85rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+      }
+      .explanation-cta-btn:hover {
+        background: white;
+        color: #0f172a;
+        transform: translateX(2px);
+      }
+      
+      /* Primary Modules Grid */
+      .primary-modules-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.2rem;
+        margin-bottom: 2.5rem;
+      }
+      .module-card {
+        background: rgba(30, 41, 59, 0.7);
+        border-radius: 18px;
+        padding: 1.4rem;
+        border-width: 2px;
+        border-style: solid;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+      .module-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+      }
+      .module-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.8rem;
+      }
+      .module-icon {
+        font-size: 2.4rem;
+      }
+      .module-badge {
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .module-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 0.35rem;
+      }
+      .module-subtext {
+        font-size: 0.78rem;
+        color: #94a3b8;
+        margin-bottom: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
+      .module-desc {
+        font-size: 0.88rem;
+        color: #cbd5e1;
+        line-height: 1.45;
+        margin-bottom: 1.2rem;
+      }
+      .module-footer {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .module-progress-bar {
+        flex: 1;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        margin-right: 1rem;
+        overflow: hidden;
+      }
+      .module-progress-fill {
+        height: 100%;
+        border-radius: 999px;
+      }
+      .module-open-link {
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      /* Secondary Collapsible Section */
+      .secondary-section-toggle {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 0.9rem 1.4rem;
+        color: #cbd5e1;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+      }
+      .secondary-section-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+      .secondary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      .secondary-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 1.2rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
         text-align: center;
       }
-      .task-choice-card:hover {
-        transform: translateY(-10px);
-        border-color: var(--primary-color);
-        background: var(--card-hover);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      .secondary-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-3px);
       }
-      .task-choice-icon { font-size: 3rem; margin-bottom: 1rem; }
-      .task-choice-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: white; }
-      .task-choice-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.4; }
+      .secondary-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+      .secondary-title { font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.2rem; }
+      .secondary-desc { font-size: 0.8rem; color: #94a3b8; }
 
-      /* Removed local exercise-card and full-width-img styles - now global in style.css */
+      @media (max-width: 650px) {
+        .svg-curve-overlay { display: none; }
+        .chips-row { gap: 0.5rem; }
+        .flow-chip { font-size: 0.85rem; padding: 0.5rem 0.8rem; }
+        .primary-modules-grid { grid-template-columns: 1fr; }
+      }
 
       .semantic-network {
         position: relative;
@@ -149,95 +413,317 @@ export function renderWordLearningView(container, navigateFn) {
   }
 
   function renderSelection(parent) {
-    const grid = document.createElement('div');
-    grid.className = 'task-selection-grid';
+    // --- 1. SPROGETS BYGGEPLADS (INTERAKTIVT SÆTNINGSFLOW) ---
+    const byggepladsCard = document.createElement('div');
+    byggepladsCard.className = 'byggeplads-card';
 
-    const tasks = [
-      { id: 'exercise_top100_substantiver', title: 'top100SubstantiverTitle', desc: 'top100SubstantiverDesc', icon: '🏆', highlight: 'substantiv' },
-      { id: 'exercise_top100_verber', title: 'top100VerberTitle', desc: 'top100VerberDesc', icon: '⚡', highlight: 'verbum' },
-      { id: 'exercise_top100_adjektiver', title: 'top100AdjektiverTitle', desc: 'top100AdjektiverDesc', icon: '🎨', highlight: 'adjektiv' },
-      { id: 'exercise_top100_adverbier', title: 'top100AdverbierTitle', desc: 'top100AdverbierDesc', icon: '🧭', highlight: 'adverbium' },
+    const flowData = {
+      adjektiv: {
+        badge: "🟠 Adjektiv",
+        color: "#f97316",
+        chipClass: "active-adj",
+        text: "Beskriver <strong>substantivet</strong>: Hvilken bil? Den <em>røde</em> bil.",
+        target: "top100_adjektiver",
+        targetTitle: "Gå til Adjektiver ➔"
+      },
+      substantiv: {
+        badge: "🟢 Substantiv",
+        color: "#22c55e",
+        chipClass: "active-sub",
+        text: "Kernen i scenen: Hvem eller hvad taler vi om? En <em>bil</em>, en <em>mand</em>, et <em>hus</em>.",
+        target: "top100_substantiver",
+        targetTitle: "Gå til Substantiver ➔"
+      },
+      verbum: {
+        badge: "🔴 Verbum",
+        color: "#ef4444",
+        chipClass: "active-vrb",
+        text: "Motoren i sætningen: Hvad gør bilen? Den <em>kører</em>.",
+        target: "top100_verber",
+        targetTitle: "Gå til Verber ➔"
+      },
+      adverbium: {
+        badge: "🔵 Adverbium",
+        color: "#38bdf8",
+        chipClass: "active-adv",
+        text: "Knytter sig til <strong>verbet</strong>: Hvordan kører den? Den kører <em>hurtigt</em> (eller <em>i dag</em>, <em>ikke</em>).",
+        target: "top100_adverbier",
+        targetTitle: "Gå til Adverbier ➔"
+      },
+      konjunktion: {
+        badge: "🟣 Konjunktion",
+        color: "#a855f7",
+        chipClass: "active-konj",
+        text: "Broen, der samler to billeder eller rammesætter indhold: <em>...fordi solen skinner</em> eller <em>Jeg tror, at...</em>",
+        target: "top_konjunktioner",
+        targetTitle: "Gå til Konjunktioner ➔"
+      }
+    };
+
+    byggepladsCard.innerHTML = `
+      <div class="byggeplads-header">
+        <div>
+          <div class="byggeplads-title">
+            <span>✨</span>
+            <span>Sprogets Byggeplads</span>
+          </div>
+          <div class="byggeplads-subtitle">Tryk på en ordklasse for at se, hvordan ordene hænger sammen</div>
+        </div>
+      </div>
+
+      <div class="sentence-flow-box">
+        <svg class="svg-curve-overlay" viewBox="0 0 540 65" preserveAspectRatio="none">
+          <!-- Bue 1: Orange Adjektiv -> Grønt Substantiv -->
+          <path d="M 65 38 Q 110 8 155 38" fill="none" stroke="#f97316" stroke-width="2.5" class="pulsing-curve" />
+          <!-- Bue 2: Blåt Adverbium -> Rødt Verbum -->
+          <path d="M 385 38 Q 330 8 275 38" fill="none" stroke="#38bdf8" stroke-width="2.5" class="pulsing-curve" />
+          <!-- Bue 3: Lilla Konjunktion binder hele sætningen videre -->
+          <path d="M 435 44 Q 485 64 530 44" fill="none" stroke="#a855f7" stroke-width="2.5" class="pulsing-curve" />
+        </svg>
+
+        <div class="chips-row">
+          <button type="button" class="flow-chip active-adj" data-type="adjektiv" id="chip-adj">
+            <span>🟠</span>
+            <span>den røde</span>
+          </button>
+          <button type="button" class="flow-chip" data-type="substantiv" id="chip-sub">
+            <span>🟢</span>
+            <span>bil</span>
+          </button>
+          <button type="button" class="flow-chip" data-type="verbum" id="chip-vrb">
+            <span>🔴</span>
+            <span>kører</span>
+          </button>
+          <button type="button" class="flow-chip" data-type="adverbium" id="chip-adv">
+            <span>🔵</span>
+            <span>hurtigt</span>
+          </button>
+          <button type="button" class="flow-chip" data-type="konjunktion" id="chip-konj">
+            <span>🟣</span>
+            <span>fordi...</span>
+          </button>
+        </div>
+
+        <div class="flow-explanation" id="flow-explanation">
+          <div class="explanation-content">
+            <span class="explanation-badge" id="flow-badge" style="background: #f97316;">🟠 Adjektiv</span>
+            <span class="explanation-text" id="flow-text">Beskriver <strong>substantivet</strong>: Hvilken bil? Den <em>røde</em> bil.</span>
+          </div>
+          <button type="button" class="explanation-cta-btn" id="flow-cta">Gå til Adjektiver ➔</button>
+        </div>
+      </div>
+    `;
+
+    // Chip click interactions
+    let currentFlowTarget = 'top100_adjektiver';
+    const chips = byggepladsCard.querySelectorAll('.flow-chip');
+    const badgeEl = byggepladsCard.querySelector('#flow-badge');
+    const textEl = byggepladsCard.querySelector('#flow-text');
+    const ctaBtn = byggepladsCard.querySelector('#flow-cta');
+
+    chips.forEach(chip => {
+      chip.onclick = () => {
+        const type = chip.getAttribute('data-type');
+        const item = flowData[type];
+        if (!item) return;
+
+        chips.forEach(c => {
+          c.className = 'flow-chip';
+        });
+        chip.classList.add(item.chipClass);
+
+        badgeEl.textContent = item.badge;
+        badgeEl.style.background = item.color;
+        textEl.innerHTML = item.text;
+        ctaBtn.textContent = item.targetTitle;
+        currentFlowTarget = item.target;
+
+        // Highlight matching module card below
+        const matchingCard = document.getElementById(`module-card-${type}`);
+        if (matchingCard) {
+          matchingCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          matchingCard.style.transform = 'translateY(-8px) scale(1.02)';
+          setTimeout(() => {
+            matchingCard.style.transform = '';
+          }, 600);
+        }
+      };
+    });
+
+    ctaBtn.onclick = () => {
+      navigateFn(currentFlowTarget);
+    };
+
+    parent.appendChild(byggepladsCard);
+
+    // --- 2. DE 5 PRIMÆRE MODULKORT ---
+    const primaryModules = [
+      {
+        id: 'exercise_top100_substantiver',
+        key: 'substantiv',
+        target: 'top100_substantiver',
+        icon: '🚗',
+        title: '1. Substantiver',
+        subtext: 'Tingene & personerne',
+        desc: 'De 100 mest almindelige navneord fordelt på Byen, Hjemmet, Klassen, Naturen og Stationen.',
+        badge: '100 ord',
+        badgeBg: 'rgba(34, 197, 94, 0.2)',
+        color: '#22c55e',
+        progress: '75%'
+      },
+      {
+        id: 'exercise_top100_adjektiver',
+        key: 'adjektiv',
+        target: 'top100_adjektiver',
+        icon: '🎨',
+        title: '2. Adjektiver',
+        subtext: 'Farver, former & følelser',
+        desc: 'Beskriver ting og personer: Fysisk, kvalitet, tid, følelser og tilstande. Knytter sig til substantivet.',
+        badge: '➔ Knytter til 🟢',
+        badgeBg: 'rgba(249, 115, 22, 0.2)',
+        color: '#f97316',
+        progress: '45%'
+      },
+      {
+        id: 'exercise_top100_verber',
+        key: 'verbum',
+        target: 'top100_verber',
+        icon: '🏃',
+        title: '3. Verber',
+        subtext: 'Handlingerne & motoren',
+        desc: 'De 100 vigtigste hverdagsverber i nutid, datid og førnutid i hverdagen.',
+        badge: '100 ord',
+        badgeBg: 'rgba(239, 68, 68, 0.2)',
+        color: '#ef4444',
+        progress: '60%'
+      },
+      {
+        id: 'exercise_top100_adverbier',
+        key: 'adverbium',
+        target: 'top100_adverbier',
+        icon: '🧭',
+        title: '4. Adverbier',
+        subtext: 'Tid, sted, måde & holdning',
+        desc: 'Små og præcise ord der knytter sig til verbet: Sted, tid, måde, grad, holdning og konnektion.',
+        badge: '➔ Knytter til 🔴',
+        badgeBg: 'rgba(56, 189, 248, 0.2)',
+        color: '#38bdf8',
+        progress: '30%'
+      },
       {
         id: 'exercise_top_konjunktioner',
-        title: 'topKonjunktionerTitle',
-        desc: 'topKonjunktionerDesc',
-        defaultTitle: 'Helsætnings- & Ledsætningskonjunktioner (inkl. "AT")',
-        defaultDesc: 'Lær bindeordene (og, men, fordi, når/da...) og et særskilt kognitivt felt om brugen af "at" i alle sætningskonstruktioner.',
+        key: 'konjunktion',
+        target: 'top_konjunktioner',
         icon: '🌉',
-        highlight: 'konjunktion'
-      },
+        title: '5. Konjunktioner & "AT"',
+        subtext: 'Brobyggerne & bindeord',
+        desc: 'Bindeordene (og, men, fordi, da/når, selvom) og et særskilt kognitivt felt om brugen af "at".',
+        badge: 'Brobyggeren',
+        badgeBg: 'rgba(168, 85, 247, 0.2)',
+        color: '#a855f7',
+        progress: '20%'
+      }
+    ];
+
+    const primaryGrid = document.createElement('div');
+    primaryGrid.className = 'primary-modules-grid';
+
+    primaryModules.forEach(mod => {
+      const card = document.createElement('div');
+      card.className = 'module-card';
+      card.id = `module-card-${mod.key}`;
+      card.style.borderColor = mod.color;
+      card.style.background = `linear-gradient(145deg, ${mod.color}15, rgba(15, 23, 42, 0.85))`;
+
+      card.innerHTML = `
+        <div>
+          <div class="module-top">
+            <span class="module-icon">${mod.icon}</span>
+            <span class="module-badge" style="background: ${mod.badgeBg}; color: ${mod.color}; border: 1px solid ${mod.color}50;">${mod.badge}</span>
+          </div>
+          <div class="module-title">${mod.title}</div>
+          <div class="module-subtext">${mod.subtext}</div>
+          <div class="module-desc">${mod.desc}</div>
+        </div>
+        <div class="module-footer">
+          <div class="module-progress-bar">
+            <div class="module-progress-fill" style="width: ${mod.progress}; background: ${mod.color};"></div>
+          </div>
+          <div class="module-open-link" style="color: ${mod.color};">
+            <span>Åbn</span>
+            <span>➔</span>
+          </div>
+        </div>
+      `;
+
+      card.onclick = () => {
+        navigateFn(mod.target);
+      };
+
+      primaryGrid.appendChild(card);
+    });
+
+    parent.appendChild(primaryGrid);
+
+    // --- 3. SEKUNDÆRE / SUPPLERENDE ØVELSER (COLLAPSIBLE) ---
+    const secondaryToggle = document.createElement('div');
+    secondaryToggle.className = 'secondary-section-toggle';
+    secondaryToggle.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span>📁</span>
+        <span>Flere ordøvelser (Semantik, naboord & historier)</span>
+      </div>
+      <span id="secondary-arrow" style="transition: transform 0.2s;">▾</span>
+    `;
+
+    const secondaryGrid = document.createElement('div');
+    secondaryGrid.className = 'secondary-grid';
+    secondaryGrid.style.display = 'none';
+
+    const legacyTasks = [
       { id: 'exercise_semantic', title: 'laerEtNytOrd', desc: 'laerEtNytOrdDesc', icon: '✨' },
       { id: 'exercise_naboord', title: 'laerNaboord', desc: 'laerNaboordDesc', icon: '👯' },
       { id: 'exercise_ordfamilier', title: 'laerOrdfamilier', desc: 'laerOrdfamilierDesc', icon: '🌳' },
       { id: 'exercise_historier', title: 'laerNyeOrdHistorier', desc: 'laerNyeOrdHistorierDesc', icon: '📖' }
     ];
 
-    tasks.forEach(task => {
-      const choice = document.createElement('div');
-      choice.className = `task-choice-card ${task.highlight ? 'highlight-choice' : ''}`;
-      if (task.highlight === 'substantiv') {
-        choice.style.border = '2px solid #22c55e';
-        choice.style.background = 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(30, 41, 59, 0.9))';
-      } else if (task.highlight === 'verbum') {
-        choice.style.border = '2px solid #ef4444';
-        choice.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(30, 41, 59, 0.9))';
-      } else if (task.highlight === 'adjektiv') {
-        choice.style.border = '2px solid #a855f7';
-        choice.style.background = 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(30, 41, 59, 0.9))';
-      } else if (task.highlight === 'adverbium') {
-        choice.style.border = '2px solid #0ea5e9';
-        choice.style.background = 'linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(30, 41, 59, 0.9))';
-      } else if (task.highlight === 'konjunktion') {
-        choice.style.border = '2px solid #f59e0b';
-        choice.style.background = 'linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(30, 41, 59, 0.9))';
-      }
-      choice.onclick = () => {
-        if (task.id === 'exercise_top100_substantiver') {
-          navigateFn('top100_substantiver');
-        } else if (task.id === 'exercise_top100_verber') {
-          navigateFn('top100_verber');
-        } else if (task.id === 'exercise_top100_adjektiver') {
-          navigateFn('top100_adjektiver');
-        } else if (task.id === 'exercise_top100_adverbier') {
-          navigateFn('top100_adverbier');
-        } else if (task.id === 'exercise_top_konjunktioner') {
-          navigateFn('top_konjunktioner');
-        } else {
-          currentState = task.id;
-          render();
-        }
+    legacyTasks.forEach(task => {
+      const card = document.createElement('div');
+      card.className = 'secondary-card';
+      const t = getTranslation(task.title);
+      const d = getTranslation(task.desc);
+
+      card.innerHTML = `
+        <div class="secondary-icon">${task.icon}</div>
+        <div class="secondary-title">${t || task.title}</div>
+        <div class="secondary-desc">${d || task.desc}</div>
+      `;
+
+      card.onclick = () => {
+        currentState = task.id;
+        render();
       };
 
-      const icon = document.createElement('div');
-      icon.className = 'task-choice-icon';
-      icon.textContent = task.icon;
-      choice.appendChild(icon);
-
-      const t = document.createElement('div');
-      t.className = 'task-choice-title';
-      const transTitle = getTranslation(task.title);
-      t.textContent = (transTitle && transTitle !== task.title) ? transTitle : (task.defaultTitle || transTitle);
-      choice.appendChild(t);
-
-      const d = document.createElement('div');
-      d.className = 'task-choice-desc';
-      const transDesc = getTranslation(task.desc);
-      d.textContent = (transDesc && transDesc !== task.desc) ? transDesc : (task.defaultDesc || transDesc);
-      choice.appendChild(d);
-
-      grid.appendChild(choice);
+      secondaryGrid.appendChild(card);
     });
 
-    parent.appendChild(grid);
+    secondaryToggle.onclick = () => {
+      const isHidden = secondaryGrid.style.display === 'none';
+      secondaryGrid.style.display = isHidden ? 'grid' : 'none';
+      secondaryToggle.querySelector('#secondary-arrow').style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    };
 
-    // --- Support Links ---
+    parent.appendChild(secondaryToggle);
+    parent.appendChild(secondaryGrid);
+
+    // --- 4. SUPPORT LINKS ---
     const supportArea = document.createElement('div');
     supportArea.className = 'support-links';
     supportArea.style.display = 'flex';
     supportArea.style.justifyContent = 'center';
     supportArea.style.flexWrap = 'wrap';
     supportArea.style.gap = '1rem';
-    supportArea.style.marginTop = '3rem';
+    supportArea.style.marginTop = '2rem';
     supportArea.style.paddingBottom = '2rem';
 
     const kofiLink = document.createElement('a');

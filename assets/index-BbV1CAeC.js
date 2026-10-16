@@ -2785,19 +2785,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
         .adj-scene-card:hover:not(.disabled) .adj-scene-card-img {
             transform: scale(1.05);
         }
-        .adj-scene-card-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #f8fafc;
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-        }
         .adj-scene-card-content {
             padding: 1.5rem;
             display: flex;
@@ -2891,7 +2878,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,t.appendChild(m);const q=document.createElement("div");q.className="adj-scenes-grid",[{id:"adjektiver_fysik",badge:"🔬 Felt 1: 20 målbare modpoler",title:"1. Fysiske egenskaber, form & sanser",desc:"Dækker alt der kan måles, mærkes eller sanses i hverdagen: <em>stor/lille, lang/kort, høj/lav, bred/smal, tung/let, varm/kold, hård/blød, fast/løs, fuld/tom, åben/lukket</em>.",img:"assets/adjektiver_fysik_venstre.jpg",active:!0,btnText:"Gå til felt 1 ➔"},{id:"adjektiver_tid",badge:"⏱️ Felt 2: 20 tids-adjektiver",title:"2. Tid, alder og tempo",desc:"Kronologi, udvikling og hastighed i hverdagen: <em>ny/gammel, ung/gammel, tidlig/sen, hurtig/langsom, pludselig, forsinket, travl, rolig...</em>",img:"assets/station_indkoeb_vrimmel.jpg",active:!0,btnText:"Gå til felt 2 ➔"},{id:"adjektiver_kvalitet",badge:"💎 Felt 3: 20 vurderings-adjektiver",title:"3. Kvalitet, sværhedsgrad og økonomi",desc:"Vurdering, priser, indsats og værdi: <em>god/dårlig, svær/let, dyr/billig, vigtig/ligegyldig, nødvendig, gratis, perfekt, forkert...</em>",img:"assets/adjektiver_kvalitet_venstre.jpg",active:!0,btnText:"Gå til felt 3 ➔"},{id:"adjektiver_folelser",badge:"❤️ Felt 4: 20 sociale adjektiver",title:"4. Følelser, personlighed & relationer",desc:"Menneskers sindstilstande og sociale kontakt: <em>glad/ked af det, venlig/uvenlig, træt/frisk, tryg/bange, sur, sød, stolt, rolig...</em>",img:"assets/adjektiver_folelser_venstre.jpg",active:!0,btnText:"Gå til felt 4 ➔"},{id:"adjektiver_tilstande",badge:"🎨 Felt 5: 20 tilstands-adjektiver",title:"5. Farver, mængder og tilstande",desc:"Visuelle og praktiske tilstande i hverdagen: <em>rød, blå, grøn, hel/halv, mange/få, ren/beskidt, sund/syg, klar, sikker, rigtig...</em>",img:"assets/adjektiver_tilstande_venstre.jpg",active:!0,btnText:"Gå til felt 5 ➔"},{id:"adjective_comparison",badge:"📏 Felt 6 • Bøjnings-Masteren (Gradbøjning & E-reglen)",title:"6. Den Store Bøjningsguide: Gradbøjning & E-reglen",desc:'Komplet interaktiv bøjningsmotor: <strong>1. Positiv</strong> (<em>stor</em>) ➔ <strong>2. Komparativ</strong> med "end" (<em>større end</em>) ➔ <strong>3. Superlativ</strong> (<em>størst / den største</em>), samt formlen for hvorfor <em>den/min/denne/Peters</em> altid tvinger <strong>-e</strong> frem!',img:"assets/adjektiver_comparison_guide.jpg",active:!0,btnText:"Åbn Bøjningsguiden 📏 ➔",action:()=>w("adjective_comparison",{from:"top100_adjektiver"})}].forEach(M=>{const u=document.createElement("div");u.className=`adj-scene-card ${M.active?"":"disabled"}`,u.innerHTML=`
             <div class="adj-scene-card-img-wrap">
                 <img src="${M.img}" alt="${M.title}" class="adj-scene-card-img" />
-                <div class="adj-scene-card-badge">${M.badge}</div>
             </div>
             <div class="adj-scene-card-content">
                 <div class="adj-scene-card-title">${M.title}</div>

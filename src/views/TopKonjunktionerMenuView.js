@@ -165,7 +165,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: '2. Årsag, betingelse og kontrast',
             desc: 'Forbind tanker med dybere logiske relationer: Forklar hvorfor noget sker (fordi), under hvilke forudsætninger (hvis, om), og hvilke modsætninger der findes (selvom).',
             btnText: 'Gå til felt 2 ➔',
-            action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_logik', tab: 'laboratorium', from: 'top_konjunktioner' })
+            action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_logik', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_3',

@@ -1424,14 +1424,13 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
     const tabs = [
         { id: 'vrimmel', label: '1. Broernes verden (vrimlebilledet)', icon: '🖼️' },
-        { id: 'laboratorium', label: '2. Ordstillings-laboratoriet ("ikke"-magneten)', icon: '🔬' },
-        { id: 'detektiv', label: '3. Konjunktions-detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'tid', label: '6. "Da" eller "når"? og tidskonjunktioner', icon: '⏳' },
-        { id: 'aarsag', label: '7. "Fordi", "for", "så" eller "derfor"?', icon: '⚡' },
-        { id: 'atom', label: '8. "At" eller "om"? og "hvis" eller "selvom"?', icon: '🧭' },
-        { id: 'tekstflow', label: '9. Tekstflow og historier', icon: '📖' }
+        { id: 'detektiv', label: '2. Konjunktions-detektiven (10 gåder)', icon: '🔍' },
+        { id: 'builder', label: '3. Sætningsbyggeren og puslespillet', icon: '🧩' },
+        { id: 'kontekst', label: '4. Kontekst-testen (14 opgaver)', icon: '🎯' },
+        { id: 'tid', label: '5. "Da" eller "når"? og tidskonjunktioner', icon: '⏳' },
+        { id: 'aarsag', label: '6. "Fordi", "for", "så" eller "derfor"?', icon: '⚡' },
+        { id: 'atom', label: '7. "At" eller "om"? og "hvis" eller "selvom"?', icon: '🧭' },
+        { id: 'tekstflow', label: '8. Tekstflow og historier', icon: '📖' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
@@ -1462,8 +1461,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         tabContent.innerHTML = '';
         if (tabId === 'vrimmel') {
             renderTabVrimmel(tabContent);
-        } else if (tabId === 'laboratorium') {
-            renderTabLaboratorium(tabContent);
         } else if (tabId === 'detektiv') {
             renderTabDetektiv(tabContent);
         } else if (tabId === 'builder') {
@@ -1664,375 +1661,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 2: ORDSTILLINGS-LABORATORIET
-    // ==========================================
-    let activeLabSub = 'magnet';
-    let selectedMagnetPair = 'for_fordi';
-    let selectedMagnetSide = 'helsaetning'; // 'helsaetning' | 'ledsaetning'
-    let selectedFrontEx = 'naar';
-    let frontOrderMode = 'bagest'; // 'bagest' | 'forrest'
-
-    function renderTabLaboratorium(parent) {
-        parent.innerHTML = '';
-
-        const wrap = document.createElement('div');
-        wrap.className = 'vaerksted-container';
-
-        const subtabs = document.createElement('div');
-        subtabs.className = 'vaerksted-subtabs';
-
-        const subList = [
-            { id: 'magnet', label: '🧲 1. "IKKE"-Magneten (Helsætning vs. Ledsætning)' },
-            { id: 'forfelt', label: '🔄 2. Ledsætning i Front = INVERSION i Hovedsætningen!' },
-            { id: 'oversigt', label: '🌉 3. Den store tabel: helsætning vs. ledsætning vs. felt 7' }
-        ];
-
-        subList.forEach(st => {
-            const btn = document.createElement('button');
-            btn.className = `vaerksted-subtab-btn ${activeLabSub === st.id ? 'active' : ''}`;
-            btn.textContent = st.label;
-            btn.onclick = () => {
-                activeLabSub = st.id;
-                renderTabLaboratorium(parent);
-            };
-            subtabs.appendChild(btn);
-        });
-        wrap.appendChild(subtabs);
-
-        const body = document.createElement('div');
-        wrap.appendChild(body);
-        parent.appendChild(wrap);
-
-        if (activeLabSub === 'magnet') {
-            renderLabMagnet(body);
-        } else if (activeLabSub === 'forfelt') {
-            renderLabForfelt(body);
-        } else {
-            renderLabOversigt(body);
-        }
-    }
-
-    function renderLabMagnet(container) {
-        const pairs = {
-            for_fordi: {
-                label: 'Årsag: for (Helsætning) ↔ fordi (Ledsætning)',
-                mainClause: 'Han bliver hjemme i sengen,',
-                helsaetning: {
-                    conj: 'for',
-                    title: '🟢 HELSÆTNING med "for" (ikke står EFTER verbet!)',
-                    tokens: [
-                        { role: 'F0 Konjunktion', word: 'for', color: '#eab308' },
-                        { role: '1. Subjekt', word: 'han', color: '#22c55e' },
-                        { role: '2. Verbum', word: 'er', color: '#ef4444' },
-                        { role: '3. Adverbium (EFTER!)', word: 'ikke', color: '#06b6d4' },
-                        { role: '4. Restled', word: 'rask i dag.', color: '#0ea5e9' }
-                    ],
-                    explain: '"For" er en sideordnende helsætningskonjunktion. Derfor følger helt normal helsætningsordstilling: Subjekt (han) + Verbum (er) + IKKE.'
-                },
-                ledsaetning: {
-                    conj: 'fordi',
-                    title: '🔵 LEDSÆTNING med "fordi" (ikke rykker FØR verbet!)',
-                    tokens: [
-                        { role: 'Konjunktion', word: 'fordi', color: '#eab308' },
-                        { role: '1. Subjekt', word: 'han', color: '#22c55e' },
-                        { role: '2. Adverbium (FØR!)', word: 'ikke', color: '#06b6d4' },
-                        { role: '3. Verbum', word: 'er', color: '#ef4444' },
-                        { role: '4. Restled', word: 'rask i dag.', color: '#0ea5e9' }
-                    ],
-                    explain: '"Fordi" er en underordnende ledsætningskonjunktion! Den trækker som en magnet "ikke" (samt aldrig/altid/ofte) ind FØR verbet: han + IKKE + er!'
-                }
-            },
-            men_selvom: {
-                label: 'Kontrast: men (Helsætning) ↔ selvom (Ledsætning)',
-                mainClause: 'De går en lang tur med hundene,',
-                helsaetning: {
-                    conj: 'men',
-                    title: '🟢 HELSÆTNING med "men" (ikke står EFTER verbet!)',
-                    tokens: [
-                        { role: 'F0 Konjunktion', word: 'men', color: '#eab308' },
-                        { role: '1. Subjekt', word: 'solen', color: '#22c55e' },
-                        { role: '2. Verbum', word: 'skinner', color: '#ef4444' },
-                        { role: '3. Adverbium (EFTER!)', word: 'ikke', color: '#06b6d4' },
-                        { role: '4. Restled', word: 'i parken.', color: '#0ea5e9' }
-                    ],
-                    explain: 'Efter "men" kommer en almindelig helsætning, hvor verbet ("skinner") kommer før "ikke".'
-                },
-                ledsaetning: {
-                    conj: 'selvom',
-                    title: '🔵 LEDSÆTNING med "selvom" (ikke rykker FØR verbet!)',
-                    tokens: [
-                        { role: 'Konjunktion', word: 'selvom', color: '#eab308' },
-                        { role: '1. Subjekt', word: 'solen', color: '#22c55e' },
-                        { role: '2. Adverbium (FØR!)', word: 'ikke', color: '#06b6d4' },
-                        { role: '3. Verbum', word: 'skinner', color: '#ef4444' },
-                        { role: '4. Restled', word: 'i parken.', color: '#0ea5e9' }
-                    ],
-                    explain: 'Efter "selvom" er vi i en ledsætning – så "ikke" hopper ind foran verbet ("ikke skinner")!'
-                }
-            },
-            og_at: {
-                label: 'Udsagn: og (Helsætning) ↔ at / hvis / når (Ledsætning)',
-                mainClause: 'Cyklisten skriver en sms,',
-                helsaetning: {
-                    conj: 'og',
-                    title: '🟢 HELSÆTNING med "og" (kommer ikke)',
-                    tokens: [
-                        { role: 'F0 Konjunktion', word: 'og', color: '#eab308' },
-                        { role: '1. Subjekt', word: 'han', color: '#22c55e' },
-                        { role: '2. Verbum', word: 'kommer', color: '#ef4444' },
-                        { role: '3. Adverbium (EFTER!)', word: 'ikke', color: '#06b6d4' },
-                        { role: '4. Restled', word: 'for sent.', color: '#0ea5e9' }
-                    ],
-                    explain: 'Efter "og" er ordstillingen: han (Subjekt) + kommer (Verbum) + ikke (Adverbium).'
-                },
-                ledsaetning: {
-                    conj: 'at',
-                    title: '🔵 LEDSÆTNING med "at" (ikke kommer)',
-                    tokens: [
-                        { role: 'Konjunktion', word: 'at', color: '#eab308' },
-                        { role: '1. Subjekt', word: 'han', color: '#22c55e' },
-                        { role: '2. Adverbium (FØR!)', word: 'ikke', color: '#06b6d4' },
-                        { role: '3. Verbum', word: 'kommer', color: '#ef4444' },
-                        { role: '4. Restled', word: 'for sent.', color: '#0ea5e9' }
-                    ],
-                    explain: 'Efter "at" (samt "om", "hvis", "når", "da", "mens") står "ikke" ALTID før verbet: han + IKKE + kommer!'
-                }
-            }
-        };
-
-        const curPair = pairs[selectedMagnetPair];
-        const curSide = curPair[selectedMagnetSide];
-
-        const card = document.createElement('div');
-        card.className = 'vaerksted-card';
-        card.innerHTML = `
-            <h2 style="text-align:center; color:#6ee7b7; margin-bottom:0.5rem;">🧲 "IKKE"-Magneten: Helsætning vs. Ledsætning</h2>
-            <p style="text-align:center; color:#cbd5e1; max-width:780px; margin:0 auto 1.2rem;">
-                Prøv at skifte mellem <strong>Helsætningskonjunktion</strong> og <strong>Ledsætningskonjunktion</strong> herunder. Se hvordan <span style="color:#22d3ee; font-weight:800;">ikke</span> og <span style="color:#fca5a5; font-weight:800;">verbet</span> bytter plads!
-            </p>
-            <div class="word-selector-grid">
-                ${Object.keys(pairs).map(k => `
-                    <button class="word-sel-btn ${selectedMagnetPair === k ? 'active' : ''}" data-pair="${k}">
-                        ${pairs[k].label}
-                    </button>
-                `).join('')}
-            </div>
-
-            <div style="display:flex; gap:1rem; justify-content:center; margin:1.5rem 0; flex-wrap:wrap;">
-                <button class="word-sel-btn ${selectedMagnetSide === 'helsaetning' ? 'active' : ''}" id="btn-side-hel" style="min-width:260px;">
-                    🟢 Vis HELSÆTNING ("${curPair.helsaetning.conj}")
-                </button>
-                <button class="word-sel-btn ${selectedMagnetSide === 'ledsaetning' ? 'active' : ''}" id="btn-side-led" style="min-width:260px;">
-                    🔵 Vis LEDSÆTNING ("${curPair.ledsaetning.conj}")
-                </button>
-            </div>
-
-            <div style="background:#0f172a; border-radius:16px; padding:1.8rem; border:2px solid #10b981; text-align:center;">
-                <div style="font-size:1.1rem; color:#94a3b8; margin-bottom:0.4rem;">Første sætning: <strong style="color:white;">"${curPair.mainClause}"</strong></div>
-                <h4 style="color:#6ee7b7; margin:0.6rem 0 1rem;">${curSide.title}</h4>
-                <div class="syntax-boxes-row">
-                    ${curSide.tokens.map(t => `
-                        <div class="syntax-token-box" style="border-color:${t.color};">
-                            <span class="syntax-token-role" style="color:${t.color};">${t.role}</span>
-                            <span class="syntax-token-word">${t.word}</span>
-                        </div>
-                    `).join('')}
-                </div>
-                <p style="color:#fef08a; font-weight:700; margin:1rem auto; max-width:700px;">💡 ${curSide.explain}</p>
-                <button class="inspector-speak-btn" id="speak-magnet-btn">
-                    <span>🔊</span> Lyt til hele sætningen
-                </button>
-            </div>
-        `;
-
-        container.innerHTML = '';
-        container.appendChild(card);
-
-        card.querySelectorAll('[data-pair]').forEach(b => {
-            b.onclick = () => {
-                selectedMagnetPair = b.dataset.pair;
-                renderLabMagnet(container);
-            };
-        });
-        card.querySelector('#btn-side-hel').onclick = () => {
-            selectedMagnetSide = 'helsaetning';
-            renderLabMagnet(container);
-        };
-        card.querySelector('#btn-side-led').onclick = () => {
-            selectedMagnetSide = 'ledsaetning';
-            renderLabMagnet(container);
-        };
-        card.querySelector('#speak-magnet-btn').onclick = () => {
-            speakDanish(`${curPair.mainClause} ${curSide.tokens.map(t => t.word).join(' ')}`);
-        };
-    }
-
-    function renderLabForfelt(container) {
-        const examples = {
-            naar: {
-                label: 'Når det regner...',
-                bagest: [
-                    { role: '1. Subjekt', word: 'Jeg', color: '#22c55e' },
-                    { role: '2. Verbum', word: 'tager', color: '#ef4444' },
-                    { role: '3. Objekt', word: 'bussen,', color: '#0ea5e9' },
-                    { role: '4. Ledsætning til sidst', word: 'når det regner.', color: '#eab308' }
-                ],
-                forrest: [
-                    { role: '1. Forfelt (Hele ledsætningen!)', word: 'Når det regner,', color: '#eab308' },
-                    { role: '2. Verbum (INVERSION!)', word: 'tager', color: '#ef4444' },
-                    { role: '3. Subjekt', word: 'jeg', color: '#22c55e' },
-                    { role: '4. Objekt', word: 'bussen.', color: '#0ea5e9' }
-                ]
-            },
-            hvis: {
-                label: 'Hvis solen skinner...',
-                bagest: [
-                    { role: '1. Subjekt', word: 'Vi', color: '#22c55e' },
-                    { role: '2. Verbum', word: 'spiser', color: '#ef4444' },
-                    { role: '3. Sted', word: 'på stranden,', color: '#0ea5e9' },
-                    { role: '4. Ledsætning til sidst', word: 'hvis solen skinner.', color: '#eab308' }
-                ],
-                forrest: [
-                    { role: '1. Forfelt (Hele ledsætningen!)', word: 'Hvis solen skinner,', color: '#eab308' },
-                    { role: '2. Verbum (INVERSION!)', word: 'spiser', color: '#ef4444' },
-                    { role: '3. Subjekt', word: 'vi', color: '#22c55e' },
-                    { role: '4. Sted', word: 'på stranden.', color: '#0ea5e9' }
-                ]
-            },
-            selvom: {
-                label: 'Selvom det ikke er varmt...',
-                bagest: [
-                    { role: '1. Subjekt', word: 'Hun', color: '#22c55e' },
-                    { role: '2. Verbum', word: 'bader', color: '#ef4444' },
-                    { role: '3. Sted', word: 'i havet,', color: '#0ea5e9' },
-                    { role: '4. Ledsætning til sidst', word: 'selvom det ikke er varmt.', color: '#eab308' }
-                ],
-                forrest: [
-                    { role: '1. Forfelt (Hele ledsætningen!)', word: 'Selvom det ikke er varmt,', color: '#eab308' },
-                    { role: '2. Verbum (INVERSION!)', word: 'bader', color: '#ef4444' },
-                    { role: '3. Subjekt', word: 'hun', color: '#22c55e' },
-                    { role: '4. Sted', word: 'i havet.', color: '#0ea5e9' }
-                ]
-            }
-        };
-
-        const cur = examples[selectedFrontEx];
-        const tokens = frontOrderMode === 'bagest' ? cur.bagest : cur.forrest;
-
-        const card = document.createElement('div');
-        card.className = 'vaerksted-card';
-        card.innerHTML = `
-            <h2 style="text-align:center; color:#6ee7b7; margin-bottom:0.5rem;">🔄 Ledsætning i Front = INVERSION i Hovedsætningen!</h2>
-            <p style="text-align:center; color:#cbd5e1; max-width:780px; margin:0 auto 1.2rem;">
-                Når du starter en sætning med en ledsætning (f.eks. <em>"Når det regner, ..."</em>), fylder hele ledsætningen <strong>Plads 1 (Forfeltet)</strong>. Derfor SKAL hovedsætningens <span style="color:#fca5a5; font-weight:800;">Verbum</span> stå på Plads 2 lige efter kommaet!
-            </p>
-            <div class="word-selector-grid">
-                ${Object.keys(examples).map(k => `
-                    <button class="word-sel-btn ${selectedFrontEx === k ? 'active' : ''}" data-fex="${k}">
-                        ${examples[k].label}
-                    </button>
-                `).join('')}
-            </div>
-
-            <div style="display:flex; gap:1rem; justify-content:center; margin:1.5rem 0; flex-wrap:wrap;">
-                <button class="word-sel-btn ${frontOrderMode === 'bagest' ? 'active' : ''}" id="btn-order-bag">
-                    1️⃣ Hovedsætning først + Ledsætning til sidst (Ingen inversion)
-                </button>
-                <button class="word-sel-btn ${frontOrderMode === 'forrest' ? 'active' : ''}" id="btn-order-for">
-                    2️⃣ Ledsætning forrest i Forfeltet ➔ INVERSION efter kommaet!
-                </button>
-            </div>
-
-            <div style="background:#0f172a; border-radius:16px; padding:1.8rem; border:2px solid #10b981; text-align:center;">
-                <div class="syntax-boxes-row">
-                    ${tokens.map(t => `
-                        <div class="syntax-token-box" style="border-color:${t.color};">
-                            <span class="syntax-token-role" style="color:${t.color};">${t.role}</span>
-                            <span class="syntax-token-word">${t.word}</span>
-                        </div>
-                    `).join('')}
-                </div>
-                <button class="inspector-speak-btn" id="speak-front-btn" style="margin-top:1rem;">
-                    <span>🔊</span> Lyt: "${tokens.map(t => t.word).join(' ')}"
-                </button>
-            </div>
-        `;
-
-        container.innerHTML = '';
-        container.appendChild(card);
-
-        card.querySelectorAll('[data-fex]').forEach(b => {
-            b.onclick = () => {
-                selectedFrontEx = b.dataset.fex;
-                renderLabForfelt(container);
-            };
-        });
-        card.querySelector('#btn-order-bag').onclick = () => {
-            frontOrderMode = 'bagest';
-            renderLabForfelt(container);
-        };
-        card.querySelector('#btn-order-for').onclick = () => {
-            frontOrderMode = 'forrest';
-            renderLabForfelt(container);
-        };
-        card.querySelector('#speak-front-btn').onclick = () => {
-            speakDanish(tokens.map(t => t.word).join(' '));
-        };
-    }
-
-    function renderLabOversigt(container) {
-        const card = document.createElement('div');
-        card.className = 'vaerksted-card';
-        card.innerHTML = `
-            <h2 style="text-align:center; color:#6ee7b7; margin-bottom:0.5rem;">🌉 Den Store Sammenligning: 3 måder at binde sætninger på</h2>
-            <p style="text-align:center; color:#cbd5e1; max-width:820px; margin:0 auto 1.6rem;">
-                Se hvordan den samme tanke kan udtrykkes med 1) <strong>Helsætningskonjunktion</strong>, 2) <strong>Ledsætningskonjunktion</strong> og 3) <strong>Konnektivt Adverbium (Felt 7)</strong>:
-            </p>
-            <div style="overflow-x:auto;">
-                <table style="width:100%; border-collapse:collapse; background:#0f172a; border-radius:14px; overflow:hidden; font-size:0.95rem;">
-                    <thead>
-                        <tr style="background:#334155; color:white; text-align:left;">
-                            <th style="padding:1rem;">Logisk relation</th>
-                            <th style="padding:1rem; color:#86efac;">1. Helsætningskonjunktion<br><small>(Subjekt + Verbum + ikke)</small></th>
-                            <th style="padding:1rem; color:#67e8f9;">2. Ledsætningskonjunktion<br><small>(Subjekt + IKKE + Verbum)</small></th>
-                            <th style="padding:1rem; color:#fde047;">3. Konnektivt Adverbium (Felt 7)<br><small>(Inversion i front / efter verbum)</small></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                            <td style="padding:1rem; font-weight:800; color:#fde047;">Årsag<br>(Hvorfor?)</td>
-                            <td style="padding:1rem;">"Han bliver hjemme, <strong>for</strong> han <span style="color:#fca5a5;">er</span> <span style="color:#22d3ee;">ikke</span> rask."</td>
-                            <td style="padding:1rem;">"Han bliver hjemme, <strong>fordi</strong> han <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">er</span> rask."</td>
-                            <td style="padding:1rem;">"Han bliver hjemme. Han <span style="color:#fca5a5;">er</span> <strong>nemlig</strong> <span style="color:#22d3ee;">ikke</span> rask."</td>
-                        </tr>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                            <td style="padding:1rem; font-weight:800; color:#fde047;">Følge<br>(Resultat)</td>
-                            <td style="padding:1rem;">"Det regner, <strong>så</strong> <span style="color:#86efac;">jeg</span> <span style="color:#fca5a5;">tager</span> bussen." <em>(Ingen inversion!)</em></td>
-                            <td style="padding:1rem;">"<strong>Da</strong> det regnede, <span style="color:#fca5a5;">tog</span> <span style="color:#86efac;">jeg</span> bussen."</td>
-                            <td style="padding:1rem;">"Det regner. <strong>Derfor</strong> <span style="color:#fca5a5;">tager</span> <span style="color:#86efac;">jeg</span> bussen." <em>(Inversion!)</em></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                            <td style="padding:1rem; font-weight:800; color:#fde047;">Kontrast<br>(Trods)</td>
-                            <td style="padding:1rem;">"Det regner, <strong>men</strong> <span style="color:#86efac;">hun</span> <span style="color:#fca5a5;">bliver</span> <span style="color:#22d3ee;">ikke</span> inde."</td>
-                            <td style="padding:1rem;">"Hun cykler, <strong>selvom</strong> det <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">er</span> tørvejr."</td>
-                            <td style="padding:1rem;">"Det regner. <strong>Alligevel</strong> <span style="color:#fca5a5;">cykler</span> <span style="color:#86efac;">hun</span>." <em>(Inversion!)</em></td>
-                        </tr>
-                        <tr>
-                            <td style="padding:1rem; font-weight:800; color:#fde047;">Betingelse<br>(Hvad hvis?)</td>
-                            <td style="padding:1rem;">"Skynd dig, <strong>eller</strong> du kommer for sent!"</td>
-                            <td style="padding:1rem;">"Du kommer for sent, <strong>hvis</strong> du <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">skynder</span> dig."</td>
-                            <td style="padding:1rem;">"Skynd dig! <strong>Ellers</strong> <span style="color:#fca5a5;">kommer</span> <span style="color:#86efac;">du</span> for sent." <em>(Inversion!)</em></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        `;
-        container.innerHTML = '';
-        container.appendChild(card);
-    }
-
-    // ==========================================
-    // TAB 3: KONJUNKTIONS-DETEKTIVEN (10 GÅDER)
+    // TAB 2: KONJUNKTIONS-DETEKTIVEN (10 GÅDER)
     // ==========================================
     const DETEKTIV_RIDDLES = [
         {
@@ -2252,7 +1881,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 4: SÆTNINGSBYGGEREN & PUSLESPILLET
+    // TAB 3: SÆTNINGSBYGGEREN & PUSLESPILLET
     // ==========================================
     const BUILDER_EXERCISES = [
         {
@@ -2662,7 +2291,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 5: KONTEKST-TESTEN (14 DIALOGER)
+    // TAB 4: KONTEKST-TESTEN (14 DIALOGER)
     // ==========================================
     const kontekstState = { idx: 0, score: 0 };
     const KONTEKST_QUESTIONS = [
@@ -2776,7 +2405,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 6: DA ELLER NÅR? & TIDSKONJUNKTIONER (8 ØVELSER)
+    // TAB 5: DA ELLER NÅR? & TIDSKONJUNKTIONER (8 ØVELSER)
     // ==========================================
     const tidState = { idx: 0, score: 0 };
     const TID_QUESTIONS = [
@@ -2898,7 +2527,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 7: FORDI, FOR, SÅ ELLER DERFOR? (8 ØVELSER)
+    // TAB 6: FORDI, FOR, SÅ ELLER DERFOR? (8 ØVELSER)
     // ==========================================
     const aarsagState = { idx: 0, score: 0 };
     const AARSAG_QUESTIONS = [
@@ -3020,7 +2649,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 8: AT ELLER OM? & HVIS ELLER SELVOM? (10 ØVELSER)
+    // TAB 7: AT ELLER OM? & HVIS ELLER SELVOM? (10 ØVELSER)
     // ==========================================
     const atomState = { idx: 0, score: 0 };
     const ATOM_QUESTIONS = [
@@ -3156,7 +2785,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 9: TEKSTFLOW & HISTORIER (KULMINATIONEN)
+    // TAB 8: TEKSTFLOW & HISTORIER (KULMINATIONEN)
     // ==========================================
     let currentStoryIdx = 0;
     const storyUserChoices = [{}, {}, {}];

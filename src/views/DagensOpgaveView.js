@@ -48,6 +48,14 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('ordstilling')
         },
         {
+            icon: '🤔',
+            titleKey: 'trorSynesMenerTitle',
+            descKey: 'trorSynesMenerDesc',
+            fallbackTitle: 'Tror / synes / mener / ved?',
+            fallbackDesc: 'Lær forskellen på personlig smag, formodning, holdning og fakta.',
+            action: () => navigateFn('tror_synes_mener')
+        },
+        {
             icon: '🫂',
             titleKey: 'hvilketOrd',
             descKey: 'hvilketOrdDesc',
@@ -69,14 +77,16 @@ export function renderDagensOpgaveView(container, navigateFn) {
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
-        cardTitle.textContent = getTranslation(data.titleKey);
+        const transTitle = getTranslation(data.titleKey);
+        cardTitle.textContent = (transTitle && transTitle !== data.titleKey) ? transTitle : (data.fallbackTitle || transTitle);
         card.appendChild(icon);
         card.appendChild(cardTitle);
 
-        if (data.descKey) {
+        if (data.descKey || data.fallbackDesc) {
             const cardDesc = document.createElement('div');
             cardDesc.className = 'card-desc';
-            cardDesc.textContent = getTranslation(data.descKey);
+            const transDesc = getTranslation(data.descKey);
+            cardDesc.textContent = (transDesc && transDesc !== data.descKey) ? transDesc : (data.fallbackDesc || transDesc || '');
             card.appendChild(cardDesc);
         }
 

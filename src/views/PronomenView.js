@@ -174,7 +174,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
         } else {
             items = [
                 { key: 'top100_verber_hub_title', type: 'top100_verber', icon: '✨' },
-                { key: 'verbumLearning', type: 'verber_nutid', icon: '🏃', img: 'verber_kategorier.png' },
+                { title: 'Tror / synes / mener / ved', type: 'tror_synes_mener', icon: '🤔' },
                 { key: 'verberTider', type: 'tider', icon: '🌉', img: 'verber_kategorier.png' }
             ];
         }
@@ -202,10 +202,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
                         alert('Denne opgave er under udvikling. Kommer snart!');
                     }
                 } else {
-                    if (item.type === 'verber_nutid') {
-                        navigateFn('verbum_menu');
-                    } else if (item.type === 'top100_verber') {
+                    if (item.type === 'top100_verber') {
                         navigateFn('top100_verber');
+                    } else if (item.type === 'tror_synes_mener') {
+                        navigateFn('tror_synes_mener');
                     } else {
                         navigateFn('verbum_learning', { subPath: item.type, backView: 'pronomen' });
                     }
@@ -937,10 +937,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
         const parts = subPath.split('/');
         if (parts.length > 1) {
             const type = parts[1];
-            if (type === 'datid_regelm' || type === 'datid' || type === 'top100_verber') {
+            if (type === 'datid_regelm' || type === 'datid' || type === 'top100_verber' || type === 'verber_nutid') {
                 navigateFn('top100_verber', {}, true);
-            } else if (type === 'verber_nutid') {
-                navigateFn('verbum_menu', {}, true);
+            } else if (type === 'tror_synes_mener') {
+                navigateFn('tror_synes_mener', {}, true);
             } else {
                 navigateFn('verbum_learning', { subPath: type, backView: 'pronomen' }, true);
             }

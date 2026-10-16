@@ -96,6 +96,7 @@ import { renderAdverbBridgeView } from './views/AdverbBridgeView.js';
 import { renderConjunctionBridgeView } from './views/ConjunctionBridgeView.js';
 import { renderAdjectiveComparisonView } from './views/AdjectiveComparisonView.js';
 import { renderVerbumMenuView } from './views/VerbumMenuView.js';
+import { renderTrorSynesMenerView } from './views/TrorSynesMenerView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
@@ -433,8 +434,11 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     const view = new VerbumLearningView(navigate, categoryId, extraData?.backView);
     appDiv.appendChild(view.render());
   } else if (viewTarget === 'verbum_menu') {
-    appState.currentView = 'verbum_menu';
-    renderVerbumMenuView(appDiv, navigate);
+    appState.currentView = 'top100_verber';
+    renderTop100VerberMenuView(appDiv, navigate);
+  } else if (viewTarget === 'tror_synes_mener') {
+    appState.currentView = 'tror_synes_mener';
+    renderTrorSynesMenerView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

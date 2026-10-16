@@ -142,8 +142,8 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'adj-hub-hero';
     hero.innerHTML = `
-        <h1>Helsætnings- og ledsætningskonjunktioner</h1>
-        <p>Lær hvordan danske sætninger bindes sammen: Hvornår står <em>ikke</em> efter verbet (helsætning), hvornår rykker <em>ikke</em> frem før verbet (ledsætning), og hvordan mestrer man alle de forskellige konstruktioner med <strong><em>at</em></strong>?</p>
+        <h1>Konjunktioner og bindeord</h1>
+        <p>Lær hvordan bindeord skaber mening, logiske relationer og sammenhæng: Hvordan forbinder vi tanker, udtrykker årsag og kontrast, placerer handlinger i tid og rapporterer hvad mennesker tænker og føler?</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -154,32 +154,32 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         {
             id: 'konj_felt_1',
             img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '1. Helsætningskonjunktioner',
-            desc: 'Binder to helsætninger sammen (og, men, eller, for, så) uden at ændre ordstillingen: Verbet står foran "ikke", og "så" udløser ikke inversion.',
+            title: '1. De 5 grundlæggende bindeord',
+            desc: 'Lær de 5 centrale bindeord (og, men, eller, for, så): Tilføj information (og), skab kontrast (men), vis alternativer (eller), begrund (for) og udtryk konsekvens (så).',
             btnText: 'Gå til felt 1 ➔',
             action: () => navigateFn('konjunktioner_all', { filter: 'helsaetning', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_2',
             img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '2. Ledsætninger: årsag, betingelse og kontrast',
-            desc: 'Lær "ikke"-magneten (fordi, selvom, hvis, om), hvor nægtelsen rykker foran verbet, samt inversion når ledsætningen står forrest.',
+            title: '2. Årsag, betingelse og kontrast',
+            desc: 'Forbind tanker med dybere logiske relationer: Forklar hvorfor noget sker (fordi), under hvilke forudsætninger (hvis, om), og hvilke modsætninger der findes (selvom).',
             btnText: 'Gå til felt 2 ➔',
             action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_logik', tab: 'laboratorium', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_3',
             img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '3. Tidskonjunktioner',
-            desc: 'Udtryk tid, rækkefølge og samtidighed med da, når, mens, inden, før, efter at, siden og indtil.',
+            title: '3. Tid og rækkefølge',
+            desc: 'Placér begivenheder i forhold til hinanden på tidslinjen: Samtidighed (mens), før og efter (inden, efter at, siden) samt afslutning (indtil, så snart).',
             btnText: 'Gå til felt 3 ➔',
             action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_tid', tab: 'tid', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_4_at',
             img: 'assets/konjunktioner_at_vrimmel.jpg',
-            title: '4. Ordet "at"',
-            desc: 'De forskellige roller for "at": Som ledsætningsbinder, som infinitivmærke (og hvornår det udelades efter modalverber), foran præpositioner og i faste udtryk.',
+            title: '4. Tankeboblen og ordet "at"',
+            desc: 'Den kognitive model for "at": Åbn en mental tankeboble og rapportér hvad mennesker tænker, tror, føler, lover, håber eller planlægger at gøre.',
             btnText: 'Gå til felt 4 ➔',
             action: () => navigateFn('konjunktioner_at', { from: 'top_konjunktioner' })
         },
@@ -187,7 +187,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             id: 'konj_felt_5_da_naar',
             img: 'assets/da_naar_vrimmel.jpg',
             title: '5. "Da" og "når"',
-            desc: 'Forskellen på fortid én gang (da) over for vaner og fremtid (når), forklaret visuelt gennem tegnestiften, cirklen og pilen.',
+            desc: 'Kognitiv tidsmodel: Forskellen på et fastlåst punkt i fortiden (da) over for gentagne vaner og fremtidige begivenheder (når).',
             btnText: 'Gå til felt 5 ➔',
             action: () => navigateFn('konjunktioner_da_naar', { from: 'top_konjunktioner' })
         },
@@ -195,7 +195,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             id: 'konj_felt_6_selvom_alligevel',
             img: 'assets/selvom_alligevel_vrimmel.jpg',
             title: '6. "Selvom" og "alligevel"',
-            desc: 'Forstå kontrast og modstand: "Selvom" introducerer forhindringen i en ledsætning, mens "alligevel" bryder igennem i helsætningen.',
+            desc: 'Kognitiv model for modstand og gennembrud: Muren (selvom), der opstiller en forhindring, og bolden (alligevel), der bryder igennem.',
             btnText: 'Gå til felt 6 ➔',
             action: () => navigateFn('konjunktioner_selvom_alligevel', { from: 'top_konjunktioner' })
         },
@@ -203,7 +203,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             id: 'konj_felt_7_fordi_derfor',
             img: 'assets/fordi_derfor_vrimmel.jpg',
             title: '7. "Fordi" og "derfor"',
-            desc: 'Forbind årsag og virkning med den rette ordstilling: Ledsætning med "fordi" over for helsætning med inversion efter "derfor".',
+            desc: 'Årsag og virkning: Kognitiv forståelse af drivkraften og grunden (fordi) over for konsekvensen, resultatet og retningen fremad (derfor).',
             btnText: 'Gå til felt 7 ➔',
             action: () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' })
         },
@@ -211,7 +211,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             id: 'konj_felt_8_tekstflow',
             img: 'assets/tekstens_trafik_vrimmel.jpg',
             title: '8. Tekstens trafik og tekstflow',
-            desc: 'Træn hvordan konjunktioner og adverbier skaber sammenhæng, flow og retning i længere historier og dialoger.',
+            desc: 'Kognitiv tekstforståelse: Se bindeord som sprogets trafiksignaler, der styrer retning, tempo og overgange i sammenhængende fortællinger og samtaler.',
             btnText: 'Gå til felt 8 ➔',
             action: () => navigateFn('konjunktioner_tekstflow', { from: 'top_konjunktioner' })
         }

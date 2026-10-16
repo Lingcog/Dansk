@@ -222,7 +222,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         <h1>Helsætnings- & Ledsætningskonjunktioner</h1>
         <p>Lær hvordan danske sætninger bindes sammen: Hvornår står <em>ikke</em> efter verbet (helsætning), hvornår rykker <em>ikke</em> frem før verbet (ledsætning), og hvordan mestrer man alle de forskellige konstruktioner med <strong><em>at</em></strong>?</p>
         <div class="konj-hub-facts-badge">
-            <span>🌉</span> 7 specialiserede felter • Inkl. særskilte flader for "AT", "Da/Når", "Selvom/Alligevel" & "Fordi/Derfor"
+            <span>🌉</span> 8 felter • Fra isolerede regler og vrimlebilleder til sammenhængende Tekstflow & Historier!
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -311,6 +311,18 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             chips: ['⛽ fordi (+ S + ikke + V)', '➡️ derfor (+ V + S = Inversion!)', 'Sætnings-Vendemaskinen', 'Årsag ↔ Virkning'],
             btnText: 'Åbn "FORDI og DERFOR"-Fladen ➡️ ➔',
             action: () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' })
+        },
+        {
+            id: 'konj_felt_8_tekstflow',
+            badge: '📖 Felt 8 • Kulminationen: Tekstflow & Historier',
+            badgeClass: 'badge-konj-1',
+            isSpecial: true,
+            img: 'assets/konjunktioner_vrimmel.jpg',
+            title: '8. Tekstflow & Historier (Sæt det hele sammen!)',
+            desc: 'Se hvordan alle bindeordene arbejder sammen i 3 levende hverdagsfortællinger med fuldt tekstflow: Mathias i snevejret 🚲, Anna i drivhuset 🌿 og Lars på caféen ☕. Oplev hvordan konjunktioner skaber flydende dansk!',
+            chips: ['📖 Tekstflow', 'Historie 1: Mathias i sneen 🚲', 'Historie 2: Anna i drivhuset 🌿', 'Historie 3: Lars på caféen ☕', 'Sammenhængende dansk'],
+            btnText: 'Åbn Tekstflow & Historier 📖 ➔',
+            action: () => navigateFn('conjunction_choice', { subPath: 'traening3', from: 'top_konjunktioner' })
         }
     ];
 

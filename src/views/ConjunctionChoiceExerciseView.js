@@ -120,8 +120,9 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
             </div>
         `;
         document.getElementById('conj-back-btn').addEventListener('click', () => {
-            if (navigateFn) navigateFn('pronomen');
-            else window.location.hash = `/${appState.lang}/pronomen`;
+            const target = extraData.from || 'top_konjunktioner';
+            if (navigateFn) navigateFn(target, extraData.fromTab ? { tab: extraData.fromTab } : {});
+            else window.location.hash = `/${appState.lang}/${target}`;
         });
         document.getElementById('btn-t1').addEventListener('click', () => {
             navigateFn('conjunction_choice', { subPath: 'traening1' });
@@ -398,6 +399,10 @@ export function initConjunctionChoiceExerciseView(container, navigateFn, extraDa
         }
 
         document.getElementById('conj-back-btn').addEventListener('click', () => {
+            if (extraData && extraData.from) {
+                navigateFn(extraData.from, extraData.fromTab ? { tab: extraData.fromTab } : {});
+                return;
+            }
             if (isTraening1 || isTraening3) {
                 navigateFn('conjunction_choice');
             } else {

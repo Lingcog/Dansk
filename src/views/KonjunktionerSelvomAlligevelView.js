@@ -55,6 +55,15 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     toFordiBtn.onclick = () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' });
     otherPairsDiv.appendChild(toFordiBtn);
 
+    const toTekstflowBtn = document.createElement('button');
+    toTekstflowBtn.className = 'back-btn';
+    toTekstflowBtn.style.background = 'rgba(99, 102, 241, 0.15)';
+    toTekstflowBtn.style.borderColor = '#6366f1';
+    toTekstflowBtn.style.color = '#a5b4fc';
+    toTekstflowBtn.innerHTML = `📖 Tekstflow & Historier ➔`;
+    toTekstflowBtn.onclick = () => navigateFn('konjunktioner_all', { tab: 'tekstflow', from: 'konjunktioner_selvom_alligevel' });
+    otherPairsDiv.appendChild(toTekstflowBtn);
+
     topBar.appendChild(otherPairsDiv);
     viewContainer.appendChild(topBar);
 

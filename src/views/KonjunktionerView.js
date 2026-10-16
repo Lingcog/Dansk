@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { conjunctionData } from '../utils/conjunctionData.js';
 
 /**
  * KonjunktionerView - Selvstændig flade om Helsætnings- og Ledsætningskonjunktioner
@@ -87,6 +88,15 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     bridgeBtn.innerHTML = `🔗 Felt 7: Konnektive Adverbier ➔`;
     bridgeBtn.onclick = () => navigateFn('adverbier_konnektion');
     rightTopBtns.appendChild(bridgeBtn);
+
+    const tekstflowTopBtn = document.createElement('button');
+    tekstflowTopBtn.className = 'back-btn';
+    tekstflowTopBtn.style.background = 'rgba(16, 185, 129, 0.2)';
+    tekstflowTopBtn.style.borderColor = '#10b981';
+    tekstflowTopBtn.style.color = '#6ee7b7';
+    tekstflowTopBtn.innerHTML = `📖 9. Tekstflow & Historier ➔`;
+    tekstflowTopBtn.onclick = () => switchTab('tekstflow');
+    rightTopBtns.appendChild(tekstflowTopBtn);
 
     topBar.appendChild(rightTopBtns);
 
@@ -1483,10 +1493,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
         { id: 'tid', label: '6. Da eller Når? & Tidskonjunktioner ⏳', icon: '⏳' },
         { id: 'aarsag', label: '7. Fordi, For, Så eller Derfor? ⚡', icon: '⚡' },
-        { id: 'atom', label: '8. At eller Om? & Hvis eller Selvom? 🎯', icon: '🧭' }
+        { id: 'atom', label: '8. At eller Om? & Hvis eller Selvom? 🎯', icon: '🧭' },
+        { id: 'tekstflow', label: '9. Tekstflow & Historier (Kulminationen!) 📖', icon: '📖' }
     ];
 
-    let currentTab = 'vrimmel';
+    let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
+    if (!tabs.some(t => t.id === currentTab)) currentTab = 'vrimmel';
 
     tabs.forEach(tab => {
         const btn = document.createElement('button');
@@ -1527,6 +1539,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             renderTabAarsag(tabContent);
         } else if (tabId === 'atom') {
             renderTabAtOm(tabContent);
+        } else if (tabId === 'tekstflow') {
+            renderTabTekstflow(tabContent);
         }
     }
 
@@ -3208,6 +3222,258 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             progressLabel: '🧭 AT/OM & HVIS/SELVOM',
             doneTitle: 'At, Om, Hvis & Selvom Mestret!'
         });
+    }
+
+    // ==========================================
+    // TAB 9: TEKSTFLOW & HISTORIER (KULMINATIONEN)
+    // ==========================================
+    let currentStoryIdx = 0;
+    const storyUserChoices = [{}, {}, {}];
+
+    function renderTabTekstflow(parent) {
+        parent.innerHTML = '';
+
+        const container = document.createElement('div');
+        container.className = 'special-tab-container tekstflow-tab-container';
+
+        const introCard = document.createElement('div');
+        introCard.className = 'special-intro-card';
+        introCard.innerHTML = `
+            <div class="special-intro-badge" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7;">
+                📖 KULMINATIONEN: FRA ISOLEREDE REGLER TIL FLYDENDE TEKSTFLOW
+            </div>
+            <h2 class="special-intro-title">Konjunktioner i Sammenhængende Tekst</h2>
+            <p class="special-intro-desc">
+                Konjunktioner er sprogets lim! I virkelighedens hverdagsdansk bruger vi bindeord til at skabe årsagskæder, kontraster og tidsforløb i hele historier.
+                Vælg en af de tre fortællinger og sæt de rigtige bindeord ind for at få teksten til at flyde naturligt.
+            </p>
+        `;
+        container.appendChild(introCard);
+
+        // Story Switcher Buttons
+        const storyTabsBar = document.createElement('div');
+        storyTabsBar.style.display = 'flex';
+        storyTabsBar.style.gap = '0.8rem';
+        storyTabsBar.style.flexWrap = 'wrap';
+        storyTabsBar.style.justifyContent = 'center';
+        storyTabsBar.style.marginBottom = '2rem';
+
+        const storyMeta = [
+            { icon: '🚲', title: 'Historie 1: Peter cykelbud i sneen' },
+            { icon: '🌿', title: 'Historie 2: Anna gartneren i parken' },
+            { icon: '☕', title: 'Historie 3: Lars tjeneren på caféen' }
+        ];
+
+        storyMeta.forEach((sm, sIdx) => {
+            const btn = document.createElement('button');
+            btn.className = `adv-tab-btn ${currentStoryIdx === sIdx ? 'active' : ''}`;
+            btn.style.padding = '0.7rem 1.3rem';
+            btn.style.borderRadius = '14px';
+            btn.innerHTML = `<span>${sm.icon}</span> ${sm.title}`;
+            btn.onclick = () => {
+                currentStoryIdx = sIdx;
+                renderTabTekstflow(parent);
+            };
+            storyTabsBar.appendChild(btn);
+        });
+        container.appendChild(storyTabsBar);
+
+        const currentStory = conjunctionData.traening3[currentStoryIdx];
+        const userChoices = storyUserChoices[currentStoryIdx];
+
+        const storyCard = document.createElement('div');
+        storyCard.className = 'exercise-action-card';
+        storyCard.style.padding = '2rem';
+
+        // Header for Story Card
+        const storyHeader = document.createElement('div');
+        storyHeader.style.display = 'flex';
+        storyHeader.style.justifyContent = 'space-between';
+        storyHeader.style.alignItems = 'center';
+        storyHeader.style.marginBottom = '1.5rem';
+        storyHeader.style.flexWrap = 'wrap';
+        storyHeader.style.gap = '0.8rem';
+        storyHeader.innerHTML = `
+            <div style="font-weight: 800; font-size: 1.25rem; color: #f8fafc; display: flex; align-items: center; gap: 0.5rem;">
+                <span>${storyMeta[currentStoryIdx].icon}</span>
+                <span>${storyMeta[currentStoryIdx].title}</span>
+            </div>
+            <button type="button" class="btn-action-listen" id="btn-listen-story" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; font-weight: 700;">
+                <span>🔊</span>
+                <span>Lyt til teksten</span>
+            </button>
+        `;
+        storyCard.appendChild(storyHeader);
+
+        // Story Text Area with Selects
+        const storyTextBox = document.createElement('div');
+        storyTextBox.style.fontSize = '1.25rem';
+        storyTextBox.style.lineHeight = '2';
+        storyTextBox.style.color = '#f1f5f9';
+        storyTextBox.style.background = 'rgba(15, 23, 42, 0.6)';
+        storyTextBox.style.padding = '2rem';
+        storyTextBox.style.borderRadius = '16px';
+        storyTextBox.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+        storyTextBox.style.marginBottom = '1.5rem';
+
+        const parts = currentStory.text.split(/(\[blank_\d+\])/);
+        let storyHtml = '';
+
+        parts.forEach(part => {
+            const match = part.match(/\[blank_(\d+)\]/);
+            if (match) {
+                const bIdx = match[1];
+                const blankData = currentStory.blanks[bIdx];
+                const chosen = userChoices[bIdx] || '';
+                const isCorrect = chosen === blankData.answer;
+
+                let selectStyle = 'display: inline-block; padding: 0.35rem 0.8rem; border-radius: 10px; font-weight: 800; font-size: 1.15rem; cursor: pointer; transition: all 0.2s ease; margin: 0 0.3rem;';
+                if (!chosen) {
+                    selectStyle += ' background: rgba(30, 41, 59, 0.9); border: 2px dashed #38bdf8; color: #38bdf8;';
+                } else if (isCorrect) {
+                    selectStyle += ' background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; color: #4ade80;';
+                } else {
+                    selectStyle += ' background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #f87171;';
+                }
+
+                storyHtml += `
+                    <select class="t3-flow-select" data-blank="${bIdx}" style="${selectStyle}">
+                        <option value="">${chosen || '...'}</option>
+                        ${blankData.options.map(opt => `<option value="${opt}" ${chosen === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                    </select>
+                `;
+            } else {
+                storyHtml += `<span>${part}</span>`;
+            }
+        });
+
+        storyTextBox.innerHTML = storyHtml;
+        storyCard.appendChild(storyTextBox);
+
+        // Feedback Banner
+        const feedbackArea = document.createElement('div');
+        feedbackArea.id = 't3-flow-feedback';
+        feedbackArea.style.display = 'none';
+        feedbackArea.style.padding = '1.2rem';
+        feedbackArea.style.borderRadius = '12px';
+        feedbackArea.style.fontSize = '1.05rem';
+        feedbackArea.style.lineHeight = '1.5';
+        feedbackArea.style.marginBottom = '1.5rem';
+        storyCard.appendChild(feedbackArea);
+
+        // Story analysis box (Didaktisk forklaring på flowet)
+        const analysisBox = document.createElement('div');
+        analysisBox.style.background = 'rgba(255, 255, 255, 0.04)';
+        analysisBox.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+        analysisBox.style.borderRadius = '14px';
+        analysisBox.style.padding = '1.2rem 1.5rem';
+        analysisBox.style.marginBottom = '1.5rem';
+        analysisBox.innerHTML = `
+            <div style="font-weight: 800; font-size: 0.95rem; color: #fde047; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                <span>💡</span>
+                <span>Hvorfor fungerer dette tekstflow?</span>
+            </div>
+            <div style="font-size: 0.92rem; color: #cbd5e1; line-height: 1.5;">
+                Her ser du vekselvirkningen: <strong>Når</strong> sætter vanen, <strong>Derfor</strong> skyder konsekvensen afsted som en pil, <strong>Fordi</strong> peger bagud mod årsagen, <strong>Selvom</strong> bygger muren op, og <strong>Alligevel</strong> bryder igennem muren. Til sidst sætter <strong>Da</strong> tegnestiften ved det præcise tidspunkt i fortiden!
+            </div>
+        `;
+        storyCard.appendChild(analysisBox);
+
+        // Bottom Controls
+        const bottomControls = document.createElement('div');
+        bottomControls.style.display = 'flex';
+        bottomControls.style.justifyContent = 'space-between';
+        bottomControls.style.alignItems = 'center';
+        bottomControls.style.flexWrap = 'wrap';
+        bottomControls.style.gap = '1rem';
+
+        const statusInfo = document.createElement('div');
+        statusInfo.id = 't3-flow-status';
+        statusInfo.style.color = '#94a3b8';
+        statusInfo.style.fontWeight = '700';
+
+        const nextStoryBtn = document.createElement('button');
+        nextStoryBtn.className = 'action-btn-primary';
+        nextStoryBtn.style.padding = '0.8rem 1.5rem';
+        nextStoryBtn.style.borderRadius = '12px';
+        nextStoryBtn.style.fontWeight = '800';
+        nextStoryBtn.style.cursor = 'pointer';
+        nextStoryBtn.innerHTML = currentStoryIdx < 2 ? `Gå til næste historie (${currentStoryIdx + 2}/3) ➔` : `Start forfra 🔄`;
+        nextStoryBtn.onclick = () => {
+            if (currentStoryIdx < 2) {
+                currentStoryIdx++;
+            } else {
+                currentStoryIdx = 0;
+            }
+            renderTabTekstflow(parent);
+        };
+
+        bottomControls.appendChild(statusInfo);
+        bottomControls.appendChild(nextStoryBtn);
+        storyCard.appendChild(bottomControls);
+
+        // Select Change Event Listeners
+        const selects = storyCard.querySelectorAll('.t3-flow-select');
+        function updateStoryProgress() {
+            const totalBlanks = Object.keys(currentStory.blanks).length;
+            let correctCount = 0;
+            for (let i = 0; i < totalBlanks; i++) {
+                if (userChoices[i] === currentStory.blanks[i].answer) correctCount++;
+            }
+            statusInfo.innerHTML = `Fremgang: <span style="color:#6ee7b7; font-weight:900;">${correctCount}</span> af ${totalBlanks} bindeord korrekt`;
+        }
+
+        selects.forEach(sel => {
+            sel.onchange = () => {
+                const bIdx = sel.getAttribute('data-blank');
+                const val = sel.value;
+                const blankData = currentStory.blanks[bIdx];
+
+                userChoices[bIdx] = val;
+
+                if (!val) {
+                    sel.style.background = 'rgba(30, 41, 59, 0.9)';
+                    sel.style.border = '2px dashed #38bdf8';
+                    sel.style.color = '#38bdf8';
+                    feedbackArea.style.display = 'none';
+                } else if (val === blankData.answer) {
+                    sel.style.background = 'rgba(34, 197, 94, 0.2)';
+                    sel.style.border = '2px solid #22c55e';
+                    sel.style.color = '#4ade80';
+                    feedbackArea.style.display = 'block';
+                    feedbackArea.style.background = 'rgba(34, 197, 94, 0.15)';
+                    feedbackArea.style.border = '1.5px solid #22c55e';
+                    feedbackArea.style.color = '#4ade80';
+                    feedbackArea.innerHTML = `🎉 <strong>Rigtigt!</strong> "${val}" passer perfekt ind i tekstens flow.`;
+                } else {
+                    sel.style.background = 'rgba(239, 68, 68, 0.2)';
+                    sel.style.border = '2px solid #ef4444';
+                    sel.style.color = '#f87171';
+                    feedbackArea.style.display = 'block';
+                    feedbackArea.style.background = 'rgba(239, 68, 68, 0.15)';
+                    feedbackArea.style.border = '1.5px solid #ef4444';
+                    feedbackArea.style.color = '#f87171';
+                    const hint = (blankData.feedback && blankData.feedback[val]) || `Prøv igen. Det rigtige ord her er "${blankData.answer}".`;
+                    feedbackArea.innerHTML = `⚠️ <strong>Overvej logikken:</strong> ${hint}`;
+                }
+
+                updateStoryProgress();
+            };
+        });
+
+        // Speech synthesis for story
+        storyHeader.querySelector('#btn-listen-story').onclick = () => {
+            let spokenText = currentStory.text;
+            Object.keys(currentStory.blanks).forEach(i => {
+                const repl = userChoices[i] || currentStory.blanks[i].answer;
+                spokenText = spokenText.replace(`[blank_${i}]`, repl);
+            });
+            speakDanish(spokenText);
+        };
+
+        updateStoryProgress();
+        container.appendChild(storyCard);
+        parent.appendChild(container);
     }
 
     // Initial render

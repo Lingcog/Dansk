@@ -11,17 +11,6 @@ export function renderMainView(container, navigateFn) {
     subtitle.className = 'subtitle';
     subtitle.textContent = getTranslation('subtitle');
 
-    // Change Language Button
-    const topBar = document.createElement('div');
-    topBar.className = 'top-bar';
-    topBar.style.justifyContent = 'flex-end';
-    topBar.style.marginBottom = '20px';
-    const langBtn = document.createElement('button');
-    langBtn.className = 'back-btn';
-    langBtn.textContent = '🌐 ' + getTranslation('selectLanguage');
-    langBtn.onclick = () => navigateFn('language');
-    topBar.appendChild(langBtn);
-
     // Cards Data Wrapper
     const cardsData = [
         {
@@ -106,7 +95,6 @@ export function renderMainView(container, navigateFn) {
     const footer = document.createElement('footer');
     footer.innerHTML = `© 2026 Træning i dansk. Udviklet af <a href="https://dk.linkedin.com/in/mikael-fabrin-2805b28b" target="_blank">Mikael Fabrin</a>.`;
 
-    viewContainer.appendChild(topBar);
     viewContainer.appendChild(title);
     viewContainer.appendChild(subtitle);
     viewContainer.appendChild(grid);

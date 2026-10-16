@@ -3,6 +3,7 @@ import { renderIdiomMadErMedicin, renderIdiomHjerterumHusrum, renderIdiomUglerIM
 import './style.css';
 import { baseUrl } from './utils/config.js';
 export { baseUrl };
+import { initGlobalLanguageSwitcher } from './components/GlobalLanguageSwitcher.js';
 import { renderLanguageView } from './views/LanguageView.js';
 import { renderMainView } from './views/MainView.js';
 import { renderNotesView } from './views/NotesView.js';
@@ -522,11 +523,18 @@ function handleRouting() {
 }
 
 // Boot up
-document.addEventListener('DOMContentLoaded', () => {
+function boot() {
+  initGlobalLanguageSwitcher();
   window.addEventListener('hashchange', handleRouting);
   window.addEventListener('popstate', handleRouting);
   handleRouting();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 
 
 if ('serviceWorker' in navigator) {

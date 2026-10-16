@@ -14667,18 +14667,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
-        .konj-hub-facts-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10b981;
-            color: #6ee7b7;
-            padding: 0.5rem 1.3rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
 
         .konj-scenes-grid {
             display: grid;
@@ -14733,23 +14721,6 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
         .konj-scene-card:hover .konj-card-img {
             transform: scale(1.05);
         }
-        .konj-pill-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(15, 23, 42, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(8px);
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: #f1f5f9;
-        }
-        .badge-konj-1 { border-color: #22c55e; color: #86efac; }
-        .badge-konj-2 { border-color: #06b6d4; color: #67e8f9; }
-        .badge-konj-3 { border-color: #a855f7; color: #d8b4fe; }
-        .badge-konj-4 { border-color: #f59e0b; color: #fde68a; }
 
         .konj-card-content {
             padding: 1.6rem;
@@ -14814,13 +14785,9 @@ import{t as kt,a as vt,b as ht,s as yt,v as xt,c as tt,n as rt,k as nt,d as ot,e
     `,t.appendChild(c);const q=document.createElement("div");q.className="konj-hub-hero",q.innerHTML=`
         <h1>Helsætnings- & Ledsætningskonjunktioner</h1>
         <p>Lær hvordan danske sætninger bindes sammen: Hvornår står <em>ikke</em> efter verbet (helsætning), hvornår rykker <em>ikke</em> frem før verbet (ledsætning), og hvordan mestrer man alle de forskellige konstruktioner med <strong><em>at</em></strong>?</p>
-        <div class="konj-hub-facts-badge">
-            <span>🌉</span> 8 felter • Fra isolerede regler og vrimlebilleder til sammenhængende Tekstflow & Historier!
-        </div>
     `,t.appendChild(q);const V=document.createElement("div");V.className="konj-scenes-grid",[{id:"konj_felt_1",badge:"🟢 Felt 1 • 5 helsætningskonjunktioner",badgeClass:"badge-konj-1",img:"assets/konjunktioner_vrimmel.jpg",title:"1. Helsætningskonjunktioner (Forbinderfelt F0)",desc:'De 5 sideordnende konjunktioner, der binder to helsætninger sammen uden at ændre ordstillingen: Verbet står FØR "ikke", og "så" udløser IKKE inversion!',chips:["og","men","eller","for (+ V + ikke)","så (+ S + V)"],btnText:"Træn helsætningskonjunktioner ➔",action:()=>w("konjunktioner_all",{filter:"helsaetning",tab:"vrimmel",from:"top_konjunktioner"})},{id:"konj_felt_2",badge:'🔵 Felt 2 • Ledsætning & "Ikke"-Magneten',badgeClass:"badge-konj-2",img:"assets/konjunktioner_vrimmel.jpg",title:"2. Ledsætninger: Årsag, Betingelse & Kontrast",desc:'Mestre "IKKE"-magneten i ledsætninger (Subjekt + IKKE + Verbum), forskellen på "for" vs. "fordi", "hvis" vs. "om" samt inversion når ledsætningen står forrest.',chips:["fordi (+ ikke + V)","selvom","hvis","om (spørgsmål/tvivl)"],btnText:"Træn ledsætninger & ordstilling ➔",action:()=>w("konjunktioner_all",{filter:"ledsaetning_logik",tab:"laboratorium",from:"top_konjunktioner"})},{id:"konj_felt_3",badge:"🟣 Felt 3 • 8 tidskonjunktioner",badgeClass:"badge-konj-3",img:"assets/konjunktioner_vrimmel.jpg",title:"3. Tidskonjunktioner: Da vs. Når, Mens & Inden",desc:'Hvornår bruger man "da" (én gang i fortiden), og hvornår bruger man "når" (nutid, fremtid og vaner)? Samt samtidighed og rækkefølge i tid.',chips:["da (fortid 1 gang)","når (fremtid/vane)","mens","inden / før","efter at","siden","indtil","så snart"],btnText:"Træn da/når & tidskonjunktioner ➔",action:()=>w("konjunktioner_all",{filter:"ledsaetning_tid",tab:"tid",from:"top_konjunktioner"})},{id:"konj_felt_4_at",badge:"🌟 Felt 4 • Særskilt Fokusfelt (18 konstruktioner)",badgeClass:"badge-konj-4",isSpecial:!0,img:"assets/konjunktioner_at_vrimmel.jpg",title:'4. Ordet "AT" i alle sætningskonstruktioner',desc:'Kognitiv ramme (Tankeboblen & Billedrammen) og træning i de 5 konstruktioner med "at": Konjunktionen "at", infinitivmærket "at" (vs. modalverber uden "at"), præposition + "at" og sammensatte bindeord.',chips:["siger/tror, at + S + V","elsker at + infinitiv","kan/skal (UDEN at!)","glad for at / god til at","kom til at","for at / uden at / ved at","så ... at"],btnText:'Åbn det særskilte "AT"-Felt 🌟 ➔',action:()=>w("konjunktioner_at",{from:"top_konjunktioner"})},{id:"konj_felt_5_da_naar",badge:"📅 Felt 5 • Særskilt Flade (Vrimlebillede + Kognitiv Guide)",badgeClass:"badge-konj-1",isSpecial:!0,img:"assets/da_naar_vrimmel.jpg",title:'5. "DA" og "NÅR" – Tegnestiften 📌, Cirklen 🔁 & Pilen 🏹',desc:"Særskilt flade med eget vrimlebillede og de 3 kognitive kalender-symboler: 📌 Tegnestiften (da = én gang i fortiden), 🔁 Cirklen (når = gentagne vaner) og 🏹 Pilen (når = fremtiden).",chips:["📌 da (fortid 1 gang)","🔁 når (vane i nutid & fortid)","🏹 når (fremtid)","Ledsætning + Inversion"],btnText:'Åbn "DA og NÅR"-Fladen 📅 ➔',action:()=>w("konjunktioner_da_naar",{from:"top_konjunktioner"})},{id:"konj_felt_6_selvom_alligevel",badge:"🧱☄️ Felt 6 • Særskilt Flade (Vrimlebillede + Mur & Bold)",badgeClass:"badge-konj-4",isSpecial:!0,img:"assets/selvom_alligevel_vrimmel.jpg",title:'6. "SELVOM" og "ALLIGEVEL" – Muren 🧱 & Bolden ☄️',desc:"Særskilt flade med eget vrimlebillede og den kognitive Mur/Bold-illustration: 🧱 Selvom bygger forhindringen i en ledsætning, mens ☄️ Alligevel er bolden, der bryder igennem muren i hovedsætningen!",chips:["🧱 selvom (+ S + ikke + V)","☄️ alligevel (på trods)","Sætnings-Transformeren","Inversion i front"],btnText:'Åbn "SELVOM og ALLIGEVEL"-Fladen 🧱 ➔',action:()=>w("konjunktioner_selvom_alligevel",{from:"top_konjunktioner"})},{id:"konj_felt_7_fordi_derfor",badge:"⛽➡️ Felt 7 • Særskilt Flade (Vrimlebillede + Årsag & Virkning)",badgeClass:"badge-konj-2",isSpecial:!0,img:"assets/fordi_derfor_vrimmel.jpg",title:'7. "FORDI" og "DERFOR" – Årsag ⛽ vs. Virkning ➡️',desc:'Særskilt flade med eget vrimlebillede og Årsag/Virkning-illustrationen: ⛽ Virkning + FORDI ➔ Årsag (ledsætning med "ikke" før verbet) over for ➡️ Årsag. DERFOR ➔ Virkning (med Inversion)!',chips:["⛽ fordi (+ S + ikke + V)","➡️ derfor (+ V + S = Inversion!)","Sætnings-Vendemaskinen","Årsag ↔ Virkning"],btnText:'Åbn "FORDI og DERFOR"-Fladen ➡️ ➔',action:()=>w("konjunktioner_fordi_derfor",{from:"top_konjunktioner"})},{id:"konj_felt_8_tekstflow",badge:"🚦 Felt 8 • Særskilt Flade (Tekstens Trafik & Tekstflow)",badgeClass:"badge-konj-1",isSpecial:!0,img:"assets/tekstens_trafik_vrimmel.jpg",title:"8. Tekstens Trafik 🚦 & Sammenhængende Tekstflow",desc:"Nytænkt flade med 6 øvelsesbaner: Det interaktive trafikkort, 4 rige hverdagsfortællinger, trafikprop-reparation, staccato-til-flow og lyn-dueller. Lær hvordan bindeord styrer fart, retning og sammenhæng!",chips:["🚦 Tekstens Trafik","🗺️ Interaktivt Trafikkort","📖 4 Historier","🚧 Ret Trafikproppen","🔀 Fra Staccato til Flow","⚡ Trafik-Duellen",'🧲 "IKKE" & Inversion'],btnText:'Åbn "Tekstens Trafik"-Fladen 🚦 ➔',action:()=>w("konjunktioner_tekstflow",{from:"top_konjunktioner"})}].forEach(M=>{const u=document.createElement("div");u.className=`konj-scene-card ${M.isSpecial?"special-at-card":""}`,u.innerHTML=`
             <div class="konj-card-img-wrap">
                 <img src="${M.img}" alt="${M.title}" class="konj-card-img">
-                <div class="konj-pill-badge ${M.badgeClass}">${M.badge}</div>
             </div>
             <div class="konj-card-content">
                 <h3>${M.title}</h3>

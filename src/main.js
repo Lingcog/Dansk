@@ -311,7 +311,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderRengoeringView(appDiv, navigate);
   } else if (viewTarget === 'traen_tidsudtryk') {
     appState.currentView = 'traen_tidsudtryk';
-    renderTraenTidsudtrykView(appDiv, navigate);
+    renderTraenTidsudtrykView(appDiv, navigate, extraData);
   } else if (viewTarget === 'lav_sporgsmal') {
     appState.currentView = 'lav_sporgsmal';
     renderLavSporgsmalView(appDiv, navigate);

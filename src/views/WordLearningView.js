@@ -400,22 +400,6 @@ export function renderWordLearningView(container, navigateFn) {
         align-items: center;
         gap: 0.3rem;
       }
-      .byggeplads-golden-rule {
-        margin-top: 1rem;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px dashed rgba(255, 255, 255, 0.18);
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 0.85rem;
-        color: #cbd5e1;
-        line-height: 1.45;
-      }
-      .byggeplads-golden-rule strong {
-        color: #fde047;
-      }
 
       /* Secondary Collapsible Section */
       .secondary-section-toggle {
@@ -682,14 +666,6 @@ export function renderWordLearningView(container, navigateFn) {
             <span class="explanation-text" id="flow-text">Beskriver <strong>substantivet</strong>: Hvilken bil? Den <em>røde</em> bil.</span>
           </div>
           <button type="button" class="explanation-cta-btn" id="flow-cta">Gå til Adjektiver ➔</button>
-        </div>
-      </div>
-
-      <!-- Den Gyldne Regel (Pædagogisk vejledning til begyndere) -->
-      <div class="byggeplads-golden-rule">
-        <span style="font-size: 1.4rem; flex-shrink: 0;">💡</span>
-        <div>
-          <strong>Den gyldne regel:</strong> Pluk lidt fra alle kasser! Lær 10 navneord, 10 verber og småordet <em>"ikke"</em> – så kan du allerede tale hverdagsdansk i dag. Du behøver ikke gøre én flade færdig før den næste.
         </div>
       </div>
     `;

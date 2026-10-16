@@ -34,7 +34,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     felt7Btn.style.background = 'rgba(234, 179, 8, 0.15)';
     felt7Btn.style.borderColor = '#eab308';
     felt7Btn.style.color = '#fde047';
-    felt7Btn.innerHTML = `🔗 Se også Felt 7: Konnektive Adverbier (derfor, alligevel...) ➔`;
+    felt7Btn.innerHTML = `🔗 Se også felt 7: konnektive adverbier (derfor, alligevel...) ➔`;
     felt7Btn.onclick = () => navigateFn('adverbier_konnektion');
     topBar.appendChild(felt7Btn);
 
@@ -44,7 +44,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     const style = document.createElement('style');
     style.textContent = `
         .top-konjunktioner-hub {
-            max-width: 1200px;
+            max-width: 1150px;
             margin: 0 auto;
             padding: 1.5rem 1.5rem 4rem;
             color: #f8fafc;
@@ -55,7 +55,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         }
         .konj-hub-hero h1 {
             font-size: 2.5rem;
-            font-weight: 900;
+            font-weight: 800;
             margin-bottom: 0.8rem;
             background: linear-gradient(135deg, #6ee7b7, #10b981, #38bdf8);
             -webkit-background-clip: text;
@@ -64,14 +64,14 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         .konj-hub-hero p {
             color: #94a3b8;
             font-size: 1.15rem;
-            max-width: 800px;
+            max-width: 780px;
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
 
         .konj-scenes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
@@ -96,7 +96,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         .konj-scene-card:hover {
             transform: translateY(-8px);
             border-color: #10b981;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.3);
         }
         .konj-scene-card.special-at-card {
             border-color: rgba(245, 158, 11, 0.6);
@@ -104,12 +104,12 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         }
         .konj-scene-card.special-at-card:hover {
             border-color: #f59e0b;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 28px rgba(245, 158, 11, 0.45);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.4);
         }
         .konj-card-img-wrap {
             position: relative;
             width: 100%;
-            height: 210px;
+            height: 200px;
             overflow: hidden;
             background: #0f172a;
         }
@@ -124,47 +124,32 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         }
 
         .konj-card-content {
-            padding: 1.6rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
-        .konj-card-content h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
+        .konj-card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
             margin-bottom: 0.6rem;
             color: white;
         }
-        .konj-card-content p {
+        .konj-card-desc {
             color: #94a3b8;
-            font-size: 0.96rem;
-            line-height: 1.55;
+            font-size: 0.95rem;
+            line-height: 1.5;
             margin-bottom: 1.2rem;
             flex-grow: 1;
-        }
-        .konj-word-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin-bottom: 1.3rem;
-        }
-        .konj-chip {
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #e2e8f0;
-            padding: 0.25rem 0.65rem;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 700;
         }
         .konj-action-btn {
             background: #059669;
             color: white;
             border: none;
-            padding: 0.85rem 1.4rem;
+            padding: 0.75rem 1.2rem;
             border-radius: 12px;
-            font-weight: 800;
-            font-size: 1rem;
+            font-weight: 700;
+            font-size: 0.95rem;
             text-align: center;
             transition: all 0.2s ease;
             display: flex;
@@ -175,6 +160,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
         }
         .konj-scene-card:hover .konj-action-btn {
             background: #10b981;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
         }
         .konj-scene-card.special-at-card .konj-action-btn {
             background: #d97706;
@@ -190,7 +176,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'konj-hub-hero';
     hero.innerHTML = `
-        <h1>Helsætnings- & Ledsætningskonjunktioner</h1>
+        <h1>Helsætnings- og ledsætningskonjunktioner</h1>
         <p>Lær hvordan danske sætninger bindes sammen: Hvornår står <em>ikke</em> efter verbet (helsætning), hvornår rykker <em>ikke</em> frem før verbet (ledsætning), og hvordan mestrer man alle de forskellige konstruktioner med <strong><em>at</em></strong>?</p>
     `;
     viewContainer.appendChild(hero);
@@ -241,7 +227,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: '4. Ordet "at" i alle sætningskonstruktioner',
             desc: 'Kognitiv ramme (Tankeboblen & Billedrammen) og træning i de 5 konstruktioner med "at": Konjunktionen "at", infinitivmærket "at" (vs. modalverber uden "at"), præposition + "at" og sammensatte bindeord.',
             chips: ['siger/tror, at + S + V', 'elsker at + infinitiv', 'kan/skal (UDEN at!)', 'glad for at / god til at', 'kom til at', 'for at / uden at / ved at', 'så ... at'],
-            btnText: 'Åbn det særskilte "AT"-Felt 🌟 ➔',
+            btnText: 'Åbn det særskilte "at"-felt 🌟 ➔',
             action: () => navigateFn('konjunktioner_at', { from: 'top_konjunktioner' })
         },
         {
@@ -253,7 +239,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: '5. "Da" og "når" – tegnestiften 📌, cirklen 🔁 og pilen 🏹',
             desc: 'Særskilt flade med eget vrimlebillede og de 3 kognitive kalender-symboler: 📌 Tegnestiften (da = én gang i fortiden), 🔁 Cirklen (når = gentagne vaner) og 🏹 Pilen (når = fremtiden).',
             chips: ['📌 da (fortid 1 gang)', '🔁 når (vane i nutid & fortid)', '🏹 når (fremtid)', 'Ledsætning + Inversion'],
-            btnText: 'Åbn "DA og NÅR"-Fladen 📅 ➔',
+            btnText: 'Åbn "da og når"-fladen 📅 ➔',
             action: () => navigateFn('konjunktioner_da_naar', { from: 'top_konjunktioner' })
         },
         {
@@ -265,7 +251,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: '6. "Selvom" og "alligevel" – muren 🧱 og bolden ☄️',
             desc: 'Særskilt flade med eget vrimlebillede og den kognitive Mur/Bold-illustration: 🧱 Selvom bygger forhindringen i en ledsætning, mens ☄️ Alligevel er bolden, der bryder igennem muren i hovedsætningen!',
             chips: ['🧱 selvom (+ S + ikke + V)', '☄️ alligevel (på trods)', 'Sætnings-Transformeren', 'Inversion i front'],
-            btnText: 'Åbn "SELVOM og ALLIGEVEL"-Fladen 🧱 ➔',
+            btnText: 'Åbn "selvom og alligevel"-fladen 🧱 ➔',
             action: () => navigateFn('konjunktioner_selvom_alligevel', { from: 'top_konjunktioner' })
         },
         {
@@ -277,7 +263,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: '7. "Fordi" og "derfor" – årsag ⛽ vs. virkning ➡️',
             desc: 'Særskilt flade med eget vrimlebillede og Årsag/Virkning-illustrationen: ⛽ Virkning + FORDI ➔ Årsag (ledsætning med "ikke" før verbet) over for ➡️ Årsag. DERFOR ➔ Virkning (med Inversion)!',
             chips: ['⛽ fordi (+ S + ikke + V)', '➡️ derfor (+ V + S = Inversion!)', 'Sætnings-Vendemaskinen', 'Årsag ↔ Virkning'],
-            btnText: 'Åbn "FORDI og DERFOR"-Fladen ➡️ ➔',
+            btnText: 'Åbn "fordi og derfor"-fladen ➡️ ➔',
             action: () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' })
         },
         {
@@ -289,7 +275,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: '8. Tekstens trafik 🚦 og sammenhængende tekstflow',
             desc: 'Nytænkt flade med 6 øvelsesbaner: Det interaktive trafikkort, 4 rige hverdagsfortællinger, trafikprop-reparation, staccato-til-flow og lyn-dueller. Lær hvordan bindeord styrer fart, retning og sammenhæng!',
             chips: ['🚦 Tekstens Trafik', '🗺️ Interaktivt Trafikkort', '📖 4 Historier', '🚧 Ret Trafikproppen', '🔀 Fra Staccato til Flow', '⚡ Trafik-Duellen', '🧲 "IKKE" & Inversion'],
-            btnText: 'Åbn "Tekstens Trafik"-Fladen 🚦 ➔',
+            btnText: 'Åbn "tekstens trafik"-fladen 🚦 ➔',
             action: () => navigateFn('konjunktioner_tekstflow', { from: 'top_konjunktioner' })
         }
     ];
@@ -302,11 +288,8 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
                 <img src="${f.img}" alt="${f.title}" class="konj-card-img">
             </div>
             <div class="konj-card-content">
-                <h3>${f.title}</h3>
-                <p>${f.desc}</p>
-                <div class="konj-word-chips">
-                    ${f.chips.map(c => `<span class="konj-chip">${c}</span>`).join('')}
-                </div>
+                <div class="konj-card-title">${f.title}</div>
+                <div class="konj-card-desc">${f.desc}</div>
                 <button class="konj-action-btn">${f.btnText}</button>
             </div>
         `;

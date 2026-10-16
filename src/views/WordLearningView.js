@@ -579,7 +579,7 @@ export function renderWordLearningView(container, navigateFn) {
         <div>
           <div class="byggeplads-title">
             <span>✨</span>
-            <span>Sprogets Byggeplads</span>
+            <span>Sprogets byggeplads</span>
           </div>
           <div class="byggeplads-subtitle">Tryk på en ordklasse eller et pegefelt for at se, hvordan ordene hænger sammen</div>
         </div>
@@ -819,7 +819,7 @@ export function renderWordLearningView(container, navigateFn) {
         key: 'konjunktion',
         target: 'top_konjunktioner',
         icon: '🌉',
-        title: '5. Konjunktioner & "AT"',
+        title: '5. Konjunktioner og "at"',
         subtext: 'Bindeordene',
         role: 'Brobyggerne',
         roleHint: 'Binder sætninger',
@@ -878,7 +878,7 @@ export function renderWordLearningView(container, navigateFn) {
     secondaryToggle.innerHTML = `
       <div style="display: flex; align-items: center; gap: 0.6rem;">
         <span>📁</span>
-        <span>Flere ordøvelser (Semantik, naboord & historier)</span>
+        <span>Flere ordøvelser (semantik, naboord og historier)</span>
       </div>
       <span id="secondary-arrow" style="transition: transform 0.2s;">▾</span>
     `;

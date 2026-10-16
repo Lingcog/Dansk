@@ -1626,7 +1626,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     const tabsConfig = [
         { id: 'tab_vrimmel', label: '1. Vrimlebillede (18 ord)', icon: '🖼️' },
         { id: 'tab_detektiv', label: '2. Adverbie-Detektiven', icon: '🔍' },
-        { id: 'tab_vippe', label: '3. Retnings-Vippen (-e reglen)', icon: '⚖️' },
+        { id: 'tab_vippe', label: '3. Retnings-vippen (-e-reglen)', icon: '⚖️' },
         { id: 'tab_saetning', label: '4. Sætningsbyggeren', icon: '🧱' },
         { id: 'tab_kontekst', label: '5. Kontekst-testen', icon: '🎯' }
     ];

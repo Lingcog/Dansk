@@ -742,12 +742,12 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Vrimlebilledet: Da & Når (12 scener)', icon: '🖼️' },
-        { id: 'kognitiv', label: '2. Kognitivt Værksted & Ordstilling', icon: '🔬' },
-        { id: 'traening2', label: '3. Klassisk Træning 2 (med Illustration)', icon: '📅' },
-        { id: 'detektiv', label: '4. Da/Når-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'fortidsduel', label: '5. Fortids-Duellen: 1 gang (da) vs. Vane i fortid (når)', icon: '⚔️' },
-        { id: 'builder', label: '6. Sætningsbyggeren (Ledsætning & Inversion)', icon: '🧩' }
+        { id: 'vrimmel', label: '1. Vrimlebilledet: da og når (12 scener)', icon: '🖼️' },
+        { id: 'kognitiv', label: '2. Kognitivt værksted og ordstilling', icon: '🔬' },
+        { id: 'traening2', label: '3. Klassisk træning 2 (med illustration)', icon: '📅' },
+        { id: 'detektiv', label: '4. Da/når-detektiven (10 gåder)', icon: '🔍' },
+        { id: 'fortidsduel', label: '5. Fortids-duellen: 1 gang (da) vs. vane i fortid (når)', icon: '⚔️' },
+        { id: 'builder', label: '6. Sætningsbyggeren (ledsætning og inversion)', icon: '🧩' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
@@ -804,9 +804,9 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         filtersDiv.className = 'vrimmel-filters';
         [
             { id: 'alle', label: 'Alle scener (12)' },
-            { id: 'da_fortid', label: '📌 DA: Fortid 1 gang (5)' },
-            { id: 'naar_vane', label: '🔁 NÅR: Gentagen vane (4)' },
-            { id: 'naar_fremtid', label: '🏹 NÅR: Fremtid (3)' }
+            { id: 'da_fortid', label: '📌 Da: fortid 1 gang (5)' },
+            { id: 'naar_vane', label: '🔁 Når: gentagen vane (4)' },
+            { id: 'naar_fremtid', label: '🏹 Når: fremtid (3)' }
         ].forEach(f => {
             const b = document.createElement('button');
             b.className = `filter-btn ${activeFilter === f.id ? 'active' : ''}`;
@@ -1257,17 +1257,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     // ==========================================
     const PUZZLES = [
         {
-            title: 'Puslespil 1 • 📌 Da-ledsætning med "ikke" FØR verbet',
+            title: 'Puslespil 1 • 📌 Da-ledsætning med "ikke" før verbet',
             hint: 'Start med hovedsætningen "Vi blev hjemme,", og sæt derefter "da"-ledsætningen sammen (Husk: Subjekt + ikke + Verbum!):',
             correct: ['Vi blev hjemme,', 'da', 'bussen', 'ikke kom.']
         },
         {
-            title: 'Puslespil 2 • 🏹 Når-ledsætning i front udløser INVERSION!',
+            title: 'Puslespil 2 • 🏹 Når-ledsætning i front udløser inversion!',
             hint: 'Start med ledsætningen "Når jeg kommer hjem,", og husk at bytte om på verbum og subjekt i hovedsætningen:',
             correct: ['Når jeg kommer hjem,', 'ringer', 'jeg', 'til dig.']
         },
         {
-            title: 'Puslespil 3 • 🔁 Når-vane i front med INVERSION',
+            title: 'Puslespil 3 • 🔁 Når-vane i front med inversion',
             hint: 'Start med "Når det regner,", og sæt derefter verbet FØR subjektet:',
             correct: ['Når det regner,', 'tager', 'jeg altid', 'paraply med.']
         }

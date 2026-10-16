@@ -1529,10 +1529,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Byens Knudepunkt (Vrimlebilledet)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. Brobygger-Værkstedet (Ordstilling & Logik)', icon: '🌉' },
+        { id: 'vrimmel', label: '1. Byens knudepunkt (vrimlebilledet)', icon: '🖼️' },
+        { id: 'vaerksted', label: '2. Brobygger-værkstedet (ordstilling og logik)', icon: '🌉' },
         { id: 'detektiv', label: '3. Logik-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
         { id: 'aarsag', label: '6. Derfor, nemlig, altså & dermed ⚡', icon: '⚡' },
         { id: 'kontrast', label: '7. Alligevel, derimod, til gengæld & tværtimod ⚖️', icon: '⚖️' },
@@ -1613,10 +1613,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         const filters = [
             { id: 'alle', label: 'Alle (20)' },
-            { id: 'aarsag', label: '🟢 Årsag & Følge (5)' },
-            { id: 'kontrast', label: '🔴 Modsætning & Kontrast (5)' },
-            { id: 'tilfoejelse', label: '🔵 Tilføjelse & Emneskift (5)' },
-            { id: 'alternativ', label: '🟣 Alternativ, Forbehold & Opsamling (5)' }
+            { id: 'aarsag', label: '🟢 Årsag og følge (5)' },
+            { id: 'kontrast', label: '🔴 Modsætning og kontrast (5)' },
+            { id: 'tilfoejelse', label: '🔵 Tilføjelse og emneskift (5)' },
+            { id: 'alternativ', label: '🟣 Alternativ, forbehold og opsamling (5)' }
         ];
 
         filters.forEach(f => {
@@ -1803,9 +1803,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         subtabs.className = 'vaerksted-subtabs';
 
         const subList = [
-            { id: 'ordstilling', label: '🔄 1. Inversions-Motoren vs. Midterpladsen' },
-            { id: 'brotyper', label: '🧭 2. De 4 Logiske Bro-typer' },
-            { id: 'tvilling', label: '⚠️ 3. Pas på Tvillingen! (Adverbium vs. Konjunktion)' }
+            { id: 'ordstilling', label: '🔄 1. Inversions-motoren vs. midterpladsen' },
+            { id: 'brotyper', label: '🧭 2. De 4 logiske bro-typer' },
+            { id: 'tvilling', label: '⚠️ 3. Pas på tvillingen! (adverbium vs. konjunktion)' }
         ];
 
         subList.forEach(st => {
@@ -2041,7 +2041,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderSubBrotyper(container) {
         const bridges = {
             aarsag: {
-                title: '🟢 1. Årsag, Følge & Konklusion',
+                title: '🟢 1. Årsag, følge og konklusion',
                 subtitle: 'Når sætning 1 og sætning 2 hænger logisk sammen som årsag og resultat',
                 items: [
                     { word: 'derfor', role: 'Peger FREM på resultatet', ex: 'Det regner. Derfor tager jeg bussen.' },
@@ -2052,7 +2052,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 ]
             },
             kontrast: {
-                title: '🔴 2. Modsætning, Kontrast & Kompensation',
+                title: '🔴 2. Modsætning, kontrast og kompensation',
                 subtitle: 'Når sætning 2 overrasker, sammenligner modsætninger eller giver et lyspunkt',
                 items: [
                     { word: 'alligevel', role: 'På trods af forhindringen', ex: 'Det regner kraftigt. Alligevel cykler hun.' },
@@ -2063,7 +2063,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 ]
             },
             tilfoejelse: {
-                title: '🔵 3. Tilføjelse, Bonus & Emneskift',
+                title: '🔵 3. Tilføjelse, bonus og emneskift',
                 subtitle: 'Når du bygger ovenpå med flere argumenter eller skifter spor i samtalen',
                 items: [
                     { word: 'desuden', role: 'Ekstra sagligt argument oveni', ex: 'Bilen er gammel. Desuden er den dyr i benzin.' },
@@ -2074,7 +2074,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 ]
             },
             alternativ: {
-                title: '🟣 4. Alternativ, Forbehold & Opsamling',
+                title: '🟣 4. Alternativ, forbehold og opsamling',
                 subtitle: 'Når du advarer om konsekvensen, vælger Plan B eller sætter en bundgrænse',
                 items: [
                     { word: 'ellers', role: 'Konsekvens hvis man IKKE gør det', ex: 'Skynd dig! Ellers kommer vi for sent.' },
@@ -2961,7 +2961,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             state: kontekstState,
             questions: KONTEKST_QUESTIONS,
             progressLabel: '🎯 KONTEKST-TESTEN',
-            doneTitle: 'Kontekst-testen Gennemført!'
+            doneTitle: 'Kontekst-testen gennemført!'
         });
     }
 
@@ -3031,7 +3031,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderTabAarsag(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⚡ Årsag, Følge & Konklusion</h2>
+                <h2>⚡ Årsag, følge og konklusion</h2>
                 <p>Lær den afgørende forskel på at pege <strong>frem mod resultatet</strong> (<em>derfor, dermed, således</em>), pege <strong>tilbage på årsagen</strong> (<em>nemlig</em>) og drage en <strong>logisk konklusion</strong> (<em>altså</em>).</p>
             </div>
             <div class="special-rule-cards-grid">
@@ -3083,7 +3083,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             state: aarsagState,
             questions: AARSAG_QUESTIONS,
             progressLabel: '⚡ ÅRSAG & FØLGE',
-            doneTitle: 'Årsag & Følge Mestret!'
+            doneTitle: 'Årsag og følge mestret!'
         });
     }
 
@@ -3205,7 +3205,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             state: kontrastState,
             questions: KONTRAST_QUESTIONS,
             progressLabel: '⚖️ KONTRAST-MESTEREN',
-            doneTitle: 'Kontrast-Mesteren Gennemført!'
+            doneTitle: 'Kontrast-mesteren gennemført!'
         });
     }
 
@@ -3289,7 +3289,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderTabAlternativ(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🛡️ Alternativ, Forbehold & Opsamling</h2>
+                <h2>🛡️ Alternativ, forbehold og opsamling</h2>
                 <p>Træn de nuancerede tekstbindere, der advarer om konsekvenser (<em>ellers</em>), vælger Plan B (<em>i stedet</em>), sætter en sikker grænse (<em>i hvert fald</em>) eller giver trøst (<em>i det mindste</em>).</p>
             </div>
             <div class="special-rule-cards-grid">
@@ -3341,7 +3341,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             state: alternativState,
             questions: ALTERNATIV_QUESTIONS,
             progressLabel: '🛡️ ALTERNATIV & FORBEHOLD',
-            doneTitle: 'Alternativ & Forbehold Mestret!'
+            doneTitle: 'Alternativ og forbehold mestret!'
         });
     }
 

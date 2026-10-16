@@ -204,7 +204,7 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
         {
             id: 'adjektiver_fysik',
             badge: '🔬 Felt 1: 20 målbare modpoler',
-            title: '1. Fysiske egenskaber, form & sanser',
+            title: '1. Fysiske egenskaber, form og sanser',
             desc: 'Dækker alt der kan måles, mærkes eller sanses i hverdagen: <em>stor/lille, lang/kort, høj/lav, bred/smal, tung/let, varm/kold, hård/blød, fast/løs, fuld/tom, åben/lukket</em>.',
             img: 'assets/adjektiver_fysik_venstre.jpg',
             active: true,
@@ -231,7 +231,7 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
         {
             id: 'adjektiver_folelser',
             badge: '❤️ Felt 4: 20 sociale adjektiver',
-            title: '4. Følelser, personlighed & relationer',
+            title: '4. Følelser, personlighed og relationer',
             desc: 'Menneskers sindstilstande og sociale kontakt: <em>glad/ked af det, venlig/uvenlig, træt/frisk, tryg/bange, sur, sød, stolt, rolig...</em>',
             img: 'assets/adjektiver_folelser_venstre.jpg',
             active: true,
@@ -248,8 +248,8 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
         },
         {
             id: 'adjective_comparison',
-            badge: '📏 Felt 6 • Bøjnings-Masteren (Gradbøjning & E-reglen)',
-            title: '6. Den Store Bøjningsguide: Gradbøjning & E-reglen',
+            badge: '📏 Felt 6 • Bøjnings-masteren (gradbøjning og e-reglen)',
+            title: '6. Den store bøjningsguide: gradbøjning og e-reglen',
             desc: 'Komplet interaktiv bøjningsmotor: <strong>1. Positiv</strong> (<em>stor</em>) ➔ <strong>2. Komparativ</strong> med "end" (<em>større end</em>) ➔ <strong>3. Superlativ</strong> (<em>størst / den største</em>), samt formlen for hvorfor <em>den/min/denne/Peters</em> altid tvinger <strong>-e</strong> frem!',
             img: 'assets/adjektiver_comparison_guide.jpg',
             active: true,

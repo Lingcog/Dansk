@@ -1537,13 +1537,13 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Planlægningsrummet (Vrimlebilledet)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. Sandsynligheds- & Holdningsbarometret', icon: '📊' },
+        { id: 'vrimmel', label: '1. Planlægningsrummet (vrimlebilledet)', icon: '🖼️' },
+        { id: 'vaerksted', label: '2. Sandsynligheds- og holdningsbarometret', icon: '📊' },
         { id: 'detektiv', label: '3. Holdnings-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'tvivl', label: '6. Tvivlens Grader: Næppe, umuligt... 📉', icon: '📉' },
-        { id: 'tone', label: '7. Heldigvis & desværre (Social tone) 🎭', icon: '🎭' },
+        { id: 'tvivl', label: '6. Tvivlens grader: næppe, umuligt... 📉', icon: '📉' },
+        { id: 'tone', label: '7. Heldigvis og desværre (social tone) 🎭', icon: '🎭' },
         { id: 'beviser', label: '8. Bevis-Detektiven (70-90%) 🔬', icon: '🔬' }
     ];
 

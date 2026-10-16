@@ -2494,9 +2494,9 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         timelineSlots.className = 'timeline-slots-grid';
 
         const TIMELINE_SLOT_CONFIG = [
-            { idx: 0, target: 'Før', label: '1. Fortid (Hvad skete tidligere?)' },
-            { idx: 1, target: 'Nu', label: '2. Nutid (Lige i dette øjeblik)' },
-            { idx: 2, target: 'Bagefter', label: '3. Næste skridt (Efterfølgende)' }
+            { idx: 0, target: 'Før', label: '1. Fortid (hvad skete tidligere?)' },
+            { idx: 1, target: 'Nu', label: '2. Nutid (lige i dette øjeblik)' },
+            { idx: 2, target: 'Bagefter', label: '3. Næste skridt (efterfølgende)' }
         ];
 
         TIMELINE_SLOT_CONFIG.forEach(slotConf => {

@@ -153,7 +153,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             badge: '📍 Felt 1 • 18 ord',
             badgeClass: 'badge-adv-1',
             img: 'assets/adverbier_sted_vrimmel.jpg',
-            title: '1. Sted: Retning vs. Hvile',
+            title: '1. Sted: retning vs. hvile',
             desc: 'Mestre den berømte forskel mellem bevægelse mod et mål (hjem, ind, ud, op) og stilstand på stedet (hjemme, inde, ude, oppe).',
             btnText: 'Udforsk retning & hvile ➔'
         },
@@ -162,7 +162,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             badge: '⏳ Felt 2 • 19 ord',
             badgeClass: 'badge-adv-2',
             img: 'assets/adverbier_tid_vrimmel.jpg',
-            title: '2. Tid & Frekvens',
+            title: '2. Tid og frekvens',
             desc: 'Hvornår og hvor tit? Lær vaner (altid, ofte, sjældent, aldrig) og tidsforløb (nu, snart, allerede, endnu, stadig).',
             btnText: 'Udforsk tid & frekvens ➔'
         },
@@ -180,7 +180,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             badge: '🌡️ Felt 4 • 20 ord',
             badgeClass: 'badge-adv-4',
             img: 'assets/adverbier_grad_vrimmel.jpg',
-            title: '4. Grad & Intensitet',
+            title: '4. Grad og intensitet',
             desc: 'Hvor meget gælder det? Træn skalaen fra 0% til over 100% (slet ikke, lidt, ret, meget, for varmt).',
             btnText: 'Udforsk intensitetsskalaen ➔'
         },
@@ -189,7 +189,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             badge: '💬 Felt 5 • 18 ord',
             badgeClass: 'badge-adv-5',
             img: 'assets/adverbier_smaaord_vrimmel.jpg',
-            title: '5. De 5 Magiske Småord',
+            title: '5. De 5 magiske småord',
             desc: 'Modalpartiklerne i dialog: jo, da, nok, vel, vist. Lær hvem der ved hvad, og hvordan en enkelt stavelse ændrer hele tonen.',
             btnText: 'Mestre samtale-småordene ➔'
         },
@@ -198,7 +198,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             badge: '🎲 Felt 6 • 20 ord',
             badgeClass: 'badge-adv-6',
             img: 'assets/adverbier_holdning_vrimmel.jpg',
-            title: '6. Sikkerhed, Tvivl & Holdning',
+            title: '6. Sikkerhed, tvivl og holdning',
             desc: 'Sandsynlighedsskalaen fra helt sikkert til usandsynligt samt talerens vurdering: heldigvis, desværre, formentlig, umuligt.',
             btnText: 'Udforsk holdning & sandsynlighed ➔'
         },
@@ -207,7 +207,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             badge: '🔗 Felt 7 • 20 ord',
             badgeClass: 'badge-adv-7',
             img: 'assets/adverbier_konnektion_vrimmel.jpg',
-            title: '7. Konnektion & Tekstbindere',
+            title: '7. Konnektion og tekstbindere',
             desc: 'Skab logisk sammenhæng mellem sætninger og afsnit: derfor (årsag), alligevel (kontrast), nemlig (begrundelse) og ellers.',
             btnText: 'Udforsk tekstbindere ➔'
         }

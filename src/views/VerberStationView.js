@@ -2149,7 +2149,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
 
         const badge = document.createElement('div');
         badge.className = `synonym-type-badge ${task.type === 'synonym' ? 'badge-type-synonym' : 'badge-type-antonym'}`;
-        badge.textContent = task.type === 'synonym' ? 'Synonym (Betyder næsten det samme)' : 'Antonym (Det modsatte)';
+        badge.textContent = task.type === 'synonym' ? 'Synonym (betyder næsten det samme)' : 'Antonym (det modsatte)';
         synonymCard.appendChild(badge);
 
         const promptText = document.createElement('p');

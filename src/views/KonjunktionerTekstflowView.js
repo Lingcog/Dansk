@@ -524,12 +524,12 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
     // 6 Tabs Configuration
     const tabs = [
-        { id: 'kort', label: '1. Trafikkortet & Trafikcentralen (Overblik)', icon: '🗺️' },
-        { id: 'historier', label: '2. Historie-Værkstedet (4 Fortællinger)', icon: '📖' },
-        { id: 'trafikprop', label: '3. Trafikproppen: Ret fejlen i flowet!', icon: '🚧' },
-        { id: 'staccato', label: '4. Fra Staccato til Flow (Sammenkædning)', icon: '🔀' },
-        { id: 'duel', label: '5. Trafik-Duellen (Hurtige scenarier)', icon: '⚡' },
-        { id: 'ordstilling', label: '6. Trafikpolitiets Ordstilling ("IKKE" & Inversion)', icon: '🧲' }
+        { id: 'kort', label: '1. Trafikkortet og trafikcentralen (overblik)', icon: '🗺️' },
+        { id: 'historier', label: '2. Historie-værkstedet (4 fortællinger)', icon: '📖' },
+        { id: 'trafikprop', label: '3. Trafikproppen: ret fejlen i flowet!', icon: '🚧' },
+        { id: 'staccato', label: '4. Fra staccato til flow (sammenkædning)', icon: '🔀' },
+        { id: 'duel', label: '5. Trafik-duellen (hurtige scenarier)', icon: '⚡' },
+        { id: 'ordstilling', label: '6. Trafikpolitiets ordstilling ("ikke" og inversion)', icon: '🧲' }
     ];
 
     const nav = document.createElement('div');
@@ -719,7 +719,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     const EXTENDED_STORIES = [
         {
             id: 'historie1',
-            title: '1. Mathias i snevejret 🚲 (Cykelbuddet i snestorm)',
+            title: '1. Mathias i snevejret 🚲 (cykelbuddet i snestorm)',
             desc: 'Om snekaos i Københavns gader, punkteringer og leveringsfrister.',
             text: "Mathias arbejder som cykelbud i København. [blank_0] det sner, er det altid ekstra hårdt at cykle. I dag vælter sneen ned fra himlen. [blank_1] kører han meget forsigtigt. Han fryser om fingrene, [blank_2] han glemte sine varme handsker derhjemme i morges. [blank_3] det er bidende koldt, smiler han til kunderne. Han er træt, men han fortsætter [blank_4] med at levere pakkerne. [blank_5] klokken slog 16 i går, var cyklen flad for anden gang.",
             blanks: {
@@ -782,7 +782,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         },
         {
             id: 'historie2',
-            title: '2. Anna i drivhuset 🌿 (Gartneren mod frosten)',
+            title: '2. Anna i drivhuset 🌿 (gartneren mod frosten)',
             desc: 'Om nattefrost, sarte tomatplanter og det lune drivhus.',
             text: "Anna arbejder som gartner i en stor park. Hun klipper kun græsset, [blank_0] det er tørvejr. I går regnede det hele dagen. [blank_1] hun mødte på arbejde, var alting vådt. Hun kunne ikke klippe græsset, [blank_2] jorden var for blød. [blank_3] arbejdede hun inde i det store drivhus i stedet. [blank_4] det regnede og var koldt udenfor, var der meget varmt i drivhuset. Hun svedte, men hun fortsatte [blank_5] med at arbejde.",
             blanks: {
@@ -845,7 +845,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         },
         {
             id: 'historie3',
-            title: '3. Lars på caféen ☕ (Den travle fredag aften)',
+            title: '3. Lars på caféen ☕ (den travle fredag aften)',
             desc: 'Om fyldte udendørsborde, væltede kopper og et smilende personale.',
             text: "Lars er tjener på en populær café i byen. [blank_0] solen skinner, vil alle gæsterne sidde udenfor. I dag er det sommer og meget varmt. [blank_1] har Lars ekstra travlt. Han løber hurtigt mellem bordene, [blank_2] mange gæster venter på deres mad. [blank_3] han har ondt i fødderne, smiler han høfligt til alle. Han tager en ekstra aftenvagt [blank_4]. [blank_5] caféen lukkede klokken 23 i går, drak personalet en kold sodavand sammen.",
             blanks: {
@@ -908,7 +908,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         },
         {
             id: 'historie4',
-            title: '4. Amina til jobsamtalen 💼 (Den store chance)',
+            title: '4. Amina til jobsamtalen 💼 (den store chance)',
             desc: 'Om nervøsitet, grundig forberedelse og et fast håndtryk fra chefen.',
             text: "Amina søger job som regnskabsassistent. [blank_0] hun skal til en vigtig samtale, forbereder hun sig altid grundigt. I går morges var hun spændt. [blank_1] hun trådte ind ad døren til firmaet, bankede hendes hjerte hurtigt. Hun var nervøs, [blank_2] hun gerne ville gøre et godt indtryk. [blank_3] øvede hun sin præsentation en ekstra gang på gangen. [blank_4] spørgsmålene var svære, svarede hun roligt og præcist. Da samtalen sluttede, tilbød chefen hende stillingen [blank_5]!",
             blanks: {

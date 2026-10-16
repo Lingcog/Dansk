@@ -2171,7 +2171,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         const isSynonym = task.type === 'synonym';
         const typeBadge = document.createElement('div');
         typeBadge.className = `synonym-type-badge ${isSynonym ? 'badge-type-synonym' : 'badge-type-antonym'}`;
-        typeBadge.textContent = isSynonym ? '🔗 Find Synonym (Samme betydning)' : '⚡ Find Antonym (Modsætning)';
+        typeBadge.textContent = isSynonym ? '🔗 Find synonym (samme betydning)' : '⚡ Find antonym (modsætning)';
         synonymCard.appendChild(typeBadge);
 
         const promptText = document.createElement('p');

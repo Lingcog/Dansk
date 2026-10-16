@@ -227,36 +227,36 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const stepItems = [
             {
                 num: '1',
-                titleFagterm: 'Positiv (Grundform)',
+                titleFagterm: 'Positiv (grundform)',
                 titleEveryday: '1. Almindelig beskrivelse',
                 q: isEn ? 'Are you describing just one thing?' : 'Beskriver du bare én ting for sig selv?',
                 ans: isEn ? 'Yes ➔ Use base form ("stor / hurtig / kold")' : 'Ja ➔ Brug grundformen ("stor / hurtig / kold")',
                 example: 'Bilen er <strong style="color: #fbbf24;">stor</strong>.',
-                badgeFagterm: 'Positiv (Grundform)',
+                badgeFagterm: 'Positiv (grundform)',
                 badgeEveryday: '1. Beskriver 1 ting',
                 colorClass: 'step-orange',
                 icon: '🚗'
             },
             {
                 num: '2',
-                titleFagterm: 'Komparativ (Sammenligning)',
+                titleFagterm: 'Komparativ (sammenligning)',
                 titleEveryday: '2. Sammenligning af to ting',
                 q: isEn ? 'Are you comparing two things with "end"?' : 'Sammenligner du to ting? (Kig efter ordet "end")',
                 ans: isEn ? 'Yes ➔ Add -ere or vowel shift ("større / hurtigere")' : 'Ja ➔ Tilføj -ere eller vokalskift ("større / hurtigere")',
                 example: 'Bilen er <strong style="color: #60a5fa;">større end</strong> cyklen.',
-                badgeFagterm: 'Komparativ (Sammenligningsform)',
+                badgeFagterm: 'Komparativ (sammenligningsform)',
                 badgeEveryday: '2. Sammenligner 2 ting',
                 colorClass: 'step-blue',
                 icon: '🚙'
             },
             {
                 num: '3',
-                titleFagterm: 'Superlativ (Højeste grad)',
-                titleEveryday: '3. Vinderen / Overgår alt',
+                titleFagterm: 'Superlativ (højeste grad)',
+                titleEveryday: '3. Vinderen / overgår alt',
                 q: isEn ? 'Does it exceed everything else in the group?' : 'Overgår tingen alle andre i gruppen?',
                 ans: isEn ? 'Yes ➔ Add -est or vowel shift ("størst / hurtigst")' : 'Ja ➔ Tilføj -est eller vokalskift ("størst / hurtigst")',
                 example: 'Lastbilen er <strong style="color: #34d399;">størst</strong> af alle.',
-                badgeFagterm: 'Superlativ (Højeste grad)',
+                badgeFagterm: 'Superlativ (højeste grad)',
                 badgeEveryday: '3. Vinderen overgår alle',
                 colorClass: 'step-green',
                 icon: '🚛'
@@ -318,7 +318,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const playgroundCard = document.createElement('div');
         playgroundCard.className = 'adj-playground-card';
         playgroundCard.innerHTML = `
-            <h3>${isEn ? '🔍 Interactive Comparison Explorer: Explore different adjectives' : '🔍 Interaktiv gradbøjnings-udforsker: Prøv forskellige adjektiver'}</h3>
+            <h3>${isEn ? '🔍 Interactive Comparison Explorer: Explore different adjectives' : '🔍 Interaktiv gradbøjnings-udforsker: prøv forskellige adjektiver'}</h3>
             <p style="opacity: 0.85; margin-bottom: 1.2rem;">
                 ${isEn 
                     ? 'Click on an adjective below to see how the scale grows from positive to comparative and superlative:' 
@@ -416,7 +416,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const introCard = document.createElement('div');
         introCard.className = 'adj-hero-card';
         introCard.innerHTML = `
-            <h2>${isEn ? 'The Definite -E Rule: Why does it say "den store bil" and "min store bil"?' : 'Den gyldne E-regel: Hvorfor hedder det "den store bil" og "min store bil"?'}</h2>
+            <h2>${isEn ? 'The Definite -E Rule: Why does it say "den store bil" and "min store bil"?' : 'Den gyldne e-regel: hvorfor hedder det "den store bil" og "min store bil"?'}</h2>
             <p class="hero-desc">
                 ${isEn 
                     ? 'In Danish, an adjective must change into its <strong>definite form</strong> by adding <strong>-e</strong> whenever the topic is made specific or owned!<br>' +
@@ -490,7 +490,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             },
             {
                 titleFagterm: '2. Possessivt pronomen',
-                titleEveryday: '2. Ejestedord (Hvem der ejer)',
+                titleEveryday: '2. Ejestedord (hvem der ejer)',
                 determiners: 'min / din / hans / hendes / vores / deres',
                 examples: [
                     'Det er <strong style="color: #f472b6;">min store</strong> bil.',
@@ -504,7 +504,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             },
             {
                 titleFagterm: '3. Demonstrativt pronomen',
-                titleEveryday: '3. Påpegende ord (Peger direkte)',
+                titleEveryday: '3. Påpegende ord (peger direkte)',
                 determiners: 'denne / dette / disse',
                 examples: [
                     'Jeg vil købe <strong style="color: #f472b6;">denne flotte</strong> trøje.',
@@ -517,8 +517,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 icon: '👉'
             },
             {
-                titleFagterm: '4. Genitiv (Ejefald)',
-                titleEveryday: '4. Navn med -s (Ejerskab)',
+                titleFagterm: '4. Genitiv (ejefald)',
+                titleEveryday: '4. Navn med -s (ejerskab)',
                 determiners: "Peters / Marias / Lærerens",
                 examples: [
                     'Det er <strong style="color: #f472b6;">Peters store</strong> computer.',
@@ -596,7 +596,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const simulatorCard = document.createElement('div');
         simulatorCard.className = 'adj-simulator-card';
         simulatorCard.innerHTML = `
-            <h3>${isEn ? '🎛️ Definite -E Simulator: Try it live' : '🎛️ E-regelsimulator: Prøv det i praksis'}</h3>
+            <h3>${isEn ? '🎛️ Definite -E Simulator: Try it live' : '🎛️ E-regelsimulator: prøv det i praksis'}</h3>
             <p style="opacity: 0.85; margin-bottom: 1.2rem;">
                 ${isEn 
                     ? 'Switch between different determiners and watch how the adjective changes into its definite form with -e:' 

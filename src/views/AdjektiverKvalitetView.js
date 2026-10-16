@@ -615,11 +615,11 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
         { id: 'tab_kontrast', label: '1. Kontrast-studiet', icon: '👁️' },
-        { id: 'tab_antonym', label: '2. Find modpolen (Duel)', icon: '⚔️' },
-        { id: 'tab_synonym', label: '3. Synonymer & Nuancer', icon: '🔄' },
-        { id: 'tab_barometer', label: '4. Barometret (Skala)', icon: '💎' },
+        { id: 'tab_antonym', label: '2. Find modpolen (duel)', icon: '⚔️' },
+        { id: 'tab_synonym', label: '3. Synonymer og nuancer', icon: '🔄' },
+        { id: 'tab_barometer', label: '4. Barometret (skala)', icon: '💎' },
         { id: 'tab_kongruens', label: '5. Kongruens (-t / -e)', icon: '🧩' },
-        { id: 'tab_historie', label: '6. Kontekst & Historie', icon: '📖' }
+        { id: 'tab_historie', label: '6. Kontekst og historie', icon: '📖' }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -1446,7 +1446,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             correctOrder: ['gratis', 'billig', 'rimelig', 'dyr', 'ubetalelig']
         },
         {
-            title: '📌 Skala 4: Vigtighed & Prioritet',
+            title: '📌 Skala 4: Vigtighed og prioritet',
             desc: 'Arranger informationer fra helt ligegyldig til uundværlig:',
             lowLabel: '💤 Ligegyldig',
             highLabel: '🚨 Uundværlig',

@@ -1465,10 +1465,10 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         { id: 'vrimmel', label: '1. "AT"-Universet (Vrimlebilledet)', icon: '🖼️' },
         { id: 'roentgen', label: '2. "AT"-Røntgenmaskinen (De 5 Konstruktioner)', icon: '🔬' },
         { id: 'detektiv', label: '3. "AT"-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 dialoger)', icon: '🎯' },
         { id: 'modal', label: '6. Med "at" eller Uden "at"? (Modal-fælden) 🚦', icon: '🚦' },
-        { id: 'sammensat', label: '7. For at, Ved at, Uden at eller Fordi? 🛠️', icon: '🛠️' },
+        { id: 'sammensat', label: '7. For at, ved at, uden at eller fordi? 🛠️', icon: '🛠️' },
         { id: 'praep', label: '8. Præposition + AT (til at, for at, kom til at...) 🔗', icon: '🔗' }
     ];
 
@@ -1545,9 +1545,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         const filters = [
             { id: 'alle', label: 'Alle (18)' },
             { id: 'konjunktion', label: '1. Konjunktion: siger/tror, at + S + V (4)' },
-            { id: 'infinitiv', label: '2. Infinitiv vs. Modalverbum (4)' },
-            { id: 'praep_inf', label: '3. Præp. + at + Infinitiv (4)' },
-            { id: 'praep_led', label: '4. Præp. + , at + Ledsætning (2)' },
+            { id: 'infinitiv', label: '2. Infinitiv vs. modalverbum (4)' },
+            { id: 'praep_inf', label: '3. Præp. + at + infinitiv (4)' },
+            { id: 'praep_led', label: '4. Præp. + , at + ledsætning (2)' },
             { id: 'sammensat', label: '5. Sammensatte: for at, ved at, uden at, så...at (4)' }
         ];
 
@@ -2357,7 +2357,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     // ==========================================
     const BUILDER_EXERCISES = [
         {
-            modeLabel: '1️⃣ Ledsætnings-at: Subjekt + IKKE + Verbum',
+            modeLabel: '1️⃣ Ledsætnings-at: subjekt + ikke + verbum',
             context: 'Byg ledsætningen efter "Hun siger," (Husk: i en "at"-ledsætning står "ikke" FØR verbet!)',
             displayTemplate: 'Hun siger, [BLANK] hun ikke kommer for sent.',
             options: ['at', 'for at', 'til at'],
@@ -2371,7 +2371,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '2️⃣ Præposition + at + Infinitiv (Samme person)',
+            modeLabel: '2️⃣ Præposition + at + infinitiv (samme person)',
             context: 'Byg sætningen: Kokken er dygtig til en færdighed ("god til at bage")',
             displayTemplate: 'Kokken er [BLANK] bage frisk brød.',
             options: ['god til at', 'god for at', 'god om at'],
@@ -2385,7 +2385,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '3️⃣ Præposition + , at + Ledsætning (Ny person)',
+            modeLabel: '3️⃣ Præposition + , at + ledsætning (ny person)',
             context: 'Byg sætningen: Jeg er glad + du ikke gik tidligt ("glad for, at du ikke gik")',
             displayTemplate: 'Jeg er [BLANK] du ikke gik tidligt.',
             options: ['glad for, at', 'glad til, at', 'glad ved, at'],
@@ -2399,7 +2399,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '4️⃣ Formål: "for at" + Infinitiv (Uden subjekt!)',
+            modeLabel: '4️⃣ Formål: "for at" + infinitiv (uden subjekt!)',
             context: 'Byg formålet: Hvorfor sparer pigen penge op?',
             displayTemplate: 'Hun sparer op [BLANK] købe en ny cykel.',
             options: ['for at', 'fordi', 'ved at'],
@@ -2413,7 +2413,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '5️⃣ Metode: "ved at" + Infinitiv',
+            modeLabel: '5️⃣ Metode: "ved at" + infinitiv',
             context: 'Byg metoden: Hvordan træner han sin udtale?',
             displayTemplate: 'Han træner udtale [BLANK] tale i mikrofonen.',
             options: ['ved at', 'for at', 'uden at'],
@@ -2427,7 +2427,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '6️⃣ Uheld i hverdagen: "kom til at" + Infinitiv',
+            modeLabel: '6️⃣ Uheld i hverdagen: "kom til at" + infinitiv',
             context: 'Byg uheldet: Han væltede melet uden vilje',
             displayTemplate: 'Han [BLANK] spilde mel på gulvet.',
             options: ['kom til at', 'gik til at', 'var til at'],
@@ -2441,7 +2441,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '7️⃣ Konsekvens: "så varm, at" + Ledsætning',
+            modeLabel: '7️⃣ Konsekvens: "så varm, at" + ledsætning',
             context: 'Byg konsekvens-ledsætningen efter "Kaffen er så varm," (Husk: "ikke" FØR verbet!)',
             displayTemplate: 'Kaffen er [BLANK] hun ikke kan drikke den.',
             options: ['så varm, at', 'for varm, at', 'meget varm, at'],
@@ -2455,7 +2455,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '8️⃣ Fravær: "uden at" + Infinitiv',
+            modeLabel: '8️⃣ Fravær: "uden at" + infinitiv',
             context: 'Byg sætningen: Han listede ud ad døren uden en lyd',
             displayTemplate: 'Han gik [BLANK] sige farvel til nogen.',
             options: ['uden at', 'ved at', 'for at'],
@@ -2871,8 +2871,8 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         renderQuizEngine(parent, {
             state: kontekstState,
             questions: KONTEKST_QUESTIONS,
-            progressLabel: '🎯 KONTEKST-TESTEN ("AT")',
-            doneTitle: 'Kontekst-testen med "AT" Gennemført!'
+            progressLabel: '🎯 Kontekst-testen ("at")',
+            doneTitle: 'Kontekst-testen med "at" gennemført!'
         });
     }
 
@@ -2951,7 +2951,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             state: modalState,
             questions: MODAL_QUESTIONS,
             progressLabel: '🚦 MED ELLER UDEN "AT"',
-            doneTitle: 'Modalverbum-Fælden Mestret!'
+            doneTitle: 'Modalverbum-fælden mestret!'
         });
     }
 
@@ -3021,7 +3021,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     function renderTabSammensat(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🛠️ For at, Ved at, Uden at eller Fordi?</h2>
+                <h2>🛠️ For at, ved at, uden at eller fordi?</h2>
                 <p>Lær hvornår man bruger de sammensatte bindeord med <strong>at + infinitiv</strong> (<em>for at</em> = formål, <em>ved at</em> = metode, <em>uden at</em> = fravær) i modsætning til <strong>fordi + subjekt + verbum</strong>.</p>
             </div>
         `;
@@ -3030,7 +3030,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             state: sammensatState,
             questions: SAMMENSAT_QUESTIONS,
             progressLabel: '🛠️ SAMMENSATTE "AT"-UDTRYK',
-            doneTitle: 'For at, Ved at, Uden at & Fordi Mestret!'
+            doneTitle: 'For at, ved at, uden at og fordi mestret!'
         });
     }
 
@@ -3123,7 +3123,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             state: praepState,
             questions: PRAEP_QUESTIONS,
             progressLabel: '🔗 PRÆPOSITION + AT',
-            doneTitle: 'Præposition + AT Mestret!'
+            doneTitle: 'Præposition + "at" mestret!'
         });
     }
 

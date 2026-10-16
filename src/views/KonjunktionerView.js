@@ -1486,15 +1486,15 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Broernes Verden (Vrimlebilledet)', icon: '🖼️' },
+        { id: 'vrimmel', label: '1. Broernes verden (vrimlebilledet)', icon: '🖼️' },
         { id: 'laboratorium', label: '2. Ordstillings-Laboratoriet ("Ikke"-Magneten)', icon: '🔬' },
         { id: 'detektiv', label: '3. Konjunktions-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'tid', label: '6. Da eller Når? & Tidskonjunktioner ⏳', icon: '⏳' },
-        { id: 'aarsag', label: '7. Fordi, For, Så eller Derfor? ⚡', icon: '⚡' },
-        { id: 'atom', label: '8. At eller Om? & Hvis eller Selvom? 🎯', icon: '🧭' },
-        { id: 'tekstflow', label: '9. Tekstflow & Historier (Kulminationen!) 📖', icon: '📖' }
+        { id: 'tid', label: '6. Da eller når? og tidskonjunktioner ⏳', icon: '⏳' },
+        { id: 'aarsag', label: '7. Fordi, for, så eller derfor? ⚡', icon: '⚡' },
+        { id: 'atom', label: '8. At eller om? og hvis eller selvom? 🎯', icon: '🧭' },
+        { id: 'tekstflow', label: '9. Tekstflow og historier (kulminationen!) 📖', icon: '📖' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
@@ -1753,7 +1753,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         const subList = [
             { id: 'magnet', label: '🧲 1. "IKKE"-Magneten (Helsætning vs. Ledsætning)' },
             { id: 'forfelt', label: '🔄 2. Ledsætning i Front = INVERSION i Hovedsætningen!' },
-            { id: 'oversigt', label: '🌉 3. Den Store Tabel: Helsætning vs. Ledsætning vs. Felt 7' }
+            { id: 'oversigt', label: '🌉 3. Den store tabel: helsætning vs. ledsætning vs. felt 7' }
         ];
 
         subList.forEach(st => {
@@ -2840,7 +2840,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             state: kontekstState,
             questions: KONTEKST_QUESTIONS,
             progressLabel: '🎯 KONTEKST-TESTEN',
-            doneTitle: 'Kontekst-testen Gennemført!'
+            doneTitle: 'Kontekst-testen gennemført!'
         });
     }
 
@@ -2910,7 +2910,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     function renderTabTid(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⏳ Da eller Når? & Tidskonjunktioner</h2>
+                <h2>⏳ Da eller når? og tidskonjunktioner</h2>
                 <p>Lær den berømte danske forskel på <strong>da</strong> (én gang i fortiden) og <strong>når</strong> (nutid, fremtid og "hver gang"-vaner) samt tidsrækkefølge med <em>mens, inden, efter at, siden, indtil</em>.</p>
             </div>
             <div class="special-rule-cards-grid">
@@ -2962,7 +2962,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             state: tidState,
             questions: TID_QUESTIONS,
             progressLabel: '⏳ DA ELLER NÅR & TID',
-            doneTitle: 'Tidskonjunktionerne Mestret!'
+            doneTitle: 'Tidskonjunktionerne mestret!'
         });
     }
 
@@ -3032,7 +3032,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     function renderTabAarsag(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⚡ Fordi, For, Så eller Derfor?</h2>
+                <h2>⚡ Fordi, for, så eller derfor?</h2>
                 <p>Løs den klassiske udfordring ved at tjekke to ting: 1) Er sætning 2 en <strong>årsag</strong> eller et <strong>resultat</strong>? 2) Hvordan er <strong>ordstillingen</strong>?</p>
             </div>
             <div class="special-rule-cards-grid">
@@ -3084,7 +3084,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             state: aarsagState,
             questions: AARSAG_QUESTIONS,
             progressLabel: '⚡ FORDI, FOR, SÅ ELLER DERFOR',
-            doneTitle: 'Årsag & Ordstilling Mestret!'
+            doneTitle: 'Årsag og ordstilling mestret!'
         });
     }
 
@@ -3168,7 +3168,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     function renderTabAtOm(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🧭 At eller Om? & Hvis eller Selvom?</h2>
+                <h2>🧭 At eller om? og hvis eller selvom?</h2>
                 <p>Undgå de klassiske fælder mellem fakta (<em>at</em>), spørgende tvivl (<em>om</em>), betingelse (<em>hvis</em>) og modstand (<em>selvom</em>).</p>
             </div>
             <div class="special-rule-cards-grid">
@@ -3220,7 +3220,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             state: atomState,
             questions: ATOM_QUESTIONS,
             progressLabel: '🧭 AT/OM & HVIS/SELVOM',
-            doneTitle: 'At, Om, Hvis & Selvom Mestret!'
+            doneTitle: 'At, om, hvis og selvom mestret!'
         });
     }
 

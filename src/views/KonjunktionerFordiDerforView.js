@@ -631,12 +631,12 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Vrimlebilledet: Fordi & Derfor (10 scener)', icon: '🖼️' },
-        { id: 'kognitiv', label: '2. Årsag & Virkning + Ordstilling', icon: '🔬' },
-        { id: 'traening2', label: '3. Klassisk Træning 2 (med Illustration)', icon: '➡️' },
-        { id: 'detektiv', label: '4. Årsag/Virkning-Detektiven (8 gåder)', icon: '🔍' },
-        { id: 'vendemaskine', label: '5. Sætnings-Vendemaskinen (Fordi ↔ Derfor)', icon: '🔄' },
-        { id: 'builder', label: '6. Sætningsbyggeren & Puslespillet', icon: '🧩' }
+        { id: 'vrimmel', label: '1. Vrimlebilledet: fordi og derfor (10 scener)', icon: '🖼️' },
+        { id: 'kognitiv', label: '2. Årsag og virkning + ordstilling', icon: '🔬' },
+        { id: 'traening2', label: '3. Klassisk træning 2 (med illustration)', icon: '➡️' },
+        { id: 'detektiv', label: '4. Årsag/virkning-detektiven (8 gåder)', icon: '🔍' },
+        { id: 'vendemaskine', label: '5. Sætnings-vendemaskinen (fordi ↔ derfor)', icon: '🔄' },
+        { id: 'builder', label: '6. Sætningsbyggeren og puslespillet', icon: '🧩' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
@@ -693,8 +693,8 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
         filtersDiv.className = 'vrimmel-filters';
         [
             { id: 'alle', label: 'Alle scener (10)' },
-            { id: 'fordi', label: '⛽ FORDI: Årsagen i ledsætning (5)' },
-            { id: 'derfor', label: '➡️ DERFOR: Virkningen med Inversion (5)' }
+            { id: 'fordi', label: '⛽ Fordi: årsagen i ledsætning (5)' },
+            { id: 'derfor', label: '➡️ Derfor: virkningen med inversion (5)' }
         ].forEach(f => {
             const b = document.createElement('button');
             b.className = `filter-btn ${activeFilter === f.id ? 'active' : ''}`;
@@ -1116,12 +1116,12 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     // ==========================================
     const PUZZLES = [
         {
-            title: 'Puslespil 1 • ⛽ Fordi-ledsætning med "ikke" FØR verbet',
+            title: 'Puslespil 1 • ⛽ Fordi-ledsætning med "ikke" før verbet',
             hint: 'Start med virkningen ("Han er træt,"), og byg derefter årsagen med "fordi" (Husk: Subjekt + ikke + Verbum!):',
             correct: ['Han er træt,', 'fordi', 'han', 'ikke sov i nat.']
         },
         {
-            title: 'Puslespil 2 • ➡️ Derfor-sætning med INVERSION',
+            title: 'Puslespil 2 • ➡️ Derfor-sætning med inversion',
             hint: 'Start med årsagen ("Han sov ikke i nat."), og byg derefter virkningen med "Derfor" (Husk: Verbum FØR Subjekt!):',
             correct: ['Han sov ikke i nat.', 'Derfor', 'er', 'han træt.']
         },

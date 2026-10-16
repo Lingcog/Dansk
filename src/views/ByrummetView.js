@@ -34,7 +34,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 <span>Du undersøger ${focusName} i vrimlebilledet.</span>
             </div>
             <button class="return-banner-btn" id="return-task-btn">
-                ↩ Tilbage til din opgave i Byrummet & Gaden
+                ↩ Tilbage til din opgave i Byrummet og gaden
             </button>
         `;
         returnBanner.querySelector('#return-task-btn').onclick = () => {
@@ -2528,7 +2528,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         targetVerb: selected[1],
                         returnView: 'byrummet_vrimmel',
                         returnTab: 'tab_saetning',
-                        returnLabel: 'Byrummet (Sætningsbyggeren)'
+                        returnLabel: 'Byrummet (sætningsbyggeren)'
                     });
                 };
             }
@@ -2568,7 +2568,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                                 targetVerb: opt,
                                 returnView: 'byrummet_vrimmel',
                                 returnTab: 'tab_saetning',
-                                returnLabel: 'Byrummet (Sætningsbyggeren)'
+                                returnLabel: 'Byrummet (sætningsbyggeren)'
                             });
                         };
                     }
@@ -2742,7 +2742,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     targetVerb: task.verbum,
                     returnView: 'byrummet_vrimmel',
                     returnTab: 'tab_saetning',
-                    returnLabel: 'Byrummet (Sætningsbyggeren)'
+                    returnLabel: 'Byrummet (sætningsbyggeren)'
                 });
             };
         }

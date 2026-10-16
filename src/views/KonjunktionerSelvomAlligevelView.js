@@ -631,12 +631,12 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Vrimlebilledet: Selvom & Alligevel (10 scener)', icon: '🖼️' },
-        { id: 'kognitiv', label: '2. Muren & Bolden + Ordstilling', icon: '🔬' },
-        { id: 'traening2', label: '3. Klassisk Træning 2 (med Illustration)', icon: '🧱' },
-        { id: 'detektiv', label: '4. Mur- eller Bold-Detektiven (8 gåder)', icon: '🔍' },
-        { id: 'transformer', label: '5. Sætnings-Transformeren (Selvom ↔ Alligevel)', icon: '🔄' },
-        { id: 'builder', label: '6. Sætningsbyggeren & Puslespillet', icon: '🧩' }
+        { id: 'vrimmel', label: '1. Vrimlebilledet: selvom og alligevel (10 scener)', icon: '🖼️' },
+        { id: 'kognitiv', label: '2. Muren og bolden + ordstilling', icon: '🔬' },
+        { id: 'traening2', label: '3. Klassisk træning 2 (med illustration)', icon: '🧱' },
+        { id: 'detektiv', label: '4. Mur- eller bold-detektiven (8 gåder)', icon: '🔍' },
+        { id: 'transformer', label: '5. Sætnings-transformeren (selvom ↔ alligevel)', icon: '🔄' },
+        { id: 'builder', label: '6. Sætningsbyggeren og puslespillet', icon: '🧩' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
@@ -693,8 +693,8 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         filtersDiv.className = 'vrimmel-filters';
         [
             { id: 'alle', label: 'Alle scener (10)' },
-            { id: 'selvom', label: '🧱 SELVOM: Muren / Forhindringen (5)' },
-            { id: 'alligevel', label: '☄️ ALLIGEVEL: Bolden / Gennembruddet (5)' }
+            { id: 'selvom', label: '🧱 Selvom: muren / forhindringen (5)' },
+            { id: 'alligevel', label: '☄️ Alligevel: bolden / gennembruddet (5)' }
         ].forEach(f => {
             const b = document.createElement('button');
             b.className = `filter-btn ${activeFilter === f.id ? 'active' : ''}`;
@@ -1116,7 +1116,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     // ==========================================
     const PUZZLES = [
         {
-            title: 'Puslespil 1 • 🧱 Selvom-ledsætning i front med Inversion',
+            title: 'Puslespil 1 • 🧱 Selvom-ledsætning i front med inversion',
             hint: 'Start med muren ("Selvom det regner,"), og husk at sætte verbet FØR subjektet i hovedsætningen:',
             correct: ['Selvom det regner,', 'går', 'vi', 'en tur.']
         },
@@ -1126,7 +1126,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             correct: ['Det regner, men', 'vi', 'går', 'alligevel en tur.']
         },
         {
-            title: 'Puslespil 3 • ☄️ Alligevel i front med Inversion',
+            title: 'Puslespil 3 • ☄️ Alligevel i front med inversion',
             hint: 'Start med "Det regner. Alligevel", og husk at bytte om på verbum og subjekt:',
             correct: ['Det regner.', 'Alligevel', 'går', 'vi en tur.']
         }

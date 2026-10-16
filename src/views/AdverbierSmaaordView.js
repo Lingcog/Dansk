@@ -1858,10 +1858,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Frokoststuen (Vrimlebilledet)', icon: '🖼️' },
+        { id: 'vrimmel', label: '1. Frokoststuen (vrimlebilledet)', icon: '🖼️' },
         { id: 'vaerksted', label: '2. Aha-værkstedet ("Hvem ved hvad?")', icon: '🧠' },
         { id: 'detektiv', label: '3. Dialog-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren & Puslespillet', icon: '🧩' },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
         { id: 'hellere', label: '6. Heller, hellere, helst ⚖️', icon: '⚖️' },
         { id: 'boosters', label: '7. Forstærkere (sgu, mon ikke, skam...) 💥', icon: '💥' }

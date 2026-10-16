@@ -615,11 +615,11 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
         { id: 'tab_kontrast', label: '1. Kontrast-studiet', icon: '👁️' },
-        { id: 'tab_antonym', label: '2. Find modpolen (Duel)', icon: '⚔️' },
-        { id: 'tab_synonym', label: '3. Synonymer & Nuancer', icon: '🔄' },
-        { id: 'tab_barometer', label: '4. Barometret (Skala)', icon: '❤️' },
+        { id: 'tab_antonym', label: '2. Find modpolen (duel)', icon: '⚔️' },
+        { id: 'tab_synonym', label: '3. Synonymer og nuancer', icon: '🔄' },
+        { id: 'tab_barometer', label: '4. Barometret (skala)', icon: '❤️' },
         { id: 'tab_kongruens', label: '5. Kongruens (-t / -e)', icon: '🧩' },
-        { id: 'tab_historie', label: '6. Kontekst & Historie', icon: '📖' }
+        { id: 'tab_historie', label: '6. Kontekst og historie', icon: '📖' }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -1425,28 +1425,28 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
 
     const barometerChallenges = [
         {
-            title: '😊 Skala 1: Glæde & Humør',
+            title: '😊 Skala 1: Glæde og humør',
             desc: 'Arranger følelserne fra mest trist til mest lykkelig:',
             lowLabel: '😢 Sønderknust',
             highLabel: '🎉 Lykkelig',
             correctOrder: ['sønderknust', 'trist', 'tilfreds', 'glad', 'lykkelig']
         },
         {
-            title: '⚡ Skala 2: Energi & Oplagthed',
+            title: '⚡ Skala 2: Energi og oplagthed',
             desc: 'Arranger energiniveauet fra helt udkørt til sprængfyldt:',
             lowLabel: '🪫 Udmattet',
             highLabel: '🔋 Sprængfyldt',
             correctOrder: ['udmattet', 'træt', 'moderat vågen', 'frisk', 'sprængfyldt med energi']
         },
         {
-            title: '🧘 Skala 3: Ro vs. Nervøsitet',
+            title: '🧘 Skala 3: Ro vs. nervøsitet',
             desc: 'Arranger fra roligst til mest bange/panisk:',
             lowLabel: '🕊️ Helt rolig',
             highLabel: '😱 Panisk',
             correctOrder: ['helt rolig', 'afslappet', 'spændt', 'nervøs', 'panisk']
         },
         {
-            title: '🧸 Skala 4: Tryghed & Frygt',
+            title: '🧸 Skala 4: Tryghed og frygt',
             desc: 'Arranger fra fuldstændig tryg til rædselsslagen:',
             lowLabel: '🛡️ Helt tryg',
             highLabel: '😨 Rædselsslagen',

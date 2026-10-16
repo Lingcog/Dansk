@@ -615,11 +615,11 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
         { id: 'tab_kontrast', label: '1. Kontrast-studiet', icon: '👁️' },
-        { id: 'tab_antonym', label: '2. Find modpolen (Duel)', icon: '⚔️' },
-        { id: 'tab_synonym', label: '3. Synonymer & Nuancer', icon: '🔄' },
-        { id: 'tab_barometer', label: '4. Barometret (Skala)', icon: '🎨' },
+        { id: 'tab_antonym', label: '2. Find modpolen (duel)', icon: '⚔️' },
+        { id: 'tab_synonym', label: '3. Synonymer og nuancer', icon: '🔄' },
+        { id: 'tab_barometer', label: '4. Barometret (skala)', icon: '🎨' },
         { id: 'tab_kongruens', label: '5. Kongruens (-t / -e)', icon: '🧩' },
-        { id: 'tab_historie', label: '6. Kontekst & Historie', icon: '📖' }
+        { id: 'tab_historie', label: '6. Kontekst og historie', icon: '📖' }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -1432,7 +1432,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             correctOrder: ['ulækker', 'beskidt', 'støvet', 'ren', 'skinnende ren']
         },
         {
-            title: '🍎 Skala 2: Helbred & Form',
+            title: '🍎 Skala 2: Helbred og form',
             desc: 'Arranger fra alvorligt syg til sprudlende sund:',
             lowLabel: '🤒 Alvorligt syg',
             highLabel: '💪 Sprudlende sund',
@@ -1460,7 +1460,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             correctOrder: ['ingen', 'få', 'nogle', 'mange', 'utallige']
         },
         {
-            title: '🧭 Skala 6: Vished & Sikkerhed',
+            title: '🧭 Skala 6: Vished og sikkerhed',
             desc: 'Arranger fra helt usikker til klokkeklar vished:',
             lowLabel: '❓ Tvivlsom',
             highLabel: '✔️ Klokkeklar',

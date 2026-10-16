@@ -586,11 +586,11 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
         { id: 'tab_kontrast', label: '1. Kontrast-studiet', icon: '👁️' },
-        { id: 'tab_antonym', label: '2. Find modpolen (Duel)', icon: '⚔️' },
-        { id: 'tab_synonym', label: '3. Synonymer & Nuancer', icon: '🔄' },
-        { id: 'tab_barometer', label: '4. Barometret (Skala)', icon: '⏱️' },
+        { id: 'tab_antonym', label: '2. Find modpolen (duel)', icon: '⚔️' },
+        { id: 'tab_synonym', label: '3. Synonymer og nuancer', icon: '🔄' },
+        { id: 'tab_barometer', label: '4. Barometret (skala)', icon: '⏱️' },
         { id: 'tab_kongruens', label: '5. Kongruens (-t / -e)', icon: '🧩' },
-        { id: 'tab_historie', label: '6. Kontekst & Historie', icon: '📖' }
+        { id: 'tab_historie', label: '6. Kontekst og historie', icon: '📖' }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -1361,7 +1361,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
 
     const barometerChallenges = [
         {
-            title: '🏃 Skala 1: Hastighed & Tempo',
+            title: '🏃 Skala 1: Hastighed og tempo',
             desc: 'Arranger ordene efter hastighed fra langsomst til hurtigst:',
             lowLabel: '🐢 Langsomst',
             highLabel: '⚡ Hurtigst',
@@ -1389,7 +1389,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             correctOrder: ['sjælden', 'lejlighedsvis', 'hyppig', 'konstant']
         },
         {
-            title: '🎯 Skala 5: Punktlighed & Præcision',
+            title: '🎯 Skala 5: Punktlighed og præcision',
             desc: 'Arranger fra mest forsinket til absolut præcis:',
             lowLabel: '⚠️ Meget for sent',
             highLabel: '🎯 Lige til tiden',

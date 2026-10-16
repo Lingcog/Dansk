@@ -157,6 +157,15 @@ export function renderWordLearningView(container, navigateFn) {
       { id: 'exercise_top100_verber', title: 'top100VerberTitle', desc: 'top100VerberDesc', icon: '⚡', highlight: 'verbum' },
       { id: 'exercise_top100_adjektiver', title: 'top100AdjektiverTitle', desc: 'top100AdjektiverDesc', icon: '🎨', highlight: 'adjektiv' },
       { id: 'exercise_top100_adverbier', title: 'top100AdverbierTitle', desc: 'top100AdverbierDesc', icon: '🧭', highlight: 'adverbium' },
+      {
+        id: 'exercise_top_konjunktioner',
+        title: 'topKonjunktionerTitle',
+        desc: 'topKonjunktionerDesc',
+        defaultTitle: 'Helsætnings- & Ledsætningskonjunktioner (inkl. "AT")',
+        defaultDesc: 'Lær bindeordene (og, men, fordi, når/da...) og et særskilt kognitivt felt om brugen af "at" i alle sætningskonstruktioner.',
+        icon: '🌉',
+        highlight: 'konjunktion'
+      },
       { id: 'exercise_semantic', title: 'laerEtNytOrd', desc: 'laerEtNytOrdDesc', icon: '✨' },
       { id: 'exercise_naboord', title: 'laerNaboord', desc: 'laerNaboordDesc', icon: '👯' },
       { id: 'exercise_ordfamilier', title: 'laerOrdfamilier', desc: 'laerOrdfamilierDesc', icon: '🌳' },
@@ -178,6 +187,9 @@ export function renderWordLearningView(container, navigateFn) {
       } else if (task.highlight === 'adverbium') {
         choice.style.border = '2px solid #0ea5e9';
         choice.style.background = 'linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(30, 41, 59, 0.9))';
+      } else if (task.highlight === 'konjunktion') {
+        choice.style.border = '2px solid #f59e0b';
+        choice.style.background = 'linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(30, 41, 59, 0.9))';
       }
       choice.onclick = () => {
         if (task.id === 'exercise_top100_substantiver') {
@@ -188,6 +200,8 @@ export function renderWordLearningView(container, navigateFn) {
           navigateFn('top100_adjektiver');
         } else if (task.id === 'exercise_top100_adverbier') {
           navigateFn('top100_adverbier');
+        } else if (task.id === 'exercise_top_konjunktioner') {
+          navigateFn('top_konjunktioner');
         } else {
           currentState = task.id;
           render();
@@ -201,12 +215,14 @@ export function renderWordLearningView(container, navigateFn) {
 
       const t = document.createElement('div');
       t.className = 'task-choice-title';
-      t.textContent = getTranslation(task.title);
+      const transTitle = getTranslation(task.title);
+      t.textContent = (transTitle && transTitle !== task.title) ? transTitle : (task.defaultTitle || transTitle);
       choice.appendChild(t);
 
       const d = document.createElement('div');
       d.className = 'task-choice-desc';
-      d.textContent = getTranslation(task.desc);
+      const transDesc = getTranslation(task.desc);
+      d.textContent = (transDesc && transDesc !== task.desc) ? transDesc : (task.defaultDesc || transDesc);
       choice.appendChild(d);
 
       grid.appendChild(choice);

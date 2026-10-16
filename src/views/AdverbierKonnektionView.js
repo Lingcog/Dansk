@@ -48,15 +48,30 @@ export function renderAdverbierKonnektionView(container, navigateFn) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-konnektion-view';
 
-    // Top Bar with back button
+    // Top Bar with back button & bridge to Konjunktioner
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
+    topBar.style.display = 'flex';
+    topBar.style.justifyContent = 'space-between';
+    topBar.style.alignItems = 'center';
+    topBar.style.flexWrap = 'wrap';
+    topBar.style.gap = '0.8rem';
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
     backBtn.innerHTML = `← ${getTranslation('back')}`;
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
+
+    const konjBtn = document.createElement('button');
+    konjBtn.className = 'back-btn';
+    konjBtn.style.background = 'rgba(16, 185, 129, 0.18)';
+    konjBtn.style.borderColor = '#10b981';
+    konjBtn.style.color = '#6ee7b7';
+    konjBtn.innerHTML = `🌉 Gå til Konjunktioner-fladen (og, men, fordi, når/da & ordet "AT") ➔`;
+    konjBtn.onclick = () => navigateFn('top_konjunktioner');
+    topBar.appendChild(konjBtn);
+
     viewContainer.appendChild(topBar);
 
     // TTS Audio Helper

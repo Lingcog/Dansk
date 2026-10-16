@@ -19,6 +19,9 @@ import { renderAdverbierGradView } from './views/AdverbierGradView.js';
 import { renderAdverbierSmaaordView } from './views/AdverbierSmaaordView.js';
 import { renderAdverbierHoldningView } from './views/AdverbierHoldningView.js';
 import { renderAdverbierKonnektionView } from './views/AdverbierKonnektionView.js';
+import { renderTopKonjunktionerMenuView } from './views/TopKonjunktionerMenuView.js';
+import { renderKonjunktionerView } from './views/KonjunktionerView.js';
+import { renderKonjunktionerAtView } from './views/KonjunktionerAtView.js';
 import { renderAdjektiverFysikView } from './views/AdjektiverFysikView.js';
 import { renderAdjektiverTidView } from './views/AdjektiverTidView.js';
 import { renderAdjektiverKvalitetView } from './views/AdjektiverKvalitetView.js';
@@ -172,6 +175,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'adverbier_konnektion') {
     appState.currentView = 'adverbier_konnektion';
     renderAdverbierKonnektionView(appDiv, navigate);
+  } else if (viewTarget === 'top_konjunktioner') {
+    appState.currentView = 'top_konjunktioner';
+    renderTopKonjunktionerMenuView(appDiv, navigate);
+  } else if (viewTarget === 'konjunktioner_all') {
+    appState.currentView = 'konjunktioner_all';
+    renderKonjunktionerView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_at') {
+    appState.currentView = 'konjunktioner_at';
+    renderKonjunktionerAtView(appDiv, navigate, extraData);
   } else if (viewTarget === 'adjektiver_fysik') {
     appState.currentView = 'adjektiver_fysik';
     renderAdjektiverFysikView(appDiv, navigate);

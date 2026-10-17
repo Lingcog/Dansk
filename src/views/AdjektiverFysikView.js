@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
+import { shuffleArray } from '../utils/shuffle.js';
 
 /**
  * AdjektiverFysikView - Felt 1: Fysiske egenskaber, form & sanser
@@ -1164,7 +1165,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const optionsGrid = antonymCard.querySelector('#duel-options');
         const feedbackContainer = antonymCard.querySelector('#duel-feedback');
 
-        const shuffled = [...item.options].sort(() => 0.5 - Math.random());
+        const shuffled = shuffleArray(item.options);
 
         shuffled.forEach(opt => {
             const btn = document.createElement('button');
@@ -1357,7 +1358,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const optionsGrid = synonymCard.querySelector('#synonym-options');
         const feedbackContainer = synonymCard.querySelector('#synonym-feedback');
 
-        const shuffled = [...item.options].sort(() => 0.5 - Math.random());
+        const shuffled = shuffleArray(item.options);
 
         shuffled.forEach(opt => {
             const btn = document.createElement('button');
@@ -1487,7 +1488,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const item = barometerChallenges[currentBarometerIndex];
         const totalSlots = item.correctOrder.length;
         let placed = [];
-        let pool = [...item.correctOrder].sort(() => 0.5 - Math.random());
+        let pool = shuffleArray(item.correctOrder);
 
         barometerCard.innerHTML = `
             <div class="task-top-bar">
@@ -1902,7 +1903,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const optionsGrid = storyCard.querySelector('#story-options');
         const feedbackContainer = storyCard.querySelector('#story-feedback');
 
-        item.options.forEach(opt => {
+        shuffleArray(item.options).forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'task-opt-btn';
             btn.textContent = opt;

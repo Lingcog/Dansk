@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { verberWordTranslations } from '../utils/top100_verber_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
+import { shuffleArray } from '../utils/shuffle.js';
 
 /**
  * VerberByrumView - Didaktisk vrimlebillede for Scene 1: Byrummet & Gaden
@@ -1502,7 +1503,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const feedbackBox = document.createElement('div');
         feedbackBox.style.marginTop = '1.5rem';
 
-        mission.options.forEach(opt => {
+        shuffleArray(mission.options).forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'mission-opt-btn';
             btn.textContent = opt.text;
@@ -1715,7 +1716,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const feedbackBox = document.createElement('div');
         feedbackBox.style.marginTop = '1.2rem';
 
-        task.options.forEach(opt => {
+        shuffleArray(task.options).forEach(opt => {
             const chip = document.createElement('button');
             chip.className = 'context-chip-btn';
             chip.textContent = opt.text;
@@ -2067,7 +2068,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
             const stepFeedback = document.createElement('div');
 
-            step.options.forEach(opt => {
+            shuffleArray(step.options).forEach(opt => {
                 const optBtn = document.createElement('button');
                 optBtn.className = 'story-opt-btn';
                 optBtn.textContent = opt.text;
@@ -2288,7 +2289,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const feedbackBox = document.createElement('div');
         feedbackBox.style.marginTop = '1.5rem';
 
-        task.options.forEach(opt => {
+        shuffleArray(task.options).forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'mission-opt-btn';
             btn.textContent = opt.text;
@@ -2669,7 +2670,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const optionsGrid = document.createElement('div');
         optionsGrid.className = 'sb-options-grid';
 
-        const allOptions = [task.correctVerb, ...task.distractors].sort(() => Math.random() - 0.5);
+        const allOptions = shuffleArray([task.correctVerb, ...task.distractors]);
 
         const puzzleContainer = document.createElement('div');
         puzzleContainer.className = 'sb-puzzle-section';
@@ -2748,7 +2749,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         `;
 
         const correctOrder = [task.subjekt, task.correctVerb, task.objekt, task.sted];
-        const scrambledWords = [...correctOrder].sort(() => Math.random() - 0.5);
+        const scrambledWords = shuffleArray(correctOrder);
 
         let placedSlots = [null, null, null, null];
 
@@ -3076,7 +3077,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const feedbackBox = document.createElement('div');
         feedbackBox.style.marginTop = '1.2rem';
 
-        task.options.forEach(opt => {
+        shuffleArray(task.options).forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'time-opt-btn';
             btn.innerHTML = `

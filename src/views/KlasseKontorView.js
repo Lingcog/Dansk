@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { klasseWordTranslations } from '../utils/top100_translations.js';
+import { shuffleArray } from '../utils/shuffle.js';
 
 /**
  * KlasseKontorView - Didaktisk vrimlebillede for semantisk felt: Undervisningslokalet og kontoret
@@ -1503,7 +1504,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         feedbackEl.style.minHeight = '50px';
         feedbackEl.style.marginTop = '1rem';
 
-        m.options.forEach(opt => {
+        shuffleArray(m.options).forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'clue-btn';
             btn.innerHTML = `<span>${opt.text}</span>`;
@@ -1760,7 +1761,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             const stepFeedback = document.createElement('div');
             stepFeedback.className = 'story-step-feedback';
 
-            step.options.forEach(opt => {
+            shuffleArray(step.options).forEach(opt => {
                 const optBtn = document.createElement('button');
                 optBtn.className = 'story-opt-btn';
                 optBtn.textContent = opt.text;
@@ -2011,7 +2012,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             const feedbackEl = document.createElement('div');
             feedbackEl.style.marginTop = '1.2rem';
 
-            task.options.forEach(opt => {
+            shuffleArray(task.options).forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'category-opt-btn';
                 btn.textContent = opt.text;
@@ -2075,7 +2076,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             const feedbackEl = document.createElement('div');
             feedbackEl.style.marginTop = '1.2rem';
 
-            task.options.forEach(opt => {
+            shuffleArray(task.options).forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'category-opt-btn';
                 btn.textContent = opt.text;

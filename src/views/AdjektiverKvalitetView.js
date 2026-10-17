@@ -663,7 +663,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en god kaffe',
                 intet: 'et godt måltid',
                 flertal: 'de gode croissanter',
-                context: 'Kaffen på cafébordet smager rigtig godt.'
+                context: 'Kaffen på caféen er rigtig god.'
             },
             wordB: {
                 word: 'dårlig',
@@ -673,7 +673,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en dårlig kaffe',
                 intet: 'et dårligt måltid',
                 flertal: 'de dårlige kopper',
-                context: 'Kaffen i den skårede kop smagte brændt og dårligt.'
+                context: 'Maden på restauranten var meget dårlig.'
             }
         },
         {
@@ -686,7 +686,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en let lektie',
                 intet: 'et let spil',
                 flertal: 'de lette opgaver',
-                context: 'Det er let at gå ind i den åbne butik.'
+                context: 'Lektien til i dag er meget let.'
             },
             wordB: {
                 word: 'svær',
@@ -696,7 +696,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en svær opgave',
                 intet: 'et svært spørgsmål',
                 flertal: 'de svære værktøjer',
-                context: 'Det er en svær opgave at reparere den gamle radio.'
+                context: 'Opgaven i skolen er meget svær.'
             }
         },
         {
@@ -719,7 +719,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en billig kasse',
                 intet: 'et billigt stykke legetøj',
                 flertal: 'de billige varer',
-                context: 'I papkassen sælger de billige sager for få kroner.'
+                context: 'Cyklen i genbrugsbutikken var meget billig.'
             }
         },
         {
@@ -732,7 +732,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en vigtig besked',
                 intet: 'et vigtigt brev',
                 flertal: 'de vigtige papirer',
-                context: 'Butikkens varer står ordnet i vigtig rækkefølge.'
+                context: 'Brevet fra lægen er meget vigtigt.'
             },
             wordB: {
                 word: 'ligegyldig',
@@ -742,7 +742,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en ligegyldig snak',
                 intet: 'et ligegyldigt rygte',
                 flertal: 'de ligegyldige ting',
-                context: 'Det gamle skab står tomt med ligegyldige sager.'
+                context: 'Beskeden i telefonen var helt ligegyldig.'
             }
         },
         {
@@ -755,7 +755,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en nødvendig pause',
                 intet: 'et nødvendigt tag',
                 flertal: 'de nødvendige ting',
-                context: 'Markisen over caféen er nødvendig for at give skygge.'
+                context: 'En varm jakke er nødvendig om vinteren.'
             },
             wordB: {
                 word: 'unødvendig',
@@ -765,7 +765,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en unødvendig udgift',
                 intet: 'et unødvendigt køb',
                 flertal: 'de unødvendige ting',
-                context: 'I baggården står der mange unødvendige kasser.'
+                context: 'En ekstra taske er helt unødvendig.'
             }
         },
         {
@@ -778,7 +778,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en rigtig vej',
                 intet: 'et rigtigt svar',
                 flertal: 'de rigtige adresser',
-                context: 'Den rene gade viser den helt rigtige vej til torvet.'
+                context: 'Svaret på opgaven er helt rigtigt.'
             },
             wordB: {
                 word: 'forkert',
@@ -788,7 +788,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en forkert vej',
                 intet: 'et forkert svar',
                 flertal: 'de forkerte veje',
-                context: 'Det revnede fortov førte den forkerte vej ind i baggården.'
+                context: 'Bussen kørte desværre den forkerte vej.'
             }
         },
         {
@@ -801,7 +801,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en perfekt dag',
                 intet: 'et perfekt bagværk',
                 flertal: 'de perfekte rammer',
-                context: 'Croissanten er bagt med et helt perfekt gyldent resultat.'
+                context: 'Vejret på vores ferie var helt perfekt.'
             },
             wordB: {
                 word: 'mangelfuld',
@@ -811,7 +811,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en mangelfuld cykel',
                 intet: 'et mangelfuldt hjul',
                 flertal: 'de mangelfulde dele',
-                context: 'Cyklen mangler sit forhjul og er helt mangelfuld.'
+                context: 'Informationen på opslaget var meget mangelfuld.'
             }
         },
         {
@@ -824,7 +824,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en nyttig app',
                 intet: 'et nyttigt råd',
                 flertal: 'de nyttige apps',
-                context: 'Telefonen på bordet er et yderst nyttigt redskab.'
+                context: 'En ordbog på telefonen er meget nyttig.'
             },
             wordB: {
                 word: 'ubrugelig',
@@ -847,7 +847,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en gratis gave',
                 intet: 'et gratis måltid (aldrig -t!)',
                 flertal: 'de gratis gaver (aldrig -e!)',
-                context: 'Gaveæsken på bordet var en helt gratis velkomstgave.'
+                context: 'Kaffen på sprogskolen er helt gratis.'
             },
             wordB: {
                 word: 'betalt',
@@ -857,7 +857,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en betalt regning',
                 intet: 'et betalt arbejde',
                 flertal: 'de betalte sedler',
-                context: 'Der ligger en stak betalte pengesedler på træbordet.'
+                context: 'Regningen for huslejen er allerede betalt.'
             }
         },
         {
@@ -870,7 +870,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en simpel krukke',
                 intet: 'et simpelt design',
                 flertal: 'de simple krukker',
-                context: 'Blomsterkrukken har et smukt og helt simpelt design.'
+                context: 'Opskriften på maden er helt simpel.'
             },
             wordB: {
                 word: 'kompliceret',
@@ -880,7 +880,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 faelles: 'en kompliceret sag',
                 intet: 'et kompliceret kabelnet',
                 flertal: 'de komplicerede ledninger',
-                context: 'Ledningerne ligger i et meget kompliceret virvar.'
+                context: 'Opgaven i bogen er meget kompliceret.'
             }
         }
     ];

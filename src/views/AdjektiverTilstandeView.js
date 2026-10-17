@@ -673,7 +673,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en beskidt jakke',
                 intet: 'et beskidt glas',
                 flertal: 'de beskidte sko',
-                context: 'Arbejdsbordet i kælderen er fyldt med beskidte oliepletter.'
+                context: 'Tallerkenen på bordet er meget beskidt.'
             }
         },
         {
@@ -686,7 +686,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en sund krop',
                 intet: 'et sundt måltid',
                 flertal: 'de sunde vaner',
-                context: 'Skålen er fyldt med friske og sunde æbler og gulerødder.'
+                context: 'Grøntsager og frugt er meget sund mad.'
             },
             wordB: {
                 word: 'syg',
@@ -696,7 +696,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en syg patient',
                 intet: 'et sygt barn',
                 flertal: 'de syge dage',
-                context: 'Plantens blade er gule og visne, fordi den er syg.'
+                context: 'Barnet har feber og er sygt i dag.'
             }
         },
         {
@@ -709,7 +709,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en hel uge',
                 intet: 'et helt år',
                 flertal: 'de hele stykker',
-                context: 'På fadet står en hel rund tærte, der lige er bagt.'
+                context: 'Familien spiste en hel pizza til aften.'
             },
             wordB: {
                 word: 'halv',
@@ -719,7 +719,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en halv time',
                 intet: 'et halvt æble',
                 flertal: 'de halve sandheder',
-                context: 'På den fedtede tallerken ligger kun et halvt stykke tørt brød.'
+                context: 'Han spiser et halvt æble i pausen.'
             }
         },
         {
@@ -732,7 +732,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'mange stole',
                 intet: 'mange penge',
                 flertal: 'de mange elever',
-                context: 'Der står mange krukker med friske planter på hylderne.'
+                context: 'Der er mange elever i klassen i dag.'
             },
             wordB: {
                 word: 'få',
@@ -742,7 +742,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'få stole',
                 intet: 'få minutter',
                 flertal: 'de få elever',
-                context: 'Der er kun få krummer og enkelte gamle søm tilbage i æsken.'
+                context: 'Der er kun få ledige pladser i bussen.'
             }
         },
         {
@@ -755,7 +755,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en sikker vej',
                 intet: 'et sikkert sted',
                 flertal: 'de sikre rammer (bemærk: sikre!)',
-                context: 'Den solide træskammel står stabilt og er helt sikker at stå på.'
+                context: 'Den nye cykelhjelm er helt sikker.'
             },
             wordB: {
                 word: 'usikker',
@@ -765,7 +765,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en usikker trappe',
                 intet: 'et usikkert svar',
                 flertal: 'de usikre tider',
-                context: 'Den knækkede stige vakler faretruende og er meget usikker.'
+                context: 'Den gamle stige er meget usikker at stå på.'
             }
         },
         {
@@ -778,7 +778,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en klar besked',
                 intet: 'et klart svar',
                 flertal: 'de klare regler',
-                context: 'I drikkeglasset er der helt krystalklart, frisk vand.'
+                context: 'Vandet i glasset er helt klart og rent.'
             },
             wordB: {
                 word: 'uklar',
@@ -788,7 +788,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en uklar melding',
                 intet: 'et uklart billede',
                 flertal: 'de uklare regler',
-                context: 'Vandet i den gamle krukke er mudret, grumset og uklart.'
+                context: 'Teksten på tavlen er meget uklar.'
             }
         },
         {
@@ -811,7 +811,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en våd paraply',
                 intet: 'et vådt gulv',
                 flertal: 'de våde frakker',
-                context: 'Røret lækker, så gulvet er dækket af en kold og våd vandpyt.'
+                context: 'Gulvet på badeværelset er meget vådt.'
             }
         },
         {
@@ -834,7 +834,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en mørk aften',
                 intet: 'et mørkt rum',
                 flertal: 'de mørke gader',
-                context: 'Hjørnet under trappen er dystert og helt mørkt.'
+                context: 'Gaden uden lamper er meget mørk om natten.'
             }
         },
         {
@@ -857,7 +857,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en rød mappe',
                 intet: 'et rødt æble',
                 flertal: 'de røde stole',
-                context: 'På det rå betongulv står en slidt rød spand.'
+                context: 'Bilen foran huset er flot og rød.'
             }
         },
         {
@@ -870,7 +870,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en levende hund',
                 intet: 'et levende menneske',
                 flertal: 'de levende planter (aldrig -t / -e!)',
-                context: 'Den levende kat sidder roligt og spinder i solskinnet.'
+                context: 'I en zoologisk have kan man se mange levende dyr.'
             },
             wordB: {
                 word: 'død',
@@ -880,7 +880,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 faelles: 'en død fugl',
                 intet: 'et dødt træ',
                 flertal: 'de døde blade',
-                context: 'Kvistplanten i krogen er tørret helt ud og er fuldstændig død.'
+                context: 'Blomsten i vinduet fik ikke vand og er helt død.'
             }
         }
     ];

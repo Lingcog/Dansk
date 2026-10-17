@@ -675,7 +675,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en tidlig morgen',
                 intet: 'et tidligt tog',
                 flertal: 'de tidlige timer',
-                context: 'Toget kører af sted på en tidlig morgen.'
+                context: 'Hun tager et tidligt tog på arbejde.'
             },
             wordB: {
                 word: 'sen',
@@ -684,7 +684,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en sen aften',
                 intet: 'et sent tog',
                 flertal: 'de sene timer',
-                context: 'Han ankommer først med bussen en sen aften.'
+                context: 'Han tager en sen bus hjem om aftenen.'
             }
         },
         {
@@ -705,7 +705,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en langsom bus',
                 intet: 'et langsomt tog',
                 flertal: 'de langsomme biler',
-                context: 'Bussen kører i langsom fart i myldretiden.'
+                context: 'Bussen i myldretiden er meget langsom.'
             }
         },
         {
@@ -717,7 +717,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en kortvarig pause',
                 intet: 'et kortvarigt stop',
                 flertal: 'de kortvarige pauser',
-                context: 'Toget gør kun et kortvarigt stop på stationen.'
+                context: 'De holder en kortvarig pause i arbejdet.'
             },
             wordB: {
                 word: 'langvarig',
@@ -726,7 +726,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en langvarig uddannelse',
                 intet: 'et langvarigt kursus',
                 flertal: 'de langvarige samtaler',
-                context: 'Der var en langvarig ventetid ved billetkøen.'
+                context: 'Ventetiden på bussen var meget langvarig.'
             }
         },
         {
@@ -738,7 +738,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en hyppig gæst',
                 intet: 'et hyppigt problem',
                 flertal: 'de hyppige togafgange',
-                context: 'Metroen har en hyppig afgang hvert andet minut.'
+                context: 'Afgangen med metroen er meget hyppig.'
             },
             wordB: {
                 word: 'sjælden',
@@ -747,7 +747,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en sjælden fugl',
                 intet: 'et sjældent syn',
                 flertal: 'de sjældne afgange',
-                context: 'Bussen til landsbyen har kun en sjælden afgang.'
+                context: 'Bussen til landsbyen er et sjældent syn.'
             }
         },
         {
@@ -780,7 +780,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en pludselig lyd',
                 intet: 'et pludseligt stop',
                 flertal: 'de pludselige ændringer',
-                context: 'Bussen lavede et pludseligt stop ved krydset.'
+                context: 'Det var et pludseligt stop ved krydset.'
             },
             wordB: {
                 word: 'gradvis',
@@ -789,7 +789,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en gradvis stigning',
                 intet: 'et gradvist fald',
                 flertal: 'de gradvise forbedringer',
-                context: 'Toget sætter farten op i en gradvis bevægelse.'
+                context: 'Der er en gradvis stigning i billetprisen.'
             }
         },
         {
@@ -831,7 +831,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 faelles: 'en punktlig chauffør',
                 intet: 'et punktligt tog',
                 flertal: 'de punktlige afgange',
-                context: 'Bussen kører altid på et punktligt minuttal.'
+                context: 'Toget til Odense er altid punktligt.'
             }
         }
     ];

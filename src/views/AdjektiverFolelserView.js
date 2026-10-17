@@ -663,7 +663,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en glad kvinde',
                 intet: 'et glad barn (aldrig -t!)',
                 flertal: 'de glade venner',
-                context: 'Moren smiler og er meget glad med den lyserøde ballon.'
+                context: 'Barnet smiler og er meget glad.'
             },
             wordB: {
                 word: 'trist',
@@ -673,7 +673,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en trist mand',
                 intet: 'et trist syn',
                 flertal: 'de triste dage',
-                context: 'Drengen i regnjakken står alene i vandpytten og ser trist ud.'
+                context: 'Manden ser trist ud i dag.'
             }
         },
         {
@@ -686,7 +686,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en venlig nabo',
                 intet: 'et venligt smil',
                 flertal: 'de venlige kolleger',
-                context: 'Manden vinker med et venligt smil til naboerne.'
+                context: 'Læreren er altid meget venlig over for eleverne.'
             },
             wordB: {
                 word: 'uvenlig',
@@ -696,7 +696,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en uvenlig mand',
                 intet: 'et uvenligt svar',
                 flertal: 'de uvenlige blikke',
-                context: 'Chaufføren ser sur ud og giver et uvenligt vink afvisende.'
+                context: 'Manden i butikken var meget uvenlig.'
             }
         },
         {
@@ -709,7 +709,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en frisk pige',
                 intet: 'et friskt æble',
                 flertal: 'de friske løbere',
-                context: 'Pigen på cyklen føler sig helt frisk og fuld af energi.'
+                context: 'Hun drikker et glas koldt og friskt vand.'
             },
             wordB: {
                 word: 'træt',
@@ -719,7 +719,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en træt elev',
                 intet: 'et træt barn',
                 flertal: 'de trætte ben (bemærk: trætte!)',
-                context: 'Den unge mand hænger træt og udmattet over bordet.'
+                context: 'Kursisten er meget træt efter en lang dag.'
             }
         },
         {
@@ -732,7 +732,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en tryg barndom',
                 intet: 'et trygt hjem',
                 flertal: 'de trygge rammer',
-                context: 'Det lille barn sidder trygt på bænken med sin bamse.'
+                context: 'Lejligheden er et rart og trygt hjem.'
             },
             wordB: {
                 word: 'bange',
@@ -742,7 +742,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en bange dreng',
                 intet: 'et bange dyr (aldrig -t!)',
                 flertal: 'de bange børn (aldrig -e!)',
-                context: 'Den lille hund er bange og kryber sammen under bænken.'
+                context: 'Den lille hund er bange for tordenvejr.'
             }
         },
         {
@@ -755,7 +755,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en sød pige',
                 intet: 'et sødt smil',
                 flertal: 'de søde børn',
-                context: 'Pigen deler kage med et sødt og rart smil.'
+                context: 'Pigen deler kage og er meget sød.'
             },
             wordB: {
                 word: 'sur',
@@ -765,7 +765,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en sur chef',
                 intet: 'et surt æble',
                 flertal: 'de sure miner',
-                context: 'Manden står med korslagte arme og ser sur ud i regnen.'
+                context: 'Manden står i regnen og ser sur ud.'
             }
         },
         {
@@ -778,7 +778,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en rolig lærer',
                 intet: 'et roligt sind',
                 flertal: 'de rolige gæster',
-                context: 'Hunden sover helt roligt på tæppet i det grønne græs.'
+                context: 'Læreren i klassen er altid rolig.'
             },
             wordB: {
                 word: 'nervøs',
@@ -788,7 +788,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en nervøs ansøger',
                 intet: 'et nervøst hjerte',
                 flertal: 'de nervøse elever',
-                context: 'Kvinden kigger nervøst på sit ur, mens bussen er forsinket.'
+                context: 'Eleven er nervøs før den mundtlige prøve.'
             }
         },
         {
@@ -801,7 +801,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en stolt far',
                 intet: 'et stolt øjeblik',
                 flertal: 'de stolte forældre',
-                context: 'Drengen med guldmedaljen står stolt og rank.'
+                context: 'Faren er meget stolt af sin datter.'
             },
             wordB: {
                 word: 'flov',
@@ -834,7 +834,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en egoistisk person',
                 intet: 'et egoistisk valg',
                 flertal: 'de egoistiske handlinger',
-                context: 'Manden maser sig foran og tænker kun på sig selv.'
+                context: 'Manden er egoistisk og vil ikke dele.'
             }
         },
         {
@@ -847,7 +847,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en social person',
                 intet: 'et socialt samvær',
                 flertal: 'de sociale aktiviteter',
-                context: 'Vennerne griner sammen i et hyggeligt socialt fællesskab.'
+                context: 'Pigen har mange venner og er meget social.'
             },
             wordB: {
                 word: 'ensom',
@@ -857,7 +857,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en ensom mand',
                 intet: 'et ensomt hjerte',
                 flertal: 'de ensomme stunder',
-                context: 'Personen sidder helt ensom og forladt i regnvejret.'
+                context: 'Den gamle mand føler sig ofte ensom.'
             }
         },
         {
@@ -870,7 +870,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en tilfreds kunde',
                 intet: 'et tilfreds smil',
                 flertal: 'de tilfredse gæster',
-                context: 'Pigen læner sig tilbage og er fuldt ud tilfreds.'
+                context: 'Kunden er meget tilfreds med maden.'
             },
             wordB: {
                 word: 'utilfreds',
@@ -880,7 +880,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 faelles: 'en utilfreds borger',
                 intet: 'et utilfreds svar',
                 flertal: 'de utilfredse kunder',
-                context: 'Manden ryster på hovedet og peger utilfreds mod køreplanen.'
+                context: 'Passageren er utilfreds med den forsinkede bus.'
             }
         }
     ];

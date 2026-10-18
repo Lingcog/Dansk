@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierTidView - Felt 2: Tid & Frekvens (Hvornår, hvor længe, hvor tit)
@@ -1847,16 +1848,16 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'adv-hero';
     hero.innerHTML = `
-        <h1>2. Tid & Frekvens</h1>
-        <p>Lær at udtrykke hvornår noget sker, hvor tit det gentager sig (100% til 0%), samt mestr de svære tids-nuancer som <em>allerede</em>, <em>endnu</em> og <em>stadig</em>.</p>
+        <h1>${getTranslation('adv_f2_hero_title')}</h1>
+        <p>${getTranslation('adv_f2_hero_desc')}</p>
         <div class="adv-rule-banner">
             <div class="rule-card-mini rule-frekvens">
                 <span>⏳</span>
-                <span><strong>Frekvens (Hvor tit?):</strong> altid (100%) ➔ ofte/tit ➔ sommetider (50%) ➔ sjældent ➔ aldrig (0%)</span>
+                <span><strong>${getTranslation('adv_filter_frequency')}:</strong> ${getTranslation('adv_f2_rule_frekvens')}</span>
             </div>
             <div class="rule-card-mini rule-tidspunkt">
                 <span>⏰</span>
-                <span><strong>Tidsforløb & Nuance:</strong> før ➔ nu ➔ bagefter • allerede (før forventet) • stadig (fortsat) • endnu ikke</span>
+                <span><strong>${getTranslation('adv_filter_time')}:</strong> ${getTranslation('adv_f2_rule_nuance')}</span>
             </div>
         </div>
     `;
@@ -1867,11 +1868,11 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede (19 ord)', icon: '🖼️' },
-        { id: 'tab_detektiv', label: '2. Tids-Detektiven', icon: '🔍' },
-        { id: 'tab_barometer', label: '3. Frekvens-Barometret', icon: '📊' },
-        { id: 'tab_saetning', label: '4. Sætningsbyggeren', icon: '🧱' },
-        { id: 'tab_kontekst', label: '5. Tids-Nuancen (Opgave 5)', icon: '🎯' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (19)`, icon: '🖼️' },
+        { id: 'tab_detektiv', label: `2. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
+        { id: 'tab_barometer', label: `3. ${getTranslation('adv_tab_barometer')}`, icon: '📊' },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🧱' },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '🎯' }
     ];
 
     const tabButtons = {};
@@ -1996,6 +1997,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         // Inspector Card
         const currentWordData = ADVERBIER_TID_DATA.find(w => w.id === selectedWordId) || ADVERBIER_TID_DATA[0];
+        const trans = getAdverbWordTranslation(currentWordData.id, 2);
+        const transMeaning = trans?.meaning;
+        const transSentence = trans?.sentence;
+
         const inspector = document.createElement('div');
         inspector.className = 'inspector-card';
 
@@ -2006,14 +2011,17 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const wordHeader = document.createElement('div');
         wordHeader.className = 'inspector-word-header';
         wordHeader.innerHTML = `
-            <div class="inspector-word-title">${currentWordData.word}</div>
+            <div class="inspector-word-title" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;">
+                <span>${currentWordData.word}</span>
+                ${transMeaning ? `<span class="inspector-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600;">(${transMeaning})</span>` : ''}
+            </div>
             <div class="adv-type-badge ${currentWordData.type === 'frekvens' ? 'badge-frekvens' : 'badge-tidspunkt'}">
                 ${currentWordData.typeLabel}
             </div>
         `;
         const speakBtn = document.createElement('button');
         speakBtn.className = 'inspector-speak-btn';
-        speakBtn.title = 'Hør udtale';
+        speakBtn.title = getTranslation('adv_listen_word');
         speakBtn.innerHTML = '🔊';
         speakBtn.onclick = () => speakDanish(currentWordData.word);
         wordHeader.appendChild(speakBtn);
@@ -2029,11 +2037,12 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         sentBox.innerHTML = `
             <div class="inspector-sentence-text">
                 "${currentWordData.sentence.replace(new RegExp(`\\b${currentWordData.word}\\b`, 'gi'), `<strong>${currentWordData.word}</strong>`)}"
+                ${transSentence ? `<div class="inspector-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
         `;
         const sentSpeakBtn = document.createElement('button');
         sentSpeakBtn.className = 'inspector-speak-btn';
-        sentSpeakBtn.title = 'Hør sætning';
+        sentSpeakBtn.title = getTranslation('adv_listen_sentence');
         sentSpeakBtn.innerHTML = '🗣️';
         sentSpeakBtn.onclick = () => speakDanish(currentWordData.sentence);
         sentBox.appendChild(sentSpeakBtn);

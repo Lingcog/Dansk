@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierHoldningView - Felt 6: Sikkerhed, Tvivl & Holdning (Sandsynlighedsskalaen & Evaluative Adverbier)
@@ -469,6 +470,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     // Helper for translations
     function getHoldningTranslation(item) {
         const lang = getLang();
+        const trans = getAdverbWordTranslation(item.id, 6, lang);
+        if (trans && trans.meaning) {
+            return { word: trans.meaning, sentence: trans.sentence || '' };
+        }
         if (item.translations && item.translations[lang]) {
             return item.translations[lang];
         }
@@ -1503,10 +1508,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     hero.className = 'holdning-hero';
     hero.innerHTML = `
         <div class="holdning-hero-tag">
-            <span>🎲</span> Felt 6 • 20 holdningsadverbier
+            ${getTranslation('top100_adv_f6_badge')}
         </div>
-        <h1>Sikkerhed, Tvivl & Holdning</h1>
-        <p>Mestre sandsynlighedsskalaen fra 100% vished (<em>helt sikkert</em>) over formodning (<em>sandsynligvis</em>) til tvivl (<em>måske</em>, <em>næppe</em>) og 0% (<em>umuligt</em>), samt dine personlige vurderinger (<em>heldigvis</em>, <em>desværre</em>, <em>ærlig talt</em>).</p>
+        <h1>${getTranslation('adv_f6_hero_title')}</h1>
+        <p>${getTranslation('adv_f6_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1516,18 +1521,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     goldenBanner.innerHTML = `
         <div class="rule-icon-holdning">💡</div>
         <div class="rule-content-holdning">
-            <h4>Nøglen til holdning: Hvor sikker er du, og hvordan vurderer du det?</h4>
-            <p>
-                Holdningsadverbier ændrer ikke selve handlingen, men afslører talerens <strong>troværdighed</strong>, <strong>sikkerhed</strong> og <strong>følelsesmæssige reaktion</strong>.
-            </p>
-            <div class="rule-pills-row-holdning">
-                <span class="rule-pill-holdning">100%: sikkert / selvfølgelig</span>
-                <span class="rule-pill-holdning">80%: sandsynligvis / formentlig</span>
-                <span class="rule-pill-holdning">50%: måske / muligvis</span>
-                <span class="rule-pill-holdning">15%: næppe (stærk tvivl)</span>
-                <span class="rule-pill-holdning">0%: umuligt</span>
-                <span class="rule-pill-holdning">Følelse: heldigvis vs. desværre</span>
-            </div>
+            <h4>${getTranslation('adv_rule_title')}</h4>
+            <p>${getTranslation('adv_f6_rule_sandsyn')}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);

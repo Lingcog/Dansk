@@ -2,7 +2,7 @@ import { getTranslation } from '../utils/i18n.js';
 
 /**
  * Top100AdverbierMenuView - Hub for de mest almindelige danske adverbier.
- * 6 semantiske felter i et balanceret 3x2 grid.
+ * 7 semantiske felter med pædagogiske råd og flersproget støtte.
  */
 export function renderTop100AdverbierMenuView(container, navigateFn) {
     container.innerHTML = '';
@@ -97,6 +97,17 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             flex-direction: column;
             flex-grow: 1;
         }
+        .scene-card-badge {
+            align-self: flex-start;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin-bottom: 0.75rem;
+        }
         .scene-card-content h3 {
             font-size: 1.35rem;
             font-weight: 800;
@@ -131,6 +142,50 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         .scene-card:hover .scene-action-btn {
             background: #0369a1;
         }
+
+        /* Pedagogical Advice Box */
+        .adv-pedagogical-box {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+        .adv-pedagogical-box h2 {
+            font-size: 1.4rem;
+            color: #f8fafc;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .adv-pedagogical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        .adv-pedagogical-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 1.2rem;
+        }
+        .adv-pedagogical-item h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .adv-pedagogical-item p {
+            color: #94a3b8;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin: 0;
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -138,78 +193,71 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'hub-hero';
     hero.innerHTML = `
-        <h1>De mest almindelige adverbier</h1>
-        <p>Lær de afgørende ord, der skaber sammenhæng, beskriver måden, viser tid og retning samt udtrykker din holdning i dansk samtale.</p>
+        <h1>${getTranslation('top100_adv_hub_title')}</h1>
+        <p>${getTranslation('top100_adv_hub_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
-    // Scenes Grid (3x2 or auto-fit)
+    // Scenes Grid (7 fields)
     const grid = document.createElement('div');
     grid.className = 'hub-scenes-grid';
 
     const fields = [
         {
             id: 'adverbier_sted',
-            badge: '📍 Felt 1 • 18 ord',
-            badgeClass: 'badge-adv-1',
+            badge: getTranslation('top100_adv_f1_badge'),
             img: 'assets/adverbier_sted_vrimmel.jpg',
-            title: '1. Sted: retning vs. hvile',
-            desc: 'Mestre den berømte forskel mellem bevægelse mod et mål (hjem, ind, ud, op) og stilstand på stedet (hjemme, inde, ude, oppe).',
-            btnText: 'Udforsk retning & hvile ➔'
+            title: getTranslation('top100_adv_f1_title'),
+            desc: getTranslation('top100_adv_f1_desc'),
+            btnText: getTranslation('top100_adv_f1_btn')
         },
         {
             id: 'adverbier_tid',
-            badge: '⏳ Felt 2 • 19 ord',
-            badgeClass: 'badge-adv-2',
+            badge: getTranslation('top100_adv_f2_badge'),
             img: 'assets/adverbier_tid_vrimmel.jpg',
-            title: '2. Tid og frekvens',
-            desc: 'Hvornår og hvor tit? Lær vaner (altid, ofte, sjældent, aldrig) og tidsforløb (nu, snart, allerede, endnu, stadig).',
-            btnText: 'Udforsk tid & frekvens ➔'
+            title: getTranslation('top100_adv_f2_title'),
+            desc: getTranslation('top100_adv_f2_desc'),
+            btnText: getTranslation('top100_adv_f2_btn')
         },
         {
             id: 'adverbier_maade',
-            badge: '⚡ Felt 3 • 20 ord',
-            badgeClass: 'badge-adv-3',
+            badge: getTranslation('top100_adv_f3_badge'),
             img: 'assets/adverbier_maade_vrimmel.jpg',
-            title: '3. Måde (-t reglen)',
-            desc: 'Hvordan foregår handlingen? Forstå den gyldne regel: Ting (en hurtig bil) vs. Handling (kører hurtigt).',
-            btnText: 'Udforsk mådesadverbier ➔'
+            title: getTranslation('top100_adv_f3_title'),
+            desc: getTranslation('top100_adv_f3_desc'),
+            btnText: getTranslation('top100_adv_f3_btn')
         },
         {
             id: 'adverbier_grad',
-            badge: '🌡️ Felt 4 • 20 ord',
-            badgeClass: 'badge-adv-4',
+            badge: getTranslation('top100_adv_f4_badge'),
             img: 'assets/adverbier_grad_vrimmel.jpg',
-            title: '4. Grad og intensitet',
-            desc: 'Hvor meget gælder det? Træn skalaen fra 0% til over 100% (slet ikke, lidt, ret, meget, for varmt).',
-            btnText: 'Udforsk intensitetsskalaen ➔'
+            title: getTranslation('top100_adv_f4_title'),
+            desc: getTranslation('top100_adv_f4_desc'),
+            btnText: getTranslation('top100_adv_f4_btn')
         },
         {
             id: 'adverbier_smaaord',
-            badge: '💬 Felt 5 • 18 ord',
-            badgeClass: 'badge-adv-5',
+            badge: getTranslation('top100_adv_f5_badge'),
             img: 'assets/adverbier_smaaord_vrimmel.jpg',
-            title: '5. De 5 magiske småord',
-            desc: 'Modalpartiklerne i dialog: jo, da, nok, vel, vist. Lær hvem der ved hvad, og hvordan en enkelt stavelse ændrer hele tonen.',
-            btnText: 'Mestre samtale-småordene ➔'
+            title: getTranslation('top100_adv_f5_title'),
+            desc: getTranslation('top100_adv_f5_desc'),
+            btnText: getTranslation('top100_adv_f5_btn')
         },
         {
             id: 'adverbier_holdning',
-            badge: '🎲 Felt 6 • 20 ord',
-            badgeClass: 'badge-adv-6',
+            badge: getTranslation('top100_adv_f6_badge'),
             img: 'assets/adverbier_holdning_vrimmel.jpg',
-            title: '6. Sikkerhed, tvivl og holdning',
-            desc: 'Sandsynlighedsskalaen fra helt sikkert til usandsynligt samt talerens vurdering: heldigvis, desværre, formentlig, umuligt.',
-            btnText: 'Udforsk holdning & sandsynlighed ➔'
+            title: getTranslation('top100_adv_f6_title'),
+            desc: getTranslation('top100_adv_f6_desc'),
+            btnText: getTranslation('top100_adv_f6_btn')
         },
         {
             id: 'adverbier_konnektion',
-            badge: '🔗 Felt 7 • 20 ord',
-            badgeClass: 'badge-adv-7',
+            badge: getTranslation('top100_adv_f7_badge'),
             img: 'assets/adverbier_konnektion_vrimmel.jpg',
-            title: '7. Konnektion og tekstbindere',
-            desc: 'Skab logisk sammenhæng mellem sætninger og afsnit: derfor (årsag), alligevel (kontrast), nemlig (begrundelse) og ellers.',
-            btnText: 'Udforsk tekstbindere ➔'
+            title: getTranslation('top100_adv_f7_title'),
+            desc: getTranslation('top100_adv_f7_desc'),
+            btnText: getTranslation('top100_adv_f7_btn')
         }
     ];
 
@@ -221,6 +269,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
                 <img src="${f.img}" alt="${f.title}" class="scene-card-img">
             </div>
             <div class="scene-card-content">
+                <span class="scene-card-badge">${f.badge}</span>
                 <h3>${f.title}</h3>
                 <p>${f.desc}</p>
                 <button class="scene-action-btn">${f.btnText}</button>
@@ -231,5 +280,28 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
     });
 
     viewContainer.appendChild(grid);
+
+    // Pedagogical Advice Box
+    const infoBox = document.createElement('div');
+    infoBox.className = 'adv-pedagogical-box';
+    infoBox.innerHTML = `
+        <h2>💡 ${getTranslation('top100_adv_ped_title')}</h2>
+        <div class="adv-pedagogical-grid">
+            <div class="adv-pedagogical-item">
+                <h3>🔄 ${getTranslation('top100_adv_ped_item1_title')}</h3>
+                <p>${getTranslation('top100_adv_ped_item1_desc')}</p>
+            </div>
+            <div class="adv-pedagogical-item">
+                <h3>⚖️ ${getTranslation('top100_adv_ped_item2_title')}</h3>
+                <p>${getTranslation('top100_adv_ped_item2_desc')}</p>
+            </div>
+            <div class="adv-pedagogical-item">
+                <h3>💬 ${getTranslation('top100_adv_ped_item3_title')}</h3>
+                <p>${getTranslation('top100_adv_ped_item3_desc')}</p>
+            </div>
+        </div>
+    `;
+    viewContainer.appendChild(infoBox);
+
     container.appendChild(viewContainer);
 }

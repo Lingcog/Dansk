@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierSmaaordView - Felt 5: De 5 Magiske Småord (Modalpartiklerne i dialog)
@@ -750,6 +751,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     // Helper for translation
     function getSmaaordTranslation(item) {
         const lang = getLang();
+        const trans = getAdverbWordTranslation(item.id, 5, lang);
+        if (trans && trans.meaning) {
+            return { word: trans.meaning, sentence: trans.sentence || '' };
+        }
         if (item.translations && item.translations[lang]) {
             return item.translations[lang];
         }
@@ -1825,10 +1830,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     hero.className = 'smaaord-hero';
     hero.innerHTML = `
         <div class="smaaord-hero-tag">
-            <span>💬</span> Felt 5 • 18 samtalesmåord
+            ${getTranslation('top100_adv_f5_badge')}
         </div>
-        <h1>De 5 Magiske Småord</h1>
-        <p>Mestre de danske modalpartikler i dialog: <strong>jo, da, nok, vel</strong> og <strong>vist</strong>. Lær hvem der ved hvad, og hvordan en enkelt stavelse forvandler hele samtalens stemning og tillid.</p>
+        <h1>${getTranslation('adv_f5_hero_title')}</h1>
+        <p>${getTranslation('adv_f5_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1838,17 +1843,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     goldenBanner.innerHTML = `
         <div class="rule-icon">💡</div>
         <div class="rule-content">
-            <h4>Nøglen til dialog: Hvem ved hvad?</h4>
-            <p>
-                Småord ændrer ikke <em>hvad</em> der sker, men <em>hvordan</em> du og din lytter deler viden.
-            </p>
-            <div class="rule-pills-row">
-                <span class="rule-pill">jo = Fælles viden ("Det ved vi begge")</span>
-                <span class="rule-pill">da = Selvfølgelighed ("Det må du da gerne!")</span>
-                <span class="rule-pill">nok = Eget gæt / trøst ("Det skal nok gå")</span>
-                <span class="rule-pill">vel = Bekræftelse ("Du er vel ikke sur?")</span>
-                <span class="rule-pill">vist = Rygte udefra ("Det regner vist i morgen")</span>
-            </div>
+            <h4>${getTranslation('adv_rule_title')}</h4>
+            <p>${getTranslation('adv_f5_rule_modal')}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);

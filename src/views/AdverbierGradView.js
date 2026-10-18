@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierGradView - Felt 4: Grad & Intensitet (Hvor meget? Hvor kraftigt?)
@@ -866,6 +867,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     // Helper for translation
     function getGradTranslation(item) {
         const lang = getLang();
+        const trans = getAdverbWordTranslation(item.id, 4, lang);
+        if (trans && trans.meaning) {
+            return { word: trans.meaning, sentence: trans.sentence || '' };
+        }
         if (item.translations && item.translations[lang]) {
             return item.translations[lang];
         }
@@ -2383,9 +2388,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'grad-hero';
     hero.innerHTML = `
-        <div class="grad-hero-tag">🌡️ Felt 4 • 20 Gradsadverbier</div>
-        <h1>Grad & Intensitet</h1>
-        <p>Hvor meget gælder det? Lær at styre styrken og intensiteten fra <strong>0% (slet ikke)</strong> op over <strong>100% (alt for meget)</strong>, og forstå forskellen på det positive <em>meget</em> og det problematiske <em>for</em>.</p>
+        <div class="grad-hero-tag">${getTranslation('top100_adv_f4_badge')}</div>
+        <h1>${getTranslation('adv_f4_hero_title')}</h1>
+        <p>${getTranslation('adv_f4_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -2395,15 +2400,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     goldenBanner.innerHTML = `
         <div class="rule-icon">⚖️</div>
         <div class="rule-content">
-            <h4>Den afgørende forskel: "Meget" vs. "For"</h4>
-            <p>
-                <strong>Meget</strong> angiver høj grad (positivt eller neutralt): <em>"Kaffen er meget varm"</em> (dejlig).<br>
-                <strong>For / Alt for</strong> angiver en overskredet grænse (et problem!): <em>"Kaffen er for varm"</em> (av, jeg brænder tungen!).
-            </p>
-            <div class="rule-pills-row">
-                <span class="rule-pill pill-meget">✓ Meget = høj intensitet (ingen problem)</span>
-                <span class="rule-pill pill-for">⚠️ For / Alt for = skaber et problem</span>
-            </div>
+            <h4>${getTranslation('adv_rule_title')}</h4>
+            <p>${getTranslation('adv_f4_rule_skala')}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);
@@ -2413,11 +2411,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebilledet', icon: '🖼️' },
-        { id: 'tab_vaerksted', label: '2. Aha-værkstedet', icon: '🌡️' },
-        { id: 'tab_detektiv', label: '3. Grads-Detektiven', icon: '🔍' },
-        { id: 'tab_saetning', label: '4. Sætningsbyggeren', icon: '🏗️' },
-        { id: 'tab_kontekst', label: '5. Kontekst-testen', icon: '📝' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')}`, icon: '🖼️' },
+        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: '🌡️' },
+        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🏗️' },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '📝' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';

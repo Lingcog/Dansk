@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierStedView - Felt 1: Sted (Retning vs. Hvile)
@@ -1604,16 +1605,16 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'adv-hero';
     hero.innerHTML = `
-        <h1>1. Sted: Retning vs. Hvile</h1>
-        <p>Forstå og mestr den klassiske forskel på dansk mellem bevægelse hen mod et mål (kort form) og stilstand på ét sted (lang form med -e).</p>
+        <h1>${getTranslation('adv_f1_hero_title')}</h1>
+        <p>${getTranslation('adv_f1_hero_desc')}</p>
         <div class="adv-rule-banner">
             <div class="rule-card-mini rule-retning">
                 <span>🚀</span>
-                <span><strong>Retning:</strong> Bevægelse mod mål = KORT FORM (hjem, ind, ud, op, ned, frem, hen)</span>
+                <span><strong>${getTranslation('adv_filter_direction')}:</strong> ${getTranslation('adv_f1_rule_retning')}</span>
             </div>
             <div class="rule-card-mini rule-hvile">
                 <span>🏡</span>
-                <span><strong>Hvile:</strong> Stilstand på stedet = LANG FORM med -E (hjemme, inde, ude, oppe, nede, fremme, henne)</span>
+                <span><strong>${getTranslation('adv_filter_rest')}:</strong> ${getTranslation('adv_f1_rule_hvile')}</span>
             </div>
         </div>
     `;
@@ -1624,11 +1625,11 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede (18 ord)', icon: '🖼️' },
-        { id: 'tab_detektiv', label: '2. Adverbie-Detektiven', icon: '🔍' },
-        { id: 'tab_vippe', label: '3. Retnings-vippen (-e-reglen)', icon: '⚖️' },
-        { id: 'tab_saetning', label: '4. Sætningsbyggeren', icon: '🧱' },
-        { id: 'tab_kontekst', label: '5. Kontekst-testen', icon: '🎯' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (18)`, icon: '🖼️' },
+        { id: 'tab_detektiv', label: `2. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
+        { id: 'tab_vippe', label: `3. ${getTranslation('adv_tab_vippe')}`, icon: '⚖️' },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🧱' },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '🎯' }
     ];
 
     const tabButtons = {};
@@ -1757,6 +1758,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         // Inspector Card
         const currentWordData = ADVERBIER_STED_DATA.find(w => w.id === selectedWordId) || ADVERBIER_STED_DATA[0];
+        const trans = getAdverbWordTranslation(currentWordData.id, 1);
+        const transMeaning = trans?.meaning;
+        const transSentence = trans?.sentence;
+
         const inspector = document.createElement('div');
         inspector.className = 'inspector-card';
 
@@ -1767,14 +1772,17 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const wordHeader = document.createElement('div');
         wordHeader.className = 'inspector-word-header';
         wordHeader.innerHTML = `
-            <div class="inspector-word-title">${currentWordData.word}</div>
+            <div class="inspector-word-title" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;">
+                <span>${currentWordData.word}</span>
+                ${transMeaning ? `<span class="inspector-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600;">(${transMeaning})</span>` : ''}
+            </div>
             <div class="adv-type-badge ${currentWordData.type === 'retning' ? 'badge-retning' : 'badge-hvile'}">
                 ${currentWordData.typeLabel}
             </div>
         `;
         const speakBtn = document.createElement('button');
         speakBtn.className = 'inspector-speak-btn';
-        speakBtn.title = 'Hør udtale';
+        speakBtn.title = getTranslation('adv_listen_word');
         speakBtn.innerHTML = '🔊';
         speakBtn.onclick = () => speakDanish(currentWordData.word);
         wordHeader.appendChild(speakBtn);
@@ -1790,11 +1798,12 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         sentBox.innerHTML = `
             <div class="inspector-sentence-text">
                 "${currentWordData.sentence.replace(new RegExp(`\\b${currentWordData.word}\\b`, 'gi'), `<strong>${currentWordData.word}</strong>`)}"
+                ${transSentence ? `<div class="inspector-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
         `;
         const sentSpeakBtn = document.createElement('button');
         sentSpeakBtn.className = 'inspector-speak-btn';
-        sentSpeakBtn.title = 'Hør sætning';
+        sentSpeakBtn.title = getTranslation('adv_listen_sentence');
         sentSpeakBtn.innerHTML = '🗣️';
         sentSpeakBtn.onclick = () => speakDanish(currentWordData.sentence);
         sentBox.appendChild(sentSpeakBtn);

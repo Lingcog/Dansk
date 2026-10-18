@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierKonnektionView - Felt 7: Konnektion & Tekstbindere (Konnektive Adverbier)
@@ -498,6 +499,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     // Helper for translations
     function getKonnektionTranslation(item) {
         const lang = getLang();
+        const trans = getAdverbWordTranslation(item.id, 7, lang);
+        if (trans && trans.meaning) {
+            return { word: trans.meaning, sentence: trans.sentence || '' };
+        }
         if (item.translations && item.translations[lang]) {
             return item.translations[lang];
         }
@@ -1497,10 +1502,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     hero.className = 'konnektion-hero';
     hero.innerHTML = `
         <div class="konnektion-hero-tag">
-            <span>🔗</span> Felt 7 • 20 konnektive adverbier
+            ${getTranslation('top100_adv_f7_badge')}
         </div>
-        <h1>Konnektion & Tekstbindere</h1>
-        <p>Byg stærke logiske broer mellem dine sætninger: Vis årsag og følge (<em>derfor, nemlig, altså</em>), skab skarp kontrast (<em>alligevel, derimod, til gengæld</em>), tilføj argumenter (<em>desuden, endda</em>) og sæt alternativer (<em>ellers, i stedet</em>).</p>
+        <h1>${getTranslation('adv_f7_hero_title')}</h1>
+        <p>${getTranslation('adv_f7_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1510,16 +1515,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     goldenBanner.innerHTML = `
         <div class="rule-icon-konnektion">🌉</div>
         <div class="rule-content-konnektion">
-            <h4>Den Gyldne Syntaks-Regel: Tekstbindere er ADVERBIER (ikke konjunktioner!)</h4>
-            <p>
-                Når et konnektivt adverbium står <strong>forrest i sætningen (Forfeltet)</strong>, udløser det altid <strong>INVERSION</strong> (Verbum før Subjekt). De kan også stå inde i sætningen lige efter verbet – og <strong><em>nemlig</em></strong> samt <strong><em>dog</em></strong> står <u>altid</u> inde i sætningen!
-            </p>
-            <div class="rule-pills-row-konnektion">
-                <span class="rule-pill-konnektion">I front = INVERSION: "Derfor tager jeg bussen"</span>
-                <span class="rule-pill-konnektion">I midten = "Jeg tager derfor bussen"</span>
-                <span class="rule-pill-konnektion">Kun i midten: "Jeg er nemlig syg"</span>
-                <span class="rule-pill-konnektion">Kontrast: alligevel / derimod / til gengæld</span>
-            </div>
+            <h4>${getTranslation('adv_rule_title')}</h4>
+            <p>${getTranslation('adv_f7_rule_broer')}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);

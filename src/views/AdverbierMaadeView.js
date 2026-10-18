@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 
 /**
  * AdverbierMaadeView - Felt 3: Måde (-t reglen)
@@ -1764,21 +1765,19 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
     const hero = document.createElement('div');
     hero.className = 'adv-hero';
     hero.innerHTML = `
-        <h1>3. Måde (-t reglen)</h1>
-        <p>Hvordan foregår handlingen? Forstå den gyldne regel i dansk: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>?</p>
+        <h1>${getTranslation('adv_f3_hero_title')}</h1>
+        <p>${getTranslation('adv_f3_hero_desc')}</p>
         <div class="adv-rule-banner">
             <div class="rule-card-mini rule-ting">
                 <span style="font-size: 1.5rem;">🚗</span>
                 <div>
-                    <strong>Ting (Adjektiv):</strong> "Bussen er hurtig."<br>
-                    <span style="color: #94a3b8; font-size: 0.88rem;">Beskriver et substantiv (ting/person) ➔ intet adverbie-t.</span>
+                    ${getTranslation('adv_f3_rule_adjektiv')}
                 </div>
             </div>
             <div class="rule-card-mini rule-handling">
                 <span style="font-size: 1.5rem;">🏃</span>
                 <div>
-                    <strong>Handling (Adverbium):</strong> "Bussen kører hurtig<strong>t</strong>."<br>
-                    <span style="color: #f472b6; font-size: 0.88rem;">Beskriver verbet (handlingen) ➔ tilføj <strong>-t</strong>!</span>
+                    ${getTranslation('adv_f3_rule_adverbium')}
                 </div>
             </div>
         </div>
@@ -1790,11 +1789,11 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede (20 ord)', icon: '🖼️' },
-        { id: 'tab_vaerksted', label: '2. Aha-værkstedet', icon: '💡' },
-        { id: 'tab_detektiv', label: '3. -t Detektiven', icon: '🔍' },
-        { id: 'tab_saetning', label: '4. Sætningsbyggeren', icon: '🧱' },
-        { id: 'tab_kontekst', label: '5. Kontekst-testen (14 opg.)', icon: '🎯' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (20)`, icon: '🖼️' },
+        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: '💡' },
+        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🧱' },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '🎯' }
     ];
 
     const tabButtons = {};
@@ -1942,17 +1941,21 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         function updateInspector() {
             const word = ADVERBIER_MAADE_DATA.find(w => w.id === selectedWordId) || ADVERBIER_MAADE_DATA[0];
+            const trans = getAdverbWordTranslation(word.id, 3);
+            const transMeaning = trans?.meaning;
+            const transSentence = trans?.sentence;
 
             inspectorCard.innerHTML = `
                 <div class="inspector-header">
                     <div class="inspector-title-wrap">
                         <h2>
                             ${word.word}
+                            ${transMeaning ? `<span class="inspector-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                             <span class="inspector-badge">${word.hasTRule ? '⚡ -t regel' : '✨ Særord'}</span>
                         </h2>
                         <div style="color: #94a3b8; font-size: 0.95rem;">${word.meaning}</div>
                     </div>
-                    <button class="inspector-audio-btn" id="inspector-play-btn" title="Hør udtale">🔊</button>
+                    <button class="inspector-audio-btn" id="inspector-play-btn" title="${getTranslation('adv_listen_word')}">🔊</button>
                 </div>
 
                 <!-- Aha Contrast Box -->
@@ -1975,14 +1978,23 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     </div>
                 </div>
 
-                <div class="inspector-scene-box">
+                <!-- Example Sentence Box -->
+                <div class="inspector-sentence-box" style="margin-top: 1rem; background: rgba(0, 0, 0, 0.25); border-radius: 12px; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
+                    <div style="font-weight: 700; color: #38bdf8; margin-bottom: 0.3rem;">💬 ${getTranslation('adv_example_title')}:</div>
+                    <div style="font-size: 1.05rem; color: #f8fafc;">
+                        "${word.sentence.replace(new RegExp(`\\b${word.word}\\b`, 'gi'), `<strong>${word.word}</strong>`)}"
+                    </div>
+                    ${transSentence ? `<div class="inspector-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
+                </div>
+
+                <div class="inspector-scene-box" style="margin-top: 1rem;">
                     <div class="scene-heading">I vrimlebilledet:</div>
                     <p class="scene-text">${word.sceneDesc}</p>
                 </div>
 
                 <div class="inspector-actions">
                     <button class="inspector-btn-action" id="insp-speak-sentence">
-                        <span>🗣️</span> Hør sætning
+                        <span>🗣️</span> ${getTranslation('adv_listen_sentence')}
                     </button>
                     <button class="inspector-btn-action" id="insp-go-vaerksted">
                         <span>💡</span> Træn i Aha-værkstedet

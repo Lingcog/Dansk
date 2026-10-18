@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
 
@@ -609,8 +610,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
     const heroHeader = document.createElement('div');
     heroHeader.className = 'adj-hero-header';
     heroHeader.innerHTML = `
-        <h1>Felt 1: Fysiske egenskaber, form & sanser</h1>
-        <p>Lær 20 uundværlige adjektiver med enkle hverdagsord, som du kender fra Top 100.</p>
+        <h1>${getTranslation('top100_adj_f1_title')}</h1>
+        <p>${getTranslation('top100_adj_f1_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -618,12 +619,12 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
-        { id: 'tab_kontrast', label: '1. Kontrast-studiet', icon: '👁️' },
-        { id: 'tab_antonym', label: '2. Find modpolen (duel)', icon: '⚔️' },
-        { id: 'tab_synonym', label: '3. Synonymer og nuancer', icon: '🔄' },
-        { id: 'tab_barometer', label: '4. Barometret (skala)', icon: '🌡️' },
-        { id: 'tab_kongruens', label: '5. Kongruens (-t / -e)', icon: '🧩' },
-        { id: 'tab_historie', label: '6. Kontekst og historie', icon: '📖' }
+        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: '👁️' },
+        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: '⚔️' },
+        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: '🔄' },
+        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: '🌡️' },
+        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: '🧩' },
+        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: '📖' }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -912,18 +913,18 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
     const instructionText = document.createElement('div');
     instructionText.className = 'contrast-instruction';
-    instructionText.innerHTML = `💡 <em>Klik på et punkt for at høre udtale og se dets modpol i det modsatte rum!</em>`;
+    instructionText.innerHTML = `💡 <em>${getTranslation('adj_click_hotspot_hint')}</em>`;
     ctrlBar.appendChild(instructionText);
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> Se rent billede: <strong id="pure-status-label">FRA</strong>`;
+    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('adj_pure_label')} <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
     let isPureMode = false;
     pureBtn.onclick = () => {
         isPureMode = !isPureMode;
         stage.classList.toggle('pure-mode', isPureMode);
         pureBtn.classList.toggle('active', isPureMode);
-        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? 'TIL 🖼️' : 'FRA';
+        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? `${getTranslation('adj_status_on')} 🖼️` : getTranslation('adj_status_off');
     };
     ctrlBar.appendChild(pureBtn);
     contrastCard.appendChild(ctrlBar);
@@ -970,17 +971,24 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             }
         });
 
+        const lang = getLang();
+        const wordTrans = adjektiverWordTranslations[item.me.word]?.[lang]
+            || (lang !== 'da' ? adjektiverWordTranslations[item.me.word]?.['en'] : null);
+        const transMeaning = wordTrans?.meaning;
+        const transSentence = wordTrans?.sentence;
+
         detailCard.style.display = 'flex';
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
                     <span style="font-size: 1.8rem;">${item.me.side === 'left' ? '☀️' : '❄️'}</span>
                     <span class="adj-main-word">${item.me.word}</span>
-                    <button class="adj-tts-btn" id="card-tts-btn">🔊 Hør udtale</button>
+                    ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
+                    <button class="adj-tts-btn" id="card-tts-btn">🔊 ${getTranslation('adj_listen_pronunciation')}</button>
                     <span style="color: #94a3b8; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at se modpolen">
-                    <span>⚔️ Modpol:</span>
+                    <span>⚔️ ${getTranslation('adj_modpol_label')}</span>
                     <strong>${item.other.word}</strong>
                     <span>➔</span>
                 </div>
@@ -988,22 +996,23 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
             <div class="adj-congruence-grid">
                 <div class="adj-congruence-box">
-                    <div class="adj-congruence-label">Fælleskøn (en ...)</div>
+                    <div class="adj-congruence-label">${getTranslation('adj_faelles_label')}</div>
                     <div class="adj-congruence-val">${formatNounLinks(item.me.faelles)}</div>
                 </div>
                 <div class="adj-congruence-box">
-                    <div class="adj-congruence-label">Intetkøn (et ... / +t)</div>
+                    <div class="adj-congruence-label">${getTranslation('adj_intet_label')}</div>
                     <div class="adj-congruence-val"><mark>${formatNounLinks(item.me.intet)}</mark></div>
                 </div>
                 <div class="adj-congruence-box">
-                    <div class="adj-congruence-label">Bestemt / Flertal (+e)</div>
+                    <div class="adj-congruence-label">${getTranslation('adj_flertal_label')}</div>
                     <div class="adj-congruence-val">${formatNounLinks(item.me.flertal)}</div>
                 </div>
             </div>
 
             <div class="adj-example-box">
-                <strong>💬 Enkel sætning:</strong><br>
+                <strong>💬 ${getTranslation('adj_example_sentence')}</strong><br>
                 "${formatNounLinks(item.me.context)}"
+                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
         `;
 

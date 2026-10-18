@@ -191,8 +191,8 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'adj-hub-hero';
     hero.innerHTML = `
-        <h1>De 100 mest almindelige adjektiver</h1>
-        <p>Adjektiver beskriver verden, tilfører nuancer og udtrykker kontraster. Udforsk de 100 mest almindelige danske adjektiver inddelt i 5 semantiske felter – og mestr den komplette bøjningslære i Felt 6!</p>
+        <h1>${getTranslation('top100_adj_hub_title')}</h1>
+        <p>${getTranslation('top100_adj_hub_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -203,57 +203,57 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     const fields = [
         {
             id: 'adjektiver_fysik',
-            badge: '🔬 Felt 1: 20 målbare modpoler',
-            title: '1. Fysiske egenskaber, form og sanser',
-            desc: 'Dækker alt der kan måles, mærkes eller sanses i hverdagen: <em>stor/lille, lang/kort, høj/lav, bred/smal, tung/let, varm/kold, hård/blød, fast/løs, fuld/tom, åben/lukket</em>.',
+            badge: getTranslation('top100_adj_f1_badge'),
+            title: getTranslation('top100_adj_f1_title'),
+            desc: getTranslation('top100_adj_f1_desc'),
             img: 'assets/adjektiver_fysik_venstre.jpg',
             active: true,
-            btnText: 'Gå til felt 1 ➔'
+            btnText: getTranslation('top100_adj_f1_btn')
         },
         {
             id: 'adjektiver_tid',
-            badge: '⏱️ Felt 2: 20 tids-adjektiver',
-            title: '2. Tid, alder og tempo',
-            desc: 'Kronologi, udvikling og hastighed i hverdagen: <em>ny/gammel, ung/gammel, tidlig/sen, hurtig/langsom, pludselig, forsinket, travl, rolig...</em>',
+            badge: getTranslation('top100_adj_f2_badge'),
+            title: getTranslation('top100_adj_f2_title'),
+            desc: getTranslation('top100_adj_f2_desc'),
             img: 'assets/station_indkoeb_vrimmel.jpg',
             active: true,
-            btnText: 'Gå til felt 2 ➔'
+            btnText: getTranslation('top100_adj_f2_btn')
         },
         {
             id: 'adjektiver_kvalitet',
-            badge: '💎 Felt 3: 20 vurderings-adjektiver',
-            title: '3. Kvalitet, sværhedsgrad og økonomi',
-            desc: 'Vurdering, priser, indsats og værdi: <em>god/dårlig, svær/let, dyr/billig, vigtig/ligegyldig, nødvendig, gratis, perfekt, forkert...</em>',
+            badge: getTranslation('top100_adj_f3_badge'),
+            title: getTranslation('top100_adj_f3_title'),
+            desc: getTranslation('top100_adj_f3_desc'),
             img: 'assets/adjektiver_kvalitet_venstre.jpg',
             active: true,
-            btnText: 'Gå til felt 3 ➔'
+            btnText: getTranslation('top100_adj_f3_btn')
         },
         {
             id: 'adjektiver_folelser',
-            badge: '❤️ Felt 4: 20 sociale adjektiver',
-            title: '4. Følelser, personlighed og relationer',
-            desc: 'Menneskers sindstilstande og sociale kontakt: <em>glad/ked af det, venlig/uvenlig, træt/frisk, tryg/bange, sur, sød, stolt, rolig...</em>',
+            badge: getTranslation('top100_adj_f4_badge'),
+            title: getTranslation('top100_adj_f4_title'),
+            desc: getTranslation('top100_adj_f4_desc'),
             img: 'assets/adjektiver_folelser_venstre.jpg',
             active: true,
-            btnText: 'Gå til felt 4 ➔'
+            btnText: getTranslation('top100_adj_f4_btn')
         },
         {
             id: 'adjektiver_tilstande',
-            badge: '🎨 Felt 5: 20 tilstands-adjektiver',
-            title: '5. Farver, mængder og tilstande',
-            desc: 'Visuelle og praktiske tilstande i hverdagen: <em>rød, blå, grøn, hel/halv, mange/få, ren/beskidt, sund/syg, klar, sikker, rigtig...</em>',
+            badge: getTranslation('top100_adj_f5_badge'),
+            title: getTranslation('top100_adj_f5_title'),
+            desc: getTranslation('top100_adj_f5_desc'),
             img: 'assets/adjektiver_tilstande_venstre.jpg',
             active: true,
-            btnText: 'Gå til felt 5 ➔'
+            btnText: getTranslation('top100_adj_f5_btn')
         },
         {
             id: 'adjective_comparison',
-            badge: '📏 Felt 6 • Bøjnings-masteren (gradbøjning og e-reglen)',
-            title: '6. Den store bøjningsguide: gradbøjning og e-reglen',
-            desc: 'Komplet interaktiv bøjningsmotor: <strong>1. Positiv</strong> (<em>stor</em>) ➔ <strong>2. Komparativ</strong> med "end" (<em>større end</em>) ➔ <strong>3. Superlativ</strong> (<em>størst / den største</em>), samt formlen for hvorfor <em>den/min/denne/Peters</em> altid tvinger <strong>-e</strong> frem!',
+            badge: getTranslation('top100_adj_f6_badge'),
+            title: getTranslation('top100_adj_f6_title'),
+            desc: getTranslation('top100_adj_f6_desc'),
             img: 'assets/adjektiver_comparison_guide.jpg',
             active: true,
-            btnText: 'Åbn Bøjningsguiden 📏 ➔',
+            btnText: getTranslation('top100_adj_f6_btn'),
             action: () => navigateFn('adjective_comparison', { from: 'top100_adjektiver' })
         }
     ];
@@ -283,19 +283,19 @@ export function renderTop100AdjektiverMenuView(container, navigateFn) {
     const infoBox = document.createElement('div');
     infoBox.className = 'adj-pedagogical-box';
     infoBox.innerHTML = `
-        <h2>💡 Hvordan lærer du adjektiver bedst?</h2>
+        <h2>${getTranslation('top100_adj_ped_title')}</h2>
         <div class="adj-pedagogical-grid">
             <div class="adj-pedagogical-item">
-                <h3>⚖️ Visuelle Modpoler</h3>
-                <p>Adjektiver beskriver relationer. Ved at lære <em>varm ↔ kold</em> sammen, forankres begge ord i hjernens semantiske netværk på den halve tid.</p>
+                <h3>${getTranslation('top100_adj_ped_item1_title')}</h3>
+                <p>${getTranslation('top100_adj_ped_item1_desc')}</p>
             </div>
             <div class="adj-pedagogical-item">
-                <h3>🧩 Kongruens & Bøjning</h3>
-                <p>Et adjektiv står aldrig alene – det bøjes efter køn og tal: <em>en varm te</em> (fælleskøn), <em>et varmt bad</em> (intetkøn: -t), <em>de varme dage</em> (flertal: -e).</p>
+                <h3>${getTranslation('top100_adj_ped_item2_title')}</h3>
+                <p>${getTranslation('top100_adj_ped_item2_desc')}</p>
             </div>
             <div class="adj-pedagogical-item">
-                <h3>🌡️ Skala & Intensitet</h3>
-                <p>Opdag ordenes styrke på et barometer: fra <em>iskold</em> ➔ <em>kold</em> ➔ <em>lun</em> ➔ <em>varm</em> ➔ <em>kogende</em>.</p>
+                <h3>${getTranslation('top100_adj_ped_item3_title')}</h3>
+                <p>${getTranslation('top100_adj_ped_item3_desc')}</p>
             </div>
         </div>
     `;

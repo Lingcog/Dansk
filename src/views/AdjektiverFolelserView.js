@@ -930,14 +930,14 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
     const leftHalf = document.createElement('div');
     leftHalf.className = 'stage-half';
     leftHalf.innerHTML = `
-        <div class="stage-half-header warm">❤️ Glæde, tryghed & fællesskab (10 egenskaber)</div>
+        <div class="stage-half-header warm">${getTranslation('adj_f4_stage_left')}</div>
         <img src="assets/adjektiver_folelser_venstre.jpg" alt="Glæde og fællesskab i parken" />
     `;
 
     const rightHalf = document.createElement('div');
     rightHalf.className = 'stage-half';
     rightHalf.innerHTML = `
-        <div class="stage-half-header cool">🌧️ Modgang, tristhed & uro (10 modpoler)</div>
+        <div class="stage-half-header cool">${getTranslation('adj_f4_stage_right')}</div>
         <img src="assets/adjektiver_folelser_hoejre.jpg" alt="Modgang og uro i regnvejret" />
     `;
 
@@ -1436,6 +1436,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
 
     const barometerChallenges = [
         {
+            id: 'f4_s1',
             title: '😊 Skala 1: Glæde og humør',
             desc: 'Arranger følelserne fra mest trist til mest lykkelig:',
             lowLabel: '😢 Sønderknust',
@@ -1443,6 +1444,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             correctOrder: ['sønderknust', 'trist', 'tilfreds', 'glad', 'lykkelig']
         },
         {
+            id: 'f4_s2',
             title: '⚡ Skala 2: Energi og oplagthed',
             desc: 'Arranger energiniveauet fra helt udkørt til sprængfyldt:',
             lowLabel: '🪫 Udmattet',
@@ -1450,6 +1452,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             correctOrder: ['udmattet', 'træt', 'moderat vågen', 'frisk', 'sprængfyldt med energi']
         },
         {
+            id: 'f4_s3',
             title: '🧘 Skala 3: Ro vs. nervøsitet',
             desc: 'Arranger fra roligst til mest bange/panisk:',
             lowLabel: '🕊️ Helt rolig',
@@ -1457,6 +1460,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             correctOrder: ['helt rolig', 'afslappet', 'spændt', 'nervøs', 'panisk']
         },
         {
+            id: 'f4_s4',
             title: '🧸 Skala 4: Tryghed og frygt',
             desc: 'Arranger fra fuldstændig tryg til rædselsslagen:',
             lowLabel: '🛡️ Helt tryg',
@@ -1464,6 +1468,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             correctOrder: ['fuldstændig tryg', 'tryg', 'urolig', 'bange', 'rædselsslagen']
         },
         {
+            id: 'f4_s5',
             title: '💖 Skala 5: Venlighed',
             desc: 'Arranger adfærden fra mest uvenlig til mest hjertevarm:',
             lowLabel: '🧊 Uvenlig / kold',
@@ -1471,6 +1476,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             correctOrder: ['fjendtlig', 'uvenlig', 'neutral', 'venlig', 'hjertevarm']
         },
         {
+            id: 'f4_s6',
             title: '👍 Skala 6: Tilfredshed',
             desc: 'Arranger kundens reaktion fra rasende til begejstret:',
             lowLabel: '😡 Rasende',
@@ -1490,27 +1496,32 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
         let placed = [];
         let pool = shuffleArray(item.correctOrder);
 
+        const bTitle = getTranslation(`adj_baro_${item.id}_title`) || item.title;
+        const bDesc = getTranslation(`adj_baro_${item.id}_desc`) || item.desc;
+        const bLow = getTranslation(`adj_baro_${item.id}_low`) || item.lowLabel;
+        const bHigh = getTranslation(`adj_baro_${item.id}_high`) || item.highLabel;
+
         barometerCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">❤️ Barometer ${currentBarometerIndex + 1} af ${barometerChallenges.length}</span>
-                <span class="task-score">${item.title}</span>
+                <span class="task-counter">${getTranslation('adj_baro_counter').replace('{current}', currentBarometerIndex + 1).replace('{total}', barometerChallenges.length)}</span>
+                <span class="task-score">${bTitle}</span>
             </div>
             <div class="task-prompt-box">
-                <div style="font-size:1.3rem; font-weight:700; margin-bottom:0.4rem;">${item.title}</div>
-                <div class="task-subprompt">${item.desc}</div>
+                <div style="font-size:1.3rem; font-weight:700; margin-bottom:0.4rem;">${bTitle}</div>
+                <div class="task-subprompt">${bDesc}</div>
             </div>
 
             <div class="scale-indicators">
-                <span>${item.lowLabel}</span>
-                <span>${item.highLabel}</span>
+                <span>${bLow}</span>
+                <span>${bHigh}</span>
             </div>
 
             <div class="barometer-track" id="barometer-slots"></div>
             <div class="barometer-pool" id="barometer-chips"></div>
 
             <div style="display:flex; justify-content:center; gap:1rem; margin-top:1.5rem;">
-                <button class="task-next-btn" style="background:#475569;" id="reset-scale-btn">Nulstil skala 🔄</button>
-                <button class="task-next-btn" id="check-scale-btn" disabled>Tjek rækkefølge ✔️</button>
+                <button class="task-next-btn" style="background:#475569;" id="reset-scale-btn">${getTranslation('adj_baro_reset_btn')}</button>
+                <button class="task-next-btn" id="check-scale-btn" disabled>${getTranslation('adj_baro_check_btn')}</button>
             </div>
             <div id="barometer-feedback" style="margin-top:1.2rem;"></div>
         `;
@@ -1526,9 +1537,9 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             for (let i = 0; i < totalSlots; i++) {
                 const slot = document.createElement('div');
                 slot.className = `barometer-slot ${placed[i] ? 'filled' : ''}`;
-                slot.textContent = placed[i] ? `${i + 1}. ${placed[i]}` : `[ Trin ${i + 1} ]`;
+                slot.textContent = placed[i] ? `${i + 1}. ${placed[i]}` : getTranslation('adj_baro_step').replace('{n}', i + 1);
                 if (placed[i]) {
-                    slot.title = 'Klik for at fjerne dette ord';
+                    slot.title = getTranslation('adj_baro_remove_tooltip');
                     slot.onclick = () => {
                         placed.splice(i, 1);
                         updateUI();
@@ -1565,7 +1576,7 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             if (isAllCorrect) {
                 feedbackBox.innerHTML = `
                     <div class="task-feedback-box correct">
-                        <strong>🎉 Perfekt sorteret!</strong> Du placerede følelserne i helt rigtig rækkefølge:<br>
+                        <strong>${getTranslation('adj_baro_success')}</strong><br>
                         <em>${item.correctOrder.join(' ➔ ')}</em>
                     </div>
                 `;
@@ -1574,13 +1585,13 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'task-next-btn';
                 if (currentBarometerIndex + 1 < barometerChallenges.length) {
-                    nextBtn.textContent = 'Næste skala ➔';
+                    nextBtn.textContent = getTranslation('adj_baro_next_btn');
                     nextBtn.onclick = () => {
                         currentBarometerIndex++;
                         renderBarometerChallenge();
                     };
                 } else {
-                    nextBtn.textContent = 'Du mestrer følelsesbarometret! 🏆';
+                    nextBtn.textContent = getTranslation('adj_baro_master_btn');
                     nextBtn.onclick = () => {
                         currentBarometerIndex = 0;
                         renderBarometerChallenge();
@@ -1590,8 +1601,8 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
             } else {
                 feedbackBox.innerHTML = `
                     <div class="task-feedback-box wrong">
-                        <strong>Ikke helt i mål endnu.</strong> Nogle af følelserne står ikke i rigtig rækkefølge.<br>
-                        Tip: Tænk på den mildeste tilstand først og den mest intense til sidst!
+                        <strong>${getTranslation('adj_baro_wrong')}</strong><br>
+                        ${getTranslation('adj_baro_hint')}
                     </div>
                 `;
             }
@@ -1688,25 +1699,25 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
                     <span style="font-size: 1.8rem;">📖</span>
                     <div>
                         <div style="font-weight: 700; color: #f8fafc; font-size: 1.05rem;">
-                            Vil du have styr på fælderne ved "glad" og "bange"?
+                            ${getTranslation('adj_grammar_banner_title')}
                         </div>
                         <div style="color: #94a3b8; font-size: 0.92rem; margin-top: 0.2rem;">
-                            Se listen over adjektiver, der aldrig tager -t eller aldrig bøjes, i bøjningsguiden.
+                            ${getTranslation('adj_grammar_banner_desc')}
                         </div>
                     </div>
                 </div>
                 <button class="adj-go-grammar-btn" id="go-comparison-guide-btn">
-                    Gå til bøjningsguiden ➔
+                    ${getTranslation('adj_grammar_banner_btn')}
                 </button>
             </div>
 
             <div class="task-top-bar">
-                <span class="task-counter">🧩 Kongruens ${currentKongruensIndex + 1} af ${kongruensTasks.length}</span>
-                <span class="task-score">Point: <strong>${kongruensScore}</strong></span>
+                <span class="task-counter">${getTranslation('adj_kongruens_counter').replace('{current}', currentKongruensIndex + 1).replace('{total}', kongruensTasks.length)}</span>
+                <span class="task-score">${getTranslation('adj_score_label')} <strong>${kongruensScore}</strong></span>
             </div>
             <div class="task-prompt-box">
                 ${formatNounLinks(item.sentence)}
-                <div class="task-subprompt">Vælg den rigtige form af adjektivet:</div>
+                <div class="task-subprompt">${getTranslation('adj_kongruens_subprompt')}</div>
             </div>
             <div class="task-options-grid" id="kongruens-options"></div>
             <div id="kongruens-feedback"></div>
@@ -1879,12 +1890,12 @@ export function renderAdjektiverFolelserView(container, navigateFn, extraData = 
         const item = historieTasks[currentStoryIndex];
         storyCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">📖 Situation ${currentStoryIndex + 1} af ${historieTasks.length}</span>
-                <span class="task-score">Point: <strong>${storyScore}</strong></span>
+                <span class="task-counter">${getTranslation('adj_situation_counter').replace('{current}', currentStoryIndex + 1).replace('{total}', historieTasks.length)}</span>
+                <span class="task-score">${getTranslation('adj_score_label')} <strong>${storyScore}</strong></span>
             </div>
             <div class="task-prompt-box">
                 "${formatNounLinks(item.story)}"
-                <div class="task-subprompt">Hvilket adjektiv passer bedst i situationen?</div>
+                <div class="task-subprompt">${getTranslation('adj_story_subprompt')}</div>
             </div>
             <div class="task-options-grid" id="story-options"></div>
             <div id="story-feedback"></div>

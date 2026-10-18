@@ -1372,6 +1372,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
 
     const barometerChallenges = [
         {
+            id: 'f2_s1',
             title: '🏃 Skala 1: Hastighed og tempo',
             desc: 'Arranger ordene efter hastighed fra langsomst til hurtigst:',
             lowLabel: '🐢 Langsomst',
@@ -1379,6 +1380,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             correctOrder: ['sneglelangsom', 'langsom', 'moderat', 'hurtig', 'lynhurtig']
         },
         {
+            id: 'f2_s2',
             title: '🎂 Skala 2: Alder',
             desc: 'Arranger ordene fra yngst til ældst:',
             lowLabel: '👶 Yngst',
@@ -1386,6 +1388,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             correctOrder: ['spæd', 'ung', 'midaldrende', 'gammel', 'urgammel']
         },
         {
+            id: 'f2_s3',
             title: '⏳ Skala 3: Varighed',
             desc: 'Arranger begivenhederne fra kortest til længst varighed:',
             lowLabel: '⚡ Få sekunder',
@@ -1393,6 +1396,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             correctOrder: ['kortvarig', 'midlertidig', 'langvarig', 'permanent']
         },
         {
+            id: 'f2_s4',
             title: '🔄 Skala 4: Hyppighed',
             desc: 'Arranger ordene efter hvor ofte noget sker:',
             lowLabel: '🚫 Næsten aldrig',
@@ -1400,6 +1404,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             correctOrder: ['sjælden', 'lejlighedsvis', 'hyppig', 'konstant']
         },
         {
+            id: 'f2_s5',
             title: '🎯 Skala 5: Punktlighed og præcision',
             desc: 'Arranger fra mest forsinket til absolut præcis:',
             lowLabel: '⚠️ Meget for sent',
@@ -1407,6 +1412,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             correctOrder: ['meget forsinket', 'lidt forsinket', 'rettidig', 'punktlig']
         },
         {
+            id: 'f2_s6',
             title: '📅 Skala 6: Aktualitet',
             desc: 'Arranger stadierne i en proces fra fortid til nutid:',
             lowLabel: '📜 Fortid',
@@ -1426,27 +1432,32 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
         let placed = [];
         let pool = shuffleArray(item.correctOrder);
 
+        const bTitle = getTranslation(`adj_baro_${item.id}_title`) || item.title;
+        const bDesc = getTranslation(`adj_baro_${item.id}_desc`) || item.desc;
+        const bLow = getTranslation(`adj_baro_${item.id}_low`) || item.lowLabel;
+        const bHigh = getTranslation(`adj_baro_${item.id}_high`) || item.highLabel;
+
         barometerCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">⏱️ Barometer ${currentBarometerIndex + 1} af ${barometerChallenges.length}</span>
-                <span class="task-score">${item.title}</span>
+                <span class="task-counter">${getTranslation('adj_baro_counter').replace('{current}', currentBarometerIndex + 1).replace('{total}', barometerChallenges.length)}</span>
+                <span class="task-score">${bTitle}</span>
             </div>
             <div class="task-prompt-box">
-                <div style="font-size:1.3rem; font-weight:700; margin-bottom:0.4rem;">${item.title}</div>
-                <div class="task-subprompt">${item.desc}</div>
+                <div style="font-size:1.3rem; font-weight:700; margin-bottom:0.4rem;">${bTitle}</div>
+                <div class="task-subprompt">${bDesc}</div>
             </div>
 
             <div class="scale-indicators">
-                <span>${item.lowLabel}</span>
-                <span>${item.highLabel}</span>
+                <span>${bLow}</span>
+                <span>${bHigh}</span>
             </div>
 
             <div class="barometer-track" id="barometer-slots"></div>
             <div class="barometer-pool" id="barometer-chips"></div>
 
             <div style="display:flex; justify-content:center; gap:1rem; margin-top:1.5rem;">
-                <button class="task-next-btn" style="background:#475569;" id="reset-scale-btn">Nulstil skala 🔄</button>
-                <button class="task-next-btn" id="check-scale-btn" disabled>Tjek rækkefølge ✔️</button>
+                <button class="task-next-btn" style="background:#475569;" id="reset-scale-btn">${getTranslation('adj_baro_reset_btn')}</button>
+                <button class="task-next-btn" id="check-scale-btn" disabled>${getTranslation('adj_baro_check_btn')}</button>
             </div>
             <div id="barometer-feedback" style="margin-top:1.2rem;"></div>
         `;
@@ -1462,9 +1473,9 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             for (let i = 0; i < totalSlots; i++) {
                 const slot = document.createElement('div');
                 slot.className = `barometer-slot ${placed[i] ? 'filled' : ''}`;
-                slot.textContent = placed[i] ? `${i + 1}. ${placed[i]}` : `[ Trin ${i + 1} ]`;
+                slot.textContent = placed[i] ? `${i + 1}. ${placed[i]}` : getTranslation('adj_baro_step').replace('{n}', i + 1);
                 if (placed[i]) {
-                    slot.title = 'Klik for at fjerne dette ord';
+                    slot.title = getTranslation('adj_baro_remove_tooltip');
                     slot.onclick = () => {
                         placed.splice(i, 1);
                         updateUI();
@@ -1501,7 +1512,7 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             if (isAllCorrect) {
                 feedbackBox.innerHTML = `
                     <div class="task-feedback-box correct">
-                        <strong>🎉 Perfekt sorteret!</strong> Du placerede ordene i helt rigtig rækkefølge:<br>
+                        <strong>${getTranslation('adj_baro_success')}</strong><br>
                         <em>${item.correctOrder.join(' ➔ ')}</em>
                     </div>
                 `;
@@ -1510,13 +1521,13 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'task-next-btn';
                 if (currentBarometerIndex + 1 < barometerChallenges.length) {
-                    nextBtn.textContent = 'Næste skala ➔';
+                    nextBtn.textContent = getTranslation('adj_baro_next_btn');
                     nextBtn.onclick = () => {
                         currentBarometerIndex++;
                         renderBarometerChallenge();
                     };
                 } else {
-                    nextBtn.textContent = 'Du mestrer tidsbarometret! 🏆';
+                    nextBtn.textContent = getTranslation('adj_baro_master_btn');
                     nextBtn.onclick = () => {
                         currentBarometerIndex = 0;
                         renderBarometerChallenge();
@@ -1526,8 +1537,8 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             } else {
                 feedbackBox.innerHTML = `
                     <div class="task-feedback-box wrong">
-                        <strong>Ikke helt i mål endnu.</strong> Nogle af ordene står ikke i rigtig rækkefølge.<br>
-                        Tip: Tænk på den laveste grad først og den højeste til sidst!
+                        <strong>${getTranslation('adj_baro_wrong')}</strong><br>
+                        ${getTranslation('adj_baro_hint')}
                     </div>
                 `;
             }
@@ -1624,25 +1635,25 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
                     <span style="font-size: 1.8rem;">📖</span>
                     <div>
                         <div style="font-weight: 700; color: #f8fafc; font-size: 1.05rem;">
-                            Vil du have det fulde overblik over adjektivers bøjning?
+                            ${getTranslation('adj_grammar_banner_title')}
                         </div>
                         <div style="color: #94a3b8; font-size: 0.92rem; margin-top: 0.2rem;">
-                            Lær om grundform, -t ved intetkøn, og -e ved flertal og bestemt form.
+                            ${getTranslation('adj_grammar_banner_desc')}
                         </div>
                     </div>
                 </div>
                 <button class="adj-go-grammar-btn" id="go-comparison-guide-btn">
-                    Gå til bøjningsguiden ➔
+                    ${getTranslation('adj_grammar_banner_btn')}
                 </button>
             </div>
 
             <div class="task-top-bar">
-                <span class="task-counter">🧩 Kongruens ${currentKongruensIndex + 1} af ${kongruensTasks.length}</span>
-                <span class="task-score">Point: <strong>${kongruensScore}</strong></span>
+                <span class="task-counter">${getTranslation('adj_kongruens_counter').replace('{current}', currentKongruensIndex + 1).replace('{total}', kongruensTasks.length)}</span>
+                <span class="task-score">${getTranslation('adj_score_label')} <strong>${kongruensScore}</strong></span>
             </div>
             <div class="task-prompt-box">
                 ${formatNounLinks(item.sentence)}
-                <div class="task-subprompt">Vælg den rigtige form af adjektivet:</div>
+                <div class="task-subprompt">${getTranslation('adj_kongruens_subprompt')}</div>
             </div>
             <div class="task-options-grid" id="kongruens-options"></div>
             <div id="kongruens-feedback"></div>
@@ -1815,12 +1826,12 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
         const item = historieTasks[currentStoryIndex];
         storyCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">📖 Situation ${currentStoryIndex + 1} af ${historieTasks.length}</span>
-                <span class="task-score">Point: <strong>${storyScore}</strong></span>
+                <span class="task-counter">${getTranslation('adj_situation_counter').replace('{current}', currentStoryIndex + 1).replace('{total}', historieTasks.length)}</span>
+                <span class="task-score">${getTranslation('adj_score_label')} <strong>${storyScore}</strong></span>
             </div>
             <div class="task-prompt-box">
                 "${formatNounLinks(item.story)}"
-                <div class="task-subprompt">Hvilket adjektiv passer bedst i situationen?</div>
+                <div class="task-subprompt">${getTranslation('adj_story_subprompt')}</div>
             </div>
             <div class="task-options-grid" id="story-options"></div>
             <div id="story-feedback"></div>

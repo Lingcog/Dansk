@@ -1416,8 +1416,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'konj-hero';
     hero.innerHTML = `
-        <h1>Helsætnings- og ledsætningskonjunktioner</h1>
-        <p>Mestre de ægte bindeord i dansk: De 5 sideordnende <strong>helsætningskonjunktioner</strong> (<em>og, men, eller, for, så</em>) og de 13 underordnende <strong>ledsætningskonjunktioner</strong> (<em>fordi, selvom, hvis, at, om, når, da, mens, inden...</em>).</p>
+        <h1>${getTranslation('konj_main_hero_title')}</h1>
+        <p>${getTranslation('konj_main_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 

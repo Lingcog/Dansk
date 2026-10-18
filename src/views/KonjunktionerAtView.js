@@ -1429,19 +1429,14 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     goldenBanner.innerHTML = `
         <div class="rule-icon-at">🔑</div>
         <div class="rule-content-at">
-            <h4>Den Hurtige Røntgen-Test: Hvilket "AT" kigger du på?</h4>
-            <p>
-                Kig på det ord, der kommer <strong>lige efter <em>at</em></strong>:<br>
-                1️⃣ Kommer der et <strong>Subjekt + (ikke) + Nutid/Datid</strong>? ➔ Så er det <strong>Konjunktionen <em>at</em></strong> (<em>"Jeg håber, <strong>at</strong> <span style="color:#86efac;">du</span> <span style="color:#fca5a5;">kommer</span>"</em>).<br>
-                2️⃣ Kommer der et <strong>Verbum i Infinitiv uden subjekt</strong>? ➔ Så er det <strong>Infinitivmærket <em>at</em></strong> (<em>"Jeg håber <strong>at</strong> <span style="color:#fca5a5;">komme</span>"</em>).<br>
-                3️⃣ Står der et <strong>Modalverbum</strong> (<em>kan, skal, vil, må, bør, tør</em>) foran? ➔ Så er <strong><em>at</em> 100% FORBUDT</strong> (<em>"Jeg kan <span style="color:#fca5a5;">komme</span>"</em>)!
-            </p>
+            <h4>${getTranslation('at_golden_title')}</h4>
+            <p>${getTranslation('at_golden_desc')}</p>
             <div class="rule-pills-row-at">
-                <span class="rule-pill-at">1. Konjunktion: siger, at + Subjekt + ikke + V</span>
-                <span class="rule-pill-at">2. Infinitiv: elsker at + Infinitiv</span>
-                <span class="rule-pill-at">3. Modalverbum: kan/skal/vil + INGEN "at"!</span>
-                <span class="rule-pill-at">4. Præposition: god til at / glad for, at</span>
-                <span class="rule-pill-at">5. Formål & Måde: for at / ved at / uden at</span>
+                <span class="rule-pill-at">${getTranslation('at_golden_f1')}</span>
+                <span class="rule-pill-at">${getTranslation('at_golden_f2')}</span>
+                <span class="rule-pill-at">${getTranslation('at_golden_f3')}</span>
+                <span class="rule-pill-at">${getTranslation('at_golden_f4')}</span>
+                <span class="rule-pill-at">${getTranslation('at_golden_f5')}</span>
             </div>
         </div>
     `;
@@ -1744,9 +1739,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.6rem;">💭 Den Kognitive Nøgle til "AT": Tankeboblen & Billedrammen</h2>
+            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.6rem;">${getTranslation('at_cog_title')}</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:820px; margin:0 auto 1.8rem; line-height:1.6;">
-                Hvorfor føles ord som <strong><em>derfor</em></strong> og <strong><em>så</em></strong> logiske, mens <strong><em>at</em></strong> virker mudret? Fordi <em>derfor/så</em> er en <strong>bro mellem to separate billeder ved siden af hinanden</strong> – mens <strong><em>at</em></strong> er en <strong>tankeboble eller billedramme, der putter Billede 2 IND I Billede 1!</strong>
+                ${getTranslation('at_cog_lead')}
             </p>
 
             <!-- VISUEL KONTRAST: 2 SEPARATE BILLEDER VS. BILLEDE-I-BILLEDE -->
@@ -1754,14 +1749,14 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 <!-- Kort A: To separate billeder -->
                 <div style="background:#0f172a; border:2px solid #38bdf8; border-radius:18px; padding:1.5rem;">
                     <div style="display:inline-block; background:rgba(56,189,248,0.15); color:#7dd3fc; border:1px solid #38bdf8; padding:0.25rem 0.75rem; border-radius:8px; font-size:0.8rem; font-weight:800; margin-bottom:0.8rem;">
-                        🌉 BRO MELLEM 2 SEPARATE BILLEDER (så / derfor / men)
+                        ${getTranslation('at_cog_card_a_badge')}
                     </div>
-                    <h4 style="color:white; margin:0 0 1rem; font-size:1.15rem;">To selvstændige filmscener ved siden af hinanden:</h4>
+                    <h4 style="color:white; margin:0 0 1rem; font-size:1.15rem;">${getTranslation('at_cog_card_a_title')}</h4>
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
                         <div style="flex:1; background:#1e293b; border:2px solid #22c55e; border-radius:12px; padding:0.9rem; text-align:center;">
                             <div style="font-size:1.4rem;">🌧️🖼️ 1</div>
                             <div style="font-weight:800; color:#86efac; font-size:0.95rem;">"Jeg har travlt onsdag"</div>
-                            <div style="font-size:0.75rem; color:#94a3b8;">Færdigt billede 1</div>
+                            <div style="font-size:0.75rem; color:#94a3b8;">${getTranslation('at_cog_card_a_img1_label')}</div>
                         </div>
                         <div style="background:#0284c7; color:white; font-weight:900; padding:0.5rem 0.8rem; border-radius:10px; font-size:0.95rem;">
                             ➔ SÅ / DERFOR ➔
@@ -1769,69 +1764,68 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                         <div style="flex:1; background:#1e293b; border:2px solid #22c55e; border-radius:12px; padding:0.9rem; text-align:center;">
                             <div style="font-size:1.4rem;">🎬🖼️ 2</div>
                             <div style="font-weight:800; color:#86efac; font-size:0.95rem;">"jeg tager i biografen torsdag"</div>
-                            <div style="font-size:0.75rem; color:#94a3b8;">Færdigt billede 2</div>
+                            <div style="font-size:0.75rem; color:#94a3b8;">${getTranslation('at_cog_card_a_img2_label')}</div>
                         </div>
                     </div>
                     <p style="color:#94a3b8; font-size:0.92rem; line-height:1.5; margin:0;">
-                        Her kan du klippe sætningen over i midten, og begge halvdele giver stadig 100% mening alene som to separate billeder.
+                        ${getTranslation('at_cog_card_a_desc')}
                     </p>
                 </div>
 
                 <!-- Kort B: Billede-i-billede (AT = Tankeboblen / Billedrammen) -->
                 <div style="background:#0f172a; border:2px solid #f59e0b; border-radius:18px; padding:1.5rem; box-shadow:0 0 25px rgba(245,158,11,0.18);">
                     <div style="display:inline-block; background:rgba(245,158,11,0.2); color:#fde68a; border:1px solid #f59e0b; padding:0.25rem 0.75rem; border-radius:8px; font-size:0.8rem; font-weight:800; margin-bottom:0.8rem;">
-                        💭 BILLEDE-I-BILLEDE: TANKEBOBLE-RAMMEN ("AT")
+                        ${getTranslation('at_cog_card_b_badge')}
                     </div>
-                    <h4 style="color:white; margin:0 0 1rem; font-size:1.15rem;">Billede 2 ligger INDE I hovedet på Billede 1:</h4>
+                    <h4 style="color:white; margin:0 0 1rem; font-size:1.15rem;">${getTranslation('at_cog_card_b_title')}</h4>
                     <!-- Ydre ramme: Billede 1 -->
                     <div style="background:#1e293b; border:2px solid #22c55e; border-radius:16px; padding:1rem; position:relative;">
                         <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
                             <div style="text-align:center; min-width:110px;">
                                 <div style="font-size:1.6rem;">🧑💭</div>
                                 <div style="font-weight:900; color:#86efac; font-size:1.05rem;">"Jeg tror, ..."</div>
-                                <div style="font-size:0.73rem; color:#94a3b8;">Ramme-sætning<br>(Tom uden boblen!)</div>
+                                <div style="font-size:0.73rem; color:#94a3b8;">${getTranslation('at_cog_card_b_frame_label')}</div>
                             </div>
                             <!-- Indre Tankeboble med AT som selve rammen -->
                             <div style="flex:1; background:rgba(245,158,11,0.12); border:3px dashed #f59e0b; border-radius:18px; padding:0.9rem; position:relative;">
                                 <div style="position:absolute; top:-12px; left:14px; background:#d97706; color:white; font-weight:900; font-size:0.78rem; padding:0.15rem 0.6rem; border-radius:6px;">
-                                    📦 AT = Boble-rammen
+                                    ${getTranslation('at_cog_card_b_bubble_badge')}
                                 </div>
                                 <div style="font-weight:800; color:#fde68a; font-size:1rem; margin-top:0.3rem; text-align:center;">
                                     "... <span style="text-decoration:underline; color:#fbbf24;">at</span> [jeg <span style="color:#22d3ee;">hellere</span> <span style="color:#fca5a5;">vil</span> i biografen på torsdag]"
                                 </div>
                                 <div style="font-size:0.76rem; color:#cbd5e1; text-align:center; margin-top:0.3rem;">
-                                    🎬 Hele filmen er pakket ind som ÉN tanke inde i hovedet!
+                                    ${getTranslation('at_cog_card_b_bubble_note')}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <p style="color:#fde68a; font-size:0.92rem; line-height:1.5; margin:0.9rem 0 0;">
-                        <strong>Aha-oplevelsen:</strong> <em>"Jeg tror"</em> er ikke et færdigt billede! Ordet <strong><em>at</em></strong> er <strong>selve kanten på tankeboblen</strong>, som fortæller lytteren: <em>"Se ind i mit hoved – her kommer det billede, jeg tror på!"</em>
+                        ${getTranslation('at_cog_card_b_aha')}
                     </p>
                 </div>
             </div>
 
             <!-- DET-TESTEN & HVORFOR "HELLERE / IKKE" FLYTTER PLADS -->
             <div style="background:#0f172a; border-radius:18px; padding:1.6rem; border-left:5px solid #06b6d4; margin-bottom:1.8rem;">
-                <h3 style="color:#67e8f9; margin:0 0 0.8rem; font-size:1.25rem;">🖼️ "Billedramme-tricket" (DET-testen): Hvorfor flytter <em>hellere</em> og <em>ikke</em> plads efter "at"?</h3>
+                <h3 style="color:#67e8f9; margin:0 0 0.8rem; font-size:1.25rem;">${getTranslation('at_cog_det_title')}</h3>
                 <p style="color:#cbd5e1; line-height:1.6; margin-bottom:1rem;">
-                    Verber som <em>tror, siger, ved, synes, håber</em> vil gerne holde én <strong>ting (et objekt)</strong> i hånden – f.eks. ordet <strong>DET</strong>: <em>"Jeg tror <strong>DET</strong>."</em><br>
-                    Når du i stedet vil putte en hel sætning ind på <strong>DET</strong>'s plads, bruger du <strong><em>at</em> som en billedramme (eller pakke-tape)</strong>, der fryser hele sætningen fast til én samlet ting:
+                    ${getTranslation('at_cog_det_desc')}
                 </p>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1rem; margin-bottom:1rem;">
                     <div style="background:#1e293b; padding:1.1rem; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
-                        <div style="color:#94a3b8; font-size:0.8rem; font-weight:800; text-transform:uppercase;">1. Fri helsætning (Levende handling ude i rummet)</div>
+                        <div style="color:#94a3b8; font-size:0.8rem; font-weight:800; text-transform:uppercase;">${getTranslation('at_cog_det_box1_title')}</div>
                         <div style="font-size:1.15rem; font-weight:800; color:white; margin:0.5rem 0;">
                             "Jeg <span style="color:#fca5a5;">vil</span> <span style="color:#22d3ee;">hellere</span> i biografen på torsdag."
                         </div>
-                        <div style="font-size:0.85rem; color:#cbd5e1;">Her er verbet (<em>vil</em>) sætningens frie motor på plads 2, så <em>hellere / ikke</em> står <strong>efter</strong> verbet.</div>
+                        <div style="font-size:0.85rem; color:#cbd5e1;">${getTranslation('at_cog_det_box1_desc')}</div>
                     </div>
                     <div style="background:#1e293b; padding:1.1rem; border-radius:12px; border:2px solid #f59e0b;">
-                        <div style="color:#fde68a; font-size:0.8rem; font-weight:800; text-transform:uppercase;">2. Pakket ind i "AT"-rammen (Frosset fast som ét billede)</div>
+                        <div style="color:#fde68a; font-size:0.8rem; font-weight:800; text-transform:uppercase;">${getTranslation('at_cog_det_box2_title')}</div>
                         <div style="font-size:1.15rem; font-weight:800; color:white; margin:0.5rem 0;">
                             "Jeg tror, <span style="color:#fbbf24; text-decoration:underline;">at</span> [jeg <span style="color:#22d3ee;">hellere</span> <span style="color:#fca5a5;">vil</span> i biografen på torsdag]."
                         </div>
-                        <div style="font-size:0.85rem; color:#fde68a;">Inde i billedrammen er sætningen ikke længere en fri helsætning – derfor rykker <em>hellere / ikke</em> <strong>frem foran verbet</strong>!</div>
+                        <div style="font-size:0.85rem; color:#fde68a;">${getTranslation('at_cog_det_box2_desc')}</div>
                     </div>
                 </div>
                 <button class="inspector-speak-btn" id="speak-bio-cognitive">
@@ -1840,22 +1834,20 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             </div>
 
             <!-- DE 4 KOGNITIVE BILLEDER FOR ALLE TYPER "AT" -->
-            <h3 style="text-align:center; color:#fde68a; margin:1.5rem 0 1rem;">🧭 Sådan hænger ALLE dansk-sprogets "AT"-konstruktioner sammen kognitivt:</h3>
+            <h3 style="text-align:center; color:#fde68a; margin:1.5rem 0 1rem;">${getTranslation('at_cog_4types_title')}</h3>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
                 <div style="background:#0f172a; border-top:4px solid #22c55e; border-radius:14px; padding:1.1rem;">
                     <div style="font-size:1.6rem; margin-bottom:0.3rem;">💭📦</div>
-                    <div style="font-weight:900; color:#86efac; margin-bottom:0.3rem;">1. Tankeboblen / Pakken</div>
+                    <div style="font-weight:900; color:#86efac; margin-bottom:0.3rem;">${getTranslation('at_cog_type1_title')}</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
-                        <strong>Konjunktionen <em>at</em></strong> pakker en hel sætning (med nyt subjekt) ind som én tanke:<br>
-                        <em style="color:#fde68a;">"Jeg tror, <strong>at</strong> jeg hellere vil..."</em>
+                        ${getTranslation('at_cog_type1_desc')}
                     </div>
                 </div>
                 <div style="background:#0f172a; border-top:4px solid #f59e0b; border-radius:14px; padding:1.1rem;">
                     <div style="font-size:1.6rem; margin-bottom:0.3rem;">🏹🎯</div>
-                    <div style="font-weight:900; color:#fde68a; margin-bottom:0.3rem;">2. Retnings-Pilen</div>
+                    <div style="font-weight:900; color:#fde68a; margin-bottom:0.3rem;">${getTranslation('at_cog_type2_title')}</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
-                        <strong>Infinitivmærket <em>at</em></strong> peger frem mod en handling, når subjektet allerede er det samme:<br>
-                        <em style="color:#fde68a;">"Jeg elsker <strong>➔ at</strong> gå i biffen."</em>
+                        ${getTranslation('at_cog_type2_desc')}
                     </div>
                 </div>
                 <div style="background:#0f172a; border-top:4px solid #ef4444; border-radius:14px; padding:1.1rem;">
@@ -1868,10 +1860,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 </div>
                 <div style="background:#0f172a; border-top:4px solid #a855f7; border-radius:14px; padding:1.1rem;">
                     <div style="font-size:1.6rem; margin-bottom:0.3rem;">🧭🔗</div>
-                    <div style="font-weight:900; color:#d8b4fe; margin-bottom:0.3rem;">4. Præpositions-Krogen</div>
+                    <div style="font-weight:900; color:#d8b4fe; margin-bottom:0.3rem;">${getTranslation('at_cog_type3_title')}</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
-                        En præposition (<em>for, til, ved, uden</em>) griber fat i enten <strong>at-pilen</strong> eller <strong>at-rammen</strong>:<br>
-                        <em style="color:#d8b4fe;">"glad <strong>for, at</strong> du går med"</em>
+                        ${getTranslation('at_cog_type3_desc')}
                     </div>
                 </div>
             </div>
@@ -1966,8 +1957,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         card.className = 'vaerksted-card';
         card.innerHTML = `
             <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">🔍 Samme Person (Infinitiv) vs. Ny Person (Ledsætning)</h2>
+            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">${getTranslation('at_sub1_title')}</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:780px; margin:0 auto 1.2rem;">
-                Den bedste måde at undervise i og forstå forskellen mellem <strong>infinitiv-at</strong> og <strong>ledsætnings-at</strong> på er ved at spørge: <em>Er der ét subjekt eller to subjekter?</em>
+                ${getTranslation('at_sub1_desc')}
             </p>
             <div class="word-selector-grid">
                 ${Object.keys(demos).map(k => `
@@ -2046,9 +2038,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">🚫 Modalverbum-Fælden: Med "at" eller Uden "at"?</h2>
+            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">${getTranslation('at_sub2_title')}</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:780px; margin:0 auto 1.2rem;">
-                De 6 danske modalverber (<strong>kan, skal, vil, må, bør, tør</strong>) knyttes direkte til næste verbum <strong>UDEN <em>at</em></strong>. Alle andre verber (<em>plejer, prøver, ønsker, begynder, husker, glemmer</em>) <strong>SKAL have <em>at</em></strong>!
+                ${getTranslation('at_sub2_desc')}
             </p>
             <div class="word-selector-grid">
                 <button class="word-sel-btn ${selectedModalDemo === 'kan' ? 'active' : ''}" data-md="kan">kan svømme ↔ plejer at svømme</button>
@@ -2090,30 +2082,30 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">📐 De 5 "AT"-Konstruktioner – Komplet Overblik</h2>
+            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">${getTranslation('at_sub3_title')}</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:800px; margin:0 auto 1.5rem;">
                 Her er de 5 mønstre, som gør det let at forklare og genkende ethvert <strong><em>at</em></strong> i en dansk tekst:
             </p>
             <div style="display:grid; gap:1rem;">
                 <div style="background:#0f172a; padding:1.2rem 1.5rem; border-radius:14px; border-left:5px solid #22c55e;">
-                    <strong style="color:#86efac; font-size:1.1rem;">1. Udsagns- og tanke-ledsætning: Verbum + (, at) + Subjekt + (ikke) + Verbum</strong>
-                    <div style="color:#cbd5e1; margin-top:0.3rem;">Efter <em>sige, tro, synes, mene, vide, håbe, se, høre</em>: <strong>"Hun siger, at hun ikke kommer."</strong> <em>("at" kan ofte udelades i talesprog).</em></div>
+                    <strong style="color:#86efac; font-size:1.1rem;">${getTranslation('at_sub3_c1_title')}</strong>
+                    <div style="color:#cbd5e1; margin-top:0.3rem;">${getTranslation('at_sub3_c1_desc')}</div>
                 </div>
                 <div style="background:#0f172a; padding:1.2rem 1.5rem; border-radius:14px; border-left:5px solid #f59e0b;">
-                    <strong style="color:#fde68a; font-size:1.1rem;">2. Infinitivmærket "at": Verbum/Adjektiv + at + Infinitiv (uden subjekt!)</strong>
-                    <div style="color:#cbd5e1; margin-top:0.3rem;">Efter <em>elske, pleje, huske, glemme, prøve, begynde</em> samt <em>Det er svært/sjovt at...</em>: <strong>"Det er sjovt at lære dansk."</strong> <em>("at" kan ALDRIG udelades her, men er forbudt efter kan/skal/vil/må/bør!).</em></div>
+                    <strong style="color:#fde68a; font-size:1.1rem;">${getTranslation('at_sub3_c2_title')}</strong>
+                    <div style="color:#cbd5e1; margin-top:0.3rem;">${getTranslation('at_sub3_c2_desc')}</div>
                 </div>
                 <div style="background:#0f172a; padding:1.2rem 1.5rem; border-radius:14px; border-left:5px solid #06b6d4;">
-                    <strong style="color:#67e8f9; font-size:1.1rem;">3. Præposition + at + Infinitiv (Samme subjekt i hele sætningen)</strong>
-                    <div style="color:#cbd5e1; margin-top:0.3rem;">Efter <em>god til, glæde sig til, træt af, bange for, komme til (uheld)</em>: <strong>"Kokken er god til at bage." / "Jeg kom til at spilde."</strong></div>
+                    <strong style="color:#67e8f9; font-size:1.1rem;">${getTranslation('at_sub3_c3_title')}</strong>
+                    <div style="color:#cbd5e1; margin-top:0.3rem;">${getTranslation('at_sub3_c3_desc')}</div>
                 </div>
                 <div style="background:#0f172a; padding:1.2rem 1.5rem; border-radius:14px; border-left:5px solid #a855f7;">
-                    <strong style="color:#d8b4fe; font-size:1.1rem;">4. Præposition + , at + Ledsætning (Nyt subjekt efter "at"!)</strong>
-                    <div style="color:#cbd5e1; margin-top:0.3rem;">Efter <em>glad for, sikker på, ked af, grunden til, handle om</em>: <strong>"Jeg er glad for, at du ikke gik."</strong> <em>("at" kan ALDRIG udelades efter en præposition!).</em></div>
+                    <strong style="color:#d8b4fe; font-size:1.1rem;">${getTranslation('at_sub3_c4_title')}</strong>
+                    <div style="color:#cbd5e1; margin-top:0.3rem;">${getTranslation('at_sub3_c4_desc')}</div>
                 </div>
                 <div style="background:#0f172a; padding:1.2rem 1.5rem; border-radius:14px; border-left:5px solid #ec4899;">
-                    <strong style="color:#f472b6; font-size:1.1rem;">5. Sammensatte bindeord med "at": for at, ved at, uden at, så ... at, efter at</strong>
-                    <div style="color:#cbd5e1; margin-top:0.3rem;"><strong>"Hun sparer op for at købe en cykel"</strong> (formål) • <strong>"Han lærte det ved at øve sig"</strong> (metode) • <strong>"Kaffen er så varm, at jeg ikke kan drikke den"</strong> (konsekvens).</div>
+                    <strong style="color:#f472b6; font-size:1.1rem;">${getTranslation('at_sub3_c5_title')}</strong>
+                    <div style="color:#cbd5e1; margin-top:0.3rem;">${getTranslation('at_sub3_c5_desc')}</div>
                 </div>
             </div>
         `;

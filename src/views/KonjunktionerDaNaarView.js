@@ -659,8 +659,8 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     const hero = document.createElement('div');
     hero.className = 'dn-hero';
     hero.innerHTML = `
-        <h1>"Da" eller "når"?</h1>
-        <p>På engelsk hedder begge ord <em>"when"</em>, men på dansk skelner vi skarpt mellem <strong>📌 Tegnestiften (<em>da</em> = én bestemt gang i fortiden)</strong>, <strong>🔁 Cirklen (<em>når</em> = gentagne vaner)</strong> og <strong>🏹 Pilen (<em>når</em> = fremtiden)</strong>.</p>
+        <h1>${getTranslation('danaar_hero_title')}</h1>
+        <p>${getTranslation('danaar_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -672,30 +672,27 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             <img src="${baseUrl}da_naar_guide_future.jpg" alt="Da vs. Når kognitiv guide" class="guide-img-thumb" />
         </div>
         <div>
-            <h3 style="margin:0 0 0.4rem; color:#6ee7b7; font-size:1.35rem;">🧭 De 3 Kognitive Kalender-Symboler (Fra Træning 2)</h3>
+            <h3 style="margin:0 0 0.4rem; color:#6ee7b7; font-size:1.35rem;">${getTranslation('danaar_guide_title')}</h3>
             <p style="margin:0; color:#cbd5e1; line-height:1.55;">
-                Kig på de tre kalendere i illustrationen til venstre – de giver dig svaret på 1 sekund:
+                ${getTranslation('danaar_guide_desc')}
             </p>
             <div class="guide-symbols-grid">
                 <div class="guide-sym-card" style="border-color:#ef4444;">
-                    <div style="font-weight:900; color:#fca5a5; font-size:1.05rem;">📌 1. Tegnestiften = DA</div>
+                    <div style="font-weight:900; color:#fca5a5; font-size:1.05rem;">${getTranslation('danaar_sym1_title')}</div>
                     <div style="font-size:0.84rem; color:#cbd5e1; margin-top:0.25rem;">
-                        Ét bestemt punkt eller en afsluttet periode i <strong>fortiden</strong>:<br>
-                        <em style="color:#fde68a;">"Jeg var i Italien, <strong>da</strong> jeg var barn."</em>
+                        ${getTranslation('danaar_sym1_desc')}
                     </div>
                 </div>
                 <div class="guide-sym-card" style="border-color:#10b981;">
-                    <div style="font-weight:900; color:#6ee7b7; font-size:1.05rem;">🔁 2. Cirklen = NÅR</div>
+                    <div style="font-weight:900; color:#6ee7b7; font-size:1.05rem;">${getTranslation('danaar_sym2_title')}</div>
                     <div style="font-size:0.84rem; color:#cbd5e1; margin-top:0.25rem;">
-                        Gentagne <strong>vaner ("hver gang")</strong> – både i nutid og fortid:<br>
-                        <em style="color:#fde68a;">"<strong>Når</strong> det regner, tager jeg altid paraply med."</em>
+                        ${getTranslation('danaar_sym2_desc')}
                     </div>
                 </div>
                 <div class="guide-sym-card" style="border-color:#f59e0b;">
-                    <div style="font-weight:900; color:#fde68a; font-size:1.05rem;">🏹 3. Pilen = NÅR</div>
+                    <div style="font-weight:900; color:#fde68a; font-size:1.05rem;">${getTranslation('danaar_sym3_title')}</div>
                     <div style="font-size:0.84rem; color:#cbd5e1; margin-top:0.25rem;">
-                        Alt der peger ind i <strong>fremtiden</strong> (aldrig <em>da</em> i fremtid!):<br>
-                        <em style="color:#fde68a;">"<strong>Når</strong> jeg kommer hjem, ringer jeg til dig."</em>
+                        ${getTranslation('danaar_sym3_desc')}
                     </div>
                 </div>
             </div>
@@ -896,18 +893,18 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#6ee7b7; margin-top:0;">🔬 Kognitivt Værksted: Tegnestiften 📌, Cirklen 🔁 & Fremtidspilen 🏹</h2>
+            <h2 style="text-align:center; color:#6ee7b7; margin-top:0;">${getTranslation('danaar_kognitiv_title')}</h2>
             <div style="text-align:center; margin:1.2rem 0;">
                 <img src="${baseUrl}da_naar_guide_future.jpg" alt="Da vs Når illustration" style="max-width:560px; width:100%; border-radius:18px; border:2px solid #10b981; background:white;" />
             </div>
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.2rem; margin:1.8rem 0;">
                 <div style="background:#0f172a; padding:1.4rem; border-radius:16px; border:2px solid #ef4444;">
-                    <h4 style="color:#fca5a5; margin-top:0;">📌 Hvornår bruger vi DA?</h4>
+                    <h4 style="color:#fca5a5; margin-top:0;">${getTranslation('danaar_kognitiv_when_da_title')}</h4>
                     <ul style="color:#cbd5e1; line-height:1.6; padding-left:1.2rem;">
-                        <li>Kun i <strong>fortid (datid / førnutid)</strong>.</li>
-                        <li>Kun når handlingen eller perioden skete <strong>ÉN bestemt gang</strong> (en tegnestift på tidslinjen).</li>
-                        <li>Signalord: <em>i går, i morges, i 2018, som barn, pludselig, første gang</em>.</li>
+                        <li>${getTranslation('danaar_kognitiv_when_da_p1')}</li>
+                        <li>${getTranslation('danaar_kognitiv_when_da_p2')}</li>
+                        <li>${getTranslation('danaar_kognitiv_when_da_p3')}</li>
                     </ul>
                     <div style="background:#1e293b; padding:0.8rem; border-radius:10px; color:white; font-weight:700;">
                         "<strong>Da</strong> jeg kom hjem i går, lavede jeg mad."
@@ -915,10 +912,10 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                 </div>
 
                 <div style="background:#0f172a; padding:1.4rem; border-radius:16px; border:2px solid #10b981;">
-                    <h4 style="color:#6ee7b7; margin-top:0;">🔁🏹 Hvornår bruger vi NÅR?</h4>
+                    <h4 style="color:#6ee7b7; margin-top:0;">${getTranslation('danaar_kognitiv_when_naar_title')}</h4>
                     <ul style="color:#cbd5e1; line-height:1.6; padding-left:1.2rem;">
-                        <li><strong>Cirklen (Vane):</strong> Hver gang noget sker – både i nutid OG fortid! Signalord: <em>altid, hver gang, plejer, ofte, om morgenen</em>.</li>
-                        <li><strong>Pilen (Fremtid):</strong> Alt i fremtiden – selv hvis det kun sker én gang!</li>
+                        <li>${getTranslation('danaar_kognitiv_when_naar_p1')}</li>
+                        <li>${getTranslation('danaar_kognitiv_when_naar_p2')}</li>
                     </ul>
                     <div style="background:#1e293b; padding:0.8rem; border-radius:10px; color:white; font-weight:700;">
                         "<strong>Når</strong> det regner, tager jeg altid bussen."
@@ -927,17 +924,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             </div>
 
             <div style="background:#0f172a; padding:1.6rem; border-radius:16px; border-left:5px solid #06b6d4;">
-                <h3 style="color:#67e8f9; margin-top:0;">🧲 To vigtige ordstillingsregler for BÅDE "da" og "når":</h3>
+                <h3 style="color:#67e8f9; margin-top:0;">${getTranslation('danaar_rules_title')}</h3>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
                     <div style="background:#1e293b; padding:1.1rem; border-radius:12px;">
-                        <div style="color:#fde68a; font-weight:800; margin-bottom:0.4rem;">1. "Ikke"-Magneten i Ledsætningen:</div>
+                        <div style="color:#fde68a; font-weight:800; margin-bottom:0.4rem;">${getTranslation('danaar_rule1_title')}</div>
                         <div style="color:white; font-size:1.1rem; font-weight:800;">"... <strong>da / når</strong> han <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">kommer</span>"</div>
-                        <div style="color:#94a3b8; font-size:0.86rem; margin-top:0.3rem;">Både <em>da</em> og <em>når</em> laver en ledsætning, så <em>ikke/altid/aldrig</em> står FØR verbet!</div>
+                        <div style="color:#94a3b8; font-size:0.86rem; margin-top:0.3rem;">${getTranslation('danaar_rule1_desc')}</div>
                     </div>
                     <div style="background:#1e293b; padding:1.1rem; border-radius:12px;">
-                        <div style="color:#fde68a; font-weight:800; margin-bottom:0.4rem;">2. Inversion når Da/Når står forrest:</div>
+                        <div style="color:#fde68a; font-weight:800; margin-bottom:0.4rem;">${getTranslation('danaar_rule2_title')}</div>
                         <div style="color:white; font-size:1.1rem; font-weight:800;">"[<strong>Når</strong> jeg kommer hjem], <span style="color:#fca5a5;">ringer</span> <span style="color:#86efac;">jeg</span>."</div>
-                        <div style="color:#94a3b8; font-size:0.86rem; margin-top:0.3rem;">Når sætningen starter med <em>Da...</em> eller <em>Når...</em>, kommer verbet FØR subjektet efter kommaet!</div>
+                        <div style="color:#94a3b8; font-size:0.86rem; margin-top:0.3rem;">${getTranslation('danaar_rule2_desc')}</div>
                     </div>
                 </div>
             </div>

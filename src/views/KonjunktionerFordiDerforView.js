@@ -555,8 +555,8 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     const hero = document.createElement('div');
     hero.className = 'fd-hero';
     hero.innerHTML = `
-        <h1>"Fordi" eller "derfor"?</h1>
-        <p>Kend forskellen på <strong>årsag</strong> og <strong>virkning</strong> – og pas på ordstillingen! <strong>⛽ <em>Fordi</em> introducerer årsagen i en ledsætning (<em>Subjekt + ikke + Verbum</em>)</strong>, mens <strong>➡️ <em>Derfor</em> introducerer virkningen/konsekvensen i en helsætning med Inversion (<em>Verbum + Subjekt</em>)!</strong></p>
+        <h1>${getTranslation('fordiderf_hero_title')}</h1>
+        <p>${getTranslation('fordiderf_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -568,23 +568,21 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
             <img src="${baseUrl}fordi_derfor_guide.png" alt="Fordi vs Derfor kognitiv guide" class="guide-img-thumb" />
         </div>
         <div>
-            <h3 style="margin:0 0 0.4rem; color:#7dd3fc; font-size:1.35rem;">🧭 Virkning + FORDI ➔ Årsag  |  Årsag. DERFOR ➔ Virkning</h3>
+            <h3 style="margin:0 0 0.4rem; color:#7dd3fc; font-size:1.35rem;">${getTranslation('fordiderf_guide_title')}</h3>
             <p style="margin:0; color:#cbd5e1; line-height:1.55;">
-                Kig på pilene i illustrationen fra Træning 2 til venstre – rækkefølgen af <strong>Årsag</strong> og <strong>Virkning</strong> afgør alt:
+                ${getTranslation('fordiderf_guide_desc')}
             </p>
             <div class="guide-symbols-grid">
                 <div class="guide-sym-card" style="border-color:#0284c7;">
-                    <div style="font-weight:900; color:#7dd3fc; font-size:1.05rem;">⛽ Virkning + FORDI ➔ Årsag</div>
+                    <div style="font-weight:900; color:#7dd3fc; font-size:1.05rem;">${getTranslation('fordiderf_sym1_title')}</div>
                     <div style="font-size:0.86rem; color:#cbd5e1; margin-top:0.3rem;">
-                        Ordet <strong><em>fordi</em></strong> står lige foran selve <strong>årsagen</strong>:<br>
-                        <em style="color:#fde68a;">"Jeg kom for sent [virkning], <strong>fordi</strong> bussen var aflyst [årsag]."</em>
+                        ${getTranslation('fordiderf_sym1_desc')}
                     </div>
                 </div>
                 <div class="guide-sym-card" style="border-color:#ea580c;">
-                    <div style="font-weight:900; color:#fdba74; font-size:1.05rem;">➡️ Årsag. DERFOR ➔ Virkning</div>
+                    <div style="font-weight:900; color:#fdba74; font-size:1.05rem;">${getTranslation('fordiderf_sym2_title')}</div>
                     <div style="font-size:0.86rem; color:#cbd5e1; margin-top:0.3rem;">
-                        Ordet <strong><em>derfor</em></strong> står lige foran <strong>virkningen/konsekvensen</strong> (med Inversion!):<br>
-                        <em style="color:#fde68a;">"Bussen var aflyst [årsag]. <strong>Derfor</strong> kom jeg for sent [virkning]."</em>
+                        ${getTranslation('fordiderf_sym2_desc')}
                     </div>
                 </div>
             </div>
@@ -784,16 +782,16 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#7dd3fc; margin-top:0;">🔬 Fordi vs. Derfor: Kognitiv Retning & Ordstilling</h2>
+            <h2 style="text-align:center; color:#7dd3fc; margin-top:0;">${getTranslation('fordiderf_kognitiv_title')}</h2>
             <div style="text-align:center; margin:1.2rem 0;">
                 <img src="${baseUrl}fordi_derfor_guide.png" alt="Fordi vs Derfor" style="max-width:680px; width:100%; border-radius:18px; border:2px solid #38bdf8; background:white;" />
             </div>
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.3rem; margin:1.8rem 0;">
                 <div style="background:#0f172a; padding:1.5rem; border-radius:16px; border:2px solid #0284c7;">
-                    <h4 style="color:#7dd3fc; margin-top:0;">⛽ FORDI = Ledsætningskonjunktion (Årsagen)</h4>
+                    <h4 style="color:#7dd3fc; margin-top:0;">${getTranslation('fordiderf_fordi_rule_title')}</h4>
                     <p style="color:#cbd5e1; line-height:1.55;">
-                        <strong>Virkning + FORDI ➔ Årsag:</strong> Ordet <em>fordi</em> introducerer selve årsagen og laver en <strong>ledsætning</strong>:
+                        ${getTranslation('fordiderf_fordi_rule_desc')}
                     </p>
                     <ul style="color:#cbd5e1; line-height:1.6; padding-left:1.2rem;">
                         <li><strong>Ordstilling:</strong> Subjekt + <span style="color:#22d3ee; font-weight:800;">ikke</span> + Verbum!</li>
@@ -802,9 +800,9 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
                 </div>
 
                 <div style="background:#0f172a; padding:1.5rem; border-radius:16px; border:2px solid #ea580c;">
-                    <h4 style="color:#fdba74; margin-top:0;">➡️ DERFOR = Konnektivt Adverbium (Virkningen)</h4>
+                    <h4 style="color:#fdba74; margin-top:0;">${getTranslation('fordiderf_derfor_rule_title')}</h4>
                     <p style="color:#cbd5e1; line-height:1.55;">
-                        <strong>Årsag. DERFOR ➔ Virkning:</strong> Ordet <em>derfor</em> konkluderer på årsagen og skubber frem mod virkningen med <strong>Inversion</strong>:
+                        ${getTranslation('fordiderf_derfor_rule_desc')}
                     </p>
                     <ul style="color:#cbd5e1; line-height:1.6; padding-left:1.2rem;">
                         <li><strong>Ordstilling i front:</strong> Derfor + <span style="color:#fca5a5; font-weight:800;">Verbum</span> + <span style="color:#86efac; font-weight:800;">Subjekt</span>!</li>

@@ -555,8 +555,8 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     const hero = document.createElement('div');
     hero.className = 'sa-hero';
     hero.innerHTML = `
-        <h1>"Selvom" eller "alligevel"?</h1>
-        <p>Begge ord handler om at gøre noget <strong>på trods af en forhindring</strong> – men kognitivt og grammatisk står de to forskellige steder: <strong>🧱 <em>Selvom</em> bygger muren (forhindringen i en ledsætning)</strong>, mens <strong>☄️ <em>Alligevel</em> er bolden, der bryder igennem muren (i hovedsætningen)!</strong></p>
+        <h1>${getTranslation('selvall_hero_title')}</h1>
+        <p>${getTranslation('selvall_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -568,23 +568,21 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             <img src="${baseUrl}selvom_alligevel_guide.png" alt="Selvom vs Alligevel kognitiv guide" class="guide-img-thumb" />
         </div>
         <div>
-            <h3 style="margin:0 0 0.4rem; color:#fdba74; font-size:1.35rem;">🧱 Muren (Selvom) vs. ☄️ Bolden gennem Muren (Alligevel)</h3>
+            <h3 style="margin:0 0 0.4rem; color:#fdba74; font-size:1.35rem;">${getTranslation('selvall_guide_title')}</h3>
             <p style="margin:0; color:#cbd5e1; line-height:1.55;">
-                Illustrationen fra Træning 2 gør det krystalklart, hvornår du skal vælge hvilket ord:
+                ${getTranslation('selvall_guide_desc')}
             </p>
             <div class="guide-symbols-grid">
                 <div class="guide-sym-card" style="border-color:#f97316;">
-                    <div style="font-weight:900; color:#fdba74; font-size:1.05rem;">🧱 SELVOM = Forhindringen (Muren)</div>
+                    <div style="font-weight:900; color:#fdba74; font-size:1.05rem;">${getTranslation('selvall_sym1_title')}</div>
                     <div style="font-size:0.86rem; color:#cbd5e1; margin-top:0.3rem;">
-                        Står <strong>altid foran selve problemet/muren</strong> i en ledsætning (<em>Subjekt + ikke + Verbum</em>):<br>
-                        <em style="color:#fde68a;">"<strong>Selvom</strong> det regner [muren], går vi en tur."</em>
+                        ${getTranslation('selvall_sym1_desc')}
                     </div>
                 </div>
                 <div class="guide-sym-card" style="border-color:#38bdf8;">
-                    <div style="font-weight:900; color:#7dd3fc; font-size:1.05rem;">☄️ ALLIGEVEL = Gennembruddet (Bolden)</div>
+                    <div style="font-weight:900; color:#7dd3fc; font-size:1.05rem;">${getTranslation('selvall_sym2_title')}</div>
                     <div style="font-size:0.86rem; color:#cbd5e1; margin-top:0.3rem;">
-                        Står <strong>i den sætning, der bryder igennem muren</strong> (efter at muren allerede er nævnt):<br>
-                        <em style="color:#fde68a;">"Det regner [muren], men vi går <strong>alligevel</strong> en tur [bolden]!"</em>
+                        ${getTranslation('selvall_sym2_desc')}
                     </div>
                 </div>
             </div>
@@ -784,16 +782,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fdba74; margin-top:0;">🔬 Muren (Selvom) vs. Bolden (Alligevel) – Kognitivt & Grammatisk</h2>
+            <h2 style="text-align:center; color:#fdba74; margin-top:0;">${getTranslation('selvall_kognitiv_title')}</h2>
             <div style="text-align:center; margin:1.2rem 0;">
                 <img src="${baseUrl}selvom_alligevel_guide.png" alt="Selvom vs Alligevel" style="max-width:650px; width:100%; border-radius:18px; border:2px solid #f97316; background:white;" />
             </div>
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.3rem; margin:1.8rem 0;">
                 <div style="background:#0f172a; padding:1.5rem; border-radius:16px; border:2px solid #f97316;">
-                    <h4 style="color:#fdba74; margin-top:0;">🧱 SELVOM = Ledsætningskonjunktion (Muren)</h4>
+                    <h4 style="color:#fdba74; margin-top:0;">${getTranslation('selvall_selvom_rule_title')}</h4>
                     <p style="color:#cbd5e1; line-height:1.55;">
-                        <strong>Selvom</strong> hører sammen med <strong>selve forhindringen</strong> (regnen, sygdommen, trætheden).
+                        ${getTranslation('selvall_selvom_rule_desc')}
                     </p>
                     <ul style="color:#cbd5e1; line-height:1.6; padding-left:1.2rem;">
                         <li><strong>"Ikke"-magneten:</strong> <em>"... selvom han <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">er</span> rask."</em></li>
@@ -802,9 +800,9 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                 </div>
 
                 <div style="background:#0f172a; padding:1.5rem; border-radius:16px; border:2px solid #38bdf8;">
-                    <h4 style="color:#7dd3fc; margin-top:0;">☄️ ALLIGEVEL = Konnektivt Adverbium (Bolden)</h4>
+                    <h4 style="color:#7dd3fc; margin-top:0;">${getTranslation('selvall_alligevel_rule_title')}</h4>
                     <p style="color:#cbd5e1; line-height:1.55;">
-                        <strong>Alligevel</strong> hører sammen med <strong>den handling, der gennemføres på trods</strong>, efter at forhindringen er nævnt!
+                        ${getTranslation('selvall_alligevel_rule_desc')}
                     </p>
                     <ul style="color:#cbd5e1; line-height:1.6; padding-left:1.2rem;">
                         <li><strong>Midterplads (efter men + subjekt + verbum):</strong> <em>"Det regner, men vi <span style="color:#fca5a5;">går</span> <strong>alligevel</strong> en tur."</em></li>

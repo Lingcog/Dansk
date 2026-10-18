@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 
 /**
  * KonjunktionerAtView - Felt 4 (Særskilt Fokusfelt): Ordet "AT" i alle sætningskonstruktioner
@@ -465,6 +466,8 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
     function getAtTranslation(item) {
         const lang = getLang();
+        const trans = getConjunctionWordTranslation(item.id, lang);
+        if (trans) return trans;
         if (item.translations && item.translations[lang]) {
             return item.translations[lang];
         }
@@ -1449,14 +1452,14 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. "AT"-Universet (Vrimlebilledet)', icon: '🖼️' },
-        { id: 'roentgen', label: '2. "AT"-Røntgenmaskinen (De 5 Konstruktioner)', icon: '🔬' },
-        { id: 'detektiv', label: '3. "AT"-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '5. Kontekst-testen (14 dialoger)', icon: '🎯' },
-        { id: 'modal', label: '6. Med "at" eller Uden "at"? (Modal-fælden) 🚦', icon: '🚦' },
-        { id: 'sammensat', label: '7. For at, ved at, uden at eller fordi? 🛠️', icon: '🛠️' },
-        { id: 'praep', label: '8. Præposition + AT (til at, for at, kom til at...) 🔗', icon: '🔗' }
+        { id: 'vrimmel', label: getTranslation('at_tab_vrimmel'), icon: '🖼️' },
+        { id: 'roentgen', label: getTranslation('at_tab_roentgen'), icon: '🔬' },
+        { id: 'detektiv', label: getTranslation('at_tab_detektiv'), icon: '🔍' },
+        { id: 'builder', label: getTranslation('at_tab_builder'), icon: '🧩' },
+        { id: 'kontekst', label: getTranslation('at_tab_kontekst'), icon: '🎯' },
+        { id: 'modal', label: getTranslation('at_tab_modal'), icon: '🚦' },
+        { id: 'sammensat', label: getTranslation('at_tab_sammensat'), icon: '🛠️' },
+        { id: 'praep', label: getTranslation('at_tab_praep'), icon: '🔗' }
     ];
 
     let currentTab = 'vrimmel';
@@ -1628,25 +1631,25 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌍</span> MÅLORDSPRÆSENTATION & OVERSÆTTELSE (${currentLang})
+                            <span>🌍</span> ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}
                         </div>
                         <div class="trans-word-val">${trans.word}</div>
                         <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.25rem;">${item.meaning}</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">📍 I Vrimlebilledet</div>
+                        <div class="scene-heading">${getTranslation('konj_inspector_in_scene')}</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">💬 SÆTNINGSEKSEMPEL</div>
+                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div class="sentence-quote-text">"${item.sentence}"</div>
                         ${trans.sentence ? `<div class="sentence-trans-text" style="color:#fde68a; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="insp-speak-sent">
-                            <span>🔊</span> Lyt til helsætningen
+                            <span>🔊</span> ${getTranslation('konj_btn_listen_sentence')}
                         </button>
                     </div>
 
@@ -1656,8 +1659,8 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     </div>
 
                     <div class="inspector-actions">
-                        <button class="inspector-btn-action" id="insp-prev-btn">⬅ Forrige konstruktion</button>
-                        <button class="inspector-btn-action" id="insp-next-btn" style="background:#d97706;">Næste konstruktion ➔</button>
+                        <button class="inspector-btn-action" id="insp-prev-btn">${getTranslation('konj_btn_prev_word')}</button>
+                        <button class="inspector-btn-action" id="insp-next-btn" style="background:#d97706;">${getTranslation('konj_btn_next_word')}</button>
                     </div>
                 </div>
             `;

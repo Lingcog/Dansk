@@ -131,9 +131,67 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             justify-content: center;
             gap: 0.5rem;
         }
+        .adj-scene-card-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            margin-bottom: 0.75rem;
+            width: fit-content;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
         .adj-scene-card:hover:not(.disabled) .adj-scene-card-btn {
             background: #10b981;
             box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Pedagogical Advice Box */
+        .adv-pedagogical-box {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+        .adv-pedagogical-box h2 {
+            font-size: 1.4rem;
+            color: #f8fafc;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .adv-pedagogical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        .adv-pedagogical-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 1.2rem;
+        }
+        .adv-pedagogical-item h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .adv-pedagogical-item p {
+            color: #94a3b8;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin: 0;
         }
     `;
     viewContainer.appendChild(style);
@@ -142,8 +200,8 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'adj-hub-hero';
     hero.innerHTML = `
-        <h1>Konjunktioner og bindeord</h1>
-        <p>Lær hvordan bindeord skaber mening, logiske relationer og sammenhæng: Hvordan forbinder vi tanker, udtrykker årsag og kontrast, placerer handlinger i tid og rapporterer hvad mennesker tænker og føler?</p>
+        <h1>${getTranslation('top_konj_hub_title')}</h1>
+        <p>${getTranslation('top_konj_hub_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -153,66 +211,74 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     const fields = [
         {
             id: 'konj_felt_1',
+            badge: getTranslation('top_konj_f1_badge'),
             img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '1. De 5 grundlæggende bindeord',
-            desc: 'Lær de 5 centrale bindeord (og, men, eller, for, så): Tilføj information (og), skab kontrast (men), vis alternativer (eller), begrund (for) og udtryk konsekvens (så).',
-            btnText: 'Gå til felt 1 ➔',
+            title: getTranslation('top_konj_f1_title'),
+            desc: getTranslation('top_konj_f1_desc'),
+            btnText: getTranslation('top_konj_f1_btn'),
             action: () => navigateFn('konjunktioner_all', { filter: 'helsaetning', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_2',
+            badge: getTranslation('top_konj_f2_badge'),
             img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '2. Årsag, betingelse og kontrast',
-            desc: 'Forbind tanker med dybere logiske relationer: Forklar hvorfor noget sker (fordi), under hvilke forudsætninger (hvis, om), og hvilke modsætninger der findes (selvom).',
-            btnText: 'Gå til felt 2 ➔',
+            title: getTranslation('top_konj_f2_title'),
+            desc: getTranslation('top_konj_f2_desc'),
+            btnText: getTranslation('top_konj_f2_btn'),
             action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_logik', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_3',
+            badge: getTranslation('top_konj_f3_badge'),
             img: 'assets/konjunktioner_vrimmel.jpg',
-            title: '3. Tid og rækkefølge',
-            desc: 'Placér begivenheder i forhold til hinanden på tidslinjen: Samtidighed (mens), før og efter (inden, efter at, siden) samt afslutning (indtil, så snart).',
-            btnText: 'Gå til felt 3 ➔',
+            title: getTranslation('top_konj_f3_title'),
+            desc: getTranslation('top_konj_f3_desc'),
+            btnText: getTranslation('top_konj_f3_btn'),
             action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_tid', tab: 'tid', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_4_at',
+            badge: getTranslation('top_konj_f4_badge'),
             img: 'assets/konjunktioner_at_vrimmel.jpg',
-            title: '4. Tankeboblen og ordet "at"',
-            desc: 'Den kognitive model for "at": Åbn en mental tankeboble og rapportér hvad mennesker tænker, tror, føler, lover, håber eller planlægger at gøre.',
-            btnText: 'Gå til felt 4 ➔',
+            title: getTranslation('top_konj_f4_title'),
+            desc: getTranslation('top_konj_f4_desc'),
+            btnText: getTranslation('top_konj_f4_btn'),
             action: () => navigateFn('konjunktioner_at', { from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_5_da_naar',
+            badge: getTranslation('top_konj_f5_badge'),
             img: 'assets/da_naar_vrimmel.jpg',
-            title: '5. "Da" og "når"',
-            desc: 'Kognitiv tidsmodel: Forskellen på et fastlåst punkt i fortiden (da) over for gentagne vaner og fremtidige begivenheder (når).',
-            btnText: 'Gå til felt 5 ➔',
+            title: getTranslation('top_konj_f5_title'),
+            desc: getTranslation('top_konj_f5_desc'),
+            btnText: getTranslation('top_konj_f5_btn'),
             action: () => navigateFn('konjunktioner_da_naar', { from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_6_selvom_alligevel',
+            badge: getTranslation('top_konj_f6_badge'),
             img: 'assets/selvom_alligevel_vrimmel.jpg',
-            title: '6. "Selvom" og "alligevel"',
-            desc: 'Kognitiv model for modstand og gennembrud: Muren (selvom), der opstiller en forhindring, og bolden (alligevel), der bryder igennem.',
-            btnText: 'Gå til felt 6 ➔',
+            title: getTranslation('top_konj_f6_title'),
+            desc: getTranslation('top_konj_f6_desc'),
+            btnText: getTranslation('top_konj_f6_btn'),
             action: () => navigateFn('konjunktioner_selvom_alligevel', { from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_7_fordi_derfor',
+            badge: getTranslation('top_konj_f7_badge'),
             img: 'assets/fordi_derfor_vrimmel.jpg',
-            title: '7. "Fordi" og "derfor"',
-            desc: 'Årsag og virkning: Kognitiv forståelse af drivkraften og grunden (fordi) over for konsekvensen, resultatet og retningen fremad (derfor).',
-            btnText: 'Gå til felt 7 ➔',
+            title: getTranslation('top_konj_f7_title'),
+            desc: getTranslation('top_konj_f7_desc'),
+            btnText: getTranslation('top_konj_f7_btn'),
             action: () => navigateFn('konjunktioner_fordi_derfor', { from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_8_tekstflow',
+            badge: getTranslation('top_konj_f8_badge'),
             img: 'assets/tekstens_trafik_vrimmel.jpg',
-            title: '8. Tekstens trafik og tekstflow',
-            desc: 'Kognitiv tekstforståelse: Se bindeord som sprogets trafiksignaler, der styrer retning og skaber et naturligt tekstflow.',
-            btnText: 'Gå til felt 8 ➔',
+            title: getTranslation('top_konj_f8_title'),
+            desc: getTranslation('top_konj_f8_desc'),
+            btnText: getTranslation('top_konj_f8_btn'),
             action: () => navigateFn('konjunktioner_tekstflow', { from: 'top_konjunktioner' })
         }
     ];
@@ -225,6 +291,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
                 <img src="${f.img}" alt="${f.title}" class="adj-scene-card-img">
             </div>
             <div class="adj-scene-card-content">
+                <span class="adj-scene-card-badge">${f.badge}</span>
                 <div class="adj-scene-card-title">${f.title}</div>
                 <div class="adj-scene-card-desc">${f.desc}</div>
                 <button class="adj-scene-card-btn">${f.btnText}</button>
@@ -235,5 +302,28 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
     });
 
     viewContainer.appendChild(grid);
+
+    // Pedagogical Advice Box
+    const infoBox = document.createElement('div');
+    infoBox.className = 'adv-pedagogical-box';
+    infoBox.innerHTML = `
+        <h2>💡 ${getTranslation('top_konj_ped_title')}</h2>
+        <div class="adv-pedagogical-grid">
+            <div class="adv-pedagogical-item">
+                <h3>🔄 ${getTranslation('top_konj_ped_item1_title')}</h3>
+                <p>${getTranslation('top_konj_ped_item1_desc')}</p>
+            </div>
+            <div class="adv-pedagogical-item">
+                <h3>⚖️ ${getTranslation('top_konj_ped_item2_title')}</h3>
+                <p>${getTranslation('top_konj_ped_item2_desc')}</p>
+            </div>
+            <div class="adv-pedagogical-item">
+                <h3>💬 ${getTranslation('top_konj_ped_item3_title')}</h3>
+                <p>${getTranslation('top_konj_ped_item3_desc')}</p>
+            </div>
+        </div>
+    `;
+    viewContainer.appendChild(infoBox);
+
     container.appendChild(viewContainer);
 }

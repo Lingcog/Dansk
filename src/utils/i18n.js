@@ -5,6 +5,7 @@ import { sporgsmalTranslations } from './sporgsmal_translations.js';
 import { verberTranslations } from './top100_verber_translations.js';
 import { adjektiverTranslations } from './top100_adjektiver_translations.js';
 import { adverbierTranslations } from './top100_adverbier_translations.js';
+import { konjunktionerTranslations } from './top100_konjunktioner_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -64,7 +65,8 @@ const allLangs = new Set([
     ...Object.keys(sporgsmalTranslations || {}),
     ...Object.keys(verberTranslations || {}),
     ...Object.keys(adjektiverTranslations || {}),
-    ...Object.keys(adverbierTranslations || {})
+    ...Object.keys(adverbierTranslations || {}),
+    ...Object.keys(konjunktionerTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -75,6 +77,7 @@ allLangs.forEach(lang => {
         ...(verberTranslations[lang] || {}),
         ...(adjektiverTranslations[lang] || {}),
         ...(adverbierTranslations[lang] || {}),
+        ...(konjunktionerTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

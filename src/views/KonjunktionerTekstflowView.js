@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 
 /**
  * KonjunktionerTekstflowView - Felt 8: Tekstens trafik og tekstflow
@@ -15,7 +16,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     const topBar = document.createElement('div');
     topBar.className = 'top-bar tf-top-bar';
     topBar.innerHTML = `
-        <button class="back-btn tf-back-btn">← Tilbage til konjunktioner</button>
+        <button class="back-btn tf-back-btn">${getTranslation('konj_btn_back')}</button>
     `;
     topBar.querySelector('.tf-back-btn').onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     viewContainer.appendChild(topBar);
@@ -399,18 +400,18 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     const hero = document.createElement('div');
     hero.className = 'tf-hero';
     hero.innerHTML = `
-        <h1>Tekstens trafik og tekstflow</h1>
-        <p>Bindeord styrer retningen og skaber et naturligt flow i sproget.</p>
+        <h1>${getTranslation('top_konj_f8_title')}</h1>
+        <p>${getTranslation('top_konj_f8_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
     // 5 Compact Tabs
     const tabs = [
-        { id: 'kort', label: '1. Trafikkortet' },
-        { id: 'historier', label: '2. Historierne' },
-        { id: 'trafikprop', label: '3. Trafikproppen' },
-        { id: 'staccato', label: '4. Fra staccato til flow' },
-        { id: 'duel', label: '5. Trafik-duellen' }
+        { id: 'kort', label: getTranslation('flow_tab_kort') },
+        { id: 'historier', label: getTranslation('flow_tab_historier') },
+        { id: 'trafikprop', label: getTranslation('flow_tab_trafikprop') },
+        { id: 'staccato', label: getTranslation('flow_tab_staccato') },
+        { id: 'duel', label: getTranslation('flow_tab_duel') }
     ];
 
     const nav = document.createElement('div');
@@ -543,16 +544,21 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     }
 
     function renderInspector(container, sig) {
+        const lang = getLang();
+        const trans = getConjunctionWordTranslation('flow_' + sig.id, lang) || getConjunctionWordTranslation(sig.id, lang);
+        const translatedSentence = (trans && trans.sentence) ? trans.sentence : (sig.example_en || '');
+        const translatedDesc = (trans && trans.meaning) ? trans.meaning : sig.desc;
+
         container.innerHTML = `
             <div class="tf-inspector">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem;">
                     <div>
                         <span style="font-size: 1.35rem; font-weight: 800; color: ${sig.color};">${sig.word}</span>
                         <span style="font-size: 0.88rem; color: #94a3b8; font-weight: 700; margin-left: 0.4rem;">– ${sig.role}</span>
-                        <div style="font-size: 0.88rem; color: #cbd5e1; margin-top: 0.1rem;">${sig.desc}</div>
+                        <div style="font-size: 0.88rem; color: #cbd5e1; margin-top: 0.1rem;">${translatedDesc}</div>
                     </div>
                     <button type="button" id="btn-speak-signal" class="action-btn-primary" style="background: ${sig.color}; padding: 0.35rem 0.75rem; font-size: 0.82rem;">
-                        🔊 Lyt
+                        🔊 ${getTranslation('konj_btn_listen_sentence')}
                     </button>
                 </div>
 
@@ -561,7 +567,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         "${sig.example}"
                     </div>
                     <div style="font-size: 0.88rem; color: #94a3b8; margin-top: 0.2rem;">
-                        🌍 "${sig.example_en}"
+                        🌍 "${translatedSentence}"
                     </div>
                 </div>
 

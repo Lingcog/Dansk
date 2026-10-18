@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { conjunctionData } from '../utils/conjunctionData.js';
+import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 
 /**
  * KonjunktionerView - Selvstændig flade om Helsætnings- og Ledsætningskonjunktioner
@@ -467,6 +468,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
     function getKonjTranslation(item) {
         const lang = getLang();
+        const trans = getConjunctionWordTranslation(item.id, lang);
+        if (trans) return trans;
         if (item.translations && item.translations[lang]) {
             return item.translations[lang];
         }
@@ -1423,14 +1426,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Broernes verden (vrimlebilledet)', icon: '🖼️' },
-        { id: 'detektiv', label: '2. Konjunktions-detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '3. Sætningsbyggeren og puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '4. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'tid', label: '5. "Da" eller "når"? og tidskonjunktioner', icon: '⏳' },
-        { id: 'aarsag', label: '6. "Fordi", "for", "så" eller "derfor"?', icon: '⚡' },
-        { id: 'atom', label: '7. "At" eller "om"? og "hvis" eller "selvom"?', icon: '🧭' },
-        { id: 'tekstflow', label: '8. Tekstflow og historier', icon: '📖' }
+        { id: 'vrimmel', label: getTranslation('konj_tab_vrimmel'), icon: '🖼️' },
+        { id: 'detektiv', label: getTranslation('konj_tab_detektiv'), icon: '🔍' },
+        { id: 'builder', label: getTranslation('konj_tab_builder'), icon: '🧩' },
+        { id: 'kontekst', label: getTranslation('konj_tab_kontekst'), icon: '🎯' },
+        { id: 'tid', label: getTranslation('konj_tab_tid'), icon: '⏳' },
+        { id: 'aarsag', label: getTranslation('konj_tab_aarsag'), icon: '⚡' },
+        { id: 'atom', label: getTranslation('konj_tab_atom'), icon: '🧭' },
+        { id: 'tekstflow', label: getTranslation('konj_tab_tekstflow'), icon: '📖' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
@@ -1608,30 +1611,30 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌍</span> MÅLORDSPRÆSENTATION & OVERSÆTTELSE (${currentLang})
+                            <span>🌍</span> ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}
                         </div>
                         <div class="trans-word-val">${trans.word}</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">📍 I Vrimlebilledet</div>
+                        <div class="scene-heading">${getTranslation('konj_inspector_in_scene')}</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">💬 EKSEMPEL PÅ SÆTNINGSBRO</div>
+                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div class="sentence-quote-text">"${highlightedSentence}"</div>
                         ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="insp-speak-sent" style="margin-top:0.8rem;">
-                            <span>🔊</span> Lyt til eksemplet
+                            <span>🔊</span> ${getTranslation('konj_btn_listen_sentence')}
                         </button>
                     </div>
 
                     <div class="inspector-actions" style="margin-top: 1rem;">
-                        <button class="inspector-btn-action" id="insp-prev-btn">⬅ Forrige ord</button>
-                        <button class="inspector-btn-action" id="insp-next-btn" style="background:#059669;">Næste ord ➔</button>
+                        <button class="inspector-btn-action" id="insp-prev-btn">${getTranslation('konj_btn_prev_word')}</button>
+                        <button class="inspector-btn-action" id="insp-next-btn" style="background:#059669;">${getTranslation('konj_btn_next_word')}</button>
                     </div>
                 </div>
             `;

@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 
 /**
  * KonjunktionerDaNaarView - Særskilt Flade: "DA" og "NÅR"
@@ -332,6 +333,8 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
 
     function getItemTrans(item) {
         const lang = getLang();
+        const trans = getConjunctionWordTranslation(item.id, lang);
+        if (trans) return trans;
         if (item.translations && item.translations[lang]) return item.translations[lang];
         if (item.translations && item.translations.en) return item.translations.en;
         return { word: item.meaning, sentence: '' };
@@ -705,12 +708,12 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Vrimlebilledet: da og når (12 scener)', icon: '🖼️' },
-        { id: 'kognitiv', label: '2. Kognitivt værksted og ordstilling', icon: '🔬' },
-        { id: 'traening2', label: '3. Klassisk træning 2 (med illustration)', icon: '📅' },
-        { id: 'detektiv', label: '4. Da/når-detektiven (10 gåder)', icon: '🔍' },
-        { id: 'fortidsduel', label: '5. Fortids-duellen: 1 gang (da) vs. vane i fortid (når)', icon: '⚔️' },
-        { id: 'builder', label: '6. Sætningsbyggeren (ledsætning og inversion)', icon: '🧩' }
+        { id: 'vrimmel', label: getTranslation('danaar_tab_vrimmel'), icon: '🖼️' },
+        { id: 'kognitiv', label: getTranslation('danaar_tab_kognitiv'), icon: '🔬' },
+        { id: 'traening2', label: getTranslation('danaar_tab_traening'), icon: '📅' },
+        { id: 'detektiv', label: getTranslation('danaar_tab_detektiv'), icon: '🔍' },
+        { id: 'fortidsduel', label: getTranslation('danaar_tab_duel'), icon: '⚔️' },
+        { id: 'builder', label: getTranslation('danaar_tab_builder'), icon: '🧩' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
@@ -840,29 +843,29 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     </div>
                     <h2 class="inspector-word-title">${item.word}</h2>
                     <div class="inspector-trans-box">
-                        <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; text-transform:uppercase;">🌍 MÅLORDSPRÆSENTATION (${currentLang})</div>
+                        <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; text-transform:uppercase;">🌍 ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}</div>
                         <div style="font-size:1.3rem; font-weight:800; color:white; margin-top:0.2rem;">${trans.word}</div>
                         <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.2rem;">${item.meaning}</div>
                     </div>
                     <div class="inspector-scene-box">
-                        <div style="font-size:0.8rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">📍 I Vrimlebilledet</div>
+                        <div style="font-size:0.8rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">${getTranslation('konj_inspector_in_scene')}</div>
                         <p style="color:#cbd5e1; margin:0.3rem 0 0;">${item.sceneDesc}</p>
                     </div>
                 </div>
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; margin-bottom:0.3rem;">💬 EKSEMPELSÆTNINGER</div>
+                        <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; margin-bottom:0.3rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="dn-speak-btn">🔊 Lyt til udtale</button>
+                        <button class="inspector-speak-btn" id="dn-speak-btn">🔊 ${getTranslation('konj_btn_listen_sentence')}</button>
                     </div>
                     <div class="inspector-scene-box" style="border-left:3px solid #f59e0b;">
                         <div style="font-size:0.8rem; font-weight:800; color:#fde68a;">🧭 Kognitiv & Grammatisk Regel</div>
                         <p style="color:#cbd5e1; margin:0.3rem 0 0;">${item.ruleHint}</p>
                     </div>
                     <div style="display:flex; gap:0.8rem;">
-                        <button class="inspector-btn-action" id="dn-prev">⬅ Forrige</button>
-                        <button class="inspector-btn-action" id="dn-next" style="background:#059669;">Næste ➔</button>
+                        <button class="inspector-btn-action" id="dn-prev">${getTranslation('konj_btn_prev_word')}</button>
+                        <button class="inspector-btn-action" id="dn-next" style="background:#059669;">${getTranslation('konj_btn_next_word')}</button>
                     </div>
                 </div>
             `;

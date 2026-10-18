@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 
 /**
  * KonjunktionerFordiDerforView - Særskilt Flade: "FORDI" og "DERFOR"
@@ -268,6 +269,8 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
 
     function getItemTrans(item) {
         const lang = getLang();
+        const trans = getConjunctionWordTranslation(item.id, lang);
+        if (trans) return trans;
         if (item.translations && item.translations[lang]) return item.translations[lang];
         if (item.translations && item.translations.en) return item.translations.en;
         return { word: item.meaning, sentence: '' };
@@ -594,10 +597,10 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Vrimlebilledet: fordi og derfor (10 scener)', icon: '🖼️' },
-        { id: 'kognitiv', label: '2. Årsag og virkning + ordstilling', icon: '🔬' },
-        { id: 'traening2', label: '3. Klassisk træning 2 (med illustration)', icon: '➡️' },
-        { id: 'detektiv', label: '4. Årsag/virkning-detektiven (8 gåder)', icon: '🔍' },
+        { id: 'vrimmel', label: getTranslation('fordiderf_tab_vrimmel'), icon: '🖼️' },
+        { id: 'kognitiv', label: getTranslation('fordiderf_tab_kognitiv'), icon: '🔬' },
+        { id: 'traening2', label: getTranslation('fordiderf_tab_traening'), icon: '➡️' },
+        { id: 'detektiv', label: getTranslation('fordiderf_tab_detektiv'), icon: '🔍' },
         { id: 'vendemaskine', label: '5. Sætnings-vendemaskinen (fordi ↔ derfor)', icon: '🔄' },
         { id: 'builder', label: '6. Sætningsbyggeren og puslespillet', icon: '🧩' }
     ];
@@ -728,29 +731,29 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
                     </div>
                     <h2 class="inspector-word-title">${item.word}</h2>
                     <div class="inspector-trans-box">
-                        <div style="font-size:0.75rem; font-weight:800; color:#7dd3fc; text-transform:uppercase;">🌍 MÅLORDSPRÆSENTATION (${currentLang})</div>
+                        <div style="font-size:0.75rem; font-weight:800; color:#7dd3fc; text-transform:uppercase;">🌍 ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}</div>
                         <div style="font-size:1.3rem; font-weight:800; color:white; margin-top:0.2rem;">${trans.word}</div>
                         <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.2rem;">${item.meaning}</div>
                     </div>
                     <div class="inspector-scene-box">
-                        <div style="font-size:0.8rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">📍 I Vrimlebilledet</div>
+                        <div style="font-size:0.8rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">${getTranslation('konj_inspector_in_scene')}</div>
                         <p style="color:#cbd5e1; margin:0.3rem 0 0;">${item.sceneDesc}</p>
                     </div>
                 </div>
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div style="font-size:0.75rem; font-weight:800; color:#7dd3fc; margin-bottom:0.3rem;">💬 EKSEMPELSÆTNINGER</div>
+                        <div style="font-size:0.75rem; font-weight:800; color:#7dd3fc; margin-bottom:0.3rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="fd-speak-btn">🔊 Lyt til udtale</button>
+                        <button class="inspector-speak-btn" id="fd-speak-btn">🔊 ${getTranslation('konj_btn_listen_sentence')}</button>
                     </div>
                     <div class="inspector-scene-box" style="border-left:3px solid #f97316;">
                         <div style="font-size:0.8rem; font-weight:800; color:#fdba74;">🧭 Kognitiv & Grammatisk Regel</div>
                         <p style="color:#cbd5e1; margin:0.3rem 0 0;">${item.ruleHint}</p>
                     </div>
                     <div style="display:flex; gap:0.8rem;">
-                        <button class="inspector-btn-action" id="fd-prev">⬅ Forrige</button>
-                        <button class="inspector-btn-action" id="fd-next" style="background:#0284c7;">Næste ➔</button>
+                        <button class="inspector-btn-action" id="fd-prev">${getTranslation('konj_btn_prev_word')}</button>
+                        <button class="inspector-btn-action" id="fd-next" style="background:#0284c7;">${getTranslation('konj_btn_next_word')}</button>
                     </div>
                 </div>
             `;

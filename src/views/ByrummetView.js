@@ -1696,14 +1696,15 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting i naturen eller vejret ☀️🌳",
+            id: "byrum_m7_title",
+            title: "Find 3 ting i naturen (træ / kat / fugl)",
             targetCount: 3,
             options: [
-                { text: "en sol", correct: true },
-                { text: "penge", correct: false },
                 { text: "et træ", correct: true },
+                { text: "penge", correct: false },
+                { text: "en kat", correct: true },
                 { text: "en skole", correct: false },
-                { text: "en tur", correct: true },
+                { text: "en fugl", correct: true },
                 { text: "et problem", correct: false }
             ]
         },

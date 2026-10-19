@@ -10969,5 +10969,149 @@ export const adjektiverWordTranslations = {
       "meaning": "مړ / مړه",
       "sentence": "په کړکۍ کې ګل اوبه ونه موندلې او په بشپړه توګه وچ (مړ) شو."
     }
+  },
+  "meget": {
+    "baseWord": "meget",
+    "field": 5,
+    "da": {
+      "meaning": "meget (utællelig)",
+      "sentence": "Der er meget kaffe tilbage i kanden."
+    },
+    "en": {
+      "meaning": "much / a lot of (uncountable)",
+      "sentence": "There is a lot of coffee left in the pot."
+    },
+    "de": {
+      "meaning": "viel (unzählbar)",
+      "sentence": "Es ist noch viel Kaffee in der Kanne."
+    },
+    "es": {
+      "meaning": "mucho (incontable)",
+      "sentence": "Queda mucho café en la cafetera."
+    },
+    "pt": {
+      "meaning": "muito (incontável)",
+      "sentence": "Resta muito café na garrafa."
+    },
+    "tr": {
+      "meaning": "çok (sayılamayan)",
+      "sentence": "Demlikte hâlâ çok kahve var."
+    },
+    "ar": {
+      "meaning": "كثير (غير معدود)",
+      "sentence": "يوجد الكثير من القهوة المتبقية في الإبريق."
+    },
+    "fa": {
+      "meaning": "بسیار / زیاد (غیرقابل شمارش)",
+      "sentence": "هنوز قهوه زیادی در قوری باقی مانده است."
+    },
+    "ku": {
+      "meaning": "gelek / pir (nayê jimartin)",
+      "sentence": "Di qehwedankê de hê gelek qehwe maye."
+    },
+    "ur": {
+      "meaning": "بہت / زیادہ (ناقابلِ شمار)",
+      "sentence": "تھرمس میں ابھی کافی ساری کافی باقی ہے۔"
+    },
+    "ru": {
+      "meaning": "много (неисчисляемое)",
+      "sentence": "В кофейнике осталось ещё много кофе."
+    },
+    "uk": {
+      "meaning": "багато (незлічуване)",
+      "sentence": "У кавнику залишилося ще багато кави."
+    },
+    "zh": {
+      "meaning": "许多 / 大量（不可数）",
+      "sentence": "壶里还剩下很多咖啡。"
+    },
+    "vi": {
+      "meaning": "nhiều (không đếm được)",
+      "sentence": "Còn rất nhiều cà phê trong bình."
+    },
+    "th": {
+      "meaning": "มาก / เยอะ (นับไม่ได้)",
+      "sentence": "ยังมีกาแฟเหลืออยู่ในกาอีกมาก"
+    },
+    "ne": {
+      "meaning": "धेरै (गन्न नसकिने)",
+      "sentence": "भाँडोमा अझै धेरै कफी बाँकी छ।"
+    },
+    "ps": {
+      "meaning": "ډېر (نه شمېرل کېدونکی)",
+      "sentence": "په ګرموس کې لاهم ډېره قهوه پاتې ده."
+    }
+  },
+  "lidt": {
+    "baseWord": "lidt",
+    "field": 5,
+    "da": {
+      "meaning": "lidt (utællelig)",
+      "sentence": "Der er kun lidt mælk tilbage i kartonen."
+    },
+    "en": {
+      "meaning": "little / a little bit (uncountable)",
+      "sentence": "There is only a little milk left in the carton."
+    },
+    "de": {
+      "meaning": "wenig / ein bisschen (unzählbar)",
+      "sentence": "In der Packung ist nur noch wenig Milch."
+    },
+    "es": {
+      "meaning": "poco / un poco (incontable)",
+      "sentence": "Solo queda un poco de leche en el cartón."
+    },
+    "pt": {
+      "meaning": "pouco / um pouco (incontável)",
+      "sentence": "Resta apenas um pouco de leite na caixa."
+    },
+    "tr": {
+      "meaning": "az / biraz (sayılamayan)",
+      "sentence": "Kutuda sadece biraz süt kalmış."
+    },
+    "ar": {
+      "meaning": "قليل (غير معدود)",
+      "sentence": "لم يتبق سوى القليل من الحليب في العلبة."
+    },
+    "fa": {
+      "meaning": "کمی / اندک (غیرقابل شمارش)",
+      "sentence": "فقط مقدار کمی شیر در کارتن باقی مانده است."
+    },
+    "ku": {
+      "meaning": "hindik / piçek (nayê jimartin)",
+      "sentence": "Di qutiyê de tenê piçek şîr maye."
+    },
+    "ur": {
+      "meaning": "تھوڑا / کم (ناقابلِ شمار)",
+      "sentence": "ڈبے میں صرف تھوڑا سا دودھ باقی ہے۔"
+    },
+    "ru": {
+      "meaning": "мало / немного (неисчисляемое)",
+      "sentence": "В пакете осталось лишь немного молока."
+    },
+    "uk": {
+      "meaning": "мало / небагато (незлічуване)",
+      "sentence": "У пакеті залишилося лише трохи молока."
+    },
+    "zh": {
+      "meaning": "少许 / 一点点（不可数）",
+      "sentence": "盒子里只剩下一丁点牛奶了。"
+    },
+    "vi": {
+      "meaning": "ít / một ít (không đếm được)",
+      "sentence": "Chỉ còn một ít sữa trong hộp."
+    },
+    "th": {
+      "meaning": "น้อย / นิดหน่อย (นับไม่ได้)",
+      "sentence": "เหลือนมอยู่ในกล่องเพียงเล็กน้อยเท่านั้น"
+    },
+    "ne": {
+      "meaning": "थोरै (गन्न नसकिने)",
+      "sentence": "कार्टुनमा थोरै मात्र दूध बाँकी छ।"
+    },
+    "ps": {
+      "meaning": "لږ (نه شمېرل کېدونکی)",
+      "sentence": "په ډبي کې یوازې لږې شیدې پاتې دي."
+    }
   }
 };

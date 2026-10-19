@@ -5,13 +5,13 @@ import { shuffleArray } from '../utils/shuffle.js';
 
 /**
  * AdjektiverTilstandeView - Felt 5: Farver, mængder og tilstande
- * Dækker 20 af de mest almindelige tilstands-, mængde- og farveadjektiver på dansk (10 kontrast-par):
- * 1. Kontrast-studiet (Visuel flade i klasselokalet og kontoret med 20 hotspots og modpol-kobling)
- * 2. Find modpolen (Antonym-duellen - tilstande i hverdagen)
+ * Dækker 22 af de mest almindelige tilstands-, mængde- og farveadjektiver på dansk (11 kontrast-par):
+ * 1. Kontrast-studiet (Visuel flade i klasselokalet og kontoret med 22 hotspots og modpol-kobling)
+ * 2. Find modpolen (Antonym-duellen - tilstande og mængder i hverdagen)
  * 3. Synonymer & Nuancer (Tilstandsnuancer)
  * 4. Barometret (Skalaer for renhed, helbred, fugtighed, lys, mængde og sikkerhed)
- * 5. Kongruens-byggeren (Fælde-træning: "sikker/sikre", -t ved intetkøn og flertal med -e)
- * 6. Kontekst & Historie (Hverdagssituationer fra sundhed, rengøring, vejr og dagligdag)
+ * 5. Kongruens-byggeren (Fælde-træning: tællelig/utællelig "mange/få" vs. "meget/lidt", "sikker/sikre", -t og -e)
+ * 6. Kontekst & Historie (Hverdagssituationer fra sundhed, mængder, rengøring, vejr og dagligdag)
  */
 export function renderAdjektiverTilstandeView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
@@ -731,8 +731,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 side: 'left',
                 x: 16, y: 31,
                 itemLabel: 'Mange urtepotter 🪴',
-                faelles: 'mange stole',
-                intet: 'mange penge',
+                faelles: 'mange stole (tællelig)',
+                intet: 'mange æbler (tællelig)',
                 flertal: 'de mange elever',
                 context: 'Der er mange elever i klassen i dag.'
             },
@@ -741,8 +741,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 side: 'right',
                 x: 78, y: 48,
                 itemLabel: 'Få krummer 🪚',
-                faelles: 'få stole',
-                intet: 'få minutter',
+                faelles: 'få stole (tællelig)',
+                intet: 'få æbler (tællelig)',
                 flertal: 'de få elever',
                 context: 'Der er kun få ledige pladser i bussen.'
             }
@@ -883,6 +883,29 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 intet: 'et dødt træ',
                 flertal: 'de døde blade',
                 context: 'Blomsten i vinduet fik ikke vand og er helt død.'
+            }
+        },
+        {
+            id: 'par_11',
+            wordA: {
+                word: 'meget',
+                side: 'left',
+                x: 63, y: 74,
+                itemLabel: 'Meget kaffe i kanden ☕',
+                faelles: 'meget kaffe (utællelig)',
+                intet: 'meget vand (utællelig)',
+                flertal: '— (bruges kun utælleligt)',
+                context: 'Der er meget kaffe tilbage i kanden.'
+            },
+            wordB: {
+                word: 'lidt',
+                side: 'right',
+                x: 52, y: 70,
+                itemLabel: 'Lidt vand i glasset 💧',
+                faelles: 'lidt kaffe (utællelig)',
+                intet: 'lidt vand (utællelig)',
+                flertal: '— (bruges kun utælleligt)',
+                context: 'Der er kun lidt mælk tilbage i kartonen.'
             }
         }
     ];
@@ -1081,8 +1104,17 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             targetWord: 'mange',
             correct: 'få ✏️',
             options: ['få ✏️', 'små 🏡', 'halve 🍎', 'tomme 🥛'],
-            wrongExplanation: 'Om antal hedder modpolerne mange og få.',
-            congruenceBonus: '<strong>Mange</strong> stole ↔ <strong>Få</strong> stole.'
+            wrongExplanation: 'Om tællelige antal hedder modpolerne mange og få.',
+            congruenceBonus: '<strong>Mange</strong> stole (tællelig flertal) ↔ <strong>Få</strong> stole. (Modsat væsker/masse: <strong>meget</strong> vand ↔ <strong>lidt</strong> vand).'
+        },
+        {
+            stimulus: 'Der er brygget <strong>MEGET</strong> kaffe til hele kontoret ☕.',
+            question: 'Hvad siger man, hvis der kun er en lille dråbe tilbage i bunden af kanden?',
+            targetWord: 'meget',
+            correct: 'lidt 💧',
+            options: ['lidt 💧', 'få ✏️', 'halvt 🥪', 'tørt 👕'],
+            wrongExplanation: 'Kaffe er en væske (utællelig masse). Modpolen til meget er lidt (ikke få).',
+            congruenceBonus: '<strong>Meget</strong> kaffe (utællelig) ↔ <strong>Lidt</strong> kaffe. (Modsat tællelige ting: <strong>mange</strong> kopper ↔ <strong>få</strong> kopper).'
         },
         {
             stimulus: 'Lås døren, så computeren står på et <strong>SIKKERT</strong> sted 🔐.',
@@ -1468,15 +1500,23 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         },
         {
             id: 'f5_s5',
-            title: '📊 Skala 5: Mængde',
-            desc: 'Arranger mængderne fra ingen til utallige:',
+            title: '📊 Skala 5: Tællelig mængde (antal)',
+            desc: 'Arranger mængderne fra ingen til utallige (tællelige ting):',
             lowLabel: '0️⃣ Ingen',
             highLabel: '♾️ Utallige',
             correctOrder: ['ingen', 'få', 'nogle', 'mange', 'utallige']
         },
         {
+            id: 'f5_s7',
+            title: '☕ Skala 6: Utællelig mængde (masse & væske)',
+            desc: 'Arranger mængden af kaffe eller vand fra ingenting til overflod:',
+            lowLabel: '0️⃣ Intet',
+            highLabel: '🌊 Kæmpe mængder',
+            correctOrder: ['intet', 'lidt', 'noget', 'meget', 'enormt meget']
+        },
+        {
             id: 'f5_s6',
-            title: '🧭 Skala 6: Vished og sikkerhed',
+            title: '🧭 Skala 7: Vished og sikkerhed',
             desc: 'Arranger fra helt usikker til klokkeklar vished:',
             lowLabel: '❓ Tvivlsom',
             highLabel: '✔️ Klokkeklar',
@@ -1680,6 +1720,42 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             correct: 'lyse',
             options: ['lys', 'lyst', 'lyse'],
             rule: '<strong>Bestemt form (det ... værelse):</strong> Får altid <strong>-e</strong>: <em>det lyse værelse</em>.'
+        },
+        {
+            sentence: 'Jeg må skynde mig videre, for jeg har ikke ______ tid i dag.',
+            correct: 'meget',
+            options: ['meget', 'mange', 'få'],
+            rule: '<strong>⚖️ Utællelig mængde (tid):</strong> "Tid" er et utælleligt begreb. Stor mængde hedder <strong>meget tid</strong> (ikke "mange tid").'
+        },
+        {
+            sentence: 'Der kom rigtig ______ gæster til fødselsdagsfesten.',
+            correct: 'mange',
+            options: ['mange', 'meget', 'lidt'],
+            rule: '<strong>⚖️ Tællelig mængde i flertal (gæster):</strong> Enkeltpersoner der kan tælles (en gæst, to gæster...) tager <strong>mange</strong> (ikke "meget gæster").'
+        },
+        {
+            sentence: 'Må jeg bede om bare ______ mælk i min kaffe?',
+            correct: 'lidt',
+            options: ['lidt', 'få', 'mange'],
+            rule: '<strong>⚖️ Utællelig mængde (mælk):</strong> Væsker og masser er utællelige uden måleenhed. Lille mængde hedder <strong>lidt mælk</strong> (ikke "få mælk").'
+        },
+        {
+            sentence: 'Bussen var næsten propfuld; der var kun ______ ledige sæder.',
+            correct: 'få',
+            options: ['få', 'lidt', 'meget'],
+            rule: '<strong>⚖️ Tællelig mængde i flertal (sæder):</strong> Sæder kan tælles (et sæde, to sæder...). Lille mængde hedder <strong>få sæder</strong> (ikke "lidt sæder").'
+        },
+        {
+            sentence: 'Kagen er alt for sød, fordi der er kommet for ______ sukker i.',
+            correct: 'meget',
+            options: ['meget', 'mange', 'få'],
+            rule: '<strong>⚖️ Utællelig masse (sukker):</strong> "Sukker" er en samlet masse uden flertal. Derfor hedder det <strong>for meget sukker</strong>.'
+        },
+        {
+            sentence: 'Hun skrev en flot dansk stil med forbavsende ______ fejl.',
+            correct: 'få',
+            options: ['få', 'lidt', 'meget'],
+            rule: '<strong>⚖️ Tællelig mængde i flertal (fejl):</strong> Fejl kan tælles (en fejl, flere fejl). Derfor hedder det <strong>få fejl</strong> (ikke "lidt fejl").'
         }
     ];
 
@@ -1708,6 +1784,24 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 <button class="adj-go-grammar-btn" id="go-comparison-guide-btn">
                     ${getTranslation('adj_grammar_banner_btn')}
                 </button>
+            </div>
+
+            <div class="adj-quantity-guide-box" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.12), rgba(249, 115, 22, 0.16)); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 16px; padding: 1.1rem; margin: 1rem 0 1.5rem;">
+                <div style="font-weight: 700; color: #f97316; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+                    <span>⚖️</span> Tællelig vs. Utællelig mængde (Mange/Få ↔ Meget/Lidt)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; font-size: 0.92rem; color: #cbd5e1;">
+                    <div style="background: rgba(15, 23, 42, 0.65); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #38bdf8;">
+                        <strong style="color: #38bdf8;">🔢 Tællelige navneord (flertal: 1, 2, 3...):</strong><br>
+                        • Stor mængde: <strong>mange</strong> (mange stole, mange bøger, mange gæster)<br>
+                        • Lille mængde: <strong>få</strong> (få stole, få bøger, få fejl)
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.65); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #f59e0b;">
+                        <strong style="color: #f59e0b;">💧 Utællelige navneord (masse, væske, tid):</strong><br>
+                        • Stor mængde: <strong>meget</strong> (meget kaffe, meget tid, meget vand)<br>
+                        • Lille mængde: <strong>lidt</strong> (lidt kaffe, lidt tid, lidt mælk)
+                    </div>
+                </div>
             </div>
 
             <div class="task-top-bar">
@@ -1875,6 +1969,18 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             correct: 'klar',
             options: ['klar', 'uklar', 'død', 'våd'],
             explanation: 'Store, tydelige bogstaver giver en klar instruktion.'
+        },
+        {
+            story: 'Det regnede kraftigt hele eftermiddagen, så der samlede sig rigtig ______ vand på vejen.',
+            correct: 'meget',
+            options: ['meget', 'mange', 'få', 'rent'],
+            explanation: 'Vand er en utællelig væske, så stor mængde hedder "meget vand" (ikke mange).'
+        },
+        {
+            story: 'Kunden havde kun en lille smule mønter i lommen og kunne kun købe ______ æbler.',
+            correct: 'få',
+            options: ['få', 'lidt', 'meget', 'halvt'],
+            explanation: 'Æbler er tællelige i flertal, så den lille mængde hedder "få æbler" (ikke lidt).'
         }
     ];
 

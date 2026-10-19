@@ -1623,7 +1623,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const byrumMissions = [
         {
-            title: "Find 3 transportmidler på vejen 🚗",
+            id: "byrum_m1_title",
+            title: "Find 3 ord for trafik (🚗)",
             targetCount: 3,
             options: [
                 { text: "en bil", correct: true },
@@ -1733,7 +1734,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         header.className = 'mission-header';
         header.innerHTML = `
             <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${byrumMissions.length}</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem;">${m.title}</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem;">${(m.id && getTranslation(m.id)) ? getTranslation(m.id) : m.title}</div>
             <div style="font-size: 0.95rem; color: #94a3b8;">${getTranslation('byrum_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);

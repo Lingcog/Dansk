@@ -33,6 +33,145 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         window.speechSynthesis.speak(utterance);
     }
 
+    // Similarity checker for Danish pronunciation
+    function isWordSimilar(w1, w2) {
+        if (!w1 || !w2) return false;
+        if (w1 === w2) return true;
+        if (w1.length >= 3 && w2.length >= 3) {
+            if (w1.includes(w2) || w2.includes(w1)) return true;
+            if (Math.abs(w1.length - w2.length) <= 1 && w1.length >= 4) {
+                let diffs = 0;
+                const minLen = Math.min(w1.length, w2.length);
+                for (let i = 0; i < minLen; i++) {
+                    if (w1[i] !== w2[i]) diffs++;
+                }
+                if (diffs <= 1) return true;
+            }
+        }
+        return false;
+    }
+
+    // Sentence match evaluator comparing spoken transcript against target sentence
+    function evaluateSentenceMatch(targetSentence, spokenText) {
+        const cleanWord = (w) => w.toLowerCase().replace(/[.,!?:;—–"']/g, '').trim();
+        const targetWords = targetSentence.trim().split(/\s+/);
+        const targetClean = targetWords.map(cleanWord);
+        const spokenWords = spokenText.trim().split(/\s+/).map(cleanWord).filter(Boolean);
+
+        let matchCount = 0;
+        let spokenIdx = 0;
+        const wordResults = [];
+
+        targetClean.forEach((targetW, i) => {
+            let matched = false;
+            for (let j = spokenIdx; j < Math.min(spokenIdx + 4, spokenWords.length); j++) {
+                const spkW = spokenWords[j];
+                if (spkW === targetW || isWordSimilar(spkW, targetW)) {
+                    matched = true;
+                    spokenIdx = j + 1;
+                    break;
+                }
+            }
+            if (matched) {
+                matchCount++;
+                wordResults.push({ word: targetWords[i], correct: true });
+            } else {
+                wordResults.push({ word: targetWords[i], correct: false });
+            }
+        });
+
+        const isSuccess = targetClean.length > 0 && (matchCount / targetClean.length >= 0.70 || matchCount === targetClean.length);
+        return {
+            isSuccess,
+            matchCount,
+            totalCount: targetClean.length,
+            wordResults,
+            spoken: spokenText
+        };
+    }
+
+    // Reusable SpeechRecognition handler for sentence-level training
+    function setupSentenceMic(micBtn, feedbackBox, targetSentenceOrFn, onSuccess = null, onResultCallback = null) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            micBtn.onclick = () => {
+                feedbackBox.className = 'speech-feedback-box incorrect';
+                feedbackBox.textContent = getTranslation('vrimmel_mic_unsupported') || 'Tale-genkendelse understøttes i Chrome, Safari og Edge.';
+            };
+            return;
+        }
+
+        let rec = null;
+        let isListening = false;
+        const originalHtml = micBtn.innerHTML;
+
+        micBtn.onclick = () => {
+            if (isListening && rec) {
+                rec.stop();
+                return;
+            }
+
+            const target = typeof targetSentenceOrFn === 'function' ? targetSentenceOrFn() : targetSentenceOrFn;
+            if (!target) return;
+
+            try {
+                rec = new SpeechRecognition();
+                rec.lang = 'da-DK';
+                rec.interimResults = false;
+                rec.maxAlternatives = 1;
+
+                rec.onstart = () => {
+                    isListening = true;
+                    micBtn.classList.add('listening');
+                    micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening') || 'Lytter...'}`;
+                    feedbackBox.className = 'speech-feedback-box listening';
+                    feedbackBox.textContent = `Sig: "${target}"`;
+                };
+
+                rec.onresult = (evt) => {
+                    const spoken = evt.results[0][0].transcript.trim();
+                    const evalResult = evaluateSentenceMatch(target, spoken);
+
+                    if (onResultCallback) {
+                        onResultCallback(evalResult);
+                    }
+
+                    if (evalResult.isSuccess) {
+                        feedbackBox.className = 'speech-feedback-box correct';
+                        feedbackBox.innerHTML = `🎉 Flot udtalt! "<strong>${spoken}</strong>" ✓`;
+                        if (onSuccess) onSuccess(evalResult);
+                    } else {
+                        feedbackBox.className = 'speech-feedback-box incorrect';
+                        feedbackBox.innerHTML = `Prøv igen. Maskinen hørte: "<em>${spoken}</em>"`;
+                    }
+                };
+
+                rec.onerror = (err) => {
+                    isListening = false;
+                    micBtn.classList.remove('listening');
+                    micBtn.innerHTML = originalHtml;
+                    if (err.error !== 'no-speech') {
+                        feedbackBox.className = 'speech-feedback-box incorrect';
+                        feedbackBox.textContent = `Mikrofon: ${err.error}`;
+                    }
+                };
+
+                rec.onend = () => {
+                    isListening = false;
+                    micBtn.classList.remove('listening');
+                    micBtn.innerHTML = originalHtml;
+                };
+
+                rec.start();
+            } catch (e) {
+                feedbackBox.className = 'speech-feedback-box incorrect';
+                feedbackBox.textContent = 'Kunne ikke starte mikrofonen.';
+                micBtn.classList.remove('listening');
+                micBtn.innerHTML = originalHtml;
+            }
+        };
+    }
+
     // Styles
     const style = document.createElement('style');
     style.textContent = `
@@ -327,6 +466,20 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             font-size: 1.05rem;
             color: #e2e8f0;
             font-style: italic;
+        }
+        .detail-sentence .udtale-word {
+            display: inline-block;
+            transition: all 0.25s ease;
+            padding: 0 2px;
+            border-radius: 4px;
+        }
+        .detail-sentence .udtale-word.correct {
+            color: #4ade80 !important;
+            font-weight: 700;
+        }
+        .detail-sentence .udtale-word.incorrect {
+            color: #f87171 !important;
+            text-decoration: underline wavy #ef4444;
         }
         .listen-word-btn {
             background: #2563eb;
@@ -1007,6 +1160,22 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
             transform: scale(1.03);
         }
+        .sb-mic-btn {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+        }
+        .sb-mic-btn:hover {
+            background: rgba(239, 68, 68, 0.3) !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5) !important;
+            transform: scale(1.03);
+        }
+        .sb-mic-btn.listening {
+            background: #ef4444 !important;
+            color: #ffffff !important;
+            border-color: #f87171 !important;
+            animation: micGlow 1.2s infinite ease-in-out;
+        }
 
         /* Challenge / Task Mode */
         .sb-task-container {
@@ -1428,6 +1597,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             const transMeaning = wordTrans?.meaning;
             const transSentence = wordTrans?.sentence;
 
+            const sentenceWordsHtml = kw.sentence.split(' ').map(w => `<span class="udtale-word">${w}</span>`).join(' ');
+
             detailBox.innerHTML = `
                 <div style="flex: 1; min-width: 250px;">
                     <div>
@@ -1436,24 +1607,29 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                     </div>
                     <div class="detail-main-word">
                         ${kw.icon} ${kw.word}
+                        <button id="listen-curr-word" style="background: none; border: none; cursor: pointer; font-size: 1.15rem; margin-left: 0.5rem; vertical-align: middle;" title="Hør ordet">🔊</button>
                         ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                     </div>
                     <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${kw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${kw.flertal}</strong></div>
-                    <div class="detail-sentence">"${kw.sentence}"</div>
+                    <div class="detail-sentence" id="vrimmel-sentence-display">"${sentenceWordsHtml}"</div>
                     ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
-                        <button class="listen-word-btn" id="listen-curr-word">
-                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
+                        <button class="listen-word-btn" id="listen-curr-sentence">
+                            <span>🔊</span> Hør sætning
                         </button>
-                        <button class="mic-speak-btn" id="mic-curr-word">
-                            <span>🎤</span> ${getTranslation('vrimmel_mic_btn')}
+                        <button class="mic-speak-btn" id="mic-curr-sentence">
+                            <span>🎤</span> Udtal sætning
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback"></div>
                 </div>
             `;
+
+            detailBox.querySelector('#listen-curr-sentence').onclick = () => {
+                speakDanish(kw.sentence);
+            };
 
             detailBox.querySelector('#listen-curr-word').onclick = () => {
                 if (kw.audioFile) {
@@ -1464,87 +1640,36 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 }
             };
 
-            const micBtn = detailBox.querySelector('#mic-curr-word');
+            const micBtn = detailBox.querySelector('#mic-curr-sentence');
             const feedbackBox = detailBox.querySelector('#speech-feedback');
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-            if (!SpeechRecognition) {
-                micBtn.onclick = () => {
-                    feedbackBox.className = 'speech-feedback-box incorrect';
-                    feedbackBox.textContent = getTranslation('vrimmel_mic_unsupported');
-                };
-            } else {
-                let rec = null;
-                let isListening = false;
-                micBtn.onclick = () => {
-                    if (isListening && rec) {
-                        rec.stop();
-                        return;
-                    }
-                    try {
-                        rec = new SpeechRecognition();
-                        rec.lang = 'da-DK';
-                        rec.interimResults = false;
-                        rec.maxAlternatives = 1;
-
-                        rec.onstart = () => {
-                            isListening = true;
-                            micBtn.classList.add('listening');
-                            micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening')}`;
-                            feedbackBox.className = 'speech-feedback-box listening';
-                            feedbackBox.textContent = `${getTranslation('vrimmel_mic_prompt')} "${kw.clean}"...`;
-                        };
-
-                        rec.onresult = (evt) => {
-                            const spoken = evt.results[0][0].transcript.toLowerCase().trim();
-                            const cleanSpoken = spoken.replace(/[.,!?]/g, '').trim();
-                            const cleanTarget = kw.clean.toLowerCase().trim();
-                            const fullTarget = kw.word.toLowerCase().trim();
-                            const isMatch = cleanSpoken === cleanTarget || 
-                                            cleanSpoken === fullTarget || 
-                                            cleanSpoken.split(' ').includes(cleanTarget) ||
-                                            cleanTarget.includes(cleanSpoken) ||
-                                            (kw.clean === 'stykke tøj' && cleanSpoken.includes('tøj')) ||
-                                            (kw.clean === 'stykke kød' && cleanSpoken.includes('kød'));
-
-                            if (isMatch) {
-                                feedbackBox.className = 'speech-feedback-box correct';
-                                feedbackBox.innerHTML = `${getTranslation('vrimmel_mic_correct')} <strong>"${spoken}"</strong> ✓`;
-                            } else {
-                                feedbackBox.className = 'speech-feedback-box incorrect';
-                                feedbackBox.innerHTML = getTranslation('vrimmel_mic_incorrect').replace('{spoken}', spoken);
-                            }
-                        };
-
-                        rec.onerror = (err) => {
-                            isListening = false;
-                            micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
-                            if (err.error !== 'no-speech') {
-                                feedbackBox.className = 'speech-feedback-box incorrect';
-                                feedbackBox.textContent = `Mikrofon: ${err.error}`;
-                            }
-                        };
-
-                        rec.onend = () => {
-                            isListening = false;
-                            micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
-                        };
-
-                        rec.start();
-                    } catch (e) {
-                        feedbackBox.className = 'speech-feedback-box incorrect';
-                        feedbackBox.textContent = 'Kunne ikke starte mikrofonen.';
-                    }
-                };
-            }
+            setupSentenceMic(
+                micBtn,
+                feedbackBox,
+                kw.sentence,
+                (evalResult) => {
+                    const spans = detailBox.querySelectorAll('#vrimmel-sentence-display .udtale-word');
+                    evalResult.wordResults.forEach((res, idx) => {
+                        if (spans[idx]) {
+                            spans[idx].className = `udtale-word ${res.correct ? 'correct' : 'incorrect'}`;
+                        }
+                    });
+                },
+                (evalResult) => {
+                    const spans = detailBox.querySelectorAll('#vrimmel-sentence-display .udtale-word');
+                    evalResult.wordResults.forEach((res, idx) => {
+                        if (spans[idx]) {
+                            spans[idx].className = `udtale-word ${res.correct ? 'correct' : 'incorrect'}`;
+                        }
+                    });
+                }
+            );
 
             if (kw.audioFile) {
                 const audio = new Audio(kw.audioFile);
-                audio.play().catch(() => speakDanish(kw.word));
+                audio.play().catch(() => speakDanish(kw.sentence));
             } else {
-                speakDanish(kw.word);
+                speakDanish(kw.sentence);
             }
         };
 
@@ -2538,9 +2663,15 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             <div class="sb-live-box">
                 <div class="sb-live-label">Din samlede sætning</div>
                 <div class="sb-live-sentence" id="free-live-sentence"></div>
-                <button class="sb-listen-btn" id="free-listen-btn">
-                    <span>🔊</span> Hør udtale
-                </button>
+                <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="sb-listen-btn" id="free-listen-btn">
+                        <span>🔊</span> Hør udtale
+                    </button>
+                    <button class="sb-listen-btn sb-mic-btn" id="free-mic-btn">
+                        <span>🎤</span> Test din udtale
+                    </button>
+                </div>
+                <div class="speech-feedback-box" id="free-speech-feedback" style="max-width: 600px; margin: 0.8rem auto 0; text-align: center;"></div>
             </div>
         `;
 
@@ -2588,6 +2719,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         const rowsContainer = freeBuilderContainer.querySelector('#free-builder-rows');
         const liveSentenceEl = freeBuilderContainer.querySelector('#free-live-sentence');
         const listenBtn = freeBuilderContainer.querySelector('#free-listen-btn');
+        const freeMicBtn = freeBuilderContainer.querySelector('#free-mic-btn');
+        const freeFeedbackEl = freeBuilderContainer.querySelector('#free-speech-feedback');
 
         function updateSentence() {
             liveSentenceEl.innerHTML = `
@@ -2596,11 +2729,27 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 <span class="grammar-word word-substantiv">${selected[2]}</span>
                 <span class="grammar-word word-sted">${selected[3]}</span>.
             `;
+            if (freeFeedbackEl) {
+                freeFeedbackEl.className = 'speech-feedback-box';
+                freeFeedbackEl.style.display = 'none';
+            }
         }
 
         listenBtn.onclick = () => {
             speakDanish(`${selected[0]} ${selected[1]} ${selected[2]} ${selected[3]}`);
         };
+
+        setupSentenceMic(
+            freeMicBtn,
+            freeFeedbackEl,
+            () => `${selected[0]} ${selected[1]} ${selected[2]} ${selected[3]}.`,
+            (evalResult) => {
+                liveSentenceEl.querySelectorAll('.grammar-word').forEach(w => {
+                    w.style.boxShadow = '0 0 16px rgba(74, 222, 128, 0.7)';
+                    setTimeout(() => w.style.boxShadow = '', 2000);
+                });
+            }
+        );
 
         freeCategories.forEach((cat, catIdx) => {
             const row = document.createElement('div');
@@ -2995,10 +3144,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                         <button class="sb-listen-btn" id="puzzle-listen-full">
                             <span>🔊</span> Hør sætningen igen
                         </button>
+                        <button class="sb-listen-btn sb-mic-btn" id="puzzle-mic-btn">
+                            <span>🎤</span> Gentag sætningen
+                        </button>
                         <button class="sb-action-btn" id="puzzle-next-btn">
                             ${currentChallengeIdx < challengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
                         </button>
                     </div>
+                    <div class="speech-feedback-box" id="puzzle-speech-feedback" style="margin-top: 0.8rem; text-align: center;"></div>
                 `;
 
                 feedbackEl.querySelector('#puzzle-listen-full').onclick = () => speakDanish(fullSentence);
@@ -3006,6 +3159,22 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                     currentChallengeIdx = (currentChallengeIdx + 1) % challengeTasks.length;
                     setupChallenge();
                 };
+
+                const puzzleMicBtn = feedbackEl.querySelector('#puzzle-mic-btn');
+                const puzzleFeedback = feedbackEl.querySelector('#puzzle-speech-feedback');
+                setupSentenceMic(
+                    puzzleMicBtn,
+                    puzzleFeedback,
+                    fullSentence,
+                    (evalResult) => {
+                        puzzleFeedback.className = 'speech-feedback-box correct';
+                        puzzleFeedback.innerHTML = `🎉 Perfekt udtalt! "<strong>${evalResult.spoken}</strong>" ⭐`;
+                        slotsEl.querySelectorAll('.sb-puzzle-slot').forEach(s => {
+                            s.style.boxShadow = '0 0 18px rgba(74, 222, 128, 0.8)';
+                            setTimeout(() => s.style.boxShadow = '', 2500);
+                        });
+                    }
+                );
             } else {
                 feedbackEl.innerHTML = `
                     <div class="sb-feedback-msg error">

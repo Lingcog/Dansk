@@ -1354,7 +1354,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 29, y: 83, icon: '🪑', sentence: 'Drengen sidder på en stol.' },
         { word: 'en mad', clean: 'mad', gender: 'en', bestemt: 'maden', flertal: 'madder', x: 38, y: 64, icon: '🍞', sentence: 'De spiser mad sammen.' },
         { word: 'en kop', clean: 'kop', gender: 'en', bestemt: 'koppen', flertal: 'kopper', x: 42, y: 58, icon: '☕', sentence: 'Hun drikker en kop kaffe.' },
-        { word: 'et kød', clean: 'kød', gender: 'et', bestemt: 'kødet', flertal: 'kød', x: 44.5, y: 68, icon: '🥩', sentence: 'De spiser kød til aften.' },
+        { word: 'et stykke kød', clean: 'stykke kød', gender: 'et', bestemt: 'kødet', flertal: 'kød', x: 44.5, y: 68, icon: '🥩', sentence: 'De spiser kød til aften.' },
         { word: 'en fisk', clean: 'fisk', gender: 'en', bestemt: 'fisken', flertal: 'fisk', x: 47.5, y: 70, icon: '🐟', sentence: 'De spiser fisk til frokost.' },
         { word: 'et glas', clean: 'glas', gender: 'et', bestemt: 'glasset', flertal: 'glas', x: 54.5, y: 64, icon: '🥛', sentence: 'Hun drikker et glas vand.' },
         { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 57, y: 68, icon: '🪑', sentence: 'Familien sidder ved bordet.' },
@@ -1504,7 +1504,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                                             cleanSpoken === fullTarget || 
                                             cleanSpoken.split(' ').includes(cleanTarget) ||
                                             cleanTarget.includes(cleanSpoken) ||
-                                            (kw.clean === 'stykke tøj' && cleanSpoken.includes('tøj'));
+                                            (kw.clean === 'stykke tøj' && cleanSpoken.includes('tøj')) ||
+                                            (kw.clean === 'stykke kød' && cleanSpoken.includes('kød'));
 
                             if (isMatch) {
                                 feedbackBox.className = 'speech-feedback-box correct';
@@ -1602,7 +1603,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         { name: 'kaffe', gender: 'en' },
         { name: 'glas', gender: 'et' },
         { name: 'mad', gender: 'en' },
-        { name: 'kød', gender: 'et' },
+        { name: 'stykke kød', gender: 'et' },
         { name: 'fisk', gender: 'en' },
         { name: 'hund', gender: 'en' },
         { name: 'kat', gender: 'en' },
@@ -1720,7 +1721,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             options: [
                 { text: "en mad", correct: true },
                 { text: "en seng", correct: false },
-                { text: "et kød", correct: true },
+                { text: "et stykke kød", correct: true },
                 { text: "et vindue", correct: false },
                 { text: "en fisk", correct: true },
                 { text: "en hund", correct: false }
@@ -1795,7 +1796,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 { text: "et træ", correct: true },
                 { text: "en seng", correct: false },
                 { text: "en fugl", correct: true },
-                { text: "et kød", correct: false }
+                { text: "et stykke kød", correct: false }
             ]
         }
     ];
@@ -2264,7 +2265,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 { text: "et vindue 🪟", correct: true },
                 { text: "en kat 🐈", correct: false },
                 { text: "en fisk 🐟", correct: false },
-                { text: "et kød 🥩", correct: false }
+                { text: "et stykke kød 🥩", correct: false }
             ]
         }
     ];

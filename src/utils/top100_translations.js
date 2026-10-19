@@ -6622,8 +6622,27 @@ export const kitchenWordTranslations = {
     "ne": { meaning: "एउटा कप", sentence: "उनी एक कप कफी पिउँछिन्।" },
     "ps": { meaning: "یوه پیاله", sentence: "هغه یوه پیاله قهوه څښي." }
   },
+  "et stykke kød": {
+    "da": { meaning: "et stykke kød", sentence: "De spiser kød til aften." },
+    "en": { meaning: "a piece of meat", sentence: "They eat meat for dinner." },
+    "de": { meaning: "ein Stück Fleisch", sentence: "Sie essen Fleisch zum Abendessen." },
+    "es": { meaning: "un trozo de carne", sentence: "Comen carne para cenar." },
+    "pt": { meaning: "um pedaço de carne", sentence: "Eles comem carne ao jantar." },
+    "tr": { meaning: "bir parça et", sentence: "Akşam yemeğinde et yiyorlar." },
+    "ar": { meaning: "قطعة لحم", sentence: "هم يتناولون اللحم في العشاء." },
+    "fa": { meaning: "یک تکه گوشت", sentence: "آن‌ها برای شام گوشت می‌خورند." },
+    "ku": { meaning: "parçeyek goşt", sentence: "Ew ji bo şîvê goşt dixwin." },
+    "ur": { meaning: "گوشت کا ایک ٹکڑا", sentence: "وہ رات کے کھانے میں گوشت کھاتے ہیں۔" },
+    "ru": { meaning: "кусок мяса", sentence: "Они едят мясо на ужин." },
+    "uk": { meaning: "шматок м'яса", sentence: "Вони їдять м'ясо на вечерю." },
+    "zh": { meaning: "一块肉", sentence: "他们晚餐吃肉。" },
+    "vi": { meaning: "một miếng thịt", sentence: "Họ ăn thịt vào bữa tối." },
+    "th": { meaning: "เนื้อสัตว์หนึ่งชิ้น", sentence: "พวกเขากินเนื้อสัตว์เป็นอาหารเย็น" },
+    "ne": { meaning: "मासुको एउटा टुक्रा", sentence: "उनीहरू साँझको खानामा मासु खान्छन्।" },
+    "ps": { meaning: "د غوښې یوه ټوټه", sentence: "دوی د ماښام ډوډۍ لپاره غوښه خوري." }
+  },
   "et kød": {
-    "da": { meaning: "et kød", sentence: "De spiser kød til aften." },
+    "da": { meaning: "et stykke kød", sentence: "De spiser kød til aften." },
     "en": { meaning: "meat", sentence: "They eat meat for dinner." },
     "de": { meaning: "Fleisch", sentence: "Sie essen Fleisch zum Abendessen." },
     "es": { meaning: "carne", sentence: "Comen carne para cenar." },

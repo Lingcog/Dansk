@@ -640,7 +640,7 @@ export const allNounsRegistry = {
     },
     "kød": {
         "clean": "kød",
-        "word": "et kød",
+        "word": "et stykke kød",
         "gender": "et",
         "bestemt": "kødet",
         "flertal": "kød",
@@ -1587,6 +1587,9 @@ export const wordToNounKey = {
     "kopper": "kop",
     "kød": "kød",
     "kødet": "kød",
+    "stykke kød": "kød",
+    "stykket kød": "kød",
+    "et stykke kød": "kød",
     "fisk": "fisk",
     "fisken": "fisk",
     "glas": "glas",

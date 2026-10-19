@@ -1707,18 +1707,6 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 { text: "en fugl", correct: true },
                 { text: "et problem", correct: false }
             ]
-        },
-        {
-            title: "Find 3 ord om arbejde og udfordringer 💼🧩",
-            targetCount: 3,
-            options: [
-                { text: "et arbejde", correct: true },
-                { text: "en pige", correct: false },
-                { text: "en læge", correct: true },
-                { text: "en plads", correct: false },
-                { text: "et problem", correct: true },
-                { text: "en krone", correct: false }
-            ]
         }
     ];
 

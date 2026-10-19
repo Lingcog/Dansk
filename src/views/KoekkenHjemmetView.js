@@ -1349,7 +1349,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         { word: 'en mor', clean: 'mor', gender: 'en', bestemt: 'moren', flertal: 'mødre', x: 34, y: 44, icon: '👩', sentence: 'Moren laver mad.' },
         { word: 'en far', clean: 'far', gender: 'en', bestemt: 'faren', flertal: 'fædre', x: 49, y: 46, icon: '👨', sentence: 'Faren taler ved bordet.' },
         { word: 'en seng', clean: 'seng', gender: 'en', bestemt: 'sengen', flertal: 'senge', x: 60, y: 38, icon: '🛏️', sentence: 'Sengen står inde i soveværelset.' },
-        { word: 'et tøj', clean: 'tøj', gender: 'et', bestemt: 'tøjet', flertal: 'tøj', x: 71, y: 32, icon: '🧥', sentence: 'Tøjet hænger på en knage.' },
+        { word: 'et stykke tøj', clean: 'stykke tøj', gender: 'et', bestemt: 'tøjet', flertal: 'tøj', x: 71, y: 32, icon: '🧥', sentence: 'Tøjet hænger på en knage.' },
         { word: 'en sko', clean: 'sko', gender: 'en', bestemt: 'skoen', flertal: 'sko', x: 71, y: 53, icon: '👟', sentence: 'Skoene står på gulvet.' },
         { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 29, y: 83, icon: '🪑', sentence: 'Drengen sidder på en stol.' },
         { word: 'en mad', clean: 'mad', gender: 'en', bestemt: 'maden', flertal: 'madder', x: 38, y: 64, icon: '🍞', sentence: 'De spiser mad sammen.' },
@@ -1503,7 +1503,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                             const isMatch = cleanSpoken === cleanTarget || 
                                             cleanSpoken === fullTarget || 
                                             cleanSpoken.split(' ').includes(cleanTarget) ||
-                                            cleanTarget.includes(cleanSpoken);
+                                            cleanTarget.includes(cleanSpoken) ||
+                                            (kw.clean === 'stykke tøj' && cleanSpoken.includes('tøj'));
 
                             if (isMatch) {
                                 feedbackBox.className = 'speech-feedback-box correct';
@@ -1608,7 +1609,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         { name: 'vindue', gender: 'et' },
         { name: 'sol', gender: 'en' },
         { name: 'træ', gender: 'et' },
-        { name: 'tøj', gender: 'et' },
+        { name: 'stykke tøj', gender: 'et' },
         { name: 'sko', gender: 'en' },
         { name: 'problem', gender: 'et' }
     ];
@@ -1734,7 +1735,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 { text: "en far", correct: true },
                 { text: "et barn", correct: true },
                 { text: "en kop", correct: false },
-                { text: "et tøj", correct: false }
+                { text: "et stykke tøj", correct: false }
             ]
         },
         {
@@ -1765,7 +1766,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             title: "Find 3 ting man kan have på 👕👟",
             targetCount: 3,
             options: [
-                { text: "et tøj", correct: true },
+                { text: "et stykke tøj", correct: true },
                 { text: "en sko", correct: true },
                 { text: "en jakke", correct: true },
                 { text: "en seng", correct: false },
@@ -2230,7 +2231,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         },
         {
             type: "find_overemne",
-            subwords: ["et tøj 👕", "en sko 👟", "en jakke 🧥"],
+            subwords: ["et stykke tøj 👕", "en sko 👟", "en jakke 🧥"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
                 { text: "Tøj og påklædning 👗", correct: true },
@@ -2669,7 +2670,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             sted: "i stuen",
             questionPrompt: "Hvad spiser Barnet i stuen?",
             targetWord: "en mad",
-            distractors: ["en seng", "et træ", "et tøj"],
+            distractors: ["en seng", "et træ", "et stykke tøj"],
             pedagogyNote: "Barnet spiser en mad, når det er sultent."
         },
         {
@@ -2699,7 +2700,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             sted: "i haven",
             questionPrompt: "Hvad drikker Gæsten i haven?",
             targetWord: "et glas vand",
-            distractors: ["et bord", "et tøj", "en sko"],
+            distractors: ["et bord", "et stykke tøj", "en sko"],
             pedagogyNote: "Gæsten slukker tørsten med koldt vand."
         },
         {

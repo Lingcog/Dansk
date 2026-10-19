@@ -580,7 +580,7 @@ export const allNounsRegistry = {
     },
     "tøj": {
         "clean": "tøj",
-        "word": "et tøj",
+        "word": "et stykke tøj",
         "gender": "et",
         "bestemt": "tøjet",
         "flertal": "tøj",
@@ -1561,6 +1561,9 @@ export const wordToNounKey = {
     "sengene": "seng",
     "tøj": "tøj",
     "tøjet": "tøj",
+    "stykke tøj": "tøj",
+    "stykket tøj": "tøj",
+    "et stykke tøj": "tøj",
     "sportstøj": "tøj",
     "sportstøjet": "tøj",
     "sko": "sko",

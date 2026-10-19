@@ -6508,8 +6508,27 @@ export const kitchenWordTranslations = {
     "ne": { meaning: "एउटा खाट", sentence: "खाट सुत्ने कोठाभित्र छ।" },
     "ps": { meaning: "یو کټ", sentence: "کټ د خوب په خونه کې دی." }
   },
+  "et stykke tøj": {
+    "da": { meaning: "et stykke tøj", sentence: "Tøjet hænger på en knage." },
+    "en": { meaning: "a piece of clothing", sentence: "The clothes are hanging on a coat hook." },
+    "de": { meaning: "ein Kleidungsstück", sentence: "Die Kleidung hängt an einem Haken." },
+    "es": { meaning: "una prenda de ropa", sentence: "La ropa cuelga de un perchero." },
+    "pt": { meaning: "uma peça de roupa", sentence: "A roupa está pendurada num cabide." },
+    "tr": { meaning: "bir parça kıyafet", sentence: "Kıyafetler askıda asılı duruyor." },
+    "ar": { meaning: "قطعة ملابس", sentence: "الملابس معلقة على المشجب." },
+    "fa": { meaning: "یک تکه لباس", sentence: "لباس‌ها روی جا لباسی آویزان هستند." },
+    "ku": { meaning: "parçeyek cil", sentence: "Cil li ser daliqandokê daliqandî ne." },
+    "ur": { meaning: "کپڑے کا ایک ٹکڑا", sentence: "کپڑے کھونٹی پر لٹکے ہوئے ہیں۔" },
+    "ru": { meaning: "предмет одежды", sentence: "Одежда висит на вешалке." },
+    "uk": { meaning: "предмет одягу", sentence: "Одяг висить на вішалці." },
+    "zh": { meaning: "一件衣服", sentence: "衣服挂在衣钩上。" },
+    "vi": { meaning: "một món quần áo", sentence: "Quần áo được treo trên móc." },
+    "th": { meaning: "เสื้อผ้าหนึ่งชิ้น", sentence: "เสื้อผ้าแขวนอยู่บนที่แขวน" },
+    "ne": { meaning: "एउटा लुगा", sentence: "लुगाहरू हुकमा झुण्डिएका छन्।" },
+    "ps": { meaning: "یوه ټوټه جامې", sentence: "جامې پر چنګک ځوړندې دي." }
+  },
   "et tøj": {
-    "da": { meaning: "et tøj", sentence: "Tøjet hænger på en knage." },
+    "da": { meaning: "et stykke tøj", sentence: "Tøjet hænger på en knage." },
     "en": { meaning: "clothes", sentence: "The clothes are hanging on a coat hook." },
     "de": { meaning: "Kleidung", sentence: "Die Kleidung hängt an einem Haken." },
     "es": { meaning: "ropa", sentence: "La ropa cuelga de un perchero." },

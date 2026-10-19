@@ -816,7 +816,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 x: 52, y: 63,
                 itemLabel: 'Blød seng 🛏️',
                 faelles: 'en blød seng',
-                intet: 'et blødt tøj',
+                intet: 'et blødt stykke tøj',
                 flertal: 'de bløde senge',
                 context: 'Sengen i soveværelset er dejlig blød.'
             }
@@ -839,7 +839,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 x: 12, y: 80,
                 itemLabel: 'Løs sko 👟',
                 faelles: 'en løs sko',
-                intet: 'et løst tøj',
+                intet: 'et løst stykke tøj',
                 flertal: 'de løse sko',
                 context: 'Skoen er for stor, så den er løs.'
             }

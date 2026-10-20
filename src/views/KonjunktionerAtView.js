@@ -1419,28 +1419,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     hero.className = 'at-hero';
     hero.innerHTML = `
         <h1>Ordet "at" i alle sætningskonstruktioner</h1>
-        <p>De to bogstaver <strong><em>at</em></strong> er et af dansk grammatiks mest drilske ord, fordi det både fungerer som <strong>ledsætningskonjunktion</strong> (<em>siger, at du...</em>), som <strong>infinitivmærke</strong> (<em>elsker at svømme</em>), sammen med <strong>præpositioner</strong> (<em>god til at / glad for, at</em>) og i <strong>sammensatte bindeord</strong> (<em>for at, uden at, ved at, så...at</em>).</p>
+        <p>Lær at kende forskel på ledsætning, infinitiv og faste vendinger.</p>
     `;
     viewContainer.appendChild(hero);
-
-    // Golden Rule Banner
-    const goldenBanner = document.createElement('div');
-    goldenBanner.className = 'golden-rule-banner-at';
-    goldenBanner.innerHTML = `
-        <div class="rule-icon-at">🔑</div>
-        <div class="rule-content-at">
-            <h4>${getTranslation('at_golden_title')}</h4>
-            <p>${getTranslation('at_golden_desc')}</p>
-            <div class="rule-pills-row-at">
-                <span class="rule-pill-at">${getTranslation('at_golden_f1')}</span>
-                <span class="rule-pill-at">${getTranslation('at_golden_f2')}</span>
-                <span class="rule-pill-at">${getTranslation('at_golden_f3')}</span>
-                <span class="rule-pill-at">${getTranslation('at_golden_f4')}</span>
-                <span class="rule-pill-at">${getTranslation('at_golden_f5')}</span>
-            </div>
-        </div>
-    `;
-    viewContainer.appendChild(goldenBanner);
 
     // Tabs Navigation
     const nav = document.createElement('div');
@@ -1529,11 +1510,11 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
         const filters = [
             { id: 'alle', label: 'Alle (18)' },
-            { id: 'konjunktion', label: '1. Konjunktion: siger/tror, at + S + V (4)' },
-            { id: 'infinitiv', label: '2. Infinitiv vs. modalverbum (4)' },
-            { id: 'praep_inf', label: '3. Præp. + at + infinitiv (4)' },
-            { id: 'praep_led', label: '4. Præp. + , at + ledsætning (2)' },
-            { id: 'sammensat', label: '5. Sammensatte: for at, ved at, uden at, så...at (4)' }
+            { id: 'konjunktion', label: '1. Ledsætning (4)' },
+            { id: 'infinitiv', label: '2. Infinitiv (4)' },
+            { id: 'praep_inf', label: '3. Præp. + infinitiv (4)' },
+            { id: 'praep_led', label: '4. Præp. + ledsætning (2)' },
+            { id: 'sammensat', label: '5. Sammensatte (4)' }
         ];
 
         filters.forEach(f => {
@@ -1609,13 +1590,15 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             });
 
             const trans = getAtTranslation(item);
-            const currentLang = getLang().toUpperCase();
+            const isDanish = getLang() === 'da';
+            const showWordTrans = !isDanish && trans && trans.word && trans.word !== item.word;
+            const showSentenceTrans = !isDanish && trans && trans.sentence && trans.sentence !== item.sentence;
 
             inspector.innerHTML = `
                 <div class="inspector-left">
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
-                            <span class="inspector-badge">📐 Formel: ${item.formula}</span>
+                            <span class="inspector-badge">📐 ${item.formula}</span>
                         </div>
                         <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale">🔊</button>
                     </div>
@@ -1623,37 +1606,28 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     <h2 class="inspector-word-title">
                         <span>🌟</span> ${item.word}
                     </h2>
+                    ${showWordTrans ? `<div class="trans-word-val" style="color:#6ee7b7; font-size:1.15rem; font-weight:700;">🌍 ${trans.word}</div>` : ''}
 
-                    <div class="inspector-trans-box">
-                        <div class="trans-badge-label">
-                            <span>🌍</span> ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}
-                        </div>
-                        <div class="trans-word-val">${trans.word}</div>
-                        <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.25rem;">${item.meaning}</div>
-                    </div>
-
-                    <div class="inspector-scene-box">
-                        <div class="scene-heading">${getTranslation('konj_inspector_in_scene')}</div>
-                        <p class="scene-text">${item.sceneDesc}</p>
+                    <div class="inspector-sentence-card" style="margin-top:0.4rem;">
+                        <div class="sentence-quote-text">"${item.sentence}"</div>
+                        ${showSentenceTrans ? `<div class="sentence-trans-text" style="color:#fde68a;">🌍 "${trans.sentence}"</div>` : ''}
+                        <button class="inspector-speak-btn" id="insp-speak-sent" style="margin-top:0.3rem;">
+                            <span>🔊</span> ${getTranslation('konj_btn_listen_sentence')}
+                        </button>
                     </div>
                 </div>
 
                 <div class="inspector-right">
-                    <div class="inspector-sentence-card">
-                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
-                        <div class="sentence-quote-text">"${item.sentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#fde68a; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="insp-speak-sent">
-                            <span>🔊</span> ${getTranslation('konj_btn_listen_sentence')}
-                        </button>
+                    <div class="inspector-scene-box" style="border-left: 3px solid #f59e0b; background:#0f172a; padding:1.2rem; border-radius:14px;">
+                        <div style="font-size:0.85rem; font-weight:800; color:#f59e0b; margin-bottom:0.4rem;">
+                            💡 ${item.meaning}
+                        </div>
+                        <p style="color:#cbd5e1; font-size:0.95rem; line-height:1.55; margin:0;">
+                            ${item.ruleHint}
+                        </p>
                     </div>
 
-                    <div class="inspector-scene-box" style="border-left: 3px solid #06b6d4;">
-                        <div class="scene-heading" style="color: #22d3ee;">🔬 Grammatisk Røntgen</div>
-                        <p class="scene-text">${item.ruleHint}</p>
-                    </div>
-
-                    <div class="inspector-actions">
+                    <div class="inspector-actions" style="margin-top:auto; display:flex; gap:0.8rem;">
                         <button class="inspector-btn-action" id="insp-prev-btn">${getTranslation('konj_btn_prev_word')}</button>
                         <button class="inspector-btn-action" id="insp-next-btn" style="background:#d97706;">${getTranslation('konj_btn_next_word')}</button>
                     </div>

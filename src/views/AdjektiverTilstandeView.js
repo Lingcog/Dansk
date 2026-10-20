@@ -1788,18 +1788,18 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
             <div class="adj-quantity-guide-box" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.12), rgba(249, 115, 22, 0.16)); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 16px; padding: 1.1rem; margin: 1rem 0 1.5rem;">
                 <div style="font-weight: 700; color: #f97316; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
-                    <span>⚖️</span> Tællelig vs. Utællelig mængde (Mange/Få ↔ Meget/Lidt)
+                    <span>⚖️</span> ${getTranslation('adj_quantity_box_title')}
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; font-size: 0.92rem; color: #cbd5e1;">
                     <div style="background: rgba(15, 23, 42, 0.65); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #38bdf8;">
-                        <strong style="color: #38bdf8;">🔢 Tællelige navneord (flertal: 1, 2, 3...):</strong><br>
-                        • Stor mængde: <strong>mange</strong> (mange stole, mange bøger, mange gæster)<br>
-                        • Lille mængde: <strong>få</strong> (få stole, få bøger, få fejl)
+                        <strong style="color: #38bdf8;">${getTranslation('adj_quantity_countable_title')}</strong><br>
+                        ${getTranslation('adj_quantity_countable_large')}<br>
+                        ${getTranslation('adj_quantity_countable_small')}
                     </div>
                     <div style="background: rgba(15, 23, 42, 0.65); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #f59e0b;">
-                        <strong style="color: #f59e0b;">💧 Utællelige navneord (masse, væske, tid):</strong><br>
-                        • Stor mængde: <strong>meget</strong> (meget kaffe, meget tid, meget vand)<br>
-                        • Lille mængde: <strong>lidt</strong> (lidt kaffe, lidt tid, lidt mælk)
+                        <strong style="color: #f59e0b;">${getTranslation('adj_quantity_uncountable_title')}</strong><br>
+                        ${getTranslation('adj_quantity_uncountable_large')}<br>
+                        ${getTranslation('adj_quantity_uncountable_small')}
                     </div>
                 </div>
             </div>
@@ -1840,11 +1840,11 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     kongruensCard.querySelector('.task-score strong').textContent = kongruensScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎉 Helt rigtigt!</strong><br>
+                            <strong>${getTranslation('adj_correct_feedback')}</strong><br>
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 Læs hele bøjningsreglen her ➔
+                                    📖 ${getTranslation('adj_grammar_banner_btn')}
                                 </a>
                             </div>
                         </div>
@@ -1856,11 +1856,11 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     });
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box wrong">
-                            <strong>Forkert form:</strong> Rigtigt er <strong>${item.correct}</strong>.<br>
+                            <strong>${getTranslation('adj_wrong_feedback')}</strong> ${getTranslation('adj_correct_answer_is')} <strong>${item.correct}</strong>.<br>
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 Se bøjningsguiden for hjælp til reglerne ➔
+                                    📖 ${getTranslation('adj_grammar_banner_btn')}
                                 </a>
                             </div>
                         </div>
@@ -1875,25 +1875,25 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'task-next-btn';
                 if (currentKongruensIndex + 1 < kongruensTasks.length) {
-                    nextBtn.textContent = 'Næste sætning ➔';
+                    nextBtn.textContent = getTranslation('adj_next_kongruens');
                     nextBtn.onclick = () => {
                         currentKongruensIndex++;
                         renderKongruensTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se bøjningsresultat (${kongruensScore}/${kongruensTasks.length}) 🏆`;
+                    nextBtn.textContent = getTranslation('adj_result_kong_btn').replace('{score}', kongruensScore).replace('{total}', kongruensTasks.length);
                     nextBtn.onclick = () => {
                         kongruensCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
                                 <div style="font-size: 3.5rem; margin-bottom: 1rem;">🧩</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Super flot tilstandskongruens!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 1.5rem;">Du fik <strong>${kongruensScore}</strong> ud af <strong>${kongruensTasks.length}</strong> rigtige endelser.</p>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">${getTranslation('adj_kong_modal_title')}</h2>
+                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 1.5rem;">${getTranslation('adj_kong_modal_score').replace('{score}', kongruensScore).replace('{total}', kongruensTasks.length)}</p>
                                 <div style="margin-bottom: 2rem;">
                                     <button class="adj-go-grammar-btn" id="finish-guide-link-btn" style="margin: 0 auto;">
-                                        📖 Gå til den store bøjningsguide ➔
+                                        📖 ${getTranslation('adj_grammar_banner_btn')}
                                     </button>
                                 </div>
-                                <button class="task-next-btn" id="restart-kong-btn">Prøv igen 🔄</button>
+                                <button class="task-next-btn" id="restart-kong-btn">${getTranslation('adj_retry_btn')}</button>
                             </div>
                         `;
                         kongruensCard.querySelector('#finish-guide-link-btn').onclick = () => navigateFn('adjective_comparison');

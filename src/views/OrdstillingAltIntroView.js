@@ -1,6 +1,7 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
 import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
+import { altIntroBuilderWordTranslations } from '../utils/alt_intro_translations.js';
 
 export function renderOrdstillingAltIntroView(container, navigateFn, type = 'tid') {
     if (type === 'tid') {
@@ -769,6 +770,7 @@ function renderFokusPaaTid(container, navigateFn) {
             <span class="word-green">en kvinde</span> 
             <span class="word-blue">på gaden</span>.
         </div>
+        ${getLang() !== 'da' ? `<div class="banner-sentence-trans" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem; margin-bottom: 0.8rem;">"${getTranslation('tid_s0')}"</div>` : ''}
         <button class="listen-btn" title="${getTranslation('tid_listen_btn')}">
             <span>🔊</span> ${getTranslation('tid_listen_btn')}
         </button>
@@ -902,6 +904,10 @@ function setupTidStepBuilder(container) {
             const optBtn = document.createElement('button');
             optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
             optBtn.textContent = opt;
+            const wordTrans = altIntroBuilderWordTranslations[getLang()]?.[opt];
+            if (wordTrans && getLang() !== 'da') {
+                optBtn.title = wordTrans;
+            }
 
             optBtn.onclick = () => {
                 selections[catIdx] = opt;
@@ -1100,9 +1106,13 @@ function setupTidPuzzleExercise(container) {
                     if (completedTasks.has(idx)) pill.classList.add('completed');
                 });
 
+                const transKey = `tid_s${currentTaskIdx + 1}`;
+                const transText = getLang() !== 'da' ? getTranslation(transKey) : '';
+
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg success">
                         ${getTranslation('tid_puzzle_correct')} "<strong>${sentence}</strong>"
+                        ${transText ? `<div class="puzzle-trans-text" style="font-size: 1rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem;">"${transText}"</div>` : ''}
                     </div>
                     <div class="puzzle-action-row">
                         <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${getTranslation('tid_listen_pronunciation')}</button>
@@ -1315,6 +1325,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             <span class="word-green">en kvinde</span> 
             <span class="word-blue">på gaden</span>.
         </div>
+        ${getLang() !== 'da' ? `<div class="banner-sentence-trans" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem; margin-bottom: 0.8rem;">"${getTranslation('konj_s0')}"</div>` : ''}
         <button class="listen-btn" title="${getTranslation('konj_listen_btn')}">
             <span>🔊</span> ${getTranslation('konj_listen_btn')}
         </button>
@@ -1448,6 +1459,10 @@ function setupKonjunktionStepBuilder(container) {
             const optBtn = document.createElement('button');
             optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
             optBtn.textContent = opt;
+            const wordTrans = altIntroBuilderWordTranslations[getLang()]?.[opt];
+            if (wordTrans && getLang() !== 'da') {
+                optBtn.title = wordTrans;
+            }
 
             optBtn.onclick = () => {
                 selections[catIdx] = opt;
@@ -1657,9 +1672,13 @@ function setupKonjunktionPuzzleExercise(container) {
                     if (completedTasks.has(idx)) pill.classList.add('completed');
                 });
 
+                const transKey = `konj_s${currentTaskIdx + 1}`;
+                const transText = getLang() !== 'da' ? getTranslation(transKey) : '';
+
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg success">
                         ${getTranslation('konj_puzzle_correct')} "<strong>${sentence}</strong>"
+                        ${transText ? `<div class="puzzle-trans-text" style="font-size: 1rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem;">"${transText}"</div>` : ''}
                     </div>
                     <div class="puzzle-action-row">
                         <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${getTranslation('konj_listen_pronunciation')}</button>

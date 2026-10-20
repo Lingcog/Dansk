@@ -97,14 +97,14 @@ export function renderOrdstillingView(container, navigateFn) {
     menuArea.appendChild(grid);
     
     const altHeader = document.createElement('h2');
-    altHeader.textContent = "Alternative sætninger";
+    altHeader.textContent = getTranslation('ordstilling_alt_header') || "Alternative sætninger";
     altHeader.style.marginTop = '2.5rem';
     altHeader.style.marginBottom = '0.5rem';
     altHeader.style.textAlign = 'center';
     menuArea.appendChild(altHeader);
     
     const altSub = document.createElement('p');
-    altSub.textContent = "Verbet står altid på 2. plads når man begynder uden subjekt.";
+    altSub.textContent = getTranslation('ordstilling_alt_sub') || "Verbet står altid på 2. plads når man begynder uden subjekt.";
     altSub.className = 'subtitle';
     altSub.style.marginBottom = '1.5rem';
     menuArea.appendChild(altSub);
@@ -121,7 +121,12 @@ export function renderOrdstillingView(container, navigateFn) {
         const type = l.key.split('_')[1];
         card.onclick = () => navigateFn('ordstilling_alt_intro', { subPath: type });
         
-        card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${categoryData.title}</div>`;
+        const translatedTitle = (type === 'tid') 
+            ? getTranslation('tid_page_title') 
+            : (type === 'konjunktion') 
+                ? getTranslation('konj_page_title') 
+                : categoryData.title;
+        card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${translatedTitle}</div>`;
         altGrid.appendChild(card);
     });
 

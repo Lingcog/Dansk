@@ -1415,7 +1415,7 @@ export function openSpotlightModal() {
                     type="text" 
                     id="sp-input-field" 
                     class="sp-input" 
-                    placeholder="Søg på dansk eller dit eget sprog... (f.eks. hund, køre, fordi, ikke, happy)" 
+                    placeholder="søg blandt 500 + ord ...." 
                     autocomplete="off" 
                     autocorrect="off" 
                     spellcheck="false"

@@ -4,6 +4,7 @@ import './style.css';
 import { baseUrl } from './utils/config.js';
 export { baseUrl };
 import { initGlobalLanguageSwitcher } from './components/GlobalLanguageSwitcher.js';
+import { initSpotlightSearch } from './components/SpotlightSearch.js';
 import { renderLanguageView } from './views/LanguageView.js';
 import { renderMainView } from './views/MainView.js';
 import { renderNotesView } from './views/NotesView.js';
@@ -545,6 +546,7 @@ function handleRouting() {
 // Boot up
 function boot() {
   initGlobalLanguageSwitcher();
+  initSpotlightSearch(navigate);
   window.addEventListener('hashchange', handleRouting);
   window.addEventListener('popstate', handleRouting);
   handleRouting();

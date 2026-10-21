@@ -393,6 +393,120 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             .tf-pin-label { font-size: 0.62rem; padding: 0.1rem 0.35rem; }
             .tf-story-card { padding: 0.75rem; }
         }
+
+        /* Model A & B: Tekstopbygning Styles */
+        .opbygning-subnav {
+            display: flex;
+            gap: 0.35rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .opbygning-subnav-btn {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .opbygning-subnav-btn:hover {
+            color: #f8fafc;
+            border-color: #38bdf8;
+            background: #334155;
+        }
+        .opbygning-subnav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #38bdf8;
+        }
+        .opbygning-card {
+            background: #1e293b;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.7rem 0.85rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+            position: relative;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .opbygning-card.selected {
+            border-color: #38bdf8;
+            background: #1e3a5f;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.4);
+            transform: scale(1.01);
+        }
+        .opbygning-card.is-correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+        }
+        .opbygning-card.is-wrong {
+            border-color: #f59e0b;
+            border-style: dashed;
+            background: rgba(245, 158, 11, 0.08);
+        }
+        .opbygning-arrow-btn {
+            background: #334155;
+            color: #f8fafc;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            touch-action: manipulation;
+        }
+        .opbygning-arrow-btn:hover:not(:disabled) {
+            background: #0284c7;
+            border-color: #38bdf8;
+        }
+        .opbygning-arrow-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+        }
+        .byggeklods-block {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 0.75rem 0.9rem;
+            margin-bottom: 0.7rem;
+            border-left: 4px solid;
+            box-sizing: border-box;
+        }
+        .print-only {
+            display: none;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                color: #000000 !important;
+                background: #ffffff !important;
+                padding: 1.5cm;
+                font-family: Arial, sans-serif;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -405,13 +519,14 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     `;
     viewContainer.appendChild(hero);
 
-    // 5 Compact Tabs
+    // 6 Compact Tabs
     const tabs = [
         { id: 'kort', label: getTranslation('flow_tab_kort') },
         { id: 'historier', label: getTranslation('flow_tab_historier') },
         { id: 'trafikprop', label: getTranslation('flow_tab_trafikprop') },
         { id: 'staccato', label: getTranslation('flow_tab_staccato') },
-        { id: 'duel', label: getTranslation('flow_tab_duel') }
+        { id: 'duel', label: getTranslation('flow_tab_duel') },
+        { id: 'opbygning', label: (getTranslation('flow_tab_opbygning') && getTranslation('flow_tab_opbygning') !== 'flow_tab_opbygning') ? getTranslation('flow_tab_opbygning') : '6. Tekstopbygning ✉️' }
     ];
 
     const nav = document.createElement('div');
@@ -450,6 +565,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         else if (tabId === 'trafikprop') renderTabTrafikprop(tabContent);
         else if (tabId === 'staccato') renderTabStaccato(tabContent);
         else if (tabId === 'duel') renderTabDuel(tabContent);
+        else if (tabId === 'opbygning') renderTabOpbygning(tabContent);
     }
 
     // ==========================================
@@ -1337,6 +1453,657 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         };
 
         parent.appendChild(card);
+    }
+
+    // ==========================================
+    // 6. TEKSTOPBYGNING (MODEL A, MODEL B & KLIPPEARK)
+    // ==========================================
+    const OPBYGNING_DATA = [
+        {
+            id: 1,
+            text: "Emne: Svar på din e-mail – om at spare penge",
+            category: "indledning",
+            color: "#38bdf8",
+            catName: "Hilsen & Indledning",
+            preview: "Emne: Svar på din e-mail – om at spare penge",
+            connector: "Emne",
+            roleDesc: "Præsenterer e-mailens emne direkte."
+        },
+        {
+            id: 2,
+            text: "Hej Carl. Tak for din e-mail! Det var virkelig hyggeligt at høre fra dig igen.",
+            category: "indledning",
+            color: "#38bdf8",
+            catName: "Hilsen & Indledning",
+            preview: "Hej Carl. Tak for din e-mail!...",
+            connector: "Hilsen",
+            roleDesc: "Skaber venlig kontakt til modtageren."
+        },
+        {
+            id: 3,
+            text: "Du spørger, hvordan jeg lever billigt i hverdagen.",
+            category: "indledning",
+            color: "#38bdf8",
+            catName: "Hilsen & Indledning",
+            preview: "Du spørger, hvordan jeg lever billigt...",
+            connector: "Refererende indledning",
+            roleDesc: "Refererer til spørgsmålet og slår emnet fast."
+        },
+        {
+            id: 4,
+            text: "For det første køber jeg næsten altid ind i discountbutikker, og jeg kigger altid efter gule tilbudsmærker.",
+            category: "handlinger",
+            color: "#22c55e",
+            catName: "Svar på \"HVORDAN\" (Handlinger)",
+            preview: "For det første køber jeg næsten altid ind...",
+            connector: "For det første ... og",
+            roleDesc: "Første praktiske handling (opremsende bindeled)."
+        },
+        {
+            id: 5,
+            text: "Derudover laver jeg store portioner mad til flere dage, så jeg undgår madspild og sparer tid.",
+            category: "handlinger",
+            color: "#22c55e",
+            catName: "Svar på \"HVORDAN\" (Handlinger)",
+            preview: "Derudover laver jeg store portioner mad...",
+            connector: "Derudover ... så",
+            roleDesc: "Næste praktiske handling med konsekvens (så)."
+        },
+        {
+            id: 6,
+            text: "Mange tror, at det er kedeligt at spare, men for mig giver det en stor frihed.",
+            category: "argumenter",
+            color: "#f97316",
+            catName: "Svar på \"HVORFOR\" (Argumenter)",
+            preview: "Mange tror, at det er kedeligt..., men...",
+            connector: "Mange tror, at ... men",
+            roleDesc: "Skifter til argumenter via kontrast (men)."
+        },
+        {
+            id: 7,
+            text: "Fordi mine faste udgifter er lave, behøver jeg nemlig ikke at arbejde over.",
+            category: "argumenter",
+            color: "#f97316",
+            catName: "Svar på \"HVORFOR\" (Argumenter)",
+            preview: "Fordi mine faste udgifter er lave...",
+            connector: "Fordi ... nemlig",
+            roleDesc: "Begrundelse bag friheden (fordi + ledsætning)."
+        },
+        {
+            id: 8,
+            text: "Derfor har jeg mere tid til mine børn og mine fritidsinteresser.",
+            category: "argumenter",
+            color: "#f97316",
+            catName: "Svar på \"HVORFOR\" (Argumenter)",
+            preview: "Derfor har jeg mere tid til mine børn...",
+            connector: "Derfor",
+            roleDesc: "Konkluderende konsekvens (derfor + V2)."
+        },
+        {
+            id: 9,
+            text: "Hvad med dig? Har du nogle gode sparetip? Mange hilsner Jens",
+            category: "afslutning",
+            color: "#a855f7",
+            catName: "Afslutning & Modspørgsmål",
+            preview: "Hvad med dig? Har du nogle gode sparetip?...",
+            connector: "Modspørgsmål & Hilsen",
+            roleDesc: "Sender bolden tilbage til modtageren og runder af."
+        }
+    ];
+
+    const BYGGEKLODS_CATS = [
+        { id: 'indledning', label: '🔵 Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2, 3] },
+        { id: 'handlinger', label: '🟢 Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Praktiske handlinger (discount, madspild)', strips: [4, 5] },
+        { id: 'argumenter', label: '🟠 Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Argumenter og begrundelser (frihed, tid)', strips: [6, 7, 8] },
+        { id: 'afslutning', label: '🟣 Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage og runder af', strips: [9] }
+    ];
+
+    // Local persistent state
+    let opbygningSubTab = 'model_a';
+    let opbygningUserOrder = [4, 2, 8, 1, 7, 3, 9, 5, 6].map(id => OPBYGNING_DATA.find(s => s.id === id));
+    let opbygningSelectedIdx = null;
+    let opbygningCompact = false;
+    let opbygningChecked = false;
+    let byggeklodsMode = 'anatomi';
+    let userCatSelections = {};
+    let userCatChecked = false;
+
+    function renderTabOpbygning(parent) {
+        parent.innerHTML = '';
+
+        const container = document.createElement('div');
+        container.style.width = '100%';
+        container.style.boxSizing = 'border-box';
+
+        // Subnav Pills
+        const subNav = document.createElement('div');
+        subNav.className = 'opbygning-subnav no-print';
+        subNav.innerHTML = `
+            <button class="opbygning-subnav-btn ${opbygningSubTab === 'model_a' ? 'active' : ''}" data-sub="model_a">
+                🧩 Model A: Puslespil
+            </button>
+            <button class="opbygning-subnav-btn ${opbygningSubTab === 'model_b' ? 'active' : ''}" data-sub="model_b">
+                🧱 Model B: Byggeklodser
+            </button>
+            <button class="opbygning-subnav-btn ${opbygningSubTab === 'klippeark' ? 'active' : ''}" data-sub="klippeark">
+                ✂️ Klippeark (Print)
+            </button>
+        `;
+
+        subNav.querySelectorAll('.opbygning-subnav-btn').forEach(btn => {
+            btn.onclick = () => {
+                opbygningSubTab = btn.getAttribute('data-sub');
+                renderTabOpbygning(parent);
+            };
+        });
+        container.appendChild(subNav);
+
+        const subContent = document.createElement('div');
+        subContent.style.width = '100%';
+        subContent.style.boxSizing = 'border-box';
+        container.appendChild(subContent);
+
+        if (opbygningSubTab === 'model_a') {
+            renderOpbygningModelA(subContent);
+        } else if (opbygningSubTab === 'model_b') {
+            renderOpbygningModelB(subContent);
+        } else {
+            renderOpbygningKlippeark(subContent);
+        }
+
+        parent.appendChild(container);
+    }
+
+    // --- Sub-view: Model A (Puslespil) ---
+    function renderOpbygningModelA(container) {
+        container.innerHTML = `
+            <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
+                    <div>
+                        <h2 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0;">
+                            Model A: Det argumenterende puslespil
+                        </h2>
+                        <p style="margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.82rem;">
+                            Genskab e-mailens logiske rækkefølge. Brug <strong>▲ / ▼</strong> eller tryk på to strimler for at bytte plads.
+                        </p>
+                    </div>
+                    <button id="btn-toggle-compact" class="opbygning-subnav-btn" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
+                        ${opbygningCompact ? '📄 Fuld tekst' : '📑 Kompakt overblik'}
+                    </button>
+                </div>
+            </div>
+
+            <div id="opbygning-strips-list" style="margin-bottom: 0.75rem;"></div>
+
+            <div id="opbygning-feedback-box" style="display: none; padding: 0.75rem 0.9rem; border-radius: 10px; margin-bottom: 0.75rem; text-align: center;"></div>
+
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center;">
+                <button id="btn-check-order" class="action-btn-primary" style="padding: 0.5rem 1.1rem; font-size: 0.9rem;">
+                    ✓ Tjek rækkefølge
+                </button>
+                <button id="btn-shuffle-order" class="opbygning-subnav-btn" style="padding: 0.5rem 0.9rem; font-size: 0.86rem;">
+                    🔀 Bland igen
+                </button>
+                <button id="btn-show-solution" class="opbygning-subnav-btn" style="padding: 0.5rem 0.9rem; font-size: 0.86rem;">
+                    👁️ Se facit
+                </button>
+            </div>
+        `;
+
+        container.querySelector('#btn-toggle-compact').onclick = () => {
+            opbygningCompact = !opbygningCompact;
+            renderOpbygningModelA(container);
+        };
+
+        const listDiv = container.querySelector('#opbygning-strips-list');
+        const feedbackBox = container.querySelector('#opbygning-feedback-box');
+
+        function updateList() {
+            listDiv.innerHTML = '';
+            opbygningUserOrder.forEach((strip, idx) => {
+                const isCorrect = opbygningChecked && (strip.id === idx + 1);
+                const isWrong = opbygningChecked && (strip.id !== idx + 1);
+                const isSelected = (opbygningSelectedIdx === idx);
+
+                const card = document.createElement('div');
+                card.className = `opbygning-card ${isSelected ? 'selected' : ''} ${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`;
+                card.style.cursor = 'pointer';
+
+                let statusBadge = '';
+                if (isSelected) {
+                    statusBadge = `<span style="background: #0284c7; color: white; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">Valgt – tryk på en anden for at bytte</span>`;
+                } else if (isCorrect) {
+                    statusBadge = `<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">✓ Rigtig plads</span>`;
+                } else if (isWrong) {
+                    statusBadge = `<span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">Flyt denne</span>`;
+                }
+
+                if (opbygningCompact) {
+                    card.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0;">
+                                <span style="background: #334155; color: #f8fafc; font-weight: 800; font-size: 0.78rem; padding: 0.2rem 0.45rem; border-radius: 6px; flex-shrink: 0;">
+                                    #${idx + 1}
+                                </span>
+                                <div style="min-width: 0; flex: 1;">
+                                    <div style="font-weight: 700; color: #f8fafc; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        ${strip.preview}
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.35rem; margin-top: 0.1rem;">
+                                        <span style="font-size: 0.72rem; color: #38bdf8; font-weight: 700;">${strip.connector}</span>
+                                        ${statusBadge}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.25rem; flex-shrink: 0;" onclick="event.stopPropagation();">
+                                <button class="opbygning-arrow-btn btn-speak-strip" title="Lyt">🔊</button>
+                                <button class="opbygning-arrow-btn btn-up" ${idx === 0 ? 'disabled' : ''} title="Flyt op">▲</button>
+                                <button class="opbygning-arrow-btn btn-down" ${idx === opbygningUserOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">
+                                    <span style="background: #334155; color: #f8fafc; font-weight: 800; font-size: 0.78rem; padding: 0.15rem 0.45rem; border-radius: 6px;">
+                                        Plads #${idx + 1}
+                                    </span>
+                                    <span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 4px;">
+                                        ${strip.connector}
+                                    </span>
+                                    ${statusBadge}
+                                </div>
+                                <div style="color: #f8fafc; font-size: 0.94rem; line-height: 1.45; font-weight: 500;">
+                                    ${strip.text}
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.25rem; flex-shrink: 0;" onclick="event.stopPropagation();">
+                                <button class="opbygning-arrow-btn btn-speak-strip" title="Lyt">🔊</button>
+                                <button class="opbygning-arrow-btn btn-up" ${idx === 0 ? 'disabled' : ''} title="Flyt op">▲</button>
+                                <button class="opbygning-arrow-btn btn-down" ${idx === opbygningUserOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Card click for tap-to-swap
+                card.onclick = () => {
+                    if (opbygningSelectedIdx === null) {
+                        opbygningSelectedIdx = idx;
+                    } else if (opbygningSelectedIdx === idx) {
+                        opbygningSelectedIdx = null;
+                    } else {
+                        // Swap
+                        const temp = opbygningUserOrder[opbygningSelectedIdx];
+                        opbygningUserOrder[opbygningSelectedIdx] = opbygningUserOrder[idx];
+                        opbygningUserOrder[idx] = temp;
+                        opbygningSelectedIdx = null;
+                        opbygningChecked = false;
+                        feedbackBox.style.display = 'none';
+                    }
+                    updateList();
+                };
+
+                // Button handlers
+                card.querySelector('.btn-speak-strip').onclick = (e) => {
+                    e.stopPropagation();
+                    speakDanish(strip.text);
+                };
+                card.querySelector('.btn-up').onclick = (e) => {
+                    e.stopPropagation();
+                    if (idx > 0) {
+                        const temp = opbygningUserOrder[idx - 1];
+                        opbygningUserOrder[idx - 1] = opbygningUserOrder[idx];
+                        opbygningUserOrder[idx] = temp;
+                        opbygningSelectedIdx = null;
+                        opbygningChecked = false;
+                        feedbackBox.style.display = 'none';
+                        updateList();
+                    }
+                };
+                card.querySelector('.btn-down').onclick = (e) => {
+                    e.stopPropagation();
+                    if (idx < opbygningUserOrder.length - 1) {
+                        const temp = opbygningUserOrder[idx + 1];
+                        opbygningUserOrder[idx + 1] = opbygningUserOrder[idx];
+                        opbygningUserOrder[idx] = temp;
+                        opbygningSelectedIdx = null;
+                        opbygningChecked = false;
+                        feedbackBox.style.display = 'none';
+                        updateList();
+                    }
+                };
+
+                listDiv.appendChild(card);
+            });
+        }
+
+        updateList();
+
+        // Bottom Actions
+        container.querySelector('#btn-check-order').onclick = () => {
+            opbygningChecked = true;
+            opbygningSelectedIdx = null;
+
+            let correctCount = 0;
+            opbygningUserOrder.forEach((s, i) => {
+                if (s.id === i + 1) correctCount++;
+            });
+
+            feedbackBox.style.display = 'block';
+            if (correctCount === 9) {
+                feedbackBox.style.background = 'rgba(34, 197, 94, 0.15)';
+                feedbackBox.style.border = '1.5px solid #22c55e';
+                feedbackBox.style.color = '#4ade80';
+                feedbackBox.innerHTML = `
+                    <div style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.3rem;">🎉 Perfekt klaret!</div>
+                    <div style="font-size: 0.88rem; color: #f8fafc; margin-bottom: 0.6rem;">
+                        Alle 9 strimler står i den logiske rækkefølge. Tekstflowet hænger nu fuldstændigt sammen.
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap;">
+                        <button id="btn-speak-all" class="action-btn-primary" style="padding: 0.35rem 0.8rem; font-size: 0.82rem;">
+                            🔊 Lyt til hele e-mailen
+                        </button>
+                        <button id="btn-go-model-b" class="action-btn-primary" style="background: #8b5cf6; padding: 0.35rem 0.8rem; font-size: 0.82rem;">
+                            Se byggeklodserne (Model B) ➔
+                        </button>
+                    </div>
+                `;
+                feedbackBox.querySelector('#btn-speak-all').onclick = () => {
+                    const fullText = opbygningUserOrder.map(s => s.text).join(' ');
+                    speakDanish(fullText);
+                };
+                feedbackBox.querySelector('#btn-go-model-b').onclick = () => {
+                    opbygningSubTab = 'model_b';
+                    renderTabOpbygning(container.parentElement.parentElement);
+                };
+            } else {
+                feedbackBox.style.background = 'rgba(245, 158, 11, 0.12)';
+                feedbackBox.style.border = '1.5px solid #f59e0b';
+                feedbackBox.style.color = '#fbbf24';
+                feedbackBox.innerHTML = `
+                    <div style="font-weight: 700; font-size: 0.95rem;">
+                        ${correctCount} af 9 strimler er på rette plads.
+                    </div>
+                    <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.2rem;">
+                        Kig efter brobyggerne (<em>For det første</em>, <em>Derudover</em>, <em>Mange tror..., men</em>, <em>Fordi</em>, <em>Derfor</em>) og prøv igen.
+                    </div>
+                `;
+            }
+            updateList();
+        };
+
+        container.querySelector('#btn-shuffle-order').onclick = () => {
+            opbygningChecked = false;
+            opbygningSelectedIdx = null;
+            feedbackBox.style.display = 'none';
+            // Shuffle ensuring not fully solved
+            const shuffled = [...OPBYGNING_DATA].sort(() => Math.random() - 0.5);
+            opbygningUserOrder = shuffled;
+            updateList();
+        };
+
+        container.querySelector('#btn-show-solution').onclick = () => {
+            opbygningChecked = true;
+            opbygningSelectedIdx = null;
+            opbygningUserOrder = [...OPBYGNING_DATA];
+            feedbackBox.style.display = 'block';
+            feedbackBox.style.background = 'rgba(56, 189, 248, 0.15)';
+            feedbackBox.style.border = '1.5px solid #38bdf8';
+            feedbackBox.style.color = '#38bdf8';
+            feedbackBox.innerHTML = `
+                <div style="font-weight: 700; font-size: 0.92rem;">Facit vist: Logisk tekstflow</div>
+                <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.2rem;">
+                    Hilsen ➔ Handlinger (Hvordan) ➔ Argumenter (Hvorfor) ➔ Afslutning.
+                </div>
+            `;
+            updateList();
+        };
+    }
+
+    // --- Sub-view: Model B (Byggeklodser) ---
+    function renderOpbygningModelB(container) {
+        container.innerHTML = `
+            <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
+                    <div>
+                        <h2 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0;">
+                            Model B: Farvekodet Byggeklods-metode
+                        </h2>
+                        <p style="margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.82rem;">
+                            En stærk tekst er bygget af 4 funktioner: Indledning ➔ Handlinger (Hvordan) ➔ Argumenter (Hvorfor) ➔ Afslutning.
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.3rem;">
+                        <button id="btn-mode-anatomi" class="opbygning-subnav-btn ${byggeklodsMode === 'anatomi' ? 'active' : ''}">
+                            👁️ Tekstens anatomi
+                        </button>
+                        <button id="btn-mode-traening" class="opbygning-subnav-btn ${byggeklodsMode === 'traening' ? 'active' : ''}">
+                            🎨 Farvelæg selv
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="byggeklods-content"></div>
+        `;
+
+        container.querySelector('#btn-mode-anatomi').onclick = () => {
+            byggeklodsMode = 'anatomi';
+            renderOpbygningModelB(container);
+        };
+        container.querySelector('#btn-mode-traening').onclick = () => {
+            byggeklodsMode = 'traening';
+            renderOpbygningModelB(container);
+        };
+
+        const contentDiv = container.querySelector('#byggeklods-content');
+
+        if (byggeklodsMode === 'anatomi') {
+            // Anatomi Oversigt: The 4 distinct functional blocks
+            contentDiv.innerHTML = `
+                ${BYGGEKLODS_CATS.map(cat => {
+                    const strips = OPBYGNING_DATA.filter(s => cat.strips.includes(s.id));
+                    return `
+                        <div class="byggeklods-block" style="border-left-color: ${cat.color};">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+                                <div>
+                                    <span style="font-weight: 800; color: ${cat.color}; font-size: 0.95rem;">${cat.label}</span>
+                                    <span style="color: #94a3b8; font-size: 0.8rem; margin-left: 0.35rem;">(${cat.desc})</span>
+                                </div>
+                                <button class="opbygning-arrow-btn btn-speak-block" data-cat="${cat.id}" style="width: auto; height: auto; padding: 0.2rem 0.5rem; font-size: 0.75rem;">
+                                    🔊 Lyt
+                                </button>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                                ${strips.map(s => `
+                                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem 0.65rem; border-radius: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem;">
+                                            <span style="font-size: 0.72rem; color: #94a3b8; font-weight: 700;">Strimmel ${s.id}:</span>
+                                            <span style="font-size: 0.72rem; color: ${cat.color}; font-weight: 700;">${s.connector}</span>
+                                            <span style="font-size: 0.72rem; color: #64748b;">• ${s.roleDesc}</span>
+                                        </div>
+                                        <div style="color: #f8fafc; font-size: 0.9rem; line-height: 1.4;">${s.text}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            `;
+
+            contentDiv.querySelectorAll('.btn-speak-block').forEach(btn => {
+                btn.onclick = () => {
+                    const cId = btn.getAttribute('data-cat');
+                    const cat = BYGGEKLODS_CATS.find(c => c.id === cId);
+                    if (cat) {
+                        const text = OPBYGNING_DATA.filter(s => cat.strips.includes(s.id)).map(s => s.text).join(' ');
+                        speakDanish(text);
+                    }
+                };
+            });
+        } else {
+            // Farvelæg selv: Interactive categorization
+            contentDiv.innerHTML = `
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 0.65rem 0.8rem; margin-bottom: 0.65rem;">
+                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.35rem; font-weight: 700;">4 farvekoder:</div>
+                    <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+                        ${BYGGEKLODS_CATS.map(cat => `
+                            <span style="background: rgba(255, 255, 255, 0.05); border: 1px solid ${cat.color}; color: ${cat.color}; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+                                ${cat.label}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div id="traening-strips-list" style="margin-bottom: 0.75rem;"></div>
+
+                <div id="traening-feedback" style="display: none; padding: 0.65rem 0.85rem; border-radius: 8px; margin-bottom: 0.75rem; text-align: center;"></div>
+
+                <div style="display: flex; gap: 0.4rem; justify-content: center;">
+                    <button id="btn-check-colors" class="action-btn-primary" style="padding: 0.45rem 1rem;">
+                        ✓ Tjek farvekoder
+                    </button>
+                    <button id="btn-reset-colors" class="opbygning-subnav-btn" style="padding: 0.45rem 0.85rem;">
+                        🔄 Nulstil
+                    </button>
+                </div>
+            `;
+
+            const listEl = contentDiv.querySelector('#traening-strips-list');
+            const feedEl = contentDiv.querySelector('#traening-feedback');
+
+            function updateTraeningList() {
+                listEl.innerHTML = '';
+                OPBYGNING_DATA.forEach(strip => {
+                    const userCat = userCatSelections[strip.id];
+                    const isRight = userCatChecked && (userCat === strip.category);
+                    const isFault = userCatChecked && (userCat !== strip.category);
+
+                    const card = document.createElement('div');
+                    card.className = `opbygning-card ${isRight ? 'is-correct' : ''} ${isFault ? 'is-wrong' : ''}`;
+                    card.style.borderColor = userCat ? (BYGGEKLODS_CATS.find(c => c.id === userCat)?.color || 'rgba(255,255,255,0.1)') : 'rgba(255,255,255,0.1)';
+
+                    card.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.3rem;">
+                            <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 700;">Strimmel ${strip.id}</span>
+                            <div style="display: flex; gap: 0.25rem;">
+                                ${BYGGEKLODS_CATS.map(cat => `
+                                    <button class="cat-select-btn" data-cat="${cat.id}" style="
+                                        background: ${userCat === cat.id ? cat.color : '#334155'};
+                                        color: ${userCat === cat.id ? '#ffffff' : '#cbd5e1'};
+                                        border: 1px solid ${cat.color};
+                                        padding: 0.15rem 0.45rem;
+                                        border-radius: 4px;
+                                        font-size: 0.72rem;
+                                        font-weight: 700;
+                                        cursor: pointer;
+                                    ">
+                                        ${cat.id === 'indledning' ? '🔵 Indledning' : cat.id === 'handlinger' ? '🟢 Handlinger' : cat.id === 'argumenter' ? '🟠 Argumenter' : '🟣 Afslutning'}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="color: #f8fafc; font-size: 0.9rem; line-height: 1.4;">${strip.text}</div>
+                    `;
+
+                    card.querySelectorAll('.cat-select-btn').forEach(btn => {
+                        btn.onclick = () => {
+                            userCatSelections[strip.id] = btn.getAttribute('data-cat');
+                            userCatChecked = false;
+                            feedEl.style.display = 'none';
+                            updateTraeningList();
+                        };
+                    });
+
+                    listEl.appendChild(card);
+                });
+            }
+
+            updateTraeningList();
+
+            contentDiv.querySelector('#btn-check-colors').onclick = () => {
+                userCatChecked = true;
+                let correctCount = 0;
+                OPBYGNING_DATA.forEach(s => {
+                    if (userCatSelections[s.id] === s.category) correctCount++;
+                });
+
+                feedEl.style.display = 'block';
+                if (correctCount === 9) {
+                    feedEl.style.background = 'rgba(34, 197, 94, 0.15)';
+                    feedEl.style.border = '1px solid #22c55e';
+                    feedEl.style.color = '#4ade80';
+                    feedEl.innerHTML = `✓ <strong>Perfekt!</strong> Alle 9 strimler er placeret i deres rigtige byggeklods.`;
+                } else {
+                    feedEl.style.background = 'rgba(245, 158, 11, 0.15)';
+                    feedEl.style.border = '1px solid #f59e0b';
+                    feedEl.style.color = '#fbbf24';
+                    feedEl.innerHTML = `${correctCount} af 9 rigtige. Tjek om strimlen handler om <em>Handlinger (Hvordan)</em> eller <em>Begrundelser (Hvorfor)</em>.`;
+                }
+                updateTraeningList();
+            };
+
+            contentDiv.querySelector('#btn-reset-colors').onclick = () => {
+                userCatSelections = {};
+                userCatChecked = false;
+                feedEl.style.display = 'none';
+                updateTraeningList();
+            };
+        }
+    }
+
+    // --- Sub-view: Klippeark (Print) ---
+    function renderOpbygningKlippeark(container) {
+        container.innerHTML = `
+            <div class="no-print" style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <div>
+                    <h2 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0;">
+                        Klippeark til parøvelse
+                    </h2>
+                    <p style="margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.82rem;">
+                        Print arket og klip strimlerne ud langs de stiplede linjer.
+                    </p>
+                </div>
+                <button id="btn-print-sheet" class="action-btn-primary" style="padding: 0.45rem 1rem;">
+                    🖨️ Udskriv klippeark
+                </button>
+            </div>
+
+            <div class="print-area" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 1rem; color: #f8fafc;">
+                <div style="border-bottom: 2px solid #38bdf8; padding-bottom: 0.5rem; margin-bottom: 0.8rem;">
+                    <div style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;">
+                        Model A: "Det argumenterende puslespil"
+                    </div>
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.2rem; font-style: italic;">
+                        Instruks til læreren: Kursisterne arbejder sammen i par om at genskabe den rigtige rækkefølge ud fra tekstens logiske opbygning.
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.4rem; font-family: monospace;">
+                    ${OPBYGNING_DATA.map(strip => `
+                        <div>
+                            <div style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
+                                ✂️ ----------------------------------------------------------------------------------
+                            </div>
+                            <div style="background: rgba(30, 41, 59, 0.7); border: 1px dashed rgba(255, 255, 255, 0.2); padding: 0.55rem 0.75rem; border-radius: 6px; margin: 0.2rem 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                <span style="font-weight: 800; color: #38bdf8; font-size: 0.85rem;">[ STRIMMEL ${strip.id} ]</span>
+                                <span style="color: #f8fafc; font-size: 0.92rem; margin-left: 0.4rem;">${strip.text}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
+                        ✂️ ----------------------------------------------------------------------------------
+                    </div>
+                </div>
+            </div>
+        `;
+
+        container.querySelector('#btn-print-sheet').onclick = () => {
+            window.print();
+        };
     }
 
     // Initialize View

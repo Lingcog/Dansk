@@ -2,6 +2,7 @@ import { navigate } from '../main.js';
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
 import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
+import { ordstillingPart2BuilderWordTranslations } from '../utils/ordstilling_part2_translations.js';
 
 export function renderOrdstillingIntroView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
@@ -750,7 +751,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 ans: 'En kvinde',
                 colorClass: 'step-green',
                 icon: '👤',
-                note: 'Hovedpersonen',
+                note: getTranslation('part2_adv_note_1'),
                 grammar: getTranslation('part2_adv_g1')
             },
             {
@@ -759,7 +760,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 ans: 'cykler',
                 colorClass: 'step-red',
                 icon: '🚲',
-                note: 'Handlingen (2. plads)',
+                note: getTranslation('part2_adv_note_2'),
                 grammar: getTranslation('part2_adv_g2')
             },
             {
@@ -777,7 +778,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 ans: 'på gaden',
                 colorClass: 'step-blue',
                 icon: '📍',
-                note: 'Baggrund / ramme',
+                note: getTranslation('part2_adv_note_4'),
                 grammar: getTranslation('part2_adv_g4')
             },
             {
@@ -786,7 +787,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 ans: 'om morgenen',
                 colorClass: 'step-purple',
                 icon: '⏰',
-                note: 'Tidspunkt',
+                note: getTranslation('part2_adv_note_5'),
                 grammar: getTranslation('part2_adv_g5')
             }
         ];
@@ -857,6 +858,10 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 const chip = document.createElement('button');
                 chip.className = `adv-quick-chip ${opt === currentAdv ? 'active' : ''}`;
                 chip.textContent = opt;
+                const wordTrans = ordstillingPart2BuilderWordTranslations[getLang()]?.[opt];
+                if (wordTrans && getLang() !== 'da') {
+                    chip.title = wordTrans;
+                }
                 chip.onclick = () => {
                     currentAdv = opt;
                     updateAdvBanner();
@@ -1004,6 +1009,10 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 const optBtn = document.createElement('button');
                 optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
                 optBtn.textContent = opt;
+                const wordTrans = ordstillingPart2BuilderWordTranslations[getLang()]?.[opt];
+                if (wordTrans && getLang() !== 'da') {
+                    optBtn.title = wordTrans;
+                }
 
                 optBtn.onclick = () => {
                     selections[catIdx] = opt;
@@ -1122,11 +1131,11 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
             slotsContainer.className = 'puzzle-slots puzzle-slots-5';
 
             const slotPrompts = [
-                { text: `1. Hvem / hvad?`, grammar: getTranslation('part2_adv_g1') },
-                { text: `2. Hvad laver?`, grammar: getTranslation('part2_adv_g2') },
-                { text: `3. Centraladverbium`, grammar: getTranslation('part2_adv_g3') },
-                { text: `4. Hvor?`, grammar: getTranslation('part2_adv_g4') },
-                { text: `5. Hvornår?`, grammar: getTranslation('part2_adv_g5') }
+                { text: getTranslation('part2_adv_slot_hint_1'), grammar: getTranslation('part2_adv_g1') },
+                { text: getTranslation('part2_adv_slot_hint_2'), grammar: getTranslation('part2_adv_g2') },
+                { text: getTranslation('part2_adv_slot_hint_3'), grammar: getTranslation('part2_adv_g3') },
+                { text: getTranslation('part2_adv_slot_hint_4'), grammar: getTranslation('part2_adv_g4') },
+                { text: getTranslation('part2_adv_slot_hint_5'), grammar: getTranslation('part2_adv_g5') }
             ];
 
             const slotColorClasses = [
@@ -1187,6 +1196,10 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     btn.className = `puzzle-word-btn ${isPlaced ? 'placed' : ''}`;
                     btn.textContent = word;
                     btn.disabled = isPlaced;
+                    const wordTrans = ordstillingPart2BuilderWordTranslations[getLang()]?.[word];
+                    if (wordTrans && getLang() !== 'da') {
+                        btn.title = wordTrans;
+                    }
 
                     btn.onclick = () => {
                         const firstEmptyIdx = userSlots.indexOf(null);
@@ -1215,9 +1228,13 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                         if (completedTasks.has(idx)) pill.classList.add('completed');
                     });
 
+                    const transKey = `part2_puzzle_s${currentTaskIdx + 1}`;
+                    const transText = getLang() !== 'da' ? getTranslation(transKey) : '';
+
                     feedbackBox.innerHTML = `
                         <div class="feedback-msg success">
                             ${getTranslation('part2_adv_puzzle_correct')} "<strong>${sentence}</strong>"
+                            ${transText ? `<div class="puzzle-trans-text" style="font-size: 1rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem;">"${transText}"</div>` : ''}
                         </div>
                         <div class="puzzle-action-row">
                             <button class="listen-btn-small" id="puzzle-5-listen-btn">🔊 ${getTranslation('part1_listen_pronunciation')}</button>

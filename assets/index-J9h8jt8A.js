@@ -3032,7 +3032,7 @@ import{t as Ft,a as Rt,b as Ot,s as Wt,v as Gt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     type="text" 
                     id="sp-input-field" 
                     class="sp-input" 
-                    placeholder="Søg på dansk eller dit eget sprog... (f.eks. hund, køre, fordi, ikke, happy)" 
+                    placeholder="søg blandt 500 + ord ...." 
                     autocomplete="off" 
                     autocorrect="off" 
                     spellcheck="false"

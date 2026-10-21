@@ -1458,115 +1458,238 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     // ==========================================
     // 6. TEKSTOPBYGNING (MODEL A, MODEL B & KLIPPEARK)
     // ==========================================
-    const OPBYGNING_DATA = [
+    const OPBYGNING_EXERCISES = [
         {
-            id: 1,
-            text: "Emne: Svar på din e-mail – om at spare penge",
-            category: "indledning",
-            color: "#38bdf8",
-            catName: "Hilsen & Indledning",
-            preview: "Emne: Svar på din e-mail – om at spare penge",
-            connector: "Emne",
-            roleDesc: "Præsenterer e-mailens emne direkte."
+            id: 'spare_penge',
+            title: '1. Spare penge 💰',
+            topic: 'Svar på din e-mail – om at spare penge',
+            data: [
+                {
+                    id: 1,
+                    text: "Emne: Svar på din e-mail – om at spare penge",
+                    category: "indledning",
+                    color: "#38bdf8",
+                    catName: "Hilsen & Indledning",
+                    preview: "Emne: Svar på din e-mail – om at spare penge",
+                    connector: "Emne",
+                    roleDesc: "Præsenterer e-mailens emne direkte."
+                },
+                {
+                    id: 2,
+                    text: "Hej Carl. Tak for din e-mail! Det var virkelig hyggeligt at høre fra dig igen.",
+                    category: "indledning",
+                    color: "#38bdf8",
+                    catName: "Hilsen & Indledning",
+                    preview: "Hej Carl. Tak for din e-mail!...",
+                    connector: "Hilsen",
+                    roleDesc: "Skaber venlig kontakt til modtageren."
+                },
+                {
+                    id: 3,
+                    text: "Du spørger, hvordan jeg lever billigt i hverdagen.",
+                    category: "indledning",
+                    color: "#38bdf8",
+                    catName: "Hilsen & Indledning",
+                    preview: "Du spørger, hvordan jeg lever billigt...",
+                    connector: "Refererende indledning",
+                    roleDesc: "Refererer til spørgsmålet og slår emnet fast."
+                },
+                {
+                    id: 4,
+                    text: "For det første køber jeg næsten altid ind i discountbutikker, og jeg kigger altid efter gule tilbudsmærker.",
+                    category: "handlinger",
+                    color: "#22c55e",
+                    catName: "Svar på \"HVORDAN\" (Handlinger)",
+                    preview: "For det første køber jeg næsten altid ind...",
+                    connector: "For det første ... og",
+                    roleDesc: "Første praktiske handling (opremsende bindeled)."
+                },
+                {
+                    id: 5,
+                    text: "Derudover laver jeg store portioner mad til flere dage, så jeg undgår madspild og sparer tid.",
+                    category: "handlinger",
+                    color: "#22c55e",
+                    catName: "Svar på \"HVORDAN\" (Handlinger)",
+                    preview: "Derudover laver jeg store portioner mad...",
+                    connector: "Derudover ... så",
+                    roleDesc: "Næste praktiske handling med konsekvens (så)."
+                },
+                {
+                    id: 6,
+                    text: "Mange tror, at det er kedeligt at spare, men for mig giver det en stor frihed.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Argumenter)",
+                    preview: "Mange tror, at det er kedeligt..., men...",
+                    connector: "Mange tror, at ... men",
+                    roleDesc: "Skifter til argumenter via kontrast (men)."
+                },
+                {
+                    id: 7,
+                    text: "Fordi mine faste udgifter er lave, behøver jeg nemlig ikke at arbejde over.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Argumenter)",
+                    preview: "Fordi mine faste udgifter er lave...",
+                    connector: "Fordi ... nemlig",
+                    roleDesc: "Begrundelse bag friheden (fordi + ledsætning)."
+                },
+                {
+                    id: 8,
+                    text: "Derfor har jeg mere tid til mine børn og mine fritidsinteresser.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Argumenter)",
+                    preview: "Derfor har jeg mere tid til mine børn...",
+                    connector: "Derfor",
+                    roleDesc: "Konkluderende konsekvens (derfor + V2)."
+                },
+                {
+                    id: 9,
+                    text: "Hvad med dig? Har du nogle gode sparetip? Mange hilsner Jens",
+                    category: "afslutning",
+                    color: "#a855f7",
+                    catName: "Afslutning & Modspørgsmål",
+                    preview: "Hvad med dig? Har du nogle gode sparetip?...",
+                    connector: "Modspørgsmål & Hilsen",
+                    roleDesc: "Sender bolden tilbage til modtageren og runder af."
+                }
+            ],
+            categories: [
+                { id: 'indledning', label: '🔵 Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2, 3] },
+                { id: 'handlinger', label: '🟢 Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Praktiske handlinger (discount, madspild)', strips: [4, 5] },
+                { id: 'argumenter', label: '🟠 Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Argumenter og begrundelser (frihed, tid)', strips: [6, 7, 8] },
+                { id: 'afslutning', label: '🟣 Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage og runder af', strips: [9] }
+            ]
         },
         {
-            id: 2,
-            text: "Hej Carl. Tak for din e-mail! Det var virkelig hyggeligt at høre fra dig igen.",
-            category: "indledning",
-            color: "#38bdf8",
-            catName: "Hilsen & Indledning",
-            preview: "Hej Carl. Tak for din e-mail!...",
-            connector: "Hilsen",
-            roleDesc: "Skaber venlig kontakt til modtageren."
-        },
-        {
-            id: 3,
-            text: "Du spørger, hvordan jeg lever billigt i hverdagen.",
-            category: "indledning",
-            color: "#38bdf8",
-            catName: "Hilsen & Indledning",
-            preview: "Du spørger, hvordan jeg lever billigt...",
-            connector: "Refererende indledning",
-            roleDesc: "Refererer til spørgsmålet og slår emnet fast."
-        },
-        {
-            id: 4,
-            text: "For det første køber jeg næsten altid ind i discountbutikker, og jeg kigger altid efter gule tilbudsmærker.",
-            category: "handlinger",
-            color: "#22c55e",
-            catName: "Svar på \"HVORDAN\" (Handlinger)",
-            preview: "For det første køber jeg næsten altid ind...",
-            connector: "For det første ... og",
-            roleDesc: "Første praktiske handling (opremsende bindeled)."
-        },
-        {
-            id: 5,
-            text: "Derudover laver jeg store portioner mad til flere dage, så jeg undgår madspild og sparer tid.",
-            category: "handlinger",
-            color: "#22c55e",
-            catName: "Svar på \"HVORDAN\" (Handlinger)",
-            preview: "Derudover laver jeg store portioner mad...",
-            connector: "Derudover ... så",
-            roleDesc: "Næste praktiske handling med konsekvens (så)."
-        },
-        {
-            id: 6,
-            text: "Mange tror, at det er kedeligt at spare, men for mig giver det en stor frihed.",
-            category: "argumenter",
-            color: "#f97316",
-            catName: "Svar på \"HVORFOR\" (Argumenter)",
-            preview: "Mange tror, at det er kedeligt..., men...",
-            connector: "Mange tror, at ... men",
-            roleDesc: "Skifter til argumenter via kontrast (men)."
-        },
-        {
-            id: 7,
-            text: "Fordi mine faste udgifter er lave, behøver jeg nemlig ikke at arbejde over.",
-            category: "argumenter",
-            color: "#f97316",
-            catName: "Svar på \"HVORFOR\" (Argumenter)",
-            preview: "Fordi mine faste udgifter er lave...",
-            connector: "Fordi ... nemlig",
-            roleDesc: "Begrundelse bag friheden (fordi + ledsætning)."
-        },
-        {
-            id: 8,
-            text: "Derfor har jeg mere tid til mine børn og mine fritidsinteresser.",
-            category: "argumenter",
-            color: "#f97316",
-            catName: "Svar på \"HVORFOR\" (Argumenter)",
-            preview: "Derfor har jeg mere tid til mine børn...",
-            connector: "Derfor",
-            roleDesc: "Konkluderende konsekvens (derfor + V2)."
-        },
-        {
-            id: 9,
-            text: "Hvad med dig? Har du nogle gode sparetip? Mange hilsner Jens",
-            category: "afslutning",
-            color: "#a855f7",
-            catName: "Afslutning & Modspørgsmål",
-            preview: "Hvad med dig? Har du nogle gode sparetip?...",
-            connector: "Modspørgsmål & Hilsen",
-            roleDesc: "Sender bolden tilbage til modtageren og runder af."
+            id: 'boernehave',
+            title: '2. Nyt job i børnehaven 👶',
+            topic: 'Svar på din e-mail – om mit nye arbejde i en børnehave',
+            data: [
+                {
+                    id: 1,
+                    text: "Hej Emma. Tak for din e-mail. Det var dejligt at høre fra dig!",
+                    category: "indledning",
+                    color: "#38bdf8",
+                    catName: "Hilsen & Indledning",
+                    preview: "Hej Emma. Tak for din e-mail...",
+                    connector: "Hilsen & Tak",
+                    roleDesc: "Skaber venlig kontakt til modtageren."
+                },
+                {
+                    id: 2,
+                    text: "Du spørger om mit nye arbejde. Jeg er startet som medhjælper i en børnehave. Børnene er søde, og arbejdet er godt.",
+                    category: "indledning",
+                    color: "#38bdf8",
+                    catName: "Hilsen & Indledning",
+                    preview: "Du spørger om mit nye arbejde...",
+                    connector: "Refererende indledning",
+                    roleDesc: "Refererer til spørgsmålet og introducerer det nye job."
+                },
+                {
+                    id: 3,
+                    text: "For det første kan jeg godt lide at lege med børnene i gården.",
+                    category: "handlinger",
+                    color: "#22c55e",
+                    catName: "Svar på \"HVORDAN\" (Det positive job)",
+                    preview: "For det første kan jeg godt lide...",
+                    connector: "For det første",
+                    roleDesc: "Første positive handling i hverdagen."
+                },
+                {
+                    id: 4,
+                    text: "For det andet har jeg besluttet at lære alle deres navne, fordi det er nemt og praktisk.",
+                    category: "handlinger",
+                    color: "#22c55e",
+                    catName: "Svar på \"HVORDAN\" (Det positive job)",
+                    preview: "For det andet har jeg besluttet...",
+                    connector: "For det andet ... fordi",
+                    roleDesc: "Anden positive handling med begrundelse (fordi)."
+                },
+                {
+                    id: 5,
+                    text: "Du spørger også, hvorfor arbejdet somme tider er hårdt og stressende. Det er mest, fordi der ofte er meget larm i børnehaven.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Udfordringer & Begrundelser)",
+                    preview: "Du spørger også, hvorfor arbejdet...",
+                    connector: "Du spørger også ... fordi",
+                    roleDesc: "Skifter til udfordringer og angiver den første årsag (larm)."
+                },
+                {
+                    id: 6,
+                    text: "Når mange børn græder på samme tid, kan det være svært at være helt rolig.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Udfordringer & Begrundelser)",
+                    preview: "Når mange børn græder på samme tid...",
+                    connector: "Når ... (inversion: kan det)",
+                    roleDesc: "Uddyber årsagen med betingelse (når) og inversion."
+                },
+                {
+                    id: 7,
+                    text: "Desuden mener jeg, at vi ikke altid har nok voksne på arbejdet, når en kollega er syg. Så skal vi arbejde meget hurtigt.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Udfordringer & Begrundelser)",
+                    preview: "Desuden mener jeg, at vi ikke...",
+                    connector: "Desuden ... at ... Så",
+                    roleDesc: "Tilføjer nyt argument med holdning (at) og konsekvens (Så)."
+                },
+                {
+                    id: 8,
+                    text: "Alligevel er jeg glad for at arbejde der, fordi det er et godt job.",
+                    category: "argumenter",
+                    color: "#f97316",
+                    catName: "Svar på \"HVORFOR\" (Udfordringer & Begrundelser)",
+                    preview: "Alligevel er jeg glad for at arbejde der...",
+                    connector: "Alligevel ... fordi",
+                    roleDesc: "Gennembrud: Trods udfordringerne opretholdes glæden."
+                },
+                {
+                    id: 9,
+                    text: "Hvordan går det med dig? Lad os snart drikke en kop kaffe sammen! De bedste hilsner",
+                    category: "afslutning",
+                    color: "#a855f7",
+                    catName: "Afslutning & Modspørgsmål",
+                    preview: "Hvordan går det med dig? Lad os snart...",
+                    connector: "Modspørgsmål & Afsked",
+                    roleDesc: "Sender bolden tilbage til modtageren og runder e-mailen af."
+                }
+            ],
+            categories: [
+                { id: 'indledning', label: '🔵 Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2] },
+                { id: 'handlinger', label: '🟢 Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Det positive ved jobbet: lege, lære navne', strips: [3, 4] },
+                { id: 'argumenter', label: '🟠 Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Udfordringer & begrundelser: larm, sygdom, alligevel glad', strips: [5, 6, 7, 8] },
+                { id: 'afslutning', label: '🟣 Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage: kaffe og hilsen', strips: [9] }
+            ]
         }
     ];
 
-    const BYGGEKLODS_CATS = [
-        { id: 'indledning', label: '🔵 Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2, 3] },
-        { id: 'handlinger', label: '🟢 Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Praktiske handlinger (discount, madspild)', strips: [4, 5] },
-        { id: 'argumenter', label: '🟠 Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Argumenter og begrundelser (frihed, tid)', strips: [6, 7, 8] },
-        { id: 'afslutning', label: '🟣 Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage og runder af', strips: [9] }
-    ];
-
-    // Local persistent state
+    // Local persistent state across exercises & subtabs
+    let currentOpbygningExId = 'spare_penge';
     let opbygningSubTab = 'model_a';
-    let opbygningUserOrder = [4, 2, 8, 1, 7, 3, 9, 5, 6].map(id => OPBYGNING_DATA.find(s => s.id === id));
-    let opbygningSelectedIdx = null;
     let opbygningCompact = false;
-    let opbygningChecked = false;
     let byggeklodsMode = 'anatomi';
-    let userCatSelections = {};
-    let userCatChecked = false;
+
+    // State per exercise
+    const exState = {
+        'spare_penge': {
+            userOrder: [4, 2, 8, 1, 7, 3, 9, 5, 6].map(id => OPBYGNING_EXERCISES[0].data.find(s => s.id === id)),
+            selectedIdx: null,
+            checked: false,
+            userCatSelections: {},
+            userCatChecked: false
+        },
+        'boernehave': {
+            userOrder: [5, 2, 7, 1, 8, 3, 9, 4, 6].map(id => OPBYGNING_EXERCISES[1].data.find(s => s.id === id)),
+            selectedIdx: null,
+            checked: false,
+            userCatSelections: {},
+            userCatChecked: false
+        }
+    };
 
     function renderTabOpbygning(parent) {
         parent.innerHTML = '';
@@ -1575,7 +1698,34 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         container.style.width = '100%';
         container.style.boxSizing = 'border-box';
 
-        // Subnav Pills
+        const currentEx = OPBYGNING_EXERCISES.find(e => e.id === currentOpbygningExId) || OPBYGNING_EXERCISES[0];
+        const state = exState[currentOpbygningExId];
+
+        // 1. Exercise Switcher Row
+        const exSwitcher = document.createElement('div');
+        exSwitcher.className = 'no-print';
+        exSwitcher.style.cssText = 'display: flex; gap: 0.4rem; align-items: center; margin-bottom: 0.65rem; flex-wrap: wrap; background: #0f172a; padding: 0.4rem 0.6rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);';
+        exSwitcher.innerHTML = `
+            <span style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; margin-right: 0.2rem;">Vælg tekst:</span>
+            ${OPBYGNING_EXERCISES.map(ex => `
+                <button class="opbygning-subnav-btn ${currentOpbygningExId === ex.id ? 'active' : ''}" data-ex="${ex.id}" style="${currentOpbygningExId === ex.id ? 'background: #059669; border-color: #10b981; color: white;' : ''}">
+                    ${ex.title}
+                </button>
+            `).join('')}
+        `;
+
+        exSwitcher.querySelectorAll('.opbygning-subnav-btn').forEach(btn => {
+            btn.onclick = () => {
+                const exId = btn.getAttribute('data-ex');
+                if (exId !== currentOpbygningExId) {
+                    currentOpbygningExId = exId;
+                    renderTabOpbygning(parent);
+                }
+            };
+        });
+        container.appendChild(exSwitcher);
+
+        // 2. Subnav Pills: Model A | Model B | Klippeark
         const subNav = document.createElement('div');
         subNav.className = 'opbygning-subnav no-print';
         subNav.innerHTML = `
@@ -1604,24 +1754,24 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         container.appendChild(subContent);
 
         if (opbygningSubTab === 'model_a') {
-            renderOpbygningModelA(subContent);
+            renderOpbygningModelA(subContent, currentEx, state, parent);
         } else if (opbygningSubTab === 'model_b') {
-            renderOpbygningModelB(subContent);
+            renderOpbygningModelB(subContent, currentEx, state, parent);
         } else {
-            renderOpbygningKlippeark(subContent);
+            renderOpbygningKlippeark(subContent, currentEx);
         }
 
         parent.appendChild(container);
     }
 
     // --- Sub-view: Model A (Puslespil) ---
-    function renderOpbygningModelA(container) {
+    function renderOpbygningModelA(container, currentEx, state, parent) {
         container.innerHTML = `
             <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
                     <div>
                         <h2 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0;">
-                            Model A: Det argumenterende puslespil
+                            Model A: Puslespil – ${currentEx.title}
                         </h2>
                         <p style="margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.82rem;">
                             Genskab e-mailens logiske rækkefølge. Brug <strong>▲ / ▼</strong> eller tryk på to strimler for at bytte plads.
@@ -1652,7 +1802,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
         container.querySelector('#btn-toggle-compact').onclick = () => {
             opbygningCompact = !opbygningCompact;
-            renderOpbygningModelA(container);
+            renderOpbygningModelA(container, currentEx, state, parent);
         };
 
         const listDiv = container.querySelector('#opbygning-strips-list');
@@ -1660,10 +1810,10 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
         function updateList() {
             listDiv.innerHTML = '';
-            opbygningUserOrder.forEach((strip, idx) => {
-                const isCorrect = opbygningChecked && (strip.id === idx + 1);
-                const isWrong = opbygningChecked && (strip.id !== idx + 1);
-                const isSelected = (opbygningSelectedIdx === idx);
+            state.userOrder.forEach((strip, idx) => {
+                const isCorrect = state.checked && (strip.id === idx + 1);
+                const isWrong = state.checked && (strip.id !== idx + 1);
+                const isSelected = (state.selectedIdx === idx);
 
                 const card = document.createElement('div');
                 card.className = `opbygning-card ${isSelected ? 'selected' : ''} ${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`;
@@ -1698,7 +1848,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                             <div style="display: flex; gap: 0.25rem; flex-shrink: 0;" onclick="event.stopPropagation();">
                                 <button class="opbygning-arrow-btn btn-speak-strip" title="Lyt">🔊</button>
                                 <button class="opbygning-arrow-btn btn-up" ${idx === 0 ? 'disabled' : ''} title="Flyt op">▲</button>
-                                <button class="opbygning-arrow-btn btn-down" ${idx === opbygningUserOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
+                                <button class="opbygning-arrow-btn btn-down" ${idx === state.userOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
                             </div>
                         </div>
                     `;
@@ -1722,7 +1872,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                             <div style="display: flex; flex-direction: column; gap: 0.25rem; flex-shrink: 0;" onclick="event.stopPropagation();">
                                 <button class="opbygning-arrow-btn btn-speak-strip" title="Lyt">🔊</button>
                                 <button class="opbygning-arrow-btn btn-up" ${idx === 0 ? 'disabled' : ''} title="Flyt op">▲</button>
-                                <button class="opbygning-arrow-btn btn-down" ${idx === opbygningUserOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
+                                <button class="opbygning-arrow-btn btn-down" ${idx === state.userOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
                             </div>
                         </div>
                     `;
@@ -1730,17 +1880,17 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
                 // Card click for tap-to-swap
                 card.onclick = () => {
-                    if (opbygningSelectedIdx === null) {
-                        opbygningSelectedIdx = idx;
-                    } else if (opbygningSelectedIdx === idx) {
-                        opbygningSelectedIdx = null;
+                    if (state.selectedIdx === null) {
+                        state.selectedIdx = idx;
+                    } else if (state.selectedIdx === idx) {
+                        state.selectedIdx = null;
                     } else {
                         // Swap
-                        const temp = opbygningUserOrder[opbygningSelectedIdx];
-                        opbygningUserOrder[opbygningSelectedIdx] = opbygningUserOrder[idx];
-                        opbygningUserOrder[idx] = temp;
-                        opbygningSelectedIdx = null;
-                        opbygningChecked = false;
+                        const temp = state.userOrder[state.selectedIdx];
+                        state.userOrder[state.selectedIdx] = state.userOrder[idx];
+                        state.userOrder[idx] = temp;
+                        state.selectedIdx = null;
+                        state.checked = false;
                         feedbackBox.style.display = 'none';
                     }
                     updateList();
@@ -1754,23 +1904,23 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 card.querySelector('.btn-up').onclick = (e) => {
                     e.stopPropagation();
                     if (idx > 0) {
-                        const temp = opbygningUserOrder[idx - 1];
-                        opbygningUserOrder[idx - 1] = opbygningUserOrder[idx];
-                        opbygningUserOrder[idx] = temp;
-                        opbygningSelectedIdx = null;
-                        opbygningChecked = false;
+                        const temp = state.userOrder[idx - 1];
+                        state.userOrder[idx - 1] = state.userOrder[idx];
+                        state.userOrder[idx] = temp;
+                        state.selectedIdx = null;
+                        state.checked = false;
                         feedbackBox.style.display = 'none';
                         updateList();
                     }
                 };
                 card.querySelector('.btn-down').onclick = (e) => {
                     e.stopPropagation();
-                    if (idx < opbygningUserOrder.length - 1) {
-                        const temp = opbygningUserOrder[idx + 1];
-                        opbygningUserOrder[idx + 1] = opbygningUserOrder[idx];
-                        opbygningUserOrder[idx] = temp;
-                        opbygningSelectedIdx = null;
-                        opbygningChecked = false;
+                    if (idx < state.userOrder.length - 1) {
+                        const temp = state.userOrder[idx + 1];
+                        state.userOrder[idx + 1] = state.userOrder[idx];
+                        state.userOrder[idx] = temp;
+                        state.selectedIdx = null;
+                        state.checked = false;
                         feedbackBox.style.display = 'none';
                         updateList();
                     }
@@ -1784,11 +1934,11 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
         // Bottom Actions
         container.querySelector('#btn-check-order').onclick = () => {
-            opbygningChecked = true;
-            opbygningSelectedIdx = null;
+            state.checked = true;
+            state.selectedIdx = null;
 
             let correctCount = 0;
-            opbygningUserOrder.forEach((s, i) => {
+            state.userOrder.forEach((s, i) => {
                 if (s.id === i + 1) correctCount++;
             });
 
@@ -1812,12 +1962,12 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     </div>
                 `;
                 feedbackBox.querySelector('#btn-speak-all').onclick = () => {
-                    const fullText = opbygningUserOrder.map(s => s.text).join(' ');
+                    const fullText = state.userOrder.map(s => s.text).join(' ');
                     speakDanish(fullText);
                 };
                 feedbackBox.querySelector('#btn-go-model-b').onclick = () => {
                     opbygningSubTab = 'model_b';
-                    renderTabOpbygning(container.parentElement.parentElement);
+                    renderTabOpbygning(parent);
                 };
             } else {
                 feedbackBox.style.background = 'rgba(245, 158, 11, 0.12)';
@@ -1828,7 +1978,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         ${correctCount} af 9 strimler er på rette plads.
                     </div>
                     <div style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.2rem;">
-                        Kig efter brobyggerne (<em>For det første</em>, <em>Derudover</em>, <em>Mange tror..., men</em>, <em>Fordi</em>, <em>Derfor</em>) og prøv igen.
+                        Kig efter brobyggerne og logiske overgange, og prøv igen.
                     </div>
                 `;
             }
@@ -1836,19 +1986,17 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         };
 
         container.querySelector('#btn-shuffle-order').onclick = () => {
-            opbygningChecked = false;
-            opbygningSelectedIdx = null;
+            state.checked = false;
+            state.selectedIdx = null;
             feedbackBox.style.display = 'none';
-            // Shuffle ensuring not fully solved
-            const shuffled = [...OPBYGNING_DATA].sort(() => Math.random() - 0.5);
-            opbygningUserOrder = shuffled;
+            state.userOrder = [...currentEx.data].sort(() => Math.random() - 0.5);
             updateList();
         };
 
         container.querySelector('#btn-show-solution').onclick = () => {
-            opbygningChecked = true;
-            opbygningSelectedIdx = null;
-            opbygningUserOrder = [...OPBYGNING_DATA];
+            state.checked = true;
+            state.selectedIdx = null;
+            state.userOrder = [...currentEx.data];
             feedbackBox.style.display = 'block';
             feedbackBox.style.background = 'rgba(56, 189, 248, 0.15)';
             feedbackBox.style.border = '1.5px solid #38bdf8';
@@ -1864,16 +2012,16 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     }
 
     // --- Sub-view: Model B (Byggeklodser) ---
-    function renderOpbygningModelB(container) {
+    function renderOpbygningModelB(container, currentEx, state, parent) {
         container.innerHTML = `
             <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
                     <div>
                         <h2 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0;">
-                            Model B: Farvekodet Byggeklods-metode
+                            Model B: Byggeklodser – ${currentEx.title}
                         </h2>
                         <p style="margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.82rem;">
-                            En stærk tekst er bygget af 4 funktioner: Indledning ➔ Handlinger (Hvordan) ➔ Argumenter (Hvorfor) ➔ Afslutning.
+                            En stærk tekst er bygget af 4 funktioner: Indledning ➔ Handlinger ➔ Argumenter ➔ Afslutning.
                         </p>
                     </div>
                     <div style="display: flex; gap: 0.3rem;">
@@ -1892,11 +2040,11 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
         container.querySelector('#btn-mode-anatomi').onclick = () => {
             byggeklodsMode = 'anatomi';
-            renderOpbygningModelB(container);
+            renderOpbygningModelB(container, currentEx, state, parent);
         };
         container.querySelector('#btn-mode-traening').onclick = () => {
             byggeklodsMode = 'traening';
-            renderOpbygningModelB(container);
+            renderOpbygningModelB(container, currentEx, state, parent);
         };
 
         const contentDiv = container.querySelector('#byggeklods-content');
@@ -1904,8 +2052,8 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         if (byggeklodsMode === 'anatomi') {
             // Anatomi Oversigt: The 4 distinct functional blocks
             contentDiv.innerHTML = `
-                ${BYGGEKLODS_CATS.map(cat => {
-                    const strips = OPBYGNING_DATA.filter(s => cat.strips.includes(s.id));
+                ${currentEx.categories.map(cat => {
+                    const strips = currentEx.data.filter(s => cat.strips.includes(s.id));
                     return `
                         <div class="byggeklods-block" style="border-left-color: ${cat.color};">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
@@ -1937,9 +2085,9 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             contentDiv.querySelectorAll('.btn-speak-block').forEach(btn => {
                 btn.onclick = () => {
                     const cId = btn.getAttribute('data-cat');
-                    const cat = BYGGEKLODS_CATS.find(c => c.id === cId);
+                    const cat = currentEx.categories.find(c => c.id === cId);
                     if (cat) {
-                        const text = OPBYGNING_DATA.filter(s => cat.strips.includes(s.id)).map(s => s.text).join(' ');
+                        const text = currentEx.data.filter(s => cat.strips.includes(s.id)).map(s => s.text).join(' ');
                         speakDanish(text);
                     }
                 };
@@ -1950,7 +2098,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 0.65rem 0.8rem; margin-bottom: 0.65rem;">
                     <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.35rem; font-weight: 700;">4 farvekoder:</div>
                     <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
-                        ${BYGGEKLODS_CATS.map(cat => `
+                        ${currentEx.categories.map(cat => `
                             <span style="background: rgba(255, 255, 255, 0.05); border: 1px solid ${cat.color}; color: ${cat.color}; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
                                 ${cat.label}
                             </span>
@@ -1977,20 +2125,20 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
             function updateTraeningList() {
                 listEl.innerHTML = '';
-                OPBYGNING_DATA.forEach(strip => {
-                    const userCat = userCatSelections[strip.id];
-                    const isRight = userCatChecked && (userCat === strip.category);
-                    const isFault = userCatChecked && (userCat !== strip.category);
+                currentEx.data.forEach(strip => {
+                    const userCat = state.userCatSelections[strip.id];
+                    const isRight = state.userCatChecked && (userCat === strip.category);
+                    const isFault = state.userCatChecked && (userCat !== strip.category);
 
                     const card = document.createElement('div');
                     card.className = `opbygning-card ${isRight ? 'is-correct' : ''} ${isFault ? 'is-wrong' : ''}`;
-                    card.style.borderColor = userCat ? (BYGGEKLODS_CATS.find(c => c.id === userCat)?.color || 'rgba(255,255,255,0.1)') : 'rgba(255,255,255,0.1)';
+                    card.style.borderColor = userCat ? (currentEx.categories.find(c => c.id === userCat)?.color || 'rgba(255,255,255,0.1)') : 'rgba(255,255,255,0.1)';
 
                     card.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.3rem;">
                             <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 700;">Strimmel ${strip.id}</span>
                             <div style="display: flex; gap: 0.25rem;">
-                                ${BYGGEKLODS_CATS.map(cat => `
+                                ${currentEx.categories.map(cat => `
                                     <button class="cat-select-btn" data-cat="${cat.id}" style="
                                         background: ${userCat === cat.id ? cat.color : '#334155'};
                                         color: ${userCat === cat.id ? '#ffffff' : '#cbd5e1'};
@@ -2011,8 +2159,8 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
                     card.querySelectorAll('.cat-select-btn').forEach(btn => {
                         btn.onclick = () => {
-                            userCatSelections[strip.id] = btn.getAttribute('data-cat');
-                            userCatChecked = false;
+                            state.userCatSelections[strip.id] = btn.getAttribute('data-cat');
+                            state.userCatChecked = false;
                             feedEl.style.display = 'none';
                             updateTraeningList();
                         };
@@ -2025,10 +2173,10 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             updateTraeningList();
 
             contentDiv.querySelector('#btn-check-colors').onclick = () => {
-                userCatChecked = true;
+                state.userCatChecked = true;
                 let correctCount = 0;
-                OPBYGNING_DATA.forEach(s => {
-                    if (userCatSelections[s.id] === s.category) correctCount++;
+                currentEx.data.forEach(s => {
+                    if (state.userCatSelections[s.id] === s.category) correctCount++;
                 });
 
                 feedEl.style.display = 'block';
@@ -2041,14 +2189,14 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     feedEl.style.background = 'rgba(245, 158, 11, 0.15)';
                     feedEl.style.border = '1px solid #f59e0b';
                     feedEl.style.color = '#fbbf24';
-                    feedEl.innerHTML = `${correctCount} af 9 rigtige. Tjek om strimlen handler om <em>Handlinger (Hvordan)</em> eller <em>Begrundelser (Hvorfor)</em>.`;
+                    feedEl.innerHTML = `${correctCount} af 9 rigtige. Tjek om strimlen hører til <em>Hilsen</em>, <em>Handlinger</em>, <em>Argumenter</em> eller <em>Afslutning</em>.`;
                 }
                 updateTraeningList();
             };
 
             contentDiv.querySelector('#btn-reset-colors').onclick = () => {
-                userCatSelections = {};
-                userCatChecked = false;
+                state.userCatSelections = {};
+                state.userCatChecked = false;
                 feedEl.style.display = 'none';
                 updateTraeningList();
             };
@@ -2056,12 +2204,12 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     }
 
     // --- Sub-view: Klippeark (Print) ---
-    function renderOpbygningKlippeark(container) {
+    function renderOpbygningKlippeark(container, currentEx) {
         container.innerHTML = `
             <div class="no-print" style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
                 <div>
                     <h2 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0;">
-                        Klippeark til parøvelse
+                        Klippeark til parøvelse – ${currentEx.title}
                     </h2>
                     <p style="margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.82rem;">
                         Print arket og klip strimlerne ud langs de stiplede linjer.
@@ -2075,7 +2223,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             <div class="print-area" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 1rem; color: #f8fafc;">
                 <div style="border-bottom: 2px solid #38bdf8; padding-bottom: 0.5rem; margin-bottom: 0.8rem;">
                     <div style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;">
-                        Model A: "Det argumenterende puslespil"
+                        Model A: "Det argumenterende puslespil" – ${currentEx.title}
                     </div>
                     <div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.2rem; font-style: italic;">
                         Instruks til læreren: Kursisterne arbejder sammen i par om at genskabe den rigtige rækkefølge ud fra tekstens logiske opbygning.
@@ -2083,7 +2231,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.4rem; font-family: monospace;">
-                    ${OPBYGNING_DATA.map(strip => `
+                    ${currentEx.data.map(strip => `
                         <div>
                             <div style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
                                 ✂️ ----------------------------------------------------------------------------------

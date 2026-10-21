@@ -151,6 +151,31 @@ export function renderWordLearningView(container, navigateFn) {
         border-color: #ffffff;
         box-shadow: 0 3px 10px rgba(0,0,0,0.6);
       }
+      .hotspot-pin.pin-adj.active .hotspot-pill {
+        color: #fb923c;
+        border-color: #f97316;
+        box-shadow: 0 0 10px rgba(249, 115, 22, 0.6);
+      }
+      .hotspot-pin.pin-sub.active .hotspot-pill {
+        color: #4ade80;
+        border-color: #22c55e;
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+      }
+      .hotspot-pin.pin-vrb.active .hotspot-pill {
+        color: #f87171;
+        border-color: #ef4444;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+      }
+      .hotspot-pin.pin-adv.active .hotspot-pill {
+        color: #38bdf8;
+        border-color: #38bdf8;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+      }
+      .hotspot-pin.pin-konj.active .hotspot-pill {
+        color: #c084fc;
+        border-color: #a855f7;
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+      }
       @media (max-width: 600px) {
         .hotspot-pin { width: 18px; height: 18px; border-width: 1.5px; }
         .hotspot-pin .pin-dot { width: 4px; height: 4px; }
@@ -162,23 +187,7 @@ export function renderWordLearningView(container, navigateFn) {
         background: rgba(0, 0, 0, 0.25);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
-        padding: 1.5rem 1rem 1rem;
-      }
-      .svg-curve-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-      }
-      .pulsing-curve {
-        stroke-dasharray: 6;
-        animation: pulseDash 25s linear infinite;
-      }
-      @keyframes pulseDash {
-        to { stroke-dashoffset: -1000; }
+        padding: 1.2rem 1rem 1rem;
       }
       .chips-row {
         position: relative;
@@ -200,36 +209,46 @@ export function renderWordLearningView(container, navigateFn) {
         cursor: pointer;
         transition: all 0.25s ease;
         user-select: none;
-        border-width: 2px;
-        border-style: solid;
-        background: rgba(15, 23, 42, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(15, 23, 42, 0.85);
+        color: #ffffff;
+      }
+      .flow-chip span {
+        color: inherit;
       }
       .flow-chip:hover {
         transform: translateY(-2px) scale(1.03);
+        border-color: rgba(255, 255, 255, 0.5);
+        color: #ffffff;
       }
       .flow-chip.active-adj {
         border-color: #f97316;
         color: #fb923c;
+        background: rgba(249, 115, 22, 0.18);
         box-shadow: 0 0 16px rgba(249, 115, 22, 0.5);
       }
       .flow-chip.active-sub {
         border-color: #22c55e;
         color: #4ade80;
+        background: rgba(34, 197, 94, 0.18);
         box-shadow: 0 0 16px rgba(34, 197, 94, 0.5);
       }
       .flow-chip.active-vrb {
         border-color: #ef4444;
         color: #f87171;
+        background: rgba(239, 68, 68, 0.18);
         box-shadow: 0 0 16px rgba(239, 68, 68, 0.5);
       }
       .flow-chip.active-adv {
         border-color: #38bdf8;
         color: #38bdf8;
+        background: rgba(56, 189, 248, 0.18);
         box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
       }
       .flow-chip.active-konj {
         border-color: #a855f7;
         color: #c084fc;
+        background: rgba(168, 85, 247, 0.18);
         box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
       }
       .flow-explanation {
@@ -438,7 +457,6 @@ export function renderWordLearningView(container, navigateFn) {
       .secondary-desc { font-size: 0.8rem; color: #94a3b8; }
 
       @media (max-width: 650px) {
-        .svg-curve-overlay { display: none; }
         .chips-row { gap: 0.5rem; }
         .flow-chip { font-size: 0.85rem; padding: 0.5rem 0.8rem; }
         .primary-modules-grid { grid-template-columns: 1fr; }
@@ -621,15 +639,6 @@ export function renderWordLearningView(container, navigateFn) {
       </div>
 
       <div class="sentence-flow-box">
-        <svg class="svg-curve-overlay" viewBox="0 0 540 65" preserveAspectRatio="none">
-          <!-- Bue 1: Orange Adjektiv -> Grønt Substantiv -->
-          <path d="M 65 38 Q 110 8 155 38" fill="none" stroke="#f97316" stroke-width="2.5" class="pulsing-curve" />
-          <!-- Bue 2: Blåt Adverbium -> Rødt Verbum -->
-          <path d="M 385 38 Q 330 8 275 38" fill="none" stroke="#38bdf8" stroke-width="2.5" class="pulsing-curve" />
-          <!-- Bue 3: Lilla Konjunktion binder hele sætningen videre -->
-          <path d="M 435 44 Q 485 64 530 44" fill="none" stroke="#a855f7" stroke-width="2.5" class="pulsing-curve" />
-        </svg>
-
         <div class="chips-row">
           <button type="button" class="flow-chip active-adj" data-type="adjektiv" id="chip-adj">
             <span>🟠</span>

@@ -2857,7 +2857,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Nu",
             sentenceAfter: "familien dejlig morgenmad sammen.",
             baseVerb: "at spise",
@@ -2869,7 +2868,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I aftes",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I aftes",
             sentenceAfter: "mor en lækker grøntsagssuppe til os alle.",
             baseVerb: "at lave mad",
@@ -2881,7 +2879,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Lige nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Lige nu",
             sentenceAfter: "katten og sover i den bløde sofa.",
             baseVerb: "at ligge",
@@ -2893,7 +2890,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "For en time siden",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "For en time siden",
             sentenceAfter: "de døren til haven op for at lufte ud.",
             baseVerb: "at åbne",
@@ -2905,7 +2901,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Hver morgen",
-            hint: "peger på en vane / nutid ➔ Nutid",
             sentenceBefore: "Hver morgen",
             sentenceAfter: "hun et stort glas koldt vand før morgenmaden.",
             baseVerb: "at drikke",
@@ -2917,7 +2912,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I morges",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I morges",
             sentenceAfter: "drengen sin varme jakke på før han gik ud.",
             baseVerb: "at tage",
@@ -2929,7 +2923,6 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dette øjeblik",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dette øjeblik",
             sentenceAfter: "telefonen ude i entréen.",
             baseVerb: "at ringe",
@@ -2966,13 +2959,15 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
         sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> ________ ${task.sentenceAfter} <span style="color: #94a3b8; font-size: 1.05rem;">(${task.baseVerb})</span>`;
         tidCard.appendChild(sentenceBox);
 
-        const hintInfo = document.createElement('div');
-        hintInfo.style.color = '#c084fc';
-        hintInfo.style.fontSize = '0.95rem';
-        hintInfo.style.fontWeight = '600';
-        hintInfo.style.marginBottom = '1rem';
-        hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
-        tidCard.appendChild(hintInfo);
+        if (currTidTaskIdx < 5 && task.hint) {
+            const hintInfo = document.createElement('div');
+            hintInfo.style.color = '#c084fc';
+            hintInfo.style.fontSize = '0.95rem';
+            hintInfo.style.fontWeight = '600';
+            hintInfo.style.marginBottom = '1rem';
+            hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+            tidCard.appendChild(hintInfo);
+        }
 
         const optionsGrid = document.createElement('div');
         optionsGrid.className = 'time-options-grid';

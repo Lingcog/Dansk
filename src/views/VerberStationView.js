@@ -2835,7 +2835,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dag",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dag",
             sentenceAfter: "billetautomaten heldigvis helt perfekt.",
             baseVerb: "at virke",
@@ -2847,7 +2846,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I forgårs",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I forgårs",
             sentenceAfter: "hun en togbillet på internettet.",
             baseVerb: "at købe",
@@ -2859,7 +2857,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Lige nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Lige nu",
             sentenceAfter: "toget roligt ind på perron 3.",
             baseVerb: "at rulle",
@@ -2871,7 +2868,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Sidste måned",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "Sidste måned",
             sentenceAfter: "de med tog hele vejen til Berlin.",
             baseVerb: "at rejse",
@@ -2883,7 +2879,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Hver eftermiddag",
-            hint: "peger på en vane / nutid ➔ Nutid",
             sentenceBefore: "Hver eftermiddag",
             sentenceAfter: "lyntoget fra spor 1 klokken fire.",
             baseVerb: "at afgå",
@@ -2895,7 +2890,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I morges",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I morges",
             sentenceAfter: "rejsen præcis til tiden fra spor 2.",
             baseVerb: "at begynde",
@@ -2907,7 +2901,6 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dette øjeblik",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dette øjeblik",
             sentenceAfter: "automaten perfekt efter reparationen.",
             baseVerb: "at virke",
@@ -2944,13 +2937,15 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
         sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> ________ ${task.sentenceAfter} <span style="color: #94a3b8; font-size: 1.05rem;">(${task.baseVerb})</span>`;
         tidCard.appendChild(sentenceBox);
 
-        const hintInfo = document.createElement('div');
-        hintInfo.style.color = '#c084fc';
-        hintInfo.style.fontSize = '0.95rem';
-        hintInfo.style.fontWeight = '600';
-        hintInfo.style.marginBottom = '1rem';
-        hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
-        tidCard.appendChild(hintInfo);
+        if (currTidTaskIdx < 5 && task.hint) {
+            const hintInfo = document.createElement('div');
+            hintInfo.style.color = '#c084fc';
+            hintInfo.style.fontSize = '0.95rem';
+            hintInfo.style.fontWeight = '600';
+            hintInfo.style.marginBottom = '1rem';
+            hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+            tidCard.appendChild(hintInfo);
+        }
 
         const optionsGrid = document.createElement('div');
         optionsGrid.className = 'time-options-grid';

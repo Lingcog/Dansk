@@ -2836,7 +2836,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dag",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dag",
             sentenceAfter: "motionisterne hurtigt rundt ad grusstierne.",
             baseVerb: "at løbe",
@@ -2848,7 +2847,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Sidste søndag",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "Sidste søndag",
             sentenceAfter: "børnene en spændende fodboldkamp i parken.",
             baseVerb: "at spille",
@@ -2860,7 +2858,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Lige nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Lige nu",
             sentenceAfter: "solen fantastisk over de grønne trækroner.",
             baseVerb: "at skinne",
@@ -2872,7 +2869,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I fjor",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I fjor",
             sentenceAfter: "det lille bøgetræ sig dobbelt så højt.",
             baseVerb: "at vokse",
@@ -2884,7 +2880,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Hver sommer",
-            hint: "peger på en vane / nutid ➔ Nutid",
             sentenceBefore: "Hver sommer",
             sentenceAfter: "mange familier den friske natur og bader.",
             baseVerb: "at nyde",
@@ -2896,7 +2891,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I går morges",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I går morges",
             sentenceAfter: "drengen bolden med begge hænder.",
             baseVerb: "at gribe",
@@ -2908,7 +2902,6 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dette øjeblik",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dette øjeblik",
             sentenceAfter: "fuglen frit i den blå luft.",
             baseVerb: "at leve",
@@ -2945,13 +2938,15 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
         sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> ________ ${task.sentenceAfter} <span style="color: #94a3b8; font-size: 1.05rem;">(${task.baseVerb})</span>`;
         tidCard.appendChild(sentenceBox);
 
-        const hintInfo = document.createElement('div');
-        hintInfo.style.color = '#c084fc';
-        hintInfo.style.fontSize = '0.95rem';
-        hintInfo.style.fontWeight = '600';
-        hintInfo.style.marginBottom = '1rem';
-        hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
-        tidCard.appendChild(hintInfo);
+        if (currTidTaskIdx < 5 && task.hint) {
+            const hintInfo = document.createElement('div');
+            hintInfo.style.color = '#c084fc';
+            hintInfo.style.fontSize = '0.95rem';
+            hintInfo.style.fontWeight = '600';
+            hintInfo.style.marginBottom = '1rem';
+            hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+            tidCard.appendChild(hintInfo);
+        }
 
         const optionsGrid = document.createElement('div');
         optionsGrid.className = 'time-options-grid';

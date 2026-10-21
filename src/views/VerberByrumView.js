@@ -2954,7 +2954,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Nu",
             sentenceAfter: "kvinden tålmodigt på bænken ved stoppestedet.",
             baseVerb: "at vente",
@@ -2966,7 +2965,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Sidste sommer",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "Sidste sommer",
             sentenceAfter: "hun i en hyggelig lejlighed midt i byen.",
             baseVerb: "at bo",
@@ -2978,7 +2976,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dette øjeblik",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dette øjeblik",
             sentenceAfter: "to venner varmt til hinanden på fortovet.",
             baseVerb: "at smile",
@@ -2990,7 +2987,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I forgårs",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I forgårs",
             sentenceAfter: "Mads sin pung i bussen.",
             baseVerb: "at miste",
@@ -3002,7 +2998,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Altid",
-            hint: "peger på en generel regel / nutid ➔ Nutid",
             sentenceBefore: "Bilisterne",
             sentenceAfter: "altid pænt for fodgængerne ved overgangen.",
             baseVerb: "at stoppe",
@@ -3014,7 +3009,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I morges kl. 8",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I morges kl. 8",
             sentenceAfter: "børnene glade hen til skolen.",
             baseVerb: "at gå",
@@ -3026,7 +3020,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Lige straks",
-            hint: "nutid om nær fremtid ➔ Nutid",
             sentenceBefore: "Lige straks",
             sentenceAfter: "den næste bus om hjørnet.",
             baseVerb: "at komme",
@@ -3063,13 +3056,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> ________ ${task.sentenceAfter} <span style="color: #94a3b8; font-size: 1.05rem;">(${task.baseVerb})</span>`;
         tidCard.appendChild(sentenceBox);
 
-        const hintInfo = document.createElement('div');
-        hintInfo.style.color = '#c084fc';
-        hintInfo.style.fontSize = '0.95rem';
-        hintInfo.style.fontWeight = '600';
-        hintInfo.style.marginBottom = '1rem';
-        hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
-        tidCard.appendChild(hintInfo);
+        if (currTidTaskIdx < 5 && task.hint) {
+            const hintInfo = document.createElement('div');
+            hintInfo.style.color = '#c084fc';
+            hintInfo.style.fontSize = '0.95rem';
+            hintInfo.style.fontWeight = '600';
+            hintInfo.style.marginBottom = '1rem';
+            hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+            tidCard.appendChild(hintInfo);
+        }
 
         const optionsGrid = document.createElement('div');
         optionsGrid.className = 'time-options-grid';

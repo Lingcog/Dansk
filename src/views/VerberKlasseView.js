@@ -2857,7 +2857,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Nu",
             sentenceAfter: "alle i klassen heldigvis lektien rigtig godt.",
             baseVerb: "at forstå",
@@ -2869,7 +2868,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I går aftes",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I går aftes",
             sentenceAfter: "hun tre kapitler i lærebogen før sengetid.",
             baseVerb: "at læse",
@@ -2881,7 +2879,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Lige nu",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "Lige nu",
             sentenceAfter: "kursisterne flittigt på deres fælles projekt.",
             baseVerb: "at arbejde",
@@ -2893,7 +2890,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I sidste uge",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I sidste uge",
             sentenceAfter: "vi et helt nyt emne om det danske arbejdsmarked.",
             baseVerb: "at lære",
@@ -2905,7 +2901,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "Hver dag",
-            hint: "peger på en vane / nutid ➔ Nutid",
             sentenceBefore: "Hver dag",
             sentenceAfter: "læreren nye nyttige ord på tavlen.",
             baseVerb: "at skrive",
@@ -2917,7 +2912,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I morges",
-            hint: "peger på fortiden ➔ Datid",
             sentenceBefore: "I morges",
             sentenceAfter: "eleven et klogt spørgsmål til læreren.",
             baseVerb: "at stille",
@@ -2929,7 +2923,6 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         },
         {
             marker: "I dette øjeblik",
-            hint: "peger på nutiden ➔ Nutid",
             sentenceBefore: "I dette øjeblik",
             sentenceAfter: "kursisten grundigt over svaret.",
             baseVerb: "at tænke",
@@ -2966,13 +2959,15 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> ________ ${task.sentenceAfter} <span style="color: #94a3b8; font-size: 1.05rem;">(${task.baseVerb})</span>`;
         tidCard.appendChild(sentenceBox);
 
-        const hintInfo = document.createElement('div');
-        hintInfo.style.color = '#c084fc';
-        hintInfo.style.fontSize = '0.95rem';
-        hintInfo.style.fontWeight = '600';
-        hintInfo.style.marginBottom = '1rem';
-        hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
-        tidCard.appendChild(hintInfo);
+        if (currTidTaskIdx < 5 && task.hint) {
+            const hintInfo = document.createElement('div');
+            hintInfo.style.color = '#c084fc';
+            hintInfo.style.fontSize = '0.95rem';
+            hintInfo.style.fontWeight = '600';
+            hintInfo.style.marginBottom = '1rem';
+            hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+            tidCard.appendChild(hintInfo);
+        }
 
         const optionsGrid = document.createElement('div');
         optionsGrid.className = 'time-options-grid';

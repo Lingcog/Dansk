@@ -747,6 +747,198 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         .frekvens-pct { font-size: 0.75rem; color: #f59e0b; font-weight: 700; }
         .frekvens-word { font-size: 0.95rem; font-weight: 700; color: white; margin-top: 0.2rem; }
 
+        /* Interaktive øvelser på Tidslinje-fanen */
+        .tids-exercise-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.6rem;
+            margin-top: 1.8rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+        .tids-exercise-header {
+            margin-bottom: 1.25rem;
+        }
+        .tids-exercise-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            margin-bottom: 0.4rem;
+        }
+        .tids-exercise-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 0.3rem;
+        }
+        .tids-exercise-desc {
+            color: #94a3b8;
+            font-size: 0.92rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* 3-vejs Sortering */
+        .tids-sorter-active {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.4rem;
+            text-align: center;
+            margin-bottom: 1.4rem;
+        }
+        .tids-sorter-word {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+        }
+        .tids-sorter-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .tids-pick-btn {
+            background: #1e293b;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            color: white;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .btn-pick-past:hover {
+            border-color: #f87171;
+            background: rgba(239, 68, 68, 0.12);
+            color: #fca5a5;
+        }
+        .btn-pick-now:hover {
+            border-color: #4ade80;
+            background: rgba(34, 197, 94, 0.12);
+            color: #86efac;
+        }
+        .btn-pick-future:hover {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            color: #7dd3fc;
+        }
+
+        .tids-sorter-buckets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .tids-bucket {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            min-height: 120px;
+        }
+        .tids-bucket-header {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .bucket-past { border-color: rgba(239, 68, 68, 0.3); }
+        .bucket-past .tids-bucket-header { color: #f87171; }
+        .bucket-now { border-color: rgba(34, 197, 94, 0.3); }
+        .bucket-now .tids-bucket-header { color: #4ade80; }
+        .bucket-future { border-color: rgba(56, 189, 248, 0.3); }
+        .bucket-future .tids-bucket-header { color: #38bdf8; }
+
+        .tids-bucket-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .placed-chip {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.55rem;
+            border-radius: 6px;
+        }
+        .placed-past {
+            background: rgba(239, 68, 68, 0.18);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+        .placed-now {
+            background: rgba(34, 197, 94, 0.18);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+        .placed-future {
+            background: rgba(56, 189, 248, 0.18);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+
+        /* Frekvens Quiz */
+        .frekvens-quiz-box {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.35rem;
+            margin-top: 1.25rem;
+        }
+        .frekvens-q-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.1rem;
+            line-height: 1.45;
+        }
+        .frekvens-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .frekvens-opt-btn {
+            background: #1e293b;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 0.85rem;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .frekvens-opt-btn:hover {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            color: #fde68a;
+        }
+        .frekvens-opt-btn.correct {
+            background: rgba(34, 197, 94, 0.2) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+        }
+        .frekvens-opt-btn.wrong {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+        }
+
         @media (max-width: 768px) {
             .tids-hero h1 { font-size: 1.7rem; }
             .golden-rule-banner { flex-direction: column; text-align: center; gap: 0.6rem; }
@@ -1502,6 +1694,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
     // --- TAB 4: TIDSLINJE OG FREKVENS ---
     function renderTidslinjeTab(parent) {
+        // 1. Reference: Tidsaksen (fortid, nutid, fremtid)
         const timelineCard = document.createElement('div');
         timelineCard.className = 'timeline-section-card';
 
@@ -1599,38 +1792,6 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     </div>
                 </div>
             </div>
-
-            <!-- Frekvens Barometer -->
-            <div class="frekvens-barometer">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                    <div style="font-weight: 700; font-size: 1.05rem; color: white;">
-                        Hvor ofte sker handlingen? (Frekvens)
-                    </div>
-                    <span style="font-size: 0.8rem; color: #f59e0b; font-weight: 600;">Fra 0 % til 100 %</span>
-                </div>
-                <div class="frekvens-scale">
-                    <div class="frekvens-step" onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('De kører aldrig i bil.'))">
-                        <div class="frekvens-pct">0 %</div>
-                        <div class="frekvens-word">aldrig</div>
-                    </div>
-                    <div class="frekvens-step" onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('Han kommer sjældent for sent.'))">
-                        <div class="frekvens-pct">20 %</div>
-                        <div class="frekvens-word">sjældent</div>
-                    </div>
-                    <div class="frekvens-step" onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('Sommetider går vi en tur ved vandet.'))">
-                        <div class="frekvens-pct">50 %</div>
-                        <div class="frekvens-word">sommetider</div>
-                    </div>
-                    <div class="frekvens-step" onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('Bussen kommer tit forbi.'))">
-                        <div class="frekvens-pct">75 %</div>
-                        <div class="frekvens-word">tit / ofte</div>
-                    </div>
-                    <div class="frekvens-step" onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('Bageren smiler altid til kunderne.'))">
-                        <div class="frekvens-pct">100 %</div>
-                        <div class="frekvens-word">altid</div>
-                    </div>
-                </div>
-            </div>
         `;
 
         timelineCard.querySelectorAll('.tidsord-chip').forEach(chip => {
@@ -1641,6 +1802,556 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         });
 
         parent.appendChild(timelineCard);
+
+        // ==========================================================
+        // 2. ØVELSE 1: SORTÉR TIDSUDTRYK (Datid, nutid, fremtid)
+        // ==========================================================
+        const sorterCard = document.createElement('div');
+        sorterCard.className = 'tids-exercise-card';
+
+        const TIMELINE_MARKERS = [
+            // Fortid (datid)
+            { word: 'i morges', target: 'past', label: 'Fortid (datid)' },
+            { word: 'i går', target: 'past', label: 'Fortid (datid)' },
+            { word: 'i forgårs', target: 'past', label: 'Fortid (datid)' },
+            { word: 'i lørdags', target: 'past', label: 'Fortid (datid)' },
+            { word: 'sidste uge', target: 'past', label: 'Fortid (datid)' },
+            // Nutid (lige nu)
+            { word: 'nu', target: 'now', label: 'Nutid (lige nu)' },
+            { word: 'lige nu', target: 'now', label: 'Nutid (lige nu)' },
+            { word: 'i dag', target: 'now', label: 'Nutid (lige nu)' },
+            { word: 'i dette øjeblik', target: 'now', label: 'Nutid (lige nu)' },
+            // Fremtid (planlagt)
+            { word: 'i morgen', target: 'future', label: 'Fremtid (planlagt handling)' },
+            { word: 'i aften', target: 'future', label: 'Fremtid (planlagt handling)' },
+            { word: 'om lidt', target: 'future', label: 'Fremtid (planlagt handling)' },
+            { word: 'på fredag', target: 'future', label: 'Fremtid (planlagt handling)' },
+            { word: 'i næste uge', target: 'future', label: 'Fremtid (planlagt handling)' }
+        ];
+
+        let remainingMarkers = [...TIMELINE_MARKERS].sort(() => Math.random() - 0.5);
+        let pastBucket = [];
+        let nowBucket = [];
+        let futureBucket = [];
+
+        function renderSorterExercise() {
+            sorterCard.innerHTML = '';
+
+            const header = document.createElement('div');
+            header.className = 'tids-exercise-header';
+            header.innerHTML = `
+                <span class="tids-exercise-tag">Øvelse 1</span>
+                <h3 class="tids-exercise-title">Sortér tidsudtrykkene: datid, nutid eller fremtid</h3>
+                <p class="tids-exercise-desc">Afgør hvilken tid udtrykket peger på: fortid (datid), nutid (lige nu) eller fremtid (planlagt handling).</p>
+            `;
+            sorterCard.appendChild(header);
+
+            if (remainingMarkers.length > 0) {
+                const currentItem = remainingMarkers[0];
+                const activeBox = document.createElement('div');
+                activeBox.className = 'tids-sorter-active';
+                activeBox.innerHTML = `
+                    <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 0.4rem;">
+                        Hvor hører dette tidsudtryk til? (${remainingMarkers.length} tilbage)
+                    </div>
+                    <div class="tids-sorter-word">"${currentItem.word}"</div>
+                    <div class="tids-sorter-buttons">
+                        <button type="button" class="tids-pick-btn btn-pick-past" id="btn-pick-past">
+                            <span>📍</span>
+                            <span>Fortid (datid)</span>
+                        </button>
+                        <button type="button" class="tids-pick-btn btn-pick-now" id="btn-pick-now">
+                            <span>🟢</span>
+                            <span>Nutid (lige nu)</span>
+                        </button>
+                        <button type="button" class="tids-pick-btn btn-pick-future" id="btn-pick-future">
+                            <span>🔵</span>
+                            <span>Fremtid (planlagt)</span>
+                        </button>
+                    </div>
+                    <div id="sorter-feedback" style="display: none; margin-top: 0.8rem; font-size: 0.92rem; font-weight: 700;"></div>
+                `;
+
+                const feedbackEl = activeBox.querySelector('#sorter-feedback');
+
+                function handleChoice(chosen) {
+                    if (chosen === currentItem.target) {
+                        feedbackEl.style.display = 'block';
+                        feedbackEl.style.color = '#4ade80';
+                        feedbackEl.textContent = `Korrekt! "${currentItem.word}" hører til ${currentItem.label.toLowerCase()}.`;
+
+                        if (chosen === 'past') pastBucket.push(currentItem.word);
+                        else if (chosen === 'now') nowBucket.push(currentItem.word);
+                        else futureBucket.push(currentItem.word);
+
+                        remainingMarkers.shift();
+                        setTimeout(() => renderSorterExercise(), 500);
+                    } else {
+                        feedbackEl.style.display = 'block';
+                        feedbackEl.style.color = '#f87171';
+                        feedbackEl.textContent = `Ikke helt. "${currentItem.word}" hører til ${currentItem.label.toLowerCase()}. Prøv igen!`;
+                    }
+                }
+
+                activeBox.querySelector('#btn-pick-past').onclick = () => handleChoice('past');
+                activeBox.querySelector('#btn-pick-now').onclick = () => handleChoice('now');
+                activeBox.querySelector('#btn-pick-future').onclick = () => handleChoice('future');
+
+                sorterCard.appendChild(activeBox);
+            } else {
+                const doneBox = document.createElement('div');
+                doneBox.className = 'tids-sorter-active';
+                doneBox.innerHTML = `
+                    <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">
+                        Flot klaret! Alle 14 tidsudtryk er placeret korrekt 🎉
+                    </div>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.2rem;">
+                        Du har nu helt styr på, hvilke udtryk der knytter sig til fortid, nutid og fremtid.
+                    </p>
+                    <button type="button" class="task-next-btn" id="btn-restart-sorter">Prøv igen 🔄</button>
+                `;
+                doneBox.querySelector('#btn-restart-sorter').onclick = () => {
+                    remainingMarkers = [...TIMELINE_MARKERS].sort(() => Math.random() - 0.5);
+                    pastBucket = [];
+                    nowBucket = [];
+                    futureBucket = [];
+                    renderSorterExercise();
+                };
+                sorterCard.appendChild(doneBox);
+            }
+
+            // Kasserne til opsamling
+            const bucketsGrid = document.createElement('div');
+            bucketsGrid.className = 'tids-sorter-buckets';
+            bucketsGrid.innerHTML = `
+                <div class="tids-bucket bucket-past">
+                    <div class="tids-bucket-header">
+                        <span>📍</span>
+                        <span>Fortid (${pastBucket.length})</span>
+                    </div>
+                    <div class="tids-bucket-flow">
+                        ${pastBucket.map(w => `<span class="placed-chip placed-past">${w}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="tids-bucket bucket-now">
+                    <div class="tids-bucket-header">
+                        <span>🟢</span>
+                        <span>Nutid (${nowBucket.length})</span>
+                    </div>
+                    <div class="tids-bucket-flow">
+                        ${nowBucket.map(w => `<span class="placed-chip placed-now">${w}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="tids-bucket bucket-future">
+                    <div class="tids-bucket-header">
+                        <span>🔵</span>
+                        <span>Fremtid (${futureBucket.length})</span>
+                    </div>
+                    <div class="tids-bucket-flow">
+                        ${futureBucket.map(w => `<span class="placed-chip placed-future">${w}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            sorterCard.appendChild(bucketsGrid);
+        }
+
+        renderSorterExercise();
+        parent.appendChild(sorterCard);
+
+        // ==========================================================
+        // 3. ØVELSE 2: VÆLG DET RIGTIGE TIDSUDTRYK TIL SÆTNINGEN
+        // ==========================================================
+        const sentenceCard = document.createElement('div');
+        sentenceCard.className = 'tids-exercise-card';
+
+        const SENTENCE_TASKS = [
+            {
+                sentenceBefore: "Hvad laver du ",
+                sentenceAfter: "? – Jeg vasker op.",
+                options: ["lige nu", "i forgårs", "i morges"],
+                correct: "lige nu",
+                tenseCategory: "nutid",
+                explanation: 'Verbet "laver" står i nutid og beskriver den igangværende handling: "lige nu".',
+                fullSentence: "Hvad laver du lige nu? – Jeg vasker op."
+            },
+            {
+                sentenceBefore: "Vi spiste en dejlig middag hos mormor ",
+                sentenceAfter: ".",
+                options: ["i lørdags", "om lidt", "nu"],
+                correct: "i lørdags",
+                tenseCategory: "fortid",
+                explanation: '"Spiste" er datid og kræver et tidsudtryk om fortiden: "i lørdags".',
+                fullSentence: "Vi spiste en dejlig middag hos mormor i lørdags."
+            },
+            {
+                sentenceBefore: "Flyet afgår ",
+                sentenceAfter: ", så vi skal skynde os.",
+                options: ["om lidt", "i går", "i forgårs"],
+                correct: "om lidt",
+                tenseCategory: "fremtid",
+                explanation: '"Afgår" er nutid brugt om en nær handling i fremtiden: "om lidt".',
+                fullSentence: "Flyet afgår om lidt, så vi skal skynde os."
+            },
+            {
+                sentenceBefore: "Børnene cyklede i skole ",
+                sentenceAfter: " klokken 8.00.",
+                options: ["i morges", "i aften", "i næste uge"],
+                correct: "i morges",
+                tenseCategory: "fortid",
+                explanation: '"Cyklede" er datid og refererer til et overstået tidspunkt tidligere på dagen: "i morges".',
+                fullSentence: "Børnene cyklede i skole i morges klokken 8.00."
+            },
+            {
+                sentenceBefore: "Solen skinner dejligt ",
+                sentenceAfter: " over hele byen.",
+                options: ["i dag", "sidste uge", "i forgårs"],
+                correct: "i dag",
+                tenseCategory: "nutid",
+                explanation: '"Skinner" er nutid og beskriver vejret på selve dagen: "i dag".',
+                fullSentence: "Solen skinner dejligt i dag over hele byen."
+            },
+            {
+                sentenceBefore: "Vi holder stor havefest ",
+                sentenceAfter: ", hvis det bliver godt vejr.",
+                options: ["på fredag", "i forgårs", "i går"],
+                correct: "på fredag",
+                tenseCategory: "fremtid",
+                explanation: '"Holder" er nutid brugt om en planlagt handling i fremtiden: "på fredag".',
+                fullSentence: "Vi holder stor havefest på fredag, hvis det bliver godt vejr."
+            }
+        ];
+
+        let taskIndex = 0;
+        let taskScore = 0;
+
+        function renderSentenceExercise() {
+            sentenceCard.innerHTML = '';
+            const t = SENTENCE_TASKS[taskIndex];
+            const pct = Math.round(((taskIndex + 1) / SENTENCE_TASKS.length) * 100);
+
+            sentenceCard.innerHTML = `
+                <div class="tids-exercise-header">
+                    <span class="tids-exercise-tag">Øvelse 2</span>
+                    <h3 class="tids-exercise-title">Vælg det rigtige tidsudtryk til sætningen</h3>
+                    <p class="tids-exercise-desc">Kig på verbet i sætningen, og vælg det tidsudtryk, der passer til tiden (datid, nutid eller fremtid).</p>
+                </div>
+
+                <div class="vaerksted-progress-bar">
+                    <div class="vaerksted-progress-fill" style="width: ${pct}%;"></div>
+                </div>
+                <div class="vaerksted-header">
+                    <span>Opgave ${taskIndex + 1} af ${SENTENCE_TASKS.length}</span>
+                    <span style="color: #38bdf8; text-transform: capitalize;">Tid: ${t.tenseCategory}</span>
+                </div>
+
+                <div class="vaerksted-sentence-box">
+                    <span>${t.sentenceBefore}</span>
+                    <span class="blank-placeholder" id="sentence-blank">...</span>
+                    <span>${t.sentenceAfter}</span>
+                </div>
+
+                <div class="vaerksted-choices-grid" id="sentence-choices"></div>
+
+                <div class="vaerksted-feedback-banner" id="sentence-feedback"></div>
+
+                <div class="vaerksted-actions-row">
+                    <button type="button" class="btn-action-listen" id="btn-listen-sentence" style="display: none;">
+                        <span>🔊</span>
+                        <span>Hør hele sætningen</span>
+                    </button>
+                    <button type="button" class="btn-next-question" id="btn-sentence-next">Næste opgave ➔</button>
+                </div>
+            `;
+
+            const choicesGrid = sentenceCard.querySelector('#sentence-choices');
+            const blankTarget = sentenceCard.querySelector('#sentence-blank');
+            const feedbackBanner = sentenceCard.querySelector('#sentence-feedback');
+            const nextBtn = sentenceCard.querySelector('#btn-sentence-next');
+            const listenBtn = sentenceCard.querySelector('#btn-listen-sentence');
+
+            t.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'vaerksted-choice-btn';
+                btn.textContent = opt;
+
+                btn.onclick = () => {
+                    choicesGrid.querySelectorAll('.vaerksted-choice-btn').forEach(b => b.disabled = true);
+                    blankTarget.textContent = opt;
+
+                    if (opt === t.correct) {
+                        taskScore++;
+                        btn.classList.add('selected-correct');
+                        feedbackBanner.className = 'vaerksted-feedback-banner correct';
+                        feedbackBanner.innerHTML = `<strong>Korrekt!</strong> ${t.explanation}`;
+                    } else {
+                        btn.classList.add('selected-wrong');
+                        choicesGrid.querySelectorAll('.vaerksted-choice-btn').forEach(b => {
+                            if (b.textContent === t.correct) b.classList.add('selected-correct');
+                        });
+                        feedbackBanner.className = 'vaerksted-feedback-banner wrong';
+                        feedbackBanner.innerHTML = `Det rigtige svar er <strong>"${t.correct}"</strong>.<br>${t.explanation}`;
+                    }
+
+                    listenBtn.style.display = 'inline-flex';
+                    listenBtn.onclick = () => speakDanish(t.fullSentence);
+
+                    nextBtn.style.display = 'inline-block';
+                    if (taskIndex === SENTENCE_TASKS.length - 1) {
+                        nextBtn.textContent = 'Se resultat';
+                    }
+                };
+
+                choicesGrid.appendChild(btn);
+            });
+
+            nextBtn.onclick = () => {
+                if (taskIndex < SENTENCE_TASKS.length - 1) {
+                    taskIndex++;
+                    renderSentenceExercise();
+                } else {
+                    renderSentenceResult();
+                }
+            };
+        }
+
+        function renderSentenceResult() {
+            sentenceCard.innerHTML = `
+                <div style="text-align: center; padding: 2rem 1rem;">
+                    <span class="tids-exercise-tag">Øvelse 2 – Resultat</span>
+                    <h2 style="font-size: 1.8rem; color: white; margin: 0.8rem 0 0.5rem;">Resultat</h2>
+                    <p style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 1.5rem;">
+                        Du fik <strong>${taskScore}</strong> ud af <strong>${SENTENCE_TASKS.length}</strong> rigtige!
+                    </p>
+                    <p style="color: #cbd5e1; max-width: 580px; margin: 0 auto 2rem; line-height: 1.6;">
+                        Godt arbejdet! Du kan nu genkende, hvordan tidsudtryk skal harmonere med verbernes tid i sætningen.
+                    </p>
+                    <button type="button" class="task-next-btn" id="btn-restart-sentence">Prøv forfra 🔄</button>
+                </div>
+            `;
+            sentenceCard.querySelector('#btn-restart-sentence').onclick = () => {
+                taskIndex = 0;
+                taskScore = 0;
+                renderSentenceExercise();
+            };
+        }
+
+        renderSentenceExercise();
+        parent.appendChild(sentenceCard);
+
+        // ==========================================================
+        // 4. FREKVENS BAROMETER & QUIZ (0 % - 100 %)
+        // ==========================================================
+        const frekvensSection = document.createElement('div');
+        frekvensSection.className = 'timeline-section-card';
+        frekvensSection.style.marginTop = '2rem';
+
+        frekvensSection.innerHTML = `
+            <div class="frekvens-barometer">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <div style="font-weight: 700; font-size: 1.05rem; color: white;">
+                        Hvor ofte sker handlingen? (Frekvens)
+                    </div>
+                    <span style="font-size: 0.8rem; color: #f59e0b; font-weight: 600;">Fra 0 % til 100 % – tryk for at lytte</span>
+                </div>
+                <div class="frekvens-scale">
+                    <div class="frekvens-step" id="step-0">
+                        <div class="frekvens-pct">0 %</div>
+                        <div class="frekvens-word">aldrig</div>
+                    </div>
+                    <div class="frekvens-step" id="step-20">
+                        <div class="frekvens-pct">20 %</div>
+                        <div class="frekvens-word">sjældent</div>
+                    </div>
+                    <div class="frekvens-step" id="step-50">
+                        <div class="frekvens-pct">50 %</div>
+                        <div class="frekvens-word">sommetider</div>
+                    </div>
+                    <div class="frekvens-step" id="step-75">
+                        <div class="frekvens-pct">75 %</div>
+                        <div class="frekvens-word">tit / ofte</div>
+                    </div>
+                    <div class="frekvens-step" id="step-100">
+                        <div class="frekvens-pct">100 %</div>
+                        <div class="frekvens-word">altid</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz container -->
+            <div id="frekvens-quiz-container"></div>
+        `;
+
+        frekvensSection.querySelector('#step-0').onclick = () => speakDanish('De kører aldrig i bil.');
+        frekvensSection.querySelector('#step-20').onclick = () => speakDanish('Han kommer sjældent for sent.');
+        frekvensSection.querySelector('#step-50').onclick = () => speakDanish('Sommetider går vi en tur ved vandet.');
+        frekvensSection.querySelector('#step-75').onclick = () => speakDanish('Bussen kommer tit forbi.');
+        frekvensSection.querySelector('#step-100').onclick = () => speakDanish('Bageren smiler altid til kunderne.');
+
+        // Frekvens Quiz logik
+        const FREKVENS_QUESTIONS = [
+            {
+                question: "Hvilket frekvensord svarer til 100 % (sker hver eneste gang)?",
+                options: ["altid", "sommetider", "aldrig", "sjældent"],
+                correct: "altid",
+                explanation: '"Altid" angiver 100 % – handlingen sker hver eneste gang uden undtagelse.',
+                exampleSentence: "Bageren smiler altid til kunderne."
+            },
+            {
+                question: "Hvor mange procent svarer 'sjældent' typisk til?",
+                options: ["20 %", "50 %", "75 %", "0 %"],
+                correct: "20 %",
+                explanation: '"Sjældent" er en lav frekvens (ca. 20 %) – det sker næsten ikke.',
+                exampleSentence: "Han kommer sjældent for sent."
+            },
+            {
+                question: "Hvilket ord betyder, at en handling overhovedet ikke finder sted (0 %)?",
+                options: ["aldrig", "sjældent", "sommetider", "tit / ofte"],
+                correct: "aldrig",
+                explanation: '"Aldrig" er 0 % – handlingen forekommer ikke.',
+                exampleSentence: "De kører aldrig i bil."
+            },
+            {
+                question: "Hvor mange procent svarer 'sommetider' (cirka halvdelen af gangene) til?",
+                options: ["50 %", "20 %", "75 %", "100 %"],
+                correct: "50 %",
+                explanation: '"Sommetider" svarer til ca. 50 % (nogle gange gør man, andre gange ikke).',
+                exampleSentence: "Sommetider går vi en tur ved vandet."
+            },
+            {
+                question: "Hvilket frekvensord svarer til 75 % (sker med høj frekvens)?",
+                options: ["tit / ofte", "sjældent", "sommetider", "aldrig"],
+                correct: "tit / ofte",
+                explanation: '"Tit / ofte" betyder høj frekvens (ca. 75 % af gangene).',
+                exampleSentence: "Bussen kommer tit forbi."
+            }
+        ];
+
+        let fqIndex = 0;
+        let fqScore = 0;
+        const fqContainer = frekvensSection.querySelector('#frekvens-quiz-container');
+
+        function renderFrekvensQuiz() {
+            fqContainer.innerHTML = '';
+            const q = FREKVENS_QUESTIONS[fqIndex];
+            const pct = Math.round(((fqIndex + 1) / FREKVENS_QUESTIONS.length) * 100);
+
+            const box = document.createElement('div');
+            box.className = 'frekvens-quiz-box';
+
+            box.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                    <span class="tids-exercise-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                        Frekvens-quiz
+                    </span>
+                    <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 600;">
+                        Spørgsmål ${fqIndex + 1} af ${FREKVENS_QUESTIONS.length}
+                    </span>
+                </div>
+
+                <div class="vaerksted-progress-bar" style="margin-bottom: 1rem;">
+                    <div class="vaerksted-progress-fill" style="width: ${pct}%; background: #f59e0b;"></div>
+                </div>
+
+                <div class="frekvens-q-text">${q.question}</div>
+
+                <div class="frekvens-options-grid" id="fq-options"></div>
+
+                <div class="vaerksted-feedback-banner" id="fq-feedback"></div>
+
+                <div class="vaerksted-actions-row">
+                    <button type="button" class="btn-action-listen" id="btn-fq-listen" style="display: none;">
+                        <span>🔊</span>
+                        <span>Hør eksempelsætning</span>
+                    </button>
+                    <button type="button" class="btn-next-question" id="btn-fq-next" style="background: #f59e0b; color: #0f172a;">
+                        Næste spørgsmål ➔
+                    </button>
+                </div>
+            `;
+
+            const optGrid = box.querySelector('#fq-options');
+            const feedbackEl = box.querySelector('#fq-feedback');
+            const nextBtn = box.querySelector('#btn-fq-next');
+            const listenBtn = box.querySelector('#btn-fq-listen');
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'frekvens-opt-btn';
+                btn.textContent = opt;
+
+                btn.onclick = () => {
+                    optGrid.querySelectorAll('.frekvens-opt-btn').forEach(b => b.disabled = true);
+
+                    if (opt === q.correct) {
+                        fqScore++;
+                        btn.classList.add('correct');
+                        feedbackEl.className = 'vaerksted-feedback-banner correct';
+                        feedbackEl.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
+                    } else {
+                        btn.classList.add('wrong');
+                        optGrid.querySelectorAll('.frekvens-opt-btn').forEach(b => {
+                            if (b.textContent === q.correct) b.classList.add('correct');
+                        });
+                        feedbackEl.className = 'vaerksted-feedback-banner wrong';
+                        feedbackEl.innerHTML = `Svaret er <strong>"${q.correct}"</strong>.<br>${q.explanation}`;
+                    }
+
+                    listenBtn.style.display = 'inline-flex';
+                    listenBtn.onclick = () => speakDanish(q.exampleSentence);
+
+                    nextBtn.style.display = 'inline-block';
+                    if (fqIndex === FREKVENS_QUESTIONS.length - 1) {
+                        nextBtn.textContent = 'Se resultat';
+                    }
+                };
+
+                optGrid.appendChild(btn);
+            });
+
+            nextBtn.onclick = () => {
+                if (fqIndex < FREKVENS_QUESTIONS.length - 1) {
+                    fqIndex++;
+                    renderFrekvensQuiz();
+                } else {
+                    renderFrekvensResult();
+                }
+            };
+
+            fqContainer.appendChild(box);
+        }
+
+        function renderFrekvensResult() {
+            fqContainer.innerHTML = `
+                <div class="frekvens-quiz-box" style="text-align: center; padding: 2rem 1rem;">
+                    <span class="tids-exercise-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                        Frekvens-quiz – Resultat
+                    </span>
+                    <h3 style="font-size: 1.6rem; color: white; margin: 0.8rem 0 0.4rem;">Flot klaret!</h3>
+                    <p style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 1.4rem;">
+                        Du fik <strong>${fqScore}</strong> ud af <strong>${FREKVENS_QUESTIONS.length}</strong> rigtige!
+                    </p>
+                    <p style="color: #cbd5e1; max-width: 520px; margin: 0 auto 1.8rem; line-height: 1.6;">
+                        Du har nu godt greb om de 5 vigtigste frekvensadverbier fra 0 % (aldrig) til 100 % (altid).
+                    </p>
+                    <button type="button" class="task-next-btn" id="btn-restart-fq" style="background: #f59e0b; color: #0f172a;">
+                        Prøv quizzen igen 🔄
+                    </button>
+                </div>
+            `;
+
+            fqContainer.querySelector('#btn-restart-fq').onclick = () => {
+                fqIndex = 0;
+                fqScore = 0;
+                renderFrekvensQuiz();
+            };
+        }
+
+        renderFrekvensQuiz();
+        parent.appendChild(frekvensSection);
     }
 
     // Initial render

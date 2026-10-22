@@ -48033,7 +48033,7 @@ import{t as Ft,a as Rt,b as Ot,s as Wt,v as Gt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <div style="margin-top: auto;">
                     <div class="rule-footer-title">Typiske tidsudtryk med førnutid:</div>
                     <div class="rule-chips">
-                        <span class="rule-chip">lige</span>
+                        <span class="rule-chip">indtil nu</span>
                         <span class="rule-chip">allerede</span>
                         <span class="rule-chip">endnu ikke</span>
                         <span class="rule-chip">nogensinde</span>
@@ -48081,7 +48081,7 @@ import{t as Ft,a as Rt,b as Ot,s as Wt,v as Gt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     `):(X.classList.add("wrong"),q.querySelectorAll(".choice-btn").forEach(ke=>{ke.querySelector(".choice-text").textContent.toLowerCase()===g.correct.toLowerCase()&&ke.classList.add("correct")}),c.querySelector("span").innerHTML=`${g.sentenceBefore} <strong style="color: #4ade80; text-decoration: underline;">${g.correct}</strong> ${g.sentenceAfter}`,K.style.display="block",K.style.background="rgba(239, 68, 68, 0.12)",K.style.border="1px solid rgba(239, 68, 68, 0.4)",K.innerHTML=`
                         <div style="color: #f87171; font-weight: 700; margin-bottom: 0.3rem;">Det rigtige svar er "${g.correct}".</div>
                         <div style="color: #cbd5e1; font-size: 0.92rem;">${g.explanation}</div>
-                    `);const ce=document.createElement("button");ce.className="task-next-btn",ce.textContent=U<Y.length-1?"Næste opgave ➔":"Start forfra 🔄",ce.onclick=()=>{U=(U+1)%Y.length,j()},K.appendChild(ce)},q.appendChild(X)}),I.appendChild(q),I.appendChild(K)}j(),L.appendChild(I);const S=document.createElement("div");S.id="panel_sorter";const w=[{word:"i går",target:"punkt"},{word:"lige",target:"bro"},{word:"i 2015",target:"punkt"},{word:"for en uge siden",target:"punkt"},{word:"allerede",target:"bro"},{word:"sidste sommer",target:"punkt"},{word:"aldrig",target:"bro"},{word:"i morges kl. 7.00",target:"punkt"},{word:"endnu ikke",target:"bro"},{word:"dengang",target:"punkt"},{word:"nogensinde",target:"bro"},{word:"siden i mandags",target:"bro"}];let _=[...w].sort(()=>Math.random()-.5),D=[],O=[];function F(){S.innerHTML="";const g=document.createElement("div");if(g.className="sorter-container",g.innerHTML=`
+                    `);const ce=document.createElement("button");ce.className="task-next-btn",ce.textContent=U<Y.length-1?"Næste opgave ➔":"Start forfra 🔄",ce.onclick=()=>{U=(U+1)%Y.length,j()},K.appendChild(ce)},q.appendChild(X)}),I.appendChild(q),I.appendChild(K)}j(),L.appendChild(I);const S=document.createElement("div");S.id="panel_sorter";const w=[{word:"i går",target:"punkt"},{word:"indtil nu",target:"bro"},{word:"i 2015",target:"punkt"},{word:"for en uge siden",target:"punkt"},{word:"allerede",target:"bro"},{word:"sidste sommer",target:"punkt"},{word:"aldrig",target:"bro"},{word:"i morges kl. 7.00",target:"punkt"},{word:"endnu ikke",target:"bro"},{word:"dengang",target:"punkt"},{word:"nogensinde",target:"bro"},{word:"siden i mandags",target:"bro"}];let _=[...w].sort(()=>Math.random()-.5),D=[],O=[];function F(){S.innerHTML="";const g=document.createElement("div");if(g.className="sorter-container",g.innerHTML=`
             <div class="sorter-instruction">
                 <h3>Sortér tidsudtrykkene: punkt eller bro?</h3>
                 <p>Afgør om tidsudtrykket låser handlingen til et afsluttet tidspunkt (punktet), eller om det forbinder handlingen med nuet (broen).</p>
@@ -48122,7 +48122,7 @@ import{t as Ft,a as Rt,b as Ot,s as Wt,v as Gt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <span>🌉</span>
                     <span>Broen (førnutid)</span>
                 </div>
-                <div class="bucket-sub">Forbindelse til nu (lige, allerede, aldrig...)</div>
+                <div class="bucket-sub">Forbindelse til nu (indtil nu, allerede, aldrig...)</div>
                 <div class="bucket-chips-flow">
                     ${O.map(c=>`<span class="placed-badge placed-bro">${c}</span>`).join("")}
                 </div>

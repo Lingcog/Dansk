@@ -744,7 +744,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
                 <div style="margin-top: auto;">
                     <div class="rule-footer-title">Typiske tidsudtryk med førnutid:</div>
                     <div class="rule-chips">
-                        <span class="rule-chip">lige</span>
+                        <span class="rule-chip">indtil nu</span>
                         <span class="rule-chip">allerede</span>
                         <span class="rule-chip">endnu ikke</span>
                         <span class="rule-chip">nogensinde</span>
@@ -1070,7 +1070,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
 
     const markers = [
         { word: 'i går', target: 'punkt' },
-        { word: 'lige', target: 'bro' },
+        { word: 'indtil nu', target: 'bro' },
         { word: 'i 2015', target: 'punkt' },
         { word: 'for en uge siden', target: 'punkt' },
         { word: 'allerede', target: 'bro' },
@@ -1164,7 +1164,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
                     <span>🌉</span>
                     <span>Broen (førnutid)</span>
                 </div>
-                <div class="bucket-sub">Forbindelse til nu (lige, allerede, aldrig...)</div>
+                <div class="bucket-sub">Forbindelse til nu (indtil nu, allerede, aldrig...)</div>
                 <div class="bucket-chips-flow">
                     ${broList.map(w => `<span class="placed-badge placed-bro">${w}</span>`).join('')}
                 </div>

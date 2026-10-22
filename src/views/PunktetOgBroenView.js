@@ -1,14 +1,15 @@
 import { getTranslation } from '../utils/i18n.js';
 
 /**
- * PunktetOgBroenView - Nytænkt flade til:
- * "Datid vs. Førnutid (Punktet & Broen)"
+ * PunktetOgBroenView - Didaktisk flade til:
+ * "Datid og førnutid: punktet og broen"
  * 
- * Bevarer den klassiske pædagogiske metafor, men illustrerer den med:
- *  1. 🧭 Interaktiv SVG Tidslinje (Punktet vs. Broen)
- *  2. ⚖️ Direkte Dueller (Sammenlign Punkt vs. Bro i samme situation)
- *  3. 🎯 Tids-Detektiven (10 interaktive opgaver med pædagogisk feedback og TTS)
- *  4. ⏱️ Tidsmarkør-Sortereren (Punkt-ord vs. Bro-ord)
+ * Enkelt og stramt design efter dansk retskrivning:
+ *  1. Enkel, visuel tidslinje (Punktet over for broen)
+ *  2. Hovedreglen (Datid vs. førnutid)
+ *  3. Sammenlign eksempler (Direkte sammenligninger)
+ *  4. Vælg den rigtige tid (10 fokuserede opgaver)
+ *  5. Sortér tidsudtryk (Direkte, intuitiv sortering uden pop op)
  */
 export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
@@ -16,14 +17,13 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container punktet-broen-view';
 
-    // Top Bar with back button
+    // Toplinje med tilbageknap
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
     topBar.style.display = 'flex';
     topBar.style.justifyContent = 'space-between';
     topBar.style.alignItems = 'center';
-    topBar.style.flexWrap = 'wrap';
-    topBar.style.gap = '0.8rem';
+    topBar.style.marginBottom = '1.5rem';
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
@@ -34,18 +34,18 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
 
     const verbHubBtn = document.createElement('button');
     verbHubBtn.className = 'back-btn';
-    verbHubBtn.style.background = 'rgba(239, 68, 68, 0.15)';
-    verbHubBtn.style.borderColor = '#ef4444';
+    verbHubBtn.style.background = 'rgba(239, 68, 68, 0.12)';
+    verbHubBtn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
     verbHubBtn.style.color = '#f87171';
-    verbHubBtn.innerHTML = `🏃 Se Top 100 Verber ➔`;
+    verbHubBtn.innerHTML = `Top 100-verber ➔`;
     verbHubBtn.onclick = () => navigateFn('top100_verber');
     topBar.appendChild(verbHubBtn);
 
     viewContainer.appendChild(topBar);
 
-    // TTS Audio Helper
+    // Oplæsning (TTS)
     function speakDanish(text) {
-        if (!('speechSynthesis' in window)) return;
+        if (!('speechSynthesis' in window) || !text) return;
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'da-DK';
@@ -53,697 +53,703 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         window.speechSynthesis.speak(utterance);
     }
 
-    // Styles
+    // CSS Styling - Stram, enkel og uden unødig visuel støj
     const style = document.createElement('style');
     style.textContent = `
         .punktet-broen-view {
-            max-width: 1150px;
+            max-width: 1040px;
             margin: 0 auto;
-            padding: 1rem 1.5rem 4rem;
+            padding: 0.5rem 1.25rem 4rem;
             color: #f8fafc;
         }
+
+        /* Hero */
         .pob-hero {
             text-align: center;
             margin-bottom: 2rem;
         }
         .pob-hero h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #ef4444, #f59e0b, #38bdf8, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 0.5rem;
+            letter-spacing: -0.02em;
         }
         .pob-hero p {
-            color: #cbd5e1;
-            font-size: 1.15rem;
-            max-width: 800px;
-            margin: 0 auto 1.5rem;
-            line-height: 1.6;
+            color: #94a3b8;
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto 1.2rem;
+            line-height: 1.5;
         }
-        .pob-badges {
+        .pob-hero-badges {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
         }
-        .pob-pill {
+        .pob-tag {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            border-width: 1.5px;
-            border-style: solid;
+            gap: 0.4rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid;
         }
-        .pill-punkt { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; color: #f87171; }
-        .pill-bro { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #fbbf24; }
+        .tag-punkt {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+        .tag-bro {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.35);
+            color: #fcd34d;
+        }
 
-        /* SVG Timeline Visual Stage */
-        .timeline-stage {
+        /* Enkel SVG-tidslinje */
+        .pob-timeline-card {
             background: #0f172a;
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 2.2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .stage-caption {
+        .pob-timeline-caption {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 0.85rem;
             color: #94a3b8;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 0.8rem;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
 
-        /* Tabs Menu */
-        .pob-tabs-menu {
+        /* Fanemenu */
+        .pob-nav-tabs {
             display: flex;
-            gap: 0.6rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 0.5rem;
-            border-radius: 16px;
+            gap: 0.4rem;
+            margin-bottom: 1.8rem;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.35rem;
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-x: auto;
         }
-        .pob-tab-btn {
+        .pob-nav-btn {
             background: transparent;
             color: #94a3b8;
             border: none;
-            padding: 0.75rem 1.3rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
+            padding: 0.65rem 1.15rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.92rem;
             cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
         }
-        .pob-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .pob-tab-btn.active {
-            background: #f59e0b;
-            color: #0f172a;
-            font-weight: 900;
-            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
-        }
-
-        /* Compass / Concept Cards */
-        .pob-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-        .concept-card {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-        }
-        .concept-card:hover {
-            transform: translateY(-4px);
-        }
-        .card-punkt { border-color: rgba(239, 68, 68, 0.4); }
-        .card-punkt:hover { border-color: #ef4444; box-shadow: 0 15px 35px rgba(239, 68, 68, 0.25); }
-        .card-bro { border-color: rgba(245, 158, 11, 0.4); }
-        .card-bro:hover { border-color: #f59e0b; box-shadow: 0 15px 35px rgba(245, 158, 11, 0.25); }
-
-        .concept-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .concept-icon-wrap {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
+        .pob-nav-btn:hover {
+            color: #ffffff;
             background: rgba(255, 255, 255, 0.05);
         }
-        .concept-title h3 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin: 0 0 0.2rem;
-        }
-        .concept-title span {
-            font-size: 0.85rem;
+        .pob-nav-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .formula-box {
-            background: #0f172a;
+
+        /* Hovedreglen: 2 søjler */
+        .pob-rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .rule-card {
+            background: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.2rem;
-            font-family: monospace;
-            font-size: 1.05rem;
-            color: #38bdf8;
-            font-weight: 700;
-        }
-        .concept-text {
-            color: #e2e8f0;
-            font-size: 0.98rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-        .concept-bullets {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 1.5rem;
+            border-radius: 18px;
+            padding: 1.6rem;
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
+        }
+        .rule-card.rule-punkt {
+            border-top: 4px solid #ef4444;
+        }
+        .rule-card.rule-bro {
+            border-top: 4px solid #f59e0b;
+        }
+        .rule-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .rule-icon {
+            font-size: 1.6rem;
+        }
+        .rule-title h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 0;
+            color: #ffffff;
+        }
+        .rule-title span {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .rule-formula {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.9rem;
+            color: #38bdf8;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .rule-body {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
             flex-grow: 1;
         }
-        .concept-bullets li {
-            font-size: 0.92rem;
+        .rule-points {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .rule-points li {
+            font-size: 0.9rem;
             color: #cbd5e1;
             display: flex;
             align-items: flex-start;
-            gap: 0.6rem;
+            gap: 0.5rem;
             line-height: 1.45;
         }
-        .marker-tag-list {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-        }
-        .marker-tag {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.25rem 0.6rem;
-            border-radius: 8px;
+        .rule-footer-title {
             font-size: 0.8rem;
             font-weight: 700;
-            color: #f1f5f9;
+            color: #94a3b8;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .rule-chips {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .rule-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #e2e8f0;
         }
 
-        /* Duels Section */
-        .duels-container {
+        /* Eksempler (Dueller) */
+        .pob-examples-list {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
         }
-        .duel-card {
-            background: var(--card-bg, #1e293b);
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 1.8rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        .example-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.4rem;
         }
-        .duel-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #f8fafc;
-            margin-bottom: 1.2rem;
+        .example-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
-        .duel-grid {
+        .example-columns {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
+            gap: 1rem;
         }
-        .duel-side {
+        .example-box {
             background: #0f172a;
-            border-radius: 16px;
-            padding: 1.2rem;
-            border-left: 4px solid #ef4444;
+            border-radius: 12px;
+            padding: 1rem 1.15rem;
+            border-left: 3px solid #ef4444;
         }
-        .duel-side.side-bro {
+        .example-box.box-bro {
             border-left-color: #f59e0b;
         }
-        .duel-side-badge {
-            font-size: 0.8rem;
-            font-weight: 800;
+        .example-label {
+            font-size: 0.78rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.4rem;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.35rem;
         }
-        .duel-sentence {
-            font-size: 1.15rem;
+        .example-sentence {
+            font-size: 1.05rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
+            margin-bottom: 0.4rem;
         }
-        .duel-meaning {
-            font-size: 0.9rem;
+        .example-explanation {
+            font-size: 0.88rem;
             color: #94a3b8;
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
-        /* Quiz / Detective Section */
-        .detective-card {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            border-radius: 24px;
-            padding: 2.2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
-        }
-        .det-counter {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid #f59e0b;
-            color: #fbbf24;
-            padding: 0.35rem 0.9rem;
+        /* Opgaver */
+        .pob-task-container {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            margin-bottom: 1.2rem;
+            padding: 1.75rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .det-sentence-box {
+        .task-counter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+        .task-counter {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.12);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .task-sentence-box {
             background: #0f172a;
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 1.6rem 1.8rem;
-            font-size: 1.35rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.25rem 1.4rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
+            line-height: 1.5;
             color: #f8fafc;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
-        .det-audio-btn {
+        .task-audio-btn {
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #38bdf8;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.2s ease;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            transition: all 0.2s;
         }
-        .det-audio-btn:hover {
-            background: rgba(56, 189, 248, 0.25);
-            transform: scale(1.1);
+        .task-audio-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            transform: scale(1.05);
         }
-        .det-hint-box {
+        .task-hint {
             color: #38bdf8;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .task-choices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .choice-btn {
+            background: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 1rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .choice-btn:hover {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateY(-2px);
+        }
+        .choice-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .choice-type {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        .choice-btn.correct {
+            background: rgba(34, 197, 94, 0.2) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+        }
+        .choice-btn.wrong {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+            opacity: 0.7;
+        }
+        .task-feedback {
+            padding: 1.1rem 1.25rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+        .task-next-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            padding: 0.75rem 1.6rem;
+            border-radius: 10px;
             font-size: 0.95rem;
-            font-weight: 600;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .task-next-btn:hover {
+            background: #fbbf24;
+            transform: translateY(-1px);
+        }
+
+        /* Sortér tidsudtryk - Rent, inline og uden pop op */
+        .sorter-container {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.6rem;
+        }
+        .sorter-instruction {
             margin-bottom: 1.5rem;
+        }
+        .sorter-instruction h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 0.35rem;
+            color: #ffffff;
+        }
+        .sorter-instruction p {
+            color: #94a3b8;
+            font-size: 0.92rem;
+            margin: 0;
+        }
+        .sorter-active-area {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .sorter-current-word {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 1rem;
+        }
+        .sorter-direct-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .sorter-pick-btn {
+            border: 1.5px solid;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .det-options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
+        .btn-punkt-pick {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #f87171;
         }
-        .det-opt-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 1.2rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.35rem;
-            text-align: center;
-        }
-        .det-opt-btn:hover {
-            border-color: #38bdf8;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        }
-        .det-opt-title {
-            font-size: 1.35rem;
-            font-weight: 900;
-        }
-        .det-opt-meta {
-            font-size: 0.82rem;
-            color: #94a3b8;
-            font-weight: 700;
-        }
-        .det-opt-btn.correct {
-            background: rgba(34, 197, 94, 0.25) !important;
-            border-color: #22c55e !important;
-            color: #4ade80 !important;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5) !important;
-        }
-        .det-opt-btn.wrong {
-            background: rgba(239, 68, 68, 0.2) !important;
-            border-color: #ef4444 !important;
-            color: #f87171 !important;
-            opacity: 0.6;
-        }
-        .det-feedback-box {
-            margin-top: 1.2rem;
-            padding: 1.4rem;
-            border-radius: 16px;
-            animation: fadeIn 0.3s ease;
-        }
-        .det-next-btn {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            color: white;
-            border: none;
-            padding: 0.9rem 2.2rem;
-            border-radius: 14px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 1.2rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-        }
-        .det-next-btn:hover {
+        .btn-punkt-pick:hover {
+            background: rgba(239, 68, 68, 0.25);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+        }
+        .btn-bro-pick {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+            color: #fbbf24;
+        }
+        .btn-bro-pick:hover {
+            background: rgba(245, 158, 11, 0.25);
+            transform: translateY(-2px);
         }
 
-        /* Marker Sorter Section */
-        .sorter-stage {
+        .sorter-buckets-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.8rem;
+            gap: 1.25rem;
         }
         .sorter-bucket {
             background: #0f172a;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 1.5rem;
-            min-height: 220px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 1.25rem;
+            min-height: 180px;
             display: flex;
             flex-direction: column;
         }
-        .bucket-punkt { border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.05); }
-        .bucket-bro { border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05); }
-        .bucket-header {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
+        .bucket-punkt {
+            border-top: 3px solid #ef4444;
+        }
+        .bucket-bro {
+            border-top: 3px solid #f59e0b;
+        }
+        .bucket-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
-        .bucket-items {
+        .bucket-sub {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.85rem;
+        }
+        .bucket-chips-flow {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.45rem;
             flex-grow: 1;
             align-content: flex-start;
         }
-        .marker-pool {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 1.2rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            justify-content: center;
-        }
-        .pool-chip {
-            background: #1e293b;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            color: #f8fafc;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-        .pool-chip:hover {
-            border-color: #38bdf8;
-            transform: scale(1.05);
-            background: #334155;
-        }
-        .placed-chip {
-            padding: 0.4rem 0.8rem;
-            border-radius: 10px;
+        .placed-badge {
+            padding: 0.3rem 0.65rem;
+            border-radius: 8px;
             font-size: 0.85rem;
-            font-weight: 700;
-            color: white;
-            animation: fadeIn 0.2s ease;
+            font-weight: 600;
         }
-        .placed-punkt { background: #ef4444; }
-        .placed-bro { background: #f59e0b; color: #0f172a; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+        .placed-punkt {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .placed-bro {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fde68a;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
     `;
     viewContainer.appendChild(style);
 
-    // Hero Section
+    // Hero Section - Korrekt dansk retskrivning
     const hero = document.createElement('div');
     hero.className = 'pob-hero';
     hero.innerHTML = `
-        <h1>🌉 Datid vs. Førnutid: Punktet & Broen</h1>
-        <p>Hvornår slutter fortiden, og hvornår rækker den ind i nutiden? Lær den gyldne regel om det lukkede punkt i datid over for broen, der forbinder fortid og nu.</p>
-        <div class="pob-badges">
-            <span class="pob-pill pill-punkt">📍 PUNKTET (Datid) = Afsluttet tid • Lukkede begivenheder</span>
-            <span class="pob-pill pill-bro">🌉 BROEN (Førnutid) = Forbinder til nu • Erfaring & resultat</span>
+        <h1>Datid og førnutid: punktet og broen</h1>
+        <p>Lær forskellen mellem et afsluttet tidspunkt i fortiden og en handling, der rækker ind i nutiden.</p>
+        <div class="pob-hero-badges">
+            <span class="pob-tag tag-punkt">📍 Punktet (datid): afsluttet tid</span>
+            <span class="pob-tag tag-bro">🌉 Broen (førnutid): forbindelse til nu</span>
         </div>
     `;
     viewContainer.appendChild(hero);
 
     // ==========================================================
-    // --- INTERAKTIV SVG TIDSLINJE (Visuelt fundament) ---
+    // --- STRAM, ENKEL SVG-TIDSLINJE ---
     // ==========================================================
-    const timelineStage = document.createElement('div');
-    timelineStage.className = 'timeline-stage';
-    timelineStage.innerHTML = `
-        <svg viewBox="0 0 950 320" width="100%" height="auto" style="display: block; max-height: 380px;" xmlns="http://www.w3.org/2000/svg">
+    const timelineCard = document.createElement('div');
+    timelineCard.className = 'pob-timeline-card';
+    timelineCard.innerHTML = `
+        <svg viewBox="0 0 900 240" width="100%" height="auto" style="display: block; max-height: 260px;" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <!-- Gradients -->
-                <linearGradient id="timeAxisGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="axisGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#475569" />
                     <stop offset="70%" stop-color="#64748b" />
                     <stop offset="100%" stop-color="#38bdf8" />
                 </linearGradient>
-                <linearGradient id="bridgeArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" />
-                    <stop offset="50%" stop-color="#fbbf24" stop-opacity="1" />
-                    <stop offset="100%" stop-color="#34d399" stop-opacity="0.9" />
+                <linearGradient id="bridgeArc" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f59e0b" />
+                    <stop offset="100%" stop-color="#10b981" />
                 </linearGradient>
-                <linearGradient id="bridgeFillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25" />
-                    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0" />
-                </linearGradient>
-                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="6" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
             </defs>
 
-            <!-- Bagtæppe / Zone-opdeling -->
-            <rect x="20" y="20" width="600" height="280" rx="16" fill="rgba(255,255,255,0.02)" />
-            <text x="40" y="50" fill="#64748b" font-size="13" font-weight="800" letter-spacing="1">FORTIDEN (TIDSLINJE)</text>
-            
-            <rect x="640" y="20" width="290" height="280" rx="16" fill="rgba(56,189,248,0.04)" stroke="rgba(56,189,248,0.2)" stroke-dasharray="4" />
-            <text x="660" y="50" fill="#38bdf8" font-size="13" font-weight="800" letter-spacing="1">NUTIDEN (DET LEVENDE NU)</text>
+            <!-- Tidslinje-akse -->
+            <line x1="60" y1="160" x2="840" y2="160" stroke="url(#axisGrad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="846,160 834,154 834,166" fill="#38bdf8" />
 
-            <!-- Tidsaksen -->
-            <line x1="50" y1="210" x2="890" y2="210" stroke="url(#timeAxisGrad)" stroke-width="4" stroke-linecap="round" />
-            <polygon points="895,210 880,203 880,217" fill="#38bdf8" />
-            
-            <!-- Tidslinje markeringer -->
-            <text x="60" y="235" fill="#94a3b8" font-size="12">Flere år siden</text>
-            <text x="250" y="235" fill="#94a3b8" font-size="12">Sidste år</text>
-            <text x="450" y="235" fill="#94a3b8" font-size="12">I går</text>
+            <!-- Zoner -->
+            <text x="70" y="35" fill="#64748b" font-size="12" font-weight="700" letter-spacing="0.5">FORTID</text>
+            <text x="750" y="35" fill="#38bdf8" font-size="12" font-weight="700" letter-spacing="0.5">NUTID</text>
 
-            <!-- ================= PUNKTET (DATID) ================= -->
-            <g id="svg-point-group" style="cursor: pointer;">
-                <!-- Afspærring / STOP linje til nutiden -->
-                <line x1="520" y1="140" x2="520" y2="250" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" opacity="0.6" />
-                <rect x="495" y="115" width="50" height="22" rx="6" fill="#ef4444" opacity="0.2" />
-                <text x="520" y="130" fill="#f87171" font-size="10" font-weight="800" text-anchor="middle">LUKKET</text>
-
-                <!-- Nål og punkt på tidslinjen -->
-                <circle cx="280" cy="210" r="14" fill="#ef4444" filter="url(#glow)" />
-                <circle cx="280" cy="210" r="7" fill="#ffffff" />
+            <!-- Punktet (Datid) -->
+            <g id="svg-punkt" style="cursor: pointer;">
+                <circle cx="280" cy="160" r="10" fill="#ef4444" />
+                <circle cx="280" cy="160" r="4" fill="#ffffff" />
+                <line x1="280" y1="145" x2="280" y2="115" stroke="#ef4444" stroke-width="1.5" />
                 
-                <!-- Punkt label -->
-                <rect x="180" y="120" width="200" height="55" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="2" />
-                <text x="280" y="142" fill="#f87171" font-size="14" font-weight="900" text-anchor="middle">📍 PUNKTET (Datid)</text>
-                <text x="280" y="162" fill="#cbd5e1" font-size="11" text-anchor="middle">Afsluttet tid • f.eks. "boede", "gik"</text>
-                <line x1="280" y1="175" x2="280" y2="196" stroke="#ef4444" stroke-width="2" />
-
-                <!-- Tidsmarkører for punktet -->
-                <text x="280" y="265" fill="#fca5a5" font-size="11" font-weight="700" text-anchor="middle">"I 2018" • "I går" • "For en time siden"</text>
+                <rect x="180" y="70" width="200" height="42" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" />
+                <text x="280" y="88" fill="#fca5a5" font-size="13" font-weight="700" text-anchor="middle">Punktet (datid)</text>
+                <text x="280" y="103" fill="#94a3b8" font-size="11" text-anchor="middle">Afsluttet tid: "jeg boede", "jeg gik"</text>
+                
+                <text x="280" y="185" fill="#94a3b8" font-size="11" text-anchor="middle">i går • for et år siden • i 2018</text>
             </g>
 
-            <!-- ================= BROEN (FØRNUTID) ================= -->
-            <g id="svg-bridge-group" style="cursor: pointer;">
-                <!-- Broens bue fra fortid (x=380) til nutid (x=770) -->
-                <path d="M 380,210 Q 575,60 770,210" fill="url(#bridgeFillGrad)" />
-                <path d="M 380,210 Q 575,60 770,210" fill="none" stroke="url(#bridgeArcGrad)" stroke-width="6" stroke-linecap="round" filter="url(#glow)" />
-                
-                <!-- Broens pyloner / kabler -->
-                <line x1="480" y1="140" x2="480" y2="210" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.7" />
-                <line x1="575" y1="110" x2="575" y2="210" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3" opacity="0.8" />
-                <line x1="670" y1="140" x2="670" y2="210" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.7" />
+            <!-- Broen (Førnutid) -->
+            <g id="svg-bro" style="cursor: pointer;">
+                <!-- Bue fra x=420 til x=750 -->
+                <path d="M 420,160 Q 585,55 750,160" fill="none" stroke="url(#bridgeArc)" stroke-width="4" stroke-linecap="round" />
+                <circle cx="420" cy="160" r="6" fill="#f59e0b" />
+                <circle cx="750" cy="160" r="10" fill="#10b981" />
+                <circle cx="750" cy="160" r="4" fill="#ffffff" />
 
-                <!-- Bro start-anker i fortiden -->
-                <circle cx="380" cy="210" r="8" fill="#f59e0b" />
-                <text x="380" y="235" fill="#f59e0b" font-size="11" font-weight="800" text-anchor="middle">Begyndte dengang</text>
+                <rect x="485" y="45" width="200" height="42" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" />
+                <text x="585" y="63" fill="#fde68a" font-size="13" font-weight="700" text-anchor="middle">Broen (førnutid)</text>
+                <text x="585" y="78" fill="#94a3b8" font-size="11" text-anchor="middle">har/er + kort tillægsform</text>
 
-                <!-- Bro slut-anker i NUTIDEN -->
-                <circle cx="770" cy="210" r="14" fill="#38bdf8" filter="url(#glow)" />
-                <circle cx="770" cy="210" r="7" fill="#ffffff" />
-                <text x="770" y="240" fill="#38bdf8" font-size="14" font-weight="900" text-anchor="middle">NU 📍</text>
-                <text x="770" y="258" fill="#94a3b8" font-size="11" text-anchor="middle">Gælder lige nu</text>
-
-                <!-- Bro Banner / Titel -->
-                <rect x="475" y="70" width="200" height="50" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
-                <text x="575" y="92" fill="#fbbf24" font-size="14" font-weight="900" text-anchor="middle">🌉 BROEN (Førnutid)</text>
-                <text x="575" y="110" fill="#cbd5e1" font-size="11" text-anchor="middle">har boet • er kommet • har set</text>
+                <text x="750" y="185" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">Nu</text>
+                <text x="750" y="200" fill="#94a3b8" font-size="11" text-anchor="middle">Forbindelse til nu</text>
             </g>
         </svg>
 
-        <div class="stage-caption">
-            <span>💡 <strong>Tip:</strong> Tryk på <em>Punktet</em> eller <em>Broen</em> i tegningen ovenfor for at læse forskellen.</span>
-            <span>📍 Datid = Lukket tidspunkt | 🌉 Førnutid = Har forbindelse til NU</span>
+        <div class="pob-timeline-caption">
+            <span><strong>Regel:</strong> Datid bruges ved et lukket tidspunkt. Førnutid bruges ved forbindelse til nuet.</span>
+            <span>Tryk på en fane nedenfor for at udforske eksempler og opgaver.</span>
         </div>
     `;
-    viewContainer.appendChild(timelineStage);
+    viewContainer.appendChild(timelineCard);
 
-    // Tabs Menu
-    const tabsMenu = document.createElement('div');
-    tabsMenu.className = 'pob-tabs-menu';
-    const tabs = [
-        { id: 'tab_concept', label: '🧭 Hovedreglen & De 3 Bropiller' },
-        { id: 'tab_duels', label: '⚖️ Direkte Dueller (Sammenlign)' },
-        { id: 'tab_quiz', label: '🎯 Tids-Detektiven (10 opgaver)' },
-        { id: 'tab_sorter', label: '⏱️ Tidsmarkør-Sortereren' }
+    // Fanemenu
+    const navTabs = document.createElement('div');
+    navTabs.className = 'pob-nav-tabs';
+    const tabsData = [
+        { id: 'tab_concept', label: 'Hovedreglen' },
+        { id: 'tab_duels', label: 'Sammenlign eksempler' },
+        { id: 'tab_quiz', label: 'Vælg den rigtige tid (10 opgaver)' },
+        { id: 'tab_sorter', label: 'Sortér tidsudtryk' }
     ];
 
-    let activeTab = 'tab_concept';
+    let activeTabId = 'tab_concept';
 
-    tabs.forEach(t => {
+    tabsData.forEach(t => {
         const btn = document.createElement('button');
-        btn.className = `pob-tab-btn ${t.id === activeTab ? 'active' : ''}`;
+        btn.className = `pob-nav-btn ${t.id === activeTabId ? 'active' : ''}`;
         btn.dataset.tab = t.id;
         btn.textContent = t.label;
         btn.onclick = () => switchTab(t.id);
-        tabsMenu.appendChild(btn);
+        navTabs.appendChild(btn);
     });
-    viewContainer.appendChild(tabsMenu);
+    viewContainer.appendChild(navTabs);
 
-    const panelsHolder = document.createElement('div');
-    viewContainer.appendChild(panelsHolder);
+    const panelsContainer = document.createElement('div');
+    viewContainer.appendChild(panelsContainer);
 
     // ==========================================================
-    // --- FANE 1: 🧭 HOVEDREGLEN & DE 3 BROPILLER ---
+    // --- FANE 1: HOVEDREGLEN ---
     // ==========================================================
     const conceptPanel = document.createElement('div');
     conceptPanel.id = 'panel_concept';
     conceptPanel.innerHTML = `
-        <div class="pob-cards-grid">
-            <!-- 1. PUNKTET -->
-            <div class="concept-card card-punkt">
-                <div class="concept-header">
-                    <div class="concept-icon-wrap" style="color: #f87171;">📍</div>
-                    <div class="concept-title">
-                        <h3 style="color: #f87171;">PUNKTET</h3>
-                        <span style="color: #ef4444;">Datid (Præteritum)</span>
+        <div class="pob-rules-grid">
+            <!-- 1. Punktet (Datid) -->
+            <div class="rule-card rule-punkt">
+                <div class="rule-card-header">
+                    <span class="rule-icon">📍</span>
+                    <div class="rule-title">
+                        <h3>Punktet</h3>
+                        <span>Datid (præteritum)</span>
                     </div>
                 </div>
-                <div class="formula-box" style="border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">
-                    FORMEL: Datidsform (gik, boede, drak, var, kom)
+                <div class="rule-formula">
+                    Form: datidsform (boede, gik, drak, kom, mødte)
                 </div>
-                <div class="concept-text">
-                    Punktet bruges, når handlingen skete på et <strong>bestemt, afsluttet tidspunkt</strong> i fortiden. Tidsvinduet er smækket i, og handlingen har sluppet nuet.
+                <div class="rule-body">
+                    Datid bruges, når handlingen skete på et <strong>afsluttet tidspunkt</strong> i fortiden. Tidsrummet er overstået, og handlingen har sluppet nuet.
                 </div>
-                <ul class="concept-bullets">
-                    <li>📅 <strong>Tiden er lukket:</strong> Dagen eller perioden er overstået (i går, sidste år).</li>
-                    <li>🕰️ <strong>Præcist tidspunkt:</strong> "Hvornår skete det?" – Kl. 8, i 2015, for to timer siden.</li>
-                    <li>🎬 <strong>Lukket historie:</strong> Handlinger i en fortælling, der følger hinanden i fortiden.</li>
+                <ul class="rule-points">
+                    <li>• <strong>Afsluttet tid:</strong> Dagen eller perioden er forbi (i går, sidste år).</li>
+                    <li>• <strong>Præcist tidspunkt:</strong> Svarer på "hvornår?" (kl. 8, i 2018, for to timer siden).</li>
+                    <li>• <strong>Fortælling:</strong> Handlinger i en historie, der skete efter hinanden.</li>
                 </ul>
                 <div style="margin-top: auto;">
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #f87171; text-transform: uppercase; margin-bottom: 0.4rem;">
-                        📍 Typiske Punkt-markører (kræver datid):
-                    </div>
-                    <div class="marker-tag-list">
-                        <span class="marker-tag">i går</span>
-                        <span class="marker-tag">i 2018</span>
-                        <span class="marker-tag">sidste uge</span>
-                        <span class="marker-tag">for ... siden</span>
-                        <span class="marker-tag">dengang</span>
-                        <span class="marker-tag">da jeg var barn</span>
+                    <div class="rule-footer-title">Typiske tidsudtryk med datid:</div>
+                    <div class="rule-chips">
+                        <span class="rule-chip">i går</span>
+                        <span class="rule-chip">i 2018</span>
+                        <span class="rule-chip">sidste uge</span>
+                        <span class="rule-chip">for ... siden</span>
+                        <span class="rule-chip">dengang</span>
+                        <span class="rule-chip">da jeg var barn</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. BROEN -->
-            <div class="concept-card card-bro">
-                <div class="concept-header">
-                    <div class="concept-icon-wrap" style="color: #fbbf24;">🌉</div>
-                    <div class="concept-title">
-                        <h3 style="color: #fbbf24;">BROEN</h3>
-                        <span style="color: #f59e0b;">Førnutid (Perfektum)</span>
+            <!-- 2. Broen (Førnutid) -->
+            <div class="rule-card rule-bro">
+                <div class="rule-card-header">
+                    <span class="rule-icon">🌉</span>
+                    <div class="rule-title">
+                        <h3>Broen</h3>
+                        <span>Førnutid (perfektum)</span>
                     </div>
                 </div>
-                <div class="formula-box" style="border-color: rgba(245, 158, 11, 0.4); color: #fde68a;">
-                    FORMEL: har / er + kort tillægsform (har boet, er kommet)
+                <div class="rule-formula" style="color: #fcd34d;">
+                    Form: har/er + kort tillægsform (har boet, er kommet)
                 </div>
-                <div class="concept-text">
-                    Broen spænder fra fortiden og hviler <strong>lige midt i nutiden</strong>. Vi bruger den, når der er en direkte forbindelse mellem fortiden og NU.
+                <div class="rule-body">
+                    Førnutid bygger en bro fra fortiden til nutiden. Vi bruger den, når handlingen har <strong>betydning eller resultat lige nu</strong>.
                 </div>
-                <ul class="concept-bullets">
-                    <li>🌟 <strong>1. Erfaring indtil nu:</strong> "Jeg har set den film 3 gange (i mit liv indtil nu)."</li>
-                    <li>⏳ <strong>2. Stadig i gang:</strong> "Jeg har boet her i 5 år (og jeg bor her stadig i dag)."</li>
-                    <li>⚡ <strong>3. Friskt resultat i nuet:</strong> "Han er lige kommet (han står foran mig nu)."</li>
+                <ul class="rule-points">
+                    <li>• <strong>Erfaring indtil nu:</strong> "Jeg har set den film tre gange."</li>
+                    <li>• <strong>Stadig i gang:</strong> "Jeg har boet her i fem år (og bor her stadig)."</li>
+                    <li>• <strong>Friskt resultat i nuet:</strong> "Han er lige kommet (han står her nu)."</li>
                 </ul>
                 <div style="margin-top: auto;">
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; margin-bottom: 0.4rem;">
-                        🌉 Typiske Bro-markører (kræver førnutid):
-                    </div>
-                    <div class="marker-tag-list">
-                        <span class="marker-tag">lige</span>
-                        <span class="marker-tag">allerede</span>
-                        <span class="marker-tag">endnu (ikke)</span>
-                        <span class="marker-tag">nogensinde</span>
-                        <span class="marker-tag">aldrig</span>
-                        <span class="marker-tag">i dag / i år</span>
+                    <div class="rule-footer-title">Typiske tidsudtryk med førnutid:</div>
+                    <div class="rule-chips">
+                        <span class="rule-chip">lige</span>
+                        <span class="rule-chip">allerede</span>
+                        <span class="rule-chip">endnu ikke</span>
+                        <span class="rule-chip">nogensinde</span>
+                        <span class="rule-chip">aldrig</span>
+                        <span class="rule-chip">i dag</span>
                     </div>
                 </div>
             </div>
@@ -751,80 +757,80 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
     `;
 
     // ==========================================================
-    // --- FANE 2: ⚖️ DIREKTE DUELLER ---
+    // --- FANE 2: SAMMENLIGN EKSEMPLER ---
     // ==========================================================
     const duelsPanel = document.createElement('div');
     duelsPanel.id = 'panel_duels';
 
-    const duels = [
+    const examplePairs = [
         {
-            topic: '🇪🇸 Hvor bor du? (Spanien)',
+            title: 'At bo et sted',
             icon: '🏠',
             punkt: {
                 sentence: 'Jeg boede i Spanien i to år.',
-                meaning: '📍 PUNKTET: Det er afsluttet fortid. Jeg bor IKKE i Spanien i dag (jeg bor måske i Danmark nu).'
+                explanation: 'Handlingen er afsluttet. Jeg bor ikke i Spanien i dag.'
             },
             bro: {
                 sentence: 'Jeg har boet i Spanien i to år.',
-                meaning: '🌉 BROEN: Handlingen startede for 2 år siden og fortsætter i dag – jeg bor stadig i Spanien!'
+                explanation: 'Handlingen begyndte for to år siden og fortsætter i dag: Jeg bor stadig i Spanien.'
             }
         },
         {
-            topic: '☕ Kaffepausen (Koffein i blodet)',
+            title: 'At drikke kaffe',
             icon: '☕',
             punkt: {
                 sentence: 'Vi drak kaffe for en time siden.',
-                meaning: '📍 PUNKTET: "For en time siden" låser handlingen fast til et bestemt tidspunkt i fortiden.'
+                explanation: '"For en time siden" låser handlingen fast til et bestemt tidspunkt i fortiden.'
             },
             bro: {
                 sentence: 'Vi har drukket tre kopper kaffe i dag.',
-                meaning: '🌉 BROEN: Dagen i dag er ikke slut endnu, og vi er stadig fulde af energi lige nu!'
+                explanation: 'Dagen i dag er ikke slut endnu, og handlingen har betydning for nuet.'
             }
         },
         {
-            topic: '🔑 Hoveddøren (Hvor er nøglen?)',
+            title: 'At tabe sine nøgler',
             icon: '🔑',
             punkt: {
                 sentence: 'I går tabte jeg mine nøgler (men naboen fandt dem).',
-                meaning: '📍 PUNKTET: Handlingen skete i går, og problemet blev løst. Ingen konsekvens i nuet.'
+                explanation: 'Handlingen skete i går, og problemet blev løst. Ingen konsekvens nu.'
             },
             bro: {
                 sentence: 'Hjælp, jeg har tabt mine nøgler!',
-                meaning: '🌉 BROEN: Handlingen skete for lidt siden, og konsekvensen gælder NU: Jeg kan ikke komme ind ad døren!'
+                explanation: 'Konsekvensen gælder lige nu: Jeg kan ikke komme ind ad døren.'
             }
         },
         {
-            topic: '🎬 Biografen (Oplevelse)',
-            icon: '🍿',
+            title: 'At gå i biografen',
+            icon: '🎬',
             punkt: {
                 sentence: 'I fredags var jeg i biografen.',
-                meaning: '📍 PUNKTET: I fredags er et afsluttet tidspunkt. Fokus er på hvornår det skete.'
+                explanation: '"I fredags" er et lukket tidspunkt i fortiden.'
             },
             bro: {
                 sentence: 'Jeg har været i biografen mange gange.',
-                meaning: '🌉 BROEN: Min samlede livserfaring frem til dette øjeblik.'
+                explanation: 'Det handler om min samlede livserfaring frem til i dag.'
             }
         }
     ];
 
     duelsPanel.innerHTML = `
-        <div class="duels-container">
-            ${duels.map(d => `
-                <div class="duel-card">
-                    <div class="duel-title">
-                        <span>${d.icon}</span>
-                        <span>${d.topic}</span>
+        <div class="pob-examples-list">
+            ${examplePairs.map(ex => `
+                <div class="example-card">
+                    <div class="example-title">
+                        <span>${ex.icon}</span>
+                        <span>${ex.title}</span>
                     </div>
-                    <div class="duel-grid">
-                        <div class="duel-side">
-                            <div class="duel-side-badge" style="color: #f87171;">📍 Punktet (Datid)</div>
-                            <div class="duel-sentence">"${d.punkt.sentence}"</div>
-                            <div class="duel-meaning">${d.punkt.meaning}</div>
+                    <div class="example-columns">
+                        <div class="example-box">
+                            <div class="example-label" style="color: #f87171;">Datid (punktet)</div>
+                            <div class="example-sentence">"${ex.punkt.sentence}"</div>
+                            <div class="example-explanation">${ex.punkt.explanation}</div>
                         </div>
-                        <div class="duel-side side-bro">
-                            <div class="duel-side-badge" style="color: #fbbf24;">🌉 Broen (Førnutid)</div>
-                            <div class="duel-sentence">"${d.bro.sentence}"</div>
-                            <div class="duel-meaning">${d.bro.meaning}</div>
+                        <div class="example-box box-bro">
+                            <div class="example-label" style="color: #fbbf24;">Førnutid (broen)</div>
+                            <div class="example-sentence">"${ex.bro.sentence}"</div>
+                            <div class="example-explanation">${ex.bro.explanation}</div>
                         </div>
                     </div>
                 </div>
@@ -833,235 +839,236 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
     `;
 
     // ==========================================================
-    // --- FANE 3: 🎯 TIDS-DETEKTIVEN (Quiz) ---
+    // --- FANE 3: VÆLG DEN RIGTIGE TID (10 opgaver) ---
     // ==========================================================
     const quizPanel = document.createElement('div');
     quizPanel.id = 'panel_quiz';
 
-    const detectiveTasks = [
+    const tasks = [
         {
             sentenceBefore: "I 2012",
             sentenceAfter: "familien til Danmark.",
             options: [
-                { text: "flyttede", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "er flyttet", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "flyttede", type: "punkt", label: "datid" },
+                { text: "er flyttet", type: "bro", label: "førnutid" }
             ],
             correct: "flyttede",
-            hint: '"I 2012" er et bestemt årstal/tidspunkt i fortiden.',
-            expl: '"I 2012" er et lukket tidspunkt i fortiden. Når vi har et præcist årstal, skal vi ALTID bruge Punktet (datid = flyttede).'
+            hint: '"I 2012" er et præcist årstal i fortiden.',
+            explanation: '"I 2012" er et lukket tidspunkt i fortiden. Ved et præcist årstal skal vi bruge datid (flyttede).'
         },
         {
             sentenceBefore: "Hvor er Mads? – Han",
             sentenceAfter: "lige ind ad døren.",
             options: [
-                { text: "kom", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "er kommet", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "kom", type: "punkt", label: "datid" },
+                { text: "er kommet", type: "bro", label: "førnutid" }
             ],
             correct: "er kommet",
-            hint: '"Lige" viser, at handlingen er frisk og har direkte betydning nu.',
-            expl: '"Lige" bygger en direkte bro til nuet (han står her nu). Derfor bruges Broen (førnutid = er kommet).'
+            hint: '"Lige" viser, at handlingen har direkte betydning nu.',
+            explanation: '"Lige" bygger bro til nuet (han står her nu). Derfor bruges førnutid (er kommet).'
         },
         {
             sentenceBefore: "Jeg",
             sentenceAfter: "tre kopper kaffe for en time siden.",
             options: [
-                { text: "drak", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "har drukket", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "drak", type: "punkt", label: "datid" },
+                { text: "har drukket", type: "bro", label: "førnutid" }
             ],
             correct: "drak",
-            hint: 'Tidsudtryk med "for ... siden" peger altid på et afsluttet punkt.',
-            expl: '"For en time siden" afslutter handlingen på et specifikt tidspunkt. Derfor skal det være Punktet (datid = drak).'
+            hint: 'Tidsudtryk med "for ... siden" peger på et afsluttet tidspunkt.',
+            explanation: '"For en time siden" låser handlingen fast til et bestemt tidspunkt i fortiden (drak).'
         },
         {
             sentenceBefore: "Sofie",
             sentenceAfter: "i denne lejlighed i fem år, og hun elsker stadig at bo her.",
             options: [
-                { text: "boede", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "har boet", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "boede", type: "punkt", label: "datid" },
+                { text: "har boet", type: "bro", label: "førnutid" }
             ],
             correct: "har boet",
             hint: 'Handlingen fortsætter stadig lige nu.',
-            expl: 'Da hun stadig bor i lejligheden i dag, skal vi bygge Broen til nutiden (førnutid = har boet).'
+            explanation: 'Hun bor stadig i lejligheden i dag. Derfor bygges broen til nutiden med førnutid (har boet).'
         },
         {
             sentenceBefore: "I går",
             sentenceAfter: "jeg min gamle ven ved bussen.",
             options: [
-                { text: "mødte", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "har mødt", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "mødte", type: "punkt", label: "datid" },
+                { text: "har mødt", type: "bro", label: "førnutid" }
             ],
             correct: "mødte",
             hint: '"I går" er en afsluttet dag i fortiden.',
-            expl: '"I går" er et afsluttet tidsrum. Punktet (datid = mødte) er det eneste rigtige.'
+            explanation: '"I går" er et afsluttet tidsrum. Derfor skal det være datid (mødte).'
         },
         {
             sentenceBefore: "Jeg",
             sentenceAfter: "aldrig prøvet at køre i metroen i København.",
             options: [
-                { text: "har", type: "bro", label: "🌉 Broen (Førnutid)" },
-                { text: "havde", type: "punkt", label: "📍 Punktet (Datid)" }
+                { text: "har", type: "bro", label: "førnutid" },
+                { text: "havde", type: "punkt", label: "datid" }
             ],
             correct: "har",
-            hint: '"Aldrig" handler om hele din livserfaring frem til i dag.',
-            expl: '"Aldrig" og "nogensinde" beskriver erfaringer i hele dit liv indtil nu. Derfor bygges Broen (førnutid = har aldrig prøvet).'
+            hint: null,
+            explanation: '"Aldrig" og "nogensinde" beskriver erfaringer i hele livet indtil nu. Derfor bruges førnutid (har aldrig prøvet).'
         },
         {
             sentenceBefore: "Toget",
             sentenceAfter: "allerede stationen, så vi må vente på det næste.",
             options: [
-                { text: "forlod", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "har forladt", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "forlod", type: "punkt", label: "datid" },
+                { text: "har forladt", type: "bro", label: "førnutid" }
             ],
             correct: "har forladt",
-            hint: '"Allerede" viser konsekvensen for os i dette øjeblik.',
-            expl: '"Allerede" kobler togstationens afgang med vores situation lige nu. Derfor bruges Broen (førnutid = har forladt).'
+            hint: null,
+            explanation: '"Allerede" kobler afgangen til vores situation lige nu. Derfor bruges førnutid (har forladt).'
         },
         {
             sentenceBefore: "Da jeg var barn,",
             sentenceAfter: "jeg altid til fodbold om onsdagen.",
             options: [
-                { text: "gik", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "er gået", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "gik", type: "punkt", label: "datid" },
+                { text: "er gået", type: "bro", label: "førnutid" }
             ],
             correct: "gik",
-            hint: '"Da jeg var barn" er en helt afsluttet periode i fortiden.',
-            expl: 'Barndommen er forbi og lukket = Punktet (datid = gik).'
+            hint: null,
+            explanation: 'Barndommen er en lukket periode i fortiden = datid (gik).'
         },
         {
             sentenceBefore: "Hvem",
             sentenceAfter: "denne flotte tegning på tavlen?",
             options: [
-                { text: "tegnede", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "har tegnet", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "tegnede", type: "punkt", label: "datid" },
+                { text: "har tegnet", type: "bro", label: "førnutid" }
             ],
             correct: "har tegnet",
-            hint: 'Tegningen er synlig på tavlen lige her og nu.',
-            expl: 'Tegningen ses fysisk på tavlen lige nu som et friskt resultat = Broen (førnutid = har tegnet).'
+            hint: null,
+            explanation: 'Tegningen ses fysisk på tavlen lige nu som et frisk resultat = førnutid (har tegnet).'
         },
         {
-            sentenceBefore: "I morges kl. 8:00",
+            sentenceBefore: "I morges kl. 8.00",
             sentenceAfter: "vækkeuret højlydt.",
             options: [
-                { text: "ringede", type: "punkt", label: "📍 Punktet (Datid)" },
-                { text: "har ringet", type: "bro", label: "🌉 Broen (Førnutid)" }
+                { text: "ringede", type: "punkt", label: "datid" },
+                { text: "har ringet", type: "bro", label: "førnutid" }
             ],
             correct: "ringede",
-            hint: 'Et helt specifikt klokkeslæt i morges.',
-            expl: 'Et præcist klokkeslæt i fortiden låser handlingen til Punktet (datid = ringede).'
+            hint: null,
+            explanation: 'Et præcist klokkeslæt i fortiden låser handlingen fast = datid (ringede).'
         }
     ];
 
-    let currDetIdx = 0;
-    const detectiveCard = document.createElement('div');
-    detectiveCard.className = 'detective-card';
+    let currentTaskIndex = 0;
+    const taskContainer = document.createElement('div');
+    taskContainer.className = 'pob-task-container';
 
-    function renderDetectiveTask() {
-        detectiveCard.innerHTML = '';
-        const task = detectiveTasks[currDetIdx];
+    function renderTask() {
+        taskContainer.innerHTML = '';
+        const task = tasks[currentTaskIndex];
 
-        const counter = document.createElement('div');
-        counter.className = 'det-counter';
-        counter.textContent = `Opgave ${currDetIdx + 1} af ${detectiveTasks.length}`;
-        detectiveCard.appendChild(counter);
-
-        const sentenceBox = document.createElement('div');
-        sentenceBox.className = 'det-sentence-box';
-        sentenceBox.innerHTML = `
-            <span>${task.sentenceBefore} ________ ${task.sentenceAfter}</span>
-            <button class="det-audio-btn" title="Lyt til sætningen" id="btn-audio-det">🔊</button>
+        // Tæller
+        const counterRow = document.createElement('div');
+        counterRow.className = 'task-counter-row';
+        counterRow.innerHTML = `
+            <span class="task-counter">Opgave ${currentTaskIndex + 1} af ${tasks.length}</span>
+            <span style="font-size: 0.85rem; color: #94a3b8;">Vælg den rigtige form</span>
         `;
-        detectiveCard.appendChild(sentenceBox);
+        taskContainer.appendChild(counterRow);
 
-        sentenceBox.querySelector('#btn-audio-det').onclick = () => {
+        // Sætningsboks
+        const sentenceBox = document.createElement('div');
+        sentenceBox.className = 'task-sentence-box';
+        sentenceBox.innerHTML = `
+            <span>${task.sentenceBefore} <span style="text-decoration: underline; color: #38bdf8;">_____</span> ${task.sentenceAfter}</span>
+            <button class="task-audio-btn" title="Lyt til sætningen" id="btn-audio-task">🔊</button>
+        `;
+        taskContainer.appendChild(sentenceBox);
+
+        sentenceBox.querySelector('#btn-audio-task').onclick = () => {
             speakDanish(`${task.sentenceBefore} ${task.correct} ${task.sentenceAfter}`);
         };
 
-        const hintBox = document.createElement('div');
-        hintBox.className = 'det-hint-box';
-        hintBox.innerHTML = `<span>💡 Ledetråd:</span> ${task.hint}`;
-        detectiveCard.appendChild(hintBox);
+        // Hint (kun opgave 1-5, jf. brugerens pædagogiske princip)
+        if (task.hint) {
+            const hintEl = document.createElement('div');
+            hintEl.className = 'task-hint';
+            hintEl.innerHTML = `<span>💡 Hint:</span> ${task.hint}`;
+            taskContainer.appendChild(hintEl);
+        }
 
-        const optionsGrid = document.createElement('div');
-        optionsGrid.className = 'det-options-grid';
+        // Svarmuligheder
+        const choicesGrid = document.createElement('div');
+        choicesGrid.className = 'task-choices-grid';
 
         const feedbackBox = document.createElement('div');
-        feedbackBox.className = 'det-feedback-box';
+        feedbackBox.className = 'task-feedback';
         feedbackBox.style.display = 'none';
 
         task.options.forEach(opt => {
             const btn = document.createElement('button');
-            btn.className = 'det-opt-btn';
+            btn.className = 'choice-btn';
             btn.innerHTML = `
-                <span class="det-opt-title">${opt.text}</span>
-                <span class="det-opt-meta">${opt.label}</span>
+                <span class="choice-text">${opt.text}</span>
+                <span class="choice-type">${opt.label}</span>
             `;
 
             btn.onclick = () => {
                 const isCorrect = (opt.text.toLowerCase() === task.correct.toLowerCase());
-                optionsGrid.querySelectorAll('.det-opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                choicesGrid.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
 
                 if (isCorrect) {
                     btn.classList.add('correct');
                     sentenceBox.querySelector('span').innerHTML = `${task.sentenceBefore} <strong style="color: #4ade80; text-decoration: underline;">${opt.text}</strong> ${task.sentenceAfter}`;
                     feedbackBox.style.display = 'block';
-                    feedbackBox.style.background = 'rgba(34, 197, 94, 0.15)';
-                    feedbackBox.style.border = '1px solid #22c55e';
+                    feedbackBox.style.background = 'rgba(34, 197, 94, 0.12)';
+                    feedbackBox.style.border = '1px solid rgba(34, 197, 94, 0.4)';
                     feedbackBox.innerHTML = `
-                        <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;">
-                            🎉 Rigtigt svar!
-                        </div>
-                        <div style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">
-                            ${task.expl}
-                        </div>
+                        <div style="color: #4ade80; font-weight: 700; margin-bottom: 0.3rem;">Korrekt!</div>
+                        <div style="color: #cbd5e1; font-size: 0.92rem;">${task.explanation}</div>
                     `;
                 } else {
                     btn.classList.add('wrong');
-                    optionsGrid.querySelectorAll('.det-opt-btn').forEach(b => {
-                        if (b.querySelector('.det-opt-title').textContent.toLowerCase() === task.correct.toLowerCase()) {
+                    choicesGrid.querySelectorAll('.choice-btn').forEach(b => {
+                        if (b.querySelector('.choice-text').textContent.toLowerCase() === task.correct.toLowerCase()) {
                             b.classList.add('correct');
                         }
                     });
                     sentenceBox.querySelector('span').innerHTML = `${task.sentenceBefore} <strong style="color: #4ade80; text-decoration: underline;">${task.correct}</strong> ${task.sentenceAfter}`;
                     feedbackBox.style.display = 'block';
-                    feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
-                    feedbackBox.style.border = '1px solid #ef4444';
+                    feedbackBox.style.background = 'rgba(239, 68, 68, 0.12)';
+                    feedbackBox.style.border = '1px solid rgba(239, 68, 68, 0.4)';
                     feedbackBox.innerHTML = `
-                        <div style="color: #f87171; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;">
-                            Ikke helt – det rigtige valg er "${task.correct}"
-                        </div>
-                        <div style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">
-                            ${task.expl}
-                        </div>
+                        <div style="color: #f87171; font-weight: 700; margin-bottom: 0.3rem;">Det rigtige svar er "${task.correct}".</div>
+                        <div style="color: #cbd5e1; font-size: 0.92rem;">${task.explanation}</div>
                     `;
                 }
 
                 const nextBtn = document.createElement('button');
-                nextBtn.className = 'det-next-btn';
-                nextBtn.textContent = currDetIdx < detectiveTasks.length - 1 ? 'Næste opgave ➔' : 'Prøv forfra 🔄';
+                nextBtn.className = 'task-next-btn';
+                nextBtn.textContent = currentTaskIndex < tasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄';
                 nextBtn.onclick = () => {
-                    currDetIdx = (currDetIdx + 1) % detectiveTasks.length;
-                    renderDetectiveTask();
+                    currentTaskIndex = (currentTaskIndex + 1) % tasks.length;
+                    renderTask();
                 };
                 feedbackBox.appendChild(nextBtn);
             };
 
-            optionsGrid.appendChild(btn);
+            choicesGrid.appendChild(btn);
         });
 
-        detectiveCard.appendChild(optionsGrid);
-        detectiveCard.appendChild(feedbackBox);
+        taskContainer.appendChild(choicesGrid);
+        taskContainer.appendChild(feedbackBox);
     }
 
-    renderDetectiveTask();
-    quizPanel.appendChild(detectiveCard);
+    renderTask();
+    quizPanel.appendChild(taskContainer);
 
     // ==========================================================
-    // --- FANE 4: ⏱️ TIDSMARKØR-SORTEREREN ---
+    // --- FANE 4: SORTÉR TIDSUDTRYK (Enkelt, direkte sortering) ---
     // ==========================================================
     const sorterPanel = document.createElement('div');
     sorterPanel.id = 'panel_sorter';
 
-    const markersToCategorize = [
+    const markers = [
         { word: 'i går', target: 'punkt' },
         { word: 'lige', target: 'bro' },
         { word: 'i 2015', target: 'punkt' },
@@ -1069,194 +1076,161 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         { word: 'allerede', target: 'bro' },
         { word: 'sidste sommer', target: 'punkt' },
         { word: 'aldrig', target: 'bro' },
-        { word: 'i morges kl. 7', target: 'punkt' },
+        { word: 'i morges kl. 7.00', target: 'punkt' },
         { word: 'endnu ikke', target: 'bro' },
         { word: 'dengang', target: 'punkt' },
         { word: 'nogensinde', target: 'bro' },
         { word: 'siden i mandags', target: 'bro' }
     ];
 
-    let remainingMarkers = [...markersToCategorize].sort(() => Math.random() - 0.5);
-    let punktItems = [];
-    let broItems = [];
+    let remainingMarkers = [...markers].sort(() => Math.random() - 0.5);
+    let punktList = [];
+    let broList = [];
+    let currentMarkerIndex = 0;
 
-    function renderSorterContent() {
-        sorterPanel.innerHTML = `
-            <div style="margin-bottom: 1.5rem;">
-                <h2 style="font-size: 1.5rem; margin-bottom: 0.4rem;">⏱️ Tidsmarkør-Sortereren: Punkt-ord eller Bro-ord?</h2>
-                <p style="color: #94a3b8;">Tryk på en tidsmarkør i puljen, og vælg hvilken kasse den hører til. Så mestrer du hurtigt sprogets ledetråde!</p>
+    function renderSorter() {
+        sorterPanel.innerHTML = '';
+        const containerBox = document.createElement('div');
+        containerBox.className = 'sorter-container';
+
+        containerBox.innerHTML = `
+            <div class="sorter-instruction">
+                <h3>Sortér tidsudtrykkene: punkt eller bro?</h3>
+                <p>Afgør om tidsudtrykket låser handlingen til et afsluttet tidspunkt (punktet), eller om det forbinder handlingen med nuet (broen).</p>
             </div>
-
-            <div class="marker-pool" id="sorter-pool">
-                ${remainingMarkers.length === 0 ? `
-                    <div style="color: #4ade80; font-weight: 800; font-size: 1.2rem; padding: 0.5rem 1rem;">
-                        🎉 Fantastisk! Alle tidsmarkører er korrekt sorteret!
-                    </div>
-                ` : remainingMarkers.map((m, idx) => `
-                    <button class="pool-chip" data-idx="${idx}">${m.word}</button>
-                `).join('')}
-            </div>
-
-            <div class="sorter-stage">
-                <!-- Punktet Kasse -->
-                <div class="sorter-bucket bucket-punkt" id="bucket-punkt-zone">
-                    <div class="bucket-header" style="color: #f87171;">
-                        <span>📍</span>
-                        <span>Punkt-markører (Datid)</span>
-                    </div>
-                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.8rem;">
-                        Kræver afsluttet datid (gik, så, drak...)
-                    </div>
-                    <div class="bucket-items" id="bucket-punkt-items">
-                        ${punktItems.map(item => `
-                            <span class="placed-chip placed-punkt">📍 ${item}</span>
-                        `).join('')}
-                    </div>
-                </div>
-
-                <!-- Broen Kasse -->
-                <div class="sorter-bucket bucket-bro" id="bucket-bro-zone">
-                    <div class="bucket-header" style="color: #fbbf24;">
-                        <span>🌉</span>
-                        <span>Bro-markører (Førnutid)</span>
-                    </div>
-                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.8rem;">
-                        Kræver førnutid med forbindelse til nu (har set, er kommet...)
-                    </div>
-                    <div class="bucket-items" id="bucket-bro-items">
-                        ${broItems.map(item => `
-                            <span class="placed-chip placed-bro">🌉 ${item}</span>
-                        `).join('')}
-                    </div>
-                </div>
-            </div>
-
-            ${remainingMarkers.length === 0 ? `
-                <div style="text-align: center; margin-top: 1rem;">
-                    <button class="det-next-btn" id="btn-reset-sorter">Prøv sorteringen igen 🔄</button>
-                </div>
-            ` : ''}
         `;
 
-        if (remainingMarkers.length === 0) {
-            const resetBtn = sorterPanel.querySelector('#btn-reset-sorter');
-            if (resetBtn) {
-                resetBtn.onclick = () => {
-                    remainingMarkers = [...markersToCategorize].sort(() => Math.random() - 0.5);
-                    punktItems = [];
-                    broItems = [];
-                    renderSorterContent();
-                };
-            }
-        }
+        if (remainingMarkers.length > 0) {
+            const currentItem = remainingMarkers[0];
+            const activeArea = document.createElement('div');
+            activeArea.className = 'sorter-active-area';
+            activeArea.innerHTML = `
+                <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 0.4rem;">
+                    Hvor hører dette tidsudtryk til? (${remainingMarkers.length} tilbage)
+                </div>
+                <div class="sorter-current-word">"${currentItem.word}"</div>
+                <div class="sorter-direct-actions">
+                    <button class="sorter-pick-btn btn-punkt-pick" id="btn-pick-punkt">
+                        📍 Punktet (datid)
+                    </button>
+                    <button class="sorter-pick-btn btn-bro-pick" id="btn-pick-bro">
+                        🌉 Broen (førnutid)
+                    </button>
+                </div>
+                <div id="sorter-feedback" style="display: none; margin-top: 0.8rem; font-size: 0.9rem; font-weight: 600;"></div>
+            `;
 
-        // Chip click handling
-        sorterPanel.querySelectorAll('.pool-chip').forEach(btn => {
-            btn.onclick = () => {
-                const idx = parseInt(btn.dataset.idx, 10);
-                const marker = remainingMarkers[idx];
-                openSorterModal(marker, idx);
+            const feedbackEl = activeArea.querySelector('#sorter-feedback');
+
+            activeArea.querySelector('#btn-pick-punkt').onclick = () => checkSorterChoice('punkt', currentItem, feedbackEl);
+            activeArea.querySelector('#btn-pick-bro').onclick = () => checkSorterChoice('bro', currentItem, feedbackEl);
+
+            containerBox.appendChild(activeArea);
+        } else {
+            const doneArea = document.createElement('div');
+            doneArea.className = 'sorter-active-area';
+            doneArea.innerHTML = `
+                <div style="color: #4ade80; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Alle 12 tidsudtryk er placeret korrekt!
+                </div>
+                <button class="task-next-btn" id="btn-restart-sorter">Prøv igen 🔄</button>
+            `;
+            doneArea.querySelector('#btn-restart-sorter').onclick = () => {
+                remainingMarkers = [...markers].sort(() => Math.random() - 0.5);
+                punktList = [];
+                broList = [];
+                renderSorter();
             };
-        });
-    }
+            containerBox.appendChild(doneArea);
+        }
 
-    function openSorterModal(marker, idx) {
-        // Quick modal / selection prompt
-        const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.inset = '0';
-        modal.style.background = 'rgba(0, 0, 0, 0.75)';
-        modal.style.backdropFilter = 'blur(6px)';
-        modal.style.display = 'flex';
-        modal.style.alignItems = 'center';
-        modal.style.justifyContent = 'center';
-        modal.style.zIndex = '9999';
-        modal.style.padding = '1.5rem';
-
-        modal.innerHTML = `
-            <div style="background: #1e293b; border: 2px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 2rem; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">Hvor hører tidsmarkøren til?</div>
-                <div style="font-size: 1.8rem; font-weight: 900; color: #38bdf8; margin-bottom: 1.5rem;">"${marker.word}"</div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                    <button id="modal-btn-punkt" style="background: rgba(239,68,68,0.2); border: 2px solid #ef4444; color: #f87171; padding: 1.2rem; border-radius: 16px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s;">
-                        📍 PUNKTET<br><span style="font-size: 0.75rem; font-weight: 600; opacity: 0.8;">(Afsluttet Datid)</span>
-                    </button>
-                    <button id="modal-btn-bro" style="background: rgba(245,158,11,0.2); border: 2px solid #f59e0b; color: #fbbf24; padding: 1.2rem; border-radius: 16px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s;">
-                        🌉 BROEN<br><span style="font-size: 0.75rem; font-weight: 600; opacity: 0.8;">(Førnutid til NU)</span>
-                    </button>
+        // Kasserne nederst
+        const bucketsGrid = document.createElement('div');
+        bucketsGrid.className = 'sorter-buckets-grid';
+        bucketsGrid.innerHTML = `
+            <div class="sorter-bucket bucket-punkt">
+                <div class="bucket-title" style="color: #f87171;">
+                    <span>📍</span>
+                    <span>Punktet (datid)</span>
                 </div>
+                <div class="bucket-sub">Afsluttet tidspunkt (i går, for en time siden...)</div>
+                <div class="bucket-chips-flow">
+                    ${punktList.map(w => `<span class="placed-badge placed-punkt">${w}</span>`).join('')}
+                </div>
+            </div>
 
-                <div id="modal-feedback" style="display: none; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 700;"></div>
-                <button id="modal-btn-close" style="background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 0.9rem;">Fortryd</button>
+            <div class="sorter-bucket bucket-bro">
+                <div class="bucket-title" style="color: #fbbf24;">
+                    <span>🌉</span>
+                    <span>Broen (førnutid)</span>
+                </div>
+                <div class="bucket-sub">Forbindelse til nu (lige, allerede, aldrig...)</div>
+                <div class="bucket-chips-flow">
+                    ${broList.map(w => `<span class="placed-badge placed-bro">${w}</span>`).join('')}
+                </div>
             </div>
         `;
 
-        document.body.appendChild(modal);
+        containerBox.appendChild(bucketsGrid);
+        sorterPanel.appendChild(containerBox);
+    }
 
-        const feedback = modal.querySelector('#modal-feedback');
-        const btnClose = modal.querySelector('#modal-btn-close');
+    function checkSorterChoice(chosen, item, feedbackEl) {
+        if (chosen === item.target) {
+            feedbackEl.style.display = 'block';
+            feedbackEl.style.color = '#4ade80';
+            feedbackEl.textContent = `Korrekt! "${item.word}" hører til ${chosen === 'punkt' ? 'punktet' : 'broen'}.`;
 
-        modal.querySelector('#modal-btn-punkt').onclick = () => submitChoice('punkt');
-        modal.querySelector('#modal-btn-bro').onclick = () => submitChoice('bro');
-        btnClose.onclick = () => document.body.removeChild(modal);
+            if (chosen === 'punkt') punktList.push(item.word);
+            else broList.push(item.word);
 
-        function submitChoice(chosen) {
-            const isCorrect = (chosen === marker.target);
-            if (isCorrect) {
-                feedback.style.display = 'block';
-                feedback.style.background = 'rgba(34,197,94,0.2)';
-                feedback.style.color = '#4ade80';
-                feedback.textContent = `🎉 Korrekt! "${marker.word}" er en ${chosen === 'punkt' ? 'Punkt' : 'Bro'}-markør!`;
-                
-                setTimeout(() => {
-                    if (chosen === 'punkt') punktItems.push(marker.word);
-                    else broItems.push(marker.word);
-                    remainingMarkers.splice(idx, 1);
-                    document.body.removeChild(modal);
-                    renderSorterContent();
-                }, 700);
-            } else {
-                feedback.style.display = 'block';
-                feedback.style.background = 'rgba(239,68,68,0.2)';
-                feedback.style.color = '#f87171';
-                feedback.textContent = `Ikke helt – tænk over om tiden er lukket i fortiden, eller rækker ind i nuet!`;
-            }
+            remainingMarkers.shift();
+            setTimeout(() => renderSorter(), 550);
+        } else {
+            feedbackEl.style.display = 'block';
+            feedbackEl.style.color = '#f87171';
+            feedbackEl.textContent = `Ikke helt. "${item.word}" ${chosen === 'punkt' ? 'hører til førnutid (broen)' : 'hører til datid (punktet)'}.`;
         }
     }
 
-    renderSorterContent();
+    renderSorter();
 
-    // Tab Switcher
+    // Fanestyring
     function switchTab(tabId) {
-        activeTab = tabId;
-        tabsMenu.querySelectorAll('.pob-tab-btn').forEach(btn => {
+        activeTabId = tabId;
+        navTabs.querySelectorAll('.pob-nav-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabId);
         });
 
-        panelsHolder.innerHTML = '';
+        panelsContainer.innerHTML = '';
         if (tabId === 'tab_concept') {
-            panelsHolder.appendChild(conceptPanel);
+            panelsContainer.appendChild(conceptPanel);
         } else if (tabId === 'tab_duels') {
-            panelsHolder.appendChild(duelsPanel);
+            panelsContainer.appendChild(duelsPanel);
         } else if (tabId === 'tab_quiz') {
-            panelsHolder.appendChild(quizPanel);
+            panelsContainer.appendChild(quizPanel);
         } else if (tabId === 'tab_sorter') {
-            panelsHolder.appendChild(sorterPanel);
+            panelsContainer.appendChild(sorterPanel);
         }
     }
 
-    // Interactive hooks from SVG
-    timelineStage.querySelector('#svg-point-group').onclick = () => {
-        switchTab('tab_concept');
-        window.scrollTo({ top: timelineStage.offsetTop + 200, behavior: 'smooth' });
-    };
-    timelineStage.querySelector('#svg-bridge-group').onclick = () => {
-        switchTab('tab_concept');
-        window.scrollTo({ top: timelineStage.offsetTop + 200, behavior: 'smooth' });
-    };
+    // Interaktive klik fra SVG
+    const svgPunkt = timelineCard.querySelector('#svg-punkt');
+    if (svgPunkt) {
+        svgPunkt.onclick = () => {
+            switchTab('tab_concept');
+            window.scrollTo({ top: timelineCard.offsetTop + 180, behavior: 'smooth' });
+        };
+    }
+    const svgBro = timelineCard.querySelector('#svg-bro');
+    if (svgBro) {
+        svgBro.onclick = () => {
+            switchTab('tab_concept');
+            window.scrollTo({ top: timelineCard.offsetTop + 180, behavior: 'smooth' });
+        };
+    }
 
-    // Initial render
+    // Start på fane 1
     switchTab('tab_concept');
 
     container.appendChild(viewContainer);

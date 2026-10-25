@@ -1157,9 +1157,9 @@ export function renderGroundingView(container, navigateFn) {
                 border-radius: 4px;
             }
             .tag-adverbium {
-                color: #facc15;
-                background: rgba(234, 179, 8, 0.15);
-                border-bottom: 2px solid #eab308;
+                color: #60a5fa;
+                background: rgba(2, 132, 199, 0.15);
+                border-bottom: 2px solid #0284c7;
                 padding: 0.1rem 0.4rem;
                 border-radius: 4px;
             }

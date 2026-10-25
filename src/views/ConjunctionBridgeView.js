@@ -90,12 +90,12 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             parts.push(`<span style="color: #f87171;">${state.selectedModal}</span>`);
             if (advWord && isCentral) {
                 // Centraladverbium (f.eks. gerne, ikke) står mellem V1 og V2!
-                parts.push(`<span style="color: #facc15;">${advWord}</span>`);
+                parts.push(`<span style="color: #60a5fa;">${advWord}</span>`);
                 parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
             } else if (advWord) {
                 // Mådesadverbium (f.eks. langsomt, hurtigt) står efter V2!
                 parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
-                parts.push(`<span style="color: #facc15;">${advWord}</span>`);
+                parts.push(`<span style="color: #60a5fa;">${advWord}</span>`);
             } else {
                 parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
             }
@@ -103,7 +103,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             const v = state.isPast ? (state.verbAnchor === 'spiste' ? 'spiste' : state.verbAnchor) : (state.verbAnchor || 'spiser');
             parts.push(`<span style="color: #f87171;">${v}</span>`);
             if (advWord) {
-                parts.push(`<span style="color: #facc15;">${advWord}</span>`);
+                parts.push(`<span style="color: #60a5fa;">${advWord}</span>`);
             }
         }
         return parts.join(' ');
@@ -783,7 +783,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                     <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
                     <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
                     <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
-                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium (Blå)</span>
                     <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#a855f7;"></span> Konjunktion (Lilla)</span>
                 </div>
             </div>
@@ -1424,9 +1424,9 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             border-radius: 4px;
         }
         .tag-adverbium {
-            color: #facc15;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+            color: #60a5fa;
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }

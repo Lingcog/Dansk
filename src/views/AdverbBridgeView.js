@@ -652,7 +652,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                     <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
                     <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
                     <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
-                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium (Blå)</span>
                 </div>
             </div>
 
@@ -1276,9 +1276,9 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             border-radius: 4px;
         }
         .tag-adverbium {
-            color: #facc15;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+            color: #60a5fa;
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }

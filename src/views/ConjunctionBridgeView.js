@@ -240,10 +240,6 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
     const headerEl = document.createElement('div');
     headerEl.className = 'conjunction-hero-compact';
     headerEl.innerHTML = `
-        <div class="conj-step-badge">
-            <span class="badge-dot-live"></span>
-            <span>Trin 5 af 5: Konjunktioner</span>
-        </div>
         <h1 class="conj-main-title">${getTranslation('conjunctionTitle') || 'Byg bro mellem to sætninger'}</h1>
         <p class="conj-sub-desc">${getTranslation('conjunctionDesc') || 'Konjunktioner (bindeord) er den kognitive bro, der forbinder handlinger med årsager, tidspunkter og modsætninger.'}</p>
     `;
@@ -408,25 +404,8 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
         }
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--conj-accent: ${activeColor};">
-                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
-                <div class="stage-sticky-bar">
-                    <div class="sticky-left-info">
-                        <span class="sticky-lamp-dot" style="background: ${activeColor}; box-shadow: 0 0 8px ${activeColor};"></span>
-                        <span class="sticky-status-title">${conj.icon} ${conj.badge}</span>
-                    </div>
-                    <div class="sticky-right-actions">
-                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
-                            <span>🔊</span>
-                            <span class="btn-audio-text">Lyt</span>
-                        </button>
-                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
-                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+            <div class="stage-frame-wrapper" style="--conj-accent: ${activeColor};">
+                <!-- SVG SCENE (380x136) -->
                 <div class="stage-svg-body">
                     <svg class="conjunction-svg-fluid" viewBox="0 0 380 136" preserveAspectRatio="xMidYMid meet">
                         <defs>
@@ -558,14 +537,6 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             </div>
         `;
 
-        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
-        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
-
-        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
-        if (toggleBtn) toggleBtn.onclick = () => {
-            isStageCollapsed = !isStageCollapsed;
-            renderStage();
-        };
     }
 
     // -------------------------------------------------------------

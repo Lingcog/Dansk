@@ -88,10 +88,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     const headerEl = document.createElement('div');
     headerEl.className = 'modal-hero-compact';
     headerEl.innerHTML = `
-        <div class="modal-step-badge">
-            <span class="badge-dot-live"></span>
-            <span>Trin 2 af 5: Modalverber</span>
-        </div>
         <h1 class="modal-main-title">${getTranslation('modalForceTitle')}</h1>
         <p class="modal-sub-desc">${getTranslation('modalForceSubtitle')}</p>
     `;
@@ -312,25 +308,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         }
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--modal-accent: ${activeColor};">
-                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
-                <div class="stage-sticky-bar">
-                    <div class="sticky-left-info">
-                        <span class="sticky-lamp-dot" style="background: ${activeColor}; box-shadow: 0 0 8px ${activeColor};"></span>
-                        <span class="sticky-status-title">${badgeText}</span>
-                    </div>
-                    <div class="sticky-right-actions">
-                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
-                            <span>🔊</span>
-                            <span class="btn-audio-text">Lyt</span>
-                        </button>
-                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
-                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+            <div class="stage-frame-wrapper" style="--modal-accent: ${activeColor};">
+                <!-- SVG SCENE (360x126) -->
                 <div class="stage-svg-body">
                     <svg class="force-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
                         <defs>
@@ -424,14 +403,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             </div>
         `;
 
-        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
-        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
-
-        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
-        if (toggleBtn) toggleBtn.onclick = () => {
-            isStageCollapsed = !isStageCollapsed;
-            renderStage();
-        };
     }
 
     // -------------------------------------------------------------

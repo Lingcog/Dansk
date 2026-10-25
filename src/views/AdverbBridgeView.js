@@ -213,10 +213,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'adverb-hero-compact';
     heroHeader.innerHTML = `
-        <div class="adverb-step-badge">
-            <span class="badge-dot-live"></span>
-            <span>Trin 4 af 5: Adverbier (Handlings-modifikator)</span>
-        </div>
         <h1 class="adverb-main-title">${getTranslation('adverbTitle') || 'Hvordan beskriver vi en handling?'}</h1>
         <p class="adverb-subtitle">
             Hvor adjektiver maler <strong>tingen</strong> (<em>det ${state.selectedAdjective} barn</em>), er adverbiet 
@@ -400,25 +396,8 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         }
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--adv-accent: ${activeColor};">
-                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
-                <div class="stage-sticky-bar">
-                    <div class="sticky-left-info">
-                        <span class="sticky-lamp-dot" style="background: ${activeColor}; box-shadow: 0 0 8px ${activeColor};"></span>
-                        <span class="sticky-status-title">${adv.icon} ${adv.badge}</span>
-                    </div>
-                    <div class="sticky-right-actions">
-                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
-                            <span>🔊</span>
-                            <span class="btn-audio-text">Lyt</span>
-                        </button>
-                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
-                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+            <div class="stage-frame-wrapper" style="--adv-accent: ${activeColor};">
+                <!-- SVG SCENE (360x146) -->
                 <div class="stage-svg-body">
                     <svg class="adverb-svg-fluid" viewBox="0 0 360 146" preserveAspectRatio="xMidYMid meet">
                         <defs>
@@ -546,14 +525,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             </div>
         `;
 
-        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
-        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
-
-        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
-        if (toggleBtn) toggleBtn.onclick = () => {
-            isStageCollapsed = !isStageCollapsed;
-            renderStage();
-        };
     }
 
     // -------------------------------------------------------------

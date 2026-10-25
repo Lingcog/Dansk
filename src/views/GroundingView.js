@@ -46,10 +46,6 @@ export function renderGroundingView(container, navigateFn) {
     const headerEl = document.createElement('div');
     headerEl.className = 'grounding-hero-compact';
     headerEl.innerHTML = `
-        <div class="grounding-step-badge">
-            <span class="badge-dot-live"></span>
-            <span>Trin 1 af 5: Grundsætningen</span>
-        </div>
         <h1 class="grounding-main-title">${getTranslation('howToBuildSentence')}</h1>
         <p class="grounding-sub-desc">${getTranslation('howToBuildSentenceDesc')}</p>
     `;
@@ -71,27 +67,10 @@ export function renderGroundingView(container, navigateFn) {
 
     stageCard.innerHTML = `
         <div class="stage-frame-wrapper" style="--grounding-accent: #38bdf8;">
-            <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
-            <div class="stage-sticky-bar">
-                <div class="sticky-left-info">
-                    <span class="sticky-lamp-dot" style="background: #38bdf8; box-shadow: 0 0 8px #38bdf8;"></span>
-                    <span class="sticky-status-title" id="sticky-grounding-status">🎈 Abstrakt (svæver)</span>
-                </div>
-                <div class="sticky-right-actions">
-                    <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
-                        <span>🔊</span>
-                        <span class="btn-audio-text">Lyt</span>
-                    </button>
-                    <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="Skjul eller vis scene">
-                        <span id="btn-toggle-collapse-text">⊟ Skjul scene</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+            <!-- SVG SCENE (360x94) -->
             <div class="stage-svg-body">
                 <div class="sky-frame-mobile">
-                    <svg class="sky-svg-fluid" viewBox="0 0 360 90" preserveAspectRatio="xMidYMid meet">
+                    <svg class="sky-svg-fluid" viewBox="0 0 360 94" preserveAspectRatio="xMidYMid meet">
                         <defs>
                             <linearGradient id="skyGradMob" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.95"/>
@@ -117,7 +96,7 @@ export function renderGroundingView(container, navigateFn) {
                         </defs>
 
                         <!-- Himmel -->
-                        <rect x="0" y="0" width="360" height="90" fill="url(#skyGradMob)" rx="10"/>
+                        <rect x="0" y="0" width="360" height="94" fill="url(#skyGradMob)" rx="10"/>
 
                         <!-- Drivende skyer med levende animation -->
                         <g opacity="0.35">
@@ -181,7 +160,7 @@ export function renderGroundingView(container, navigateFn) {
                         </g>
 
                         <!-- LUFTBALLONEN (Ordet "barn") -->
-                        <g id="balloon-craft" class="balloon-craft balloon-floating-anim" transform="translate(260, 26)">
+                        <g id="balloon-craft" class="balloon-craft balloon-floating-anim" transform="translate(260, 31)">
                             <!-- Ballon kuppel -->
                             <path d="M 0 -17 C -17 -17 -22 2 -8 14 L -4 18 L 4 18 L 8 14 C 22 2 17 -17 0 -17 Z" 
                                   fill="url(#balloonGradMob)" stroke="#fda4af" stroke-width="1.2" filter="drop-shadow(0 3px 6px rgba(0,0,0,0.35))"/>
@@ -249,31 +228,7 @@ export function renderGroundingView(container, navigateFn) {
     viewContainer.appendChild(interactionCard);
 
     // DOM referencer
-    let isStageCollapsed = false;
     const stageFrame = stageCard.querySelector('.stage-frame-wrapper');
-    const stickyGroundingStatus = stageCard.querySelector('#sticky-grounding-status');
-    const stickyLampDot = stageCard.querySelector('.sticky-lamp-dot');
-    const audioBtn = stageCard.querySelector('#btn-sticky-audio');
-    if (audioBtn) {
-        audioBtn.onclick = () => {
-            const sentence = `${state.nounAnchor || 'Mit'} barn ${state.verbAnchor || 'spiser'}.`;
-            speakDanish(sentence);
-        };
-    }
-    const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
-    const toggleBtnText = stageCard.querySelector('#btn-toggle-collapse-text');
-    if (toggleBtn && stageFrame) {
-        toggleBtn.onclick = () => {
-            isStageCollapsed = !isStageCollapsed;
-            if (isStageCollapsed) {
-                stageFrame.classList.add('is-collapsed');
-                if (toggleBtnText) toggleBtnText.textContent = '⊞ Vis scene';
-            } else {
-                stageFrame.classList.remove('is-collapsed');
-                if (toggleBtnText) toggleBtnText.textContent = '⊟ Skjul scene';
-            }
-        };
-    }
 
     function flashStage() {
         if (stageFrame) {
@@ -304,11 +259,6 @@ export function renderGroundingView(container, navigateFn) {
             if (tetherRopeFlux) tetherRopeFlux.style.opacity = '0';
             balloonBadgeText.textContent = '🎈 Abstrakt (svæver)';
             balloonBadgeText.style.fill = '#38bdf8';
-            if (stickyGroundingStatus) stickyGroundingStatus.textContent = '🎈 Abstrakt (svæver)';
-            if (stickyLampDot) {
-                stickyLampDot.style.background = '#38bdf8';
-                stickyLampDot.style.boxShadow = '0 0 8px #38bdf8';
-            }
             liveSlotNoun.className = 'slot-item slot-empty';
             liveSlotNoun.textContent = '1. Anker ?';
         } else {
@@ -326,11 +276,6 @@ export function renderGroundingView(container, navigateFn) {
 
             balloonBadgeText.textContent = `⚓ Forankret: "${state.nounAnchor}"`;
             balloonBadgeText.style.fill = '#fcd34d';
-            if (stickyGroundingStatus) stickyGroundingStatus.textContent = `⚓ Forankret: "${state.nounAnchor}"`;
-            if (stickyLampDot) {
-                stickyLampDot.style.background = '#fcd34d';
-                stickyLampDot.style.boxShadow = '0 0 8px #fcd34d';
-            }
 
             liveSlotNoun.className = 'slot-item slot-active-noun';
             liveSlotNoun.textContent = state.nounAnchor;
@@ -349,11 +294,6 @@ export function renderGroundingView(container, navigateFn) {
 
             balloonBadgeText.textContent = `⏰ I tid: "${state.verbAnchor}"`;
             balloonBadgeText.style.fill = '#4ade80';
-            if (stickyGroundingStatus) stickyGroundingStatus.textContent = `⏰ I tid: "${state.verbAnchor}"`;
-            if (stickyLampDot) {
-                stickyLampDot.style.background = '#4ade80';
-                stickyLampDot.style.boxShadow = '0 0 8px #4ade80';
-            }
         }
 
         if (state.step >= 4) {
@@ -366,11 +306,6 @@ export function renderGroundingView(container, navigateFn) {
             }
             balloonBadgeText.textContent = `🌱 Landet på jorden!`;
             balloonBadgeText.style.fill = '#4ade80';
-            if (stickyGroundingStatus) stickyGroundingStatus.textContent = `🌱 Landet på jorden!`;
-            if (stickyLampDot) {
-                stickyLampDot.style.background = '#4ade80';
-                stickyLampDot.style.boxShadow = '0 0 8px #4ade80';
-            }
         } else {
             balloonCraft.classList.add('balloon-floating-anim');
             balloonCraft.style.transform = '';
@@ -1127,7 +1062,7 @@ export function renderGroundingView(container, navigateFn) {
                 max-width: 100%;
                 height: auto;
                 display: block;
-                aspect-ratio: 360 / 90;
+                aspect-ratio: 360 / 94;
             }
 
             /* Integreret sætningsbånd */

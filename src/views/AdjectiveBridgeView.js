@@ -313,10 +313,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     const headerEl = document.createElement('div');
     headerEl.className = 'adjective-hero-compact';
     headerEl.innerHTML = `
-        <div class="adj-step-badge">
-            <span class="badge-dot-live"></span>
-            <span>Trin 3 af 5: Adjektiver</span>
-        </div>
         <h1 class="adj-main-title">${getTranslation('adjectiveTitle')}</h1>
         <p class="adj-sub-desc">${getTranslation('adjectiveDesc')}</p>
     `;
@@ -353,25 +349,8 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         const beamGlow = adj.colorGlow;
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--adj-accent: ${beamColor};">
-                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
-                <div class="stage-sticky-bar">
-                    <div class="sticky-left-info">
-                        <span class="sticky-lamp-dot" style="background: ${beamColor}; box-shadow: 0 0 8px ${beamColor};"></span>
-                        <span class="sticky-status-title">💡 Projektør: "${adjWord}"</span>
-                    </div>
-                    <div class="sticky-right-actions">
-                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
-                            <span>🔊</span>
-                            <span class="btn-audio-text">Lyt</span>
-                        </button>
-                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
-                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+            <div class="stage-frame-wrapper" style="--adj-accent: ${beamColor};">
+                <!-- SVG SCENE (360x126) -->
                 <div class="stage-svg-body">
                     <svg class="adj-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
                         <defs>
@@ -474,14 +453,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             </div>
         `;
 
-        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
-        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
-
-        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
-        if (toggleBtn) toggleBtn.onclick = () => {
-            isStageCollapsed = !isStageCollapsed;
-            renderStage();
-        };
     }
 
     // -------------------------------------------------------------

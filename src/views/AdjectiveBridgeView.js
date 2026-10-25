@@ -135,6 +135,156 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         return `${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun} ${getModalWord()} ${getActionWord()}.`;
     }
 
+    // Kongruens laboratorie-state & hjælpefunktioner
+    const agreementState = {
+        type: isDefiniteAnchor() ? 'bestemt' : 'ubestemt',
+        word: 'barn',
+        stem: 'stor'
+    };
+
+    function getAgreementDetails(type, word, stem) {
+        const isDef = type === 'bestemt';
+        let stemDisplay = stem;
+        let suffixDisplay = '';
+        let fullAdj = '';
+        let phrase = '';
+        let subRole = '';
+        const nounIcon = word === 'barn' ? '👶' : '🚗';
+        const nounDisplay = word === 'barn' ? 'Barn' : 'Bil';
+        const nounGender = word === 'barn' ? 'et-ord (intetkøn)' : 'en-ord (fælleskøn)';
+
+        if (isDef) {
+            // STÆRK BINDING: ALTID -e
+            if (stem === 'sulten') {
+                stemDisplay = 'sultn';
+                suffixDisplay = '-e';
+                fullAdj = 'sultne';
+            } else if (stem === 'stor') {
+                stemDisplay = 'stor';
+                suffixDisplay = '-e';
+                fullAdj = 'store';
+            } else if (stem === 'hurtig') {
+                stemDisplay = 'hurtig';
+                suffixDisplay = '-e';
+                fullAdj = 'hurtige';
+            }
+            phrase = word === 'barn' ? `Det ${fullAdj} barn` : `Den ${fullAdj} bil`;
+            subRole = '⚡ Fastlåst: -e';
+        } else {
+            // SVAG BINDING: KØN AFGØR
+            if (word === 'barn') {
+                if (stem === 'sulten') {
+                    stemDisplay = 'sulten';
+                    suffixDisplay = '-t';
+                    fullAdj = 'sultent';
+                } else if (stem === 'stor') {
+                    stemDisplay = 'stor';
+                    suffixDisplay = '-t';
+                    fullAdj = 'stort';
+                } else if (stem === 'hurtig') {
+                    stemDisplay = 'hurtig';
+                    suffixDisplay = '-t';
+                    fullAdj = 'hurtigt';
+                }
+                phrase = `Et ${fullAdj} barn`;
+                subRole = '⚪ Intetkøn: -t';
+            } else {
+                stemDisplay = stem;
+                suffixDisplay = '-ø';
+                fullAdj = stem;
+                phrase = `En ${fullAdj} bil`;
+                subRole = '⚪ Fælleskøn: -ø';
+            }
+        }
+
+        return {
+            isDef,
+            stemDisplay,
+            suffixDisplay,
+            fullAdj,
+            phrase,
+            subRole,
+            nounIcon,
+            nounDisplay,
+            nounGender
+        };
+    }
+
+    function getWavesSvg(isDef) {
+        if (isDef) {
+            // STÆRK BINDING: Tykke, intense, pulserende grønne bølger mod venstre
+            return `
+                <svg viewBox="0 0 220 70" preserveAspectRatio="none" class="magnet-waves-svg-el">
+                    <defs>
+                        <filter id="strongWaveGlow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <linearGradient id="waveGradStrong" x1="1" y1="0" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#4ade80" />
+                            <stop offset="50%" stop-color="#22c55e" />
+                            <stop offset="100%" stop-color="#16a34a" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Bølge 1 (Top) -->
+                    <path d="M 210 16 Q 110 8 10 16" fill="none" stroke="url(#waveGradStrong)" stroke-width="3.5" opacity="0.9" stroke-dasharray="14 7" filter="url(#strongWaveGlow)">
+                        <animate attributeName="stroke-dashoffset" from="0" to="42" dur="0.9s" repeatCount="infinite" />
+                    </path>
+
+                    <!-- Bølge 2 (Øvre midte med oscillerende kurve) -->
+                    <path d="M 210 27 Q 110 18 10 27" fill="none" stroke="url(#waveGradStrong)" stroke-width="4.5" opacity="0.95" filter="url(#strongWaveGlow)">
+                        <animate attributeName="d" values="M 210 27 Q 110 14 10 27; M 210 27 Q 110 40 10 27; M 210 27 Q 110 14 10 27" dur="1.2s" repeatCount="infinite" />
+                    </path>
+
+                    <!-- Bølge 3 (Kernecenter med højeste styrke) -->
+                    <path d="M 210 35 L 10 35" fill="none" stroke="#86efac" stroke-width="6" opacity="1.0" stroke-dasharray="16 8" filter="url(#strongWaveGlow)">
+                        <animate attributeName="stroke-dashoffset" from="0" to="48" dur="0.75s" repeatCount="infinite" />
+                    </path>
+
+                    <!-- Bølge 4 (Nedre midte med modsat kurve) -->
+                    <path d="M 210 43 Q 110 52 10 43" fill="none" stroke="url(#waveGradStrong)" stroke-width="4.5" opacity="0.95" filter="url(#strongWaveGlow)">
+                        <animate attributeName="d" values="M 210 43 Q 110 56 10 43; M 210 43 Q 110 30 10 43; M 210 43 Q 110 56 10 43" dur="1.3s" repeatCount="infinite" />
+                    </path>
+
+                    <!-- Bølge 5 (Bund) -->
+                    <path d="M 210 54 Q 110 62 10 54" fill="none" stroke="url(#waveGradStrong)" stroke-width="3.5" opacity="0.9" stroke-dasharray="14 7" filter="url(#strongWaveGlow)">
+                        <animate attributeName="stroke-dashoffset" from="0" to="42" dur="0.9s" repeatCount="infinite" />
+                    </path>
+                </svg>
+            `;
+        } else {
+            // SVAG BINDING: Tynde, stiplede, kølige grå/blå bølger
+            return `
+                <svg viewBox="0 0 220 70" preserveAspectRatio="none" class="magnet-waves-svg-el">
+                    <linearGradient id="waveGradWeak" x1="1" y1="0" x2="0" y2="0">
+                        <stop offset="0%" stop-color="#94a3b8" />
+                        <stop offset="50%" stop-color="#64748b" />
+                        <stop offset="100%" stop-color="#475569" />
+                    </linearGradient>
+
+                    <!-- Bølge 1 (Top) -->
+                    <path d="M 210 18 Q 110 10 10 18" fill="none" stroke="url(#waveGradWeak)" stroke-width="1.8" opacity="0.45" stroke-dasharray="7 7">
+                        <animate attributeName="stroke-dashoffset" from="0" to="28" dur="2.4s" repeatCount="infinite" />
+                    </path>
+
+                    <!-- Bølge 2 (Midte) -->
+                    <path d="M 210 35 Q 110 35 10 35" fill="none" stroke="url(#waveGradWeak)" stroke-width="2.2" opacity="0.5" stroke-dasharray="8 8">
+                        <animate attributeName="stroke-dashoffset" from="0" to="32" dur="2.1s" repeatCount="infinite" />
+                    </path>
+
+                    <!-- Bølge 3 (Bund) -->
+                    <path d="M 210 52 Q 110 60 10 52" fill="none" stroke="url(#waveGradWeak)" stroke-width="1.8" opacity="0.45" stroke-dasharray="7 7">
+                        <animate attributeName="stroke-dashoffset" from="0" to="28" dur="2.4s" repeatCount="infinite" />
+                    </path>
+                </svg>
+            `;
+        }
+    }
+
     // -------------------------------------------------------------
     // TOP BAR & NAVIGATION
     // -------------------------------------------------------------
@@ -398,55 +548,9 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             </div>
 
             <!-- ========================================================= -->
-            <!-- KONGRUENS: MAGNETEN BAG -T OG -E ENDELSER                 -->
+            <!-- KONGRUENS: MAGNETISK BINDING & BØLGE-ANIMATION             -->
             <!-- ========================================================= -->
-            <div class="agreement-interactive-card">
-                <div class="agreement-header">
-                    <span class="agreement-pill">Kongruens-reglen</span>
-                    <h3 class="agreement-h3">Hvorfor hedder det "${state.selectedAdjective}"?</h3>
-                    <p class="agreement-p">${getTranslation('agreementDesc')}</p>
-                </div>
-
-                <!-- T/E MAGNET-VIPPE -->
-                <div class="magnet-toggle-wrapper">
-                    <span class="magnet-toggle-label">Test hvordan ankeret former adjektivets endelse:</span>
-                    <div class="magnet-toggle-pill">
-                        <button type="button" class="magnet-btn ${!isDef ? 'active' : ''}" id="btn-toggle-indef">
-                            <span>🧲 Ubestemt (Et barn)</span>
-                        </button>
-                        <button type="button" class="magnet-btn ${isDef ? 'active' : ''}" id="btn-toggle-def">
-                            <span>🧲 Bestemt (${state.nounAnchor} barn)</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- DYNAMISK MAGNET-ILLUSTRATION -->
-                <div class="magnet-diagram">
-                    <div class="magnet-box box-magnet-noun">
-                        <div class="diag-tag">Substantiv / Anker</div>
-                        <div class="diag-word" style="color: #f8fafc;">
-                            ${isDef ? state.nounAnchor + ' barn' : 'Et barn'}
-                        </div>
-                        <div class="diag-role">${isDef ? '🌟 Bestemt form' : '⚪ Ubestemt (intetkøn)'}</div>
-                    </div>
-
-                    <div class="magnet-flow-symbol">➔ trækker ➔</div>
-
-                    <div class="magnet-box box-magnet-adj" style="border-color: ${activeAdj.color};">
-                        <div class="diag-tag">Adjektivets form</div>
-                        <div class="diag-word" style="color: ${activeAdj.color};">
-                            ${state.selectedAdjective}
-                        </div>
-                        <div class="diag-role">
-                            ${isDef ? 'Endelse: <strong>-e</strong>' : 'Endelse: <strong>-t</strong>'}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="agreement-callout-msg">
-                    ${getTranslation('agreementExpl')}
-                </div>
-            </div>
+            <div class="agreement-interactive-card" id="agreement-interactive-card"></div>
 
             <!-- ========================================================= -->
             <!-- DEN STORE GRAMMATIK-STI: BROEN TIL ADVERBIER              -->
@@ -524,32 +628,193 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 const chosen = btn.dataset.id;
                 state.selectedAdjectiveId = chosen;
                 state.selectedAdjective = getInflectedAdjective(chosen);
+                if (chosen === 'sulten') {
+                    agreementState.stem = 'sulten';
+                }
                 speakDanish(state.selectedAdjective);
                 refreshUI();
             };
         });
 
-        // Magnet-vippe: Ubestemt vs Bestemt
-        const btnIndef = box.querySelector('#btn-toggle-indef');
-        const btnDef = box.querySelector('#btn-toggle-def');
+        // ---------------------------------------------------------
+        // KOGNITIV KONGRUENS: MAGNETISKE BØLGER & STÆRK BINDING
+        // ---------------------------------------------------------
+        const agreementCardEl = box.querySelector('#agreement-interactive-card');
 
-        btnIndef.onclick = () => {
-            if (isDefiniteAnchor()) {
-                state.nounAnchor = 'Et';
-                state.selectedAdjective = getInflectedAdjective(state.selectedAdjectiveId);
-                speakDanish(getFullSentence());
-                refreshUI();
-            }
-        };
+        function renderAgreementCard() {
+            if (!agreementCardEl) return;
+            const details = getAgreementDetails(agreementState.type, agreementState.word, agreementState.stem);
+            const isDef = details.isDef;
 
-        btnDef.onclick = () => {
-            if (!isDefiniteAnchor()) {
-                state.nounAnchor = 'Mit';
-                state.selectedAdjective = getInflectedAdjective(state.selectedAdjectiveId);
-                speakDanish(getFullSentence());
-                refreshUI();
+            agreementCardEl.innerHTML = `
+                <div class="agreement-header">
+                    <span class="agreement-pill">🧲 Kognitiv Kongruens</span>
+                    <h3 class="agreement-h3">${getTranslation('agreementTitle')}</h3>
+                    <p class="agreement-p">${getTranslation('agreementDesc')}</p>
+                </div>
+
+                <!-- 3 KONTROL-RÆKKER -->
+                <div class="agreement-controls-row">
+                    <!-- 1. Forankring / Binding -->
+                    <div class="control-subgroup">
+                        <span class="ctrl-legend">1. Form & Bindingens styrke:</span>
+                        <div class="ctrl-btn-group">
+                            <button type="button" class="ctrl-btn ${isDef ? 'active-strong' : ''}" data-type="bestemt">
+                                <span>⚡ Bestemt (Stærk binding: altid -e)</span>
+                            </button>
+                            <button type="button" class="ctrl-btn ${!isDef ? 'active-weak' : ''}" data-type="ubestemt">
+                                <span>⚪ Ubestemt (Svag binding: køn afgør)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Substantiv & Køn -->
+                    <div class="control-subgroup">
+                        <span class="ctrl-legend">2. Substantiv & grammatisk køn:</span>
+                        <div class="ctrl-btn-group">
+                            <button type="button" class="ctrl-btn ${agreementState.word === 'barn' ? 'active-noun' : ''}" data-word="barn">
+                                <span>👶 Barn (et-ord / intetkøn)</span>
+                            </button>
+                            <button type="button" class="ctrl-btn ${agreementState.word === 'bil' ? 'active-noun' : ''}" data-word="bil">
+                                <span>🚗 Bil (en-ord / fælleskøn)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Adjektiv-stamme -->
+                    <div class="control-subgroup">
+                        <span class="ctrl-legend">3. Adjektiv-stamme:</span>
+                        <div class="ctrl-btn-group adj-stems-group">
+                            <button type="button" class="ctrl-stem-btn ${agreementState.stem === 'stor' ? 'active-stem' : ''}" data-stem="stor">
+                                <span>stor</span>
+                            </button>
+                            <button type="button" class="ctrl-stem-btn ${agreementState.stem === 'hurtig' ? 'active-stem' : ''}" data-stem="hurtig">
+                                <span>hurtig</span>
+                            </button>
+                            <button type="button" class="ctrl-stem-btn ${agreementState.stem === 'sulten' ? 'active-stem' : ''}" data-stem="sulten">
+                                <span>sulten</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DYNAMISK STATUS-STRIP -->
+                <div class="magnet-status-strip ${isDef ? 'status-strong' : 'status-weak'}">
+                    ${isDef ? 
+                        `⚡ <strong>STÆRK BINDING:</strong> Magneten trækker med maksimal kraft! Endelsen låses fast på <strong>-e</strong> uanset køn (<em>${details.phrase}</em>).` : 
+                        `⚪ <strong>SVAG BINDING:</strong> Løsere tilknytning. Endelsen bestemmes af substantivets køn: ${agreementState.word === 'barn' ? 'intetkøn (et-ord) trækker <strong>-t</strong>' : 'fælleskøn (en-ord) trækker <strong>-ø</strong> (ingen endelse)'} (<em>${details.phrase}</em>).`
+                    }
+                </div>
+
+                <!-- DEN GRAFISKE MAGNETISKE BØLGE-ILLUSTRATION (SVG) -->
+                <div class="magnet-container ${isDef ? 'strong' : 'weak'}">
+                    <!-- ADJEKTIV BOKS (MODTAGER) -->
+                    <div class="adjective-shape-box ${isDef ? 'strong' : 'weak'}">
+                        <div class="box-tag-label">Adjektiv</div>
+                        <div class="adj-stem-suffix-wrap">
+                            <span class="adj-stem-txt">${details.stemDisplay}</span><span class="adj-suffix-txt ${isDef ? 'suffix-strong' : (details.suffixDisplay === '-t' ? 'suffix-t' : 'suffix-empty')}">${details.suffixDisplay}</span>
+                        </div>
+                        <div class="adj-sub-role ${isDef ? 'strong' : 'weak'}">${details.subRole}</div>
+                    </div>
+
+                    <!-- MAGNETISKE BØLGER (SVG) DER FLYDER FRA HØJRE MOD VENSTRE -->
+                    <div class="magnet-waves" id="magnet-waves-box">
+                        ${getWavesSvg(isDef)}
+                        <div class="flux-badge ${isDef ? 'strong' : 'weak'}">
+                            ${isDef ? '⚡ STÆRK BINDING ⚡' : '⚪ SVAG BINDING ⚪'}
+                        </div>
+                    </div>
+
+                    <!-- SUBSTANTIV MAGNET (KRAFTKILDE) -->
+                    <div class="noun-influence-box ${isDef ? 'strong' : 'weak'}">
+                        <div class="box-tag-label">Substantiv (Magnet)</div>
+                        <div class="noun-flex-wrap">
+                            <span class="noun-emoji">${details.nounIcon}</span>
+                            <span class="noun-txt">${details.nounDisplay}</span>
+                        </div>
+                        <div class="noun-sub-role ${isDef ? 'strong' : 'weak'}">
+                            ${isDef ? (agreementState.word === 'barn' ? 'Det barn (bestemt)' : 'Den bil (bestemt)') : (agreementState.word === 'barn' ? 'Et barn (intetkøn)' : 'En bil (fælleskøn)')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE SYNTESE-BÅND MED LYD -->
+                <div class="syntese-banner ${isDef ? 'syntese-strong' : 'syntese-weak'}">
+                    <div class="syntese-left">
+                        <span class="syntese-type-tag">${isDef ? '⚡ Stærk binding (-e):' : '⚪ Svag binding:'}</span>
+                        <span class="syntese-phrase">${details.phrase}</span>
+                    </div>
+                    <button type="button" class="btn-tts-listen-mini" id="btn-listen-agreement">
+                        <span>🔊</span>
+                        <span>Lyt</span>
+                    </button>
+                </div>
+
+                <!-- KOGNITIV GRAMMATIK FORKLARING -->
+                <div class="agreement-pedagogical-box ${isDef ? 'box-strong' : 'box-weak'}">
+                    <div class="ped-icon">${isDef ? '⚡' : '🧲'}</div>
+                    <div class="ped-text">
+                        ${isDef ? 
+                            `<strong>Kognitiv forankring (Bestemt form):</strong> Når vi taler om noget <em>bestemt</em> ("vi ved præcis, hvilket barn/hvilken bil der er i fokus"), er den mentale reference så stærk, at substantivets køn træder i baggrunden. Den magnetiske kraft låser altid adjektivet fast i den fælles bestemte form med <strong>-e</strong> (<em>${details.phrase}</em>).` : 
+                            `<strong>Kognitiv reference (Ubestemt form):</strong> I ubestemt form introduceres en ukendt eller generel entitet. Forankringen er åben og bindingen er svagere – derfor må adjektivet overtage substantivets køn: intetkøn (et-ord) trækker et <strong>-t</strong> (<em>et stort barn</em>), mens fælleskøn (en-ord) ikke trækker nogen endelse (<em>en hurtig bil</em>).`
+                        }
+                    </div>
+                </div>
+            `;
+
+            // Knap-handlinger
+            agreementCardEl.querySelectorAll('.ctrl-btn[data-type]').forEach(btn => {
+                btn.onclick = () => {
+                    const newType = btn.dataset.type;
+                    if (agreementState.type !== newType) {
+                        agreementState.type = newType;
+                        if (agreementState.word === 'barn') {
+                            state.nounAnchor = newType === 'bestemt' ? 'Mit' : 'Et';
+                            state.selectedAdjective = getInflectedAdjective(state.selectedAdjectiveId);
+                            renderStage();
+                            renderSentenceStrip();
+                        }
+                        renderAgreementCard();
+                        const updated = getAgreementDetails(agreementState.type, agreementState.word, agreementState.stem);
+                        speakDanish(updated.phrase);
+                    }
+                };
+            });
+
+            agreementCardEl.querySelectorAll('.ctrl-btn[data-word]').forEach(btn => {
+                btn.onclick = () => {
+                    const newWord = btn.dataset.word;
+                    if (agreementState.word !== newWord) {
+                        agreementState.word = newWord;
+                        if (newWord === 'bil' && agreementState.stem === 'sulten') {
+                            agreementState.stem = 'hurtig';
+                        }
+                        renderAgreementCard();
+                        const updated = getAgreementDetails(agreementState.type, agreementState.word, agreementState.stem);
+                        speakDanish(updated.phrase);
+                    }
+                };
+            });
+
+            agreementCardEl.querySelectorAll('.ctrl-stem-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const newStem = btn.dataset.stem;
+                    if (agreementState.stem !== newStem) {
+                        agreementState.stem = newStem;
+                        renderAgreementCard();
+                        const updated = getAgreementDetails(agreementState.type, agreementState.word, agreementState.stem);
+                        speakDanish(updated.phrase);
+                    }
+                };
+            });
+
+            const listenBtn = agreementCardEl.querySelector('#btn-listen-agreement');
+            if (listenBtn) {
+                listenBtn.onclick = () => speakDanish(details.phrase);
             }
-        };
+        }
+
+        renderAgreementCard();
 
         // Gå til adverbier
         box.querySelector('#btn-goto-adverbs').onclick = () => {
@@ -826,8 +1091,8 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         /* Kongruens / Magnet Kort */
         .agreement-interactive-card {
             background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
             padding: 1.15rem 1rem;
             margin-bottom: 1.4rem;
             box-sizing: border-box;
@@ -858,81 +1123,380 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             line-height: 1.4;
         }
 
-        /* Magnet-vippe */
-        .magnet-toggle-wrapper {
+        /* 3 Kontrol-rækker */
+        .agreement-controls-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-bottom: 0.95rem;
+        }
+        .control-subgroup {
             background: #0f172a;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
+            border-radius: 12px;
+            padding: 0.6rem 0.75rem;
         }
-        .magnet-toggle-label {
-            display: block;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+        .ctrl-legend {
+            font-size: 0.76rem;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.4rem;
         }
-        .magnet-toggle-pill {
+        .ctrl-btn-group {
             display: flex;
             gap: 0.4rem;
             width: 100%;
         }
-        .magnet-btn {
+        .ctrl-btn {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            color: #cbd5e1;
             padding: 0.55rem 0.4rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            font-size: 0.88rem;
+            color: #cbd5e1;
+            font-size: 0.86rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
         }
-        .magnet-btn.active {
-            background: rgba(34, 197, 94, 0.2);
+        .ctrl-btn.active-strong {
+            background: rgba(34, 197, 94, 0.22);
             border-color: #22c55e;
             color: #86efac;
-            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+            transform: translateY(-1px);
+        }
+        .ctrl-btn.active-weak {
+            background: rgba(148, 163, 184, 0.22);
+            border-color: #94a3b8;
+            color: #f1f5f9;
+            box-shadow: 0 0 8px rgba(148, 163, 184, 0.25);
+            transform: translateY(-1px);
+        }
+        .ctrl-btn.active-noun {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: #38bdf8;
+            color: #bae6fd;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+            transform: translateY(-1px);
+        }
+        .ctrl-stem-btn {
+            flex: 1;
+            padding: 0.45rem 0.4rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-size: 0.86rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .ctrl-stem-btn.active-stem {
+            background: rgba(245, 158, 11, 0.22);
+            border-color: #f59e0b;
+            color: #fde68a;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+            transform: translateY(-1px);
         }
 
-        /* Magnet Diagram */
-        .magnet-diagram {
+        /* Dynamisk status-strip */
+        .magnet-status-strip {
+            padding: 0.65rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            line-height: 1.4;
+            margin-bottom: 0.85rem;
+            transition: all 0.3s;
+        }
+        .magnet-status-strip.status-strong {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.45);
+            color: #86efac;
+        }
+        .magnet-status-strip.status-weak {
+            background: rgba(148, 163, 184, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            color: #cbd5e1;
+        }
+
+        /* Magnet-container med bølge-animation */
+        .magnet-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            width: 100%;
+            background: #0b1120;
+            padding: 1.15rem 0.85rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
+            box-sizing: border-box;
+            margin-bottom: 0.95rem;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+        .magnet-container.strong {
+            border-color: rgba(34, 197, 94, 0.45);
+            box-shadow: inset 0 0 25px rgba(34, 197, 94, 0.15), 0 0 20px rgba(34, 197, 94, 0.15);
+        }
+
+        .adjective-shape-box {
+            flex: 0 0 120px;
+            text-align: center;
+            padding: 0.85rem 0.5rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+            z-index: 2;
+        }
+        .adjective-shape-box.strong {
+            border: 2px solid #22c55e;
+            background: rgba(34, 197, 94, 0.15);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        .adjective-shape-box.weak {
+            border: 1.5px dashed rgba(255, 255, 255, 0.2);
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: none;
+        }
+
+        .noun-influence-box {
+            flex: 0 0 120px;
+            text-align: center;
+            padding: 0.85rem 0.5rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+            z-index: 2;
+        }
+        .noun-influence-box.strong {
+            border: 2px solid #22c55e;
+            background: linear-gradient(135deg, rgba(21, 128, 61, 0.6), rgba(34, 197, 94, 0.25));
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        .noun-influence-box.weak {
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: rgba(30, 41, 59, 0.8);
+            box-shadow: none;
+        }
+
+        .box-tag-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            margin-bottom: 0.25rem;
+        }
+        .adj-stem-suffix-wrap, .noun-flex-wrap {
+            font-size: 1.45rem;
+            font-weight: 900;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            margin-bottom: 0.25rem;
+        }
+        .adj-stem-txt {
+            color: #ffffff;
+        }
+        .adj-suffix-txt {
+            display: inline-block;
+            font-weight: 900;
+        }
+        .suffix-strong {
+            color: #4ade80;
+            animation: pulse-suffix-strong 1.2s infinite ease-in-out;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.8);
+        }
+        .suffix-t {
+            color: #38bdf8;
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+        }
+        .suffix-empty {
+            color: #64748b;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+        @keyframes pulse-suffix-strong {
+            0% {
+                transform: scale(1);
+                color: #4ade80;
+                text-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+            }
+            50% {
+                transform: scale(1.22);
+                color: #86efac;
+                text-shadow: 0 0 16px rgba(74, 222, 128, 1);
+            }
+            100% {
+                transform: scale(1);
+                color: #4ade80;
+                text-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+            }
+        }
+
+        .noun-emoji {
+            font-size: 1.25rem;
+            margin-right: 0.2rem;
+        }
+        .noun-txt {
+            color: #ffffff;
+        }
+
+        .adj-sub-role, .noun-sub-role {
+            font-size: 0.72rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .adj-sub-role.strong, .noun-sub-role.strong {
+            color: #86efac;
+        }
+        .adj-sub-role.weak, .noun-sub-role.weak {
+            color: #94a3b8;
+        }
+
+        /* Magnetiske Bølger (SVG) */
+        .magnet-waves {
+            flex: 1 1 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            height: 65px;
+            overflow: visible;
+            z-index: 1;
+        }
+        .magnet-waves-svg-el {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+        .flux-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.55rem;
+            border-radius: 9999px;
+            white-space: nowrap;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .flux-badge.strong {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1.5px solid #22c55e;
+            color: #4ade80;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+            animation: pulse-badge-strong 1.2s infinite alternate;
+        }
+        .flux-badge.weak {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: #94a3b8;
+        }
+        @keyframes pulse-badge-strong {
+            from { transform: translate(-50%, -50%) scale(0.97); }
+            to { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        /* Syntese-bånd */
+        .syntese-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 12px;
+            margin-bottom: 0.85rem;
+            box-sizing: border-box;
+        }
+        .syntese-banner.syntese-strong {
+            background: rgba(34, 197, 94, 0.12);
+            border: 1.5px solid rgba(34, 197, 94, 0.4);
+        }
+        .syntese-banner.syntese-weak {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1.5px solid rgba(56, 189, 248, 0.35);
+        }
+        .syntese-left {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.85rem;
-            width: 100%;
-            box-sizing: border-box;
+            flex-wrap: wrap;
         }
-        .magnet-box {
-            flex: 1;
-            min-width: 0;
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 0.65rem 0.4rem;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        .magnet-flow-symbol {
-            font-size: 0.78rem;
+        .syntese-type-tag {
+            font-size: 0.76rem;
             font-weight: 800;
+            text-transform: uppercase;
             color: #94a3b8;
-            flex-shrink: 0;
-            text-align: center;
         }
-        .agreement-callout-msg {
-            background: rgba(34, 197, 94, 0.1);
-            border-left: 3px solid #22c55e;
-            padding: 0.6rem 0.8rem;
-            font-size: 0.88rem;
+        .syntese-phrase {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+        .btn-tts-listen-mini {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.25rem 0.65rem;
+            border-radius: 16px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .btn-tts-listen-mini:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Kognitiv forklaring */
+        .agreement-pedagogical-box {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.85rem 0.95rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.45;
             color: #e2e8f0;
-            line-height: 1.4;
-            border-radius: 0 6px 6px 0;
+            box-sizing: border-box;
+        }
+        .agreement-pedagogical-box.box-strong {
+            background: rgba(34, 197, 94, 0.08);
+            border-left: 3px solid #22c55e;
+        }
+        .agreement-pedagogical-box.box-weak {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid #38bdf8;
+        }
+        .agreement-pedagogical-box .ped-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .agreement-pedagogical-box .ped-text {
+            flex: 1;
         }
 
         /* Roadmap */
@@ -1048,9 +1612,12 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             .card-word { font-size: 1.3rem; }
             .adj-main-title { font-size: 1.3rem; }
             .strip-blocks-5-row { gap: 0.2rem; }
-            .part-word { font-size: 0.95rem; }
-            .magnet-diagram { flex-direction: column; }
-            .magnet-flow-symbol { transform: rotate(90deg); margin: 0.2rem 0; }
+            .adjective-shape-box, .noun-influence-box { flex: 0 0 92px; width: 92px; padding: 0.55rem 0.35rem; }
+            .adj-stem-suffix-wrap, .noun-flex-wrap { font-size: 1.15rem; }
+            .flux-badge { font-size: 0.62rem; padding: 0.15rem 0.35rem; }
+            .magnet-container { padding: 0.75rem 0.35rem; gap: 0.25rem; }
+            .ctrl-btn { font-size: 0.78rem; padding: 0.5rem 0.25rem; }
+            .syntese-phrase { font-size: 1.02rem; }
         }
     `;
     document.head.appendChild(style);

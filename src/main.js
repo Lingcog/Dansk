@@ -85,6 +85,7 @@ import { renderDialogerSygdomJobView } from './views/DialogerSygdomJobView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
 import { renderHistorierSygdomJobView } from './views/HistorierSygdomJobView.js';
+import { renderHCAndersenView } from './views/HCAndersenView.js';
 import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
 import { renderPronomenView } from './views/PronomenView.js';
 import { renderGroundingView } from './views/GroundingView.js';
@@ -360,6 +361,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'historier_menu') {
     appState.currentView = 'historier_menu';
     renderHistorierMenuView(appDiv, navigate);
+  } else if (viewTarget === 'hc_andersen_eventyr' || viewTarget === 'hc_andersen_menu' || viewTarget === 'hc_andersen') {
+    appState.currentView = 'hc_andersen_eventyr';
+    renderHCAndersenView(appDiv, navigate, extraData);
   } else if (viewTarget === 'historier_sygdom_job') {
     appState.currentView = 'historier_sygdom_job';
     renderHistorierSygdomJobView(appDiv, navigate);

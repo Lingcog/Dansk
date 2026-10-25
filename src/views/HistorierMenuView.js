@@ -28,6 +28,14 @@ export function renderHistorierMenuView(container, navigateFn) {
     // Menu Cards
     const cardsData = [
         {
+            icon: '🏰',
+            title: isEn ? "H.C. Andersen's Fairy Tales" : 'H.C. Andersens eventyr',
+            desc: isEn 
+                ? 'Read and learn Danish with simplified, shortened editions of classic fairy tales. Includes audio read-aloud, vocabulary notes, and quizzes.'
+                : 'Læs og lær dansk med forkortede og forsimplede udgaver af klassiske eventyr. Med indbygget oplæsning, gloser og quiz.',
+            action: () => navigateFn('hc_andersen_eventyr')
+        },
+        {
             icon: '🕹️',
             title: isEn ? "Anna's fun day at Netto" : 'Annas sjove dag i Netto',
             desc: isEn 

@@ -5,6 +5,2037 @@
  */
 
 export const hcAndersenStories = [
+{
+    "id": "klods_hans",
+    "title": "Klods-Hans",
+    "titleEn": "Clumsy Hans",
+    "icon": "🐐",
+    "level": "Let (A2)",
+    "readingTime": "3 min",
+    "quote": "»Hov! Se hvad jeg har fundet: en død krage og en gammel træsko!«",
+    "quoteEn": "»Whoa! Look what I found: a dead crow and an old wooden shoe!«",
+    "teaser": "Kongens datter skal giftes, og den som taler bedst vinder hende. De to fornemme brødre forbereder store taler, men Klods-Hans rider afsted på sin ged med en død krage, en gammel træsko og mudder fra grøften!",
+    "teaserEn": "The king daughter is to marry, and whoever speaks best wins her. The two clever brothers prepare big speeches, but Clumsy Hans rides his goat with a dead crow, an old shoe and mud!",
+    "grammarFocus": {
+        "title": "Sprog-spot: Pronominer & Ordklasser",
+        "desc": "Læg mærke til de pink pronominer (jeg, du, hende, min, hans), som erstatter personer og viser ejerskab. Klik på et hvilket som helst farvet ord for at se dets bøjning, lytte til udtalen og træne det!"
+    },
+    "hasWimmelbilder": true,
+    "sections": [
+        {
+            "chapter": "Scene 1: På bondegården",
+            "chapterEn": "Scene 1: At the Farm",
+            "vrimmelImage": "assets/klods_hans_scene1.jpg",
+            "audioText": "Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Storebror sagde: Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Mellembror sagde: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! Klods-Hans råbte: Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Hov, se her: Det er en død krage! Faren sagde: Tag du bare geden, Klods-Hans.",
+            "text": "Far: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nKlods-Hans: »Jeg prøver også! Jeg har ingen hest, men jeg tager min ged. Hov, se her: Det er en død krage!«\n\nFar: »Tag du bare geden, Klods-Hans.«",
+            "hotspots": [
+                {
+                    "x": 38,
+                    "y": 50,
+                    "type": "vrb",
+                    "word": "rider",
+                    "label": "rider",
+                    "info": "Verbum: at ride"
+                },
+                {
+                    "x": 44,
+                    "y": 56,
+                    "type": "sub",
+                    "word": "hest",
+                    "label": "en hest",
+                    "info": "Substantiv: en hest"
+                },
+                {
+                    "x": 74,
+                    "y": 35,
+                    "type": "sub",
+                    "word": "fugl",
+                    "label": "en krage",
+                    "info": "Substantiv: en fugl (krage)"
+                },
+                {
+                    "x": 67,
+                    "y": 52,
+                    "type": "pro",
+                    "word": "jeg",
+                    "label": "jeg (subjekt)",
+                    "info": "Pronomen: jeg"
+                },
+                {
+                    "x": 73,
+                    "y": 72,
+                    "type": "sub",
+                    "word": "ged",
+                    "label": "en ged",
+                    "info": "Substantiv: en ged"
+                },
+                {
+                    "x": 88,
+                    "y": 58,
+                    "type": "sub",
+                    "word": "far",
+                    "label": "en far",
+                    "info": "Substantiv: en far"
+                },
+                {
+                    "x": 36,
+                    "y": 38,
+                    "type": "adj",
+                    "word": "klog",
+                    "label": "klog",
+                    "info": "Adjektiv: klog"
+                }
+            ],
+            "dialogue": [
+                {
+                    "speaker": "Far",
+                    "speakerIcon": "👨‍🌾",
+                    "audioText": "Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.",
+                    "tokens": [
+                        {
+                            "text": "Kongen",
+                            "type": "sub",
+                            "key": "konge"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har sagt",
+                            "type": "vrb",
+                            "key": "sige"
+                        },
+                        {
+                            "text": ", ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "at",
+                            "type": "konj",
+                            "key": "at"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "hans",
+                            "type": "pro",
+                            "key": "hans"
+                        },
+                        {
+                            "text": " datter ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "skal finde",
+                            "type": "vrb",
+                            "key": "finde"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "mand",
+                            "type": "sub",
+                            "key": "mand"
+                        },
+                        {
+                            "text": ". Den, som ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "taler",
+                            "type": "vrb",
+                            "key": "tale"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "bedst",
+                            "type": "adj",
+                            "key": "god"
+                        },
+                        {
+                            "text": ", ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vinder",
+                            "type": "vrb",
+                            "key": "vinde"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "hende",
+                            "type": "pro",
+                            "key": "hende"
+                        },
+                        {
+                            "text": ".",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Storebror",
+                    "speakerIcon": "🎩",
+                    "audioText": "Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!",
+                    "tokens": [
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "tager",
+                            "type": "vrb",
+                            "key": "tage"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "til",
+                            "type": "prep",
+                            "key": "til"
+                        },
+                        {
+                            "text": " slottet. ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "kan tale",
+                            "type": "vrb",
+                            "key": "tale"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "om",
+                            "type": "prep",
+                            "key": "om"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "store",
+                            "type": "adj",
+                            "key": "stor"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "komplicerede",
+                            "type": "adj",
+                            "key": "kompliceret"
+                        },
+                        {
+                            "text": " ting. ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "meget",
+                            "type": "adv",
+                            "key": "meget"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "klog",
+                            "type": "adj",
+                            "key": "klog"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Mellembror",
+                    "speakerIcon": "📜",
+                    "audioText": "Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!",
+                    "tokens": [
+                        {
+                            "text": "Og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vil",
+                            "type": "vrb",
+                            "key": "ville"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "også",
+                            "type": "adv",
+                            "key": "ogsaa"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "gå",
+                            "type": "vrb",
+                            "key": "gå"
+                        },
+                        {
+                            "text": "! ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "kender",
+                            "type": "vrb",
+                            "key": "kende"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "mange",
+                            "type": "adj",
+                            "key": "mange"
+                        },
+                        {
+                            "text": " sange. Ja, ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "altid",
+                            "type": "adv",
+                            "key": "altid"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "glad",
+                            "type": "adj",
+                            "key": "glad"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "god",
+                            "type": "adj",
+                            "key": "god"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "til",
+                            "type": "prep",
+                            "key": "til"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "at",
+                            "type": "konj",
+                            "key": "at"
+                        },
+                        {
+                            "text": " synge!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Hov, se her: Det er en død krage!",
+                    "tokens": [
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "prøver",
+                            "type": "vrb",
+                            "key": "prøve"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "også",
+                            "type": "adv",
+                            "key": "ogsaa"
+                        },
+                        {
+                            "text": "! ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har",
+                            "type": "vrb",
+                            "key": "have"
+                        },
+                        {
+                            "text": " ingen hest, ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "men",
+                            "type": "konj",
+                            "key": "men"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "tager",
+                            "type": "vrb",
+                            "key": "tage"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "min",
+                            "type": "pro",
+                            "key": "min"
+                        },
+                        {
+                            "text": " ged! Hov, ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "se",
+                            "type": "vrb",
+                            "key": "se"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "her",
+                            "type": "adv",
+                            "key": "her"
+                        },
+                        {
+                            "text": ": ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Det",
+                            "type": "pro",
+                            "key": "det"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "død",
+                            "type": "adj",
+                            "key": "død"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "krage",
+                            "type": "sub",
+                            "key": "fugl"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Far",
+                    "speakerIcon": "👨‍🌾",
+                    "audioText": "Tag du bare geden, Klods-Hans.",
+                    "tokens": [
+                        {
+                            "text": "Tag",
+                            "type": "vrb",
+                            "key": "tage"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "bare",
+                            "type": "adv",
+                            "key": "bare"
+                        },
+                        {
+                            "text": " geden, Klods-Hans.",
+                            "type": "plain"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "chapter": "Scene 2: På landevejen til slottet",
+            "chapterEn": "Scene 2: On the Country Road",
+            "vrimmelImage": "assets/klods_hans_scene2.jpg",
+            "audioText": "Manden på vejen spurgte: Hvor er du på vej hen? Klods-Hans svarede: Jeg er på vej til prinsessen! Manden spurgte: Og har du en gave med til hende? Klods-Hans sagde: Nu skal du se hvad jeg har fundet! En fugl og en gammel beskidt træsko med mudder! Manden grinede: Held og lykke med det!",
+            "text": "Mand på vejen: »Hvor er du på vej hen?«\n\nKlods-Hans: »Jeg er på vej til prinsessen!«\n\nMand på vejen: »Og har du en gave med til hende?«\n\nKlods-Hans: »Nu skal du se hvad jeg har fundet! En fugl og en gammel, beskidt træsko med mudder.«\n\nMand på vejen: »Held og lykke med det!« (griner)",
+            "hotspots": [
+                {
+                    "x": 34,
+                    "y": 55,
+                    "type": "sub",
+                    "word": "mand",
+                    "label": "en mand",
+                    "info": "Substantiv: en mand"
+                },
+                {
+                    "x": 45,
+                    "y": 64,
+                    "type": "sub",
+                    "word": "vej",
+                    "label": "en vej",
+                    "info": "Substantiv: en vej"
+                },
+                {
+                    "x": 74,
+                    "y": 65,
+                    "type": "sub",
+                    "word": "ged",
+                    "label": "en ged",
+                    "info": "Substantiv: en ged"
+                },
+                {
+                    "x": 59,
+                    "y": 35,
+                    "type": "sub",
+                    "word": "fugl",
+                    "label": "en krage",
+                    "info": "Substantiv: en fugl (krage)"
+                },
+                {
+                    "x": 79,
+                    "y": 33,
+                    "type": "sub",
+                    "word": "sko",
+                    "label": "en træsko",
+                    "info": "Substantiv: en sko"
+                },
+                {
+                    "x": 23,
+                    "y": 88,
+                    "type": "sub",
+                    "word": "mudder",
+                    "label": "mudder",
+                    "info": "Substantiv: mudder"
+                },
+                {
+                    "x": 86,
+                    "y": 18,
+                    "type": "sub",
+                    "word": "slot",
+                    "label": "et slot",
+                    "info": "Substantiv: et slot"
+                }
+            ],
+            "dialogue": [
+                {
+                    "speaker": "Mand på vejen",
+                    "speakerIcon": "🧑‍🌾",
+                    "audioText": "Hvor er du på vej hen?",
+                    "tokens": [
+                        {
+                            "text": "Hvor",
+                            "type": "adv",
+                            "key": "hvor"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "på",
+                            "type": "prep",
+                            "key": "på"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vej",
+                            "type": "sub",
+                            "key": "vej"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "hen",
+                            "type": "adv",
+                            "key": "hen"
+                        },
+                        {
+                            "text": "?",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "Jeg er på vej til prinsessen!",
+                    "tokens": [
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "på",
+                            "type": "prep",
+                            "key": "på"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vej",
+                            "type": "sub",
+                            "key": "vej"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "til",
+                            "type": "prep",
+                            "key": "til"
+                        },
+                        {
+                            "text": " prinsessen!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Mand på vejen",
+                    "speakerIcon": "🧑‍🌾",
+                    "audioText": "Og har du en gave med til hende?",
+                    "tokens": [
+                        {
+                            "text": "Og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har",
+                            "type": "vrb",
+                            "key": "have"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "gave",
+                            "type": "sub",
+                            "key": "gave"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "med",
+                            "type": "prep",
+                            "key": "med"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "til",
+                            "type": "prep",
+                            "key": "til"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "hende",
+                            "type": "pro",
+                            "key": "hende"
+                        },
+                        {
+                            "text": "?",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "Nu skal du se hvad jeg har fundet! En fugl og en gammel, beskidt træsko med mudder.",
+                    "tokens": [
+                        {
+                            "text": "Nu",
+                            "type": "adv",
+                            "key": "nu"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "skal",
+                            "type": "vrb",
+                            "key": "skulle"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "se",
+                            "type": "vrb",
+                            "key": "se"
+                        },
+                        {
+                            "text": ", hvad ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har fundet",
+                            "type": "vrb",
+                            "key": "finde"
+                        },
+                        {
+                            "text": "! En ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "fugl",
+                            "type": "sub",
+                            "key": "fugl"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "gammel",
+                            "type": "adj",
+                            "key": "gammel"
+                        },
+                        {
+                            "text": ", ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "beskidt",
+                            "type": "adj",
+                            "key": "beskidt"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "træsko",
+                            "type": "sub",
+                            "key": "sko"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "med",
+                            "type": "prep",
+                            "key": "med"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "mudder",
+                            "type": "sub",
+                            "key": "mudder"
+                        },
+                        {
+                            "text": ".",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Mand på vejen",
+                    "speakerIcon": "🧑‍🌾",
+                    "audioText": "Held og lykke med det!",
+                    "tokens": [
+                        {
+                            "text": "Held og lykke ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "med",
+                            "type": "prep",
+                            "key": "med"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "det",
+                            "type": "pro",
+                            "key": "det"
+                        },
+                        {
+                            "text": "! (griner)",
+                            "type": "plain"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "chapter": "Scene 3: I riddersalen ved slottet",
+            "chapterEn": "Scene 3: In the Great Hall",
+            "vrimmelImage": "assets/klods_hans_scene3.jpg",
+            "audioText": "Kongen råbte: Vis hvad I kan! Storebror svedte: Det er så varmt. Jeg kan ikke huske! Mellembror så sig rundt: Jeg har glemt hvad jeg vil sige. Det er alt for varmt! Klods-Hans sagde muntert: Hej! Jeg kom på min ged. Jeg har en død krage og en træsko med mudder! Prinsessen grinede: Fortæl mere, Klods-Hans! Hvordan vil du bruge kragen? Klods-Hans svarede: Jeg tænkte på at stege den og lave god mad! Prinsessen spurgte: Og hvad vil du stege den i? Klods-Hans svarede: I træskoen, selvfølgelig! Prinsessen spurgte: Og sovsen? Hvad med den? Klods-Hans viste mudderet frem: Den er her! Prinsessen grinede højt: Du er virkelig anderledes, Klods-Hans! Du har en sjov måde at se tingene på! Kongen sagde: Det ser ud til, at prinsessen har valgt. Klods-Hans, du har vundet hendes hjerte! Alle råbte: Hurra for Klods-Hans og prinsessen!",
+            "text": "Kongen: »Vis, hvad I kan!«\n\nStorebror: (sveder) »Det er så varmt... Jeg kan ikke huske...«\n\nMellembror: (ser rundt) »Jeg har glemt, hvad jeg vil sige... Det er alt for varmt!«\n\nKlods-Hans: »Hej! Jeg kom på en ged. Jeg har en død krage og en træsko med mudder.«\n\nPrinsessen: (griner) »Fortæl mere, Klods-Hans! Hvordan vil du bruge kragen?«\n\nKlods-Hans: »Jeg tænkte på at stege den og lave god mad!«\n\nPrinsessen: »Og hvad vil du stege den i?«\n\nKlods-Hans: »I træskoen, selvfølgelig!«\n\nPrinsessen: »Og sovsen? Hvad med den?«\n\nKlods-Hans: »Den er her!« (viser mudderet frem)\n\nPrinsessen: (griner højt) »Du er virkelig anderledes, Klods-Hans! Du har en sjov måde at se tingene på.«\n\nKongen: »Det ser ud til, at prinsessen har valgt. Klods-Hans, du har vundet hendes hjerte!«\n\nAlle: »Hurra for Klods-Hans og prinsessen!«",
+            "hotspots": [
+                {
+                    "x": 78,
+                    "y": 52,
+                    "type": "sub",
+                    "word": "prinsesse",
+                    "label": "en prinsesse",
+                    "info": "Substantiv: en prinsesse"
+                },
+                {
+                    "x": 86,
+                    "y": 53,
+                    "type": "sub",
+                    "word": "konge",
+                    "label": "en konge",
+                    "info": "Substantiv: en konge"
+                },
+                {
+                    "x": 74,
+                    "y": 55,
+                    "type": "adj",
+                    "word": "varm",
+                    "label": "varm ovn",
+                    "info": "Adjektiv: varm"
+                },
+                {
+                    "x": 61,
+                    "y": 40,
+                    "type": "sub",
+                    "word": "fugl",
+                    "label": "kragen",
+                    "info": "Substantiv: en krage"
+                },
+                {
+                    "x": 55,
+                    "y": 35,
+                    "type": "sub",
+                    "word": "sko",
+                    "label": "træskoen",
+                    "info": "Substantiv: en sko"
+                },
+                {
+                    "x": 67,
+                    "y": 42,
+                    "type": "sub",
+                    "word": "mudder",
+                    "label": "sovs (mudder)",
+                    "info": "Substantiv: mudder"
+                },
+                {
+                    "x": 64,
+                    "y": 69,
+                    "type": "sub",
+                    "word": "ged",
+                    "label": "geden",
+                    "info": "Substantiv: en ged"
+                },
+                {
+                    "x": 13,
+                    "y": 53,
+                    "type": "vrb",
+                    "word": "huske",
+                    "label": "huske",
+                    "info": "Verbum: at huske"
+                },
+                {
+                    "x": 23,
+                    "y": 56,
+                    "type": "vrb",
+                    "word": "glemme",
+                    "label": "glemt",
+                    "info": "Verbum: at glemme"
+                }
+            ],
+            "dialogue": [
+                {
+                    "speaker": "Kongen",
+                    "speakerIcon": "👑",
+                    "audioText": "Vis hvad I kan!",
+                    "tokens": [
+                        {
+                            "text": "Vis",
+                            "type": "vrb",
+                            "key": "vise"
+                        },
+                        {
+                            "text": ", hvad ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "I",
+                            "type": "pro",
+                            "key": "i"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "kan",
+                            "type": "vrb",
+                            "key": "kunne"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Storebror",
+                    "speakerIcon": "🎩",
+                    "audioText": "Det er så varmt. Jeg kan ikke huske.",
+                    "tokens": [
+                        {
+                            "text": "(sveder) ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Det",
+                            "type": "pro",
+                            "key": "det"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "så",
+                            "type": "adv",
+                            "key": "så"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "varmt",
+                            "type": "adj",
+                            "key": "varm"
+                        },
+                        {
+                            "text": "... ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "kan",
+                            "type": "vrb",
+                            "key": "kunne"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "ikke",
+                            "type": "adv",
+                            "key": "ikke"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "huske",
+                            "type": "vrb",
+                            "key": "huske"
+                        },
+                        {
+                            "text": "...",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Mellembror",
+                    "speakerIcon": "📜",
+                    "audioText": "Jeg har glemt hvad jeg vil sige. Det er alt for varmt!",
+                    "tokens": [
+                        {
+                            "text": "(kigger rundt) ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har glemt",
+                            "type": "vrb",
+                            "key": "glemme"
+                        },
+                        {
+                            "text": ", hvad ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vil",
+                            "type": "vrb",
+                            "key": "ville"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "sige",
+                            "type": "vrb",
+                            "key": "sige"
+                        },
+                        {
+                            "text": "... ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Det",
+                            "type": "pro",
+                            "key": "det"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "alt for",
+                            "type": "adv",
+                            "key": "alt_for"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "varmt",
+                            "type": "adj",
+                            "key": "varm"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "Hej! Jeg kom på en ged. Jeg har en død krage og en træsko med mudder.",
+                    "tokens": [
+                        {
+                            "text": "Hej! ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "kom",
+                            "type": "vrb",
+                            "key": "komme"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "på",
+                            "type": "prep",
+                            "key": "på"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "ged",
+                            "type": "sub",
+                            "key": "ged"
+                        },
+                        {
+                            "text": ". ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har",
+                            "type": "vrb",
+                            "key": "have"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "død",
+                            "type": "adj",
+                            "key": "død"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "krage",
+                            "type": "sub",
+                            "key": "fugl"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " en ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "træsko",
+                            "type": "sub",
+                            "key": "sko"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "med",
+                            "type": "prep",
+                            "key": "med"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "mudder",
+                            "type": "sub",
+                            "key": "mudder"
+                        },
+                        {
+                            "text": ".",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Prinsessen",
+                    "speakerIcon": "👸",
+                    "audioText": "Fortæl mere, Klods-Hans! Hvordan vil du bruge kragen?",
+                    "tokens": [
+                        {
+                            "text": "(griner) ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Fortæl",
+                            "type": "vrb",
+                            "key": "fortælle"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "mere",
+                            "type": "adv",
+                            "key": "mere"
+                        },
+                        {
+                            "text": ", Klods-Hans! Hvordan ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vil",
+                            "type": "vrb",
+                            "key": "ville"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "bruge",
+                            "type": "vrb",
+                            "key": "bruge"
+                        },
+                        {
+                            "text": " kragen?",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "Jeg tænkte på at stege den og lave god mad!",
+                    "tokens": [
+                        {
+                            "text": "Jeg",
+                            "type": "pro",
+                            "key": "jeg"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "tænkte",
+                            "type": "vrb",
+                            "key": "tænke"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "på",
+                            "type": "prep",
+                            "key": "på"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "at",
+                            "type": "konj",
+                            "key": "at"
+                        },
+                        {
+                            "text": " stege ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "den",
+                            "type": "pro",
+                            "key": "den"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "lave",
+                            "type": "vrb",
+                            "key": "gøre"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "god",
+                            "type": "adj",
+                            "key": "god"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "mad",
+                            "type": "sub",
+                            "key": "mad"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Prinsessen",
+                    "speakerIcon": "👸",
+                    "audioText": "Og hvad vil du stege den i?",
+                    "tokens": [
+                        {
+                            "text": "Og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " hvad ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "vil",
+                            "type": "vrb",
+                            "key": "ville"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " stege ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "den",
+                            "type": "pro",
+                            "key": "den"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "i",
+                            "type": "prep",
+                            "key": "i"
+                        },
+                        {
+                            "text": "?",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "I træskoen, selvfølgelig!",
+                    "tokens": [
+                        {
+                            "text": "I",
+                            "type": "prep",
+                            "key": "i"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "træskoen",
+                            "type": "sub",
+                            "key": "sko"
+                        },
+                        {
+                            "text": ", ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "selvfølgelig",
+                            "type": "adv",
+                            "key": "selvfoelgelig"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Prinsessen",
+                    "speakerIcon": "👸",
+                    "audioText": "Og sovsen? Hvad med den?",
+                    "tokens": [
+                        {
+                            "text": "Og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " sovsen? Hvad ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "med",
+                            "type": "prep",
+                            "key": "med"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "den",
+                            "type": "pro",
+                            "key": "den"
+                        },
+                        {
+                            "text": "?",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Klods-Hans",
+                    "speakerIcon": "🐐",
+                    "audioText": "Den er her!",
+                    "tokens": [
+                        {
+                            "text": "Den",
+                            "type": "pro",
+                            "key": "den"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "her",
+                            "type": "adv",
+                            "key": "her"
+                        },
+                        {
+                            "text": "! (viser mudderet frem)",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Prinsessen",
+                    "speakerIcon": "👸",
+                    "audioText": "Du er virkelig anderledes, Klods-Hans! Du har en sjov måde at se tingene på.",
+                    "tokens": [
+                        {
+                            "text": "(griner højt) ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "er",
+                            "type": "vrb",
+                            "key": "være"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "virkelig",
+                            "type": "adv",
+                            "key": "virkelig"
+                        },
+                        {
+                            "text": " anderledes, Klods-Hans! ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "Du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har",
+                            "type": "vrb",
+                            "key": "have"
+                        },
+                        {
+                            "text": " en sjov måde ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "at",
+                            "type": "konj",
+                            "key": "at"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "se",
+                            "type": "vrb",
+                            "key": "se"
+                        },
+                        {
+                            "text": " tingene ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "på",
+                            "type": "prep",
+                            "key": "på"
+                        },
+                        {
+                            "text": ".",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Kongen",
+                    "speakerIcon": "👑",
+                    "audioText": "Det ser ud til, at prinsessen har valgt. Klods-Hans, du har vundet hendes hjerte!",
+                    "tokens": [
+                        {
+                            "text": "Det",
+                            "type": "pro",
+                            "key": "det"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "ser",
+                            "type": "vrb",
+                            "key": "se"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "ud",
+                            "type": "adv",
+                            "key": "ud"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "til",
+                            "type": "prep",
+                            "key": "til"
+                        },
+                        {
+                            "text": ", ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "at",
+                            "type": "konj",
+                            "key": "at"
+                        },
+                        {
+                            "text": " prinsessen ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har valgt",
+                            "type": "vrb",
+                            "key": "vælge"
+                        },
+                        {
+                            "text": ". Klods-Hans, ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "du",
+                            "type": "pro",
+                            "key": "du"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "har vundet",
+                            "type": "vrb",
+                            "key": "vinde"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "hendes",
+                            "type": "pro",
+                            "key": "hendes"
+                        },
+                        {
+                            "text": " ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "hjerte",
+                            "type": "sub",
+                            "key": "hjerte"
+                        },
+                        {
+                            "text": "!",
+                            "type": "plain"
+                        }
+                    ]
+                },
+                {
+                    "speaker": "Alle",
+                    "speakerIcon": "🎉",
+                    "audioText": "Hurra for Klods-Hans og prinsessen!",
+                    "tokens": [
+                        {
+                            "text": "Hurra ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "for",
+                            "type": "prep",
+                            "key": "for"
+                        },
+                        {
+                            "text": " Klods-Hans ",
+                            "type": "plain"
+                        },
+                        {
+                            "text": "og",
+                            "type": "konj",
+                            "key": "og"
+                        },
+                        {
+                            "text": " prinsessen!",
+                            "type": "plain"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "vocabulary": [
+        {
+            "word": "en ged",
+            "type": "substantiv",
+            "meaningDa": "et muntert husdyr med horn og skæg",
+            "meaningEn": "a goat"
+        },
+        {
+            "word": "en krage",
+            "type": "substantiv",
+            "meaningDa": "en klog, sort fugl",
+            "meaningEn": "a crow"
+        },
+        {
+            "word": "en træsko",
+            "type": "substantiv",
+            "meaningDa": "en gammeldags sko udskåret af træ",
+            "meaningEn": "a wooden shoe / clog"
+        },
+        {
+            "word": "mudder",
+            "type": "substantiv",
+            "meaningDa": "våd, blød jord fra grøften",
+            "meaningEn": "mud"
+        },
+        {
+            "word": "kompliceret",
+            "type": "adjektiv",
+            "meaningDa": "svær og med mange dele",
+            "meaningEn": "complicated"
+        },
+        {
+            "word": "selvfølgelig",
+            "type": "adverbium",
+            "meaningDa": "helt naturligt og indlysende",
+            "meaningEn": "of course / obviously"
+        },
+        {
+            "word": "et hjerte",
+            "type": "substantiv",
+            "meaningDa": "kærlighed og følelser (vinde hendes hjerte)",
+            "meaningEn": "a heart"
+        }
+    ],
+    "quiz": [
+        {
+            "question": "Hvad rider Klods-Hans på til slottet?",
+            "options": [
+                "En stor sort hest",
+                "En munter hvid ged",
+                "En hurtig cykel"
+            ],
+            "correctIndex": 1,
+            "explanation": "Klods-Hans har ingen hest, men tager stolt sin hvide ged!"
+        },
+        {
+            "question": "Hvilke tre ting finder Klods-Hans på vejen?",
+            "options": [
+                "Guld, en ring og et sværd",
+                "En død krage, en gammel træsko og mudder",
+                "Et æble, en bog og en hat"
+            ],
+            "correctIndex": 1,
+            "explanation": "Han finder en død krage, en gammel træsko i grøften og en håndfuld mudder til sovs."
+        },
+        {
+            "question": "Hvorfor vælger prinsessen Klods-Hans som sin mand?",
+            "options": [
+                "Fordi han har de fineste klæder",
+                "Fordi han kan svare for sig, er sjov og ikke mister mælet i varmen",
+                "Fordi han er den bedste til at synge sange"
+            ],
+            "correctIndex": 1,
+            "explanation": "Prinsessen elsker hans kvikke svar, hans munterhed og hans sjove måde at se tingene på!"
+        }
+    ]
+},
     {
         id: "den_grimme_aelling",
         title: "Den grimme ælling",

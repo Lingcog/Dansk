@@ -1,10 +1,19 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { hcAndersenStories } from '../data/hc_andersen_stories.js';
+import { allNounsRegistry, wordToNounKey, openNounQuickPeekModal } from '../utils/nounQuickPeekModal.js';
+import { byrumVerbsRegistry, openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
+import { openPronounQuickPeekModal } from '../utils/pronounQuickPeekModal.js';
+import { openWordPresentation } from '../components/SpotlightSearch.js';
+import { verberWordTranslations } from '../utils/top100_verber_translations.js';
+import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
+import { adverbierWordTranslations } from '../utils/top100_adverbier_translations.js';
+import { konjunktionerWordTranslations } from '../utils/top100_konjunktioner_translations.js';
 
 /**
  * HCAndersenView - H.C. Andersens Eventyr
  * Læs og lær dansk med forkortede, forsimplede udgaver af klassiske eventyr.
- * Funktioner: Oplæsning (TTS), interaktive gloser, sprog-spots og forståelsesquiz.
+ * Funktioner: Vrimlebilleder, grammatiske farvekoder på ordniveau, interaktive
+ * målordspræsentationer for alle ordklasser (inkl. pink pronominer), oplæsning (TTS) og quiz.
  */
 export function renderHCAndersenView(container, navigateFn, extraData = {}) {
     const isEn = getLang() === 'en';
@@ -29,7 +38,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
     }
 
     function speakDanish(text, onEndCallback = null) {
-        if (!('speechSynthesis' in window)) return;
+        if (!('speechSynthesis' in window) || !text) return;
         stopSpeech();
 
         const cleanText = text.replace(/»|«|“|”/g, '').trim();
@@ -109,32 +118,33 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             renderCatalog();
         } else {
             const story = hcAndersenStories.find(s => s.id === activeStoryId);
-            if (!story) {
-                activeStoryId = null;
+            if (story) {
+                renderReader(story);
+            } else {
                 renderCatalog();
-                return;
             }
-            renderReader(story);
         }
     }
 
-    // --- 1. CATALOG / OVERBLIK ---
+    // --- 1. EVENTYROVERSIGT (CATALOG) ---
     function renderCatalog() {
         const hero = document.createElement('div');
         hero.className = 'hc-hero-card';
         hero.innerHTML = `
-            <div class="hc-hero-badge">🏰 ${isEn ? 'Classic Literature & Graded Reading' : 'Dansk kulturarv & Letlæst'}</div>
-            <h1 class="hc-hero-title">H.C. Andersens eventyr</h1>
+            <div class="hc-hero-badge">🏰 ${isEn ? 'Danish Cultural Heritage & Graded Reading' : 'Dansk kulturarv & Letlæst'}</div>
+            <h1 class="hc-hero-title">${isEn ? "H.C. Andersen's Fairy Tales" : 'H.C. Andersens eventyr'}</h1>
             <p class="hc-hero-desc">
                 ${isEn 
-                    ? "Read and learn Danish with simplified, shortened editions of Hans Christian Andersen's most famous fairy tales. Expand your vocabulary, listen to authentic spoken Danish, and test your understanding with engaging quizzes." 
-                    : "Læs og lær dansk med forkortede og forsimplede udgaver af H.C. Andersens verdenskendte eventyr. Udvid dit ordforråd med ordforklaringer, lyt til den naturlige udtale og test din forståelse med små quizzer."}
+                    ? 'Read and learn Danish with shortened and simplified editions of classic fairy tales. Featuring interactive wimmelbuch scenes, grammatical color codes, audio read-aloud, and comprehension quizzes.'
+                    : 'Læs og lær dansk med forkortede og forsimplede udgaver af H.C. Andersens verdenskendte eventyr. Med interaktive vrimlebilleder, officielle grammatiske farvekoder, indbygget oplæsning og ordforklaringer.'
+                }
             </p>
             <div class="hc-features-pills">
-                <span class="hc-pill">🦢 4 klassiske eventyr</span>
-                <span class="hc-pill">🎯 Niveau: Let (A2 - B1)</span>
-                <span class="hc-pill">🔊 Indbygget oplæsning</span>
-                <span class="hc-pill">📚 Gloser & ordforklaringer</span>
+                <span class="hc-pill">✨ ${isEn ? 'Wimmelbuch scenes' : 'Interaktive vrimlebilleder'}</span>
+                <span class="hc-pill">🎨 ${isEn ? 'Grammar color codes' : 'Grammatiske farvekoder'}</span>
+                <span class="hc-pill">💗 ${isEn ? 'Pronoun quick peeks' : 'Pink pronominer & opslag'}</span>
+                <span class="hc-pill">🎯 ${isEn ? 'Level: Easy (A2 - B1)' : 'Niveau: Let (A2 - B1)'}</span>
+                <span class="hc-pill">🔊 ${isEn ? 'Built-in audio' : 'Indbygget oplæsning'}</span>
             </div>
         `;
         mainContent.appendChild(hero);
@@ -160,6 +170,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 <div class="hc-card-header">
                     <span class="hc-card-icon">${story.icon}</span>
                     <div class="hc-card-badges">
+                        ${story.hasWimmelbilder ? `<span class="hc-wimmel-tag">✨ 3 Vrimlebilleder</span>` : ''}
                         <span class="hc-level-tag">${story.level}</span>
                         <span class="hc-time-tag">⏱️ ${story.readingTime}</span>
                     </div>
@@ -239,7 +250,6 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         `;
         modeToggle.querySelectorAll('.mode-tab-btn').forEach(btn => {
             btn.onclick = () => {
-                stopSpeech();
                 readingMode = btn.dataset.mode;
                 renderView();
             };
@@ -249,10 +259,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const fontControl = document.createElement('div');
         fontControl.className = 'hc-font-control';
         fontControl.innerHTML = `
-            <span class="font-label">Skrift:</span>
-            <button class="font-btn ${fontSizeLevel === 0 ? 'active' : ''}" data-size="0" title="Standard">A</button>
-            <button class="font-btn ${fontSizeLevel === 1 ? 'active' : ''}" data-size="1" title="Mellem">A+</button>
-            <button class="font-btn ${fontSizeLevel === 2 ? 'active' : ''}" data-size="2" title="Stor">A++</button>
+            <span class="font-label">Tekst:</span>
+            <button class="font-btn ${fontSizeLevel === 0 ? 'active' : ''}" data-size="0">A</button>
+            <button class="font-btn ${fontSizeLevel === 1 ? 'active' : ''}" data-size="1">A+</button>
+            <button class="font-btn ${fontSizeLevel === 2 ? 'active' : ''}" data-size="2">A++</button>
         `;
         fontControl.querySelectorAll('.font-btn').forEach(btn => {
             btn.onclick = () => {
@@ -268,33 +278,33 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         toolbar.appendChild(fontControl);
         readerWrapper.appendChild(toolbar);
 
-        // Story Body Area
-        const storyBody = document.createElement('div');
-        storyBody.className = 'hc-story-body';
+        // Sections content
+        const sectionsContainer = document.createElement('div');
+        sectionsContainer.className = 'hc-sections-container';
 
         if (readingMode === 'steps') {
-            // STEP BY STEP MODE
+            // Navigation pills for steps
             const stepNav = document.createElement('div');
             stepNav.className = 'hc-step-nav';
-
             story.sections.forEach((sec, idx) => {
-                const stepPill = document.createElement('button');
-                stepPill.className = `hc-step-pill ${idx === currentStepIdx ? 'active' : ''}`;
-                stepPill.innerHTML = `<span>Del ${idx + 1}</span>`;
-                stepPill.onclick = () => {
+                const stepBtn = document.createElement('button');
+                stepBtn.className = `hc-step-pill ${idx === currentStepIdx ? 'active' : ''}`;
+                stepBtn.innerHTML = `Del ${idx + 1}`;
+                stepBtn.onclick = () => {
                     stopSpeech();
                     currentStepIdx = idx;
                     renderView();
                 };
-                stepNav.appendChild(stepPill);
+                stepNav.appendChild(stepBtn);
             });
-            storyBody.appendChild(stepNav);
+            sectionsContainer.appendChild(stepNav);
 
-            const activeSection = story.sections[currentStepIdx];
-            const sectionCard = createSectionCard(activeSection, currentStepIdx, story);
-            storyBody.appendChild(sectionCard);
+            // Active section card
+            const activeSec = story.sections[currentStepIdx];
+            const secCard = createSectionCard(activeSec, currentStepIdx, story);
+            sectionsContainer.appendChild(secCard);
 
-            // Step controls (Prev / Next)
+            // Step Action Buttons
             const stepActions = document.createElement('div');
             stepActions.className = 'hc-step-actions';
 
@@ -306,6 +316,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     stopSpeech();
                     currentStepIdx--;
                     renderView();
+                    window.scrollTo({ top: 180, behavior: 'smooth' });
                 };
                 stepActions.appendChild(prevBtn);
             } else {
@@ -320,6 +331,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     stopSpeech();
                     currentStepIdx++;
                     renderView();
+                    window.scrollTo({ top: 180, behavior: 'smooth' });
                 };
                 stepActions.appendChild(nextBtn);
             } else {
@@ -333,46 +345,41 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 stepActions.appendChild(quizJumpBtn);
             }
 
-            storyBody.appendChild(stepActions);
-
+            sectionsContainer.appendChild(stepActions);
         } else {
-            // FULL TEXT MODE
+            // Full text mode: display all sections sequentially
             story.sections.forEach((sec, idx) => {
-                const sectionCard = createSectionCard(sec, idx, story);
-                storyBody.appendChild(sectionCard);
+                const secCard = createSectionCard(sec, idx, story);
+                sectionsContainer.appendChild(secCard);
             });
         }
 
-        readerWrapper.appendChild(storyBody);
+        readerWrapper.appendChild(sectionsContainer);
 
         // Grammar Spot Card
         if (story.grammarFocus) {
-            const grammarCard = document.createElement('div');
-            grammarCard.className = 'hc-grammar-spot';
-            grammarCard.innerHTML = `
+            const grammarSpot = document.createElement('div');
+            grammarSpot.className = 'hc-grammar-spot';
+            grammarSpot.innerHTML = `
                 <div class="grammar-spot-header">
-                    <span class="grammar-icon">💡</span>
+                    <span style="font-size: 1.3rem;">💡</span>
                     <h4>${story.grammarFocus.title}</h4>
                 </div>
                 <p class="grammar-spot-text">${story.grammarFocus.desc}</p>
             `;
-            readerWrapper.appendChild(grammarCard);
+            readerWrapper.appendChild(grammarSpot);
         }
 
-        // Vocabulary Reference Box
+        // Vocabulary List
         if (story.vocabulary && story.vocabulary.length > 0) {
             const vocabCard = document.createElement('div');
             vocabCard.className = 'hc-vocab-card';
             vocabCard.innerHTML = `
                 <div class="vocab-header">
-                    <span class="vocab-icon">📚</span>
+                    <span style="font-size: 1.4rem;">📚</span>
                     <h3>${isEn ? 'Vocabulary & Explanations' : 'Gloser & ordforklaringer i dette eventyr'}</h3>
                 </div>
-                <p class="vocab-hint">
-                    ${isEn 
-                        ? 'Click the speaker button to hear the pronunciation of each word:' 
-                        : 'Lær ordene at kende – klik på højttaleren for at høre udtalen:'}
-                </p>
+                <p class="vocab-hint">${isEn ? 'Get to know the words – click the speaker to listen to pronunciation:' : 'Lær ordene at kende – klik på højttaleren for at høre udtalen:'}</p>
                 <div class="vocab-grid">
                     ${story.vocabulary.map(v => `
                         <div class="vocab-item">
@@ -459,49 +466,473 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         };
         card.appendChild(header);
 
+        // 1. Render Vrimlebillede Stage if present
+        if (section.vrimmelImage) {
+            const vrimmelStage = document.createElement('div');
+            vrimmelStage.className = 'hc-vrimmel-stage';
+            vrimmelStage.innerHTML = `
+                <img src="${section.vrimmelImage}" alt="${section.chapter}" class="hc-vrimmel-img" />
+            `;
+
+            if (section.hotspots && section.hotspots.length > 0) {
+                section.hotspots.forEach(spot => {
+                    const pin = document.createElement('button');
+                    pin.type = 'button';
+                    pin.className = `hc-hotspot-pin pin-${spot.type}`;
+                    pin.style.left = `${spot.x}%`;
+                    pin.style.top = `${spot.y}%`;
+                    pin.title = spot.label || spot.word;
+                    pin.innerHTML = `
+                        <span class="pin-dot"></span>
+                        <div class="hc-hotspot-pill">${spot.label || spot.word}</div>
+                    `;
+                    pin.onclick = (e) => {
+                        e.stopPropagation();
+                        speakDanish(spot.word);
+                        handleWordClick({ text: spot.word, type: spot.type, key: spot.word }, spot.info || section.chapter);
+                    };
+                    vrimmelStage.appendChild(pin);
+                });
+            }
+            card.appendChild(vrimmelStage);
+
+            // Grammar Legend
+            const legendBar = document.createElement('div');
+            legendBar.className = 'hc-grammar-legend';
+            legendBar.innerHTML = `
+                <span class="hc-legend-item" style="color: #4ade80;"><span class="hc-legend-dot" style="background:#22c55e;"></span> 🟢 Substantiv</span>
+                <span class="hc-legend-item" style="color: #f87171;"><span class="hc-legend-dot" style="background:#ef4444;"></span> 🔴 Verbum</span>
+                <span class="hc-legend-item" style="color: #fb923c;"><span class="hc-legend-dot" style="background:#f97316;"></span> 🟠 Adjektiv</span>
+                <span class="hc-legend-item" style="color: #38bdf8;"><span class="hc-legend-dot" style="background:#38bdf8;"></span> 🔵 Adverbium</span>
+                <span class="hc-legend-item" style="color: #c084fc;"><span class="hc-legend-dot" style="background:#a855f7;"></span> 🟣 Konjunktion</span>
+                <span class="hc-legend-item" style="color: #fde047;"><span class="hc-legend-dot" style="background:#eab308;"></span> 🟡 Præposition</span>
+                <span class="hc-legend-item" style="color: #f472b6;"><span class="hc-legend-dot" style="background:#ec4899;"></span> 💗 Pronomen</span>
+                <div class="hc-legend-hint">👆 ${isEn ? 'Click on any colored word to see inflections, explanation, and pronunciation.' : 'Tryk på et hvilket som helst farvet ord for at se bøjning, forklaring og udtale.'}</div>
+            `;
+            card.appendChild(legendBar);
+        }
+
+        // 2. Render Text Body or Dialogue Lines
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
-        // Format paragraphs and highlight vocabulary words
-        const paragraphs = section.text.split('\n\n');
-        paragraphs.forEach(pText => {
-            const p = document.createElement('p');
-            p.className = 'story-paragraph';
+        if (section.dialogue && section.dialogue.length > 0) {
+            // Dialogue Playback Mode
+            const dialogueList = document.createElement('div');
+            dialogueList.className = 'hc-dialogue-list';
 
-            // Mark vocabulary words with interactive span
-            let highlighted = pText;
-            if (story.vocabulary) {
-                story.vocabulary.forEach(vocab => {
-                    // Extract stem or bare word for highlighting
-                    const bareWord = vocab.word.replace(/^(en|et|at)\s+/, '');
-                    const regex = new RegExp(`\\b(${bareWord}[a-zæøå]*)\\b`, 'gi');
-                    highlighted = highlighted.replace(regex, (match) => {
-                        return `<span class="vocab-highlight" title="${vocab.meaningDa} (${vocab.meaningEn})" data-word="${match}">${match}</span>`;
-                    });
-                });
-            }
+            section.dialogue.forEach(line => {
+                const lineEl = document.createElement('div');
+                lineEl.className = 'hc-dialogue-line';
 
-            p.innerHTML = highlighted;
-
-            // Add click listeners to vocabulary highlights
-            p.querySelectorAll('.vocab-highlight').forEach(el => {
-                el.onclick = (e) => {
-                    e.stopPropagation();
-                    const word = el.dataset.word;
-                    speakDanish(word);
-                    showQuickWordTip(el, word, story.vocabulary);
+                const speakerHeader = document.createElement('div');
+                speakerHeader.className = 'hc-speaker-header';
+                speakerHeader.innerHTML = `
+                    <span class="hc-speaker-badge">
+                        <span>${line.speakerIcon || '💬'}</span>
+                        <span>${line.speaker}:</span>
+                    </span>
+                    <button class="hc-speaker-audio-btn" title="${isEn ? 'Listen to line' : 'Lyt til replik'}">
+                        <span>🔊</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                    </button>
+                `;
+                speakerHeader.querySelector('.hc-speaker-audio-btn').onclick = () => {
+                    speakDanish(line.audioText);
                 };
+                lineEl.appendChild(speakerHeader);
+
+                const speechEl = document.createElement('div');
+                speechEl.className = 'hc-line-speech';
+
+                if (line.tokens && line.tokens.length > 0) {
+                    line.tokens.forEach(token => {
+                        if (token.type === 'plain') {
+                            const span = document.createElement('span');
+                            span.textContent = token.text;
+                            speechEl.appendChild(span);
+                        } else {
+                            const tokenBtn = document.createElement('span');
+                            tokenBtn.className = `hc-word-token token-${token.type}`;
+                            tokenBtn.textContent = token.text;
+                            tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
+                            tokenBtn.onclick = (e) => {
+                                e.stopPropagation();
+                                speakDanish(token.text);
+                                handleWordClick(token, line.audioText);
+                            };
+                            speechEl.appendChild(tokenBtn);
+                        }
+                    });
+                } else {
+                    speechEl.textContent = line.audioText;
+                }
+
+                lineEl.appendChild(speechEl);
+                dialogueList.appendChild(lineEl);
             });
 
-            textBody.appendChild(p);
-        });
+            textBody.appendChild(dialogueList);
+        } else {
+            // Standard fairy tale prose paragraphs
+            const paragraphs = section.text.split('\n\n');
+            paragraphs.forEach(pText => {
+                const p = document.createElement('p');
+                p.className = 'story-paragraph';
+
+                let highlighted = pText;
+                if (story.vocabulary) {
+                    story.vocabulary.forEach(vocab => {
+                        const bareWord = vocab.word.replace(/^(en|et|at)\s+/, '');
+                        const regex = new RegExp(`\\b(${bareWord}[a-zæøå]*)\\b`, 'gi');
+                        highlighted = highlighted.replace(regex, (match) => {
+                            return `<span class="vocab-highlight" title="${vocab.meaningDa} (${vocab.meaningEn})" data-word="${match}">${match}</span>`;
+                        });
+                    });
+                }
+
+                p.innerHTML = highlighted;
+
+                p.querySelectorAll('.vocab-highlight').forEach(el => {
+                    el.onclick = (e) => {
+                        e.stopPropagation();
+                        const word = el.dataset.word;
+                        speakDanish(word);
+                        showQuickWordTip(el, word, story.vocabulary);
+                    };
+                });
+
+                textBody.appendChild(p);
+            });
+        }
 
         card.appendChild(textBody);
         return card;
     }
 
+    // --- 3. WORD CLICK HANDLER (Links til målsprogspræsentationer) ---
+    function handleWordClick(token, sentenceContext) {
+        if (!token) return;
+
+        // 1. Pronominer (Pink) -> Open Pronoun Quick Peek Modal
+        if (token.type === 'pro') {
+            openPronounQuickPeekModal(token.text, sentenceContext, navigateFn);
+            return;
+        }
+
+        // 2. Substantiver (Grøn) -> Open Noun Modal or Word Presentation
+        if (token.type === 'sub') {
+            const nounKey = (token.key || token.text).toLowerCase().replace(/^(en|et)\s+/, '').trim();
+            if (allNounsRegistry && allNounsRegistry[nounKey]) {
+                openNounQuickPeekModal(nounKey);
+                return;
+            }
+            if (wordToNounKey && wordToNounKey[nounKey]) {
+                openNounQuickPeekModal(wordToNounKey[nounKey]);
+                return;
+            }
+            openWordPresentation({
+                id: `noun_${nounKey}`,
+                key: nounKey,
+                title: token.text,
+                baseWord: nounKey,
+                category: 'nouns',
+                type: 'noun',
+                badge: 'Navneord',
+                badgeColor: '#22c55e',
+                icon: '🟢',
+                meaning: `Substantiv: Betegner en person, et dyr, en genstand eller et begreb i eventyret.`,
+                sentence: sentenceContext,
+                forms: `Form i teksten: "${token.text}"`,
+                translations: { en: nounKey }
+            });
+            return;
+        }
+
+        // 3. Verber (Rød) -> Open Verb Quick Peek Modal or Word Presentation
+        if (token.type === 'vrb') {
+            const verbKey = (token.key || token.text).replace(/^at\s+/, '').toLowerCase().trim();
+            if (byrumVerbsRegistry && byrumVerbsRegistry[verbKey]) {
+                openVerbQuickPeekModal(verbKey, navigateFn);
+                return;
+            }
+            const vEntry = verberWordTranslations[verbKey] || verberWordTranslations['at ' + verbKey];
+            if (vEntry) {
+                const transMap = {};
+                Object.keys(vEntry).forEach(k => {
+                    if (vEntry[k] && typeof vEntry[k] === 'object' && vEntry[k].meaning) {
+                        transMap[k] = vEntry[k].meaning;
+                    }
+                });
+                openWordPresentation({
+                    id: `verb_${verbKey}`,
+                    key: verbKey,
+                    title: `at ${verbKey}`,
+                    baseWord: verbKey,
+                    category: 'verbs',
+                    type: 'verb',
+                    badge: 'Udsagnsord',
+                    badgeColor: '#ef4444',
+                    icon: '🔴',
+                    forms: `Nutid: ${vEntry.nutid || ''} | Datid: ${vEntry.datid || ''}`,
+                    meaning: vEntry.da?.meaning || `Udsagnsord: Angiver en handling eller tilstand.`,
+                    sentence: sentenceContext || vEntry.da?.sentence || '',
+                    translations: transMap
+                });
+                return;
+            }
+            openWordPresentation({
+                id: `verb_${verbKey}`,
+                key: verbKey,
+                title: `at ${verbKey}`,
+                baseWord: verbKey,
+                category: 'verbs',
+                type: 'verb',
+                badge: 'Udsagnsord',
+                badgeColor: '#ef4444',
+                icon: '🔴',
+                meaning: `Udsagnsord: Sætningens handling eller drivkraft.`,
+                sentence: sentenceContext,
+                translations: { en: verbKey }
+            });
+            return;
+        }
+
+        // 4. Adjektiver (Orange) -> Open Word Presentation
+        if (token.type === 'adj') {
+            const adjKey = (token.key || token.text).toLowerCase().trim();
+            const aEntry = adjektiverWordTranslations[adjKey];
+            if (aEntry) {
+                const transMap = {};
+                Object.keys(aEntry).forEach(k => {
+                    if (aEntry[k] && typeof aEntry[k] === 'object' && aEntry[k].meaning) {
+                        transMap[k] = aEntry[k].meaning;
+                    }
+                });
+                openWordPresentation({
+                    id: `adj_${adjKey}`,
+                    key: adjKey,
+                    title: aEntry.baseWord || adjKey,
+                    baseWord: aEntry.baseWord || adjKey,
+                    category: 'adjectives',
+                    type: 'adjective',
+                    badge: 'Tillægsord',
+                    badgeColor: '#f97316',
+                    icon: '🟠',
+                    forms: `Fælleskøn: en ${adjKey} | Intetkøn: et ${adjKey}t | Flertal: ${adjKey}e`,
+                    meaning: aEntry.da?.meaning || `Adjektiv: Beskriver en egenskab eller tilstand.`,
+                    sentence: sentenceContext || aEntry.da?.sentence || '',
+                    translations: transMap
+                });
+                return;
+            }
+            openWordPresentation({
+                id: `adj_${adjKey}`,
+                key: adjKey,
+                title: token.text,
+                baseWord: adjKey,
+                category: 'adjectives',
+                type: 'adjective',
+                badge: 'Tillægsord',
+                badgeColor: '#f97316',
+                icon: '🟠',
+                meaning: `Tillægsord: Beskriver substantivet i sætningen.`,
+                sentence: sentenceContext,
+                translations: { en: adjKey }
+            });
+            return;
+        }
+
+        // 5. Adverbier (Blå) -> Open Word Presentation
+        if (token.type === 'adv') {
+            const advKey = (token.key || token.text).toLowerCase().trim();
+            let matchedEntry = null;
+            Object.entries(adverbierWordTranslations).forEach(([k, val]) => {
+                if (val.baseWord === advKey || val.id === advKey || k.replace(/^f\d+_/, '') === advKey) {
+                    matchedEntry = val;
+                }
+            });
+            if (matchedEntry) {
+                const transMap = {};
+                Object.keys(matchedEntry).forEach(k => {
+                    if (matchedEntry[k] && typeof matchedEntry[k] === 'object' && matchedEntry[k].meaning) {
+                        transMap[k] = matchedEntry[k].meaning;
+                    }
+                });
+                openWordPresentation({
+                    id: `adv_${advKey}`,
+                    key: advKey,
+                    title: matchedEntry.baseWord || advKey,
+                    baseWord: matchedEntry.baseWord || advKey,
+                    category: 'adverbs',
+                    type: 'adverb',
+                    badge: 'Biord',
+                    badgeColor: '#38bdf8',
+                    icon: '🔵',
+                    meaning: matchedEntry.da?.meaning || `Adverbium: Angiver tid, sted, måde, grad eller holdning.`,
+                    sentence: sentenceContext || matchedEntry.da?.sentence || '',
+                    translations: transMap
+                });
+                return;
+            }
+            openWordPresentation({
+                id: `adv_${advKey}`,
+                key: advKey,
+                title: token.text,
+                baseWord: advKey,
+                category: 'adverbs',
+                type: 'adverb',
+                badge: 'Biord',
+                badgeColor: '#38bdf8',
+                icon: '🔵',
+                meaning: `Adverbium (biord): Justerer verbet, adjektivet eller hele sætningen.`,
+                sentence: sentenceContext,
+                translations: { en: advKey }
+            });
+            return;
+        }
+
+        // 6. Konjunktioner (Lilla) -> Open Word Presentation
+        if (token.type === 'konj') {
+            const konjKey = (token.key || token.text).toLowerCase().trim();
+            let matchedEntry = null;
+            Object.entries(konjunktionerWordTranslations).forEach(([k, val]) => {
+                if (val.baseWord === konjKey || val.id === konjKey || k.replace(/^flow_/, '') === konjKey) {
+                    matchedEntry = val;
+                }
+            });
+            if (matchedEntry) {
+                const transMap = {};
+                Object.keys(matchedEntry).forEach(k => {
+                    if (matchedEntry[k] && typeof matchedEntry[k] === 'object' && matchedEntry[k].meaning) {
+                        transMap[k] = matchedEntry[k].meaning;
+                    }
+                });
+                openWordPresentation({
+                    id: `konj_${konjKey}`,
+                    key: konjKey,
+                    title: matchedEntry.baseWord || konjKey,
+                    baseWord: matchedEntry.baseWord || konjKey,
+                    category: 'conjunctions',
+                    type: 'conjunction',
+                    badge: 'Bindeord',
+                    badgeColor: '#a855f7',
+                    icon: '🟣',
+                    meaning: matchedEntry.da?.meaning || `Konjunktion: Binder ord eller sætninger sammen.`,
+                    sentence: sentenceContext || matchedEntry.da?.sentence || '',
+                    translations: transMap
+                });
+                return;
+            }
+            openWordPresentation({
+                id: `konj_${konjKey}`,
+                key: konjKey,
+                title: token.text,
+                baseWord: konjKey,
+                category: 'conjunctions',
+                type: 'conjunction',
+                badge: 'Bindeord',
+                badgeColor: '#a855f7',
+                icon: '🟣',
+                meaning: `Konjunktion: Forbinder sætningsled eller sætninger.`,
+                sentence: sentenceContext,
+                translations: { en: konjKey }
+            });
+            return;
+        }
+
+        // 7. Præpositioner (Gul) -> Open Preposition Modal
+        if (token.type === 'prep') {
+            openPrepositionModal(token.text, sentenceContext);
+            return;
+        }
+    }
+
+    // --- 4. PREPOSITION QUICK MODAL ---
+    function openPrepositionModal(rawWord, sentenceContext) {
+        const cleanWord = rawWord.toLowerCase().replace(/[.,!?:;»«"']/g, '').trim();
+        const prepDict = {
+            "til": {
+                desc: "Angiver retning mod et mål eller en modtager.",
+                descEn: "Indicates direction towards a destination or recipient.",
+                example: "Jeg tager til slottet. Har du en gave med til hende?"
+            },
+            "på": {
+                desc: "Angiver placering på en flade eller en tilstand/situation.",
+                descEn: "Indicates location upon a surface or an ongoing state.",
+                example: "På bondegården. Han rider på sin ged. Han er på vej."
+            },
+            "i": {
+                desc: "Angiver placering inde i et rum eller en beholder/genstand.",
+                descEn: "Indicates location inside a space or object.",
+                example: "I træskoen, selvfølgelig! Hvad vil du stege den i?"
+            },
+            "med": {
+                desc: "Angiver ledsagelse, redskab eller indhold.",
+                descEn: "Indicates accompaniment, tool or content.",
+                example: "En træsko med mudder. Tag du geden med."
+            },
+            "om": {
+                desc: "Angiver emne eller hvad noget handler om.",
+                descEn: "Indicates subject matter or what something concerns.",
+                example: "Jeg kan tale om store og komplicerede ting."
+            },
+            "for": {
+                desc: "Angiver hensigt, årsag eller til ære for.",
+                descEn: "Indicates purpose, reason or honor.",
+                example: "Hurra for Klods-Hans og prinsessen!"
+            }
+        };
+
+        const info = prepDict[cleanWord] || {
+            desc: "Forholdsord (præposition): Forbinder et navneord eller pronomen med resten af sætningen.",
+            descEn: "Preposition: Connects a noun or pronoun to the rest of the sentence.",
+            example: sentenceContext || "Forholdsord i sætningen."
+        };
+
+        const existing = document.querySelector('.hc-prep-modal-overlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.className = 'hc-prep-modal-overlay';
+        overlay.innerHTML = `
+            <div class="hc-prep-modal">
+                <div class="hc-prep-header">
+                    <span class="hc-prep-badge">🟡 Præposition (Forholdsord)</span>
+                    <button class="hc-prep-close" id="hc-prep-close-btn">✕</button>
+                </div>
+                <div class="hc-prep-body">
+                    <div class="hc-prep-title-row">
+                        <h2 class="hc-prep-word">${cleanWord}</h2>
+                        <button class="hc-prep-tts-btn" id="hc-prep-tts">
+                            <span>🔊</span> Lyt
+                        </button>
+                    </div>
+                    <p class="hc-prep-desc">${isEn ? info.descEn : info.desc}</p>
+                    <div class="hc-prep-sentence">
+                        💬 "${sentenceContext || info.example}"
+                    </div>
+                    <button class="hc-prep-ok-btn" id="hc-prep-ok">Forstået ➔</button>
+                </div>
+            </div>
+        `;
+
+        function closePrep() {
+            overlay.classList.add('fade-out');
+            setTimeout(() => overlay.remove(), 160);
+        }
+
+        overlay.querySelector('#hc-prep-close-btn').onclick = closePrep;
+        overlay.querySelector('#hc-prep-ok').onclick = closePrep;
+        overlay.onclick = (e) => {
+            if (e.target === overlay) closePrep();
+        };
+        overlay.querySelector('#hc-prep-tts').onclick = () => speakDanish(cleanWord);
+
+        document.body.appendChild(overlay);
+        speakDanish(cleanWord);
+    }
+
     function showQuickWordTip(anchorEl, word, vocabularyList) {
-        // Remove existing tip
         const oldTip = document.querySelector('.hc-word-tooltip');
         if (oldTip) oldTip.remove();
 
@@ -607,7 +1038,6 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         feedbackRow.innerHTML = `❌ <strong>${isEn ? 'Not quite right.' : 'Ikke helt.'}</strong> ${qItem.explanation}`;
                     }
 
-                    // Check if all answered
                     if (answeredQuestions.size === quizItems.length) {
                         showFinalScore();
                     }
@@ -766,7 +1196,18 @@ function injectStyles() {
         }
         .hc-card-badges {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
+            align-items: center;
+        }
+        .hc-wimmel-tag {
+            background: rgba(234, 179, 8, 0.2);
+            border: 1px solid #eab308;
+            color: #fde047;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
         }
         .hc-level-tag {
             background: rgba(34, 197, 94, 0.18);
@@ -1004,12 +1445,12 @@ function injectStyles() {
 
         /* Section card */
         .hc-section-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
+            background: rgba(30, 41, 59, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
             padding: 1.8rem;
             margin-bottom: 1.4rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         .section-header {
             display: flex;
@@ -1017,10 +1458,10 @@ function injectStyles() {
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding-bottom: 0.8rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.4rem;
         }
         .section-header h3 {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: #fde047;
             margin: 0;
             font-weight: 700;
@@ -1042,6 +1483,234 @@ function injectStyles() {
         .section-audio-btn:hover {
             background: rgba(2, 132, 199, 0.3);
             color: #fff;
+        }
+
+        /* --- VRIMLEBILLEDE STAGE & HOTSPOTS --- */
+        .hc-vrimmel-stage {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.4rem;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+        }
+        .hc-vrimmel-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: brightness(0.98);
+            transition: filter 0.3s ease;
+        }
+        .hc-hotspot-pin {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            animation: pulsePin 2.5s infinite;
+        }
+        @keyframes pulsePin {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+        .hc-hotspot-pin.pin-sub { background: #22c55e; }
+        .hc-hotspot-pin.pin-vrb { background: #ef4444; }
+        .hc-hotspot-pin.pin-adj { background: #f97316; }
+        .hc-hotspot-pin.pin-adv { background: #38bdf8; }
+        .hc-hotspot-pin.pin-konj { background: #a855f7; }
+        .hc-hotspot-pin.pin-prep { background: #eab308; }
+        .hc-hotspot-pin.pin-pro { background: #ec4899; }
+        .hc-hotspot-pin:hover {
+            transform: translate(-50%, -50%) scale(1.25) !important;
+            z-index: 30;
+            box-shadow: 0 0 16px #ffffff, 0 0 10px currentColor;
+        }
+        .hc-hotspot-pin .pin-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: block;
+            pointer-events: none;
+        }
+        .hc-hotspot-pill {
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 0.15rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            opacity: 0.95;
+            transition: all 0.2s ease;
+        }
+        .hc-hotspot-pin:hover .hc-hotspot-pill {
+            opacity: 1;
+            border-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+        }
+
+        /* Grammar Color Legend */
+        .hc-grammar-legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem 0.8rem;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 0.7rem 1rem;
+            margin-bottom: 1.4rem;
+        }
+        .hc-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .hc-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .hc-legend-hint {
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+        }
+
+        /* --- DIALOGUE & INTERACTIVE WORDS --- */
+        .hc-dialogue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .hc-dialogue-line {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            transition: border-color 0.2s;
+        }
+        .hc-dialogue-line:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .hc-speaker-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+        .hc-speaker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #fef08a;
+        }
+        .hc-speaker-audio-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #60a5fa;
+            border-radius: 8px;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+        }
+        .hc-speaker-audio-btn:hover {
+            background: rgba(2, 132, 199, 0.3);
+            color: #fff;
+        }
+        .hc-line-speech {
+            font-size: 1.18rem;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+        .font-size-0 .hc-line-speech { font-size: 1.05rem; }
+        .font-size-1 .hc-line-speech { font-size: 1.2rem; }
+        .font-size-2 .hc-line-speech { font-size: 1.38rem; }
+
+        /* Word Tokens with Grammar Color Coding */
+        .hc-word-token {
+            cursor: pointer;
+            padding: 0.12rem 0.3rem;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: all 0.18s ease;
+            display: inline-block;
+            position: relative;
+        }
+        .hc-word-token:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.25);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .hc-word-token.token-sub {
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.15);
+            border-bottom: 2px solid #22c55e;
+        }
+        .hc-word-token.token-vrb {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.15);
+            border-bottom: 2px solid #ef4444;
+        }
+        .hc-word-token.token-adj {
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.15);
+            border-bottom: 2px solid #f97316;
+        }
+        .hc-word-token.token-adv {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.15);
+            border-bottom: 2px solid #38bdf8;
+        }
+        .hc-word-token.token-konj {
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid #a855f7;
+        }
+        .hc-word-token.token-prep {
+            color: #fde047;
+            background: rgba(234, 179, 8, 0.15);
+            border-bottom: 2px solid #eab308;
+        }
+        .hc-word-token.token-pro {
+            color: #f472b6;
+            background: rgba(236, 72, 153, 0.18);
+            border-bottom: 2px solid #ec4899;
         }
 
         /* Typography sizing */
@@ -1130,6 +1799,122 @@ function injectStyles() {
             font-size: 0.82rem;
             color: #94a3b8;
             font-style: italic;
+        }
+
+        /* Preposition modal */
+        .hc-prep-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeInTip 0.2s ease;
+        }
+        .hc-prep-modal-overlay.fade-out {
+            opacity: 0;
+            transition: opacity 0.16s ease;
+        }
+        .hc-prep-modal {
+            background: rgba(15, 23, 42, 0.96);
+            border: 2px solid #eab308;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            color: #f8fafc;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(234, 179, 8, 0.3);
+            overflow: hidden;
+        }
+        .hc-prep-header {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(15, 23, 42, 0.9));
+            padding: 1rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(234, 179, 8, 0.3);
+        }
+        .hc-prep-badge {
+            background: rgba(234, 179, 8, 0.2);
+            border: 1px solid #eab308;
+            color: #fde047;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+        .hc-prep-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #94a3b8;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hc-prep-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .hc-prep-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .hc-prep-word {
+            font-size: 1.8rem;
+            color: #fde047;
+            font-weight: 800;
+            margin: 0;
+        }
+        .hc-prep-tts-btn {
+            background: rgba(234, 179, 8, 0.2);
+            border: 1px solid #eab308;
+            color: #fde047;
+            padding: 0.4rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .hc-prep-desc {
+            font-size: 0.96rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+            margin: 0;
+        }
+        .hc-prep-sentence {
+            background: rgba(234, 179, 8, 0.08);
+            border-left: 3px solid #eab308;
+            padding: 0.7rem 1rem;
+            border-radius: 0 10px 10px 0;
+            color: #fef08a;
+            font-style: italic;
+            font-size: 0.92rem;
+        }
+        .hc-prep-ok-btn {
+            background: #eab308;
+            color: #0f172a;
+            border: none;
+            padding: 0.75rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 0.3rem;
+            transition: all 0.2s;
+        }
+        .hc-prep-ok-btn:hover {
+            background: #fde047;
+            transform: translateY(-2px);
         }
 
         /* Step actions */
@@ -1348,107 +2133,116 @@ function injectStyles() {
             gap: 0.6rem;
         }
         .quiz-opt-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #e2e8f0;
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: #f1f5f9;
+            padding: 0.85rem 1.1rem;
+            border-radius: 12px;
             text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
         }
         .quiz-opt-btn:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.15);
             border-color: #38bdf8;
-            color: #fff;
+            transform: translateX(4px);
         }
         .quiz-opt-btn.correct {
             background: rgba(34, 197, 94, 0.25) !important;
             border-color: #22c55e !important;
-            color: #4ade80 !important;
+            color: #86efac !important;
             font-weight: 700;
         }
         .quiz-opt-btn.wrong {
             background: rgba(239, 68, 68, 0.25) !important;
             border-color: #ef4444 !important;
-            color: #f87171 !important;
+            color: #fca5a5 !important;
         }
         .quiz-feedback-row {
-            margin-top: 0.8rem;
-            padding: 0.7rem 0.9rem;
-            border-radius: 8px;
+            margin-top: 0.9rem;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
             font-size: 0.95rem;
             line-height: 1.4;
         }
         .quiz-feedback-row.success {
             background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-left: 3px solid #22c55e;
             color: #86efac;
         }
         .quiz-feedback-row.error {
             background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-left: 3px solid #ef4444;
             color: #fca5a5;
         }
+
         .quiz-score-banner {
-            margin-top: 1.5rem;
-            padding: 1.4rem;
-            border-radius: 14px;
+            margin-top: 1.8rem;
+            border-radius: 16px;
+            padding: 1.5rem;
             text-align: center;
         }
         .quiz-score-banner.perfect {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.25) 100%);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(2, 132, 199, 0.25));
             border: 2px solid #22c55e;
-            color: #86efac;
         }
         .quiz-score-banner.good {
             background: rgba(2, 132, 199, 0.2);
             border: 2px solid #0284c7;
-            color: #7dd3fc;
         }
-        .score-icon { font-size: 2.2rem; margin-bottom: 0.3rem; }
-        .score-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.3rem; }
-        .score-desc { font-size: 1.05rem; }
+        .score-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .score-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fef08a;
+            margin-bottom: 0.2rem;
+        }
+        .score-desc {
+            color: #e2e8f0;
+            font-size: 1.05rem;
+        }
 
         /* Bottom Nav */
         .hc-bottom-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 1rem;
+            flex-wrap: wrap;
             margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         .back-to-list-btn, .next-story-btn {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #f8fafc;
+            color: #cbd5e1;
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s;
         }
         .back-to-list-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.16);
             color: #fff;
         }
         .next-story-btn {
             background: #eab308;
-            border-color: #eab308;
             color: #0f172a;
+            border-color: #eab308;
             margin-left: auto;
         }
         .next-story-btn:hover {
             background: #fde047;
-            transform: translateY(-2px);
+            transform: translateX(3px);
         }
 
-        @media (max-width: 650px) {
+        @media (max-width: 600px) {
             .hc-stories-grid {
                 grid-template-columns: 1fr;
             }
@@ -1464,13 +2258,6 @@ function injectStyles() {
             }
             .hc-font-control {
                 justify-content: center;
-            }
-            .hc-bottom-nav {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .next-story-btn {
-                margin-left: 0;
             }
         }
     `;

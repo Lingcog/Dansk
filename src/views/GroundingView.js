@@ -99,10 +99,16 @@ export function renderGroundingView(container, navigateFn) {
                 <!-- Himmel -->
                 <rect x="0" y="0" width="360" height="90" fill="url(#skyGradMob)" rx="10"/>
 
-                <!-- Drivende skyer -->
-                <g opacity="0.3">
-                    <path d="M 25 15 Q 40 8 55 15 Q 70 8 85 15 A 8 8 0 0 1 80 25 L 30 25 A 8 8 0 0 1 25 15 Z" fill="#ffffff"/>
-                    <path d="M 270 12 Q 285 5 300 12 Q 315 5 330 12 A 8 8 0 0 1 325 22 L 275 22 A 8 8 0 0 1 270 12 Z" fill="#ffffff"/>
+                <!-- Drivende skyer med levende animation -->
+                <g opacity="0.35">
+                    <g>
+                        <path d="M 25 15 Q 40 8 55 15 Q 70 8 85 15 A 8 8 0 0 1 80 25 L 30 25 A 8 8 0 0 1 25 15 Z" fill="#ffffff"/>
+                        <animateTransform attributeName="transform" type="translate" values="0,0; 25,0; 0,0" dur="20s" repeatCount="infinite"/>
+                    </g>
+                    <g>
+                        <path d="M 270 12 Q 285 5 300 12 Q 315 5 330 12 A 8 8 0 0 1 325 22 L 275 22 A 8 8 0 0 1 270 12 Z" fill="#ffffff"/>
+                        <animateTransform attributeName="transform" type="translate" values="0,0; -20,0; 0,0" dur="24s" repeatCount="infinite"/>
+                    </g>
                 </g>
 
                 <!-- Jorden i bunden -->
@@ -126,15 +132,36 @@ export function renderGroundingView(container, navigateFn) {
                           stroke="#fbbf24" stroke-width="2" stroke-dasharray="250" stroke-dashoffset="250" 
                           fill="none" filter="url(#glowGoldMob)" stroke-linecap="round"/>
                     
+                    <!-- Animeret energistrøm gennem tøjresnoren -->
+                    <path id="tether-rope-flux" d="M 260 42 Q 170 58 75 74" 
+                          stroke="#fef08a" stroke-width="2.5" stroke-dasharray="8 8" 
+                          fill="none" opacity="0" stroke-linecap="round">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="0.9s" repeatCount="infinite"/>
+                    </path>
+                    
                     <g id="ground-anchor" transform="translate(75, 74) scale(0)" opacity="0">
+                        <!-- Udvidende anker-ringe -->
+                        <circle cx="0" cy="0" r="3" fill="none" stroke="#fbbf24" stroke-width="1.5">
+                            <animate attributeName="r" values="3; 14; 3" dur="2s" repeatCount="infinite"/>
+                            <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="2s" repeatCount="infinite"/>
+                        </circle>
                         <circle cx="0" cy="0" r="3" fill="#fbbf24"/>
                         <path d="M -6 1.5 Q 0 8 6 1.5" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
                         <line x1="0" y1="-1.5" x2="0" y2="5" stroke="#fbbf24" stroke-width="1.5"/>
                     </g>
                 </g>
 
+                <!-- Landing-chokbølge ved jorden (aktiveres ved trin >= 4) -->
+                <g id="landing-ripple" transform="translate(260, 74)" opacity="0">
+                    <ellipse cx="0" cy="0" rx="4" ry="2" fill="none" stroke="#4ade80" stroke-width="2">
+                        <animate attributeName="rx" values="4; 34; 4" dur="2s" repeatCount="infinite"/>
+                        <animate attributeName="ry" values="2; 8; 2" dur="2s" repeatCount="infinite"/>
+                        <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="2s" repeatCount="infinite"/>
+                    </ellipse>
+                </g>
+
                 <!-- LUFTBALLONEN (Ordet "barn") -->
-                <g id="balloon-craft" class="balloon-craft" transform="translate(260, 26)">
+                <g id="balloon-craft" class="balloon-craft balloon-floating-anim" transform="translate(260, 26)">
                     <!-- Ballon kuppel -->
                     <path d="M 0 -17 C -17 -17 -22 2 -8 14 L -4 18 L 4 18 L 8 14 C 22 2 17 -17 0 -17 Z" 
                           fill="url(#balloonGradMob)" stroke="#fda4af" stroke-width="1.2" filter="drop-shadow(0 3px 6px rgba(0,0,0,0.35))"/>
@@ -142,10 +169,18 @@ export function renderGroundingView(container, navigateFn) {
                     <!-- Mønsterstribe -->
                     <path d="M 0 -17 C -6 -17 -8 2 -2 18 L 2 18 C 8 2 6 -17 0 -17 Z" fill="rgba(255,255,255,0.25)"/>
 
-                    <!-- Tidsmotor / flamme (Trin 2 live) -->
+                    <!-- Tidsmotor / flamme (Trin 2 live med levende flamme-animation) -->
                     <g id="burner-flame" opacity="0" transform="translate(0, 19)">
-                        <circle cx="0" cy="2" r="3" fill="#f59e0b" filter="url(#glowGoldMob)"/>
-                        <polygon points="-2,1 0,-3 2,1" fill="#fbbf24"/>
+                        <circle cx="0" cy="2" r="3.5" fill="#f59e0b" filter="url(#glowGoldMob)">
+                            <animate attributeName="r" values="3; 5.5; 3" dur="0.45s" repeatCount="infinite"/>
+                            <animate attributeName="opacity" values="0.7; 1; 0.7" dur="0.45s" repeatCount="infinite"/>
+                        </circle>
+                        <polygon points="-2,1 0,-3 2,1" fill="#fbbf24">
+                            <animate attributeName="points" values="-2,1 0,-3 2,1; -2.5,1.5 0,-5.5 2.5,1.5; -2,1 0,-3 2,1" dur="0.32s" repeatCount="infinite"/>
+                        </polygon>
+                        <polygon points="-1,1 0,-1.5 1,1" fill="#ffffff">
+                            <animate attributeName="opacity" values="0.6; 1; 0.6" dur="0.22s" repeatCount="infinite"/>
+                        </polygon>
                     </g>
 
                     <!-- Snore til kurven -->
@@ -194,8 +229,10 @@ export function renderGroundingView(container, navigateFn) {
     // DOM referencer
     const balloonCraft = stageCard.querySelector('#balloon-craft');
     const tetherRope = stageCard.querySelector('#tether-rope');
+    const tetherRopeFlux = stageCard.querySelector('#tether-rope-flux');
     const groundAnchor = stageCard.querySelector('#ground-anchor');
     const burnerFlame = stageCard.querySelector('#burner-flame');
+    const landingRipple = stageCard.querySelector('#landing-ripple');
     const balloonBadgeText = stageCard.querySelector('#balloon-badge-text');
 
     const liveSlotNoun = stageCard.querySelector('#live-slot-noun');
@@ -203,13 +240,27 @@ export function renderGroundingView(container, navigateFn) {
 
     // Opdater synkron scene
     function updateLiveStage() {
-        if (state.nounAnchor) {
+        if (!state.nounAnchor) {
+            tetherRope.style.strokeDashoffset = '250';
+            groundAnchor.style.transform = 'translate(75px, 74px) scale(0)';
+            groundAnchor.style.opacity = '0';
+            if (tetherRopeFlux) tetherRopeFlux.style.opacity = '0';
+            balloonBadgeText.textContent = '🎈 Abstrakt (svæver)';
+            balloonBadgeText.style.fill = '#38bdf8';
+            liveSlotNoun.className = 'slot-item slot-empty';
+            liveSlotNoun.textContent = '1. Anker ?';
+        } else {
             tetherRope.style.strokeDashoffset = '0';
             tetherRope.style.transition = 'stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
             
             groundAnchor.style.transform = 'translate(75px, 74px) scale(1)';
             groundAnchor.style.opacity = '1';
             groundAnchor.style.transition = 'transform 0.4s ease 0.6s, opacity 0.4s ease 0.6s';
+
+            if (tetherRopeFlux) {
+                tetherRopeFlux.style.opacity = '0.95';
+                tetherRopeFlux.style.transition = 'opacity 0.6s ease 0.5s';
+            }
 
             balloonBadgeText.textContent = `⚓ Forankret: "${state.nounAnchor}"`;
             balloonBadgeText.style.fill = '#fcd34d';
@@ -218,7 +269,11 @@ export function renderGroundingView(container, navigateFn) {
             liveSlotNoun.textContent = state.nounAnchor;
         }
 
-        if (state.verbAnchor) {
+        if (!state.verbAnchor) {
+            burnerFlame.style.opacity = '0';
+            liveSlotVerb.className = 'slot-item slot-empty';
+            liveSlotVerb.textContent = '2. Tid ?';
+        } else {
             burnerFlame.style.opacity = '1';
             burnerFlame.style.transition = 'opacity 0.4s ease';
 
@@ -230,10 +285,21 @@ export function renderGroundingView(container, navigateFn) {
         }
 
         if (state.step >= 4) {
+            balloonCraft.classList.remove('balloon-floating-anim');
             balloonCraft.style.transform = 'translate(260px, 46px)';
             balloonCraft.style.transition = 'transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            if (landingRipple) {
+                landingRipple.style.opacity = '1';
+                landingRipple.style.transition = 'opacity 0.6s ease 0.8s';
+            }
             balloonBadgeText.textContent = `🌱 Landet på jorden!`;
             balloonBadgeText.style.fill = '#4ade80';
+        } else {
+            balloonCraft.classList.add('balloon-floating-anim');
+            balloonCraft.style.transform = '';
+            if (landingRipple) {
+                landingRipple.style.opacity = '0';
+            }
         }
     }
 
@@ -531,8 +597,17 @@ export function renderGroundingView(container, navigateFn) {
                         <path d="M 85 68 Q 100 58 115 68 L 115 105 L 85 105 Z" fill="#0284c7"/>
                         <circle cx="180" cy="58" r="9" fill="#f43f5e"/>
                         <path d="M 170 78 Q 180 70 190 78 L 190 105 L 170 105 Z" fill="#e11d48"/>
-                        <path d="M 115 74 Q 148 60 170 80" stroke="#f43f5e" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <text x="145" y="55" font-size="16" text-anchor="middle">❤️</text>
+                        
+                        <!-- Forbindende kærligheds-/relationsbue med aktivt strømmende partikler -->
+                        <path d="M 115 74 Q 148 60 170 80" stroke="#f43f5e" stroke-width="3" stroke-dasharray="6 4" fill="none" stroke-linecap="round">
+                            <animate attributeName="stroke-dashoffset" from="20" to="0" dur="0.9s" repeatCount="infinite"/>
+                        </path>
+                        
+                        <!-- Pulserende hjerte-ikon -->
+                        <text x="145" y="55" font-size="16" text-anchor="middle">
+                            ❤️
+                            <animate attributeName="font-size" values="14; 18; 14" dur="1.2s" repeatCount="infinite"/>
+                        </text>
                         <text x="100" y="115" font-size="11" fill="#cbd5e1" font-weight="700" text-anchor="middle">Mig (taleren)</text>
                         <text x="180" y="115" font-size="11" fill="#cbd5e1" font-weight="700" text-anchor="middle">Mit barn</text>
                     </svg>
@@ -543,14 +618,20 @@ export function renderGroundingView(container, navigateFn) {
             sceneHtml = `
                 <div class="scene-frame-inner">
                     <svg viewBox="0 0 320 120" class="scene-vector-svg">
-                        <polygon points="160,10 90,110 230,110" fill="rgba(250, 204, 21, 0.18)"/>
+                        <!-- Lysende kegle/spotlight der pulserer -->
+                        <polygon points="160,10 90,110 230,110" fill="rgba(250, 204, 21, 0.22)">
+                            <animate attributeName="opacity" values="0.7; 1; 0.7" dur="2s" repeatCount="infinite"/>
+                        </polygon>
                         <g opacity="0.35">
                             <circle cx="70" cy="65" r="8" fill="#94a3b8"/>
                             <path d="M 62 80 Q 70 75 78 80 L 78 105 L 62 105 Z" fill="#64748b"/>
                             <circle cx="250" cy="65" r="8" fill="#94a3b8"/>
                             <path d="M 242 80 Q 250 75 258 80 L 258 105 L 242 105 Z" fill="#64748b"/>
                         </g>
-                        <circle cx="160" cy="60" r="9.5" fill="#facc15" filter="drop-shadow(0 0 6px #facc15)"/>
+                        <!-- Udvalgt barn med pulserende lyskrone -->
+                        <circle cx="160" cy="60" r="10" fill="#facc15" filter="drop-shadow(0 0 6px #facc15)">
+                            <animate attributeName="r" values="9.5; 11.5; 9.5" dur="1.5s" repeatCount="infinite"/>
+                        </circle>
                         <path d="M 150 80 Q 160 72 170 80 L 170 105 L 150 105 Z" fill="#eab308"/>
                         <text x="160" y="115" font-size="11" fill="#facc15" font-weight="800" text-anchor="middle">Et barn (i mængden)</text>
                     </svg>
@@ -566,7 +647,10 @@ export function renderGroundingView(container, navigateFn) {
                             <path d="M -11 32 Q 0 22 11 32 L 11 68 L -11 68 Z" fill="#0284c7"/>
                             <line x1="8" y1="34" x2="42" y2="29" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/>
                         </g>
-                        <line x1="110" y1="65" x2="230" y2="65" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6 4"/>
+                        <!-- Animeret udpegende laser-/strålelinje mod barnet -->
+                        <line x1="110" y1="65" x2="230" y2="65" stroke="#38bdf8" stroke-width="3" stroke-dasharray="8 5">
+                            <animate attributeName="stroke-dashoffset" from="26" to="0" dur="0.8s" repeatCount="infinite"/>
+                        </line>
                         <polygon points="230,62 238,65 230,68" fill="#38bdf8"/>
                         <g transform="translate(260, 50)">
                             <circle cx="0" cy="9" r="8.5" fill="#f43f5e"/>
@@ -582,7 +666,11 @@ export function renderGroundingView(container, navigateFn) {
             sceneHtml = `
                 <div class="scene-frame-inner">
                     <svg viewBox="0 0 320 120" class="scene-vector-svg">
-                        <ellipse cx="160" cy="70" rx="80" ry="34" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 4"/>
+                        <!-- Nærhedssfære med pulserende omkreds -->
+                        <ellipse cx="160" cy="70" rx="80" ry="34" fill="rgba(56, 189, 248, 0.14)" stroke="#38bdf8" stroke-width="2" stroke-dasharray="8 5">
+                            <animate attributeName="stroke-dashoffset" from="0" to="26" dur="1.4s" repeatCount="infinite"/>
+                            <animate attributeName="rx" values="78; 83; 78" dur="2s" repeatCount="infinite"/>
+                        </ellipse>
                         <g transform="translate(135, 40)">
                             <circle cx="0" cy="10" r="11" fill="#38bdf8"/>
                             <path d="M -11 32 Q 0 22 11 32 L 11 64 L -11 64 Z" fill="#0284c7"/>
@@ -1229,6 +1317,27 @@ export function renderGroundingView(container, navigateFn) {
                 box-shadow: 0 0 10px currentColor;
                 z-index: 3;
                 transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+                animation: pulseGlowDot 1.4s ease-in-out infinite alternate;
+            }
+            @keyframes pulseGlowDot {
+                0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px currentColor; }
+                100% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 16px currentColor; }
+            }
+
+            /* Animeret svævende luftballon */
+            .balloon-floating-anim {
+                animation: balloonFloat 3.2s ease-in-out infinite alternate;
+            }
+            @keyframes balloonFloat {
+                0% {
+                    transform: translate(260px, 26px);
+                }
+                50% {
+                    transform: translate(260px, 19px);
+                }
+                100% {
+                    transform: translate(260px, 26px);
+                }
             }
             .btn-continue-chain {
                 background: #38bdf8;

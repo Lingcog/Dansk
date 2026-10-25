@@ -129,7 +129,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         if (base === 'skal') {
             badgeText = `⚡ SKAL: Ydre pres & Nødvendighed`;
             forceSvgOverlay = `
-                <!-- SKAL: Ydre trykbølger / kraftvektorer bag agens -->
+                <!-- SKAL: Ydre trykbølger / kraftvektorer bag agens med aktiv skubbende animation -->
                 <defs>
                     <linearGradient id="thrustGrad" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stop-color="#f97316" stop-opacity="0.2"/>
@@ -141,18 +141,33 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </filter>
                 </defs>
 
-                <!-- 3 kraftfulde fremaddrivende pile bag barnet (i feltet x=32 til 72) -->
+                <!-- 3 kraftfulde fremaddrivende pile bag barnet med skubbende animation -->
                 <g class="force-push-group" transform="translate(34, 42)">
-                    <path d="M 0 0 L 16 14 L 0 28" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.6"/>
-                    <path d="M 12 0 L 28 14 L 12 28" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85"/>
-                    <path d="M 24 0 L 40 14 L 24 28" stroke="#fbbf24" stroke-width="4.5" stroke-linecap="round" fill="none" filter="url(#glowOrange)"/>
+                    <path d="M 0 0 L 16 14 L 0 28" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.6">
+                        <animateTransform attributeName="transform" type="translate" values="0,0; 10,0; 0,0" dur="0.9s" repeatCount="infinite" />
+                    </path>
+                    <path d="M 12 0 L 28 14 L 12 28" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85">
+                        <animateTransform attributeName="transform" type="translate" values="0,0; 10,0; 0,0" dur="0.9s" begin="0.15s" repeatCount="infinite" />
+                    </path>
+                    <path d="M 24 0 L 40 14 L 24 28" stroke="#fbbf24" stroke-width="4.5" stroke-linecap="round" fill="none" filter="url(#glowOrange)">
+                        <animateTransform attributeName="transform" type="translate" values="0,0; 10,0; 0,0" dur="0.9s" begin="0.3s" repeatCount="infinite" />
+                    </path>
                 </g>
 
-                <!-- Trykfelt der skubber direkte i ryggen -->
-                <path d="M 75 50 Q 86 60 75 70" stroke="#fbbf24" stroke-width="3" fill="none" opacity="0.8"/>
+                <!-- Trykstråle der pumper direkte i ryggen -->
+                <path d="M 15 56 L 74 56" stroke="#fbbf24" stroke-width="4.5" stroke-dasharray="12 6" stroke-linecap="round" filter="url(#glowOrange)">
+                    <animate attributeName="stroke-dashoffset" from="36" to="0" dur="0.65s" repeatCount="infinite" />
+                </path>
 
-                <!-- Uundgåelig kraftlinje på jorden mellem barn og mad -->
-                <line x1="102" y1="86" x2="242" y2="86" stroke="#f97316" stroke-width="3.5" stroke-dasharray="8 4" stroke-linecap="round" opacity="0.85"/>
+                <!-- Trykfelt der skubber direkte i ryggen med bølgebevægelse -->
+                <path d="M 75 50 Q 86 60 75 70" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#glowOrange)">
+                    <animate attributeName="d" values="M 72 49 Q 84 59 72 69; M 77 49 Q 90 59 77 69; M 72 49 Q 84 59 72 69" dur="0.8s" repeatCount="infinite" />
+                </path>
+
+                <!-- Uundgåelig kraftlinje på jorden mellem barn og mad med fremadrettet flow -->
+                <line x1="102" y1="86" x2="242" y2="86" stroke="#f97316" stroke-width="3.5" stroke-dasharray="10 5" stroke-linecap="round" filter="url(#glowOrange)">
+                    <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.8s" repeatCount="infinite" />
+                </line>
             `;
         } else if (base === 'må') {
             badgeText = `🚪 MÅ: Barrieren er løftet / Fri bane`;
@@ -165,26 +180,48 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </filter>
                 </defs>
 
-                <!-- Løftet barriere/bom præcis i midten (x=172) -->
+                <!-- Løftet barriere/bom præcis i midten (x=172) med grønt svaj -->
                 <g transform="translate(172, 38)">
                     <!-- Stolpe -->
                     <rect x="-3" y="18" width="6" height="30" rx="2" fill="#334155"/>
                     <circle cx="0" cy="18" r="4.5" fill="#22c55e"/>
 
                     <!-- Bommen er svunget opad i fri position -->
-                    <path d="M 0 18 L 24 -16" stroke="#4ade80" stroke-width="4" stroke-linecap="round" filter="url(#glowGreen)"/>
+                    <line x1="0" y1="18" x2="24" y2="-16" stroke="#4ade80" stroke-width="4.5" stroke-linecap="round" filter="url(#glowGreen)">
+                        <animate attributeName="y2" values="-12; -18; -12" dur="2s" repeatCount="infinite" />
+                    </line>
 
-                    <!-- Opløsnings-partikler i luften -->
-                    <circle cx="8" cy="8" r="1.5" fill="#86efac" opacity="0.7"/>
-                    <circle cx="18" cy="0" r="2" fill="#86efac" opacity="0.9"/>
-                    <circle cx="26" cy="-8" r="1.5" fill="#86efac" opacity="0.6"/>
+                    <!-- Opløsnings-partikler i luften der svæver opad -->
+                    <circle cx="8" cy="8" r="2" fill="#86efac">
+                        <animate attributeName="cy" values="16; -8; 16" dur="1.8s" repeatCount="infinite" />
+                        <animate attributeName="opacity" values="0.3; 1; 0.3" dur="1.8s" repeatCount="infinite" />
+                    </circle>
+                    <circle cx="18" cy="0" r="2.5" fill="#86efac">
+                        <animate attributeName="cy" values="12; -14; 12" dur="2s" begin="0.3s" repeatCount="infinite" />
+                        <animate attributeName="opacity" values="0.4; 1; 0.4" dur="2s" begin="0.3s" repeatCount="infinite" />
+                    </circle>
+                    <circle cx="26" cy="-8" r="2" fill="#86efac">
+                        <animate attributeName="cy" values="6; -20; 6" dur="2.2s" begin="0.6s" repeatCount="infinite" />
+                        <animate attributeName="opacity" values="0.3; 0.9; 0.3" dur="2.2s" begin="0.6s" repeatCount="infinite" />
+                    </circle>
                 </g>
 
-                <!-- Åben, grøn lysvej hen over jorden mellem barn og mad -->
-                <line x1="102" y1="86" x2="242" y2="86" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" filter="url(#glowGreen)"/>
-                <circle cx="132" cy="86" r="3" fill="#86efac"/>
-                <circle cx="172" cy="86" r="3" fill="#86efac"/>
-                <circle cx="212" cy="86" r="3" fill="#86efac"/>
+                <!-- Åben, grøn lysvej hen over jorden mellem barn og mad der strømmer frit -->
+                <line x1="102" y1="86" x2="242" y2="86" stroke="#22c55e" stroke-width="4" stroke-dasharray="14 7" stroke-linecap="round" filter="url(#glowGreen)">
+                    <animate attributeName="stroke-dashoffset" from="42" to="0" dur="1.2s" repeatCount="infinite" />
+                </line>
+                <circle cx="132" cy="86" r="3.5" fill="#86efac">
+                    <animate attributeName="r" values="2.5; 5; 2.5" dur="1.4s" repeatCount="infinite"/>
+                    <animate attributeName="opacity" values="0.6; 1; 0.6" dur="1.4s" repeatCount="infinite"/>
+                </circle>
+                <circle cx="172" cy="86" r="3.5" fill="#86efac">
+                    <animate attributeName="r" values="2.5; 5; 2.5" dur="1.4s" begin="0.45s" repeatCount="infinite"/>
+                    <animate attributeName="opacity" values="0.6; 1; 0.6" dur="1.4s" begin="0.45s" repeatCount="infinite"/>
+                </circle>
+                <circle cx="212" cy="86" r="3.5" fill="#86efac">
+                    <animate attributeName="r" values="2.5; 5; 2.5" dur="1.4s" begin="0.9s" repeatCount="infinite"/>
+                    <animate attributeName="opacity" values="0.6; 1; 0.6" dur="1.4s" begin="0.9s" repeatCount="infinite"/>
+                </circle>
             `;
         } else if (base === 'vil') {
             badgeText = `❤️ VIL: Indre vilje & Magnetisk træk`;
@@ -197,18 +234,39 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </filter>
                 </defs>
 
-                <!-- Glødende hjerte/vilje-kerne i barnets bryst -->
-                <circle cx="86" cy="52" r="7.5" fill="#f43f5e" filter="url(#glowRose)"/>
-                <circle cx="86" cy="52" r="3.5" fill="#ffffff"/>
+                <!-- Glødende hjerte/vilje-kerne i barnets bryst der pulserer livagtigt -->
+                <circle cx="86" cy="52" r="7.5" fill="#f43f5e" filter="url(#glowRose)">
+                    <animate attributeName="r" values="6; 9.5; 6.5; 10; 6" dur="1.3s" repeatCount="infinite" />
+                </circle>
+                <circle cx="86" cy="52" r="3.5" fill="#ffffff">
+                    <animate attributeName="opacity" values="0.7; 1; 0.7" dur="1.3s" repeatCount="infinite" />
+                </circle>
 
-                <!-- Magnetisk attraktionsbue fra barn mod mad -->
-                <path d="M 96 52 Q 172 20 244 54" stroke="#fb7185" stroke-width="3" fill="none" stroke-linecap="round" 
-                      stroke-dasharray="6 4" filter="url(#glowRose)"/>
+                <!-- Magnetisk attraktionsbue fra barn mod mad med aktivt partikelflow -->
+                <path d="M 96 52 Q 172 20 244 54" stroke="#fb7185" stroke-width="3.5" fill="none" stroke-linecap="round" 
+                      stroke-dasharray="10 6" filter="url(#glowRose)">
+                    <animate attributeName="stroke-dashoffset" from="32" to="0" dur="0.75s" repeatCount="infinite" />
+                </path>
+                <path d="M 96 56 Q 172 30 244 58" stroke="#f43f5e" stroke-width="2" fill="none" opacity="0.6">
+                    <animate attributeName="d" values="M 96 56 Q 172 26 244 58; M 96 56 Q 172 36 244 58; M 96 56 Q 172 26 244 58" dur="1.5s" repeatCount="infinite" />
+                </path>
 
-                <!-- Fremadrettede intentionsstråler -->
-                <line x1="98" y1="48" x2="110" y2="46" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
-                <line x1="100" y1="54" x2="114" y2="54" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="98" y1="60" x2="110" y2="62" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
+                <!-- Fremadrettede intentionsstråler der pulserer -->
+                <line x1="98" y1="48" x2="114" y2="45" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round">
+                    <animate attributeName="x2" values="108; 118; 108" dur="1s" repeatCount="infinite"/>
+                </line>
+                <line x1="100" y1="53" x2="120" y2="53" stroke="#fda4af" stroke-width="3" stroke-linecap="round">
+                    <animate attributeName="x2" values="112; 124; 112" dur="1s" repeatCount="infinite"/>
+                </line>
+                <line x1="98" y1="58" x2="114" y2="61" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round">
+                    <animate attributeName="x2" values="108; 118; 108" dur="1s" repeatCount="infinite"/>
+                </line>
+
+                <!-- Magnetiske tiltrækningsringe ved maden -->
+                <circle cx="254" cy="54" r="14" fill="none" stroke="#fb7185" stroke-width="1.8">
+                    <animate attributeName="r" values="10; 22; 10" dur="1.5s" repeatCount="infinite"/>
+                    <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="1.5s" repeatCount="infinite"/>
+                </circle>
             `;
         } else if (base === 'kan') {
             badgeText = `🌐 KAN: Kapacitet & Mulighedsfelt`;
@@ -220,20 +278,33 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <feComposite in="SourceGraphic" in2="blur" operator="over"/>
                     </filter>
                     <linearGradient id="auraGrad" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#0284c7" stop-opacity="0.35"/>
-                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1"/>
+                        <stop offset="0%" stop-color="#0284c7" stop-opacity="0.4"/>
+                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.15"/>
                     </linearGradient>
                 </defs>
 
-                <!-- Stor kompetence-aura omkring subjektet og frem mod målet -->
-                <ellipse cx="135" cy="56" rx="55" ry="30" fill="url(#auraGrad)" stroke="#38bdf8" stroke-width="1.8" 
-                         stroke-dasharray="6 3" filter="url(#glowCyan)"/>
+                <!-- Stor kompetence-aura omkring agens og målet der udvider sig med energi -->
+                <ellipse cx="165" cy="56" rx="75" ry="32" fill="url(#auraGrad)" stroke="#38bdf8" stroke-width="2" 
+                         stroke-dasharray="10 6" filter="url(#glowCyan)">
+                    <animate attributeName="stroke-dashoffset" from="0" to="48" dur="2s" repeatCount="infinite" />
+                    <animate attributeName="rx" values="72; 82; 72" dur="2.4s" repeatCount="infinite" />
+                    <animate attributeName="ry" values="30; 34; 30" dur="2.4s" repeatCount="infinite" />
+                </ellipse>
 
-                <!-- Aura omkring barnets hoved/ressource -->
-                <circle cx="86" cy="38" r="14" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.8"/>
+                <!-- Roterende og pulserende kompetence-ringe omkring barnets hoved/ressource -->
+                <circle cx="86" cy="38" r="14" fill="none" stroke="#38bdf8" stroke-width="1.8">
+                    <animate attributeName="r" values="10; 22; 10" dur="1.8s" repeatCount="infinite" />
+                    <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="1.8s" repeatCount="infinite" />
+                </circle>
+                <circle cx="86" cy="38" r="14" fill="none" stroke="#38bdf8" stroke-width="1.2">
+                    <animate attributeName="r" values="16; 28; 16" dur="1.8s" begin="0.4s" repeatCount="infinite" />
+                    <animate attributeName="opacity" values="0.7; 0.05; 0.7" dur="1.8s" repeatCount="infinite" />
+                </circle>
 
-                <!-- Solid cyan bro langs jorden mellem barn og mad -->
-                <line x1="102" y1="86" x2="242" y2="86" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" filter="url(#glowCyan)"/>
+                <!-- Solid cyan bro langs jorden mellem barn og mad med aktiv lysstrøm -->
+                <line x1="102" y1="86" x2="242" y2="86" stroke="#38bdf8" stroke-width="4.5" stroke-dasharray="14 7" filter="url(#glowCyan)">
+                    <animate attributeName="stroke-dashoffset" from="42" to="0" dur="1.1s" repeatCount="infinite" />
+                </line>
             `;
         }
 
@@ -292,9 +363,15 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
                         <!-- Mad -->
                         <circle cx="0" cy="31" r="4.5" fill="#f59e0b"/>
-                        <!-- Duft/Damp -->
-                        <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
-                        <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
+                        <!-- Duft/Damp med levende opdrift -->
+                        <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
+                            <animate attributeName="d" values="M -3 25 Q -5 19 0 14; M -3 25 Q -2 18 -4 13; M -3 25 Q -5 19 0 14" dur="2s" repeatCount="infinite"/>
+                            <animate attributeName="opacity" values="0.4; 0.9; 0.4" dur="2s" repeatCount="infinite"/>
+                        </path>
+                        <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
+                            <animate attributeName="d" values="M 3 26 Q 5 20 1 15; M 3 26 Q 2 19 4 14; M 3 26 Q 5 20 1 15" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
+                            <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
+                        </path>
 
                         <!-- Mærkaten for handlingen (STOR OG TYDELIG TEKST) -->
                         <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
@@ -305,9 +382,11 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         </text>
                     </g>
 
-                    <!-- Statusbadge i toppen af scenen -->
+                    <!-- Statusbadge i toppen af scenen med pulserende glød -->
                     <g class="stage-top-badge" transform="translate(180, 15)">
-                        <rect x="-105" y="-10" width="210" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.3"/>
+                        <rect x="-108" y="-10" width="216" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.3">
+                            <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
+                        </rect>
                         <text x="0" y="4" fill="${activeColor}" font-size="10.2" font-weight="900" text-anchor="middle">
                             ${badgeText}
                         </text>
@@ -457,9 +536,35 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </div>
                 </div>
 
+                <!-- ANIMERET TIDS-LINJE MED GLIDENDE MARKØR -->
+                <div class="timeline-slider-track">
+                    <svg viewBox="0 0 320 46" class="timeline-svg-fluid" preserveAspectRatio="xMidYMid meet">
+                        <line x1="45" y1="20" x2="275" y2="20" stroke="rgba(255,255,255,0.2)" stroke-width="3.5" stroke-linecap="round" />
+                        
+                        <!-- Flow-strøm langs tidsaksen -->
+                        <line x1="45" y1="20" x2="275" y2="20" stroke="${MODAL_FORMS[base].color}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="10 6" opacity="0.45">
+                            <animate attributeName="stroke-dashoffset" from="32" to="0" dur="1s" repeatCount="infinite"/>
+                        </line>
+                        
+                        <!-- Datid punkt -->
+                        <circle cx="80" cy="20" r="5" fill="#475569" />
+                        <text x="80" y="38" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle">Datid (i går)</text>
+                        
+                        <!-- Nutid punkt -->
+                        <circle cx="240" cy="20" r="5" fill="#475569" />
+                        <text x="240" y="38" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle">Nutid (lige nu)</text>
+                        
+                        <!-- Glidende tidsmarkør med pulserende glød -->
+                        <circle id="timeline-moving-dot" cx="${state.isPast ? '80' : '240'}" cy="20" r="9" 
+                                fill="${MODAL_FORMS[base].color}" style="transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 0 8px ${MODAL_FORMS[base].color});">
+                            <animate attributeName="r" values="8; 10.5; 8" dur="1.5s" repeatCount="infinite" />
+                        </circle>
+                    </svg>
+                </div>
+
                 <!-- VISUELT TIDS-DIAGRAM -->
                 <div class="finiteness-diagram">
-                    <div class="diagram-box box-v1">
+                    <div class="diagram-box box-v1 pulse-finite-active">
                         <div class="diag-tag">Verbum 1 (Modalverbum)</div>
                         <div class="diag-word" id="v1-display" style="color: ${MODAL_FORMS[base].color};">
                             ${getCurrentModalWord()}
@@ -819,6 +924,11 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             border-color: var(--card-accent) !important;
             background: rgba(15, 23, 42, 0.95) !important;
             box-shadow: 0 0 16px var(--card-accent);
+            animation: cardActiveGlow 2.4s ease-in-out infinite alternate;
+        }
+        @keyframes cardActiveGlow {
+            0% { box-shadow: 0 0 8px var(--card-accent); transform: scale(1.005); }
+            100% { box-shadow: 0 0 18px var(--card-accent); transform: scale(1.02); }
         }
         .card-head {
             display: flex;
@@ -947,6 +1057,33 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             border-color: #38bdf8;
             color: #ffffff;
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Animeret Tidslinje-slider */
+        .timeline-slider-track {
+            background: #0b1120;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.4rem 0.6rem;
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timeline-svg-fluid {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+        }
+
+        .pulse-finite-active {
+            animation: pulseV1Flash 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes pulseV1Flash {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.18); filter: brightness(1.5); }
+            100% { transform: scale(1); filter: brightness(1); }
         }
 
         /* Finithed Diagram */

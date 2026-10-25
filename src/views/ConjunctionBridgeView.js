@@ -813,7 +813,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                         <span>↺ Start forfra på grammatik-stien</span>
                     </button>
                     <button type="button" class="btn-secondary-link" id="btn-goto-daily">
-                        <span>Dagens Opgave 🎯</span>
+                        <span>Lær grammatik 🎯</span>
                     </button>
                 </div>
             </div>

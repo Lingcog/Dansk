@@ -45780,9 +45780,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
         .stage-svg-body {
             width: 100%;
-            max-height: 145px;
+            max-height: 320px;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 1;
         }
         .stage-frame-wrapper.is-collapsed .stage-svg-body {
@@ -46860,9 +46860,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
         .stage-svg-body {
             width: 100%;
-            max-height: 145px;
+            max-height: 320px;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 1;
         }
         .stage-frame-wrapper.is-collapsed .stage-svg-body {
@@ -47590,7 +47590,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             .ctrl-btn { font-size: 0.78rem; padding: 0.5rem 0.25rem; }
             .syntese-phrase { font-size: 1.02rem; }
         }
-    `,document.head.appendChild(O),J.appendChild(r)}function jo(J,y,t={}){const r={nounAnchor:t.nounAnchor||"Mit",selectedNoun:t.selectedNoun||"barn",selectedAdjective:t.selectedAdjective||t.adjectivePart||"lille",adjectiveForm:t.adjectiveForm||"definite",selectedModal:t.selectedModal||"skal",verbAnchor:t.verbAnchor||"spiser",selectedVerb:t.selectedVerb||"spise",isPast:t.isPast||!1,selectedAdverb:t.selectedAdverb||"langsomt"};let n=!1;function s(j){if(!("speechSynthesis"in window)||!j)return;window.speechSynthesis.cancel();const h=new SpeechSynthesisUtterance(j);h.lang="da-DK",h.rate=.9,window.speechSynthesis.speak(h)}const i={langsomt:{id:"langsomt",word:"langsomt",category:"maade",categoryTitle:"Mådesadverbium (Hvordan?)",icon:"🐢",color:"#38bdf8",colorGlow:"rgba(56, 189, 248, 0.45)",badge:"Roligt tempo (langsomt)",desc:"Handlingen foregår med tålmodighed, ro og uden hastværk.",ruleNote:"Dannes af adjektivet <em>langsom</em> + endelsen <strong>-t</strong>.",isCentral:!1},hurtigt:{id:"hurtigt",word:"hurtigt",category:"maade",categoryTitle:"Mådesadverbium (Hvordan?)",icon:"⚡",color:"#22c55e",colorGlow:"rgba(34, 197, 94, 0.5)",badge:"Høj fart & energi (hurtigt)",desc:"Handlingen accelererer med hurtige bevægelser og fremdrift.",ruleNote:"Dannes af adjektivet <em>hurtig</em> + endelsen <strong>-t</strong>.",isCentral:!1},pænt:{id:"pænt",word:"pænt",category:"maade",categoryTitle:"Mådesadverbium (Hvordan?)",icon:"✨",color:"#ec4899",colorGlow:"rgba(236, 72, 153, 0.45)",badge:"Gode manerer & orden (pænt)",desc:"Handlingen udføres ordentligt, høfligt og nydeligt ved bordet.",ruleNote:"Dannes af adjektivet <em>pæn</em> + endelsen <strong>-t</strong>.",isCentral:!1},meget:{id:"meget",word:"meget",category:"grad",categoryTitle:"Gradsadverbium (Hvor meget?)",icon:"🔥",color:"#f59e0b",colorGlow:"rgba(245, 158, 11, 0.5)",badge:"Høj intensitet & mængde (meget)",desc:"Skruer helt op for handlingens styrke, appetit og volumen.",ruleNote:"Gradsadverbium der forstærker handlingens intensitet.",isCentral:!1},lidt:{id:"lidt",word:"lidt",category:"grad",categoryTitle:"Gradsadverbium (Hvor meget?)",icon:"💧",color:"#a855f7",colorGlow:"rgba(168, 85, 247, 0.45)",badge:"Lille mængde & forsigtighed (lidt)",desc:"En beskeden, tilbageholdende og dæmpet mængde af handlingen.",ruleNote:"Gradsadverbium der dæmper verbets kraft.",isCentral:!1},ikke:{id:"ikke",word:"ikke",category:"central",categoryTitle:"Centraladverbium (Nægtelse)",icon:"🛑",color:"#ef4444",colorGlow:"rgba(239, 68, 68, 0.55)",badge:"Nægtelse / Afvisning (ikke)",desc:"Benægter handlingen totalt. Handlingen afbrydes eller finder ikke sted!",ruleNote:'📌 Placeres på <strong>3. pladsen</strong> lige efter V1: <em>"Mit barn skal <strong>ikke</strong> spise"</em>.',isCentral:!0},gerne:{id:"gerne",word:"gerne",category:"central",categoryTitle:"Centraladverbium (Holdning & Lyst)",icon:"💖",color:"#fb7185",colorGlow:"rgba(251, 113, 133, 0.5)",badge:"Lyst & personlig vilje (gerne)",desc:"Udtrykker en positiv holdning, velvilje og lyst til handlingen.",ruleNote:'📌 Centraladverbium lige efter V1: <em>"Mit barn vil <strong>gerne</strong> spise"</em>.',isCentral:!0},nu:{id:"nu",word:"nu",category:"tid",categoryTitle:"Tidsadverbium (Hvornår?)",icon:"⏰",color:"#10b981",colorGlow:"rgba(16, 185, 129, 0.45)",badge:"Tidsanker i øjeblikket (nu)",desc:"Forankrer handlingen præcist i dette nuværende sekund.",ruleNote:'Tidsadverbium der svarer på "hvornår sker handlingen?".',isCentral:!1}};function E(){return i[r.selectedAdverb]||i.langsomt}function A(){const j=E(),h=r.selectedModal,m=r.selectedVerb,k=`${r.nounAnchor} ${r.selectedAdjective} ${r.selectedNoun}`;return j.isCentral?`${k} ${h} ${j.word} ${m}.`:`${k} ${h} ${m} ${j.word}.`}J.innerHTML="";const S=document.createElement("div");S.className="adverb-mobile-view animate-in";const P=document.createElement("div");P.className="top-bar";const u=document.createElement("button");u.className="btn-back-nav",u.innerHTML="← Tilbage til Adjektiver",u.onclick=()=>{y("adjective_bridge",{nounAnchor:r.nounAnchor,selectedNoun:r.selectedNoun,selectedAdjective:r.selectedAdjective,adjectiveForm:r.adjectiveForm,selectedModal:r.selectedModal,verbAnchor:r.verbAnchor,selectedVerb:r.selectedVerb,isPast:r.isPast})},P.appendChild(u),S.appendChild(P),S.appendChild(Ze("adverbier",y));const x=document.createElement("div");x.className="adverb-hero-compact",x.innerHTML=`
+    `,document.head.appendChild(O),J.appendChild(r)}function jo(J,y,t={}){const r={nounAnchor:t.nounAnchor||"Mit",selectedNoun:t.selectedNoun||"barn",selectedAdjective:t.selectedAdjective||t.adjectivePart||"lille",adjectiveForm:t.adjectiveForm||"definite",selectedModal:t.selectedModal||"skal",verbAnchor:t.verbAnchor||"spiser",selectedVerb:t.selectedVerb||"spise",isPast:t.isPast||!1,selectedAdverb:t.selectedAdverb||"langsomt"};let n=!1;function s(j){if(!("speechSynthesis"in window)||!j)return;window.speechSynthesis.cancel();const h=new SpeechSynthesisUtterance(j);h.lang="da-DK",h.rate=.9,window.speechSynthesis.speak(h)}const i={langsomt:{id:"langsomt",word:"langsomt",category:"maade",categoryTitle:"Mådesadverbium (Hvordan?)",tag:"Måde (tempo)",icon:"🐢",color:"#38bdf8",colorGlow:"rgba(56, 189, 248, 0.45)",badge:"Roligt tempo (langsomt)",desc:"Handlingen foregår med tålmodighed, ro og uden hastværk.",ruleNote:"Dannes af adjektivet <em>langsom</em> + endelsen <strong>-t</strong>.",isCentral:!1},hurtigt:{id:"hurtigt",word:"hurtigt",category:"maade",categoryTitle:"Mådesadverbium (Hvordan?)",tag:"Måde (høj fart)",icon:"⚡",color:"#22c55e",colorGlow:"rgba(34, 197, 94, 0.5)",badge:"Høj fart & energi (hurtigt)",desc:"Handlingen accelererer med hurtige bevægelser og fremdrift.",ruleNote:"Dannes af adjektivet <em>hurtig</em> + endelsen <strong>-t</strong>.",isCentral:!1},pænt:{id:"pænt",word:"pænt",category:"maade",categoryTitle:"Mådesadverbium (Hvordan?)",tag:"Måde (adfærd)",icon:"✨",color:"#ec4899",colorGlow:"rgba(236, 72, 153, 0.45)",badge:"Gode manerer & orden (pænt)",desc:"Handlingen udføres ordentligt, høfligt og nydeligt ved bordet.",ruleNote:"Dannes af adjektivet <em>pæn</em> + endelsen <strong>-t</strong>.",isCentral:!1},meget:{id:"meget",word:"meget",category:"grad",categoryTitle:"Gradsadverbium (Hvor meget?)",tag:"Grad (høj styrke)",icon:"🔥",color:"#f59e0b",colorGlow:"rgba(245, 158, 11, 0.5)",badge:"Høj intensitet & mængde (meget)",desc:"Skruer helt op for handlingens styrke, appetit og volumen.",ruleNote:"Gradsadverbium der forstærker handlingens intensitet.",isCentral:!1},lidt:{id:"lidt",word:"lidt",category:"grad",categoryTitle:"Gradsadverbium (Hvor meget?)",tag:"Grad (dæmpet)",icon:"💧",color:"#a855f7",colorGlow:"rgba(168, 85, 247, 0.45)",badge:"Lille mængde & forsigtighed (lidt)",desc:"En beskeden, tilbageholdende og dæmpet mængde af handlingen.",ruleNote:"Gradsadverbium der dæmper verbets kraft.",isCentral:!1},ikke:{id:"ikke",word:"ikke",category:"central",categoryTitle:"Centraladverbium (Nægtelse)",tag:"Central (3. plads)",icon:"🛑",color:"#ef4444",colorGlow:"rgba(239, 68, 68, 0.55)",badge:"Nægtelse / Afvisning (ikke)",desc:"Benægter handlingen totalt. Handlingen afbrydes eller finder ikke sted!",ruleNote:'📌 Placeres på <strong>3. pladsen</strong> lige efter V1: <em>"Mit barn skal <strong>ikke</strong> spise"</em>.',isCentral:!0},gerne:{id:"gerne",word:"gerne",category:"central",categoryTitle:"Centraladverbium (Holdning & Lyst)",tag:"Central (vilje)",icon:"💖",color:"#fb7185",colorGlow:"rgba(251, 113, 133, 0.5)",badge:"Lyst & personlig vilje (gerne)",desc:"Udtrykker en positiv holdning, velvilje og lyst til handlingen.",ruleNote:'📌 Centraladverbium lige efter V1: <em>"Mit barn vil <strong>gerne</strong> spise"</em>.',isCentral:!0},nu:{id:"nu",word:"nu",category:"tid",categoryTitle:"Tidsadverbium (Hvornår?)",tag:"Tid (i dette nu)",icon:"⏰",color:"#10b981",colorGlow:"rgba(16, 185, 129, 0.45)",badge:"Tidsanker i øjeblikket (nu)",desc:"Forankrer handlingen præcist i dette nuværende sekund.",ruleNote:'Tidsadverbium der svarer på "hvornår sker handlingen?".',isCentral:!1}};function E(){return i[r.selectedAdverb]||i.langsomt}function A(){const j=E(),h=r.selectedModal,m=r.selectedVerb,k=`${r.nounAnchor} ${r.selectedAdjective} ${r.selectedNoun}`;return j.isCentral?`${k} ${h} ${j.word} ${m}.`:`${k} ${h} ${m} ${j.word}.`}J.innerHTML="";const S=document.createElement("div");S.className="adverb-mobile-view animate-in";const P=document.createElement("div");P.className="top-bar";const u=document.createElement("button");u.className="btn-back-nav",u.innerHTML="← Tilbage til Adjektiver",u.onclick=()=>{y("adjective_bridge",{nounAnchor:r.nounAnchor,selectedNoun:r.selectedNoun,selectedAdjective:r.selectedAdjective,adjectiveForm:r.adjectiveForm,selectedModal:r.selectedModal,verbAnchor:r.verbAnchor,selectedVerb:r.selectedVerb,isPast:r.isPast})},P.appendChild(u),S.appendChild(P),S.appendChild(Ze("adverbier",y));const x=document.createElement("div");x.className="adverb-hero-compact",x.innerHTML=`
         <div class="adverb-step-badge">
             <span class="badge-dot-live"></span>
             <span>Trin 4 af 5: Adverbier (Handlings-modifikator)</span>
@@ -47747,7 +47747,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
                 <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
                 <div class="stage-svg-body">
-                    <svg class="adverb-svg-fluid" viewBox="0 0 360 134" preserveAspectRatio="xMidYMid meet">
+                    <svg class="adverb-svg-fluid" viewBox="0 0 360 146" preserveAspectRatio="xMidYMid meet">
                         <defs>
                             <linearGradient id="advSpaceGrad" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="0%" stop-color="#0b1329"/>
@@ -47770,10 +47770,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                         </defs>
 
                         <!-- Himmelbaggrund -->
-                        <rect x="0" y="0" width="360" height="134" rx="12" fill="url(#advSpaceGrad)"/>
+                        <rect x="0" y="0" width="360" height="146" rx="12" fill="url(#advSpaceGrad)"/>
 
                         <!-- Jorden / terræn -->
-                        <rect x="0" y="94" width="360" height="40" rx="0 0 12 12" fill="url(#advGrassGrad)"/>
+                        <rect x="0" y="94" width="360" height="52" rx="0 0 12 12" fill="url(#advGrassGrad)"/>
                         <line x1="0" y1="94" x2="360" y2="94" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
 
                         <!-- PROJEKTØRENS LYSKEGLE DER BELYSER HANDLINGEN -->
@@ -47807,21 +47807,24 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                             <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
                             <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
                             
-                            <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
-                            <text x="0" y="74" fill="#ffffff" font-size="12.5" font-weight="900" text-anchor="middle">
-                                ${r.nounAnchor} ${r.selectedAdjective} ${r.selectedNoun}
-                            </text>
-                            <text x="0" y="85" fill="#93c5fd" font-size="8" font-weight="700" text-anchor="middle">
-                                (Subjekt + Adjektiv)
-                            </text>
+                            <!-- Navnemærke-boks på jorden (TILPASSET OG TYDELIG) -->
+                            <g class="character-label-pill" transform="translate(0, 64)">
+                                <rect x="-60" y="0" width="120" height="30" rx="8" fill="rgba(15, 23, 42, 0.92)" stroke="#38bdf8" stroke-width="1.2"/>
+                                <text x="0" y="14" fill="#ffffff" font-size="10.8" font-weight="900" text-anchor="middle">
+                                    ${r.nounAnchor} ${r.selectedAdjective} ${r.selectedNoun}
+                                </text>
+                                <text x="0" y="24" fill="#93c5fd" font-size="7.5" font-weight="700" text-anchor="middle">
+                                    Subjekt
+                                </text>
+                            </g>
                         </g>
 
                         <!-- MÅLET / HANDLINGEN: "spise" ved bordet under projektøren -->
-                        <g class="target-action" transform="translate(258, 38)">
+                        <g class="target-action" transform="translate(258, 36)">
                             <!-- Bord -->
                             <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
-                            <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
-                            <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                            <line x1="-12" y1="46" x2="-12" y2="58" stroke="#78350f" stroke-width="2.5"/>
+                            <line x1="12" y1="46" x2="12" y2="58" stroke="#78350f" stroke-width="2.5"/>
                             
                             <!-- Tallerken -->
                             <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
@@ -47838,22 +47841,25 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                                 <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
                             </path>
 
-                            <!-- Handlingsnavn (STOR OG TYDELIG TEKST) -->
-                            <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
-                                ${r.selectedVerb}
-                            </text>
-                            <text x="0" y="84" fill="${h}" font-size="9" font-weight="800" text-anchor="middle">
-                                modificeres af: "${j.word}"
-                            </text>
+                            <!-- Handlings-mærkeboks på jorden (TILPASSET OG TYDELIG) -->
+                            <g class="action-label-pill" transform="translate(0, 64)">
+                                <rect x="-60" y="0" width="120" height="30" rx="8" fill="rgba(15, 23, 42, 0.92)" stroke="${h}" stroke-width="1.2"/>
+                                <text x="0" y="14" fill="#4ade80" font-size="12" font-weight="900" text-anchor="middle">
+                                    ${r.selectedVerb}
+                                </text>
+                                <text x="0" y="24" fill="${h}" font-size="8" font-weight="800" text-anchor="middle">
+                                    modificeres: "${j.word}"
+                                </text>
+                            </g>
                         </g>
 
-                        <!-- Statusbadge i toppen med pulserende kant -->
-                        <g class="stage-top-badge" transform="translate(180, 15)">
-                            <rect x="-115" y="-10" width="230" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${h}" stroke-width="1.4">
+                        <!-- Statusbadge i toppen mellem agens og projektør (INGEN KOLLISION) -->
+                        <g class="stage-top-badge" transform="translate(152, 14)">
+                            <rect x="-65" y="-9" width="130" height="20" rx="10" fill="rgba(15, 23, 42, 0.94)" stroke="${h}" stroke-width="1.4">
                                 <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
                             </rect>
-                            <text x="0" y="4" fill="${h}" font-size="9.8" font-weight="900" text-anchor="middle">
-                                ${j.icon} ${j.badge}
+                            <text x="0" y="4" fill="${h}" font-size="8.8" font-weight="900" text-anchor="middle">
+                                ${j.icon} ${j.word.toUpperCase()} · ${j.tag}
                             </text>
                         </g>
                     </svg>
@@ -47868,50 +47874,58 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `;const k=K.querySelector("#btn-sticky-audio");k&&(k.onclick=()=>s(A()));const z=K.querySelector("#btn-toggle-collapse");z&&(z.onclick=()=>{n=!n,pe()})}function ve(){const j=E(),h=j.color;let m="";j.isCentral?m=`
                 <!-- Led 1: Subjektet -->
                 <div class="strip-block block-subject">
+                    <span class="block-num-pill">1</span>
                     <span class="block-word">${r.nounAnchor} ${r.selectedAdjective} ${r.selectedNoun}</span>
-                    <span class="block-role">Hvem (Subjekt)</span>
+                    <span class="block-role">Subjekt</span>
                 </div>
 
                 <!-- Led 2: Verbum 1 (Bøjet tidsanker) -->
                 <div class="strip-block block-v1">
+                    <span class="block-num-pill">2</span>
                     <span class="block-word" style="color: #38bdf8;">${r.selectedModal}</span>
                     <span class="block-role">V1 (Modal)</span>
                 </div>
 
                 <!-- Led 3: Centraladverbium (PÅ 3. PLADSEN!) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${h}; background: rgba(15, 23, 42, 0.95);">
-                    <span class="block-word" style="color: ${h};">${j.word}</span>
-                    <span class="block-role" style="color: ${h};">3. plads (Central)</span>
+                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${h}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 14px ${h}44;">
+                    <span class="block-num-pill" style="background: ${h}; color: #0f172a;">3</span>
+                    <span class="block-word" style="color: ${h}; font-weight: 900;">${j.word}</span>
+                    <span class="block-role" style="color: ${h}; font-weight: 800;">Centraladverbium</span>
                 </div>
 
                 <!-- Led 4: Verbum 2 (Handlingen) -->
                 <div class="strip-block block-v2">
+                    <span class="block-num-pill">4</span>
                     <span class="block-word" style="color: #4ade80;">${r.selectedVerb}</span>
                     <span class="block-role">V2 (Infinitiv)</span>
                 </div>
             `:m=`
                 <!-- Led 1: Subjektet -->
                 <div class="strip-block block-subject">
+                    <span class="block-num-pill">1</span>
                     <span class="block-word">${r.nounAnchor} ${r.selectedAdjective} ${r.selectedNoun}</span>
-                    <span class="block-role">Hvem (Subjekt)</span>
+                    <span class="block-role">Subjekt</span>
                 </div>
 
                 <!-- Led 2: Verbum 1 (Bøjet tidsanker) -->
                 <div class="strip-block block-v1">
+                    <span class="block-num-pill">2</span>
                     <span class="block-word" style="color: #38bdf8;">${r.selectedModal}</span>
                     <span class="block-role">V1 (Modal)</span>
                 </div>
 
                 <!-- Led 3: Verbum 2 (Handlingen) -->
                 <div class="strip-block block-v2">
+                    <span class="block-num-pill">3</span>
                     <span class="block-word" style="color: #4ade80;">${r.selectedVerb}</span>
                     <span class="block-role">V2 (Handlingen)</span>
                 </div>
 
-                <!-- Led 4: Mådes-/Gradsadverbium (Projektøren) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${h}; background: rgba(15, 23, 42, 0.95);">
-                    <span class="block-word" style="color: ${h};">${j.word}</span>
-                    <span class="block-role" style="color: ${h};">Adverbium (${j.category})</span>
+                <!-- Led 4: Mådes-/Grads-/Tidsadverbium (Projektøren) -->
+                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${h}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 14px ${h}44;">
+                    <span class="block-num-pill" style="background: ${h}; color: #0f172a;">4</span>
+                    <span class="block-word" style="color: ${h}; font-weight: 900;">${j.word}</span>
+                    <span class="block-role" style="color: ${h}; font-weight: 800;">${j.tag}</span>
                 </div>
             `,Z.innerHTML=`
             <div class="strip-top-row">
@@ -47943,7 +47957,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                                     <span class="card-icon">${z.icon}</span>
                                     <span class="card-word">${z.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${z.color};">${z.type}</div>
+                                <div class="card-badge" style="color: ${z.color};">${z.tag}</div>
                                 <div class="card-desc">${z.desc}</div>
                             </button>
                         `}).join("")}
@@ -47960,7 +47974,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                                     <span class="card-icon">${z.icon}</span>
                                     <span class="card-word">${z.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${z.color};">${z.type}</div>
+                                <div class="card-badge" style="color: ${z.color};">${z.tag}</div>
                                 <div class="card-desc">${z.desc}</div>
                             </button>
                         `}).join("")}
@@ -47977,7 +47991,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                                     <span class="card-icon">${z.icon}</span>
                                     <span class="card-word">${z.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${z.color};">${z.type}</div>
+                                <div class="card-badge" style="color: ${z.color};">${z.tag}</div>
                                 <div class="card-desc">${z.desc}</div>
                             </button>
                         `}).join("")}
@@ -48236,9 +48250,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
         .stage-svg-body {
             width: 100%;
-            max-height: 145px;
+            max-height: 320px;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 1;
         }
         .stage-frame-wrapper.is-collapsed .stage-svg-body {
@@ -48315,21 +48329,39 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             gap: 0.3rem;
         }
         .strip-blocks-row {
-            display: flex;
-            gap: 0.45rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.55rem;
             width: 100%;
             box-sizing: border-box;
         }
         .strip-block {
-            flex: 1;
-            min-width: 0;
-            padding: 0.5rem 0.3rem;
-            border-radius: 8px;
+            position: relative;
+            padding: 0.65rem 0.5rem;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
             box-sizing: border-box;
+            min-height: 72px;
+        }
+        .block-num-pill {
+            position: absolute;
+            top: 5px;
+            left: 7px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
         .block-subject {
             background: rgba(255, 255, 255, 0.05);
@@ -48355,20 +48387,26 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             100% { transform: scale(1.02); filter: brightness(1.2); }
         }
         .block-word {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 900;
             color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.25;
+            text-align: center;
             max-width: 100%;
+            margin-top: 0.35rem;
         }
         .block-role {
             font-size: 0.72rem;
             font-weight: 700;
             color: #94a3b8;
-            margin-top: 0.15rem;
+            margin-top: 0.25rem;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         /* Kontrolområde */
@@ -48395,8 +48433,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         }
         .adverb-cards-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 0.55rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.6rem;
             margin-bottom: 0.75rem;
             width: 100%;
             box-sizing: border-box;
@@ -48644,13 +48682,20 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             color: #38bdf8;
         }
 
-        @media (max-width: 480px) {
-            .adverb-mobile-view { padding: 0 0.15rem 2.5rem !important; }
-            .adverb-cards-row { grid-template-columns: 1fr; }
-            .comparison-boxes-grid { grid-template-columns: 1fr; }
-            .card-word { font-size: 1.2rem; }
-            .adverb-main-title { font-size: 1.3rem; }
-            .block-word { font-size: 0.95rem; }
+        @media (max-width: 640px) {
+            .adverb-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .strip-blocks-row { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem !important; }
+            .adverb-cards-row { grid-template-columns: 1fr !important; }
+            .comparison-boxes-grid { grid-template-columns: 1fr !important; }
+            .card-word { font-size: 1.15rem; }
+            .adverb-main-title { font-size: 1.25rem; }
+            .block-word { font-size: 1rem; }
+        }
+        @media (max-width: 380px) {
+            .strip-block { padding: 0.55rem 0.35rem !important; }
+            .block-word { font-size: 0.92rem !important; }
+            .block-role { font-size: 0.68rem !important; }
+            .adverb-main-title { font-size: 1.15rem; }
         }
     `,document.head.appendChild(R),J.appendChild(S)}function Co(J,y,t={}){const r={nounAnchor:t.nounAnchor||"Mit",selectedNoun:t.selectedNoun||"barn",selectedAdjective:t.selectedAdjective||"lille",adjectivePart:t.adjectivePart||"lille",selectedModal:t.selectedModal||"vil",verbAnchor:t.verbAnchor||"spiser",selectedVerb:t.selectedVerb||"spise",selectedAdverb:t.selectedAdverb||"gerne",selectedConjId:t.selectedConjId||"fordi",isPast:t.isPast||!1};J.innerHTML="";const n=document.createElement("div");n.className="conjunction-mobile-view",J.appendChild(n);function s(m){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const k=m.replace(/[*_#\[\]]/g,"").trim(),z=new SpeechSynthesisUtterance(k);z.lang="da-DK",z.rate=.9,window.speechSynthesis.speak(z)}function i(){const m=` ${r.selectedAdjective}`,k=r.selectedAdverb!=="ingen"?` ${r.selectedAdverb}`:"";return`${r.nounAnchor}${m} ${r.selectedNoun} ${r.selectedModal}${k} ${r.selectedVerb}`.trim()}const E={fordi:{id:"fordi",word:"fordi",category:"cause",categoryLabel:"Årsag & Følge",icon:"🌱",badge:"Årsag (Hvorfor?)",color:"#22c55e",colorGlow:"rgba(34, 197, 94, 0.45)",role:"Årsagen bag handlingen",clause2Text:"det er sultent",clause2Desc:"Årsag: Kroppen mangler energi",getFullSentence:m=>`${m}, fordi det er sultent.`,cognitiveVisualDesc:"En pulserende grøn energibro, der forbinder handlingen direkte til årsagens nærende rod.",wordOrderType:"subordinate",wordOrderBadge:"Bisætning (S-A-V)",wordOrderExpl:'Efter "fordi" følger bisætningsordstilling: Subjekt ("det") kommer før verbet ("er"). Hvis der er et centraladverbium (f.eks. "ikke"), står det altid før verbet: "..., fordi det <em>ikke</em> er sultent".'},derfor:{id:"derfor",word:"derfor",category:"cause",categoryLabel:"Årsag & Følge",icon:"⚡",badge:"Konsekvens (Resultat)",color:"#f59e0b",colorGlow:"rgba(245, 158, 11, 0.45)",role:"Handlingen er resultatet",clause2Text:m=>`Derfor ${r.selectedModal+" det "+r.selectedVerb}`,clause2Desc:"Konsekvens: Handlingen udløses",getFullSentence:()=>`Barnet er sultent. Derfor ${r.selectedModal+" det "+r.selectedVerb}.`,cognitiveVisualDesc:"En gylden resultat-vektor, der slynger handlingen fremad som en uundgåelig konsekvens.",wordOrderType:"inversion",wordOrderBadge:"Inversion (V-S)",wordOrderExpl:'<strong>VIGTIG REGEL:</strong> "Derfor" er et bindeord/konjunktionaladverbium, IKKE en underordnende konjunktion. Derfor kommer verbet på 2. pladsen lige efter "derfor" (omvendt ordstilling): "Barnet er sultent. Derfor <em>vil</em> det spise" (ikke "Derfor det vil spise").'},når:{id:"når",word:"når",category:"time",categoryLabel:"Tid & Tidsfæstelse",icon:"⏰",badge:"Nutid & Gentagelse",color:"#38bdf8",colorGlow:"rgba(56, 189, 248, 0.45)",role:"Hver gang eller i fremtiden",clause2Text:"maden er serveret",clause2Desc:"Tidsanker: Når tidspunktet indtræffer",getFullSentence:m=>`${m}, når maden er serveret.`,cognitiveVisualDesc:"Et cyklisk tids-ur og fremadrettede lyseblå tidsbølger, der aktiverer handlingen hver gang.",wordOrderType:"subordinate",wordOrderBadge:"Tids-bisætning (S-A-V)",wordOrderExpl:'"Når" bruges om nutid, fremtid eller noget, der sker gentagne gange ("hver gang"). Ordstillingen er bisætningsstruktur: Subjekt + (centraladverbium) + Verbum.'},da:{id:"da",word:"da",category:"time",categoryLabel:"Tid & Tidsfæstelse",icon:"🕰️",badge:"Fortid (Dengang)",color:"#818cf8",colorGlow:"rgba(129, 140, 248, 0.45)",role:"Én bestemt gang i datid",clause2Text:"klokken slog tolv",clause2Desc:"Historisk anker: Dengang i fortiden",getFullSentence:()=>`${r.nounAnchor} ${r.selectedAdjective+" "}${r.selectedNoun} spiste, da klokken slog tolv.`,cognitiveVisualDesc:"Et historisk tidsanker, der kastes dybt tilbage i datiden mod et bestemt unikt øjeblik.",wordOrderType:"subordinate",wordOrderBadge:"Datids-anker (S-A-V)",wordOrderExpl:'<strong>DA vs. NÅR:</strong> "Da" bruges KUN i datid om en enkeltstående begivenhed ("dengang"). Husk reglen: <em>"Dengang da – hver gang når"</em>.'},selvom:{id:"selvom",word:"selvom",category:"contrast",categoryLabel:"Forhindring & Kontrast",icon:"🛡️",badge:"Trods modstand",color:"#ec4899",colorGlow:"rgba(236, 72, 153, 0.45)",role:"Handlingen trodser barrieren",clause2Text:"det er meget træt",clause2Desc:"Forhindring: Træthed forsøger at bremse",getFullSentence:m=>`${m}, selvom det er meget træt.`,cognitiveVisualDesc:"Handlingsbroen bryder direkte igennem en massiv barriere – handlingen sejrer trods modstand.",wordOrderType:"subordinate",wordOrderBadge:"Indrømmelse (S-A-V)",wordOrderExpl:'"Selvom" indleder en koncessiv bisætning (indrømmelse). Det viser, at handlingen i hovedsætningen gennemføres på trods af en reel forhindring.'},men:{id:"men",word:"men",category:"contrast",categoryLabel:"Forhindring & Kontrast",icon:"⚖️",badge:"Modsætning (Kontrast)",color:"#ef4444",colorGlow:"rgba(239, 68, 68, 0.45)",role:"To modsatrettede fakta mødes",clause2Text:"maden er stadig lidt varm",clause2Desc:"Kontrast: Et modstridende faktum",getFullSentence:m=>`${m}, men maden er stadig lidt varm.`,cognitiveVisualDesc:"To adskilte veje, der mødes på midten med en skarp kontrastmarkør og advarselslys.",wordOrderType:"coordinate",wordOrderBadge:"Sideordning (Hovedsætning)",wordOrderExpl:'"Men" er en sideordnende konjunktion. Den forbinder to selvstændige hovedsætninger med ligeværdig, normal ordstilling (Subjekt + Verbum).'},og:{id:"og",word:"og",category:"connect",categoryLabel:"Forbindelse & Hensigt",icon:"🌉",badge:"Forbindelse (Addition)",color:"#14b8a6",colorGlow:"rgba(20, 184, 166, 0.45)",role:"To handlinger i harmoni",clause2Text:"drikker et glas vand",clause2Desc:"Ekstra handling: Side om side",getFullSentence:m=>`${m} og drikker et glas vand.`,cognitiveVisualDesc:"En gylden, uafbrudt hængebro, hvor to handlinger flyder sammen i en ubrudt harmonisk strøm.",wordOrderType:"coordinate",wordOrderBadge:"Sideordning (Addition)",wordOrderExpl:'"Og" er det simpleste bindeord på dansk. Det forbinder to ensartede led eller sætninger i fredelig ligevægt uden at ændre ordstillingen.'},så:{id:"så",word:"så",category:"connect",categoryLabel:"Forbindelse & Hensigt",icon:"🎯",badge:"Hensigt & Mål",color:"#a855f7",colorGlow:"rgba(168, 85, 247, 0.45)",role:"Viser formålet bag handlingen",clause2Text:"det kan blive mæt og glad",clause2Desc:"Mål: Den ønskede tilstand opnås",getFullSentence:m=>`${m}, så det kan blive mæt og glad.`,cognitiveVisualDesc:"En laserfokuseret sigtelinje, der peger direkte mod en lysende måltavle på den modsatte bred.",wordOrderType:"subordinate",wordOrderBadge:"Hensigt / Følge (S-A-V)",wordOrderExpl:'"Så" bruges her til at angive hensigten eller formålet med handlingen: "Hvorfor spiser barnet? <em>Så det kan blive mæt</em>".'}};function A(){return E[r.selectedConjId]||E.fordi}function S(){const m=A(),k=i();return m.getFullSentence(k)}let P=!1;const u=document.createElement("div");u.className="top-bar";const x=document.createElement("button");x.className="back-btn",x.textContent="← "+(e("back")||"Tilbage til Adverbier"),x.onclick=()=>y("adverb_bridge",{nounAnchor:r.nounAnchor,selectedNoun:r.selectedNoun,selectedAdjective:r.selectedAdjective,adjectivePart:r.adjectivePart,selectedModal:r.selectedModal,verbAnchor:r.verbAnchor,selectedVerb:r.selectedVerb,selectedAdverb:r.selectedAdverb,isPast:r.isPast}),u.appendChild(x),n.appendChild(u),n.appendChild(Ze("konjunktioner",y));const K=document.createElement("div");K.className="conjunction-hero-compact",K.innerHTML=`
         <div class="conj-step-badge">
@@ -49219,9 +49264,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
         .stage-svg-body {
             width: 100%;
-            max-height: 145px;
+            max-height: 320px;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 1;
         }
         .stage-frame-wrapper.is-collapsed .stage-svg-body {

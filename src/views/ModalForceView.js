@@ -423,22 +423,22 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             </div>
 
             <div class="strip-blocks-row">
-                <!-- Led 1: Subjektet -->
-                <div class="strip-block block-subject">
-                    <span class="block-word">${state.nounAnchor} ${state.selectedNoun}</span>
-                    <span class="block-role">Hvem (Subjekt)</span>
+                <!-- Led 1: Subjektet (Grøn) -->
+                <div class="strip-block block-subject" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
+                    <span class="block-word" style="color: #4ade80;">${state.nounAnchor} ${state.selectedNoun}</span>
+                    <span class="block-role" style="color: #4ade80;">Subjekt</span>
                 </div>
 
-                <!-- Led 2: Modalverbet (Verbum 1 - Finit tidsanker) -->
-                <div class="strip-block block-modal" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.85);">
-                    <span class="block-word" style="color: ${activeColor};">${modalWord}</span>
-                    <span class="block-role" style="color: ${activeColor};">V1 (${state.isPast ? 'Datid' : 'Nutid'})</span>
+                <!-- Led 2: Modalverbet (Verbum 1 - Rød) -->
+                <div class="strip-block block-modal" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
+                    <span class="block-word" style="color: #f87171;">${modalWord}</span>
+                    <span class="block-role" style="color: #f87171;">V1 (${state.isPast ? 'Datid' : 'Nutid'})</span>
                 </div>
 
-                <!-- Led 3: Handlingen (Verbum 2 - Infinitiv) -->
-                <div class="strip-block block-action">
-                    <span class="block-word" style="color: #4ade80;">spise</span>
-                    <span class="block-role">V2 (Infinitiv)</span>
+                <!-- Led 3: Handlingen (Verbum 2 - Rød) -->
+                <div class="strip-block block-action" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
+                    <span class="block-word" style="color: #f87171;">spise</span>
+                    <span class="block-role" style="color: #f87171;">V2 (Infinitiv)</span>
                 </div>
             </div>
         `;
@@ -586,7 +586,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
                     <div class="diagram-box box-v2">
                         <div class="diag-tag">Verbum 2 (Handlingen)</div>
-                        <div class="diag-word" style="color: #4ade80;">spise</div>
+                        <div class="diag-word" style="color: #f87171;">spise</div>
                         <div class="diag-role">💭 Ren idé (Infinitiv)</div>
                         <div class="diag-sub">Uforanderlig! Bøjes IKKE!</div>
                     </div>
@@ -597,59 +597,17 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 </div>
             </div>
 
-            <!-- ========================================================= -->
-            <!-- DEN STORE GRAMMATIK-STI: BROEN TIL ADJEKTIVER             -->
-            <!-- ========================================================= -->
-            <div class="grammar-roadmap-card">
-                <div class="roadmap-header">
-                    <span>Den store grammatik-sti: Se hvordan sætningen udbygges</span>
+            <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
+            <div class="current-sentence-badge-box">
+                <span class="cs-label">Din sætning nu:</span>
+                <div class="cs-sentence-row">
+                    <span class="cs-word tag-subjekt">${state.nounAnchor} ${state.selectedNoun}</span>
+                    <span class="cs-word tag-verbum">${getCurrentModalWord()}</span>
+                    <span class="cs-word tag-verbum">spise.</span>
                 </div>
-
-                <div class="roadmap-steps-list">
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">1. Grundsætning (Intro)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedNoun} ${state.verbAnchor}."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item current">
-                        <div class="step-icon-badge">⚡</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">2. Modalverber (Kraft & vilje)</div>
-                            <div class="step-example-txt">"${getFullSentence()}"</div>
-                        </div>
-                        <div class="step-status-pill current">Aktiv nu</div>
-                    </div>
-
-                    <div class="roadmap-step-item next">
-                        <div class="step-icon-badge">🏷️</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">3. Adjektiver (Beskrivelse)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} <strong>[lille / sultne]</strong> ${state.selectedNoun} ${getCurrentModalWord()} spise..."</div>
-                        </div>
-                        <div class="step-status-pill next">Næste skridt</div>
-                    </div>
-
-                    <div class="roadmap-step-item future">
-                        <div class="step-icon-badge">🌊</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">4. Adverbier (Måde, grad og tid)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} lille ${state.selectedNoun} ${getCurrentModalWord()} spise <strong>[langsomt / gerne]</strong>..."</div>
-                        </div>
-                        <div class="step-status-pill future">Trin 4</div>
-                    </div>
-
-                    <div class="roadmap-step-item future">
-                        <div class="step-icon-badge">🌉</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">5. Konjunktioner (Tekstflow & bindeord)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} lille ${state.selectedNoun} ${getCurrentModalWord()} spise, <strong>[fordi]</strong>..."</div>
-                        </div>
-                        <div class="step-status-pill future">Trin 5</div>
-                    </div>
+                <div class="cs-tags-legend">
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
                 </div>
             </div>
 
@@ -970,16 +928,109 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             box-sizing: border-box;
         }
         .block-subject {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            background: rgba(34, 197, 94, 0.12);
+            border: 1.5px solid #22c55e;
         }
         .block-modal {
-            border: 2px solid #f43f5e;
-            box-shadow: 0 0 12px rgba(244, 63, 94, 0.25);
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
         }
         .block-action {
-            background: rgba(34, 197, 94, 0.12);
-            border: 1.5px solid rgba(74, 222, 128, 0.4);
+            background: rgba(239, 68, 68, 0.10);
+            border: 1.5px solid rgba(239, 68, 68, 0.4);
+        }
+
+        /* Nuværende sætning boks & globale grammatik tags */
+        .current-sentence-badge-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            margin: 1rem auto;
+            max-width: 540px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .cs-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+        .cs-sentence-row {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.35;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .tag-subjekt {
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.15);
+            border-bottom: 2px solid #22c55e;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-verbum {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.15);
+            border-bottom: 2px solid #ef4444;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adjektiv {
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.15);
+            border-bottom: 2px solid #f97316;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adverbium {
+            color: #facc15;
+            background: rgba(234, 179, 8, 0.15);
+            border-bottom: 2px solid #eab308;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-konjunktion {
+            color: #38bdf8;
+            background: rgba(6, 182, 212, 0.15);
+            border-bottom: 2px solid #06b6d4;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .cs-tags-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.35rem;
+        }
+        .legend-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
         }
         .block-word {
             font-size: 1.15rem;

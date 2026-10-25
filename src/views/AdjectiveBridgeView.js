@@ -473,34 +473,34 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             </div>
 
             <div class="strip-blocks-5-row">
-                <!-- 1. Anker -->
-                <div class="strip-block-part block-anchor">
-                    <span class="part-word">${state.nounAnchor}</span>
-                    <span class="part-tag">Anker</span>
+                <!-- 1. Anker (Grøn) -->
+                <div class="strip-block-part block-anchor" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
+                    <span class="part-word" style="color: #4ade80;">${state.nounAnchor}</span>
+                    <span class="part-tag" style="color: #4ade80;">Subjekt</span>
                 </div>
 
-                <!-- 2. Adjektiv (Nyt led) -->
-                <div class="strip-block-part block-adj-active" style="border-color: ${adjColor};">
-                    <span class="part-word" style="color: ${adjColor};">${adjWord}</span>
-                    <span class="part-tag" style="color: ${adjColor};">Adjektiv</span>
+                <!-- 2. Adjektiv (Orange) -->
+                <div class="strip-block-part block-adj-active" style="border-color: #f97316; background: rgba(249, 115, 22, 0.15);">
+                    <span class="part-word" style="color: #fb923c;">${adjWord}</span>
+                    <span class="part-tag" style="color: #fb923c;">Adjektiv</span>
                 </div>
 
-                <!-- 3. Subjekt -->
-                <div class="strip-block-part block-noun">
-                    <span class="part-word">${state.selectedNoun}</span>
-                    <span class="part-tag">Subjekt</span>
+                <!-- 3. Subjekt (Grøn) -->
+                <div class="strip-block-part block-noun" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
+                    <span class="part-word" style="color: #4ade80;">${state.selectedNoun}</span>
+                    <span class="part-tag" style="color: #4ade80;">Subjekt</span>
                 </div>
 
-                <!-- 4. Modal -->
-                <div class="strip-block-part block-modal">
-                    <span class="part-word" style="color: #fbbf24;">${getModalWord()}</span>
-                    <span class="part-tag">Modal</span>
+                <!-- 4. Modal (Rød) -->
+                <div class="strip-block-part block-modal" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
+                    <span class="part-word" style="color: #f87171;">${getModalWord()}</span>
+                    <span class="part-tag" style="color: #f87171;">V1 (Modal)</span>
                 </div>
 
-                <!-- 5. Handling -->
-                <div class="strip-block-part block-action">
-                    <span class="part-word" style="color: #4ade80;">${getActionWord()}</span>
-                    <span class="part-tag">Handling</span>
+                <!-- 5. Handling (Rød) -->
+                <div class="strip-block-part block-action" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
+                    <span class="part-word" style="color: #f87171;">${getActionWord()}</span>
+                    <span class="part-tag" style="color: #f87171;">V2 (Infinitiv)</span>
                 </div>
             </div>
         `;
@@ -562,58 +562,20 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             <div class="agreement-interactive-card" id="agreement-interactive-card"></div>
 
             <!-- ========================================================= -->
-            <!-- DEN STORE GRAMMATIK-STI: BROEN TIL ADVERBIER              -->
-            <!-- ========================================================= -->
-            <div class="grammar-roadmap-card">
-                <div class="roadmap-header">
-                    <span>Den store grammatik-sti: Se hvordan sætningen udbygges</span>
+            <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
+            <div class="current-sentence-badge-box">
+                <span class="cs-label">Din sætning nu:</span>
+                <div class="cs-sentence-row">
+                    <span class="cs-word tag-subjekt">${state.nounAnchor}</span>
+                    <span class="cs-word tag-adjektiv">${adjWord}</span>
+                    <span class="cs-word tag-subjekt">${state.selectedNoun}</span>
+                    <span class="cs-word tag-verbum">${getModalWord()}</span>
+                    <span class="cs-word tag-verbum">spise.</span>
                 </div>
-
-                <div class="roadmap-steps-list">
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">1. Grundsætning (Intro)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedNoun} ${state.verbAnchor}."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">2. Modalverber (Kraft & vilje)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedNoun} ${getModalWord()} spise."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item current">
-                        <div class="step-icon-badge">🏷️</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">3. Adjektiver (Beskrivelse)</div>
-                            <div class="step-example-txt">"${getFullSentence()}"</div>
-                        </div>
-                        <div class="step-status-pill current">Aktiv nu</div>
-                    </div>
-
-                    <div class="roadmap-step-item next">
-                        <div class="step-icon-badge">🌊</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">4. Adverbier (Måde, grad og tid)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun} ${getModalWord()} spise <strong>[langsomt / gerne]</strong>..."</div>
-                        </div>
-                        <div class="step-status-pill next">Næste skridt</div>
-                    </div>
-
-                    <div class="roadmap-step-item future">
-                        <div class="step-icon-badge">🌉</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">5. Konjunktioner (Tekstflow & bindeord)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun} ${getModalWord()} spise, <strong>[fordi]</strong>..."</div>
-                        </div>
-                        <div class="step-status-pill future">Trin 5</div>
-                    </div>
+                <div class="cs-tags-legend">
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
+                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
                 </div>
             </div>
 
@@ -1124,6 +1086,96 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             color: #94a3b8;
             margin-top: 0.15rem;
             white-space: nowrap;
+        /* Nuværende sætning boks & globale grammatik tags */
+        .current-sentence-badge-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            margin: 1rem auto;
+            max-width: 540px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .cs-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+        .cs-sentence-row {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.35;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .tag-subjekt {
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.15);
+            border-bottom: 2px solid #22c55e;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-verbum {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.15);
+            border-bottom: 2px solid #ef4444;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adjektiv {
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.15);
+            border-bottom: 2px solid #f97316;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adverbium {
+            color: #facc15;
+            background: rgba(234, 179, 8, 0.15);
+            border-bottom: 2px solid #eab308;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-konjunktion {
+            color: #38bdf8;
+            background: rgba(6, 182, 212, 0.15);
+            border-bottom: 2px solid #06b6d4;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .cs-tags-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.35rem;
+        }
+        .legend-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
         }
 
         /* 4 Adjektiv Kort (2x2 Grid) */

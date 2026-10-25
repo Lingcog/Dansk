@@ -769,73 +769,27 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.innerHTML = `
             <div class="celebration-hero-card">
                 <div class="celebration-icon">🏆</div>
-                <h2 style="font-size: 1.6rem; color: white; margin-bottom: 0.4rem; font-weight: 800;">
+                <h2 style="font-size: 1.6rem; color: white; margin-bottom: 0.6rem; font-weight: 800;">
                     Grundsætningen er forankret!
                 </h2>
-                <div class="final-sentence-chip-row">
-                    <span class="final-sentence-text">"${completedSentence}"</span>
-                    <button type="button" class="btn-hear-sentence" id="btn-speak-final">
+                <div class="current-sentence-badge-box">
+                    <span class="cs-label">Din sætning nu:</span>
+                    <div class="cs-sentence-row">
+                        <span class="cs-word tag-subjekt">${state.nounAnchor} barn</span>
+                        <span class="cs-word tag-verbum">${state.verbAnchor}.</span>
+                    </div>
+                    <div class="cs-tags-legend">
+                        <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
+                        <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verbum (Rød)</span>
+                    </div>
+                    <button type="button" class="btn-hear-sentence" id="btn-speak-final" style="margin-top: 0.75rem;">
                         <span>🔊</span>
-                        <span>Lyt</span>
+                        <span>Lyt til sætningen</span>
                     </button>
                 </div>
-                <p style="color: #cbd5e1; font-size: 1rem; max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.5;">
+                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 540px; margin: 1rem auto 0; line-height: 1.5;">
                     ${getTranslation('groundingFinalMsg')}
                 </p>
-            </div>
-
-            <!-- DEN STORE SAMMENHÆNGENDE GRAMMATIK-STI -->
-            <div class="grammar-roadmap-card">
-                <div class="roadmap-header">
-                    <span>Den store grammatik-sti: Se hvordan sætningen udbygges</span>
-                </div>
-
-                <div class="roadmap-steps-list">
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">1. Grundsætning (Intro)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} barn ${state.verbAnchor}."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item next">
-                        <div class="step-icon-badge">⚡</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">2. Modalverber (Vilje, pligt og evne)</div>
-                            <div class="step-example-txt">"Mit barn <strong>[vil / skal / kan]</strong> spise..."</div>
-                        </div>
-                        <div class="step-status-pill next">Næste skridt</div>
-                    </div>
-
-                    <div class="roadmap-step-item future">
-                        <div class="step-icon-badge">🏷️</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">3. Adjektiver (Beskrivelse)</div>
-                            <div class="step-example-txt">"Mit <strong>[lille / sultne]</strong> barn vil spise..."</div>
-                        </div>
-                        <div class="step-status-pill future">Trin 3</div>
-                    </div>
-
-                    <div class="roadmap-step-item future">
-                        <div class="step-icon-badge">🌊</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">4. Adverbier (Måde, grad og tid)</div>
-                            <div class="step-example-txt">"Mit lille barn vil spise <strong>[langsomt / gerne]</strong>..."</div>
-                        </div>
-                        <div class="step-status-pill future">Trin 4</div>
-                    </div>
-
-                    <div class="roadmap-step-item future">
-                        <div class="step-icon-badge">🌉</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">5. Konjunktioner (Tekstflow & bindeord)</div>
-                            <div class="step-example-txt">"Mit lille barn vil spise, <strong>[fordi]</strong> det er sultent..."</div>
-                        </div>
-                        <div class="step-status-pill future">Trin 5</div>
-                    </div>
-                </div>
             </div>
 
             <!-- MODAL TEASER KNAP -->
@@ -1110,19 +1064,111 @@ export function renderGroundingView(container, navigateFn) {
                 font-weight: 700;
             }
             .slot-fixed {
-                background: rgba(244, 63, 94, 0.18);
-                border: 1.5px solid rgba(244, 63, 94, 0.5);
-                color: #fda4af;
+                background: rgba(34, 197, 94, 0.15);
+                border: 1.5px solid rgba(34, 197, 94, 0.4);
+                color: #86efac;
             }
             .slot-active-noun {
-                background: rgba(251, 191, 36, 0.25);
-                border: 1.5px solid #fbbf24;
-                color: #fde68a;
-            }
-            .slot-active-verb {
                 background: rgba(34, 197, 94, 0.25);
                 border: 1.5px solid #22c55e;
-                color: #86efac;
+                color: #4ade80;
+            }
+            .slot-active-verb {
+                background: rgba(239, 68, 68, 0.25);
+                border: 1.5px solid #ef4444;
+                color: #f87171;
+            }
+
+            /* Nuværende sætning boks & globale grammatik tags */
+            .current-sentence-badge-box {
+                background: rgba(15, 23, 42, 0.85);
+                border: 1.5px solid rgba(255, 255, 255, 0.15);
+                border-radius: 14px;
+                padding: 1rem 1.25rem;
+                margin: 0.85rem auto 0;
+                max-width: 540px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.4rem;
+            }
+            .cs-label {
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: #94a3b8;
+                font-weight: 800;
+            }
+            .cs-sentence-row {
+                font-size: 1.45rem;
+                font-weight: 900;
+                color: #ffffff;
+                line-height: 1.35;
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.4rem;
+            }
+            .tag-subjekt {
+                color: #4ade80;
+                background: rgba(34, 197, 94, 0.15);
+                border-bottom: 2px solid #22c55e;
+                padding: 0.1rem 0.4rem;
+                border-radius: 4px;
+            }
+            .tag-verbum {
+                color: #f87171;
+                background: rgba(239, 68, 68, 0.15);
+                border-bottom: 2px solid #ef4444;
+                padding: 0.1rem 0.4rem;
+                border-radius: 4px;
+            }
+            .tag-adjektiv {
+                color: #fb923c;
+                background: rgba(249, 115, 22, 0.15);
+                border-bottom: 2px solid #f97316;
+                padding: 0.1rem 0.4rem;
+                border-radius: 4px;
+            }
+            .tag-adverbium {
+                color: #facc15;
+                background: rgba(234, 179, 8, 0.15);
+                border-bottom: 2px solid #eab308;
+                padding: 0.1rem 0.4rem;
+                border-radius: 4px;
+            }
+            .tag-konjunktion {
+                color: #38bdf8;
+                background: rgba(6, 182, 212, 0.15);
+                border-bottom: 2px solid #06b6d4;
+                padding: 0.1rem 0.4rem;
+                border-radius: 4px;
+            }
+            .cs-tags-legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+                margin-top: 0.35rem;
+            }
+            .legend-pill {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: #cbd5e1;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                background: rgba(255, 255, 255, 0.05);
+                padding: 0.15rem 0.5rem;
+                border-radius: 12px;
+            }
+            .legend-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                display: inline-block;
             }
 
             /* Opgave-kort */

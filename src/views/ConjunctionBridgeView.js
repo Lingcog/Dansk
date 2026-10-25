@@ -48,6 +48,29 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
         return `${state.nounAnchor}${adj} ${state.selectedNoun} ${v}${adv}`.trim();
     }
 
+    function renderColoredClause1() {
+        const parts = [];
+        parts.push(`<span style="color: #4ade80;">${state.nounAnchor}</span>`);
+        if (state.selectedAdjective) {
+            parts.push(`<span style="color: #fb923c;">${state.selectedAdjective}</span>`);
+        }
+        parts.push(`<span style="color: #4ade80;">${state.selectedNoun}</span>`);
+        if (state.selectedModal) {
+            parts.push(`<span style="color: #f87171;">${state.selectedModal}</span>`);
+            if (state.selectedAdverb && state.selectedAdverb !== 'ingen') {
+                parts.push(`<span style="color: #facc15;">${state.selectedAdverb}</span>`);
+            }
+            parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
+        } else {
+            const v = state.isPast ? (state.verbAnchor === 'spiste' ? 'spiste' : state.verbAnchor) : (state.verbAnchor || 'spiser');
+            parts.push(`<span style="color: #f87171;">${v}</span>`);
+            if (state.selectedAdverb && state.selectedAdverb !== 'ingen') {
+                parts.push(`<span style="color: #facc15;">${state.selectedAdverb}</span>`);
+            }
+        }
+        return parts.join(' ');
+    }
+
     // -------------------------------------------------------------
     // DE 8 KOGNITIVE KONJUNKTIONER & BINDEORD I 4 FAMILIER
     // -------------------------------------------------------------
@@ -558,16 +581,16 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             </div>
 
             <div class="strip-blocks-row">
-                <!-- Led 1: Hovedsætningen -->
-                <div class="strip-block block-clause1">
-                    <span class="block-word">${c1Text}</span>
-                    <span class="block-role">Hovedsætning (Handlingen)</span>
+                <!-- Led 1: Hovedsætningen (Grøn/Orange/Rød/Gul) -->
+                <div class="strip-block block-clause1" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.08);">
+                    <span class="block-word">${renderColoredClause1()}</span>
+                    <span class="block-role" style="color: #4ade80;">Hovedsætning (Trin 1-4)</span>
                 </div>
 
-                <!-- Led 2: Konjunktionen (Broen) -->
-                <div class="strip-block block-conjunction" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 12px ${activeColor}33;">
-                    <span class="block-word" style="color: ${activeColor}; font-weight: 900;">${conj.id === 'derfor' ? '. Derfor' : ', ' + conj.word}</span>
-                    <span class="block-role" style="color: ${activeColor}; font-weight: 800;">Bro-led (${conj.badge})</span>
+                <!-- Led 2: Konjunktionen (Broen - Cyan) -->
+                <div class="strip-block block-conjunction" style="border-color: #06b6d4; background: rgba(6, 182, 212, 0.15); box-shadow: 0 0 12px rgba(6, 182, 212, 0.25);">
+                    <span class="block-word" style="color: #38bdf8; font-weight: 900;">${conj.id === 'derfor' ? '. Derfor' : ', ' + conj.word}</span>
+                    <span class="block-role" style="color: #38bdf8; font-weight: 800;">Konjunktion (${conj.badge})</span>
                 </div>
 
                 <!-- Led 3: Bisætningen / Konsekvensen -->
@@ -588,6 +611,8 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
     function renderInteractionArea() {
         taskArea.innerHTML = '';
         const conj = getActiveConj();
+        const c1Text = getClause1();
+        const c2Text = typeof conj.clause2Text === 'function' ? conj.clause2Text(c1Text) : conj.clause2Text;
 
         const box = document.createElement('div');
         box.className = 'conjunction-interactive-box';
@@ -671,57 +696,23 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                 </div>
             </div>
 
-            <!-- DEN STORE GRAMMATIK-STI: HELE REJSEN ER FULDFØRT! -->
-            <div class="grammar-roadmap-completed">
-                <div class="roadmap-header">
-                    <span>🏆 Tillykke! Hele grammatik-stien er gennemført (Trin 1-5)</span>
+            <!-- ========================================================= -->
+            <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN: HELE REJSEN ER SAMLET    -->
+            <!-- ========================================================= -->
+            <div class="current-sentence-badge-box">
+                <span class="cs-label">Din fulde sætning er bygget:</span>
+                <div class="cs-sentence-row">
+                    ${conj.id === 'derfor' 
+                        ? `<span class="cs-word tag-subjekt">Barnet</span> <span class="cs-word tag-verbum">er</span> <span class="cs-word tag-adjektiv">sultent</span>. <span class="cs-word tag-konjunktion">Derfor</span> <span class="cs-word tag-verbum">${state.selectedModal || (state.isPast ? 'spiste' : 'spiser')}</span> <span class="cs-word tag-subjekt">${state.selectedModal ? 'det' : 'det.'}</span> ${state.selectedModal ? `<span class="cs-word tag-verbum">${state.selectedVerb}.</span>` : ''}`
+                        : `<span class="cs-word tag-subjekt">${state.nounAnchor}</span> ${state.selectedAdjective ? `<span class="cs-word tag-adjektiv">${state.selectedAdjective}</span>` : ''} <span class="cs-word tag-subjekt">${state.selectedNoun}</span> <span class="cs-word tag-verbum">${state.selectedModal || state.verbAnchor}</span> ${state.selectedModal ? `<span class="cs-word tag-verbum">${state.selectedVerb}</span>` : ''} ${state.selectedAdverb && state.selectedAdverb !== 'ingen' ? `<span class="cs-word tag-adverbium">${state.selectedAdverb}</span>` : ''}${conj.id === 'og' ? '' : ','} <span class="cs-word tag-konjunktion">${conj.word}</span> <span class="cs-word" style="color: #cbd5e1;">${c2Text.endsWith('.') ? c2Text : c2Text + '.'}</span>`
+                    }
                 </div>
-
-                <div class="roadmap-steps-list">
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">1. Grundsætning (Forankring i virkeligheden)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} barn ${state.verbAnchor}."</div>
-                        </div>
-                        <div class="step-status-pill done">Trin 1</div>
-                    </div>
-
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">2. Modalverber (Indre vilje, pligt & evne)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} barn <strong>${state.selectedModal}</strong> spise..."</div>
-                        </div>
-                        <div class="step-status-pill done">Trin 2</div>
-                    </div>
-
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">3. Adjektiver (Oplysning & beskrivelse)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} <strong>${state.selectedAdjective}</strong> barn ${state.selectedModal} spise..."</div>
-                        </div>
-                        <div class="step-status-pill done">Trin 3</div>
-                    </div>
-
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">4. Adverbier (Måde, grad og tid på handlingen)</div>
-                            <div class="step-example-txt">"${getClause1()}..."</div>
-                        </div>
-                        <div class="step-status-pill done">Trin 4</div>
-                    </div>
-
-                    <div class="roadmap-step-item current">
-                        <div class="step-icon-badge">🌉</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">5. Konjunktioner (Brobygning til hele sætninger)</div>
-                            <div class="step-example-txt">"${getFullSentence()}"</div>
-                        </div>
-                        <div class="step-status-pill current">Trin 5</div>
-                    </div>
+                <div class="cs-tags-legend">
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
+                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
+                    <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#06b6d4;"></span> Konjunktion (Cyan)</span>
                 </div>
             </div>
 
@@ -1235,92 +1226,96 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             color: #f8fafc;
         }
 
-        /* Roadmap Completed */
-        .grammar-roadmap-completed {
-            background: #1e293b;
-            border: 1.5px solid rgba(34, 197, 94, 0.3);
-            border-radius: 16px;
-            padding: 1.15rem 1rem;
-            margin-bottom: 1.5rem;
-            box-sizing: border-box;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
-        }
-        .roadmap-header {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: #4ade80;
-            margin-bottom: 0.85rem;
+        /* Nuværende sætning boks & globale grammatik tags */
+        .current-sentence-badge-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            margin: 1rem auto;
+            max-width: 540px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 0.4rem;
         }
-        .roadmap-steps-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-        }
-        .roadmap-step-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 0.55rem 0.7rem;
-            box-sizing: border-box;
-        }
-        .roadmap-step-item.done {
-            border-left: 3px solid #4ade80;
-        }
-        .roadmap-step-item.current {
-            border-left: 3px solid #22c55e;
-            background: rgba(34, 197, 94, 0.12);
-        }
-        .step-icon-badge {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 800;
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            flex-shrink: 0;
-        }
-        .step-text-body {
-            flex: 1;
-            min-width: 0;
-        }
-        .step-head-txt {
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 0.1rem;
-        }
-        .step-example-txt {
-            font-size: 0.76rem;
-            color: #94a3b8;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .step-status-pill {
-            font-size: 0.68rem;
-            font-weight: 800;
-            padding: 0.15rem 0.45rem;
-            border-radius: 4px;
+        .cs-label {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            flex-shrink: 0;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+            font-weight: 800;
         }
-        .step-status-pill.done {
-            background: rgba(34, 197, 94, 0.2);
+        .cs-sentence-row {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.4;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+        .tag-subjekt {
             color: #4ade80;
+            background: rgba(34, 197, 94, 0.15);
+            border-bottom: 2px solid #22c55e;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
         }
-        .step-status-pill.current {
-            background: #22c55e;
-            color: #0f172a;
+        .tag-verbum {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.15);
+            border-bottom: 2px solid #ef4444;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adjektiv {
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.15);
+            border-bottom: 2px solid #f97316;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adverbium {
+            color: #facc15;
+            background: rgba(234, 179, 8, 0.15);
+            border-bottom: 2px solid #eab308;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-konjunktion {
+            color: #38bdf8;
+            background: rgba(6, 182, 212, 0.15);
+            border-bottom: 2px solid #06b6d4;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .cs-tags-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.35rem;
+        }
+        .legend-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
         }
 
         /* Træningsaktioner */

@@ -539,63 +539,63 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         if (adv.isCentral) {
             // Centraladverbium står på 3. pladsen lige efter V1
             blocksHtml = `
-                <!-- Led 1: Subjektet -->
-                <div class="strip-block block-subject">
-                    <span class="block-num-pill">1</span>
-                    <span class="block-word">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
-                    <span class="block-role">Subjekt</span>
+                <!-- Led 1: Subjektet (Grøn) -->
+                <div class="strip-block block-subject" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
+                    <span class="block-num-pill" style="background: #22c55e; color: #0f172a;">1</span>
+                    <span class="block-word" style="color: #4ade80;">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
+                    <span class="block-role" style="color: #4ade80;">Subjekt</span>
                 </div>
 
-                <!-- Led 2: Verbum 1 (Bøjet tidsanker) -->
-                <div class="strip-block block-v1">
-                    <span class="block-num-pill">2</span>
-                    <span class="block-word" style="color: #38bdf8;">${state.selectedModal || state.verbAnchor}</span>
-                    <span class="block-role">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
+                <!-- Led 2: Verbum 1 (Rød) -->
+                <div class="strip-block block-v1" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
+                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">2</span>
+                    <span class="block-word" style="color: #f87171;">${state.selectedModal || state.verbAnchor}</span>
+                    <span class="block-role" style="color: #f87171;">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
                 </div>
 
-                <!-- Led 3: Centraladverbium (PÅ 3. PLADSEN!) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 14px ${activeColor}44;">
-                    <span class="block-num-pill" style="background: ${activeColor}; color: #0f172a;">3</span>
-                    <span class="block-word" style="color: ${activeColor}; font-weight: 900;">${adv.word}</span>
-                    <span class="block-role" style="color: ${activeColor}; font-weight: 800;">Centraladverbium</span>
+                <!-- Led 3: Centraladverbium (Gul - PÅ 3. PLADSEN!) -->
+                <div class="strip-block block-adverb pulse-block-glow" style="border-color: #eab308; background: rgba(234, 179, 8, 0.15); box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);">
+                    <span class="block-num-pill" style="background: #eab308; color: #0f172a;">3</span>
+                    <span class="block-word" style="color: #facc15; font-weight: 900;">${adv.word}</span>
+                    <span class="block-role" style="color: #facc15; font-weight: 800;">Centraladverbium</span>
                 </div>
 
-                <!-- Led 4: Verbum 2 (Handlingen) -->
-                <div class="strip-block block-v2">
-                    <span class="block-num-pill">4</span>
-                    <span class="block-word" style="color: #4ade80;">${state.selectedVerb}</span>
-                    <span class="block-role">V2 (Infinitiv)</span>
+                <!-- Led 4: Verbum 2 (Rød) -->
+                <div class="strip-block block-v2" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
+                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">4</span>
+                    <span class="block-word" style="color: #f87171;">${state.selectedVerb}</span>
+                    <span class="block-role" style="color: #f87171;">V2 (Infinitiv)</span>
                 </div>
             `;
         } else {
             // Mådes-, grads- eller tidsadverbium står efter verbet
             blocksHtml = `
-                <!-- Led 1: Subjektet -->
-                <div class="strip-block block-subject">
-                    <span class="block-num-pill">1</span>
-                    <span class="block-word">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
-                    <span class="block-role">Subjekt</span>
+                <!-- Led 1: Subjektet (Grøn) -->
+                <div class="strip-block block-subject" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
+                    <span class="block-num-pill" style="background: #22c55e; color: #0f172a;">1</span>
+                    <span class="block-word" style="color: #4ade80;">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
+                    <span class="block-role" style="color: #4ade80;">Subjekt</span>
                 </div>
 
-                <!-- Led 2: Verbum 1 (Bøjet tidsanker) -->
-                <div class="strip-block block-v1">
-                    <span class="block-num-pill">2</span>
-                    <span class="block-word" style="color: #38bdf8;">${state.selectedModal || state.verbAnchor}</span>
-                    <span class="block-role">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
+                <!-- Led 2: Verbum 1 (Rød) -->
+                <div class="strip-block block-v1" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
+                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">2</span>
+                    <span class="block-word" style="color: #f87171;">${state.selectedModal || state.verbAnchor}</span>
+                    <span class="block-role" style="color: #f87171;">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
                 </div>
 
-                <!-- Led 3: Verbum 2 (Handlingen) -->
-                <div class="strip-block block-v2">
-                    <span class="block-num-pill">3</span>
-                    <span class="block-word" style="color: #4ade80;">${state.selectedVerb}</span>
-                    <span class="block-role">V2 (Handlingen)</span>
+                <!-- Led 3: Verbum 2 (Rød) -->
+                <div class="strip-block block-v2" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
+                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">3</span>
+                    <span class="block-word" style="color: #f87171;">${state.selectedVerb}</span>
+                    <span class="block-role" style="color: #f87171;">V2 (Handlingen)</span>
                 </div>
 
-                <!-- Led 4: Mådes-/Grads-/Tidsadverbium (Projektøren) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 14px ${activeColor}44;">
-                    <span class="block-num-pill" style="background: ${activeColor}; color: #0f172a;">4</span>
-                    <span class="block-word" style="color: ${activeColor}; font-weight: 900;">${adv.word}</span>
-                    <span class="block-role" style="color: ${activeColor}; font-weight: 800;">${adv.tag}</span>
+                <!-- Led 4: Mådes-/Grads-/Tidsadverbium (Gul) -->
+                <div class="strip-block block-adverb pulse-block-glow" style="border-color: #eab308; background: rgba(234, 179, 8, 0.15); box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);">
+                    <span class="block-num-pill" style="background: #eab308; color: #0f172a;">4</span>
+                    <span class="block-word" style="color: #facc15; font-weight: 900;">${adv.word}</span>
+                    <span class="block-role" style="color: #facc15; font-weight: 800;">${adv.tag}</span>
                 </div>
             `;
         }
@@ -735,58 +735,21 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             </div>
 
             <!-- ========================================================= -->
-            <!-- DEN STORE GRAMMATIK-STI: BROEN TIL KONJUNKTIONER          -->
+            <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <!-- ========================================================= -->
-            <div class="grammar-roadmap-card">
-                <div class="roadmap-header">
-                    <span>Den store grammatik-sti: Se hvordan sætningen er bygget op</span>
+            <div class="current-sentence-badge-box">
+                <span class="cs-label">Din sætning nu:</span>
+                <div class="cs-sentence-row">
+                    ${adv.isCentral 
+                        ? `<span class="cs-word tag-subjekt">${state.nounAnchor}</span> <span class="cs-word tag-adjektiv">${state.selectedAdjective}</span> <span class="cs-word tag-subjekt">${state.selectedNoun}</span> <span class="cs-word tag-verbum">${state.selectedModal || state.verbAnchor}</span> <span class="cs-word tag-adverbium">${adv.word}</span> <span class="cs-word tag-verbum">${state.selectedVerb}.</span>`
+                        : `<span class="cs-word tag-subjekt">${state.nounAnchor}</span> <span class="cs-word tag-adjektiv">${state.selectedAdjective}</span> <span class="cs-word tag-subjekt">${state.selectedNoun}</span> <span class="cs-word tag-verbum">${state.selectedModal || state.verbAnchor}</span> <span class="cs-word tag-verbum">${state.selectedVerb}</span> <span class="cs-word tag-adverbium">${adv.word}.</span>`
+                    }
                 </div>
-
-                <div class="roadmap-steps-list">
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">1. Grundsætning (Intro)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedNoun} ${state.verbAnchor}."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">2. Modalverber (Kraft & Finithed)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedNoun} ${state.selectedModal} ${state.selectedVerb}."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item done">
-                        <div class="step-icon-badge">✓</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">3. Adjektiver (Beskrivelse af barnet)</div>
-                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun} ${state.selectedModal} ${state.selectedVerb}."</div>
-                        </div>
-                        <div class="step-status-pill done">Gennemført</div>
-                    </div>
-
-                    <div class="roadmap-step-item current">
-                        <div class="step-icon-badge">🔦</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">4. Adverbier (Måden der spises på)</div>
-                            <div class="step-example-txt">"${getFullSentence()}"</div>
-                        </div>
-                        <div class="step-status-pill current">Aktiv nu</div>
-                    </div>
-
-                    <div class="roadmap-step-item next">
-                        <div class="step-icon-badge">🌉</div>
-                        <div class="step-text-body">
-                            <div class="step-head-txt">5. Konjunktioner (Tekstflow & Bindeord)</div>
-                            <div class="step-example-txt">"${getFullSentence()} <strong>[fordi]</strong>..."</div>
-                        </div>
-                        <div class="step-status-pill next">Næste trin</div>
-                    </div>
+                <div class="cs-tags-legend">
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
+                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
                 </div>
             </div>
 
@@ -1333,85 +1296,96 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             line-height: 1.4;
         }
 
-        /* Roadmap */
-        .grammar-roadmap-card {
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+        /* Nuværende sætning boks & globale grammatik tags */
+        .current-sentence-badge-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
             border-radius: 14px;
-            padding: 1rem;
-            margin-bottom: 1.25rem;
-            box-sizing: border-box;
-        }
-        .roadmap-header {
-            font-size: 0.92rem;
-            font-weight: 800;
-            color: #38bdf8;
-            margin-bottom: 0.75rem;
-        }
-        .roadmap-steps-list {
+            padding: 1rem 1.25rem;
+            margin: 1rem auto;
+            max-width: 540px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-        }
-        .roadmap-step-item {
-            display: flex;
             align-items: center;
-            gap: 0.65rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 0.6rem 0.75rem;
+            gap: 0.4rem;
         }
-        .roadmap-step-item.done {
-            border-color: rgba(34, 197, 94, 0.4);
-            background: rgba(34, 197, 94, 0.1);
+        .cs-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+            font-weight: 800;
         }
-        .roadmap-step-item.current {
-            border-color: rgba(251, 191, 36, 0.5);
-            background: rgba(251, 191, 36, 0.12);
-        }
-        .roadmap-step-item.next {
-            border-color: rgba(56, 189, 248, 0.4);
-            background: rgba(56, 189, 248, 0.08);
-        }
-        .step-icon-badge {
-            font-size: 1.15rem;
-            width: 22px;
+        .cs-sentence-row {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.35;
             text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
         }
-        .step-text-body {
-            flex: 1;
-            min-width: 0;
-        }
-        .step-head-txt {
-            font-size: 0.92rem;
-            font-weight: 800;
-            color: white;
-        }
-        .step-example-txt {
-            font-size: 0.82rem;
-            color: #cbd5e1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .step-status-pill {
-            font-size: 0.72rem;
-            font-weight: 800;
-            padding: 0.15rem 0.5rem;
-            border-radius: 5px;
-        }
-        .step-status-pill.done {
-            background: rgba(34, 197, 94, 0.25);
+        .tag-subjekt {
             color: #4ade80;
+            background: rgba(34, 197, 94, 0.15);
+            border-bottom: 2px solid #22c55e;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
         }
-        .step-status-pill.current {
-            background: rgba(251, 191, 36, 0.25);
-            color: #fbbf24;
+        .tag-verbum {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.15);
+            border-bottom: 2px solid #ef4444;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
         }
-        .step-status-pill.next {
-            background: rgba(56, 189, 248, 0.25);
+        .tag-adjektiv {
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.15);
+            border-bottom: 2px solid #f97316;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-adverbium {
+            color: #facc15;
+            background: rgba(234, 179, 8, 0.15);
+            border-bottom: 2px solid #eab308;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .tag-konjunktion {
             color: #38bdf8;
+            background: rgba(6, 182, 212, 0.15);
+            border-bottom: 2px solid #06b6d4;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .cs-tags-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.35rem;
+        }
+        .legend-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
         }
 
         /* Action card for næste trin */

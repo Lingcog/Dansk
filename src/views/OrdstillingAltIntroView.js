@@ -69,7 +69,7 @@ function renderFokusPaaSted(container, navigateFn) {
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #94a3b8;"></span> <strong style="color: #cbd5e1;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
 
@@ -104,8 +104,8 @@ function renderFokusPaaSted(container, navigateFn) {
                     <marker id="arrowhead-sted-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                         <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
                     </marker>
-                    <marker id="arrowhead-sted-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+                    <marker id="arrowhead-sted-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#94a3b8" />
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Sted) til gaden -->
@@ -115,7 +115,7 @@ function renderFokusPaaSted(container, navigateFn) {
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
                 <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-sted-green)" />
                 <!-- Arrow 4: Fra Boks 4 (Hvornår - tid) til himmel/bygning -->
-                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-sted-purple)" />
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrowhead-sted-gray)" />
             </svg>
             <!-- Box 1: Hvor sker det? (Sted forrest) -->
             <div class="photo-bubble bubble-3">
@@ -135,7 +135,7 @@ function renderFokusPaaSted(container, navigateFn) {
             <!-- Box 4: Hvornår sker det? -->
             <div class="photo-bubble bubble-4">
                 <div class="bubble-q">4. Hvornår sker det?</div>
-                <div class="bubble-ans ans-purple">om morgenen</div>
+                <div class="bubble-ans ans-gray">om morgenen</div>
             </div>
         </div>
     `;
@@ -181,7 +181,7 @@ function renderFokusPaaSted(container, navigateFn) {
             num: '4',
             q: 'Hvornår sker det?',
             ans: 'om morgenen',
-            colorClass: 'step-purple',
+            colorClass: 'step-gray',
             icon: '⏰',
             note: 'Tiden kommer til sidst',
             grammar: 'Tidsadverbium'
@@ -213,7 +213,7 @@ function renderFokusPaaSted(container, navigateFn) {
             <span class="word-yellow">På gaden</span> 
             <span class="word-red">cykler</span> 
             <span class="word-green">en kvinde</span> 
-            <span class="word-purple">om morgenen</span>.
+            <span class="word-gray">om morgenen</span>.
         </div>
         <button class="listen-btn" title="Hør udtale">
             <span>🔊</span> Hør sætningen
@@ -304,7 +304,7 @@ function setupStedStepBuilder(container) {
         },
         {
             q: "4. Hvornår sker det? (Tiden til sidst)",
-            colorClass: "step-purple",
+            colorClass: "step-gray",
             grammar: "Tidsadverbium",
             options: ["om morgenen", "om aftenen", "hver dag", "lige nu", "i dag", "om natten"]
         }
@@ -325,7 +325,7 @@ function setupStedStepBuilder(container) {
                 <span class="word-yellow">${selections[0]}</span> 
                 <span class="word-red">${selections[1]}</span> 
                 <span class="word-green">${selections[2]}</span> 
-                <span class="word-purple">${selections[3]}</span>.
+                <span class="word-gray">${selections[3]}</span>.
             </div>
             <button class="listen-btn-small" title="Lyt">🔊 Hør udtale</button>
         `;
@@ -478,7 +478,7 @@ function setupStedPuzzleExercise(container) {
 
         slotPrompts.forEach((promptItem, idx) => {
             const slot = document.createElement('div');
-            const colorClass = idx === 0 ? 'sted-slot-yellow' : idx === 1 ? 'sted-slot-red' : idx === 2 ? 'sted-slot-green' : 'sted-slot-purple';
+            const colorClass = idx === 0 ? 'sted-slot-yellow' : idx === 1 ? 'sted-slot-red' : idx === 2 ? 'sted-slot-green' : 'sted-slot-gray';
             slot.className = `puzzle-slot ${colorClass}`;
             slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
             slot.dataset.idx = idx;
@@ -627,7 +627,7 @@ function renderFokusPaaTid(container, navigateFn) {
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #94a3b8;"></span> <strong style="color: #cbd5e1;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
 
@@ -650,8 +650,8 @@ function renderFokusPaaTid(container, navigateFn) {
             <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('tid_hero_img_alt')}" class="hero-image">
             <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                 <defs>
-                    <marker id="arrowhead-tid-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+                    <marker id="arrowhead-tid-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#94a3b8" />
                     </marker>
                     <marker id="arrowhead-tid-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                         <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
@@ -664,7 +664,7 @@ function renderFokusPaaTid(container, navigateFn) {
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Hvornår - tid) til himmel/bygning -->
-                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-tid-purple)" />
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrowhead-tid-gray)" />
                 <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
                 <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-tid-red)" />
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
@@ -675,7 +675,7 @@ function renderFokusPaaTid(container, navigateFn) {
             <!-- Box 1: Hvornår sker det? (Tid forrest) -->
             <div class="photo-bubble bubble-4">
                 <div class="bubble-q">1. ${getTranslation('tid_q1')}</div>
-                <div class="bubble-ans ans-purple">Om morgenen</div>
+                <div class="bubble-ans ans-gray">Om morgenen</div>
             </div>
             <!-- Box 2: Hvad laver personen eller tingen? (Handlingen er altid nr. 2!) -->
             <div class="photo-bubble bubble-2">
@@ -709,7 +709,7 @@ function renderFokusPaaTid(container, navigateFn) {
             num: '1',
             q: getTranslation('tid_q1'),
             ans: 'Om morgenen',
-            colorClass: 'step-purple',
+            colorClass: 'step-gray',
             icon: '⏰',
             note: getTranslation('tid_note_1'),
             grammar: getTranslation('tid_g1')
@@ -765,7 +765,7 @@ function renderFokusPaaTid(container, navigateFn) {
     resultBox.innerHTML = `
         <div class="banner-label">${getTranslation('tid_finished_label')}</div>
         <div class="banner-sentence">
-            <span class="word-purple">Om morgenen</span> 
+            <span class="word-gray">Om morgenen</span> 
             <span class="word-red">cykler</span> 
             <span class="word-green">en kvinde</span> 
             <span class="word-yellow">på gaden</span>.
@@ -838,7 +838,7 @@ function setupTidStepBuilder(container) {
     const categories = [
         {
             q: `1. ${getTranslation('tid_q1')} (${getTranslation('tid_builder_hint_1')})`,
-            colorClass: "step-purple",
+            colorClass: "step-gray",
             grammar: getTranslation('tid_g1'),
             options: ["Om morgenen", "Om aftenen", "Hver dag", "Lige nu", "I dag", "Om eftermiddagen"]
         },
@@ -874,7 +874,7 @@ function setupTidStepBuilder(container) {
         outputBox.innerHTML = `
             <div class="live-label">${getTranslation('tid_builder_live_label')}</div>
             <div class="live-text">
-                <span class="word-purple">${selections[0]}</span> 
+                <span class="word-gray">${selections[0]}</span> 
                 <span class="word-red">${selections[1]}</span> 
                 <span class="word-green">${selections[2]}</span> 
                 <span class="word-yellow">${selections[3]}</span>.
@@ -1031,7 +1031,7 @@ function setupTidPuzzleExercise(container) {
 
         slotPrompts.forEach((promptItem, idx) => {
             const slot = document.createElement('div');
-            const colorClass = idx === 0 ? 'tid-slot-purple' : idx === 1 ? 'tid-slot-red' : idx === 2 ? 'tid-slot-green' : 'tid-slot-yellow';
+            const colorClass = idx === 0 ? 'tid-slot-gray' : idx === 1 ? 'tid-slot-red' : idx === 2 ? 'tid-slot-green' : 'tid-slot-yellow';
             slot.className = `puzzle-slot ${colorClass}`;
             slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
             slot.dataset.idx = idx;
@@ -1178,11 +1178,11 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
     const grammarBanner = document.createElement('div');
     grammarBanner.className = 'grammar-system-banner';
     grammarBanner.innerHTML = `
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #06b6d4;"></span> <strong style="color: #38bdf8;">Konjunktion + ledsætning</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Konjunktion + ledsætning</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #94a3b8;"></span> <strong style="color: #cbd5e1;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
 
@@ -1205,8 +1205,8 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             <img src="assets/foto_metafor_clean.jpg" alt="${getTranslation('konj_hero_img_alt')}" class="hero-image">
             <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                 <defs>
-                    <marker id="arrowhead-konj-cyan" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#06b6d4" />
+                    <marker id="arrowhead-konj-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
                     </marker>
                     <marker id="arrowhead-konj-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                         <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
@@ -1219,7 +1219,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Ledsætning) til himmel/baggrund -->
-                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#06b6d4" stroke-width="4" marker-end="url(#arrowhead-konj-cyan)" />
+                <line x1="1130" y1="120" x2="1180" y2="150" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrowhead-konj-purple)" />
                 <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
                 <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-konj-red)" />
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
@@ -1230,7 +1230,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             <!-- Box 1: Hvornår eller hvorfor? (Ledsætning forrest = 1. plads!) -->
             <div class="photo-bubble bubble-4">
                 <div class="bubble-q">1. ${getTranslation('konj_q1')}</div>
-                <div class="bubble-ans ans-cyan">Da det regnede,</div>
+                <div class="bubble-ans ans-purple">Da det regnede,</div>
             </div>
             <!-- Box 2: Hvad laver personen eller tingen? (Handlingen er altid nr. 2!) -->
             <div class="photo-bubble bubble-2">
@@ -1264,7 +1264,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             num: '1',
             q: getTranslation('konj_q1'),
             ans: 'Da det regnede,',
-            colorClass: 'step-cyan',
+            colorClass: 'step-purple',
             icon: '🔗',
             note: getTranslation('konj_note_1'),
             grammar: getTranslation('konj_g1')
@@ -1320,7 +1320,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
     resultBox.innerHTML = `
         <div class="banner-label">${getTranslation('konj_finished_label')}</div>
         <div class="banner-sentence">
-            <span class="word-cyan">Da det regnede,</span> 
+            <span class="word-purple">Da det regnede,</span> 
             <span class="word-red">cyklede</span> 
             <span class="word-green">en kvinde</span> 
             <span class="word-yellow">på gaden</span>.
@@ -1393,7 +1393,7 @@ function setupKonjunktionStepBuilder(container) {
     const categories = [
         {
             q: `1. ${getTranslation('konj_q1')} (${getTranslation('konj_builder_hint_1')})`,
-            colorClass: "step-cyan",
+            colorClass: "step-purple",
             grammar: getTranslation('konj_g1'),
             options: ["Da det regnede,", "Når solen skinner,", "Selvom det var koldt,", "Fordi hun havde travlt,", "Hvis vejret er godt,", "Mens det sneede,"]
         },
@@ -1429,7 +1429,7 @@ function setupKonjunktionStepBuilder(container) {
         outputBox.innerHTML = `
             <div class="live-label">${getTranslation('konj_builder_live_label')}</div>
             <div class="live-text">
-                <span class="word-cyan">${selections[0]}</span> 
+                <span class="word-purple">${selections[0]}</span> 
                 <span class="word-red">${selections[1]}</span> 
                 <span class="word-green">${selections[2]}</span> 
                 <span class="word-yellow">${selections[3]}</span>.
@@ -1586,7 +1586,7 @@ function setupKonjunktionPuzzleExercise(container) {
 
         slotPrompts.forEach((promptItem, idx) => {
             const slot = document.createElement('div');
-            const colorClass = idx === 0 ? 'konj-slot-cyan' : idx === 1 ? 'konj-slot-red' : idx === 2 ? 'konj-slot-green' : 'konj-slot-yellow';
+            const colorClass = idx === 0 ? 'konj-slot-purple' : idx === 1 ? 'konj-slot-red' : idx === 2 ? 'konj-slot-green' : 'konj-slot-yellow';
             slot.className = `puzzle-slot ${colorClass}`;
             slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
             slot.dataset.idx = idx;
@@ -2447,6 +2447,7 @@ function ensureIntroStyles() {
         .ans-blue { background: rgba(2, 132, 199, 0.15); color: #60a5fa; border: 1px solid #0284c7; }
         .ans-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid #8b5cf6; }
         .ans-yellow { background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid #eab308; }
+        .ans-gray { background: rgba(148, 163, 184, 0.18); color: #cbd5e1; border: 1px solid #94a3b8; }
         .ans-pink { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
         .ans-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid #06b6d4; }
 
@@ -2490,6 +2491,7 @@ function ensureIntroStyles() {
         .simple-step-card.step-blue { border-color: #0284c7; background: rgba(2, 132, 199, 0.1); }
         .simple-step-card.step-purple { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
         .simple-step-card.step-yellow { border-color: #eab308; background: rgba(234, 179, 8, 0.1); }
+        .simple-step-card.step-gray { border-color: #94a3b8; background: rgba(148, 163, 184, 0.1); }
         .simple-step-card.step-pink { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
         .simple-step-card.step-cyan { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
 
@@ -2499,6 +2501,7 @@ function ensureIntroStyles() {
         .step-blue .step-badge { background: #0284c7; }
         .step-purple .step-badge { background: #8b5cf6; }
         .step-yellow .step-badge { background: #eab308; }
+        .step-gray .step-badge { background: #94a3b8; color: #0f172a; }
         .step-pink .step-badge { background: #06b6d4; }
         .step-cyan .step-badge { background: #06b6d4; }
 
@@ -2536,6 +2539,7 @@ function ensureIntroStyles() {
         .word-blue { color: #60a5fa; }
         .word-purple { color: #c084fc; }
         .word-yellow { color: #fde047; }
+        .word-gray { color: #cbd5e1; }
         .word-pink { color: #38bdf8; }
         .word-cyan { color: #38bdf8; }
 
@@ -2611,6 +2615,7 @@ function ensureIntroStyles() {
         .builder-q-row.step-blue { border-left-color: #0284c7; }
         .builder-q-row.step-purple { border-left-color: #8b5cf6; }
         .builder-q-row.step-yellow { border-left-color: #eab308; }
+        .builder-q-row.step-gray { border-left-color: #94a3b8; }
         .builder-q-row.step-pink { border-left-color: #06b6d4; }
         .builder-q-row.step-cyan { border-left-color: #06b6d4; }
 
@@ -2700,15 +2705,16 @@ function ensureIntroStyles() {
         .puzzle-slot.filled { background: rgba(76, 175, 80, 0.15); border-style: solid; border-color: #4CAF50; cursor: pointer; }
 
         /* Tid slot colors */
-        .puzzle-slot.tid-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+        .puzzle-slot.tid-slot-gray.filled { border-color: #94a3b8; background: rgba(148, 163, 184, 0.15); }
+        .puzzle-slot.tid-slot-gray.filled .slot-text { color: #cbd5e1; }
         .puzzle-slot.tid-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.tid-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
         .puzzle-slot.tid-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
         .puzzle-slot.tid-slot-yellow.filled .slot-text { color: #fde047; }
 
         /* Konjunktion slot colors */
-        .puzzle-slot.konj-slot-cyan.filled { border-color: #06b6d4; background: rgba(6, 182, 212, 0.15); }
-        .puzzle-slot.konj-slot-cyan.filled .slot-text { color: #38bdf8; }
+        .puzzle-slot.konj-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+        .puzzle-slot.konj-slot-purple.filled .slot-text { color: #c084fc; }
         .puzzle-slot.konj-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.konj-slot-red.filled .slot-text { color: #f87171; }
         .puzzle-slot.konj-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
@@ -2721,7 +2727,8 @@ function ensureIntroStyles() {
         .puzzle-slot.sted-slot-yellow.filled .slot-text { color: #fde047; }
         .puzzle-slot.sted-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.sted-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.sted-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
+        .puzzle-slot.sted-slot-gray.filled { border-color: #94a3b8; background: rgba(148, 163, 184, 0.15); }
+        .puzzle-slot.sted-slot-gray.filled .slot-text { color: #cbd5e1; }
 
         /* Holdning slot colors */
         .puzzle-slot.holdning-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }

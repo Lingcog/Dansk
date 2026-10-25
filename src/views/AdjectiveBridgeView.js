@@ -1048,6 +1048,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             color: #94a3b8;
             margin-top: 0.15rem;
             white-space: nowrap;
+        }
         /* Nuværende sætning boks & globale grammatik tags */
         .current-sentence-badge-box {
             background: rgba(15, 23, 42, 0.85);

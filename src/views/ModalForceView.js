@@ -66,6 +66,9 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         return `${state.nounAnchor} ${state.selectedNoun} ${getCurrentModalWord()} spise.`;
     }
 
+    // Tilstand for om det klæbende animationsvindue er foldet sammen
+    let isStageCollapsed = false;
+
     // -------------------------------------------------------------
     // TOP BAR & NAVIGATION
     // -------------------------------------------------------------
@@ -309,91 +312,126 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         }
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper">
-                <svg class="force-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                        <linearGradient id="spaceGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#0b1329"/>
-                            <stop offset="70%" stop-color="#1e293b"/>
-                            <stop offset="100%" stop-color="#0f172a"/>
-                        </linearGradient>
-                        <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#15803d"/>
-                            <stop offset="100%" stop-color="#14532d"/>
-                        </linearGradient>
-                    </defs>
+            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--modal-accent: ${activeColor};">
+                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
+                <div class="stage-sticky-bar">
+                    <div class="sticky-left-info">
+                        <span class="sticky-lamp-dot" style="background: ${activeColor}; box-shadow: 0 0 8px ${activeColor};"></span>
+                        <span class="sticky-status-title">${badgeText}</span>
+                    </div>
+                    <div class="sticky-right-actions">
+                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
+                            <span>🔊</span>
+                            <span class="btn-audio-text">Lyt</span>
+                        </button>
+                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
+                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
+                        </button>
+                    </div>
+                </div>
 
-                    <!-- Baggrund & nattehimmel -->
-                    <rect x="0" y="0" width="360" height="126" rx="12" fill="url(#spaceGrad)"/>
+                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+                <div class="stage-svg-body">
+                    <svg class="force-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="spaceGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#0b1329"/>
+                                <stop offset="70%" stop-color="#1e293b"/>
+                                <stop offset="100%" stop-color="#0f172a"/>
+                            </linearGradient>
+                            <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#15803d"/>
+                                <stop offset="100%" stop-color="#14532d"/>
+                            </linearGradient>
+                        </defs>
 
-                    <!-- Jorden / Terrænet -->
-                    <rect x="0" y="86" width="360" height="40" rx="0 0 12 12" fill="url(#grassGrad)"/>
-                    <line x1="0" y1="86" x2="360" y2="86" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
+                        <!-- Baggrund & nattehimmel -->
+                        <rect x="0" y="0" width="360" height="126" rx="12" fill="url(#spaceGrad)"/>
 
-                    <!-- Dynamiske kraftvektorer (SKAL, MÅ, VIL, KAN) -->
-                    ${forceSvgOverlay}
+                        <!-- Jorden / Terrænet -->
+                        <rect x="0" y="86" width="360" height="40" rx="0 0 12 12" fill="url(#grassGrad)"/>
+                        <line x1="0" y1="86" x2="360" y2="86" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
 
-                    <!-- AGENS: Barnet (Tættere på maden: placeret ved x=86) -->
-                    <g class="agent-character" transform="translate(86, 28)">
-                        <!-- Hoved -->
-                        <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
-                        <!-- Krop -->
-                        <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="#0284c7" rx="3"/>
-                        <!-- Ben til jorden (y=86, så 28 + 58 = 86) -->
-                        <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-                        
-                        <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
-                        <text x="0" y="74" fill="#ffffff" font-size="13" font-weight="900" text-anchor="middle">
-                            ${state.nounAnchor} ${state.selectedNoun}
-                        </text>
-                        <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
-                            (subjekt)
-                        </text>
-                    </g>
+                        <!-- Dynamiske kraftvektorer (SKAL, MÅ, VIL, KAN) -->
+                        ${forceSvgOverlay}
 
-                    <!-- MÅLET: Handlingen "spise" (Tættere på barnet: placeret ved x=258) -->
-                    <g class="target-action" transform="translate(258, 30)">
-                        <!-- Bord -->
-                        <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
-                        <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
-                        <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
-                        
-                        <!-- Tallerken -->
-                        <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
-                        <!-- Mad -->
-                        <circle cx="0" cy="31" r="4.5" fill="#f59e0b"/>
-                        <!-- Duft/Damp med levende opdrift -->
-                        <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
-                            <animate attributeName="d" values="M -3 25 Q -5 19 0 14; M -3 25 Q -2 18 -4 13; M -3 25 Q -5 19 0 14" dur="2s" repeatCount="infinite"/>
-                            <animate attributeName="opacity" values="0.4; 0.9; 0.4" dur="2s" repeatCount="infinite"/>
-                        </path>
-                        <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
-                            <animate attributeName="d" values="M 3 26 Q 5 20 1 15; M 3 26 Q 2 19 4 14; M 3 26 Q 5 20 1 15" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
-                            <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
-                        </path>
+                        <!-- AGENS: Barnet (Tættere på maden: placeret ved x=86) -->
+                        <g class="agent-character" transform="translate(86, 28)">
+                            <!-- Hoved -->
+                            <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
+                            <!-- Krop -->
+                            <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="#0284c7" rx="3"/>
+                            <!-- Ben til jorden (y=86, så 28 + 58 = 86) -->
+                            <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                            
+                            <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
+                            <text x="0" y="74" fill="#ffffff" font-size="13" font-weight="900" text-anchor="middle">
+                                ${state.nounAnchor} ${state.selectedNoun}
+                            </text>
+                            <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
+                                (subjekt)
+                            </text>
+                        </g>
 
-                        <!-- Mærkaten for handlingen (STOR OG TYDELIG TEKST) -->
-                        <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
-                            spise
-                        </text>
-                        <text x="0" y="84" fill="#86efac" font-size="8.5" font-weight="700" text-anchor="middle">
-                            (handling / idé)
-                        </text>
-                    </g>
+                        <!-- MÅLET: Handlingen "spise" (Tættere på barnet: placeret ved x=258) -->
+                        <g class="target-action" transform="translate(258, 30)">
+                            <!-- Bord -->
+                            <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
+                            <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                            <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                            
+                            <!-- Tallerken -->
+                            <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <!-- Mad -->
+                            <circle cx="0" cy="31" r="4.5" fill="#f59e0b"/>
+                            <!-- Duft/Damp med levende opdrift -->
+                            <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
+                                <animate attributeName="d" values="M -3 25 Q -5 19 0 14; M -3 25 Q -2 18 -4 13; M -3 25 Q -5 19 0 14" dur="2s" repeatCount="infinite"/>
+                                <animate attributeName="opacity" values="0.4; 0.9; 0.4" dur="2s" repeatCount="infinite"/>
+                            </path>
+                            <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
+                                <animate attributeName="d" values="M 3 26 Q 5 20 1 15; M 3 26 Q 2 19 4 14; M 3 26 Q 5 20 1 15" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
+                                <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
+                            </path>
 
-                    <!-- Statusbadge i toppen af scenen med pulserende glød -->
-                    <g class="stage-top-badge" transform="translate(180, 15)">
-                        <rect x="-108" y="-10" width="216" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.3">
-                            <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
-                        </rect>
-                        <text x="0" y="4" fill="${activeColor}" font-size="10.2" font-weight="900" text-anchor="middle">
-                            ${badgeText}
-                        </text>
-                    </g>
-                </svg>
+                            <!-- Mærkaten for handlingen (STOR OG TYDELIG TEKST) -->
+                            <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
+                                spise
+                            </text>
+                            <text x="0" y="84" fill="#86efac" font-size="8.5" font-weight="700" text-anchor="middle">
+                                (handling / idé)
+                            </text>
+                        </g>
+
+                        <!-- Statusbadge i toppen af scenen med pulserende glød -->
+                        <g class="stage-top-badge" transform="translate(180, 15)">
+                            <rect x="-108" y="-10" width="216" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.3">
+                                <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
+                            </rect>
+                            <text x="0" y="4" fill="${activeColor}" font-size="10.2" font-weight="900" text-anchor="middle">
+                                ${badgeText}
+                            </text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
+                <div class="sticky-sentence-summary">
+                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-phrase">"${getFullSentence()}"</span>
+                </div>
             </div>
         `;
+
+        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
+        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
+
+        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
+        if (toggleBtn) toggleBtn.onclick = () => {
+            isStageCollapsed = !isStageCollapsed;
+            renderStage();
+        };
     }
 
     // -------------------------------------------------------------
@@ -702,10 +740,21 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         taskArea.appendChild(box);
     }
 
+    function flashStage() {
+        const frame = stageCard.querySelector('.stage-frame-wrapper');
+        if (frame) {
+            frame.classList.remove('pulse-stage-glow');
+            void frame.offsetWidth;
+            frame.classList.add('pulse-stage-glow');
+            setTimeout(() => frame.classList.remove('pulse-stage-glow'), 600);
+        }
+    }
+
     function refreshUI() {
         renderStage();
         renderSentenceStrip();
         renderInteractionArea();
+        flashStage();
     }
 
     refreshUI();
@@ -725,7 +774,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             margin: 0 auto;
             padding: 0 0.2rem 3rem !important;
             box-sizing: border-box;
-            overflow-x: hidden !important;
             color: #f8fafc;
         }
 
@@ -774,28 +822,128 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             line-height: 1.4;
         }
 
-        /* Kraftfelt-scene */
+        /* KLÆBENDE SCENE-RAMME (SMART STICKY HUD) */
         .modal-stage-card {
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
-            padding: 0.65rem 0.75rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
             box-sizing: border-box;
         }
         .stage-frame-wrapper {
+            position: relative;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: #0f172a;
+            transition: all 0.25s ease;
         }
+        .stage-frame-wrapper.pulse-stage-glow {
+            border-color: var(--modal-accent, #38bdf8) !important;
+            box-shadow: 0 0 25px var(--modal-accent, rgba(56, 189, 248, 0.6)) !important;
+        }
+
+        .stage-sticky-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.35rem 0.65rem;
+            background: rgba(15, 23, 42, 0.96);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 0.4rem;
+        }
+        .sticky-left-info {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 0;
+            flex: 1;
+        }
+        .sticky-lamp-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .sticky-status-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sticky-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-shrink: 0;
+        }
+        .btn-mini-audio, .btn-toggle-collapse {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s;
+        }
+        .btn-mini-audio:hover, .btn-toggle-collapse:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stage-svg-body {
+            width: 100%;
+            max-height: 145px;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            opacity: 1;
+        }
+        .stage-frame-wrapper.is-collapsed .stage-svg-body {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .sticky-sentence-summary {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.65rem;
+            background: rgba(0, 0, 0, 0.35);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.88rem;
+        }
+        .summary-prefix {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .summary-phrase {
+            font-weight: 800;
+            color: #fcd34d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+        }
+
         .force-svg-fluid {
             width: 100%;
-            max-width: 100%;
             height: auto;
             display: block;
-            aspect-ratio: 360 / 126;
         }
 
         /* Sætningsbånd */

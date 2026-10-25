@@ -17,6 +17,9 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         selectedAdverb: extraData.selectedAdverb || 'langsomt'
     };
 
+    // Tilstand for om det klæbende animationsvindue er foldet sammen
+    let isStageCollapsed = false;
+
     // -------------------------------------------------------------
     // TALE-SYNTHESE (TTS)
     // -------------------------------------------------------------
@@ -389,119 +392,154 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         }
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper">
-                <svg class="adverb-svg-fluid" viewBox="0 0 360 134" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                        <linearGradient id="advSpaceGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#0b1329"/>
-                            <stop offset="70%" stop-color="#1e293b"/>
-                            <stop offset="100%" stop-color="#0f172a"/>
-                        </linearGradient>
-                        <linearGradient id="advGrassGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#15803d"/>
-                            <stop offset="100%" stop-color="#14532d"/>
-                        </linearGradient>
-                        <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="${activeColor}" stop-opacity="0.6"/>
-                            <stop offset="60%" stop-color="${activeColor}" stop-opacity="0.25"/>
-                            <stop offset="100%" stop-color="${activeColor}" stop-opacity="0.05"/>
-                        </linearGradient>
-                        <filter id="advGlow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                        </filter>
-                    </defs>
+            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--adv-accent: ${activeColor};">
+                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
+                <div class="stage-sticky-bar">
+                    <div class="sticky-left-info">
+                        <span class="sticky-lamp-dot" style="background: ${activeColor}; box-shadow: 0 0 8px ${activeColor};"></span>
+                        <span class="sticky-status-title">${adv.icon} ${adv.badge}</span>
+                    </div>
+                    <div class="sticky-right-actions">
+                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
+                            <span>🔊</span>
+                            <span class="btn-audio-text">Lyt</span>
+                        </button>
+                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
+                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
+                        </button>
+                    </div>
+                </div>
 
-                    <!-- Himmelbaggrund -->
-                    <rect x="0" y="0" width="360" height="134" rx="12" fill="url(#advSpaceGrad)"/>
+                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+                <div class="stage-svg-body">
+                    <svg class="adverb-svg-fluid" viewBox="0 0 360 134" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="advSpaceGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#0b1329"/>
+                                <stop offset="70%" stop-color="#1e293b"/>
+                                <stop offset="100%" stop-color="#0f172a"/>
+                            </linearGradient>
+                            <linearGradient id="advGrassGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#15803d"/>
+                                <stop offset="100%" stop-color="#14532d"/>
+                            </linearGradient>
+                            <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="${activeColor}" stop-opacity="0.6"/>
+                                <stop offset="60%" stop-color="${activeColor}" stop-opacity="0.25"/>
+                                <stop offset="100%" stop-color="${activeColor}" stop-opacity="0.05"/>
+                            </linearGradient>
+                            <filter id="advGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
 
-                    <!-- Jorden / terræn -->
-                    <rect x="0" y="94" width="360" height="40" rx="0 0 12 12" fill="url(#advGrassGrad)"/>
-                    <line x1="0" y1="94" x2="360" y2="94" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
+                        <!-- Himmelbaggrund -->
+                        <rect x="0" y="0" width="360" height="134" rx="12" fill="url(#advSpaceGrad)"/>
 
-                    <!-- PROJEKTØRENS LYSKEGLE DER BELYSER HANDLINGEN -->
-                    <polygon points="252,18 264,18 304,94 212,94" fill="url(#beamGrad)">
-                        <animate attributeName="opacity" values="0.75; 1; 0.75" dur="2s" repeatCount="infinite"/>
-                    </polygon>
+                        <!-- Jorden / terræn -->
+                        <rect x="0" y="94" width="360" height="40" rx="0 0 12 12" fill="url(#advGrassGrad)"/>
+                        <line x1="0" y1="94" x2="360" y2="94" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
 
-                    <!-- PROJEKTØR-LAMPE I LOFTET/TOPPEN -->
-                    <g class="projector-fixture" transform="translate(258, 14)">
-                        <!-- Ophæng -->
-                        <line x1="0" y1="-14" x2="0" y2="0" stroke="#64748b" stroke-width="2"/>
-                        <!-- Lampehus -->
-                        <path d="M -14 0 L 14 0 L 10 8 L -10 8 Z" fill="#334155" stroke="#94a3b8" stroke-width="1"/>
-                        <!-- Glødende pære med adverbiets farve -->
-                        <ellipse cx="0" cy="8" rx="8" ry="3.5" fill="${activeColor}" filter="url(#advGlow)">
-                            <animate attributeName="rx" values="7.5; 9.5; 7.5" dur="1.6s" repeatCount="infinite"/>
-                        </ellipse>
-                        <text x="0" y="-3" font-size="7.5" fill="#94a3b8" font-weight="800" text-anchor="middle">PROJEKTØR</text>
-                    </g>
+                        <!-- PROJEKTØRENS LYSKEGLE DER BELYSER HANDLINGEN -->
+                        <polygon points="252,18 264,18 304,94 212,94" fill="url(#beamGrad)">
+                            <animate attributeName="opacity" values="0.75; 1; 0.75" dur="2s" repeatCount="infinite"/>
+                        </polygon>
 
-                    <!-- DYNAMISKE KRAFT- OG BØLGEEFFEKTER -->
-                    ${dynamicActionOverlay}
+                        <!-- PROJEKTØR-LAMPE I LOFTET/TOPPEN -->
+                        <g class="projector-fixture" transform="translate(258, 14)">
+                            <!-- Ophæng -->
+                            <line x1="0" y1="-14" x2="0" y2="0" stroke="#64748b" stroke-width="2"/>
+                            <!-- Lampehus -->
+                            <path d="M -14 0 L 14 0 L 10 8 L -10 8 Z" fill="#334155" stroke="#94a3b8" stroke-width="1"/>
+                            <!-- Glødende pære med adverbiets farve -->
+                            <ellipse cx="0" cy="8" rx="8" ry="3.5" fill="${activeColor}" filter="url(#advGlow)">
+                                <animate attributeName="rx" values="7.5; 9.5; 7.5" dur="1.6s" repeatCount="infinite"/>
+                            </ellipse>
+                            <text x="0" y="-3" font-size="7.5" fill="#94a3b8" font-weight="800" text-anchor="middle">PROJEKTØR</text>
+                        </g>
 
-                    <!-- AGENS / SUBJEKT: Barnet (med adjektiv påført) -->
-                    <g class="agent-character" transform="translate(86, 36)">
-                        <!-- Hoved -->
-                        <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
-                        <!-- Krop (med adjektiv-farvet trøje) -->
-                        <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="#0284c7" rx="3"/>
-                        <!-- Ben til jorden (y=94, så 36 + 58 = 94) -->
-                        <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-                        
-                        <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
-                        <text x="0" y="74" fill="#ffffff" font-size="12.5" font-weight="900" text-anchor="middle">
-                            ${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}
-                        </text>
-                        <text x="0" y="85" fill="#93c5fd" font-size="8" font-weight="700" text-anchor="middle">
-                            (Subjekt + Adjektiv)
-                        </text>
-                    </g>
+                        <!-- DYNAMISKE KRAFT- OG BØLGEEFFEKTER -->
+                        ${dynamicActionOverlay}
 
-                    <!-- MÅLET / HANDLINGEN: "spise" ved bordet under projektøren -->
-                    <g class="target-action" transform="translate(258, 38)">
-                        <!-- Bord -->
-                        <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
-                        <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
-                        <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
-                        
-                        <!-- Tallerken -->
-                        <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
-                        <!-- Mad -->
-                        <circle cx="0" cy="31" r="4.5" fill="#f59e0b"/>
-                        
-                        <!-- Damp fra maden med levende opdrift -->
-                        <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
-                            <animate attributeName="d" values="M -3 25 Q -5 19 0 14; M -3 25 Q -2 18 -4 13; M -3 25 Q -5 19 0 14" dur="2s" repeatCount="infinite"/>
-                            <animate attributeName="opacity" values="0.4; 0.9; 0.4" dur="2s" repeatCount="infinite"/>
-                        </path>
-                        <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
-                            <animate attributeName="d" values="M 3 26 Q 5 20 1 15; M 3 26 Q 2 19 4 14; M 3 26 Q 5 20 1 15" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
-                            <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
-                        </path>
+                        <!-- AGENS / SUBJEKT: Barnet (med adjektiv påført) -->
+                        <g class="agent-character" transform="translate(86, 36)">
+                            <!-- Hoved -->
+                            <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
+                            <!-- Krop (med adjektiv-farvet trøje) -->
+                            <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="#0284c7" rx="3"/>
+                            <!-- Ben til jorden (y=94, så 36 + 58 = 94) -->
+                            <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                            
+                            <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
+                            <text x="0" y="74" fill="#ffffff" font-size="12.5" font-weight="900" text-anchor="middle">
+                                ${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}
+                            </text>
+                            <text x="0" y="85" fill="#93c5fd" font-size="8" font-weight="700" text-anchor="middle">
+                                (Subjekt + Adjektiv)
+                            </text>
+                        </g>
 
-                        <!-- Handlingsnavn (STOR OG TYDELIG TEKST) -->
-                        <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
-                            ${state.selectedVerb}
-                        </text>
-                        <text x="0" y="84" fill="${activeColor}" font-size="9" font-weight="800" text-anchor="middle">
-                            modificeres af: "${adv.word}"
-                        </text>
-                    </g>
+                        <!-- MÅLET / HANDLINGEN: "spise" ved bordet under projektøren -->
+                        <g class="target-action" transform="translate(258, 38)">
+                            <!-- Bord -->
+                            <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
+                            <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                            <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                            
+                            <!-- Tallerken -->
+                            <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <!-- Mad -->
+                            <circle cx="0" cy="31" r="4.5" fill="#f59e0b"/>
+                            
+                            <!-- Damp fra maden med levende opdrift -->
+                            <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
+                                <animate attributeName="d" values="M -3 25 Q -5 19 0 14; M -3 25 Q -2 18 -4 13; M -3 25 Q -5 19 0 14" dur="2s" repeatCount="infinite"/>
+                                <animate attributeName="opacity" values="0.4; 0.9; 0.4" dur="2s" repeatCount="infinite"/>
+                            </path>
+                            <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.3" fill="none" opacity="0.8">
+                                <animate attributeName="d" values="M 3 26 Q 5 20 1 15; M 3 26 Q 2 19 4 14; M 3 26 Q 5 20 1 15" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
+                                <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
+                            </path>
 
-                    <!-- Statusbadge i toppen med pulserende kant -->
-                    <g class="stage-top-badge" transform="translate(180, 15)">
-                        <rect x="-115" y="-10" width="230" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.4">
-                            <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
-                        </rect>
-                        <text x="0" y="4" fill="${activeColor}" font-size="9.8" font-weight="900" text-anchor="middle">
-                            ${adv.icon} ${adv.badge}
-                        </text>
-                    </g>
-                </svg>
+                            <!-- Handlingsnavn (STOR OG TYDELIG TEKST) -->
+                            <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
+                                ${state.selectedVerb}
+                            </text>
+                            <text x="0" y="84" fill="${activeColor}" font-size="9" font-weight="800" text-anchor="middle">
+                                modificeres af: "${adv.word}"
+                            </text>
+                        </g>
+
+                        <!-- Statusbadge i toppen med pulserende kant -->
+                        <g class="stage-top-badge" transform="translate(180, 15)">
+                            <rect x="-115" y="-10" width="230" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.4">
+                                <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
+                            </rect>
+                            <text x="0" y="4" fill="${activeColor}" font-size="9.8" font-weight="900" text-anchor="middle">
+                                ${adv.icon} ${adv.badge}
+                            </text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
+                <div class="sticky-sentence-summary">
+                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-phrase">"${getFullSentence()}"</span>
+                </div>
             </div>
         `;
+
+        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
+        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
+
+        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
+        if (toggleBtn) toggleBtn.onclick = () => {
+            isStageCollapsed = !isStageCollapsed;
+            renderStage();
+        };
     }
 
     // -------------------------------------------------------------
@@ -786,6 +824,12 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                 state.selectedAdverb = chosen;
                 speakDanish(chosen);
                 refreshUI();
+
+                const frame = stageCard.querySelector('.stage-frame-wrapper');
+                if (frame) {
+                    frame.classList.add('pulse-stage-glow');
+                    setTimeout(() => frame.classList.remove('pulse-stage-glow'), 600);
+                }
             };
         });
 
@@ -841,7 +885,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             margin: 0 auto;
             padding: 0 0.2rem 3rem !important;
             box-sizing: border-box;
-            overflow-x: hidden !important;
             color: #f8fafc;
         }
 
@@ -900,8 +943,12 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             line-height: 1.4;
         }
 
-        /* Scene Frame */
+        /* KLÆBENDE SCENE-RAMME (STICKY STAGE HUD) */
         .adverb-stage-card {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
             box-sizing: border-box;
@@ -909,11 +956,111 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         .stage-frame-wrapper {
             position: relative;
             width: 100%;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: #0f172a;
+            transition: all 0.25s ease;
         }
+        .stage-frame-wrapper.pulse-stage-glow {
+            border-color: var(--adv-accent, #38bdf8) !important;
+            box-shadow: 0 0 25px var(--adv-accent, rgba(56, 189, 248, 0.6)) !important;
+        }
+
+        .stage-sticky-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.35rem 0.65rem;
+            background: rgba(15, 23, 42, 0.96);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 0.4rem;
+        }
+        .sticky-left-info {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 0;
+            flex: 1;
+        }
+        .sticky-lamp-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .sticky-status-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sticky-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-shrink: 0;
+        }
+        .btn-mini-audio, .btn-toggle-collapse {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s;
+        }
+        .btn-mini-audio:hover, .btn-toggle-collapse:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stage-svg-body {
+            width: 100%;
+            max-height: 145px;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            opacity: 1;
+        }
+        .stage-frame-wrapper.is-collapsed .stage-svg-body {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .sticky-sentence-summary {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.65rem;
+            background: rgba(0, 0, 0, 0.35);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.88rem;
+        }
+        .summary-prefix {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .summary-phrase {
+            font-weight: 800;
+            color: #fcd34d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+        }
+
         .adverb-svg-fluid {
             width: 100%;
             height: auto;

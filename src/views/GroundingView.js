@@ -70,149 +70,171 @@ export function renderGroundingView(container, navigateFn) {
     stageCard.className = 'grounding-stage-compact';
 
     stageCard.innerHTML = `
-        <div class="sky-frame-mobile">
-            <svg class="sky-svg-fluid" viewBox="0 0 360 90" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                    <linearGradient id="skyGradMob" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.95"/>
-                        <stop offset="65%" stop-color="#0284c7" stop-opacity="0.45"/>
-                        <stop offset="100%" stop-color="#064e3b" stop-opacity="0.75"/>
-                    </linearGradient>
+        <div class="stage-frame-wrapper" style="--grounding-accent: #38bdf8;">
+            <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
+            <div class="stage-sticky-bar">
+                <div class="sticky-left-info">
+                    <span class="sticky-lamp-dot" style="background: #38bdf8; box-shadow: 0 0 8px #38bdf8;"></span>
+                    <span class="sticky-status-title" id="sticky-grounding-status">🎈 Abstrakt (svæver)</span>
+                </div>
+                <div class="sticky-right-actions">
+                    <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
+                        <span>🔊</span>
+                        <span class="btn-audio-text">Lyt</span>
+                    </button>
+                    <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="Skjul eller vis scene">
+                        <span id="btn-toggle-collapse-text">⊟ Skjul scene</span>
+                    </button>
+                </div>
+            </div>
 
-                    <linearGradient id="groundGradMob" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#16a34a"/>
-                        <stop offset="100%" stop-color="#14532d"/>
-                    </linearGradient>
+            <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+            <div class="stage-svg-body">
+                <div class="sky-frame-mobile">
+                    <svg class="sky-svg-fluid" viewBox="0 0 360 90" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="skyGradMob" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.95"/>
+                                <stop offset="65%" stop-color="#0284c7" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#064e3b" stop-opacity="0.75"/>
+                            </linearGradient>
 
-                    <linearGradient id="balloonGradMob" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#f43f5e"/>
-                        <stop offset="60%" stop-color="#e11d48"/>
-                        <stop offset="100%" stop-color="#9f1239"/>
-                    </linearGradient>
+                            <linearGradient id="groundGradMob" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#16a34a"/>
+                                <stop offset="100%" stop-color="#14532d"/>
+                            </linearGradient>
 
-                    <filter id="glowGoldMob" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="2" result="blur" />
-                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                    </filter>
-                </defs>
+                            <linearGradient id="balloonGradMob" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#f43f5e"/>
+                                <stop offset="60%" stop-color="#e11d48"/>
+                                <stop offset="100%" stop-color="#9f1239"/>
+                            </linearGradient>
 
-                <!-- Himmel -->
-                <rect x="0" y="0" width="360" height="90" fill="url(#skyGradMob)" rx="10"/>
+                            <filter id="glowGoldMob" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="2" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
 
-                <!-- Drivende skyer med levende animation -->
-                <g opacity="0.35">
-                    <g>
-                        <path d="M 25 15 Q 40 8 55 15 Q 70 8 85 15 A 8 8 0 0 1 80 25 L 30 25 A 8 8 0 0 1 25 15 Z" fill="#ffffff"/>
-                        <animateTransform attributeName="transform" type="translate" values="0,0; 25,0; 0,0" dur="20s" repeatCount="infinite"/>
-                    </g>
-                    <g>
-                        <path d="M 270 12 Q 285 5 300 12 Q 315 5 330 12 A 8 8 0 0 1 325 22 L 275 22 A 8 8 0 0 1 270 12 Z" fill="#ffffff"/>
-                        <animateTransform attributeName="transform" type="translate" values="0,0; -20,0; 0,0" dur="24s" repeatCount="infinite"/>
-                    </g>
-                </g>
+                        <!-- Himmel -->
+                        <rect x="0" y="0" width="360" height="90" fill="url(#skyGradMob)" rx="10"/>
 
-                <!-- Jorden i bunden -->
-                <rect x="0" y="74" width="360" height="16" fill="url(#groundGradMob)" rx="0 0 10 10"/>
-                <line x1="0" y1="74" x2="360" y2="74" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
+                        <!-- Drivende skyer med levende animation -->
+                        <g opacity="0.35">
+                            <g>
+                                <path d="M 25 15 Q 40 8 55 15 Q 70 8 85 15 A 8 8 0 0 1 80 25 L 30 25 A 8 8 0 0 1 25 15 Z" fill="#ffffff"/>
+                                <animateTransform attributeName="transform" type="translate" values="0,0; 25,0; 0,0" dur="20s" repeatCount="infinite"/>
+                            </g>
+                            <g>
+                                <path d="M 270 12 Q 285 5 300 12 Q 315 5 330 12 A 8 8 0 0 1 325 22 L 275 22 A 8 8 0 0 1 270 12 Z" fill="#ffffff"/>
+                                <animateTransform attributeName="transform" type="translate" values="0,0; -20,0; 0,0" dur="24s" repeatCount="infinite"/>
+                            </g>
+                        </g>
 
-                <!-- Taleren på jorden -->
-                <g class="speaker-figure" transform="translate(65, 48)">
-                    <circle cx="0" cy="6" r="4.5" fill="#f8fafc"/>
-                    <line x1="0" y1="10" x2="0" y2="19" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="0" y1="13" x2="8" y2="17" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="0" y1="13" x2="-6" y2="18" stroke="#f8fafc" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="0" y1="19" x2="-4" y2="26" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="0" y1="19" x2="4" y2="26" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-                    <text x="0" y="34" font-size="9" fill="#cbd5e1" text-anchor="middle" font-weight="700">Taleren</text>
-                </g>
+                        <!-- Jorden i bunden -->
+                        <rect x="0" y="74" width="360" height="16" fill="url(#groundGradMob)" rx="0 0 10 10"/>
+                        <line x1="0" y1="74" x2="360" y2="74" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
 
-                <!-- TØJRESNOR & ANKER (Trin 1 live animation) -->
-                <g id="tether-group">
-                    <path id="tether-rope" d="M 260 42 Q 170 58 75 74" 
-                          stroke="#fbbf24" stroke-width="2" stroke-dasharray="250" stroke-dashoffset="250" 
-                          fill="none" filter="url(#glowGoldMob)" stroke-linecap="round"/>
-                    
-                    <!-- Animeret energistrøm gennem tøjresnoren -->
-                    <path id="tether-rope-flux" d="M 260 42 Q 170 58 75 74" 
-                          stroke="#fef08a" stroke-width="2.5" stroke-dasharray="8 8" 
-                          fill="none" opacity="0" stroke-linecap="round">
-                        <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="0.9s" repeatCount="infinite"/>
-                    </path>
-                    
-                    <g id="ground-anchor" transform="translate(75, 74) scale(0)" opacity="0">
-                        <!-- Udvidende anker-ringe -->
-                        <circle cx="0" cy="0" r="3" fill="none" stroke="#fbbf24" stroke-width="1.5">
-                            <animate attributeName="r" values="3; 14; 3" dur="2s" repeatCount="infinite"/>
-                            <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="2s" repeatCount="infinite"/>
-                        </circle>
-                        <circle cx="0" cy="0" r="3" fill="#fbbf24"/>
-                        <path d="M -6 1.5 Q 0 8 6 1.5" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
-                        <line x1="0" y1="-1.5" x2="0" y2="5" stroke="#fbbf24" stroke-width="1.5"/>
-                    </g>
-                </g>
+                        <!-- Taleren på jorden -->
+                        <g class="speaker-figure" transform="translate(65, 48)">
+                            <circle cx="0" cy="6" r="4.5" fill="#f8fafc"/>
+                            <line x1="0" y1="10" x2="0" y2="19" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="0" y1="13" x2="8" y2="17" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="0" y1="13" x2="-6" y2="18" stroke="#f8fafc" stroke-width="1.5" stroke-linecap="round"/>
+                            <line x1="0" y1="19" x2="-4" y2="26" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="0" y1="19" x2="4" y2="26" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+                            <text x="0" y="34" font-size="9" fill="#cbd5e1" text-anchor="middle" font-weight="700">Taleren</text>
+                        </g>
 
-                <!-- Landing-chokbølge ved jorden (aktiveres ved trin >= 4) -->
-                <g id="landing-ripple" transform="translate(260, 74)" opacity="0">
-                    <ellipse cx="0" cy="0" rx="4" ry="2" fill="none" stroke="#4ade80" stroke-width="2">
-                        <animate attributeName="rx" values="4; 34; 4" dur="2s" repeatCount="infinite"/>
-                        <animate attributeName="ry" values="2; 8; 2" dur="2s" repeatCount="infinite"/>
-                        <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="2s" repeatCount="infinite"/>
-                    </ellipse>
-                </g>
+                        <!-- TØJRESNOR & ANKER (Trin 1 live animation) -->
+                        <g id="tether-group">
+                            <path id="tether-rope" d="M 260 42 Q 170 58 75 74" 
+                                  stroke="#fbbf24" stroke-width="2" stroke-dasharray="250" stroke-dashoffset="250" 
+                                  fill="none" filter="url(#glowGoldMob)" stroke-linecap="round"/>
+                            
+                            <!-- Animeret energistrøm gennem tøjresnoren -->
+                            <path id="tether-rope-flux" d="M 260 42 Q 170 58 75 74" 
+                                  stroke="#fef08a" stroke-width="2.5" stroke-dasharray="8 8" 
+                                  fill="none" opacity="0" stroke-linecap="round">
+                                <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="0.9s" repeatCount="infinite"/>
+                            </path>
+                            
+                            <g id="ground-anchor" transform="translate(75, 74) scale(0)" opacity="0">
+                                <!-- Udvidende anker-ringe -->
+                                <circle cx="0" cy="0" r="3" fill="none" stroke="#fbbf24" stroke-width="1.5">
+                                    <animate attributeName="r" values="3; 14; 3" dur="2s" repeatCount="infinite"/>
+                                    <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="2s" repeatCount="infinite"/>
+                                </circle>
+                                <circle cx="0" cy="0" r="3" fill="#fbbf24"/>
+                                <path d="M -6 1.5 Q 0 8 6 1.5" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <line x1="0" y1="-1.5" x2="0" y2="5" stroke="#fbbf24" stroke-width="1.5"/>
+                            </g>
+                        </g>
 
-                <!-- LUFTBALLONEN (Ordet "barn") -->
-                <g id="balloon-craft" class="balloon-craft balloon-floating-anim" transform="translate(260, 26)">
-                    <!-- Ballon kuppel -->
-                    <path d="M 0 -17 C -17 -17 -22 2 -8 14 L -4 18 L 4 18 L 8 14 C 22 2 17 -17 0 -17 Z" 
-                          fill="url(#balloonGradMob)" stroke="#fda4af" stroke-width="1.2" filter="drop-shadow(0 3px 6px rgba(0,0,0,0.35))"/>
-                    
-                    <!-- Mønsterstribe -->
-                    <path d="M 0 -17 C -6 -17 -8 2 -2 18 L 2 18 C 8 2 6 -17 0 -17 Z" fill="rgba(255,255,255,0.25)"/>
+                        <!-- Landing-chokbølge ved jorden (aktiveres ved trin >= 4) -->
+                        <g id="landing-ripple" transform="translate(260, 74)" opacity="0">
+                            <ellipse cx="0" cy="0" rx="4" ry="2" fill="none" stroke="#4ade80" stroke-width="2">
+                                <animate attributeName="rx" values="4; 34; 4" dur="2s" repeatCount="infinite"/>
+                                <animate attributeName="ry" values="2; 8; 2" dur="2s" repeatCount="infinite"/>
+                                <animate attributeName="opacity" values="0.9; 0.1; 0.9" dur="2s" repeatCount="infinite"/>
+                            </ellipse>
+                        </g>
 
-                    <!-- Tidsmotor / flamme (Trin 2 live med levende flamme-animation) -->
-                    <g id="burner-flame" opacity="0" transform="translate(0, 19)">
-                        <circle cx="0" cy="2" r="3.5" fill="#f59e0b" filter="url(#glowGoldMob)">
-                            <animate attributeName="r" values="3; 5.5; 3" dur="0.45s" repeatCount="infinite"/>
-                            <animate attributeName="opacity" values="0.7; 1; 0.7" dur="0.45s" repeatCount="infinite"/>
-                        </circle>
-                        <polygon points="-2,1 0,-3 2,1" fill="#fbbf24">
-                            <animate attributeName="points" values="-2,1 0,-3 2,1; -2.5,1.5 0,-5.5 2.5,1.5; -2,1 0,-3 2,1" dur="0.32s" repeatCount="infinite"/>
-                        </polygon>
-                        <polygon points="-1,1 0,-1.5 1,1" fill="#ffffff">
-                            <animate attributeName="opacity" values="0.6; 1; 0.6" dur="0.22s" repeatCount="infinite"/>
-                        </polygon>
-                    </g>
+                        <!-- LUFTBALLONEN (Ordet "barn") -->
+                        <g id="balloon-craft" class="balloon-craft balloon-floating-anim" transform="translate(260, 26)">
+                            <!-- Ballon kuppel -->
+                            <path d="M 0 -17 C -17 -17 -22 2 -8 14 L -4 18 L 4 18 L 8 14 C 22 2 17 -17 0 -17 Z" 
+                                  fill="url(#balloonGradMob)" stroke="#fda4af" stroke-width="1.2" filter="drop-shadow(0 3px 6px rgba(0,0,0,0.35))"/>
+                            
+                            <!-- Mønsterstribe -->
+                            <path d="M 0 -17 C -6 -17 -8 2 -2 18 L 2 18 C 8 2 6 -17 0 -17 Z" fill="rgba(255,255,255,0.25)"/>
 
-                    <!-- Snore til kurven -->
-                    <line x1="-4" y1="18" x2="-5" y2="23" stroke="#e2e8f0" stroke-width="1"/>
-                    <line x1="4" y1="18" x2="5" y2="23" stroke="#e2e8f0" stroke-width="1"/>
+                            <!-- Tidsmotor / flamme (Trin 2 live med levende flamme-animation) -->
+                            <g id="burner-flame" opacity="0" transform="translate(0, 19)">
+                                <circle cx="0" cy="2" r="3.5" fill="#f59e0b" filter="url(#glowGoldMob)">
+                                    <animate attributeName="r" values="3; 5.5; 3" dur="0.45s" repeatCount="infinite"/>
+                                    <animate attributeName="opacity" values="0.7; 1; 0.7" dur="0.45s" repeatCount="infinite"/>
+                                </circle>
+                                <polygon points="-2,1 0,-3 2,1" fill="#fbbf24">
+                                    <animate attributeName="points" values="-2,1 0,-3 2,1; -2.5,1.5 0,-5.5 2.5,1.5; -2,1 0,-3 2,1" dur="0.32s" repeatCount="infinite"/>
+                                </polygon>
+                                <polygon points="-1,1 0,-1.5 1,1" fill="#ffffff">
+                                    <animate attributeName="opacity" values="0.6; 1; 0.6" dur="0.22s" repeatCount="infinite"/>
+                                </polygon>
+                            </g>
 
-                    <!-- Kurven -->
-                    <rect x="-13" y="23" width="26" height="14" rx="3" fill="#78350f" stroke="#b45309" stroke-width="1.2"/>
+                            <!-- Snore til kurven -->
+                            <line x1="-4" y1="18" x2="-5" y2="23" stroke="#e2e8f0" stroke-width="1"/>
+                            <line x1="4" y1="18" x2="5" y2="23" stroke="#e2e8f0" stroke-width="1"/>
 
-                    <!-- Teksten BARN (TYDELIG) -->
-                    <text x="0" y="34" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle" letter-spacing="0.3">
-                        barn
-                    </text>
+                            <!-- Kurven -->
+                            <rect x="-13" y="23" width="26" height="14" rx="3" fill="#78350f" stroke="#b45309" stroke-width="1.2"/>
 
-                    <!-- Svævende status over ballonen -->
-                    <g id="balloon-badge" transform="translate(0, -23)">
-                        <rect x="-50" y="-8" width="100" height="16" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="1"/>
-                        <text id="balloon-badge-text" x="0" y="3.5" fill="#38bdf8" font-size="8.5" font-weight="800" text-anchor="middle">
-                            🎈 Abstrakt (svæver)
-                        </text>
-                    </g>
-                </g>
-            </svg>
-        </div>
+                            <!-- Teksten BARN (TYDELIG) -->
+                            <text x="0" y="34" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle" letter-spacing="0.3">
+                                barn
+                            </text>
 
-        <!-- INTEGRERET SÆTNINGSBÅND I ÉN FLOT RÆKKE -->
-        <div class="compact-strip-container">
-            <div class="strip-header-title">Sætningen:</div>
-            <div class="slots-mobile-row">
-                <span class="slot-item slot-empty" id="live-slot-noun">1. Anker ?</span>
-                <span class="slot-item slot-fixed">barn</span>
-                <span class="slot-item slot-empty" id="live-slot-verb">2. Tid ?</span>
+                            <!-- Svævende status over ballonen -->
+                            <g id="balloon-badge" transform="translate(0, -23)">
+                                <rect x="-50" y="-8" width="100" height="16" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="1"/>
+                                <text id="balloon-badge-text" x="0" y="3.5" fill="#38bdf8" font-size="8.5" font-weight="800" text-anchor="middle">
+                                    🎈 Abstrakt (svæver)
+                                </text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- INTEGRERET SÆTNINGSBÅND I ÉN FLOT RÆKKE -->
+            <div class="compact-strip-container">
+                <div class="strip-header-title">Sætningen:</div>
+                <div class="slots-mobile-row">
+                    <span class="slot-item slot-empty" id="live-slot-noun">1. Anker ?</span>
+                    <span class="slot-item slot-fixed">barn</span>
+                    <span class="slot-item slot-empty" id="live-slot-verb">2. Tid ?</span>
+                </div>
             </div>
         </div>
     `;
@@ -227,6 +249,41 @@ export function renderGroundingView(container, navigateFn) {
     viewContainer.appendChild(interactionCard);
 
     // DOM referencer
+    let isStageCollapsed = false;
+    const stageFrame = stageCard.querySelector('.stage-frame-wrapper');
+    const stickyGroundingStatus = stageCard.querySelector('#sticky-grounding-status');
+    const stickyLampDot = stageCard.querySelector('.sticky-lamp-dot');
+    const audioBtn = stageCard.querySelector('#btn-sticky-audio');
+    if (audioBtn) {
+        audioBtn.onclick = () => {
+            const sentence = `${state.nounAnchor || 'Mit'} barn ${state.verbAnchor || 'spiser'}.`;
+            speakDanish(sentence);
+        };
+    }
+    const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
+    const toggleBtnText = stageCard.querySelector('#btn-toggle-collapse-text');
+    if (toggleBtn && stageFrame) {
+        toggleBtn.onclick = () => {
+            isStageCollapsed = !isStageCollapsed;
+            if (isStageCollapsed) {
+                stageFrame.classList.add('is-collapsed');
+                if (toggleBtnText) toggleBtnText.textContent = '⊞ Vis scene';
+            } else {
+                stageFrame.classList.remove('is-collapsed');
+                if (toggleBtnText) toggleBtnText.textContent = '⊟ Skjul scene';
+            }
+        };
+    }
+
+    function flashStage() {
+        if (stageFrame) {
+            stageFrame.classList.remove('pulse-stage-glow');
+            void stageFrame.offsetWidth;
+            stageFrame.classList.add('pulse-stage-glow');
+            setTimeout(() => stageFrame.classList.remove('pulse-stage-glow'), 600);
+        }
+    }
+
     const balloonCraft = stageCard.querySelector('#balloon-craft');
     const tetherRope = stageCard.querySelector('#tether-rope');
     const tetherRopeFlux = stageCard.querySelector('#tether-rope-flux');
@@ -247,6 +304,11 @@ export function renderGroundingView(container, navigateFn) {
             if (tetherRopeFlux) tetherRopeFlux.style.opacity = '0';
             balloonBadgeText.textContent = '🎈 Abstrakt (svæver)';
             balloonBadgeText.style.fill = '#38bdf8';
+            if (stickyGroundingStatus) stickyGroundingStatus.textContent = '🎈 Abstrakt (svæver)';
+            if (stickyLampDot) {
+                stickyLampDot.style.background = '#38bdf8';
+                stickyLampDot.style.boxShadow = '0 0 8px #38bdf8';
+            }
             liveSlotNoun.className = 'slot-item slot-empty';
             liveSlotNoun.textContent = '1. Anker ?';
         } else {
@@ -264,6 +326,11 @@ export function renderGroundingView(container, navigateFn) {
 
             balloonBadgeText.textContent = `⚓ Forankret: "${state.nounAnchor}"`;
             balloonBadgeText.style.fill = '#fcd34d';
+            if (stickyGroundingStatus) stickyGroundingStatus.textContent = `⚓ Forankret: "${state.nounAnchor}"`;
+            if (stickyLampDot) {
+                stickyLampDot.style.background = '#fcd34d';
+                stickyLampDot.style.boxShadow = '0 0 8px #fcd34d';
+            }
 
             liveSlotNoun.className = 'slot-item slot-active-noun';
             liveSlotNoun.textContent = state.nounAnchor;
@@ -282,6 +349,11 @@ export function renderGroundingView(container, navigateFn) {
 
             balloonBadgeText.textContent = `⏰ I tid: "${state.verbAnchor}"`;
             balloonBadgeText.style.fill = '#4ade80';
+            if (stickyGroundingStatus) stickyGroundingStatus.textContent = `⏰ I tid: "${state.verbAnchor}"`;
+            if (stickyLampDot) {
+                stickyLampDot.style.background = '#4ade80';
+                stickyLampDot.style.boxShadow = '0 0 8px #4ade80';
+            }
         }
 
         if (state.step >= 4) {
@@ -294,6 +366,11 @@ export function renderGroundingView(container, navigateFn) {
             }
             balloonBadgeText.textContent = `🌱 Landet på jorden!`;
             balloonBadgeText.style.fill = '#4ade80';
+            if (stickyGroundingStatus) stickyGroundingStatus.textContent = `🌱 Landet på jorden!`;
+            if (stickyLampDot) {
+                stickyLampDot.style.background = '#4ade80';
+                stickyLampDot.style.boxShadow = '0 0 8px #4ade80';
+            }
         } else {
             balloonCraft.classList.add('balloon-floating-anim');
             balloonCraft.style.transform = '';
@@ -301,6 +378,8 @@ export function renderGroundingView(container, navigateFn) {
                 landingRipple.style.opacity = '0';
             }
         }
+
+        flashStage();
     }
 
     // Skift trin
@@ -886,7 +965,6 @@ export function renderGroundingView(container, navigateFn) {
             margin: 0 auto;
             padding: 0 0.2rem 2.5rem !important;
             box-sizing: border-box;
-            overflow-x: hidden !important;
             color: #f8fafc;
         }
 
@@ -946,21 +1024,102 @@ export function renderGroundingView(container, navigateFn) {
                 line-height: 1.4;
             }
 
-            /* Ultra-kompakt scene */
+            /* KLÆBENDE SCENE-RAMME (SMART STICKY HUD) */
             .grounding-stage-compact {
-                background: #0f172a;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 14px;
-                padding: 0.65rem 0.75rem;
-                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                z-index: 60;
                 margin-bottom: 0.85rem;
                 width: 100%;
                 box-sizing: border-box;
             }
+            .stage-frame-wrapper {
+                position: relative;
+                width: 100%;
+                border-radius: 14px;
+                overflow: hidden;
+                box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6);
+                border: 1.5px solid rgba(255, 255, 255, 0.15);
+                background: #0f172a;
+                transition: all 0.25s ease;
+            }
+            .stage-frame-wrapper.pulse-stage-glow {
+                border-color: var(--grounding-accent, #38bdf8) !important;
+                box-shadow: 0 0 25px var(--grounding-accent, rgba(56, 189, 248, 0.6)) !important;
+            }
+
+            .stage-sticky-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.35rem 0.65rem;
+                background: rgba(15, 23, 42, 0.96);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                gap: 0.4rem;
+            }
+            .sticky-left-info {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                min-width: 0;
+                flex: 1;
+            }
+            .sticky-lamp-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+            .sticky-status-title {
+                font-size: 0.8rem;
+                font-weight: 800;
+                color: #ffffff;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .sticky-right-actions {
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                flex-shrink: 0;
+            }
+            .btn-mini-audio, .btn-toggle-collapse {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                color: white;
+                padding: 0.2rem 0.5rem;
+                border-radius: 8px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                transition: all 0.2s;
+            }
+            .btn-mini-audio:hover, .btn-toggle-collapse:hover {
+                background: rgba(255, 255, 255, 0.16);
+                border-color: rgba(255, 255, 255, 0.3);
+            }
+
+            .stage-svg-body {
+                width: 100%;
+                max-height: 125px;
+                overflow: hidden;
+                transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+                opacity: 1;
+            }
+            .stage-frame-wrapper.is-collapsed .stage-svg-body {
+                max-height: 0;
+                opacity: 0;
+            }
+
             .sky-frame-mobile {
                 width: 100%;
                 max-width: 100%;
-                border-radius: 8px;
+                border-radius: 0;
                 overflow: hidden;
             }
             .sky-svg-fluid {

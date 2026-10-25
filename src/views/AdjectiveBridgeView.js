@@ -135,6 +135,9 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         return `${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun} ${getModalWord()} ${getActionWord()}.`;
     }
 
+    // Tilstand for om det klæbende animationsvindue er foldet sammen
+    let isStageCollapsed = false;
+
     // Kongruens laboratorie-state & hjælpefunktioner
     const agreementState = {
         type: isDefiniteAnchor() ? 'bestemt' : 'ubestemt',
@@ -350,100 +353,135 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         const beamGlow = adj.colorGlow;
 
         stageCard.innerHTML = `
-            <div class="stage-frame-wrapper">
-                <svg class="adj-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                        <linearGradient id="adjNightGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#0a1128"/>
-                            <stop offset="65%" stop-color="#1e293b"/>
-                            <stop offset="100%" stop-color="#0f172a"/>
-                        </linearGradient>
+            <div class="stage-frame-wrapper ${isStageCollapsed ? 'is-collapsed' : ''}" style="--adj-accent: ${beamColor};">
+                <!-- KLÆBENDE TOPBAR MED STATUS, LYD OG FOLD-KNAP -->
+                <div class="stage-sticky-bar">
+                    <div class="sticky-left-info">
+                        <span class="sticky-lamp-dot" style="background: ${beamColor}; box-shadow: 0 0 8px ${beamColor};"></span>
+                        <span class="sticky-status-title">💡 Projektør: "${adjWord}"</span>
+                    </div>
+                    <div class="sticky-right-actions">
+                        <button type="button" class="btn-mini-audio" id="btn-sticky-audio" title="Lyt til sætningen">
+                            <span>🔊</span>
+                            <span class="btn-audio-text">Lyt</span>
+                        </button>
+                        <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="${isStageCollapsed ? 'Fold scenen ud' : 'Gør scenen kompakt'}">
+                            <span>${isStageCollapsed ? '⊞ Vis scene' : '⊟ Skjul scene'}</span>
+                        </button>
+                    </div>
+                </div>
 
-                        <linearGradient id="groundGradAdj" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#15803d"/>
-                            <stop offset="100%" stop-color="#14532d"/>
-                        </linearGradient>
+                <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
+                <div class="stage-svg-body">
+                    <svg class="adj-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="adjNightGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#0a1128"/>
+                                <stop offset="65%" stop-color="#1e293b"/>
+                                <stop offset="100%" stop-color="#0f172a"/>
+                            </linearGradient>
 
-                        <!-- Projektør lyskegle gradient -->
-                        <linearGradient id="spotlightBeamGrad" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stop-color="${beamColor}" stop-opacity="0.85"/>
-                            <stop offset="30%" stop-color="${beamColor}" stop-opacity="0.45"/>
-                            <stop offset="85%" stop-color="${beamColor}" stop-opacity="0.2"/>
-                            <stop offset="100%" stop-color="${beamColor}" stop-opacity="0.0"/>
-                        </linearGradient>
+                            <linearGradient id="groundGradAdj" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#15803d"/>
+                                <stop offset="100%" stop-color="#14532d"/>
+                            </linearGradient>
 
-                        <filter id="beamFilter" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="4" result="blur"/>
-                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                        </filter>
-                    </defs>
+                            <!-- Projektør lyskegle gradient -->
+                            <linearGradient id="spotlightBeamGrad" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="${beamColor}" stop-opacity="0.85"/>
+                                <stop offset="30%" stop-color="${beamColor}" stop-opacity="0.45"/>
+                                <stop offset="85%" stop-color="${beamColor}" stop-opacity="0.2"/>
+                                <stop offset="100%" stop-color="${beamColor}" stop-opacity="0.0"/>
+                            </linearGradient>
 
-                    <!-- Baggrund -->
-                    <rect x="0" y="0" width="360" height="126" rx="12" fill="url(#adjNightGrad)"/>
+                            <filter id="beamFilter" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="4" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
 
-                    <!-- Jorden -->
-                    <rect x="0" y="86" width="360" height="40" rx="0 0 12 12" fill="url(#groundGradAdj)"/>
-                    <line x1="0" y1="86" x2="360" y2="86" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
+                        <!-- Baggrund -->
+                        <rect x="0" y="0" width="360" height="126" rx="12" fill="url(#adjNightGrad)"/>
 
-                    <!-- DYNAMISK LYSKEGLE FRA PROJEKTØREN (Mod barnet) -->
-                    <path d="M 68 54 L 285 24 L 285 86 L 68 62 Z" fill="url(#spotlightBeamGrad)" filter="url(#beamFilter)"/>
+                        <!-- Jorden -->
+                        <rect x="0" y="86" width="360" height="40" rx="0 0 12 12" fill="url(#groundGradAdj)"/>
+                        <line x1="0" y1="86" x2="360" y2="86" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
 
-                    <!-- LYS-AURA OMKRING BARNET -->
-                    <ellipse cx="248" cy="56" rx="34" ry="28" fill="${beamGlow}" opacity="0.85" filter="url(#beamFilter)"/>
+                        <!-- DYNAMISK LYSKEGLE FRA PROJEKTØREN (Mod barnet) -->
+                        <path d="M 68 54 L 285 24 L 285 86 L 68 62 Z" fill="url(#spotlightBeamGrad)" filter="url(#beamFilter)"/>
 
-                    <!-- PROJEKTØREN TIL VENSTRE (x=45, y=56) -->
-                    <g class="projector-hardware" transform="translate(42, 40)">
-                        <!-- Stativ / holder -->
-                        <line x1="12" y1="32" x2="12" y2="46" stroke="#64748b" stroke-width="3"/>
-                        <line x1="12" y1="46" x2="0" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="12" y1="46" x2="24" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- LYS-AURA OMKRING BARNET -->
+                        <ellipse cx="248" cy="56" rx="34" ry="28" fill="${beamGlow}" opacity="0.85" filter="url(#beamFilter)"/>
 
-                        <!-- Projektør-lampehus -->
-                        <path d="M 0 10 L 22 16 L 22 28 L 0 34 Z" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
-                        <!-- Pære / linse med glød -->
-                        <ellipse cx="22" cy="22" rx="4" ry="8" fill="${beamColor}" filter="url(#beamFilter)"/>
+                        <!-- PROJEKTØREN TIL VENSTRE (x=45, y=56) -->
+                        <g class="projector-hardware" transform="translate(42, 40)">
+                            <!-- Stativ / holder -->
+                            <line x1="12" y1="32" x2="12" y2="46" stroke="#64748b" stroke-width="3"/>
+                            <line x1="12" y1="46" x2="0" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="12" y1="46" x2="24" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
 
-                        <!-- Mærkat -->
-                        <text x="12" y="58" fill="#94a3b8" font-size="8.5" font-weight="700" text-anchor="middle">
-                            Projektør
-                        </text>
-                    </g>
+                            <!-- Projektør-lampehus -->
+                            <path d="M 0 10 L 22 16 L 22 28 L 0 34 Z" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+                            <!-- Pære / linse med glød -->
+                            <ellipse cx="22" cy="22" rx="4" ry="8" fill="${beamColor}" filter="url(#beamFilter)"/>
 
-                    <!-- BARNET I LYSET (Placeret ved x=248) -->
-                    <g class="illuminated-child" transform="translate(248, 28)">
-                        <!-- Hoved -->
-                        <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
-                        <!-- Krop i projektørens farve -->
-                        <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="${beamColor}" rx="3"/>
-                        <!-- Ben til jorden (y=86, så 28 + 58 = 86) -->
-                        <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-
-                        <!-- Egenskab / Ikon over hovedet -->
-                        <g transform="translate(0, -6)">
-                            <circle cx="0" cy="0" r="10" fill="rgba(15, 23, 42, 0.9)" stroke="${beamColor}" stroke-width="1.5"/>
-                            <text x="0" y="3.5" font-size="10.5" text-anchor="middle">${adj.icon}</text>
+                            <!-- Mærkat -->
+                            <text x="12" y="58" fill="#94a3b8" font-size="8.5" font-weight="700" text-anchor="middle">
+                                Projektør
+                            </text>
                         </g>
 
-                        <!-- STOR, TYDELIG TEKST PÅ JORDEN -->
-                        <text x="0" y="74" fill="#ffffff" font-size="13.5" font-weight="900" text-anchor="middle">
-                            ${state.nounAnchor} <tspan fill="${beamColor}">${adjWord}</tspan> ${state.selectedNoun}
-                        </text>
-                        <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
-                            (beskrevet med adjektiv)
-                        </text>
-                    </g>
+                        <!-- BARNET I LYSET (Placeret ved x=248) -->
+                        <g class="illuminated-child" transform="translate(248, 28)">
+                            <!-- Hoved -->
+                            <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
+                            <!-- Krop i projektørens farve -->
+                            <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="${beamColor}" rx="3"/>
+                            <!-- Ben til jorden (y=86, så 28 + 58 = 86) -->
+                            <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
 
-                    <!-- TOP STATUS-BADGE -->
-                    <g class="stage-top-badge" transform="translate(180, 15)">
-                        <rect x="-105" y="-10" width="210" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${beamColor}" stroke-width="1.3"/>
-                        <text x="0" y="4" fill="${beamColor}" font-size="10" font-weight="900" text-anchor="middle">
-                            💡 Projektør: Lyser med "${adjWord}"
-                        </text>
-                    </g>
-                </svg>
+                            <!-- Egenskab / Ikon over hovedet -->
+                            <g transform="translate(0, -6)">
+                                <circle cx="0" cy="0" r="10" fill="rgba(15, 23, 42, 0.9)" stroke="${beamColor}" stroke-width="1.5"/>
+                                <text x="0" y="3.5" font-size="10.5" text-anchor="middle">${adj.icon}</text>
+                            </g>
+
+                            <!-- STOR, TYDELIG TEKST PÅ JORDEN -->
+                            <text x="0" y="74" fill="#ffffff" font-size="13.5" font-weight="900" text-anchor="middle">
+                                ${state.nounAnchor} <tspan fill="${beamColor}">${adjWord}</tspan> ${state.selectedNoun}
+                            </text>
+                            <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
+                                (beskrevet med adjektiv)
+                            </text>
+                        </g>
+
+                        <!-- TOP STATUS-BADGE -->
+                        <g class="stage-top-badge" transform="translate(180, 15)">
+                            <rect x="-105" y="-10" width="210" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${beamColor}" stroke-width="1.3"/>
+                            <text x="0" y="4" fill="${beamColor}" font-size="10" font-weight="900" text-anchor="middle">
+                                💡 Projektør: Lyser med "${adjWord}"
+                            </text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
+                <div class="sticky-sentence-summary">
+                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-phrase">"${getFullSentence()}"</span>
+                </div>
             </div>
         `;
+
+        const audioBtn = stageCard.querySelector('#btn-sticky-audio');
+        if (audioBtn) audioBtn.onclick = () => speakDanish(getFullSentence());
+
+        const toggleBtn = stageCard.querySelector('#btn-toggle-collapse');
+        if (toggleBtn) toggleBtn.onclick = () => {
+            isStageCollapsed = !isStageCollapsed;
+            renderStage();
+        };
     }
 
     // -------------------------------------------------------------
@@ -833,10 +871,21 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         taskArea.appendChild(box);
     }
 
+    function flashStage() {
+        const frame = stageCard.querySelector('.stage-frame-wrapper');
+        if (frame) {
+            frame.classList.remove('pulse-stage-glow');
+            void frame.offsetWidth;
+            frame.classList.add('pulse-stage-glow');
+            setTimeout(() => frame.classList.remove('pulse-stage-glow'), 600);
+        }
+    }
+
     function refreshUI() {
         renderStage();
         renderSentenceStrip();
         renderInteractionArea();
+        flashStage();
     }
 
     refreshUI();
@@ -858,7 +907,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             margin: 0 auto;
             padding: 0 0.2rem 3rem !important;
             box-sizing: border-box;
-            overflow-x: hidden !important;
             color: #f8fafc;
         }
 
@@ -907,28 +955,128 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             line-height: 1.4;
         }
 
-        /* Projektør-scene */
+        /* KLÆBENDE SCENE-RAMME (SMART STICKY HUD) */
         .adj-stage-card {
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
-            padding: 0.65rem 0.75rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
             box-sizing: border-box;
         }
         .stage-frame-wrapper {
+            position: relative;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: #0f172a;
+            transition: all 0.25s ease;
         }
+        .stage-frame-wrapper.pulse-stage-glow {
+            border-color: var(--adj-accent, #38bdf8) !important;
+            box-shadow: 0 0 25px var(--adj-accent, rgba(56, 189, 248, 0.6)) !important;
+        }
+
+        .stage-sticky-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.35rem 0.65rem;
+            background: rgba(15, 23, 42, 0.96);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 0.4rem;
+        }
+        .sticky-left-info {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 0;
+            flex: 1;
+        }
+        .sticky-lamp-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .sticky-status-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sticky-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-shrink: 0;
+        }
+        .btn-mini-audio, .btn-toggle-collapse {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s;
+        }
+        .btn-mini-audio:hover, .btn-toggle-collapse:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stage-svg-body {
+            width: 100%;
+            max-height: 145px;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            opacity: 1;
+        }
+        .stage-frame-wrapper.is-collapsed .stage-svg-body {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .sticky-sentence-summary {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.65rem;
+            background: rgba(0, 0, 0, 0.35);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.88rem;
+        }
+        .summary-prefix {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .summary-phrase {
+            font-weight: 800;
+            color: #fcd34d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+        }
+
         .adj-svg-fluid {
             width: 100%;
-            max-width: 100%;
             height: auto;
             display: block;
-            aspect-ratio: 360 / 126;
         }
 
         /* Sætningsbånd - 5 led */

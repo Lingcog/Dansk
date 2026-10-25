@@ -10,7 +10,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
     `,t.appendChild(w);const A=document.createElement("div");A.className="intro-hero-card",A.innerHTML=`
         <h2>Når stedet kommer først i sætningen</h2>
@@ -25,8 +25,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <img src="assets/foto_metafor_clean.jpg" alt="Fokus på sted: På gaden cykler en kvinde om morgenen" class="hero-image">
             <svg class="photo-overlay-svg" viewBox="0 0 1376 768" preserveAspectRatio="none">
                 <defs>
-                    <marker id="arrowhead-sted-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                    <marker id="arrowhead-sted-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
                     </marker>
                     <marker id="arrowhead-sted-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                         <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
@@ -39,7 +39,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Sted) til gaden -->
-                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-sted-blue)" />
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-sted-yellow)" />
                 <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
                 <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-sted-red)" />
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
@@ -50,7 +50,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <!-- Box 1: Hvor sker det? (Sted forrest) -->
             <div class="photo-bubble bubble-3">
                 <div class="bubble-q">1. Hvor sker det?</div>
-                <div class="bubble-ans ans-blue">På gaden</div>
+                <div class="bubble-ans ans-yellow">På gaden</div>
             </div>
             <!-- Box 2: Hvad laver personen eller tingen? (Handlingen nr. 2!) -->
             <div class="photo-bubble bubble-2">
@@ -68,7 +68,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <div class="bubble-ans ans-purple">om morgenen</div>
             </div>
         </div>
-    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:"Hvor sker det?",ans:"På gaden",colorClass:"step-blue",icon:"📍",note:"Stedet sættes forrest",grammar:"Præposition (sted)"},{num:"2",q:"Hvad laver personen eller tingen?",ans:"cykler",colorClass:"step-red",icon:"🚲",note:"Handlingen SKAL være nr. 2!",grammar:"Verbum (inversion: 2. plads!)"},{num:"3",q:"Hvad eller hvem taler vi om?",ans:"en kvinde",colorClass:"step-green",icon:"👤",note:"Personen rykker om bagved",grammar:"Substantiv / Pronomen (subjekt)"},{num:"4",q:"Hvornår sker det?",ans:"om morgenen",colorClass:"step-purple",icon:"⏰",note:"Tiden kommer til sidst",grammar:"Tidsadverbium"}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
+    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:"Hvor sker det?",ans:"På gaden",colorClass:"step-yellow",icon:"📍",note:"Stedet sættes forrest",grammar:"Præposition (sted)"},{num:"2",q:"Hvad laver personen eller tingen?",ans:"cykler",colorClass:"step-red",icon:"🚲",note:"Handlingen SKAL være nr. 2!",grammar:"Verbum (inversion: 2. plads!)"},{num:"3",q:"Hvad eller hvem taler vi om?",ans:"en kvinde",colorClass:"step-green",icon:"👤",note:"Personen rykker om bagved",grammar:"Substantiv / Pronomen (subjekt)"},{num:"4",q:"Hvornår sker det?",ans:"om morgenen",colorClass:"step-purple",icon:"⏰",note:"Tiden kommer til sidst",grammar:"Tidsadverbium"}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
             <div class="step-badge">${I.num}</div>
             <div class="step-card-content">
                 <div class="step-q">${I.icon} ${I.q}</div>
@@ -79,7 +79,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `,f.appendChild(C)}),t.appendChild(f);const Z=document.createElement("div");Z.className="finished-sentence-banner",Z.innerHTML=`
         <div class="banner-label">Den færdige sætning:</div>
         <div class="banner-sentence">
-            <span class="word-blue">På gaden</span> 
+            <span class="word-yellow">På gaden</span> 
             <span class="word-red">cykler</span> 
             <span class="word-green">en kvinde</span> 
             <span class="word-purple">om morgenen</span>.
@@ -90,10 +90,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
     `;const oe=Z.querySelector(".listen-btn");oe.onclick=()=>Ke("På gaden cykler en kvinde om morgenen"),t.appendChild(Z);const ge=document.createElement("div");ge.className="section-divider",ge.innerHTML=`
         <h2>✍️ Prøv selv at lave en sætning med fokus på sted</h2>
         <p>Husk: Stedet kommer først, og handlingen er ALTID nummer 2!</p>
-    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent="Trin-for-trin bygger";const W=document.createElement("button");W.className="ex-sub-tab",W.textContent="Puslespil: Rigtig rækkefølge",ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},vr(J),hr(G),U.appendChild(t),dt()}function vr(U){const h=[{q:"1. Hvor sker det? (Stedet forrest)",colorClass:"step-blue",grammar:"Præposition (sted)",options:["På gaden","I parken","På skolen","Derhjemme","I haven","På caféen"]},{q:"2. Hvad laver personen eller tingen? (Handlingen er altid nr. 2!)",colorClass:"step-red",grammar:"Verbum (inversion)",options:["cykler","løber","arbejder","sover","kører","sidder"]},{q:"3. Hvad eller hvem taler vi om? (Personen/tingen)",colorClass:"step-green",grammar:"Substantiv / Pronomen",options:["en kvinde","en mand","læreren","katten","bussen","folk"]},{q:"4. Hvornår sker det? (Tiden til sidst)",colorClass:"step-purple",grammar:"Tidsadverbium",options:["om morgenen","om aftenen","hver dag","lige nu","i dag","om natten"]}];let t=["På gaden","cykler","en kvinde","om morgenen"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
+    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent="Trin-for-trin bygger";const W=document.createElement("button");W.className="ex-sub-tab",W.textContent="Puslespil: Rigtig rækkefølge",ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},vr(J),hr(G),U.appendChild(t),dt()}function vr(U){const h=[{q:"1. Hvor sker det? (Stedet forrest)",colorClass:"step-yellow",grammar:"Præposition (sted)",options:["På gaden","I parken","På skolen","Derhjemme","I haven","På caféen"]},{q:"2. Hvad laver personen eller tingen? (Handlingen er altid nr. 2!)",colorClass:"step-red",grammar:"Verbum (inversion)",options:["cykler","løber","arbejder","sover","kører","sidder"]},{q:"3. Hvad eller hvem taler vi om? (Personen/tingen)",colorClass:"step-green",grammar:"Substantiv / Pronomen",options:["en kvinde","en mand","læreren","katten","bussen","folk"]},{q:"4. Hvornår sker det? (Tiden til sidst)",colorClass:"step-purple",grammar:"Tidsadverbium",options:["om morgenen","om aftenen","hver dag","lige nu","i dag","om natten"]}];let t=["På gaden","cykler","en kvinde","om morgenen"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
             <div class="live-label">Din sætning med fokus på sted:</div>
             <div class="live-text">
-                <span class="word-blue">${t[0]}</span> 
+                <span class="word-yellow">${t[0]}</span> 
                 <span class="word-red">${t[1]}</span> 
                 <span class="word-green">${t[2]}</span> 
                 <span class="word-purple">${t[3]}</span>.
@@ -102,7 +102,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `;const w=n.querySelector(".listen-btn-small");w.onclick=()=>Ke(`${t[0]} ${t[1]} ${t[2]} ${t[3]}`)}const d=document.createElement("div");d.className="builder-questions-list",h.forEach((w,A)=>{const T=document.createElement("div");T.className=`builder-q-row ${w.colorClass}`;const V=document.createElement("div");V.className="builder-q-title",V.innerHTML=`${w.q} <span class="grammar-badge-inline">${w.grammar}</span>`,T.appendChild(V);const k=document.createElement("div");k.className="builder-btn-grid",w.options.forEach(f=>{const Q=document.createElement("button");Q.className=`chip-btn ${t[A]===f?"selected":""}`,Q.textContent=f,Q.onclick=()=>{t[A]=f,T.querySelectorAll(".chip-btn").forEach(Z=>Z.classList.remove("selected")),Q.classList.add("selected"),l()},k.appendChild(Q)}),T.appendChild(k),d.appendChild(T)}),r.appendChild(d),r.appendChild(n),U.appendChild(r),l()}function hr(U){const h=[{correct:["På gaden","cykler","en kvinde","om morgenen"],scrambled:["om morgenen","På gaden","en kvinde","cykler"]},{correct:["I parken","løber","en mand","hver dag"],scrambled:["løber","hver dag","I parken","en mand"]},{correct:["På skolen","arbejder","læreren","i dag"],scrambled:["læreren","På skolen","i dag","arbejder"]},{correct:["I sengen","sover","babyen","lige nu"],scrambled:["lige nu","sover","I sengen","babyen"]},{correct:["I sofaen","sover","katten","om natten"],scrambled:["katten","om natten","sover","I sofaen"]},{correct:["På stationen","ankommer","toget","klokken otte"],scrambled:["klokken otte","På stationen","ankommer","toget"]},{correct:["I haven","leger","børnene","om eftermiddagen"],scrambled:["om eftermiddagen","børnene","I haven","leger"]},{correct:["På vejen","kører","bussen","lige nu"],scrambled:["bussen","På vejen","lige nu","kører"]},{correct:["I svømmehallen","svømmer","pigen","i dag"],scrambled:["i dag","svømmer","pigen","I svømmehallen"]},{correct:["På caféen","sidder","folk","om morgenen"],scrambled:["folk","sidder","om morgenen","På caféen"]}];let t=0,r=[null,null,null,null];const n=new Set,l=document.createElement("div");l.className="puzzle-wrapper";function d(){l.innerHTML="",r=[null,null,null,null];const w=h[t],A=document.createElement("div");A.className="puzzle-header";const T=document.createElement("div");T.className="puzzle-pills-row",h.forEach((Y,W)=>{const J=document.createElement("button");J.className=`puzzle-pill ${W===t?"active":""} ${n.has(W)?"completed":""}`,J.textContent=W+1,J.title=`Gå til opgave ${W+1}`,J.onclick=()=>{t=W,d()},T.appendChild(J)}),A.appendChild(T);const V=document.createElement("div");V.className="puzzle-counter",V.textContent=`Opgave ${t+1} af ${h.length}`,A.appendChild(V);const k=document.createElement("div");k.className="puzzle-guide",k.innerHTML=`
             Klik på ordene i den rigtige rækkefølge med fokus på sted:
             <br><small>1. Hvor? ➔ 2. Hvad sker der? ➔ 3. Hvem/hvad? ➔ 4. Hvornår?</small>
-        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:"1. Hvor? (Sted)",grammar:"Præposition (sted)"},{text:"2. Hvad laver? (Handling)",grammar:"Verbum (2. plads)"},{text:"3. Hvem / hvad? (Person)",grammar:"Substantiv"},{text:"4. Hvornår? (Tid)",grammar:"Tidsadverbium"}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"sted-slot-blue":W===1?"sted-slot-red":W===2?"sted-slot-green":"sted-slot-purple";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((Y,W)=>{const J=r[W];J?(Y.classList.add("filled"),Y.innerHTML=`
+        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:"1. Hvor? (Sted)",grammar:"Præposition (sted)"},{text:"2. Hvad laver? (Handling)",grammar:"Verbum (2. plads)"},{text:"3. Hvem / hvad? (Person)",grammar:"Substantiv"},{text:"4. Hvornår? (Tid)",grammar:"Tidsadverbium"}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"sted-slot-yellow":W===1?"sted-slot-red":W===2?"sted-slot-green":"sted-slot-purple";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((Y,W)=>{const J=r[W];J?(Y.classList.add("filled"),Y.innerHTML=`
                         <span class="slot-number">${W+1}</span>
                         <span class="slot-text">${J}</span>
                         <span class="slot-remove">✕</span>
@@ -125,7 +125,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
     `,t.appendChild(w);const A=document.createElement("div");A.className="intro-hero-card",A.innerHTML=`
         <h2>${e("tid_hero_title")}</h2>
@@ -146,8 +146,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <marker id="arrowhead-tid-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                         <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
                     </marker>
-                    <marker id="arrowhead-tid-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                    <marker id="arrowhead-tid-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Hvornår - tid) til himmel/bygning -->
@@ -157,7 +157,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
                 <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-tid-green)" />
                 <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
-                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-tid-blue)" />
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-tid-yellow)" />
             </svg>
             <!-- Box 1: Hvornår sker det? (Tid forrest) -->
             <div class="photo-bubble bubble-4">
@@ -177,10 +177,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <!-- Box 4: Hvor sker det? (Stedet til sidst) -->
             <div class="photo-bubble bubble-3">
                 <div class="bubble-q">4. ${e("tid_q4")}</div>
-                <div class="bubble-ans ans-blue">på gaden</div>
+                <div class="bubble-ans ans-yellow">på gaden</div>
             </div>
         </div>
-    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:e("tid_q1"),ans:"Om morgenen",colorClass:"step-purple",icon:"⏰",note:e("tid_note_1"),grammar:e("tid_g1")},{num:"2",q:e("tid_q2"),ans:"cykler",colorClass:"step-red",icon:"🚲",note:e("tid_note_2"),grammar:e("tid_g2")},{num:"3",q:e("tid_q3"),ans:"en kvinde",colorClass:"step-green",icon:"👤",note:e("tid_note_3"),grammar:e("tid_g3")},{num:"4",q:e("tid_q4"),ans:"på gaden",colorClass:"step-blue",icon:"📍",note:e("tid_note_4"),grammar:e("tid_g4")}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
+    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:e("tid_q1"),ans:"Om morgenen",colorClass:"step-purple",icon:"⏰",note:e("tid_note_1"),grammar:e("tid_g1")},{num:"2",q:e("tid_q2"),ans:"cykler",colorClass:"step-red",icon:"🚲",note:e("tid_note_2"),grammar:e("tid_g2")},{num:"3",q:e("tid_q3"),ans:"en kvinde",colorClass:"step-green",icon:"👤",note:e("tid_note_3"),grammar:e("tid_g3")},{num:"4",q:e("tid_q4"),ans:"på gaden",colorClass:"step-yellow",icon:"📍",note:e("tid_note_4"),grammar:e("tid_g4")}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
             <div class="step-badge">${I.num}</div>
             <div class="step-card-content">
                 <div class="step-q">${I.icon} ${I.q}</div>
@@ -194,7 +194,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <span class="word-purple">Om morgenen</span> 
             <span class="word-red">cykler</span> 
             <span class="word-green">en kvinde</span> 
-            <span class="word-blue">på gaden</span>.
+            <span class="word-yellow">på gaden</span>.
         </div>
         ${Se()!=="da"?`<div class="banner-sentence-trans" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem; margin-bottom: 0.8rem;">"${e("tid_s0")}"</div>`:""}
         <button class="listen-btn" title="${e("tid_listen_btn")}">
@@ -203,19 +203,19 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
     `;const oe=Z.querySelector(".listen-btn");oe.onclick=()=>Ke("Om morgenen cykler en kvinde på gaden"),t.appendChild(Z);const ge=document.createElement("div");ge.className="section-divider",ge.innerHTML=`
         <h2>${e("tid_try_title")}</h2>
         <p>${e("tid_try_desc")}</p>
-    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent=e("tid_tab_builder");const W=document.createElement("button");W.className="ex-sub-tab",W.textContent=e("tid_tab_puzzle"),ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},yr(J),wr(G),U.appendChild(t),dt()}function yr(U){const h=[{q:`1. ${e("tid_q1")} (${e("tid_builder_hint_1")})`,colorClass:"step-purple",grammar:e("tid_g1"),options:["Om morgenen","Om aftenen","Hver dag","Lige nu","I dag","Om eftermiddagen"]},{q:`2. ${e("tid_q2")} (${e("tid_builder_hint_2")})`,colorClass:"step-red",grammar:e("tid_g2"),options:["cykler","løber","arbejder","sover","kører","venter"]},{q:`3. ${e("tid_q3")} (${e("tid_builder_hint_3")})`,colorClass:"step-green",grammar:e("tid_g3"),options:["en kvinde","en mand","en hund","læreren","bussen","folk"]},{q:`4. ${e("tid_q4")} (${e("tid_builder_hint_4")})`,colorClass:"step-blue",grammar:e("tid_g4"),options:["på gaden","i parken","på skolen","derhjemme","i haven","på vejen"]}];let t=["Om morgenen","cykler","en kvinde","på gaden"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
+    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent=e("tid_tab_builder");const W=document.createElement("button");W.className="ex-sub-tab",W.textContent=e("tid_tab_puzzle"),ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},yr(J),wr(G),U.appendChild(t),dt()}function yr(U){const h=[{q:`1. ${e("tid_q1")} (${e("tid_builder_hint_1")})`,colorClass:"step-purple",grammar:e("tid_g1"),options:["Om morgenen","Om aftenen","Hver dag","Lige nu","I dag","Om eftermiddagen"]},{q:`2. ${e("tid_q2")} (${e("tid_builder_hint_2")})`,colorClass:"step-red",grammar:e("tid_g2"),options:["cykler","løber","arbejder","sover","kører","venter"]},{q:`3. ${e("tid_q3")} (${e("tid_builder_hint_3")})`,colorClass:"step-green",grammar:e("tid_g3"),options:["en kvinde","en mand","en hund","læreren","bussen","folk"]},{q:`4. ${e("tid_q4")} (${e("tid_builder_hint_4")})`,colorClass:"step-yellow",grammar:e("tid_g4"),options:["på gaden","i parken","på skolen","derhjemme","i haven","på vejen"]}];let t=["Om morgenen","cykler","en kvinde","på gaden"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
             <div class="live-label">${e("tid_builder_live_label")}</div>
             <div class="live-text">
                 <span class="word-purple">${t[0]}</span> 
                 <span class="word-red">${t[1]}</span> 
                 <span class="word-green">${t[2]}</span> 
-                <span class="word-blue">${t[3]}</span>.
+                <span class="word-yellow">${t[3]}</span>.
             </div>
             <button class="listen-btn-small" title="${e("tid_listen_pronunciation")}">🔊 ${e("tid_listen_pronunciation")}</button>
         `;const w=n.querySelector(".listen-btn-small");w.onclick=()=>Ke(`${t[0]} ${t[1]} ${t[2]} ${t[3]}`)}const d=document.createElement("div");d.className="builder-questions-list",h.forEach((w,A)=>{const T=document.createElement("div");T.className=`builder-q-row ${w.colorClass}`;const V=document.createElement("div");V.className="builder-q-title",V.innerHTML=`${w.q} <span class="grammar-badge-inline">${w.grammar}</span>`,T.appendChild(V);const k=document.createElement("div");k.className="builder-btn-grid",w.options.forEach(f=>{const Q=document.createElement("button");Q.className=`chip-btn ${t[A]===f?"selected":""}`,Q.textContent=f;const Z=Zt[Se()]?.[f];Z&&Se()!=="da"&&(Q.title=Z),Q.onclick=()=>{t[A]=f,T.querySelectorAll(".chip-btn").forEach(oe=>oe.classList.remove("selected")),Q.classList.add("selected"),l()},k.appendChild(Q)}),T.appendChild(k),d.appendChild(T)}),r.appendChild(d),r.appendChild(n),U.appendChild(r),l()}function wr(U){const h=[{correct:["Om morgenen","cykler","en kvinde","på gaden"],scrambled:["på gaden","Om morgenen","en kvinde","cykler"]},{correct:["Hver dag","løber","en mand","i parken"],scrambled:["en mand","Hver dag","i parken","løber"]},{correct:["I dag","arbejder","læreren","på skolen"],scrambled:["læreren","på skolen","I dag","arbejder"]},{correct:["Lige nu","sover","babyen","i sengen"],scrambled:["i sengen","Lige nu","sover","babyen"]},{correct:["Om natten","sover","katten","i sofaen"],scrambled:["katten","Om natten","sover","i sofaen"]},{correct:["Klokken otte","ankommer","toget","på stationen"],scrambled:["ankommer","på stationen","Klokken otte","toget"]},{correct:["Om eftermiddagen","leger","børnene","i haven"],scrambled:["børnene","Om eftermiddagen","i haven","leger"]},{correct:["Lige nu","kører","bussen","på vejen"],scrambled:["på vejen","bussen","Lige nu","kører"]},{correct:["I dag","svømmer","pigen","i svømmehallen"],scrambled:["svømmer","pigen","i svømmehallen","I dag"]},{correct:["Hver morgen","venter","folk","på gaden"],scrambled:["venter","folk","på gaden","Hver morgen"]}];let t=0,r=[null,null,null,null];const n=new Set,l=document.createElement("div");l.className="puzzle-wrapper";function d(){l.innerHTML="",r=[null,null,null,null];const w=h[t],A=document.createElement("div");A.className="puzzle-header";const T=document.createElement("div");T.className="puzzle-pills-row",h.forEach((Y,W)=>{const J=document.createElement("button");J.className=`puzzle-pill ${W===t?"active":""} ${n.has(W)?"completed":""}`,J.textContent=W+1,J.title=`${e("tid_puzzle_pill_title")} ${W+1}`,J.onclick=()=>{t=W,d()},T.appendChild(J)}),A.appendChild(T);const V=document.createElement("div");V.className="puzzle-counter",V.textContent=e("tid_puzzle_counter",{current:t+1,total:h.length}),A.appendChild(V);const k=document.createElement("div");k.className="puzzle-guide",k.innerHTML=`
             ${e("tid_puzzle_guide")}
             <br><small>${e("tid_puzzle_guide_sub")}</small>
-        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:e("tid_slot_hint_1"),grammar:e("tid_g1")},{text:e("tid_slot_hint_2"),grammar:e("tid_g2")},{text:e("tid_slot_hint_3"),grammar:e("tid_g3")},{text:e("tid_slot_hint_4"),grammar:e("tid_g4")}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"tid-slot-purple":W===1?"tid-slot-red":W===2?"tid-slot-green":"tid-slot-blue";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((Y,W)=>{const J=r[W];J?(Y.classList.add("filled"),Y.innerHTML=`
+        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:e("tid_slot_hint_1"),grammar:e("tid_g1")},{text:e("tid_slot_hint_2"),grammar:e("tid_g2")},{text:e("tid_slot_hint_3"),grammar:e("tid_g3")},{text:e("tid_slot_hint_4"),grammar:e("tid_g4")}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"tid-slot-purple":W===1?"tid-slot-red":W===2?"tid-slot-green":"tid-slot-yellow";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((Y,W)=>{const J=r[W];J?(Y.classList.add("filled"),Y.innerHTML=`
                         <span class="slot-number">${W+1}</span>
                         <span class="slot-text">${J}</span>
                         <span class="slot-remove">✕</span>
@@ -239,7 +239,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #06b6d4;"></span> <strong style="color: #38bdf8;">Konjunktion + ledsætning</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
     `,t.appendChild(w);const A=document.createElement("div");A.className="intro-hero-card",A.innerHTML=`
         <h2>${e("konj_hero_title")}</h2>
@@ -260,8 +260,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <marker id="arrowhead-konj-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                         <polygon points="0 0, 8 3, 0 6" fill="#22c55e" />
                     </marker>
-                    <marker id="arrowhead-konj-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
+                    <marker id="arrowhead-konj-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Ledsætning) til himmel/baggrund -->
@@ -271,7 +271,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
                 <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-konj-green)" />
                 <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
-                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-konj-blue)" />
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-konj-yellow)" />
             </svg>
             <!-- Box 1: Hvornår eller hvorfor? (Ledsætning forrest = 1. plads!) -->
             <div class="photo-bubble bubble-4">
@@ -291,10 +291,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <!-- Box 4: Hvor sker det? (Stedet til sidst) -->
             <div class="photo-bubble bubble-3">
                 <div class="bubble-q">4. ${e("konj_q4")}</div>
-                <div class="bubble-ans ans-blue">på gaden</div>
+                <div class="bubble-ans ans-yellow">på gaden</div>
             </div>
         </div>
-    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:e("konj_q1"),ans:"Da det regnede,",colorClass:"step-cyan",icon:"🔗",note:e("konj_note_1"),grammar:e("konj_g1")},{num:"2",q:e("konj_q2"),ans:"cyklede",colorClass:"step-red",icon:"🚲",note:e("konj_note_2"),grammar:e("konj_g2")},{num:"3",q:e("konj_q3"),ans:"en kvinde",colorClass:"step-green",icon:"👤",note:e("konj_note_3"),grammar:e("konj_g3")},{num:"4",q:e("konj_q4"),ans:"på gaden",colorClass:"step-blue",icon:"📍",note:e("konj_note_4"),grammar:e("konj_g4")}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
+    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:e("konj_q1"),ans:"Da det regnede,",colorClass:"step-cyan",icon:"🔗",note:e("konj_note_1"),grammar:e("konj_g1")},{num:"2",q:e("konj_q2"),ans:"cyklede",colorClass:"step-red",icon:"🚲",note:e("konj_note_2"),grammar:e("konj_g2")},{num:"3",q:e("konj_q3"),ans:"en kvinde",colorClass:"step-green",icon:"👤",note:e("konj_note_3"),grammar:e("konj_g3")},{num:"4",q:e("konj_q4"),ans:"på gaden",colorClass:"step-yellow",icon:"📍",note:e("konj_note_4"),grammar:e("konj_g4")}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
             <div class="step-badge">${I.num}</div>
             <div class="step-card-content">
                 <div class="step-q">${I.icon} ${I.q}</div>
@@ -308,7 +308,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <span class="word-cyan">Da det regnede,</span> 
             <span class="word-red">cyklede</span> 
             <span class="word-green">en kvinde</span> 
-            <span class="word-blue">på gaden</span>.
+            <span class="word-yellow">på gaden</span>.
         </div>
         ${Se()!=="da"?`<div class="banner-sentence-trans" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem; margin-bottom: 0.8rem;">"${e("konj_s0")}"</div>`:""}
         <button class="listen-btn" title="${e("konj_listen_btn")}">
@@ -317,19 +317,19 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
     `;const oe=Z.querySelector(".listen-btn");oe.onclick=()=>Ke("Da det regnede, cyklede en kvinde på gaden"),t.appendChild(Z);const ge=document.createElement("div");ge.className="section-divider",ge.innerHTML=`
         <h2>${e("konj_try_title")}</h2>
         <p>${e("konj_try_desc")}</p>
-    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent=e("konj_tab_builder");const W=document.createElement("button");W.className="ex-sub-tab",W.textContent=e("konj_tab_puzzle"),ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},jr(J),Er(G),U.appendChild(t),dt()}function jr(U){const h=[{q:`1. ${e("konj_q1")} (${e("konj_builder_hint_1")})`,colorClass:"step-cyan",grammar:e("konj_g1"),options:["Da det regnede,","Når solen skinner,","Selvom det var koldt,","Fordi hun havde travlt,","Hvis vejret er godt,","Mens det sneede,"]},{q:`2. ${e("konj_q2")} (${e("konj_builder_hint_2")})`,colorClass:"step-red",grammar:e("konj_g2"),options:["cykler","løber","arbejder","kører","venter","drikker kaffe"]},{q:`3. ${e("konj_q3")} (${e("konj_builder_hint_3")})`,colorClass:"step-green",grammar:e("konj_g3"),options:["en kvinde","en mand","en hund","læreren","bussen","folk"]},{q:`4. ${e("konj_q4")} (${e("konj_builder_hint_4")})`,colorClass:"step-blue",grammar:e("konj_g4"),options:["på gaden","i parken","på skolen","på stationen","derhjemme","i haven"]}];let t=["Da det regnede,","cyklede","en kvinde","på gaden"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
+    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent=e("konj_tab_builder");const W=document.createElement("button");W.className="ex-sub-tab",W.textContent=e("konj_tab_puzzle"),ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},jr(J),Er(G),U.appendChild(t),dt()}function jr(U){const h=[{q:`1. ${e("konj_q1")} (${e("konj_builder_hint_1")})`,colorClass:"step-cyan",grammar:e("konj_g1"),options:["Da det regnede,","Når solen skinner,","Selvom det var koldt,","Fordi hun havde travlt,","Hvis vejret er godt,","Mens det sneede,"]},{q:`2. ${e("konj_q2")} (${e("konj_builder_hint_2")})`,colorClass:"step-red",grammar:e("konj_g2"),options:["cykler","løber","arbejder","kører","venter","drikker kaffe"]},{q:`3. ${e("konj_q3")} (${e("konj_builder_hint_3")})`,colorClass:"step-green",grammar:e("konj_g3"),options:["en kvinde","en mand","en hund","læreren","bussen","folk"]},{q:`4. ${e("konj_q4")} (${e("konj_builder_hint_4")})`,colorClass:"step-yellow",grammar:e("konj_g4"),options:["på gaden","i parken","på skolen","på stationen","derhjemme","i haven"]}];let t=["Da det regnede,","cyklede","en kvinde","på gaden"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
             <div class="live-label">${e("konj_builder_live_label")}</div>
             <div class="live-text">
                 <span class="word-cyan">${t[0]}</span> 
                 <span class="word-red">${t[1]}</span> 
                 <span class="word-green">${t[2]}</span> 
-                <span class="word-blue">${t[3]}</span>.
+                <span class="word-yellow">${t[3]}</span>.
             </div>
             <button class="listen-btn-small" title="${e("konj_listen_pronunciation")}">🔊 ${e("konj_listen_pronunciation")}</button>
         `;const w=n.querySelector(".listen-btn-small");w.onclick=()=>Ke(`${t[0]} ${t[1]} ${t[2]} ${t[3]}`)}const d=document.createElement("div");d.className="builder-questions-list",h.forEach((w,A)=>{const T=document.createElement("div");T.className=`builder-q-row ${w.colorClass}`;const V=document.createElement("div");V.className="builder-q-title",V.innerHTML=`${w.q} <span class="grammar-badge-inline">${w.grammar}</span>`,T.appendChild(V);const k=document.createElement("div");k.className="builder-btn-grid",w.options.forEach(f=>{const Q=document.createElement("button");Q.className=`chip-btn ${t[A]===f?"selected":""}`,Q.textContent=f;const Z=Zt[Se()]?.[f];Z&&Se()!=="da"&&(Q.title=Z),Q.onclick=()=>{t[A]=f,T.querySelectorAll(".chip-btn").forEach(oe=>oe.classList.remove("selected")),Q.classList.add("selected"),l()},k.appendChild(Q)}),T.appendChild(k),d.appendChild(T)}),r.appendChild(d),r.appendChild(n),U.appendChild(r),l()}function Er(U){const h=[{correct:["Da det regnede,","cyklede","en kvinde","på gaden"],scrambled:["på gaden","Da det regnede,","en kvinde","cyklede"]},{correct:["Når solen skinner,","løber","en mand","i parken"],scrambled:["en mand","Når solen skinner,","i parken","løber"]},{correct:["Selvom det var koldt,","arbejdede","læreren","i haven"],scrambled:["læreren","i haven","Selvom det var koldt,","arbejdede"]},{correct:["Fordi bussen var forsinket,","ventede","folk","på stationen"],scrambled:["på stationen","ventede","Fordi bussen var forsinket,","folk"]},{correct:["Hvis det sner,","kører","bussen","forsigtigt på vejen"],scrambled:["forsigtigt på vejen","bussen","Hvis det sner,","kører"]},{correct:["Da klokken blev otte,","ankom","toget","på perronen"],scrambled:["ankom","på perronen","Da klokken blev otte,","toget"]},{correct:["Mens forældrene lavede mad,","legede","børnene","i stuen"],scrambled:["børnene","Mens forældrene lavede mad,","i stuen","legede"]},{correct:["Selvom hun var træt,","læste","pigen","en bog i sengen"],scrambled:["en bog i sengen","læste","Selvom hun var træt,","pigen"]},{correct:["Fordi det var weekend,","sov","familien","længe derhjemme"],scrambled:["længe derhjemme","familien","Fordi det var weekend,","sov"]},{correct:["Når timerne er slut,","cykler","eleverne","hjem fra skolen"],scrambled:["eleverne","hjem fra skolen","Når timerne er slut,","cykler"]}];let t=0,r=[null,null,null,null];const n=new Set,l=document.createElement("div");l.className="puzzle-wrapper";function d(){l.innerHTML="",r=[null,null,null,null];const w=h[t],A=document.createElement("div");A.className="puzzle-header";const T=document.createElement("div");T.className="puzzle-pills-row",h.forEach((Y,W)=>{const J=document.createElement("button");J.className=`puzzle-pill ${W===t?"active":""} ${n.has(W)?"completed":""}`,J.textContent=W+1,J.title=`${e("konj_puzzle_pill_title")} ${W+1}`,J.onclick=()=>{t=W,d()},T.appendChild(J)}),A.appendChild(T);const V=document.createElement("div");V.className="puzzle-counter",V.textContent=e("konj_puzzle_counter",{current:t+1,total:h.length}),A.appendChild(V);const k=document.createElement("div");k.className="puzzle-guide",k.innerHTML=`
             ${e("konj_puzzle_guide")}
             <br><small>${e("konj_puzzle_guide_sub")}</small>
-        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:e("konj_slot_hint_1"),grammar:e("konj_g1")},{text:e("konj_slot_hint_2"),grammar:e("konj_g2")},{text:e("konj_slot_hint_3"),grammar:e("konj_g3")},{text:e("konj_slot_hint_4"),grammar:e("konj_g4")}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"konj-slot-cyan":W===1?"konj-slot-red":W===2?"konj-slot-green":"konj-slot-blue";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((J,G)=>{const I=r[G];I?(J.classList.add("filled"),J.innerHTML=`
+        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:e("konj_slot_hint_1"),grammar:e("konj_g1")},{text:e("konj_slot_hint_2"),grammar:e("konj_g2")},{text:e("konj_slot_hint_3"),grammar:e("konj_g3")},{text:e("konj_slot_hint_4"),grammar:e("konj_g4")}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"konj-slot-cyan":W===1?"konj-slot-red":W===2?"konj-slot-green":"konj-slot-yellow";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((J,G)=>{const I=r[G];I?(J.classList.add("filled"),J.innerHTML=`
                         <span class="slot-number">${G+1}</span>
                         <span class="slot-text">${I}</span>
                         <span class="slot-remove">✕</span>
@@ -350,11 +350,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     </div>
                     <button class="retry-task-btn" id="puzzle-retry-btn">${e("konj_retry")}</button>
                 `,oe.querySelector("#puzzle-retry-btn").onclick=()=>{r=[null,null,null,null],oe.innerHTML="",ge()}}ge()}d(),U.appendChild(l)}function Cr(U,h){const t=document.createElement("div");t.className="view-container";const r=document.createElement("div");r.className="top-bar";const n=document.createElement("button");n.className="back-btn",n.innerHTML=`← ${e("back")}`,n.onclick=()=>h("ordstilling"),r.appendChild(n),t.appendChild(r);const l=document.createElement("h1");l.textContent="Fokus på holdning",t.appendChild(l);const d=Ye(t);t.appendChild(d);const w=document.createElement("div");w.className="grammar-system-banner",w.innerHTML=`
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Centraladverbium (holdning)</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
     `,t.appendChild(w);const A=document.createElement("div");A.className="intro-hero-card",A.innerHTML=`
         <h2>Når holdningen (centraladverbiet) kommer først i sætningen</h2>
         <p class="hero-desc">
@@ -382,18 +381,18 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     </marker>
                 </defs>
                 <!-- Arrow 1: Fra Boks 1 (Holdning) til himmel/sol -->
-                <line x1="200" y1="110" x2="310" y2="160" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-holdning-yellow)" />
+                <line x1="200" y1="110" x2="310" y2="160" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-holdning-blue)" />
                 <!-- Arrow 2: Fra Boks 2 (Handling) til cykel/pedaler -->
                 <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-holdning-red)" />
                 <!-- Arrow 3: Fra Boks 3 (Hvem/hvad - Subjekt) til kvinde -->
-                <line x1="430" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-holdning-green)" />
+                <line x1="580" y1="130" x2="620" y2="340" stroke="#22c55e" stroke-width="4" marker-end="url(#arrowhead-holdning-green)" />
                 <!-- Arrow 4: Fra Boks 4 (Sted) til gaden -->
-                <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-holdning-blue)" />
+                <line x1="300" y1="600" x2="520" y2="610" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-holdning-yellow)" />
             </svg>
             <!-- Box 1: Hvad mener eller føler du om det? (Holdning forrest) -->
             <div class="photo-bubble bubble-7-holdning">
                 <div class="bubble-q">1. Hvad mener eller føler du?</div>
-                <div class="bubble-ans ans-yellow">Heldigvis</div>
+                <div class="bubble-ans ans-blue">Heldigvis</div>
             </div>
             <!-- Box 2: Hvad laver personen eller tingen? (Handlingen er altid nr. 2!) -->
             <div class="photo-bubble bubble-2">
@@ -401,17 +400,17 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <div class="bubble-ans ans-red">cykler</div>
             </div>
             <!-- Box 3: Hvad eller hvem taler vi om? (Personen rykker bagved) -->
-            <div class="photo-bubble bubble-1">
+            <div class="photo-bubble bubble-holdning-subjekt">
                 <div class="bubble-q">3. Hvem taler vi om?</div>
                 <div class="bubble-ans ans-green">en kvinde</div>
             </div>
             <!-- Box 4: Hvor sker det? -->
             <div class="photo-bubble bubble-3">
                 <div class="bubble-q">4. Hvor sker det?</div>
-                <div class="bubble-ans ans-blue">på gaden</div>
+                <div class="bubble-ans ans-yellow">på gaden</div>
             </div>
         </div>
-    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:"Hvad mener eller føler du om det?",ans:"Heldigvis",colorClass:"step-yellow",icon:"🌤️",note:"Holdningen sættes forrest",grammar:"Centraladverbium"},{num:"2",q:"Hvad laver personen eller tingen?",ans:"cykler",colorClass:"step-red",icon:"🚲",note:"Handlingen SKAL være nr. 2!",grammar:"Verbum (inversion: 2. plads!)"},{num:"3",q:"Hvad eller hvem taler vi om?",ans:"en kvinde",colorClass:"step-green",icon:"👤",note:"Personen rykker om bagved",grammar:"Substantiv / Pronomen (subjekt)"},{num:"4",q:"Hvor sker det?",ans:"på gaden",colorClass:"step-blue",icon:"📍",note:"Stedet til sidst",grammar:"Præposition (sted)"}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
+    `;const V=T.querySelector(".photo-overlay-wrap"),k=Re(V);T.insertBefore(k,V),t.appendChild(T);const f=document.createElement("div");f.className="simple-steps-grid",[{num:"1",q:"Hvad mener eller føler du om det?",ans:"Heldigvis",colorClass:"step-blue",icon:"🌤️",note:"Holdningen sættes forrest",grammar:"Centraladverbium"},{num:"2",q:"Hvad laver personen eller tingen?",ans:"cykler",colorClass:"step-red",icon:"🚲",note:"Handlingen SKAL være nr. 2!",grammar:"Verbum (inversion: 2. plads!)"},{num:"3",q:"Hvad eller hvem taler vi om?",ans:"en kvinde",colorClass:"step-green",icon:"👤",note:"Personen rykker om bagved",grammar:"Substantiv / Pronomen (subjekt)"},{num:"4",q:"Hvor sker det?",ans:"på gaden",colorClass:"step-yellow",icon:"📍",note:"Stedet til sidst",grammar:"Præposition (sted)"}].forEach(I=>{const C=document.createElement("div");C.className=`simple-step-card ${I.colorClass}`,C.innerHTML=`
             <div class="step-badge">${I.num}</div>
             <div class="step-card-content">
                 <div class="step-q">${I.icon} ${I.q}</div>
@@ -422,10 +421,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `,f.appendChild(C)}),t.appendChild(f);const Z=document.createElement("div");Z.className="finished-sentence-banner",Z.innerHTML=`
         <div class="banner-label">Den færdige sætning:</div>
         <div class="banner-sentence">
-            <span class="word-yellow">Heldigvis</span> 
+            <span class="word-blue">Heldigvis</span> 
             <span class="word-red">cykler</span> 
             <span class="word-green">en kvinde</span> 
-            <span class="word-blue">på gaden</span>.
+            <span class="word-yellow">på gaden</span>.
         </div>
         <button class="listen-btn" title="Hør udtale">
             <span>🔊</span> Hør sætningen
@@ -433,19 +432,19 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
     `;const oe=Z.querySelector(".listen-btn");oe.onclick=()=>Ke("Heldigvis cykler en kvinde på gaden"),t.appendChild(Z);const ge=document.createElement("div");ge.className="section-divider",ge.innerHTML=`
         <h2>✍️ Prøv selv at lave en sætning med fokus på holdning</h2>
         <p>Husk: Holdningen kommer først, og handlingen er ALTID nummer 2!</p>
-    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent="Trin-for-trin bygger";const W=document.createElement("button");W.className="ex-sub-tab",W.textContent="Puslespil: Rigtig rækkefølge",ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},zr(J),Sr(G),U.appendChild(t),dt()}function zr(U){const h=[{q:"1. Hvad mener eller føler du? (Holdningen forrest)",colorClass:"step-yellow",grammar:"Centraladverbium",options:["Heldigvis","Desværre","Faktisk","Forhåbentlig","Sandsynligvis","Måske"]},{q:"2. Hvad laver personen eller tingen? (Handlingen er altid nr. 2!)",colorClass:"step-red",grammar:"Verbum (inversion)",options:["cykler","løber","arbejder","sover","kører","sidder"]},{q:"3. Hvad eller hvem taler vi om? (Personen/tingen)",colorClass:"step-green",grammar:"Substantiv / Pronomen",options:["en kvinde","en mand","læreren","katten","bussen","folk"]},{q:"4. Hvor sker det? (Stedet til sidst)",colorClass:"step-blue",grammar:"Præposition (sted)",options:["på gaden","i parken","på skolen","derhjemme","i haven","på caféen"]}];let t=["Heldigvis","cykler","en kvinde","på gaden"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
+    `,t.appendChild(ge);const ke=document.createElement("div");ke.className="exercise-sub-tabs";const Y=document.createElement("button");Y.className="ex-sub-tab active",Y.textContent="Trin-for-trin bygger";const W=document.createElement("button");W.className="ex-sub-tab",W.textContent="Puslespil: Rigtig rækkefølge",ke.appendChild(Y),ke.appendChild(W),t.appendChild(ke);const J=document.createElement("div");J.className="exercise-panel active";const G=document.createElement("div");G.className="exercise-panel",G.style.display="none",t.appendChild(J),t.appendChild(G),Y.onclick=()=>{Y.classList.add("active"),W.classList.remove("active"),J.style.display="block",G.style.display="none"},W.onclick=()=>{W.classList.add("active"),Y.classList.remove("active"),G.style.display="block",J.style.display="none"},zr(J),Sr(G),U.appendChild(t),dt()}function zr(U){const h=[{q:"1. Hvad mener eller føler du? (Holdningen forrest)",colorClass:"step-blue",grammar:"Centraladverbium",options:["Heldigvis","Desværre","Faktisk","Forhåbentlig","Sandsynligvis","Måske"]},{q:"2. Hvad laver personen eller tingen? (Handlingen er altid nr. 2!)",colorClass:"step-red",grammar:"Verbum (inversion)",options:["cykler","løber","arbejder","sover","kører","sidder"]},{q:"3. Hvad eller hvem taler vi om? (Personen/tingen)",colorClass:"step-green",grammar:"Substantiv / Pronomen",options:["en kvinde","en mand","læreren","katten","bussen","folk"]},{q:"4. Hvor sker det? (Stedet til sidst)",colorClass:"step-yellow",grammar:"Præposition (sted)",options:["på gaden","i parken","på skolen","derhjemme","i haven","på caféen"]}];let t=["Heldigvis","cykler","en kvinde","på gaden"];const r=document.createElement("div");r.className="step-builder-card";const n=document.createElement("div");n.className="builder-live-sentence";function l(){n.innerHTML=`
             <div class="live-label">Din sætning med fokus på holdning:</div>
             <div class="live-text">
-                <span class="word-yellow">${t[0]}</span> 
+                <span class="word-blue">${t[0]}</span> 
                 <span class="word-red">${t[1]}</span> 
                 <span class="word-green">${t[2]}</span> 
-                <span class="word-blue">${t[3]}</span>.
+                <span class="word-yellow">${t[3]}</span>.
             </div>
             <button class="listen-btn-small" title="Lyt">🔊 Hør udtale</button>
         `;const w=n.querySelector(".listen-btn-small");w.onclick=()=>Ke(`${t[0]} ${t[1]} ${t[2]} ${t[3]}`)}const d=document.createElement("div");d.className="builder-questions-list",h.forEach((w,A)=>{const T=document.createElement("div");T.className=`builder-q-row ${w.colorClass}`;const V=document.createElement("div");V.className="builder-q-title",V.innerHTML=`${w.q} <span class="grammar-badge-inline">${w.grammar}</span>`,T.appendChild(V);const k=document.createElement("div");k.className="builder-btn-grid",w.options.forEach(f=>{const Q=document.createElement("button");Q.className=`chip-btn ${t[A]===f?"selected":""}`,Q.textContent=f,Q.onclick=()=>{t[A]=f,T.querySelectorAll(".chip-btn").forEach(Z=>Z.classList.remove("selected")),Q.classList.add("selected"),l()},k.appendChild(Q)}),T.appendChild(k),d.appendChild(T)}),r.appendChild(d),r.appendChild(n),U.appendChild(r),l()}function Sr(U){const h=[{correct:["Heldigvis","cykler","en kvinde","på gaden"],scrambled:["på gaden","Heldigvis","en kvinde","cykler"]},{correct:["Desværre","venter","manden","på bussen"],scrambled:["venter","på bussen","Desværre","manden"]},{correct:["Faktisk","arbejder","læreren","på skolen"],scrambled:["læreren","Faktisk","på skolen","arbejder"]},{correct:["Heldigvis","sover","babyen","i sengen"],scrambled:["i sengen","sover","Heldigvis","babyen"]},{correct:["Desværre","sidder","katten","på taget"],scrambled:["katten","på taget","sidder","Desværre"]},{correct:["Sandsynligvis","kører","bussen","på motorvejen"],scrambled:["på motorvejen","Sandsynligvis","kører","bussen"]},{correct:["Forhåbentlig","venter","vennerne","på caféen"],scrambled:["på caféen","vennerne","Forhåbentlig","venter"]},{correct:["Måske","løber","drengen","i parken"],scrambled:["drengen","Måske","i parken","løber"]},{correct:["Heldigvis","svømmer","pigen","i svømmehallen"],scrambled:["i svømmehallen","svømmer","pigen","Heldigvis"]},{correct:["Faktisk","bor","familien","i byen"],scrambled:["familien","bor","i byen","Faktisk"]}];let t=0,r=[null,null,null,null];const n=new Set,l=document.createElement("div");l.className="puzzle-wrapper";function d(){l.innerHTML="",r=[null,null,null,null];const w=h[t],A=document.createElement("div");A.className="puzzle-header";const T=document.createElement("div");T.className="puzzle-pills-row",h.forEach((Y,W)=>{const J=document.createElement("button");J.className=`puzzle-pill ${W===t?"active":""} ${n.has(W)?"completed":""}`,J.textContent=W+1,J.title=`Gå til opgave ${W+1}`,J.onclick=()=>{t=W,d()},T.appendChild(J)}),A.appendChild(T);const V=document.createElement("div");V.className="puzzle-counter",V.textContent=`Opgave ${t+1} af ${h.length}`,A.appendChild(V);const k=document.createElement("div");k.className="puzzle-guide",k.innerHTML=`
             Klik på ordene i den rigtige rækkefølge med fokus på holdning:
             <br><small>1. Hvad mener du? ➔ 2. Hvad sker der? ➔ 3. Hvem/hvad? ➔ 4. Hvor?</small>
-        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:"1. Hvad mener du? (Holdning)",grammar:"Centraladverbium"},{text:"2. Hvad laver? (Handling)",grammar:"Verbum (2. plads)"},{text:"3. Hvem / hvad? (Person)",grammar:"Substantiv"},{text:"4. Hvor? (Sted)",grammar:"Præposition (sted)"}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"holdning-slot-yellow":W===1?"holdning-slot-red":W===2?"holdning-slot-green":"holdning-slot-blue";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((Y,W)=>{const J=r[W];J?(Y.classList.add("filled"),Y.innerHTML=`
+        `,A.appendChild(k),l.appendChild(A);const f=document.createElement("div");f.className="puzzle-slots";const Q=[{text:"1. Hvad mener du? (Holdning)",grammar:"Centraladverbium"},{text:"2. Hvad laver? (Handling)",grammar:"Verbum (2. plads)"},{text:"3. Hvem / hvad? (Person)",grammar:"Substantiv"},{text:"4. Hvor? (Sted)",grammar:"Præposition (sted)"}];Q.forEach((Y,W)=>{const J=document.createElement("div"),G=W===0?"holdning-slot-blue":W===1?"holdning-slot-red":W===2?"holdning-slot-green":"holdning-slot-yellow";J.className=`puzzle-slot ${G}`,J.innerHTML=`<span class="slot-hint">${Y.text}</span><span class="grammar-hint-slot">[${Y.grammar}]</span>`,J.dataset.idx=W,J.onclick=()=>{r[W]&&(r[W]=null,ge())},f.appendChild(J)}),l.appendChild(f);const Z=document.createElement("div");Z.className="puzzle-bank",l.appendChild(Z);const oe=document.createElement("div");oe.className="puzzle-feedback",l.appendChild(oe);function ge(){f.querySelectorAll(".puzzle-slot").forEach((Y,W)=>{const J=r[W];J?(Y.classList.add("filled"),Y.innerHTML=`
                         <span class="slot-number">${W+1}</span>
                         <span class="slot-text">${J}</span>
                         <span class="slot-remove">✕</span>
@@ -606,6 +605,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .bubble-2 { top: 48%; right: 5%; }
         .bubble-3 { bottom: 12%; left: 6%; }
         .bubble-7-holdning { top: 6%; left: 3%; }
+        .bubble-holdning-subjekt { top: 9%; left: 29%; }
 
         @media (max-width: 600px) {
             .photo-bubble { padding: 3px 6px; border-width: 1.5px; }
@@ -614,6 +614,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             .bubble-2 { top: 45%; right: 2%; }
             .bubble-3 { bottom: 8%; left: 2%; }
             .bubble-7-holdning { top: 4%; left: 2%; }
+            .bubble-holdning-subjekt { top: 6%; left: 24%; }
         }
 
         .simple-steps-grid {
@@ -852,7 +853,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .puzzle-slot.tid-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
         .puzzle-slot.tid-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.tid-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.tid-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+        .puzzle-slot.tid-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+        .puzzle-slot.tid-slot-yellow.filled .slot-text { color: #fde047; }
 
         /* Konjunktion slot colors */
         .puzzle-slot.konj-slot-cyan.filled { border-color: #06b6d4; background: rgba(6, 182, 212, 0.15); }
@@ -861,20 +863,23 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .puzzle-slot.konj-slot-red.filled .slot-text { color: #f87171; }
         .puzzle-slot.konj-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
         .puzzle-slot.konj-slot-green.filled .slot-text { color: #4ade80; }
-        .puzzle-slot.konj-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
-        .puzzle-slot.konj-slot-blue.filled .slot-text { color: #60a5fa; }
+        .puzzle-slot.konj-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+        .puzzle-slot.konj-slot-yellow.filled .slot-text { color: #fde047; }
 
         /* Sted slot colors */
-        .puzzle-slot.sted-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+        .puzzle-slot.sted-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+        .puzzle-slot.sted-slot-yellow.filled .slot-text { color: #fde047; }
         .puzzle-slot.sted-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.sted-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
         .puzzle-slot.sted-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
 
         /* Holdning slot colors */
-        .puzzle-slot.holdning-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+        .puzzle-slot.holdning-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+        .puzzle-slot.holdning-slot-blue.filled .slot-text { color: #60a5fa; }
         .puzzle-slot.holdning-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         .puzzle-slot.holdning-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.holdning-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
+        .puzzle-slot.holdning-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+        .puzzle-slot.holdning-slot-yellow.filled .slot-text { color: #fde047; }
 
         .slot-hint { font-size: 0.85rem; color: #888; font-style: italic; }
         .slot-number { position: absolute; top: 4px; left: 8px; font-size: 0.75rem; font-weight: bold; opacity: 0.7; }
@@ -39663,9 +39668,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `,document.head.appendChild(W)}}function Yn(U,h,t={}){const r=document.createElement("div");r.className="view-container";const n=document.createElement("div");n.className="top-bar";const l=document.createElement("button");l.className="back-btn",l.innerHTML=`← ${e("back")}`,l.onclick=()=>h("ordstilling"),n.appendChild(l),r.appendChild(n);const d=document.createElement("h1");d.textContent=e("ordstilling_intro_title")||"Introduktion - start her",r.appendChild(d);const w=Ye(r);r.appendChild(w);const A=document.createElement("div");A.className="grammar-system-banner",A.innerHTML=`
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #22c55e;"></span> <strong style="color: #4ade80;">Substantiv / Pronomen</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #ef4444;"></span> <strong style="color: #f87171;">Verbum</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #facc15;">Centraladverbium</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Centraladverbium</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #f97316;"></span> <strong style="color: #fb923c;">Adjektiv</strong></div>
-        <div class="grammar-system-item"><span class="grammar-dot" style="background: #0284c7;"></span> <strong style="color: #60a5fa;">Sted (Præposition)</strong></div>
+        <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #8b5cf6;"></span> <strong style="color: #c084fc;">Tid (Tidsadverbium)</strong></div>
     `,r.appendChild(A);const T=document.createElement("div");T.className="intro-tabs-nav";const V=document.createElement("button");V.className="intro-tab-btn active",V.innerHTML=`<strong>${e("intro_tab_part1")}</strong> <span>${e("intro_tab_part1_sub")}</span>`;const k=document.createElement("button");k.className="intro-tab-btn",k.innerHTML=`<strong>${e("intro_tab_part2")}</strong> <span>${e("intro_tab_part2_sub")}</span>`;const f=document.createElement("button");f.className="intro-tab-btn",f.innerHTML=`<strong>${e("intro_tab_part3")}</strong> <span>${e("intro_tab_part3_sub")}</span>`;const Q=document.createElement("button");Q.className="intro-tab-btn",Q.innerHTML=`<strong>${e("intro_tab_part4")}</strong> <span>${e("intro_tab_part4_sub")}</span>`,T.appendChild(V),T.appendChild(k),T.appendChild(f),T.appendChild(Q),r.appendChild(T);const Z=document.createElement("div");Z.className="intro-part-container active";const oe=document.createElement("div");oe.className="intro-part-container",oe.style.display="none";const ge=document.createElement("div");ge.className="intro-part-container",ge.style.display="none";const ke=document.createElement("div");ke.className="intro-part-container",ke.style.display="none",r.appendChild(Z),r.appendChild(oe),r.appendChild(ge),r.appendChild(ke);function Y(s){const i=Se();history.pushState(null,"","#/"+i+"/ordstilling_intro/part"+s),V.classList.toggle("active",s===1),k.classList.toggle("active",s===2),f.classList.toggle("active",s===3),Q.classList.toggle("active",s===4),Z.style.display=s===1?"block":"none",oe.style.display=s===2?"block":"none",ge.style.display=s===3?"block":"none",ke.style.display=s===4?"block":"none"}V.onclick=()=>Y(1),k.onclick=()=>Y(2),f.onclick=()=>Y(3),Q.onclick=()=>Y(4);function W(s){if(!("speechSynthesis"in window))return;window.speechSynthesis.cancel();const i=new SpeechSynthesisUtterance(s);i.lang="da-DK",i.rate=.9,window.speechSynthesis.speak(i)}function J(){const s=document.createElement("div");s.className="intro-hero-card",s.innerHTML=`
             <h2>${e("part1_hero_title")}</h2>
@@ -39683,6 +39688,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                         <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                             <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
                         </marker>
+                        <marker id="arrowhead-yellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#eab308" />
+                        </marker>
                         <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                             <polygon points="0 0, 8 3, 0 6" fill="#0284c7" />
                         </marker>
@@ -39697,7 +39705,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <!-- Arrow 2: Fra Boks 2 (Handling - Verbum) til cykel/pedaler -->
                     <line x1="880" y1="450" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-red)" />
                     <!-- Arrow 3: Fra Boks 3 (Sted) til gaden -->
-                    <line x1="300" y1="600" x2="520" y2="610" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-blue)" />
+                    <line x1="300" y1="600" x2="520" y2="610" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-yellow)" />
                 </svg>
                 <!-- Box 1: Hvem eller hvad taler vi om? -->
                 <div class="photo-bubble bubble-1">
@@ -39717,10 +39725,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Box 3: Hvor sker det? -->
                 <div class="photo-bubble bubble-3">
                     <div class="bubble-q">3. ${e("part1_q3")}</div>
-                    <div class="bubble-ans ans-blue">på gaden</div>
+                    <div class="bubble-ans ans-yellow">på gaden</div>
                 </div>
             </div>
-        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),Z.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid",[{num:"1",q:e("part1_q1"),ans:"En kvinde",colorClass:"step-green",icon:"👤",grammar:e("part1_g1")},{num:"2",q:e("part1_q2"),ans:"cykler",colorClass:"step-red",icon:"🚲",grammar:e("part1_g2")},{num:"3",q:e("part1_q3"),ans:"på gaden",colorClass:"step-blue",icon:"📍",grammar:e("part1_g3")},{num:"4",q:e("part1_q4"),ans:"om morgenen",colorClass:"step-purple",icon:"⏰",grammar:e("part1_g4")}].forEach(K=>{const ae=document.createElement("div");ae.className=`simple-step-card ${K.colorClass}`,ae.innerHTML=`
+        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),Z.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid",[{num:"1",q:e("part1_q1"),ans:"En kvinde",colorClass:"step-green",icon:"👤",grammar:e("part1_g1")},{num:"2",q:e("part1_q2"),ans:"cykler",colorClass:"step-red",icon:"🚲",grammar:e("part1_g2")},{num:"3",q:e("part1_q3"),ans:"på gaden",colorClass:"step-yellow",icon:"📍",grammar:e("part1_g3")},{num:"4",q:e("part1_q4"),ans:"om morgenen",colorClass:"step-purple",icon:"⏰",grammar:e("part1_g4")}].forEach(K=>{const ae=document.createElement("div");ae.className=`simple-step-card ${K.colorClass}`,ae.innerHTML=`
                 <div class="step-badge">${K.num}</div>
                 <div class="step-card-content">
                     <div class="step-q">${K.icon} ${K.q}</div>
@@ -39741,7 +39749,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <div class="banner-sentence">
                 <span class="word-green">En kvinde</span> 
                 <span class="word-red">cykler</span> 
-                <span class="word-blue">på gaden</span> 
+                <span class="word-yellow">på gaden</span> 
                 <span class="word-purple">om morgenen</span>.
             </div>
             <button class="listen-btn" title="Hør udtale">
@@ -39750,12 +39758,12 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `;const ie=X.querySelector(".listen-btn");ie.onclick=()=>W("En kvinde cykler på gaden om morgenen"),Z.appendChild(X);const ce=document.createElement("div");ce.className="section-divider",ce.innerHTML=`
             <h2>${e("part1_try_title")}</h2>
             <p>${e("part1_try_desc")}</p>
-        `,Z.appendChild(ce);const ve=document.createElement("div");ve.className="exercise-sub-tabs";const me=document.createElement("button");me.className="ex-sub-tab active",me.textContent=e("part1_tab_builder");const de=document.createElement("button");de.className="ex-sub-tab",de.textContent=e("part1_tab_puzzle"),ve.appendChild(me),ve.appendChild(de),Z.appendChild(ve);const ue=document.createElement("div");ue.className="exercise-panel active";const se=document.createElement("div");se.className="exercise-panel",se.style.display="none",Z.appendChild(ue),Z.appendChild(se),me.onclick=()=>{me.classList.add("active"),de.classList.remove("active"),ue.style.display="block",se.style.display="none"},de.onclick=()=>{de.classList.add("active"),me.classList.remove("active"),se.style.display="block",ue.style.display="none"},G(ue),I(se)}function G(s){const i=[{q:e("part1_builder_q1"),colorClass:"step-green",grammar:e("part1_builder_g1"),options:["En kvinde","En mand","En hund","En dreng","En pige","Bussen"]},{q:e("part1_builder_q2"),colorClass:"step-red",grammar:e("part1_builder_g2"),options:["cykler","løber","drikker kaffe","spiser mad","læser en bog","kører"]},{q:e("part1_builder_q3"),colorClass:"step-blue",grammar:e("part1_builder_g3"),options:["på gaden","i parken","på caféen","i skolen","i køkkenet"]},{q:e("part1_builder_q4"),colorClass:"step-purple",grammar:e("part1_builder_g4"),options:["om morgenen","om aftenen","hver dag","lige nu","i dag"]}];let c=["En kvinde","cykler","på gaden","om morgenen"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
+        `,Z.appendChild(ce);const ve=document.createElement("div");ve.className="exercise-sub-tabs";const me=document.createElement("button");me.className="ex-sub-tab active",me.textContent=e("part1_tab_builder");const de=document.createElement("button");de.className="ex-sub-tab",de.textContent=e("part1_tab_puzzle"),ve.appendChild(me),ve.appendChild(de),Z.appendChild(ve);const ue=document.createElement("div");ue.className="exercise-panel active";const se=document.createElement("div");se.className="exercise-panel",se.style.display="none",Z.appendChild(ue),Z.appendChild(se),me.onclick=()=>{me.classList.add("active"),de.classList.remove("active"),ue.style.display="block",se.style.display="none"},de.onclick=()=>{de.classList.add("active"),me.classList.remove("active"),se.style.display="block",ue.style.display="none"},G(ue),I(se)}function G(s){const i=[{q:e("part1_builder_q1"),colorClass:"step-green",grammar:e("part1_builder_g1"),options:["En kvinde","En mand","En hund","En dreng","En pige","Bussen"]},{q:e("part1_builder_q2"),colorClass:"step-red",grammar:e("part1_builder_g2"),options:["cykler","løber","drikker kaffe","spiser mad","læser en bog","kører"]},{q:e("part1_builder_q3"),colorClass:"step-yellow",grammar:e("part1_builder_g3"),options:["på gaden","i parken","på caféen","i skolen","i køkkenet"]},{q:e("part1_builder_q4"),colorClass:"step-purple",grammar:e("part1_builder_g4"),options:["om morgenen","om aftenen","hver dag","lige nu","i dag"]}];let c=["En kvinde","cykler","på gaden","om morgenen"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
                 <div class="live-label">${e("part1_live_label")}</div>
                 <div class="live-text">
                     <span class="word-green">${c[0]}</span> 
                     <span class="word-red">${c[1]}</span> 
-                    <span class="word-blue">${c[2]}</span> 
+                    <span class="word-yellow">${c[2]}</span> 
                     <span class="word-purple">${c[3]}</span>.
                 </div>
                 <button class="listen-btn-small" title="Lyt">🔊 ${e("part1_listen_pronunciation")}</button>
@@ -39814,9 +39822,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <!-- Arrow 2: Handling (Verbum) -> cykel/pedaler -->
                     <line x1="910" y1="350" x2="750" y2="430" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-5-red)" />
                     <!-- Arrow 3: Centraladverbium (modificerer verbet) -> handling/cykel -->
-                    <line x1="910" y1="520" x2="780" y2="490" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-5-yellow)" />
+                    <line x1="910" y1="520" x2="780" y2="490" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-5-blue)" />
                     <!-- Arrow 4: Sted -> vejbanen -->
-                    <line x1="300" y1="620" x2="520" y2="620" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-5-blue)" />
+                    <line x1="300" y1="620" x2="520" y2="620" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-5-yellow)" />
                 </svg>
                 <!-- Box 1: Subjekt -->
                 <div class="photo-bubble bubble-5-subjekt">
@@ -39836,15 +39844,15 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Box 3: Centraladverbium (Modificerer verbet) -->
                 <div class="photo-bubble bubble-5-adv">
                     <div class="bubble-q">3. ${e("part2_adv_q3")}</div>
-                    <div class="bubble-ans ans-yellow">ikke / faktisk / vist</div>
+                    <div class="bubble-ans ans-blue">ikke / faktisk / vist</div>
                 </div>
                 <!-- Box 4: Sted -->
                 <div class="photo-bubble bubble-5-sted">
                     <div class="bubble-q">4. ${e("part2_adv_q4")}</div>
-                    <div class="bubble-ans ans-blue">på gaden</div>
+                    <div class="bubble-ans ans-yellow">på gaden</div>
                 </div>
             </div>
-        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),oe.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid steps-grid-5",[{num:"1",q:e("part2_adv_q1"),ans:"En kvinde",colorClass:"step-green",icon:"👤",note:e("part2_adv_note_1"),grammar:e("part2_adv_g1")},{num:"2",q:e("part2_adv_q2"),ans:"cykler",colorClass:"step-red",icon:"🚲",note:e("part2_adv_note_2"),grammar:e("part2_adv_g2")},{num:"3",q:e("part2_adv_q3"),ans:"ikke / faktisk / vist",colorClass:"step-yellow",icon:"⚡",note:e("part2_adv_note_3"),grammar:e("part2_adv_g3")},{num:"4",q:e("part2_adv_q4"),ans:"på gaden",colorClass:"step-blue",icon:"📍",note:e("part2_adv_note_4"),grammar:e("part2_adv_g4")},{num:"5",q:e("part2_adv_q5"),ans:"om morgenen",colorClass:"step-purple",icon:"⏰",note:e("part2_adv_note_5"),grammar:e("part2_adv_g5")}].forEach(fe=>{const le=document.createElement("div");le.className=`simple-step-card ${fe.colorClass}`,le.innerHTML=`
+        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),oe.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid steps-grid-5",[{num:"1",q:e("part2_adv_q1"),ans:"En kvinde",colorClass:"step-green",icon:"👤",note:e("part2_adv_note_1"),grammar:e("part2_adv_g1")},{num:"2",q:e("part2_adv_q2"),ans:"cykler",colorClass:"step-red",icon:"🚲",note:e("part2_adv_note_2"),grammar:e("part2_adv_g2")},{num:"3",q:e("part2_adv_q3"),ans:"ikke / faktisk / vist",colorClass:"step-blue",icon:"⚡",note:e("part2_adv_note_3"),grammar:e("part2_adv_g3")},{num:"4",q:e("part2_adv_q4"),ans:"på gaden",colorClass:"step-yellow",icon:"📍",note:e("part2_adv_note_4"),grammar:e("part2_adv_g4")},{num:"5",q:e("part2_adv_q5"),ans:"om morgenen",colorClass:"step-purple",icon:"⏰",note:e("part2_adv_note_5"),grammar:e("part2_adv_g5")}].forEach(fe=>{const le=document.createElement("div");le.className=`simple-step-card ${fe.colorClass}`,le.innerHTML=`
                 <div class="step-badge">${fe.num}</div>
                 <div class="step-card-content">
                     <div class="step-q">${fe.icon} ${fe.q}</div>
@@ -39856,11 +39864,11 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             <h3>${e("part2_adv_box_title")}</h3>
             <p>${e("part2_adv_box_desc")}</p>
             <div class="modifier-examples-list">
-                <div class="mod-ex-item"><span class="mod-tag ans-yellow">ikke</span> <span>${e("part2_adv_box_ikke")}</span></div>
-                <div class="mod-ex-item"><span class="mod-tag ans-yellow">faktisk</span> <span>${e("part2_adv_box_faktisk")}</span></div>
-                <div class="mod-ex-item"><span class="mod-tag ans-yellow">vist</span> <span>${e("part2_adv_box_vist")}</span></div>
-                <div class="mod-ex-item"><span class="mod-tag ans-yellow">altid / aldrig</span> <span>${e("part2_adv_box_altid")}</span></div>
-                <div class="mod-ex-item"><span class="mod-tag ans-yellow">gerne / måske</span> <span>${e("part2_adv_box_gerne")}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-blue">ikke</span> <span>${e("part2_adv_box_ikke")}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-blue">faktisk</span> <span>${e("part2_adv_box_faktisk")}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-blue">vist</span> <span>${e("part2_adv_box_vist")}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-blue">altid / aldrig</span> <span>${e("part2_adv_box_altid")}</span></div>
+                <div class="mod-ex-item"><span class="mod-tag ans-blue">gerne / måske</span> <span>${e("part2_adv_box_gerne")}</span></div>
             </div>
             <div class="modifier-rule-badge">
                 ${e("part2_adv_box_rule")}
@@ -39870,8 +39878,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <div class="banner-sentence">
                     <span class="word-green">En kvinde</span> 
                     <span class="word-red">cykler</span> 
-                    <strong class="word-yellow adv-pulse">${ie}</strong> 
-                    <span class="word-blue">på gaden</span> 
+                    <strong class="word-blue adv-pulse">${ie}</strong> 
+                    <span class="word-yellow">på gaden</span> 
                     <span class="word-purple">om morgenen</span>.
                 </div>
                 <div class="adv-switcher-row">
@@ -39884,20 +39892,20 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             `;const fe=X.querySelector(".adv-chips-wrap");ce.forEach(u=>{const E=document.createElement("button");E.className=`adv-quick-chip ${u===ie?"active":""}`,E.textContent=u;const R=ct[Se()]?.[u];R&&Se()!=="da"&&(E.title=R),E.onclick=()=>{ie=u,ve()},fe.appendChild(E)});const le=X.querySelector(".listen-btn");le.onclick=()=>W(`En kvinde cykler ${ie} på gaden om morgenen`)}ve(),oe.appendChild(X);const me=document.createElement("div");me.className="section-divider",me.innerHTML=`
             <h2>${e("part2_adv_try_title")}</h2>
             <p>${e("part2_adv_try_desc")}</p>
-        `,oe.appendChild(me);const de=document.createElement("div");de.className="exercise-sub-tabs";const ue=document.createElement("button");ue.className="ex-sub-tab active",ue.textContent=e("part2_adv_tab_builder");const se=document.createElement("button");se.className="ex-sub-tab",se.textContent=e("part2_adv_tab_puzzle"),de.appendChild(ue),de.appendChild(se),oe.appendChild(de);const K=document.createElement("div");K.className="exercise-panel active";const ae=document.createElement("div");ae.className="exercise-panel",ae.style.display="none",oe.appendChild(K),oe.appendChild(ae),ue.onclick=()=>{ue.classList.add("active"),se.classList.remove("active"),K.style.display="block",ae.style.display="none"},se.onclick=()=>{se.classList.add("active"),ue.classList.remove("active"),ae.style.display="block",K.style.display="none"},H(K),g(ae)}function H(s){const i=[{q:e("part2_adv_builder_q1"),colorClass:"step-green",grammar:e("part2_adv_g1"),options:["En kvinde","En mand","En hund","En dreng","En pige","Bussen","Lægen","Familien"]},{q:e("part2_adv_builder_q2"),colorClass:"step-red",grammar:e("part2_adv_g2"),options:["cykler","løber","drikker kaffe","spiser mad","læser en bog","kører","arbejder"]},{q:e("part2_adv_builder_q3"),colorClass:"step-yellow",grammar:e("part2_adv_g3"),options:["ikke","faktisk","vist","altid","aldrig","ofte","gerne","måske"]},{q:e("part2_adv_builder_q4"),colorClass:"step-blue",grammar:e("part2_adv_g4"),options:["på gaden","i parken","på caféen","i skolen","i haven","i køkkenet"]},{q:e("part2_adv_builder_q5"),colorClass:"step-purple",grammar:e("part2_adv_g5"),options:["om morgenen","om aftenen","hver dag","lige nu","i dag","om natten"]}];let c=["En kvinde","cykler","ikke","på gaden","om morgenen"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
+        `,oe.appendChild(me);const de=document.createElement("div");de.className="exercise-sub-tabs";const ue=document.createElement("button");ue.className="ex-sub-tab active",ue.textContent=e("part2_adv_tab_builder");const se=document.createElement("button");se.className="ex-sub-tab",se.textContent=e("part2_adv_tab_puzzle"),de.appendChild(ue),de.appendChild(se),oe.appendChild(de);const K=document.createElement("div");K.className="exercise-panel active";const ae=document.createElement("div");ae.className="exercise-panel",ae.style.display="none",oe.appendChild(K),oe.appendChild(ae),ue.onclick=()=>{ue.classList.add("active"),se.classList.remove("active"),K.style.display="block",ae.style.display="none"},se.onclick=()=>{se.classList.add("active"),ue.classList.remove("active"),ae.style.display="block",K.style.display="none"},H(K),g(ae)}function H(s){const i=[{q:e("part2_adv_builder_q1"),colorClass:"step-green",grammar:e("part2_adv_g1"),options:["En kvinde","En mand","En hund","En dreng","En pige","Bussen","Lægen","Familien"]},{q:e("part2_adv_builder_q2"),colorClass:"step-red",grammar:e("part2_adv_g2"),options:["cykler","løber","drikker kaffe","spiser mad","læser en bog","kører","arbejder"]},{q:e("part2_adv_builder_q3"),colorClass:"step-blue",grammar:e("part2_adv_g3"),options:["ikke","faktisk","vist","altid","aldrig","ofte","gerne","måske"]},{q:e("part2_adv_builder_q4"),colorClass:"step-yellow",grammar:e("part2_adv_g4"),options:["på gaden","i parken","på caféen","i skolen","i haven","i køkkenet"]},{q:e("part2_adv_builder_q5"),colorClass:"step-purple",grammar:e("part2_adv_g5"),options:["om morgenen","om aftenen","hver dag","lige nu","i dag","om natten"]}];let c=["En kvinde","cykler","ikke","på gaden","om morgenen"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
                 <div class="live-label">${e("part2_adv_builder_live_label")}</div>
                 <div class="live-text">
                     <span class="word-green">${c[0]}</span> 
                     <span class="word-red">${c[1]}</span> 
-                    <span class="word-yellow">${c[2]}</span> 
-                    <span class="word-blue">${c[3]}</span> 
+                    <span class="word-blue">${c[2]}</span> 
+                    <span class="word-yellow">${c[3]}</span> 
                     <span class="word-purple">${c[4]}</span>.
                 </div>
                 <button class="listen-btn-small" title="Lyt">🔊 ${e("part1_listen_pronunciation")}</button>
             `;const X=L.querySelector(".listen-btn-small");X.onclick=()=>W(`${c[0]} ${c[1]} ${c[2]} ${c[3]} ${c[4]}`)}const re=document.createElement("div");re.className="builder-questions-list",i.forEach((X,ie)=>{const ce=document.createElement("div");ce.className=`builder-q-row ${X.colorClass}`;const ve=document.createElement("div");ve.className="builder-q-title",ve.innerHTML=`${X.q} <span class="grammar-badge-inline">${X.grammar}</span>`,ce.appendChild(ve);const me=document.createElement("div");me.className="builder-btn-grid",X.options.forEach(de=>{const ue=document.createElement("button");ue.className=`chip-btn ${c[ie]===de?"selected":""}`,ue.textContent=de;const se=ct[Se()]?.[de];se&&Se()!=="da"&&(ue.title=se),ue.onclick=()=>{c[ie]=de,ce.querySelectorAll(".chip-btn").forEach(K=>K.classList.remove("selected")),ue.classList.add("selected"),B()},me.appendChild(ue)}),ce.appendChild(me),re.appendChild(ce)}),m.appendChild(re),m.appendChild(L),s.appendChild(m),B()}function g(s){const i=[{correct:["En kvinde","cykler","ikke","på gaden","om morgenen"],scrambled:["på gaden","ikke","En kvinde","om morgenen","cykler"]},{correct:["En mand","drikker kaffe","faktisk","på caféen","om morgenen"],scrambled:["faktisk","på caféen","drikker kaffe","om morgenen","En mand"]},{correct:["En hund","løber","altid","i parken","hver dag"],scrambled:["i parken","altid","En hund","hver dag","løber"]},{correct:["En pige","læser en bog","gerne","i skolen","i dag"],scrambled:["gerne","i dag","En pige","læser en bog","i skolen"]},{correct:["Bussen","kører","aldrig","på gaden","om natten"],scrambled:["om natten","aldrig","kører","på gaden","Bussen"]},{correct:["En familie","spiser aftensmad","ofte","i køkkenet","om aftenen"],scrambled:["ofte","spiser aftensmad","i køkkenet","En familie","om aftenen"]},{correct:["En dreng","spiller fodbold","vist","i haven","om eftermiddagen"],scrambled:["i haven","vist","En dreng","spiller fodbold","om eftermiddagen"]},{correct:["Lægen","taler i telefon","måske","på hospitalet","lige nu"],scrambled:["måske","lige nu","taler i telefon","på hospitalet","Lægen"]},{correct:["En kat","sover","altid","i sengen","om dagen"],scrambled:["sover","om dagen","altid","i sengen","En kat"]},{correct:["Toget","ankommer","faktisk","på stationen","til tiden"],scrambled:["til tiden","faktisk","Toget","ankommer","på stationen"]}];let c=0,m=[null,null,null,null,null];const L=new Set,B=document.createElement("div");B.className="puzzle-wrapper";function re(){B.innerHTML="",m=[null,null,null,null,null];const X=i[c],ie=document.createElement("div");ie.className="puzzle-header";const ce=document.createElement("div");ce.className="puzzle-pills-row",i.forEach((u,E)=>{const R=document.createElement("button");R.className=`puzzle-pill ${E===c?"active":""} ${L.has(E)?"completed":""}`,R.textContent=E+1,R.title=`${e("part1_puzzle_pill_title")} ${E+1}`,R.onclick=()=>{c=E,re()},ce.appendChild(R)}),ie.appendChild(ce);const ve=document.createElement("div");ve.className="puzzle-counter",ve.textContent=e("part1_puzzle_counter",{current:c+1,total:i.length}),ie.appendChild(ve);const me=document.createElement("div");me.className="puzzle-guide",me.innerHTML=`
                 <div>${e("part2_adv_puzzle_guide")}</div>
                 <small>${e("part2_adv_puzzle_guide_sub")}</small>
-            `,ie.appendChild(me),B.appendChild(ie);const de=document.createElement("div");de.className="puzzle-slots puzzle-slots-5";const ue=[{text:e("part2_adv_slot_hint_1"),grammar:e("part2_adv_g1")},{text:e("part2_adv_slot_hint_2"),grammar:e("part2_adv_g2")},{text:e("part2_adv_slot_hint_3"),grammar:e("part2_adv_g3")},{text:e("part2_adv_slot_hint_4"),grammar:e("part2_adv_g4")},{text:e("part2_adv_slot_hint_5"),grammar:e("part2_adv_g5")}],se=["slot5-green","slot5-red","slot5-yellow","slot5-blue","slot5-purple"];ue.forEach((u,E)=>{const R=document.createElement("div");R.className=`puzzle-slot ${se[E]}`,R.innerHTML=`<span class="slot-hint">${u.text}</span><span class="grammar-hint-slot">[${u.grammar}]</span>`,R.dataset.idx=E,R.onclick=()=>{m[E]&&(m[E]=null,fe())},de.appendChild(R)}),B.appendChild(de);const K=document.createElement("div");K.className="puzzle-bank",B.appendChild(K);const ae=document.createElement("div");ae.className="puzzle-feedback",B.appendChild(ae);function fe(){de.querySelectorAll(".puzzle-slot").forEach((u,E)=>{const R=m[E];R?(u.classList.add("filled"),u.innerHTML=`
+            `,ie.appendChild(me),B.appendChild(ie);const de=document.createElement("div");de.className="puzzle-slots puzzle-slots-5";const ue=[{text:e("part2_adv_slot_hint_1"),grammar:e("part2_adv_g1")},{text:e("part2_adv_slot_hint_2"),grammar:e("part2_adv_g2")},{text:e("part2_adv_slot_hint_3"),grammar:e("part2_adv_g3")},{text:e("part2_adv_slot_hint_4"),grammar:e("part2_adv_g4")},{text:e("part2_adv_slot_hint_5"),grammar:e("part2_adv_g5")}],se=["slot5-green","slot5-red","slot5-blue","slot5-yellow","slot5-purple"];ue.forEach((u,E)=>{const R=document.createElement("div");R.className=`puzzle-slot ${se[E]}`,R.innerHTML=`<span class="slot-hint">${u.text}</span><span class="grammar-hint-slot">[${u.grammar}]</span>`,R.dataset.idx=E,R.onclick=()=>{m[E]&&(m[E]=null,fe())},de.appendChild(R)}),B.appendChild(de);const K=document.createElement("div");K.className="puzzle-bank",B.appendChild(K);const ae=document.createElement("div");ae.className="puzzle-feedback",B.appendChild(ae);function fe(){de.querySelectorAll(".puzzle-slot").forEach((u,E)=>{const R=m[E];R?(u.classList.add("filled"),u.innerHTML=`
                             <span class="slot-number">${E+1}</span>
                             <span class="slot-text">${R}</span>
                             <span class="slot-remove">✕</span>
@@ -39953,11 +39961,11 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <!-- Arrow 2: Hjælpeverbum (Kraft/styring) -> overkrop/styr -->
                     <line x1="930" y1="260" x2="710" y2="300" stroke="#f43f5e" stroke-width="4" marker-end="url(#arrowhead-6-pink)" />
                     <!-- Arrow 3: Centraladverbium (Modificerer) -> mellem styring og pedaler -->
-                    <line x1="930" y1="410" x2="750" y2="400" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-6-yellow)" />
+                    <line x1="930" y1="410" x2="750" y2="400" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-6-blue)" />
                     <!-- Arrow 4: Hovedverbum (Handlingen i infinitiv) -> pedaler/hjul -->
                     <line x1="930" y1="560" x2="760" y2="490" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-6-red)" />
                     <!-- Arrow 5: Sted -> vejbanen -->
-                    <line x1="300" y1="620" x2="520" y2="620" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-6-blue)" />
+                    <line x1="300" y1="620" x2="520" y2="620" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-6-yellow)" />
                 </svg>
                 <!-- Box 1: Subjekt -->
                 <div class="photo-bubble bubble-6-subjekt">
@@ -39977,7 +39985,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Box 3: Centraladverbium -->
                 <div class="photo-bubble bubble-6-adv">
                     <div class="bubble-q">3. ${e("part3_modal_q3")}</div>
-                    <div class="bubble-ans ans-yellow">ikke / faktisk / vist</div>
+                    <div class="bubble-ans ans-blue">ikke / faktisk / vist</div>
                 </div>
                 <!-- Box 4: Hovedverbum -->
                 <div class="photo-bubble bubble-6-hovedverb">
@@ -39987,10 +39995,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Box 5: Sted -->
                 <div class="photo-bubble bubble-6-sted">
                     <div class="bubble-q">5. ${e("part3_modal_q5")}</div>
-                    <div class="bubble-ans ans-blue">på gaden</div>
+                    <div class="bubble-ans ans-yellow">på gaden</div>
                 </div>
             </div>
-        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),ge.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid steps-grid-6",[{num:"1",q:e("part3_modal_q1"),ans:"En kvinde",colorClass:"step-green",icon:"👤",note:"Hovedpersonen",grammar:e("part3_modal_g1")},{num:"2",q:e("part3_modal_q2"),ans:"kan / skal / vil / må / bør",colorClass:"step-pink",icon:"⚡",note:e("part3_modal_note_2"),grammar:e("part3_modal_g2")},{num:"3",q:e("part3_modal_q3"),ans:"ikke / altid / gerne",colorClass:"step-yellow",icon:"🛡️",note:e("part3_modal_note_3"),grammar:e("part3_modal_g3")},{num:"4",q:e("part3_modal_q4"),ans:"cykle (infinitiv)",colorClass:"step-red",icon:"🚲",note:e("part3_modal_note_4"),grammar:e("part3_modal_g4")},{num:"5",q:e("part3_modal_q5"),ans:"på gaden",colorClass:"step-blue",icon:"📍",note:"Baggrund / ramme",grammar:e("part3_modal_g5")},{num:"6",q:e("part3_modal_q6"),ans:"om morgenen",colorClass:"step-purple",icon:"⏰",note:"Tidspunkt",grammar:e("part3_modal_g6")}].forEach(u=>{const E=document.createElement("div");E.className=`simple-step-card ${u.colorClass}`,E.innerHTML=`
+        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),ge.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid steps-grid-6",[{num:"1",q:e("part3_modal_q1"),ans:"En kvinde",colorClass:"step-green",icon:"👤",note:"Hovedpersonen",grammar:e("part3_modal_g1")},{num:"2",q:e("part3_modal_q2"),ans:"kan / skal / vil / må / bør",colorClass:"step-pink",icon:"⚡",note:e("part3_modal_note_2"),grammar:e("part3_modal_g2")},{num:"3",q:e("part3_modal_q3"),ans:"ikke / altid / gerne",colorClass:"step-blue",icon:"🛡️",note:e("part3_modal_note_3"),grammar:e("part3_modal_g3")},{num:"4",q:e("part3_modal_q4"),ans:"cykle (infinitiv)",colorClass:"step-red",icon:"🚲",note:e("part3_modal_note_4"),grammar:e("part3_modal_g4")},{num:"5",q:e("part3_modal_q5"),ans:"på gaden",colorClass:"step-yellow",icon:"📍",note:"Baggrund / ramme",grammar:e("part3_modal_g5")},{num:"6",q:e("part3_modal_q6"),ans:"om morgenen",colorClass:"step-purple",icon:"⏰",note:"Tidspunkt",grammar:e("part3_modal_g6")}].forEach(u=>{const E=document.createElement("div");E.className=`simple-step-card ${u.colorClass}`,E.innerHTML=`
                 <div class="step-badge">${u.num}</div>
                 <div class="step-card-content">
                     <div class="step-q">${u.icon} ${u.q}</div>
@@ -40016,9 +40024,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <div class="banner-sentence">
                     <span class="word-green">En kvinde</span> 
                     <strong class="word-pink modal-pulse">${ie}</strong> 
-                    <strong class="word-yellow adv-pulse">${ce}</strong> 
+                    <strong class="word-blue adv-pulse">${ce}</strong> 
                     <span class="word-red">cykle</span> 
-                    <span class="word-blue">på gaden</span> 
+                    <span class="word-yellow">på gaden</span> 
                     <span class="word-purple">om morgenen</span>.
                 </div>
                 <div class="adv-switcher-row">
@@ -40034,21 +40042,21 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             `;const u=X.querySelector(".modal-chips-wrap");ve.forEach(ee=>{const pe=document.createElement("button");pe.className=`modal-quick-chip ${ee===ie?"active":""}`,pe.textContent=ee,pe.onclick=()=>{ie=ee,de()},u.appendChild(pe)});const E=X.querySelector(".adv-chips-wrap");me.forEach(ee=>{const pe=document.createElement("button");pe.className=`adv-quick-chip ${ee===ce?"active":""}`,pe.textContent=ee,pe.onclick=()=>{ce=ee,de()},E.appendChild(pe)});const R=X.querySelector(".listen-btn");R.onclick=()=>W(`En kvinde ${ie} ${ce} cykle på gaden om morgenen`)}de(),ge.appendChild(X);const ue=document.createElement("div");ue.className="section-divider",ue.innerHTML=`
             <h2>${e("part3_modal_try_title")}</h2>
             <p>${e("part3_modal_try_desc")}</p>
-        `,ge.appendChild(ue);const se=document.createElement("div");se.className="exercise-sub-tabs";const K=document.createElement("button");K.className="ex-sub-tab active",K.textContent=e("part3_modal_tab_builder");const ae=document.createElement("button");ae.className="ex-sub-tab",ae.textContent=e("part3_modal_tab_puzzle"),se.appendChild(K),se.appendChild(ae),ge.appendChild(se);const fe=document.createElement("div");fe.className="exercise-panel active";const le=document.createElement("div");le.className="exercise-panel",le.style.display="none",ge.appendChild(fe),ge.appendChild(le),K.onclick=()=>{K.classList.add("active"),ae.classList.remove("active"),fe.style.display="block",le.style.display="none"},ae.onclick=()=>{ae.classList.add("active"),K.classList.remove("active"),le.style.display="block",fe.style.display="none"},z(fe),q(le)}function z(s){const i=[{q:e("part3_modal_builder_q1"),colorClass:"step-green",grammar:e("part3_modal_g1"),options:["En kvinde","En mand","En hund","En dreng","En pige","Bussen","Lægen","Familien"]},{q:e("part3_modal_builder_q2"),colorClass:"step-pink",grammar:e("part3_modal_g2"),options:["kan","skal","vil","må","bør"]},{q:e("part3_modal_builder_q3"),colorClass:"step-yellow",grammar:e("part3_modal_g3"),options:["ikke","faktisk","vist","altid","aldrig","ofte","gerne"]},{q:e("part3_modal_builder_q4"),colorClass:"step-red",grammar:e("part3_modal_g4"),options:["cykle","løbe","drikke kaffe","spise mad","læse en bog","køre","arbejde"]},{q:e("part3_modal_builder_q5"),colorClass:"step-blue",grammar:e("part3_modal_g5"),options:["på gaden","i parken","på caféen","i skolen","i haven","i køkkenet"]},{q:e("part3_modal_builder_q6"),colorClass:"step-purple",grammar:e("part3_modal_g6"),options:["om morgenen","om aftenen","hver dag","lige nu","i dag","om natten"]}];let c=["En kvinde","kan","ikke","cykle","på gaden","om morgenen"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
+        `,ge.appendChild(ue);const se=document.createElement("div");se.className="exercise-sub-tabs";const K=document.createElement("button");K.className="ex-sub-tab active",K.textContent=e("part3_modal_tab_builder");const ae=document.createElement("button");ae.className="ex-sub-tab",ae.textContent=e("part3_modal_tab_puzzle"),se.appendChild(K),se.appendChild(ae),ge.appendChild(se);const fe=document.createElement("div");fe.className="exercise-panel active";const le=document.createElement("div");le.className="exercise-panel",le.style.display="none",ge.appendChild(fe),ge.appendChild(le),K.onclick=()=>{K.classList.add("active"),ae.classList.remove("active"),fe.style.display="block",le.style.display="none"},ae.onclick=()=>{ae.classList.add("active"),K.classList.remove("active"),le.style.display="block",fe.style.display="none"},z(fe),q(le)}function z(s){const i=[{q:e("part3_modal_builder_q1"),colorClass:"step-green",grammar:e("part3_modal_g1"),options:["En kvinde","En mand","En hund","En dreng","En pige","Bussen","Lægen","Familien"]},{q:e("part3_modal_builder_q2"),colorClass:"step-pink",grammar:e("part3_modal_g2"),options:["kan","skal","vil","må","bør"]},{q:e("part3_modal_builder_q3"),colorClass:"step-blue",grammar:e("part3_modal_g3"),options:["ikke","faktisk","vist","altid","aldrig","ofte","gerne"]},{q:e("part3_modal_builder_q4"),colorClass:"step-red",grammar:e("part3_modal_g4"),options:["cykle","løbe","drikke kaffe","spise mad","læse en bog","køre","arbejde"]},{q:e("part3_modal_builder_q5"),colorClass:"step-yellow",grammar:e("part3_modal_g5"),options:["på gaden","i parken","på caféen","i skolen","i haven","i køkkenet"]},{q:e("part3_modal_builder_q6"),colorClass:"step-purple",grammar:e("part3_modal_g6"),options:["om morgenen","om aftenen","hver dag","lige nu","i dag","om natten"]}];let c=["En kvinde","kan","ikke","cykle","på gaden","om morgenen"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
                 <div class="live-label">${e("part3_modal_builder_live_label")}</div>
                 <div class="live-text">
                     <span class="word-green">${c[0]}</span> 
                     <span class="word-pink">${c[1]}</span> 
-                    <span class="word-yellow">${c[2]}</span> 
+                    <span class="word-blue">${c[2]}</span> 
                     <span class="word-red">${c[3]}</span> 
-                    <span class="word-blue">${c[4]}</span> 
+                    <span class="word-yellow">${c[4]}</span> 
                     <span class="word-purple">${c[5]}</span>.
                 </div>
                 <button class="listen-btn-small" title="Lyt">🔊 ${e("part1_listen_pronunciation")}</button>
             `;const X=L.querySelector(".listen-btn-small");X.onclick=()=>W(`${c[0]} ${c[1]} ${c[2]} ${c[3]} ${c[4]} ${c[5]}`)}const re=document.createElement("div");re.className="builder-questions-list",i.forEach((X,ie)=>{const ce=document.createElement("div");ce.className=`builder-q-row ${X.colorClass}`;const ve=document.createElement("div");ve.className="builder-q-title",ve.innerHTML=`${X.q} <span class="grammar-badge-inline">${X.grammar}</span>`,ce.appendChild(ve);const me=document.createElement("div");me.className="builder-btn-grid",X.options.forEach(de=>{const ue=document.createElement("button");ue.className=`chip-btn ${c[ie]===de?"selected":""}`,ue.textContent=de,ue.onclick=()=>{c[ie]=de,ce.querySelectorAll(".chip-btn").forEach(se=>se.classList.remove("selected")),ue.classList.add("selected"),B()},me.appendChild(ue)}),ce.appendChild(me),re.appendChild(ce)}),m.appendChild(re),m.appendChild(L),s.appendChild(m),B()}function q(s){const i=[{correct:["En kvinde","kan","ikke","cykle","på gaden","om morgenen"],scrambled:["cykle","kan","En kvinde","på gaden","ikke","om morgenen"]},{correct:["En mand","skal","faktisk","drikke kaffe","på caféen","om morgenen"],scrambled:["på caféen","drikke kaffe","skal","faktisk","om morgenen","En mand"]},{correct:["En pige","vil","gerne","læse en bog","i skolen","i dag"],scrambled:["vil","i dag","læse en bog","En pige","gerne","i skolen"]},{correct:["Bussen","må","ikke","køre","på gaden","om natten"],scrambled:["ikke","om natten","Bussen","køre","må","på gaden"]},{correct:["En dreng","bør","altid","lave lektier","i stuen","om eftermiddagen"],scrambled:["lave lektier","altid","bør","i stuen","En dreng","om eftermiddagen"]},{correct:["Familien","vil","aldrig","spise mad","på restaurant","om aftenen"],scrambled:["aldrig","vil","Familien","om aftenen","spise mad","på restaurant"]},{correct:["Lægen","skal","vist","arbejde","på hospitalet","i dag"],scrambled:["arbejde","vist","på hospitalet","skal","Lægen","i dag"]},{correct:["En hund","må","gerne","løbe","i parken","hver dag"],scrambled:["løbe","hver dag","gerne","må","En hund","i parken"]},{correct:["Studenten","kan","ofte","studere","på biblioteket","om aftenen"],scrambled:["studere","på biblioteket","ofte","kan","om aftenen","Studenten"]},{correct:["Toget","vil","faktisk","ankomme","på stationen","til tiden"],scrambled:["ankomme","faktisk","til tiden","Toget","vil","på stationen"]}];let c=0,m=[null,null,null,null,null,null];const L=new Set,B=document.createElement("div");B.className="puzzle-wrapper";function re(){B.innerHTML="",m=[null,null,null,null,null,null];const X=i[c],ie=document.createElement("div");ie.className="puzzle-header";const ce=document.createElement("div");ce.className="puzzle-pills-row",i.forEach((u,E)=>{const R=document.createElement("button");R.className=`puzzle-pill ${E===c?"active":""} ${L.has(E)?"completed":""}`,R.textContent=E+1,R.title=`${e("part1_puzzle_pill_title")} ${E+1}`,R.onclick=()=>{c=E,re()},ce.appendChild(R)}),ie.appendChild(ce);const ve=document.createElement("div");ve.className="puzzle-counter",ve.textContent=e("part1_puzzle_counter",{current:c+1,total:i.length}),ie.appendChild(ve);const me=document.createElement("div");me.className="puzzle-guide",me.innerHTML=`
                 <div>${e("part3_modal_puzzle_guide")}</div>
                 <small>${e("part3_modal_puzzle_guide_sub")}</small>
-            `,ie.appendChild(me),B.appendChild(ie);const de=document.createElement("div");de.className="puzzle-slots puzzle-slots-6";const ue=[{text:"1. Hvem / hvad?",grammar:e("part3_modal_g1")},{text:"2. Hjælpeverbum (kraft)",grammar:e("part3_modal_g2")},{text:"3. Centraladverbium",grammar:e("part3_modal_g3")},{text:"4. Hovedverbum (infinitiv)",grammar:e("part3_modal_g4")},{text:"5. Hvor?",grammar:e("part3_modal_g5")},{text:"6. Hvornår?",grammar:e("part3_modal_g6")}],se=["slot6-green","slot6-modal","slot6-yellow","slot6-verb","slot6-blue","slot6-purple"];ue.forEach((u,E)=>{const R=document.createElement("div");R.className=`puzzle-slot ${se[E]}`,R.innerHTML=`<span class="slot-hint">${u.text}</span><span class="grammar-hint-slot">[${u.grammar}]</span>`,R.dataset.idx=E,R.onclick=()=>{m[E]&&(m[E]=null,fe())},de.appendChild(R)}),B.appendChild(de);const K=document.createElement("div");K.className="puzzle-bank",B.appendChild(K);const ae=document.createElement("div");ae.className="puzzle-feedback",B.appendChild(ae);function fe(){de.querySelectorAll(".puzzle-slot").forEach((ee,pe)=>{const p=m[pe];p?(ee.innerHTML=`
+            `,ie.appendChild(me),B.appendChild(ie);const de=document.createElement("div");de.className="puzzle-slots puzzle-slots-6";const ue=[{text:"1. Hvem / hvad?",grammar:e("part3_modal_g1")},{text:"2. Hjælpeverbum (kraft)",grammar:e("part3_modal_g2")},{text:"3. Centraladverbium",grammar:e("part3_modal_g3")},{text:"4. Hovedverbum (infinitiv)",grammar:e("part3_modal_g4")},{text:"5. Hvor?",grammar:e("part3_modal_g5")},{text:"6. Hvornår?",grammar:e("part3_modal_g6")}],se=["slot6-green","slot6-modal","slot6-blue","slot6-verb","slot6-yellow","slot6-purple"];ue.forEach((u,E)=>{const R=document.createElement("div");R.className=`puzzle-slot ${se[E]}`,R.innerHTML=`<span class="slot-hint">${u.text}</span><span class="grammar-hint-slot">[${u.grammar}]</span>`,R.dataset.idx=E,R.onclick=()=>{m[E]&&(m[E]=null,fe())},de.appendChild(R)}),B.appendChild(de);const K=document.createElement("div");K.className="puzzle-bank",B.appendChild(K);const ae=document.createElement("div");ae.className="puzzle-feedback",B.appendChild(ae);function fe(){de.querySelectorAll(".puzzle-slot").forEach((ee,pe)=>{const p=m[pe];p?(ee.innerHTML=`
                             <span class="slot-number">${pe+1}</span>
                             <span class="slot-filled-word">${p}</span>
                             <span class="slot-remove">✕</span>
@@ -40103,7 +40111,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                         </marker>
                     </defs>
                     <!-- Arrow 4: Heldigvis (Holdning) -> Sol/himmel -->
-                    <line x1="200" y1="110" x2="310" y2="160" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-7-yellow)" />
+                    <line x1="200" y1="110" x2="310" y2="160" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-7-blue)" />
                     <!-- Arrow 1: Den travle (Adjektiv) -> Kvinde -->
                     <line x1="200" y1="260" x2="570" y2="280" stroke="#f97316" stroke-width="4" marker-end="url(#arrowhead-7-orange)" />
                     <!-- Arrow 2: kvinde (Substantiv) -> Hoved/ansigt -->
@@ -40113,14 +40121,14 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <!-- Arrow 3: cykler (Verbum) -> Pedaler/hjul -->
                     <line x1="910" y1="440" x2="740" y2="480" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead-7-red)" />
                     <!-- Arrow 5: forsigtigt (Måde) -> Cykelsti/fart -->
-                    <line x1="910" y1="590" x2="840" y2="590" stroke="#06b6d4" stroke-width="4" marker-end="url(#arrowhead-7-cyan)" />
+                    <line x1="910" y1="590" x2="840" y2="590" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-7-blue)" />
                     <!-- Arrow 6: på gaden (Sted) -> Vejbanen -->
-                    <line x1="250" y1="670" x2="520" y2="670" stroke="#0284c7" stroke-width="4" marker-end="url(#arrowhead-7-blue)" />
+                    <line x1="250" y1="670" x2="520" y2="670" stroke="#eab308" stroke-width="4" marker-end="url(#arrowhead-7-yellow)" />
                 </svg>
                 <!-- Box 4: Holdning -->
                 <div class="photo-bubble bubble-7-holdning">
                     <div class="bubble-q">4. ${e("part2_q4")}</div>
-                    <div class="bubble-ans ans-yellow">heldigvis</div>
+                    <div class="bubble-ans ans-blue">heldigvis</div>
                 </div>
                 <!-- Box 1: Adjektiv -->
                 <div class="photo-bubble bubble-7-adjektiv">
@@ -40145,15 +40153,15 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <!-- Box 5: Måde -->
                 <div class="photo-bubble bubble-7-maade">
                     <div class="bubble-q">5. ${e("part2_q5")}</div>
-                    <div class="bubble-ans ans-cyan">forsigtigt</div>
+                    <div class="bubble-ans ans-blue">forsigtigt</div>
                 </div>
                 <!-- Box 6: Sted -->
                 <div class="photo-bubble bubble-7-sted">
                     <div class="bubble-q">6. ${e("part2_q6")}</div>
-                    <div class="bubble-ans ans-blue">på gaden</div>
+                    <div class="bubble-ans ans-yellow">på gaden</div>
                 </div>
             </div>
-        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),ke.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid",[{num:"1",q:e("part2_q1"),ans:"Den travle",colorClass:"step-orange",icon:"🎨",note:e("part2_note_1"),grammar:e("part2_g1")},{num:"2",q:e("part2_q2"),ans:"kvinde",colorClass:"step-green",icon:"👤",note:e("part2_note_2"),grammar:e("part2_g2")},{num:"3",q:e("part2_q3"),ans:"cykler",colorClass:"step-red",icon:"🚲",note:e("part2_note_3"),grammar:e("part2_g3")},{num:"4",q:e("part2_q4"),ans:"heldigvis",colorClass:"step-yellow",icon:"🌤️",note:e("part2_note_4"),grammar:e("part2_g4")},{num:"5",q:e("part2_q5"),ans:"forsigtigt",colorClass:"step-cyan",icon:"⚡",note:e("part2_note_5"),grammar:e("part2_g5")},{num:"6",q:e("part2_q6"),ans:"på gaden",colorClass:"step-blue",icon:"📍",note:e("part2_note_6"),grammar:e("part2_g6")},{num:"7",q:e("part2_q7"),ans:"mens det sner",colorClass:"step-purple",icon:"❄️",note:e("part2_note_7"),grammar:e("part2_g7")}].forEach(se=>{const K=document.createElement("div");K.className=`simple-step-card ${se.colorClass}`,K.innerHTML=`
+        `;const c=i.querySelector(".photo-overlay-wrap"),m=Re(c);i.insertBefore(m,c),ke.appendChild(i);const L=document.createElement("div");L.className="simple-steps-grid",[{num:"1",q:e("part2_q1"),ans:"Den travle",colorClass:"step-orange",icon:"🎨",note:e("part2_note_1"),grammar:e("part2_g1")},{num:"2",q:e("part2_q2"),ans:"kvinde",colorClass:"step-green",icon:"👤",note:e("part2_note_2"),grammar:e("part2_g2")},{num:"3",q:e("part2_q3"),ans:"cykler",colorClass:"step-red",icon:"🚲",note:e("part2_note_3"),grammar:e("part2_g3")},{num:"4",q:e("part2_q4"),ans:"heldigvis",colorClass:"step-blue",icon:"🌤️",note:e("part2_note_4"),grammar:e("part2_g4")},{num:"5",q:e("part2_q5"),ans:"forsigtigt",colorClass:"step-blue",icon:"⚡",note:e("part2_note_5"),grammar:e("part2_g5")},{num:"6",q:e("part2_q6"),ans:"på gaden",colorClass:"step-yellow",icon:"📍",note:e("part2_note_6"),grammar:e("part2_g6")},{num:"7",q:e("part2_q7"),ans:"mens det sner",colorClass:"step-purple",icon:"❄️",note:e("part2_note_7"),grammar:e("part2_g7")}].forEach(se=>{const K=document.createElement("div");K.className=`simple-step-card ${se.colorClass}`,K.innerHTML=`
                 <div class="step-badge">${se.num}</div>
                 <div class="step-card-content">
                     <div class="step-q">${se.icon} ${se.q}</div>
@@ -40167,9 +40175,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 <span class="word-orange">Den travle</span> 
                 <span class="word-green">kvinde</span> 
                 <span class="word-red">cykler</span> 
-                <span class="word-yellow">heldigvis</span> 
-                <span class="word-cyan">forsigtigt</span> 
-                <span class="word-blue">på gaden</span>, 
+                <span class="word-blue">heldigvis</span> 
+                <span class="word-blue">forsigtigt</span> 
+                <span class="word-yellow">på gaden</span>, 
                 <span class="word-purple">mens det sner</span>.
             </div>
             <button class="listen-btn" title="${e("part2_listen_btn")}">
@@ -40178,22 +40186,22 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         `;const X=re.querySelector(".listen-btn");X.onclick=()=>W("Den travle kvinde cykler heldigvis forsigtigt på gaden, mens det sner"),ke.appendChild(re);const ie=document.createElement("div");ie.className="section-divider",ie.innerHTML=`
             <h2>${e("part2_try_title")}</h2>
             <p>${e("part2_try_desc")}</p>
-        `,ke.appendChild(ie);const ce=document.createElement("div");ce.className="exercise-sub-tabs";const ve=document.createElement("button");ve.className="ex-sub-tab active",ve.textContent=e("part2_tab_builder");const me=document.createElement("button");me.className="ex-sub-tab",me.textContent=e("part2_tab_puzzle"),ce.appendChild(ve),ce.appendChild(me),ke.appendChild(ce);const de=document.createElement("div");de.className="exercise-panel active";const ue=document.createElement("div");ue.className="exercise-panel",ue.style.display="none",ke.appendChild(de),ke.appendChild(ue),ve.onclick=()=>{ve.classList.add("active"),me.classList.remove("active"),de.style.display="block",ue.style.display="none"},me.onclick=()=>{me.classList.add("active"),ve.classList.remove("active"),ue.style.display="block",de.style.display="none"},_(de),j(ue)}function _(s){const i=[{q:`1. ${e("part2_q1")} (${e("part2_note_1")})`,colorClass:"step-orange",grammar:e("part2_g1"),options:["Den travle","En glad","Det lille","Den dygtige","En stor","Den unge"]},{q:`2. ${e("part2_q2")} (${e("part2_note_2")})`,colorClass:"step-green",grammar:e("part2_g2"),options:["kvinde","mand","barn","lærer","hund","pige"]},{q:`3. ${e("part2_q3")} (${e("part2_note_3")})`,colorClass:"step-red",grammar:e("part2_g3"),options:["cykler","løber","arbejder","sover","leger","læser"]},{q:`4. ${e("part2_q4")} (${e("part2_note_4")})`,colorClass:"step-yellow",grammar:e("part2_g4"),options:["heldigvis","desværre","faktisk","altid","ofte"]},{q:`5. ${e("part2_q5")} (${e("part2_note_5")})`,colorClass:"step-pink",grammar:e("part2_g5"),options:["forsigtigt","hurtigt","roligt","flittigt","vildt","stille"]},{q:`6. ${e("part2_q6")} (${e("part2_note_6")})`,colorClass:"step-blue",grammar:e("part2_g6"),options:["på gaden","i parken","i skolen","derhjemme","i haven","på biblioteket"]},{q:`7. ${e("part2_q7")} (${e("part2_note_7")})`,colorClass:"step-purple",grammar:e("part2_g7"),options:["mens det sner","fordi solen skinner","selvom det regner","når eleverne har fri","mens gæsterne spiser","før timen starter"]}];let c=["Den travle","kvinde","cykler","heldigvis","forsigtigt","på gaden","mens det sner"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
+        `,ke.appendChild(ie);const ce=document.createElement("div");ce.className="exercise-sub-tabs";const ve=document.createElement("button");ve.className="ex-sub-tab active",ve.textContent=e("part2_tab_builder");const me=document.createElement("button");me.className="ex-sub-tab",me.textContent=e("part2_tab_puzzle"),ce.appendChild(ve),ce.appendChild(me),ke.appendChild(ce);const de=document.createElement("div");de.className="exercise-panel active";const ue=document.createElement("div");ue.className="exercise-panel",ue.style.display="none",ke.appendChild(de),ke.appendChild(ue),ve.onclick=()=>{ve.classList.add("active"),me.classList.remove("active"),de.style.display="block",ue.style.display="none"},me.onclick=()=>{me.classList.add("active"),ve.classList.remove("active"),ue.style.display="block",de.style.display="none"},_(de),j(ue)}function _(s){const i=[{q:`1. ${e("part2_q1")} (${e("part2_note_1")})`,colorClass:"step-orange",grammar:e("part2_g1"),options:["Den travle","En glad","Det lille","Den dygtige","En stor","Den unge"]},{q:`2. ${e("part2_q2")} (${e("part2_note_2")})`,colorClass:"step-green",grammar:e("part2_g2"),options:["kvinde","mand","barn","lærer","hund","pige"]},{q:`3. ${e("part2_q3")} (${e("part2_note_3")})`,colorClass:"step-red",grammar:e("part2_g3"),options:["cykler","løber","arbejder","sover","leger","læser"]},{q:`4. ${e("part2_q4")} (${e("part2_note_4")})`,colorClass:"step-blue",grammar:e("part2_g4"),options:["heldigvis","desværre","faktisk","altid","ofte"]},{q:`5. ${e("part2_q5")} (${e("part2_note_5")})`,colorClass:"step-blue",grammar:e("part2_g5"),options:["forsigtigt","hurtigt","roligt","flittigt","vildt","stille"]},{q:`6. ${e("part2_q6")} (${e("part2_note_6")})`,colorClass:"step-yellow",grammar:e("part2_g6"),options:["på gaden","i parken","i skolen","derhjemme","i haven","på biblioteket"]},{q:`7. ${e("part2_q7")} (${e("part2_note_7")})`,colorClass:"step-purple",grammar:e("part2_g7"),options:["mens det sner","fordi solen skinner","selvom det regner","når eleverne har fri","mens gæsterne spiser","før timen starter"]}];let c=["Den travle","kvinde","cykler","heldigvis","forsigtigt","på gaden","mens det sner"];const m=document.createElement("div");m.className="step-builder-card";const L=document.createElement("div");L.className="builder-live-sentence";function B(){L.innerHTML=`
                 <div class="live-label">${e("part2_builder_live_label")}</div>
                 <div class="live-text">
                     <span class="word-orange">${c[0]}</span> 
                     <span class="word-green">${c[1]}</span> 
                     <span class="word-red">${c[2]}</span> 
-                    <span class="word-yellow">${c[3]}</span> 
-                    <span class="word-pink">${c[4]}</span> 
-                    <span class="word-blue">${c[5]}</span>, 
+                    <span class="word-blue">${c[3]}</span> 
+                    <span class="word-blue">${c[4]}</span> 
+                    <span class="word-yellow">${c[5]}</span>, 
                     <span class="word-purple">${c[6]}</span>.
                 </div>
                 <button class="listen-btn-small" title="${e("part2_listen_pronunciation")}">🔊 ${e("part2_listen_pronunciation")}</button>
             `;const X=L.querySelector(".listen-btn-small");X.onclick=()=>W(`${c[0]} ${c[1]} ${c[2]} ${c[3]} ${c[4]} ${c[5]}, ${c[6]}`)}const re=document.createElement("div");re.className="builder-questions-list",i.forEach((X,ie)=>{const ce=document.createElement("div");ce.className=`builder-q-row ${X.colorClass}`;const ve=document.createElement("div");ve.className="builder-q-title",ve.innerHTML=`${X.q} <span class="grammar-badge-inline">${X.grammar}</span>`,ce.appendChild(ve);const me=document.createElement("div");me.className="builder-btn-grid",X.options.forEach(de=>{const ue=document.createElement("button");ue.className=`chip-btn ${c[ie]===de?"selected":""}`,ue.textContent=de,ue.onclick=()=>{c[ie]=de,ce.querySelectorAll(".chip-btn").forEach(se=>se.classList.remove("selected")),ue.classList.add("selected"),B()},me.appendChild(ue)}),ce.appendChild(me),re.appendChild(ce)}),m.appendChild(re),m.appendChild(L),s.appendChild(m),B()}function j(s){const i=[{correct:["Den travle","kvinde","cykler","heldigvis","forsigtigt","på gaden","mens det sner"],scrambled:["på gaden","heldigvis","kvinde","mens det sner","cykler","Den travle","forsigtigt"]},{correct:["En glad","mand","løber","altid","hurtigt","i parken","fordi solen skinner"],scrambled:["hurtigt","i parken","mand","altid","fordi solen skinner","En glad","løber"]},{correct:["Det lille","barn","sover","ofte","roligt","derhjemme","selvom det regner"],scrambled:["ofte","barn","selvom det regner","sover","Det lille","derhjemme","roligt"]},{correct:["Den dygtige","lærer","arbejder","faktisk","flittigt","på skolen","når eleverne har fri"],scrambled:["arbejder","faktisk","på skolen","Den dygtige","flittigt","lærer","når eleverne har fri"]},{correct:["En stor","hund","leger","desværre","vildt","i haven","mens gæsterne spiser"],scrambled:["i haven","leger","hund","mens gæsterne spiser","En stor","vildt","desværre"]},{correct:["Den unge","pige","læser","altid","stille","på biblioteket","før timen starter"],scrambled:["læser","før timen starter","stille","Den unge","på biblioteket","pige","altid"]},{correct:["Den grønne","bus","kører","heldigvis","langsomt","i byen","fordi vejen er glat"],scrambled:["kører","fordi vejen er glat","Den grønne","langsomt","i byen","bus","heldigvis"]},{correct:["En træt","chauffør","drikker","ofte","kaffe","på rastepladsen","når natten falder på"],scrambled:["drikker","på rastepladsen","chauffør","når natten falder på","ofte","En træt","kaffe"]},{correct:["Den gamle","kat","ligger","faktisk","helt stille","i sofaen","mens radioen spiller"],scrambled:["kat","ligger","mens radioen spiller","Den gamle","i sofaen","helt stille","faktisk"]},{correct:["En flink","nabo","hjælper","altid","gerne","i opgangen","hvis der er problemer"],scrambled:["altid","i opgangen","hjælper","nabo","En flink","hvis der er problemer","gerne"]}];let c=0,m=[null,null,null,null,null,null,null];const L=new Set,B=document.createElement("div");B.className="puzzle-wrapper";function re(){B.innerHTML="",m=[null,null,null,null,null,null,null];const X=i[c],ie=document.createElement("div");ie.className="puzzle-header";const ce=document.createElement("div");ce.className="puzzle-pills-row",i.forEach((u,E)=>{const R=document.createElement("button");R.className=`puzzle-pill ${E===c?"active":""} ${L.has(E)?"completed":""}`,R.textContent=E+1,R.title=`${e("part2_puzzle_pill_title")} ${E+1}`,R.onclick=()=>{c=E,re()},ce.appendChild(R)}),ie.appendChild(ce);const ve=document.createElement("div");ve.className="puzzle-counter",ve.textContent=e("part2_puzzle_counter",{current:c+1,total:i.length}),ie.appendChild(ve);const me=document.createElement("div");me.className="puzzle-guide",me.innerHTML=`
                 ${e("part2_puzzle_guide")}
                 <br><small>${e("part2_puzzle_guide_sub")}</small>
-            `,ie.appendChild(me),B.appendChild(ie);const de=document.createElement("div");de.className="puzzle-slots puzzle-slots-7";const ue=[{text:`1. ${e("part2_note_1")}`,grammar:e("part2_g1")},{text:`2. ${e("part2_note_2")}`,grammar:e("part2_g2")},{text:`3. ${e("part2_note_3")}`,grammar:e("part2_g3")},{text:`4. ${e("part2_note_4")}`,grammar:e("part2_g4")},{text:`5. ${e("part2_note_5")}`,grammar:e("part2_g5")},{text:`6. ${e("part2_note_6")}`,grammar:e("part2_g6")},{text:`7. ${e("part2_note_7")}`,grammar:e("part2_g7")}],se=["slot7-orange","slot7-green","slot7-red","slot7-yellow","slot7-pink","slot7-blue","slot7-purple"];ue.forEach((u,E)=>{const R=document.createElement("div");R.className=`puzzle-slot ${se[E]}`,R.innerHTML=`<span class="slot-hint">${u.text}</span><span class="grammar-hint-slot">[${u.grammar}]</span>`,R.dataset.idx=E,R.onclick=()=>{m[E]&&(m[E]=null,fe())},de.appendChild(R)}),B.appendChild(de);const K=document.createElement("div");K.className="puzzle-bank",B.appendChild(K);const ae=document.createElement("div");ae.className="puzzle-feedback",B.appendChild(ae);function fe(){de.querySelectorAll(".puzzle-slot").forEach((u,E)=>{const R=m[E];R?(u.classList.add("filled"),u.innerHTML=`
+            `,ie.appendChild(me),B.appendChild(ie);const de=document.createElement("div");de.className="puzzle-slots puzzle-slots-7";const ue=[{text:`1. ${e("part2_note_1")}`,grammar:e("part2_g1")},{text:`2. ${e("part2_note_2")}`,grammar:e("part2_g2")},{text:`3. ${e("part2_note_3")}`,grammar:e("part2_g3")},{text:`4. ${e("part2_note_4")}`,grammar:e("part2_g4")},{text:`5. ${e("part2_note_5")}`,grammar:e("part2_g5")},{text:`6. ${e("part2_note_6")}`,grammar:e("part2_g6")},{text:`7. ${e("part2_note_7")}`,grammar:e("part2_g7")}],se=["slot7-orange","slot7-green","slot7-red","slot7-blue","slot7-blue","slot7-yellow","slot7-purple"];ue.forEach((u,E)=>{const R=document.createElement("div");R.className=`puzzle-slot ${se[E]}`,R.innerHTML=`<span class="slot-hint">${u.text}</span><span class="grammar-hint-slot">[${u.grammar}]</span>`,R.dataset.idx=E,R.onclick=()=>{m[E]&&(m[E]=null,fe())},de.appendChild(R)}),B.appendChild(de);const K=document.createElement("div");K.className="puzzle-bank",B.appendChild(K);const ae=document.createElement("div");ae.className="puzzle-feedback",B.appendChild(ae);function fe(){de.querySelectorAll(".puzzle-slot").forEach((u,E)=>{const R=m[E];R?(u.classList.add("filled"),u.innerHTML=`
                             <span class="slot-number">${E+1}</span>
                             <span class="slot-text">${R}</span>
                             <span class="slot-remove">✕</span>
@@ -40799,8 +40807,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             .puzzle-slot.slot-0.filled .slot-text { color: #4ade80; }
             .puzzle-slot.slot-1.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
             .puzzle-slot.slot-1.filled .slot-text { color: #f87171; }
-            .puzzle-slot.slot-2.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
-            .puzzle-slot.slot-2.filled .slot-text { color: #60a5fa; }
+            .puzzle-slot.slot-2.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
+            .puzzle-slot.slot-2.filled .slot-text { color: #fde047; }
             .puzzle-slot.slot-3.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
             .puzzle-slot.slot-3.filled .slot-text { color: #c084fc; }
 
@@ -40833,8 +40841,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
             /* Modifier Explanation Card & Adverb Switcher */
             .modifier-explanation-card {
-                background: rgba(234, 179, 8, 0.08);
-                border: 2px solid rgba(234, 179, 8, 0.35);
+                background: rgba(2, 132, 199, 0.08);
+                border: 2px solid rgba(2, 132, 199, 0.35);
                 border-radius: 16px;
                 padding: 1.5rem 1.8rem;
                 margin: 1.8rem 0;
@@ -40842,7 +40850,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             }
             .modifier-explanation-card h3 {
                 margin: 0 0 0.75rem 0;
-                color: #fde047;
+                color: #60a5fa;
                 font-size: 1.3rem;
             }
             .modifier-explanation-card p {
@@ -40906,8 +40914,8 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             }
             .adv-quick-chip {
                 background: rgba(255, 255, 255, 0.08);
-                border: 1.5px solid rgba(234, 179, 8, 0.4);
-                color: #fde047;
+                border: 1.5px solid rgba(2, 132, 199, 0.4);
+                color: #60a5fa;
                 padding: 0.35rem 0.9rem;
                 border-radius: 20px;
                 font-size: 0.95rem;
@@ -40916,14 +40924,14 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 transition: all 0.2s ease;
             }
             .adv-quick-chip:hover {
-                background: rgba(234, 179, 8, 0.2);
+                background: rgba(2, 132, 199, 0.2);
                 transform: translateY(-1px);
             }
             .adv-quick-chip.active {
-                background: #eab308;
-                color: #0f172a;
-                border-color: #facc15;
-                box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
+                background: #0284c7;
+                color: #ffffff;
+                border-color: #38bdf8;
+                box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
             }
             .adv-pulse {
                 display: inline-block;
@@ -43377,9 +43385,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 border-radius: 4px;
             }
             .tag-adverbium {
-                color: #facc15;
-                background: rgba(234, 179, 8, 0.15);
-                border-bottom: 2px solid #eab308;
+                color: #60a5fa;
+                background: rgba(2, 132, 199, 0.15);
+                border-bottom: 2px solid #0284c7;
                 padding: 0.1rem 0.4rem;
                 border-radius: 4px;
             }
@@ -45937,9 +45945,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-adverbium {
-            color: #facc15;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+            color: #60a5fa;
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
@@ -47011,9 +47019,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-adverbium {
-            color: #facc15;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+            color: #60a5fa;
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
@@ -48117,7 +48125,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
                     <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
                     <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
-                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium (Blå)</span>
                 </div>
             </div>
 
@@ -48670,9 +48678,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-adverbium {
-            color: #facc15;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+            color: #60a5fa;
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
@@ -49162,7 +49170,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
                     <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
                     <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
-                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium (Blå)</span>
                     <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#a855f7;"></span> Konjunktion (Lilla)</span>
                 </div>
             </div>
@@ -49736,9 +49744,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-adverbium {
-            color: #facc15;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+            color: #60a5fa;
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }

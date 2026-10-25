@@ -21,7 +21,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
     viewContainer.className = 'view-container hc-andersen-container';
 
     // State
-    let activeStoryId = extraData?.storyId || extraData?.subPath || null;
+    let activeStoryId = extraData?.storyId || extraData?.story || extraData?.subPath || null;
     let isPlaying = false;
     let activeUtterance = null;
     let fontSizeLevel = 1; // 0 = standard, 1 = medium (default), 2 = stor

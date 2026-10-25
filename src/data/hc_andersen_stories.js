@@ -1083,8 +1083,8 @@ export const hcAndersenStories = [
                 "chapter": "Scene 2: På landevejen til slottet",
                 "chapterEn": "Scene 2: On the Road to the Castle",
                 "vrimmelImage": "assets/klods_hans_scene2.jpg",
-                "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alle de kloge ord. Klods-Hans råbte: Halehoj! Her kommer jeg! Se hvad jeg har fundet på landevejen: Det er en død krage! Brødrene sagde: Klods! Hvad vil du med en død krage? Klods-Hans svarede: Den vil jeg forære til kongedatteren! Brødrene grinede: Haha! Gør du bare det! Klods-Hans råbte: Halehoj! Her er jeg igen! Nu skal I se hvad jeg har fundet: En gammel træsko! Brødrene sagde: En gammel træsko uden overstykke? Skal kongedatteren også have den? Klods-Hans svarede: Ja, det skal hun da! Klods-Hans råbte: Halehoj! Nu bliver det endnu bedre! Se hvad jeg har gravet op af grøften! Brødrene sagde: Føj, Klods-Hans! Det er jo pludder og mudder fra grøften! Klods-Hans svarede: Ja, og det er den fineste slags! Hvor vil hun blive glad!",
-                "text": "Fortæller: »De to brødre red foran på deres heste. De talte ikke, for de tænkte over alle de kloge ord.«\n\nKlods-Hans: »Halehoj! Her kommer jeg! Se hvad jeg har fundet på landevejen: Det er en død krage!«\n\nBrødrene: »Klods! Hvad vil du med en død krage?«\n\nKlods-Hans: »Den vil jeg forære til kongedatteren!«\n\nBrødrene: »Haha! Gør du bare det!« (de ler og rider videre)\n\nKlods-Hans: »Halehoj! Her er jeg igen! Nu skal I se hvad jeg har fundet: En gammel træsko!«\n\nBrødrene: »En gammel træsko uden overstykke? Skal kongedatteren også have den?«\n\nKlods-Hans: »Ja, det skal hun da!«\n\nKlods-Hans: »Halehoj! Nu bliver det endnu bedre! Se hvad jeg har gravet op af grøften!«\n\nBrødrene: »Føj, Klods-Hans! Det er jo pludder og mudder fra grøften!«\n\nKlods-Hans: »Ja, og det er den fineste slags! Hvor vil hun blive glad!«",
+                "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alt det kloge de ville sige. Klods-Hans råbte: Her kommer jeg! Se, hvad jeg har fundet på landevejen: Det er en død krage! Brødrene sagde: Klods! Hvad vil du med en død krage? Klods-Hans svarede: Den vil jeg give til kongedatteren! Brødrene grinede: Haha! Gør du bare det! Klods-Hans råbte: Her er jeg igen! Nu skal I se, hvad jeg har fundet: En gammel træsko! Brødrene sagde: En gammel træsko? Skal kongedatteren også have den? Klods-Hans svarede: Ja, det skal hun da! Klods-Hans råbte: Halehoj! Nu bliver det endnu bedre! Se, hvad jeg har gravet op af grøften! Brødrene sagde: Adr, hvor ulækkert, Klods-Hans! Det er jo mudder fra grøften! Klods-Hans svarede: Ja, og det er den fineste slags! Hvor vil hun blive glad!",
+                "text": "Fortæller: »De to brødre red foran på deres heste. De talte ikke, for de tænkte over alt det kloge de ville sige.«\n\nKlods-Hans: »Her kommer jeg! Se, hvad jeg har fundet på landevejen: Det er en død krage!«\n\nBrødrene: »Klods! Hvad vil du med en død krage?«\n\nKlods-Hans: »Den vil jeg give til kongedatteren!«\n\nBrødrene: »Haha! Gør du bare det!« (de ler og rider videre)\n\nKlods-Hans: »Her er jeg igen! Nu skal I se, hvad jeg har fundet: En gammel træsko!«\n\nBrødrene: »En gammel træsko? Skal kongedatteren også have den?«\n\nKlods-Hans: »Ja, det skal hun da!«\n\nKlods-Hans: »Halehoj! Nu bliver det endnu bedre! Se, hvad jeg har gravet op af grøften!«\n\nBrødrene: »Adr, hvor ulækkert, Klods-Hans! Det er jo mudder fra grøften!«\n\nKlods-Hans: »Ja, og det er den fineste slags! Hvor vil hun blive glad!«",
                 "hotspots": [
                     {
                         "x": 74,
@@ -1171,7 +1171,7 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Fortæller",
                         "speakerIcon": "📖",
-                        "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alle de kloge ord.",
+                        "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alt det kloge de ville sige.",
                         "tokens": [
                             { "text": "De", "type": "pro", "key": "de" },
                             { "text": " ", "type": "plain" },
@@ -1202,19 +1202,22 @@ export const hcAndersenStories = [
                             { "text": "tænkte", "type": "vrb", "key": "tænke" },
                             { "text": " ", "type": "plain" },
                             { "text": "over", "type": "prep", "key": "over" },
-                            { "text": " alle de ", "type": "plain" },
+                            { "text": " alt det ", "type": "plain" },
                             { "text": "kloge", "type": "adj", "key": "klog" },
                             { "text": " ", "type": "plain" },
-                            { "text": "ord", "type": "sub", "key": "ord" },
+                            { "text": "de", "type": "pro", "key": "de" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "ville", "type": "vrb", "key": "ville" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "sige", "type": "vrb", "key": "sige" },
                             { "text": ".", "type": "plain" }
                         ]
                     },
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "🐐",
-                        "audioText": "Halehoj! Her kommer jeg! Se hvad jeg har fundet på landevejen: Det er en død krage!",
+                        "audioText": "Her kommer jeg! Se, hvad jeg har fundet på landevejen: Det er en død krage!",
                         "tokens": [
-                            { "text": "Halehoj! ", "type": "plain" },
                             { "text": "Her", "type": "adv", "key": "her" },
                             { "text": " ", "type": "plain" },
                             { "text": "kommer", "type": "vrb", "key": "komme" },
@@ -1245,7 +1248,7 @@ export const hcAndersenStories = [
                             "title": "Mesterens replik: Udfyld & Udtale",
                             "badge": "👑 Mesterens replik",
                             "prompt": "Hvilket tillægsord (adjektiv) råber Klods-Hans om kragen?",
-                            "sentenceTemplate": "Halehoj! Her kommer jeg! Se hvad jeg fandt: Det er en [ ___ ] krage!",
+                            "sentenceTemplate": "Her kommer jeg! Se, hvad jeg har fundet: Det er en [ ___ ] krage!",
                             "options": [
                                 "død",
                                 "levende",
@@ -1281,7 +1284,7 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "🐐",
-                        "audioText": "Den vil jeg forære til kongedatteren!",
+                        "audioText": "Den vil jeg give til kongedatteren!",
                         "tokens": [
                             { "text": "Den", "type": "pro", "key": "den" },
                             { "text": " ", "type": "plain" },
@@ -1289,7 +1292,7 @@ export const hcAndersenStories = [
                             { "text": " ", "type": "plain" },
                             { "text": "jeg", "type": "pro", "key": "jeg" },
                             { "text": " ", "type": "plain" },
-                            { "text": "forære", "type": "vrb", "key": "give" },
+                            { "text": "give", "type": "vrb", "key": "give" },
                             { "text": " ", "type": "plain" },
                             { "text": "til", "type": "prep", "key": "til" },
                             { "text": " ", "type": "plain" },
@@ -1316,9 +1319,8 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "🐐",
-                        "audioText": "Halehoj! Her er jeg igen! Nu skal I se hvad jeg har fundet: En gammel træsko!",
+                        "audioText": "Her er jeg igen! Nu skal I se, hvad jeg har fundet: En gammel træsko!",
                         "tokens": [
-                            { "text": "Halehoj! ", "type": "plain" },
                             { "text": "Her", "type": "adv", "key": "her" },
                             { "text": " ", "type": "plain" },
                             { "text": "er", "type": "vrb", "key": "være" },
@@ -1326,35 +1328,25 @@ export const hcAndersenStories = [
                             { "text": "jeg", "type": "pro", "key": "jeg" },
                             { "text": " ", "type": "plain" },
                             { "text": "igen", "type": "adv", "key": "igen" },
-                            { "text": "! ........ ", "type": "plain" },
-                            { "text": "[Vises i ordstillingsopgaven]", "type": "plain" }
+                            { "text": "!", "type": "plain" }
                         ],
                         "challenge": {
                             "type": "ordstilling",
                             "title": "Mesterens replik: Inversion efter 'Nu'",
                             "badge": "👑 Mesterens replik",
                             "prompt": "Saml Klods-Hans' udråb med inversion efter tidsadverbiet 'Nu':",
-                            "targetSentence": "Nu skal I se hvad jeg har fundet!",
+                            "targetSentence": "Nu skal I se, hvad jeg har fundet!",
                             "tiles": [
                                 "Nu",
                                 "skal",
                                 "I",
-                                "se",
+                                "se,",
                                 "hvad",
                                 "jeg",
                                 "har",
                                 "fundet!"
                             ],
                             "completedTokens": [
-                                { "text": "Halehoj! ", "type": "plain" },
-                                { "text": "Her", "type": "adv", "key": "her" },
-                                { "text": " ", "type": "plain" },
-                                { "text": "er", "type": "vrb", "key": "være" },
-                                { "text": " ", "type": "plain" },
-                                { "text": "jeg", "type": "pro", "key": "jeg" },
-                                { "text": " ", "type": "plain" },
-                                { "text": "igen", "type": "adv", "key": "igen" },
-                                { "text": "! ", "type": "plain" },
                                 { "text": "Nu", "type": "adv", "key": "nu" },
                                 { "text": " ", "type": "plain" },
                                 { "text": "skal", "type": "vrb", "key": "skulle" },
@@ -1378,16 +1370,12 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Brødrene",
                         "speakerIcon": "🎩",
-                        "audioText": "En gammel træsko uden overstykke? Skal kongedatteren også have den?",
+                        "audioText": "En gammel træsko? Skal kongedatteren også have den?",
                         "tokens": [
                             { "text": "En ", "type": "plain" },
                             { "text": "gammel", "type": "adj", "key": "gammel" },
                             { "text": " ", "type": "plain" },
                             { "text": "træsko", "type": "sub", "key": "træsko" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "uden", "type": "prep", "key": "uden" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "overstykke", "type": "sub", "key": "stykke" },
                             { "text": "? ", "type": "plain" },
                             { "text": "Skal", "type": "vrb", "key": "skulle" },
                             { "text": " ", "type": "plain" },
@@ -1420,7 +1408,7 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "🐐",
-                        "audioText": "Halehoj! Nu bliver det endnu bedre! Se hvad jeg har gravet op af grøften!",
+                        "audioText": "Halehoj! Nu bliver det endnu bedre! Se, hvad jeg har gravet op af grøften!",
                         "tokens": [
                             { "text": "Halehoj! ", "type": "plain" },
                             { "text": "Nu", "type": "adv", "key": "nu" },
@@ -1450,18 +1438,16 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Brødrene",
                         "speakerIcon": "🎩",
-                        "audioText": "Føj, Klods-Hans! Det er jo pludder og mudder fra grøften!",
+                        "audioText": "Adr, hvor ulækkert, Klods-Hans! Det er jo mudder fra grøften!",
                         "tokens": [
-                            { "text": "Føj, Klods-Hans! ", "type": "plain" },
+                            { "text": "Adr, hvor ", "type": "plain" },
+                            { "text": "ulækkert", "type": "adj", "key": "ulækker" },
+                            { "text": ", Klods-Hans! ", "type": "plain" },
                             { "text": "Det", "type": "pro", "key": "det" },
                             { "text": " ", "type": "plain" },
                             { "text": "er", "type": "vrb", "key": "være" },
                             { "text": " ", "type": "plain" },
                             { "text": "jo", "type": "adv", "key": "jo" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "pludder", "type": "sub", "key": "mudder" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "og", "type": "konj", "key": "og" },
                             { "text": " ", "type": "plain" },
                             { "text": "mudder", "type": "sub", "key": "mudder" },
                             { "text": " ", "type": "plain" },
@@ -1592,15 +1578,15 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_s3",
                                 "badge": "🟢 Synonym & Begreb",
-                                "prompt": "Brødrene råber: 'Det er jo pludder!' Hvilket ord er et synonym for **pludder** i grøften?",
+                                "prompt": "Brødrene råber: 'Det er jo mudder fra grøften!' Hvilket ord er et synonym for **mudder**?",
                                 "options": [
-                                    "Mudder (eller pløre)",
+                                    "Pludder (eller pløre)",
                                     "Sand",
                                     "Sten",
                                     "Græs"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Pludder* er et gammelt dansk ord for vådt, fedtet mudder eller pløre i en grøft."
+                                "explanation": "*Mudder* og *pludder* (eller *pløre*) er synonymer for våd, fedtet jord i en grøft."
                             }
                         ]
                     },

@@ -1037,9 +1037,9 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
         .stage-svg-body {
             width: 100%;
-            max-height: 145px;
+            max-height: 320px;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 1;
         }
         .stage-frame-wrapper.is-collapsed .stage-svg-body {

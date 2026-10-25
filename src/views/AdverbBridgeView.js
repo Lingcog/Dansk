@@ -41,6 +41,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'langsomt',
             category: 'maade',
             categoryTitle: 'Mådesadverbium (Hvordan?)',
+            tag: 'Måde (tempo)',
             icon: '🐢',
             color: '#38bdf8',
             colorGlow: 'rgba(56, 189, 248, 0.45)',
@@ -54,6 +55,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'hurtigt',
             category: 'maade',
             categoryTitle: 'Mådesadverbium (Hvordan?)',
+            tag: 'Måde (høj fart)',
             icon: '⚡',
             color: '#22c55e',
             colorGlow: 'rgba(34, 197, 94, 0.5)',
@@ -67,6 +69,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'pænt',
             category: 'maade',
             categoryTitle: 'Mådesadverbium (Hvordan?)',
+            tag: 'Måde (adfærd)',
             icon: '✨',
             color: '#ec4899',
             colorGlow: 'rgba(236, 72, 153, 0.45)',
@@ -80,6 +83,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'meget',
             category: 'grad',
             categoryTitle: 'Gradsadverbium (Hvor meget?)',
+            tag: 'Grad (høj styrke)',
             icon: '🔥',
             color: '#f59e0b',
             colorGlow: 'rgba(245, 158, 11, 0.5)',
@@ -93,6 +97,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'lidt',
             category: 'grad',
             categoryTitle: 'Gradsadverbium (Hvor meget?)',
+            tag: 'Grad (dæmpet)',
             icon: '💧',
             color: '#a855f7',
             colorGlow: 'rgba(168, 85, 247, 0.45)',
@@ -106,6 +111,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'ikke',
             category: 'central',
             categoryTitle: 'Centraladverbium (Nægtelse)',
+            tag: 'Central (3. plads)',
             icon: '🛑',
             color: '#ef4444',
             colorGlow: 'rgba(239, 68, 68, 0.55)',
@@ -119,6 +125,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'gerne',
             category: 'central',
             categoryTitle: 'Centraladverbium (Holdning & Lyst)',
+            tag: 'Central (vilje)',
             icon: '💖',
             color: '#fb7185',
             colorGlow: 'rgba(251, 113, 133, 0.5)',
@@ -132,6 +139,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'nu',
             category: 'tid',
             categoryTitle: 'Tidsadverbium (Hvornår?)',
+            tag: 'Tid (i dette nu)',
             icon: '⏰',
             color: '#10b981',
             colorGlow: 'rgba(16, 185, 129, 0.45)',
@@ -412,7 +420,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
                 <!-- SVG SCENE (KAN MINIMERES VED BEHOV) -->
                 <div class="stage-svg-body">
-                    <svg class="adverb-svg-fluid" viewBox="0 0 360 134" preserveAspectRatio="xMidYMid meet">
+                    <svg class="adverb-svg-fluid" viewBox="0 0 360 146" preserveAspectRatio="xMidYMid meet">
                         <defs>
                             <linearGradient id="advSpaceGrad" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="0%" stop-color="#0b1329"/>
@@ -435,10 +443,10 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                         </defs>
 
                         <!-- Himmelbaggrund -->
-                        <rect x="0" y="0" width="360" height="134" rx="12" fill="url(#advSpaceGrad)"/>
+                        <rect x="0" y="0" width="360" height="146" rx="12" fill="url(#advSpaceGrad)"/>
 
                         <!-- Jorden / terræn -->
-                        <rect x="0" y="94" width="360" height="40" rx="0 0 12 12" fill="url(#advGrassGrad)"/>
+                        <rect x="0" y="94" width="360" height="52" rx="0 0 12 12" fill="url(#advGrassGrad)"/>
                         <line x1="0" y1="94" x2="360" y2="94" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
 
                         <!-- PROJEKTØRENS LYSKEGLE DER BELYSER HANDLINGEN -->
@@ -472,21 +480,24 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                             <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
                             <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
                             
-                            <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
-                            <text x="0" y="74" fill="#ffffff" font-size="12.5" font-weight="900" text-anchor="middle">
-                                ${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}
-                            </text>
-                            <text x="0" y="85" fill="#93c5fd" font-size="8" font-weight="700" text-anchor="middle">
-                                (Subjekt + Adjektiv)
-                            </text>
+                            <!-- Navnemærke-boks på jorden (TILPASSET OG TYDELIG) -->
+                            <g class="character-label-pill" transform="translate(0, 64)">
+                                <rect x="-60" y="0" width="120" height="30" rx="8" fill="rgba(15, 23, 42, 0.92)" stroke="#38bdf8" stroke-width="1.2"/>
+                                <text x="0" y="14" fill="#ffffff" font-size="10.8" font-weight="900" text-anchor="middle">
+                                    ${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}
+                                </text>
+                                <text x="0" y="24" fill="#93c5fd" font-size="7.5" font-weight="700" text-anchor="middle">
+                                    Subjekt
+                                </text>
+                            </g>
                         </g>
 
                         <!-- MÅLET / HANDLINGEN: "spise" ved bordet under projektøren -->
-                        <g class="target-action" transform="translate(258, 38)">
+                        <g class="target-action" transform="translate(258, 36)">
                             <!-- Bord -->
                             <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
-                            <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
-                            <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                            <line x1="-12" y1="46" x2="-12" y2="58" stroke="#78350f" stroke-width="2.5"/>
+                            <line x1="12" y1="46" x2="12" y2="58" stroke="#78350f" stroke-width="2.5"/>
                             
                             <!-- Tallerken -->
                             <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
@@ -503,22 +514,25 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                                 <animate attributeName="opacity" values="0.3; 0.85; 0.3" dur="2.3s" begin="0.4s" repeatCount="infinite"/>
                             </path>
 
-                            <!-- Handlingsnavn (STOR OG TYDELIG TEKST) -->
-                            <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
-                                ${state.selectedVerb}
-                            </text>
-                            <text x="0" y="84" fill="${activeColor}" font-size="9" font-weight="800" text-anchor="middle">
-                                modificeres af: "${adv.word}"
-                            </text>
+                            <!-- Handlings-mærkeboks på jorden (TILPASSET OG TYDELIG) -->
+                            <g class="action-label-pill" transform="translate(0, 64)">
+                                <rect x="-60" y="0" width="120" height="30" rx="8" fill="rgba(15, 23, 42, 0.92)" stroke="${activeColor}" stroke-width="1.2"/>
+                                <text x="0" y="14" fill="#4ade80" font-size="12" font-weight="900" text-anchor="middle">
+                                    ${state.selectedVerb}
+                                </text>
+                                <text x="0" y="24" fill="${activeColor}" font-size="8" font-weight="800" text-anchor="middle">
+                                    modificeres: "${adv.word}"
+                                </text>
+                            </g>
                         </g>
 
-                        <!-- Statusbadge i toppen med pulserende kant -->
-                        <g class="stage-top-badge" transform="translate(180, 15)">
-                            <rect x="-115" y="-10" width="230" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.4">
+                        <!-- Statusbadge i toppen mellem agens og projektør (INGEN KOLLISION) -->
+                        <g class="stage-top-badge" transform="translate(152, 14)">
+                            <rect x="-65" y="-9" width="130" height="20" rx="10" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.4">
                                 <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
                             </rect>
-                            <text x="0" y="4" fill="${activeColor}" font-size="9.8" font-weight="900" text-anchor="middle">
-                                ${adv.icon} ${adv.badge}
+                            <text x="0" y="4" fill="${activeColor}" font-size="8.8" font-weight="900" text-anchor="middle">
+                                ${adv.icon} ${adv.word.toUpperCase()} · ${adv.tag}
                             </text>
                         </g>
                     </svg>
@@ -556,53 +570,61 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             blocksHtml = `
                 <!-- Led 1: Subjektet -->
                 <div class="strip-block block-subject">
+                    <span class="block-num-pill">1</span>
                     <span class="block-word">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
-                    <span class="block-role">Hvem (Subjekt)</span>
+                    <span class="block-role">Subjekt</span>
                 </div>
 
                 <!-- Led 2: Verbum 1 (Bøjet tidsanker) -->
                 <div class="strip-block block-v1">
+                    <span class="block-num-pill">2</span>
                     <span class="block-word" style="color: #38bdf8;">${state.selectedModal || state.verbAnchor}</span>
                     <span class="block-role">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
                 </div>
 
                 <!-- Led 3: Centraladverbium (PÅ 3. PLADSEN!) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95);">
-                    <span class="block-word" style="color: ${activeColor};">${adv.word}</span>
-                    <span class="block-role" style="color: ${activeColor};">3. plads (Central)</span>
+                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 14px ${activeColor}44;">
+                    <span class="block-num-pill" style="background: ${activeColor}; color: #0f172a;">3</span>
+                    <span class="block-word" style="color: ${activeColor}; font-weight: 900;">${adv.word}</span>
+                    <span class="block-role" style="color: ${activeColor}; font-weight: 800;">Centraladverbium</span>
                 </div>
 
                 <!-- Led 4: Verbum 2 (Handlingen) -->
                 <div class="strip-block block-v2">
+                    <span class="block-num-pill">4</span>
                     <span class="block-word" style="color: #4ade80;">${state.selectedVerb}</span>
                     <span class="block-role">V2 (Infinitiv)</span>
                 </div>
             `;
         } else {
-            // Mådes- eller gradsadverbium står efter verbet
+            // Mådes-, grads- eller tidsadverbium står efter verbet
             blocksHtml = `
                 <!-- Led 1: Subjektet -->
                 <div class="strip-block block-subject">
+                    <span class="block-num-pill">1</span>
                     <span class="block-word">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
-                    <span class="block-role">Hvem (Subjekt)</span>
+                    <span class="block-role">Subjekt</span>
                 </div>
 
                 <!-- Led 2: Verbum 1 (Bøjet tidsanker) -->
                 <div class="strip-block block-v1">
+                    <span class="block-num-pill">2</span>
                     <span class="block-word" style="color: #38bdf8;">${state.selectedModal || state.verbAnchor}</span>
                     <span class="block-role">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
                 </div>
 
                 <!-- Led 3: Verbum 2 (Handlingen) -->
                 <div class="strip-block block-v2">
+                    <span class="block-num-pill">3</span>
                     <span class="block-word" style="color: #4ade80;">${state.selectedVerb}</span>
                     <span class="block-role">V2 (Handlingen)</span>
                 </div>
 
-                <!-- Led 4: Mådes-/Gradsadverbium (Projektøren) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95);">
-                    <span class="block-word" style="color: ${activeColor};">${adv.word}</span>
-                    <span class="block-role" style="color: ${activeColor};">Adverbium (${adv.category})</span>
+                <!-- Led 4: Mådes-/Grads-/Tidsadverbium (Projektøren) -->
+                <div class="strip-block block-adverb pulse-block-glow" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 14px ${activeColor}44;">
+                    <span class="block-num-pill" style="background: ${activeColor}; color: #0f172a;">4</span>
+                    <span class="block-word" style="color: ${activeColor}; font-weight: 900;">${adv.word}</span>
+                    <span class="block-role" style="color: ${activeColor}; font-weight: 800;">${adv.tag}</span>
                 </div>
             `;
         }
@@ -660,7 +682,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                                     <span class="card-icon">${a.icon}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${a.color};">${a.type}</div>
+                                <div class="card-badge" style="color: ${a.color};">${a.tag}</div>
                                 <div class="card-desc">${a.desc}</div>
                             </button>
                         `;
@@ -681,7 +703,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                                     <span class="card-icon">${a.icon}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${a.color};">${a.type}</div>
+                                <div class="card-badge" style="color: ${a.color};">${a.tag}</div>
                                 <div class="card-desc">${a.desc}</div>
                             </button>
                         `;
@@ -702,7 +724,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                                     <span class="card-icon">${a.icon}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${a.color};">${a.type}</div>
+                                <div class="card-badge" style="color: ${a.color};">${a.tag}</div>
                                 <div class="card-desc">${a.desc}</div>
                             </button>
                         `;
@@ -1025,9 +1047,9 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
         .stage-svg-body {
             width: 100%;
-            max-height: 145px;
+            max-height: 320px;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 1;
         }
         .stage-frame-wrapper.is-collapsed .stage-svg-body {
@@ -1104,21 +1126,39 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             gap: 0.3rem;
         }
         .strip-blocks-row {
-            display: flex;
-            gap: 0.45rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.55rem;
             width: 100%;
             box-sizing: border-box;
         }
         .strip-block {
-            flex: 1;
-            min-width: 0;
-            padding: 0.5rem 0.3rem;
-            border-radius: 8px;
+            position: relative;
+            padding: 0.65rem 0.5rem;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
             box-sizing: border-box;
+            min-height: 72px;
+        }
+        .block-num-pill {
+            position: absolute;
+            top: 5px;
+            left: 7px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
         .block-subject {
             background: rgba(255, 255, 255, 0.05);
@@ -1144,20 +1184,26 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             100% { transform: scale(1.02); filter: brightness(1.2); }
         }
         .block-word {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 900;
             color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.25;
+            text-align: center;
             max-width: 100%;
+            margin-top: 0.35rem;
         }
         .block-role {
             font-size: 0.72rem;
             font-weight: 700;
             color: #94a3b8;
-            margin-top: 0.15rem;
+            margin-top: 0.25rem;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         /* Kontrolområde */
@@ -1184,8 +1230,8 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         }
         .adverb-cards-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 0.55rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.6rem;
             margin-bottom: 0.75rem;
             width: 100%;
             box-sizing: border-box;
@@ -1433,13 +1479,20 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             color: #38bdf8;
         }
 
-        @media (max-width: 480px) {
-            .adverb-mobile-view { padding: 0 0.15rem 2.5rem !important; }
-            .adverb-cards-row { grid-template-columns: 1fr; }
-            .comparison-boxes-grid { grid-template-columns: 1fr; }
-            .card-word { font-size: 1.2rem; }
-            .adverb-main-title { font-size: 1.3rem; }
-            .block-word { font-size: 0.95rem; }
+        @media (max-width: 640px) {
+            .adverb-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .strip-blocks-row { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem !important; }
+            .adverb-cards-row { grid-template-columns: 1fr !important; }
+            .comparison-boxes-grid { grid-template-columns: 1fr !important; }
+            .card-word { font-size: 1.15rem; }
+            .adverb-main-title { font-size: 1.25rem; }
+            .block-word { font-size: 1rem; }
+        }
+        @media (max-width: 380px) {
+            .strip-block { padding: 0.55rem 0.35rem !important; }
+            .block-word { font-size: 0.92rem !important; }
+            .block-role { font-size: 0.68rem !important; }
+            .adverb-main-title { font-size: 1.15rem; }
         }
     `;
     document.head.appendChild(style);

@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
 
@@ -409,43 +409,28 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     // RENDER: LIVE SÆTNINGSBÅND
     // -------------------------------------------------------------
     function renderSentenceStrip() {
-        const base = getBaseModal(state.selectedModal);
-        const modalWord = getCurrentModalWord();
-        const activeColor = MODAL_FORMS[base].color;
-
+        stripCard.className = 'ordstilling-bridge-link-card';
         stripCard.innerHTML = `
-            <div class="strip-top-row">
-                <span class="strip-header-tag">Sætningens opbygning:</span>
-                <button type="button" class="btn-tts-listen" id="btn-listen-strip">
-                    <span>🔊</span>
-                    <span>Lyt</span>
-                </button>
-            </div>
-
-            <div class="strip-blocks-row">
-                <!-- Led 1: Subjektet (Grøn) -->
-                <div class="strip-block block-subject" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
-                    <span class="block-word" style="color: #4ade80;">${state.nounAnchor} ${state.selectedNoun}</span>
-                    <span class="block-role" style="color: #4ade80;">Subjekt</span>
-                </div>
-
-                <!-- Led 2: Modalverbet (Verbum 1 - Rød) -->
-                <div class="strip-block block-modal" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
-                    <span class="block-word" style="color: #f87171;">${modalWord}</span>
-                    <span class="block-role" style="color: #f87171;">V1 (${state.isPast ? 'Datid' : 'Nutid'})</span>
-                </div>
-
-                <!-- Led 3: Handlingen (Verbum 2 - Rød) -->
-                <div class="strip-block block-action" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
-                    <span class="block-word" style="color: #f87171;">spise</span>
-                    <span class="block-role" style="color: #f87171;">V2 (Infinitiv)</span>
+            <div class="obl-left">
+                <span class="obl-icon">📐</span>
+                <div class="obl-text">
+                    <span class="obl-badge">Ordstilling</span>
+                    <div class="obl-title">Modalverber & Hjælpeverber</div>
+                    <div class="obl-desc">Lær hvordan V1 (modalverbum) og V2 (infinitiv) placeres i sætningsskemaet.</div>
                 </div>
             </div>
+            <a href="#/${getLang()}/ordstilling_intro/part3" class="btn-goto-ordstilling" id="btn-link-ordstilling-modal">
+                <span>Gå til Ordstilling (Del 3) ➔</span>
+            </a>
         `;
 
-        stripCard.querySelector('#btn-listen-strip').onclick = () => {
-            speakDanish(getFullSentence());
-        };
+        const btnLink = stripCard.querySelector('#btn-link-ordstilling-modal');
+        if (btnLink) {
+            btnLink.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part3' });
+            };
+        }
     }
 
     // -------------------------------------------------------------
@@ -520,80 +505,18 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <div class="expl-body">${explanationText}</div>
             </div>
 
-            <!-- ========================================================= -->
-            <!-- FINITHED: HVORFOR BØJES KUN DET FØRSTE ORD?              -->
-            <!-- ========================================================= -->
-            <div class="finiteness-interactive-card">
-                <div class="finiteness-header">
-                    <span class="finiteness-pill">Tidsankerets hemmelighed</span>
-                    <h3 class="finiteness-h3">${getTranslation('finitenessTitle')}</h3>
-                    <p class="finiteness-p">${getTranslation('finitenessDesc')}</p>
-                </div>
-
-                <!-- TIDS-VIPPE: NUTID VS. DATID -->
-                <div class="time-toggle-wrapper">
-                    <span class="time-toggle-label">Skift sætningens tid:</span>
-                    <div class="time-toggle-pill">
-                        <button type="button" class="time-btn ${!state.isPast ? 'active' : ''}" id="btn-toggle-present">
-                            <span>🟢</span>
-                            <span>Nutid (lige nu)</span>
-                        </button>
-                        <button type="button" class="time-btn ${state.isPast ? 'active' : ''}" id="btn-toggle-past">
-                            <span>🟠</span>
-                            <span>Datid (i går)</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- ANIMERET TIDS-LINJE MED GLIDENDE MARKØR -->
-                <div class="timeline-slider-track">
-                    <svg viewBox="0 0 320 46" class="timeline-svg-fluid" preserveAspectRatio="xMidYMid meet">
-                        <line x1="45" y1="20" x2="275" y2="20" stroke="rgba(255,255,255,0.2)" stroke-width="3.5" stroke-linecap="round" />
-                        
-                        <!-- Flow-strøm langs tidsaksen -->
-                        <line x1="45" y1="20" x2="275" y2="20" stroke="${MODAL_FORMS[base].color}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="10 6" opacity="0.45">
-                            <animate attributeName="stroke-dashoffset" from="32" to="0" dur="1s" repeatCount="infinite"/>
-                        </line>
-                        
-                        <!-- Datid punkt -->
-                        <circle cx="80" cy="20" r="5" fill="#475569" />
-                        <text x="80" y="38" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle">Datid (i går)</text>
-                        
-                        <!-- Nutid punkt -->
-                        <circle cx="240" cy="20" r="5" fill="#475569" />
-                        <text x="240" y="38" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle">Nutid (lige nu)</text>
-                        
-                        <!-- Glidende tidsmarkør med pulserende glød -->
-                        <circle id="timeline-moving-dot" cx="${state.isPast ? '80' : '240'}" cy="20" r="9" 
-                                fill="${MODAL_FORMS[base].color}" style="transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 0 8px ${MODAL_FORMS[base].color});">
-                            <animate attributeName="r" values="8; 10.5; 8" dur="1.5s" repeatCount="infinite" />
-                        </circle>
-                    </svg>
-                </div>
-
-                <!-- VISUELT TIDS-DIAGRAM -->
-                <div class="finiteness-diagram">
-                    <div class="diagram-box box-v1 pulse-finite-active">
-                        <div class="diag-tag">Verbum 1 (Modalverbum)</div>
-                        <div class="diag-word" id="v1-display" style="color: ${MODAL_FORMS[base].color};">
-                            ${getCurrentModalWord()}
-                        </div>
-                        <div class="diag-role">⚓ Tidsankeret (${state.isPast ? 'Datid' : 'Nutid'})</div>
-                        <div class="diag-sub">Bøjes i tid!</div>
-                    </div>
-
-                    <div class="diagram-arrow">➔</div>
-
-                    <div class="diagram-box box-v2">
-                        <div class="diag-tag">Verbum 2 (Handlingen)</div>
-                        <div class="diag-word" style="color: #f87171;">spise</div>
-                        <div class="diag-role">💭 Ren idé (Infinitiv)</div>
-                        <div class="diag-sub">Uforanderlig! Bøjes IKKE!</div>
-                    </div>
-                </div>
-
-                <div class="finiteness-callout-msg">
-                    ${getTranslation('finitenessExpl')}
+            <!-- TIDS-VIPPE: NUTID VS. DATID -->
+            <div class="time-toggle-wrapper">
+                <span class="time-toggle-label">Skift sætningens tid:</span>
+                <div class="time-toggle-pill">
+                    <button type="button" class="time-btn ${!state.isPast ? 'active' : ''}" id="btn-toggle-present">
+                        <span>🟢</span>
+                        <span>Nutid (lige nu)</span>
+                    </button>
+                    <button type="button" class="time-btn ${state.isPast ? 'active' : ''}" id="btn-toggle-past">
+                        <span>🟠</span>
+                        <span>Datid (i går)</span>
+                    </button>
                 </div>
             </div>
 
@@ -1150,41 +1073,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             color: #fbbf24;
         }
 
-        /* Finithed Card */
-        .finiteness-interactive-card {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
-            padding: 1.15rem 1rem;
-            margin-bottom: 1.4rem;
-            box-sizing: border-box;
-        }
-        .finiteness-pill {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.15rem 0.55rem;
-            border-radius: 5px;
-            margin-bottom: 0.35rem;
-        }
-        .finiteness-h3 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: white;
-            margin: 0 0 0.3rem;
-            line-height: 1.3;
-        }
-        .finiteness-p {
-            color: #cbd5e1;
-            font-size: 0.92rem;
-            margin: 0 0 1rem;
-            line-height: 1.4;
-        }
-
         /* Tids-vippe */
         .time-toggle-wrapper {
             background: #0f172a;
@@ -1229,86 +1117,97 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
         }
 
-        /* Animeret Tidslinje-slider */
-        .timeline-slider-track {
-            background: #0b1120;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Ordstilling Bridge Link Card */
+        .ordstilling-bridge-link-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 12px;
-            padding: 0.4rem 0.6rem;
-            margin-bottom: 0.85rem;
+            padding: 0.9rem 1.15rem;
+            margin: 1.1rem 0;
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-        .timeline-svg-fluid {
-            width: 100%;
-            max-width: 320px;
-            height: auto;
-            display: block;
-        }
-
-        .pulse-finite-active {
-            animation: pulseV1Flash 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes pulseV1Flash {
-            0% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.18); filter: brightness(1.5); }
-            100% { transform: scale(1); filter: brightness(1); }
-        }
-
-        /* Finithed Diagram */
-        .finiteness-diagram {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.85rem;
-            width: 100%;
+            justify-content: space-between;
+            gap: 1rem;
             box-sizing: border-box;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
         }
-        .diagram-box {
+        .ordstilling-bridge-link-card:hover {
+            border-color: rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
+        }
+        .obl-left {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
             flex: 1;
             min-width: 0;
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 0.65rem 0.4rem;
-            text-align: center;
-            box-sizing: border-box;
         }
-        .diagram-arrow {
-            font-size: 1.3rem;
-            color: #94a3b8;
+        .obl-icon {
+            font-size: 1.6rem;
+            line-height: 1;
             flex-shrink: 0;
         }
-        .diag-tag {
+        .obl-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            min-width: 0;
+        }
+        .obl-badge {
+            display: inline-block;
             font-size: 0.7rem;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-        }
-        .diag-word {
-            font-size: 1.35rem;
-            font-weight: 900;
-            margin: 0.2rem 0;
-        }
-        .diag-role {
-            font-size: 0.78rem;
             font-weight: 800;
-            color: #cbd5e1;
+            text-transform: uppercase;
+            color: #38bdf8;
+            letter-spacing: 0.06em;
         }
-        .diag-sub {
-            font-size: 0.7rem;
+        .obl-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #f8fafc;
+            line-height: 1.25;
+        }
+        .obl-desc {
+            font-size: 0.82rem;
             color: #94a3b8;
-            margin-top: 0.1rem;
+            line-height: 1.35;
         }
-        .finiteness-callout-msg {
-            background: rgba(56, 189, 248, 0.1);
-            border-left: 3px solid #38bdf8;
-            padding: 0.6rem 0.8rem;
+        .btn-goto-ordstilling {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1.5px solid #38bdf8;
+            color: #38bdf8;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
             font-size: 0.88rem;
-            color: #e2e8f0;
-            line-height: 1.4;
-            border-radius: 0 6px 6px 0;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .btn-goto-ordstilling:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+        @media (max-width: 600px) {
+            .ordstilling-bridge-link-card {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: left;
+                gap: 0.85rem;
+                padding: 0.85rem 1rem;
+            }
+            .btn-goto-ordstilling {
+                justify-content: center;
+                width: 100%;
+            }
         }
 
         /* Roadmap */

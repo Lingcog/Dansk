@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
 
@@ -792,6 +792,21 @@ export function renderGroundingView(container, navigateFn) {
                 </p>
             </div>
 
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 1 (GRUNDSÆTNINGENS 4 LED) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Grundsætningens 4 led (Enkel model)</div>
+                        <div class="obl-desc">Lær hvordan Subjekt, Verbum, Sted og Tid danner den grundlæggende danske sætning.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part1" class="btn-goto-ordstilling" id="btn-link-ordstilling-grounding">
+                    <span>Gå til Ordstilling (Del 1) ➔</span>
+                </a>
+            </div>
+
             <!-- MODAL TEASER KNAP -->
             <div class="modal-callout-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;">
@@ -813,6 +828,15 @@ export function renderGroundingView(container, navigateFn) {
         `;
 
         stepDiv.querySelector('#btn-speak-final').onclick = () => speakDanish(completedSentence);
+
+        // Link til ordstilling del 1
+        const btnLinkOrdstilling = stepDiv.querySelector('#btn-link-ordstilling-grounding');
+        if (btnLinkOrdstilling) {
+            btnLinkOrdstilling.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part1' });
+            };
+        }
 
         stepDiv.querySelector('#btn-start-modal-chain').onclick = () => {
             navigateFn('modal_force', {
@@ -1629,6 +1653,99 @@ export function renderGroundingView(container, navigateFn) {
                 font-weight: 600;
                 cursor: pointer;
                 text-decoration: underline;
+            }
+
+            /* Ordstilling Bridge Link Card */
+            .ordstilling-bridge-link-card {
+                background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+                border: 1px solid rgba(56, 189, 248, 0.3);
+                border-radius: 12px;
+                padding: 0.9rem 1.15rem;
+                margin: 1.1rem 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                box-sizing: border-box;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: all 0.2s ease;
+            }
+            .ordstilling-bridge-link-card:hover {
+                border-color: rgba(56, 189, 248, 0.6);
+                transform: translateY(-1px);
+                box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
+            }
+            .obl-left {
+                display: flex;
+                align-items: center;
+                gap: 0.85rem;
+                flex: 1;
+                min-width: 0;
+            }
+            .obl-icon {
+                font-size: 1.6rem;
+                line-height: 1;
+                flex-shrink: 0;
+            }
+            .obl-text {
+                display: flex;
+                flex-direction: column;
+                gap: 0.15rem;
+                min-width: 0;
+            }
+            .obl-badge {
+                display: inline-block;
+                font-size: 0.7rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                color: #38bdf8;
+                letter-spacing: 0.06em;
+            }
+            .obl-title {
+                font-size: 0.98rem;
+                font-weight: 800;
+                color: #f8fafc;
+                line-height: 1.25;
+            }
+            .obl-desc {
+                font-size: 0.82rem;
+                color: #94a3b8;
+                line-height: 1.35;
+            }
+            .btn-goto-ordstilling {
+                background: rgba(56, 189, 248, 0.15);
+                border: 1.5px solid #38bdf8;
+                color: #38bdf8;
+                padding: 0.6rem 1rem;
+                border-radius: 8px;
+                font-size: 0.88rem;
+                font-weight: 800;
+                cursor: pointer;
+                white-space: nowrap;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                transition: all 0.2s ease;
+                flex-shrink: 0;
+                text-decoration: none;
+            }
+            .btn-goto-ordstilling:hover {
+                background: #38bdf8;
+                color: #0f172a;
+                box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+            }
+            @media (max-width: 600px) {
+                .ordstilling-bridge-link-card {
+                    flex-direction: column;
+                    align-items: stretch;
+                    text-align: left;
+                    gap: 0.85rem;
+                    padding: 0.85rem 1rem;
+                }
+                .btn-goto-ordstilling {
+                    justify-content: center;
+                    width: 100%;
+                }
             }
 
             @media (max-width: 480px) {

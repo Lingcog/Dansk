@@ -1,4 +1,4 @@
-import { getTranslation, appState } from '../utils/i18n.js';
+import { getTranslation, getLang, appState } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 
 export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
@@ -111,13 +111,13 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             word: 'ikke',
             category: 'central',
             categoryTitle: 'Centraladverbium (Nægtelse)',
-            tag: 'Central (3. plads)',
+            tag: 'Centraladverbium',
             icon: '🛑',
             color: '#ef4444',
             colorGlow: 'rgba(239, 68, 68, 0.55)',
             badge: 'Nægtelse / Afvisning (ikke)',
             desc: 'Benægter handlingen totalt. Handlingen afbrydes eller finder ikke sted!',
-            ruleNote: '📌 Placeres på <strong>3. pladsen</strong> lige efter V1: <em>"Mit barn skal <strong>ikke</strong> spise"</em>.',
+            ruleNote: 'Benægter handlingen totalt (sætningens betydning vendes om).',
             isCentral: true
         },
         'gerne': {
@@ -131,7 +131,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             colorGlow: 'rgba(251, 113, 133, 0.5)',
             badge: 'Lyst & personlig vilje (gerne)',
             desc: 'Udtrykker en positiv holdning, velvilje og lyst til handlingen.',
-            ruleNote: '📌 Centraladverbium lige efter V1: <em>"Mit barn vil <strong>gerne</strong> spise"</em>.',
+            ruleNote: 'Udtrykker positiv holdning og velvilje (at gøre noget med glæde).',
             isCentral: true
         },
         'nu': {
@@ -528,95 +528,32 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
     }
 
     // -------------------------------------------------------------
-    // RENDER: LIVE SÆTNINGSBÅND I GRAMMATISKE LED
+    // RENDER: RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER)
+    // Erstatter tidligere ordstillingsboks med direkte pædagogisk link
     // -------------------------------------------------------------
     function renderSentenceStrip() {
-        const adv = getActiveAdverb();
-        const activeColor = adv.color;
-
-        let blocksHtml = '';
-
-        if (adv.isCentral) {
-            // Centraladverbium står på 3. pladsen lige efter V1
-            blocksHtml = `
-                <!-- Led 1: Subjektet (Grøn) -->
-                <div class="strip-block block-subject" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
-                    <span class="block-num-pill" style="background: #22c55e; color: #0f172a;">1</span>
-                    <span class="block-word" style="color: #4ade80;">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
-                    <span class="block-role" style="color: #4ade80;">Subjekt</span>
-                </div>
-
-                <!-- Led 2: Verbum 1 (Rød) -->
-                <div class="strip-block block-v1" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
-                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">2</span>
-                    <span class="block-word" style="color: #f87171;">${state.selectedModal || state.verbAnchor}</span>
-                    <span class="block-role" style="color: #f87171;">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
-                </div>
-
-                <!-- Led 3: Centraladverbium (Gul - PÅ 3. PLADSEN!) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: #eab308; background: rgba(234, 179, 8, 0.15); box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);">
-                    <span class="block-num-pill" style="background: #eab308; color: #0f172a;">3</span>
-                    <span class="block-word" style="color: #facc15; font-weight: 900;">${adv.word}</span>
-                    <span class="block-role" style="color: #facc15; font-weight: 800;">Centraladverbium</span>
-                </div>
-
-                <!-- Led 4: Verbum 2 (Rød) -->
-                <div class="strip-block block-v2" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
-                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">4</span>
-                    <span class="block-word" style="color: #f87171;">${state.selectedVerb}</span>
-                    <span class="block-role" style="color: #f87171;">V2 (Infinitiv)</span>
-                </div>
-            `;
-        } else {
-            // Mådes-, grads- eller tidsadverbium står efter verbet
-            blocksHtml = `
-                <!-- Led 1: Subjektet (Grøn) -->
-                <div class="strip-block block-subject" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
-                    <span class="block-num-pill" style="background: #22c55e; color: #0f172a;">1</span>
-                    <span class="block-word" style="color: #4ade80;">${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}</span>
-                    <span class="block-role" style="color: #4ade80;">Subjekt</span>
-                </div>
-
-                <!-- Led 2: Verbum 1 (Rød) -->
-                <div class="strip-block block-v1" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
-                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">2</span>
-                    <span class="block-word" style="color: #f87171;">${state.selectedModal || state.verbAnchor}</span>
-                    <span class="block-role" style="color: #f87171;">V1 (${state.selectedModal ? 'Modal' : 'Finit'})</span>
-                </div>
-
-                <!-- Led 3: Verbum 2 (Rød) -->
-                <div class="strip-block block-v2" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
-                    <span class="block-num-pill" style="background: #ef4444; color: #ffffff;">3</span>
-                    <span class="block-word" style="color: #f87171;">${state.selectedVerb}</span>
-                    <span class="block-role" style="color: #f87171;">V2 (Handlingen)</span>
-                </div>
-
-                <!-- Led 4: Mådes-/Grads-/Tidsadverbium (Gul) -->
-                <div class="strip-block block-adverb pulse-block-glow" style="border-color: #eab308; background: rgba(234, 179, 8, 0.15); box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);">
-                    <span class="block-num-pill" style="background: #eab308; color: #0f172a;">4</span>
-                    <span class="block-word" style="color: #facc15; font-weight: 900;">${adv.word}</span>
-                    <span class="block-role" style="color: #facc15; font-weight: 800;">${adv.tag}</span>
-                </div>
-            `;
-        }
-
+        stripCard.className = 'ordstilling-bridge-link-card';
         stripCard.innerHTML = `
-            <div class="strip-top-row">
-                <span class="strip-header-tag">Sætningens led i korrekt rækkefølge:</span>
-                <button type="button" class="btn-tts-listen" id="btn-listen-strip">
-                    <span>🔊</span>
-                    <span>Lyt</span>
-                </button>
+            <div class="obl-left">
+                <span class="obl-icon">📐</span>
+                <div class="obl-text">
+                    <span class="obl-badge">Ordstilling</span>
+                    <div class="obl-title">Centraladverbiets Plads (5 led)</div>
+                    <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
+                </div>
             </div>
-
-            <div class="strip-blocks-row">
-                ${blocksHtml}
-            </div>
+            <a href="#/${getLang()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
+                <span>Gå til Ordstilling (Del 2) ➔</span>
+            </a>
         `;
 
-        stripCard.querySelector('#btn-listen-strip').onclick = () => {
-            speakDanish(getFullSentence());
-        };
+        const btnLink = stripCard.querySelector('#btn-link-ordstilling-adverb');
+        if (btnLink) {
+            btnLink.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part2' });
+            };
+        }
     }
 
     // -------------------------------------------------------------
@@ -683,7 +620,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
                 <!-- 3. CENTRALADVERBIER -->
                 <div class="category-group-header" style="margin-top: 0.6rem;">
-                    <span>🛑 Centraladverbier (Holdning & Nægtelse - på 3. pladsen!):</span>
+                    <span>🛑 Centraladverbier (Holdning & Nægtelse):</span>
                 </div>
                 <div class="adverb-cards-row">
                     ${['ikke', 'gerne', 'nu'].map(key => {
@@ -1422,6 +1359,99 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         }
         .link-sub-practice:hover {
             color: #38bdf8;
+        }
+
+        /* Ordstilling Bridge Link Card */
+        .ordstilling-bridge-link-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            padding: 0.9rem 1.15rem;
+            margin: 1.1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            box-sizing: border-box;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
+        }
+        .ordstilling-bridge-link-card:hover {
+            border-color: rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
+        }
+        .obl-left {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex: 1;
+            min-width: 0;
+        }
+        .obl-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .obl-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            min-width: 0;
+        }
+        .obl-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #38bdf8;
+            letter-spacing: 0.06em;
+        }
+        .obl-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #f8fafc;
+            line-height: 1.25;
+        }
+        .obl-desc {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            line-height: 1.35;
+        }
+        .btn-goto-ordstilling {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1.5px solid #38bdf8;
+            color: #38bdf8;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .btn-goto-ordstilling:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+        @media (max-width: 600px) {
+            .ordstilling-bridge-link-card {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: left;
+                gap: 0.85rem;
+                padding: 0.85rem 1rem;
+            }
+            .btn-goto-ordstilling {
+                justify-content: center;
+                width: 100%;
+            }
         }
 
         @media (max-width: 640px) {

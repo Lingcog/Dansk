@@ -1,4 +1,4 @@
-import { getTranslation, appState } from '../utils/i18n.js';
+import { getTranslation, getLang, appState } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
 
@@ -459,55 +459,28 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     // RENDER: LIVE SÆTNINGSBÅND (5 sammenhængende led)
     // -------------------------------------------------------------
     function renderSentenceStrip() {
-        const adj = ADJECTIVES[state.selectedAdjectiveId] || ADJECTIVES['sulten'];
-        const adjWord = getInflectedAdjective(state.selectedAdjectiveId);
-        const adjColor = adj.color;
-
+        stripCard.className = 'ordstilling-bridge-link-card';
         stripCard.innerHTML = `
-            <div class="strip-top-row">
-                <span class="strip-header-tag">Sætningens 5 led:</span>
-                <button type="button" class="btn-tts-listen" id="btn-listen-strip">
-                    <span>🔊</span>
-                    <span>Lyt</span>
-                </button>
-            </div>
-
-            <div class="strip-blocks-5-row">
-                <!-- 1. Anker (Grøn) -->
-                <div class="strip-block-part block-anchor" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
-                    <span class="part-word" style="color: #4ade80;">${state.nounAnchor}</span>
-                    <span class="part-tag" style="color: #4ade80;">Subjekt</span>
-                </div>
-
-                <!-- 2. Adjektiv (Orange) -->
-                <div class="strip-block-part block-adj-active" style="border-color: #f97316; background: rgba(249, 115, 22, 0.15);">
-                    <span class="part-word" style="color: #fb923c;">${adjWord}</span>
-                    <span class="part-tag" style="color: #fb923c;">Adjektiv</span>
-                </div>
-
-                <!-- 3. Subjekt (Grøn) -->
-                <div class="strip-block-part block-noun" style="border-color: #22c55e; background: rgba(34, 197, 94, 0.12);">
-                    <span class="part-word" style="color: #4ade80;">${state.selectedNoun}</span>
-                    <span class="part-tag" style="color: #4ade80;">Subjekt</span>
-                </div>
-
-                <!-- 4. Modal (Rød) -->
-                <div class="strip-block-part block-modal" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15);">
-                    <span class="part-word" style="color: #f87171;">${getModalWord()}</span>
-                    <span class="part-tag" style="color: #f87171;">V1 (Modal)</span>
-                </div>
-
-                <!-- 5. Handling (Rød) -->
-                <div class="strip-block-part block-action" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.10);">
-                    <span class="part-word" style="color: #f87171;">${getActionWord()}</span>
-                    <span class="part-tag" style="color: #f87171;">V2 (Infinitiv)</span>
+            <div class="obl-left">
+                <span class="obl-icon">📐</span>
+                <div class="obl-text">
+                    <span class="obl-badge">Ordstilling</span>
+                    <div class="obl-title">Adjektiver i Sætningsskemaet (Udvidet model)</div>
+                    <div class="obl-desc">Lær hvordan adjektiver og nominalled placeres i det udvidede sætningsskema.</div>
                 </div>
             </div>
+            <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-adj">
+                <span>Gå til Ordstilling (Del 4) ➔</span>
+            </a>
         `;
 
-        stripCard.querySelector('#btn-listen-strip').onclick = () => {
-            speakDanish(getFullSentence());
-        };
+        const btnLink = stripCard.querySelector('#btn-link-ordstilling-adj');
+        if (btnLink) {
+            btnLink.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part4' });
+            };
+        }
     }
 
     // -------------------------------------------------------------
@@ -558,7 +531,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
             <!-- ========================================================= -->
             <!-- KONGRUENS: MAGNETISK BINDING & BØLGE-ANIMATION             -->
-            <!-- ========================================================= -->
             <div class="agreement-interactive-card" id="agreement-interactive-card"></div>
 
             <!-- ========================================================= -->
@@ -1775,6 +1747,99 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         .btn-launch-adverb:hover {
             background: #7dd3fc;
             transform: scale(1.02);
+        }
+
+        /* Ordstilling Bridge Link Card */
+        .ordstilling-bridge-link-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            padding: 0.9rem 1.15rem;
+            margin: 1.1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            box-sizing: border-box;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
+        }
+        .ordstilling-bridge-link-card:hover {
+            border-color: rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
+        }
+        .obl-left {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex: 1;
+            min-width: 0;
+        }
+        .obl-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .obl-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            min-width: 0;
+        }
+        .obl-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #38bdf8;
+            letter-spacing: 0.06em;
+        }
+        .obl-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #f8fafc;
+            line-height: 1.25;
+        }
+        .obl-desc {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            line-height: 1.35;
+        }
+        .btn-goto-ordstilling {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1.5px solid #38bdf8;
+            color: #38bdf8;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .btn-goto-ordstilling:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+        @media (max-width: 600px) {
+            .ordstilling-bridge-link-card {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: left;
+                gap: 0.85rem;
+                padding: 0.85rem 1rem;
+            }
+            .btn-goto-ordstilling {
+                justify-content: center;
+                width: 100%;
+            }
         }
 
         @media (max-width: 640px) {

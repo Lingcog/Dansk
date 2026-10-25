@@ -46956,6 +46956,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             color: #94a3b8;
             margin-top: 0.15rem;
             white-space: nowrap;
+        }
         /* Nuværende sætning boks & globale grammatik tags */
         .current-sentence-badge-box {
             background: rgba(15, 23, 42, 0.85);

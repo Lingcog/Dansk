@@ -449,6 +449,238 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         mainContent.appendChild(readerWrapper);
     }
 
+    function createSectionTasks(section, index) {
+        if (!section.tasks) return null;
+
+        const categories = [
+            { key: 'detektiv', label: isEn ? 'Visual Detective' : 'Visuel detektiv', icon: '🔍', color: '#38bdf8' },
+            { key: 'substantiver', label: isEn ? 'Nouns' : 'Substantiver', subLabel: 'Over- & underbegreber', icon: '🟢', color: '#22c55e' },
+            { key: 'verber', label: isEn ? 'Verbs' : 'Verber', subLabel: 'Modsætninger & synonymer', icon: '🔴', color: '#ef4444' },
+            { key: 'adjektiver', label: isEn ? 'Adjectives' : 'Adjektiver', subLabel: 'Modsætninger & grader', icon: '🟠', color: '#f97316' },
+            { key: 'adverbier', label: isEn ? 'Adverbs' : 'Adverbier', subLabel: 'Grader & synonymer', icon: '🔵', color: '#38bdf8' }
+        ].filter(cat => section.tasks[cat.key] && section.tasks[cat.key].questions && section.tasks[cat.key].questions.length > 0);
+
+        if (categories.length === 0) return null;
+
+        const tasksWrap = document.createElement('div');
+        tasksWrap.className = 'hc-section-tasks';
+
+        let activeCatKey = categories[0].key;
+        const currentQuestionIdx = {};
+        const catScores = {};
+        const userAnswers = {};
+
+        categories.forEach(c => {
+            currentQuestionIdx[c.key] = 0;
+            catScores[c.key] = 0;
+            userAnswers[c.key] = {};
+        });
+
+        // Top Header
+        const tasksHeader = document.createElement('div');
+        tasksHeader.className = 'hc-tasks-header';
+        tasksHeader.innerHTML = `
+            <div>
+                <div class="hc-tasks-title">
+                    <span>🎯</span>
+                    <span>${isEn ? 'Scene Exercises & Detective' : 'Opgaver til scenen'}</span>
+                </div>
+                <div class="hc-tasks-subtitle">${isEn ? 'Practice visual observation and central word classes from the wimmelbild:' : 'Træn visuel opmærksomhed og centrale ordklasser fra vrimlebilledet:'}</div>
+            </div>
+        `;
+        tasksWrap.appendChild(tasksHeader);
+
+        // Tab buttons container
+        const tabsRow = document.createElement('div');
+        tabsRow.className = 'hc-task-tabs';
+
+        const tabButtons = {};
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `hc-task-tab-btn tab-${cat.key} ${cat.key === activeCatKey ? 'active' : ''}`;
+            const count = section.tasks[cat.key].questions.length;
+            btn.innerHTML = `
+                <span>${cat.icon}</span>
+                <span>${cat.label}</span>
+                <span class="hc-task-tab-count">(${count})</span>
+            `;
+            btn.onclick = () => {
+                activeCatKey = cat.key;
+                Object.keys(tabButtons).forEach(k => {
+                    tabButtons[k].classList.toggle('active', k === activeCatKey);
+                });
+                renderActivePanel();
+            };
+            tabButtons[cat.key] = btn;
+            tabsRow.appendChild(btn);
+        });
+        tasksWrap.appendChild(tabsRow);
+
+        // Panel holder
+        const panelHolder = document.createElement('div');
+        panelHolder.className = 'hc-task-panel-holder';
+        tasksWrap.appendChild(panelHolder);
+
+        function renderActivePanel() {
+            panelHolder.innerHTML = '';
+            const catData = section.tasks[activeCatKey];
+            if (!catData || !catData.questions || catData.questions.length === 0) return;
+
+            const qIdx = currentQuestionIdx[activeCatKey];
+            const totalQ = catData.questions.length;
+            const currentQ = catData.questions[qIdx];
+            const isCompleted = qIdx >= totalQ;
+
+            const panel = document.createElement('div');
+            panel.className = 'hc-task-panel';
+
+            if (isCompleted) {
+                // Show celebration summary for this category
+                const score = catScores[activeCatKey];
+                const pct = Math.round((score / totalQ) * 100);
+                panel.innerHTML = `
+                    <div class="hc-task-summary">
+                        <div class="summary-icon">${pct >= 75 ? '🏆' : '👏'}</div>
+                        <h4>${catData.title} – ${isEn ? 'Completed!' : 'Gennemført!'}</h4>
+                        <p class="summary-score-text">${isEn ? `You got <strong>${score}</strong> out of <strong>${totalQ}</strong> correct (${pct}%).` : `Du fik <strong>${score}</strong> ud af <strong>${totalQ}</strong> rigtige (${pct}%).`}</p>
+                        <button type="button" class="hc-task-restart-btn">
+                            <span>🔄</span> <span>${isEn ? 'Try this category again' : 'Prøv denne kategori igen'}</span>
+                        </button>
+                    </div>
+                `;
+                panel.querySelector('.hc-task-restart-btn').onclick = () => {
+                    currentQuestionIdx[activeCatKey] = 0;
+                    catScores[activeCatKey] = 0;
+                    userAnswers[activeCatKey] = {};
+                    renderActivePanel();
+                };
+                panelHolder.appendChild(panel);
+                return;
+            }
+
+            // Render current question
+            const headerRow = document.createElement('div');
+            headerRow.className = 'hc-task-panel-header';
+            headerRow.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                    <span class="hc-task-badge ${activeCatKey}">
+                        ${currentQ.badge || catData.badge || 'Opgave'}
+                    </span>
+                    <span class="hc-task-progress-text">${isEn ? `Question ${qIdx + 1} of ${totalQ}` : `Spørgsmål ${qIdx + 1} af ${totalQ}`}</span>
+                </div>
+                <div class="hc-task-score-pill">
+                    ⭐ ${catScores[activeCatKey]} / ${totalQ}
+                </div>
+            `;
+            panel.appendChild(headerRow);
+
+            if (catData.desc && qIdx === 0) {
+                const descP = document.createElement('div');
+                descP.className = 'hc-task-cat-desc';
+                descP.textContent = catData.desc;
+                panel.appendChild(descP);
+            }
+
+            // Question prompt with audio button
+            const promptBox = document.createElement('div');
+            promptBox.className = 'hc-task-prompt-box';
+            promptBox.innerHTML = `
+                <div class="hc-task-prompt">${currentQ.prompt.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
+                <button type="button" class="hc-task-speak-btn" title="${isEn ? 'Listen to question' : 'Lyt til spørgsmålet'}">🔊</button>
+            `;
+            promptBox.querySelector('.hc-task-speak-btn').onclick = () => {
+                const plainText = currentQ.prompt.replace(/\*\*/g, '');
+                speakDanish(plainText);
+            };
+            panel.appendChild(promptBox);
+
+            // Options grid
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'hc-task-options';
+
+            const feedbackWrap = document.createElement('div');
+            feedbackWrap.className = 'hc-task-feedback-container';
+
+            const savedAnswer = userAnswers[activeCatKey][qIdx];
+            let isAnswered = savedAnswer !== undefined;
+
+            currentQ.options.forEach((optText, optIdx) => {
+                const optBtn = document.createElement('button');
+                optBtn.type = 'button';
+                optBtn.className = 'hc-task-opt-btn';
+                optBtn.innerHTML = `
+                    <span class="opt-bullet">${String.fromCharCode(65 + optIdx)}</span>
+                    <span class="opt-text">${optText}</span>
+                `;
+
+                if (isAnswered) {
+                    optBtn.disabled = true;
+                    if (optIdx === currentQ.correct) {
+                        optBtn.classList.add('correct');
+                    } else if (optIdx === savedAnswer.selectedIdx) {
+                        optBtn.classList.add('incorrect');
+                    }
+                }
+
+                optBtn.onclick = () => {
+                    if (isAnswered) return;
+                    isAnswered = true;
+                    const isCorrect = optIdx === currentQ.correct;
+                    if (isCorrect) {
+                        catScores[activeCatKey]++;
+                    }
+                    userAnswers[activeCatKey][qIdx] = { selectedIdx: optIdx, isCorrect };
+
+                    optionsGrid.querySelectorAll('.hc-task-opt-btn').forEach((b, idx) => {
+                        b.disabled = true;
+                        if (idx === currentQ.correct) {
+                            b.classList.add('correct');
+                        } else if (idx === optIdx && !isCorrect) {
+                            b.classList.add('incorrect');
+                        }
+                    });
+
+                    showFeedback(isCorrect);
+                };
+
+                optionsGrid.appendChild(optBtn);
+            });
+            panel.appendChild(optionsGrid);
+
+            function showFeedback(isCorrect) {
+                feedbackWrap.innerHTML = `
+                    <div class="hc-task-feedback ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div style="display: flex; align-items: flex-start; gap: 0.6rem;">
+                            <span style="font-size: 1.3rem;">${isCorrect ? '✅' : '💡'}</span>
+                            <div class="hc-task-feedback-text">
+                                <strong>${isCorrect ? (isEn ? 'Correct!' : 'Rigtigt!') : (isEn ? 'Note:' : 'Bemærk:')}</strong>
+                                <span>${currentQ.explanation}</span>
+                            </div>
+                        </div>
+                        <button type="button" class="hc-task-next-btn">
+                            ${qIdx < totalQ - 1 ? (isEn ? 'Next question ➔' : 'Næste spørgsmål ➔') : (isEn ? 'See result 🏆' : 'Se resultat 🏆')}
+                        </button>
+                    </div>
+                `;
+                feedbackWrap.querySelector('.hc-task-next-btn').onclick = () => {
+                    currentQuestionIdx[activeCatKey]++;
+                    renderActivePanel();
+                };
+            }
+
+            if (isAnswered) {
+                showFeedback(savedAnswer.isCorrect);
+            }
+
+            panel.appendChild(feedbackWrap);
+            panelHolder.appendChild(panel);
+        }
+
+        renderActivePanel();
+        return tasksWrap;
+    }
+
     function createSectionCard(section, index, story) {
         const card = document.createElement('div');
         card.className = 'hc-section-card';
@@ -512,7 +744,27 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             card.appendChild(legendBar);
         }
 
-        // 2. Render Text Body or Dialogue Lines
+        // 2. Render Interactive Tasks for Scene (Visuel detektiv + Grammatiske opgaver)
+        if (section.tasks) {
+            const tasksEl = createSectionTasks(section, index);
+            if (tasksEl) {
+                card.appendChild(tasksEl);
+            }
+        }
+
+        // 3. Render "Teksten" heading (Teksten flyttet til sidst)
+        const textHeading = document.createElement('div');
+        textHeading.className = 'hc-text-heading';
+        textHeading.innerHTML = `
+            <div class="hc-text-badge-row">
+                <span class="hc-text-badge">📖 Teksten</span>
+                <h4 class="hc-text-title">${section.chapter}</h4>
+            </div>
+            <p class="hc-text-hint">${isEn ? 'Read the dialogue, listen to the pronunciation, and tap any colored word to inspect its grammar and inflections:' : 'Læs replikkerne, lyt til personernes udtale og tryk på de farvede ord for at se bøjning og ordbogsopslag:'}</p>
+        `;
+        card.appendChild(textHeading);
+
+        // 4. Render Text Body or Dialogue Lines
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
@@ -2240,6 +2492,351 @@ function injectStyles() {
         .next-story-btn:hover {
             background: #fde047;
             transform: translateX(3px);
+        }
+
+        /* ========================================= */
+        /* SCENE TASKS (DETEKTIV & GRAMMATIK OPGAVER) */
+        /* ========================================= */
+        .hc-section-tasks {
+            margin: 1.8rem 0 2.2rem;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 1.4rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(12px);
+        }
+        .hc-tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .hc-tasks-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hc-tasks-subtitle {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+        }
+        .hc-task-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-bottom: 1.3rem;
+        }
+        .hc-task-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.55rem 0.95rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+        .hc-task-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .hc-task-tab-btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .hc-task-tab-btn.tab-detektiv.active { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
+        .hc-task-tab-btn.tab-substantiver.active { border-color: #22c55e; color: #4ade80; background: rgba(34, 197, 94, 0.15); }
+        .hc-task-tab-btn.tab-verber.active { border-color: #ef4444; color: #f87171; background: rgba(239, 68, 68, 0.15); }
+        .hc-task-tab-btn.tab-adjektiver.active { border-color: #f97316; color: #fb923c; background: rgba(249, 115, 22, 0.15); }
+        .hc-task-tab-btn.tab-adverbier.active { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
+        .hc-task-tab-count {
+            opacity: 0.65;
+            font-size: 0.76rem;
+        }
+
+        /* Task Panel */
+        .hc-task-panel {
+            background: rgba(30, 41, 59, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.3rem;
+            animation: fadeIn 0.25s ease;
+        }
+        .hc-task-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.9rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .hc-task-badge {
+            font-size: 0.74rem;
+            font-weight: 800;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: #f1f5f9;
+        }
+        .hc-task-badge.detektiv { background: rgba(56, 189, 248, 0.18); border-color: #38bdf8; color: #38bdf8; }
+        .hc-task-badge.substantiver { background: rgba(34, 197, 94, 0.18); border-color: #22c55e; color: #4ade80; }
+        .hc-task-badge.verber { background: rgba(239, 68, 68, 0.18); border-color: #ef4444; color: #f87171; }
+        .hc-task-badge.adjektiver { background: rgba(249, 115, 22, 0.18); border-color: #f97316; color: #fb923c; }
+        .hc-task-badge.adverbier { background: rgba(56, 189, 248, 0.18); border-color: #38bdf8; color: #38bdf8; }
+        .hc-task-progress-text {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+        .hc-task-score-pill {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #fde047;
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            padding: 0.2rem 0.65rem;
+            border-radius: 12px;
+        }
+        .hc-task-cat-desc {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            line-height: 1.45;
+        }
+        .hc-task-prompt-box {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .hc-task-prompt {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.5;
+        }
+        .hc-task-prompt strong {
+            color: #fde047;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .hc-task-speak-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .hc-task-speak-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        .hc-task-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .hc-task-opt-btn {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            color: #f1f5f9;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            line-height: 1.35;
+        }
+        .hc-task-opt-btn .opt-bullet {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .hc-task-opt-btn .opt-text {
+            flex: 1;
+        }
+        .hc-task-opt-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+        .hc-task-opt-btn.correct {
+            background: rgba(34, 197, 94, 0.22) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.35);
+        }
+        .hc-task-opt-btn.correct .opt-bullet {
+            background: #22c55e;
+            color: #0f172a;
+        }
+        .hc-task-opt-btn.incorrect {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+        }
+        .hc-task-opt-btn.incorrect .opt-bullet {
+            background: #ef4444;
+            color: #ffffff;
+        }
+        .hc-task-opt-btn:disabled {
+            cursor: default;
+        }
+        .hc-task-feedback {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 12px;
+            padding: 0.95rem 1.15rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .hc-task-feedback.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.12);
+        }
+        .hc-task-feedback.incorrect {
+            border-color: #f97316;
+            background: rgba(249, 115, 22, 0.12);
+        }
+        .hc-task-feedback-text {
+            font-size: 0.92rem;
+            line-height: 1.45;
+            color: #f8fafc;
+        }
+        .hc-task-next-btn {
+            align-self: flex-end;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.55rem 1.15rem;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .hc-task-next-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        .hc-task-summary {
+            text-align: center;
+            padding: 1.5rem 1rem;
+        }
+        .hc-task-summary .summary-icon {
+            font-size: 2.8rem;
+            margin-bottom: 0.6rem;
+        }
+        .hc-task-summary h4 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 0.4rem;
+        }
+        .hc-task-summary .summary-score-text {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            margin-bottom: 1.3rem;
+        }
+        .hc-task-restart-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .hc-task-restart-btn:hover {
+            background: white;
+            color: #0f172a;
+        }
+
+        /* Teksten Divider Heading */
+        .hc-text-heading {
+            margin: 2.5rem 0 1.2rem;
+            padding-top: 1.6rem;
+            border-top: 2px dashed rgba(255, 255, 255, 0.18);
+        }
+        .hc-text-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .hc-text-badge {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.35);
+        }
+        .hc-text-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin: 0;
+        }
+        .hc-text-hint {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin: 0.3rem 0 0;
+            line-height: 1.4;
         }
 
         @media (max-width: 600px) {

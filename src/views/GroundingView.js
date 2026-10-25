@@ -1028,7 +1028,7 @@ export function renderGroundingView(container, navigateFn) {
             .grounding-stage-compact {
                 position: -webkit-sticky;
                 position: sticky;
-                top: 0;
+                top: 0.5rem;
                 z-index: 60;
                 margin-bottom: 0.85rem;
                 width: 100%;

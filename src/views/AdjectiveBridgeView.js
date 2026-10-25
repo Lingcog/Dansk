@@ -959,7 +959,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         .adj-stage-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            top: 0.5rem;
             z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
@@ -1754,8 +1754,9 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             transform: scale(1.02);
         }
 
-        @media (max-width: 480px) {
-            .adjective-mobile-view { padding: 0 0.15rem 2.5rem !important; }
+        @media (max-width: 640px) {
+            .adjective-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .stage-sticky-bar { padding-right: 94px !important; }
             .adj-cards-grid { grid-template-columns: 1fr; }
             .card-word { font-size: 1.3rem; }
             .adj-main-title { font-size: 1.3rem; }

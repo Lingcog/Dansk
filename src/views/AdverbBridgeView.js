@@ -969,7 +969,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         .adverb-stage-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            top: 0.5rem;
             z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
@@ -1481,6 +1481,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
         @media (max-width: 640px) {
             .adverb-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .stage-sticky-bar { padding-right: 94px !important; }
             .strip-blocks-row { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem !important; }
             .adverb-cards-row { grid-template-columns: 1fr !important; }
             .comparison-boxes-grid { grid-template-columns: 1fr !important; }

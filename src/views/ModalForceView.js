@@ -101,13 +101,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     viewContainer.appendChild(stageCard);
 
     // =============================================================
-    // LIVE SÆTNINGSBÅND (Mit barn [modal] spise)
-    // =============================================================
-    const stripCard = document.createElement('div');
-    stripCard.className = 'modal-sentence-strip-card';
-    viewContainer.appendChild(stripCard);
-
-    // =============================================================
     // INTERAKTIONSKORT & DIDAKTISKE MODULER
     // =============================================================
     const taskArea = document.createElement('div');
@@ -406,34 +399,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     }
 
     // -------------------------------------------------------------
-    // RENDER: LIVE SÆTNINGSBÅND
-    // -------------------------------------------------------------
-    function renderSentenceStrip() {
-        stripCard.className = 'ordstilling-bridge-link-card';
-        stripCard.innerHTML = `
-            <div class="obl-left">
-                <span class="obl-icon">📐</span>
-                <div class="obl-text">
-                    <span class="obl-badge">Ordstilling</span>
-                    <div class="obl-title">Modalverber & Hjælpeverber</div>
-                    <div class="obl-desc">Lær hvordan V1 (modalverbum) og V2 (infinitiv) placeres i sætningsskemaet.</div>
-                </div>
-            </div>
-            <a href="#/${getLang()}/ordstilling_intro/part3" class="btn-goto-ordstilling" id="btn-link-ordstilling-modal">
-                <span>Gå til Ordstilling (Del 3) ➔</span>
-            </a>
-        `;
-
-        const btnLink = stripCard.querySelector('#btn-link-ordstilling-modal');
-        if (btnLink) {
-            btnLink.onclick = (e) => {
-                e.preventDefault();
-                navigateFn('ordstilling_intro', { subPath: 'part3' });
-            };
-        }
-    }
-
-    // -------------------------------------------------------------
     // RENDER: DE 4 MODAL-KORT & FINITHEDS-MODUL
     // -------------------------------------------------------------
     function renderInteractionArea() {
@@ -534,6 +499,21 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 </div>
             </div>
 
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 3 (MODALVERBER) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Modalverber & Hjælpeverber (6 led)</div>
+                        <div class="obl-desc">Lær hvordan V1 (modalverbum) og V2 (infinitiv) placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part3" class="btn-goto-ordstilling" id="btn-link-ordstilling-modal">
+                    <span>Gå til Ordstilling (Del 3) ➔</span>
+                </a>
+            </div>
+
             <!-- GÅ VIDERE KNAP -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
@@ -578,6 +558,15 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             }
         };
 
+        // Ordstilling link
+        const btnOrdstilling = box.querySelector('#btn-link-ordstilling-modal');
+        if (btnOrdstilling) {
+            btnOrdstilling.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part3' });
+            };
+        }
+
         // Gå til adjektiver
         box.querySelector('#btn-goto-adjectives').onclick = () => {
             navigateFn('adjective_bridge', {
@@ -604,7 +593,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
     function refreshUI() {
         renderStage();
-        renderSentenceStrip();
         renderInteractionArea();
         flashStage();
     }

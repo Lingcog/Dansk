@@ -212,6 +212,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             badge: 'Konsekvens (Resultat)',
             color: '#f59e0b', // Amber / Guld
             colorGlow: 'rgba(245, 158, 11, 0.45)',
+            role: 'Konsekvensen af en tilstand',
             clause2Text: (c1) => {
                 const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
                 const isCentral = isCentralAdverb(advWord);
@@ -409,13 +410,6 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
     const stageCard = document.createElement('div');
     stageCard.className = 'conjunction-stage-card';
     viewContainer.appendChild(stageCard);
-
-    // =============================================================
-    // LIVE SÆTNINGSBÅND I GRAMMATISKE LED (Hovedsætning + Bro + Bisætning)
-    // =============================================================
-    const stripCard = document.createElement('div');
-    stripCard.className = 'conj-sentence-strip-card';
-    viewContainer.appendChild(stripCard);
 
     // =============================================================
     // INTERAKTIONS-OMRÅDE
@@ -697,33 +691,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
     }
 
-    // -------------------------------------------------------------
-    // RENDER: LIVE SÆTNINGSBÅND I DE 3 HOVEDKOMPONENTER
-    // -------------------------------------------------------------
-    function renderSentenceStrip() {
-        stripCard.className = 'ordstilling-bridge-link-card';
-        stripCard.innerHTML = `
-            <div class="obl-left">
-                <span class="obl-icon">📐</span>
-                <div class="obl-text">
-                    <span class="obl-badge">Ordstilling</span>
-                    <div class="obl-title">Ledsætninger & Udvidet Model</div>
-                    <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
-                </div>
-            </div>
-            <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
-                <span>Gå til Ordstilling (Del 4) ➔</span>
-            </a>
-        `;
 
-        const btnLink = stripCard.querySelector('#btn-link-ordstilling-conj');
-        if (btnLink) {
-            btnLink.onclick = (e) => {
-                e.preventDefault();
-                navigateFn('ordstilling_intro', { subPath: 'part4' });
-            };
-        }
-    }
 
     // -------------------------------------------------------------
     // RENDER: INTERAKTIONS-OMRÅDET (KORT, ORDSTILLINGS-RADAR & STI)
@@ -820,6 +788,21 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                 </div>
             </div>
 
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Ledsætninger & Udvidet Model (Del 4)</div>
+                        <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
+                    <span>Gå til Ordstilling (Del 4) ➔</span>
+                </a>
+            </div>
+
             <!-- TRÆNINGSAKTIONER -->
             <div class="conjunction-actions-container">
                 <button type="button" class="btn-launch-training" id="btn-goto-conjunction-exercises">
@@ -845,6 +828,15 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                 refreshUI();
             };
         });
+
+        // Ordstilling link
+        const btnOrdstilling = box.querySelector('#btn-link-ordstilling-conj');
+        if (btnOrdstilling) {
+            btnOrdstilling.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part4' });
+            };
+        }
 
         // Link til øvelser
         box.querySelector('#btn-goto-conjunction-exercises').onclick = () => {
@@ -876,7 +868,6 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
     function refreshUI() {
         renderStage();
-        renderSentenceStrip();
         renderInteractionArea();
         flashStage();
     }

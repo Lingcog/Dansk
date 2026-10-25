@@ -229,13 +229,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
     viewContainer.appendChild(stageCard);
 
     // =============================================================
-    // LIVE SÆTNINGSBÅND I LED
-    // =============================================================
-    const stripCard = document.createElement('div');
-    stripCard.className = 'adverb-strip-card';
-    viewContainer.appendChild(stripCard);
-
-    // =============================================================
     // INTERAKTIONS-OMRÅDE: ADVERBIE-LAB & DIDAKTISKE KORT
     // =============================================================
     const taskArea = document.createElement('div');
@@ -527,34 +520,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
     }
 
-    // -------------------------------------------------------------
-    // RENDER: RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER)
-    // Erstatter tidligere ordstillingsboks med direkte pædagogisk link
-    // -------------------------------------------------------------
-    function renderSentenceStrip() {
-        stripCard.className = 'ordstilling-bridge-link-card';
-        stripCard.innerHTML = `
-            <div class="obl-left">
-                <span class="obl-icon">📐</span>
-                <div class="obl-text">
-                    <span class="obl-badge">Ordstilling</span>
-                    <div class="obl-title">Centraladverbiets Plads (5 led)</div>
-                    <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
-                </div>
-            </div>
-            <a href="#/${getLang()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
-                <span>Gå til Ordstilling (Del 2) ➔</span>
-            </a>
-        `;
 
-        const btnLink = stripCard.querySelector('#btn-link-ordstilling-adverb');
-        if (btnLink) {
-            btnLink.onclick = (e) => {
-                e.preventDefault();
-                navigateFn('ordstilling_intro', { subPath: 'part2' });
-            };
-        }
-    }
 
     // -------------------------------------------------------------
     // RENDER: ADVERBIE-LABORATORIUM & FORKLARINGER
@@ -690,6 +656,21 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                 </div>
             </div>
 
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Centraladverbiets Plads (5 led)</div>
+                        <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
+                    <span>Gå til Ordstilling (Del 2) ➔</span>
+                </a>
+            </div>
+
             <!-- GÅ VIDERE TIL TRIN 5 (KONJUNKTIONER) -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
@@ -726,6 +707,15 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             };
         });
 
+        // Ordstilling link
+        const btnOrdstilling = box.querySelector('#btn-link-ordstilling-adverb');
+        if (btnOrdstilling) {
+            btnOrdstilling.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part2' });
+            };
+        }
+
         // Gå til konjunktioner
         box.querySelector('#btn-goto-conjunctions').onclick = () => {
             navigateFn('conjunction_bridge', {
@@ -755,7 +745,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
     function refreshUI() {
         renderStage();
-        renderSentenceStrip();
         renderInteractionArea();
     }
 

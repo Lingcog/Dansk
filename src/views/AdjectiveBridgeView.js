@@ -326,13 +326,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     viewContainer.appendChild(stageCard);
 
     // =============================================================
-    // LIVE SÆTNINGSBÅND (Mit + [lille] + barn + vil + spise)
-    // =============================================================
-    const stripCard = document.createElement('div');
-    stripCard.className = 'adj-sentence-strip-card';
-    viewContainer.appendChild(stripCard);
-
-    // =============================================================
     // INTERAKTIONS-OMRÅDE
     // =============================================================
     const taskArea = document.createElement('div');
@@ -455,33 +448,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
     }
 
-    // -------------------------------------------------------------
-    // RENDER: LIVE SÆTNINGSBÅND (5 sammenhængende led)
-    // -------------------------------------------------------------
-    function renderSentenceStrip() {
-        stripCard.className = 'ordstilling-bridge-link-card';
-        stripCard.innerHTML = `
-            <div class="obl-left">
-                <span class="obl-icon">📐</span>
-                <div class="obl-text">
-                    <span class="obl-badge">Ordstilling</span>
-                    <div class="obl-title">Adjektiver i Sætningsskemaet (Udvidet model)</div>
-                    <div class="obl-desc">Lær hvordan adjektiver og nominalled placeres i det udvidede sætningsskema.</div>
-                </div>
-            </div>
-            <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-adj">
-                <span>Gå til Ordstilling (Del 4) ➔</span>
-            </a>
-        `;
 
-        const btnLink = stripCard.querySelector('#btn-link-ordstilling-adj');
-        if (btnLink) {
-            btnLink.onclick = (e) => {
-                e.preventDefault();
-                navigateFn('ordstilling_intro', { subPath: 'part4' });
-            };
-        }
-    }
 
     // -------------------------------------------------------------
     // RENDER: INTERAKTIONS-OMRÅDE (4 Adjektiv-Kort + Kongruens)
@@ -491,6 +458,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
         const activeAdj = ADJECTIVES[state.selectedAdjectiveId] || ADJECTIVES['sulten'];
         const isDef = isDefiniteAnchor();
+        const adjWord = state.selectedAdjective || getInflectedAdjective(state.selectedAdjectiveId);
 
         const box = document.createElement('div');
         box.className = 'adj-controls-container animate-in';
@@ -549,6 +517,21 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
                     <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
                 </div>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Adjektiver & Nominalled (Del 4)</div>
+                        <div class="obl-desc">Lær hvordan adjektiver og udvidede nominalled placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-adj">
+                    <span>Gå til Ordstilling (Del 4) ➔</span>
+                </a>
             </div>
 
             <!-- GÅ VIDERE TIL ADVERBIER -->
@@ -715,7 +698,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                             state.nounAnchor = newType === 'bestemt' ? 'Mit' : 'Et';
                             state.selectedAdjective = getInflectedAdjective(state.selectedAdjectiveId);
                             renderStage();
-                            renderSentenceStrip();
                         }
                         renderAgreementCard();
                         const updated = getAgreementDetails(agreementState.type, agreementState.word, agreementState.stem);
@@ -759,6 +741,15 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
         renderAgreementCard();
 
+        // Ordstilling link
+        const btnOrdstilling = box.querySelector('#btn-link-ordstilling-adj');
+        if (btnOrdstilling) {
+            btnOrdstilling.onclick = (e) => {
+                e.preventDefault();
+                navigateFn('ordstilling_intro', { subPath: 'part4' });
+            };
+        }
+
         // Gå til adverbier
         box.querySelector('#btn-goto-adverbs').onclick = () => {
             navigateFn('adverb_bridge', {
@@ -788,7 +779,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
     function refreshUI() {
         renderStage();
-        renderSentenceStrip();
         renderInteractionArea();
         flashStage();
     }

@@ -49192,7 +49192,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                         <span>↺ Start forfra på grammatik-stien</span>
                     </button>
                     <button type="button" class="btn-secondary-link" id="btn-goto-daily">
-                        <span>Dagens Opgave 🎯</span>
+                        <span>Lær grammatik 🎯</span>
                     </button>
                 </div>
             </div>

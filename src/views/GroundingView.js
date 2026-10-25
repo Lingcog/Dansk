@@ -3,22 +3,19 @@ import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
 
 /**
- * GroundingView 2.0 - Den pædagogiske grundsten for sætningsopbygning.
+ * GroundingView 2.0 - Kompakt, skarp og letlæselig.
  * 
- * Vigtigste pædagogiske principper:
- * 1. Den levende metafor: Ordet "barn" svæver abstrakt som en ballon.
- *    - Trin 1: Substantiv-ankeret (Mit, Et, Det, Dette) skyder en tøjresnor/et anker ned live.
- *    - Trin 2: Tidsankeret (spiser, spiste, skal spise) tænder tidsmotoren på ballonen.
- *    - Trin 3: Grounding: Sætningen samles på jorden, og ballonen lander trygt.
- * 2. Gradvis sætningsopbygning i realtid:
- *    [ Anker ] + [ barn ] + [ Handling ]
- * 3. Kæden videre: Sætningen overføres direkte videre til Modalverber -> Adjektiver -> Adverbier -> Konjunktioner!
+ * Designoptimeringer:
+ * 1. Kompakt scene øverst (mindre spildplads i højden, så opgaverne er synlige med det samme).
+ * 2. Markant større, tydeligere typografi på kort, ord og forklaringer.
+ * 3. Den levende ballon-scene og linen der sætter sig fast i realtid.
+ * 4. Kæden videre mod Modalverber bevaret 100%.
  */
 export function renderGroundingView(container, navigateFn) {
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container grounding-view-2';
+    viewContainer.className = 'view-container grounding-view-compact';
 
     // Audio TTS Helper
     function speakDanish(text) {
@@ -40,135 +37,132 @@ export function renderGroundingView(container, navigateFn) {
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
-    // Grammatik-menu (Intro / Modalverber / Adjektiver / Adverbier / Konjunktioner)
+    // Grammatik-menu
     viewContainer.appendChild(renderGrammarMenu('intro', navigateFn));
 
-    // Overskrift og intro
+    // Kompakt overskrift
     const headerEl = document.createElement('div');
-    headerEl.className = 'grounding-header-hero';
+    headerEl.className = 'grounding-compact-header';
     headerEl.innerHTML = `
-        <div class="grounding-journey-badge">
-            <span class="badge-dot"></span>
+        <div class="grounding-step-pill">
+            <span class="pill-dot"></span>
             <span>Trin 1 af 5: Grundsætningen</span>
         </div>
         <h1>${getTranslation('howToBuildSentence')}</h1>
-        <p class="grounding-subtitle">${getTranslation('howToBuildSentenceDesc')}</p>
+        <p class="grounding-lead-text">${getTranslation('howToBuildSentenceDesc')}</p>
     `;
     viewContainer.appendChild(headerEl);
 
     // State for øvelsen
     let state = {
-        step: 1, // 1: Noun anchor, 2: Verb anchor, 3: Assemble sentence, 4: Visual scenes, 5: Master bridge
+        step: 1, // 1: Noun anchor, 2: Verb anchor, 3: Assemble, 4: Visual scenes, 5: Bridge
         nounAnchor: '',
         verbAnchor: '',
         sentenceParts: []
     };
 
     // ==========================================================
-    // DEN LEVENDE INTERAKTIVE BALLON-SCENE (SVG)
+    // KOMPAKT LEVENDE BALLON-SCENE + SÆTNINGSBÅND
     // ==========================================================
     const stageCard = document.createElement('div');
-    stageCard.className = 'grounding-stage-card';
+    stageCard.className = 'grounding-compact-stage';
 
     stageCard.innerHTML = `
-        <div class="sky-canvas-wrapper">
-            <svg class="grounding-sky-svg" viewBox="0 0 500 230" preserveAspectRatio="xMidYMid meet">
+        <!-- Slank, panoramisk SVG-himmel (kun 130px høj) -->
+        <div class="compact-sky-frame">
+            <svg class="compact-sky-svg" viewBox="0 0 500 130" preserveAspectRatio="xMidYMid meet">
                 <defs>
-                    <!-- Sky & Ground Gradients -->
-                    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.8"/>
-                        <stop offset="60%" stop-color="#0284c7" stop-opacity="0.4"/>
-                        <stop offset="100%" stop-color="#042f2e" stop-opacity="0.6"/>
+                    <linearGradient id="skyGradCompact" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.9"/>
+                        <stop offset="60%" stop-color="#0284c7" stop-opacity="0.45"/>
+                        <stop offset="100%" stop-color="#064e3b" stop-opacity="0.7"/>
                     </linearGradient>
 
-                    <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#15803d"/>
+                    <linearGradient id="groundGradCompact" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#16a34a"/>
                         <stop offset="100%" stop-color="#14532d"/>
                     </linearGradient>
 
-                    <linearGradient id="balloonGrad" x1="0" y1="0" x2="1" y2="1">
+                    <linearGradient id="balloonGradCompact" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f43f5e"/>
                         <stop offset="50%" stop-color="#e11d48"/>
-                        <stop offset="100%" stop-color="#be123c"/>
+                        <stop offset="100%" stop-color="#9f1239"/>
                     </linearGradient>
 
-                    <filter id="glowGold" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="3" result="blur" />
+                    <filter id="glowGoldCompact" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="2.5" result="blur" />
                         <feComposite in="SourceGraphic" in2="blur" operator="over"/>
                     </filter>
                 </defs>
 
-                <!-- Himmel baggrund -->
-                <rect x="0" y="0" width="500" height="230" fill="url(#skyGrad)" rx="16"/>
+                <!-- Himmel -->
+                <rect x="0" y="0" width="500" height="130" fill="url(#skyGradCompact)" rx="12"/>
 
-                <!-- Skyer der driver let -->
-                <g class="drifting-clouds" opacity="0.35">
-                    <path d="M 40 45 Q 60 30 85 45 Q 110 30 135 45 A 15 15 0 0 1 125 65 L 45 65 A 15 15 0 0 1 40 45 Z" fill="#ffffff"/>
-                    <path d="M 330 35 Q 350 20 375 35 Q 400 20 425 35 A 15 15 0 0 1 415 55 L 335 55 A 15 15 0 0 1 330 35 Z" fill="#ffffff"/>
+                <!-- Drivende skyer -->
+                <g opacity="0.3">
+                    <path d="M 40 25 Q 55 15 70 25 Q 85 15 100 25 A 10 10 0 0 1 95 38 L 45 38 A 10 10 0 0 1 40 25 Z" fill="#ffffff"/>
+                    <path d="M 370 20 Q 385 10 400 20 Q 415 10 430 20 A 10 10 0 0 1 425 33 L 375 33 A 10 10 0 0 1 370 20 Z" fill="#ffffff"/>
                 </g>
 
-                <!-- JORDEN / THE GROUND (Fundamentet i bunden) -->
-                <rect x="0" y="195" width="500" height="35" fill="url(#groundGrad)" rx="0 0 16 16"/>
-                <line x1="0" y1="195" x2="500" y2="195" stroke="#4ade80" stroke-width="2" opacity="0.6"/>
+                <!-- Jorden i bunden -->
+                <rect x="0" y="105" width="500" height="25" fill="url(#groundGradCompact)" rx="0 0 12 12"/>
+                <line x1="0" y1="105" x2="500" y2="105" stroke="#4ade80" stroke-width="2" opacity="0.7"/>
 
-                <!-- Taleren / Personen på jorden -->
-                <g class="ground-speaker" transform="translate(110, 150)">
-                    <circle cx="0" cy="12" r="7" fill="#cbd5e1"/>
-                    <line x1="0" y1="19" x2="0" y2="35" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="0" y1="24" x2="-8" y2="32" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/>
-                    <line x1="0" y1="24" x2="10" y2="28" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/>
-                    <line x1="0" y1="35" x2="-6" y2="45" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="0" y1="35" x2="6" y2="45" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
-                    <text x="0" y="55" font-size="8.5" fill="#94a3b8" text-anchor="middle" font-weight="600">Taleren</text>
+                <!-- Taleren på jorden -->
+                <g class="speaker-figure" transform="translate(95, 68)">
+                    <circle cx="0" cy="8" r="6" fill="#f8fafc"/>
+                    <line x1="0" y1="14" x2="0" y2="27" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="0" y1="18" x2="10" y2="23" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="0" y1="18" x2="-7" y2="25" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="0" y1="27" x2="-5" y2="37" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="0" y1="27" x2="5" y2="37" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="0" y="48" font-size="11" fill="#cbd5e1" text-anchor="middle" font-weight="700">Taleren</text>
                 </g>
 
-                <!-- TØJRESNORE & ANKER (Trin 1 live animation) -->
-                <g id="anchor-system" class="anchor-system">
-                    <!-- Linen der kastes ned -->
-                    <path id="tether-rope" d="M 250 115 Q 180 155 120 185" 
-                          stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="300" stroke-dashoffset="300" 
-                          fill="none" filter="url(#glowGold)" stroke-linecap="round"/>
+                <!-- TØJRESNOR & ANKER (Trin 1 live animation) -->
+                <g id="tether-group">
+                    <path id="tether-rope" d="M 270 56 Q 180 80 108 105" 
+                          stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="250" stroke-dashoffset="250" 
+                          fill="none" filter="url(#glowGoldCompact)" stroke-linecap="round"/>
                     
-                    <!-- Selve ankeret der griber i jorden -->
-                    <g id="ground-anchor" transform="translate(120, 185) scale(0)" opacity="0">
-                        <circle cx="0" cy="0" r="4" fill="#fbbf24"/>
-                        <path d="M -8 2 Q 0 12 8 2" stroke="#fbbf24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                        <line x1="0" y1="-3" x2="0" y2="7" stroke="#fbbf24" stroke-width="2.5"/>
+                    <g id="ground-anchor" transform="translate(108, 105) scale(0)" opacity="0">
+                        <circle cx="0" cy="0" r="3.5" fill="#fbbf24"/>
+                        <path d="M -7 2 Q 0 10 7 2" stroke="#fbbf24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                        <line x1="0" y1="-2" x2="0" y2="6" stroke="#fbbf24" stroke-width="2"/>
                     </g>
                 </g>
 
                 <!-- LUFTBALLONEN (Ordet "barn") -->
-                <g id="balloon-craft" class="balloon-craft" transform="translate(250, 65)">
+                <g id="balloon-craft" class="balloon-craft" transform="translate(270, 36)">
                     <!-- Ballon kuppel -->
-                    <path d="M 0 -35 C -32 -35 -40 2 -15 25 L -8 32 L 8 32 L 15 25 C 40 2 32 -35 0 -35 Z" 
-                          fill="url(#balloonGrad)" stroke="#fda4af" stroke-width="1.5" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.35))"/>
+                    <path d="M 0 -22 C -22 -22 -28 3 -10 18 L -5 23 L 5 23 L 10 18 C 28 3 22 -22 0 -22 Z" 
+                          fill="url(#balloonGradCompact)" stroke="#fda4af" stroke-width="1.5" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.3))"/>
                     
-                    <!-- Mønsterstriber på ballonen -->
-                    <path d="M 0 -35 C -12 -35 -15 2 -5 32 L 5 32 C 15 2 12 -35 0 -35 Z" 
-                          fill="rgba(255,255,255,0.22)"/>
+                    <!-- Mønsterstribe -->
+                    <path d="M 0 -22 C -8 -22 -10 3 -3 23 L 3 23 C 10 3 8 -22 0 -22 Z" fill="rgba(255,255,255,0.25)"/>
 
-                    <!-- Tidsmotor / flamme (Trin 2 live animation) -->
-                    <g id="burner-flame" opacity="0" transform="translate(0, 34)">
-                        <circle cx="0" cy="3" r="5" fill="#f59e0b" filter="url(#glowGold)"/>
-                        <polygon points="-3,2 0,-5 3,2" fill="#fbbf24"/>
+                    <!-- Tidsmotor / flamme (Trin 2 live) -->
+                    <g id="burner-flame" opacity="0" transform="translate(0, 24)">
+                        <circle cx="0" cy="2" r="4" fill="#f59e0b" filter="url(#glowGoldCompact)"/>
+                        <polygon points="-2.5,1 0,-4 2.5,1" fill="#fbbf24"/>
                     </g>
 
                     <!-- Snore til kurven -->
-                    <line x1="-7" y1="32" x2="-8" y2="43" stroke="#e2e8f0" stroke-width="1.2"/>
-                    <line x1="7" y1="32" x2="8" y2="43" stroke="#e2e8f0" stroke-width="1.2"/>
+                    <line x1="-5" y1="23" x2="-6" y2="29" stroke="#e2e8f0" stroke-width="1.2"/>
+                    <line x1="5" y1="23" x2="6" y2="29" stroke="#e2e8f0" stroke-width="1.2"/>
 
                     <!-- Kurven -->
-                    <rect x="-14" y="43" width="28" height="18" rx="4" fill="#78350f" stroke="#b45309" stroke-width="1.5"/>
+                    <rect x="-16" y="29" width="32" height="17" rx="3.5" fill="#78350f" stroke="#b45309" stroke-width="1.5"/>
 
-                    <!-- Teksten BARN på kurven -->
-                    <text x="0" y="56" fill="#ffffff" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+                    <!-- Teksten BARN (STOR OG TYDELIG) -->
+                    <text x="0" y="42" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle" letter-spacing="0.5">
                         barn
                     </text>
 
                     <!-- Svævende statusmærkat over ballonen -->
-                    <g id="balloon-badge" transform="translate(0, -44)">
-                        <rect x="-55" y="-10" width="110" height="20" rx="10" fill="rgba(15, 23, 42, 0.85)" stroke="#38bdf8" stroke-width="1"/>
-                        <text id="balloon-badge-text" x="0" y="4" fill="#38bdf8" font-size="9.5" font-weight="700" text-anchor="middle">
+                    <g id="balloon-badge" transform="translate(0, -30)">
+                        <rect x="-65" y="-10" width="130" height="20" rx="10" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="1.2"/>
+                        <text id="balloon-badge-text" x="0" y="4" fill="#38bdf8" font-size="11.5" font-weight="800" text-anchor="middle">
                             🎈 Abstrakt (svæver)
                         </text>
                     </g>
@@ -176,19 +170,13 @@ export function renderGroundingView(container, navigateFn) {
             </svg>
         </div>
 
-        <!-- LIVE SÆTNINGSBÅND LIGE UNDER SCENEN -->
-        <div class="grounding-live-strip">
-            <div class="strip-label">Sætningens opbygning i realtid:</div>
-            <div class="live-sentence-slots">
-                <span class="sentence-slot slot-noun-anchor" id="live-slot-noun">
-                    <span class="slot-placeholder">1. Rumligt anker ?</span>
-                </span>
-                <span class="sentence-slot slot-noun" id="live-slot-noun-word">
-                    <span class="slot-fixed">barn</span>
-                </span>
-                <span class="sentence-slot slot-verb-anchor" id="live-slot-verb">
-                    <span class="slot-placeholder">2. Tidsanker ?</span>
-                </span>
+        <!-- INTEGRERET LIVE SÆTNINGSBÅND -->
+        <div class="compact-sentence-strip">
+            <span class="strip-lead">Sætningen:</span>
+            <div class="live-sentence-row">
+                <span class="slot-chip slot-empty" id="live-slot-noun">1. Rumligt anker ?</span>
+                <span class="slot-chip slot-fixed">barn</span>
+                <span class="slot-chip slot-empty" id="live-slot-verb">2. Tidsanker ?</span>
             </div>
         </div>
     `;
@@ -196,13 +184,13 @@ export function renderGroundingView(container, navigateFn) {
     viewContainer.appendChild(stageCard);
 
     // ==========================================================
-    // INTERAKTIONS-OMRÅDET (TRIN 1, 2, 3, 4, 5)
+    // INTERAKTIONS-OMRÅDET (STOR, TYDELIG TYPOGRAFI)
     // ==========================================================
     const interactionCard = document.createElement('div');
-    interactionCard.className = 'grounding-interaction-card';
+    interactionCard.className = 'grounding-task-card';
     viewContainer.appendChild(interactionCard);
 
-    // DOM referencer til SVG elementer
+    // DOM referencer
     const balloonCraft = stageCard.querySelector('#balloon-craft');
     const tetherRope = stageCard.querySelector('#tether-rope');
     const groundAnchor = stageCard.querySelector('#ground-anchor');
@@ -214,36 +202,35 @@ export function renderGroundingView(container, navigateFn) {
 
     // Opdater synkron scene
     function updateLiveStage() {
-        // Noun anchor status
         if (state.nounAnchor) {
-            // Animer linen der kastes og låser
             tetherRope.style.strokeDashoffset = '0';
             tetherRope.style.transition = 'stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
             
-            groundAnchor.style.transform = 'translate(120px, 185px) scale(1)';
+            groundAnchor.style.transform = 'translate(108px, 105px) scale(1)';
             groundAnchor.style.opacity = '1';
             groundAnchor.style.transition = 'transform 0.4s ease 0.6s, opacity 0.4s ease 0.6s';
 
             balloonBadgeText.textContent = `⚓ Forankret med "${state.nounAnchor}"`;
             balloonBadgeText.style.fill = '#fcd34d';
 
-            liveSlotNoun.innerHTML = `<span class="slot-active slot-noun-filled">${state.nounAnchor}</span>`;
+            liveSlotNoun.className = 'slot-chip slot-filled-noun';
+            liveSlotNoun.textContent = state.nounAnchor;
         }
 
-        // Verb anchor status
         if (state.verbAnchor) {
             burnerFlame.style.opacity = '1';
             burnerFlame.style.transition = 'opacity 0.4s ease';
 
-            liveSlotVerb.innerHTML = `<span class="slot-active slot-verb-filled">${state.verbAnchor}</span>`;
+            liveSlotVerb.className = 'slot-chip slot-filled-verb';
+            liveSlotVerb.textContent = state.verbAnchor;
+
             balloonBadgeText.textContent = `⏰ Forankret i tid: "${state.verbAnchor}"`;
             balloonBadgeText.style.fill = '#4ade80';
         }
 
-        // Grounded (Trin 3 færdiggjort)
         if (state.step >= 4) {
-            balloonCraft.style.transform = 'translate(250px, 125px)';
-            balloonCraft.style.transition = 'transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            balloonCraft.style.transform = 'translate(270px, 66px)';
+            balloonCraft.style.transition = 'transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
             balloonBadgeText.textContent = `🌱 Fuldstændig Grounded!`;
             balloonBadgeText.style.fill = '#4ade80';
         }
@@ -276,65 +263,64 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.className = 'step-box animate-in';
 
         stepDiv.innerHTML = `
-            <div class="step-badge">Trin 1 af 3: Forankr navneordet</div>
-            <h2 class="step-title">${getTranslation('groundingStep1')}</h2>
-            <p class="step-guide">
-                Ordet <strong>"barn"</strong> svæver abstrakt oppe i luften. Vælg hvordan du vil tøjre barnet til virkeligheden:
+            <div class="step-progress-tag">Trin 1 af 3: Hvem eller hvad taler vi om?</div>
+            <h2 class="step-heading">${getTranslation('groundingStep1')}</h2>
+            <p class="step-instruction">
+                Ordet <strong>"barn"</strong> svæver abstrakt oppe i luften. Vælg et anker, der tøjrer barnet til virkeligheden:
             </p>
 
-            <div class="anchor-chips-grid">
-                <button type="button" class="anchor-pick-card" data-anchor="Mit">
-                    <div class="card-icon">🏷️</div>
-                    <div class="card-main">
-                        <span class="card-word">Mit</span>
-                        <span class="card-label">${getTranslation('groundingRelationPrefix')}</span>
+            <div class="big-cards-grid">
+                <button type="button" class="big-anchor-card" data-anchor="Mit">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">🏷️</span>
+                        <span class="card-title-word">Mit</span>
                     </div>
-                    <div class="card-desc">Barnet har en personlig relation til taleren.</div>
+                    <div class="card-highlight-label">${getTranslation('groundingRelationPrefix')}</div>
+                    <div class="card-explanation-text">Barnet tilhører taleren (personlig relation).</div>
                 </button>
 
-                <button type="button" class="anchor-pick-card" data-anchor="Et">
-                    <div class="card-icon">🔦</div>
-                    <div class="card-main">
-                        <span class="card-word">Et</span>
-                        <span class="card-label">${getTranslation('groundingIndefinitePrefix')}</span>
+                <button type="button" class="big-anchor-card" data-anchor="Et">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">🔦</span>
+                        <span class="card-title-word">Et</span>
                     </div>
-                    <div class="card-desc">Et tilfældigt barn blandt alle verdens børn.</div>
+                    <div class="card-highlight-label">${getTranslation('groundingIndefinitePrefix')}</div>
+                    <div class="card-explanation-text">Et tilfældigt barn blandt alle verdens børn.</div>
                 </button>
 
-                <button type="button" class="anchor-pick-card" data-anchor="Det">
-                    <div class="card-icon">👉</div>
-                    <div class="card-main">
-                        <span class="card-word">Det</span>
-                        <span class="card-label">${getTranslation('groundingDistalPrefix')}</span>
+                <button type="button" class="big-anchor-card" data-anchor="Det">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">👉</span>
+                        <span class="card-title-word">Det</span>
                     </div>
-                    <div class="card-desc">Barnet derhenne på afstand (pegefelt).</div>
+                    <div class="card-highlight-label">${getTranslation('groundingDistalPrefix')}</div>
+                    <div class="card-explanation-text">Barnet derhenne på afstand (pegefelt).</div>
                 </button>
 
-                <button type="button" class="anchor-pick-card" data-anchor="Dette">
-                    <div class="card-icon">📍</div>
-                    <div class="card-main">
-                        <span class="card-word">Dette</span>
-                        <span class="card-label">${getTranslation('groundingProximalPrefix')}</span>
+                <button type="button" class="big-anchor-card" data-anchor="Dette">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">📍</span>
+                        <span class="card-title-word">Dette</span>
                     </div>
-                    <div class="card-desc">Barnet lige her og nu i umiddelbar nærhed.</div>
+                    <div class="card-highlight-label">${getTranslation('groundingProximalPrefix')}</div>
+                    <div class="card-explanation-text">Barnet lige her og nu i umiddelbar nærhed.</div>
                 </button>
             </div>
         `;
 
-        stepDiv.querySelectorAll('.anchor-pick-card').forEach(btn => {
+        stepDiv.querySelectorAll('.big-anchor-card').forEach(btn => {
             btn.onclick = () => {
                 const chosen = btn.getAttribute('data-anchor');
                 state.nounAnchor = chosen;
-                btn.classList.add('selected');
+                btn.classList.add('active-selected');
 
-                // Lyd & live opdatering
                 speakDanish(chosen + ' barn');
                 updateLiveStage();
 
                 setTimeout(() => {
                     state.step = 2;
                     renderStep();
-                }, 750);
+                }, 700);
             };
         });
 
@@ -349,47 +335,47 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.className = 'step-box animate-in';
 
         stepDiv.innerHTML = `
-            <div class="step-badge">Trin 2 af 3: Forankr handlingen i tiden</div>
-            <h2 class="step-title">${getTranslation('groundingStep2')}</h2>
-            <p class="step-guide">
-                Handlingen <strong>"at spise"</strong> skal have et tidspunkt for at kunne finde sted i virkeligheden:
+            <div class="step-progress-tag">Trin 2 af 3: Hvornår sker handlingen?</div>
+            <h2 class="step-heading">${getTranslation('groundingStep2')}</h2>
+            <p class="step-instruction">
+                Handlingen <strong>"at spise"</strong> skal forankres i tiden for at blive virkelig:
             </p>
 
-            <div class="anchor-chips-grid grid-3-cols">
-                <button type="button" class="anchor-pick-card" data-verb="spiser">
-                    <div class="card-icon">🟢</div>
-                    <div class="card-main">
-                        <span class="card-word">spiser</span>
-                        <span class="card-label">${getTranslation('tenseNow')}</span>
+            <div class="big-cards-grid grid-3">
+                <button type="button" class="big-anchor-card" data-verb="spiser">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">🟢</span>
+                        <span class="card-title-word">spiser</span>
                     </div>
-                    <div class="card-desc">Handlingen foregår lige nu i nutiden.</div>
+                    <div class="card-highlight-label" style="color: #4ade80;">${getTranslation('tenseNow')}</div>
+                    <div class="card-explanation-text">Handlingen foregår lige nu i nutiden.</div>
                 </button>
 
-                <button type="button" class="anchor-pick-card" data-verb="spiste">
-                    <div class="card-icon">📍</div>
-                    <div class="card-main">
-                        <span class="card-word">spiste</span>
-                        <span class="card-label">${getTranslation('tensePast')}</span>
+                <button type="button" class="big-anchor-card" data-verb="spiste">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">📍</span>
+                        <span class="card-title-word">spiste</span>
                     </div>
-                    <div class="card-desc">Handlingen skete i går eller tidligere.</div>
+                    <div class="card-highlight-label" style="color: #f87171;">${getTranslation('tensePast')}</div>
+                    <div class="card-explanation-text">Handlingen skete i går eller i fortiden.</div>
                 </button>
 
-                <button type="button" class="anchor-pick-card" data-verb="skal spise">
-                    <div class="card-icon">🔵</div>
-                    <div class="card-main">
-                        <span class="card-word">skal spise</span>
-                        <span class="card-label">${getTranslation('tenseFuture')}</span>
+                <button type="button" class="big-anchor-card" data-verb="skal spise">
+                    <div class="card-top-row">
+                        <span class="card-icon-big">🔵</span>
+                        <span class="card-title-word">skal spise</span>
                     </div>
-                    <div class="card-desc">Handlingen er planlagt ude i fremtiden.</div>
+                    <div class="card-highlight-label" style="color: #38bdf8;">${getTranslation('tenseFuture')}</div>
+                    <div class="card-explanation-text">Handlingen er planlagt ude i fremtiden.</div>
                 </button>
             </div>
         `;
 
-        stepDiv.querySelectorAll('.anchor-pick-card').forEach(btn => {
+        stepDiv.querySelectorAll('.big-anchor-card').forEach(btn => {
             btn.onclick = () => {
                 const chosen = btn.getAttribute('data-verb');
                 state.verbAnchor = chosen;
-                btn.classList.add('selected');
+                btn.classList.add('active-selected');
 
                 speakDanish(chosen);
                 updateLiveStage();
@@ -397,7 +383,7 @@ export function renderGroundingView(container, navigateFn) {
                 setTimeout(() => {
                     state.step = 3;
                     renderStep();
-                }, 750);
+                }, 700);
             };
         });
 
@@ -405,39 +391,39 @@ export function renderGroundingView(container, navigateFn) {
     }
 
     // -------------------------------------------------------------
-    // TRIN 3: GROUNDING (Samling på Jorden)
+    // TRIN 3: GROUNDING (Landing på jorden)
     // -------------------------------------------------------------
     function renderAssembleStep() {
         const stepDiv = document.createElement('div');
         stepDiv.className = 'step-box animate-in';
 
         stepDiv.innerHTML = `
-            <div class="step-badge">Trin 3 af 3: Landing på Jorden</div>
-            <h2 class="step-title">${getTranslation('groundingStep3')}</h2>
-            <p class="step-guide">
-                Tryk på brikkerne i den rigtige rækkefølge (eller træk dem) for at samle den komplette sætning på jorden:
+            <div class="step-progress-tag">Trin 3 af 3: Landing på Jorden</div>
+            <h2 class="step-heading">${getTranslation('groundingStep3')}</h2>
+            <p class="step-instruction">
+                Tryk på brikkerne i den rigtige rækkefølge for at samle sætningen nede på jorden:
             </p>
 
-            <div class="drag-pool-box">
-                <div class="pool-label">Kildebrikker (tryk for at placere på jorden):</div>
-                <div class="drag-pool-row" id="drag-source">
-                    <button type="button" class="puzzle-brick" data-word="${state.nounAnchor}">${state.nounAnchor}</button>
-                    <button type="button" class="puzzle-brick" data-word="barn">barn</button>
-                    <button type="button" class="puzzle-brick" data-word="${state.verbAnchor}">${state.verbAnchor}</button>
+            <div class="puzzle-source-card">
+                <div class="puzzle-title-label">Kildebrikker (tryk for at flytte til jorden):</div>
+                <div class="puzzle-chips-pool" id="drag-source">
+                    <button type="button" class="big-puzzle-chip" data-word="${state.nounAnchor}">${state.nounAnchor}</button>
+                    <button type="button" class="big-puzzle-chip" data-word="barn">barn</button>
+                    <button type="button" class="big-puzzle-chip" data-word="${state.verbAnchor}">${state.verbAnchor}</button>
                 </div>
             </div>
 
-            <div class="ground-landing-box">
-                <div class="ground-landing-label">🌱 Jorden (The Ground):</div>
-                <div class="ground-landing-zone" id="drag-target"></div>
+            <div class="puzzle-target-card">
+                <div class="target-title-label">🌱 Jorden (The Ground):</div>
+                <div class="puzzle-landing-bay" id="drag-target"></div>
             </div>
 
-            <div class="ground-actions-row">
-                <button type="button" class="btn-check-ground" id="btn-check-assembly">
+            <div class="puzzle-controls-bar">
+                <button type="button" class="btn-ground-confirm" id="btn-check-assembly">
                     <span>⚓</span>
                     <span>${getTranslation('checkResult')}</span>
                 </button>
-                <button type="button" class="btn-reset-assembly" id="btn-reset-slots">
+                <button type="button" class="btn-ground-clear" id="btn-reset-slots">
                     Nulstil brikker 🔄
                 </button>
             </div>
@@ -451,39 +437,36 @@ export function renderGroundingView(container, navigateFn) {
         const resetBtn = stepDiv.querySelector('#btn-reset-slots');
         const feedbackBox = stepDiv.querySelector('#assembly-feedback');
 
-        // Tap-to-place interaktion
-        function attachBrickEvents() {
-            sourceRow.querySelectorAll('.puzzle-brick').forEach(brick => {
+        function attachEvents() {
+            sourceRow.querySelectorAll('.big-puzzle-chip').forEach(brick => {
                 brick.onclick = () => {
                     targetRow.appendChild(brick);
-                    brick.classList.add('in-ground');
+                    brick.classList.add('chip-placed');
                     speakDanish(brick.dataset.word);
-                    attachBrickEvents();
+                    attachEvents();
                 };
             });
 
-            targetRow.querySelectorAll('.puzzle-brick').forEach(brick => {
+            targetRow.querySelectorAll('.big-puzzle-chip').forEach(brick => {
                 brick.onclick = () => {
                     sourceRow.appendChild(brick);
-                    brick.classList.remove('in-ground');
-                    attachBrickEvents();
+                    brick.classList.remove('chip-placed');
+                    attachEvents();
                 };
             });
         }
-        attachBrickEvents();
+        attachEvents();
 
-        // Nulstil
         resetBtn.onclick = () => {
-            targetRow.querySelectorAll('.puzzle-brick').forEach(b => {
+            targetRow.querySelectorAll('.big-puzzle-chip').forEach(b => {
                 sourceRow.appendChild(b);
-                b.classList.remove('in-ground');
+                b.classList.remove('chip-placed');
             });
             feedbackBox.style.display = 'none';
         };
 
-        // Tjek sætning
         checkBtn.onclick = () => {
-            const placedWords = Array.from(targetRow.querySelectorAll('.puzzle-brick')).map(b => b.dataset.word.trim());
+            const placedWords = Array.from(targetRow.querySelectorAll('.big-puzzle-chip')).map(b => b.dataset.word.trim());
             const constructed = placedWords.join(' ').toLowerCase();
             const expected = `${state.nounAnchor} barn ${state.verbAnchor}`.toLowerCase();
 
@@ -492,21 +475,20 @@ export function renderGroundingView(container, navigateFn) {
                 feedbackBox.style.display = 'block';
                 feedbackBox.className = 'grounding-feedback-box success-box';
                 feedbackBox.innerHTML = `
-                    <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.3rem;">
+                    <div style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.3rem;">
                         🎉 ${getTranslation('groundingSuccess')}
                     </div>
-                    <div style="font-size: 1.15rem; color: #f8fafc; font-weight: 700; margin-bottom: 0.8rem;">
+                    <div style="font-size: 1.25rem; color: #f8fafc; font-weight: 800; margin-bottom: 0.5rem;">
                         "${fullSentence}"
                     </div>
-                    <p style="margin: 0; color: #cbd5e1; font-size: 0.95rem;">
-                        Ballonen er nu landet trygt på jorden. Lad os se den konkrete visuelle forankring og tidsaksen!
+                    <p style="margin: 0; color: #e2e8f0; font-size: 1.05rem;">
+                        Ballonen er landet trygt på jorden! Sætningen har nu fast holdepunkt i virkeligheden.
                     </p>
                 `;
 
                 speakDanish(fullSentence);
                 checkBtn.disabled = true;
 
-                // Opdater scenen: Ballonen lander blødt
                 state.step = 4;
                 updateLiveStage();
 
@@ -518,7 +500,7 @@ export function renderGroundingView(container, navigateFn) {
                 feedbackBox.className = 'grounding-feedback-box error-box';
                 feedbackBox.innerHTML = `
                     <strong>${getTranslation('wrongOrder')}</strong><br>
-                    Husk rækkefølgen: Først rumligt anker (<em>${state.nounAnchor}</em>), derefter navneordet (<em>barn</em>) og til sidst tidsankeret (<em>${state.verbAnchor}</em>).
+                    Rækkefølgen skal være: Først rumligt anker (<em>${state.nounAnchor}</em>), derefter navneordet (<em>barn</em>) og til sidst tidsankeret (<em>${state.verbAnchor}</em>).
                 `;
             }
         };
@@ -541,24 +523,15 @@ export function renderGroundingView(container, navigateFn) {
             sceneTitle = getTranslation('groundingRelation');
             sceneHtml = `
                 <div class="visual-scene-box">
-                    <svg viewBox="0 0 320 140" class="modern-scene-svg">
-                        <defs>
-                            <linearGradient id="relWarm" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#f43f5e"/>
-                                <stop offset="100%" stop-color="#fb7185"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- Voksen -->
-                        <circle cx="100" cy="50" r="14" fill="#38bdf8"/>
-                        <path d="M 85 80 Q 100 68 115 80 L 115 125 L 85 125 Z" fill="#0284c7"/>
-                        <!-- Barn -->
-                        <circle cx="180" cy="70" r="10" fill="#f43f5e"/>
-                        <path d="M 170 92 Q 180 84 190 92 L 190 125 L 170 125 Z" fill="#e11d48"/>
-                        <!-- Varm forbindelseslinje & Hjerte -->
-                        <path d="M 115 85 Q 148 70 170 95" stroke="url(#relWarm)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                        <text x="145" y="70" font-size="18" text-anchor="middle">❤️</text>
-                        <text x="100" y="137" font-size="10" fill="#94a3b8" text-anchor="middle">Mig (taleren)</text>
-                        <text x="180" y="137" font-size="10" fill="#94a3b8" text-anchor="middle">Mit barn</text>
+                    <svg viewBox="0 0 320 130" class="scene-clear-svg">
+                        <circle cx="100" cy="45" r="14" fill="#38bdf8"/>
+                        <path d="M 85 75 Q 100 64 115 75 L 115 115 L 85 115 Z" fill="#0284c7"/>
+                        <circle cx="180" cy="65" r="10" fill="#f43f5e"/>
+                        <path d="M 170 86 Q 180 78 190 86 L 190 115 L 170 115 Z" fill="#e11d48"/>
+                        <path d="M 115 80 Q 148 65 170 88" stroke="#f43f5e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                        <text x="145" y="62" font-size="18" text-anchor="middle">❤️</text>
+                        <text x="100" y="126" font-size="12" fill="#cbd5e1" font-weight="700" text-anchor="middle">Mig (taleren)</text>
+                        <text x="180" y="126" font-size="12" fill="#cbd5e1" font-weight="700" text-anchor="middle">Mit barn</text>
                     </svg>
                 </div>
             `;
@@ -566,20 +539,17 @@ export function renderGroundingView(container, navigateFn) {
             sceneTitle = getTranslation('groundingIndefinite');
             sceneHtml = `
                 <div class="visual-scene-box">
-                    <svg viewBox="0 0 320 140" class="modern-scene-svg">
-                        <!-- Spotlys kegle -->
-                        <polygon points="160,10 90,130 230,130" fill="rgba(250, 204, 21, 0.15)"/>
-                        <!-- Børn i skyggen -->
-                        <g opacity="0.3">
-                            <circle cx="70" cy="75" r="9" fill="#94a3b8"/>
-                            <path d="M 62 95 Q 70 88 78 95 L 78 125 L 62 125 Z" fill="#64748b"/>
-                            <circle cx="250" cy="75" r="9" fill="#94a3b8"/>
-                            <path d="M 242 95 Q 250 88 258 95 L 258 125 L 242 125 Z" fill="#64748b"/>
+                    <svg viewBox="0 0 320 130" class="scene-clear-svg">
+                        <polygon points="160,10 90,120 230,120" fill="rgba(250, 204, 21, 0.18)"/>
+                        <g opacity="0.35">
+                            <circle cx="70" cy="70" r="9" fill="#94a3b8"/>
+                            <path d="M 62 88 Q 70 82 78 88 L 78 115 L 62 115 Z" fill="#64748b"/>
+                            <circle cx="250" cy="70" r="9" fill="#94a3b8"/>
+                            <path d="M 242 88 Q 250 82 258 88 L 258 115 L 242 115 Z" fill="#64748b"/>
                         </g>
-                        <!-- Det udvalgte barn i spotlyset -->
-                        <circle cx="160" cy="70" r="10" fill="#facc15" filter="drop-shadow(0 0 8px #facc15)"/>
-                        <path d="M 150 92 Q 160 84 170 92 L 170 125 L 150 125 Z" fill="#eab308"/>
-                        <text x="160" y="137" font-size="10" fill="#facc15" font-weight="700" text-anchor="middle">Et barn (vilkårligt)</text>
+                        <circle cx="160" cy="65" r="10" fill="#facc15" filter="drop-shadow(0 0 8px #facc15)"/>
+                        <path d="M 150 86 Q 160 78 170 86 L 170 115 L 150 115 Z" fill="#eab308"/>
+                        <text x="160" y="126" font-size="12" fill="#facc15" font-weight="800" text-anchor="middle">Et barn (vilkårligt i mængden)</text>
                     </svg>
                 </div>
             `;
@@ -587,24 +557,20 @@ export function renderGroundingView(container, navigateFn) {
             sceneTitle = getTranslation('groundingDistal');
             sceneHtml = `
                 <div class="visual-scene-box">
-                    <svg viewBox="0 0 320 140" class="modern-scene-svg">
-                        <!-- Taleren der peger -->
-                        <g transform="translate(60, 45)">
+                    <svg viewBox="0 0 320 130" class="scene-clear-svg">
+                        <g transform="translate(60, 40)">
                             <circle cx="0" cy="12" r="12" fill="#38bdf8"/>
-                            <path d="M -12 38 Q 0 28 12 38 L 12 80 L -12 80 Z" fill="#0284c7"/>
-                            <!-- Pegende arm -->
-                            <line x1="8" y1="40" x2="45" y2="35" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M -12 36 Q 0 26 12 36 L 12 75 L -12 75 Z" fill="#0284c7"/>
+                            <line x1="8" y1="38" x2="45" y2="33" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
                         </g>
-                        <!-- Laser-pegestråle mod barnet på afstand -->
-                        <line x1="110" y1="80" x2="230" y2="80" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.8"/>
-                        <polygon points="230,76 240,80 230,84" fill="#38bdf8"/>
-                        <!-- Barnet på afstand -->
-                        <g transform="translate(260, 60)">
+                        <line x1="110" y1="73" x2="230" y2="73" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6 4"/>
+                        <polygon points="230,69 240,73 230,77" fill="#38bdf8"/>
+                        <g transform="translate(260, 55)">
                             <circle cx="0" cy="10" r="9" fill="#f43f5e"/>
-                            <path d="M -9 28 Q 0 20 9 28 L 9 65 L -9 65 Z" fill="#e11d48"/>
+                            <path d="M -9 26 Q 0 18 9 26 L 9 60 L -9 60 Z" fill="#e11d48"/>
                         </g>
-                        <text x="60" y="137" font-size="10" fill="#94a3b8" text-anchor="middle">Taleren</text>
-                        <text x="260" y="137" font-size="10" fill="#38bdf8" font-weight="700" text-anchor="middle">Det barn (på afstand)</text>
+                        <text x="60" y="126" font-size="12" fill="#cbd5e1" font-weight="700" text-anchor="middle">Taleren</text>
+                        <text x="260" y="126" font-size="12" fill="#38bdf8" font-weight="800" text-anchor="middle">Det barn (på afstand)</text>
                     </svg>
                 </div>
             `;
@@ -612,25 +578,22 @@ export function renderGroundingView(container, navigateFn) {
             sceneTitle = getTranslation('groundingProximal');
             sceneHtml = `
                 <div class="visual-scene-box">
-                    <svg viewBox="0 0 320 140" class="modern-scene-svg">
-                        <!-- Nærværs-boble / cirkel -->
-                        <ellipse cx="160" cy="85" rx="90" ry="40" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5 3"/>
-                        <!-- Taleren og barnet helt tæt på hinanden -->
-                        <g transform="translate(135, 50)">
+                    <svg viewBox="0 0 320 130" class="scene-clear-svg">
+                        <ellipse cx="160" cy="78" rx="85" ry="38" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6 4"/>
+                        <g transform="translate(135, 45)">
                             <circle cx="0" cy="12" r="12" fill="#38bdf8"/>
-                            <path d="M -12 38 Q 0 28 12 38 L 12 75 L -12 75 Z" fill="#0284c7"/>
+                            <path d="M -12 36 Q 0 26 12 36 L 12 70 L -12 70 Z" fill="#0284c7"/>
                         </g>
-                        <g transform="translate(185, 62)">
+                        <g transform="translate(185, 56)">
                             <circle cx="0" cy="10" r="9" fill="#f43f5e"/>
-                            <path d="M -9 28 Q 0 20 9 28 L 9 63 L -9 63 Z" fill="#e11d48"/>
+                            <path d="M -9 26 Q 0 18 9 26 L 9 59 L -9 59 Z" fill="#e11d48"/>
                         </g>
-                        <text x="160" y="137" font-size="10" fill="#38bdf8" font-weight="700" text-anchor="middle">Dette barn (lige her i nærværet)</text>
+                        <text x="160" y="126" font-size="12" fill="#38bdf8" font-weight="800" text-anchor="middle">Dette barn (lige her i nærværet)</text>
                     </svg>
                 </div>
             `;
         }
 
-        // Tidslinje markering
         let tenseLabel = getTranslation('presentTense');
         let pointerPercent = '50%';
         let tenseColor = '#4ade80';
@@ -646,35 +609,36 @@ export function renderGroundingView(container, navigateFn) {
         }
 
         stepDiv.innerHTML = `
-            <div class="step-badge" style="background: rgba(34, 197, 94, 0.15); color: #4ade80;">
+            <div class="step-progress-tag" style="background: rgba(34, 197, 94, 0.2); color: #4ade80;">
                 Forankring bekræftet!
             </div>
-            <h2 class="step-title">Sætningen: "${state.nounAnchor} barn ${state.verbAnchor}."</h2>
+            <h2 class="step-heading">Sætningen: "${state.nounAnchor} barn ${state.verbAnchor}."</h2>
 
-            <div class="visual-anchor-card">
-                <div class="card-mini-title">${sceneTitle}</div>
+            <div class="visual-card-block">
+                <div class="visual-card-title">${sceneTitle}</div>
                 ${sceneHtml}
             </div>
 
-            <!-- Tidsaksen for verbet -->
-            <div class="visual-timeline-card">
-                <div class="timeline-header-row">
-                    <span class="timeline-title">Handlingen forankret i tiden:</span>
-                    <span class="timeline-active-tag" style="color: ${tenseColor};">${state.verbAnchor} (${tenseLabel})</span>
+            <div class="visual-card-block">
+                <div class="timeline-row-top">
+                    <span class="timeline-big-title">Handlingen forankret i tiden:</span>
+                    <span class="timeline-status-pill" style="color: ${tenseColor}; border-color: ${tenseColor};">
+                        ${state.verbAnchor} (${tenseLabel})
+                    </span>
                 </div>
-                <div class="timeline-track-bar">
-                    <div class="track-line"></div>
-                    <div class="track-nodes">
-                        <span class="track-node ${state.verbAnchor === 'spiste' ? 'active-node' : ''}">Fortid (datid)</span>
-                        <span class="track-node ${state.verbAnchor === 'spiser' ? 'active-node' : ''}">Nutid (lige nu)</span>
-                        <span class="track-node ${state.verbAnchor === 'skal spise' ? 'active-node' : ''}">Fremtid (planlagt)</span>
+                <div class="timeline-bar-wrapper">
+                    <div class="timeline-center-rail"></div>
+                    <div class="timeline-points-row">
+                        <span class="time-label ${state.verbAnchor === 'spiste' ? 'time-label-active' : ''}">Fortid (datid)</span>
+                        <span class="time-label ${state.verbAnchor === 'spiser' ? 'time-label-active' : ''}">Nutid (lige nu)</span>
+                        <span class="time-label ${state.verbAnchor === 'skal spise' ? 'time-label-active' : ''}">Fremtid (planlagt)</span>
                     </div>
-                    <div class="timeline-glow-cursor" style="left: ${pointerPercent}; background: ${tenseColor};"></div>
+                    <div class="timeline-marker-orb" style="left: ${pointerPercent}; background: ${tenseColor};"></div>
                 </div>
             </div>
 
-            <div style="margin-top: 2rem; text-align: center;">
-                <button type="button" class="btn-proceed-bridge" id="btn-goto-final">
+            <div style="margin-top: 1.8rem; text-align: center;">
+                <button type="button" class="btn-goto-chain" id="btn-goto-final">
                     <span>Se hele grammatik-rejsen ➔</span>
                 </button>
             </div>
@@ -698,98 +662,92 @@ export function renderGroundingView(container, navigateFn) {
         const completedSentence = `${state.nounAnchor} barn ${state.verbAnchor}.`;
 
         stepDiv.innerHTML = `
-            <div class="completion-hero">
-                <div class="completion-crown">🏆</div>
-                <h2 style="font-size: 1.8rem; color: white; margin-bottom: 0.5rem;">
+            <div class="completion-banner">
+                <div class="trophy-emoji">🏆</div>
+                <h2 style="font-size: 1.8rem; color: white; margin-bottom: 0.5rem; font-weight: 800;">
                     Grundsætningen er solidt forankret!
                 </h2>
-                <div class="hero-sentence-showcase">
-                    <span class="hero-sentence-text">"${completedSentence}"</span>
-                    <button type="button" class="btn-audio-hero" id="btn-speak-final">
+                <div class="big-sentence-badge">
+                    <span class="badge-text">"${completedSentence}"</span>
+                    <button type="button" class="btn-badge-audio" id="btn-speak-final">
                         <span>🔊</span>
                         <span>Lyt</span>
                     </button>
                 </div>
-                <p style="color: #94a3b8; font-size: 1.05rem; max-width: 620px; margin: 0 auto 2rem; line-height: 1.6;">
+                <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 620px; margin: 0 auto 1.8rem; line-height: 1.55;">
                     ${getTranslation('groundingFinalMsg')}
                 </p>
             </div>
 
-            <!-- DEN STORE SAMMENHÆNGENDE GRAMMATIK-STI -->
-            <div class="grammar-chain-card">
-                <div class="chain-title">
-                    <span>Den store grammatik-sti: Se hvordan sætningen vokser</span>
+            <!-- GRAMMATIK-STIEN -->
+            <div class="grammar-path-box">
+                <div class="path-box-title">
+                    <span>Den store grammatik-sti: Se hvordan sætningen udbygges</span>
                 </div>
 
-                <div class="chain-steps-list">
-                    <!-- Trin 1: Intro (Gennemført) -->
-                    <div class="chain-step-row step-done">
-                        <div class="step-status-icon">✓</div>
-                        <div class="step-info">
-                            <div class="step-name">1. Grundsætning (Intro)</div>
-                            <div class="step-sentence-preview">"${state.nounAnchor} barn ${state.verbAnchor}."</div>
+                <div class="path-steps-column">
+                    <div class="path-step-item item-completed">
+                        <div class="step-num-icon">✓</div>
+                        <div class="step-text-content">
+                            <div class="step-title-bold">1. Grundsætning (Intro)</div>
+                            <div class="step-sub-sentence">"${state.nounAnchor} barn ${state.verbAnchor}."</div>
                         </div>
-                        <div class="step-badge-status">Gennemført</div>
+                        <div class="step-tag-completed">Gennemført</div>
                     </div>
 
-                    <!-- Trin 2: Modalverber (Næste skridt!) -->
-                    <div class="chain-step-row step-next">
-                        <div class="step-status-icon">⚡</div>
-                        <div class="step-info">
-                            <div class="step-name">2. Modalverber (Vilje, pligt og evne)</div>
-                            <div class="step-sentence-preview">"Mit barn <strong>[vil / skal / kan]</strong> spise..."</div>
+                    <div class="path-step-item item-next-highlight">
+                        <div class="step-num-icon">⚡</div>
+                        <div class="step-text-content">
+                            <div class="step-title-bold">2. Modalverber (Vilje, pligt og evne)</div>
+                            <div class="step-sub-sentence">"Mit barn <strong>[vil / skal / kan]</strong> spise..."</div>
                         </div>
-                        <div class="step-badge-status status-next">Næste skridt</div>
+                        <div class="step-tag-next">Næste skridt</div>
                     </div>
 
-                    <!-- Trin 3: Adjektiver -->
-                    <div class="chain-step-row step-upcoming">
-                        <div class="step-status-icon">🏷️</div>
-                        <div class="step-info">
-                            <div class="step-name">3. Adjektiver (Beskrivelse)</div>
-                            <div class="step-sentence-preview">"Mit <strong>[lille / sultne]</strong> barn vil spise..."</div>
+                    <div class="path-step-item item-future">
+                        <div class="step-num-icon">🏷️</div>
+                        <div class="step-text-content">
+                            <div class="step-title-bold">3. Adjektiver (Beskrivelse)</div>
+                            <div class="step-sub-sentence">"Mit <strong>[lille / sultne]</strong> barn vil spise..."</div>
                         </div>
-                        <div class="step-badge-status status-upcoming">Trin 3</div>
+                        <div class="step-tag-future">Trin 3</div>
                     </div>
 
-                    <!-- Trin 4: Adverbier -->
-                    <div class="chain-step-row step-upcoming">
-                        <div class="step-status-icon">🌊</div>
-                        <div class="step-info">
-                            <div class="step-name">4. Adverbier (Måde, grad og tid)</div>
-                            <div class="step-sentence-preview">"Mit lille barn vil spise <strong>[langsomt / gerne]</strong>..."</div>
+                    <div class="path-step-item item-future">
+                        <div class="step-num-icon">🌊</div>
+                        <div class="step-text-content">
+                            <div class="step-title-bold">4. Adverbier (Måde, grad og tid)</div>
+                            <div class="step-sub-sentence">"Mit lille barn vil spise <strong>[langsomt / gerne]</strong>..."</div>
                         </div>
-                        <div class="step-badge-status status-upcoming">Trin 4</div>
+                        <div class="step-tag-future">Trin 4</div>
                     </div>
 
-                    <!-- Trin 5: Konjunktioner -->
-                    <div class="chain-step-row step-upcoming">
-                        <div class="step-status-icon">🌉</div>
-                        <div class="step-info">
-                            <div class="step-name">5. Konjunktioner (Tekstflow & bindeord)</div>
-                            <div class="step-sentence-preview">"Mit lille barn vil spise, <strong>[fordi]</strong> det er sultent..."</div>
+                    <div class="path-step-item item-future">
+                        <div class="step-num-icon">🌉</div>
+                        <div class="step-text-content">
+                            <div class="step-title-bold">5. Konjunktioner (Tekstflow & bindeord)</div>
+                            <div class="step-sub-sentence">"Mit lille barn vil spise, <strong>[fordi]</strong> det er sultent..."</div>
                         </div>
-                        <div class="step-badge-status status-upcoming">Trin 5</div>
+                        <div class="step-tag-future">Trin 5</div>
                     </div>
                 </div>
             </div>
 
-            <!-- TEASER OG KNAP TIL MODALVERBER -->
-            <div class="modal-launch-card">
-                <h3 style="color: #fbbf24; font-size: 1.3rem; margin-bottom: 0.5rem;">
+            <!-- MODAL TEASER KNAP -->
+            <div class="modal-bridge-card">
+                <h3 style="color: #fbbf24; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">
                     Tag "${completedSentence}" med ind i Modalverber
                 </h3>
-                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.5;">
+                <p style="color: #f1f5f9; font-size: 1.05rem; max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.5;">
                     Hvad sker der, når barnet ikke bare <em>spiser</em>, men <strong>vil</strong>, <strong>skal</strong> eller <strong>må</strong> spise?
                 </p>
-                <button type="button" class="btn-start-modal-primary" id="btn-start-modal-chain">
+                <button type="button" class="btn-launch-modal" id="btn-start-modal-chain">
                     <span>${getTranslation('nextStepModalVerbs')} ➔</span>
                 </button>
             </div>
 
-            <!-- Start forfra mulighed -->
             <div style="text-align: center; margin-top: 1.5rem;">
-                <button type="button" class="btn-restart-intro" id="btn-restart-all">
+                <button type="button" class="btn-restart-action" id="btn-restart-all">
                     Prøv med et andet anker 🔄
                 </button>
             </div>
@@ -797,7 +755,6 @@ export function renderGroundingView(container, navigateFn) {
 
         stepDiv.querySelector('#btn-speak-final').onclick = () => speakDanish(completedSentence);
 
-        // SEND STATE DIREKTE VIDERE TIL MODALVERBER!
         stepDiv.querySelector('#btn-start-modal-chain').onclick = () => {
             navigateFn('modal_force', {
                 nounAnchor: state.nounAnchor,
@@ -817,189 +774,187 @@ export function renderGroundingView(container, navigateFn) {
         interactionCard.appendChild(stepDiv);
     }
 
-    // Initial kørsel
     renderStep();
 
     // ==========================================================
-    // STYLES FOR GROUNDING 2.0
+    // CSS MED STORE, LETLÆSELIGE TEKSTER & KOMPAKT SCENE
     // ==========================================================
-    if (!document.getElementById('grounding-2-styles')) {
+    if (!document.getElementById('grounding-compact-styles')) {
         const style = document.createElement('style');
-        style.id = 'grounding-2-styles';
+        style.id = 'grounding-compact-styles';
         style.textContent = `
-            .grounding-view-2 {
-                max-width: 900px;
+            .grounding-view-compact {
+                max-width: 860px;
                 margin: 0 auto;
-                padding: 0.5rem 1rem 4rem;
+                padding: 0.5rem 1rem 3.5rem;
                 color: #f8fafc;
             }
 
-            .grounding-header-hero {
+            /* Kompakt header */
+            .grounding-compact-header {
                 text-align: center;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1rem;
             }
-            .grounding-journey-badge {
+            .grounding-step-pill {
                 display: inline-flex;
                 align-items: center;
-                gap: 0.5rem;
-                background: rgba(56, 189, 248, 0.12);
-                border: 1px solid rgba(56, 189, 248, 0.3);
-                padding: 0.3rem 0.85rem;
+                gap: 0.4rem;
+                background: rgba(56, 189, 248, 0.15);
+                border: 1px solid rgba(56, 189, 248, 0.35);
+                padding: 0.25rem 0.8rem;
                 border-radius: 9999px;
-                font-size: 0.8rem;
+                font-size: 0.85rem;
                 font-weight: 700;
                 color: #38bdf8;
-                margin-bottom: 0.8rem;
+                margin-bottom: 0.5rem;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
             }
-            .badge-dot {
+            .pill-dot {
                 width: 8px;
                 height: 8px;
                 border-radius: 50%;
                 background: #38bdf8;
-                box-shadow: 0 0 8px #38bdf8;
+                box-shadow: 0 0 6px #38bdf8;
             }
-            .grounding-header-hero h1 {
-                font-size: 2rem;
+            .grounding-compact-header h1 {
+                font-size: 1.85rem;
                 font-weight: 800;
-                margin: 0 0 0.4rem;
+                margin: 0 0 0.35rem;
                 color: #ffffff;
                 letter-spacing: -0.02em;
             }
-            .grounding-subtitle {
-                color: #94a3b8;
+            .grounding-lead-text {
+                color: #cbd5e1;
                 font-size: 1.05rem;
-                max-width: 660px;
+                max-width: 650px;
                 margin: 0 auto;
                 line-height: 1.5;
             }
 
-            /* Stage Card */
-            .grounding-stage-card {
+            /* Kompakt scene */
+            .grounding-compact-stage {
                 background: #0f172a;
                 border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 20px;
-                padding: 1.25rem;
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-                margin-bottom: 1.75rem;
+                border-radius: 16px;
+                padding: 0.85rem 1rem;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                margin-bottom: 1.25rem;
             }
-            .sky-canvas-wrapper {
+            .compact-sky-frame {
                 width: 100%;
-                border-radius: 14px;
+                max-height: 145px;
+                border-radius: 10px;
                 overflow: hidden;
             }
-            .grounding-sky-svg {
+            .compact-sky-svg {
                 width: 100%;
                 height: auto;
                 display: block;
+                max-height: 145px;
             }
 
-            /* Live Sentence Strip */
-            .grounding-live-strip {
-                margin-top: 1rem;
-                background: rgba(15, 23, 42, 0.7);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 12px;
-                padding: 0.8rem 1rem;
+            /* Integreret sætningsbånd */
+            .compact-sentence-strip {
+                margin-top: 0.75rem;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                gap: 0.5rem;
+                justify-content: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 10px;
+                padding: 0.5rem 0.8rem;
             }
-            .strip-label {
-                font-size: 0.78rem;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                color: #94a3b8;
-                font-weight: 600;
+            .strip-lead {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #cbd5e1;
             }
-            .live-sentence-slots {
+            .live-sentence-row {
                 display: flex;
-                gap: 0.6rem;
+                gap: 0.5rem;
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            .sentence-slot {
-                padding: 0.45rem 1rem;
+            .slot-chip {
+                padding: 0.4rem 0.9rem;
                 border-radius: 8px;
                 font-size: 1.15rem;
-                font-weight: 700;
+                font-weight: 800;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
             }
-            .slot-noun-anchor, .slot-verb-anchor {
+            .slot-empty {
                 background: rgba(255, 255, 255, 0.04);
-                border: 1.5px dashed rgba(255, 255, 255, 0.2);
-                color: #64748b;
-                min-width: 110px;
+                border: 1.5px dashed rgba(255, 255, 255, 0.25);
+                color: #94a3b8;
+                font-size: 0.95rem;
+                font-weight: 700;
             }
-            .slot-noun {
-                background: rgba(244, 63, 94, 0.15);
-                border: 1.5px solid rgba(244, 63, 94, 0.4);
+            .slot-fixed {
+                background: rgba(244, 63, 94, 0.18);
+                border: 1.5px solid rgba(244, 63, 94, 0.5);
                 color: #fda4af;
             }
-            .slot-noun-filled {
-                background: rgba(251, 191, 36, 0.2);
+            .slot-filled-noun {
+                background: rgba(251, 191, 36, 0.22);
                 border: 1.5px solid #fbbf24;
                 color: #fde68a;
-                padding: 0.2rem 0.6rem;
-                border-radius: 6px;
             }
-            .slot-verb-filled {
-                background: rgba(34, 197, 94, 0.2);
+            .slot-filled-verb {
+                background: rgba(34, 197, 94, 0.22);
                 border: 1.5px solid #22c55e;
                 color: #86efac;
-                padding: 0.2rem 0.6rem;
-                border-radius: 6px;
             }
 
-            /* Interaction Card */
-            .grounding-interaction-card {
+            /* Opgavekort med stor typografi */
+            .grounding-task-card {
                 background: #1e293b;
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 20px;
-                padding: 1.8rem;
+                border-radius: 18px;
+                padding: 1.5rem;
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
             }
-            .step-badge {
+            .step-progress-tag {
                 display: inline-block;
                 background: rgba(56, 189, 248, 0.15);
                 color: #38bdf8;
-                font-size: 0.78rem;
-                font-weight: 700;
+                font-size: 0.85rem;
+                font-weight: 800;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
-                padding: 0.25rem 0.65rem;
+                padding: 0.25rem 0.7rem;
                 border-radius: 6px;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.4rem;
             }
-            .step-title {
-                font-size: 1.45rem;
+            .step-heading {
+                font-size: 1.55rem;
                 font-weight: 800;
                 color: white;
-                margin: 0 0 0.5rem;
+                margin: 0 0 0.4rem;
             }
-            .step-guide {
-                color: #94a3b8;
-                font-size: 1rem;
-                margin: 0 0 1.5rem;
-                line-height: 1.5;
+            .step-instruction {
+                color: #cbd5e1;
+                font-size: 1.12rem;
+                margin: 0 0 1.25rem;
+                line-height: 1.55;
             }
 
-            /* Anchor Chips Grid */
-            .anchor-chips-grid {
+            /* Store anker-kort med letlæselig tekst */
+            .big-cards-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
                 gap: 1rem;
             }
-            .grid-3-cols {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             }
-            .anchor-pick-card {
+            .big-anchor-card {
                 background: #0f172a;
-                border: 1.5px solid rgba(255, 255, 255, 0.12);
+                border: 2px solid rgba(255, 255, 255, 0.12);
                 border-radius: 14px;
                 padding: 1.2rem;
                 text-align: left;
@@ -1007,119 +962,120 @@ export function renderGroundingView(container, navigateFn) {
                 transition: all 0.2s ease;
                 display: flex;
                 flex-direction: column;
-                gap: 0.4rem;
+                gap: 0.35rem;
             }
-            .anchor-pick-card:hover {
+            .big-anchor-card:hover {
                 border-color: #38bdf8;
                 background: rgba(56, 189, 248, 0.08);
                 transform: translateY(-2px);
             }
-            .anchor-pick-card.selected {
+            .big-anchor-card.active-selected {
                 border-color: #4ade80 !important;
-                background: rgba(34, 197, 94, 0.15) !important;
+                background: rgba(34, 197, 94, 0.18) !important;
             }
-            .card-icon {
-                font-size: 1.6rem;
+            .card-top-row {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
                 margin-bottom: 0.2rem;
             }
-            .card-main {
-                display: flex;
-                align-items: baseline;
-                gap: 0.4rem;
+            .card-icon-big {
+                font-size: 2.2rem;
             }
-            .card-word {
-                font-size: 1.4rem;
-                font-weight: 800;
+            .card-title-word {
+                font-size: 1.75rem;
+                font-weight: 900;
                 color: #ffffff;
             }
-            .card-label {
-                font-size: 0.8rem;
-                color: #94a3b8;
-                font-weight: 600;
+            .card-highlight-label {
+                font-size: 1.05rem;
+                color: #38bdf8;
+                font-weight: 700;
             }
-            .card-desc {
-                font-size: 0.82rem;
-                color: #cbd5e1;
-                line-height: 1.4;
+            .card-explanation-text {
+                font-size: 1rem;
+                color: #e2e8f0;
+                line-height: 1.45;
+                margin-top: 0.2rem;
             }
 
-            /* Puzzle / Assembly */
-            .drag-pool-box {
+            /* Puslespil (Trin 3) */
+            .puzzle-source-card {
                 background: #0f172a;
                 border: 1px solid rgba(255, 255, 255, 0.08);
                 border-radius: 12px;
-                padding: 1rem;
+                padding: 1.1rem;
                 margin-bottom: 1.25rem;
             }
-            .pool-label {
-                font-size: 0.82rem;
-                color: #94a3b8;
-                font-weight: 600;
-                margin-bottom: 0.6rem;
-            }
-            .drag-pool-row {
-                display: flex;
-                gap: 0.8rem;
-                flex-wrap: wrap;
-                min-height: 48px;
-                align-items: center;
-            }
-            .puzzle-brick {
-                background: #1e293b;
-                border: 1.5px solid rgba(255, 255, 255, 0.18);
-                color: white;
-                font-size: 1.15rem;
+            .puzzle-title-label {
+                font-size: 1rem;
+                color: #cbd5e1;
                 font-weight: 700;
-                padding: 0.6rem 1.2rem;
-                border-radius: 10px;
-                cursor: pointer;
-                transition: all 0.2s;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                margin-bottom: 0.75rem;
             }
-            .puzzle-brick:hover {
-                border-color: #38bdf8;
-                transform: translateY(-2px);
-            }
-            .puzzle-brick.in-ground {
-                background: rgba(34, 197, 94, 0.18);
-                border-color: #22c55e;
-                color: #86efac;
-            }
-
-            .ground-landing-box {
-                background: rgba(21, 128, 61, 0.12);
-                border: 2px dashed rgba(74, 222, 128, 0.4);
-                border-radius: 14px;
-                padding: 1.25rem;
-                margin-bottom: 1.5rem;
-            }
-            .ground-landing-label {
-                font-size: 0.85rem;
-                font-weight: 700;
-                color: #4ade80;
-                margin-bottom: 0.6rem;
-            }
-            .ground-landing-zone {
+            .puzzle-chips-pool {
                 display: flex;
-                gap: 0.8rem;
+                gap: 0.9rem;
                 flex-wrap: wrap;
                 min-height: 52px;
                 align-items: center;
             }
+            .big-puzzle-chip {
+                background: #1e293b;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                color: white;
+                font-size: 1.35rem;
+                font-weight: 800;
+                padding: 0.7rem 1.4rem;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            }
+            .big-puzzle-chip:hover {
+                border-color: #38bdf8;
+                transform: translateY(-2px);
+            }
+            .big-puzzle-chip.chip-placed {
+                background: rgba(34, 197, 94, 0.2);
+                border-color: #22c55e;
+                color: #86efac;
+            }
 
-            .ground-actions-row {
+            .puzzle-target-card {
+                background: rgba(21, 128, 61, 0.15);
+                border: 2px dashed rgba(74, 222, 128, 0.5);
+                border-radius: 14px;
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+            .target-title-label {
+                font-size: 1.1rem;
+                font-weight: 800;
+                color: #4ade80;
+                margin-bottom: 0.75rem;
+            }
+            .puzzle-landing-bay {
+                display: flex;
+                gap: 0.9rem;
+                flex-wrap: wrap;
+                min-height: 56px;
+                align-items: center;
+            }
+
+            .puzzle-controls-bar {
                 display: flex;
                 gap: 1rem;
                 align-items: center;
                 flex-wrap: wrap;
             }
-            .btn-check-ground {
+            .btn-ground-confirm {
                 background: #22c55e;
                 color: #0f172a;
                 border: none;
-                padding: 0.8rem 1.6rem;
+                padding: 0.85rem 1.8rem;
                 border-radius: 12px;
-                font-size: 1rem;
+                font-size: 1.15rem;
                 font-weight: 800;
                 cursor: pointer;
                 transition: all 0.2s;
@@ -1127,21 +1083,21 @@ export function renderGroundingView(container, navigateFn) {
                 align-items: center;
                 gap: 0.5rem;
             }
-            .btn-check-ground:hover {
+            .btn-ground-confirm:hover {
                 background: #16a34a;
                 transform: translateY(-1px);
             }
-            .btn-reset-assembly {
+            .btn-ground-clear {
                 background: transparent;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: #94a3b8;
-                padding: 0.75rem 1.2rem;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                color: #cbd5e1;
+                padding: 0.8rem 1.25rem;
                 border-radius: 12px;
-                font-size: 0.9rem;
+                font-size: 1rem;
                 font-weight: 600;
                 cursor: pointer;
             }
-            .btn-reset-assembly:hover {
+            .btn-ground-clear:hover {
                 color: white;
                 border-color: white;
             }
@@ -1150,238 +1106,105 @@ export function renderGroundingView(container, navigateFn) {
                 margin-top: 1.2rem;
                 padding: 1.2rem;
                 border-radius: 12px;
-                line-height: 1.5;
+                line-height: 1.55;
             }
             .success-box {
-                background: rgba(34, 197, 94, 0.15);
-                border: 1px solid rgba(34, 197, 94, 0.4);
+                background: rgba(34, 197, 94, 0.18);
+                border: 1.5px solid rgba(34, 197, 94, 0.5);
                 color: #86efac;
             }
             .error-box {
-                background: rgba(239, 68, 68, 0.15);
-                border: 1px solid rgba(239, 68, 68, 0.4);
+                background: rgba(239, 68, 68, 0.18);
+                border: 1.5px solid rgba(239, 68, 68, 0.5);
                 color: #fca5a5;
             }
 
-            /* Visual Exploration */
-            .visual-anchor-card, .visual-timeline-card {
+            /* Visual Exploration (Trin 4) */
+            .visual-card-block {
                 background: #0f172a;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 14px;
                 padding: 1.25rem;
                 margin-bottom: 1.25rem;
             }
-            .card-mini-title {
-                font-size: 0.95rem;
-                font-weight: 700;
+            .visual-card-title {
+                font-size: 1.1rem;
+                font-weight: 800;
                 color: #38bdf8;
                 margin-bottom: 0.8rem;
             }
-            .modern-scene-svg {
+            .scene-clear-svg {
                 width: 100%;
-                max-width: 440px;
+                max-width: 420px;
                 height: auto;
                 display: block;
                 margin: 0 auto;
             }
-
-            /* Timeline */
-            .timeline-header-row {
+            .timeline-row-top {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 1rem;
-                font-size: 0.9rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
-            .timeline-title { color: #94a3b8; font-weight: 600; }
-            .timeline-active-tag { font-weight: 800; }
-            .timeline-track-bar {
+            .timeline-big-title {
+                font-size: 1.05rem;
+                font-weight: 700;
+                color: #cbd5e1;
+            }
+            .timeline-status-pill {
+                font-size: 1.05rem;
+                font-weight: 800;
+                border: 1.5px solid currentColor;
+                padding: 0.2rem 0.65rem;
+                border-radius: 6px;
+            }
+            .timeline-bar-wrapper {
                 position: relative;
                 padding: 1.5rem 0.5rem 0.5rem;
             }
-            .track-line {
-                height: 4px;
-                background: rgba(255, 255, 255, 0.15);
-                border-radius: 2px;
+            .timeline-center-rail {
+                height: 5px;
+                background: rgba(255, 255, 255, 0.18);
+                border-radius: 3px;
                 position: absolute;
                 top: 50%;
-                left: 10%;
-                right: 10%;
+                left: 8%;
+                right: 8%;
                 transform: translateY(-50%);
             }
-            .track-nodes {
+            .timeline-points-row {
                 display: flex;
                 justify-content: space-between;
                 position: relative;
                 z-index: 2;
             }
-            .track-node {
-                font-size: 0.82rem;
-                font-weight: 600;
-                color: #64748b;
+            .time-label {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #94a3b8;
                 background: #0f172a;
-                padding: 0.2rem 0.5rem;
-                border-radius: 4px;
+                padding: 0.25rem 0.6rem;
+                border-radius: 6px;
             }
-            .track-node.active-node {
+            .time-label-active {
                 color: white;
-                font-weight: 800;
+                font-weight: 900;
             }
-            .timeline-glow-cursor {
+            .timeline-marker-orb {
                 position: absolute;
                 top: 50%;
-                width: 16px;
-                height: 16px;
+                width: 18px;
+                height: 18px;
                 border-radius: 50%;
                 transform: translate(-50%, -50%);
-                box-shadow: 0 0 12px currentColor;
+                box-shadow: 0 0 14px currentColor;
                 z-index: 3;
                 transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             }
-
-            /* Progression Buttons */
-            .btn-proceed-bridge {
+            .btn-goto-chain {
                 background: #38bdf8;
-                color: #0f172a;
-                border: none;
-                padding: 0.85rem 1.8rem;
-                border-radius: 12px;
-                font-size: 1.05rem;
-                font-weight: 800;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-            .btn-proceed-bridge:hover {
-                background: #7dd3fc;
-                transform: translateY(-2px);
-            }
-
-            /* Final Completion & Chain */
-            .completion-hero {
-                text-align: center;
-                margin-bottom: 2rem;
-            }
-            .completion-crown {
-                font-size: 3rem;
-                margin-bottom: 0.5rem;
-            }
-            .hero-sentence-showcase {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.75rem;
-                background: rgba(34, 197, 94, 0.15);
-                border: 1.5px solid rgba(34, 197, 94, 0.4);
-                padding: 0.6rem 1.4rem;
-                border-radius: 9999px;
-                margin-bottom: 1.2rem;
-            }
-            .hero-sentence-text {
-                font-size: 1.45rem;
-                font-weight: 800;
-                color: #4ade80;
-            }
-            .btn-audio-hero {
-                background: rgba(255, 255, 255, 0.12);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: white;
-                padding: 0.3rem 0.75rem;
-                border-radius: 20px;
-                font-size: 0.85rem;
-                font-weight: 700;
-                cursor: pointer;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.3rem;
-            }
-            .btn-audio-hero:hover {
-                background: rgba(255, 255, 255, 0.25);
-            }
-
-            /* Grammar Chain Card */
-            .grammar-chain-card {
-                background: #0f172a;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 16px;
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            .chain-title {
-                font-size: 1rem;
-                font-weight: 700;
-                color: #38bdf8;
-                margin-bottom: 1rem;
-                display: flex;
-                align-items: center;
-                gap: 0.4rem;
-            }
-            .chain-steps-list {
-                display: flex;
-                flex-direction: column;
-                gap: 0.65rem;
-            }
-            .chain-step-row {
-                display: flex;
-                align-items: center;
-                gap: 0.9rem;
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid rgba(255, 255, 255, 0.07);
-                border-radius: 12px;
-                padding: 0.75rem 1rem;
-            }
-            .step-done {
-                border-color: rgba(34, 197, 94, 0.3);
-                background: rgba(34, 197, 94, 0.08);
-            }
-            .step-next {
-                border-color: rgba(251, 191, 36, 0.4);
-                background: rgba(251, 191, 36, 0.1);
-            }
-            .step-status-icon {
-                font-size: 1.25rem;
-                width: 28px;
-                text-align: center;
-            }
-            .step-info {
-                flex: 1;
-            }
-            .step-name {
-                font-size: 0.92rem;
-                font-weight: 700;
-                color: white;
-            }
-            .step-sentence-preview {
-                font-size: 0.85rem;
-                color: #94a3b8;
-                margin-top: 0.15rem;
-            }
-            .step-badge-status {
-                font-size: 0.75rem;
-                font-weight: 700;
-                padding: 0.2rem 0.6rem;
-                border-radius: 6px;
-                background: rgba(34, 197, 94, 0.2);
-                color: #4ade80;
-            }
-            .status-next {
-                background: rgba(251, 191, 36, 0.2);
-                color: #fbbf24;
-            }
-            .status-upcoming {
-                background: rgba(255, 255, 255, 0.06);
-                color: #64748b;
-            }
-
-            /* Modal Launch Card */
-            .modal-launch-card {
-                background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.05));
-                border: 1.5px solid rgba(251, 191, 36, 0.4);
-                border-radius: 18px;
-                padding: 1.8rem;
-                text-align: center;
-                box-shadow: 0 8px 25px rgba(251, 191, 36, 0.15);
-            }
-            .btn-start-modal-primary {
-                background: #fbbf24;
                 color: #0f172a;
                 border: none;
                 padding: 0.9rem 2rem;
@@ -1390,31 +1213,173 @@ export function renderGroundingView(container, navigateFn) {
                 font-weight: 800;
                 cursor: pointer;
                 transition: all 0.2s;
-                box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
             }
-            .btn-start-modal-primary:hover {
+            .btn-goto-chain:hover {
+                background: #7dd3fc;
+                transform: translateY(-2px);
+            }
+
+            /* Final Completion (Trin 5) */
+            .completion-banner {
+                text-align: center;
+                margin-bottom: 1.75rem;
+            }
+            .trophy-emoji {
+                font-size: 2.8rem;
+                margin-bottom: 0.4rem;
+            }
+            .big-sentence-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.8rem;
+                background: rgba(34, 197, 94, 0.18);
+                border: 2px solid rgba(34, 197, 94, 0.5);
+                padding: 0.65rem 1.5rem;
+                border-radius: 9999px;
+                margin-bottom: 1rem;
+            }
+            .badge-text {
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: #4ade80;
+            }
+            .btn-badge-audio {
+                background: rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                color: white;
+                padding: 0.35rem 0.85rem;
+                border-radius: 20px;
+                font-size: 0.95rem;
+                font-weight: 700;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+            }
+            .btn-badge-audio:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            /* Grammatik-stien */
+            .grammar-path-box {
+                background: #0f172a;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 16px;
+                padding: 1.4rem;
+                margin-bottom: 1.75rem;
+            }
+            .path-box-title {
+                font-size: 1.1rem;
+                font-weight: 800;
+                color: #38bdf8;
+                margin-bottom: 1rem;
+            }
+            .path-steps-column {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .path-step-item {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 12px;
+                padding: 0.85rem 1.1rem;
+            }
+            .item-completed {
+                border-color: rgba(34, 197, 94, 0.4);
+                background: rgba(34, 197, 94, 0.1);
+            }
+            .item-next-highlight {
+                border-color: rgba(251, 191, 36, 0.5);
+                background: rgba(251, 191, 36, 0.12);
+            }
+            .step-num-icon {
+                font-size: 1.35rem;
+                width: 30px;
+                text-align: center;
+            }
+            .step-text-content {
+                flex: 1;
+            }
+            .step-title-bold {
+                font-size: 1.05rem;
+                font-weight: 800;
+                color: white;
+            }
+            .step-sub-sentence {
+                font-size: 0.95rem;
+                color: #cbd5e1;
+                margin-top: 0.15rem;
+            }
+            .step-tag-completed {
+                font-size: 0.85rem;
+                font-weight: 800;
+                padding: 0.25rem 0.65rem;
+                border-radius: 6px;
+                background: rgba(34, 197, 94, 0.25);
+                color: #4ade80;
+            }
+            .step-tag-next {
+                font-size: 0.85rem;
+                font-weight: 800;
+                padding: 0.25rem 0.65rem;
+                border-radius: 6px;
+                background: rgba(251, 191, 36, 0.25);
+                color: #fbbf24;
+            }
+            .step-tag-future {
+                font-size: 0.85rem;
+                font-weight: 700;
+                padding: 0.25rem 0.65rem;
+                border-radius: 6px;
+                background: rgba(255, 255, 255, 0.06);
+                color: #94a3b8;
+            }
+
+            .modal-bridge-card {
+                background: linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(245, 158, 11, 0.08));
+                border: 2px solid rgba(251, 191, 36, 0.5);
+                border-radius: 18px;
+                padding: 1.75rem;
+                text-align: center;
+                box-shadow: 0 8px 25px rgba(251, 191, 36, 0.2);
+            }
+            .btn-launch-modal {
+                background: #fbbf24;
+                color: #0f172a;
+                border: none;
+                padding: 1rem 2.2rem;
+                border-radius: 14px;
+                font-size: 1.25rem;
+                font-weight: 900;
+                cursor: pointer;
+                transition: all 0.2s;
+                box-shadow: 0 4px 16px rgba(251, 191, 36, 0.35);
+            }
+            .btn-launch-modal:hover {
                 background: #f59e0b;
                 transform: scale(1.02);
-                box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
             }
-            .btn-restart-intro {
+            .btn-restart-action {
                 background: transparent;
                 border: none;
-                color: #94a3b8;
-                font-size: 0.9rem;
+                color: #cbd5e1;
+                font-size: 1rem;
                 font-weight: 600;
                 cursor: pointer;
                 text-decoration: underline;
             }
-            .btn-restart-intro:hover {
+            .btn-restart-action:hover {
                 color: white;
             }
 
             @media (max-width: 640px) {
-                .grounding-header-hero h1 { font-size: 1.6rem; }
-                .anchor-chips-grid { grid-template-columns: 1fr; }
-                .live-sentence-slots { flex-direction: column; width: 100%; }
-                .sentence-slot { width: 100%; }
+                .grounding-compact-header h1 { font-size: 1.5rem; }
+                .big-cards-grid { grid-template-columns: 1fr; }
+                .compact-sentence-strip { flex-direction: column; }
             }
         `;
         document.head.appendChild(style);

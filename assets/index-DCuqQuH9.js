@@ -43213,7 +43213,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             .grounding-stage-compact {
                 position: -webkit-sticky;
                 position: sticky;
-                top: 0;
+                top: 0.5rem;
                 z-index: 60;
                 margin-bottom: 0.85rem;
                 width: 100%;
@@ -45702,7 +45702,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .modal-stage-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            top: 0.5rem;
             z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
@@ -46272,8 +46272,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             transform: scale(1.02);
         }
 
-        @media (max-width: 480px) {
-            .modal-force-mobile-view { padding: 0 0.15rem 2.5rem !important; }
+        @media (max-width: 640px) {
+            .modal-force-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .stage-sticky-bar { padding-right: 94px !important; }
             .modal-cards-grid { grid-template-columns: 1fr; }
             .card-word { font-size: 1.3rem; }
             .modal-main-title { font-size: 1.3rem; }
@@ -46782,7 +46783,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .adj-stage-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            top: 0.5rem;
             z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
@@ -47577,8 +47578,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             transform: scale(1.02);
         }
 
-        @media (max-width: 480px) {
-            .adjective-mobile-view { padding: 0 0.15rem 2.5rem !important; }
+        @media (max-width: 640px) {
+            .adjective-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .stage-sticky-bar { padding-right: 94px !important; }
             .adj-cards-grid { grid-template-columns: 1fr; }
             .card-word { font-size: 1.3rem; }
             .adj-main-title { font-size: 1.3rem; }
@@ -48172,7 +48174,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .adverb-stage-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            top: 0.5rem;
             z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
@@ -48684,6 +48686,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
 
         @media (max-width: 640px) {
             .adverb-mobile-view { padding: 0 0.25rem 2.5rem !important; }
+            .stage-sticky-bar { padding-right: 94px !important; }
             .strip-blocks-row { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem !important; }
             .adverb-cards-row { grid-template-columns: 1fr !important; }
             .comparison-boxes-grid { grid-template-columns: 1fr !important; }
@@ -49186,7 +49189,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
         .conjunction-stage-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            top: 0.5rem;
             z-index: 60;
             margin-bottom: 0.85rem;
             width: 100%;
@@ -49686,9 +49689,10 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             transition: all 0.2s;
             text-align: center;
         }
-        .btn-secondary-link:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
+        @media (max-width: 640px) {
+            .conjunction-bridge-view { padding: 0 0.25rem 2.5rem !important; }
+            .stage-sticky-bar { padding-right: 94px !important; }
+            .secondary-actions-row { grid-template-columns: 1fr; }
         }
     `,document.head.appendChild(h)}function zo(J,y,t={}){const r=document.createElement("div");r.className="view-container adj-comparison-view";const n=Se()==="en";function s(q){if(!("speechSynthesis"in window))return;window.speechSynthesis.cancel();const O=new SpeechSynthesisUtterance(q);O.lang="da-DK",O.rate=.9,window.speechSynthesis.speak(O)}const i=document.createElement("div");i.className="top-bar",i.style.display="flex",i.style.justifyContent="space-between",i.style.alignItems="center",i.style.flexWrap="wrap",i.style.gap="0.8rem";const E=document.createElement("button");E.className="back-btn",E.innerHTML=`← ${e("back")||(n?"Back":"Tilbage")}`,E.onclick=()=>y(t.from||"top100_adjektiver"),i.appendChild(E);const A=document.createElement("button");A.className="back-btn",A.style.background="rgba(168, 85, 247, 0.2)",A.style.borderColor="#a855f7",A.style.color="#c084fc",A.innerHTML="🟣 De 100 Adjektiver (Hub) ➔",A.onclick=()=>y("top100_adjektiver"),i.appendChild(A),r.appendChild(i);const S=document.createElement("h1");S.textContent=n?"📏 Big / bigger / biggest? (Adjectives & Definite Forms)":"📏 Stor / større / størst? (Gradbøjning & bestemt form)",r.appendChild(S);const P=document.createElement("p");P.className="subtitle",P.textContent=n?"Degrees of comparison and the definite -e rule: From single descriptions to comparisons, winners, and ownership.":"Intuitiv gradbøjning og den vigtige e-regel: Fra almindelig beskrivelse til sammenligninger, vinderen og bestemt form (-e).",r.appendChild(P);let u=!0;const x=document.createElement("div");x.className="adj-grammar-toggle-bar";const K=document.createElement("button");K.className="adj-grammar-toggle-btn",K.id="adj-grammar-toggle-btn";function Z(){u?(r.classList.remove("hide-grammar-terms"),K.innerHTML=n?'<span class="toggle-icon">🏷️</span> <span class="toggle-main">Grammar terms: <strong>ACTIVE</strong></span> <span class="toggle-hint">• Click to hide terms (everyday language)</span>':'<span class="toggle-icon">🏷️</span> <span class="toggle-main">Grammatiske betegnelser: <strong>VISES</strong></span> <span class="toggle-hint">• Klik for at skjule fagtermer (hverdagssprog)</span>',K.classList.remove("everyday-mode")):(r.classList.add("hide-grammar-terms"),K.innerHTML=n?'<span class="toggle-icon">🗣️</span> <span class="toggle-main">Everyday language: <strong>ACTIVE</strong></span> <span class="toggle-hint">• Click to show grammar terms</span>':'<span class="toggle-icon">🗣️</span> <span class="toggle-main">Hverdagssprog: <strong>AKTIVT</strong></span> <span class="toggle-hint">• Klik for at vise grammatiske betegnelser</span>',K.classList.add("everyday-mode"))}K.onclick=()=>{u=!u,Z()},Z(),x.appendChild(K),r.appendChild(x);const ae=document.createElement("div");ae.className="adj-grammar-banner",ae.innerHTML=`
         <div class="grammar-system-item">

@@ -1,62 +1,74 @@
 import { getTranslation } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
-import { navigate } from '../main.js';
 import { baseUrl } from '../utils/config.js';
 
+/**
+ * ModalForceView 2.0 - Kognitiv Force Dynamics (Leonard Talmy).
+ * 
+ * Didaktisk fundament:
+ * 1. Modalverber udtrykker fysiske og sociale kraftfelter:
+ *    - SKAL: Ydre pres / social nødvendighed (External compulsion)
+ *    - MÅ: Fjernelse af barriere / tilladelse (Removal of barrier)
+ *    - VIL: Indre drivkraft / vilje & intention (Internal volition & attraction)
+ *    - KAN: Kapacitet / mulighedsfelt (Sphere of potential & capability)
+ * 2. Finithed: Modalverbet stjæler tidsankeret (vil -> ville), mens
+ *    hovedverbet (spise) forbliver uforanderligt i infinitiv (mental projektion).
+ * 3. Fuldt integreret i master-kæden: Grundsætning -> Modalverber -> Adjektiver.
+ */
 export function renderModalForceView(container, navigateFn, inheritedState = {}) {
-    const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container modal-force-view';
+    container.innerHTML = '';
 
-    // Default state if nothing inherited
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container modal-force-mobile-view';
+
+    // State videreført fra GroundingView eller defaults
     const state = {
-        nounAnchor: inheritedState.nounAnchor || 'Et',
+        nounAnchor: inheritedState.nounAnchor || 'Mit',
+        selectedNoun: inheritedState.selectedNoun || 'barn',
         verbAnchor: (inheritedState.verbAnchor || 'spiser').replace(' (nu)', '').replace(' (i går)', '').replace(' (senere)', ''),
-        selectedModal: inheritedState.selectedModal || '',
+        selectedModal: inheritedState.selectedModal || 'vil',
+        isPast: inheritedState.verbAnchor === 'spiste' || inheritedState.isPast === true,
+        showFiniteness: false
     };
 
-    function getVerbTranslation(verb) {
-        if (verb === 'spiser') return getTranslation('vocabEats');
-        if (verb === 'spiste') return getTranslation('vocabAte');
-        if (verb === 'skal spise') return getTranslation('vocabWillEat');
-        return verb;
+    // TTS Audio Helper
+    function speakDanish(text) {
+        if (!('speechSynthesis' in window) || !text) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'da-DK';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
     }
 
-    function getModalTranslation(modal) {
-        if (!modal) return '???';
-        const modalKeys = {
-            'skal': 'vocabSkal',
-            'må': 'vocabMaa',
-            'vil': 'vocabVil',
-            'kan': 'vocabKan'
-        };
-        return modal + ' (' + getTranslation(modalKeys[modal] || modal).toLowerCase() + ')';
+    // Modal bøjnings-ordbog
+    const MODAL_FORMS = {
+        'skal': { present: 'skal', past: 'skulle', en: 'must / shall', icon: '⚡', color: '#f97316' },
+        'må': { present: 'må', past: 'måtte', en: 'may / allowed to', icon: '🚪', color: '#22c55e' },
+        'vil': { present: 'vil', past: 'ville', en: 'wants to / will', icon: '❤️', color: '#f43f5e' },
+        'kan': { present: 'kan', past: 'kunne', en: 'can / able to', icon: '🌐', color: '#38bdf8' }
+    };
+
+    function getBaseModal(m) {
+        if (['skal', 'skulle'].includes(m)) return 'skal';
+        if (['må', 'måtte'].includes(m)) return 'må';
+        if (['vil', 'ville'].includes(m)) return 'vil';
+        if (['kan', 'kunne'].includes(m)) return 'kan';
+        return m || 'vil';
     }
 
-    function getModalPastTranslation(modal) {
-        if (!modal) return '';
-        const base = getBaseModal(modal);
-        const pastKeys = {
-            'skal': 'vocabSkulle',
-            'må': 'vocabMaatte',
-            'vil': 'vocabVille',
-            'kan': 'vocabKunne'
-        };
-        const pastDanish = { 'skal': 'skulle', 'må': 'måtte', 'vil': 'ville', 'kan': 'kunne' }[base];
-        return pastDanish + ' (' + getTranslation(pastKeys[base] || base).toLowerCase() + ')';
+    function getCurrentModalWord() {
+        const base = getBaseModal(state.selectedModal);
+        return state.isPast ? MODAL_FORMS[base].past : MODAL_FORMS[base].present;
     }
 
-    function getBaseModal(modal) {
-        if (!modal) return '';
-        if (['skal', 'skulle'].includes(modal)) return 'skal';
-        if (['må', 'måtte'].includes(modal)) return 'må';
-        if (['vil', 'ville'].includes(modal)) return 'vil';
-        if (['kan', 'kunne'].includes(modal)) return 'kan';
-        return modal;
+    function getFullSentence() {
+        return `${state.nounAnchor} ${state.selectedNoun} ${getCurrentModalWord()} spise.`;
     }
 
-    const isPast = state.verbAnchor === 'spiste';
-
-    // Top bar
+    // -------------------------------------------------------------
+    // TOP BAR & NAVIGATION
+    // -------------------------------------------------------------
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
@@ -66,547 +78,1043 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
+    // Grammatik-menu
     viewContainer.appendChild(renderGrammarMenu('modalverber', navigateFn));
 
-    // Header
-    const title = document.createElement('h1');
-    title.textContent = getTranslation('modalForceTitle');
-    const subtitle = document.createElement('p');
-    subtitle.className = 'subtitle';
-    subtitle.textContent = getTranslation('modalForceSubtitle');
-    viewContainer.appendChild(title);
-    viewContainer.appendChild(subtitle);
+    // Kompakt overskrift
+    const headerEl = document.createElement('div');
+    headerEl.className = 'modal-hero-compact';
+    headerEl.innerHTML = `
+        <div class="modal-step-badge">
+            <span class="badge-dot-live"></span>
+            <span>Trin 2 af 5: Modalverber</span>
+        </div>
+        <h1 class="modal-main-title">${getTranslation('modalForceTitle')}</h1>
+        <p class="modal-sub-desc">${getTranslation('modalForceSubtitle')}</p>
+    `;
+    viewContainer.appendChild(headerEl);
 
-    const exerciseArea = document.createElement('div');
-    exerciseArea.className = 'exercise-container';
-    viewContainer.appendChild(exerciseArea);
+    // =============================================================
+    // DYNAMISK KRAFTFELT-SCENE (Aspect-ratio responsive SVG)
+    // =============================================================
+    const stageCard = document.createElement('div');
+    stageCard.className = 'modal-stage-card';
+    viewContainer.appendChild(stageCard);
 
-    function renderExercise() {
-        exerciseArea.innerHTML = `
-            <div id="force-section" class="step-content animate-in">
-                <div class="force-visualization" id="force-viz">
-                    <div class="viz-placeholder">${getTranslation('modalForcePlaceholder')}</div>
-                </div>
+    // =============================================================
+    // LIVE SÆTNINGSBÅND (Mit barn [modal] spise)
+    // =============================================================
+    const stripCard = document.createElement('div');
+    stripCard.className = 'modal-sentence-strip-card';
+    viewContainer.appendChild(stripCard);
 
-                <div class="modal-interaction">
-                    <span class="sentence-part no-wrap">${state.nounAnchor} barn</span>
-                    <select class="grammatik-select modal-select" id="modal-select">
-                        <option value="">???</option>
-                        <option value="${isPast ? 'skulle' : 'skal'}" ${state.selectedModal === (isPast ? 'skulle' : 'skal') ? 'selected' : ''}>${isPast ? 'skulle' : 'skal'} - ${isPast ? getTranslation('vocabSkulle') : getTranslation('vocabSkal')}</option>
-                        <option value="${isPast ? 'måtte' : 'må'}" ${state.selectedModal === (isPast ? 'måtte' : 'må') ? 'selected' : ''}>${isPast ? 'måtte' : 'må'} - ${isPast ? getTranslation('vocabMaatte') : getTranslation('vocabMaa')}</option>
-                        <option value="${isPast ? 'ville' : 'vil'}" ${state.selectedModal === (isPast ? 'ville' : 'vil') ? 'selected' : ''}>${isPast ? 'ville' : 'vil'} - ${isPast ? getTranslation('vocabVille') : getTranslation('vocabVil')}</option>
-                        <option value="${isPast ? 'kunne' : 'kan'}" ${state.selectedModal === (isPast ? 'kunne' : 'kan') ? 'selected' : ''}>${isPast ? 'kunne' : 'kan'} - ${isPast ? getTranslation('vocabKunne') : getTranslation('vocabKan')}</option>
-                    </select>
-                    <span class="sentence-part">spise</span>
-                </div>
+    // =============================================================
+    // INTERAKTIONSKORT & DIDAKTISKE MODULER
+    // =============================================================
+    const taskArea = document.createElement('div');
+    taskArea.className = 'modal-task-area';
+    viewContainer.appendChild(taskArea);
 
-                <div class="force-explanation" id="force-expl"></div>
+    // -------------------------------------------------------------
+    // RENDER: KRAFTFELT-SCENE
+    // -------------------------------------------------------------
+    function renderStage() {
+        const base = getBaseModal(state.selectedModal);
+        const modalWord = getCurrentModalWord();
+        const activeColor = MODAL_FORMS[base].color;
+
+        let forceSvgOverlay = '';
+        let badgeText = '';
+
+        if (base === 'skal') {
+            badgeText = `⚡ SKAL: Ydre pres & Nødvendighed`;
+            forceSvgOverlay = `
+                <!-- SKAL: Ydre trykbølger / kraftvektorer bag agens -->
+                <defs>
+                    <linearGradient id="thrustGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#f97316" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.95"/>
+                    </linearGradient>
+                    <filter id="glowOrange" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                </defs>
+
+                <!-- 3 kraftfulde fremaddrivende pile bag agens -->
+                <g class="force-push-group" transform="translate(10, 52)">
+                    <path d="M 0 0 L 16 14 L 0 28" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+                    <path d="M 12 0 L 28 14 L 12 28" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85"/>
+                    <path d="M 24 0 L 40 14 L 24 28" stroke="#fbbf24" stroke-width="4.5" stroke-linecap="round" fill="none" filter="url(#glowOrange)"/>
+                </g>
+
+                <!-- Trykfelt der skubber i ryggen -->
+                <path d="M 45 60 Q 60 70 45 80" stroke="#fbbf24" stroke-width="3" fill="none" opacity="0.8"/>
+
+                <!-- Uundgåelig kraftlinje på jorden -->
+                <line x1="68" y1="92" x2="280" y2="92" stroke="#f97316" stroke-width="3" stroke-dasharray="8 4" stroke-linecap="round" opacity="0.85"/>
+            `;
+        } else if (base === 'må') {
+            badgeText = `🚪 MÅ: Barrieren er løftet / Fri bane`;
+            forceSvgOverlay = `
+                <!-- MÅ: Barriere der glider væk, og grøn åben passage -->
+                <defs>
+                    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                </defs>
+
+                <!-- Løftet barriere/bom i midten (åbnet) -->
+                <g transform="translate(165, 42)">
+                    <!-- Stolpe -->
+                    <rect x="-3" y="16" width="6" height="34" rx="2" fill="#334155"/>
+                    <circle cx="0" cy="18" r="4.5" fill="#22c55e"/>
+
+                    <!-- Bommen er svunget opad i fri position -->
+                    <path d="M 0 18 L 26 -16" stroke="#4ade80" stroke-width="4" stroke-linecap="round" filter="url(#glowGreen)"/>
+
+                    <!-- Opløsnings-partikler i luften -->
+                    <circle cx="10" cy="10" r="1.5" fill="#86efac" opacity="0.7"/>
+                    <circle cx="20" cy="2" r="2" fill="#86efac" opacity="0.9"/>
+                    <circle cx="28" cy="-8" r="1.5" fill="#86efac" opacity="0.6"/>
+                </g>
+
+                <!-- Åben, grøn lysvej hen over jorden -->
+                <line x1="68" y1="92" x2="280" y2="92" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" filter="url(#glowGreen)"/>
+                <circle cx="120" cy="92" r="3" fill="#86efac"/>
+                <circle cx="170" cy="92" r="3" fill="#86efac"/>
+                <circle cx="220" cy="92" r="3" fill="#86efac"/>
+            `;
+        } else if (base === 'vil') {
+            badgeText = `❤️ VIL: Indre vilje & Magnetisk træk`;
+            forceSvgOverlay = `
+                <!-- VIL: Glødende indre kerne og magnetisk tiltrækningsbue -->
+                <defs>
+                    <filter id="glowRose" x="-25%" y="-25%" width="150%" height="150%">
+                        <feGaussianBlur stdDeviation="3.5" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                </defs>
+
+                <!-- Magnetisk attraktionsbue fra subjekt mod mad -->
+                <path d="M 62 65 Q 170 30 282 66" stroke="#fb7185" stroke-width="3" fill="none" stroke-linecap="round" 
+                      stroke-dasharray="6 4" filter="url(#glowRose)"/>
                 
-                <div class="navigation-controls" style="margin-top: 2rem; ${state.selectedModal ? '' : 'display: none;'}" id="nav-controls">
-                    <button class="gemini-btn spotlight-btn" id="next-step-btn">${getTranslation('whyConjugateFirst')}</button>
-                </div>
+                <!-- Glødende hjerte/vilje-kerne i brystet -->
+                <circle cx="56" cy="65" r="7" fill="#f43f5e" filter="url(#glowRose)"/>
+                <circle cx="56" cy="65" r="3.5" fill="#ffffff"/>
+
+                <!-- Fremadrettede intentionsstråler -->
+                <line x1="66" y1="62" x2="78" y2="60" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
+                <line x1="68" y1="68" x2="82" y2="68" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="66" y1="74" x2="78" y2="76" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
+            `;
+        } else if (base === 'kan') {
+            badgeText = `🌐 KAN: Kapacitet & Mulighedsfelt`;
+            forceSvgOverlay = `
+                <!-- KAN: Ekspanderende kompetence-sfære og solid platform -->
+                <defs>
+                    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                    <linearGradient id="auraGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#0284c7" stop-opacity="0.35"/>
+                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- Stor kompetence-aura omkring subjektet mod målet -->
+                <ellipse cx="115" cy="68" rx="60" ry="34" fill="url(#auraGrad)" stroke="#38bdf8" stroke-width="1.8" 
+                         stroke-dasharray="6 3" filter="url(#glowCyan)"/>
+
+                <!-- Aura omkring barnets hoved/ressource -->
+                <circle cx="54" cy="50" r="14" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.8"/>
+
+                <!-- Solid cyan bro langs jorden -->
+                <line x1="68" y1="92" x2="280" y2="92" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" filter="url(#glowCyan)"/>
+            `;
+        }
+
+        stageCard.innerHTML = `
+            <div class="stage-frame-wrapper">
+                <svg class="force-svg-fluid" viewBox="0 0 360 115" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="spaceGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#0b1329"/>
+                            <stop offset="70%" stop-color="#1e293b"/>
+                            <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                        <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#15803d"/>
+                            <stop offset="100%" stop-color="#14532d"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Baggrund & nattehimmel -->
+                    <rect x="0" y="0" width="360" height="115" rx="12" fill="url(#spaceGrad)"/>
+
+                    <!-- Jorden / Terrænet -->
+                    <rect x="0" y="92" width="360" height="23" rx="0 0 12 12" fill="url(#grassGrad)"/>
+                    <line x1="0" y1="92" x2="360" y2="92" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+
+                    <!-- Dynamiske kraftvektorer (SKAL, MÅ, VIL, KAN) -->
+                    ${forceSvgOverlay}
+
+                    <!-- AGENS: Barnet (Stiliseret moderne silhuet) -->
+                    <g class="agent-character" transform="translate(54, 38)">
+                        <!-- Hoved -->
+                        <circle cx="0" cy="12" r="7" fill="#f8fafc"/>
+                        <!-- Krop -->
+                        <path d="M -7 22 Q 0 19 7 22 L 8 41 L -8 41 Z" fill="#0284c7" rx="3"/>
+                        <!-- Ben til jorden (y=92) -->
+                        <line x1="-4" y1="41" x2="-4" y2="54" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="4" y1="41" x2="4" y2="54" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                        
+                        <!-- Navnemærke -->
+                        <text x="0" y="66" fill="#cbd5e1" font-size="9" font-weight="800" text-anchor="middle">
+                            ${state.nounAnchor} ${state.selectedNoun}
+                        </text>
+                    </g>
+
+                    <!-- MÅLET: Handlingen "spise" (Maden på bordet) -->
+                    <g class="target-action" transform="translate(295, 48)">
+                        <!-- Bord -->
+                        <rect x="-18" y="32" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
+                        <line x1="-12" y1="44" x2="-12" y2="54" stroke="#78350f" stroke-width="2.5"/>
+                        <line x1="12" y1="44" x2="12" y2="54" stroke="#78350f" stroke-width="2.5"/>
+                        
+                        <!-- Tallerken -->
+                        <ellipse cx="0" cy="31" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+                        <!-- Mad -->
+                        <circle cx="0" cy="29" r="4.5" fill="#f59e0b"/>
+                        <!-- Duft/Damp -->
+                        <path d="M -3 23 Q -5 17 0 12" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
+                        <path d="M 3 24 Q 5 18 1 13" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
+
+                        <!-- Mærkaten for handlingen -->
+                        <text x="0" y="56" fill="#86efac" font-size="9.5" font-weight="900" text-anchor="middle">
+                            spise (∞)
+                        </text>
+                    </g>
+
+                    <!-- Statusbadge i toppen af scenen -->
+                    <g class="stage-top-badge" transform="translate(180, 16)">
+                        <rect x="-95" y="-10" width="190" height="20" rx="10" fill="rgba(15, 23, 42, 0.92)" stroke="${activeColor}" stroke-width="1.2"/>
+                        <text x="0" y="3.5" fill="${activeColor}" font-size="9.2" font-weight="800" text-anchor="middle">
+                            ${badgeText}
+                        </text>
+                    </g>
+                </svg>
+            </div>
+        `;
+    }
+
+    // -------------------------------------------------------------
+    // RENDER: LIVE SÆTNINGSBÅND
+    // -------------------------------------------------------------
+    function renderSentenceStrip() {
+        const base = getBaseModal(state.selectedModal);
+        const modalWord = getCurrentModalWord();
+        const activeColor = MODAL_FORMS[base].color;
+
+        stripCard.innerHTML = `
+            <div class="strip-top-row">
+                <span class="strip-header-tag">Sætningens opbygning:</span>
+                <button type="button" class="btn-tts-listen" id="btn-listen-strip">
+                    <span>🔊</span>
+                    <span>Lyt</span>
+                </button>
             </div>
 
-            <div id="finiteness-section" class="step-content animate-in" style="display: none; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; margin-top: 3rem;">
-                <h2 style="margin-top: 0;">${getTranslation('finitenessTitle')}</h2>
-                <p class="subtitle" style="margin-bottom: 2rem;">${getTranslation('finitenessDesc')}</p>
+            <div class="strip-blocks-row">
+                <!-- Led 1: Subjektet -->
+                <div class="strip-block block-subject">
+                    <span class="block-word">${state.nounAnchor} ${state.selectedNoun}</span>
+                    <span class="block-role">Hvem (Subjekt)</span>
+                </div>
 
-                <div class="finiteness-visual timeline-layout">
-                    <div class="finiteness-box timeline-box" id="timeline-box">
-                        <div class="label">${getTranslation('timelineLabel')}</div>
-                        <div class="svg-container" id="timeline-svg"></div>
-                        <div class="word-anchor">
-                            <div class="word-display" id="modal-word-marker">${getModalTranslation(state.selectedModal || 'skal')}</div>
-                        </div>
-                        <div class="time-toggle">
-                            <button class="toggle-btn ${isPast ? 'active' : ''}" data-time="da">${getTranslation('pastLabel')}</button>
-                            <button class="toggle-btn ${!isPast ? 'active' : ''}" data-time="nu">${getTranslation('nowLabel')}</button>
-                        </div>
+                <!-- Led 2: Modalverbet (Verbum 1 - Finit tidsanker) -->
+                <div class="strip-block block-modal" style="border-color: ${activeColor}; background: rgba(15, 23, 42, 0.85);">
+                    <span class="block-word" style="color: ${activeColor};">${modalWord}</span>
+                    <span class="block-role" style="color: ${activeColor};">V1 (${state.isPast ? 'Datid' : 'Nutid'})</span>
+                </div>
+
+                <!-- Led 3: Handlingen (Verbum 2 - Infinitiv) -->
+                <div class="strip-block block-action">
+                    <span class="block-word" style="color: #4ade80;">spise</span>
+                    <span class="block-role">V2 (Infinitiv)</span>
+                </div>
+            </div>
+        `;
+
+        stripCard.querySelector('#btn-listen-strip').onclick = () => {
+            speakDanish(getFullSentence());
+        };
+    }
+
+    // -------------------------------------------------------------
+    // RENDER: DE 4 MODAL-KORT & FINITHEDS-MODUL
+    // -------------------------------------------------------------
+    function renderInteractionArea() {
+        taskArea.innerHTML = '';
+
+        const base = getBaseModal(state.selectedModal);
+
+        // Kognitiv forklaringstekst for det valgte modalverbum
+        let explanationText = '';
+        if (base === 'skal') explanationText = getTranslation('modalForceSkal');
+        else if (base === 'må') explanationText = getTranslation('modalForceMaa');
+        else if (base === 'vil') explanationText = getTranslation('modalForceVil');
+        else if (base === 'kan') explanationText = getTranslation('modalForceKan');
+
+        const box = document.createElement('div');
+        box.className = 'modal-controls-container animate-in';
+
+        box.innerHTML = `
+            <div class="controls-title-row">
+                <span class="section-label">Vælg et modalverbum for at ændre kraften:</span>
+            </div>
+
+            <!-- DE 4 TAKTILE MODAL-KORT -->
+            <div class="modal-cards-grid">
+                <!-- SKAL -->
+                <button type="button" class="modal-card-btn ${base === 'skal' ? 'active-card' : ''}" data-modal="skal" style="--card-accent: #f97316;">
+                    <div class="card-head">
+                        <span class="card-icon">⚡</span>
+                        <span class="card-word">${state.isPast ? 'skulle' : 'skal'}</span>
                     </div>
+                    <div class="card-badge" style="color: #f97316;">Ydre pres</div>
+                    <div class="card-desc">Handlingen er en nødvendighed eller en fastlagt aftale.</div>
+                </button>
 
-                    <div class="finiteness-box action-box" id="action-box">
-                        <div class="label">${getTranslation('actionLabel')}</div>
-                        <div class="svg-container" id="photo-svg"></div>
-                        <div class="word-display static-word" id="action-word-static">spise</div>
+                <!-- MÅ -->
+                <button type="button" class="modal-card-btn ${base === 'må' ? 'active-card' : ''}" data-modal="må" style="--card-accent: #22c55e;">
+                    <div class="card-head">
+                        <span class="card-icon">🚪</span>
+                        <span class="card-word">${state.isPast ? 'måtte' : 'må'}</span>
                     </div>
+                    <div class="card-badge" style="color: #22c55e;">Fri bane / Tilladelse</div>
+                    <div class="card-desc">Barrieren er fjernet. Regel eller tilladelse giver grønt lys.</div>
+                </button>
+
+                <!-- VIL -->
+                <button type="button" class="modal-card-btn ${base === 'vil' ? 'active-card' : ''}" data-modal="vil" style="--card-accent: #f43f5e;">
+                    <div class="card-head">
+                        <span class="card-icon">❤️</span>
+                        <span class="card-word">${state.isPast ? 'ville' : 'vil'}</span>
+                    </div>
+                    <div class="card-badge" style="color: #f43f5e;">Indre vilje / Lyst</div>
+                    <div class="card-desc">Kraften kommer indefra agens. Et personligt ønske trækker fremad.</div>
+                </button>
+
+                <!-- KAN -->
+                <button type="button" class="modal-card-btn ${base === 'kan' ? 'active-card' : ''}" data-modal="kan" style="--card-accent: #38bdf8;">
+                    <div class="card-head">
+                        <span class="card-icon">🌐</span>
+                        <span class="card-word">${state.isPast ? 'kunne' : 'kan'}</span>
+                    </div>
+                    <div class="card-badge" style="color: #38bdf8;">Kapacitet / Mulighed</div>
+                    <div class="card-desc">Evnen og ressourcerne er til stede. Handlingen er mulig.</div>
+                </button>
+            </div>
+
+            <!-- KOGNITIV FORKLARINGS-BANNER -->
+            <div class="force-explanation-box">
+                <div class="expl-icon">💡</div>
+                <div class="expl-body">${explanationText}</div>
+            </div>
+
+            <!-- ========================================================= -->
+            <!-- FINITHED: HVORFOR BØJES KUN DET FØRSTE ORD?              -->
+            <!-- ========================================================= -->
+            <div class="finiteness-interactive-card">
+                <div class="finiteness-header">
+                    <span class="finiteness-pill">Tidsankerets hemmelighed</span>
+                    <h3 class="finiteness-h3">${getTranslation('finitenessTitle')}</h3>
+                    <p class="finiteness-p">${getTranslation('finitenessDesc')}</p>
                 </div>
 
-                <div class="force-explanation visible" id="finiteness-expl">
-                    ${getTranslation('finitenessExpl')}
-                </div>
-
-                <div id="teaser-section" class="recommendation-box animate-in" style="margin-top: 4rem; display: none; text-align: center;">
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1.5rem;">${getTranslation('adjectiveTitle')}</h4>
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
-                        ${getTranslation('adjectiveTeaser')}
-                    </p>
-                    <button class="gemini-btn spotlight-btn" id="go-to-adj-btn">
-                        ${getTranslation('nextStepAdjective')}
-                    </button>
-                </div>
-
-                <div class="recommendation-box" style="margin-top: 4rem;">
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1.5rem;">${getTranslation('modalTeaserTitle')}</h4>
-                    <div class="recommendation-grid">
-                        <button class="rec-btn spotlight-btn" id="rec-hjaelpe" style="min-width: 280px;">
-                            <span class="rec-icon">⚡</span>
-                            <span class="rec-label">${getTranslation('modalPracticeLabel')}</span>
+                <!-- TIDS-VIPPE: NUTID VS. DATID -->
+                <div class="time-toggle-wrapper">
+                    <span class="time-toggle-label">Skift sætningens tid:</span>
+                    <div class="time-toggle-pill">
+                        <button type="button" class="time-btn ${!state.isPast ? 'active' : ''}" id="btn-toggle-present">
+                            <span>🟢</span>
+                            <span>Nutid (lige nu)</span>
+                        </button>
+                        <button type="button" class="time-btn ${state.isPast ? 'active' : ''}" id="btn-toggle-past">
+                            <span>🟠</span>
+                            <span>Datid (i går)</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="navigation-controls" style="margin-top: 3rem;">
-                    <button class="gemini-btn outline-btn" id="finish-btn">${getTranslation('finishBtn')}</button>
+                <!-- VISUELT TIDS-DIAGRAM -->
+                <div class="finiteness-diagram">
+                    <div class="diagram-box box-v1">
+                        <div class="diag-tag">Verbum 1 (Modalverbum)</div>
+                        <div class="diag-word" id="v1-display" style="color: ${MODAL_FORMS[base].color};">
+                            ${getCurrentModalWord()}
+                        </div>
+                        <div class="diag-role">⚓ Tidsankeret (${state.isPast ? 'Datid' : 'Nutid'})</div>
+                        <div class="diag-sub">Bøjes i tid!</div>
+                    </div>
+
+                    <div class="diagram-arrow">➔</div>
+
+                    <div class="diagram-box box-v2">
+                        <div class="diag-tag">Verbum 2 (Handlingen)</div>
+                        <div class="diag-word" style="color: #4ade80;">spise</div>
+                        <div class="diag-role">💭 Ren idé (Infinitiv)</div>
+                        <div class="diag-sub">Uforanderlig! Bøjes IKKE!</div>
+                    </div>
                 </div>
+
+                <div class="finiteness-callout-msg">
+                    ${getTranslation('finitenessExpl')}
+                </div>
+            </div>
+
+            <!-- ========================================================= -->
+            <!-- DEN STORE GRAMMATIK-STI: BROEN TIL ADJEKTIVER             -->
+            <!-- ========================================================= -->
+            <div class="grammar-roadmap-card">
+                <div class="roadmap-header">
+                    <span>Den store grammatik-sti: Se hvordan sætningen udbygges</span>
+                </div>
+
+                <div class="roadmap-steps-list">
+                    <div class="roadmap-step-item done">
+                        <div class="step-icon-badge">✓</div>
+                        <div class="step-text-body">
+                            <div class="step-head-txt">1. Grundsætning (Intro)</div>
+                            <div class="step-example-txt">"${state.nounAnchor} ${state.selectedNoun} ${state.verbAnchor}."</div>
+                        </div>
+                        <div class="step-status-pill done">Gennemført</div>
+                    </div>
+
+                    <div class="roadmap-step-item current">
+                        <div class="step-icon-badge">⚡</div>
+                        <div class="step-text-body">
+                            <div class="step-head-txt">2. Modalverber (Kraft & vilje)</div>
+                            <div class="step-example-txt">"${getFullSentence()}"</div>
+                        </div>
+                        <div class="step-status-pill current">Aktiv nu</div>
+                    </div>
+
+                    <div class="roadmap-step-item next">
+                        <div class="step-icon-badge">🏷️</div>
+                        <div class="step-text-body">
+                            <div class="step-head-txt">3. Adjektiver (Beskrivelse)</div>
+                            <div class="step-example-txt">"${state.nounAnchor} <strong>[lille / sultne]</strong> ${state.selectedNoun} ${getCurrentModalWord()} spise..."</div>
+                        </div>
+                        <div class="step-status-pill next">Næste skridt</div>
+                    </div>
+
+                    <div class="roadmap-step-item future">
+                        <div class="step-icon-badge">🌊</div>
+                        <div class="step-text-body">
+                            <div class="step-head-txt">4. Adverbier (Måde, grad og tid)</div>
+                            <div class="step-example-txt">"${state.nounAnchor} lille ${state.selectedNoun} ${getCurrentModalWord()} spise <strong>[langsomt / gerne]</strong>..."</div>
+                        </div>
+                        <div class="step-status-pill future">Trin 4</div>
+                    </div>
+
+                    <div class="roadmap-step-item future">
+                        <div class="step-icon-badge">🌉</div>
+                        <div class="step-text-body">
+                            <div class="step-head-txt">5. Konjunktioner (Tekstflow & bindeord)</div>
+                            <div class="step-example-txt">"${state.nounAnchor} lille ${state.selectedNoun} ${getCurrentModalWord()} spise, <strong>[fordi]</strong>..."</div>
+                        </div>
+                        <div class="step-status-pill future">Trin 5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GÅ VIDERE KNAP -->
+            <div class="next-bridge-action-card">
+                <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
+                    Klar til næste trin: Tilføj Adjektiver
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
+                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adjektiver maler og beskriver barnet.
+                </p>
+                <button type="button" class="btn-launch-adjective" id="btn-goto-adjectives">
+                    <span>${getTranslation('nextStepAdjective') || 'Fortsæt til Adjektiver'} ➔</span>
+                </button>
             </div>
         `;
 
-        const select = exerciseArea.querySelector('#modal-select');
-        const viz = exerciseArea.querySelector('#force-viz');
-        const expl = exerciseArea.querySelector('#force-expl');
-        const nav = exerciseArea.querySelector('#nav-controls');
-        const nextBtn = exerciseArea.querySelector('#next-step-btn');
-        const teaserSection = exerciseArea.querySelector('#teaser-section');
-        const goToAdjBtn = exerciseArea.querySelector('#go-to-adj-btn');
-        const finishBtn = exerciseArea.querySelector('#finish-btn');
-        const recHjaelpe = exerciseArea.querySelector('#rec-hjaelpe');
-
-        if (state.selectedModal) {
-            select.value = state.selectedModal;
-            updateVisualization(state.selectedModal, viz, expl);
-        }
-
-        select.onchange = () => {
-            const val = select.value;
-            state.selectedModal = val;
-            updateVisualization(val, viz, expl);
-            if (val) {
-                nav.style.display = 'block';
-                const projWord = exerciseArea.querySelector('#modal-word-marker');
-                if (projWord) projWord.textContent = isPast ? getModalPastTranslation(val) : getModalTranslation(val);
-            }
-        };
-
-        nextBtn.onclick = () => {
-            const section = exerciseArea.querySelector('#finiteness-section');
-            section.style.display = 'block';
-            renderFinitenessLogic();
-            nextBtn.style.display = 'none';
-            setTimeout(() => {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
-
-            // Show teaser after some interaction or time
-            setTimeout(() => {
-                teaserSection.style.display = 'block';
-            }, 1500);
-        };
-
-        goToAdjBtn.onclick = () => navigateFn('adjective_bridge', {
-            ...state,
-            verbAnchor: state.verbAnchor // Ensure it's explicitly included if spread doesn't catch it
-        });
-
-        finishBtn.onclick = () => navigateFn('dagens_opgave');
-        recHjaelpe.onclick = () => navigateFn('verbum_learning', { categoryId: 'hjaelpe' });
-    }
-
-    function renderFinitenessLogic() {
-        const timelineSvg = exerciseArea.querySelector('#timeline-svg');
-        const photoSvg = exerciseArea.querySelector('#photo-svg');
-        const modalMarker = exerciseArea.querySelector('#modal-word-marker');
-        const toggleBtns = exerciseArea.querySelectorAll('.toggle-btn');
-        const actionWord = exerciseArea.querySelector('#action-word-static');
-
-        // Timeline SVG
-        const dotCx = isPast ? '100' : '300';
-        timelineSvg.innerHTML = `
-            <svg viewBox="0 0 400 100" class="timeline-svg-main">
-                <line x1="50" y1="50" x2="350" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="4" stroke-linecap="round" />
-                <circle cx="100" cy="50" r="6" fill="#666" />
-                <circle cx="300" cy="50" r="6" fill="#666" />
-                <circle id="moving-dot" cx="${dotCx}" cy="50" r="10" fill="var(--bg-deep-red)" style="transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);" />
-            </svg>
-        `;
-
-        // Action/Idea SVG (Thinking bubble)
-        photoSvg.innerHTML = `
-            <svg viewBox="0 0 160 160" class="activity-svg">
-                <path d="M 40 80 Q 20 80 20 60 Q 20 30 50 30 Q 60 10 90 10 Q 130 10 130 40 Q 150 40 150 70 Q 150 100 120 100 L 40 100 Z" 
-                      fill="rgba(76, 175, 80, 0.1)" stroke="#4caf50" stroke-width="2" />
-            </svg>
-        `;
-
-        toggleBtns.forEach(btn => {
+        // Klik på modal-kort
+        box.querySelectorAll('.modal-card-btn').forEach(btn => {
             btn.onclick = () => {
-                toggleBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const time = btn.dataset.time;
-                const modal = state.selectedModal || 'skal';
-                const base = getBaseModal(modal);
-                const dot = exerciseArea.querySelector('#moving-dot');
-
-                if (time === 'da') {
-                    dot.setAttribute('cx', '100');
-                    modalMarker.textContent = getModalPastTranslation(base);
-                    modalMarker.style.color = '#ff9800';
-                    modalMarker.classList.add('shift-past');
-
-                    const pastMap = { 'skal': 'skulle', 'må': 'måtte', 'vil': 'ville', 'kan': 'kunne' };
-                    state.selectedModal = pastMap[base] || base;
-                } else {
-                    dot.setAttribute('cx', '300');
-                    modalMarker.textContent = getModalTranslation(base);
-                    modalMarker.style.color = 'white';
-                    modalMarker.classList.remove('shift-past');
-
-                    state.selectedModal = base;
-                }
-
-                actionWord.classList.add('action-pulse');
-                setTimeout(() => actionWord.classList.remove('action-pulse'), 800);
+                const chosen = btn.dataset.modal;
+                state.selectedModal = chosen;
+                speakDanish(getCurrentModalWord());
+                refreshUI();
             };
         });
+
+        // Tidsvippe (Nutid / Datid)
+        const btnPresent = box.querySelector('#btn-toggle-present');
+        const btnPast = box.querySelector('#btn-toggle-past');
+
+        btnPresent.onclick = () => {
+            if (state.isPast) {
+                state.isPast = false;
+                speakDanish(getFullSentence());
+                refreshUI();
+            }
+        };
+
+        btnPast.onclick = () => {
+            if (!state.isPast) {
+                state.isPast = true;
+                speakDanish(getFullSentence());
+                refreshUI();
+            }
+        };
+
+        // Gå til adjektiver
+        box.querySelector('#btn-goto-adjectives').onclick = () => {
+            navigateFn('adjective_bridge', {
+                nounAnchor: state.nounAnchor,
+                selectedNoun: state.selectedNoun,
+                selectedModal: getCurrentModalWord(),
+                verbAnchor: state.isPast ? 'spiste' : 'spiser',
+                isPast: state.isPast
+            });
+        };
+
+        taskArea.appendChild(box);
     }
 
-    function updateVisualization(modal, container, explContainer) {
-        container.innerHTML = '';
-        explContainer.innerHTML = '';
-        explContainer.className = 'force-explanation visible';
+    function refreshUI() {
+        renderStage();
+        renderSentenceStrip();
+        renderInteractionArea();
+    }
 
-        let svgContent = '';
-        let explanation = '';
-        const baseModal = getBaseModal(modal);
+    refreshUI();
 
-        const commonStyles = `
-            <style>
-                .viz-svg { width: 100%; max-width: 500px; height: 300px; }
-                .stickman { stroke: white; stroke-width: 3; fill: none; }
-                .target { fill: #ffeb3b; filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0.5)); }
-                .force-line { stroke-width: 4; stroke-linecap: round; fill: none; }
-            </style>
-        `;
+    // =============================================================
+    // 100% MOBIL-SIKRE STYLES (INGEN VANDRET OVERFLOW)
+    // =============================================================
+    const oldStyles = document.getElementById('modal-force-styles');
+    if (oldStyles) oldStyles.remove();
 
-        if (baseModal === 'skal') {
-            explanation = getTranslation('modalForceSkal');
-            svgContent = `
-                <svg viewBox="0 0 200 120" class="viz-svg">
-                    <g class="stickman" transform="translate(40,40)">
-                        <circle cx="0" cy="0" r="10"/> <line x1="0" y1="10" x2="0" y2="40"/>
-                    </g>
-                    <circle cx="160" cy="65" r="15" class="target"/>
-                    <path d="M 10 65 L 70 65" class="force-line" stroke="#ff5722" marker-end="url(#arrowhead)"/>
-                    <defs>
-                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                            <polygon points="0 0, 10 3.5, 0 7" fill="#ff5722" />
-                        </marker>
-                    </defs>
-                    <path d="M 20 65 Q 45 65 70 65" stroke="#ff5722" stroke-width="8" stroke-opacity="0.3" fill="none">
-                        <animate attributeName="stroke-dashoffset" from="100" to="0" dur="1s" repeatCount="infinite" />
-                    </path>
-                </svg>
-            `;
-        } else if (baseModal === 'må') {
-            explanation = getTranslation('modalForceMaa');
-            svgContent = `
-                <svg viewBox="0 0 200 120" class="viz-svg">
-                    <g class="stickman" transform="translate(40,40)">
-                        <circle cx="0" cy="0" r="10"/> <line x1="0" y1="10" x2="0" y2="40"/>
-                    </g>
-                    <circle cx="160" cy="65" r="15" class="target"/>
-                    <line x1="100" y1="30" x2="100" y2="100" stroke="#4caf50" stroke-width="4" id="barrier">
-                        <animate attributeName="y2" from="100" to="30" dur="1.5s" fill="freeze" />
-                        <animate attributeName="opacity" from="1" to="0.2" dur="1.5s" fill="freeze" />
-                    </line>
-                    <path d="M 60 65 L 140 65" stroke="#4caf50" stroke-width="2" stroke-dasharray="5,5" />
-                </svg>
-            `;
-        } else if (baseModal === 'vil') {
-            explanation = getTranslation('modalForceVil');
-            svgContent = `
-                <svg viewBox="0 0 200 120" class="viz-svg">
-                    <g class="stickman" transform="translate(40,40)">
-                        <circle cx="0" cy="0" r="10"/> <line x1="0" y1="10" x2="0" y2="40"/>
-                    </g>
-                    <circle cx="160" cy="65" r="15" class="target"/>
-                    <path d="M 65 55 Q 110 55 145 65" stroke="#ff4081" stroke-width="3" fill="none" stroke-dasharray="5,5">
-                         <animate attributeName="stroke-dashoffset" from="10" to="0" dur="0.5s" repeatCount="infinite" />
-                    </path>
-                    <circle cx="60" cy="55" r="15" fill="#ff4081" opacity="0.1">
-                        <animate attributeName="r" from="10" to="25" dur="2s" repeatCount="infinite" />
-                    </circle>
-                </svg>
-            `;
-        } else if (baseModal === 'kan') {
-            explanation = getTranslation('modalForceKan');
-            svgContent = `
-                <svg viewBox="0 0 200 120" class="viz-svg">
-                    <g class="stickman" transform="translate(40,40)">
-                        <circle cx="0" cy="0" r="10"/> <line x1="0" y1="10" x2="0" y2="40"/>
-                        <circle cx="0" cy="20" r="25" stroke="#2196f3" stroke-width="1" opacity="0.3">
-                            <animate attributeName="r" from="20" to="35" dur="3s" repeatCount="infinite" />
-                        </circle>
-                    </g>
-                    <circle cx="160" cy="65" r="15" class="target"/>
-                    <path d="M 60 65 L 140 65" stroke="#2196f3" stroke-width="2" opacity="0.4" />
-                </svg>
-            `;
+    const style = document.createElement('style');
+    style.id = 'modal-force-styles';
+    style.textContent = `
+        .modal-force-mobile-view {
+            width: 100% !important;
+            max-width: 760px !important;
+            margin: 0 auto;
+            padding: 0 0.2rem 3rem !important;
+            box-sizing: border-box;
+            overflow-x: hidden !important;
+            color: #f8fafc;
         }
 
-        container.innerHTML = commonStyles + svgContent;
-        explContainer.innerHTML = explanation;
-    }
+        .modal-force-mobile-view .top-bar {
+            margin-bottom: 0.35rem !important;
+        }
 
-    renderExercise();
+        .modal-force-mobile-view .grammar-nav-menu {
+            margin-bottom: 0.5rem !important;
+            padding: 0.25rem 0 !important;
+        }
 
-    if (!document.getElementById('modal-force-styles')) {
-        const styles = document.createElement('style');
-        styles.id = 'modal-force-styles';
-        styles.textContent = `
-            .modal-force-view {
-                padding-top: 2rem;
-            }
-            .modal-force-view .force-visualization {
-                background: rgba(0,0,0,0.3);
-                border-radius: 24px;
-                height: 300px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-bottom: 2rem;
-                overflow: hidden;
-                border: 1px solid rgba(255,255,255,0.05);
-            }
-            @media (max-width: 600px) {
-                .modal-force-view .force-visualization { height: 180px; border-radius: 12px; margin-bottom: 1.2rem; }
-            }
-            .viz-placeholder {
-                opacity: 0.4;
-                font-style: italic;
-                padding: 1rem;
-                text-align: center;
-            }
-            .modal-interaction {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 1.5rem;
-                margin: 2rem 0;
-                font-size: 1.8rem;
-                font-weight: 700;
-                flex-wrap: wrap;
-            }
-            @media (max-width: 600px) {
-                .modal-interaction { 
-                    font-size: 1.1rem; 
-                    gap: 0.4rem; 
-                    margin: 1rem 0;
-                    justify-content: space-evenly;
-                }
-            }
-            .no-wrap {
-                white-space: nowrap;
-                display: inline-block;
-            }
-            .modal-select {
-                font-size: 1.5rem !important;
-                padding: 0.5rem 1rem !important;
-                background: var(--bg-deep-red) !important;
-                border-radius: 12px !important;
-                color: white !important;
-                border: none !important;
-            }
-            @media (max-width: 600px) {
-                .modal-select { 
-                    font-size: 1rem !important; 
-                    padding: 0.3rem 0.6rem !important; 
-                    border-radius: 6px !important;
-                    min-width: 70px;
-                }
-            }
-            .force-explanation {
-                background: rgba(255, 255, 255, 0.05);
-                padding: 2rem;
-                border-radius: 16px;
-                line-height: 1.6;
-                text-align: left;
-                opacity: 0;
-                transform: translateY(10px);
-                transition: all 0.5s ease;
-            }
-            @media (max-width: 600px) {
-                .force-explanation { padding: 1.2rem; font-size: 0.95rem; }
-            }
-            .force-explanation.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            .sentence-part {
-                color: rgba(255,255,255,0.9);
-            }
-            
-            /* Finiteness Exercise Styles */
-            .finiteness-visual {
-                display: flex;
-                justify-content: center;
-                gap: 3rem;
-                margin: 3rem 0;
-            }
-            @media (max-width: 600px) {
-                .finiteness-visual { gap: 1.5rem; margin: 2rem 0; }
-            }
-            .finiteness-box {
-                background: rgba(255,255,255,0.05);
-                padding: 1.5rem;
-                border-radius: 20px;
-                width: 200px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                border: 2px solid transparent;
-                transition: all 0.3s ease;
-            }
-            @media (max-width: 600px) {
-                .finiteness-box { padding: 1rem; border-radius: 16px; }
-            }
-            .finiteness-box .label {
-                font-size: 0.9rem;
-                opacity: 0.6;
-                margin-bottom: 1rem;
-            }
-            .finiteness-box .word-display {
-                font-size: 2.2rem;
-                font-weight: 800;
-                margin: 1rem 0;
-            }
-            @media (max-width: 600px) {
-                .finiteness-box .word-display { font-size: 1.6rem; margin: 0.5rem 0; }
-            }
-            .time-toggle {
-                display: flex;
-                gap: 0.5rem;
-                margin-top: 1rem;
-            }
-            .toggle-btn {
-                background: rgba(255,255,255,0.1);
-                border: none;
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-            .toggle-btn.active {
-                background: var(--bg-deep-red);
-                box-shadow: 0 0 10px rgba(183, 28, 28, 0.4);
-            }
-            .pulse-anim {
-                animation: pulse 0.5s ease;
-                border-color: var(--bg-deep-red) !important;
-            }
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-            .static-word {
-                color: #4caf50;
-                transition: transform 0.3s ease;
-            }
-            .action-pulse {
-                animation: actionPulse 0.8s ease;
-            }
-            @keyframes actionPulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.1); color: #8bc34a; }
-                100% { transform: scale(1); }
-            }
-            .timeline-layout {
-                gap: 2rem !important;
-                flex-wrap: wrap;
-            }
-            .timeline-box {
-                width: 450px !important;
-                max-width: 100%;
-            }
-            .action-box {
-                width: 250px !important;
-                max-width: 100%;
-            }
-            .timeline-svg-main {
-                width: 100%;
-                height: 100px;
-            }
-            @media (max-width: 600px) {
-                .timeline-svg-main { height: 60px; }
-            }
-            .word-anchor {
-                height: 60px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-                width: 100%;
-            }
-            #modal-word-marker {
-                transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-                transform: translateX(100px);
-            }
-            @media (max-width: 600px) {
-                #modal-word-marker { transform: translateX(60px); }
-            }
-            #modal-word-marker.shift-past {
-                transform: translateX(-100px);
-            }
-            @media (max-width: 600px) {
-                #modal-word-marker.shift-past { transform: translateX(-60px); }
-            }
-            .activity-svg {
-                width: 120px;
-                height: 100px;
-            }
-            @media (max-width: 600px) {
-                .activity-svg { width: 80px; height: 70px; }
-            }
-            .spotlight-btn {
-                background: linear-gradient(135deg, var(--bg-deep-red), #ff5252);
-                border: none;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                padding: 1.2rem 2.4rem;
-                color: white;
-                border-radius: 12px;
-                cursor: pointer;
-            }
-            @media (max-width: 600px) {
-                .spotlight-btn { padding: 1rem 1.5rem; font-size: 0.95rem; border-radius: 10px; }
-            }
-            .outline-btn {
-                background: transparent;
-                border: 2px solid rgba(255,255,255,0.2);
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 12px;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-            .outline-btn:hover {
-                border-color: rgba(255,255,255,0.4);
-                background: rgba(255,255,255,0.05);
-            }
-            .rec-btn {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            .rec-icon { font-size: 1.5rem; }
-            .rec-label { font-size: 1rem; font-weight: 600; }
-        `;
-        document.head.appendChild(styles);
-    }
+        /* Hero */
+        .modal-hero-compact {
+            text-align: center;
+            margin-bottom: 0.75rem;
+            padding: 0 0.4rem;
+        }
+        .modal-step-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            padding: 0.2rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .modal-main-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin: 0 0 0.25rem;
+            color: #ffffff;
+            line-height: 1.25;
+        }
+        .modal-sub-desc {
+            color: #cbd5e1;
+            font-size: 0.92rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* Kraftfelt-scene */
+        .modal-stage-card {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 0.65rem 0.75rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            margin-bottom: 0.85rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .stage-frame-wrapper {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .force-svg-fluid {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 360 / 115;
+        }
+
+        /* Sætningsbånd */
+        .modal-sentence-strip-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.6rem 0.8rem;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        .strip-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.45rem;
+        }
+        .strip-header-tag {
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+        .btn-tts-listen {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .strip-blocks-row {
+            display: flex;
+            gap: 0.45rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .strip-block {
+            flex: 1;
+            min-width: 0;
+            padding: 0.5rem 0.3rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .block-subject {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+        }
+        .block-modal {
+            border: 2px solid #f43f5e;
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.25);
+        }
+        .block-action {
+            background: rgba(34, 197, 94, 0.12);
+            border: 1.5px solid rgba(74, 222, 128, 0.4);
+        }
+        .block-word {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .block-role {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-top: 0.15rem;
+            white-space: nowrap;
+        }
+
+        /* Kontrolområde */
+        .modal-task-area {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .controls-title-row {
+            margin-bottom: 0.6rem;
+        }
+        .section-label {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            font-weight: 700;
+        }
+
+        /* 4 Modal Kort (2x2 Grid) */
+        .modal-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .modal-card-btn {
+            background: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 0.75rem 0.65rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .modal-card-btn:hover {
+            border-color: var(--card-accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .modal-card-btn.active-card {
+            border-color: var(--card-accent) !important;
+            background: rgba(15, 23, 42, 0.95) !important;
+            box-shadow: 0 0 16px var(--card-accent);
+        }
+        .card-head {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .card-icon {
+            font-size: 1.35rem;
+        }
+        .card-word {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+        .card-badge {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        .card-desc {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            line-height: 1.3;
+        }
+
+        /* Forklaringsboks */
+        .force-explanation-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            box-sizing: border-box;
+        }
+        .expl-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .expl-body {
+            font-size: 0.94rem;
+            color: #f1f5f9;
+            line-height: 1.45;
+        }
+        .expl-body strong {
+            color: #fbbf24;
+        }
+
+        /* Finithed Card */
+        .finiteness-interactive-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 1.15rem 1rem;
+            margin-bottom: 1.4rem;
+            box-sizing: border-box;
+        }
+        .finiteness-pill {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.15rem 0.55rem;
+            border-radius: 5px;
+            margin-bottom: 0.35rem;
+        }
+        .finiteness-h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 0.3rem;
+            line-height: 1.3;
+        }
+        .finiteness-p {
+            color: #cbd5e1;
+            font-size: 0.92rem;
+            margin: 0 0 1rem;
+            line-height: 1.4;
+        }
+
+        /* Tids-vippe */
+        .time-toggle-wrapper {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .time-toggle-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        .time-toggle-pill {
+            display: flex;
+            gap: 0.4rem;
+            width: 100%;
+        }
+        .time-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 0.55rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            transition: all 0.2s;
+        }
+        .time-btn.active {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: #38bdf8;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Finithed Diagram */
+        .finiteness-diagram {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.85rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .diagram-box {
+            flex: 1;
+            min-width: 0;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.65rem 0.4rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .diagram-arrow {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .diag-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        .diag-word {
+            font-size: 1.35rem;
+            font-weight: 900;
+            margin: 0.2rem 0;
+        }
+        .diag-role {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #cbd5e1;
+        }
+        .diag-sub {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 0.1rem;
+        }
+        .finiteness-callout-msg {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid #38bdf8;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.88rem;
+            color: #e2e8f0;
+            line-height: 1.4;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Roadmap */
+        .grammar-roadmap-card {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+            box-sizing: border-box;
+        }
+        .roadmap-header {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 0.75rem;
+        }
+        .roadmap-steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .roadmap-step-item {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 0.6rem 0.75rem;
+        }
+        .roadmap-step-item.done {
+            border-color: rgba(34, 197, 94, 0.4);
+            background: rgba(34, 197, 94, 0.1);
+        }
+        .roadmap-step-item.current {
+            border-color: rgba(251, 191, 36, 0.5);
+            background: rgba(251, 191, 36, 0.12);
+        }
+        .step-icon-badge {
+            font-size: 1.15rem;
+            width: 22px;
+            text-align: center;
+        }
+        .step-text-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .step-head-txt {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: white;
+        }
+        .step-example-txt {
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .step-status-pill {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 0.15rem 0.5rem;
+            border-radius: 5px;
+        }
+        .step-status-pill.done {
+            background: rgba(34, 197, 94, 0.25);
+            color: #4ade80;
+        }
+        .step-status-pill.current {
+            background: rgba(251, 191, 36, 0.25);
+            color: #fbbf24;
+        }
+        .step-status-pill.next {
+            background: rgba(56, 189, 248, 0.25);
+            color: #38bdf8;
+        }
+        .step-status-pill.future {
+            background: rgba(255, 255, 255, 0.06);
+            color: #94a3b8;
+        }
+
+        /* Action card for næste trin */
+        .next-bridge-action-card {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(14, 165, 233, 0.06));
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            border-radius: 14px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .btn-launch-adjective {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 0.85rem 1.6rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+            transition: all 0.2s;
+        }
+        .btn-launch-adjective:hover {
+            background: #7dd3fc;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 480px) {
+            .modal-force-mobile-view { padding: 0 0.15rem 2.5rem !important; }
+            .modal-cards-grid { grid-template-columns: 1fr; }
+            .card-word { font-size: 1.3rem; }
+            .modal-main-title { font-size: 1.3rem; }
+            .finiteness-diagram { flex-direction: column; }
+            .diagram-arrow { transform: rotate(90deg); margin: 0.2rem 0; }
+        }
+    `;
+    document.head.appendChild(style);
 
     container.appendChild(viewContainer);
 }

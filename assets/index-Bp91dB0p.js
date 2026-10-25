@@ -43384,9 +43384,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                 border-radius: 4px;
             }
             .tag-konjunktion {
-                color: #38bdf8;
-                background: rgba(6, 182, 212, 0.15);
-                border-bottom: 2px solid #06b6d4;
+                color: #c084fc;
+                background: rgba(168, 85, 247, 0.15);
+                border-bottom: 2px solid #a855f7;
                 padding: 0.1rem 0.4rem;
                 border-radius: 4px;
             }
@@ -45944,9 +45944,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-konjunktion {
-            color: #38bdf8;
-            background: rgba(6, 182, 212, 0.15);
-            border-bottom: 2px solid #06b6d4;
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid #a855f7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
@@ -47018,9 +47018,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-konjunktion {
-            color: #38bdf8;
-            background: rgba(6, 182, 212, 0.15);
-            border-bottom: 2px solid #06b6d4;
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid #a855f7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
@@ -48677,9 +48677,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-konjunktion {
-            color: #38bdf8;
-            background: rgba(6, 182, 212, 0.15);
-            border-bottom: 2px solid #06b6d4;
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid #a855f7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
@@ -49163,7 +49163,7 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
                     <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
                     <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
                     <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#eab308;"></span> Adverbium (Gul)</span>
-                    <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#06b6d4;"></span> Konjunktion (Cyan)</span>
+                    <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#a855f7;"></span> Konjunktion (Lilla)</span>
                 </div>
             </div>
 
@@ -49743,9 +49743,9 @@ import{t as Ft,a as Rt,b as Ot,s as Gt,v as Wt,c as Jt,d as Ut,k as Yt,e as Xt,o
             border-radius: 4px;
         }
         .tag-konjunktion {
-            color: #38bdf8;
-            background: rgba(6, 182, 212, 0.15);
-            border-bottom: 2px solid #06b6d4;
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid #a855f7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }

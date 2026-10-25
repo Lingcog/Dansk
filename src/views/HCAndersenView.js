@@ -973,8 +973,16 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         <span>🔊</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
                     </button>
                 `;
+                const isChallengeSolved = solvedChallenges[i] === true;
+                const showCompletedChallenge = isChallengeSolved || isAllViewMode;
+
+                let fullLineAudio = line.audioText;
+                if (showCompletedChallenge && line.challenge && line.challenge.targetSentence) {
+                    fullLineAudio = `${line.audioText} ${line.challenge.targetSentence}`;
+                }
+
                 speakerHeader.querySelector('.hc-speaker-audio-btn').onclick = () => {
-                    speakDanish(line.audioText);
+                    speakDanish(fullLineAudio);
                 };
                 lineEl.appendChild(speakerHeader);
 
@@ -1004,12 +1012,44 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     speechEl.textContent = line.audioText;
                 }
 
+                // If line has completedTokens from challenge
+                if (line.challenge && line.challenge.completedTokens) {
+                    if (showCompletedChallenge) {
+                        const spacer = document.createElement('span');
+                        spacer.textContent = ' ';
+                        speechEl.appendChild(spacer);
+
+                        line.challenge.completedTokens.forEach(token => {
+                            if (token.type === 'plain') {
+                                const span = document.createElement('span');
+                                span.textContent = token.text;
+                                speechEl.appendChild(span);
+                            } else {
+                                const tokenBtn = document.createElement('span');
+                                tokenBtn.className = `hc-word-token token-${token.type}`;
+                                tokenBtn.textContent = token.text;
+                                tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
+                                tokenBtn.onclick = (e) => {
+                                    e.stopPropagation();
+                                    speakDanish(token.text);
+                                    handleWordClick(token, line.challenge.targetSentence);
+                                };
+                                speechEl.appendChild(tokenBtn);
+                            }
+                        });
+                    } else if (isLatestLine) {
+                        const dotsSpan = document.createElement('span');
+                        dotsSpan.className = 'hc-challenge-dots-placeholder';
+                        dotsSpan.title = isEn ? 'Solve the challenge below to complete the sentence' : 'Løs Mesterens replik nedenfor for at fuldføre sætningen';
+                        dotsSpan.innerHTML = ` <span class="dots-anim">........</span> <span class="dots-hint">[${isEn ? 'Built in challenge below' : 'Vises i ordstillingsopgaven'}]</span>`;
+                        speechEl.appendChild(dotsSpan);
+                    }
+                }
+
                 lineEl.appendChild(speechEl);
 
                 // Challenge check
                 if (line.challenge) {
-                    const isChallengeSolved = solvedChallenges[i] === true;
-
                     if (!isChallengeSolved && isLatestLine) {
                         const challengeCard = renderChallengeCard(line.challenge, i, () => {
                             solvedChallenges[i] = true;
@@ -3542,6 +3582,33 @@ function injectStyles() {
             font-size: 0.84rem;
             font-weight: 800;
             margin-top: 0.8rem;
+        }
+        .hc-challenge-dots-placeholder {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-left: 0.35rem;
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+        .hc-challenge-dots-placeholder .dots-anim {
+            letter-spacing: 2px;
+            font-weight: 800;
+            color: #fde047;
+            animation: pulseDots 2s infinite ease-in-out;
+        }
+        @keyframes pulseDots {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; color: #38bdf8; }
+        }
+        .hc-challenge-dots-placeholder .dots-hint {
+            font-size: 0.78rem;
+            font-weight: 700;
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px dashed rgba(234, 179, 8, 0.45);
+            color: #fde047;
+            padding: 0.15rem 0.55rem;
+            border-radius: 8px;
         }
         .hc-flow-nav-bar {
             display: flex;

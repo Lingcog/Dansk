@@ -295,7 +295,7 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Far",
                         "speakerIcon": "👨‍🌾",
-                        "audioText": "Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.",
+                        "audioText": "Kongen har sagt, at hans datter skal finde en mand.",
                         "tokens": [
                             {
                                 "text": "Kongen",
@@ -330,7 +330,16 @@ export const hcAndersenStories = [
                                 "key": "hans"
                             },
                             {
-                                "text": " datter ",
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "datter",
+                                "type": "sub",
+                                "key": "datter"
+                            },
+                            {
+                                "text": " ",
                                 "type": "plain"
                             },
                             {
@@ -348,42 +357,6 @@ export const hcAndersenStories = [
                                 "key": "mand"
                             },
                             {
-                                "text": ". Den, som ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "taler",
-                                "type": "vrb",
-                                "key": "tale"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "bedst",
-                                "type": "adj",
-                                "key": "god"
-                            },
-                            {
-                                "text": ", ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "vinder",
-                                "type": "vrb",
-                                "key": "vinde"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "hende",
-                                "type": "pro",
-                                "key": "hende"
-                            },
-                            {
                                 "text": ".",
                                 "type": "plain"
                             }
@@ -392,7 +365,7 @@ export const hcAndersenStories = [
                             "type": "ordstilling",
                             "title": "Mesterens replik: Ordstilling",
                             "badge": "👑 Mesterens replik",
-                            "prompt": "Faderen fremsætter kongens betingelse. Saml den berømte sætning i rigtig ordstilling:",
+                            "prompt": "Hvad siger faren om kongens betingelse? Saml sætningsdelen i rigtig ordstilling:",
                             "targetSentence": "Den, som taler bedst, vinder hende.",
                             "tiles": [
                                 "Den,",
@@ -401,6 +374,62 @@ export const hcAndersenStories = [
                                 "bedst,",
                                 "vinder",
                                 "hende."
+                            ],
+                            "completedTokens": [
+                                {
+                                    "text": "Den",
+                                    "type": "pro",
+                                    "key": "den"
+                                },
+                                {
+                                    "text": ", ",
+                                    "type": "plain"
+                                },
+                                {
+                                    "text": "som",
+                                    "type": "pro",
+                                    "key": "som"
+                                },
+                                {
+                                    "text": " ",
+                                    "type": "plain"
+                                },
+                                {
+                                    "text": "taler",
+                                    "type": "vrb",
+                                    "key": "tale"
+                                },
+                                {
+                                    "text": " ",
+                                    "type": "plain"
+                                },
+                                {
+                                    "text": "bedst",
+                                    "type": "adj",
+                                    "key": "god"
+                                },
+                                {
+                                    "text": ", ",
+                                    "type": "plain"
+                                },
+                                {
+                                    "text": "vinder",
+                                    "type": "vrb",
+                                    "key": "vinde"
+                                },
+                                {
+                                    "text": " ",
+                                    "type": "plain"
+                                },
+                                {
+                                    "text": "hende",
+                                    "type": "pro",
+                                    "key": "hende"
+                                },
+                                {
+                                    "text": ".",
+                                    "type": "plain"
+                                }
                             ],
                             "explanation": "Korrekt ordstilling! Læg mærke til V2: Efter ledsætningen ('som taler bedst') kommer verbet 'vinder' lige før objektet 'hende'."
                         }

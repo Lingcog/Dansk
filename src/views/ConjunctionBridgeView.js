@@ -38,14 +38,41 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
     // -------------------------------------------------------------
     // FØRSTE SÆTNINGSHALVDEL (Hovedsætningen fra Trin 1-4)
     // -------------------------------------------------------------
+    // Centraladverbier står altid foran infinitiven (V2) i hovedsætninger:
+    // f.eks. "vil GERNE spise", "skal IKKE spise", "kan ALTID spise".
+    const CENTRAL_ADVERBS = new Set([
+        'ikke', 'gerne', 'altid', 'aldrig', 'ofte', 'måske', 'faktisk', 
+        'heldigvis', 'nok', 'vist', 'jo', 'vel', 'knap', 'næppe', 'sjældent'
+    ]);
+
+    function isCentralAdverb(adv) {
+        if (!adv) return false;
+        const clean = adv.toLowerCase().trim();
+        return CENTRAL_ADVERBS.has(clean);
+    }
+
     function getClause1() {
         const adj = state.selectedAdjective ? ` ${state.selectedAdjective}` : '';
-        const adv = state.selectedAdverb && state.selectedAdverb !== 'ingen' ? ` ${state.selectedAdverb}` : '';
+        const subj = `${state.nounAnchor}${adj} ${state.selectedNoun}`;
+        const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
+
         if (state.selectedModal) {
-            return `${state.nounAnchor}${adj} ${state.selectedNoun} ${state.selectedModal}${adv} ${state.selectedVerb}`.trim();
+            if (advWord && isCentralAdverb(advWord)) {
+                // Centraladverbium står på 3. pladsen mellem V1 og V2: "vil gerne spise"
+                return `${subj} ${state.selectedModal} ${advWord} ${state.selectedVerb}`.trim();
+            } else if (advWord) {
+                // Mådesadverbium står efter V2: "vil spise langsomt"
+                return `${subj} ${state.selectedModal} ${state.selectedVerb} ${advWord}`.trim();
+            } else {
+                return `${subj} ${state.selectedModal} ${state.selectedVerb}`.trim();
+            }
         }
+
         const v = state.isPast ? (state.verbAnchor === 'spiste' ? 'spiste' : state.verbAnchor) : (state.verbAnchor || 'spiser');
-        return `${state.nounAnchor}${adj} ${state.selectedNoun} ${v}${adv}`.trim();
+        if (advWord) {
+            return `${subj} ${v} ${advWord}`.trim();
+        }
+        return `${subj} ${v}`.trim();
     }
 
     function renderColoredClause1() {
@@ -55,20 +82,103 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             parts.push(`<span style="color: #fb923c;">${state.selectedAdjective}</span>`);
         }
         parts.push(`<span style="color: #4ade80;">${state.selectedNoun}</span>`);
+
+        const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
+        const isCentral = isCentralAdverb(advWord);
+
         if (state.selectedModal) {
             parts.push(`<span style="color: #f87171;">${state.selectedModal}</span>`);
-            if (state.selectedAdverb && state.selectedAdverb !== 'ingen') {
-                parts.push(`<span style="color: #facc15;">${state.selectedAdverb}</span>`);
+            if (advWord && isCentral) {
+                // Centraladverbium (f.eks. gerne, ikke) står mellem V1 og V2!
+                parts.push(`<span style="color: #facc15;">${advWord}</span>`);
+                parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
+            } else if (advWord) {
+                // Mådesadverbium (f.eks. langsomt, hurtigt) står efter V2!
+                parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
+                parts.push(`<span style="color: #facc15;">${advWord}</span>`);
+            } else {
+                parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
             }
-            parts.push(`<span style="color: #f87171;">${state.selectedVerb}</span>`);
         } else {
             const v = state.isPast ? (state.verbAnchor === 'spiste' ? 'spiste' : state.verbAnchor) : (state.verbAnchor || 'spiser');
             parts.push(`<span style="color: #f87171;">${v}</span>`);
-            if (state.selectedAdverb && state.selectedAdverb !== 'ingen') {
-                parts.push(`<span style="color: #facc15;">${state.selectedAdverb}</span>`);
+            if (advWord) {
+                parts.push(`<span style="color: #facc15;">${advWord}</span>`);
             }
         }
         return parts.join(' ');
+    }
+
+    function renderColoredSentenceSpans(conj, c2Text) {
+        if (conj.id === 'derfor') {
+            const verb1 = state.selectedModal || (state.isPast ? 'spiste' : 'spiser');
+            const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
+            const isCentral = isCentralAdverb(advWord);
+
+            let v1SubjectPart = '';
+            if (state.selectedModal) {
+                if (advWord && isCentral) {
+                    v1SubjectPart = `<span class="cs-word tag-verbum">${state.selectedModal}</span> <span class="cs-word tag-subjekt">det</span> <span class="cs-word tag-adverbium">${advWord}</span> <span class="cs-word tag-verbum">${state.selectedVerb}.</span>`;
+                } else if (advWord) {
+                    v1SubjectPart = `<span class="cs-word tag-verbum">${state.selectedModal}</span> <span class="cs-word tag-subjekt">det</span> <span class="cs-word tag-verbum">${state.selectedVerb}</span> <span class="cs-word tag-adverbium">${advWord}.</span>`;
+                } else {
+                    v1SubjectPart = `<span class="cs-word tag-verbum">${state.selectedModal}</span> <span class="cs-word tag-subjekt">det</span> <span class="cs-word tag-verbum">${state.selectedVerb}.</span>`;
+                }
+            } else {
+                const v = state.isPast ? 'spiste' : 'spiser';
+                if (advWord) {
+                    v1SubjectPart = `<span class="cs-word tag-verbum">${v}</span> <span class="cs-word tag-subjekt">det</span> <span class="cs-word tag-adverbium">${advWord}.</span>`;
+                } else {
+                    v1SubjectPart = `<span class="cs-word tag-verbum">${v}</span> <span class="cs-word tag-subjekt">det.</span>`;
+                }
+            }
+
+            return `
+                <span class="cs-word tag-subjekt">Barnet</span>
+                <span class="cs-word tag-verbum">er</span>
+                <span class="cs-word tag-adjektiv">sultent</span>.
+                <span class="cs-word tag-konjunktion">Derfor</span>
+                ${v1SubjectPart}
+            `;
+        }
+
+        const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
+        const isCentral = isCentralAdverb(advWord);
+        const comma = conj.id === 'og' ? '' : ',';
+        const cleanC2 = c2Text.endsWith('.') ? c2Text : c2Text + '.';
+
+        const spans = [];
+        spans.push(`<span class="cs-word tag-subjekt">${state.nounAnchor}</span>`);
+        if (state.selectedAdjective) {
+            spans.push(`<span class="cs-word tag-adjektiv">${state.selectedAdjective}</span>`);
+        }
+        spans.push(`<span class="cs-word tag-subjekt">${state.selectedNoun}</span>`);
+
+        if (state.selectedModal) {
+            spans.push(`<span class="cs-word tag-verbum">${state.selectedModal}</span>`);
+            if (advWord && isCentral) {
+                // Centraladverbium (f.eks. gerne, ikke) står foran infinitiven (V2)!
+                spans.push(`<span class="cs-word tag-adverbium">${advWord}</span>`);
+                spans.push(`<span class="cs-word tag-verbum">${state.selectedVerb}</span>${comma}`);
+            } else if (advWord) {
+                // Mådesadverbium (f.eks. langsomt, hurtigt) står efter infinitiven (V2)!
+                spans.push(`<span class="cs-word tag-verbum">${state.selectedVerb}</span>`);
+                spans.push(`<span class="cs-word tag-adverbium">${advWord}</span>${comma}`);
+            } else {
+                spans.push(`<span class="cs-word tag-verbum">${state.selectedVerb}</span>${comma}`);
+            }
+        } else {
+            const v = state.isPast ? (state.verbAnchor === 'spiste' ? 'spiste' : state.verbAnchor) : (state.verbAnchor || 'spiser');
+            spans.push(`<span class="cs-word tag-verbum">${v}</span>`);
+            if (advWord) {
+                spans.push(`<span class="cs-word tag-adverbium">${advWord}</span>${comma}`);
+            }
+        }
+
+        spans.push(`<span class="cs-word tag-konjunktion">${conj.word}</span>`);
+        spans.push(`<span class="cs-word" style="color: #cbd5e1;">${cleanC2}</span>`);
+
+        return spans.join(' ');
     }
 
     // -------------------------------------------------------------
@@ -102,10 +212,35 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             badge: 'Konsekvens (Resultat)',
             color: '#f59e0b', // Amber / Guld
             colorGlow: 'rgba(245, 158, 11, 0.45)',
-            role: 'Handlingen er resultatet',
-            clause2Text: (c1) => `Derfor ${state.selectedModal ? state.selectedModal + ' det ' + state.selectedVerb : (state.isPast ? 'spiste det' : 'spiser det')}`,
+            clause2Text: (c1) => {
+                const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
+                const isCentral = isCentralAdverb(advWord);
+                if (state.selectedModal) {
+                    if (advWord && isCentral) {
+                        return `Derfor ${state.selectedModal} det ${advWord} ${state.selectedVerb}`;
+                    } else if (advWord) {
+                        return `Derfor ${state.selectedModal} det ${state.selectedVerb} ${advWord}`;
+                    }
+                    return `Derfor ${state.selectedModal} det ${state.selectedVerb}`;
+                }
+                const v = state.isPast ? 'spiste' : 'spiser';
+                return advWord ? `Derfor ${v} det ${advWord}` : `Derfor ${v} det`;
+            },
             clause2Desc: 'Konsekvens: Handlingen udløses',
-            getFullSentence: () => `Barnet er sultent. Derfor ${state.selectedModal ? state.selectedModal + ' det ' + state.selectedVerb : (state.isPast ? 'spiste det' : 'spiser det')}.`,
+            getFullSentence: () => {
+                const advWord = (state.selectedAdverb && state.selectedAdverb !== 'ingen') ? state.selectedAdverb.trim() : '';
+                const isCentral = isCentralAdverb(advWord);
+                if (state.selectedModal) {
+                    if (advWord && isCentral) {
+                        return `Barnet er sultent. Derfor ${state.selectedModal} det ${advWord} ${state.selectedVerb}.`;
+                    } else if (advWord) {
+                        return `Barnet er sultent. Derfor ${state.selectedModal} det ${state.selectedVerb} ${advWord}.`;
+                    }
+                    return `Barnet er sultent. Derfor ${state.selectedModal} det ${state.selectedVerb}.`;
+                }
+                const v = state.isPast ? 'spiste' : 'spiser';
+                return advWord ? `Barnet er sultent. Derfor ${v} det ${advWord}.` : `Barnet er sultent. Derfor ${v} det.`;
+            },
             cognitiveVisualDesc: 'En gylden resultat-vektor, der slynger handlingen fremad som en uundgåelig konsekvens.',
             wordOrderType: 'inversion',
             wordOrderBadge: 'Inversion (V-S)',
@@ -702,10 +837,7 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             <div class="current-sentence-badge-box">
                 <span class="cs-label">Din fulde sætning er bygget:</span>
                 <div class="cs-sentence-row">
-                    ${conj.id === 'derfor' 
-                        ? `<span class="cs-word tag-subjekt">Barnet</span> <span class="cs-word tag-verbum">er</span> <span class="cs-word tag-adjektiv">sultent</span>. <span class="cs-word tag-konjunktion">Derfor</span> <span class="cs-word tag-verbum">${state.selectedModal || (state.isPast ? 'spiste' : 'spiser')}</span> <span class="cs-word tag-subjekt">${state.selectedModal ? 'det' : 'det.'}</span> ${state.selectedModal ? `<span class="cs-word tag-verbum">${state.selectedVerb}.</span>` : ''}`
-                        : `<span class="cs-word tag-subjekt">${state.nounAnchor}</span> ${state.selectedAdjective ? `<span class="cs-word tag-adjektiv">${state.selectedAdjective}</span>` : ''} <span class="cs-word tag-subjekt">${state.selectedNoun}</span> <span class="cs-word tag-verbum">${state.selectedModal || state.verbAnchor}</span> ${state.selectedModal ? `<span class="cs-word tag-verbum">${state.selectedVerb}</span>` : ''} ${state.selectedAdverb && state.selectedAdverb !== 'ingen' ? `<span class="cs-word tag-adverbium">${state.selectedAdverb}</span>` : ''}${conj.id === 'og' ? '' : ','} <span class="cs-word tag-konjunktion">${conj.word}</span> <span class="cs-word" style="color: #cbd5e1;">${c2Text.endsWith('.') ? c2Text : c2Text + '.'}</span>`
-                    }
+                    ${renderColoredSentenceSpans(conj, c2Text)}
                 </div>
                 <div class="cs-tags-legend">
                     <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>

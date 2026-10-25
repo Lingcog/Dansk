@@ -15,6 +15,12 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 body {
   font-family: var(--font-family);
   background: radial-gradient(circle at top right, #6b0f1a, var(--bg-color));
@@ -34,11 +40,13 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
   #app {
-    padding: 1rem 0.8rem;
+    padding: 0.6rem 0.5rem;
   }
 }
 
@@ -194,6 +202,12 @@ p.subtitle {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .top-bar {
+    margin-bottom: 0.8rem;
+  }
 }
 
 .back-btn {

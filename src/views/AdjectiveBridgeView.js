@@ -1110,9 +1110,9 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             border-radius: 4px;
         }
         .tag-konjunktion {
-            color: #38bdf8;
-            background: rgba(6, 182, 212, 0.15);
-            border-bottom: 2px solid #06b6d4;
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid #a855f7;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }

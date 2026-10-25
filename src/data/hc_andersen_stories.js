@@ -26,8 +26,8 @@ export const hcAndersenStories = [
                 "chapter": "Scene 1: På bondegården",
                 "chapterEn": "Scene 1: At the Farm",
                 "vrimmelImage": "assets/klods_hans_scene1.jpg",
-                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Storebror sagde: Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Mellembror sagde: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! Klods-Hans råbte: Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Hov, se her: Det er en død krage! Faren sagde: Tag du bare geden, Klods-Hans.",
-                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nKlods-Hans: »Jeg prøver også! Jeg har ingen hest, men jeg tager min ged. Hov, se her: Det er en død krage!«\n\nFar: »Tag du bare geden, Klods-Hans.«",
+                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Storebror sagde: Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Mellembror sagde: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! Klods-Hans råbte: Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Faren sagde: Tag du bare geden, Klods-Hans.",
+                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nKlods-Hans: »Jeg prøver også! Jeg har ingen hest, men jeg tager min ged!«\n\nFar: »Tag du bare geden, Klods-Hans.«",
                 "hotspots": [
                     {
                         "x": 38,
@@ -46,12 +46,12 @@ export const hcAndersenStories = [
                         "info": "Substantiv: en hest"
                     },
                     {
-                        "x": 74,
-                        "y": 35,
+                        "x": 80,
+                        "y": 28,
                         "type": "sub",
-                        "word": "fugl",
-                        "label": "en krage",
-                        "info": "Substantiv: en fugl (krage)"
+                        "word": "gård",
+                        "label": "en gård",
+                        "info": "Substantiv: en gård"
                     },
                     {
                         "x": 67,
@@ -712,7 +712,7 @@ export const hcAndersenStories = [
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "🐐",
-                        "audioText": "Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Hov, se her: Det er en død krage!",
+                        "audioText": "Jeg prøver også! Jeg har ingen hest, men jeg tager min ged!",
                         "tokens": [
                             {
                                 "text": "Jeg",
@@ -792,81 +792,10 @@ export const hcAndersenStories = [
                                 "key": "min"
                             },
                             {
-                                "text": " ged! Hov, ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "se",
-                                "type": "vrb",
-                                "key": "se"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "her",
-                                "type": "adv",
-                                "key": "her"
-                            },
-                            {
-                                "text": ": ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "Det",
-                                "type": "pro",
-                                "key": "det"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "er",
-                                "type": "vrb",
-                                "key": "være"
-                            },
-                            {
-                                "text": " en ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "død",
-                                "type": "adj",
-                                "key": "død"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "krage",
-                                "type": "sub",
-                                "key": "fugl"
-                            },
-                            {
-                                "text": "!",
+                                "text": " ged!",
                                 "type": "plain"
                             }
-                        ],
-                        "challenge": {
-                            "type": "cloze_speech",
-                            "title": "Mesterens replik: Udfyld & Udtale",
-                            "badge": "👑 Mesterens replik",
-                            "prompt": "Hvilket tillægsord råber Klods-Hans om kragen?",
-                            "sentenceTemplate": "Hov, se her: Det er en [ ___ ] krage!",
-                            "options": [
-                                "død",
-                                "levende",
-                                "gammel",
-                                "varm"
-                            ],
-                            "correct": "død",
-                            "speechPrompt": "Udtal Klods-Hans' kække udråb højt: »Hov, se her: Det er en død krage!«",
-                            "audioText": "Hov, se her: Det er en død krage!",
-                            "explanation": "Flot! 'Død' beskriver kragens tilstand. Klods-Hans er ligeglad med at den er død – for ham er det en prægtig gave til prinsessen!"
-                        }
+                        ]
                     },
                     {
                         "speaker": "Far",
@@ -924,15 +853,15 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_d2",
-                                "prompt": "Hvad holder Klods-Hans triumferende op i luften foran sin far og brødre?",
+                                "prompt": "Hvilket redskab af træ og jern står ved siden af stalddøren på jorden?",
                                 "options": [
-                                    "En død krage",
-                                    "En guldring",
-                                    "En bog",
-                                    "En blomsterbuket"
+                                    "En trillebør",
+                                    "En stige",
+                                    "En plov",
+                                    "En rive"
                                 ],
                                 "correct": 0,
-                                "explanation": "Lige præcis! Han har fundet en død krage på marken og vil have den med som bejlergave til prinsessen."
+                                "explanation": "Rigtigt observeret! En gammel trillebør af træ står på gårdspladsen ved stalden."
                             },
                             {
                                 "id": "s1_d3",
@@ -982,15 +911,15 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_s2",
                                 "badge": "🟢 Underbegreb",
-                                "prompt": "Klods-Hans finder en krage. Hvilket overbegreb tilhører **en krage**?",
+                                "prompt": "Hvad er et underbegreb til overbegrebet **et familiemedlem**?",
                                 "options": [
-                                    "En fugl",
-                                    "Et insekt",
-                                    "En fisk",
-                                    "Et krybdyr"
+                                    "En søn (eller en far)",
+                                    "En ged",
+                                    "En hest",
+                                    "En gård"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Fugl* er overbegrebet, og *en krage* er et specifikt underbegreb (en sort, intelligent fugl)."
+                                "explanation": "*Familiemedlem* er overbegrebet, og *en søn* eller *en far* er underbegreber (familiemedlemmer)."
                             },
                             {
                                 "id": "s1_s3",
@@ -1076,15 +1005,15 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_a2",
                                 "badge": "🟠 Modsætning (Antonym)",
-                                "prompt": "Klods-Hans finder en død krage. Hvad er det modsatte af **død**?",
+                                "prompt": "Mellembror siger: 'Ja, jeg er altid glad.' Hvad er det modsatte af **glad**?",
                                 "options": [
-                                    "levende",
-                                    "gammel",
-                                    "træt",
-                                    "varm"
+                                    "trist / ked af det",
+                                    "klog",
+                                    "rig",
+                                    "hurtig"
                                 ],
                                 "correct": 0,
-                                "explanation": "Noget der ikke er *dødt*, er *levende*."
+                                "explanation": "Det modsatte af at være *glad* er at være *trist* eller *ked af det*."
                             },
                             {
                                 "id": "s1_a3",
@@ -1152,62 +1081,86 @@ export const hcAndersenStories = [
             },
             {
                 "chapter": "Scene 2: På landevejen til slottet",
-                "chapterEn": "Scene 2: On the Country Road",
+                "chapterEn": "Scene 2: On the Road to the Castle",
                 "vrimmelImage": "assets/klods_hans_scene2.jpg",
-                "audioText": "Manden på vejen spurgte: Hvor er du på vej hen? Klods-Hans svarede: Jeg er på vej til prinsessen! Manden spurgte: Og har du en gave med til hende? Klods-Hans sagde: Nu skal du se hvad jeg har fundet! En fugl og en gammel beskidt træsko med mudder! Manden grinede: Held og lykke med det!",
-                "text": "Mand på vejen: »Hvor er du på vej hen?«\n\nKlods-Hans: »Jeg er på vej til prinsessen!«\n\nMand på vejen: »Og har du en gave med til hende?«\n\nKlods-Hans: »Nu skal du se hvad jeg har fundet! En fugl og en gammel, beskidt træsko med mudder.«\n\nMand på vejen: »Held og lykke med det!« (griner)",
+                "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alle de kloge ord. Klods-Hans råbte: Halehoj! Her kommer jeg! Se hvad jeg har fundet på landevejen: Det er en død krage! Brødrene sagde: Klods! Hvad vil du med en død krage? Klods-Hans svarede: Den vil jeg forære til kongedatteren! Brødrene grinede: Haha! Gør du bare det! Klods-Hans råbte: Halehoj! Her er jeg igen! Nu skal I se hvad jeg har fundet: En gammel træsko! Brødrene sagde: En gammel træsko uden overstykke? Skal kongedatteren også have den? Klods-Hans svarede: Ja, det skal hun da! Klods-Hans råbte: Halehoj! Nu bliver det endnu bedre! Se hvad jeg har gravet op af grøften! Brødrene sagde: Føj, Klods-Hans! Det er jo pludder og mudder fra grøften! Klods-Hans svarede: Ja, og det er den fineste slags! Hvor vil hun blive glad!",
+                "text": "Fortæller: »De to brødre red foran på deres heste. De talte ikke, for de tænkte over alle de kloge ord.«\n\nKlods-Hans: »Halehoj! Her kommer jeg! Se hvad jeg har fundet på landevejen: Det er en død krage!«\n\nBrødrene: »Klods! Hvad vil du med en død krage?«\n\nKlods-Hans: »Den vil jeg forære til kongedatteren!«\n\nBrødrene: »Haha! Gør du bare det!« (de ler og rider videre)\n\nKlods-Hans: »Halehoj! Her er jeg igen! Nu skal I se hvad jeg har fundet: En gammel træsko!«\n\nBrødrene: »En gammel træsko uden overstykke? Skal kongedatteren også have den?«\n\nKlods-Hans: »Ja, det skal hun da!«\n\nKlods-Hans: »Halehoj! Nu bliver det endnu bedre! Se hvad jeg har gravet op af grøften!«\n\nBrødrene: »Føj, Klods-Hans! Det er jo pludder og mudder fra grøften!«\n\nKlods-Hans: »Ja, og det er den fineste slags! Hvor vil hun blive glad!«",
                 "hotspots": [
                     {
-                        "x": 34,
-                        "y": 55,
-                        "type": "sub",
-                        "word": "mand",
-                        "label": "en mand",
-                        "info": "Substantiv: en mand"
-                    },
-                    {
-                        "x": 45,
-                        "y": 64,
-                        "type": "sub",
-                        "word": "vej",
-                        "label": "en vej",
-                        "info": "Substantiv: en vej"
+                        "x": 74,
+                        "y": 44,
+                        "type": "vrb",
+                        "word": "rider",
+                        "label": "rider bagefter",
+                        "info": "Verbum: at ride"
                     },
                     {
                         "x": 74,
-                        "y": 65,
+                        "y": 70,
                         "type": "sub",
                         "word": "ged",
                         "label": "en ged",
                         "info": "Substantiv: en ged"
                     },
                     {
-                        "x": 59,
-                        "y": 35,
+                        "x": 81,
+                        "y": 20,
                         "type": "sub",
                         "word": "fugl",
-                        "label": "en krage",
+                        "label": "en død krage",
                         "info": "Substantiv: en fugl (krage)"
                     },
                     {
-                        "x": 79,
-                        "y": 33,
+                        "x": 34,
+                        "y": 45,
                         "type": "sub",
-                        "word": "sko",
-                        "label": "en træsko",
-                        "info": "Substantiv: en sko"
+                        "word": "bror",
+                        "label": "storebror",
+                        "info": "Substantiv: en bror"
+                    },
+                    {
+                        "x": 42,
+                        "y": 48,
+                        "type": "vrb",
+                        "word": "tænker",
+                        "label": "at tænke",
+                        "info": "Verbum: at tænke"
+                    },
+                    {
+                        "x": 38,
+                        "y": 55,
+                        "type": "sub",
+                        "word": "hest",
+                        "label": "to heste",
+                        "info": "Substantiv: to heste"
+                    },
+                    {
+                        "x": 19,
+                        "y": 88,
+                        "type": "sub",
+                        "word": "træsko",
+                        "label": "en gammel træsko",
+                        "info": "Substantiv: en træsko"
                     },
                     {
                         "x": 23,
-                        "y": 88,
+                        "y": 82,
                         "type": "sub",
                         "word": "mudder",
-                        "label": "mudder",
+                        "label": "mudder / pludder",
                         "info": "Substantiv: mudder"
                     },
                     {
-                        "x": 86,
-                        "y": 18,
+                        "x": 50,
+                        "y": 50,
+                        "type": "sub",
+                        "word": "vej",
+                        "label": "en landevej",
+                        "info": "Substantiv: en landevej"
+                    },
+                    {
+                        "x": 37,
+                        "y": 20,
                         "type": "sub",
                         "word": "slot",
                         "label": "et slot",
@@ -1216,373 +1169,334 @@ export const hcAndersenStories = [
                 ],
                 "dialogue": [
                     {
-                        "speaker": "Mand på vejen",
-                        "speakerIcon": "🧑‍🌾",
-                        "audioText": "Hvor er du på vej hen?",
+                        "speaker": "Fortæller",
+                        "speakerIcon": "📖",
+                        "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alle de kloge ord.",
                         "tokens": [
-                            {
-                                "text": "Hvor",
-                                "type": "adv",
-                                "key": "hvor"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "er",
-                                "type": "vrb",
-                                "key": "være"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "du",
-                                "type": "pro",
-                                "key": "du"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "på",
-                                "type": "prep",
-                                "key": "på"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "vej",
-                                "type": "sub",
-                                "key": "vej"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "hen",
-                                "type": "adv",
-                                "key": "hen"
-                            },
-                            {
-                                "text": "?",
-                                "type": "plain"
-                            }
+                            { "text": "De", "type": "pro", "key": "de" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "to", "type": "adj", "key": "to" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "brødre", "type": "sub", "key": "bror" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "red", "type": "vrb", "key": "ride" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "foran", "type": "adv", "key": "foran" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "på", "type": "prep", "key": "på" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "deres", "type": "pro", "key": "deres" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "heste", "type": "sub", "key": "hest" },
+                            { "text": ". ", "type": "plain" },
+                            { "text": "De", "type": "pro", "key": "de" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "talte", "type": "vrb", "key": "tale" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "ikke", "type": "adv", "key": "ikke" },
+                            { "text": ", ", "type": "plain" },
+                            { "text": "for", "type": "konj", "key": "for" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "de", "type": "pro", "key": "de" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "tænkte", "type": "vrb", "key": "tænke" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "over", "type": "prep", "key": "over" },
+                            { "text": " alle de ", "type": "plain" },
+                            { "text": "kloge", "type": "adj", "key": "klog" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "ord", "type": "sub", "key": "ord" },
+                            { "text": ".", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "🐐",
+                        "audioText": "Halehoj! Her kommer jeg! Se hvad jeg har fundet på landevejen: Det er en død krage!",
+                        "tokens": [
+                            { "text": "Halehoj! ", "type": "plain" },
+                            { "text": "Her", "type": "adv", "key": "her" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "kommer", "type": "vrb", "key": "komme" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "jeg", "type": "pro", "key": "jeg" },
+                            { "text": "! ", "type": "plain" },
+                            { "text": "Se", "type": "vrb", "key": "se" },
+                            { "text": ", hvad ", "type": "plain" },
+                            { "text": "jeg", "type": "pro", "key": "jeg" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "har fundet", "type": "vrb", "key": "finde" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "på", "type": "prep", "key": "på" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "landevejen", "type": "sub", "key": "vej" },
+                            { "text": ": ", "type": "plain" },
+                            { "text": "Det", "type": "pro", "key": "det" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "er", "type": "vrb", "key": "være" },
+                            { "text": " en ", "type": "plain" },
+                            { "text": "død", "type": "adj", "key": "død" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "krage", "type": "sub", "key": "fugl" },
+                            { "text": "!", "type": "plain" }
                         ],
                         "challenge": {
-                            "type": "ordstilling",
-                            "title": "Mesterens replik: Spørgsmålets ordstilling",
+                            "type": "cloze_speech",
+                            "title": "Mesterens replik: Udfyld & Udtale",
                             "badge": "👑 Mesterens replik",
-                            "prompt": "Saml mandens spørgsmål med stedsadverbiet 'hen':",
-                            "targetSentence": "Hvor er du på vej hen?",
-                            "tiles": [
-                                "Hvor",
-                                "er",
-                                "du",
-                                "på",
-                                "vej",
-                                "hen?"
+                            "prompt": "Hvilket tillægsord (adjektiv) råber Klods-Hans om kragen?",
+                            "sentenceTemplate": "Halehoj! Her kommer jeg! Se hvad jeg fandt: Det er en [ ___ ] krage!",
+                            "options": [
+                                "død",
+                                "levende",
+                                "klog",
+                                "varm"
                             ],
-                            "explanation": "Rigtigt! I et spørgsmål med spørgeord kommer spørgeordet ('Hvor') først, derefter verbet ('er'), subjektet ('du') og til sidst retningsadverbiet ('hen')."
+                            "correct": "død",
+                            "speechPrompt": "Udtal Klods-Hans' kække udråb højt: »Det er en død krage!«",
+                            "audioText": "Det er en død krage!",
+                            "explanation": "Flot! 'Død' beskriver kragens tilstand. Klods-Hans er pavestolt af sit første store fund på vejen!"
                         }
                     },
                     {
-                        "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
-                        "audioText": "Jeg er på vej til prinsessen!",
+                        "speaker": "Brødrene",
+                        "speakerIcon": "🎩",
+                        "audioText": "Klods! Hvad vil du med en død krage?",
                         "tokens": [
-                            {
-                                "text": "Jeg",
-                                "type": "pro",
-                                "key": "jeg"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "er",
-                                "type": "vrb",
-                                "key": "være"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "på",
-                                "type": "prep",
-                                "key": "på"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "vej",
-                                "type": "sub",
-                                "key": "vej"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "til",
-                                "type": "prep",
-                                "key": "til"
-                            },
-                            {
-                                "text": " prinsessen!",
-                                "type": "plain"
-                            }
-                        ]
-                    },
-                    {
-                        "speaker": "Mand på vejen",
-                        "speakerIcon": "🧑‍🌾",
-                        "audioText": "Og har du en gave med til hende?",
-                        "tokens": [
-                            {
-                                "text": "Og",
-                                "type": "konj",
-                                "key": "og"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "har",
-                                "type": "vrb",
-                                "key": "have"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "du",
-                                "type": "pro",
-                                "key": "du"
-                            },
-                            {
-                                "text": " en ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "gave",
-                                "type": "sub",
-                                "key": "gave"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "med",
-                                "type": "prep",
-                                "key": "med"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "til",
-                                "type": "prep",
-                                "key": "til"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "hende",
-                                "type": "pro",
-                                "key": "hende"
-                            },
-                            {
-                                "text": "?",
-                                "type": "plain"
-                            }
+                            { "text": "Klods! ", "type": "plain" },
+                            { "text": "Hvad", "type": "pro", "key": "hvad" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "vil", "type": "vrb", "key": "ville" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "du", "type": "pro", "key": "du" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "med", "type": "prep", "key": "med" },
+                            { "text": " en ", "type": "plain" },
+                            { "text": "død", "type": "adj", "key": "død" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "krage", "type": "sub", "key": "fugl" },
+                            { "text": "?", "type": "plain" }
                         ]
                     },
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "🐐",
-                        "audioText": "Nu skal du se hvad jeg har fundet! En fugl og en gammel, beskidt træsko med mudder.",
+                        "audioText": "Den vil jeg forære til kongedatteren!",
                         "tokens": [
-                            {
-                                "text": "Nu",
-                                "type": "adv",
-                                "key": "nu"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "skal",
-                                "type": "vrb",
-                                "key": "skulle"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "du",
-                                "type": "pro",
-                                "key": "du"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "se",
-                                "type": "vrb",
-                                "key": "se"
-                            },
-                            {
-                                "text": ", hvad ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "jeg",
-                                "type": "pro",
-                                "key": "jeg"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "har fundet",
-                                "type": "vrb",
-                                "key": "finde"
-                            },
-                            {
-                                "text": "! En ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "fugl",
-                                "type": "sub",
-                                "key": "fugl"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "og",
-                                "type": "konj",
-                                "key": "og"
-                            },
-                            {
-                                "text": " en ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "gammel",
-                                "type": "adj",
-                                "key": "gammel"
-                            },
-                            {
-                                "text": ", ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "beskidt",
-                                "type": "adj",
-                                "key": "beskidt"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "træsko",
-                                "type": "sub",
-                                "key": "sko"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "med",
-                                "type": "prep",
-                                "key": "med"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "mudder",
-                                "type": "sub",
-                                "key": "mudder"
-                            },
-                            {
-                                "text": ".",
-                                "type": "plain"
-                            }
+                            { "text": "Den", "type": "pro", "key": "den" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "vil", "type": "vrb", "key": "ville" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "jeg", "type": "pro", "key": "jeg" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "forære", "type": "vrb", "key": "give" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "til", "type": "prep", "key": "til" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "kongedatteren", "type": "sub", "key": "prinsesse" },
+                            { "text": "!", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Brødrene",
+                        "speakerIcon": "🎩",
+                        "audioText": "Haha! Gør du bare det!",
+                        "tokens": [
+                            { "text": "Haha! ", "type": "plain" },
+                            { "text": "Gør", "type": "vrb", "key": "gøre" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "du", "type": "pro", "key": "du" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "bare", "type": "adv", "key": "bare" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "det", "type": "pro", "key": "det" },
+                            { "text": "! (de ler og rider videre)", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "🐐",
+                        "audioText": "Halehoj! Her er jeg igen! Nu skal I se hvad jeg har fundet: En gammel træsko!",
+                        "tokens": [
+                            { "text": "Halehoj! ", "type": "plain" },
+                            { "text": "Her", "type": "adv", "key": "her" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "er", "type": "vrb", "key": "være" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "jeg", "type": "pro", "key": "jeg" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "igen", "type": "adv", "key": "igen" },
+                            { "text": "! ........ ", "type": "plain" },
+                            { "text": "[Vises i ordstillingsopgaven]", "type": "plain" }
                         ],
                         "challenge": {
                             "type": "ordstilling",
                             "title": "Mesterens replik: Inversion efter 'Nu'",
                             "badge": "👑 Mesterens replik",
                             "prompt": "Saml Klods-Hans' udråb med inversion efter tidsadverbiet 'Nu':",
-                            "targetSentence": "Nu skal du se hvad jeg har fundet!",
+                            "targetSentence": "Nu skal I se hvad jeg har fundet!",
                             "tiles": [
                                 "Nu",
                                 "skal",
-                                "du",
+                                "I",
                                 "se",
                                 "hvad",
                                 "jeg",
                                 "har",
                                 "fundet!"
                             ],
-                            "explanation": "Perfekt! Når tidsadverbiet 'Nu' står i forfeltet, bytter verbet ('skal') og subjektet ('du') plads (inversion)!"
+                            "completedTokens": [
+                                { "text": "Halehoj! ", "type": "plain" },
+                                { "text": "Her", "type": "adv", "key": "her" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "er", "type": "vrb", "key": "være" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "jeg", "type": "pro", "key": "jeg" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "igen", "type": "adv", "key": "igen" },
+                                { "text": "! ", "type": "plain" },
+                                { "text": "Nu", "type": "adv", "key": "nu" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "skal", "type": "vrb", "key": "skulle" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "I", "type": "pro", "key": "i" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "se", "type": "vrb", "key": "se" },
+                                { "text": ", hvad ", "type": "plain" },
+                                { "text": "jeg", "type": "pro", "key": "jeg" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "har fundet", "type": "vrb", "key": "finde" },
+                                { "text": ": En ", "type": "plain" },
+                                { "text": "gammel", "type": "adj", "key": "gammel" },
+                                { "text": " ", "type": "plain" },
+                                { "text": "træsko", "type": "sub", "key": "træsko" },
+                                { "text": "!", "type": "plain" }
+                            ],
+                            "explanation": "Perfekt! Når tidsadverbiet 'Nu' står forrest i forfeltet, bytter verbet ('skal') og subjektet ('I') plads (inversion)!"
                         }
                     },
                     {
-                        "speaker": "Mand på vejen",
-                        "speakerIcon": "🧑‍🌾",
-                        "audioText": "Held og lykke med det!",
+                        "speaker": "Brødrene",
+                        "speakerIcon": "🎩",
+                        "audioText": "En gammel træsko uden overstykke? Skal kongedatteren også have den?",
                         "tokens": [
-                            {
-                                "text": "Held og lykke ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "med",
-                                "type": "prep",
-                                "key": "med"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "det",
-                                "type": "pro",
-                                "key": "det"
-                            },
-                            {
-                                "text": "! (griner)",
-                                "type": "plain"
-                            }
+                            { "text": "En ", "type": "plain" },
+                            { "text": "gammel", "type": "adj", "key": "gammel" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "træsko", "type": "sub", "key": "træsko" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "uden", "type": "prep", "key": "uden" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "overstykke", "type": "sub", "key": "stykke" },
+                            { "text": "? ", "type": "plain" },
+                            { "text": "Skal", "type": "vrb", "key": "skulle" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "kongedatteren", "type": "sub", "key": "prinsesse" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "også", "type": "adv", "key": "ogsaa" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "have", "type": "vrb", "key": "have" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "den", "type": "pro", "key": "den" },
+                            { "text": "?", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "🐐",
+                        "audioText": "Ja, det skal hun da!",
+                        "tokens": [
+                            { "text": "Ja, ", "type": "plain" },
+                            { "text": "det", "type": "pro", "key": "det" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "skal", "type": "vrb", "key": "skulle" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "hun", "type": "pro", "key": "hun" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "da", "type": "adv", "key": "da" },
+                            { "text": "!", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "🐐",
+                        "audioText": "Halehoj! Nu bliver det endnu bedre! Se hvad jeg har gravet op af grøften!",
+                        "tokens": [
+                            { "text": "Halehoj! ", "type": "plain" },
+                            { "text": "Nu", "type": "adv", "key": "nu" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "bliver", "type": "vrb", "key": "blive" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "det", "type": "pro", "key": "det" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "endnu", "type": "adv", "key": "endnu" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "bedre", "type": "adj", "key": "god" },
+                            { "text": "! ", "type": "plain" },
+                            { "text": "Se", "type": "vrb", "key": "se" },
+                            { "text": ", hvad ", "type": "plain" },
+                            { "text": "jeg", "type": "pro", "key": "jeg" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "har gravet", "type": "vrb", "key": "grave" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "op", "type": "adv", "key": "op" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "af", "type": "prep", "key": "af" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "grøften", "type": "sub", "key": "grøft" },
+                            { "text": "!", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Brødrene",
+                        "speakerIcon": "🎩",
+                        "audioText": "Føj, Klods-Hans! Det er jo pludder og mudder fra grøften!",
+                        "tokens": [
+                            { "text": "Føj, Klods-Hans! ", "type": "plain" },
+                            { "text": "Det", "type": "pro", "key": "det" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "er", "type": "vrb", "key": "være" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "jo", "type": "adv", "key": "jo" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "pludder", "type": "sub", "key": "mudder" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "og", "type": "konj", "key": "og" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "mudder", "type": "sub", "key": "mudder" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "fra", "type": "prep", "key": "fra" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "grøften", "type": "sub", "key": "grøft" },
+                            { "text": "!", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "🐐",
+                        "audioText": "Ja, og det er den fineste slags! Hvor vil hun blive glad!",
+                        "tokens": [
+                            { "text": "Ja, ", "type": "plain" },
+                            { "text": "og", "type": "konj", "key": "og" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "det", "type": "pro", "key": "det" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "er", "type": "vrb", "key": "være" },
+                            { "text": " den ", "type": "plain" },
+                            { "text": "fineste", "type": "adj", "key": "fin" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "slags", "type": "sub", "key": "slags" },
+                            { "text": "! ", "type": "plain" },
+                            { "text": "Hvor", "type": "adv", "key": "hvor" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "vil", "type": "vrb", "key": "ville" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "hun", "type": "pro", "key": "hun" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "blive", "type": "vrb", "key": "blive" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "glad", "type": "adj", "key": "glad" },
+                            { "text": "!", "type": "plain" }
                         ]
                     }
                 ],
@@ -1595,51 +1509,51 @@ export const hcAndersenStories = [
                         "questions": [
                             {
                                 "id": "s2_d1",
-                                "prompt": "Hvad har Klods-Hans nu fundet i grøften og lagt den døde krage ned i?",
+                                "prompt": "Hvem rider forrest på landevejen mod slottet?",
                                 "options": [
-                                    "En gammel, mudret træsko",
-                                    "En lædertaske",
-                                    "En kurv",
-                                    "En jernspand"
+                                    "Klods-Hans' to kloge brødre på fine heste",
+                                    "Kongens soldater",
+                                    "Klods-Hans på sin ged",
+                                    "Faren fra bondegården"
                                 ],
                                 "correct": 0,
-                                "explanation": "Rigtigt! Klods-Hans har fundet en gammel træsko, som han bruger til at bære kragen i!"
+                                "explanation": "Rigtigt! De to ældre brødre rider foran på deres stolte heste og tænker over deres taler."
                             },
                             {
                                 "id": "s2_d2",
-                                "prompt": "Hvad står der på den hvide milepæl/sten i vejkanten til højre?",
+                                "prompt": "Hvor befinder Klods-Hans sig på billedet?",
                                 "options": [
-                                    "Slottet (med pil)",
-                                    "Skoven",
-                                    "København",
-                                    "Havnen"
+                                    "Han rider bagefter brødrene på sin hvide ged",
+                                    "Han går til fods ved siden af vejen",
+                                    "Han sidder oppe i et træ",
+                                    "Han er allerede nået frem til slottet"
                                 ],
                                 "correct": 0,
-                                "explanation": "Præcis! Milepælen markerer retningen og afstanden mod kongens slot."
+                                "explanation": "Præcis! Klods-Hans kommer ridende bagefter brødrene i fuld fart på sin gedebuk!"
                             },
                             {
                                 "id": "s2_d3",
-                                "prompt": "Hvem møder Klods-Hans på landevejen, som standser op og forundres?",
+                                "prompt": "Hvad løfter Klods-Hans stolt op i hånden, mens han råber 'Halehoj!'?",
                                 "options": [
-                                    "En bonde/mand med trækvogn",
-                                    "Kongen på hest",
-                                    "En ridder med sværd",
-                                    "To soldater"
+                                    "En død sort krage",
+                                    "En guldnøgle",
+                                    "Et flag",
+                                    "En ridepisk"
                                 ],
                                 "correct": 0,
-                                "explanation": "Flot spottet! En lokal mand med tohjulet trækvogn spørger forundret, hvad Klods-Hans har med."
+                                "explanation": "Flot spottet! Klods-Hans vifter med den døde krage, som han fandt på landevejen."
                             },
                             {
                                 "id": "s2_d4",
-                                "prompt": "Hvad samler Klods-Hans op fra pløret ved vejkanten og putter i lommerne?",
+                                "prompt": "Hvad ligger der nede i vejkanten i det våde mudder / pludder?",
                                 "options": [
-                                    "Mudder / våd jord",
-                                    "Guldstykker",
-                                    "Modne æbler",
-                                    "Flade sten"
+                                    "En gammel træsko",
+                                    "En tabt pung",
+                                    "En jernkniv",
+                                    "En hestesko"
                                 ],
                                 "correct": 0,
-                                "explanation": "Korrekt! Klods-Hans fylder lommerne med det herligste mudder til at lave sauce af!"
+                                "explanation": "Korrekt! I grøftens mudder ligger en gammel træsko uden overstykke."
                             }
                         ]
                     },
@@ -1652,6 +1566,19 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_s1",
                                 "badge": "🟢 Overbegreb",
+                                "prompt": "Klods-Hans finder en krage på vejen. Hvilket overbegreb tilhører **en krage**?",
+                                "options": [
+                                    "En fugl",
+                                    "Et pattedyr",
+                                    "En fisk",
+                                    "Et krybdyr"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Fugl* er overbegrebet, og *en krage* er et specifikt underbegreb."
+                            },
+                            {
+                                "id": "s2_s2",
+                                "badge": "🟢 Overbegreb",
                                 "prompt": "Klods-Hans finder en gammel træsko. Hvad er overbegrebet for **en træsko**?",
                                 "options": [
                                     "Fodtøj (eller sko)",
@@ -1663,30 +1590,17 @@ export const hcAndersenStories = [
                                 "explanation": "*Fodtøj* er overbegrebet. Underbegreber er f.eks. *træsko*, *støvler*, *sneakers* og *sandaler*."
                             },
                             {
-                                "id": "s2_s2",
-                                "badge": "🟢 Overbegreb",
-                                "prompt": "Brødrene rider mod slottet. Hvad er overbegrebet for **et slot**?",
-                                "options": [
-                                    "En bygning (eller residens)",
-                                    "En vej",
-                                    "Et landskab",
-                                    "Et køretøj"
-                                ],
-                                "correct": 0,
-                                "explanation": "Et slot er en stor, fornem *bygning*, hvor kongelige residerer."
-                            },
-                            {
                                 "id": "s2_s3",
-                                "badge": "🟢 Underbegreb",
-                                "prompt": "Underbegreber til **naturmaterialer**: Hvilket ord fra scenen er en våd blanding af jord og vand?",
+                                "badge": "🟢 Synonym & Begreb",
+                                "prompt": "Brødrene råber: 'Det er jo pludder!' Hvilket ord er et synonym for **pludder** i grøften?",
                                 "options": [
                                     "Mudder (eller pløre)",
-                                    "Et slot",
-                                    "En hest",
-                                    "En gave"
+                                    "Sand",
+                                    "Sten",
+                                    "Græs"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Mudder* er våd, fedtet jord og vand blandet sammen i grøften."
+                                "explanation": "*Pludder* er et gammelt dansk ord for vådt, fedtet mudder eller pløre i en grøft."
                             }
                         ]
                     },
@@ -1701,33 +1615,33 @@ export const hcAndersenStories = [
                                 "badge": "🔴 Modsætning (Antonym)",
                                 "prompt": "Klods-Hans råber: 'Se hvad jeg har fundet!' Hvad er det modsatte af **at finde**?",
                                 "options": [
-                                    "at miste (eller tabe)",
+                                    "at tabe / miste",
                                     "at lede",
                                     "at beholde",
                                     "at købe"
                                 ],
                                 "correct": 0,
-                                "explanation": "Når du *finder* noget, opdager du det. Hvis du *mister* noget, har du det ikke længere."
+                                "explanation": "Når du *finder* noget, opdager du det. Hvis du *mister* eller *taber* det, har du det ikke længere."
                             },
                             {
                                 "id": "s2_v2",
-                                "badge": "🔴 Modsætning (Antonym)",
-                                "prompt": "Manden spørger, og Klods-Hans svarer. Hvad er det modsatte af **at spørge**?",
+                                "badge": "🔴 Synonym",
+                                "prompt": "Brødrene rider stille og tænker over kloge ord. Hvilket verbum er et synonym til **at tænke**?",
                                 "options": [
-                                    "at svare",
-                                    "at lytte",
-                                    "at hviske",
-                                    "at synge"
+                                    "at overveje / spekulere",
+                                    "at sove",
+                                    "at råbe",
+                                    "at løbe"
                                 ],
                                 "correct": 0,
-                                "explanation": "I en samtale *spørger* den ene, og den anden person *svarer*."
+                                "explanation": "*At tænke*, *at spekulere* og *at overveje* betyder næsten det samme (synonymer)."
                             },
                             {
                                 "id": "s2_v3",
                                 "badge": "🔴 Synonym",
-                                "prompt": "Manden på vejen griner af Klods-Hans. Hvilket verbum er et synonym til **at grine**?",
+                                "prompt": "Brødrene griner og ler af Klods-Hans. Hvilket verbum er et synonym til **at le**?",
                                 "options": [
-                                    "at le",
+                                    "at grine",
                                     "at græde",
                                     "at råbe",
                                     "at klage"
@@ -1741,20 +1655,20 @@ export const hcAndersenStories = [
                         "title": "Adjektiver: Modsætninger og gradbøjning",
                         "badge": "🟠 Modsætninger & gradbøjning",
                         "icon": "🟠",
-                        "desc": "Træn tillægsord der beskriver fundene i vejkanten:",
+                        "desc": "Træn tillægsord der beskriver fundene og personerne:",
                         "questions": [
                             {
                                 "id": "s2_a1",
                                 "badge": "🟠 Modsætning (Antonym)",
-                                "prompt": "Træskoen i mudderet er meget beskidt. Hvad er det modsatte af **beskidt**?",
+                                "prompt": "Klods-Hans finder en død krage. Hvad er det modsatte af **død**?",
                                 "options": [
-                                    "ren",
+                                    "levende",
+                                    "gammel",
                                     "våd",
-                                    "slidt",
-                                    "mørk"
+                                    "klog"
                                 ],
                                 "correct": 0,
-                                "explanation": "Noget der er *beskidt*, skal vaskes for at blive *rent*."
+                                "explanation": "Det modsatte af *død* er *levende*."
                             },
                             {
                                 "id": "s2_a2",
@@ -1767,46 +1681,46 @@ export const hcAndersenStories = [
                                     "hurtig"
                                 ],
                                 "correct": 0,
-                                "explanation": "En ting er enten *gammel* eller *ny* (hvis det er en person, er modpolen *ung*)."
+                                "explanation": "En ting er enten *gammel* eller *ny* (om personer bruges modpolen *ung*)."
                             },
                             {
                                 "id": "s2_a3",
                                 "badge": "🟠 Gradbøjning",
-                                "prompt": "Hvordan gradbøjes det uregelmæssige adjektiv **gammel**?",
+                                "prompt": "Klods-Hans siger at mudderet er af den 'fineste slags'. Hvordan gradbøjes **fin**?",
                                 "options": [
-                                    "gammel – ældre – ældst",
-                                    "gammel – gamlere – gamlest",
-                                    "gammel – mere gammel – mest gammel",
-                                    "ung – yngre – yngst"
+                                    "fin – finere – finest",
+                                    "fin – mere fin – mest fin",
+                                    "fin – finere – bedst",
+                                    "god – bedre – bedst"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Gammel* skifter vokalstamme i komparativ og superlativ: *gammel – ældre – ældst*."
+                                "explanation": "*Fin* gradbøjes regelmæssigt med -ere og -est: *fin – finere – finest*."
                             }
                         ]
                     },
                     "adverbier": {
-                        "title": "Adverbier: Gradbøjning og synonymer",
-                        "badge": "🔵 Gradbøjning & synonymer",
+                        "title": "Adverbier: Position og bevægelse",
+                        "badge": "🔵 Position & bevægelse",
                         "icon": "🔵",
-                        "desc": "Træn steds- og tidsadverbier der beskriver bevægelse på landevejen:",
+                        "desc": "Træn steds- og tidsadverbier der beskriver brødrenes og Klods-Hans' ridt:",
                         "questions": [
                             {
                                 "id": "s2_adv1",
-                                "badge": "🔵 Stedsadverbium & Retning",
-                                "prompt": "Manden spørger: 'Hvor er du på vej hen?' Hvilken funktion har **hen** her?",
+                                "badge": "🔵 Stedsadverbium & Position",
+                                "prompt": "Brødrene rider **foran**, og Klods-Hans rider **bagefter**. Hvad angiver disse to ord?",
                                 "options": [
-                                    "Det viser retning / bevægelse mod et mål",
-                                    "Det angiver klokkeslæt",
-                                    "Det viser en holdning",
-                                    "Det benægter sætningen"
+                                    "Position i rummet i forhold til hinanden (stedsadverbier)",
+                                    "Tidspunkt på dagen (tidsadverbier)",
+                                    "En følelse hos personerne",
+                                    "Graden af hastighed"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Hen* er et stedsadverbium, der udtrykker bevægelse mod et mål ('på vej hen til slottet')."
+                                "explanation": "*Foran* og *bagefter* er stedsadverbier, der angiver den indbyrdes placering."
                             },
                             {
                                 "id": "s2_adv2",
                                 "badge": "🔵 Tidsadverbium",
-                                "prompt": "Klods-Hans siger: 'Nu skal du se!' Hvilket udtryk er et synonym til tidsadverbiet **nu**?",
+                                "prompt": "Klods-Hans råber: 'Nu skal I se!' Hvilket udtryk er et synonym til tidsadverbiet **nu**?",
                                 "options": [
                                     "i dette øjeblik / straks",
                                     "i går",
@@ -1818,16 +1732,16 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s2_adv3",
-                                "badge": "🔵 Modsætning (Antonym)",
-                                "prompt": "Hvad er det modsatte af stedadverbiet **her** ('se her')?",
+                                "badge": "🔵 Bevægelsesadverbium",
+                                "prompt": "Brødrene ler og rider **videre**. Hvad angiver adverbiet **videre** her?",
                                 "options": [
-                                    "der",
-                                    "hjemme",
-                                    "aldrig",
-                                    "altid"
+                                    "Fortsættelse af bevægelsen fremad",
+                                    "At de vender om",
+                                    "At de standser helt op",
+                                    "At de rider hurtigere"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Her* er tæt på den, der taler, mens *der* er længere væk."
+                                "explanation": "*Videre* angiver en fortsættelse af en handling eller bevægelse ('at ride videre mod slottet')."
                             }
                         ]
                     }

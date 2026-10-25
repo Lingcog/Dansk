@@ -116,7 +116,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     viewContainer.appendChild(taskArea);
 
     // -------------------------------------------------------------
-    // RENDER: KRAFTFELT-SCENE
+    // RENDER: KRAFTFELT-SCENE (Barn og mad tættere på hinanden + større tekst)
     // -------------------------------------------------------------
     function renderStage() {
         const base = getBaseModal(state.selectedModal);
@@ -141,18 +141,18 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </filter>
                 </defs>
 
-                <!-- 3 kraftfulde fremaddrivende pile bag agens -->
-                <g class="force-push-group" transform="translate(10, 52)">
+                <!-- 3 kraftfulde fremaddrivende pile bag barnet (i feltet x=32 til 72) -->
+                <g class="force-push-group" transform="translate(34, 42)">
                     <path d="M 0 0 L 16 14 L 0 28" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.6"/>
                     <path d="M 12 0 L 28 14 L 12 28" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85"/>
                     <path d="M 24 0 L 40 14 L 24 28" stroke="#fbbf24" stroke-width="4.5" stroke-linecap="round" fill="none" filter="url(#glowOrange)"/>
                 </g>
 
-                <!-- Trykfelt der skubber i ryggen -->
-                <path d="M 45 60 Q 60 70 45 80" stroke="#fbbf24" stroke-width="3" fill="none" opacity="0.8"/>
+                <!-- Trykfelt der skubber direkte i ryggen -->
+                <path d="M 75 50 Q 86 60 75 70" stroke="#fbbf24" stroke-width="3" fill="none" opacity="0.8"/>
 
-                <!-- Uundgåelig kraftlinje på jorden -->
-                <line x1="68" y1="92" x2="280" y2="92" stroke="#f97316" stroke-width="3" stroke-dasharray="8 4" stroke-linecap="round" opacity="0.85"/>
+                <!-- Uundgåelig kraftlinje på jorden mellem barn og mad -->
+                <line x1="102" y1="86" x2="242" y2="86" stroke="#f97316" stroke-width="3.5" stroke-dasharray="8 4" stroke-linecap="round" opacity="0.85"/>
             `;
         } else if (base === 'må') {
             badgeText = `🚪 MÅ: Barrieren er løftet / Fri bane`;
@@ -165,26 +165,26 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </filter>
                 </defs>
 
-                <!-- Løftet barriere/bom i midten (åbnet) -->
-                <g transform="translate(165, 42)">
+                <!-- Løftet barriere/bom præcis i midten (x=172) -->
+                <g transform="translate(172, 38)">
                     <!-- Stolpe -->
-                    <rect x="-3" y="16" width="6" height="34" rx="2" fill="#334155"/>
+                    <rect x="-3" y="18" width="6" height="30" rx="2" fill="#334155"/>
                     <circle cx="0" cy="18" r="4.5" fill="#22c55e"/>
 
                     <!-- Bommen er svunget opad i fri position -->
-                    <path d="M 0 18 L 26 -16" stroke="#4ade80" stroke-width="4" stroke-linecap="round" filter="url(#glowGreen)"/>
+                    <path d="M 0 18 L 24 -16" stroke="#4ade80" stroke-width="4" stroke-linecap="round" filter="url(#glowGreen)"/>
 
                     <!-- Opløsnings-partikler i luften -->
-                    <circle cx="10" cy="10" r="1.5" fill="#86efac" opacity="0.7"/>
-                    <circle cx="20" cy="2" r="2" fill="#86efac" opacity="0.9"/>
-                    <circle cx="28" cy="-8" r="1.5" fill="#86efac" opacity="0.6"/>
+                    <circle cx="8" cy="8" r="1.5" fill="#86efac" opacity="0.7"/>
+                    <circle cx="18" cy="0" r="2" fill="#86efac" opacity="0.9"/>
+                    <circle cx="26" cy="-8" r="1.5" fill="#86efac" opacity="0.6"/>
                 </g>
 
-                <!-- Åben, grøn lysvej hen over jorden -->
-                <line x1="68" y1="92" x2="280" y2="92" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" filter="url(#glowGreen)"/>
-                <circle cx="120" cy="92" r="3" fill="#86efac"/>
-                <circle cx="170" cy="92" r="3" fill="#86efac"/>
-                <circle cx="220" cy="92" r="3" fill="#86efac"/>
+                <!-- Åben, grøn lysvej hen over jorden mellem barn og mad -->
+                <line x1="102" y1="86" x2="242" y2="86" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" filter="url(#glowGreen)"/>
+                <circle cx="132" cy="86" r="3" fill="#86efac"/>
+                <circle cx="172" cy="86" r="3" fill="#86efac"/>
+                <circle cx="212" cy="86" r="3" fill="#86efac"/>
             `;
         } else if (base === 'vil') {
             badgeText = `❤️ VIL: Indre vilje & Magnetisk træk`;
@@ -197,18 +197,18 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </filter>
                 </defs>
 
-                <!-- Magnetisk attraktionsbue fra subjekt mod mad -->
-                <path d="M 62 65 Q 170 30 282 66" stroke="#fb7185" stroke-width="3" fill="none" stroke-linecap="round" 
+                <!-- Glødende hjerte/vilje-kerne i barnets bryst -->
+                <circle cx="86" cy="52" r="7.5" fill="#f43f5e" filter="url(#glowRose)"/>
+                <circle cx="86" cy="52" r="3.5" fill="#ffffff"/>
+
+                <!-- Magnetisk attraktionsbue fra barn mod mad -->
+                <path d="M 96 52 Q 172 20 244 54" stroke="#fb7185" stroke-width="3" fill="none" stroke-linecap="round" 
                       stroke-dasharray="6 4" filter="url(#glowRose)"/>
-                
-                <!-- Glødende hjerte/vilje-kerne i brystet -->
-                <circle cx="56" cy="65" r="7" fill="#f43f5e" filter="url(#glowRose)"/>
-                <circle cx="56" cy="65" r="3.5" fill="#ffffff"/>
 
                 <!-- Fremadrettede intentionsstråler -->
-                <line x1="66" y1="62" x2="78" y2="60" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
-                <line x1="68" y1="68" x2="82" y2="68" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="66" y1="74" x2="78" y2="76" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
+                <line x1="98" y1="48" x2="110" y2="46" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
+                <line x1="100" y1="54" x2="114" y2="54" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="98" y1="60" x2="110" y2="62" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>
             `;
         } else if (base === 'kan') {
             badgeText = `🌐 KAN: Kapacitet & Mulighedsfelt`;
@@ -225,21 +225,21 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </linearGradient>
                 </defs>
 
-                <!-- Stor kompetence-aura omkring subjektet mod målet -->
-                <ellipse cx="115" cy="68" rx="60" ry="34" fill="url(#auraGrad)" stroke="#38bdf8" stroke-width="1.8" 
+                <!-- Stor kompetence-aura omkring subjektet og frem mod målet -->
+                <ellipse cx="135" cy="56" rx="55" ry="30" fill="url(#auraGrad)" stroke="#38bdf8" stroke-width="1.8" 
                          stroke-dasharray="6 3" filter="url(#glowCyan)"/>
 
                 <!-- Aura omkring barnets hoved/ressource -->
-                <circle cx="54" cy="50" r="14" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.8"/>
+                <circle cx="86" cy="38" r="14" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.8"/>
 
-                <!-- Solid cyan bro langs jorden -->
-                <line x1="68" y1="92" x2="280" y2="92" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" filter="url(#glowCyan)"/>
+                <!-- Solid cyan bro langs jorden mellem barn og mad -->
+                <line x1="102" y1="86" x2="242" y2="86" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" filter="url(#glowCyan)"/>
             `;
         }
 
         stageCard.innerHTML = `
             <div class="stage-frame-wrapper">
-                <svg class="force-svg-fluid" viewBox="0 0 360 115" preserveAspectRatio="xMidYMid meet">
+                <svg class="force-svg-fluid" viewBox="0 0 360 126" preserveAspectRatio="xMidYMid meet">
                     <defs>
                         <linearGradient id="spaceGrad" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stop-color="#0b1329"/>
@@ -253,56 +253,62 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     </defs>
 
                     <!-- Baggrund & nattehimmel -->
-                    <rect x="0" y="0" width="360" height="115" rx="12" fill="url(#spaceGrad)"/>
+                    <rect x="0" y="0" width="360" height="126" rx="12" fill="url(#spaceGrad)"/>
 
                     <!-- Jorden / Terrænet -->
-                    <rect x="0" y="92" width="360" height="23" rx="0 0 12 12" fill="url(#grassGrad)"/>
-                    <line x1="0" y1="92" x2="360" y2="92" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+                    <rect x="0" y="86" width="360" height="40" rx="0 0 12 12" fill="url(#grassGrad)"/>
+                    <line x1="0" y1="86" x2="360" y2="86" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
 
                     <!-- Dynamiske kraftvektorer (SKAL, MÅ, VIL, KAN) -->
                     ${forceSvgOverlay}
 
-                    <!-- AGENS: Barnet (Stiliseret moderne silhuet) -->
-                    <g class="agent-character" transform="translate(54, 38)">
+                    <!-- AGENS: Barnet (Tættere på maden: placeret ved x=86) -->
+                    <g class="agent-character" transform="translate(86, 28)">
                         <!-- Hoved -->
-                        <circle cx="0" cy="12" r="7" fill="#f8fafc"/>
+                        <circle cx="0" cy="11" r="7.5" fill="#f8fafc"/>
                         <!-- Krop -->
-                        <path d="M -7 22 Q 0 19 7 22 L 8 41 L -8 41 Z" fill="#0284c7" rx="3"/>
-                        <!-- Ben til jorden (y=92) -->
-                        <line x1="-4" y1="41" x2="-4" y2="54" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="4" y1="41" x2="4" y2="54" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M -7 21 Q 0 18 7 21 L 8 42 L -8 42 Z" fill="#0284c7" rx="3"/>
+                        <!-- Ben til jorden (y=86, så 28 + 58 = 86) -->
+                        <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
                         
-                        <!-- Navnemærke -->
-                        <text x="0" y="66" fill="#cbd5e1" font-size="9" font-weight="800" text-anchor="middle">
+                        <!-- Navnemærke (STOR OG TYDELIG TEKST) -->
+                        <text x="0" y="74" fill="#ffffff" font-size="13" font-weight="900" text-anchor="middle">
                             ${state.nounAnchor} ${state.selectedNoun}
+                        </text>
+                        <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
+                            (subjekt)
                         </text>
                     </g>
 
-                    <!-- MÅLET: Handlingen "spise" (Maden på bordet) -->
-                    <g class="target-action" transform="translate(295, 48)">
+                    <!-- MÅLET: Handlingen "spise" (Tættere på barnet: placeret ved x=258) -->
+                    <g class="target-action" transform="translate(258, 30)">
                         <!-- Bord -->
-                        <rect x="-18" y="32" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
-                        <line x1="-12" y1="44" x2="-12" y2="54" stroke="#78350f" stroke-width="2.5"/>
-                        <line x1="12" y1="44" x2="12" y2="54" stroke="#78350f" stroke-width="2.5"/>
+                        <rect x="-18" y="34" width="36" height="12" rx="2" fill="#78350f" stroke="#b45309" stroke-width="1"/>
+                        <line x1="-12" y1="46" x2="-12" y2="56" stroke="#78350f" stroke-width="2.5"/>
+                        <line x1="12" y1="46" x2="12" y2="56" stroke="#78350f" stroke-width="2.5"/>
                         
                         <!-- Tallerken -->
-                        <ellipse cx="0" cy="31" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+                        <ellipse cx="0" cy="33" rx="14" ry="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
                         <!-- Mad -->
-                        <circle cx="0" cy="29" r="4.5" fill="#f59e0b"/>
+                        <circle cx="0" cy="31" r="4.5" fill="#f59e0b"/>
                         <!-- Duft/Damp -->
-                        <path d="M -3 23 Q -5 17 0 12" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
-                        <path d="M 3 24 Q 5 18 1 13" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
+                        <path d="M -3 25 Q -5 19 0 14" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
+                        <path d="M 3 26 Q 5 20 1 15" stroke="#fde68a" stroke-width="1.2" fill="none" opacity="0.8"/>
 
-                        <!-- Mærkaten for handlingen -->
-                        <text x="0" y="56" fill="#86efac" font-size="9.5" font-weight="900" text-anchor="middle">
-                            spise (∞)
+                        <!-- Mærkaten for handlingen (STOR OG TYDELIG TEKST) -->
+                        <text x="0" y="72" fill="#4ade80" font-size="14.5" font-weight="900" text-anchor="middle">
+                            spise
+                        </text>
+                        <text x="0" y="84" fill="#86efac" font-size="8.5" font-weight="700" text-anchor="middle">
+                            (handling / idé)
                         </text>
                     </g>
 
                     <!-- Statusbadge i toppen af scenen -->
-                    <g class="stage-top-badge" transform="translate(180, 16)">
-                        <rect x="-95" y="-10" width="190" height="20" rx="10" fill="rgba(15, 23, 42, 0.92)" stroke="${activeColor}" stroke-width="1.2"/>
-                        <text x="0" y="3.5" fill="${activeColor}" font-size="9.2" font-weight="800" text-anchor="middle">
+                    <g class="stage-top-badge" transform="translate(180, 15)">
+                        <rect x="-105" y="-10" width="210" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${activeColor}" stroke-width="1.3"/>
+                        <text x="0" y="4" fill="${activeColor}" font-size="10.2" font-weight="900" text-anchor="middle">
                             ${badgeText}
                         </text>
                     </g>
@@ -684,7 +690,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             max-width: 100%;
             height: auto;
             display: block;
-            aspect-ratio: 360 / 115;
+            aspect-ratio: 360 / 126;
         }
 
         /* Sætningsbånd */

@@ -681,6 +681,419 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         return tasksWrap;
     }
 
+    function renderChallengeCard(challenge, lineIdx, onComplete) {
+        const card = document.createElement('div');
+        card.className = 'hc-challenge-card';
+
+        const header = document.createElement('div');
+        header.className = 'hc-challenge-header';
+        header.innerHTML = `
+            <span class="hc-challenge-badge">${challenge.badge || '👑 Mesterens replik'}</span>
+            <h4 class="hc-challenge-title">${challenge.title}</h4>
+        `;
+        card.appendChild(header);
+
+        const promptEl = document.createElement('div');
+        promptEl.className = 'hc-challenge-prompt';
+        promptEl.innerHTML = challenge.prompt.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        card.appendChild(promptEl);
+
+        const feedbackEl = document.createElement('div');
+        feedbackEl.className = 'hc-challenge-feedback';
+        feedbackEl.style.display = 'none';
+
+        if (challenge.type === 'ordstilling') {
+            const tilesPool = [...challenge.tiles].sort(() => Math.random() - 0.5);
+            const assembled = [];
+
+            const slotWrap = document.createElement('div');
+            slotWrap.className = 'hc-challenge-slot-wrap';
+            slotWrap.innerHTML = `
+                <div class="slot-label">${isEn ? 'Your sentence:' : 'Din sætning:'}</div>
+                <div class="hc-challenge-slot empty"><span class="slot-placeholder">${isEn ? 'Tap the word tiles below to build the sentence...' : 'Tryk på ordene nedenfor for at bygge sætningen...'}</span></div>
+            `;
+            const slotEl = slotWrap.querySelector('.hc-challenge-slot');
+            card.appendChild(slotWrap);
+
+            const poolWrap = document.createElement('div');
+            poolWrap.className = 'hc-challenge-pool';
+            card.appendChild(poolWrap);
+
+            function updateSlotAndPool() {
+                slotEl.innerHTML = '';
+                if (assembled.length === 0) {
+                    slotEl.classList.add('empty');
+                    slotEl.innerHTML = `<span class="slot-placeholder">${isEn ? 'Tap the word tiles below to build the sentence...' : 'Tryk på ordene nedenfor for at bygge sætningen...'}</span>`;
+                } else {
+                    slotEl.classList.remove('empty');
+                    assembled.forEach((word, idx) => {
+                        const tile = document.createElement('button');
+                        tile.type = 'button';
+                        tile.className = 'hc-tile in-slot';
+                        tile.textContent = word;
+                        tile.onclick = () => {
+                            assembled.splice(idx, 1);
+                            tilesPool.push(word);
+                            updateSlotAndPool();
+                        };
+                        slotEl.appendChild(tile);
+                    });
+                }
+
+                poolWrap.innerHTML = '';
+                tilesPool.forEach((word, idx) => {
+                    const tile = document.createElement('button');
+                    tile.type = 'button';
+                    tile.className = 'hc-tile in-pool';
+                    tile.textContent = word;
+                    tile.onclick = () => {
+                        tilesPool.splice(idx, 1);
+                        assembled.push(word);
+                        updateSlotAndPool();
+                    };
+                    poolWrap.appendChild(tile);
+                });
+            }
+
+            updateSlotAndPool();
+
+            const actionsRow = document.createElement('div');
+            actionsRow.className = 'hc-challenge-actions';
+            actionsRow.innerHTML = `
+                <button type="button" class="hc-check-sentence-btn">
+                    <span>${isEn ? 'Check word order' : 'Tjek ordstilling'}</span> <span>✅</span>
+                </button>
+                <button type="button" class="hc-reset-tiles-btn" title="Nulstil brikker">
+                    <span>🔄</span> <span>${isEn ? 'Reset' : 'Nulstil'}</span>
+                </button>
+            `;
+
+            actionsRow.querySelector('.hc-reset-tiles-btn').onclick = () => {
+                tilesPool.length = 0;
+                challenge.tiles.forEach(t => tilesPool.push(t));
+                tilesPool.sort(() => Math.random() - 0.5);
+                assembled.length = 0;
+                updateSlotAndPool();
+                feedbackEl.style.display = 'none';
+            };
+
+            actionsRow.querySelector('.hc-check-sentence-btn').onclick = () => {
+                const assembledStr = assembled.join(' ').replace(/\s+([,\.!\?])/g, '$1').trim();
+                const targetStr = challenge.targetSentence.replace(/\s+([,\.!\?])/g, '$1').trim();
+
+                const isMatch = assembledStr.toLowerCase().replace(/[,\.!\?]/g, '').trim() === targetStr.toLowerCase().replace(/[,\.!\?]/g, '').trim();
+
+                if (isMatch) {
+                    slotEl.classList.add('correct');
+                    feedbackEl.className = 'hc-challenge-feedback correct';
+                    feedbackEl.style.display = 'flex';
+                    feedbackEl.innerHTML = `
+                        <div class="feedback-msg">
+                            <span style="font-size: 1.4rem;">🎉</span>
+                            <div>
+                                <strong>${isEn ? 'Perfect word order!' : 'Helt rigtigt!'}</strong>
+                                <p>${challenge.explanation}</p>
+                            </div>
+                        </div>
+                        <button type="button" class="hc-challenge-continue-btn">
+                            <span>${isEn ? 'Continue reading ➔' : 'Fortsæt læsningen ➔'}</span>
+                        </button>
+                    `;
+                    speakDanish(targetStr);
+                    feedbackEl.querySelector('.hc-challenge-continue-btn').onclick = () => {
+                        onComplete();
+                    };
+                    actionsRow.style.display = 'none';
+                    poolWrap.style.display = 'none';
+                } else {
+                    feedbackEl.className = 'hc-challenge-feedback incorrect';
+                    feedbackEl.style.display = 'flex';
+                    feedbackEl.innerHTML = `
+                        <div class="feedback-msg">
+                            <span style="font-size: 1.3rem;">💡</span>
+                            <div>
+                                <strong>${isEn ? 'Not quite right yet:' : 'Ikke helt den rigtige rækkefølge endnu:'}</strong>
+                                <p>${isEn ? 'Try changing the order of the words. Pay attention to verb and subject order!' : 'Prøv at bytte om på brikkerne. Husk V2-reglen for udsagnsord og grundled!'}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            };
+
+            card.appendChild(actionsRow);
+            card.appendChild(feedbackEl);
+        } else if (challenge.type === 'cloze_speech') {
+            const templateBox = document.createElement('div');
+            templateBox.className = 'hc-cloze-template-box';
+            templateBox.innerHTML = `
+                <div class="hc-cloze-template" id="cloze-template-text">
+                    ${challenge.sentenceTemplate.replace(/\[\s*___\s*\]/, '<span class="cloze-gap-pill">?</span>')}
+                </div>
+            `;
+            card.appendChild(templateBox);
+
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'hc-cloze-options';
+
+            let isClozeCorrect = false;
+
+            challenge.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'hc-cloze-opt-btn';
+                btn.textContent = opt;
+
+                btn.onclick = () => {
+                    if (isClozeCorrect) return;
+
+                    if (opt === challenge.correct) {
+                        isClozeCorrect = true;
+                        btn.classList.add('correct');
+                        optionsGrid.querySelectorAll('.hc-cloze-opt-btn').forEach(b => {
+                            b.disabled = true;
+                            if (b !== btn) b.style.opacity = '0.4';
+                        });
+
+                        const gapPill = templateBox.querySelector('.cloze-gap-pill');
+                        if (gapPill) {
+                            gapPill.textContent = opt;
+                            gapPill.classList.add('filled');
+                        }
+
+                        feedbackEl.className = 'hc-challenge-feedback correct';
+                        feedbackEl.style.display = 'flex';
+                        feedbackEl.innerHTML = `
+                            <div class="feedback-msg">
+                                <span style="font-size: 1.4rem;">👏</span>
+                                <div>
+                                    <strong>${isEn ? 'Correct word!' : 'Rigtigt ord!'}</strong>
+                                    <p>${challenge.explanation}</p>
+                                </div>
+                            </div>
+                            <div class="hc-speech-practice-box">
+                                <div class="speech-prompt-title">🎙️ ${challenge.speechPrompt || (isEn ? 'Practice pronouncing the line aloud:' : 'Udtaletræning: Sig replikken højt:')}</div>
+                                <div class="speech-audio-btns">
+                                    <button type="button" class="speech-btn normal" id="speech-play-normal">
+                                        <span>🔊</span> <span>${isEn ? 'Normal speed' : 'Normal udtale'}</span>
+                                    </button>
+                                    <button type="button" class="speech-btn slow" id="speech-play-slow">
+                                        <span>🐢</span> <span>${isEn ? 'Slowly (0.75x)' : 'Langsomt (0.75x)'}</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="hc-challenge-continue-btn" id="cloze-continue-btn">
+                                <span>🗣️ ${isEn ? 'I said it aloud – Continue ➔' : 'Jeg har udtalt replikken – Fortsæt ➔'}</span>
+                            </button>
+                        `;
+
+                        feedbackEl.querySelector('#speech-play-normal').onclick = () => {
+                            speakDanish(challenge.audioText);
+                        };
+                        feedbackEl.querySelector('#speech-play-slow').onclick = () => {
+                            if (!('speechSynthesis' in window)) return;
+                            window.speechSynthesis.cancel();
+                            const utterance = new SpeechSynthesisUtterance(challenge.audioText);
+                            utterance.lang = 'da-DK';
+                            utterance.rate = 0.75;
+                            window.speechSynthesis.speak(utterance);
+                        };
+                        feedbackEl.querySelector('#cloze-continue-btn').onclick = () => {
+                            onComplete();
+                        };
+                    } else {
+                        btn.classList.add('incorrect');
+                        btn.disabled = true;
+                    }
+                };
+
+                optionsGrid.appendChild(btn);
+            });
+
+            card.appendChild(optionsGrid);
+            card.appendChild(feedbackEl);
+        }
+
+        return card;
+    }
+
+    function createSentenceFlow(section, sectionIndex) {
+        const flowContainer = document.createElement('div');
+        flowContainer.className = 'hc-sentence-flow-wrapper';
+
+        let revealedCount = 1;
+        const totalLines = section.dialogue.length;
+        const solvedChallenges = {};
+        let isAllViewMode = false;
+
+        function renderFlow() {
+            flowContainer.innerHTML = '';
+
+            const currentProgress = isAllViewMode ? totalLines : revealedCount;
+            const pct = Math.round((currentProgress / totalLines) * 100);
+
+            // Progress header bar
+            const headerEl = document.createElement('div');
+            headerEl.className = 'hc-flow-header-row';
+            headerEl.innerHTML = `
+                <div class="hc-flow-progress-info">
+                    <span class="hc-flow-step-badge">📜 ${isEn ? `Sentence ${currentProgress} of ${totalLines}` : `Sætning ${currentProgress} af ${totalLines}`}</span>
+                    <div class="hc-flow-bar-track">
+                        <div class="hc-flow-bar-fill" style="width: ${pct}%;"></div>
+                    </div>
+                </div>
+                <button type="button" class="hc-flow-toggle-btn" title="${isAllViewMode ? (isEn ? 'Switch to step-by-step reading' : 'Skift til sætningsvis visning') : (isEn ? 'Show all sentences at once' : 'Vis hele scenens tekst samlet')}">
+                    <span>${isAllViewMode ? '➡️ Sætningsvis' : '📜 Vis samlet tekst'}</span>
+                </button>
+            `;
+            headerEl.querySelector('.hc-flow-toggle-btn').onclick = () => {
+                isAllViewMode = !isAllViewMode;
+                renderFlow();
+            };
+            flowContainer.appendChild(headerEl);
+
+            const dialogueList = document.createElement('div');
+            dialogueList.className = 'hc-dialogue-list';
+
+            const linesToShow = isAllViewMode ? totalLines : revealedCount;
+
+            for (let i = 0; i < linesToShow; i++) {
+                const line = section.dialogue[i];
+                const isLatestLine = (i === revealedCount - 1) && !isAllViewMode;
+                const lineEl = document.createElement('div');
+                lineEl.className = `hc-dialogue-line ${isLatestLine ? 'latest-revealed' : ''}`;
+
+                const speakerHeader = document.createElement('div');
+                speakerHeader.className = 'hc-speaker-header';
+                speakerHeader.innerHTML = `
+                    <span class="hc-speaker-badge">
+                        <span>${line.speakerIcon || '💬'}</span>
+                        <span>${line.speaker}:</span>
+                    </span>
+                    <button type="button" class="hc-speaker-audio-btn" title="${isEn ? 'Listen to line' : 'Lyt til replik'}">
+                        <span>🔊</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                    </button>
+                `;
+                speakerHeader.querySelector('.hc-speaker-audio-btn').onclick = () => {
+                    speakDanish(line.audioText);
+                };
+                lineEl.appendChild(speakerHeader);
+
+                const speechEl = document.createElement('div');
+                speechEl.className = 'hc-line-speech';
+
+                if (line.tokens && line.tokens.length > 0) {
+                    line.tokens.forEach(token => {
+                        if (token.type === 'plain') {
+                            const span = document.createElement('span');
+                            span.textContent = token.text;
+                            speechEl.appendChild(span);
+                        } else {
+                            const tokenBtn = document.createElement('span');
+                            tokenBtn.className = `hc-word-token token-${token.type}`;
+                            tokenBtn.textContent = token.text;
+                            tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
+                            tokenBtn.onclick = (e) => {
+                                e.stopPropagation();
+                                speakDanish(token.text);
+                                handleWordClick(token, line.audioText);
+                            };
+                            speechEl.appendChild(tokenBtn);
+                        }
+                    });
+                } else {
+                    speechEl.textContent = line.audioText;
+                }
+
+                lineEl.appendChild(speechEl);
+
+                // Challenge check
+                if (line.challenge) {
+                    const isChallengeSolved = solvedChallenges[i] === true;
+
+                    if (!isChallengeSolved && isLatestLine) {
+                        const challengeCard = renderChallengeCard(line.challenge, i, () => {
+                            solvedChallenges[i] = true;
+                            renderFlow();
+                        });
+                        lineEl.appendChild(challengeCard);
+                    } else if (isChallengeSolved) {
+                        const solvedPill = document.createElement('div');
+                        solvedPill.className = 'hc-challenge-solved-badge';
+                        solvedPill.innerHTML = `
+                            <span>👑</span>
+                            <span>${line.challenge.title} – Gennemført! ✅</span>
+                        `;
+                        lineEl.appendChild(solvedPill);
+                    }
+                }
+
+                dialogueList.appendChild(lineEl);
+            }
+
+            flowContainer.appendChild(dialogueList);
+
+            // Flow navigation bar (Next sentence or completion)
+            if (!isAllViewMode) {
+                const currentLine = section.dialogue[revealedCount - 1];
+                const hasUnsolvedChallenge = currentLine && currentLine.challenge && !solvedChallenges[revealedCount - 1];
+
+                const navBar = document.createElement('div');
+                navBar.className = 'hc-flow-nav-bar';
+
+                if (revealedCount < totalLines) {
+                    const nextBtn = document.createElement('button');
+                    nextBtn.type = 'button';
+                    nextBtn.className = 'hc-next-sentence-btn';
+                    nextBtn.disabled = hasUnsolvedChallenge;
+                    nextBtn.innerHTML = `
+                        <span>${isEn ? 'I understand this sentence – Next' : 'Jeg forstår sætningen – Næste sætning'}</span>
+                        <span>➔</span>
+                    `;
+                    nextBtn.onclick = () => {
+                        revealedCount++;
+                        renderFlow();
+                        setTimeout(() => {
+                            const latest = flowContainer.querySelector('.latest-revealed');
+                            if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 60);
+                    };
+
+                    const hintText = document.createElement('div');
+                    hintText.className = 'hc-next-sentence-hint';
+                    hintText.textContent = hasUnsolvedChallenge 
+                        ? (isEn ? 'Solve the challenge above to unlock the next sentence!' : 'Løs udfordringen ovenfor for at låse op for næste sætning!')
+                        : (isEn ? 'Press when you have understood the sentence and want to continue' : 'Tryk når du har forstået sætningen og er klar til at gå videre i handlingen.');
+
+                    navBar.appendChild(nextBtn);
+                    navBar.appendChild(hintText);
+                } else {
+                    const compCard = document.createElement('div');
+                    compCard.className = 'hc-flow-completion-card';
+                    compCard.innerHTML = `
+                        <div class="completion-icon">🎉</div>
+                        <h4>${isEn ? 'Scene completed!' : 'Hele scenen er læst og forstået!'}</h4>
+                        <p>${isEn ? 'Great job! You have read and mastered the sentences in this scene.' : 'Flot klaret! Du har læst alle sætninger og mestret replikkerne i denne scene.'}</p>
+                        <div class="completion-actions">
+                            <button type="button" class="hc-restart-flow-btn">
+                                <span>🔄</span> <span>${isEn ? 'Read scene again' : 'Læs scenen forfra'}</span>
+                            </button>
+                        </div>
+                    `;
+                    compCard.querySelector('.hc-restart-flow-btn').onclick = () => {
+                        revealedCount = 1;
+                        renderFlow();
+                    };
+                    navBar.appendChild(compCard);
+                }
+
+                flowContainer.appendChild(navBar);
+            }
+        }
+
+        renderFlow();
+        return flowContainer;
+    }
+
     function createSectionCard(section, index, story) {
         const card = document.createElement('div');
         card.className = 'hc-section-card';
@@ -760,70 +1173,16 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 <span class="hc-text-badge">📖 Teksten</span>
                 <h4 class="hc-text-title">${section.chapter}</h4>
             </div>
-            <p class="hc-text-hint">${isEn ? 'Read the dialogue, listen to the pronunciation, and tap any colored word to inspect its grammar and inflections:' : 'Læs replikkerne, lyt til personernes udtale og tryk på de farvede ord for at se bøjning og ordbogsopslag:'}</p>
+            <p class="hc-text-hint">${isEn ? 'Read the dialogue sentence by sentence, master the key lines, and tap any colored word to inspect its grammar:' : 'Læs replikkerne sætning for sætning, løs Mesterens replik undervejs og tryk på de farvede ord for bøjning og ordbogsopslag:'}</p>
         `;
         card.appendChild(textHeading);
 
-        // 4. Render Text Body or Dialogue Lines
+        // 4. Render Text Body or Sentence Flow
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
         if (section.dialogue && section.dialogue.length > 0) {
-            // Dialogue Playback Mode
-            const dialogueList = document.createElement('div');
-            dialogueList.className = 'hc-dialogue-list';
-
-            section.dialogue.forEach(line => {
-                const lineEl = document.createElement('div');
-                lineEl.className = 'hc-dialogue-line';
-
-                const speakerHeader = document.createElement('div');
-                speakerHeader.className = 'hc-speaker-header';
-                speakerHeader.innerHTML = `
-                    <span class="hc-speaker-badge">
-                        <span>${line.speakerIcon || '💬'}</span>
-                        <span>${line.speaker}:</span>
-                    </span>
-                    <button class="hc-speaker-audio-btn" title="${isEn ? 'Listen to line' : 'Lyt til replik'}">
-                        <span>🔊</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
-                    </button>
-                `;
-                speakerHeader.querySelector('.hc-speaker-audio-btn').onclick = () => {
-                    speakDanish(line.audioText);
-                };
-                lineEl.appendChild(speakerHeader);
-
-                const speechEl = document.createElement('div');
-                speechEl.className = 'hc-line-speech';
-
-                if (line.tokens && line.tokens.length > 0) {
-                    line.tokens.forEach(token => {
-                        if (token.type === 'plain') {
-                            const span = document.createElement('span');
-                            span.textContent = token.text;
-                            speechEl.appendChild(span);
-                        } else {
-                            const tokenBtn = document.createElement('span');
-                            tokenBtn.className = `hc-word-token token-${token.type}`;
-                            tokenBtn.textContent = token.text;
-                            tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
-                            tokenBtn.onclick = (e) => {
-                                e.stopPropagation();
-                                speakDanish(token.text);
-                                handleWordClick(token, line.audioText);
-                            };
-                            speechEl.appendChild(tokenBtn);
-                        }
-                    });
-                } else {
-                    speechEl.textContent = line.audioText;
-                }
-
-                lineEl.appendChild(speechEl);
-                dialogueList.appendChild(lineEl);
-            });
-
-            textBody.appendChild(dialogueList);
+            textBody.appendChild(createSentenceFlow(section, index));
         } else {
             // Standard fairy tale prose paragraphs
             const paragraphs = section.text.split('\n\n');
@@ -2837,6 +3196,435 @@ function injectStyles() {
             color: #94a3b8;
             margin: 0.3rem 0 0;
             line-height: 1.4;
+        }
+        /* Sentence Flow & Challenge Cards */
+        .hc-sentence-flow-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+        .hc-flow-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.7rem 1rem;
+        }
+        .hc-flow-progress-info {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            flex: 1;
+            min-width: 200px;
+        }
+        .hc-flow-step-badge {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: #fde047;
+            white-space: nowrap;
+        }
+        .hc-flow-bar-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .hc-flow-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #22c55e);
+            transition: width 0.3s ease;
+            border-radius: 999px;
+        }
+        .hc-flow-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hc-flow-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: #fff;
+        }
+        .hc-dialogue-line.latest-revealed {
+            border: 1.5px solid rgba(56, 189, 248, 0.5) !important;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+        .hc-challenge-card {
+            margin-top: 1.2rem;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+            border: 2px solid #eab308;
+            border-radius: 16px;
+            padding: 1.3rem;
+            box-shadow: 0 8px 24px rgba(234, 179, 8, 0.25);
+            animation: fadeIn 0.35s ease;
+        }
+        .hc-challenge-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .hc-challenge-badge {
+            background: #eab308;
+            color: #0f172a;
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hc-challenge-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #fef08a;
+            margin: 0;
+        }
+        .hc-challenge-prompt {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .hc-challenge-slot-wrap {
+            margin-bottom: 0.85rem;
+        }
+        .slot-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
+        }
+        .hc-challenge-slot {
+            min-height: 52px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px dashed rgba(234, 179, 8, 0.45);
+            border-radius: 12px;
+            padding: 0.55rem 0.85rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .hc-challenge-slot.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+        .slot-placeholder {
+            color: #64748b;
+            font-size: 0.88rem;
+            font-style: italic;
+            user-select: none;
+        }
+        .hc-challenge-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            padding: 0.75rem 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            min-height: 52px;
+            align-items: center;
+        }
+        .hc-tile {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: #f8fafc;
+            padding: 0.45rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+        .hc-tile:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+        }
+        .hc-tile.in-slot {
+            background: rgba(234, 179, 8, 0.2);
+            border-color: #eab308;
+            color: #fef08a;
+        }
+        .hc-challenge-actions {
+            display: flex;
+            gap: 0.65rem;
+            margin-top: 0.9rem;
+        }
+        .hc-check-puzzle-btn, .hc-check-sentence-btn {
+            background: #22c55e;
+            border: none;
+            color: #052e16;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hc-check-puzzle-btn:hover, .hc-check-sentence-btn:hover {
+            background: #4ade80;
+            transform: translateY(-1px);
+        }
+        .hc-reset-puzzle-btn, .hc-reset-tiles-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hc-challenge-feedback {
+            margin-top: 1rem;
+            padding: 0.9rem 1.1rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            animation: fadeIn 0.25s ease;
+        }
+        .hc-challenge-feedback.correct {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1.5px solid #22c55e;
+            color: #f1f5f9;
+        }
+        .hc-challenge-feedback.incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid #ef4444;
+            color: #fca5a5;
+        }
+        .hc-challenge-continue-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: all 0.2s;
+        }
+        .hc-challenge-continue-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        .hc-cloze-template-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .hc-cloze-template {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #f8fafc;
+            font-weight: 600;
+        }
+        .cloze-gap-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            height: 32px;
+            padding: 0 0.6rem;
+            border-radius: 8px;
+            border: 2px dashed #eab308;
+            background: rgba(234, 179, 8, 0.15);
+            color: #fde047;
+            font-weight: 800;
+            margin: 0 0.3rem;
+            vertical-align: middle;
+        }
+        .cloze-gap-pill.filled {
+            border: 2px solid #22c55e;
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+        .hc-cloze-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 0.8rem;
+        }
+        .hc-cloze-opt-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            color: #f8fafc;
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+        .hc-cloze-opt-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+        }
+        .hc-cloze-opt-btn.correct {
+            background: rgba(34, 197, 94, 0.25) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+        }
+        .hc-cloze-opt-btn.incorrect {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+        }
+        .hc-speech-practice-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            margin: 0.5rem 0;
+        }
+        .speech-prompt-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #fde047;
+            margin-bottom: 0.6rem;
+        }
+        .speech-audio-btns {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .speech-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #f8fafc;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+        .speech-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+        .hc-challenge-solved-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid #22c55e;
+            color: #4ade80;
+            padding: 0.35rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            font-weight: 800;
+            margin-top: 0.8rem;
+        }
+        .hc-flow-nav-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            padding: 1.2rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            text-align: center;
+        }
+        .hc-next-sentence-btn {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hc-next-sentence-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5);
+        }
+        .hc-next-sentence-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: #64748b;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .hc-next-sentence-hint {
+            font-size: 0.86rem;
+            color: #94a3b8;
+            max-width: 460px;
+            line-height: 1.4;
+        }
+        .hc-flow-completion-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1rem;
+        }
+        .completion-icon {
+            font-size: 2.5rem;
+        }
+        .hc-flow-completion-card h4 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fef08a;
+            margin: 0;
+        }
+        .hc-flow-completion-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin: 0 0 0.8rem 0;
+        }
+        .hc-restart-flow-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 0.55rem 1.15rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+        .hc-restart-flow-btn:hover {
+            background: white;
+            color: #0f172a;
         }
 
         @media (max-width: 600px) {

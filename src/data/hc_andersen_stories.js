@@ -26,8 +26,8 @@ export const hcAndersenStories = [
                 "chapter": "Scene 1: På bondegården",
                 "chapterEn": "Scene 1: At the Farm",
                 "vrimmelImage": "assets/klods_hans_scene1.jpg",
-                "audioText": "Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Storebror sagde: Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Mellembror sagde: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! Klods-Hans råbte: Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Hov, se her: Det er en død krage! Faren sagde: Tag du bare geden, Klods-Hans.",
-                "text": "Far: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nKlods-Hans: »Jeg prøver også! Jeg har ingen hest, men jeg tager min ged. Hov, se her: Det er en død krage!«\n\nFar: »Tag du bare geden, Klods-Hans.«",
+                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Storebror sagde: Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Mellembror sagde: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! Klods-Hans råbte: Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Hov, se her: Det er en død krage! Faren sagde: Tag du bare geden, Klods-Hans.",
+                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nKlods-Hans: »Jeg prøver også! Jeg har ingen hest, men jeg tager min ged. Hov, se her: Det er en død krage!«\n\nFar: »Tag du bare geden, Klods-Hans.«",
                 "hotspots": [
                     {
                         "x": 38,
@@ -87,6 +87,211 @@ export const hcAndersenStories = [
                     }
                 ],
                 "dialogue": [
+                    {
+                        "speaker": "Fortæller",
+                        "speakerIcon": "📖",
+                        "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.",
+                        "tokens": [
+                            {
+                                "text": "Ude",
+                                "type": "adv",
+                                "key": "ude"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "på",
+                                "type": "prep",
+                                "key": "på"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "landet",
+                                "type": "sub",
+                                "key": "land"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "var",
+                                "type": "vrb",
+                                "key": "være"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "der",
+                                "type": "adv",
+                                "key": "der"
+                            },
+                            {
+                                "text": " en ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "gammel",
+                                "type": "adj",
+                                "key": "gammel"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "gård",
+                                "type": "sub",
+                                "key": "gård"
+                            },
+                            {
+                                "text": ", ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "og",
+                                "type": "konj",
+                                "key": "og"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "i",
+                                "type": "prep",
+                                "key": "i"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "den",
+                                "type": "pro",
+                                "key": "den"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "var",
+                                "type": "vrb",
+                                "key": "være"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "der",
+                                "type": "adv",
+                                "key": "der"
+                            },
+                            {
+                                "text": " en ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "gammel",
+                                "type": "adj",
+                                "key": "gammel"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "far",
+                                "type": "sub",
+                                "key": "far"
+                            },
+                            {
+                                "text": ", ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "som",
+                                "type": "pro",
+                                "key": "som"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "havde",
+                                "type": "vrb",
+                                "key": "have"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "tre",
+                                "type": "adj",
+                                "key": "tre"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "sønner",
+                                "type": "sub",
+                                "key": "søn"
+                            },
+                            {
+                                "text": ", ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "der",
+                                "type": "pro",
+                                "key": "der"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "var",
+                                "type": "vrb",
+                                "key": "være"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "så",
+                                "type": "adv",
+                                "key": "så"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "kloge",
+                                "type": "adj",
+                                "key": "klog"
+                            },
+                            {
+                                "text": ".",
+                                "type": "plain"
+                            }
+                        ]
+                    },
                     {
                         "speaker": "Far",
                         "speakerIcon": "👨‍🌾",
@@ -182,7 +387,23 @@ export const hcAndersenStories = [
                                 "text": ".",
                                 "type": "plain"
                             }
-                        ]
+                        ],
+                        "challenge": {
+                            "type": "ordstilling",
+                            "title": "Mesterens replik: Ordstilling",
+                            "badge": "👑 Mesterens replik",
+                            "prompt": "Faderen fremsætter kongens betingelse. Saml den berømte sætning i rigtig ordstilling:",
+                            "targetSentence": "Den, som taler bedst, vinder hende.",
+                            "tiles": [
+                                "Den,",
+                                "som",
+                                "taler",
+                                "bedst,",
+                                "vinder",
+                                "hende."
+                            ],
+                            "explanation": "Korrekt ordstilling! Læg mærke til V2: Efter ledsætningen ('som taler bedst') kommer verbet 'vinder' lige før objektet 'hende'."
+                        }
                     },
                     {
                         "speaker": "Storebror",
@@ -599,7 +820,24 @@ export const hcAndersenStories = [
                                 "text": "!",
                                 "type": "plain"
                             }
-                        ]
+                        ],
+                        "challenge": {
+                            "type": "cloze_speech",
+                            "title": "Mesterens replik: Udfyld & Udtale",
+                            "badge": "👑 Mesterens replik",
+                            "prompt": "Hvilket tillægsord råber Klods-Hans om kragen?",
+                            "sentenceTemplate": "Hov, se her: Det er en [ ___ ] krage!",
+                            "options": [
+                                "død",
+                                "levende",
+                                "gammel",
+                                "varm"
+                            ],
+                            "correct": "død",
+                            "speechPrompt": "Udtal Klods-Hans' kække udråb højt: »Hov, se her: Det er en død krage!«",
+                            "audioText": "Hov, se her: Det er en død krage!",
+                            "explanation": "Flot! 'Død' beskriver kragens tilstand. Klods-Hans er ligeglad med at den er død – for ham er det en prægtig gave til prinsessen!"
+                        }
                     },
                     {
                         "speaker": "Far",
@@ -1007,7 +1245,23 @@ export const hcAndersenStories = [
                                 "text": "?",
                                 "type": "plain"
                             }
-                        ]
+                        ],
+                        "challenge": {
+                            "type": "ordstilling",
+                            "title": "Mesterens replik: Spørgsmålets ordstilling",
+                            "badge": "👑 Mesterens replik",
+                            "prompt": "Saml mandens spørgsmål med stedsadverbiet 'hen':",
+                            "targetSentence": "Hvor er du på vej hen?",
+                            "tiles": [
+                                "Hvor",
+                                "er",
+                                "du",
+                                "på",
+                                "vej",
+                                "hen?"
+                            ],
+                            "explanation": "Rigtigt! I et spørgsmål med spørgeord kommer spørgeordet ('Hvor') først, derefter verbet ('er'), subjektet ('du') og til sidst retningsadverbiet ('hen')."
+                        }
                     },
                     {
                         "speaker": "Klods-Hans",
@@ -1253,7 +1507,25 @@ export const hcAndersenStories = [
                                 "text": ".",
                                 "type": "plain"
                             }
-                        ]
+                        ],
+                        "challenge": {
+                            "type": "ordstilling",
+                            "title": "Mesterens replik: Inversion efter 'Nu'",
+                            "badge": "👑 Mesterens replik",
+                            "prompt": "Saml Klods-Hans' udråb med inversion efter tidsadverbiet 'Nu':",
+                            "targetSentence": "Nu skal du se hvad jeg har fundet!",
+                            "tiles": [
+                                "Nu",
+                                "skal",
+                                "du",
+                                "se",
+                                "hvad",
+                                "jeg",
+                                "har",
+                                "fundet!"
+                            ],
+                            "explanation": "Perfekt! Når tidsadverbiet 'Nu' står i forfeltet, bytter verbet ('skal') og subjektet ('du') plads (inversion)!"
+                        }
                     },
                     {
                         "speaker": "Mand på vejen",
@@ -1728,7 +2000,24 @@ export const hcAndersenStories = [
                                 "text": "...",
                                 "type": "plain"
                             }
-                        ]
+                        ],
+                        "challenge": {
+                            "type": "cloze_speech",
+                            "title": "Mesterens replik: Centraladverbiets plads",
+                            "badge": "👑 Mesterens replik",
+                            "prompt": "Indsæt det vigtige centraladverbium der benægter handlingen:",
+                            "sentenceTemplate": "Jeg kan [ ___ ] huske.",
+                            "options": [
+                                "ikke",
+                                "altid",
+                                "måske",
+                                "gerne"
+                            ],
+                            "correct": "ikke",
+                            "speechPrompt": "Udtal sætningen med sved på panden ligesom Storebror: »Det er så varmt. Jeg kan ikke huske.«",
+                            "audioText": "Det er så varmt. Jeg kan ikke huske.",
+                            "explanation": "Lige præcis! I en hovedsætning placeres centraladverbiet 'ikke' altid lige efter det bøjede verbum ('kan')."
+                        }
                     },
                     {
                         "speaker": "Mellembror",
@@ -1939,7 +2228,25 @@ export const hcAndersenStories = [
                                 "text": ".",
                                 "type": "plain"
                             }
-                        ]
+                        ],
+                        "challenge": {
+                            "type": "ordstilling",
+                            "title": "Mesterens replik: Klods-Hans' kvikke svar",
+                            "badge": "👑 Mesterens replik",
+                            "prompt": "Saml Klods-Hans' kække replik til prinsessen:",
+                            "targetSentence": "Det kan vi koge i træskoen!",
+                            "tiles": [
+                                "Det",
+                                "kan",
+                                "vi",
+                                "koge",
+                                "i",
+                                "træskoen!"
+                            ],
+                            "speechPrompt": "Prøv at gentage replikken med Klods-Hans' glade selvtillid: »Det kan vi koge i træskoen!«",
+                            "audioText": "Det kan vi koge i træskoen!",
+                            "explanation": "Fremragende! Klods-Hans har svar på alting og mister aldrig mælet i varmen!"
+                        }
                     },
                     {
                         "speaker": "Prinsessen",

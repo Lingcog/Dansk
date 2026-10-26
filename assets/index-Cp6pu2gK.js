@@ -51844,8 +51844,8 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
 
             <!-- TRÆNINGSAKTIONER -->
             <div class="conjunction-actions-container">
-                <button type="button" class="btn-launch-training" id="btn-goto-conjunction-exercises">
-                    <span>Træn konjunktioner i øvelser ➔</span>
+                <button type="button" class="btn-launch-training" id="btn-goto-word-learning">
+                    <span>Lær nye ord ➔</span>
                 </button>
                 <div class="secondary-actions-row">
                     <button type="button" class="btn-secondary-link" id="btn-restart-grammar">
@@ -51871,7 +51871,7 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                     <span>Gå til Ordstilling (Del 4) ➔</span>
                 </a>
             </div>
-        `,h.querySelectorAll(".conj-card-btn").forEach(M=>{M.onclick=()=>{const o=M.dataset.conj;t.selectedConjId=o,d(o),Y()}});const p=h.querySelector("#btn-link-ordstilling-conj");p&&(p.onclick=M=>{M.preventDefault(),x("ordstilling_intro",{subPath:"part4"})}),h.querySelector("#btn-goto-conjunction-exercises").onclick=()=>{x("conjunction_choice")},h.querySelector("#btn-restart-grammar").onclick=()=>{x("grounding")},h.querySelector("#btn-goto-daily").onclick=()=>{x("dagens_opgave")},ve.appendChild(h)}function X(){const v=ge.querySelector(".stage-frame-wrapper");v&&(v.classList.remove("pulse-stage-glow"),v.offsetWidth,v.classList.add("pulse-stage-glow"),setTimeout(()=>v.classList.remove("pulse-stage-glow"),600))}function Y(){Q(),U(),X()}Y();const F=document.getElementById("conjunction-mobile-styles");F&&F.remove();const z=document.getElementById("conj-bridge-styles");z&&z.remove();const T=document.createElement("style");T.id="conjunction-mobile-styles",T.textContent=`
+        `,h.querySelectorAll(".conj-card-btn").forEach(M=>{M.onclick=()=>{const o=M.dataset.conj;t.selectedConjId=o,d(o),Y()}});const p=h.querySelector("#btn-link-ordstilling-conj");p&&(p.onclick=M=>{M.preventDefault(),x("ordstilling_intro",{subPath:"part4"})}),h.querySelector("#btn-goto-word-learning").onclick=()=>{x("word_learning")},h.querySelector("#btn-restart-grammar").onclick=()=>{x("grounding")},h.querySelector("#btn-goto-daily").onclick=()=>{x("dagens_opgave")},ve.appendChild(h)}function X(){const v=ge.querySelector(".stage-frame-wrapper");v&&(v.classList.remove("pulse-stage-glow"),v.offsetWidth,v.classList.add("pulse-stage-glow"),setTimeout(()=>v.classList.remove("pulse-stage-glow"),600))}function Y(){Q(),U(),X()}Y();const F=document.getElementById("conjunction-mobile-styles");F&&F.remove();const z=document.getElementById("conj-bridge-styles");z&&z.remove();const T=document.createElement("style");T.id="conjunction-mobile-styles",T.textContent=`
         .conjunction-mobile-view {
             width: 100% !important;
             max-width: 760px !important;

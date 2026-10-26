@@ -106,6 +106,7 @@ import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExer
 import { renderDanskKulturView } from './views/DanskKulturView.js';
 import { renderTalemaaderView } from './views/TalemaaderView.js';
 import { renderTraenSporgsmalMenuView } from './views/TraenSporgsmalMenuView.js';
+import { renderTraenSporgsmalTrackView } from './views/TraenSporgsmalTrackView.js';
 import { renderHvBetydningView } from './views/HvBetydningView.js';
 import { renderSporgsmalOrdstillingView } from './views/SporgsmalOrdstillingView.js';
 import { renderLaesetraeningView } from './views/LaesetraeningView.js';
@@ -485,12 +486,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'traen_sporgsmal_menu') {
     appState.currentView = 'traen_sporgsmal_menu';
     renderTraenSporgsmalMenuView(appDiv, navigate);
+  } else if (viewTarget === 'traen_sporgsmal_track') {
+    appState.currentView = 'traen_sporgsmal_track';
+    renderTraenSporgsmalTrackView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sporgsmal_hv_betydning') {
-    appState.currentView = 'sporgsmal_hv_betydning';
-    renderHvBetydningView(appDiv, navigate);
+    appState.currentView = 'traen_sporgsmal_track';
+    renderTraenSporgsmalTrackView(appDiv, navigate, { trackId: 'anna', initialTab: 1 });
   } else if (viewTarget === 'sporgsmal_ordstilling') {
-    appState.currentView = 'sporgsmal_ordstilling';
-    renderSporgsmalOrdstillingView(appDiv, navigate);
+    appState.currentView = 'traen_sporgsmal_track';
+    renderTraenSporgsmalTrackView(appDiv, navigate, { trackId: 'anna', initialTab: 3 });
   } else if (viewTarget === 'idiom_hjerterum') {
     appState.currentView = 'idiom_hjerterum';
     renderIdiomHjerterumHusrum(appDiv, navigate);

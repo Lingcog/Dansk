@@ -10,6 +10,7 @@ import { altIntroTranslations } from './alt_intro_translations.js';
 import { ordstillingPart2Translations } from './ordstilling_part2_translations.js';
 import { groundingTranslations } from './grounding_translations.js';
 import { adjectiveComparisonTranslations } from './adjective_comparison_translations.js';
+import { sporgsmalStoriesTranslations } from './sporgsmal_stories_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -74,7 +75,8 @@ const allLangs = new Set([
     ...Object.keys(altIntroTranslations || {}),
     ...Object.keys(ordstillingPart2Translations || {}),
     ...Object.keys(groundingTranslations || {}),
-    ...Object.keys(adjectiveComparisonTranslations || {})
+    ...Object.keys(adjectiveComparisonTranslations || {}),
+    ...Object.keys(sporgsmalStoriesTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -82,6 +84,7 @@ allLangs.forEach(lang => {
         ...(talemaaderTranslations[lang] || {}),
         ...(top100Translations[lang] || {}),
         ...(sporgsmalTranslations[lang] || {}),
+        ...(sporgsmalStoriesTranslations[lang] || {}),
         ...(verberTranslations[lang] || {}),
         ...(adjektiverTranslations[lang] || {}),
         ...(adverbierTranslations[lang] || {}),

@@ -2,9 +2,12 @@ import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderSporgsmalInteractiveView(container, navigateFn, extraData) {
-    const storyId = extraData && extraData.storyId ? extraData.storyId : 'anna';
+    const storyId = extraData && (extraData.storyId || extraData.subPath) ? (extraData.storyId || extraData.subPath) : 'anna';
     const lsKey = `sporgsmal_progress_${storyId}`;
-    const t = (key, fallback) => getTranslation(key) || fallback;
+    const t = (key, fallback) => {
+        const val = getTranslation(key);
+        return val === key ? fallback : val;
+    };
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container sporgsmal-interactive-container';
@@ -234,16 +237,16 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
 
         if (storyId === 'jonas') {
             storyData = [
-                { type: 'narrative', text: t('jonas_sit_1', '📍 Situation 1: Jonas spiser brød og drikker kaffe til morgenmad.'), image: 'assets/jonas_portrait.png' },
+                { type: 'narrative', text: t('jonas_sit_1', '📍 Situation 1: Jonas spiser brød til morgenmad.'), image: 'assets/jonas_portrait.png' },
                 { type: 'user_action', 
                   trps: t('jonas_trps_1_hv', 'Spørg om hans morgenmad.'), 
                   construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'spiser', 'Jonas', 'til', 'morgenmad?'] },
-                  pronunciation: { target: 'Hvad spiser Jonas til morgenmad?', alternatives: ['Hvad får Jonas til morgenmad', 'Hvad drikker Jonas til morgenmad', 'Hvad får han til morgenmad', 'Hvad spiser han til morgenmad'], focus: [] }
+                  pronunciation: { target: 'Hvad spiser Jonas til morgenmad?', alternatives: ['Hvad får Jonas til morgenmad', 'Hvad får han til morgenmad', 'Hvad spiser han til morgenmad'], focus: [] }
                 },
                 { type: 'user_action', 
-                  trps: t('jonas_trps_1_jn', 'Nu et ja/nej-spørgsmål: Spørg om han spiser brød og kaffe.'), 
-                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Jonas', 'brød', 'og', 'kaffe?'] },
-                  pronunciation: { target: 'Spiser Jonas brød og kaffe?', alternatives: ['Får Jonas brød og kaffe', 'Får han brød og kaffe til morgenmad', 'Spiser han brød og kaffe'], focus: [] }
+                  trps: t('jonas_trps_1_jn', 'Nu et ja/nej-spørgsmål: Spørg om han spiser brød.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Jonas', 'brød', 'til', 'morgenmad?'] },
+                  pronunciation: { target: 'Spiser Jonas brød til morgenmad?', alternatives: ['Får Jonas brød til morgenmad', 'Spiser han brød til morgenmad', 'Får han brød til morgenmad', 'Spiser Jonas brød', 'Spiser han brød'], focus: [] }
                 },
                 
                 { type: 'narrative', text: t('jonas_sit_2', '📍 Situation 2: Jonas spiser en sandwich til frokost.'), image: 'assets/jonas_portrait.png' },
@@ -319,6 +322,200 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
                 },
                 
                 { type: 'narrative', text: t('jonas_success', '🏆 Godt gået! Du har nu trænet spørgsmål om mad og vaner!') }
+            ];
+            return;
+        }
+        if (storyId === 'jens') {
+            storyData = [
+                { type: 'narrative', text: t('jens_sit_1', '📍 Situation 1: Jens er pensionist. Han har ikke bil.'), image: 'assets/jens_bil_1789928673725.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_1_hv', 'Spørg ind til hvad han ikke har.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'har', 'Jens', 'ikke?'] },
+                  pronunciation: { target: 'Hvad har Jens ikke?', alternatives: ['Hvad har han ikke'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_1_jn', 'Spørg om han har en bil.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Har', 'Jens', 'en', 'bil?'] },
+                  pronunciation: { target: 'Har Jens en bil?', alternatives: ['Har han en bil', 'Har Jens bil', 'Har han bil'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_sit_2', '📍 Situation 2: Jens tager bussen om eftermiddagen.'), image: 'assets/jens_bus_1789928683643.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_2_hv', 'Spørg om hvornår han tager bussen.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvornår', 'tager', 'Jens', 'bussen?'] },
+                  pronunciation: { target: 'Hvornår tager Jens bussen?', alternatives: ['Hvornår tager han bussen'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_2_jn', 'Spørg om han tager bussen om eftermiddagen.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Tager', 'Jens', 'bussen', 'om', 'eftermiddagen?'] },
+                  pronunciation: { target: 'Tager Jens bussen om eftermiddagen?', alternatives: ['Tager han bussen om eftermiddagen'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_sit_3', '📍 Situation 3: Jens bruger rejsekort.'), image: 'assets/jens_rejsekort_1789928694251.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_3_hv', 'Spørg ind til hvad han bruger.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'bruger', 'Jens?'] },
+                  pronunciation: { target: 'Hvad bruger Jens?', alternatives: ['Hvad bruger han'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_3_jn', 'Spørg om han bruger rejsekort.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Bruger', 'Jens', 'rejsekort?'] },
+                  pronunciation: { target: 'Bruger Jens rejsekort?', alternatives: ['Bruger han rejsekort', 'Bruger Jens et rejsekort', 'Bruger han et rejsekort'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_sit_4', '📍 Situation 4: Jens kan ikke lide at køre med Metro.'), image: 'assets/jens_metro_1789928703747.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_4_hv', 'Spørg ind til hvad han ikke kan lide.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'kan', 'Jens', 'ikke', 'lide?'] },
+                  pronunciation: { target: 'Hvad kan Jens ikke lide?', alternatives: ['Hvad kan han ikke lide'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_4_jn', 'Spørg om han kan lide at køre med Metro.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Kan', 'Jens', 'lide', 'at', 'køre', 'med', 'Metro?'] },
+                  pronunciation: { target: 'Kan Jens lide at køre med Metro?', alternatives: ['Kan han lide at køre med Metro', 'Kan Jens lide at køre med metroen', 'Kan han lide at køre med metroen'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_sit_5', '📍 Situation 5: Jens cykler tit til en park.'), image: 'assets/jens_cykel_1789928713661.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_5_hv', 'Spørg om hvor han tit cykler hen.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'cykler', 'Jens', 'tit', 'hen?'] },
+                  pronunciation: { target: 'Hvor cykler Jens tit hen?', alternatives: ['Hvor cykler han tit hen', 'Hvor cykler Jens hen', 'Hvor cykler han hen'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_5_jn', 'Spørg om han tit cykler til en park.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Cykler', 'Jens', 'tit', 'til', 'en', 'park?'] },
+                  pronunciation: { target: 'Cykler Jens tit til en park?', alternatives: ['Cykler han tit til en park'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_sit_6', '📍 Situation 6: Det tager 10 minutter at cykle til parken.'), image: 'assets/jens_tid_1789928724056.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_6_hv', 'Spørg om hvor lang tid det tager.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'lang', 'tid', 'tager', 'det?'] },
+                  pronunciation: { target: 'Hvor lang tid tager det?', alternatives: ['Hvor længe tager det', 'Hvor lang tid tager det at cykle til parken', 'Hvor længe tager det at cykle til parken'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_6_jn', 'Spørg om det tager 10 minutter.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Tager', 'det', 'ti', 'minutter?'] },
+                  pronunciation: { target: 'Tager det ti minutter?', alternatives: ['Tager det 10 minutter', 'Tager det 10 minutter at cykle til parken', 'Tager det ti minutter at cykle til parken'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_sit_7', '📍 Situation 7: Jens cykler sammen med en ven.'), image: 'assets/jens_ven_1789928734592.jpg' },
+                { type: 'user_action', 
+                  trps: t('jens_trps_7_hv', 'Spørg ind til hvem han cykler med.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvem', 'cykler', 'Jens', 'sammen', 'med?'] },
+                  pronunciation: { target: 'Hvem cykler Jens sammen med?', alternatives: ['Hvem cykler han sammen med', 'Hvem cykler Jens med', 'Hvem cykler han med'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('jens_trps_7_jn', 'Spørg om han cykler sammen med en ven.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Cykler', 'Jens', 'sammen', 'med', 'en', 'ven?'] },
+                  pronunciation: { target: 'Cykler Jens sammen med en ven?', alternatives: ['Cykler han sammen med en ven', 'Cykler Jens med en ven', 'Cykler han med en ven'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('jens_success', '🏆 Godt gået! Du har nu trænet spørgsmål om transport og vaner!') }
+            ];
+            return;
+        }
+
+
+        if (storyId === 'lise') {
+            storyData = [
+                { type: 'narrative', text: t('lise_sit_1', '📍 Situation 1: Lise er pensionist. Hun går til lægen 2 gange om måneden.'), image: 'assets/lise_doctor_1789909749160.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_1_hv', 'Spørg om frekvensen for lægebesøg.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'ofte', 'går', 'Lise', 'til', 'lægen?'] },
+                  pronunciation: { target: 'Hvor ofte går Lise til lægen?', alternatives: ['Hvor tit går Lise til lægen', 'Hvor ofte går hun til lægen', 'Hvor tit går hun til lægen'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_1_jn', 'Nu et ja/nej-spørgsmål: Spørg om hun går til lægen to gange om måneden.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Går', 'Lise', 'til', 'lægen', 'to', 'gange', 'om', 'måneden?'] },
+                  pronunciation: { target: 'Går Lise til lægen to gange om måneden?', alternatives: ['Går hun til lægen to gange om måneden', 'Går Lise til lægen 2 gange om måneden', 'Går hun til lægen 2 gange om måneden'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_2', '📍 Situation 2: Lise spiser tre piller hver dag.'), image: 'assets/lise_pills_1789909760323.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_2_hv', 'Spørg om antallet af piller.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'mange', 'piller', 'spiser', 'Lise?'] },
+                  pronunciation: { target: 'Hvor mange piller spiser Lise?', alternatives: ['Hvor mange piller spiser hun', 'Hvor mange piller tager Lise', 'Hvor mange piller tager hun'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_2_jn', 'Spørg om hun spiser tre piller.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Spiser', 'Lise', 'tre', 'piller?'] },
+                  pronunciation: { target: 'Spiser Lise tre piller?', alternatives: ['Spiser hun tre piller', 'Tager Lise tre piller', 'Tager hun tre piller'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_3', '📍 Situation 3: Lise har tit hovedpine.'), image: 'assets/lise_headache_1789909770488.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_3_hv', 'Spørg ind til hvad hun har tit.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'har', 'Lise', 'tit?'] },
+                  pronunciation: { target: 'Hvad har Lise tit?', alternatives: ['Hvad har hun tit', 'Hvad fejler Lise tit'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_3_jn', 'Spørg om hun tit har hovedpine.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Har', 'Lise', 'tit', 'hovedpine?'] },
+                  pronunciation: { target: 'Har Lise tit hovedpine?', alternatives: ['Har hun tit hovedpine', 'Lider Lise tit af hovedpine', 'Lider hun tit af hovedpine'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_4', '📍 Situation 4: Lise er ofte forkølet.'), image: 'assets/lise_cold_1789909786170.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_4_hv', 'Spørg om hvor ofte hun er forkølet.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'ofte', 'er', 'Lise', 'forkølet?'] },
+                  pronunciation: { target: 'Hvor ofte er Lise forkølet?', alternatives: ['Hvor tit er Lise forkølet', 'Hvor ofte er hun forkølet', 'Hvor tit er hun forkølet'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_4_jn', 'Spørg om hun ofte er forkølet.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Er', 'Lise', 'ofte', 'forkølet?'] },
+                  pronunciation: { target: 'Er Lise ofte forkølet?', alternatives: ['Er hun ofte forkølet', 'Er Lise tit forkølet', 'Er hun tit forkølet'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_5', '📍 Situation 5: Lise har været på hospitalet 2 gange.'), image: 'assets/lise_hospital_1789909796267.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_5_hv', 'Spørg om hvor mange gange hun har været på hospitalet.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'mange', 'gange', 'har', 'Lise', 'været', 'på', 'hospitalet?'] },
+                  pronunciation: { target: 'Hvor mange gange har Lise været på hospitalet?', alternatives: ['Hvor mange gange har hun været på hospitalet'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_5_jn', 'Spørg om hun har været på hospitalet to gange.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Har', 'Lise', 'været', 'på', 'hospitalet', 'to', 'gange?'] },
+                  pronunciation: { target: 'Har Lise været på hospitalet to gange?', alternatives: ['Har hun været på hospitalet to gange', 'Har Lise været på hospitalet 2 gange', 'Har hun været på hospitalet 2 gange'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_6', '📍 Situation 6: Lise går en tur hver dag.'), image: 'assets/lise_walk_1789909806840.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_6_hv', 'Spørg om hvor ofte hun går tur.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvor', 'ofte', 'går', 'Lise', 'en', 'tur?'] },
+                  pronunciation: { target: 'Hvor ofte går Lise en tur?', alternatives: ['Hvor tit går Lise en tur', 'Hvor ofte går hun en tur', 'Hvor tit går hun en tur', 'Hvor ofte går Lise tur', 'Hvor tit går Lise tur'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_6_jn', 'Spørg om hun går en tur hver dag.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Går', 'Lise', 'en', 'tur', 'hver', 'dag?'] },
+                  pronunciation: { target: 'Går Lise en tur hver dag?', alternatives: ['Går hun en tur hver dag', 'Går Lise tur hver dag', 'Går hun tur hver dag'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_7', '📍 Situation 7: Lise sover ikke godt om natten.'), image: 'assets/lise_sleep_1789909817453.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_7_hv', 'Spørg ind til hendes søvn.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvordan', 'sover', 'Lise', 'om', 'natten?'] },
+                  pronunciation: { target: 'Hvordan sover Lise om natten?', alternatives: ['Hvordan sover hun om natten'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_7_jn', 'Spørg om hun sover godt om natten.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Sover', 'Lise', 'godt', 'om', 'natten?'] },
+                  pronunciation: { target: 'Sover Lise godt om natten?', alternatives: ['Sover hun godt om natten'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_sit_8', '📍 Situation 8: Lise er vegetar.'), image: 'assets/lise_vegetarian_1789909828678.jpg' },
+                { type: 'user_action', 
+                  trps: t('lise_trps_8_hv', 'Spørg ind til hendes kost.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Hvad', 'er', 'Lise?'] },
+                  pronunciation: { target: 'Hvad er Lise?', alternatives: ['Hvad er hun'], focus: [] }
+                },
+                { type: 'user_action', 
+                  trps: t('lise_trps_8_jn', 'Spørg om hun er vegetar.'), 
+                  construction: { type: 'HIDDEN_OP', fallbackLink: 'sporgsmal_ordstilling', words: ['Er', 'Lise', 'vegetar?'] },
+                  pronunciation: { target: 'Er Lise vegetar?', alternatives: ['Er hun vegetar'], focus: [] }
+                },
+                
+                { type: 'narrative', text: t('lise_success', '🏆 Godt gået! Du har nu trænet spørgsmål om helbred og sundhed!') }
             ];
             return;
         }
@@ -425,12 +622,19 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
         // Not used in this view
     }
 
-    const situationsNames = ['1. Ting', '2. Pris', '3. Sted', '4. Tidspunkt', '5. Betaling', '6. Transport', '7. Selskab'];
-
     function updateProgressTracker() {
         progressTracker.innerHTML = '';
         
-        situationsNames.forEach((name, i) => {
+        let namesToUse;
+        if (storyId === 'lise') {
+            namesToUse = ['1. Læge', '2. Medicin', '3. Smerter', '4. Sygdom', '5. Hospital', '6. Motion', '7. Søvn', '8. Kost'];
+        } else if (storyId === 'jens') {
+            namesToUse = ['1. Bil', '2. Bus', '3. Billet', '4. Metro', '5. Cykel', '6. Tid', '7. Selskab'];
+        } else {
+            namesToUse = ['1. Ting', '2. Pris', '3. Sted', '4. Tidspunkt', '5. Betaling', '6. Transport', '7. Selskab'];
+        }
+
+        namesToUse.forEach((name, i) => {
             // Each situation has a narrative at i*3, Hv-task at i*3+1, Ja/Nej-task at i*3+2
             const hvPassed = currentStepIndex > (i * 3 + 1);
             const jaNejPassed = currentStepIndex > (i * 3 + 2);
@@ -498,7 +702,9 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
                 
                 if (step.image) {
                     const img = document.createElement('img');
-                    img.src = step.image;
+                    img.src = step.image.startsWith('http') || step.image.startsWith(baseUrl)
+                        ? step.image
+                        : `${baseUrl}${step.image.replace(/^\//, '')}`;
                     img.style.maxWidth = '100%';
                     img.style.maxHeight = '220px'; // good height for mobile readability
                     img.style.borderRadius = '16px';
@@ -918,8 +1124,10 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
                             
                             if (strictWords.includes(clean)) {
                                 isMatch = (spokenArr[i] === clean);
-                            } else if (clean === 'anna') {
-                                isMatch = (spokenArr[i] === 'anna' || spokenArr[i] === 'hun');
+                            } else if (clean === 'anna' || clean === 'sara' || clean === 'lise') {
+                                isMatch = (spokenArr[i] === clean || spokenArr[i] === 'hun');
+                            } else if (clean === 'lars' || clean === 'jonas' || clean === 'jens') {
+                                isMatch = (spokenArr[i] === clean || spokenArr[i] === 'han');
                             } else if (clean === 'kommer') {
                                 isMatch = (spokenArr[i] === 'kommer' || spokenArr[i] === 'tager' || spokenArr[i] === 'kører');
                             } else if (clean === 'kok') {
@@ -955,8 +1163,10 @@ export function renderSporgsmalInteractiveView(container, navigateFn, extraData)
                         
                         if (strictWords.includes(clean)) {
                             isMatch = (spokenArr[i] === clean);
-                        } else if (clean === 'anna') {
-                            isMatch = (spokenArr[i] === 'anna' || spokenArr[i] === 'hun');
+                        } else if (clean === 'anna' || clean === 'sara' || clean === 'lise') {
+                            isMatch = (spokenArr[i] === clean || spokenArr[i] === 'hun');
+                        } else if (clean === 'lars' || clean === 'jonas' || clean === 'jens') {
+                            isMatch = (spokenArr[i] === clean || spokenArr[i] === 'han');
                         } else if (clean === 'kommer') {
                             isMatch = (spokenArr[i] === 'kommer' || spokenArr[i] === 'tager' || spokenArr[i] === 'kører');
                         } else if (clean === 'kok') {

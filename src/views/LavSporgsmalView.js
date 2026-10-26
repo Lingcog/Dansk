@@ -3,6 +3,7 @@ import { navigate } from '../main.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderLavSporgsmalView(container, navigateFn) {
+    const t = (key, fallback) => { const val = getTranslation(key); return val === key ? fallback : val; };
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
 
@@ -28,7 +29,7 @@ export function renderLavSporgsmalView(container, navigateFn) {
 
     const img = document.createElement('img');
     img.src = `${baseUrl}questions.png`;
-    img.alt = 'Spørgsmålsdannelse illustration';
+    img.alt = t('menu_img_alt', 'Spørgsmålsdannelse illustration');
 
     imageContainer.appendChild(img);
 
@@ -48,11 +49,11 @@ export function renderLavSporgsmalView(container, navigateFn) {
     annaCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'anna' });
     
     const annaTitle = document.createElement('h2');
-    annaTitle.textContent = '🛒 Indkøb (Anna)';
+    annaTitle.textContent = t('menu_anna_title', '🛒 Indkøb (Anna)');
     annaTitle.style.marginBottom = '1rem';
     
     const annaDesc = document.createElement('p');
-    annaDesc.textContent = 'Træn interaktivt i appen: Anna køber ind i Netto.';
+    annaDesc.textContent = t('menu_anna_desc', 'Træn interaktivt i appen: Anna køber ind i Netto.');
     annaDesc.style.color = 'var(--text-muted)';
     annaDesc.style.lineHeight = '1.5';
     
@@ -69,11 +70,11 @@ export function renderLavSporgsmalView(container, navigateFn) {
     saraCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'sara' });
     
     const saraTitle = document.createElement('h2');
-    saraTitle.textContent = '🎂 Fødselsdag (Sara)';
+    saraTitle.textContent = t('menu_sara_title', '🎂 Fødselsdag (Sara)');
     saraTitle.style.marginBottom = '1rem';
     
     const saraDesc = document.createElement('p');
-    saraDesc.textContent = 'Træn interaktivt i appen: Sara holder fødselsdagsfest.';
+    saraDesc.textContent = t('menu_sara_desc', 'Træn interaktivt i appen: Sara holder fødselsdagsfest.');
     saraDesc.style.color = 'var(--text-muted)';
     saraDesc.style.lineHeight = '1.5';
     
@@ -90,11 +91,11 @@ export function renderLavSporgsmalView(container, navigateFn) {
     larsCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'lars' });
     
     const larsTitle = document.createElement('h2');
-    larsTitle.textContent = '👨‍👩‍👧‍👦 Familie (Lars)';
+    larsTitle.textContent = t('menu_lars_title', '👨‍👩‍👧‍👦 Familie (Lars)');
     larsTitle.style.marginBottom = '1rem';
     
     const larsDesc = document.createElement('p');
-    larsDesc.textContent = 'Træn interaktivt i appen: Lars og hans familie.';
+    larsDesc.textContent = t('menu_lars_desc', 'Træn interaktivt i appen: Lars og hans familie.');
     larsDesc.style.color = 'var(--text-muted)';
     larsDesc.style.lineHeight = '1.5';
     
@@ -111,17 +112,59 @@ export function renderLavSporgsmalView(container, navigateFn) {
     jonasCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'jonas' });
     
     const jonasTitle = document.createElement('h2');
-    jonasTitle.textContent = '🍎 Mad (Jonas)';
+    jonasTitle.textContent = t('menu_jonas_title', '🍎 Mad (Jonas)');
     jonasTitle.style.marginBottom = '1rem';
     
     const jonasDesc = document.createElement('p');
-    jonasDesc.textContent = 'Træn interaktivt i appen: Jonas spiser sundt.';
+    jonasDesc.textContent = t('menu_jonas_desc', 'Træn interaktivt i appen: Jonas spiser sundt.');
     jonasDesc.style.color = 'var(--text-muted)';
     jonasDesc.style.lineHeight = '1.5';
     
     jonasCard.appendChild(jonasTitle);
     jonasCard.appendChild(jonasDesc);
     optionsContainer.appendChild(jonasCard);
+
+    // --- Option 5: Lise (Sundhed) ---
+    const liseCard = document.createElement('div');
+    liseCard.className = 'exercise-card';
+    liseCard.style.cursor = 'pointer';
+    liseCard.style.textAlign = 'center';
+    liseCard.style.margin = '0';
+    liseCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'lise' });
+    
+    const liseTitle = document.createElement('h2');
+    liseTitle.textContent = t('menu_lise_title', '🩺 Sundhed (Lise)');
+    liseTitle.style.marginBottom = '1rem';
+    
+    const liseDesc = document.createElement('p');
+    liseDesc.textContent = t('menu_lise_desc', 'Træn interaktivt i appen: Lises helbred og vaner.');
+    liseDesc.style.color = 'var(--text-muted)';
+    liseDesc.style.lineHeight = '1.5';
+    
+    liseCard.appendChild(liseTitle);
+    liseCard.appendChild(liseDesc);
+    optionsContainer.appendChild(liseCard);
+
+    // --- Option 6: Jens (Transport) ---
+    const jensCard = document.createElement('div');
+    jensCard.className = 'exercise-card';
+    jensCard.style.cursor = 'pointer';
+    jensCard.style.textAlign = 'center';
+    jensCard.style.margin = '0';
+    jensCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'jens' });
+    
+    const jensTitle = document.createElement('h2');
+    jensTitle.textContent = t('menu_jens_title', '🚌 Transport (Jens)');
+    jensTitle.style.marginBottom = '1rem';
+    
+    const jensDesc = document.createElement('p');
+    jensDesc.textContent = t('menu_jens_desc', 'Træn interaktivt i appen: Jens og offentlig transport.');
+    jensDesc.style.color = 'var(--text-muted)';
+    jensDesc.style.lineHeight = '1.5';
+    
+    jensCard.appendChild(jensTitle);
+    jensCard.appendChild(jensDesc);
+    optionsContainer.appendChild(jensCard);
 
     
     // --- Option 2: AI Bot Flow ---
@@ -130,12 +173,12 @@ export function renderLavSporgsmalView(container, navigateFn) {
     botCard.style.margin = '0';
     
     const botTitle = document.createElement('h2');
-    botTitle.textContent = 'Træn fritekst med AI-Bot';
+    botTitle.textContent = t('menu_bot_title', 'Træn fritekst med AI-Bot');
     botTitle.style.marginBottom = '1rem';
     botTitle.style.textAlign = 'center';
     
     const botDesc = document.createElement('p');
-    botDesc.textContent = 'Træn ved at skrive frit til den eksterne AI-lærer. Kræver at du accepterer brugervilkår for Google Gemini.';
+    botDesc.textContent = t('menu_bot_desc', 'Træn ved at skrive frit til den eksterne AI-lærer. Kræver at du accepterer brugervilkår for Google Gemini.');
     botDesc.style.color = 'var(--text-muted)';
     botDesc.style.lineHeight = '1.5';
     botDesc.style.textAlign = 'center';
@@ -196,11 +239,11 @@ export function renderLavSporgsmalView(container, navigateFn) {
     targetCard.onclick = () => navigateFn('traen_sporgsmal_menu');
     
     const targetTitle = document.createElement('h2');
-    targetTitle.textContent = getTranslation('sporgsmal_target_training_title') || 'Målrettet Træning';
+    targetTitle.textContent = t('menu_target_title', 'Målrettet Træning');
     targetTitle.style.marginBottom = '1rem';
     
     const targetDesc = document.createElement('p');
-    targetDesc.textContent = getTranslation('sporgsmal_target_training_desc') || 'Træn specifikke elementer, fx betydningen af Hv-ord eller ordstilling i spørgsmål.';
+    targetDesc.textContent = t('menu_target_desc', 'Træn specifikke elementer, fx betydningen af Hv-ord eller ordstilling i spørgsmål.');
     targetDesc.style.color = 'var(--text-muted)';
     targetDesc.style.lineHeight = '1.5';
     

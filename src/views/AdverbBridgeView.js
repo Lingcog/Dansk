@@ -667,12 +667,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                 <button type="button" class="btn-launch-conjunction" id="btn-goto-conjunctions">
                     <span>${getTranslation('nextStepAfterAdverb') || 'Fortsæt til Konjunktioner'} ➔</span>
                 </button>
-
-                <div style="margin-top: 1rem;">
-                    <a href="javascript:void(0)" id="link-adverb-exercises" class="link-sub-practice">
-                        <span>✍️ Træn flere adverbier i hverdagssituationer</span>
-                    </a>
-                </div>
             </div>
 
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
@@ -731,14 +725,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                 isPast: state.isPast
             });
         };
-
-        // Træningslink
-        const practiceLink = box.querySelector('#link-adverb-exercises');
-        if (practiceLink) {
-            practiceLink.onclick = () => {
-                navigateFn('adverb_choice');
-            };
-        }
 
         taskArea.appendChild(box);
     }

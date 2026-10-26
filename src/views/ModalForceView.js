@@ -88,8 +88,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
     const headerEl = document.createElement('div');
     headerEl.className = 'modal-hero-compact';
     headerEl.innerHTML = `
-        <h1 class="modal-main-title">${getTranslation('modalForceTitle')}</h1>
-        <p class="modal-sub-desc">${getTranslation('modalForceSubtitle')}</p>
+        <h1 class="modal-main-title">${getTranslation('modal_hero_title')}</h1>
+        <p class="modal-sub-desc">${getTranslation('modal_hero_desc')}</p>
     `;
     viewContainer.appendChild(headerEl);
 
@@ -119,7 +119,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
         let badgeText = '';
 
         if (base === 'skal') {
-            badgeText = `⚡ SKAL: Ydre pres & Nødvendighed`;
+            badgeText = getTranslation('modal_badge_skal');
             forceSvgOverlay = `
                 <!-- SKAL: Ydre trykbølger / kraftvektorer bag agens med aktiv skubbende animation -->
                 <defs>
@@ -162,7 +162,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 </line>
             `;
         } else if (base === 'må') {
-            badgeText = `🚪 MÅ: Barrieren er løftet / Fri bane`;
+            badgeText = getTranslation('modal_badge_maa');
             forceSvgOverlay = `
                 <!-- MÅ: Barriere der glider væk, og grøn åben passage -->
                 <defs>
@@ -216,7 +216,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 </circle>
             `;
         } else if (base === 'vil') {
-            badgeText = `❤️ VIL: Indre vilje & Magnetisk træk`;
+            badgeText = getTranslation('modal_badge_vil');
             forceSvgOverlay = `
                 <!-- VIL: Glødende indre kerne og magnetisk tiltrækningsbue -->
                 <defs>
@@ -261,7 +261,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 </circle>
             `;
         } else if (base === 'kan') {
-            badgeText = `🌐 KAN: Kapacitet & Mulighedsfelt`;
+            badgeText = getTranslation('modal_badge_kan');
             forceSvgOverlay = `
                 <!-- KAN: Ekspanderende kompetence-sfære og solid platform -->
                 <defs>
@@ -342,7 +342,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                                 ${state.nounAnchor} ${state.selectedNoun}
                             </text>
                             <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
-                                (subjekt)
+                                (${getTranslation('grounding_step1_badge_subject') || 'subjekt'})
                             </text>
                         </g>
 
@@ -372,7 +372,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                                 spise
                             </text>
                             <text x="0" y="84" fill="#86efac" font-size="8.5" font-weight="700" text-anchor="middle">
-                                (handling / idé)
+                                (${getTranslation('grounding_step1_badge_verb') || 'handling / idé'})
                             </text>
                         </g>
 
@@ -390,7 +390,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
@@ -408,17 +408,17 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
         // Kognitiv forklaringstekst for det valgte modalverbum
         let explanationText = '';
-        if (base === 'skal') explanationText = getTranslation('modalForceSkal');
-        else if (base === 'må') explanationText = getTranslation('modalForceMaa');
-        else if (base === 'vil') explanationText = getTranslation('modalForceVil');
-        else if (base === 'kan') explanationText = getTranslation('modalForceKan');
+        if (base === 'skal') explanationText = getTranslation('modal_expl_skal');
+        else if (base === 'må') explanationText = getTranslation('modal_expl_maa');
+        else if (base === 'vil') explanationText = getTranslation('modal_expl_vil');
+        else if (base === 'kan') explanationText = getTranslation('modal_expl_kan');
 
         const box = document.createElement('div');
         box.className = 'modal-controls-container animate-in';
 
         box.innerHTML = `
             <div class="controls-title-row">
-                <span class="section-label">Vælg et modalverbum for at ændre kraften:</span>
+                <span class="section-label">${getTranslation('modal_choose_label')}</span>
             </div>
 
             <!-- DE 4 TAKTILE MODAL-KORT -->
@@ -429,8 +429,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <span class="card-icon">⚡</span>
                         <span class="card-word">${state.isPast ? 'skulle' : 'skal'}</span>
                     </div>
-                    <div class="card-badge" style="color: #f97316;">Ydre pres</div>
-                    <div class="card-desc">Handlingen er en nødvendighed eller en fastlagt aftale.</div>
+                    <div class="card-badge" style="color: #f97316;">${getTranslation('modal_card_skal_badge')}</div>
+                    <div class="card-desc">${getTranslation('modal_card_skal_desc')}</div>
                 </button>
 
                 <!-- MÅ -->
@@ -439,8 +439,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <span class="card-icon">🚪</span>
                         <span class="card-word">${state.isPast ? 'måtte' : 'må'}</span>
                     </div>
-                    <div class="card-badge" style="color: #22c55e;">Fri bane / Tilladelse</div>
-                    <div class="card-desc">Barrieren er fjernet. Regel eller tilladelse giver grønt lys.</div>
+                    <div class="card-badge" style="color: #22c55e;">${getTranslation('modal_card_maa_badge')}</div>
+                    <div class="card-desc">${getTranslation('modal_card_maa_desc')}</div>
                 </button>
 
                 <!-- VIL -->
@@ -449,8 +449,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <span class="card-icon">❤️</span>
                         <span class="card-word">${state.isPast ? 'ville' : 'vil'}</span>
                     </div>
-                    <div class="card-badge" style="color: #f43f5e;">Indre vilje / Lyst</div>
-                    <div class="card-desc">Kraften kommer indefra agens. Et personligt ønske trækker fremad.</div>
+                    <div class="card-badge" style="color: #f43f5e;">${getTranslation('modal_card_vil_badge')}</div>
+                    <div class="card-desc">${getTranslation('modal_card_vil_desc')}</div>
                 </button>
 
                 <!-- KAN -->
@@ -459,8 +459,8 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                         <span class="card-icon">🌐</span>
                         <span class="card-word">${state.isPast ? 'kunne' : 'kan'}</span>
                     </div>
-                    <div class="card-badge" style="color: #38bdf8;">Kapacitet / Mulighed</div>
-                    <div class="card-desc">Evnen og ressourcerne er til stede. Handlingen er mulig.</div>
+                    <div class="card-badge" style="color: #38bdf8;">${getTranslation('modal_card_kan_badge')}</div>
+                    <div class="card-desc">${getTranslation('modal_card_kan_desc')}</div>
                 </button>
             </div>
 
@@ -472,43 +472,43 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
             <!-- TIDS-VIPPE: NUTID VS. DATID -->
             <div class="time-toggle-wrapper">
-                <span class="time-toggle-label">Skift sætningens tid:</span>
+                <span class="time-toggle-label">${getTranslation('modal_time_toggle_label')}</span>
                 <div class="time-toggle-pill">
                     <button type="button" class="time-btn ${!state.isPast ? 'active' : ''}" id="btn-toggle-present">
                         <span>🟢</span>
-                        <span>Nutid (lige nu)</span>
+                        <span>${getTranslation('modal_time_present')}</span>
                     </button>
                     <button type="button" class="time-btn ${state.isPast ? 'active' : ''}" id="btn-toggle-past">
                         <span>🟠</span>
-                        <span>Datid (i går)</span>
+                        <span>${getTranslation('modal_time_past')}</span>
                     </button>
                 </div>
             </div>
 
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">Din sætning nu:</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
                 <div class="cs-sentence-row">
                     <span class="cs-word tag-subjekt">${state.nounAnchor} ${state.selectedNoun}</span>
                     <span class="cs-word tag-verbum">${getCurrentModalWord()}</span>
                     <span class="cs-word tag-verbum">spise.</span>
                 </div>
                 <div class="cs-tags-legend">
-                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
-                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber</span>
                 </div>
             </div>
 
             <!-- GÅ VIDERE KNAP -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til næste trin: Tilføj Adjektiver
+                    ${getTranslation('modal_action_next_title')}
                 </h3>
                 <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adjektiver maler og beskriver barnet.
+                    ${getTranslation('modal_action_next_desc').replace('{sentence}', getFullSentence())}
                 </p>
                 <button type="button" class="btn-launch-adjective" id="btn-goto-adjectives">
-                    <span>${getTranslation('nextStepAdjective') || 'Fortsæt til Adjektiver'} ➔</span>
+                    <span>${getTranslation('modal_btn_next_adj')}</span>
                 </button>
             </div>
 
@@ -518,12 +518,12 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                     <span class="obl-icon">📐</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Modalverber & Hjælpeverber (6 led)</div>
-                        <div class="obl-desc">Lær hvordan V1 (modalverbum) og V2 (infinitiv) placeres i sætningsskemaet.</div>
+                        <div class="obl-title">${getTranslation('modal_ordstilling_title')}</div>
+                        <div class="obl-desc">${getTranslation('modal_ordstilling_desc')}</div>
                     </div>
                 </div>
                 <a href="#/${getLang()}/ordstilling_intro/part3" class="btn-goto-ordstilling" id="btn-link-ordstilling-modal">
-                    <span>Gå til Ordstilling (Del 3) ➔</span>
+                    <span>${getTranslation('modal_ordstilling_btn')}</span>
                 </a>
             </div>
         `;

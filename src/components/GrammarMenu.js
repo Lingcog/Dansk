@@ -1,13 +1,15 @@
+import { getTranslation } from '../utils/i18n.js';
+
 export function renderGrammarMenu(currentView, navigateFn) {
     const menuContainer = document.createElement('div');
     menuContainer.className = 'grammar-nav-menu';
 
     const menuItems = [
-        { id: 'intro', label: 'Intro', route: 'grounding' },
-        { id: 'modalverber', label: 'Modalverber', route: 'modal_force' },
-        { id: 'adjektiver', label: 'Adjektiver', route: 'adjective_bridge' },
-        { id: 'adverbier', label: 'Adverbier', route: 'adverb_bridge' },
-        { id: 'konjunktioner', label: 'Konjunktioner', route: 'conjunction_bridge' }
+        { id: 'intro', label: getTranslation('menu_intro') || 'Intro', route: 'grounding' },
+        { id: 'modalverber', label: getTranslation('menu_modalverber') || 'Modalverber', route: 'modal_force' },
+        { id: 'adjektiver', label: getTranslation('menu_adjektiver') || 'Adjektiver', route: 'adjective_bridge' },
+        { id: 'adverbier', label: getTranslation('menu_adverbier') || 'Adverbier', route: 'adverb_bridge' },
+        { id: 'konjunktioner', label: getTranslation('menu_konjunktioner') || 'Konjunktioner', route: 'conjunction_bridge' }
     ];
 
     const scrollWrapper = document.createElement('div');

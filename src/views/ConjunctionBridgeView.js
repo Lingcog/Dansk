@@ -399,8 +399,8 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
     const headerEl = document.createElement('div');
     headerEl.className = 'conjunction-hero-compact';
     headerEl.innerHTML = `
-        <h1 class="conj-main-title">${getTranslation('conjunctionTitle') || 'Byg bro mellem to sætninger'}</h1>
-        <p class="conj-sub-desc">${getTranslation('conjunctionDesc') || 'Konjunktioner (bindeord) er den kognitive bro, der forbinder handlinger med årsager, tidspunkter og modsætninger.'}</p>
+        <h1 class="conj-main-title">${getTranslation('conj_hero_title')}</h1>
+        <p class="conj-sub-desc">${getTranslation('conj_hero_desc')}</p>
     `;
     viewContainer.appendChild(headerEl);
 
@@ -683,15 +683,13 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
         `;
 
     }
-
-
 
     // -------------------------------------------------------------
     // RENDER: INTERAKTIONS-OMRÅDET (KORT, ORDSTILLINGS-RADAR & STI)
@@ -707,10 +705,10 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
         // Gruppér i 4 pædagogiske familier
         const categories = [
-            { key: 'cause', title: 'Årsag & Følge', icon: '🌱' },
-            { key: 'time', title: 'Tid & Tidsfæstelse', icon: '⏰' },
-            { key: 'contrast', title: 'Forhindring & Kontrast', icon: '🛡️' },
-            { key: 'connect', title: 'Forbindelse & Hensigt', icon: '🌉' }
+            { key: 'cause', title: getTranslation('conj_cat_cause'), icon: '🌱' },
+            { key: 'time', title: getTranslation('conj_cat_time'), icon: '⏰' },
+            { key: 'contrast', title: getTranslation('conj_cat_contrast'), icon: '🛡️' },
+            { key: 'connect', title: getTranslation('conj_cat_connect'), icon: '🌉' }
         ];
 
         let cardsHtml = '';
@@ -725,6 +723,9 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                     <div class="conj-cards-grid">
                         ${items.map(item => {
                             const isActive = item.id === state.selectedConjId;
+                            const keyNorm = item.id === 'så' ? 'saa' : (item.id === 'når' ? 'naar' : item.id);
+                            const badgeText = getTranslation('conj_card_' + keyNorm + '_badge') || item.badge;
+                            const descText = getTranslation('conj_card_' + keyNorm + '_role') || item.role;
                             return `
                                 <button type="button" 
                                         class="conj-card-btn ${isActive ? 'active-card' : ''}" 
@@ -734,8 +735,8 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                                         <span class="card-icon">${item.icon}</span>
                                         <span class="card-word" style="color: ${isActive ? item.color : '#ffffff'};">${item.word}</span>
                                     </div>
-                                    <div class="card-badge" style="color: ${item.color};">${item.badge}</div>
-                                    <div class="card-desc">${item.role}</div>
+                                    <div class="card-badge" style="color: ${item.color};">${badgeText}</div>
+                                    <div class="card-desc">${descText}</div>
                                 </button>
                             `;
                         }).join('')}
@@ -746,9 +747,9 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
         box.innerHTML = `
             <div class="task-head-instructions">
-                <h2 class="task-step-h2">Vælg et bindeord for at bygge broen:</h2>
+                <h2 class="task-step-h2">${getTranslation('conj_choose_title')}</h2>
                 <p class="task-step-p">
-                    Tryk på et bindeord for at se, hvordan det forbinder barnets handling med årsag, tid eller modsætning:
+                    ${getTranslation('conj_choose_desc')}
                 </p>
             </div>
 
@@ -760,13 +761,13 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                 <div class="expl-icon-side">${conj.icon}</div>
                 <div class="expl-body-side">
                     <h3 style="color: ${conj.color}; font-size: 1.05rem; font-weight: 800; margin: 0 0 0.3rem;">
-                        Kognitiv funktion: ${conj.word}
+                        ${getTranslation('conj_cog_func').replace('{word}', conj.word)}
                     </h3>
                     <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.45; margin: 0 0 0.6rem;">
                         ${conj.cognitiveVisualDesc}
                     </p>
                     <div class="expl-sentence-preview">
-                        <strong>Fuldt eksempel:</strong> "${getFullSentence()}"
+                        <strong>${getTranslation('conj_full_ex')}</strong> "${getFullSentence()}"
                     </div>
                 </div>
             </div>
@@ -775,30 +776,30 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN: HELE REJSEN ER SAMLET    -->
             <!-- ========================================================= -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">Din fulde sætning er bygget:</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
                 <div class="cs-sentence-row">
                     ${renderColoredSentenceSpans(conj, c2Text)}
                 </div>
                 <div class="cs-tags-legend">
-                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
-                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
-                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
-                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium (Blå)</span>
-                    <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#a855f7;"></span> Konjunktion (Lilla)</span>
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt</span>
+                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium</span>
+                    <span class="legend-pill tag-konjunktion-pill"><span class="legend-dot" style="background:#a855f7;"></span> Konjunktion</span>
                 </div>
             </div>
 
             <!-- TRÆNINGSAKTIONER -->
             <div class="conjunction-actions-container">
                 <button type="button" class="btn-launch-training" id="btn-goto-word-learning">
-                    <span>Lær nye ord ➔</span>
+                    <span>${getTranslation('conj_btn_word_learning')}</span>
                 </button>
                 <div class="secondary-actions-row">
                     <button type="button" class="btn-secondary-link" id="btn-restart-grammar">
-                        <span>↺ Start forfra på grammatik-stien</span>
+                        <span>${getTranslation('conj_btn_restart')}</span>
                     </button>
                     <button type="button" class="btn-secondary-link" id="btn-goto-daily">
-                        <span>Lær grammatik 🎯</span>
+                        <span>${getTranslation('conj_btn_daily')}</span>
                     </button>
                 </div>
             </div>
@@ -809,12 +810,12 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                     <span class="obl-icon">📐</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Ledsætninger & Udvidet Model (Del 4)</div>
-                        <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
+                        <div class="obl-title">${getTranslation('conj_ordstilling_title')}</div>
+                        <div class="obl-desc">${getTranslation('conj_ordstilling_desc')}</div>
                     </div>
                 </div>
                 <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
-                    <span>Gå til Ordstilling (Del 4) ➔</span>
+                    <span>${getTranslation('conj_ordstilling_btn')}</span>
                 </a>
             </div>
         `;

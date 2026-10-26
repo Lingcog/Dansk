@@ -313,8 +313,8 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     const headerEl = document.createElement('div');
     headerEl.className = 'adjective-hero-compact';
     headerEl.innerHTML = `
-        <h1 class="adj-main-title">${getTranslation('adjectiveTitle')}</h1>
-        <p class="adj-sub-desc">${getTranslation('adjectiveDesc')}</p>
+        <h1 class="adj-main-title">${getTranslation('adj_hero_title')}</h1>
+        <p class="adj-sub-desc">${getTranslation('adj_hero_desc')}</p>
     `;
     viewContainer.appendChild(headerEl);
 
@@ -399,7 +399,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
                             <!-- Mærkat -->
                             <text x="12" y="58" fill="#94a3b8" font-size="8.5" font-weight="700" text-anchor="middle">
-                                Projektør
+                                ${getTranslation('adj_box_adj_label') || 'Projektør'}
                             </text>
                         </g>
 
@@ -424,7 +424,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                                 ${state.nounAnchor} <tspan fill="${beamColor}">${adjWord}</tspan> ${state.selectedNoun}
                             </text>
                             <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
-                                (beskrevet med adjektiv)
+                                (${getTranslation('grounding_step1_badge_subject') || 'beskrevet med adjektiv'})
                             </text>
                         </g>
 
@@ -432,7 +432,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                         <g class="stage-top-badge" transform="translate(180, 15)">
                             <rect x="-105" y="-10" width="210" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${beamColor}" stroke-width="1.3"/>
                             <text x="0" y="4" fill="${beamColor}" font-size="10" font-weight="900" text-anchor="middle">
-                                💡 Projektør: Lyser med "${adjWord}"
+                                💡 ${getTranslation('adj_box_adj_label') || 'Projektør'}: "${adjWord}"
                             </text>
                         </g>
                     </svg>
@@ -440,7 +440,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
@@ -465,7 +465,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
         box.innerHTML = `
             <div class="controls-title-row">
-                <span class="section-label">Vælg en projektør-farve for at ændre barnets egenskab:</span>
+                <span class="section-label">${getTranslation('adj_choose_label')}</span>
             </div>
 
             <!-- DE 4 TAKTILE ADJEKTIV-KORT -->
@@ -473,6 +473,8 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 ${Object.values(ADJECTIVES).map(item => {
                     const word = isDef ? item.forms.definite : item.forms.indefEt;
                     const isSelected = state.selectedAdjectiveId === item.id;
+                    const typeText = getTranslation('adj_card_' + item.id + '_type') || item.type;
+                    const descText = getTranslation('adj_card_' + item.id + '_desc') || item.desc;
                     return `
                         <button type="button" class="adj-card-btn ${isSelected ? 'active-card' : ''}" 
                                 data-id="${item.id}" style="--card-accent: ${item.color};">
@@ -480,8 +482,8 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                                 <span class="card-icon">${item.icon}</span>
                                 <span class="card-word" style="color: ${item.color};">${word}</span>
                             </div>
-                            <div class="card-badge" style="color: ${item.color};">${item.type} (${item.labelEn})</div>
-                            <div class="card-desc">${item.desc}</div>
+                            <div class="card-badge" style="color: ${item.color};">${typeText}</div>
+                            <div class="card-desc">${descText}</div>
                         </button>
                     `;
                 }).join('')}
@@ -492,8 +494,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 <div class="expl-icon">💡</div>
                 <div class="expl-body">
                     <strong>${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}:</strong><br>
-                    Adjektivet lægger sig direkte foran substantivet og maler et specifikt billede. 
-                    Når vi ændrer adjektivet, ændres barnets tilstand – men selve handlingen <em>(${getModalWord()} spise)</em> forbliver den samme.
+                    ${getTranslation('adj_expl_box').replace('{modalWord}', getModalWord())}
                 </div>
             </div>
 
@@ -504,7 +505,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             <!-- ========================================================= -->
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">Din sætning nu:</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
                 <div class="cs-sentence-row">
                     <span class="cs-word tag-subjekt">${state.nounAnchor}</span>
                     <span class="cs-word tag-adjektiv">${adjWord}</span>
@@ -513,22 +514,22 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     <span class="cs-word tag-verbum">spise.</span>
                 </div>
                 <div class="cs-tags-legend">
-                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
-                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
-                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt</span>
+                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber</span>
                 </div>
             </div>
 
             <!-- GÅ VIDERE TIL ADVERBIER -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til næste trin: Tilføj Adverbier
+                    ${getTranslation('adj_action_next_title')}
                 </h3>
                 <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adverbier beskriver selve måden, barnet spiser på.
+                    ${getTranslation('adj_action_next_desc').replace('{sentence}', getFullSentence())}
                 </p>
                 <button type="button" class="btn-launch-adverb" id="btn-goto-adverbs">
-                    <span>${getTranslation('nextStepAdverb') || 'Fortsæt til Adverbier'} ➔</span>
+                    <span>${getTranslation('adj_btn_next_adv')}</span>
                 </button>
             </div>
 
@@ -538,12 +539,12 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     <span class="obl-icon">📐</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Adjektiver & Nominalled (Del 4)</div>
-                        <div class="obl-desc">Lær hvordan adjektiver og udvidede nominalled placeres i sætningsskemaet.</div>
+                        <div class="obl-title">${getTranslation('adj_ordstilling_title')}</div>
+                        <div class="obl-desc">${getTranslation('adj_ordstilling_desc')}</div>
                     </div>
                 </div>
                 <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-adj">
-                    <span>Gå til Ordstilling (Del 4) ➔</span>
+                    <span>${getTranslation('adj_ordstilling_btn')}</span>
                 </a>
             </div>
         `;
@@ -572,44 +573,58 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             const details = getAgreementDetails(agreementState.type, agreementState.word, agreementState.stem);
             const isDef = details.isDef;
 
+            let statusText = '';
+            if (isDef) {
+                statusText = getTranslation('adj_status_strong').replace('{phrase}', details.phrase);
+            } else {
+                statusText = (agreementState.word === 'barn' ? getTranslation('adj_status_weak_et') : getTranslation('adj_status_weak_en')).replace('{phrase}', details.phrase);
+            }
+
+            let subRoleNoun = '';
+            if (isDef) {
+                subRoleNoun = agreementState.word === 'barn' ? getTranslation('adj_subrole_strong_barn') : getTranslation('adj_subrole_strong_bil');
+            } else {
+                subRoleNoun = agreementState.word === 'barn' ? getTranslation('adj_subrole_weak_barn') : getTranslation('adj_subrole_weak_bil');
+            }
+
             agreementCardEl.innerHTML = `
                 <div class="agreement-header">
-                    <span class="agreement-pill">🧲 Kognitiv Kongruens</span>
-                    <h3 class="agreement-h3">${getTranslation('agreementTitle')}</h3>
-                    <p class="agreement-p">${getTranslation('agreementDesc')}</p>
+                    <span class="agreement-pill">${getTranslation('adj_agreement_pill')}</span>
+                    <h3 class="agreement-h3">${getTranslation('adj_agreement_title')}</h3>
+                    <p class="agreement-p">${getTranslation('adj_agreement_desc')}</p>
                 </div>
 
                 <!-- 3 KONTROL-RÆKKER -->
                 <div class="agreement-controls-row">
                     <!-- 1. Forankring / Binding -->
                     <div class="control-subgroup">
-                        <span class="ctrl-legend">1. Form & Bindingens styrke:</span>
+                        <span class="ctrl-legend">${getTranslation('adj_ctrl_form_legend')}</span>
                         <div class="ctrl-btn-group">
                             <button type="button" class="ctrl-btn ${isDef ? 'active-strong' : ''}" data-type="bestemt">
-                                <span>⚡ Bestemt (Stærk binding: altid -e)</span>
+                                <span>${getTranslation('adj_ctrl_bestemt')}</span>
                             </button>
                             <button type="button" class="ctrl-btn ${!isDef ? 'active-weak' : ''}" data-type="ubestemt">
-                                <span>⚪ Ubestemt (Svag binding: køn afgør)</span>
+                                <span>${getTranslation('adj_ctrl_ubestemt')}</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- 2. Substantiv & Køn -->
                     <div class="control-subgroup">
-                        <span class="ctrl-legend">2. Substantiv & grammatisk køn:</span>
+                        <span class="ctrl-legend">${getTranslation('adj_ctrl_noun_legend')}</span>
                         <div class="ctrl-btn-group">
                             <button type="button" class="ctrl-btn ${agreementState.word === 'barn' ? 'active-noun' : ''}" data-word="barn">
-                                <span>👶 Barn (et-ord / intetkøn)</span>
+                                <span>${getTranslation('adj_ctrl_barn')}</span>
                             </button>
                             <button type="button" class="ctrl-btn ${agreementState.word === 'bil' ? 'active-noun' : ''}" data-word="bil">
-                                <span>🚗 Bil (en-ord / fælleskøn)</span>
+                                <span>${getTranslation('adj_ctrl_bil')}</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- 3. Adjektiv-stamme -->
                     <div class="control-subgroup">
-                        <span class="ctrl-legend">3. Adjektiv-stamme:</span>
+                        <span class="ctrl-legend">${getTranslation('adj_ctrl_stem_legend')}</span>
                         <div class="ctrl-btn-group adj-stems-group">
                             <button type="button" class="ctrl-stem-btn ${agreementState.stem === 'stor' ? 'active-stem' : ''}" data-stem="stor">
                                 <span>stor</span>
@@ -626,17 +641,14 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
                 <!-- DYNAMISK STATUS-STRIP -->
                 <div class="magnet-status-strip ${isDef ? 'status-strong' : 'status-weak'}">
-                    ${isDef ? 
-                        `⚡ <strong>STÆRK BINDING:</strong> Magneten trækker med maksimal kraft! Endelsen låses fast på <strong>-e</strong> uanset køn (<em>${details.phrase}</em>).` : 
-                        `⚪ <strong>SVAG BINDING:</strong> Løsere tilknytning. Endelsen bestemmes af substantivets køn: ${agreementState.word === 'barn' ? 'intetkøn (et-ord) trækker <strong>-t</strong>' : 'fælleskøn (en-ord) trækker <strong>-ø</strong> (ingen endelse)'} (<em>${details.phrase}</em>).`
-                    }
+                    ${statusText}
                 </div>
 
                 <!-- DEN GRAFISKE MAGNETISKE BØLGE-ILLUSTRATION (SVG) -->
                 <div class="magnet-container ${isDef ? 'strong' : 'weak'}">
                     <!-- ADJEKTIV BOKS (MODTAGER) -->
                     <div class="adjective-shape-box ${isDef ? 'strong' : 'weak'}">
-                        <div class="box-tag-label">Adjektiv</div>
+                        <div class="box-tag-label">${getTranslation('adj_box_adj_label')}</div>
                         <div class="adj-stem-suffix-wrap">
                             <span class="adj-stem-txt">${details.stemDisplay}</span><span class="adj-suffix-txt ${isDef ? 'suffix-strong' : (details.suffixDisplay === '-t' ? 'suffix-t' : 'suffix-empty')}">${details.suffixDisplay}</span>
                         </div>
@@ -647,19 +659,19 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     <div class="magnet-waves" id="magnet-waves-box">
                         ${getWavesSvg(isDef)}
                         <div class="flux-badge ${isDef ? 'strong' : 'weak'}">
-                            ${isDef ? '⚡ STÆRK BINDING ⚡' : '⚪ SVAG BINDING ⚪'}
+                            ${isDef ? getTranslation('adj_badge_strong') : getTranslation('adj_badge_weak')}
                         </div>
                     </div>
 
                     <!-- SUBSTANTIV MAGNET (KRAFTKILDE) -->
                     <div class="noun-influence-box ${isDef ? 'strong' : 'weak'}">
-                        <div class="box-tag-label">Substantiv (Magnet)</div>
+                        <div class="box-tag-label">${getTranslation('adj_box_noun_label')}</div>
                         <div class="noun-flex-wrap">
                             <span class="noun-emoji">${details.nounIcon}</span>
                             <span class="noun-txt">${details.nounDisplay}</span>
                         </div>
                         <div class="noun-sub-role ${isDef ? 'strong' : 'weak'}">
-                            ${isDef ? (agreementState.word === 'barn' ? 'Det barn (bestemt)' : 'Den bil (bestemt)') : (agreementState.word === 'barn' ? 'Et barn (intetkøn)' : 'En bil (fælleskøn)')}
+                            ${subRoleNoun}
                         </div>
                     </div>
                 </div>
@@ -667,7 +679,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 <!-- LIVE SYNTESE-BÅND MED LYD -->
                 <div class="syntese-banner ${isDef ? 'syntese-strong' : 'syntese-weak'}">
                     <div class="syntese-left">
-                        <span class="syntese-type-tag">${isDef ? '⚡ Stærk binding (-e):' : '⚪ Svag binding:'}</span>
+                        <span class="syntese-type-tag">${isDef ? getTranslation('adj_syntese_strong') : getTranslation('adj_syntese_weak')}</span>
                         <span class="syntese-phrase">${details.phrase}</span>
                     </div>
                     <button type="button" class="btn-tts-listen-mini" id="btn-listen-agreement">
@@ -680,10 +692,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 <div class="agreement-pedagogical-box ${isDef ? 'box-strong' : 'box-weak'}">
                     <div class="ped-icon">${isDef ? '⚡' : '🧲'}</div>
                     <div class="ped-text">
-                        ${isDef ? 
-                            `<strong>Kognitiv forankring (Bestemt form):</strong> Når vi taler om noget <em>bestemt</em> ("vi ved præcis, hvilket barn/hvilken bil der er i fokus"), er den mentale reference så stærk, at substantivets køn træder i baggrunden. Den magnetiske kraft låser altid adjektivet fast i den fælles bestemte form med <strong>-e</strong> (<em>${details.phrase}</em>).` : 
-                            `<strong>Kognitiv reference (Ubestemt form):</strong> I ubestemt form introduceres en ukendt eller generel entitet. Forankringen er åben og bindingen er svagere – derfor må adjektivet overtage substantivets køn: intetkøn (et-ord) trækker et <strong>-t</strong> (<em>et stort barn</em>), mens fælleskøn (en-ord) ikke trækker nogen endelse (<em>en hurtig bil</em>).`
-                        }
+                        ${isDef ? getTranslation('adj_rule_strong') : getTranslation('adj_rule_weak')}
                     </div>
                 </div>
             `;

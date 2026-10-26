@@ -213,10 +213,9 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'adverb-hero-compact';
     heroHeader.innerHTML = `
-        <h1 class="adverb-main-title">${getTranslation('adverbTitle') || 'Hvordan beskriver vi en handling?'}</h1>
+        <h1 class="adverb-main-title">${getTranslation('adv_hero_title')}</h1>
         <p class="adverb-subtitle">
-            Hvor adjektiver maler <strong>tingen</strong> (<em>det ${state.selectedAdjective} barn</em>), er adverbiet 
-            en <strong>projektør</strong>, der kaster lys over <strong>selve handlingen</strong> (<em>hvordan barnet spiser</em>).
+            ${getTranslation('adv_hero_subtitle').replace('{adj}', state.selectedAdjective)}
         </p>
     `;
     viewContainer.appendChild(heroHeader);
@@ -512,15 +511,13 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">Sætning:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
         `;
 
     }
-
-
 
     // -------------------------------------------------------------
     // RENDER: ADVERBIE-LABORATORIUM & FORKLARINGER
@@ -532,74 +529,54 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
         const box = document.createElement('div');
         box.className = 'adverb-controls-container animate-in';
 
-        // Opbyg kort for de forskellige adverbier
-        const adverbKeys = Object.keys(ADVERBS);
-
         box.innerHTML = `
             <!-- SEKTION: VÆLG ET ADVERBIUM -->
             <div class="controls-title-row">
-                <span class="section-label">Vælg et adverbium for at belyse og ændre handlingen:</span>
+                <span class="section-label">${getTranslation('adj_choose_label')}</span>
             </div>
 
             <div class="adverb-categories-grid">
                 <!-- 1. MÅDESADVERBIER -->
                 <div class="category-group-header">
-                    <span>🚀 Mådesadverbier (Hvordan spiser barnet?):</span>
+                    <span>🚀 ${getTranslation('adv_section1_label')}</span>
                 </div>
                 <div class="adverb-cards-row">
                     ${['langsomt', 'hurtigt', 'pænt'].map(key => {
                         const a = ADVERBS[key];
                         const isActive = state.selectedAdverb === key;
+                        const badgeText = getTranslation('adv_card_' + key + '_badge') || a.tag;
+                        const descText = getTranslation('adv_card_' + key + '_desc') || a.desc;
                         return `
                             <button type="button" class="adverb-card-btn ${isActive ? 'active-card' : ''}" data-adv="${key}" style="--adv-accent: ${a.color};">
                                 <div class="card-head">
                                     <span class="card-icon">${a.icon}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${a.color};">${a.tag}</div>
-                                <div class="card-desc">${a.desc}</div>
+                                <div class="card-badge" style="color: ${a.color};">${badgeText}</div>
+                                <div class="card-desc">${descText}</div>
                             </button>
                         `;
                     }).join('')}
                 </div>
 
-                <!-- 2. GRADSADVERBIER -->
+                <!-- 2. GRADSADVERBIER & CENTRALADVERBIER -->
                 <div class="category-group-header" style="margin-top: 0.6rem;">
-                    <span>📊 Gradsadverbier (Hvor meget?):</span>
-                </div>
-                <div class="adverb-cards-row">
-                    ${['meget', 'lidt'].map(key => {
-                        const a = ADVERBS[key];
-                        const isActive = state.selectedAdverb === key;
-                        return `
-                            <button type="button" class="adverb-card-btn ${isActive ? 'active-card' : ''}" data-adv="${key}" style="--adv-accent: ${a.color};">
-                                <div class="card-head">
-                                    <span class="card-icon">${a.icon}</span>
-                                    <span class="card-word">${a.word}</span>
-                                </div>
-                                <div class="card-badge" style="color: ${a.color};">${a.tag}</div>
-                                <div class="card-desc">${a.desc}</div>
-                            </button>
-                        `;
-                    }).join('')}
-                </div>
-
-                <!-- 3. CENTRALADVERBIER -->
-                <div class="category-group-header" style="margin-top: 0.6rem;">
-                    <span>🛑 Centraladverbier (Holdning & Nægtelse):</span>
+                    <span>🛑 ${getTranslation('adv_section2_label')}</span>
                 </div>
                 <div class="adverb-cards-row">
                     ${['ikke', 'gerne', 'nu'].map(key => {
                         const a = ADVERBS[key];
                         const isActive = state.selectedAdverb === key;
+                        const badgeText = getTranslation('adv_card_' + key + '_badge') || a.tag;
+                        const descText = getTranslation('adv_card_' + key + '_desc') || a.desc;
                         return `
                             <button type="button" class="adverb-card-btn ${isActive ? 'active-card' : ''}" data-adv="${key}" style="--adv-accent: ${a.color};">
                                 <div class="card-head">
                                     <span class="card-icon">${a.icon}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
-                                <div class="card-badge" style="color: ${a.color};">${a.tag}</div>
-                                <div class="card-desc">${a.desc}</div>
+                                <div class="card-badge" style="color: ${a.color};">${badgeText}</div>
+                                <div class="card-desc">${descText}</div>
                             </button>
                         `;
                     }).join('')}
@@ -610,28 +587,28 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             <div class="adverb-deep-expl-card">
                 <div class="expl-header-row">
                     <span class="expl-icon-bulb">💡</span>
-                    <h3 class="expl-title">Hvad er forskellen på et adjektiv og et adverbium?</h3>
+                    <h3 class="expl-title">${getTranslation('adv_diff_title')}</h3>
                 </div>
                 <div class="expl-body-content">
                     <p style="margin: 0 0 0.65rem; line-height: 1.45;">
-                        Mange forveksler adjektiver og adverbier, fordi de ofte ligner hinanden (f.eks. <em>langsom</em> vs. <em>langsomt</em>). Men kognitivt peger de på to helt forskellige ting:
+                        ${getTranslation('adv_diff_intro')}
                     </p>
                     <div class="comparison-boxes-grid">
                         <div class="comp-box box-adj">
-                            <div class="comp-title">🎨 Adjektiver beskriver TINGEN</div>
-                            <div class="comp-example">"Et <strong>langsomt</strong> tog"</div>
-                            <div class="comp-note">Svarer på: <em>Hvilket</em> barn / tog? Bøjes efter køn og bestemthed (<em>stort</em> vs. <em>store</em>).</div>
+                            <div class="comp-title">${getTranslation('adv_diff_box_adj_title')}</div>
+                            <div class="comp-example">${getTranslation('adv_diff_box_adj_ex')}</div>
+                            <div class="comp-note">${getTranslation('adv_diff_box_adj_note')}</div>
                         </div>
                         <div class="comp-box box-adv">
-                            <div class="comp-title">🔦 Adverbier belyser HANDLINGEN</div>
-                            <div class="comp-example">"Toget kører <strong>langsomt</strong>"</div>
-                            <div class="comp-note">Svarer på: <em>Hvordan</em> kører det? Får ofte et fast <strong>-t</strong>, men bøjes <strong>ALDRIG</strong> efter subjektets køn!</div>
+                            <div class="comp-title">${getTranslation('adv_diff_box_adv_title')}</div>
+                            <div class="comp-example">${getTranslation('adv_diff_box_adv_ex')}</div>
+                            <div class="comp-note">${getTranslation('adv_diff_box_adv_note')}</div>
                         </div>
                     </div>
                     <div class="rule-callout-banner">
                         <span class="rule-icon">📌</span>
                         <div class="rule-text">
-                            <strong>Det valgte adverbium:</strong> ${adv.ruleNote}
+                            <strong>${getTranslation('adv_rule_chosen')}</strong> ${getTranslation('adv_card_' + adv.id + '_desc') || adv.ruleNote}
                         </div>
                     </div>
                 </div>
@@ -641,7 +618,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <!-- ========================================================= -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">Din sætning nu:</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
                 <div class="cs-sentence-row">
                     ${adv.isCentral 
                         ? `<span class="cs-word tag-subjekt">${state.nounAnchor}</span> <span class="cs-word tag-adjektiv">${state.selectedAdjective}</span> <span class="cs-word tag-subjekt">${state.selectedNoun}</span> <span class="cs-word tag-verbum">${state.selectedModal || state.verbAnchor}</span> <span class="cs-word tag-adverbium">${adv.word}</span> <span class="cs-word tag-verbum">${state.selectedVerb}.</span>`
@@ -649,23 +626,23 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                     }
                 </div>
                 <div class="cs-tags-legend">
-                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
-                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv (Orange)</span>
-                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber (Rød)</span>
-                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium (Blå)</span>
+                    <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt</span>
+                    <span class="legend-pill tag-adjektiv-pill"><span class="legend-dot" style="background:#f97316;"></span> Adjektiv</span>
+                    <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verber</span>
+                    <span class="legend-pill tag-adverbium-pill"><span class="legend-dot" style="background:#0284c7;"></span> Adverbium</span>
                 </div>
             </div>
 
             <!-- GÅ VIDERE TIL TRIN 5 (KONJUNKTIONER) -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til sidste trin: Forbind sætninger med Konjunktioner
+                    ${getTranslation('adv_action_next_title')}
                 </h3>
                 <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag hele sætningen <strong>"${getFullSentence()}"</strong> med over på broen og lær, hvordan bindeord som <em>fordi</em>, <em>da</em>, <em>når</em> og <em>selvom</em> skaber flydende tekst.
+                    ${getTranslation('adv_action_next_desc').replace('{sentence}', getFullSentence())}
                 </p>
                 <button type="button" class="btn-launch-conjunction" id="btn-goto-conjunctions">
-                    <span>${getTranslation('nextStepAfterAdverb') || 'Fortsæt til Konjunktioner'} ➔</span>
+                    <span>${getTranslation('adv_btn_next_conj')}</span>
                 </button>
             </div>
 
@@ -675,12 +652,12 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                     <span class="obl-icon">📐</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Centraladverbiets Plads (5 led)</div>
-                        <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
+                        <div class="obl-title">${getTranslation('adv_ordstilling_title')}</div>
+                        <div class="obl-desc">${getTranslation('adv_ordstilling_desc')}</div>
                     </div>
                 </div>
                 <a href="#/${getLang()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
-                    <span>Gå til Ordstilling (Del 2) ➔</span>
+                    <span>${getTranslation('adv_ordstilling_btn')}</span>
                 </a>
             </div>
         `;

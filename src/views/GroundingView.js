@@ -122,7 +122,7 @@ export function renderGroundingView(container, navigateFn) {
                             <line x1="0" y1="13" x2="-6" y2="18" stroke="#f8fafc" stroke-width="1.5" stroke-linecap="round"/>
                             <line x1="0" y1="19" x2="-4" y2="26" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
                             <line x1="0" y1="19" x2="4" y2="26" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-                            <text x="0" y="34" font-size="9" fill="#cbd5e1" text-anchor="middle" font-weight="700">Taleren</text>
+                            <text x="0" y="34" font-size="9" fill="#cbd5e1" text-anchor="middle" font-weight="700">${getTranslation('grounding_stage_speaker') || 'Taleren'}</text>
                         </g>
 
                         <!-- TØJRESNOR & ANKER (Trin 1 live animation) -->
@@ -198,7 +198,7 @@ export function renderGroundingView(container, navigateFn) {
                             <g id="balloon-badge" transform="translate(0, -23)">
                                 <rect x="-50" y="-8" width="100" height="16" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="1"/>
                                 <text id="balloon-badge-text" x="0" y="3.5" fill="#38bdf8" font-size="8.5" font-weight="800" text-anchor="middle">
-                                    🎈 Abstrakt (svæver)
+                                    ${getTranslation('grounding_stage_abstract') || '🎈 Abstrakt (svæver)'}
                                 </text>
                             </g>
                         </g>
@@ -208,11 +208,11 @@ export function renderGroundingView(container, navigateFn) {
 
             <!-- INTEGRERET SÆTNINGSBÅND I ÉN FLOT RÆKKE -->
             <div class="compact-strip-container">
-                <div class="strip-header-title">Sætningen:</div>
+                <div class="strip-header-title">${getTranslation('grounding_strip_title') || 'Sætningen:'}</div>
                 <div class="slots-mobile-row">
-                    <span class="slot-item slot-empty" id="live-slot-noun">1. Anker ?</span>
+                    <span class="slot-item slot-empty" id="live-slot-noun">${getTranslation('grounding_slot_noun_empty') || '1. Anker ?'}</span>
                     <span class="slot-item slot-fixed">barn</span>
-                    <span class="slot-item slot-empty" id="live-slot-verb">2. Tid ?</span>
+                    <span class="slot-item slot-empty" id="live-slot-verb">${getTranslation('grounding_slot_verb_empty') || '2. Tid ?'}</span>
                 </div>
             </div>
         </div>
@@ -257,10 +257,10 @@ export function renderGroundingView(container, navigateFn) {
             groundAnchor.style.transform = 'translate(75px, 74px) scale(0)';
             groundAnchor.style.opacity = '0';
             if (tetherRopeFlux) tetherRopeFlux.style.opacity = '0';
-            balloonBadgeText.textContent = '🎈 Abstrakt (svæver)';
+            balloonBadgeText.textContent = getTranslation('grounding_stage_abstract') || '🎈 Abstrakt (svæver)';
             balloonBadgeText.style.fill = '#38bdf8';
             liveSlotNoun.className = 'slot-item slot-empty';
-            liveSlotNoun.textContent = '1. Anker ?';
+            liveSlotNoun.textContent = getTranslation('grounding_slot_noun_empty') || '1. Anker ?';
         } else {
             tetherRope.style.strokeDashoffset = '0';
             tetherRope.style.transition = 'stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
@@ -274,7 +274,7 @@ export function renderGroundingView(container, navigateFn) {
                 tetherRopeFlux.style.transition = 'opacity 0.6s ease 0.5s';
             }
 
-            balloonBadgeText.textContent = `⚓ Forankret: "${state.nounAnchor}"`;
+            balloonBadgeText.textContent = `${getTranslation('grounding_stage_anchored') || '⚓ Forankret:'} "${state.nounAnchor}"`;
             balloonBadgeText.style.fill = '#fcd34d';
 
             liveSlotNoun.className = 'slot-item slot-active-noun';
@@ -284,7 +284,7 @@ export function renderGroundingView(container, navigateFn) {
         if (!state.verbAnchor) {
             burnerFlame.style.opacity = '0';
             liveSlotVerb.className = 'slot-item slot-empty';
-            liveSlotVerb.textContent = '2. Tid ?';
+            liveSlotVerb.textContent = getTranslation('grounding_slot_verb_empty') || '2. Tid ?';
         } else {
             burnerFlame.style.opacity = '1';
             burnerFlame.style.transition = 'opacity 0.4s ease';
@@ -292,7 +292,7 @@ export function renderGroundingView(container, navigateFn) {
             liveSlotVerb.className = 'slot-item slot-active-verb';
             liveSlotVerb.textContent = state.verbAnchor;
 
-            balloonBadgeText.textContent = `⏰ I tid: "${state.verbAnchor}"`;
+            balloonBadgeText.textContent = `${getTranslation('grounding_stage_timed') || '⏰ I tid:'} "${state.verbAnchor}"`;
             balloonBadgeText.style.fill = '#4ade80';
         }
 
@@ -304,7 +304,7 @@ export function renderGroundingView(container, navigateFn) {
                 landingRipple.style.opacity = '1';
                 landingRipple.style.transition = 'opacity 0.6s ease 0.8s';
             }
-            balloonBadgeText.textContent = `🌱 Landet på jorden!`;
+            balloonBadgeText.textContent = getTranslation('grounding_stage_landed') || '🌱 Landet på jorden!';
             balloonBadgeText.style.fill = '#4ade80';
         } else {
             balloonCraft.classList.add('balloon-floating-anim');
@@ -344,10 +344,10 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.className = 'step-box-flow animate-in';
 
         stepDiv.innerHTML = `
-            <div class="task-step-pill">Trin 1 af 3: Rumligt anker</div>
-            <h2 class="task-step-h2">${getTranslation('groundingStep1')}</h2>
+            <div class="task-step-pill">${getTranslation('grounding_step1_pill') || 'Trin 1 af 3: Rumligt anker'}</div>
+            <h2 class="task-step-h2">${getTranslation('grounding_step1_title') || getTranslation('groundingStep1')}</h2>
             <p class="task-step-p">
-                Ordet <strong>"barn"</strong> svæver abstrakt oppe i luften. Vælg et anker, der tøjrer barnet til virkeligheden:
+                ${getTranslation('grounding_step1_desc')}
             </p>
 
             <div class="cards-layout-2x2">
@@ -356,8 +356,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">🏷️</span>
                         <span class="btn-word">Mit</span>
                     </div>
-                    <div class="btn-role">${getTranslation('relation') || 'Relation (ejerskab)'}</div>
-                    <div class="btn-subtext">Barnet tilhører taleren.</div>
+                    <div class="btn-role">${getTranslation('grounding_anchor_mit_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_anchor_mit_desc')}</div>
                 </button>
 
                 <button type="button" class="mobile-anchor-btn" data-anchor="Et">
@@ -365,8 +365,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">🔦</span>
                         <span class="btn-word">Et</span>
                     </div>
-                    <div class="btn-role">${getTranslation('indefinite') || 'Ubestemt (et af mange)'}</div>
-                    <div class="btn-subtext">Et vilkårligt barn blandt mange.</div>
+                    <div class="btn-role">${getTranslation('grounding_anchor_et_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_anchor_et_desc')}</div>
                 </button>
 
                 <button type="button" class="mobile-anchor-btn" data-anchor="Det">
@@ -374,8 +374,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">👉</span>
                         <span class="btn-word">Det</span>
                     </div>
-                    <div class="btn-role">${getTranslation('pointing') || 'Udpegning (på afstand)'}</div>
-                    <div class="btn-subtext">Barnet derovre på afstand.</div>
+                    <div class="btn-role">${getTranslation('grounding_anchor_det_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_anchor_det_desc')}</div>
                 </button>
 
                 <button type="button" class="mobile-anchor-btn" data-anchor="Dette">
@@ -383,8 +383,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">📍</span>
                         <span class="btn-word">Dette</span>
                     </div>
-                    <div class="btn-role">${getTranslation('nearness') || 'Nærhed (lige her)'}</div>
-                    <div class="btn-subtext">Barnet lige her i nærværet.</div>
+                    <div class="btn-role">${getTranslation('grounding_anchor_dette_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_anchor_dette_desc')}</div>
                 </button>
             </div>
         `;
@@ -416,10 +416,10 @@ export function renderGroundingView(container, navigateFn) {
         stepDiv.className = 'step-box-flow animate-in';
 
         stepDiv.innerHTML = `
-            <div class="task-step-pill">Trin 2 af 3: Tidsanker</div>
-            <h2 class="task-step-h2">${getTranslation('groundingStep2')}</h2>
+            <div class="task-step-pill">${getTranslation('grounding_step2_pill') || 'Trin 2 af 3: Tidsanker'}</div>
+            <h2 class="task-step-h2">${getTranslation('grounding_step2_title') || getTranslation('groundingStep2')}</h2>
             <p class="task-step-p">
-                Handlingen <strong>"at spise"</strong> skal have et tidspunkt for at finde sted:
+                ${getTranslation('grounding_step2_desc')}
             </p>
 
             <div class="cards-layout-stack">
@@ -428,8 +428,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">🟢</span>
                         <span class="btn-word">spiser</span>
                     </div>
-                    <div class="btn-role" style="color: #4ade80;">Lige nu (${getTranslation('presentTense') || 'Nutid'})</div>
-                    <div class="btn-subtext">Handlingen sker lige nu i nutiden.</div>
+                    <div class="btn-role" style="color: #4ade80;">${getTranslation('grounding_verb_spiser_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_verb_spiser_desc')}</div>
                 </button>
 
                 <button type="button" class="mobile-anchor-btn" data-verb="spiste">
@@ -437,8 +437,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">📍</span>
                         <span class="btn-word">spiste</span>
                     </div>
-                    <div class="btn-role" style="color: #f87171;">I går / fortid (${getTranslation('pastTense') || 'Datid'})</div>
-                    <div class="btn-subtext">Handlingen skete i fortiden.</div>
+                    <div class="btn-role" style="color: #f87171;">${getTranslation('grounding_verb_spiste_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_verb_spiste_desc')}</div>
                 </button>
 
                 <button type="button" class="mobile-anchor-btn" data-verb="skal spise">
@@ -446,8 +446,8 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="btn-emoji">🔵</span>
                         <span class="btn-word">skal spise</span>
                     </div>
-                    <div class="btn-role" style="color: #38bdf8;">Planlagt (${getTranslation('futureTense') || 'Fremtid'})</div>
-                    <div class="btn-subtext">Handlingen er planlagt ude i fremtiden.</div>
+                    <div class="btn-role" style="color: #38bdf8;">${getTranslation('grounding_verb_skal_spise_role')}</div>
+                    <div class="btn-subtext">${getTranslation('grounding_verb_skal_spise_desc')}</div>
                 </button>
             </div>
         `;
@@ -483,31 +483,31 @@ export function renderGroundingView(container, navigateFn) {
         const shuffledWords = [...initialWords].sort(() => Math.random() - 0.5);
 
         stepDiv.innerHTML = `
-            <div class="task-step-pill">Trin 3 af 3: Landing på Jorden</div>
-            <h2 class="task-step-h2">${getTranslation('groundingStep3')}</h2>
+            <div class="task-step-pill">${getTranslation('grounding_step3_pill') || 'Trin 3 af 3: Landing på Jorden'}</div>
+            <h2 class="task-step-h2">${getTranslation('grounding_step3_title') || getTranslation('groundingStep3')}</h2>
             <p class="task-step-p">
-                Tryk på brikkerne i rigtig rækkefølge for at samle sætningen på jorden:
+                ${getTranslation('grounding_step3_desc')}
             </p>
 
             <div class="assembly-source-area">
-                <div class="area-tag-label">Tryk på brikkerne for at placere dem på jorden:</div>
+                <div class="area-tag-label">${getTranslation('grounding_chips_label')}</div>
                 <div class="chips-pool-row" id="drag-source">
                     ${shuffledWords.map(w => `<button type="button" class="tap-brick-btn" data-word="${w}">${w}</button>`).join('')}
                 </div>
             </div>
 
             <div class="assembly-ground-zone">
-                <div class="ground-zone-title">🌱 Jorden (The Ground):</div>
+                <div class="ground-zone-title">${getTranslation('grounding_ground_zone')}</div>
                 <div class="chips-landing-row" id="drag-target"></div>
             </div>
 
             <div class="assembly-actions-row">
                 <button type="button" class="btn-confirm-ground" id="btn-check-assembly">
                     <span>⚓</span>
-                    <span>${getTranslation('checkResult')}</span>
+                    <span>${getTranslation('grounding_btn_check') || getTranslation('checkResult')}</span>
                 </button>
                 <button type="button" class="btn-reset-ground" id="btn-reset-slots">
-                    Nulstil 🔄
+                    ${getTranslation('grounding_btn_reset') || 'Nulstil 🔄'}
                 </button>
             </div>
 
@@ -559,13 +559,13 @@ export function renderGroundingView(container, navigateFn) {
                 feedbackBox.className = 'assembly-feedback-banner success';
                 feedbackBox.innerHTML = `
                     <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.2rem;">
-                        🎉 ${getTranslation('groundingSuccess')}
+                        🎉 ${getTranslation('grounding_success_title') || getTranslation('groundingSuccess')}
                     </div>
                     <div style="font-size: 1.15rem; color: #f8fafc; font-weight: 800; margin-bottom: 0.3rem;">
                         "${fullSentence}"
                     </div>
                     <p style="margin: 0; color: #e2e8f0; font-size: 0.95rem;">
-                        Ballonen er landet trygt på jorden! Sætningen har nu jordforbindelse.
+                        ${getTranslation('grounding_success_desc')}
                     </p>
                 `;
 
@@ -582,8 +582,8 @@ export function renderGroundingView(container, navigateFn) {
                 feedbackBox.style.display = 'block';
                 feedbackBox.className = 'assembly-feedback-banner error';
                 feedbackBox.innerHTML = `
-                    <strong>${getTranslation('wrongOrder')}</strong><br>
-                    Rækkefølgen er: Først anker (<em>${state.nounAnchor}</em>), derefter <em>barn</em> og til sidst <em>${state.verbAnchor}</em>.
+                    <strong>${getTranslation('grounding_wrong_order_title') || getTranslation('wrongOrder')}</strong><br>
+                    ${getTranslation('grounding_wrong_order_desc', { nounAnchor: state.nounAnchor, verbAnchor: state.verbAnchor })}
                 `;
             }
         };
@@ -715,7 +715,7 @@ export function renderGroundingView(container, navigateFn) {
 
         stepDiv.innerHTML = `
             <div class="task-step-pill" style="background: rgba(34, 197, 94, 0.2); color: #4ade80;">
-                Forankring bekræftet!
+                ${getTranslation('grounding_step4_confirmed')}
             </div>
             <h2 class="task-step-h2">"${state.nounAnchor} barn ${state.verbAnchor}."</h2>
 
@@ -726,7 +726,7 @@ export function renderGroundingView(container, navigateFn) {
 
             <div class="result-card-box">
                 <div class="timeline-header-compact">
-                    <span class="timeline-label-title">Handlingen i tiden:</span>
+                    <span class="timeline-label-title">${getTranslation('grounding_timeline_title')}</span>
                     <span class="timeline-tense-badge" style="color: ${tenseColor}; border-color: ${tenseColor};">
                         ${state.verbAnchor} (${tenseLabel})
                     </span>
@@ -734,9 +734,9 @@ export function renderGroundingView(container, navigateFn) {
                 <div class="timeline-track-compact">
                     <div class="track-center-line"></div>
                     <div class="track-labels-row">
-                        <span class="time-step ${state.verbAnchor === 'spiste' ? 'active' : ''}">Fortid</span>
-                        <span class="time-step ${state.verbAnchor === 'spiser' ? 'active' : ''}">Nutid</span>
-                        <span class="time-step ${state.verbAnchor === 'skal spise' ? 'active' : ''}">Fremtid</span>
+                        <span class="time-step ${state.verbAnchor === 'spiste' ? 'active' : ''}">${getTranslation('grounding_timeline_past')}</span>
+                        <span class="time-step ${state.verbAnchor === 'spiser' ? 'active' : ''}">${getTranslation('grounding_timeline_present')}</span>
+                        <span class="time-step ${state.verbAnchor === 'skal spise' ? 'active' : ''}">${getTranslation('grounding_timeline_future')}</span>
                     </div>
                     <div class="track-glow-dot" style="left: ${pointerPercent}; background: ${tenseColor};"></div>
                 </div>
@@ -744,7 +744,7 @@ export function renderGroundingView(container, navigateFn) {
 
             <div style="margin-top: 1.5rem; text-align: center;">
                 <button type="button" class="btn-continue-chain" id="btn-goto-final">
-                    <span>Se hele grammatik-rejsen ➔</span>
+                    <span>${getTranslation('grounding_btn_continue')}</span>
                 </button>
             </div>
         `;
@@ -770,44 +770,44 @@ export function renderGroundingView(container, navigateFn) {
             <div class="celebration-hero-card">
                 <div class="celebration-icon">🏆</div>
                 <h2 style="font-size: 1.6rem; color: white; margin-bottom: 0.6rem; font-weight: 800;">
-                    Grundsætningen er forankret!
+                    ${getTranslation('grounding_final_hero_title')}
                 </h2>
                 <div class="current-sentence-badge-box">
-                    <span class="cs-label">Din sætning nu:</span>
+                    <span class="cs-label">${getTranslation('cs_label_current')}</span>
                     <div class="cs-sentence-row">
                         <span class="cs-word tag-subjekt">${state.nounAnchor} barn</span>
                         <span class="cs-word tag-verbum">${state.verbAnchor}.</span>
                     </div>
                     <div class="cs-tags-legend">
-                        <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> Subjekt (Grøn)</span>
-                        <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> Verbum (Rød)</span>
+                        <span class="legend-pill tag-subjekt-pill"><span class="legend-dot" style="background:#22c55e;"></span> ${getTranslation('legend_subjekt')}</span>
+                        <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> ${getTranslation('legend_verbum')}</span>
                     </div>
                     <button type="button" class="btn-hear-sentence" id="btn-speak-final" style="margin-top: 0.75rem;">
                         <span>🔊</span>
-                        <span>Lyt til sætningen</span>
+                        <span>${getTranslation('btn_listen_sentence')}</span>
                     </button>
                 </div>
                 <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 540px; margin: 1rem auto 0; line-height: 1.5;">
-                    ${getTranslation('groundingFinalMsg')}
+                    ${getTranslation('grounding_final_msg') || getTranslation('groundingFinalMsg')}
                 </p>
             </div>
 
             <!-- MODAL TEASER KNAP -->
             <div class="modal-callout-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;">
-                    Tag "${completedSentence}" med ind i Modalverber
+                    ${getTranslation('grounding_modal_teaser_title', { completedSentence })}
                 </h3>
                 <p style="color: #f1f5f9; font-size: 0.95rem; max-width: 520px; margin: 0 auto 1.2rem; line-height: 1.45;">
-                    Hvad sker der, når barnet ikke bare <em>spiser</em>, men <strong>vil</strong>, <strong>skal</strong> eller <strong>må</strong> spise?
+                    ${getTranslation('grounding_modal_teaser_desc')}
                 </p>
                 <button type="button" class="btn-primary-modal-launch" id="btn-start-modal-chain">
-                    <span>${getTranslation('nextStepModalVerbs')} ➔</span>
+                    <span>${getTranslation('grounding_btn_next_modal') || getTranslation('nextStepModalVerbs')}</span>
                 </button>
             </div>
 
             <div style="text-align: center; margin-top: 1.25rem; margin-bottom: 1.25rem;">
                 <button type="button" class="btn-text-restart" id="btn-restart-all">
-                    Prøv med et andet anker 🔄
+                    ${getTranslation('grounding_btn_restart')}
                 </button>
             </div>
 
@@ -816,13 +816,13 @@ export function renderGroundingView(container, navigateFn) {
                 <div class="obl-left">
                     <span class="obl-icon">📐</span>
                     <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Grundsætningens 4 led (Enkel model)</div>
-                        <div class="obl-desc">Lær hvordan Subjekt, Verbum, Sted og Tid danner den grundlæggende danske sætning.</div>
+                        <span class="obl-badge">${getTranslation('grounding_ordstilling_badge')}</span>
+                        <div class="obl-title">${getTranslation('grounding_ordstilling_title')}</div>
+                        <div class="obl-desc">${getTranslation('grounding_ordstilling_desc')}</div>
                     </div>
                 </div>
                 <a href="#/${getLang()}/ordstilling_intro/part1" class="btn-goto-ordstilling" id="btn-link-ordstilling-grounding">
-                    <span>Gå til Ordstilling (Del 1) ➔</span>
+                    <span>${getTranslation('grounding_ordstilling_btn')}</span>
                 </a>
             </div>
         `;

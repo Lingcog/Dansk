@@ -8,6 +8,7 @@ import { verberWordTranslations } from '../utils/top100_verber_translations.js';
 import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
 import { adverbierWordTranslations } from '../utils/top100_adverbier_translations.js';
 import { konjunktionerWordTranslations } from '../utils/top100_konjunktioner_translations.js';
+import { isHCDevMode, setHCDevMode } from '../utils/devMode.js';
 
 /**
  * HCAndersenView - H.C. Andersens Eventyr
@@ -16,6 +17,14 @@ import { konjunktionerWordTranslations } from '../utils/top100_konjunktioner_tra
  * målordspræsentationer for alle ordklasser (inkl. pink pronominer), oplæsning (TTS) og quiz.
  */
 export function renderHCAndersenView(container, navigateFn, extraData = {}) {
+    injectStyles();
+
+    // Dev Gate: Check if dev mode is enabled (always true on localhost / 127.0.0.1)
+    if (!isHCDevMode(extraData)) {
+        renderComingSoonView(container, navigateFn, extraData);
+        return;
+    }
+
     const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container hc-andersen-container';
@@ -1729,6 +1738,75 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
     // Initialize View
     renderView();
+    container.appendChild(viewContainer);
+}
+
+function renderComingSoonView(container, navigateFn, extraData = {}) {
+    const isEn = getLang() === 'en';
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container hc-andersen-container';
+
+    // Top bar
+    const topBar = document.createElement('div');
+    topBar.className = 'top-bar';
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-btn';
+    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back to stories' : 'Tilbage til historier')}`;
+    backBtn.onclick = () => navigateFn('historier_menu');
+    topBar.appendChild(backBtn);
+    viewContainer.appendChild(topBar);
+
+    // Hero Teaser
+    let tapCount = 0;
+    let tapTimer = null;
+
+    const hero = document.createElement('div');
+    hero.className = 'hc-hero-card';
+    hero.innerHTML = `
+        <div id="hc-coming-soon-castle" style="font-size: 4rem; margin-bottom: 0.8rem; cursor: pointer; user-select: none;">🏰</div>
+        <div class="hc-hero-badge" style="margin-bottom: 1.2rem;">
+            🚧 ${isEn ? 'Under Development · Coming Soon' : 'Under udvikling · Kommer snart'}
+        </div>
+        <h1 style="font-size: 2.3rem; font-weight: 800; margin: 0 0 1rem; color: #f8fafc;">
+            H.C. Andersens Eventyr
+        </h1>
+        <p style="font-size: 1.08rem; color: #cbd5e1; max-width: 650px; margin: 0 auto 1.8rem; line-height: 1.65;">
+            ${isEn
+                ? 'We are building an interactive Danish fairy tale universe with simplified classics, search-and-find scenes, line-by-line grammar coaching, and native audio. This section will open very soon!'
+                : 'Vi er i fuld gang med at skabe en eventyrlig læringsflade med H.C. Andersens udødelige eventyr, tilpasset danskkursister med detaljerede vrimlebilleder, sætningstræning, gloser og professionel oplæsning. Siden åbner snart!'}
+        </p>
+        <button id="hc-teaser-back-btn" style="
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            color: #0f172a;
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 0.85rem 2.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+            transition: transform 0.15s ease;
+        ">
+            ← ${isEn ? 'Explore Other Stories' : 'Udforsk andre historier'}
+        </button>
+    `;
+
+    hero.querySelector('#hc-teaser-back-btn').onclick = () => navigateFn('historier_menu');
+
+    // Secret 5-tap developer unlock on the castle icon
+    hero.querySelector('#hc-coming-soon-castle').onclick = () => {
+        tapCount++;
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(() => { tapCount = 0; }, 2000);
+        if (tapCount >= 5) {
+            setHCDevMode(true);
+            alert(isEn ? '🔓 Developer mode activated!' : '🔓 Udviklertilstand aktiveret!');
+            renderHCAndersenView(container, navigateFn, { ...extraData, dev: 'true' });
+        }
+    };
+
+    viewContainer.appendChild(hero);
+    container.innerHTML = '';
     container.appendChild(viewContainer);
 }
 

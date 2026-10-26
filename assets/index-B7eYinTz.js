@@ -45739,21 +45739,6 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 </p>
             </div>
 
-            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 1 (GRUNDSÆTNINGENS 4 LED) -->
-            <div class="ordstilling-bridge-link-card">
-                <div class="obl-left">
-                    <span class="obl-icon">📐</span>
-                    <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Grundsætningens 4 led (Enkel model)</div>
-                        <div class="obl-desc">Lær hvordan Subjekt, Verbum, Sted og Tid danner den grundlæggende danske sætning.</div>
-                    </div>
-                </div>
-                <a href="#/${Se()}/ordstilling_intro/part1" class="btn-goto-ordstilling" id="btn-link-ordstilling-grounding">
-                    <span>Gå til Ordstilling (Del 1) ➔</span>
-                </a>
-            </div>
-
             <!-- MODAL TEASER KNAP -->
             <div class="modal-callout-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;">
@@ -45767,10 +45752,25 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 </button>
             </div>
 
-            <div style="text-align: center; margin-top: 1.25rem;">
+            <div style="text-align: center; margin-top: 1.25rem; margin-bottom: 1.25rem;">
                 <button type="button" class="btn-text-restart" id="btn-restart-all">
                     Prøv med et andet anker 🔄
                 </button>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 1 (GRUNDSÆTNINGENS 4 LED) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Grundsætningens 4 led (Enkel model)</div>
+                        <div class="obl-desc">Lær hvordan Subjekt, Verbum, Sted og Tid danner den grundlæggende danske sætning.</div>
+                    </div>
+                </div>
+                <a href="#/${Se()}/ordstilling_intro/part1" class="btn-goto-ordstilling" id="btn-link-ordstilling-grounding">
+                    <span>Gå til Ordstilling (Del 1) ➔</span>
+                </a>
             </div>
         `,M.querySelector("#btn-speak-final").onclick=()=>t(o);const a=M.querySelector("#btn-link-ordstilling-grounding");a&&(a.onclick=s=>{s.preventDefault(),x("ordstilling_intro",{subPath:"part1"})}),M.querySelector("#btn-start-modal-chain").onclick=()=>{x("modal_force",{nounAnchor:E.nounAnchor,verbAnchor:E.verbAnchor,selectedNoun:"barn",selectedVerb:E.verbAnchor})},M.querySelector("#btn-restart-all").onclick=()=>{E.step=1,E.nounAnchor="",E.verbAnchor="",F()},z.appendChild(M)}F();const h=document.getElementById("grounding-mobile-styles");h&&h.remove();const D=document.getElementById("grounding-compact-styles");D&&D.remove();const g=document.getElementById("grounding-view-styles");g&&g.remove();const p=document.createElement("style");p.id="grounding-mobile-styles",p.textContent=`
         .grounding-mobile-view {
@@ -48292,6 +48292,19 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 </div>
             </div>
 
+            <!-- GÅ VIDERE KNAP -->
+            <div class="next-bridge-action-card">
+                <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
+                    Klar til næste trin: Tilføj Adjektiver
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
+                    Tag sætningen <strong>"${z()}"</strong> med videre og lær, hvordan adjektiver maler og beskriver barnet.
+                </p>
+                <button type="button" class="btn-launch-adjective" id="btn-goto-adjectives">
+                    <span>${e("nextStepAdjective")||"Fortsæt til Adjektiver"} ➔</span>
+                </button>
+            </div>
+
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 3 (MODALVERBER) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
@@ -48305,19 +48318,6 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 <a href="#/${Se()}/ordstilling_intro/part3" class="btn-goto-ordstilling" id="btn-link-ordstilling-modal">
                     <span>Gå til Ordstilling (Del 3) ➔</span>
                 </a>
-            </div>
-
-            <!-- GÅ VIDERE KNAP -->
-            <div class="next-bridge-action-card">
-                <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til næste trin: Tilføj Adjektiver
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag sætningen <strong>"${z()}"</strong> med videre og lær, hvordan adjektiver maler og beskriver barnet.
-                </p>
-                <button type="button" class="btn-launch-adjective" id="btn-goto-adjectives">
-                    <span>${e("nextStepAdjective")||"Fortsæt til Adjektiver"} ➔</span>
-                </button>
             </div>
         `,H.querySelectorAll(".modal-card-btn").forEach(T=>{T.onclick=()=>{const h=T.dataset.modal;n.selectedModal=h,d(B()),Q()}});const $=H.querySelector("#btn-toggle-present"),u=H.querySelector("#btn-toggle-past");$.onclick=()=>{n.isPast&&(n.isPast=!1,d(z()),Q())},u.onclick=()=>{n.isPast||(n.isPast=!0,d(z()),Q())};const j=H.querySelector("#btn-link-ordstilling-modal");j&&(j.onclick=T=>{T.preventDefault(),x("ordstilling_intro",{subPath:"part3"})}),H.querySelector("#btn-goto-adjectives").onclick=()=>{x("adjective_bridge",{nounAnchor:n.nounAnchor,selectedNoun:n.selectedNoun,selectedModal:B(),verbAnchor:n.isPast?"spiste":"spiser",isPast:n.isPast})},te.appendChild(H)}function ve(){const Y=ee.querySelector(".stage-frame-wrapper");Y&&(Y.classList.remove("pulse-stage-glow"),Y.offsetWidth,Y.classList.add("pulse-stage-glow"),setTimeout(()=>Y.classList.remove("pulse-stage-glow"),600))}function Q(){oe(),ge(),ve()}Q();const U=document.getElementById("modal-force-styles");U&&U.remove();const X=document.createElement("style");X.id="modal-force-styles",X.textContent=`
         .modal-force-mobile-view {
@@ -49249,6 +49249,19 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 </div>
             </div>
 
+            <!-- GÅ VIDERE TIL ADVERBIER -->
+            <div class="next-bridge-action-card">
+                <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
+                    Klar til næste trin: Tilføj Adverbier
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
+                    Tag sætningen <strong>"${v()}"</strong> med videre og lær, hvordan adverbier beskriver selve måden, barnet spiser på.
+                </p>
+                <button type="button" class="btn-launch-adverb" id="btn-goto-adverbs">
+                    <span>${e("nextStepAdverb")||"Fortsæt til Adverbier"} ➔</span>
+                </button>
+            </div>
+
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
@@ -49262,19 +49275,6 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 <a href="#/${Se()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-adj">
                     <span>Gå til Ordstilling (Del 4) ➔</span>
                 </a>
-            </div>
-
-            <!-- GÅ VIDERE TIL ADVERBIER -->
-            <div class="next-bridge-action-card">
-                <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til næste trin: Tilføj Adverbier
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag sætningen <strong>"${v()}"</strong> med videre og lær, hvordan adverbier beskriver selve måden, barnet spiser på.
-                </p>
-                <button type="button" class="btn-launch-adverb" id="btn-goto-adverbs">
-                    <span>${e("nextStepAdverb")||"Fortsæt til Adverbier"} ➔</span>
-                </button>
             </div>
         `,D.querySelectorAll(".adj-card-btn").forEach(o=>{o.onclick=()=>{const a=o.dataset.id;n.selectedAdjectiveId=a,n.selectedAdjective=B(a),a==="sulten"&&(y.stem="sulten"),d(n.selectedAdjective),H()}});const g=D.querySelector("#agreement-interactive-card");function p(){if(!g)return;const o=ee(y.type,y.word,y.stem),a=o.isDef;g.innerHTML=`
                 <div class="agreement-header">
@@ -50802,21 +50802,6 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 </div>
             </div>
 
-            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
-            <div class="ordstilling-bridge-link-card">
-                <div class="obl-left">
-                    <span class="obl-icon">📐</span>
-                    <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Centraladverbiets Plads (5 led)</div>
-                        <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
-                    </div>
-                </div>
-                <a href="#/${Se()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
-                    <span>Gå til Ordstilling (Del 2) ➔</span>
-                </a>
-            </div>
-
             <!-- GÅ VIDERE TIL TRIN 5 (KONJUNKTIONER) -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
@@ -50834,6 +50819,21 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                         <span>✍️ Træn flere adverbier i hverdagssituationer</span>
                     </a>
                 </div>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Centraladverbiets Plads (5 led)</div>
+                        <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${Se()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
+                    <span>Gå til Ordstilling (Del 2) ➔</span>
+                </a>
             </div>
         `,Y.querySelectorAll(".adverb-card-btn").forEach($=>{$.onclick=()=>{const u=$.dataset.adv;t.selectedAdverb=u,n(u),ge();const j=y.querySelector(".stage-frame-wrapper");j&&(j.classList.add("pulse-stage-glow"),setTimeout(()=>j.classList.remove("pulse-stage-glow"),600))}});const F=Y.querySelector("#btn-link-ordstilling-adverb");F&&(F.onclick=$=>{$.preventDefault(),x("ordstilling_intro",{subPath:"part2"})}),Y.querySelector("#btn-goto-conjunctions").onclick=()=>{x("conjunction_bridge",{nounAnchor:t.nounAnchor,selectedNoun:t.selectedNoun,selectedAdjective:t.selectedAdjective,adjectivePart:t.selectedAdjective,adjectiveForm:t.adjectiveForm,selectedModal:t.selectedModal,verbAnchor:t.verbAnchor,selectedVerb:t.selectedVerb,selectedAdverb:t.selectedAdverb,isPast:t.isPast})};const H=Y.querySelector("#link-adverb-exercises");H&&(H.onclick=()=>{x("adverb_choice")}),ee.appendChild(Y)}function ge(){te(),oe()}ge();const ve=document.getElementById("adverb-bridge-styles");ve&&ve.remove();const Q=document.getElementById("adverb-bridge-mobile-styles");Q&&Q.remove();const U=document.createElement("style");U.id="adverb-bridge-mobile-styles",U.textContent=`
         .adverb-mobile-view {
@@ -51848,21 +51848,6 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 </div>
             </div>
 
-            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
-            <div class="ordstilling-bridge-link-card">
-                <div class="obl-left">
-                    <span class="obl-icon">📐</span>
-                    <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Ledsætninger & Udvidet Model (Del 4)</div>
-                        <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
-                    </div>
-                </div>
-                <a href="#/${Se()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
-                    <span>Gå til Ordstilling (Del 4) ➔</span>
-                </a>
-            </div>
-
             <!-- TRÆNINGSAKTIONER -->
             <div class="conjunction-actions-container">
                 <button type="button" class="btn-launch-training" id="btn-goto-conjunction-exercises">
@@ -51876,6 +51861,21 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                         <span>Lær grammatik 🎯</span>
                     </button>
                 </div>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Ledsætninger & Udvidet Model (Del 4)</div>
+                        <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${Se()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
+                    <span>Gå til Ordstilling (Del 4) ➔</span>
+                </a>
             </div>
         `,h.querySelectorAll(".conj-card-btn").forEach(M=>{M.onclick=()=>{const o=M.dataset.conj;t.selectedConjId=o,d(o),Y()}});const p=h.querySelector("#btn-link-ordstilling-conj");p&&(p.onclick=M=>{M.preventDefault(),x("ordstilling_intro",{subPath:"part4"})}),h.querySelector("#btn-goto-conjunction-exercises").onclick=()=>{x("conjunction_choice")},h.querySelector("#btn-restart-grammar").onclick=()=>{x("grounding")},h.querySelector("#btn-goto-daily").onclick=()=>{x("dagens_opgave")},ve.appendChild(h)}function X(){const u=ge.querySelector(".stage-frame-wrapper");u&&(u.classList.remove("pulse-stage-glow"),u.offsetWidth,u.classList.add("pulse-stage-glow"),setTimeout(()=>u.classList.remove("pulse-stage-glow"),600))}function Y(){Q(),U(),X()}Y();const F=document.getElementById("conjunction-mobile-styles");F&&F.remove();const H=document.getElementById("conj-bridge-styles");H&&H.remove();const $=document.createElement("style");$.id="conjunction-mobile-styles",$.textContent=`
         .conjunction-mobile-view {

@@ -45279,48 +45279,48 @@ import{t as Jt,a as Ut,b as Yt,s as Qt,v as Xt,c as Zt,d as er,k as tr,e as rr,o
                 border-radius: 12px;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             }
-        `,document.head.appendChild(c)}const a=r?.viewMode,s=r?.subPath||"";if(r?.category,a==="subjekt")E("subjekt","pronominer_spotlight.png");else if(a==="objekt")E("objekt","objekt_vand.jpg");else if(a==="possessiv")E("possessiv","ejefald_guide_voksne.jpg");else if(a==="refleksiv")E("refleksiv","refleksiv_guide.jpg");else if(a==="adverbier")p();else if(a==="adverbier_dialog")M();else if(a==="konjunktioner")x("top_konjunktioner");else if(a==="der_er_det_er"||s==="der_er_det_er")D();else if(s==="adjektiv_comparison")x("adjective_comparison");else if(s==="v"||s.startsWith("v/")){const c=s.split("/");if(c.length>1){const C=c[1];C==="datid_regelm"||C==="datid"||C==="top100_verber"||C==="verber_nutid"?x("top100_verber",{},!0):C==="tror_synes_mener"?x("tror_synes_mener",{},!0):C==="punktet_og_broen"||C==="tider"?x("punktet_og_broen",{},!0):x("verbum_learning",{subPath:C,backView:"pronomen"},!0)}else x("top100_verber",{},!0)}else if(s==="p"||s.startsWith("p/")){const c=s.split("/");if(c.length>2){const C=c[1],N=c[2];te="pronomen";const J=Gt[C]?.find(K=>K.id===N);if(J){ge=J.exercises;const K="pronominer"+C.charAt(0).toUpperCase()+C.slice(1);o({key:K,type:C})}else E(C)}else c.length>1?E(c[1]):v("pronomen")}else s==="artikler_menu"?v("artikler_menu"):s==="adverbier_menu"?x("top100_adverbier"):j()}function tt(W,x){const r=document.createElement("div");r.className="grammar-nav-menu";const t=[{id:"intro",label:"Intro",route:"grounding"},{id:"modalverber",label:"Modalverber",route:"modal_force"},{id:"adjektiver",label:"Adjektiver",route:"adjective_bridge"},{id:"adverbier",label:"Adverbier",route:"adverb_bridge"},{id:"konjunktioner",label:"Konjunktioner",route:"conjunction_bridge"}],n=document.createElement("div");if(n.className="grammar-nav-scroll",t.forEach(d=>{const m=document.createElement("button");m.className="grammar-nav-btn"+(d.id===W?" active":""),m.textContent=d.label,m.onclick=()=>{d.id!==W&&x(d.route)},n.appendChild(m)}),r.appendChild(n),!document.getElementById("grammar-menu-styles")){const d=document.createElement("style");d.id="grammar-menu-styles",d.textContent=`
-            .grammar-nav-menu {
-                width: 100%;
-                margin-bottom: 1.5rem;
-                background: rgba(0, 0, 0, 0.15);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 0.5rem 0;
-            }
-            .grammar-nav-scroll {
-                display: flex;
-                overflow-x: auto;
-                gap: 0.5rem;
-                padding: 0 1rem;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE/Edge */
-            }
-            .grammar-nav-scroll::-webkit-scrollbar {
-                display: none; /* Chrome/Safari */
-            }
-            .grammar-nav-btn {
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                color: rgba(255, 255, 255, 0.8);
-                padding: 0.4rem 1rem;
-                border-radius: 20px;
-                font-size: 0.85rem;
-                font-weight: 600;
-                cursor: pointer;
-                white-space: nowrap;
-                transition: all 0.2s;
-            }
-            .grammar-nav-btn:hover {
-                background: rgba(255, 255, 255, 0.15);
-                color: white;
-            }
-            .grammar-nav-btn.active {
-                background: var(--accent-light, #ffeb3b);
-                color: black;
-                border-color: var(--accent-light, #ffeb3b);
-            }
-        `,document.head.appendChild(d)}return r}function Ho(W,x){W.innerHTML="";const r=document.createElement("div");r.className="view-container grounding-mobile-view";function t(M){if(!("speechSynthesis"in window)||!M)return;window.speechSynthesis.cancel();const o=new SpeechSynthesisUtterance(M);o.lang="da-DK",o.rate=.9,window.speechSynthesis.speak(o)}const n=document.createElement("div");n.className="top-bar";const d=document.createElement("button");d.className="back-btn",d.textContent="← "+e("back"),d.onclick=()=>x("dagens_opgave"),n.appendChild(d),r.appendChild(n),r.appendChild(tt("intro",x));const m=document.createElement("div");m.className="grounding-hero-compact",m.innerHTML=`
+        `,document.head.appendChild(c)}const a=r?.viewMode,s=r?.subPath||"";if(r?.category,a==="subjekt")E("subjekt","pronominer_spotlight.png");else if(a==="objekt")E("objekt","objekt_vand.jpg");else if(a==="possessiv")E("possessiv","ejefald_guide_voksne.jpg");else if(a==="refleksiv")E("refleksiv","refleksiv_guide.jpg");else if(a==="adverbier")p();else if(a==="adverbier_dialog")M();else if(a==="konjunktioner")x("top_konjunktioner");else if(a==="der_er_det_er"||s==="der_er_det_er")D();else if(s==="adjektiv_comparison")x("adjective_comparison");else if(s==="v"||s.startsWith("v/")){const c=s.split("/");if(c.length>1){const C=c[1];C==="datid_regelm"||C==="datid"||C==="top100_verber"||C==="verber_nutid"?x("top100_verber",{},!0):C==="tror_synes_mener"?x("tror_synes_mener",{},!0):C==="punktet_og_broen"||C==="tider"?x("punktet_og_broen",{},!0):x("verbum_learning",{subPath:C,backView:"pronomen"},!0)}else x("top100_verber",{},!0)}else if(s==="p"||s.startsWith("p/")){const c=s.split("/");if(c.length>2){const C=c[1],N=c[2];te="pronomen";const J=Gt[C]?.find(K=>K.id===N);if(J){ge=J.exercises;const K="pronominer"+C.charAt(0).toUpperCase()+C.slice(1);o({key:K,type:C})}else E(C)}else c.length>1?E(c[1]):v("pronomen")}else s==="artikler_menu"?v("artikler_menu"):s==="adverbier_menu"?x("top100_adverbier"):j()}function tt(W,x){const r=document.createElement("div");r.className="grammar-nav-menu";const t=[{id:"intro",label:"Intro",route:"grounding"},{id:"modalverber",label:"Modalverber",route:"modal_force"},{id:"adjektiver",label:"Adjektiver",route:"adjective_bridge"},{id:"adverbier",label:"Adverbier",route:"adverb_bridge"},{id:"konjunktioner",label:"Konjunktioner",route:"conjunction_bridge"}],n=document.createElement("div");n.className="grammar-nav-scroll",t.forEach(j=>{const B=document.createElement("button");B.className="grammar-nav-btn"+(j.id===W?" active":""),B.textContent=j.label,B.onclick=()=>{j.id!==W&&x(j.route)},n.appendChild(B)}),r.appendChild(n);const d=document.getElementById("grammar-menu-styles");d&&d.remove();const m=document.createElement("style");return m.id="grammar-menu-styles",m.textContent=`
+        .grammar-nav-menu {
+            width: 100%;
+            margin-bottom: 1.25rem;
+            background: rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0;
+        }
+        .grammar-nav-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0 1rem;
+        }
+        .grammar-nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.28rem 0.85rem;
+            border-radius: 16px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            text-align: center;
+            min-width: 125px;
+            transition: all 0.2s;
+        }
+        .grammar-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        .grammar-nav-btn.active {
+            background: var(--accent-light, #ffeb3b);
+            color: black;
+            border-color: var(--accent-light, #ffeb3b);
+            font-weight: 700;
+        }
+    `,document.head.appendChild(m),r}function Ho(W,x){W.innerHTML="";const r=document.createElement("div");r.className="view-container grounding-mobile-view";function t(M){if(!("speechSynthesis"in window)||!M)return;window.speechSynthesis.cancel();const o=new SpeechSynthesisUtterance(M);o.lang="da-DK",o.rate=.9,window.speechSynthesis.speak(o)}const n=document.createElement("div");n.className="top-bar";const d=document.createElement("button");d.className="back-btn",d.textContent="← "+e("back"),d.onclick=()=>x("dagens_opgave"),n.appendChild(d),r.appendChild(n),r.appendChild(tt("intro",x));const m=document.createElement("div");m.className="grounding-hero-compact",m.innerHTML=`
         <h1 class="grounding-main-title">${e("howToBuildSentence")}</h1>
         <p class="grounding-sub-desc">${e("howToBuildSentenceDesc")}</p>
     `,r.appendChild(m);let j={step:1,nounAnchor:"",verbAnchor:""};const B=document.createElement("div");B.className="grounding-stage-compact",B.innerHTML=`

@@ -792,21 +792,6 @@ export function renderGroundingView(container, navigateFn) {
                 </p>
             </div>
 
-            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 1 (GRUNDSÆTNINGENS 4 LED) -->
-            <div class="ordstilling-bridge-link-card">
-                <div class="obl-left">
-                    <span class="obl-icon">📐</span>
-                    <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Grundsætningens 4 led (Enkel model)</div>
-                        <div class="obl-desc">Lær hvordan Subjekt, Verbum, Sted og Tid danner den grundlæggende danske sætning.</div>
-                    </div>
-                </div>
-                <a href="#/${getLang()}/ordstilling_intro/part1" class="btn-goto-ordstilling" id="btn-link-ordstilling-grounding">
-                    <span>Gå til Ordstilling (Del 1) ➔</span>
-                </a>
-            </div>
-
             <!-- MODAL TEASER KNAP -->
             <div class="modal-callout-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;">
@@ -820,10 +805,25 @@ export function renderGroundingView(container, navigateFn) {
                 </button>
             </div>
 
-            <div style="text-align: center; margin-top: 1.25rem;">
+            <div style="text-align: center; margin-top: 1.25rem; margin-bottom: 1.25rem;">
                 <button type="button" class="btn-text-restart" id="btn-restart-all">
                     Prøv med et andet anker 🔄
                 </button>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 1 (GRUNDSÆTNINGENS 4 LED) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Grundsætningens 4 led (Enkel model)</div>
+                        <div class="obl-desc">Lær hvordan Subjekt, Verbum, Sted og Tid danner den grundlæggende danske sætning.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part1" class="btn-goto-ordstilling" id="btn-link-ordstilling-grounding">
+                    <span>Gå til Ordstilling (Del 1) ➔</span>
+                </a>
             </div>
         `;
 

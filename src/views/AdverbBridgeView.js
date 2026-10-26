@@ -656,21 +656,6 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                 </div>
             </div>
 
-            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
-            <div class="ordstilling-bridge-link-card">
-                <div class="obl-left">
-                    <span class="obl-icon">📐</span>
-                    <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Centraladverbiets Plads (5 led)</div>
-                        <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
-                    </div>
-                </div>
-                <a href="#/${getLang()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
-                    <span>Gå til Ordstilling (Del 2) ➔</span>
-                </a>
-            </div>
-
             <!-- GÅ VIDERE TIL TRIN 5 (KONJUNKTIONER) -->
             <div class="next-bridge-action-card">
                 <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
@@ -688,6 +673,21 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                         <span>✍️ Træn flere adverbier i hverdagssituationer</span>
                     </a>
                 </div>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Centraladverbiets Plads (5 led)</div>
+                        <div class="obl-desc">Lær hvordan centraladverbier som 'ikke', 'gerne' og 'altid' placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part2" class="btn-goto-ordstilling" id="btn-link-ordstilling-adverb">
+                    <span>Gå til Ordstilling (Del 2) ➔</span>
+                </a>
             </div>
         `;
 

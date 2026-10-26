@@ -788,21 +788,6 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                 </div>
             </div>
 
-            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
-            <div class="ordstilling-bridge-link-card">
-                <div class="obl-left">
-                    <span class="obl-icon">📐</span>
-                    <div class="obl-text">
-                        <span class="obl-badge">Ordstilling</span>
-                        <div class="obl-title">Ledsætninger & Udvidet Model (Del 4)</div>
-                        <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
-                    </div>
-                </div>
-                <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
-                    <span>Gå til Ordstilling (Del 4) ➔</span>
-                </a>
-            </div>
-
             <!-- TRÆNINGSAKTIONER -->
             <div class="conjunction-actions-container">
                 <button type="button" class="btn-launch-training" id="btn-goto-conjunction-exercises">
@@ -816,6 +801,21 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
                         <span>Lær grammatik 🎯</span>
                     </button>
                 </div>
+            </div>
+
+            <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
+            <div class="ordstilling-bridge-link-card">
+                <div class="obl-left">
+                    <span class="obl-icon">📐</span>
+                    <div class="obl-text">
+                        <span class="obl-badge">Ordstilling</span>
+                        <div class="obl-title">Ledsætninger & Udvidet Model (Del 4)</div>
+                        <div class="obl-desc">Lær hvordan konjunktioner, ledsætninger og inversionsregler placeres i sætningsskemaet.</div>
+                    </div>
+                </div>
+                <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-conj">
+                    <span>Gå til Ordstilling (Del 4) ➔</span>
+                </a>
             </div>
         `;
 

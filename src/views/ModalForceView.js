@@ -499,6 +499,19 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 </div>
             </div>
 
+            <!-- GÅ VIDERE KNAP -->
+            <div class="next-bridge-action-card">
+                <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
+                    Klar til næste trin: Tilføj Adjektiver
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
+                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adjektiver maler og beskriver barnet.
+                </p>
+                <button type="button" class="btn-launch-adjective" id="btn-goto-adjectives">
+                    <span>${getTranslation('nextStepAdjective') || 'Fortsæt til Adjektiver'} ➔</span>
+                </button>
+            </div>
+
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 3 (MODALVERBER) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
@@ -512,19 +525,6 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <a href="#/${getLang()}/ordstilling_intro/part3" class="btn-goto-ordstilling" id="btn-link-ordstilling-modal">
                     <span>Gå til Ordstilling (Del 3) ➔</span>
                 </a>
-            </div>
-
-            <!-- GÅ VIDERE KNAP -->
-            <div class="next-bridge-action-card">
-                <h3 style="color: #fbbf24; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til næste trin: Tilføj Adjektiver
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adjektiver maler og beskriver barnet.
-                </p>
-                <button type="button" class="btn-launch-adjective" id="btn-goto-adjectives">
-                    <span>${getTranslation('nextStepAdjective') || 'Fortsæt til Adjektiver'} ➔</span>
-                </button>
             </div>
         `;
 

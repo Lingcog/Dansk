@@ -519,6 +519,19 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 </div>
             </div>
 
+            <!-- GÅ VIDERE TIL ADVERBIER -->
+            <div class="next-bridge-action-card">
+                <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
+                    Klar til næste trin: Tilføj Adverbier
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
+                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adverbier beskriver selve måden, barnet spiser på.
+                </p>
+                <button type="button" class="btn-launch-adverb" id="btn-goto-adverbs">
+                    <span>${getTranslation('nextStepAdverb') || 'Fortsæt til Adverbier'} ➔</span>
+                </button>
+            </div>
+
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
@@ -532,19 +545,6 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 <a href="#/${getLang()}/ordstilling_intro/part4" class="btn-goto-ordstilling" id="btn-link-ordstilling-adj">
                     <span>Gå til Ordstilling (Del 4) ➔</span>
                 </a>
-            </div>
-
-            <!-- GÅ VIDERE TIL ADVERBIER -->
-            <div class="next-bridge-action-card">
-                <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                    Klar til næste trin: Tilføj Adverbier
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.15rem; line-height: 1.45;">
-                    Tag sætningen <strong>"${getFullSentence()}"</strong> med videre og lær, hvordan adverbier beskriver selve måden, barnet spiser på.
-                </p>
-                <button type="button" class="btn-launch-adverb" id="btn-goto-adverbs">
-                    <span>${getTranslation('nextStepAdverb') || 'Fortsæt til Adverbier'} ➔</span>
-                </button>
             </div>
         `;
 

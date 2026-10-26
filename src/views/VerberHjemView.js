@@ -1734,6 +1734,14 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
                         { text: "Han kaster mælken på gulvet ❌", correct: false },
                         { text: "Han gemmer sig i skabet 🙈", correct: false }
                     ]
+                },
+                {
+                    q: "4. Hvad gør faren så med mælken?",
+                    options: [
+                        { text: "Han sætter den på plads 🥛", correct: true },
+                        { text: "Han hælder den i vaskemaskinen 🧺", correct: false },
+                        { text: "Han vander blomsterne med den 🪴", correct: false }
+                    ]
                 }
             ]
         },

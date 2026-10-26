@@ -9,6 +9,7 @@ import { konjunktionerTranslations } from './top100_konjunktioner_translations.j
 import { altIntroTranslations } from './alt_intro_translations.js';
 import { ordstillingPart2Translations } from './ordstilling_part2_translations.js';
 import { groundingTranslations } from './grounding_translations.js';
+import { adjectiveComparisonTranslations } from './adjective_comparison_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -72,7 +73,8 @@ const allLangs = new Set([
     ...Object.keys(konjunktionerTranslations || {}),
     ...Object.keys(altIntroTranslations || {}),
     ...Object.keys(ordstillingPart2Translations || {}),
-    ...Object.keys(groundingTranslations || {})
+    ...Object.keys(groundingTranslations || {}),
+    ...Object.keys(adjectiveComparisonTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -87,6 +89,7 @@ allLangs.forEach(lang => {
         ...(altIntroTranslations[lang] || {}),
         ...(ordstillingPart2Translations[lang] || {}),
         ...(groundingTranslations[lang] || {}),
+        ...(adjectiveComparisonTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

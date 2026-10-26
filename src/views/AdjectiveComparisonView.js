@@ -28,7 +28,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
+    backBtn.innerHTML = `← ${getTranslation('adj_back')}`;
     backBtn.onclick = () => navigateFn(extraData.from || 'top100_adjektiver');
     topBar.appendChild(backBtn);
 
@@ -37,7 +37,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
     toHubBtn.style.background = 'rgba(168, 85, 247, 0.2)';
     toHubBtn.style.borderColor = '#a855f7';
     toHubBtn.style.color = '#c084fc';
-    toHubBtn.innerHTML = `🟣 De 100 Adjektiver (Hub) ➔`;
+    toHubBtn.innerHTML = getTranslation('adj_hub_btn');
     toHubBtn.onclick = () => navigateFn('top100_adjektiver');
     topBar.appendChild(toHubBtn);
 
@@ -45,16 +45,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
     // Header Title
     const title = document.createElement('h1');
-    title.textContent = isEn 
-        ? '📏 Big / bigger / biggest? (Adjectives & Definite Forms)' 
-        : '📏 Stor / større / størst? (Gradbøjning & bestemt form)';
+    title.textContent = getTranslation('adj_page_title');
     viewContainer.appendChild(title);
 
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = isEn
-        ? 'Degrees of comparison and the definite -e rule: From single descriptions to comparisons, winners, and ownership.'
-        : 'Intuitiv gradbøjning og den vigtige e-regel: Fra almindelig beskrivelse til sammenligninger, vinderen og bestemt form (-e).';
+    subtitle.textContent = getTranslation('adj_page_subtitle');
     viewContainer.appendChild(subtitle);
 
     // Grammar Toggle Button Area
@@ -69,15 +65,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
     function updateToggleBtnState() {
         if (showGrammarTerms) {
             viewContainer.classList.remove('hide-grammar-terms');
-            grammarToggleBtn.innerHTML = isEn
-                ? `<span class="toggle-icon">🏷️</span> <span class="toggle-main">Grammar terms: <strong>ACTIVE</strong></span> <span class="toggle-hint">• Click to hide terms (everyday language)</span>`
-                : `<span class="toggle-icon">🏷️</span> <span class="toggle-main">Grammatiske betegnelser: <strong>VISES</strong></span> <span class="toggle-hint">• Klik for at skjule fagtermer (hverdagssprog)</span>`;
+            grammarToggleBtn.innerHTML = `<span class="toggle-icon">🏷️</span> <span class="toggle-main">${getTranslation('adj_toggle_grammar_active')}</span> <span class="toggle-hint">${getTranslation('adj_toggle_grammar_hint_hide')}</span>`;
             grammarToggleBtn.classList.remove('everyday-mode');
         } else {
             viewContainer.classList.add('hide-grammar-terms');
-            grammarToggleBtn.innerHTML = isEn
-                ? `<span class="toggle-icon">🗣️</span> <span class="toggle-main">Everyday language: <strong>ACTIVE</strong></span> <span class="toggle-hint">• Click to show grammar terms</span>`
-                : `<span class="toggle-icon">🗣️</span> <span class="toggle-main">Hverdagssprog: <strong>AKTIVT</strong></span> <span class="toggle-hint">• Klik for at vise grammatiske betegnelser</span>`;
+            grammarToggleBtn.innerHTML = `<span class="toggle-icon">🗣️</span> <span class="toggle-main">${getTranslation('adj_toggle_everyday_active')}</span> <span class="toggle-hint">${getTranslation('adj_toggle_everyday_hint_show')}</span>`;
             grammarToggleBtn.classList.add('everyday-mode');
         }
     }
@@ -97,34 +89,34 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         <div class="grammar-system-item">
             <span class="grammar-dot" style="background: #f59e0b;"></span>
             <strong style="color: #fbbf24;">
-                <span class="term-fagterm">1. Positiv</span>
-                <span class="term-everyday">1. Beskrivelse</span>
+                <span class="term-fagterm">${getTranslation('adj_legend_pos_fagterm')}</span>
+                <span class="term-everyday">${getTranslation('adj_legend_pos_everyday')}</span>
             </strong>
-            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${isEn ? 'One object (stor)' : 'Én ting (stor)'}</span>
+            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${getTranslation('adj_legend_pos_desc')}</span>
         </div>
         <div class="grammar-system-item">
             <span class="grammar-dot" style="background: #3b82f6;"></span>
             <strong style="color: #60a5fa;">
-                <span class="term-fagterm">2. Komparativ</span>
-                <span class="term-everyday">2. Sammenligning</span>
+                <span class="term-fagterm">${getTranslation('adj_legend_komp_fagterm')}</span>
+                <span class="term-everyday">${getTranslation('adj_legend_komp_everyday')}</span>
             </strong>
-            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${isEn ? '2 objects with "end" (større)' : '2 ting med "end" (større)'}</span>
+            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${getTranslation('adj_legend_komp_desc')}</span>
         </div>
         <div class="grammar-system-item">
             <span class="grammar-dot" style="background: #10b981;"></span>
             <strong style="color: #34d399;">
-                <span class="term-fagterm">3. Superlativ</span>
-                <span class="term-everyday">3. Vinderen</span>
+                <span class="term-fagterm">${getTranslation('adj_legend_sup_fagterm')}</span>
+                <span class="term-everyday">${getTranslation('adj_legend_sup_everyday')}</span>
             </strong>
-            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${isEn ? 'Exceeds all / Winner (størst)' : 'Overgår alle / Vinder (størst)'}</span>
+            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${getTranslation('adj_legend_sup_desc')}</span>
         </div>
         <div class="grammar-system-item">
             <span class="grammar-dot" style="background: #ec4899;"></span>
             <strong style="color: #f472b6;">
-                <span class="term-fagterm">Bestemt form (-e)</span>
-                <span class="term-everyday">Kendt / ejet (-e)</span>
+                <span class="term-fagterm">${getTranslation('adj_legend_def_fagterm')}</span>
+                <span class="term-everyday">${getTranslation('adj_legend_def_everyday')}</span>
             </strong>
-            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ den/min/denne + stor-e</span>
+            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${getTranslation('adj_legend_def_desc')}</span>
         </div>
     `;
     viewContainer.appendChild(grammarBanner);
@@ -135,15 +127,15 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
     const tab1Btn = document.createElement('button');
     tab1Btn.className = 'adj-tab-btn active';
-    tab1Btn.innerHTML = `<strong>${isEn ? 'Part 1: Comparison & Model' : '1. del: Gradbøjning & Modellen'}</strong> <span>${isEn ? 'Stor ➔ større ➔ størst' : 'Stor ➔ større ➔ størst'}</span>`;
+    tab1Btn.innerHTML = `<strong>${getTranslation('adj_tab1_title')}</strong> <span>${getTranslation('adj_tab1_sub')}</span>`;
 
     const tab2Btn = document.createElement('button');
     tab2Btn.className = 'adj-tab-btn';
-    tab2Btn.innerHTML = `<strong>${isEn ? 'Part 2: Definite Form & -E Rule' : '2. del: Bestemt form & E-reglen'}</strong> <span>${isEn ? '"Den store bil" & "Min store bil"' : '"Den store bil" & "Min store bil"'}</span>`;
+    tab2Btn.innerHTML = `<strong>${getTranslation('adj_tab2_title')}</strong> <span>${getTranslation('adj_tab2_sub')}</span>`;
 
     const tab3Btn = document.createElement('button');
     tab3Btn.className = 'adj-tab-btn';
-    tab3Btn.innerHTML = `<strong>${isEn ? 'Part 3: Practice Yourself' : '3. del: Træn selv'}</strong> <span>${isEn ? 'Choice & Sentence Builder' : 'Vælg form & Sætningsbygger'}</span>`;
+    tab3Btn.innerHTML = `<strong>${getTranslation('adj_tab3_title')}</strong> <span>${getTranslation('adj_tab3_sub')}</span>`;
 
     tabsContainer.appendChild(tab1Btn);
     tabsContainer.appendChild(tab2Btn);
@@ -189,18 +181,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const introCard = document.createElement('div');
         introCard.className = 'adj-hero-card';
         introCard.innerHTML = `
-            <h2>${isEn ? 'How do we compare things in Danish?' : 'Hvordan sammenligner vi ting på dansk?'}</h2>
+            <h2>${getTranslation('adj_p1_hero_title')}</h2>
             <p class="hero-desc">
-                ${isEn 
-                    ? 'Adjectives describe how someone or something is. When we want to compare or highlight qualities, we inflect adjectives in <strong>three steps</strong>:<br>' +
-                      '<strong>1. Base form (Positive):</strong> Describes just one thing without comparison (e.g. <em>en stor bil</em>).<br>' +
-                      '<strong>2. Comparative:</strong> Used when comparing <strong>two things</strong>. We almost always use the word <strong>"end"</strong> (e.g. <em>Bilen er <strong>større end</strong> cyklen</em>).<br>' +
-                      '<strong>3. Superlative (The Winner):</strong> Used when one thing <strong>exceeds all others</strong> and reaches the highest degree (e.g. <em>Lastbilen er <strong>størst</strong></em>).'
-                    : 'Adjektiver (tillægsord) beskriver hvordan noget er. Når vi vil sammenligne eller fremhæve egenskaber, bøjer vi adjektivet i <strong>tre logiske trin</strong>:<br>' +
-                      '<strong>1. Grundform (Positiv):</strong> Beskriver blot én ting for sig selv (fx <em>en stor bil</em>).<br>' +
-                      '<strong>2. Sammenligning (Komparativ):</strong> Bruges når vi sammenligner <strong>to ting</strong>. Vi bruger næsten altid ordet <strong>"end"</strong> (fx <em>Bilen er <strong>større end</strong> cyklen</em>).<br>' +
-                      '<strong>3. Vinderen (Superlativ):</strong> Bruges når noget <strong>overgår alle andre</strong> og er på det allerhøjeste trin (fx <em>Lastbilen er <strong>størst</strong></em>).'
-                }
+                ${getTranslation('adj_p1_hero_desc')}
             </p>
         `;
         part1Container.appendChild(introCard);
@@ -209,13 +192,10 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'adj-image-wrapper';
         imgWrapper.innerHTML = `
-            <img src="${baseUrl}adjektiver_comparison_guide.jpg" alt="${isEn ? 'Danish adjective degrees: stor -> større -> størst' : 'Dansk gradbøjning: stor -> større -> størst'}" class="hero-image">
+            <img src="${baseUrl}adjektiver_comparison_guide.jpg" alt="${getTranslation('adj_p1_hero_title')}" class="hero-image">
             <div class="image-caption">
-                <span>💡 <strong>${isEn ? 'Rule of thumb:' : 'Huskeregel:'}</strong></span> 
-                ${isEn 
-                    ? 'Comparative compares 2 things with <strong>"end"</strong>. Superlative crowns the winner that exceeds all!' 
-                    : 'Komparativ sammenligner 2 ting med <strong>"end"</strong>. Superlativ kårer vinderen der overgår alle andre!'
-                }
+                <span>💡 <strong>${getTranslation('adj_p1_rule_thumb_label')}</strong></span> 
+                ${getTranslation('adj_p1_rule_thumb_text')}
             </div>
         `;
         part1Container.appendChild(imgWrapper);
@@ -227,37 +207,37 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const stepItems = [
             {
                 num: '1',
-                titleFagterm: 'Positiv (grundform)',
-                titleEveryday: '1. Almindelig beskrivelse',
-                q: isEn ? 'Are you describing just one thing?' : 'Beskriver du bare én ting for sig selv?',
-                ans: isEn ? 'Yes ➔ Use base form ("stor / hurtig / kold")' : 'Ja ➔ Brug grundformen ("stor / hurtig / kold")',
+                titleFagterm: getTranslation('adj_p1_s1_title_fagterm'),
+                titleEveryday: getTranslation('adj_p1_s1_title_everyday'),
+                q: getTranslation('adj_p1_s1_q'),
+                ans: getTranslation('adj_p1_s1_ans'),
                 example: 'Bilen er <strong style="color: #fbbf24;">stor</strong>.',
-                badgeFagterm: 'Positiv (grundform)',
-                badgeEveryday: '1. Beskriver 1 ting',
+                badgeFagterm: getTranslation('adj_p1_s1_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p1_s1_badge_everyday'),
                 colorClass: 'step-orange',
                 icon: '🚗'
             },
             {
                 num: '2',
-                titleFagterm: 'Komparativ (sammenligning)',
-                titleEveryday: '2. Sammenligning af to ting',
-                q: isEn ? 'Are you comparing two things with "end"?' : 'Sammenligner du to ting? (Kig efter ordet "end")',
-                ans: isEn ? 'Yes ➔ Add -ere or vowel shift ("større / hurtigere")' : 'Ja ➔ Tilføj -ere eller vokalskift ("større / hurtigere")',
+                titleFagterm: getTranslation('adj_p1_s2_title_fagterm'),
+                titleEveryday: getTranslation('adj_p1_s2_title_everyday'),
+                q: getTranslation('adj_p1_s2_q'),
+                ans: getTranslation('adj_p1_s2_ans'),
                 example: 'Bilen er <strong style="color: #60a5fa;">større end</strong> cyklen.',
-                badgeFagterm: 'Komparativ (sammenligningsform)',
-                badgeEveryday: '2. Sammenligner 2 ting',
+                badgeFagterm: getTranslation('adj_p1_s2_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p1_s2_badge_everyday'),
                 colorClass: 'step-blue',
                 icon: '🚙'
             },
             {
                 num: '3',
-                titleFagterm: 'Superlativ (højeste grad)',
-                titleEveryday: '3. Vinderen / overgår alt',
-                q: isEn ? 'Does it exceed everything else in the group?' : 'Overgår tingen alle andre i gruppen?',
-                ans: isEn ? 'Yes ➔ Add -est or vowel shift ("størst / hurtigst")' : 'Ja ➔ Tilføj -est eller vokalskift ("størst / hurtigst")',
+                titleFagterm: getTranslation('adj_p1_s3_title_fagterm'),
+                titleEveryday: getTranslation('adj_p1_s3_title_everyday'),
+                q: getTranslation('adj_p1_s3_q'),
+                ans: getTranslation('adj_p1_s3_ans'),
                 example: 'Lastbilen er <strong style="color: #34d399;">størst</strong> af alle.',
-                badgeFagterm: 'Superlativ (højeste grad)',
-                badgeEveryday: '3. Vinderen overgår alle',
+                badgeFagterm: getTranslation('adj_p1_s3_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p1_s3_badge_everyday'),
                 colorClass: 'step-green',
                 icon: '🚛'
             }
@@ -280,7 +260,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     <div class="step-ans">${item.ans}</div>
                     <div class="step-example-box">
                         <div class="example-text">${item.example}</div>
-                        <button class="listen-btn-mini" title="${isEn ? 'Listen' : 'Hør'}">🔊</button>
+                        <button class="listen-btn-mini" title="${getTranslation('adj_listen_btn_short')}">🔊</button>
                     </div>
                     <div class="grammar-badge">
                         🏷️ 
@@ -302,12 +282,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const resultBox = document.createElement('div');
         resultBox.className = 'finished-sentence-banner';
         resultBox.innerHTML = `
-            <div class="banner-label">${isEn ? 'Natural comparison flow in a conversation:' : 'Naturligt sammenligningsflow i samtale:'}</div>
+            <div class="banner-label">${getTranslation('adj_p1_flow_label')}</div>
             <div class="banner-sentence">
                 "Bilen er <span class="word-orange">stor</span>. Men varevognen er <span class="word-blue">større end</span> bilen. Og lastbilen er den <span class="word-green">største</span>!"
             </div>
-            <button class="listen-btn" title="${isEn ? 'Listen to flow' : 'Hør hele sammenligningen'}">
-                <span>🔊</span> ${isEn ? 'Listen to natural flow' : 'Hør hele sætningsforløbet'}
+            <button class="listen-btn" title="${getTranslation('adj_p1_flow_btn')}">
+                <span>🔊</span> ${getTranslation('adj_p1_flow_btn')}
             </button>
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
@@ -318,12 +298,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const playgroundCard = document.createElement('div');
         playgroundCard.className = 'adj-playground-card';
         playgroundCard.innerHTML = `
-            <h3>${isEn ? '🔍 Interactive Comparison Explorer: Explore different adjectives' : '🔍 Interaktiv gradbøjnings-udforsker: prøv forskellige adjektiver'}</h3>
+            <h3>${getTranslation('adj_p1_explorer_title')}</h3>
             <p style="opacity: 0.85; margin-bottom: 1.2rem;">
-                ${isEn 
-                    ? 'Click on an adjective below to see how the scale grows from positive to comparative and superlative:' 
-                    : 'Klik på et adjektiv nedenfor for at se hvordan skalaen vokser fra grundform til sammenligning og vinderen:'
-                }
+                ${getTranslation('adj_p1_explorer_desc')}
             </p>
             <div class="adj-pill-selector" id="adj-pills-row"></div>
             <div class="adj-interactive-display" id="adj-interactive-display"></div>
@@ -366,37 +343,37 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     <!-- Column 1: Positiv -->
                     <div class="display-col col-pos">
                         <div class="col-tier-label">
-                            <span class="term-fagterm">1. Positiv</span>
-                            <span class="term-everyday">1. Beskrivelse</span>
+                            <span class="term-fagterm">${getTranslation('adj_legend_pos_fagterm')}</span>
+                            <span class="term-everyday">${getTranslation('adj_legend_pos_everyday')}</span>
                         </div>
                         <div class="col-word">${current.pos}</div>
                         <div class="col-meter"><div class="meter-fill" style="width: 35%;"></div></div>
                         <div class="col-example">"${current.exPos}"</div>
-                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exPos}">🔊 Hør</button>
+                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exPos}">🔊 ${getTranslation('adj_listen_btn_short')}</button>
                     </div>
 
                     <!-- Column 2: Komparativ -->
                     <div class="display-col col-komp">
                         <div class="col-tier-label">
-                            <span class="term-fagterm">2. Komparativ</span>
-                            <span class="term-everyday">2. Sammenligning</span>
+                            <span class="term-fagterm">${getTranslation('adj_legend_komp_fagterm')}</span>
+                            <span class="term-everyday">${getTranslation('adj_legend_komp_everyday')}</span>
                         </div>
                         <div class="col-word">${current.komp}</div>
                         <div class="col-meter"><div class="meter-fill" style="width: 65%;"></div></div>
                         <div class="col-example">"${current.exKomp}"</div>
-                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exKomp}">🔊 Hør</button>
+                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exKomp}">🔊 ${getTranslation('adj_listen_btn_short')}</button>
                     </div>
 
                     <!-- Column 3: Superlativ -->
                     <div class="display-col col-sup">
                         <div class="col-tier-label">
-                            <span class="term-fagterm">3. Superlativ</span>
-                            <span class="term-everyday">3. Vinderen</span>
+                            <span class="term-fagterm">${getTranslation('adj_legend_sup_fagterm')}</span>
+                            <span class="term-everyday">${getTranslation('adj_legend_sup_everyday')}</span>
                         </div>
                         <div class="col-word">${current.sup}</div>
                         <div class="col-meter"><div class="meter-fill" style="width: 100%;"></div></div>
                         <div class="col-example">"${current.exSup}"</div>
-                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exSup}">🔊 Hør</button>
+                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exSup}">🔊 ${getTranslation('adj_listen_btn_short')}</button>
                     </div>
                 </div>
             `;
@@ -416,17 +393,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const introCard = document.createElement('div');
         introCard.className = 'adj-hero-card';
         introCard.innerHTML = `
-            <h2>${isEn ? 'The Definite -E Rule: Why does it say "den store bil" and "min store bil"?' : 'Den gyldne e-regel: hvorfor hedder det "den store bil" og "min store bil"?'}</h2>
+            <h2>${getTranslation('adj_p2_hero_title')}</h2>
             <p class="hero-desc">
-                ${isEn 
-                    ? 'In Danish, an adjective must change into its <strong>definite form</strong> by adding <strong>-e</strong> whenever the topic is made specific or owned!<br>' +
-                      '• <strong>Indefinite:</strong> <em>en stor bil</em> (fælleskøn) | <em>et stort hus</em> (-t in intetkøn).<br>' +
-                      '• <strong>Definite:</strong> As soon as we make it definite with an article (<em>den/det/de</em>), a possessive pronoun (<em>min/din/vores</em>), a demonstrative (<em>denne/dette</em>), or a name in genitive (<em>Peters</em>), <strong>the adjective ALWAYS adds -e</strong> regardless of gender!'
-                    : 'Når et substantiv er ubestemt og ukendt, har adjektivet sin grundform (eller -t ved intetkøn):<br>' +
-                      '• <strong>Ubestemt:</strong> <em>en stor bil</em> (fælleskøn) | <em>et stort hus</em> (intetkøn får -t).<br>' +
-                      '• <strong>Men når emnet er BESTEMT:</strong> Så snart emnet bliver kendt, udpeget eller ejet, SKAL adjektivet altid have <strong>-e</strong> på – uanset om det er fælleskøn eller intetkøn!<br>' +
-                      '<em>den stor<strong>e</strong> bil</em> • <em>det stor<strong>e</strong> hus</em> • <em>min stor<strong>e</strong> bil</em> • <em>denne stor<strong>e</strong> bil</em>'
-                }
+                ${getTranslation('adj_p2_hero_desc')}
             </p>
         `;
         part2Container.appendChild(introCard);
@@ -436,35 +405,35 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         formulaBox.className = 'adj-formula-box';
         formulaBox.innerHTML = `
             <div class="formula-title">
-                ${isEn ? '📐 The Definite Adjective Formula:' : '📐 Formlen for adjektivets bestemte form:'}
+                ${getTranslation('adj_p2_formula_title')}
             </div>
             <div class="formula-components">
                 <div class="formula-chip chip-marker">
                     <span class="chip-type">
-                        <span class="term-fagterm">Bestemt markør</span>
-                        <span class="term-everyday">Kendt eller ejet</span>
+                        <span class="term-fagterm">${getTranslation('adj_p2_chip_marker_fagterm')}</span>
+                        <span class="term-everyday">${getTranslation('adj_p2_chip_marker_everyday')}</span>
                     </span>
                     <span class="chip-val">den / min / denne / Peters</span>
                 </div>
                 <div class="formula-plus">+</div>
                 <div class="formula-chip chip-adj">
                     <span class="chip-type">
-                        <span class="term-fagterm">Adjektiv + -E</span>
-                        <span class="term-everyday">Beskrivelse + -E</span>
+                        <span class="term-fagterm">${getTranslation('adj_p2_chip_adj_fagterm')}</span>
+                        <span class="term-everyday">${getTranslation('adj_p2_chip_adj_everyday')}</span>
                     </span>
                     <span class="chip-val">stor<strong>e</strong> / ny<strong>e</strong> / flot<strong>te</strong></span>
                 </div>
                 <div class="formula-plus">+</div>
                 <div class="formula-chip chip-noun">
                     <span class="chip-type">
-                        <span class="term-fagterm">Substantiv</span>
-                        <span class="term-everyday">Navneord</span>
+                        <span class="term-fagterm">${getTranslation('adj_p2_chip_noun_fagterm')}</span>
+                        <span class="term-everyday">${getTranslation('adj_p2_chip_noun_everyday')}</span>
                     </span>
                     <span class="chip-val">bil / hus / cykel</span>
                 </div>
             </div>
             <div class="formula-rule-note">
-                💡 <strong>Husk:</strong> Ved bestemt form mister intetkøn sit "-t" (<em>et stor<strong>t</strong> hus</em> ➔ <em>det stor<strong>e</strong> hus</em> / <em>mit stor<strong>e</strong> hus</em>)!
+                ${getTranslation('adj_p2_formula_note')}
             </div>
         `;
         part2Container.appendChild(formulaBox);
@@ -475,8 +444,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
         const scenarios = [
             {
-                titleFagterm: '1. Bestemt artikel',
-                titleEveryday: '1. Kendeord for kendte ting',
+                titleFagterm: getTranslation('adj_p2_sc1_title_fagterm'),
+                titleEveryday: getTranslation('adj_p2_sc1_title_everyday'),
                 determiners: 'den / det / de',
                 examples: [
                     'Hvor er <strong style="color: #f472b6;">den store</strong> bil?',
@@ -484,13 +453,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     'Se <strong style="color: #f472b6;">de store</strong> træer.'
                 ],
                 fullSentence: 'Hvor er den store bil? Vi bor i det store hus. Se de store træer.',
-                badgeFagterm: 'Bestemt artikel (den/det/de)',
-                badgeEveryday: 'Kendeord for kendte ting',
+                badgeFagterm: getTranslation('adj_p2_sc1_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p2_sc1_badge_everyday'),
                 icon: '🎯'
             },
             {
-                titleFagterm: '2. Possessivt pronomen',
-                titleEveryday: '2. Ejestedord (hvem der ejer)',
+                titleFagterm: getTranslation('adj_p2_sc2_title_fagterm'),
+                titleEveryday: getTranslation('adj_p2_sc2_title_everyday'),
                 determiners: 'min / din / hans / hendes / vores / deres',
                 examples: [
                     'Det er <strong style="color: #f472b6;">min store</strong> bil.',
@@ -498,13 +467,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     'Vi elsker <strong style="color: #f472b6;">vores gamle</strong> have.'
                 ],
                 fullSentence: 'Det er min store bil. Har du set hendes nye cykel? Vi elsker vores gamle have.',
-                badgeFagterm: 'Possessivt pronomen (ejestedord)',
-                badgeEveryday: 'Ejestedord (min, din, vores...)',
+                badgeFagterm: getTranslation('adj_p2_sc2_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p2_sc2_badge_everyday'),
                 icon: '🔑'
             },
             {
-                titleFagterm: '3. Demonstrativt pronomen',
-                titleEveryday: '3. Påpegende ord (peger direkte)',
+                titleFagterm: getTranslation('adj_p2_sc3_title_fagterm'),
+                titleEveryday: getTranslation('adj_p2_sc3_title_everyday'),
                 determiners: 'denne / dette / disse',
                 examples: [
                     'Jeg vil købe <strong style="color: #f472b6;">denne flotte</strong> trøje.',
@@ -512,13 +481,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     'Hvem ejer <strong style="color: #f472b6;">disse hurtige</strong> biler?'
                 ],
                 fullSentence: 'Jeg vil købe denne flotte trøje. Kender du dette gamle sagn? Hvem ejer disse hurtige biler?',
-                badgeFagterm: 'Demonstrativt pronomen (påpegende)',
-                badgeEveryday: 'Påpegende ord (denne, dette, disse)',
+                badgeFagterm: getTranslation('adj_p2_sc3_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p2_sc3_badge_everyday'),
                 icon: '👉'
             },
             {
-                titleFagterm: '4. Genitiv (ejefald)',
-                titleEveryday: '4. Navn med -s (ejerskab)',
+                titleFagterm: getTranslation('adj_p2_sc4_title_fagterm'),
+                titleEveryday: getTranslation('adj_p2_sc4_title_everyday'),
                 determiners: "Peters / Marias / Lærerens",
                 examples: [
                     'Det er <strong style="color: #f472b6;">Peters store</strong> computer.',
@@ -526,8 +495,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     'Hvor er <strong style="color: #f472b6;">lærerens røde</strong> kuglepen?'
                 ],
                 fullSentence: 'Det er Peters store computer. Vi besøger Marias hyggelige lejlighed.',
-                badgeFagterm: 'Genitiv (ejefald med -s)',
-                badgeEveryday: 'Navn med -s (Peter, Maria...)',
+                badgeFagterm: getTranslation('adj_p2_sc4_badge_fagterm'),
+                badgeEveryday: getTranslation('adj_p2_sc4_badge_everyday'),
                 icon: '👤'
             }
         ];
@@ -550,7 +519,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     ${sc.examples.map(ex => `<li>${ex}</li>`).join('')}
                 </ul>
                 <div class="sc-footer">
-                    <button class="listen-btn-mini sc-listen-btn" title="Hør eksempler">🔊 Lyt</button>
+                    <button class="listen-btn-mini sc-listen-btn" title="${getTranslation('adj_p2_sc_listen')}">🔊 ${getTranslation('adj_p2_sc_listen')}</button>
                     <div class="grammar-badge">
                         🏷️ 
                         <span class="term-fagterm">${sc.badgeFagterm}</span>
@@ -569,22 +538,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         superDefiniteCard.className = 'super-definite-card';
         superDefiniteCard.innerHTML = `
             <div class="super-def-content">
-                <div class="super-def-badge">🌟 ${isEn ? 'Definite Superlative:' : 'Superlativ i bestemt form:'}</div>
-                <h3>${isEn ? 'Also adds -e: "Den største bil" & "Min bedste ven"' : 'Får også altid -e: "Den største bil" & "Min bedste ven"'}</h3>
+                <div class="super-def-badge">${getTranslation('adj_p2_super_def_badge')}</div>
+                <h3>${getTranslation('adj_p2_super_def_title')}</h3>
                 <p>
-                    ${isEn 
-                        ? 'When a superlative is used with a definite article (<em>den/det/de</em>) or possessive pronoun (<em>min/din</em>), it also gets the ending <strong>-e</strong>!<br>' +
-                          '• Alone / Predicative: <em>Lastbilen er <strong>størst</strong>.</em><br>' +
-                          '• Definite with article: <em>Det er <strong>den største</strong> lastbil på vejen.</em><br>' +
-                          '• With possessive pronoun: <em>Peter er <strong>min bedste</strong> ven.</em>'
-                        : 'Når et adjektiv i superlativ (højeste grad) står sammen med en bestemt artikel (<em>den/det/de</em>) eller et possessivt pronomen (<em>min/din/vores</em>), får superlativet også endelsen <strong>-e</strong>!<br>' +
-                          '• Stående alene: <em>Lastbilen er <strong>størst</strong>.</em><br>' +
-                          '• Bestemt med kendeord: <em>Det er <strong>den største</strong> lastbil på vejen.</em><br>' +
-                          '• Med ejestedord: <em>Peter er <strong>min bedste</strong> ven.</em>'
-                    }
+                    ${getTranslation('adj_p2_super_def_text')}
                 </p>
                 <button class="listen-btn-mini super-def-listen" style="margin-top: 0.5rem;">
-                    🔊 ${isEn ? 'Listen to examples' : 'Hør eksempler'}
+                    🔊 ${getTranslation('adj_p2_super_def_listen')}
                 </button>
             </div>
         `;
@@ -596,12 +556,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const simulatorCard = document.createElement('div');
         simulatorCard.className = 'adj-simulator-card';
         simulatorCard.innerHTML = `
-            <h3>${isEn ? '🎛️ Definite -E Simulator: Try it live' : '🎛️ E-regelsimulator: prøv det i praksis'}</h3>
+            <h3>${getTranslation('adj_p2_sim_title')}</h3>
             <p style="opacity: 0.85; margin-bottom: 1.2rem;">
-                ${isEn 
-                    ? 'Switch between different determiners and watch how the adjective changes into its definite form with -e:' 
-                    : 'Skift mellem forskellige markører og se hvordan adjektivet automatisk tilføjer -e:'
-                }
+                ${getTranslation('adj_p2_sim_desc')}
             </p>
             <div class="sim-selector-row" id="sim-noun-row"></div>
             <div class="sim-modes-row" id="sim-modes-row"></div>
@@ -617,11 +574,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         ];
 
         const simModes = [
-            { id: 'ubestemt', labelFagterm: 'Ubestemt form', labelEveryday: 'Ukendt (1. gang)', icon: '❓' },
-            { id: 'artikel', labelFagterm: 'Bestemt artikel', labelEveryday: 'Kendeord (den/det)', icon: '🎯' },
-            { id: 'possessiv', labelFagterm: 'Possessivt pronomen', labelEveryday: 'Ejestedord (min/mit)', icon: '🔑' },
-            { id: 'demonstrativ', labelFagterm: 'Demonstrativt pronomen', labelEveryday: 'Påpegende (denne/dette)', icon: '👉' },
-            { id: 'superlativ', labelFagterm: 'Bestemt superlativ', labelEveryday: 'Vinderen i bestemt form', icon: '🌟' }
+            { id: 'ubestemt', labelFagterm: getTranslation('adj_p2_mode_ubestemt_fagterm'), labelEveryday: getTranslation('adj_p2_mode_ubestemt_everyday'), icon: '❓' },
+            { id: 'artikel', labelFagterm: getTranslation('adj_p2_mode_artikel_fagterm'), labelEveryday: getTranslation('adj_p2_mode_artikel_everyday'), icon: '🎯' },
+            { id: 'possessiv', labelFagterm: getTranslation('adj_p2_mode_possessiv_fagterm'), labelEveryday: getTranslation('adj_p2_mode_possessiv_everyday'), icon: '🔑' },
+            { id: 'demonstrativ', labelFagterm: getTranslation('adj_p2_mode_demonstrativ_fagterm'), labelEveryday: getTranslation('adj_p2_mode_demonstrativ_everyday'), icon: '👉' },
+            { id: 'superlativ', labelFagterm: getTranslation('adj_p2_mode_superlativ_fagterm'), labelEveryday: getTranslation('adj_p2_mode_superlativ_everyday'), icon: '🌟' }
         ];
 
         let currentSimNounId = 'bil';
@@ -670,25 +627,25 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 marker = noun.gender;
                 adjWord = noun.adj;
                 explanation = noun.intet 
-                    ? `Intetkøn ("et") ➔ adjektivet får -t: "et ${adjWord} ${noun.base}".` 
-                    : `Fælleskøn ("en") ➔ adjektivet har grundform: "en ${adjWord} ${noun.base}".`;
+                    ? getTranslation('adj_p2_sim_exp_ubestemt_intet').replace('{adj}', adjWord).replace('{noun}', noun.base)
+                    : getTranslation('adj_p2_sim_exp_ubestemt_faelles').replace('{adj}', adjWord).replace('{noun}', noun.base);
             } else if (currentSimModeId === 'artikel') {
                 marker = noun.intet ? 'det' : 'den';
                 adjWord = noun.adjDef;
-                explanation = `Bestemt artikel ("${marker}") kræver endelsen <strong>-e</strong> på adjektivet: "${marker} ${adjWord} ${noun.base}".`;
+                explanation = getTranslation('adj_p2_sim_exp_artikel').replace(/{marker}/g, marker).replace('{adj}', adjWord).replace('{noun}', noun.base);
             } else if (currentSimModeId === 'possessiv') {
                 marker = noun.intet ? 'mit' : 'min';
                 adjWord = noun.adjDef;
-                explanation = `Possessivt pronomen ("${marker}") viser ejerskab ➔ adjektivet får altid <strong>-e</strong>: "${marker} ${adjWord} ${noun.base}".`;
+                explanation = getTranslation('adj_p2_sim_exp_possessiv').replace(/{marker}/g, marker).replace('{adj}', adjWord).replace('{noun}', noun.base);
             } else if (currentSimModeId === 'demonstrativ') {
                 marker = noun.intet ? 'dette' : 'denne';
                 adjWord = noun.adjDef;
-                explanation = `Demonstrativt pronomen ("${marker}") peger på tingen ➔ adjektivet får altid <strong>-e</strong>: "${marker} ${adjWord} ${noun.base}".`;
+                explanation = getTranslation('adj_p2_sim_exp_demonstrativ').replace(/{marker}/g, marker).replace('{adj}', adjWord).replace('{noun}', noun.base);
             } else if (currentSimModeId === 'superlativ') {
                 marker = noun.intet ? 'det' : 'den';
                 const supWord = noun.id === 'bil' || noun.id === 'hus' ? 'største' : (noun.id === 'cykel' ? 'hurtigste' : 'mindste');
                 adjWord = supWord;
-                explanation = `Bestemt superlativ ("${marker} ${adjWord}") tager også <strong>-e</strong> som afslutning!`;
+                explanation = getTranslation('adj_p2_sim_exp_superlativ').replace('{marker}', marker).replace('{adj}', adjWord);
             }
 
             const fullPhrase = `${marker} ${adjWord} ${noun.base}`;
@@ -701,7 +658,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 </div>
                 <div class="sim-explanation">${explanation}</div>
                 <button class="listen-btn-mini sim-listen-btn">
-                    <span>🔊</span> Lyt til udtale
+                    <span>🔊</span> ${getTranslation('adj_p2_sim_listen_btn')}
                 </button>
             `;
 
@@ -720,10 +677,10 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         subTabsRow.className = 'adj-subtabs-row';
         subTabsRow.innerHTML = `
             <button class="subtab-btn active" id="subtab-btn-choice">
-                📝 ${isEn ? 'Activity 1: Choose the correct form' : 'Aktivitet 1: Vælg den rigtige form'}
+                ${getTranslation('adj_p3_subtab_choice')}
             </button>
             <button class="subtab-btn" id="subtab-btn-builder">
-                🧩 ${isEn ? 'Activity 2: Sentence Builder Puzzle' : 'Aktivitet 2: Sætningsbygger / Puslespil'}
+                ${getTranslation('adj_p3_subtab_builder')}
             </button>
         `;
         part3Container.appendChild(subTabsRow);
@@ -998,20 +955,17 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             choiceSection.innerHTML = `
                 <div class="exercise-header-card">
                     <div class="set-indicator">
-                        ${isEn ? 'Exercise set' : 'Øvelsessæt'} <strong>${currentSetIdx + 1}</strong> ${isEn ? 'of' : 'af'} ${practiceSets.length}
+                        ${getTranslation('adj_p3_set_indicator', { current: currentSetIdx + 1, total: practiceSets.length })}
                     </div>
                     <p style="margin: 0.4rem 0 0; opacity: 0.9;">
-                        ${isEn 
-                            ? 'Select the correct adjective form. Think about: Is it comparing two things with "end"? Does it exceed all others? Or does it take -e due to "den / min / denne"?' 
-                            : 'Vælg den rigtige adjektivform. Tænk over: Er der "end" (sammenligning)? Overgår den alle (vinderen)? Eller skal der -e på pga. "den / min / denne"?'
-                        }
+                        ${getTranslation('adj_p3_instruction')}
                     </p>
                 </div>
                 <div class="questions-list" id="questions-list"></div>
                 <div class="exercise-summary-bar" id="exercise-summary-bar"></div>
                 <div style="text-align: center; margin-top: 1.5rem;">
                     <button class="next-set-btn" id="next-set-btn" style="display: none;">
-                        ${isEn ? 'Try Next Exercise Set ➔' : 'Prøv næste øvelsessæt ➔'}
+                        ${getTranslation('adj_p3_next_set_btn')}
                     </button>
                 </div>
             `;
@@ -1054,14 +1008,14 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 } else if (correct === total) {
                     summaryBar.innerHTML = `
                         <div class="summary-success">
-                            🎉 <strong>${isEn ? 'Fantastic! All 5 answers are correct!' : 'Fantastisk! Alle 5 svar er helt rigtige!'}</strong>
+                            🎉 <strong>${getTranslation('adj_p3_summary_success')}</strong>
                         </div>
                     `;
                     nextBtn.style.display = 'inline-block';
                 } else {
                     summaryBar.innerHTML = `
                         <div class="summary-progress">
-                            ${filled} / ${total} ${isEn ? 'answered' : 'besvaret'} (${correct} ${isEn ? 'correct' : 'rigtige'})
+                            ${getTranslation('adj_p3_summary_progress', { filled, total, correct })}
                         </div>
                     `;
                     nextBtn.style.display = 'none';
@@ -1073,12 +1027,14 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     const idx = parseInt(sel.dataset.qidx);
                     const qData = currentQuestions[idx];
                     const fb = choiceSection.querySelector(`#q-feedback-${idx}`);
+                    const baseQKey = `adj_q_s${currentSetIdx + 1}_q${idx + 1}`;
 
                     if (sel.value === qData.answer) {
                         sel.classList.add('correct');
                         sel.classList.remove('wrong');
                         fb.className = 'feedback-msg correct';
-                        fb.innerHTML = `✓ ${qData.feedback}`;
+                        const feedbackText = getTranslation(`${baseQKey}_feedback`) || qData.feedback;
+                        fb.innerHTML = `✓ ${feedbackText}`;
                         fb.style.display = 'block';
                     } else if (sel.value === "") {
                         sel.classList.remove('correct', 'wrong');
@@ -1087,7 +1043,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         sel.classList.add('wrong');
                         sel.classList.remove('correct');
                         fb.className = 'feedback-msg wrong';
-                        const hint = qData.hints[sel.value] || "Tænk over om der sammenlignes to ting med 'end', om noget overgår alle, eller om der står 'den/min/denne'.";
+                        const hint = getTranslation(`${baseQKey}_hint_${sel.value}`) || qData.hints[sel.value] || getTranslation('adj_p3_default_hint');
                         fb.innerHTML = `⚠ ${hint}`;
                         fb.style.display = 'block';
                     }
@@ -1107,31 +1063,31 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const puzzleTasks = [
             {
                 id: 'puz_1',
-                title: isEn ? 'Task 1: Comparing two vehicles' : 'Opgave 1: Sammenlign to køretøjer',
-                meaning: isEn ? 'My new car is faster than your old bicycle.' : 'Min nye bil er hurtigere end din gamle cykel.',
+                title: getTranslation('adj_p3_puz1_title'),
+                meaning: getTranslation('adj_p3_puz1_meaning'),
                 words: ['Min', 'nye', 'bil', 'er', 'hurtigere', 'end', 'din', 'gamle', 'cykel.'],
-                hint: isEn ? 'Notice both "nye" and "gamle" take -e after "min" and "din"!' : 'Læg mærke til at både "nye" og "gamle" får -e efter "min" og "din"!'
+                hint: getTranslation('adj_p3_puz1_hint')
             },
             {
                 id: 'puz_2',
-                title: isEn ? 'Task 2: The largest vehicle' : 'Opgave 2: Det største køretøj',
-                meaning: isEn ? 'The big truck is the heaviest on the road.' : 'Den store lastbil er den tungeste på vejen.',
+                title: getTranslation('adj_p3_puz2_title'),
+                meaning: getTranslation('adj_p3_puz2_meaning'),
                 words: ['Den', 'store', 'lastbil', 'er', 'den', 'tungeste', 'på', 'vejen.'],
-                hint: isEn ? '"Den store" has definite -e, and "den tungeste" has definite superlative -e!' : '"Den store" har bestemt -e, og "den tungeste" har bestemt superlativ -e!'
+                hint: getTranslation('adj_p3_puz2_hint')
             },
             {
                 id: 'puz_3',
-                title: isEn ? 'Task 3: Ownership and comparison' : 'Opgave 3: Ejerskab og sammenligning',
-                meaning: isEn ? "Peter's little dog is smaller than the cat." : 'Peters lille hund er mindre end katten.',
+                title: getTranslation('adj_p3_puz3_title'),
+                meaning: getTranslation('adj_p3_puz3_meaning'),
                 words: ['Peters', 'lille', 'hund', 'er', 'mindre', 'end', 'katten.'],
-                hint: isEn ? '"Peters" is genitive, and "mindre end" compares two animals.' : '"Peters" er ejefald (genitiv), og "mindre end" sammenligner de to dyr.'
+                hint: getTranslation('adj_p3_puz3_hint')
             },
             {
                 id: 'puz_4',
-                title: isEn ? 'Task 4: Demonstrative and best fragrance' : 'Opgave 4: Påpegende ord og vinderen',
-                meaning: isEn ? 'This beautiful flower smells best in the garden.' : 'Denne smukke blomst dufter bedst i haven.',
+                title: getTranslation('adj_p3_puz4_title'),
+                meaning: getTranslation('adj_p3_puz4_meaning'),
                 words: ['Denne', 'smukke', 'blomst', 'dufter', 'bedst', 'i', 'haven.'],
-                hint: isEn ? '"Denne" requires -e ("smukke"), while "bedst" is superlative.' : '"Denne" udløser -e ("smukke"), mens "bedst" er superlativ.'
+                hint: getTranslation('adj_p3_puz4_hint')
             }
         ];
 
@@ -1161,7 +1117,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
                 <div class="puzzle-target-area">
                     <div class="puzzle-slots-container" id="puzzle-slots-container">
-                        <span class="puzzle-placeholder-text">${isEn ? 'Click words below to place them here...' : 'Klik på ordene nedenfor for at placere dem her...'}</span>
+                        <span class="puzzle-placeholder-text">${getTranslation('adj_p3_puz_placeholder')}</span>
                     </div>
                 </div>
 
@@ -1185,7 +1141,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
             function updateSlots() {
                 if (placedWords.length === 0) {
-                    slotsContainer.innerHTML = `<span class="puzzle-placeholder-text">${isEn ? 'Click words below to place them here...' : 'Klik på ordene nedenfor for at placere dem her...'}</span>`;
+                    slotsContainer.innerHTML = `<span class="puzzle-placeholder-text">${getTranslation('adj_p3_puz_placeholder')}</span>`;
                 } else {
                     slotsContainer.innerHTML = placedWords.map((w, idx) => `
                         <div class="puzzle-slot filled" data-placed-idx="${idx}">
@@ -1238,15 +1194,15 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         feedbackArea.style.display = 'block';
                         feedbackArea.innerHTML = `
                             <div class="feedback-msg success">
-                                🎉 <strong>${isEn ? 'Perfect! The sentence is completely correct!' : 'Perfekt! Sætningen er helt korrekt sammensat!'}</strong>
+                                🎉 <strong>${getTranslation('adj_p3_puz_success')}</strong>
                             </div>
                             <div class="puzzle-action-row">
                                 <button class="listen-btn-small" id="puzzle-listen-btn">
-                                    🔊 ${isEn ? 'Listen to sentence' : 'Lyt til sætningen'}
+                                    🔊 ${getTranslation('adj_p3_puz_listen')}
                                 </button>
                                 ${currentPuzzleIdx < puzzleTasks.length - 1 ? `
                                     <button class="next-task-btn" id="puzzle-next-task-btn">
-                                        ${isEn ? 'Next Task ➔' : 'Næste opgave ➔'}
+                                        ${getTranslation('adj_p3_next_task')}
                                     </button>
                                 ` : ''}
                             </div>
@@ -1267,11 +1223,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         feedbackArea.style.display = 'block';
                         feedbackArea.innerHTML = `
                             <div class="feedback-msg error">
-                                ⚠ <strong>${isEn ? 'Not quite right yet.' : 'Ikke helt rigtigt endnu.'}</strong> ${isEn ? 'Check the order of adjectives and comparison words.' : 'Tjek rækkefølgen af adjektiver og ordet "end".'}
+                                ⚠ <strong>${getTranslation('adj_p3_puz_error_title')}</strong> ${getTranslation('adj_p3_puz_error_hint')}
                             </div>
                             <div class="puzzle-action-row">
                                 <button class="retry-task-btn" id="puzzle-retry-btn">
-                                    🔄 ${isEn ? 'Clear & Try Again' : 'Ryd og prøv igen'}
+                                    🔄 ${getTranslation('adj_p3_puz_retry_btn')}
                                 </button>
                             </div>
                         `;

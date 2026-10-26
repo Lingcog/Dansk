@@ -31,6 +31,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
     // State
     let activeStoryId = extraData?.storyId || extraData?.story || extraData?.subPath || null;
+    let activeStorySubView = extraData?.subView === 'talemaader' ? 'talemaader' : 'story'; // 'story' | 'talemaader'
     let isPlaying = false;
     let activeUtterance = null;
     let fontSizeLevel = 1; // 0 = standard, 1 = medium (default), 2 = stor
@@ -103,13 +104,24 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
     function updateTopBar() {
         if (activeStoryId) {
-            backBtn.innerHTML = `← ${isEn ? 'All Fairy Tales' : 'Alle eventyr'}`;
-            backBtn.onclick = () => {
-                stopSpeech();
-                activeStoryId = null;
-                currentStepIdx = 0;
-                renderView();
-            };
+            if (activeStorySubView === 'talemaader') {
+                backBtn.innerHTML = `← ${isEn ? 'Back to Story' : 'Tilbage til eventyret'}`;
+                backBtn.onclick = () => {
+                    stopSpeech();
+                    activeStorySubView = 'story';
+                    renderView();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                backBtn.innerHTML = `← ${isEn ? 'All Fairy Tales' : 'Alle eventyr'}`;
+                backBtn.onclick = () => {
+                    stopSpeech();
+                    activeStoryId = null;
+                    currentStepIdx = 0;
+                    activeStorySubView = 'story';
+                    renderView();
+                };
+            }
         } else {
             backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
             backBtn.onclick = () => {
@@ -128,7 +140,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         } else {
             const story = hcAndersenStories.find(s => s.id === activeStoryId);
             if (story) {
-                renderReader(story);
+                if (activeStorySubView === 'talemaader' && story.talemaaderChallenge) {
+                    renderStoryTalemaader(story);
+                } else {
+                    renderReader(story);
+                }
             } else {
                 renderCatalog();
             }
@@ -285,6 +301,20 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         toolbar.appendChild(fullAudioBtn);
         toolbar.appendChild(modeToggle);
         toolbar.appendChild(fontControl);
+
+        if (story.talemaaderChallenge) {
+            const talemaaderTabBtn = document.createElement('button');
+            talemaaderTabBtn.className = 'hc-talemaader-nav-btn';
+            talemaaderTabBtn.innerHTML = `<span>🎭</span> <span>${isEn ? 'Fairy Tale Idioms (B1/B2)' : 'Eventyrets talemåder (B1/B2)'}</span>`;
+            talemaaderTabBtn.onclick = () => {
+                stopSpeech();
+                activeStorySubView = 'talemaader';
+                renderView();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            toolbar.appendChild(talemaaderTabBtn);
+        }
+
         readerWrapper.appendChild(toolbar);
 
         // Sections content
@@ -418,6 +448,31 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         if (story.quiz && story.quiz.length > 0) {
             const quizCard = createQuizSection(story.quiz);
             readerWrapper.appendChild(quizCard);
+        }
+
+        // Optional Advanced Feature: Fairy Tale Idioms Challenge Banner
+        if (story.talemaaderChallenge) {
+            const talemaaderBanner = document.createElement('div');
+            talemaaderBanner.className = 'hc-talemaader-invitation-card';
+            talemaaderBanner.innerHTML = `
+                <div class="invitation-icon">🎭</div>
+                <div class="invitation-body">
+                    <div class="invitation-badge">🌟 ${isEn ? 'Optional Challenge • Advanced (B1/B2)' : 'Valgfri udfordring • For avancerede kursister (B1/B2)'}</div>
+                    <h3 class="invitation-title">${isEn ? story.talemaaderChallenge.titleEn || story.talemaaderChallenge.title : story.talemaaderChallenge.title}</h3>
+                    <p class="invitation-desc">${isEn ? story.talemaaderChallenge.descEn || story.talemaaderChallenge.desc : story.talemaaderChallenge.desc}</p>
+                </div>
+                <button type="button" class="invitation-start-btn">
+                    <span>${isEn ? 'Explore Idioms' : 'Start talemåderne'}</span>
+                    <span>➔</span>
+                </button>
+            `;
+            talemaaderBanner.querySelector('.invitation-start-btn').onclick = () => {
+                stopSpeech();
+                activeStorySubView = 'talemaader';
+                renderView();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            readerWrapper.appendChild(talemaaderBanner);
         }
 
         // Bottom Actions (Back to list, Next story)
@@ -1734,6 +1789,253 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         }
 
         return quizCard;
+    }
+
+    // --- 4. DEDIKERET TALEMÅDE-FLADE FOR AVANCEREDE KURSISTER (B1/B2) ---
+    function renderStoryTalemaader(story) {
+        const challenge = story.talemaaderChallenge;
+        if (!challenge) {
+            renderReader(story);
+            return;
+        }
+
+        const pageWrapper = document.createElement('div');
+        pageWrapper.className = 'hc-talemaader-page-wrapper';
+
+        // 1. Hero Card
+        const heroCard = document.createElement('div');
+        heroCard.className = 'hc-talemaader-hero-card';
+        heroCard.innerHTML = `
+            <div class="hero-top-row">
+                <span class="hero-badge">🎭 ${isEn ? 'Optional Challenge • Advanced (B1/B2)' : 'Valgfri udfordring • For avancerede kursister (B1/B2)'}</span>
+                <button type="button" class="hero-back-story-btn">
+                    ← ${isEn ? 'Back to Story' : 'Tilbage til eventyret'}
+                </button>
+            </div>
+            <h1 class="hero-title">${story.title}: ${isEn ? challenge.titleEn || challenge.title : challenge.title}</h1>
+            <p class="hero-desc">${isEn ? challenge.descEn || challenge.desc : challenge.desc}</p>
+            <div class="hero-stats-row">
+                <div class="hero-stat-pill">
+                    <span>💡</span>
+                    <span>${isEn ? `${challenge.items.length} Idioms from the scenes` : `${challenge.items.length} talemåder fra scenerne`}</span>
+                </div>
+                <div class="hero-stat-pill">
+                    <span>📚</span>
+                    <span>${isEn ? 'Linked to »Everyday Life Idioms«' : 'Koblet til »Livets omveje«'}</span>
+                </div>
+            </div>
+        `;
+        heroCard.querySelector('.hero-back-story-btn').onclick = () => {
+            stopSpeech();
+            activeStorySubView = 'story';
+            renderView();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        pageWrapper.appendChild(heroCard);
+
+        // 2. Progress Indicator
+        const progressCard = document.createElement('div');
+        progressCard.className = 'hc-talemaader-progress-card';
+        progressCard.innerHTML = `
+            <div class="progress-info">
+                <span class="progress-label">${isEn ? 'Progress:' : 'Status:'}</span>
+                <span class="progress-count" id="talemaader-progress-count">0 / ${challenge.items.length} ${isEn ? 'completed' : 'fuldført'}</span>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="talemaader-progress-fill" style="width: 0%;"></div>
+            </div>
+        `;
+        pageWrapper.appendChild(progressCard);
+
+        // 3. Questions Container
+        const questionsList = document.createElement('div');
+        questionsList.className = 'hc-talemaader-list';
+
+        let correctCount = 0;
+        const totalItems = challenge.items.length;
+        const answeredItems = new Set();
+
+        function updateProgress() {
+            const countEl = pageWrapper.querySelector('#talemaader-progress-count');
+            const fillEl = pageWrapper.querySelector('#talemaader-progress-fill');
+            const pct = Math.round((correctCount / totalItems) * 100);
+            if (countEl) {
+                countEl.textContent = `${correctCount} / ${totalItems} ${isEn ? 'completed' : 'fuldført'}`;
+            }
+            if (fillEl) {
+                fillEl.style.width = `${pct}%`;
+            }
+
+            if (correctCount === totalItems) {
+                const celebrationEl = pageWrapper.querySelector('.hc-talemaader-celebration-banner');
+                if (celebrationEl) {
+                    celebrationEl.style.display = 'block';
+                    celebrationEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        challenge.items.forEach((item, itemIdx) => {
+            const card = document.createElement('div');
+            card.className = 'hc-talemaade-item-card';
+            card.id = `talemaade-item-${item.id}`;
+
+            card.innerHTML = `
+                <div class="item-header">
+                    <div class="item-scene-pill">
+                        <span>🎬</span>
+                        <span>${isEn ? item.sceneTitleEn || item.sceneTitle : item.sceneTitle}</span>
+                    </div>
+                    <div class="item-idiom-badge">
+                        <span>${item.idiomIcon || '🎭'}</span>
+                        <strong>»${item.idiom}«</strong>
+                    </div>
+                </div>
+
+                <div class="item-context-box">
+                    <div class="context-label">
+                        <span>📖</span>
+                        <span>${isEn ? 'Situation in the fairy tale:' : 'Situationen i eventyret:'}</span>
+                    </div>
+                    <p class="context-quote">»${isEn ? item.sceneContextEn || item.sceneContext : item.sceneContext}«</p>
+                </div>
+
+                <div class="item-prompt-row">
+                    <div class="item-prompt-question">
+                        <span>❓</span>
+                        <strong>${isEn ? item.questionEn || item.question : item.question}</strong>
+                    </div>
+                    <button type="button" class="item-listen-btn" title="Hør talemåden">
+                        <span>🔊</span>
+                        <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                    </button>
+                </div>
+
+                <div class="item-options-list">
+                    ${item.options.map((opt, optIdx) => `
+                        <button type="button" class="hc-idiom-opt-btn" data-itemidx="${itemIdx}" data-optidx="${optIdx}">
+                            <span class="opt-letter">${String.fromCharCode(65 + optIdx)}</span>
+                            <span class="opt-text">${opt}</span>
+                        </button>
+                    `).join('')}
+                </div>
+
+                <div class="item-feedback-box" style="display: none;"></div>
+            `;
+
+            // Listen button
+            card.querySelector('.item-listen-btn').onclick = (e) => {
+                e.stopPropagation();
+                speakDanish(item.idiom);
+            };
+
+            const optButtons = card.querySelectorAll('.hc-idiom-opt-btn');
+            const feedbackBox = card.querySelector('.item-feedback-box');
+
+            optButtons.forEach(btn => {
+                btn.onclick = () => {
+                    const chosenIdx = parseInt(btn.dataset.optidx, 10);
+                    const chosenText = item.options[chosenIdx];
+                    const isCorrect = chosenText === item.correct;
+
+                    if (isCorrect) {
+                        if (!answeredItems.has(item.id)) {
+                            answeredItems.add(item.id);
+                            correctCount++;
+                            updateProgress();
+                        }
+
+                        // Disable all buttons in this card and highlight correct
+                        optButtons.forEach(b => {
+                            b.disabled = true;
+                            if (b.dataset.optidx === String(chosenIdx)) {
+                                b.classList.add('correct');
+                            } else {
+                                b.classList.remove('wrong');
+                            }
+                        });
+
+                        feedbackBox.style.display = 'block';
+                        feedbackBox.className = 'item-feedback-box correct';
+                        feedbackBox.innerHTML = `
+                            <div class="feedback-badge">✅ ${isEn ? 'Correct!' : 'Helt rigtigt!'}</div>
+                            <p class="feedback-explanation">${item.explanation}</p>
+                            <div class="feedback-package-card">
+                                <div class="pkg-card-left">
+                                    <div class="pkg-card-icon">💡</div>
+                                    <div>
+                                        <div class="pkg-card-title">${isEn ? 'Want to practice this idiom and see the illustration?' : 'Vil du træne denne talemåde og se illustrationen?'}</div>
+                                        <div class="pkg-card-sub">${isEn ? `Module: »${item.moduleName}« in ${item.packageName}` : `Modul: »${item.moduleName}« i ${item.packageName}`}</div>
+                                    </div>
+                                </div>
+                                <button type="button" class="pkg-card-action-btn">
+                                    <span>${isEn ? `Open »${item.packageName}«` : `Gå til »${item.packageName}«`}</span>
+                                    <span>➔</span>
+                                </button>
+                            </div>
+                        `;
+
+                        // Wire up the link directly to the package!
+                        const pkgBtn = feedbackBox.querySelector('.pkg-card-action-btn');
+                        if (pkgBtn) {
+                            pkgBtn.onclick = () => {
+                                stopSpeech();
+                                navigateFn('talemaader', { package: item.packageId || 'pkg1' });
+                            };
+                        }
+                    } else {
+                        btn.classList.add('wrong');
+                        feedbackBox.style.display = 'block';
+                        feedbackBox.className = 'item-feedback-box wrong';
+                        feedbackBox.innerHTML = `
+                            <div class="feedback-badge">❌ ${isEn ? 'Not quite right.' : 'Ikke helt rigtigt.'}</div>
+                            <p class="feedback-explanation">${isEn ? 'That is a literal misunderstanding or another meaning. Try again!' : 'Det er den bogstavelige forståelse eller en anden betydning. Prøv en af de andre muligheder!'}</p>
+                        `;
+                    }
+                };
+            });
+
+            questionsList.appendChild(card);
+        });
+
+        pageWrapper.appendChild(questionsList);
+
+        // 4. Celebration Banner
+        const celebrationBanner = document.createElement('div');
+        celebrationBanner.className = 'hc-talemaader-celebration-banner';
+        celebrationBanner.style.display = 'none';
+        celebrationBanner.innerHTML = `
+            <div class="celebration-icon">🎉 🏆 🌟</div>
+            <h2 class="celebration-title">${isEn ? 'Outstanding! You mastered the fairy tale idioms!' : 'Fantastisk! Du har mestret eventyrets talemåder!'}</h2>
+            <p class="celebration-desc">
+                ${isEn 
+                    ? 'You have connected Clumsy Hans with the figurative Danish idioms. Now you know what it means to freeze up, nail it, and hit the jackpot!' 
+                    : 'Du har nu forbundet Klods-Hans med de klassiske danske talemåder. Nu ved du præcis, hvad det betyder at gå i baglås, ramme plet og skyde papegøjen!'
+                }
+            </p>
+            <div class="celebration-actions">
+                <button type="button" class="celebration-btn secondary" id="celebration-back-btn">
+                    ← ${isEn ? 'Back to Story' : 'Tilbage til eventyret'}
+                </button>
+                <button type="button" class="celebration-btn primary" id="celebration-talemaader-btn">
+                    <span>${isEn ? 'Explore all idioms in »Livets omveje«' : 'Udforsk alle talemåder i »Livets omveje«'}</span>
+                    <span>➔</span>
+                </button>
+            </div>
+        `;
+        celebrationBanner.querySelector('#celebration-back-btn').onclick = () => {
+            stopSpeech();
+            activeStorySubView = 'story';
+            renderView();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        celebrationBanner.querySelector('#celebration-talemaader-btn').onclick = () => {
+            stopSpeech();
+            navigateFn('talemaader', { package: 'pkg1' });
+        };
+        pageWrapper.appendChild(celebrationBanner);
+
+        mainContent.appendChild(pageWrapper);
     }
 
     // Initialize View
@@ -3770,6 +4072,529 @@ function injectStyles() {
         .hc-restart-flow-btn:hover {
             background: white;
             color: #0f172a;
+        }
+
+        /* --- TALEMÅDER I EVENTYRET (FOR AVANCEREDE KURSISTER) --- */
+        .hc-talemaader-nav-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: #ffffff;
+            border: 1px solid rgba(216, 180, 254, 0.4);
+            border-radius: 9999px;
+            padding: 0.5rem 1.1rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+            transition: all 0.2s ease;
+        }
+        .hc-talemaader-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.5);
+            background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+        }
+
+        .hc-talemaader-invitation-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(88, 28, 135, 0.4) 100%);
+            border: 1.5px solid rgba(168, 85, 247, 0.5);
+            border-radius: 20px;
+            padding: 1.6rem 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .hc-talemaader-invitation-card .invitation-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 4px 10px rgba(168, 85, 247, 0.5));
+        }
+        .hc-talemaader-invitation-card .invitation-body {
+            flex: 1;
+        }
+        .invitation-badge {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.25);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 9999px;
+            padding: 0.2rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.4rem;
+        }
+        .invitation-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin: 0 0 0.4rem 0;
+        }
+        .invitation-desc {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin: 0;
+            line-height: 1.5;
+        }
+        .invitation-start-btn {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 0.9rem 1.4rem;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .invitation-start-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.6);
+        }
+
+        .hc-talemaader-page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 0.5rem 3rem 0.5rem;
+        }
+        .hc-talemaader-hero-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(67, 56, 202, 0.35) 100%);
+            border: 1.5px solid rgba(129, 140, 248, 0.4);
+            border-radius: 20px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+        .hero-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .hero-badge {
+            background: rgba(168, 85, 247, 0.25);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 9999px;
+            padding: 0.25rem 0.85rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .hero-back-story-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hero-back-story-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+        }
+        .hc-talemaader-hero-card .hero-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.3;
+        }
+        .hc-talemaader-hero-card .hero-desc {
+            font-size: 1rem;
+            color: #cbd5e1;
+            margin: 0 0 1.2rem 0;
+            line-height: 1.6;
+        }
+        .hero-stats-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .hero-stat-pill {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.86rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .hc-talemaader-progress-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 0.9rem 1.4rem;
+            margin-bottom: 2rem;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
+        }
+        .progress-bar-track {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #38bdf8);
+            border-radius: 9999px;
+            transition: width 0.4s ease;
+        }
+
+        .hc-talemaader-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .hc-talemaade-item-card {
+            background: #1e293b;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transition: border-color 0.2s;
+        }
+        .hc-talemaade-item-card:hover {
+            border-color: rgba(168, 85, 247, 0.35);
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.1rem;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .item-scene-pill {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 9999px;
+            padding: 0.25rem 0.8rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .item-idiom-badge {
+            background: rgba(234, 179, 8, 0.15);
+            color: #fde047;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 9999px;
+            padding: 0.25rem 0.85rem;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .item-context-box {
+            background: rgba(15, 23, 42, 0.55);
+            border-left: 3.5px solid #a855f7;
+            border-radius: 0 12px 12px 0;
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 1.3rem;
+        }
+        .context-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a855f7;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .context-quote {
+            font-size: 0.98rem;
+            color: #f1f5f9;
+            font-style: italic;
+            margin: 0;
+            line-height: 1.5;
+        }
+        .item-prompt-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.8rem;
+        }
+        .item-prompt-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f8fafc;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.4;
+        }
+        .item-listen-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            border-radius: 10px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .item-listen-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: scale(1.04);
+        }
+
+        .item-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+        }
+        .hc-idiom-opt-btn {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 0.85rem 1.1rem;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            line-height: 1.45;
+            transition: all 0.2s ease;
+        }
+        .hc-idiom-opt-btn:hover:not(:disabled) {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #38bdf8;
+            transform: translateX(3px);
+            color: white;
+        }
+        .opt-letter {
+            background: rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            border-radius: 6px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .hc-idiom-opt-btn:hover:not(:disabled) .opt-letter {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+        .hc-idiom-opt-btn.correct {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.8) 0%, rgba(22, 101, 52, 0.7) 100%) !important;
+            border-color: #22c55e !important;
+            color: #ecfdf5 !important;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
+        }
+        .hc-idiom-opt-btn.correct .opt-letter {
+            background: #22c55e !important;
+            color: #052e16 !important;
+        }
+        .hc-idiom-opt-btn.wrong {
+            background: linear-gradient(135deg, rgba(69, 10, 10, 0.8) 0%, rgba(127, 29, 29, 0.7) 100%) !important;
+            border-color: #ef4444 !important;
+            color: #fef2f2 !important;
+            animation: hcShake 0.4s ease;
+        }
+        .hc-idiom-opt-btn.wrong .opt-letter {
+            background: #ef4444 !important;
+            color: white !important;
+        }
+        @keyframes hcShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .item-feedback-box {
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            margin-top: 0.75rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .item-feedback-box.correct {
+            background: rgba(22, 101, 52, 0.25);
+            border: 1.5px solid rgba(34, 197, 94, 0.5);
+        }
+        .item-feedback-box.wrong {
+            background: rgba(127, 29, 29, 0.25);
+            border: 1.5px solid rgba(239, 68, 68, 0.5);
+        }
+        .feedback-badge {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
+        }
+        .item-feedback-box.correct .feedback-badge {
+            color: #4ade80;
+        }
+        .item-feedback-box.wrong .feedback-badge {
+            color: #f87171;
+        }
+        .feedback-explanation {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            margin: 0 0 0.8rem 0;
+            line-height: 1.5;
+        }
+
+        /* Full package link card upon correct answer */
+        .feedback-package-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.85) 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            border-radius: 12px;
+            padding: 0.9rem 1.1rem;
+            margin-top: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .pkg-card-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .pkg-card-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .pkg-card-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.3;
+        }
+        .pkg-card-sub {
+            font-size: 0.8rem;
+            color: #38bdf8;
+            font-weight: 600;
+            margin-top: 0.15rem;
+        }
+        .pkg-card-action-btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+        }
+        .pkg-card-action-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.5);
+        }
+
+        .hc-talemaader-celebration-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(20, 83, 45, 0.4) 100%);
+            border: 2px solid #22c55e;
+            border-radius: 20px;
+            padding: 2.2rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.4s ease;
+        }
+        .celebration-icon {
+            font-size: 3.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .celebration-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #86efac;
+            margin: 0 0 0.6rem 0;
+        }
+        .celebration-desc {
+            font-size: 1rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+        .celebration-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .celebration-btn {
+            border-radius: 12px;
+            padding: 0.8rem 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .celebration-btn.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+        }
+        .celebration-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .celebration-btn.primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        .celebration-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
         }
 
         @media (max-width: 600px) {

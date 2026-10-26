@@ -3008,7 +3008,132 @@ export const hcAndersenStories = [
                 "correctIndex": 1,
                 "explanation": "Prinsessen elsker hans kvikke svar, hans munterhed og hans sjove måde at se tingene på!"
             }
-        ]
+        ],
+        "talemaaderChallenge": {
+            "title": "Eventyrets talemåder",
+            "titleEn": "Fairy Tale Idioms",
+            "subtitle": "Valgfri udfordring for avancerede kursister (B1/B2)",
+            "subtitleEn": "Optional challenge for advanced learners (B1/B2)",
+            "desc": "H.C. Andersens eventyr er fulde af situationer, som danskere i dag beskriver med faste talemåder. Kan du gætte, hvilken betydning talemåden har i denne scene?",
+            "descEn": "H.C. Andersen's fairy tales are full of situations that Danes describe today with fixed idioms. Can you guess the meaning of the idiom for each scene?",
+            "items": [
+                {
+                    "id": "blind_hoene",
+                    "sceneTitle": "Scene 1: På bondegården",
+                    "sceneTitleEn": "Scene 1: At the Farm",
+                    "sceneContext": "Faren og brødrene griner ad Klods-Hans og siger: »Du kan jo ingenting! Du kan ikke tale med fine folk!« Men Klods-Hans ender alligevel med at vinde prinsessen.",
+                    "sceneContextEn": "The father and brothers laugh at Clumsy Hans and say: 'You can't do anything! You can't speak with fine people!' Yet Hans ends up winning the princess.",
+                    "idiom": "En blind høne kan også finde et korn",
+                    "idiomEn": "Even a blind hen finds a grain",
+                    "idiomIcon": "🐔",
+                    "question": "Denne scene passer med talemåden: »En blind høne kan også finde et korn«. Hvad betyder talemåden?",
+                    "questionEn": "This scene fits the idiom: 'En blind høne kan også finde et korn'. What does it mean?",
+                    "correct": "At man kan være heldig at lykkes med noget, selvom man egentlig ikke er særligt dygtig eller har forberedt sig.",
+                    "options": [
+                        "At man kan være heldig at lykkes med noget, selvom man egentlig ikke er særligt dygtig eller har forberedt sig.",
+                        "At en person, der arbejder i det stille, altid ender med at finde den største belønning.",
+                        "At man er så stædig, at man stjæler andres hårdt tjente resultater.",
+                        "At et dårligt syn ofte gør, at man lægger mærke til de helt små detaljer på jorden."
+                    ],
+                    "explanation": "Rigtigt! Klods-Hans var hverken lærd eller forberedt som sine brødre, men han lykkedes alligevel med at vinde kongedatteren og det halve rige.",
+                    "packageId": "pkg1",
+                    "packageName": "Livets omveje 1",
+                    "moduleName": "At lykkes & Målrettet flid"
+                },
+                {
+                    "id": "gaa_i_baglaas",
+                    "sceneTitle": "Scene 3: Foran kongedatteren",
+                    "sceneTitleEn": "Scene 3: In Front of the Princess",
+                    "sceneContext": "De to lærde brødre har øvet sig i tre år. Men da de står foran kongedatteren og rådsherrerne, bliver de overvældede af nervøsitet og kan ikke få et eneste ord frem!",
+                    "sceneContextEn": "The two learned brothers practiced for three years. But standing before the princess and councilors, they are overwhelmed by nervousness, unable to speak a single word!",
+                    "idiom": "At gå i baglås",
+                    "idiomEn": "To seize up / freeze completely",
+                    "idiomIcon": "🔒",
+                    "question": "Denne scene passer med talemåden: »At gå i baglås«. Hvad betyder talemåden?",
+                    "questionEn": "This scene fits the idiom: 'At gå i baglås'. What does it mean?",
+                    "correct": "At man fuldstændig mister evnen til at tænke klart eller handle, ofte fordi man er stresset eller presset.",
+                    "options": [
+                        "At man fuldstændig mister evnen til at tænke klart eller handle, ofte fordi man er stresset eller presset.",
+                        "At man sikrer sit hus så godt, at ingen tyve nogensinde kan bryde ind.",
+                        "At man låser en anden person inde på et værelse for at straffe dem.",
+                        "At man glemmer sin nøgle og må vente på at en låsesmed kommer og hjælper."
+                    ],
+                    "explanation": "Lige præcis! Brødrene blev så pressede og mundlamme foran prinsessen, at deres hjerne og tale gik fuldstændig i baglås.",
+                    "packageId": "pkg1",
+                    "packageName": "Livets omveje 1",
+                    "moduleName": "Fejltrin & Kollaps"
+                },
+                {
+                    "id": "kaste_haandklaedet",
+                    "sceneTitle": "Scene 3: Brødrenes nederlag",
+                    "sceneTitleEn": "Scene 3: The Brothers' Defeat",
+                    "sceneContext": "Da brødrene kun kan fremstamme »Det dur ikke!«, må de opgive deres drøm om kongedatteren og forlade slottet med bøjede hoveder.",
+                    "sceneContextEn": "When the brothers can only stammer 'It's no good!', they have to give up their dream of the princess and leave the castle in defeat.",
+                    "idiom": "At kaste håndklædet i ringen",
+                    "idiomEn": "To throw in the towel",
+                    "idiomIcon": "🥊",
+                    "question": "Denne scene passer med talemåden: »At kaste håndklædet i ringen«. Hvad betyder talemåden?",
+                    "questionEn": "This scene fits the idiom: 'At kaste håndklædet i ringen'. What does it mean?",
+                    "correct": "At man giver helt op og erkender sit nederlag, fordi situationen er blevet for svær at klare.",
+                    "options": [
+                        "At man giver helt op og erkender sit nederlag, fordi situationen er blevet for svær at klare.",
+                        "At man smider sine bekymringer væk og endelig begynder at nyde livet i fulde drag.",
+                        "At man kaster sit skrald i naturen i stedet for at rydde ordentligt op efter sig selv.",
+                        "At man er færdig med at tage bad og lægger håndklædet til vask."
+                    ],
+                    "explanation": "Helt rigtigt! Udtrykket stammer fra boksning, hvor træneren kaster et håndklæde i ringen for at stoppe kampen. Brødrene opgav alt og erkendte deres nederlag.",
+                    "packageId": "pkg1",
+                    "packageName": "Livets omveje 1",
+                    "moduleName": "Mental & Handlingsretræte"
+                },
+                {
+                    "id": "ramme_plet",
+                    "sceneTitle": "Scene 4: Klods-Hans taler med prinsessen",
+                    "sceneTitleEn": "Scene 4: Clumsy Hans Speaks with the Princess",
+                    "sceneContext": "Prinsessen driller: »Her er en varme! Jeg steger hanekyllinger!« Klods-Hans svarer lynhurtigt: »Så kan jeg vel få stegt min krage!« og viser kragen, træskoen og plørefarven. Hvert svar er perfekt!",
+                    "sceneContextEn": "The princess teases: 'It is so hot here! I am roasting cockerels!' Hans replies immediately: 'Then I can roast my crow!' showing the crow, shoe, and mud. Every reply is spot on!",
+                    "idiom": "At ramme plet",
+                    "idiomEn": "To hit the bullseye / nail it",
+                    "idiomIcon": "🎯",
+                    "question": "Denne scene passer med talemåden: »At ramme plet«. Hvad betyder talemåden?",
+                    "questionEn": "This scene fits the idiom: 'At ramme plet'. What does it mean?",
+                    "correct": "At man siger eller gør noget, der er fuldstændig rigtigt og præcist i den givne situation.",
+                    "options": [
+                        "At man siger eller gør noget, der er fuldstændig rigtigt og præcist i den givne situation.",
+                        "At man vinder en stor sum penge i et meget svært og kompliceret spil.",
+                        "At man ved et uheld rammer et ømt punkt hos en anden og gør dem meget kede af det.",
+                        "At man skyder til måls og formår at træffe midten af skiven."
+                    ],
+                    "explanation": "Korrekt! Klods-Hans havde svar på rede hånd og ramte plet i enhver ordveksling med kongedatteren.",
+                    "packageId": "pkg1",
+                    "packageName": "Livets omveje 1",
+                    "moduleName": "At lykkes & Målrettet flid"
+                },
+                {
+                    "id": "skyde_papegoejen",
+                    "sceneTitle": "Scene 5: Slutningen",
+                    "sceneTitleEn": "Scene 5: The Ending",
+                    "sceneContext": "Klods-Hans fik kongedatteren til kone, fik det halve kongerige og blev kronet til konge!",
+                    "sceneContextEn": "Clumsy Hans won the king's daughter as his wife, received half the kingdom, and was crowned king!",
+                    "idiom": "At skyde papegøjen",
+                    "idiomEn": "To hit the jackpot / win big",
+                    "idiomIcon": "🦜",
+                    "question": "Denne scene passer med talemåden: »At skyde papegøjen«. Hvad betyder talemåden?",
+                    "questionEn": "This scene fits the idiom: 'At skyde papegøjen'. What does it mean?",
+                    "correct": "At man er usædvanligt heldig og vinder den helt store gevinst (oftest et godt ægteskab eller drømmejobbet).",
+                    "options": [
+                        "At man er usædvanligt heldig og vinder den helt store gevinst (oftest et godt ægteskab eller drømmejobbet).",
+                        "At man er så utroligt præcis i sit arbejde, at man kan ramme et meget lille mål.",
+                        "At man ødelægger noget smukt og sjældent, bare fordi man vil vise sig frem for andre.",
+                        "At man tager på en lang jagt for at finde den eneste løsning på et svært problem."
+                    ],
+                    "explanation": "Præcis! Udtrykket stammer fra historiske fugleskydninger, hvor træpapegøjen var hovedpræmien. Klods-Hans vandt den ultimative gevinst: både et lykkeligt ægteskab og et helt kongerige!",
+                    "packageId": "pkg1",
+                    "packageName": "Livets omveje 1",
+                    "moduleName": "At lykkes & Målrettet flid"
+                }
+            ]
+        }
     },
     {
         "id": "den_grimme_aelling",

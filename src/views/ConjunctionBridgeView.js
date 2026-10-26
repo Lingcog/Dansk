@@ -790,8 +790,8 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
 
             <!-- TRÆNINGSAKTIONER -->
             <div class="conjunction-actions-container">
-                <button type="button" class="btn-launch-training" id="btn-goto-conjunction-exercises">
-                    <span>Træn konjunktioner i øvelser ➔</span>
+                <button type="button" class="btn-launch-training" id="btn-goto-word-learning">
+                    <span>Lær nye ord ➔</span>
                 </button>
                 <div class="secondary-actions-row">
                     <button type="button" class="btn-secondary-link" id="btn-restart-grammar">
@@ -838,9 +838,9 @@ export function renderConjunctionBridgeView(container, navigateFn, extraData = {
             };
         }
 
-        // Link til øvelser
-        box.querySelector('#btn-goto-conjunction-exercises').onclick = () => {
-            navigateFn('conjunction_choice');
+        // Link til Lær nye ord
+        box.querySelector('#btn-goto-word-learning').onclick = () => {
+            navigateFn('word_learning');
         };
 
         // Genstart grammatik-sti

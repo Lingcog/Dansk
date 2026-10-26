@@ -28,53 +28,54 @@ export function renderGrammarMenu(currentView, navigateFn) {
     menuContainer.appendChild(scrollWrapper);
 
     // CSS
-    if (!document.getElementById('grammar-menu-styles')) {
-        const style = document.createElement('style');
-        style.id = 'grammar-menu-styles';
-        style.textContent = `
-            .grammar-nav-menu {
-                width: 100%;
-                margin-bottom: 1.5rem;
-                background: rgba(0, 0, 0, 0.15);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 0.5rem 0;
-            }
-            .grammar-nav-scroll {
-                display: flex;
-                overflow-x: auto;
-                gap: 0.5rem;
-                padding: 0 1rem;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE/Edge */
-            }
-            .grammar-nav-scroll::-webkit-scrollbar {
-                display: none; /* Chrome/Safari */
-            }
-            .grammar-nav-btn {
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                color: rgba(255, 255, 255, 0.8);
-                padding: 0.4rem 1rem;
-                border-radius: 20px;
-                font-size: 0.85rem;
-                font-weight: 600;
-                cursor: pointer;
-                white-space: nowrap;
-                transition: all 0.2s;
-            }
-            .grammar-nav-btn:hover {
-                background: rgba(255, 255, 255, 0.15);
-                color: white;
-            }
-            .grammar-nav-btn.active {
-                background: var(--accent-light, #ffeb3b);
-                color: black;
-                border-color: var(--accent-light, #ffeb3b);
-            }
-        `;
-        document.head.appendChild(style);
-    }
+    const existingStyle = document.getElementById('grammar-menu-styles');
+    if (existingStyle) existingStyle.remove();
+
+    const style = document.createElement('style');
+    style.id = 'grammar-menu-styles';
+    style.textContent = `
+        .grammar-nav-menu {
+            width: 100%;
+            margin-bottom: 1.25rem;
+            background: rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0;
+        }
+        .grammar-nav-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0 1rem;
+        }
+        .grammar-nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.28rem 0.85rem;
+            border-radius: 16px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            text-align: center;
+            min-width: 125px;
+            transition: all 0.2s;
+        }
+        .grammar-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        .grammar-nav-btn.active {
+            background: var(--accent-light, #ffeb3b);
+            color: black;
+            border-color: var(--accent-light, #ffeb3b);
+            font-weight: 700;
+        }
+    `;
+    document.head.appendChild(style);
 
     return menuContainer;
 }

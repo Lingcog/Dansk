@@ -20,6 +20,9 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         }
     }
 
+    // In-memory completion state for this session (resets on re-entering the task)
+    const completedTabs = new Set();
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container';
     viewContainer.style.maxWidth = '800px';
@@ -74,7 +77,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
     tabsContainer.style.marginBottom = '2rem';
 
     const tabs = [
-        { id: 1, labelKey: 'traen_tab_semantic', defaultLabel: '1. Semantisk (Hv-ord)', icon: '🎯' },
+        { id: 1, labelKey: 'traen_tab_semantic', defaultLabel: '1. Hv-ord', icon: '🎯' },
         { id: 2, labelKey: 'traen_tab_yesno', defaultLabel: '2. Ja/Nej-spørgsmål', icon: '❓' },
         { id: 3, labelKey: 'traen_tab_wordorder', defaultLabel: '3. Ordstilling', icon: '🧩' }
     ];
@@ -97,7 +100,6 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         btn.style.transition = 'all 0.2s ease';
         btn.style.background = 'var(--card-bg, rgba(255,255,255,0.06))';
         btn.style.color = 'var(--text-color, #fff)';
-        btn.innerHTML = `${tabInfo.icon} <span class="tab-label-text">${t(tabInfo.labelKey, tabInfo.defaultLabel)}</span>`;
 
         btn.onclick = () => {
             clearActiveTimer();
@@ -107,32 +109,183 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         };
 
         tabsContainer.appendChild(btn);
-        tabButtons.push({ btn, id: tabInfo.id });
+        tabButtons.push({ btn, tabInfo });
     });
 
     viewContainer.appendChild(tabsContainer);
     viewContainer.appendChild(exerciseContainer);
 
     function updateTabStyles() {
-        tabButtons.forEach(tb => {
-            if (tb.id === currentTab) {
-                tb.btn.style.background = 'var(--accent-color, #4a90e2)';
-                tb.btn.style.borderColor = '#ffffff';
-                tb.btn.style.color = '#ffffff';
-                tb.btn.style.boxShadow = '0 4px 12px rgba(74, 144, 226, 0.4)';
+        tabButtons.forEach(({ btn, tabInfo }) => {
+            const isCompleted = completedTabs.has(tabInfo.id);
+            const statusIcon = isCompleted ? '✓ ' : '';
+
+            btn.innerHTML = `${tabInfo.icon} <span class="tab-label-text">${statusIcon}${t(tabInfo.labelKey, tabInfo.defaultLabel)}</span>`;
+
+            if (tabInfo.id === currentTab) {
+                btn.style.background = 'var(--accent-color, #4a90e2)';
+                btn.style.borderColor = '#ffffff';
+                btn.style.color = '#ffffff';
+                btn.style.boxShadow = '0 4px 12px rgba(74, 144, 226, 0.4)';
             } else {
-                tb.btn.style.background = 'var(--card-bg, rgba(255,255,255,0.08))';
-                tb.btn.style.borderColor = 'rgba(255,255,255,0.1)';
-                tb.btn.style.color = 'var(--text-muted, #ccc)';
-                tb.btn.style.boxShadow = 'none';
+                btn.style.background = isCompleted ? 'rgba(76, 175, 80, 0.12)' : 'var(--card-bg, rgba(255,255,255,0.08))';
+                btn.style.borderColor = isCompleted ? 'rgba(76, 175, 80, 0.4)' : 'rgba(255,255,255,0.1)';
+                btn.style.color = isCompleted ? '#81c784' : 'var(--text-muted, #ccc)';
+                btn.style.boxShadow = 'none';
             }
         });
     }
 
     // -------------------------------------------------------------
-    // EXERCISE 1: SEMANTISK TRÆNING (HV-ORD)
+    // SUCCESS SCREEN: DELOPGAVE POKAL
     // -------------------------------------------------------------
-    function renderSemanticExercise() {
+    function renderSubTaskDoneCard({ message, nextTab, nextTabLabel, onRestart }) {
+        exerciseContainer.innerHTML = '';
+
+        const card = document.createElement('div');
+        card.style.background = 'var(--card-bg, rgba(255,255,255,0.05))';
+        card.style.padding = '2.5rem 1.5rem';
+        card.style.borderRadius = '16px';
+        card.style.textAlign = 'center';
+        card.style.border = '1px solid rgba(255,255,255,0.15)';
+        card.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+
+        const trophy = document.createElement('div');
+        trophy.textContent = '🏆';
+        trophy.style.fontSize = '3.5rem';
+        trophy.style.marginBottom = '0.75rem';
+
+        const msgTitle = document.createElement('h2');
+        msgTitle.innerHTML = message;
+        msgTitle.style.fontSize = '1.45rem';
+        msgTitle.style.marginBottom = '1.75rem';
+        msgTitle.style.color = '#ffffff';
+
+        const btnGroup = document.createElement('div');
+        btnGroup.style.display = 'flex';
+        btnGroup.style.justifyContent = 'center';
+        btnGroup.style.gap = '1rem';
+        btnGroup.style.flexWrap = 'wrap';
+
+        const restartBtn = document.createElement('button');
+        restartBtn.className = 'primary-btn';
+        restartBtn.style.background = 'rgba(255,255,255,0.12)';
+        restartBtn.style.border = '1px solid rgba(255,255,255,0.25)';
+        restartBtn.innerHTML = `↻ ${t('traen_btn_restart', 'Prøv igen')}`;
+        restartBtn.onclick = onRestart;
+
+        btnGroup.appendChild(restartBtn);
+
+        if (nextTab) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'primary-btn';
+            nextBtn.style.background = '#4caf50';
+            nextBtn.innerHTML = `${nextTabLabel}`;
+            nextBtn.onclick = () => {
+                clearActiveTimer();
+                currentTab = nextTab;
+                updateTabStyles();
+                renderActiveTab();
+            };
+            btnGroup.appendChild(nextBtn);
+        } else {
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'primary-btn';
+            menuBtn.style.background = 'var(--accent-color, #4a90e2)';
+            menuBtn.innerHTML = `← ${t('traen_btn_back_to_menu', 'Tilbage til menuen')}`;
+            menuBtn.onclick = () => {
+                clearActiveTimer();
+                navigateFn('traen_sporgsmal_menu');
+            };
+            btnGroup.appendChild(menuBtn);
+        }
+
+        card.appendChild(trophy);
+        card.appendChild(msgTitle);
+        card.appendChild(btnGroup);
+        exerciseContainer.appendChild(card);
+    }
+
+    // -------------------------------------------------------------
+    // SUCCESS SCREEN: HELE FLADEN GENNEMFØRT POKAL
+    // -------------------------------------------------------------
+    function renderGrandTrackDoneCard() {
+        exerciseContainer.innerHTML = '';
+
+        const card = document.createElement('div');
+        card.style.background = 'linear-gradient(145deg, rgba(255, 215, 0, 0.12), rgba(255, 255, 255, 0.05))';
+        card.style.padding = '3rem 1.5rem';
+        card.style.borderRadius = '18px';
+        card.style.textAlign = 'center';
+        card.style.border = '2px solid rgba(255, 215, 0, 0.4)';
+        card.style.boxShadow = '0 12px 40px rgba(255, 215, 0, 0.2)';
+
+        const trophy = document.createElement('div');
+        trophy.textContent = '🏆';
+        trophy.style.fontSize = '4.5rem';
+        trophy.style.marginBottom = '0.5rem';
+
+        const grandTitle = document.createElement('h2');
+        grandTitle.textContent = t('traen_track_done_title', '🏆 Kæmpe tillykke! Banen er gennemført!');
+        grandTitle.style.fontSize = '1.8rem';
+        grandTitle.style.color = '#ffd700';
+        grandTitle.style.marginBottom = '0.75rem';
+
+        const grandDesc = document.createElement('p');
+        const trackName = t(track.titleKey, track.defaultTitle);
+        grandDesc.textContent = t('traen_track_done_desc', 'Du har gennemført alle 3 opgaver i {track}: Hv-ord, ja/nej-spørgsmål og ordstilling.').replace('{track}', trackName);
+        grandDesc.style.fontSize = '1.15rem';
+        grandDesc.style.color = '#ffffff';
+        grandDesc.style.opacity = '0.95';
+        grandDesc.style.lineHeight = '1.5';
+        grandDesc.style.marginBottom = '2rem';
+
+        const btnGroup = document.createElement('div');
+        btnGroup.style.display = 'flex';
+        btnGroup.style.justifyContent = 'center';
+        btnGroup.style.gap = '1rem';
+        btnGroup.style.flexWrap = 'wrap';
+
+        const restartTrackBtn = document.createElement('button');
+        restartTrackBtn.className = 'primary-btn';
+        restartTrackBtn.style.background = 'rgba(255,255,255,0.15)';
+        restartTrackBtn.style.border = '2px solid rgba(255,255,255,0.3)';
+        restartTrackBtn.style.fontSize = '1.05rem';
+        restartTrackBtn.style.padding = '0.85rem 1.4rem';
+        restartTrackBtn.innerHTML = `↻ ${t('traen_btn_restart_track', 'Prøv banen igen')}`;
+        restartTrackBtn.onclick = () => {
+            clearActiveTimer();
+            completedTabs.clear();
+            currentTab = 1;
+            updateTabStyles();
+            renderActiveTab();
+        };
+
+        const menuBtn = document.createElement('button');
+        menuBtn.className = 'primary-btn';
+        menuBtn.style.background = 'var(--accent-color, #4a90e2)';
+        menuBtn.style.fontSize = '1.05rem';
+        menuBtn.style.padding = '0.85rem 1.4rem';
+        menuBtn.innerHTML = `← ${t('traen_btn_back_to_menu', 'Tilbage til menuen')}`;
+        menuBtn.onclick = () => {
+            clearActiveTimer();
+            navigateFn('traen_sporgsmal_menu');
+        };
+
+        btnGroup.appendChild(restartTrackBtn);
+        btnGroup.appendChild(menuBtn);
+
+        card.appendChild(trophy);
+        card.appendChild(grandTitle);
+        card.appendChild(grandDesc);
+        card.appendChild(btnGroup);
+        exerciseContainer.appendChild(card);
+    }
+
+    // -------------------------------------------------------------
+    // EXERCISE 1: HV-ORD
+    // -------------------------------------------------------------
+    function renderHvWordsExercise() {
         clearActiveTimer();
         exerciseContainer.innerHTML = '';
         const questions = track.semantic || [];
@@ -144,46 +297,19 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             exerciseContainer.innerHTML = '';
 
             if (curIdx >= questions.length) {
-                // Done screen
-                const doneCard = document.createElement('div');
-                doneCard.style.background = 'var(--card-bg, rgba(255,255,255,0.05))';
-                doneCard.style.padding = '2.5rem 1.5rem';
-                doneCard.style.borderRadius = '16px';
-                doneCard.style.textAlign = 'center';
-                doneCard.style.border = '1px solid rgba(255,255,255,0.1)';
+                completedTabs.add(1);
+                updateTabStyles();
 
-                const doneTitle = document.createElement('h2');
-                doneTitle.innerHTML = t('traen_semantic_done_title', '🏆 Fantastisk! Du har gennemført den semantiske træning!');
-                doneTitle.style.marginBottom = '1.5rem';
-                doneTitle.style.fontSize = '1.5rem';
-
-                const btnGroup = document.createElement('div');
-                btnGroup.style.display = 'flex';
-                btnGroup.style.justifyContent = 'center';
-                btnGroup.style.gap = '1rem';
-                btnGroup.style.flexWrap = 'wrap';
-
-                const restartBtn = document.createElement('button');
-                restartBtn.className = 'primary-btn';
-                restartBtn.innerHTML = `↻ ${t('traen_btn_restart', 'Prøv igen')}`;
-                restartBtn.onclick = () => { curIdx = 0; showQ(); };
-
-                const nextTabBtn = document.createElement('button');
-                nextTabBtn.className = 'primary-btn';
-                nextTabBtn.style.background = '#4caf50';
-                nextTabBtn.innerHTML = `${t('traen_btn_next_exercise', 'Videre til Ja/Nej-spørgsmål')} →`;
-                nextTabBtn.onclick = () => {
-                    clearActiveTimer();
-                    currentTab = 2;
-                    updateTabStyles();
-                    renderActiveTab();
-                };
-
-                btnGroup.appendChild(restartBtn);
-                btnGroup.appendChild(nextTabBtn);
-                doneCard.appendChild(doneTitle);
-                doneCard.appendChild(btnGroup);
-                exerciseContainer.appendChild(doneCard);
+                if (completedTabs.size === 3) {
+                    renderGrandTrackDoneCard();
+                } else {
+                    renderSubTaskDoneCard({
+                        message: t('traen_done_hv', '🏆 Flot klaret! Du har gennemført Hv-ord.'),
+                        nextTab: 2,
+                        nextTabLabel: `${t('traen_btn_next_to_yesno', 'Videre til Ja/Nej-spørgsmål →')}`,
+                        onRestart: () => { curIdx = 0; showQ(); }
+                    });
+                }
                 return;
             }
 
@@ -207,7 +333,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             badge.style.padding = '0.2rem 0.6rem';
             badge.style.borderRadius = '20px';
             badge.style.fontSize = '0.85rem';
-            badge.textContent = t('traen_badge_semantic', 'Semantisk (Hv-ord)');
+            badge.textContent = t('traen_badge_semantic', 'Hv-ord');
 
             progress.appendChild(progressText);
             progress.appendChild(badge);
@@ -390,46 +516,19 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             exerciseContainer.innerHTML = '';
 
             if (curIdx >= questions.length) {
-                // Done screen
-                const doneCard = document.createElement('div');
-                doneCard.style.background = 'var(--card-bg, rgba(255,255,255,0.05))';
-                doneCard.style.padding = '2.5rem 1.5rem';
-                doneCard.style.borderRadius = '16px';
-                doneCard.style.textAlign = 'center';
-                doneCard.style.border = '1px solid rgba(255,255,255,0.1)';
+                completedTabs.add(2);
+                updateTabStyles();
 
-                const doneTitle = document.createElement('h2');
-                doneTitle.innerHTML = t('traen_yesno_done_title', '🏆 Godt gået! Du har mestret ja/nej-spørgsmål!');
-                doneTitle.style.marginBottom = '1.5rem';
-                doneTitle.style.fontSize = '1.5rem';
-
-                const btnGroup = document.createElement('div');
-                btnGroup.style.display = 'flex';
-                btnGroup.style.justifyContent = 'center';
-                btnGroup.style.gap = '1rem';
-                btnGroup.style.flexWrap = 'wrap';
-
-                const restartBtn = document.createElement('button');
-                restartBtn.className = 'primary-btn';
-                restartBtn.innerHTML = `↻ ${t('traen_btn_restart', 'Prøv igen')}`;
-                restartBtn.onclick = () => { curIdx = 0; showQ(); };
-
-                const nextTabBtn = document.createElement('button');
-                nextTabBtn.className = 'primary-btn';
-                nextTabBtn.style.background = '#4caf50';
-                nextTabBtn.innerHTML = `${t('traen_btn_next_exercise', 'Videre til Ordstilling')} →`;
-                nextTabBtn.onclick = () => {
-                    clearActiveTimer();
-                    currentTab = 3;
-                    updateTabStyles();
-                    renderActiveTab();
-                };
-
-                btnGroup.appendChild(restartBtn);
-                btnGroup.appendChild(nextTabBtn);
-                doneCard.appendChild(doneTitle);
-                doneCard.appendChild(btnGroup);
-                exerciseContainer.appendChild(doneCard);
+                if (completedTabs.size === 3) {
+                    renderGrandTrackDoneCard();
+                } else {
+                    renderSubTaskDoneCard({
+                        message: t('traen_done_yesno', '🏆 Flot klaret! Du har gennemført Ja/Nej-spørgsmål.'),
+                        nextTab: 3,
+                        nextTabLabel: `${t('traen_btn_next_to_wordorder', 'Videre til Ordstilling →')}`,
+                        onRestart: () => { curIdx = 0; showQ(); }
+                    });
+                }
                 return;
             }
 
@@ -636,44 +735,19 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             exerciseContainer.innerHTML = '';
 
             if (curIdx >= sentences.length) {
-                // Done screen
-                const doneCard = document.createElement('div');
-                doneCard.style.background = 'var(--card-bg, rgba(255,255,255,0.05))';
-                doneCard.style.padding = '2.5rem 1.5rem';
-                doneCard.style.borderRadius = '16px';
-                doneCard.style.textAlign = 'center';
-                doneCard.style.border = '1px solid rgba(255,255,255,0.1)';
+                completedTabs.add(3);
+                updateTabStyles();
 
-                const doneTitle = document.createElement('h2');
-                doneTitle.innerHTML = t('traen_wordorder_done_title', '🏆 Superflot! Du har bygget alle spørgsmålene i korrekt ordstilling!');
-                doneTitle.style.marginBottom = '1.5rem';
-                doneTitle.style.fontSize = '1.5rem';
-
-                const btnGroup = document.createElement('div');
-                btnGroup.style.display = 'flex';
-                btnGroup.style.justifyContent = 'center';
-                btnGroup.style.gap = '1rem';
-                btnGroup.style.flexWrap = 'wrap';
-
-                const restartBtn = document.createElement('button');
-                restartBtn.className = 'primary-btn';
-                restartBtn.innerHTML = `↻ ${t('traen_btn_restart', 'Prøv igen')}`;
-                restartBtn.onclick = () => { curIdx = 0; showPuzzle(); };
-
-                const menuBtn = document.createElement('button');
-                menuBtn.className = 'primary-btn';
-                menuBtn.style.background = 'var(--accent-color, #4a90e2)';
-                menuBtn.innerHTML = `${t('traen_btn_back_to_menu', 'Tilbage til menuen')} ←`;
-                menuBtn.onclick = () => {
-                    clearActiveTimer();
-                    navigateFn('traen_sporgsmal_menu');
-                };
-
-                btnGroup.appendChild(restartBtn);
-                btnGroup.appendChild(menuBtn);
-                doneCard.appendChild(doneTitle);
-                doneCard.appendChild(btnGroup);
-                exerciseContainer.appendChild(doneCard);
+                if (completedTabs.size === 3) {
+                    renderGrandTrackDoneCard();
+                } else {
+                    renderSubTaskDoneCard({
+                        message: t('traen_done_wordorder', '🏆 Flot klaret! Du har bygget alle spørgsmålene i korrekt ordstilling.'),
+                        nextTab: 1,
+                        nextTabLabel: `${t('traen_btn_next_to_hv', 'Videre til Hv-ord →')}`,
+                        onRestart: () => { curIdx = 0; showPuzzle(); }
+                    });
+                }
                 return;
             }
 
@@ -838,7 +912,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
     function renderActiveTab() {
         clearActiveTimer();
         if (currentTab === 1) {
-            renderSemanticExercise();
+            renderHvWordsExercise();
         } else if (currentTab === 2) {
             renderYesNoExercise();
         } else if (currentTab === 3) {

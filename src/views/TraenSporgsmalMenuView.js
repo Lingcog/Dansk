@@ -39,7 +39,7 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
 
     const subtitle = document.createElement('p');
     subtitle.className = 'subtitle';
-    subtitle.textContent = t('sporgsmal_target_menu_desc', 'Vælg en træningsbane for at træne semantik (Hv-ord), ja/nej-spørgsmål og ordstilling.');
+    subtitle.textContent = t('sporgsmal_target_menu_desc', 'Vælg en træningsbane for at træne Hv-ord, ja/nej-spørgsmål og ordstilling.');
     subtitle.style.color = 'var(--text-muted, #aaa)';
     subtitle.style.fontSize = '1.15rem';
 
@@ -115,7 +115,7 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
         pillsContainer.style.marginTop = 'auto';
 
         const exercises = [
-            { tab: 1, icon: '🎯', labelKey: 'traen_badge_semantic', defaultLabel: '1. Semantisk (Hv-ord)', color: 'rgba(74, 144, 226, 0.15)', border: 'rgba(74, 144, 226, 0.4)', text: '#90caf9' },
+            { tab: 1, icon: '🎯', labelKey: 'traen_badge_semantic', defaultLabel: '1. Hv-ord', color: 'rgba(74, 144, 226, 0.15)', border: 'rgba(74, 144, 226, 0.4)', text: '#90caf9' },
             { tab: 2, icon: '❓', labelKey: 'traen_badge_yesno', defaultLabel: '2. Ja/Nej-spørgsmål', color: 'rgba(76, 175, 80, 0.15)', border: 'rgba(76, 175, 80, 0.4)', text: '#a5d6a7' },
             { tab: 3, icon: '🧩', labelKey: 'traen_badge_wordorder', defaultLabel: '3. Ordstilling (Puslespil)', color: 'rgba(255, 152, 0, 0.15)', border: 'rgba(255, 152, 0, 0.4)', text: '#ffcc80' }
         ];

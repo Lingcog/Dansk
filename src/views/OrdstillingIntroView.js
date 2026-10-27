@@ -935,34 +935,64 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         setup5StepPuzzleExercise(puzzleContainer);
     }
 
-    // Step-by-step 5-question builder
+    // Step-by-step 5-question builder (with separated verb & object around the central adverb)
     function setup5StepBuilder(container) {
+        const verbDefaultObject = {
+            "cykler": "",
+            "løber": "",
+            "kører": "",
+            "arbejder": "",
+            "drikker": "kaffe",
+            "spiser": "mad",
+            "læser": "en bog"
+        };
+
+        const objectDefaultVerb = {
+            "": null,
+            "kaffe": "drikker",
+            "mad": "spiser",
+            "aftensmad": "spiser",
+            "en bog": "læser"
+        };
+
         const categories = [
             {
+                key: "subj",
                 q: getTranslation('part2_adv_builder_q1'),
                 colorClass: "step-green",
                 grammar: getTranslation('part2_adv_g1'),
                 options: ["En kvinde", "En mand", "En hund", "En dreng", "En pige", "Bussen", "Lægen", "Familien"]
             },
             {
+                key: "verb",
                 q: getTranslation('part2_adv_builder_q2'),
                 colorClass: "step-red",
                 grammar: getTranslation('part2_adv_g2'),
-                options: ["cykler", "løber", "drikker kaffe", "spiser mad", "læser en bog", "kører", "arbejder"]
+                options: ["cykler", "løber", "drikker", "spiser", "læser", "kører", "arbejder"]
             },
             {
+                key: "adv",
                 q: getTranslation('part2_adv_builder_q3'),
                 colorClass: "step-blue",
                 grammar: getTranslation('part2_adv_g3'),
                 options: ["ikke", "faktisk", "vist", "altid", "aldrig", "ofte", "gerne", "måske"]
             },
             {
+                key: "obj",
+                q: getTranslation('part2_adv_builder_q_obj') || "4. Hvad drikker/spiser/læser personen? (Objekt efter centraladverbiet)",
+                colorClass: "step-green",
+                grammar: getTranslation('part2_adv_g_obj') || "Substantiv (objekt)",
+                options: ["", "kaffe", "mad", "aftensmad", "en bog"]
+            },
+            {
+                key: "place",
                 q: getTranslation('part2_adv_builder_q4'),
                 colorClass: "step-yellow",
                 grammar: getTranslation('part2_adv_g4'),
                 options: ["på gaden", "i parken", "på caféen", "i skolen", "i haven", "i køkkenet"]
             },
             {
+                key: "time",
                 q: getTranslation('part2_adv_builder_q5'),
                 colorClass: "step-gray",
                 grammar: getTranslation('part2_adv_g5'),
@@ -970,7 +1000,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
             }
         ];
 
-        let selections = ["En kvinde", "cykler", "ikke", "på gaden", "om morgenen"];
+        let selections = ["En kvinde", "cykler", "ikke", "", "på gaden", "om morgenen"];
 
         const card = document.createElement('div');
         card.className = 'step-builder-card';
@@ -978,24 +1008,39 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         const outputBox = document.createElement('div');
         outputBox.className = 'builder-live-sentence';
 
+        const questionsList = document.createElement('div');
+        questionsList.className = 'builder-questions-list';
+
+        function syncChipSelections() {
+            const rows = questionsList.querySelectorAll('.builder-q-row');
+            rows.forEach((row, idx) => {
+                row.querySelectorAll('.chip-btn').forEach(btn => {
+                    btn.classList.toggle('selected', btn.dataset.val === selections[idx]);
+                });
+            });
+        }
+
         function updateLiveSentence() {
+            const hasObj = Boolean(selections[3]);
+            const objSpan = hasObj ? ` <span class="word-green">${selections[3]}</span>` : '';
+            const spokenSentence = hasObj
+                ? `${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]} ${selections[4]} ${selections[5]}`
+                : `${selections[0]} ${selections[1]} ${selections[2]} ${selections[4]} ${selections[5]}`;
+
             outputBox.innerHTML = `
                 <div class="live-label">${getTranslation('part2_adv_builder_live_label')}</div>
                 <div class="live-text">
                     <span class="word-green">${selections[0]}</span> 
                     <span class="word-red">${selections[1]}</span> 
-                    <span class="word-blue">${selections[2]}</span> 
-                    <span class="word-yellow">${selections[3]}</span> 
-                    <span class="word-gray">${selections[4]}</span>.
+                    <span class="word-blue">${selections[2]}</span>${objSpan} 
+                    <span class="word-yellow">${selections[4]}</span> 
+                    <span class="word-gray">${selections[5]}</span>.
                 </div>
                 <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
             `;
             const listenBtn = outputBox.querySelector('.listen-btn-small');
-            listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]} ${selections[4]}`);
+            listenBtn.onclick = () => speakDanish(spokenSentence);
         }
-
-        const questionsList = document.createElement('div');
-        questionsList.className = 'builder-questions-list';
 
         categories.forEach((cat, catIdx) => {
             const qRow = document.createElement('div');
@@ -1012,16 +1057,30 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
             cat.options.forEach(opt => {
                 const optBtn = document.createElement('button');
                 optBtn.className = `chip-btn ${selections[catIdx] === opt ? 'selected' : ''}`;
-                optBtn.textContent = opt;
-                const wordTrans = ordstillingPart2BuilderWordTranslations[getLang()]?.[opt];
+                optBtn.dataset.val = opt;
+                const displayLabel = opt === "" ? (getTranslation('part2_adv_no_obj') || "— (intet objekt)") : opt;
+                optBtn.textContent = displayLabel;
+                const lookupKey = opt === "" ? "— (intet objekt)" : opt;
+                const wordTrans = ordstillingPart2BuilderWordTranslations[getLang()]?.[lookupKey];
                 if (wordTrans && getLang() !== 'da') {
                     optBtn.title = wordTrans;
                 }
 
                 optBtn.onclick = () => {
                     selections[catIdx] = opt;
-                    qRow.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('selected'));
-                    optBtn.classList.add('selected');
+                    if (cat.key === "verb") {
+                        // Automatically pair transitive verbs with their natural object after the central adverb
+                        selections[3] = verbDefaultObject[opt] ?? "";
+                    } else if (cat.key === "obj") {
+                        // Ensure a matching transitive verb when an object is chosen
+                        const matchingVerb = objectDefaultVerb[opt];
+                        if (matchingVerb) {
+                            selections[1] = matchingVerb;
+                        } else if (opt === "" && ["drikker", "spiser", "læser"].includes(selections[1])) {
+                            selections[1] = "cykler";
+                        }
+                    }
+                    syncChipSelections();
                     updateLiveSentence();
                 };
                 optionsWrapper.appendChild(optBtn);
@@ -1038,7 +1097,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         updateLiveSentence();
     }
 
-    // Puzzle Exercise for 5 steps (10 tasks)
+    // Puzzle Exercise for Part 2 (10 tasks: 5-step for intransitive verbs, 6-step when verb + object are split around central adverb)
     function setup5StepPuzzleExercise(container) {
         const tasks = [
             {
@@ -1046,32 +1105,32 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 scrambled: ["på gaden", "ikke", "En kvinde", "om morgenen", "cykler"]
             },
             {
-                correct: ["En mand", "drikker kaffe", "faktisk", "på caféen", "om morgenen"],
-                scrambled: ["faktisk", "på caféen", "drikker kaffe", "om morgenen", "En mand"]
+                correct: ["En mand", "drikker", "faktisk", "kaffe", "på caféen", "om morgenen"],
+                scrambled: ["faktisk", "kaffe", "på caféen", "drikker", "om morgenen", "En mand"]
             },
             {
                 correct: ["En hund", "løber", "altid", "i parken", "hver dag"],
                 scrambled: ["i parken", "altid", "En hund", "hver dag", "løber"]
             },
             {
-                correct: ["En pige", "læser en bog", "gerne", "i skolen", "i dag"],
-                scrambled: ["gerne", "i dag", "En pige", "læser en bog", "i skolen"]
+                correct: ["En pige", "læser", "gerne", "en bog", "i skolen", "i dag"],
+                scrambled: ["gerne", "i dag", "en bog", "En pige", "læser", "i skolen"]
             },
             {
                 correct: ["Bussen", "kører", "aldrig", "på gaden", "om natten"],
                 scrambled: ["om natten", "aldrig", "kører", "på gaden", "Bussen"]
             },
             {
-                correct: ["En familie", "spiser aftensmad", "ofte", "i køkkenet", "om aftenen"],
-                scrambled: ["ofte", "spiser aftensmad", "i køkkenet", "En familie", "om aftenen"]
+                correct: ["En familie", "spiser", "ofte", "aftensmad", "i køkkenet", "om aftenen"],
+                scrambled: ["ofte", "aftensmad", "i køkkenet", "spiser", "En familie", "om aftenen"]
             },
             {
-                correct: ["En dreng", "spiller fodbold", "vist", "i haven", "om eftermiddagen"],
-                scrambled: ["i haven", "vist", "En dreng", "spiller fodbold", "om eftermiddagen"]
+                correct: ["En dreng", "spiller", "vist", "fodbold", "i haven", "om eftermiddagen"],
+                scrambled: ["i haven", "vist", "fodbold", "En dreng", "spiller", "om eftermiddagen"]
             },
             {
-                correct: ["Lægen", "taler i telefon", "måske", "på hospitalet", "lige nu"],
-                scrambled: ["måske", "lige nu", "taler i telefon", "på hospitalet", "Lægen"]
+                correct: ["Lægen", "taler", "måske", "i telefon", "på hospitalet", "lige nu"],
+                scrambled: ["måske", "lige nu", "i telefon", "taler", "på hospitalet", "Lægen"]
             },
             {
                 correct: ["En kat", "sover", "altid", "i sengen", "om dagen"],
@@ -1084,7 +1143,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         ];
 
         let currentTaskIdx = 0;
-        let userSlots = [null, null, null, null, null];
+        let userSlots = [];
         const completedTasks = new Set();
 
         const puzzleWrapper = document.createElement('div');
@@ -1092,9 +1151,10 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
 
         function renderCurrentTask() {
             puzzleWrapper.innerHTML = '';
-            userSlots = [null, null, null, null, null];
-
             const task = tasks[currentTaskIdx];
+            const numSlots = task.correct.length;
+            const hasObjSlot = numSlots === 6;
+            userSlots = Array(numSlots).fill(null);
 
             const header = document.createElement('div');
             header.className = 'puzzle-header';
@@ -1122,9 +1182,12 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
 
             const guide = document.createElement('div');
             guide.className = 'puzzle-guide';
+            const guideSubText = hasObjSlot
+                ? (getTranslation('part2_adv_puzzle_guide_sub_6') || '1. Hvem ➔ 2. Verbum ➔ 3. Centraladverbium ➔ 4. Objekt ➔ 5. Sted ➔ 6. Tid')
+                : getTranslation('part2_adv_puzzle_guide_sub');
             guide.innerHTML = `
                 <div>${getTranslation('part2_adv_puzzle_guide')}</div>
-                <small>${getTranslation('part2_adv_puzzle_guide_sub')}</small>
+                <small>${guideSubText}</small>
             `;
             header.appendChild(guide);
 
@@ -1132,23 +1195,41 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
 
             // Slots display
             const slotsContainer = document.createElement('div');
-            slotsContainer.className = 'puzzle-slots puzzle-slots-5';
+            slotsContainer.className = `puzzle-slots ${hasObjSlot ? 'puzzle-slots-6' : 'puzzle-slots-5'}`;
 
-            const slotPrompts = [
-                { text: getTranslation('part2_adv_slot_hint_1'), grammar: getTranslation('part2_adv_g1') },
-                { text: getTranslation('part2_adv_slot_hint_2'), grammar: getTranslation('part2_adv_g2') },
-                { text: getTranslation('part2_adv_slot_hint_3'), grammar: getTranslation('part2_adv_g3') },
-                { text: getTranslation('part2_adv_slot_hint_4'), grammar: getTranslation('part2_adv_g4') },
-                { text: getTranslation('part2_adv_slot_hint_5'), grammar: getTranslation('part2_adv_g5') }
-            ];
+            const slotPrompts = hasObjSlot
+                ? [
+                    { text: getTranslation('part2_adv_slot_hint_1'), grammar: getTranslation('part2_adv_g1') },
+                    { text: getTranslation('part2_adv_slot_hint_2'), grammar: getTranslation('part2_adv_g2') },
+                    { text: getTranslation('part2_adv_slot_hint_3'), grammar: getTranslation('part2_adv_g3') },
+                    { text: getTranslation('part2_adv_slot_hint_obj') || '4. Hvad? (Objekt)', grammar: getTranslation('part2_adv_g_obj') || 'Substantiv (objekt)' },
+                    { text: (getTranslation('part2_adv_slot_hint_4') || '4. Hvor?').replace(/^4\./, '5.').replace(/^۴\./, '۵.'), grammar: getTranslation('part2_adv_g4') },
+                    { text: (getTranslation('part2_adv_slot_hint_5') || '5. Hvornår?').replace(/^5\./, '6.').replace(/^۵\./, '۶.'), grammar: getTranslation('part2_adv_g5') }
+                ]
+                : [
+                    { text: getTranslation('part2_adv_slot_hint_1'), grammar: getTranslation('part2_adv_g1') },
+                    { text: getTranslation('part2_adv_slot_hint_2'), grammar: getTranslation('part2_adv_g2') },
+                    { text: getTranslation('part2_adv_slot_hint_3'), grammar: getTranslation('part2_adv_g3') },
+                    { text: getTranslation('part2_adv_slot_hint_4'), grammar: getTranslation('part2_adv_g4') },
+                    { text: getTranslation('part2_adv_slot_hint_5'), grammar: getTranslation('part2_adv_g5') }
+                ];
 
-            const slotColorClasses = [
-                "slot5-green",
-                "slot5-red",
-                "slot5-blue",
-                "slot5-yellow",
-                "slot5-gray"
-            ];
+            const slotColorClasses = hasObjSlot
+                ? [
+                    "slot5-green",
+                    "slot5-red",
+                    "slot5-blue",
+                    "slot5-green",
+                    "slot5-yellow",
+                    "slot5-gray"
+                ]
+                : [
+                    "slot5-green",
+                    "slot5-red",
+                    "slot5-blue",
+                    "slot5-yellow",
+                    "slot5-gray"
+                ];
 
             slotPrompts.forEach((promptItem, idx) => {
                 const slot = document.createElement('div');
@@ -1260,7 +1341,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                         <button class="retry-task-btn" id="puzzle-5-retry-btn">${getTranslation('part1_retry')}</button>
                     `;
                     feedbackBox.querySelector('#puzzle-5-retry-btn').onclick = () => {
-                        userSlots = [null, null, null, null, null];
+                        userSlots = Array(numSlots).fill(null);
                         feedbackBox.innerHTML = '';
                         updateSlotsAndBank();
                     };

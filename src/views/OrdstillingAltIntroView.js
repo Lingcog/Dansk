@@ -1401,7 +1401,7 @@ function setupKonjunktionStepBuilder(container) {
             q: `2. ${getTranslation('konj_q2')} (${getTranslation('konj_builder_hint_2')})`,
             colorClass: "step-red",
             grammar: getTranslation('konj_g2'),
-            options: ["cykler", "løber", "arbejder", "kører", "venter", "drikker kaffe"]
+            options: ["cykler", "løber", "arbejder", "kører", "venter", "sover"]
         },
         {
             q: `3. ${getTranslation('konj_q3')} (${getTranslation('konj_builder_hint_3')})`,
@@ -1417,7 +1417,7 @@ function setupKonjunktionStepBuilder(container) {
         }
     ];
 
-    let selections = ["Da det regnede,", "cyklede", "en kvinde", "på gaden"];
+    let selections = ["Da det regnede,", "cykler", "en kvinde", "på gaden"];
 
     const card = document.createElement('div');
     card.className = 'step-builder-card';

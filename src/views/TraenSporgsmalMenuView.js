@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 import { targetTrainingTracks } from '../utils/target_training_data.js';
+import { baseUrl } from '../utils/config.js';
 
 export function renderTraenSporgsmalMenuView(container, navigateFn) {
     const t = (key, fallback) => {
@@ -81,6 +82,21 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
 
         // Header portion
         const cardHeader = document.createElement('div');
+
+        if (track.coverImage) {
+            const cardImg = document.createElement('img');
+            cardImg.src = track.coverImage.startsWith('http') || track.coverImage.startsWith(baseUrl)
+                ? track.coverImage
+                : `${baseUrl}${track.coverImage.replace(/^\//, '')}`;
+            cardImg.alt = t(track.titleKey, track.defaultTitle);
+            cardImg.style.width = '100%';
+            cardImg.style.height = '140px';
+            cardImg.style.objectFit = 'cover';
+            cardImg.style.borderRadius = '10px';
+            cardImg.style.marginBottom = '0.85rem';
+            cardImg.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)';
+            cardHeader.appendChild(cardImg);
+        }
 
         const cardTitle = document.createElement('h2');
         cardTitle.innerHTML = `${track.icon} ${t(track.titleKey, track.defaultTitle)}`;

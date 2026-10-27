@@ -25,7 +25,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_1",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en ting eller genstand."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en ting eller genstand.",
+        "image": "assets/anna_shopping_vector.png"
       },
       {
         "situationKey": "anna_sit_2",
@@ -44,7 +45,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor meget",
         "explanationKey": "hv_exp_2",
-        "explanationFallback": "Vi bruger \"Hvor meget\", når vi spørger om pris eller en mængde, der ikke kan tælles."
+        "explanationFallback": "Vi bruger \"Hvor meget\", når vi spørger om pris eller en mængde, der ikke kan tælles.",
+        "image": "assets/anna_paying_cash.png"
       },
       {
         "situationKey": "anna_sit_3",
@@ -63,7 +65,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor",
         "explanationKey": "hv_exp_3",
-        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om et sted eller en position."
+        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om et sted eller en position.",
+        "image": "assets/anna_supermarket.png"
       },
       {
         "situationKey": "anna_sit_4",
@@ -82,7 +85,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvornår",
         "explanationKey": "hv_exp_4",
-        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tid eller et tidspunkt."
+        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tid eller et tidspunkt.",
+        "image": "assets/anna_time_14.png"
       },
       {
         "situationKey": "anna_sit_5",
@@ -101,7 +105,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvordan",
         "explanationKey": "hv_exp_5",
-        "explanationFallback": "Vi bruger \"Hvordan\", når vi spørger om måde, middel eller fremgangsmåde."
+        "explanationFallback": "Vi bruger \"Hvordan\", når vi spørger om måde, middel eller fremgangsmåde.",
+        "image": "assets/anna_paying_card.png"
       },
       {
         "situationKey": "anna_sit_6",
@@ -120,7 +125,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvordan",
         "explanationKey": "hv_exp_6",
-        "explanationFallback": "Vi bruger \"Hvordan\", når vi spørger om transportmiddel og måde."
+        "explanationFallback": "Vi bruger \"Hvordan\", når vi spørger om transportmiddel og måde.",
+        "image": "assets/anna_driving.png"
       },
       {
         "situationKey": "anna_sit_7",
@@ -139,7 +145,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvem",
         "explanationKey": "hv_exp_7",
-        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om en person eller personer."
+        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om en person eller personer.",
+        "image": "assets/anna_with_friend.png"
       }
     ],
     "yesNo": [
@@ -160,7 +167,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Køber",
         "explanationKey": "jn_exp_anna_1",
-        "explanationFallback": "I ja/nej-spørgsmål på dansk starter vi direkte med verbet: \"Køber Anna frugt?\". Vi bruger ikke \"gør\" eller \"er\"."
+        "explanationFallback": "I ja/nej-spørgsmål på dansk starter vi direkte med verbet: \"Køber Anna frugt?\". Vi bruger ikke \"gør\" eller \"er\".",
+        "image": "assets/anna_shopping_vector.png"
       },
       {
         "situationKey": "anna_sit_2",
@@ -179,7 +187,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Betaler",
         "explanationKey": "jn_exp_anna_2",
-        "explanationFallback": "Verbet \"Betaler\" står på plads 1 i et ja/nej-spørgsmål."
+        "explanationFallback": "Verbet \"Betaler\" står på plads 1 i et ja/nej-spørgsmål.",
+        "image": "assets/anna_paying_cash.png"
       },
       {
         "situationKey": "anna_sit_3",
@@ -198,7 +207,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Køber",
         "explanationKey": "jn_exp_anna_3",
-        "explanationFallback": "\"Køber\" er verbet og står først: \"Køber Anna ind i Netto?\"."
+        "explanationFallback": "\"Køber\" er verbet og står først: \"Køber Anna ind i Netto?\".",
+        "image": "assets/anna_supermarket.png"
       },
       {
         "situationKey": "anna_sit_4",
@@ -217,7 +227,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Køber",
         "explanationKey": "jn_exp_anna_4",
-        "explanationFallback": "Verbet \"Køber\" står forrest i ja/nej-spørgsmålet."
+        "explanationFallback": "Verbet \"Køber\" står forrest i ja/nej-spørgsmålet.",
+        "image": "assets/anna_time_14.png"
       },
       {
         "situationKey": "anna_sit_5",
@@ -236,7 +247,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Betaler",
         "explanationKey": "jn_exp_anna_5",
-        "explanationFallback": "Verbet \"Betaler\" indleder spørgsmålet."
+        "explanationFallback": "Verbet \"Betaler\" indleder spørgsmålet.",
+        "image": "assets/anna_paying_card.png"
       },
       {
         "situationKey": "anna_sit_6",
@@ -255,7 +267,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Kører",
         "explanationKey": "jn_exp_anna_6",
-        "explanationFallback": "Verbet \"Kører\" står på plads 1: \"Kører Anna i bil?\"."
+        "explanationFallback": "Verbet \"Kører\" står på plads 1: \"Kører Anna i bil?\".",
+        "image": "assets/anna_driving.png"
       },
       {
         "situationKey": "anna_sit_7",
@@ -274,7 +287,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Køber",
         "explanationKey": "jn_exp_anna_7",
-        "explanationFallback": "Verbet \"Køber\" står på plads 1: \"Køber Anna ind alene?\"."
+        "explanationFallback": "Verbet \"Køber\" står på plads 1: \"Køber Anna ind alene?\".",
+        "image": "assets/anna_with_friend.png"
       }
     ],
     "wordOrder": [
@@ -292,6 +306,16 @@ export const targetTrainingTracks = [
       "Kører Anna i bil?",
       "Hvem køber Anna ind sammen med?",
       "Køber Anna ind alene?"
+    ],
+    "coverImage": "assets/anna_shopping_vector.png",
+    "images": [
+      "assets/anna_shopping_vector.png",
+      "assets/anna_paying_cash.png",
+      "assets/anna_supermarket.png",
+      "assets/anna_time_14.png",
+      "assets/anna_paying_card.png",
+      "assets/anna_driving.png",
+      "assets/anna_with_friend.png"
     ]
   },
   {
@@ -319,7 +343,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvornår",
         "explanationKey": "hv_exp_time",
-        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om et tidspunkt."
+        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om et tidspunkt.",
+        "image": "assets/sara_time_18.png"
       },
       {
         "situationKey": "sara_sit_2",
@@ -338,7 +363,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvem",
         "explanationKey": "hv_exp_person",
-        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om personer (gæsterne)."
+        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om personer (gæsterne).",
+        "image": "assets/sara_friends.png"
       },
       {
         "situationKey": "sara_sit_3",
@@ -357,7 +383,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en ting eller gave."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en ting eller gave.",
+        "image": "assets/sara_phone.png"
       },
       {
         "situationKey": "sara_sit_4",
@@ -376,7 +403,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om maden eller serveringen."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om maden eller serveringen.",
+        "image": "assets/sara_cake.png"
       },
       {
         "situationKey": "sara_sit_5",
@@ -395,7 +423,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor",
         "explanationKey": "hv_exp_place",
-        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om stedet (i lejligheden)."
+        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om stedet (i lejligheden).",
+        "image": "assets/sara_apartment.png"
       },
       {
         "situationKey": "sara_sit_6",
@@ -414,7 +443,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om interesser eller emner."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om interesser eller emner.",
+        "image": "assets/sara_music.png"
       },
       {
         "situationKey": "sara_sit_7",
@@ -433,7 +463,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvornår",
         "explanationKey": "hv_exp_time",
-        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om et tidspunkt."
+        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om et tidspunkt.",
+        "image": "assets/sara_time_23.png"
       }
     ],
     "yesNo": [
@@ -454,7 +485,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Begynder",
         "explanationKey": "jn_exp_sara_1",
-        "explanationFallback": "Verbet \"Begynder\" står på plads 1 i et ja/nej-spørgsmål."
+        "explanationFallback": "Verbet \"Begynder\" står på plads 1 i et ja/nej-spørgsmål.",
+        "image": "assets/sara_time_18.png"
       },
       {
         "situationKey": "sara_sit_2",
@@ -473,7 +505,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Inviterer",
         "explanationKey": "jn_exp_sara_2",
-        "explanationFallback": "Verbet \"Inviterer\" indleder spørgsmålet."
+        "explanationFallback": "Verbet \"Inviterer\" indleder spørgsmålet.",
+        "image": "assets/sara_friends.png"
       },
       {
         "situationKey": "sara_sit_3",
@@ -492,7 +525,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Vil",
         "explanationKey": "jn_exp_sara_3",
-        "explanationFallback": "Hjælpeverbet \"Vil\" står på plads 1: \"Vil Sara have en ny telefon?\"."
+        "explanationFallback": "Hjælpeverbet \"Vil\" står på plads 1: \"Vil Sara have en ny telefon?\".",
+        "image": "assets/sara_phone.png"
       },
       {
         "situationKey": "sara_sit_4",
@@ -511,7 +545,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Serverer",
         "explanationKey": "jn_exp_sara_4",
-        "explanationFallback": "Verbet \"Serverer\" står forrest i spørgsmålet."
+        "explanationFallback": "Verbet \"Serverer\" står forrest i spørgsmålet.",
+        "image": "assets/sara_cake.png"
       },
       {
         "situationKey": "sara_sit_5",
@@ -530,7 +565,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Holder",
         "explanationKey": "jn_exp_sara_5",
-        "explanationFallback": "Verbet \"Holder\" står på plads 1."
+        "explanationFallback": "Verbet \"Holder\" står på plads 1.",
+        "image": "assets/sara_apartment.png"
       },
       {
         "situationKey": "sara_sit_6",
@@ -549,7 +585,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Elsker",
         "explanationKey": "jn_exp_sara_6",
-        "explanationFallback": "Verbet \"Elsker\" står først i ja/nej-spørgsmålet."
+        "explanationFallback": "Verbet \"Elsker\" står først i ja/nej-spørgsmålet.",
+        "image": "assets/sara_music.png"
       },
       {
         "situationKey": "sara_sit_7",
@@ -568,7 +605,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Slutter",
         "explanationKey": "jn_exp_sara_7",
-        "explanationFallback": "Verbet \"Slutter\" står først."
+        "explanationFallback": "Verbet \"Slutter\" står først.",
+        "image": "assets/sara_time_23.png"
       }
     ],
     "wordOrder": [
@@ -586,6 +624,16 @@ export const targetTrainingTracks = [
       "Elsker Sara musik?",
       "Hvornår slutter fødselsdagen?",
       "Slutter fødselsdagen klokken 23?"
+    ],
+    "coverImage": "assets/sara_cake.png",
+    "images": [
+      "assets/sara_time_18.png",
+      "assets/sara_friends.png",
+      "assets/sara_phone.png",
+      "assets/sara_cake.png",
+      "assets/sara_apartment.png",
+      "assets/sara_music.png",
+      "assets/sara_time_23.png"
     ]
   },
   {
@@ -613,7 +661,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_job",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om profession eller job (\"Hvad arbejder du som?\")."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om profession eller job (\"Hvad arbejder du som?\").",
+        "image": "assets/lars_kok.png"
       },
       {
         "situationKey": "lars_sit_2",
@@ -632,7 +681,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor mange",
         "explanationKey": "hv_exp_count",
-        "explanationFallback": "Vi bruger \"Hvor mange\", når vi spørger om et tælleligt antal."
+        "explanationFallback": "Vi bruger \"Hvor mange\", når vi spørger om et tælleligt antal.",
+        "image": "assets/lars_born.png"
       },
       {
         "situationKey": "lars_sit_3",
@@ -651,7 +701,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor gamle",
         "explanationKey": "hv_exp_age",
-        "explanationFallback": "Vi bruger \"Hvor gamle\", når vi spørger om alder på personer."
+        "explanationFallback": "Vi bruger \"Hvor gamle\", når vi spørger om alder på personer.",
+        "image": "assets/lars_born_alder.png"
       },
       {
         "situationKey": "lars_sit_4",
@@ -670,7 +721,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor",
         "explanationKey": "hv_exp_place",
-        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om sted eller bopæl."
+        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om sted eller bopæl.",
+        "image": "assets/lars_hus.png"
       },
       {
         "situationKey": "lars_sit_5",
@@ -689,7 +741,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor ofte",
         "explanationKey": "hv_exp_freq",
-        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed eller frekvens."
+        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed eller frekvens.",
+        "image": "assets/lars_foraeldre.png"
       },
       {
         "situationKey": "lars_sit_6",
@@ -708,7 +761,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvem",
         "explanationKey": "hv_exp_person",
-        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om en person."
+        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om en person.",
+        "image": "assets/lars_telefon.png"
       },
       {
         "situationKey": "lars_sit_7",
@@ -727,7 +781,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvornår",
         "explanationKey": "hv_exp_time",
-        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tidspunktet."
+        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tidspunktet.",
+        "image": "assets/lars_aftensmad.png"
       }
     ],
     "yesNo": [
@@ -748,7 +803,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Er",
         "explanationKey": "jn_exp_lars_1",
-        "explanationFallback": "Verbet \"Er\" står på plads 1: \"Er Lars kok?\"."
+        "explanationFallback": "Verbet \"Er\" står på plads 1: \"Er Lars kok?\".",
+        "image": "assets/lars_kok.png"
       },
       {
         "situationKey": "lars_sit_2",
@@ -767,7 +823,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Har",
         "explanationKey": "jn_exp_lars_2",
-        "explanationFallback": "Verbet \"Har\" står først: \"Har Lars to børn?\"."
+        "explanationFallback": "Verbet \"Har\" står først: \"Har Lars to børn?\".",
+        "image": "assets/lars_born.png"
       },
       {
         "situationKey": "lars_sit_3",
@@ -786,7 +843,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Er",
         "explanationKey": "jn_exp_lars_3",
-        "explanationFallback": "Verbet \"Er\" indleder spørgsmålet."
+        "explanationFallback": "Verbet \"Er\" indleder spørgsmålet.",
+        "image": "assets/lars_born_alder.png"
       },
       {
         "situationKey": "lars_sit_4",
@@ -805,7 +863,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Bor",
         "explanationKey": "jn_exp_lars_4",
-        "explanationFallback": "Verbet \"Bor\" står forrest: \"Bor Lars i Farum?\"."
+        "explanationFallback": "Verbet \"Bor\" står forrest: \"Bor Lars i Farum?\".",
+        "image": "assets/lars_hus.png"
       },
       {
         "situationKey": "lars_sit_5",
@@ -824,7 +883,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Besøger",
         "explanationKey": "jn_exp_lars_5",
-        "explanationFallback": "Verbet \"Besøger\" indleder ja/nej-spørgsmålet."
+        "explanationFallback": "Verbet \"Besøger\" indleder ja/nej-spørgsmålet.",
+        "image": "assets/lars_foraeldre.png"
       },
       {
         "situationKey": "lars_sit_6",
@@ -843,7 +903,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Ringer",
         "explanationKey": "jn_exp_lars_6",
-        "explanationFallback": "Verbet \"Ringer\" står på plads 1."
+        "explanationFallback": "Verbet \"Ringer\" står på plads 1.",
+        "image": "assets/lars_telefon.png"
       },
       {
         "situationKey": "lars_sit_7",
@@ -862,7 +923,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Spiser",
         "explanationKey": "jn_exp_lars_7",
-        "explanationFallback": "Verbet \"Spiser\" står på plads 1."
+        "explanationFallback": "Verbet \"Spiser\" står på plads 1.",
+        "image": "assets/lars_aftensmad.png"
       }
     ],
     "wordOrder": [
@@ -880,6 +942,16 @@ export const targetTrainingTracks = [
       "Ringer Lars til sine forældre hver dag?",
       "Hvornår spiser Lars familie aftensmad sammen?",
       "Spiser de aftensmad sammen hver dag?"
+    ],
+    "coverImage": "assets/lars_kok.png",
+    "images": [
+      "assets/lars_kok.png",
+      "assets/lars_born.png",
+      "assets/lars_born_alder.png",
+      "assets/lars_hus.png",
+      "assets/lars_foraeldre.png",
+      "assets/lars_telefon.png",
+      "assets/lars_aftensmad.png"
     ]
   },
   {
@@ -907,7 +979,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om mad eller ting."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om mad eller ting.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_2",
@@ -926,7 +999,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om genstanden eller maden."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om genstanden eller maden.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_3",
@@ -945,7 +1019,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger hvad nogen kan lide."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger hvad nogen kan lide.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_4",
@@ -964,7 +1039,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om drikkevarer."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om drikkevarer.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_5",
@@ -983,7 +1059,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor ofte",
         "explanationKey": "hv_exp_freq",
-        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed eller frekvens."
+        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed eller frekvens.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_6",
@@ -1002,7 +1079,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvornår",
         "explanationKey": "hv_exp_time",
-        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tidspunkt eller dag."
+        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tidspunkt eller dag.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_7",
@@ -1021,7 +1099,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor",
         "explanationKey": "hv_exp_place",
-        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om et sted eller en butik."
+        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om et sted eller en butik.",
+        "image": "assets/jonas_portrait.png"
       }
     ],
     "yesNo": [
@@ -1042,7 +1121,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Spiser",
         "explanationKey": "jn_exp_jonas_1",
-        "explanationFallback": "Verbet \"Spiser\" står på plads 1 i ja/nej-spørgsmålet."
+        "explanationFallback": "Verbet \"Spiser\" står på plads 1 i ja/nej-spørgsmålet.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_2",
@@ -1061,7 +1141,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Spiser",
         "explanationKey": "jn_exp_jonas_2",
-        "explanationFallback": "Verbet \"Spiser\" står først."
+        "explanationFallback": "Verbet \"Spiser\" står først.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_3",
@@ -1080,7 +1161,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Kan",
         "explanationKey": "jn_exp_jonas_3",
-        "explanationFallback": "Hjælpeverbet \"Kan\" står på plads 1: \"Kan Jonas godt lide suppe?\"."
+        "explanationFallback": "Hjælpeverbet \"Kan\" står på plads 1: \"Kan Jonas godt lide suppe?\".",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_4",
@@ -1099,7 +1181,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Drikker",
         "explanationKey": "jn_exp_jonas_4",
-        "explanationFallback": "Verbet \"Drikker\" indleder spørgsmålet."
+        "explanationFallback": "Verbet \"Drikker\" indleder spørgsmålet.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_5",
@@ -1118,7 +1201,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Spiser",
         "explanationKey": "jn_exp_jonas_5",
-        "explanationFallback": "Verbet \"Spiser\" står forrest."
+        "explanationFallback": "Verbet \"Spiser\" står forrest.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_6",
@@ -1137,7 +1221,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Spiser",
         "explanationKey": "jn_exp_jonas_6",
-        "explanationFallback": "Verbet \"Spiser\" står først."
+        "explanationFallback": "Verbet \"Spiser\" står først.",
+        "image": "assets/jonas_portrait.png"
       },
       {
         "situationKey": "jonas_sit_7",
@@ -1156,7 +1241,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Køber",
         "explanationKey": "jn_exp_jonas_7",
-        "explanationFallback": "Verbet \"Køber\" står på plads 1: \"Køber Jonas ind i Lidl?\"."
+        "explanationFallback": "Verbet \"Køber\" står på plads 1: \"Køber Jonas ind i Lidl?\".",
+        "image": "assets/jonas_portrait.png"
       }
     ],
     "wordOrder": [
@@ -1174,6 +1260,16 @@ export const targetTrainingTracks = [
       "Spiser Jonas en burger i weekenden?",
       "Hvor køber Jonas ind?",
       "Køber Jonas ind i Lidl?"
+    ],
+    "coverImage": "assets/jonas_portrait.png",
+    "images": [
+      "assets/jonas_portrait.png",
+      "assets/jonas_portrait.png",
+      "assets/jonas_portrait.png",
+      "assets/jonas_portrait.png",
+      "assets/jonas_portrait.png",
+      "assets/jonas_portrait.png",
+      "assets/jonas_portrait.png"
     ]
   },
   {
@@ -1201,7 +1297,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor ofte",
         "explanationKey": "hv_exp_freq",
-        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed eller frekvens."
+        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed eller frekvens.",
+        "image": "assets/lise_doctor_1789909749160.jpg"
       },
       {
         "situationKey": "lise_sit_2",
@@ -1220,7 +1317,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor mange",
         "explanationKey": "hv_exp_count",
-        "explanationFallback": "Vi bruger \"Hvor mange\", når vi spørger om et tælleligt antal (piller)."
+        "explanationFallback": "Vi bruger \"Hvor mange\", når vi spørger om et tælleligt antal (piller).",
+        "image": "assets/lise_pills_1789909760323.jpg"
       },
       {
         "situationKey": "lise_sit_3",
@@ -1239,7 +1337,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en tilstand eller smerte."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en tilstand eller smerte.",
+        "image": "assets/lise_headache_1789909770488.jpg"
       },
       {
         "situationKey": "lise_sit_4",
@@ -1258,7 +1357,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor ofte",
         "explanationKey": "hv_exp_freq",
-        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om frekvens."
+        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om frekvens.",
+        "image": "assets/lise_cold_1789909786170.jpg"
       },
       {
         "situationKey": "lise_sit_5",
@@ -1277,7 +1377,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor mange",
         "explanationKey": "hv_exp_count",
-        "explanationFallback": "Vi bruger \"Hvor mange\", når vi spørger om antal gange."
+        "explanationFallback": "Vi bruger \"Hvor mange\", når vi spørger om antal gange.",
+        "image": "assets/lise_hospital_1789909796267.jpg"
       },
       {
         "situationKey": "lise_sit_6",
@@ -1296,7 +1397,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor ofte",
         "explanationKey": "hv_exp_freq",
-        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed."
+        "explanationFallback": "Vi bruger \"Hvor ofte\", når vi spørger om hyppighed.",
+        "image": "assets/lise_walk_1789909806840.jpg"
       },
       {
         "situationKey": "lise_sit_7",
@@ -1315,7 +1417,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvordan",
         "explanationKey": "hv_exp_way",
-        "explanationFallback": "Vi bruger \"Hvordan\", når vi spørger om kvalitet eller måde."
+        "explanationFallback": "Vi bruger \"Hvordan\", når vi spørger om kvalitet eller måde.",
+        "image": "assets/lise_sleep_1789909817453.jpg"
       },
       {
         "situationKey": "lise_sit_8",
@@ -1334,7 +1437,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_state",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om hvad nogen er (\"Hvad er Lise?\")."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om hvad nogen er (\"Hvad er Lise?\").",
+        "image": "assets/lise_vegetarian_1789909828678.jpg"
       }
     ],
     "yesNo": [
@@ -1355,7 +1459,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Går",
         "explanationKey": "jn_exp_lise_1",
-        "explanationFallback": "Verbet \"Går\" står på plads 1 i ja/nej-spørgsmålet."
+        "explanationFallback": "Verbet \"Går\" står på plads 1 i ja/nej-spørgsmålet.",
+        "image": "assets/lise_doctor_1789909749160.jpg"
       },
       {
         "situationKey": "lise_sit_2",
@@ -1374,7 +1479,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Spiser",
         "explanationKey": "jn_exp_lise_2",
-        "explanationFallback": "Verbet \"Spiser\" står først."
+        "explanationFallback": "Verbet \"Spiser\" står først.",
+        "image": "assets/lise_pills_1789909760323.jpg"
       },
       {
         "situationKey": "lise_sit_3",
@@ -1393,7 +1499,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Har",
         "explanationKey": "jn_exp_lise_3",
-        "explanationFallback": "Verbet \"Har\" står forrest: \"Har Lise tit hovedpine?\"."
+        "explanationFallback": "Verbet \"Har\" står forrest: \"Har Lise tit hovedpine?\".",
+        "image": "assets/lise_headache_1789909770488.jpg"
       },
       {
         "situationKey": "lise_sit_4",
@@ -1412,7 +1519,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Er",
         "explanationKey": "jn_exp_lise_4",
-        "explanationFallback": "Verbet \"Er\" indleder ja/nej-spørgsmålet."
+        "explanationFallback": "Verbet \"Er\" indleder ja/nej-spørgsmålet.",
+        "image": "assets/lise_cold_1789909786170.jpg"
       },
       {
         "situationKey": "lise_sit_5",
@@ -1431,7 +1539,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Har",
         "explanationKey": "jn_exp_lise_5",
-        "explanationFallback": "Hjælpeverbet \"Har\" står forrest: \"Har Lise været...?\"."
+        "explanationFallback": "Hjælpeverbet \"Har\" står forrest: \"Har Lise været...?\".",
+        "image": "assets/lise_hospital_1789909796267.jpg"
       },
       {
         "situationKey": "lise_sit_6",
@@ -1450,7 +1559,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Går",
         "explanationKey": "jn_exp_lise_6",
-        "explanationFallback": "Verbet \"Går\" står på plads 1."
+        "explanationFallback": "Verbet \"Går\" står på plads 1.",
+        "image": "assets/lise_walk_1789909806840.jpg"
       },
       {
         "situationKey": "lise_sit_7",
@@ -1469,7 +1579,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Sover",
         "explanationKey": "jn_exp_lise_7",
-        "explanationFallback": "Verbet \"Sover\" står på plads 1."
+        "explanationFallback": "Verbet \"Sover\" står på plads 1.",
+        "image": "assets/lise_sleep_1789909817453.jpg"
       },
       {
         "situationKey": "lise_sit_8",
@@ -1488,7 +1599,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Er",
         "explanationKey": "jn_exp_lise_8",
-        "explanationFallback": "Verbet \"Er\" står på plads 1: \"Er Lise vegetar?\"."
+        "explanationFallback": "Verbet \"Er\" står på plads 1: \"Er Lise vegetar?\".",
+        "image": "assets/lise_vegetarian_1789909828678.jpg"
       }
     ],
     "wordOrder": [
@@ -1508,6 +1620,17 @@ export const targetTrainingTracks = [
       "Sover Lise godt om natten?",
       "Hvad er Lise?",
       "Er Lise vegetar?"
+    ],
+    "coverImage": "assets/lise_doctor_1789909749160.jpg",
+    "images": [
+      "assets/lise_doctor_1789909749160.jpg",
+      "assets/lise_pills_1789909760323.jpg",
+      "assets/lise_headache_1789909770488.jpg",
+      "assets/lise_cold_1789909786170.jpg",
+      "assets/lise_hospital_1789909796267.jpg",
+      "assets/lise_walk_1789909806840.jpg",
+      "assets/lise_sleep_1789909817453.jpg",
+      "assets/lise_vegetarian_1789909828678.jpg"
     ]
   },
   {
@@ -1535,7 +1658,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en ting (en bil)."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om en ting (en bil).",
+        "image": "assets/jens_bil_1789928673725.jpg"
       },
       {
         "situationKey": "jens_sit_2",
@@ -1554,7 +1678,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvornår",
         "explanationKey": "hv_exp_time",
-        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tidspunktet på dagen."
+        "explanationFallback": "Vi bruger \"Hvornår\", når vi spørger om tidspunktet på dagen.",
+        "image": "assets/jens_bus_1789928683643.jpg"
       },
       {
         "situationKey": "jens_sit_3",
@@ -1573,7 +1698,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om tingen (rejsekort)."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om tingen (rejsekort).",
+        "image": "assets/jens_rejsekort_1789928694251.jpg"
       },
       {
         "situationKey": "jens_sit_4",
@@ -1592,7 +1718,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvad",
         "explanationKey": "hv_exp_thing",
-        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om hvad man ikke kan lide."
+        "explanationFallback": "Vi bruger \"Hvad\", når vi spørger om hvad man ikke kan lide.",
+        "image": "assets/jens_metro_1789928703747.jpg"
       },
       {
         "situationKey": "jens_sit_5",
@@ -1611,7 +1738,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor",
         "explanationKey": "hv_exp_place",
-        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om sted eller destination."
+        "explanationFallback": "Vi bruger \"Hvor\", når vi spørger om sted eller destination.",
+        "image": "assets/jens_cykel_1789928713661.jpg"
       },
       {
         "situationKey": "jens_sit_6",
@@ -1630,7 +1758,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvor lang tid",
         "explanationKey": "hv_exp_duration",
-        "explanationFallback": "Vi bruger \"Hvor lang tid\", når vi spørger om varighed."
+        "explanationFallback": "Vi bruger \"Hvor lang tid\", når vi spørger om varighed.",
+        "image": "assets/jens_tid_1789928724056.jpg"
       },
       {
         "situationKey": "jens_sit_7",
@@ -1649,7 +1778,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Hvem",
         "explanationKey": "hv_exp_person",
-        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om personen (en ven)."
+        "explanationFallback": "Vi bruger \"Hvem\", når vi spørger om personen (en ven).",
+        "image": "assets/jens_ven_1789928734592.jpg"
       }
     ],
     "yesNo": [
@@ -1670,7 +1800,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Har",
         "explanationKey": "jn_exp_jens_1",
-        "explanationFallback": "Verbet \"Har\" står på plads 1: \"Har Jens en bil?\"."
+        "explanationFallback": "Verbet \"Har\" står på plads 1: \"Har Jens en bil?\".",
+        "image": "assets/jens_bil_1789928673725.jpg"
       },
       {
         "situationKey": "jens_sit_2",
@@ -1689,7 +1820,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Tager",
         "explanationKey": "jn_exp_jens_2",
-        "explanationFallback": "Verbet \"Tager\" står forrest."
+        "explanationFallback": "Verbet \"Tager\" står forrest.",
+        "image": "assets/jens_bus_1789928683643.jpg"
       },
       {
         "situationKey": "jens_sit_3",
@@ -1708,7 +1840,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Bruger",
         "explanationKey": "jn_exp_jens_3",
-        "explanationFallback": "Verbet \"Bruger\" står først."
+        "explanationFallback": "Verbet \"Bruger\" står først.",
+        "image": "assets/jens_rejsekort_1789928694251.jpg"
       },
       {
         "situationKey": "jens_sit_4",
@@ -1727,7 +1860,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Kan",
         "explanationKey": "jn_exp_jens_4",
-        "explanationFallback": "Hjælpeverbet \"Kan\" står forrest: \"Kan Jens lide...?\"."
+        "explanationFallback": "Hjælpeverbet \"Kan\" står forrest: \"Kan Jens lide...?\".",
+        "image": "assets/jens_metro_1789928703747.jpg"
       },
       {
         "situationKey": "jens_sit_5",
@@ -1746,7 +1880,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Cykler",
         "explanationKey": "jn_exp_jens_5",
-        "explanationFallback": "Verbet \"Cykler\" står på plads 1."
+        "explanationFallback": "Verbet \"Cykler\" står på plads 1.",
+        "image": "assets/jens_cykel_1789928713661.jpg"
       },
       {
         "situationKey": "jens_sit_6",
@@ -1765,7 +1900,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Tager",
         "explanationKey": "jn_exp_jens_6",
-        "explanationFallback": "Verbet \"Tager\" står på plads 1: \"Tager det ti minutter?\"."
+        "explanationFallback": "Verbet \"Tager\" står på plads 1: \"Tager det ti minutter?\".",
+        "image": "assets/jens_tid_1789928724056.jpg"
       },
       {
         "situationKey": "jens_sit_7",
@@ -1784,7 +1920,8 @@ export const targetTrainingTracks = [
         ],
         "correct": "Cykler",
         "explanationKey": "jn_exp_jens_7",
-        "explanationFallback": "Verbet \"Cykler\" står forrest."
+        "explanationFallback": "Verbet \"Cykler\" står forrest.",
+        "image": "assets/jens_ven_1789928734592.jpg"
       }
     ],
     "wordOrder": [
@@ -1802,6 +1939,16 @@ export const targetTrainingTracks = [
       "Tager det ti minutter?",
       "Hvem cykler Jens sammen med?",
       "Cykler Jens sammen med en ven?"
+    ],
+    "coverImage": "assets/jens_bus_1789928683643.jpg",
+    "images": [
+      "assets/jens_bil_1789928673725.jpg",
+      "assets/jens_bus_1789928683643.jpg",
+      "assets/jens_rejsekort_1789928694251.jpg",
+      "assets/jens_metro_1789928703747.jpg",
+      "assets/jens_cykel_1789928713661.jpg",
+      "assets/jens_tid_1789928724056.jpg",
+      "assets/jens_ven_1789928734592.jpg"
     ]
   }
 ];

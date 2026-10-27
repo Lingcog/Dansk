@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 import { targetTrainingTracks } from '../utils/target_training_data.js';
+import { baseUrl } from '../utils/config.js';
 
 export function renderTraenSporgsmalTrackView(container, navigateFn, extraData = {}) {
     const trackId = extraData.trackId || extraData.track || extraData.subPath || 'anna';
@@ -339,6 +340,27 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             progress.appendChild(badge);
             exerciseContainer.appendChild(progress);
 
+            // Illustration
+            if (q.image) {
+                const imgBox = document.createElement('div');
+                imgBox.className = 'thematic-image-container';
+                imgBox.style.textAlign = 'center';
+                imgBox.style.marginBottom = '1.25rem';
+
+                const img = document.createElement('img');
+                img.src = q.image.startsWith('http') || q.image.startsWith(baseUrl)
+                    ? q.image
+                    : `${baseUrl}${q.image.replace(/^\//, '')}`;
+                img.alt = t(q.situationKey, q.situationFallback);
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '230px';
+                img.style.borderRadius = '14px';
+                img.style.boxShadow = '0 6px 18px rgba(0,0,0,0.35)';
+                img.style.objectFit = 'cover';
+                imgBox.appendChild(img);
+                exerciseContainer.appendChild(imgBox);
+            }
+
             // Situation
             const sit = document.createElement('div');
             sit.style.background = 'rgba(255,255,255,0.04)';
@@ -557,6 +579,27 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             progress.appendChild(progressText);
             progress.appendChild(badge);
             exerciseContainer.appendChild(progress);
+
+            // Illustration
+            if (q.image) {
+                const imgBox = document.createElement('div');
+                imgBox.className = 'thematic-image-container';
+                imgBox.style.textAlign = 'center';
+                imgBox.style.marginBottom = '1.25rem';
+
+                const img = document.createElement('img');
+                img.src = q.image.startsWith('http') || q.image.startsWith(baseUrl)
+                    ? q.image
+                    : `${baseUrl}${q.image.replace(/^\//, '')}`;
+                img.alt = t(q.situationKey, q.situationFallback);
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '230px';
+                img.style.borderRadius = '14px';
+                img.style.boxShadow = '0 6px 18px rgba(0,0,0,0.35)';
+                img.style.objectFit = 'cover';
+                imgBox.appendChild(img);
+                exerciseContainer.appendChild(imgBox);
+            }
 
             // Situation
             const sit = document.createElement('div');
@@ -787,6 +830,44 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             progress.appendChild(progressText);
             progress.appendChild(badge);
             exerciseContainer.appendChild(progress);
+
+            // Illustration & situation context
+            const sitIdx = Math.floor(curIdx / 2);
+            const sit = track.semantic ? track.semantic[sitIdx] : null;
+            const imagePath = sit?.image || (track.images ? track.images[sitIdx] : null);
+
+            if (imagePath) {
+                const imgBox = document.createElement('div');
+                imgBox.className = 'thematic-image-container';
+                imgBox.style.textAlign = 'center';
+                imgBox.style.marginBottom = '1.25rem';
+
+                const img = document.createElement('img');
+                img.src = imagePath.startsWith('http') || imagePath.startsWith(baseUrl)
+                    ? imagePath
+                    : `${baseUrl}${imagePath.replace(/^\//, '')}`;
+                img.alt = sit ? t(sit.situationKey, sit.situationFallback) : '';
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '230px';
+                img.style.borderRadius = '14px';
+                img.style.boxShadow = '0 6px 18px rgba(0,0,0,0.35)';
+                img.style.objectFit = 'cover';
+                imgBox.appendChild(img);
+                exerciseContainer.appendChild(imgBox);
+            }
+
+            if (sit) {
+                const sitBox = document.createElement('div');
+                sitBox.style.background = 'rgba(255,255,255,0.04)';
+                sitBox.style.border = '1px solid rgba(255,255,255,0.08)';
+                sitBox.style.padding = '0.85rem 1.25rem';
+                sitBox.style.borderRadius = '10px';
+                sitBox.style.marginBottom = '1.25rem';
+                sitBox.style.fontSize = '1.05rem';
+                sitBox.style.lineHeight = '1.4';
+                sitBox.textContent = t(sit.situationKey, sit.situationFallback);
+                exerciseContainer.appendChild(sitBox);
+            }
 
             // Intro prompt
             const intro = document.createElement('p');

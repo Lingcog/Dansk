@@ -1,6 +1,7 @@
 import { getTranslation } from '../utils/i18n.js';
 import { navigate } from '../main.js';
 import { baseUrl } from '../utils/config.js';
+import { getTrackMastery, isTrackFullyMastered, getFirstUnmasteredTab } from '../utils/target_training_data.js';
 
 export function renderLavSporgsmalView(container, navigateFn) {
     const t = (key, fallback) => { const val = getTranslation(key); return val === key ? fallback : val; };
@@ -61,131 +62,77 @@ export function renderLavSporgsmalView(container, navigateFn) {
     targetCard.appendChild(targetDesc);
     optionsContainer.appendChild(targetCard);
 
-    // --- Option 1: Anna (Indkøb) ---
-    const annaCard = document.createElement('div');
-    annaCard.className = 'exercise-card';
-    annaCard.style.cursor = 'pointer';
-    annaCard.style.textAlign = 'center';
-    annaCard.style.margin = '0';
-    annaCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'anna' });
-    
-    const annaTitle = document.createElement('h2');
-    annaTitle.textContent = t('menu_anna_title', '🛒 Indkøb (Anna)');
-    annaTitle.style.marginBottom = '1rem';
-    
-    const annaDesc = document.createElement('p');
-    annaDesc.textContent = t('menu_anna_desc', 'Træn interaktivt i appen: Anna køber ind i Netto.');
-    annaDesc.style.color = 'var(--text-muted)';
-    annaDesc.style.lineHeight = '1.5';
-    
-    annaCard.appendChild(annaTitle);
-    annaCard.appendChild(annaDesc);
-    optionsContainer.appendChild(annaCard);
-    
-    // --- Option 2: Sara (Fødselsdag) ---
-    const saraCard = document.createElement('div');
-    saraCard.className = 'exercise-card';
-    saraCard.style.cursor = 'pointer';
-    saraCard.style.textAlign = 'center';
-    saraCard.style.margin = '0';
-    saraCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'sara' });
-    
-    const saraTitle = document.createElement('h2');
-    saraTitle.textContent = t('menu_sara_title', '🎂 Fødselsdag (Sara)');
-    saraTitle.style.marginBottom = '1rem';
-    
-    const saraDesc = document.createElement('p');
-    saraDesc.textContent = t('menu_sara_desc', 'Træn interaktivt i appen: Sara holder fødselsdagsfest.');
-    saraDesc.style.color = 'var(--text-muted)';
-    saraDesc.style.lineHeight = '1.5';
-    
-    saraCard.appendChild(saraTitle);
-    saraCard.appendChild(saraDesc);
-    optionsContainer.appendChild(saraCard);
-    
-    // --- Option 3: Lars (Familie) ---
-    const larsCard = document.createElement('div');
-    larsCard.className = 'exercise-card';
-    larsCard.style.cursor = 'pointer';
-    larsCard.style.textAlign = 'center';
-    larsCard.style.margin = '0';
-    larsCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'lars' });
-    
-    const larsTitle = document.createElement('h2');
-    larsTitle.textContent = t('menu_lars_title', '👨‍👩‍👧‍👦 Familie (Lars)');
-    larsTitle.style.marginBottom = '1rem';
-    
-    const larsDesc = document.createElement('p');
-    larsDesc.textContent = t('menu_lars_desc', 'Træn interaktivt i appen: Lars og hans familie.');
-    larsDesc.style.color = 'var(--text-muted)';
-    larsDesc.style.lineHeight = '1.5';
-    
-    larsCard.appendChild(larsTitle);
-    larsCard.appendChild(larsDesc);
-    optionsContainer.appendChild(larsCard);
+    const storyItems = [
+        { storyId: 'anna', titleKey: 'menu_anna_title', defaultTitle: '🛒 Indkøb (Anna)', descKey: 'menu_anna_desc', defaultDesc: 'Træn interaktivt i appen: Anna køber ind i Netto.' },
+        { storyId: 'sara', titleKey: 'menu_sara_title', defaultTitle: '🎂 Fødselsdag (Sara)', descKey: 'menu_sara_desc', defaultDesc: 'Træn interaktivt i appen: Sara holder fødselsdagsfest.' },
+        { storyId: 'lars', titleKey: 'menu_lars_title', defaultTitle: '👨‍👩‍👧‍👦 Familie (Lars)', descKey: 'menu_lars_desc', defaultDesc: 'Træn interaktivt i appen: Lars og hans familie.' },
+        { storyId: 'jonas', titleKey: 'menu_jonas_title', defaultTitle: '🍎 Mad (Jonas)', descKey: 'menu_jonas_desc', defaultDesc: 'Træn interaktivt i appen: Jonas spiser sundt.' },
+        { storyId: 'lise', titleKey: 'menu_lise_title', defaultTitle: '🩺 Sundhed (Lise)', descKey: 'menu_lise_desc', defaultDesc: 'Træn interaktivt i appen: Lises helbred og vaner.' },
+        { storyId: 'jens', titleKey: 'menu_jens_title', defaultTitle: '🚌 Transport (Jens)', descKey: 'menu_jens_desc', defaultDesc: 'Træn interaktivt i appen: Jens og offentlig transport.' }
+    ];
 
-    // --- Option 4: Jonas (Mad) ---
-    const jonasCard = document.createElement('div');
-    jonasCard.className = 'exercise-card';
-    jonasCard.style.cursor = 'pointer';
-    jonasCard.style.textAlign = 'center';
-    jonasCard.style.margin = '0';
-    jonasCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'jonas' });
-    
-    const jonasTitle = document.createElement('h2');
-    jonasTitle.textContent = t('menu_jonas_title', '🍎 Mad (Jonas)');
-    jonasTitle.style.marginBottom = '1rem';
-    
-    const jonasDesc = document.createElement('p');
-    jonasDesc.textContent = t('menu_jonas_desc', 'Træn interaktivt i appen: Jonas spiser sundt.');
-    jonasDesc.style.color = 'var(--text-muted)';
-    jonasDesc.style.lineHeight = '1.5';
-    
-    jonasCard.appendChild(jonasTitle);
-    jonasCard.appendChild(jonasDesc);
-    optionsContainer.appendChild(jonasCard);
+    storyItems.forEach(item => {
+        const masteredSet = getTrackMastery(item.storyId);
+        const masteredCount = masteredSet.size;
+        const isUnlocked = isTrackFullyMastered(item.storyId);
 
-    // --- Option 5: Lise (Sundhed) ---
-    const liseCard = document.createElement('div');
-    liseCard.className = 'exercise-card';
-    liseCard.style.cursor = 'pointer';
-    liseCard.style.textAlign = 'center';
-    liseCard.style.margin = '0';
-    liseCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'lise' });
-    
-    const liseTitle = document.createElement('h2');
-    liseTitle.textContent = t('menu_lise_title', '🩺 Sundhed (Lise)');
-    liseTitle.style.marginBottom = '1rem';
-    
-    const liseDesc = document.createElement('p');
-    liseDesc.textContent = t('menu_lise_desc', 'Træn interaktivt i appen: Lises helbred og vaner.');
-    liseDesc.style.color = 'var(--text-muted)';
-    liseDesc.style.lineHeight = '1.5';
-    
-    liseCard.appendChild(liseTitle);
-    liseCard.appendChild(liseDesc);
-    optionsContainer.appendChild(liseCard);
+        const card = document.createElement('div');
+        card.className = 'exercise-card';
+        card.style.cursor = 'pointer';
+        card.style.textAlign = 'center';
+        card.style.margin = '0';
+        card.style.position = 'relative';
+        card.style.transition = 'all 0.2s ease';
 
-    // --- Option 6: Jens (Transport) ---
-    const jensCard = document.createElement('div');
-    jensCard.className = 'exercise-card';
-    jensCard.style.cursor = 'pointer';
-    jensCard.style.textAlign = 'center';
-    jensCard.style.margin = '0';
-    jensCard.onclick = () => navigateFn('sporgsmal_interactive', { storyId: 'jens' });
-    
-    const jensTitle = document.createElement('h2');
-    jensTitle.textContent = t('menu_jens_title', '🚌 Transport (Jens)');
-    jensTitle.style.marginBottom = '1rem';
-    
-    const jensDesc = document.createElement('p');
-    jensDesc.textContent = t('menu_jens_desc', 'Træn interaktivt i appen: Jens og offentlig transport.');
-    jensDesc.style.color = 'var(--text-muted)';
-    jensDesc.style.lineHeight = '1.5';
-    
-    jensCard.appendChild(jensTitle);
-    jensCard.appendChild(jensDesc);
-    optionsContainer.appendChild(jensCard);
+        if (isUnlocked) {
+            card.style.border = '1px solid rgba(76, 175, 80, 0.45)';
+            card.onclick = () => navigateFn('sporgsmal_interactive', { storyId: item.storyId });
+        } else {
+            card.style.border = '1px dashed rgba(255, 152, 0, 0.4)';
+            card.style.opacity = '0.92';
+            card.onclick = () => navigateFn('traen_sporgsmal_track', {
+                trackId: item.storyId,
+                initialTab: getFirstUnmasteredTab(item.storyId),
+                fromLockedStory: true
+            });
+        }
+
+        const cardTitle = document.createElement('h2');
+        cardTitle.textContent = isUnlocked
+            ? t(item.titleKey, item.defaultTitle)
+            : `🔒 ${t(item.titleKey, item.defaultTitle)}`;
+        cardTitle.style.marginBottom = '0.75rem';
+
+        const cardDesc = document.createElement('p');
+        cardDesc.textContent = t(item.descKey, item.defaultDesc);
+        cardDesc.style.color = 'var(--text-muted)';
+        cardDesc.style.lineHeight = '1.5';
+        cardDesc.style.marginBottom = '1rem';
+
+        const statusBadge = document.createElement('div');
+        statusBadge.style.display = 'inline-block';
+        statusBadge.style.padding = '0.45rem 0.9rem';
+        statusBadge.style.borderRadius = '20px';
+        statusBadge.style.fontSize = '0.9rem';
+        statusBadge.style.fontWeight = '600';
+
+        if (isUnlocked) {
+            statusBadge.style.background = 'rgba(76, 175, 80, 0.18)';
+            statusBadge.style.border = '1px solid rgba(76, 175, 80, 0.45)';
+            statusBadge.style.color = '#a5d6a7';
+            statusBadge.textContent = `🔓 ${t('sporgsmal_story_unlocked', 'Låst op! (3/3 baner med 100%) — Klik for at starte →')}`;
+        } else {
+            statusBadge.style.background = 'rgba(255, 152, 0, 0.15)';
+            statusBadge.style.border = '1px solid rgba(255, 152, 0, 0.4)';
+            statusBadge.style.color = '#ffcc80';
+            statusBadge.textContent = `🔒 ${t('sporgsmal_story_locked', 'Låst ({count}/3 baner med 100% i Målrettet træning) — Klik for at træne først →').replace('{count}', masteredCount)}`;
+        }
+
+        card.appendChild(cardTitle);
+        card.appendChild(cardDesc);
+        card.appendChild(statusBadge);
+        optionsContainer.appendChild(card);
+    });
 
     
     // --- Option 2: AI Bot Flow ---

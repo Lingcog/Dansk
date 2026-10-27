@@ -1,10 +1,17 @@
 import { getTranslation } from '../utils/i18n.js';
-import { targetTrainingTracks } from '../utils/target_training_data.js';
+import {
+    targetTrainingTracks,
+    getTrackMastery,
+    markSubtaskMastered,
+    isTrackFullyMastered,
+    getFirstUnmasteredTab
+} from '../utils/target_training_data.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderTraenSporgsmalTrackView(container, navigateFn, extraData = {}) {
     const trackId = extraData.trackId || extraData.track || extraData.subPath || 'anna';
     const initialTab = parseInt(extraData.initialTab || extraData.tab || '1', 10);
+    const fromLockedStory = Boolean(extraData.fromLockedStory);
 
     const track = targetTrainingTracks.find(t => t.id === trackId) || targetTrainingTracks[0];
 
@@ -43,7 +50,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
     backBtn.innerHTML = `← ${t('back', 'Tilbage')}`;
     backBtn.onclick = () => {
         clearActiveTimer();
-        navigateFn('traen_sporgsmal_menu');
+        navigateFn(fromLockedStory ? 'lav_sporgsmal' : 'traen_sporgsmal_menu');
     };
     topBar.appendChild(backBtn);
 
@@ -52,7 +59,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
     // Header
     const header = document.createElement('div');
     header.style.textAlign = 'center';
-    header.style.marginBottom = '2rem';
+    header.style.marginBottom = '1.5rem';
 
     const trackTitle = document.createElement('h1');
     trackTitle.innerHTML = `${track.icon} ${t(track.titleKey, track.defaultTitle)}`;
@@ -68,6 +75,27 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
     header.appendChild(trackTitle);
     header.appendChild(trackDesc);
     viewContainer.appendChild(header);
+
+    // Prerequisite Banner if redirected from a locked story on "Lav spørgsmål"
+    if (fromLockedStory || !isTrackFullyMastered(track.id)) {
+        const lockBanner = document.createElement('div');
+        const fullyMastered = isTrackFullyMastered(track.id);
+        lockBanner.style.background = fullyMastered ? 'rgba(76, 175, 80, 0.14)' : 'rgba(255, 152, 0, 0.14)';
+        lockBanner.style.border = fullyMastered ? '1px solid rgba(76, 175, 80, 0.45)' : '1px solid rgba(255, 152, 0, 0.45)';
+        lockBanner.style.color = fullyMastered ? '#81c784' : '#ffb74d';
+        lockBanner.style.padding = '0.85rem 1.15rem';
+        lockBanner.style.borderRadius = '12px';
+        lockBanner.style.marginBottom = '1.5rem';
+        lockBanner.style.fontSize = '0.96rem';
+        lockBanner.style.lineHeight = '1.45';
+        lockBanner.style.textAlign = 'center';
+        const trackName = t(track.titleKey, track.defaultTitle);
+        lockBanner.innerHTML = t(
+            'traen_locked_banner',
+            '🔒 Gennemfør alle 3 øvelser her med <strong>100% rigtige svar</strong> for at låse op for <strong>{track}</strong> på siden "Lav spørgsmål".'
+        ).replace('{track}', trackName);
+        viewContainer.appendChild(lockBanner);
+    }
 
     // Tabs navigation
     const tabsContainer = document.createElement('div');
@@ -117,8 +145,9 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
     viewContainer.appendChild(exerciseContainer);
 
     function updateTabStyles() {
+        const masteredSet = getTrackMastery(track.id);
         tabButtons.forEach(({ btn, tabInfo }) => {
-            const isCompleted = completedTabs.has(tabInfo.id);
+            const isCompleted = masteredSet.has(tabInfo.id) || completedTabs.has(tabInfo.id);
             const statusIcon = isCompleted ? '✓ ' : '';
 
             btn.innerHTML = `${tabInfo.icon} <span class="tab-label-text">${statusIcon}${t(tabInfo.labelKey, tabInfo.defaultLabel)}</span>`;
@@ -129,12 +158,91 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
                 btn.style.color = '#ffffff';
                 btn.style.boxShadow = '0 4px 12px rgba(74, 144, 226, 0.4)';
             } else {
-                btn.style.background = isCompleted ? 'rgba(76, 175, 80, 0.12)' : 'var(--card-bg, rgba(255,255,255,0.08))';
-                btn.style.borderColor = isCompleted ? 'rgba(76, 175, 80, 0.4)' : 'rgba(255,255,255,0.1)';
+                btn.style.background = isCompleted ? 'rgba(76, 175, 80, 0.14)' : 'var(--card-bg, rgba(255,255,255,0.08))';
+                btn.style.borderColor = isCompleted ? 'rgba(76, 175, 80, 0.45)' : 'rgba(255,255,255,0.1)';
                 btn.style.color = isCompleted ? '#81c784' : 'var(--text-muted, #ccc)';
                 btn.style.boxShadow = 'none';
             }
         });
+    }
+
+    // -------------------------------------------------------------
+    // RETRY SCREEN: UNDER 100% GENNEMFØRSEL
+    // -------------------------------------------------------------
+    function renderSubTaskRetryCard({ correctCount, totalCount, nextTab, nextTabLabel, onRestart }) {
+        exerciseContainer.innerHTML = '';
+        const pct = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+        const card = document.createElement('div');
+        card.style.background = 'var(--card-bg, rgba(255,255,255,0.05))';
+        card.style.padding = '2.5rem 1.5rem';
+        card.style.borderRadius = '16px';
+        card.style.textAlign = 'center';
+        card.style.border = '1px solid rgba(255, 152, 0, 0.45)';
+        card.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+
+        const iconEl = document.createElement('div');
+        iconEl.textContent = '🎯';
+        iconEl.style.fontSize = '3.5rem';
+        iconEl.style.marginBottom = '0.75rem';
+
+        const msgTitle = document.createElement('h2');
+        msgTitle.innerHTML = t('traen_retry_title', 'Du fik {correct} ud af {total} rigtige ({pct}%)')
+            .replace('{correct}', correctCount)
+            .replace('{total}', totalCount)
+            .replace('{pct}', pct);
+        msgTitle.style.fontSize = '1.45rem';
+        msgTitle.style.marginBottom = '0.85rem';
+        msgTitle.style.color = '#ffb74d';
+
+        const msgDesc = document.createElement('p');
+        const trackName = t(track.titleKey, track.defaultTitle);
+        msgDesc.innerHTML = t(
+            'traen_retry_desc',
+            'Du skal have <strong>100% rigtige svar</strong> (fejlfrit i ét gennemløb) i denne delopgave for at optjene pokalen 🏆 og låse op for <strong>{track}</strong> på siden "Lav spørgsmål".'
+        ).replace('{track}', trackName);
+        msgDesc.style.fontSize = '1.05rem';
+        msgDesc.style.color = 'rgba(255,255,255,0.9)';
+        msgDesc.style.lineHeight = '1.5';
+        msgDesc.style.maxWidth = '560px';
+        msgDesc.style.margin = '0 auto 1.75rem auto';
+
+        const btnGroup = document.createElement('div');
+        btnGroup.style.display = 'flex';
+        btnGroup.style.justifyContent = 'center';
+        btnGroup.style.gap = '1rem';
+        btnGroup.style.flexWrap = 'wrap';
+
+        const restartBtn = document.createElement('button');
+        restartBtn.className = 'primary-btn';
+        restartBtn.style.background = '#ff9800';
+        restartBtn.style.color = '#ffffff';
+        restartBtn.style.fontWeight = '700';
+        restartBtn.innerHTML = `↻ ${t('traen_btn_retry_100', 'Prøv igen (opnå 100%)')}`;
+        restartBtn.onclick = onRestart;
+
+        btnGroup.appendChild(restartBtn);
+
+        if (nextTab) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'primary-btn';
+            nextBtn.style.background = 'rgba(255,255,255,0.12)';
+            nextBtn.style.border = '1px solid rgba(255,255,255,0.25)';
+            nextBtn.innerHTML = `${nextTabLabel}`;
+            nextBtn.onclick = () => {
+                clearActiveTimer();
+                currentTab = nextTab;
+                updateTabStyles();
+                renderActiveTab();
+            };
+            btnGroup.appendChild(nextBtn);
+        }
+
+        card.appendChild(iconEl);
+        card.appendChild(msgTitle);
+        card.appendChild(msgDesc);
+        card.appendChild(btnGroup);
+        exerciseContainer.appendChild(card);
     }
 
     // -------------------------------------------------------------
@@ -148,7 +256,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         card.style.padding = '2.5rem 1.5rem';
         card.style.borderRadius = '16px';
         card.style.textAlign = 'center';
-        card.style.border = '1px solid rgba(255,255,255,0.15)';
+        card.style.border = '1px solid rgba(76, 175, 80, 0.45)';
         card.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
 
         const trophy = document.createElement('div');
@@ -159,8 +267,15 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         const msgTitle = document.createElement('h2');
         msgTitle.innerHTML = message;
         msgTitle.style.fontSize = '1.45rem';
-        msgTitle.style.marginBottom = '1.75rem';
+        msgTitle.style.marginBottom = '0.6rem';
         msgTitle.style.color = '#ffffff';
+
+        const masteryCount = getTrackMastery(track.id).size;
+        const progressNote = document.createElement('p');
+        progressNote.style.fontSize = '1rem';
+        progressNote.style.color = '#81c784';
+        progressNote.style.marginBottom = '1.75rem';
+        progressNote.textContent = `${t('traen_subtask_100_badge', '✓ 100% fejlfrit gennemført')} (${masteryCount}/3)`;
 
         const btnGroup = document.createElement('div');
         btnGroup.style.display = 'flex';
@@ -203,6 +318,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
 
         card.appendChild(trophy);
         card.appendChild(msgTitle);
+        card.appendChild(progressNote);
         card.appendChild(btnGroup);
         exerciseContainer.appendChild(card);
     }
@@ -234,7 +350,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
 
         const grandDesc = document.createElement('p');
         const trackName = t(track.titleKey, track.defaultTitle);
-        grandDesc.textContent = t('traen_track_done_desc', 'Du har gennemført alle 3 opgaver i {track}: Hv-ord, ja/nej-spørgsmål og ordstilling.').replace('{track}', trackName);
+        grandDesc.textContent = t('traen_track_done_desc', 'Du har gennemført alle 3 opgaver i {track} med 100%: Hv-ord, ja/nej-spørgsmål og ordstilling. "{track}" er nu låst op på siden "Lav spørgsmål"!').replace(/\{track\}/g, trackName);
         grandDesc.style.fontSize = '1.15rem';
         grandDesc.style.color = '#ffffff';
         grandDesc.style.opacity = '0.95';
@@ -246,6 +362,19 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         btnGroup.style.justifyContent = 'center';
         btnGroup.style.gap = '1rem';
         btnGroup.style.flexWrap = 'wrap';
+
+        const openStoryBtn = document.createElement('button');
+        openStoryBtn.className = 'primary-btn';
+        openStoryBtn.style.background = '#4caf50';
+        openStoryBtn.style.border = '2px solid #81c784';
+        openStoryBtn.style.fontSize = '1.08rem';
+        openStoryBtn.style.fontWeight = '700';
+        openStoryBtn.style.padding = '0.85rem 1.5rem';
+        openStoryBtn.innerHTML = `🔓 ${t('traen_btn_open_story', 'Start "{track}" i Lav spørgsmål →').replace('{track}', trackName)}`;
+        openStoryBtn.onclick = () => {
+            clearActiveTimer();
+            navigateFn('sporgsmal_interactive', { storyId: track.id });
+        };
 
         const restartTrackBtn = document.createElement('button');
         restartTrackBtn.className = 'primary-btn';
@@ -273,6 +402,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             navigateFn('traen_sporgsmal_menu');
         };
 
+        btnGroup.appendChild(openStoryBtn);
         btnGroup.appendChild(restartTrackBtn);
         btnGroup.appendChild(menuBtn);
 
@@ -291,6 +421,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         exerciseContainer.innerHTML = '';
         const questions = track.semantic || [];
         let curIdx = 0;
+        let correctCount = 0;
 
         function showQ() {
             clearActiveTimer();
@@ -298,17 +429,29 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             exerciseContainer.innerHTML = '';
 
             if (curIdx >= questions.length) {
-                completedTabs.add(1);
-                updateTabStyles();
+                const is100Pct = questions.length > 0 && correctCount === questions.length;
+                if (is100Pct) {
+                    completedTabs.add(1);
+                    markSubtaskMastered(track.id, 1);
+                    updateTabStyles();
 
-                if (completedTabs.size === 3) {
-                    renderGrandTrackDoneCard();
+                    if (isTrackFullyMastered(track.id)) {
+                        renderGrandTrackDoneCard();
+                    } else {
+                        renderSubTaskDoneCard({
+                            message: t('traen_done_hv', '🏆 Flot klaret! Du har gennemført Hv-ord.'),
+                            nextTab: 2,
+                            nextTabLabel: `${t('traen_btn_next_to_yesno', 'Videre til Ja/Nej-spørgsmål →')}`,
+                            onRestart: () => { curIdx = 0; correctCount = 0; showQ(); }
+                        });
+                    }
                 } else {
-                    renderSubTaskDoneCard({
-                        message: t('traen_done_hv', '🏆 Flot klaret! Du har gennemført Hv-ord.'),
+                    renderSubTaskRetryCard({
+                        correctCount,
+                        totalCount: questions.length,
                         nextTab: 2,
                         nextTabLabel: `${t('traen_btn_next_to_yesno', 'Videre til Ja/Nej-spørgsmål →')}`,
-                        onRestart: () => { curIdx = 0; showQ(); }
+                        onRestart: () => { curIdx = 0; correctCount = 0; showQ(); }
                     });
                 }
                 return;
@@ -448,6 +591,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
                     missingWord.textContent = q.correct;
 
                     if (isCorrect) {
+                        correctCount++;
                         optBtn.style.background = '#2e7d32';
                         optBtn.style.borderColor = '#4caf50';
                         missingWord.style.color = '#4caf50';
@@ -531,6 +675,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         exerciseContainer.innerHTML = '';
         const questions = track.yesNo || [];
         let curIdx = 0;
+        let correctCount = 0;
 
         function showQ() {
             clearActiveTimer();
@@ -538,17 +683,29 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             exerciseContainer.innerHTML = '';
 
             if (curIdx >= questions.length) {
-                completedTabs.add(2);
-                updateTabStyles();
+                const is100Pct = questions.length > 0 && correctCount === questions.length;
+                if (is100Pct) {
+                    completedTabs.add(2);
+                    markSubtaskMastered(track.id, 2);
+                    updateTabStyles();
 
-                if (completedTabs.size === 3) {
-                    renderGrandTrackDoneCard();
+                    if (isTrackFullyMastered(track.id)) {
+                        renderGrandTrackDoneCard();
+                    } else {
+                        renderSubTaskDoneCard({
+                            message: t('traen_done_yesno', '🏆 Flot klaret! Du har gennemført Ja/Nej-spørgsmål.'),
+                            nextTab: 3,
+                            nextTabLabel: `${t('traen_btn_next_to_wordorder', 'Videre til Ordstilling →')}`,
+                            onRestart: () => { curIdx = 0; correctCount = 0; showQ(); }
+                        });
+                    }
                 } else {
-                    renderSubTaskDoneCard({
-                        message: t('traen_done_yesno', '🏆 Flot klaret! Du har gennemført Ja/Nej-spørgsmål.'),
+                    renderSubTaskRetryCard({
+                        correctCount,
+                        totalCount: questions.length,
                         nextTab: 3,
                         nextTabLabel: `${t('traen_btn_next_to_wordorder', 'Videre til Ordstilling →')}`,
-                        onRestart: () => { curIdx = 0; showQ(); }
+                        onRestart: () => { curIdx = 0; correctCount = 0; showQ(); }
                     });
                 }
                 return;
@@ -688,6 +845,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
                     missingWord.textContent = q.correct;
 
                     if (isCorrect) {
+                        correctCount++;
                         optBtn.style.background = '#2e7d32';
                         optBtn.style.borderColor = '#4caf50';
                         missingWord.style.color = '#4caf50';
@@ -771,6 +929,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
         exerciseContainer.innerHTML = '';
         const sentences = track.wordOrder || [];
         let curIdx = 0;
+        let correctCount = 0;
 
         function showPuzzle() {
             clearActiveTimer();
@@ -778,22 +937,36 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             exerciseContainer.innerHTML = '';
 
             if (curIdx >= sentences.length) {
-                completedTabs.add(3);
-                updateTabStyles();
+                const is100Pct = sentences.length > 0 && correctCount === sentences.length;
+                if (is100Pct) {
+                    completedTabs.add(3);
+                    markSubtaskMastered(track.id, 3);
+                    updateTabStyles();
 
-                if (completedTabs.size === 3) {
-                    renderGrandTrackDoneCard();
+                    if (isTrackFullyMastered(track.id)) {
+                        renderGrandTrackDoneCard();
+                    } else {
+                        renderSubTaskDoneCard({
+                            message: t('traen_done_wordorder', '🏆 Flot klaret! Du har bygget alle spørgsmålene i korrekt ordstilling.'),
+                            nextTab: getFirstUnmasteredTab(track.id),
+                            nextTabLabel: `${t('traen_btn_next_to_hv', 'Videre til Hv-ord →')}`,
+                            onRestart: () => { curIdx = 0; correctCount = 0; showPuzzle(); }
+                        });
+                    }
                 } else {
-                    renderSubTaskDoneCard({
-                        message: t('traen_done_wordorder', '🏆 Flot klaret! Du har bygget alle spørgsmålene i korrekt ordstilling.'),
-                        nextTab: 1,
+                    renderSubTaskRetryCard({
+                        correctCount,
+                        totalCount: sentences.length,
+                        nextTab: getFirstUnmasteredTab(track.id),
                         nextTabLabel: `${t('traen_btn_next_to_hv', 'Videre til Hv-ord →')}`,
-                        onRestart: () => { curIdx = 0; showPuzzle(); }
+                        onRestart: () => { curIdx = 0; correctCount = 0; showPuzzle(); }
                     });
                 }
                 return;
             }
 
+            let hadErrorOnPuzzle = false;
+            let scoredCurrentPuzzle = false;
             const originalSentence = sentences[curIdx];
             const targetWords = originalSentence.split(' ');
             
@@ -969,11 +1142,16 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
 
                 if (remainingInPool === 0) {
                     if (selectedWords.join(' ') === originalSentence) {
+                        if (!hadErrorOnPuzzle && !scoredCurrentPuzzle) {
+                            correctCount++;
+                            scoredCurrentPuzzle = true;
+                        }
                         feedback.textContent = `✓ ${t('traen_wordorder_success', 'Korrekt ordstilling! Godt gået.')}`;
                         feedback.style.color = '#4caf50';
                         resultArea.style.borderColor = '#4caf50';
                         nextBtn.style.display = 'inline-block';
                     } else {
+                        hadErrorOnPuzzle = true;
                         feedback.textContent = `✗ ${t('traen_wordorder_error', 'Forkert ordstilling. Prøv igen!')}`;
                         feedback.style.color = '#ef5350';
                         resultArea.style.borderColor = '#ef5350';

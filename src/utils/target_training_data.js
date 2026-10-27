@@ -1952,3 +1952,43 @@ export const targetTrainingTracks = [
     ]
   }
 ];
+
+const MASTERY_STORAGE_KEY = 'traen_sporgsmal_mastery_100';
+
+export function getTrackMastery(trackId) {
+  try {
+    const raw = localStorage.getItem(MASTERY_STORAGE_KEY);
+    const data = raw ? JSON.parse(raw) : {};
+    const arr = Array.isArray(data[trackId]) ? data[trackId] : [];
+    return new Set(arr);
+  } catch (e) {
+    return new Set();
+  }
+}
+
+export function markSubtaskMastered(trackId, tabId) {
+  try {
+    const raw = localStorage.getItem(MASTERY_STORAGE_KEY);
+    const data = raw ? JSON.parse(raw) : {};
+    const set = new Set(Array.isArray(data[trackId]) ? data[trackId] : []);
+    set.add(tabId);
+    data[trackId] = Array.from(set);
+    localStorage.setItem(MASTERY_STORAGE_KEY, JSON.stringify(data));
+    return set;
+  } catch (e) {
+    return new Set([tabId]);
+  }
+}
+
+export function isTrackFullyMastered(trackId) {
+  const set = getTrackMastery(trackId);
+  return set.has(1) && set.has(2) && set.has(3);
+}
+
+export function getFirstUnmasteredTab(trackId) {
+  const set = getTrackMastery(trackId);
+  if (!set.has(1)) return 1;
+  if (!set.has(2)) return 2;
+  if (!set.has(3)) return 3;
+  return 1;
+}

@@ -1,5 +1,5 @@
 import { getTranslation } from '../utils/i18n.js';
-import { targetTrainingTracks } from '../utils/target_training_data.js';
+import { targetTrainingTracks, getTrackMastery, isTrackFullyMastered, getFirstUnmasteredTab } from '../utils/target_training_data.js';
 import { baseUrl } from '../utils/config.js';
 
 export function renderTraenSporgsmalMenuView(container, navigateFn) {
@@ -98,10 +98,13 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
             cardHeader.appendChild(cardImg);
         }
 
+        const masteredSet = getTrackMastery(track.id);
+        const isFullyMastered = isTrackFullyMastered(track.id);
+
         const cardTitle = document.createElement('h2');
         cardTitle.innerHTML = `${track.icon} ${t(track.titleKey, track.defaultTitle)}`;
         cardTitle.style.fontSize = '1.35rem';
-        cardTitle.style.marginBottom = '0.6rem';
+        cardTitle.style.marginBottom = '0.4rem';
         cardTitle.style.color = '#ffffff';
 
         const cardDesc = document.createElement('p');
@@ -109,17 +112,27 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
         cardDesc.style.color = 'var(--text-muted, #aaa)';
         cardDesc.style.fontSize = '0.95rem';
         cardDesc.style.lineHeight = '1.4';
-        cardDesc.style.marginBottom = '1.25rem';
+        cardDesc.style.marginBottom = '0.6rem';
+
+        const masteryStatus = document.createElement('div');
+        masteryStatus.style.fontSize = '0.85rem';
+        masteryStatus.style.fontWeight = '600';
+        masteryStatus.style.marginBottom = '1rem';
+        masteryStatus.style.color = isFullyMastered ? '#81c784' : '#ffcc80';
+        masteryStatus.textContent = isFullyMastered
+            ? `🔓 ${t('traen_menu_unlocked_status', '3/3 (100%) — Oplåst i Lav spørgsmål!')}`
+            : `🔒 ${t('traen_menu_locked_status', '{count}/3 baner gennemført med 100%').replace('{count}', masteredSet.size)}`;
 
         cardHeader.appendChild(cardTitle);
         cardHeader.appendChild(cardDesc);
+        cardHeader.appendChild(masteryStatus);
         card.appendChild(cardHeader);
 
-        // Click on card body opens track at tab 1
+        // Click on card body opens track at first unmastered tab (or tab 1)
         card.onclick = (e) => {
             // Only trigger if clicked outside action pills
             if (!e.target.closest('.track-action-pill')) {
-                navigateFn('traen_sporgsmal_track', { trackId: track.id, initialTab: 1 });
+                navigateFn('traen_sporgsmal_track', { trackId: track.id, initialTab: getFirstUnmasteredTab(track.id) });
             }
         };
 
@@ -137,6 +150,7 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
         ];
 
         exercises.forEach(ex => {
+            const isTabMastered = masteredSet.has(ex.tab);
             const pill = document.createElement('button');
             pill.className = 'track-action-pill';
             pill.style.display = 'flex';
@@ -153,7 +167,10 @@ export function renderTraenSporgsmalMenuView(container, navigateFn) {
             pill.style.textAlign = 'left';
             pill.style.transition = 'all 0.15s ease';
 
-            pill.innerHTML = `<span>${ex.icon}</span> <span>${t(ex.labelKey, ex.defaultLabel)}</span>`;
+            const checkHtml = isTabMastered
+                ? `<span style="margin-left: auto; font-weight: 700; color: #81c784; font-size: 0.82rem;">✓ 100%</span>`
+                : '';
+            pill.innerHTML = `<span>${ex.icon}</span> <span>${t(ex.labelKey, ex.defaultLabel)}</span>${checkHtml}`;
 
             pill.onmouseenter = () => {
                 pill.style.background = ex.border;

@@ -40,6 +40,27 @@ export function renderLavSporgsmalView(container, navigateFn) {
     optionsContainer.style.gap = '2rem';
     optionsContainer.style.marginTop = '2rem';
     
+    // --- Option 0: Targeted Training ---
+    const targetCard = document.createElement('div');
+    targetCard.className = 'exercise-card';
+    targetCard.style.cursor = 'pointer';
+    targetCard.style.textAlign = 'center';
+    targetCard.style.margin = '0';
+    targetCard.onclick = () => navigateFn('traen_sporgsmal_menu');
+    
+    const targetTitle = document.createElement('h2');
+    targetTitle.textContent = t('menu_target_title', 'Målrettet Træning');
+    targetTitle.style.marginBottom = '1rem';
+    
+    const targetDesc = document.createElement('p');
+    targetDesc.textContent = t('menu_target_desc', 'Træn specifikke elementer, fx betydningen af Hv-ord eller ordstilling i spørgsmål.');
+    targetDesc.style.color = 'var(--text-muted)';
+    targetDesc.style.lineHeight = '1.5';
+    
+    targetCard.appendChild(targetTitle);
+    targetCard.appendChild(targetDesc);
+    optionsContainer.appendChild(targetCard);
+
     // --- Option 1: Anna (Indkøb) ---
     const annaCard = document.createElement('div');
     annaCard.className = 'exercise-card';
@@ -229,27 +250,6 @@ export function renderLavSporgsmalView(container, navigateFn) {
     botCard.appendChild(consentContainer);
     botCard.appendChild(geminiBtnContainer);
     optionsContainer.appendChild(botCard);
-    
-    // --- Option 3: Targeted Training ---
-    const targetCard = document.createElement('div');
-    targetCard.className = 'exercise-card';
-    targetCard.style.cursor = 'pointer';
-    targetCard.style.textAlign = 'center';
-    targetCard.style.margin = '0';
-    targetCard.onclick = () => navigateFn('traen_sporgsmal_menu');
-    
-    const targetTitle = document.createElement('h2');
-    targetTitle.textContent = t('menu_target_title', 'Målrettet Træning');
-    targetTitle.style.marginBottom = '1rem';
-    
-    const targetDesc = document.createElement('p');
-    targetDesc.textContent = t('menu_target_desc', 'Træn specifikke elementer, fx betydningen af Hv-ord eller ordstilling i spørgsmål.');
-    targetDesc.style.color = 'var(--text-muted)';
-    targetDesc.style.lineHeight = '1.5';
-    
-    targetCard.appendChild(targetTitle);
-    targetCard.appendChild(targetDesc);
-    optionsContainer.appendChild(targetCard);
 
     viewContainer.appendChild(topBar);
     viewContainer.appendChild(title);

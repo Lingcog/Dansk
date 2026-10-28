@@ -1,5 +1,8 @@
 import { getTranslation } from '../utils/i18n.js';
 import { renderArbejdeBilvaerkstedView } from './ArbejdeBilvaerkstedView.js';
+import { renderArbejdeKoekkenView } from './ArbejdeKoekkenView.js';
+
+export { renderArbejdeBilvaerkstedView, renderArbejdeKoekkenView };
 
 /**
  * MitHverdagslivMenuView - Hub for "Mit hverdagsliv" under "Lær nye ord".
@@ -172,12 +175,12 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
     const scenes = [
         {
             id: 'mit_hverdagsliv_arbejde',
-            badge: '💼 Scenarie 1 • Bilværksted',
+            badge: '💼 Scenarie 1 • 2 arbejdspladser',
             icon: '💼',
             title: getTranslation('mit_hverdagsliv_arbejde_title') || 'Arbejde',
-            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'På bilværkstedet: Udforsk målord på tværs af ordklasser, faste fagtermer, historier og mundtlige værkstedsdialoger.',
-            btnText: getTranslation('mit_hverdagsliv_arbejde_btn') || 'Åbn Arbejde (Bilværksted) ➔',
-            img: 'assets/bilvaerksted_vrimmel.jpg',
+            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'Træn dansk på arbejdspladsen (de første 3 måneder): Vælg mellem 🔧 På bilværkstedet og 👩‍🍳 Som køkkenassistent i storkøkken og kantine.',
+            btnText: getTranslation('mit_hverdagsliv_arbejde_btn') || 'Vælg arbejdsplads (2 scenarier) ➔',
+            img: 'assets/koekkenassistent_vrimmel.jpg',
             accent: '#38bdf8'
         },
         {
@@ -325,7 +328,242 @@ function renderScenarioSubView(container, navigateFn, config) {
 }
 
 export function renderMitHverdagslivArbejdeView(container, navigateFn, extraData = {}) {
-    renderArbejdeBilvaerkstedView(container, navigateFn, extraData);
+    if (extraData && extraData.workplace === 'bilvaerksted') {
+        renderArbejdeBilvaerkstedView(container, navigateFn, extraData);
+        return;
+    }
+    if (extraData && extraData.workplace === 'koekken') {
+        renderArbejdeKoekkenView(container, navigateFn, extraData);
+        return;
+    }
+
+    container.innerHTML = '';
+
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container mit-hverdagsliv-hub';
+
+    const topBar = document.createElement('div');
+    topBar.className = 'top-bar';
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-btn';
+    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage til Mit hverdagsliv'}`;
+    backBtn.onclick = () => navigateFn('mit_hverdagsliv');
+    topBar.appendChild(backBtn);
+    viewContainer.appendChild(topBar);
+
+    const style = document.createElement('style');
+    style.textContent = `
+        .mit-hverdagsliv-hub {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 1.5rem 4rem;
+            color: #f8fafc;
+        }
+        .mit-hverdagsliv-hub .hub-hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .mit-hverdagsliv-hub .hub-hero h1 {
+            font-size: 2.35rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #38bdf8, #fb923c, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .mit-hverdagsliv-hub .hub-hero p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 760px;
+            margin: 0 auto 1.2rem;
+            line-height: 1.6;
+        }
+        .mit-hverdagsliv-hub .hub-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .mit-hverdagsliv-hub .hub-scenes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .mit-hverdagsliv-hub .scene-card {
+            background: var(--card-bg, #1e293b);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+        .mit-hverdagsliv-hub .scene-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--scene-accent, #38bdf8);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 22px rgba(56, 189, 248, 0.25);
+        }
+        .mit-hverdagsliv-hub .scene-card-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 235px;
+            overflow: hidden;
+            background: #0f172a;
+        }
+        .mit-hverdagsliv-hub .scene-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .mit-hverdagsliv-hub .scene-card:hover .scene-card-img {
+            transform: scale(1.05);
+        }
+        .mit-hverdagsliv-hub .scene-pill-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(8px);
+            padding: 0.38rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #f1f5f9;
+        }
+        .mit-hverdagsliv-hub .scene-card-content {
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .mit-hverdagsliv-hub .scene-card-content h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 0.65rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .mit-hverdagsliv-hub .scene-card-content p {
+            color: #94a3b8;
+            font-size: 0.96rem;
+            line-height: 1.55;
+            margin-bottom: 1.1rem;
+            flex-grow: 1;
+        }
+        .mit-hverdagsliv-hub .scene-feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.3rem;
+        }
+        .mit-hverdagsliv-hub .scene-feature-tag {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .mit-hverdagsliv-hub .scene-action-btn {
+            background: var(--scene-accent, #38bdf8);
+            color: #0f172a;
+            border: none;
+            padding: 0.9rem 1.4rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .mit-hverdagsliv-hub .scene-card:hover .scene-action-btn {
+            filter: brightness(1.1);
+        }
+    `;
+    viewContainer.appendChild(style);
+
+    const hero = document.createElement('div');
+    hero.className = 'hub-hero';
+    hero.innerHTML = `
+        <div class="hub-badge">💼 Mit hverdagsliv • Arbejde</div>
+        <h1 style="margin-top: 0.8rem;">Vælg arbejdsplads</h1>
+        <p>Træn de vigtigste målord, fagudtryk, historier, mundtlige dialoger og faste automatiserede sætninger med dansk betoning til de første 3 måneder på jobbet.</p>
+    `;
+    viewContainer.appendChild(hero);
+
+    const workplaces = [
+        {
+            id: 'mit_hverdagsliv_arbejde_bilvaerksted',
+            badge: '🔧 Arbejdsplads 1 • Bilværksted',
+            icon: '🔧',
+            title: 'På bilværkstedet',
+            desc: 'Arbejd som mekaniker eller værkstedsassistent: Lær 32 centrale ord fra autoværkstedet, læs 4 praksisnære historier med klikbare ord, sæt værkstedsdialoger i rækkefølge og træn udtale med dansk betoning.',
+            tags: ['🖼️ 32 Målord', '🕵️‍♂️ Ord-detektiv', '📖 4 Historier', '🗣️ 5 Dialoger', '🎙️ Sig det højt (Betoning)'],
+            btnText: 'Åbn Bilværkstedet ➔',
+            img: 'assets/bilvaerksted_vrimmel.jpg',
+            accent: '#38bdf8'
+        },
+        {
+            id: 'mit_hverdagsliv_arbejde_koekken',
+            badge: '👩‍🍳 Arbejdsplads 2 • Storkøkken & Kantine',
+            icon: '👩‍🍳',
+            title: 'Som køkkenassistent',
+            desc: 'Arbejd i et dansk storkøkken og kantine: Lær 32 vigtige ord om fødevaresikkerhed, hygiejne, køkkenudstyr og opvask, læs 4 historier med klikbare ord, løs køkkendialoger og træn faste sætninger med betoning.',
+            tags: ['🖼️ 32 Målord', '🕵️‍♂️ Ord-detektiv', '📖 4 Historier', '🗣️ 5 Dialoger', '🎙️ Sig det højt (Betoning)'],
+            btnText: 'Åbn Køkkenassistent ➔',
+            img: 'assets/koekkenassistent_vrimmel.jpg',
+            accent: '#fb923c'
+        }
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'hub-scenes-grid';
+
+    workplaces.forEach(wp => {
+        const card = document.createElement('div');
+        card.className = 'scene-card';
+        card.style.setProperty('--scene-accent', wp.accent);
+        card.innerHTML = `
+            <div class="scene-card-img-wrap">
+                <img src="${wp.img}" alt="${wp.title} vrimlebillede" class="scene-card-img">
+                <span class="scene-pill-badge" style="border-color: ${wp.accent}; color: ${wp.accent};">${wp.badge}</span>
+            </div>
+            <div class="scene-card-content">
+                <h3><span>${wp.icon}</span> <span>${wp.title}</span></h3>
+                <p>${wp.desc}</p>
+                <div class="scene-feature-tags">
+                    ${wp.tags.map(t => `<span class="scene-feature-tag">${t}</span>`).join('')}
+                </div>
+                <button class="scene-action-btn">${wp.btnText}</button>
+            </div>
+        `;
+        card.onclick = () => navigateFn(wp.id);
+        grid.appendChild(card);
+    });
+
+    viewContainer.appendChild(grid);
+    container.appendChild(viewContainer);
 }
 
 export function renderMitHverdagslivFritidView(container, navigateFn) {

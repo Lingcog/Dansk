@@ -47,7 +47,9 @@ import {
   renderMitHverdagslivMenuView,
   renderMitHverdagslivArbejdeView,
   renderMitHverdagslivFritidView,
-  renderMitHverdagslivAarstiderView
+  renderMitHverdagslivAarstiderView,
+  renderArbejdeBilvaerkstedView,
+  renderArbejdeKoekkenView
 } from './views/MitHverdagslivMenuView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
 import { renderSamtaleBoligMenuView } from './views/SamtaleBoligMenuView.js';
@@ -264,6 +266,12 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'mit_hverdagsliv_arbejde') {
     appState.currentView = 'mit_hverdagsliv_arbejde';
     renderMitHverdagslivArbejdeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_arbejde_bilvaerksted') {
+    appState.currentView = 'mit_hverdagsliv_arbejde_bilvaerksted';
+    renderArbejdeBilvaerkstedView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_arbejde_koekken') {
+    appState.currentView = 'mit_hverdagsliv_arbejde_koekken';
+    renderArbejdeKoekkenView(appDiv, navigate, extraData);
   } else if (viewTarget === 'mit_hverdagsliv_fritid') {
     appState.currentView = 'mit_hverdagsliv_fritid';
     renderMitHverdagslivFritidView(appDiv, navigate, extraData);

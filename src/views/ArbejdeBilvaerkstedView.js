@@ -24,15 +24,26 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container bilvaerksted-view';
 
-    // Top Bar with back button
+    // Top Bar with back button + workplace switcher
     const topBar = document.createElement('div');
     topBar.className = 'top-bar';
+    topBar.style.cssText = 'display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;';
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
-    backBtn.onclick = () => navigateFn('mit_hverdagsliv');
+    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage til Arbejde'}`;
+    backBtn.onclick = () => navigateFn('mit_hverdagsliv_arbejde');
     topBar.appendChild(backBtn);
+
+    const workplaceSwitch = document.createElement('div');
+    workplaceSwitch.style.cssText = 'display: flex; gap: 0.5rem; align-items: center;';
+    workplaceSwitch.innerHTML = `
+        <span style="background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; color: #38bdf8; padding: 0.45rem 0.9rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem;">🔧 Bilværksted (Aktiv)</span>
+        <button id="switch-to-koekken-btn" style="background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.45); color: #fb923c; padding: 0.45rem 0.9rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer;">👩‍🍳 Skift til Køkkenassistent ➔</button>
+    `;
+    workplaceSwitch.querySelector('#switch-to-koekken-btn').onclick = () => navigateFn('mit_hverdagsliv_arbejde_koekken');
+    topBar.appendChild(workplaceSwitch);
+
     viewContainer.appendChild(topBar);
 
     // TTS Audio Helper

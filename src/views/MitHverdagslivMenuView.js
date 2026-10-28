@@ -1,4 +1,5 @@
 import { getTranslation } from '../utils/i18n.js';
+import { renderArbejdeBilvaerkstedView } from './ArbejdeBilvaerkstedView.js';
 
 /**
  * MitHverdagslivMenuView - Hub for "Mit hverdagsliv" under "Lær nye ord".
@@ -171,12 +172,12 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
     const scenes = [
         {
             id: 'mit_hverdagsliv_arbejde',
-            badge: '💼 Scenarie 1',
+            badge: '💼 Scenarie 1 • Bilværksted',
             icon: '💼',
             title: getTranslation('mit_hverdagsliv_arbejde_title') || 'Arbejde',
-            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'Udforsk arbejdspladsen, kolleger, møder, værktøj og daglige opgaver på jobbet gennem vrimlebilleder.',
-            btnText: getTranslation('mit_hverdagsliv_arbejde_btn') || 'Åbn Arbejde ➔',
-            img: 'assets/klasse_kontor_vrimmel.jpg',
+            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'På bilværkstedet: Udforsk 32 målord (50% substantiver, 25% verber, 25% adjektiver & adverbier), faste fagtermer og mundtlige værkstedsdialoger.',
+            btnText: getTranslation('mit_hverdagsliv_arbejde_btn') || 'Åbn Arbejde (Bilværksted) ➔',
+            img: 'assets/bilvaerksted_vrimmel.jpg',
             accent: '#38bdf8'
         },
         {
@@ -323,14 +324,8 @@ function renderScenarioSubView(container, navigateFn, config) {
     container.appendChild(viewContainer);
 }
 
-export function renderMitHverdagslivArbejdeView(container, navigateFn) {
-    renderScenarioSubView(container, navigateFn, {
-        icon: '💼',
-        title: getTranslation('mit_hverdagsliv_arbejde_title') || 'Arbejde',
-        desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'Udforsk arbejdspladsen, kolleger, møder og daglige opgaver på jobbet gennem vrimlebilleder.',
-        img: 'assets/klasse_kontor_vrimmel.jpg',
-        accent: '#38bdf8'
-    });
+export function renderMitHverdagslivArbejdeView(container, navigateFn, extraData = {}) {
+    renderArbejdeBilvaerkstedView(container, navigateFn, extraData);
 }
 
 export function renderMitHverdagslivFritidView(container, navigateFn) {

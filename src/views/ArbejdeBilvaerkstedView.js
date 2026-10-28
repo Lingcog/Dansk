@@ -1,0 +1,2404 @@
+import { getTranslation, getLang } from '../utils/i18n.js';
+import { shuffleArray } from '../utils/shuffle.js';
+
+/**
+ * ArbejdeBilvaerkstedView - Scenarie: "Arbejde – På bilværkstedet" under "Mit hverdagsliv"
+ *
+ * Indeholder 32 målord med præcis fordeling på de 4 ordklasser:
+ * - 16 Substantiver (50 %) - kombination af kerneord og faste værkstedstermer
+ * - 8 Verber (25 %) - kombination af kerneord og faste værkstedshandlinger
+ * - 4 Adjektiver (12,5 %) - tilstand og egenskaber på værkstedet
+ * - 4 Adverbier (12,5 %) - måde og holdning på værkstedet
+ *
+ * 6 didaktiske faner:
+ * 1. 🔍 Vrimlebillede (32 kompakte, farvekodede pegefelter, ordklasse-filter, zoom, målordsdefinitioner, faste termer + 4-kategoris sortering & en/et-sortering)
+ * 2. 🕵️ Ord-detektiv (10 missioner på tværs af alle 4 ordklasser og faste termer)
+ * 3. 🔄 Synonymer & Antonymer (Modsætninger og synonymer/faste fagudtryk for alle ordklasser)
+ * 4. 📖 Historier (4 realistiske værkstedshistorier med interaktive spørgsmål)
+ * 5. ✍️ Sætningsbygning (Farvekodet sætningsbygger med alle 4 ordklasser + 10 sætnings-puslespil)
+ * 6. 💬 Mundtlige dialoger (NY OPGAVE TIL SIDST: 5 realistiske mundtlige værkstedsdialoger i blandet rækkefølge, som skal sættes i rigtig rækkefølge)
+ */
+export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData = {}) {
+    container.innerHTML = '';
+
+    const viewContainer = document.createElement('div');
+    viewContainer.className = 'view-container bilvaerksted-view';
+
+    // Top Bar with back button
+    const topBar = document.createElement('div');
+    topBar.className = 'top-bar';
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-btn';
+    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
+    backBtn.onclick = () => navigateFn('mit_hverdagsliv');
+    topBar.appendChild(backBtn);
+    viewContainer.appendChild(topBar);
+
+    // TTS Audio Helper
+    function speakDanish(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'da-DK';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // ========================================================
+    // --- 32 MÅLORD PÅ BILVÆRKSTEDET (50% Sub, 25% Verb, 12.5% Adj, 12.5% Adv)
+    // ========================================================
+    const WORKSHOP_WORDS = [
+        // --- 16 SUBSTANTIVER (50%) ---
+        {
+            id: 'mekaniker',
+            num: 1,
+            word: 'en mekaniker',
+            clean: 'mekaniker',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: mekanikeren | Flertal: mekanikere',
+            x: 40,
+            y: 48,
+            icon: '👨‍🔧',
+            isCore: false,
+            definition: 'En fagperson på et bilværksted, som undersøger, servicerer og reparerer biler.',
+            fixedTerms: 'at køre bilen til mekanikeren • en udlært automekaniker • en dygtig mekaniker',
+            sentence: 'Mekanikeren står under bilen og tjekker undervognen med sin lampe.'
+        },
+        {
+            id: 'autovaerksted',
+            num: 2,
+            word: 'et autoværksted',
+            clean: 'autoværksted',
+            wordClass: 'substantiv',
+            gender: 'et',
+            forms: 'Bestemt: autoværkstedet | Flertal: autoværksteder',
+            x: 48,
+            y: 7,
+            icon: '🏢',
+            isCore: false,
+            definition: 'Et værksted med lift og specialværktøj, hvor biler bliver repareret og serviceret.',
+            fixedTerms: 'bilen er på værksted • at bestille tid på et autoværksted',
+            sentence: 'Der er travlt på det lokale autoværksted i dag.'
+        },
+        {
+            id: 'bil',
+            num: 3,
+            word: 'en bil',
+            clean: 'bil',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: bilen | Flertal: biler',
+            x: 35,
+            y: 20,
+            icon: '🚗',
+            isCore: true,
+            definition: 'Køretøj med motor og fire hjul (kerneord fra Lær nye ord).',
+            fixedTerms: 'at indlevere bilen • en lånebil • bilen skal til serviceeftersyn',
+            sentence: 'Den blå bil hænger højt oppe på liften.'
+        },
+        {
+            id: 'autolift',
+            num: 4,
+            word: 'en autolift',
+            clean: 'autolift',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: autoliften | Flertal: autolifte',
+            x: 23.5,
+            y: 42,
+            icon: '🏗️',
+            isCore: false,
+            definition: 'Hydraulisk løfteapparat på værkstedet, der løfter hele bilen op i luften.',
+            fixedTerms: 'at køre bilen på liften • at hæve og sænke autoliften',
+            sentence: 'Autoliften løfter bilen, så mekanikeren kan se ind under bunden.'
+        },
+        {
+            id: 'motor',
+            num: 5,
+            word: 'en motor',
+            clean: 'motor',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: motoren | Flertal: motorer',
+            x: 63,
+            y: 72,
+            icon: '⚙️',
+            isCore: true,
+            definition: 'Maskinen under motorhjelmen, der får bilen til at køre.',
+            fixedTerms: 'at åbne motorhjelmen • motoren hakker • motorlampen lyser',
+            sentence: 'Mekanikeren kigger ned i bilens åbne motor.'
+        },
+        {
+            id: 'daek',
+            num: 6,
+            word: 'et dæk',
+            clean: 'dæk',
+            wordClass: 'substantiv',
+            gender: 'et',
+            forms: 'Bestemt: dækket | Flertal: dæk',
+            x: 10,
+            y: 23,
+            icon: '🛞',
+            isCore: false,
+            definition: 'Den sorte gummiring omkring bilens hjul, der rører ved vejen.',
+            fixedTerms: 'sommerdæk og vinterdæk • dæktryk • lovpligtigt dækmønster',
+            sentence: 'På reolen til venstre står der både sommerdæk og vinterdæk.'
+        },
+        {
+            id: 'bremse',
+            num: 7,
+            word: 'en bremse',
+            clean: 'bremse',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: bremsen | Flertal: bremser',
+            x: 55,
+            y: 21,
+            icon: '🛑',
+            isCore: false,
+            definition: 'Den vigtige sikkerhedsdel ved hjulene, der får bilen til at sætte farten ned og standse.',
+            fixedTerms: 'bremseklodser og bremseskiver • bremserne hyler • håndbremse',
+            sentence: 'Hvis bremserne piber, når du træder på pedalen, bør bremseklodserne skiftes.'
+        },
+        {
+            id: 'batteri',
+            num: 8,
+            word: 'et batteri',
+            clean: 'batteri',
+            wordClass: 'substantiv',
+            gender: 'et',
+            forms: 'Bestemt: batteriet | Flertal: batterier',
+            x: 68,
+            y: 74,
+            icon: '🔋',
+            isCore: false,
+            definition: 'Strømkilde under motorhjelmen, der giver strøm til at starte bilen og tænde lyset.',
+            fixedTerms: 'at oplade batteriet • startkabler • et fladt bilbatteri',
+            sentence: 'I hård frost kan et gammelt batteri miste strømmen.'
+        },
+        {
+            id: 'motorolie',
+            num: 9,
+            word: 'en motorolie',
+            clean: 'motorolie',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: motorolien | Flertal: motorolier',
+            x: 59,
+            y: 63,
+            icon: '🛢️',
+            isCore: false,
+            definition: 'Smørevæske i dunken, der beskytter motorens bevægelige dele mod varme og slitage.',
+            fixedTerms: 'at måle oliestanden med oliepinden • olieskift og nyt oliefilter',
+            sentence: 'Mekanikeren hælder frisk motorolie fra den gule dunk ned i motoren.'
+        },
+        {
+            id: 'udstoedning',
+            num: 10,
+            word: 'en udstødning',
+            clean: 'udstødning',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: udstødningen | Flertal: udstødninger',
+            x: 35,
+            y: 33,
+            icon: '💨',
+            isCore: false,
+            definition: 'Rørsystemet under bilens bund, som leder røggasser væk og dæmper motorlarmen.',
+            fixedTerms: 'et hul i udstødningen • en rusten lydpotte • udstødningsrør',
+            sentence: 'Under den blå bil kan man tydeligt se udstødningen og lydpotten.'
+        },
+        {
+            id: 'forrude',
+            num: 11,
+            word: 'en forrude',
+            clean: 'forrude',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: forruden | Flertal: forruder',
+            x: 75,
+            y: 56,
+            icon: '🪟',
+            isCore: false,
+            definition: 'Det store glasvindue forrest på bilen, som føreren kigger ud igennem.',
+            fixedTerms: 'et stenslag i forruden • en revnet forrude • vinduesviskere og sprinklervæske',
+            sentence: 'En lille sten på motorvejen har lavet et stenslag i forruden.'
+        },
+        {
+            id: 'vaerktoej',
+            num: 12,
+            word: 'et værktøj',
+            clean: 'værktøj',
+            wordClass: 'substantiv',
+            gender: 'et',
+            forms: 'Bestemt: værktøjet | Flertal: værktøjer',
+            x: 32,
+            y: 84,
+            icon: '🧰',
+            isCore: true,
+            definition: 'Redskaber i den røde værktøjsvogn, som bruges til reparationer.',
+            fixedTerms: 'en rullende værktøjsvogn • håndværktøj og trykluftværktøj',
+            sentence: 'Alt værktøjet ligger klar i den røde værktøjsvogn på hjul.'
+        },
+        {
+            id: 'skruenoegle',
+            num: 13,
+            word: 'en skruenøgle',
+            clean: 'skruenøgle',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: skruenøglen | Flertal: skruenøgler',
+            x: 40.5,
+            y: 56.5,
+            icon: '🔧',
+            isCore: false,
+            definition: 'Stålredskab til at løsne eller spænde møtrikker og bolte på bilen.',
+            fixedTerms: 'en fastnøgle • en momentnøgle • at løsne en rusten møtrik',
+            sentence: 'Mekanikeren holder en skruenøgle i hånden under liften.'
+        },
+        {
+            id: 'donkraft',
+            num: 14,
+            word: 'en donkraft',
+            clean: 'donkraft',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: donkraften | Flertal: donkrafte',
+            x: 24,
+            y: 93,
+            icon: '⚙️',
+            isCore: false,
+            definition: 'Lavt løfteredskab på hjul, man skubber ind under bilen for at løfte ét hjul ad gangen.',
+            fixedTerms: 'at pumpe donkraften op • løftepunkt under bilens panel',
+            sentence: 'Den blå donkraft står på gulvet lige ved siden af lærlingen.'
+        },
+        {
+            id: 'reservedel',
+            num: 15,
+            word: 'en reservedel',
+            clean: 'reservedel',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: reservedelen | Flertal: reservedele',
+            x: 69,
+            y: 21,
+            icon: '📦',
+            isCore: false,
+            definition: 'En ny bil-del fra lagerreolen, som sættes ind i stedet for en slidt eller defekt del.',
+            fixedTerms: 'originale reservedele • at bestille en reservedel hjem',
+            sentence: 'På reolen bagved står der nye reservedele som oliefiltre, slanger og remme.'
+        },
+        {
+            id: 'regning',
+            num: 16,
+            word: 'en regning',
+            clean: 'regning',
+            wordClass: 'substantiv',
+            gender: 'en',
+            forms: 'Bestemt: regningen | Flertal: regninger',
+            x: 88,
+            y: 83,
+            icon: '🧾',
+            isCore: true,
+            definition: 'Dokument på disken, der viser prisen for arbejdstimer, reservedele og moms.',
+            fixedTerms: 'et uforpligtende pristilbud • arbejdsløn inkl. moms • at betale regningen',
+            sentence: 'Ved skranken gennemgår medarbejderen regningen med kunden.'
+        },
+
+        // --- 8 VERBER (25%) ---
+        {
+            id: 'reparere',
+            num: 17,
+            word: 'at reparere',
+            clean: 'reparerer',
+            wordClass: 'verbum',
+            forms: 'Nutid: reparerer | Datid: reparerede | Førnutid: har repareret',
+            x: 33,
+            y: 41,
+            icon: '🛠️',
+            isCore: false,
+            definition: 'At sætte noget i stand, som er gået i stykker, så det fungerer igen.',
+            fixedTerms: 'at reparere en skade • at reparere et stenslag • kan det betale sig at reparere?',
+            sentence: 'Mekanikeren reparerer den utætte udstødning under bilen.'
+        },
+        {
+            id: 'skifte',
+            num: 18,
+            word: 'at skifte',
+            clean: 'skifter',
+            wordClass: 'verbum',
+            forms: 'Nutid: skifter | Datid: skiftede | Førnutid: har skiftet',
+            x: 4,
+            y: 84,
+            icon: '🔄',
+            isCore: true,
+            definition: 'At fjerne en gammel eller slidt del og sætte en ny del på plads.',
+            fixedTerms: 'at skifte fra sommerdæk til vinterdæk • at skifte olie • at skifte en pære',
+            sentence: 'Lærlingen skifter dækkene på den røde bil.'
+        },
+        {
+            id: 'tjekke',
+            num: 19,
+            word: 'at tjekke',
+            clean: 'tjekker',
+            wordClass: 'verbum',
+            forms: 'Nutid: tjekker | Datid: tjekkede | Førnutid: har tjekket',
+            x: 36.5,
+            y: 39,
+            icon: '🔎',
+            isCore: true,
+            definition: 'At kontrollere og efterse grundigt, om alt på bilen er sikkert og i orden.',
+            fixedTerms: 'at tjekke dæktryk • at tjekke oliestanden • et 30-punkts sikkerhedstjek',
+            sentence: 'Mekanikeren lyser med lampen for at tjekke bremser og rør under bilen.'
+        },
+        {
+            id: 'loefte',
+            num: 20,
+            word: 'at løfte',
+            clean: 'løfter',
+            wordClass: 'verbum',
+            forms: 'Nutid: løfter | Datid: løftede | Førnutid: har løftet',
+            x: 48,
+            y: 35,
+            icon: '⬆️',
+            isCore: true,
+            definition: 'At hæve noget tungt op fra gulvet ved hjælp af en autolift eller donkraft.',
+            fixedTerms: 'at løfte bilen på liften • pas på ryggen, når du løfter tunge dæk',
+            sentence: 'De gule bærearme på autoliften løfter bilen sikkert op.'
+        },
+        {
+            id: 'spaende',
+            num: 21,
+            word: 'at spænde',
+            clean: 'spænder',
+            wordClass: 'verbum',
+            forms: 'Nutid: spænder | Datid: spændte | Førnutid: har spændt',
+            x: 15,
+            y: 77,
+            icon: '🔩',
+            isCore: false,
+            definition: 'At stramme hjulbolte og møtrikker godt fast med det rigtige tryk.',
+            fixedTerms: 'at efterspænde hjulboltene efter 100 km • at spænde med hjulnøgle',
+            sentence: 'Lærlingen spænder hjulboltene fast på den røde bils baghjul.'
+        },
+        {
+            id: 'paafylde',
+            num: 22,
+            word: 'at påfylde',
+            clean: 'påfylder',
+            wordClass: 'verbum',
+            forms: 'Nutid: påfylder | Datid: påfyldte | Førnutid: har påfyldt',
+            x: 62.5,
+            y: 66,
+            icon: '🫗',
+            isCore: false,
+            definition: 'At hælde ny væske (olie, kølervæske eller sprinklervæske) på bilens beholdere.',
+            fixedTerms: 'at påfylde frisk motorolie • at efterfylde blå sprinklervæske',
+            sentence: 'Mekanikeren i blåt arbejdstøj påfylder ny olie direkte i motoren.'
+        },
+        {
+            id: 'fejlsoege',
+            num: 23,
+            word: 'at fejlsøge',
+            clean: 'fejlsøger',
+            wordClass: 'verbum',
+            forms: 'Nutid: fejlsøger | Datid: fejlsøgte | Førnutid: har fejlsøgt',
+            x: 45.5,
+            y: 74,
+            icon: '💻',
+            isCore: false,
+            definition: 'At tilslutte en diagnosetester for at finde ud af, hvorfor en advarselslampe lyser.',
+            fixedTerms: 'elektronisk fejlsøgning • at udlæse fejlkoder på bilens computer',
+            sentence: 'På rullebordet ligger diagnosetesteren klar til at fejlsøge bilen.'
+        },
+        {
+            id: 'syne',
+            num: 24,
+            word: 'at syne',
+            clean: 'syner',
+            wordClass: 'verbum',
+            forms: 'Nutid: syner | Datid: synede | Førnutid: har synet',
+            x: 84,
+            y: 66,
+            icon: '📋',
+            isCore: false,
+            definition: 'At foretage den lovpligtige kontrol af, om bilen er sikker at køre i.',
+            fixedTerms: 'periodisk bilsyn • bilen gik glat gennem syn • klargøring til syn',
+            sentence: 'Værkstedet klargør og tjekker hele bilen, før den skal synes.'
+        },
+
+        // --- 4 ADJEKTIVER (12.5%) ---
+        {
+            id: 'slidt',
+            num: 25,
+            word: 'slidt',
+            clean: 'slidt',
+            wordClass: 'adjektiv',
+            forms: 'En-ord: slidt | Et-ord: slidt | Bestemt/Flertal: slidte',
+            x: 43,
+            y: 34,
+            icon: '⚠️',
+            isCore: false,
+            definition: 'Brugt så længe, at materialet er blevet tyndt og trænger til udskiftning.',
+            fixedTerms: 'slidte bremseklodser • et slidt dækmønster • sliddele på bilen',
+            sentence: 'Bremseskiverne og dækkene kontrolleres for, om de er slidte.'
+        },
+        {
+            id: 'flad',
+            num: 26,
+            word: 'flad',
+            clean: 'flad',
+            wordClass: 'adjektiv',
+            forms: 'En-ord: flad | Et-ord: fladt | Bestemt/Flertal: flade',
+            x: 12,
+            y: 83,
+            icon: '🛞',
+            isCore: true,
+            definition: 'Et dæk der har tabt luften (punkteret), eller et batteri der er løbet tør for strøm.',
+            fixedTerms: 'et fladt dæk • et fladt batteri • dækket er helt fladt',
+            sentence: 'Kunden kom ind med et fladt dæk, som lærlingen nu har skiftet.'
+        },
+        {
+            id: 'defekt',
+            num: 27,
+            word: 'defekt',
+            clean: 'defekt',
+            wordClass: 'adjektiv',
+            forms: 'En-ord: defekt | Et-ord: defekt | Bestemt/Flertal: defekte',
+            x: 59,
+            y: 74,
+            icon: '🚨',
+            isCore: false,
+            definition: 'I stykker; en teknisk del på bilen som ikke længere virker.',
+            fixedTerms: 'en defekt pære • en defekt føler i motoren • udskiftning af defekte dele',
+            sentence: 'En defekt del i motoren eller en revnet forrude skal udbedres på værkstedet.'
+        },
+        {
+            id: 'koereklar',
+            num: 28,
+            word: 'køreklar',
+            clean: 'køreklar',
+            wordClass: 'adjektiv',
+            forms: 'En-ord: køreklar | Et-ord: køreklart | Bestemt/Flertal: køreklare',
+            x: 89,
+            y: 35,
+            icon: '✅',
+            isCore: false,
+            definition: 'Færdigrepareret, sikker og helt klar til at køre ud på vejen igen.',
+            fixedTerms: 'bilen er synet og køreklar • vi ringer, når bilen er køreklar',
+            sentence: 'Ude foran porten holder den grønne bil helt køreklar efter eftersynet.'
+        },
+
+        // --- 4 ADVERBIER (12.5%) ---
+        {
+            id: 'grundigt',
+            num: 29,
+            word: 'grundigt',
+            clean: 'grundigt',
+            wordClass: 'adverbium',
+            forms: 'Mådesadverbium (-t form af adjektivet "grundig")',
+            x: 40,
+            y: 66,
+            icon: '🔍',
+            isCore: false,
+            definition: 'På en meget omhyggelig og nøjagtig måde, hvor alle detaljer bliver tjekket.',
+            fixedTerms: 'at undersøge bilen grundigt • at rense bremserne grundigt',
+            sentence: 'Mekanikeren gennemgår undervognen grundigt med sin arbejdslampe.'
+        },
+        {
+            id: 'forsigtigt',
+            num: 30,
+            word: 'forsigtigt',
+            clean: 'forsigtigt',
+            wordClass: 'adverbium',
+            forms: 'Mådesadverbium (-t form af adjektivet "forsigtig")',
+            x: 53,
+            y: 58,
+            icon: '🧤',
+            isCore: true,
+            definition: 'Roligt og med stor omtanke, så man ikke spilder olie eller laver skader.',
+            fixedTerms: 'at sænke liften forsigtigt • at hælde olie på forsigtigt',
+            sentence: 'Han hælder olien forsigtigt ned i motoren uden at spilde.'
+        },
+        {
+            id: 'hurtigt',
+            num: 31,
+            word: 'hurtigt',
+            clean: 'hurtigt',
+            wordClass: 'adverbium',
+            forms: 'Mådesadverbium (-t form af adjektivet "hurtig" – kerneord)',
+            x: 18,
+            y: 63,
+            icon: '⚡',
+            isCore: true,
+            definition: 'På kort tid og med høj arbejdshastighed.',
+            fixedTerms: 'at klare et hjulskift hurtigt • vi finder fejlen hurtigt',
+            sentence: 'Den unge lærling arbejder hurtigt og effektivt med hjulskiftet.'
+        },
+        {
+            id: 'heldigvis',
+            num: 32,
+            word: 'heldigvis',
+            clean: 'heldigvis',
+            wordClass: 'adverbium',
+            forms: 'Holdningsadverbium (udtrykker lettelse – kerneord)',
+            x: 92,
+            y: 73,
+            icon: '🍀',
+            isCore: true,
+            definition: 'Viser talerens lettelse over, at problemet ikke var så slemt eller dyrt som frygtet.',
+            fixedTerms: 'det er heldigvis kun en sikring • garantien dækker heldigvis',
+            sentence: 'Kunden smiler ved skranken, for regningen blev heldigvis ikke dyr!'
+        }
+    ];
+
+    const CLASS_META = {
+        substantiv: { label: '🟢 Substantiv', short: 'Substantiv', color: '#22c55e', bg: 'rgba(34, 197, 94, 0.18)' },
+        verbum: { label: '🔴 Verbum', short: 'Verbum', color: '#ef4444', bg: 'rgba(239, 68, 68, 0.18)' },
+        adjektiv: { label: '🟠 Adjektiv', short: 'Adjektiv', color: '#f97316', bg: 'rgba(249, 115, 22, 0.18)' },
+        adverbium: { label: '🔵 Adverbium', short: 'Adverbium', color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.18)' }
+    };
+
+    // Styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .bilvaerksted-view {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 1rem 1.2rem 4rem;
+            color: #f8fafc;
+        }
+        .bv-hero-header {
+            text-align: center;
+            margin-bottom: 1.6rem;
+        }
+        .bv-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+        }
+        .bv-hero-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #38bdf8, #22c55e, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bv-hero-header p {
+            color: #94a3b8;
+            font-size: 1.05rem;
+            max-width: 820px;
+            margin: 0 auto 1rem;
+            line-height: 1.5;
+        }
+        .bv-ratio-strip {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+        .bv-ratio-pill {
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(15, 23, 42, 0.75);
+        }
+
+        /* Tabs Navigation */
+        .bv-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.8rem;
+            background: rgba(30, 41, 59, 0.75);
+            padding: 0.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bv-tab-btn {
+            background: transparent;
+            color: #94a3b8;
+            border: none;
+            padding: 0.65rem 1.05rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .bv-tab-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .bv-tab-btn.active {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        .bv-panel {
+            display: none;
+            animation: bvFadeIn 0.28s ease;
+        }
+        .bv-panel.active {
+            display: block;
+        }
+        @keyframes bvFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Vrimlebillede Card */
+        .bv-vrimmel-card {
+            background: rgba(30, 41, 59, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .bv-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bv-filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .bv-filter-btn {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1.5px solid #475569;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .bv-filter-btn:hover {
+            border-color: #94a3b8;
+            color: white;
+        }
+        .bv-filter-btn.active {
+            background: #0f172a;
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+        }
+        .bv-tools-right {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+        .bv-zoom-btn, .bv-pure-btn {
+            background: #1e293b;
+            color: #f1f5f9;
+            border: 1.5px solid #64748b;
+            padding: 0.42rem 0.85rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .bv-zoom-btn.active, .bv-pure-btn.active {
+            background: #0284c7;
+            border-color: #38bdf8;
+            color: white;
+        }
+
+        /* Scroll/Zoom Viewport & Stage */
+        .bv-stage-viewport {
+            width: 100%;
+            overflow: auto;
+            border-radius: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: #0f172a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            -webkit-overflow-scrolling: touch;
+        }
+        .bv-stage {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+            transform-origin: top left;
+            transition: width 0.25s ease;
+        }
+        .bv-stage.zoom-15 {
+            width: 150%;
+        }
+        .bv-stage.zoom-20 {
+            width: 200%;
+        }
+        .bv-stage.pure-mode .bv-hotspot {
+            display: none !important;
+        }
+        .bv-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            user-select: none;
+        }
+
+        /* Compact Hotspots (optimized for both desktop & mobile phones) */
+        .bv-hotspot {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.65rem;
+            border: 1.8px solid #ffffff;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 10;
+            padding: 0;
+            line-height: 1;
+        }
+        .bv-hotspot.hs-substantiv { background: rgba(22, 163, 74, 0.92); }
+        .bv-hotspot.hs-verbum { background: rgba(220, 38, 38, 0.92); }
+        .bv-hotspot.hs-adjektiv { background: rgba(234, 88, 12, 0.92); }
+        .bv-hotspot.hs-adverbium { background: rgba(2, 132, 199, 0.92); }
+
+        .bv-hotspot:hover, .bv-hotspot.active {
+            transform: translate(-50%, -50%) scale(1.38);
+            z-index: 25;
+            box-shadow: 0 0 12px #ffffff, 0 0 8px currentColor;
+        }
+        .bv-hotspot.filtered-out {
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        @media (max-width: 640px) {
+            .bv-hotspot {
+                width: 15px;
+                height: 15px;
+                font-size: 0.5rem;
+                border-width: 1.2px;
+            }
+            .bv-vrimmel-card {
+                padding: 0.85rem;
+            }
+        }
+
+        /* Detail Card */
+        .bv-detail-card {
+            background: #1e293b;
+            border: 1.5px solid #475569;
+            border-radius: 16px;
+            padding: 1.35rem;
+            margin-top: 1.2rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .bv-badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 0.5rem;
+        }
+        .bv-class-badge {
+            padding: 0.28rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .bv-def-box {
+            background: rgba(15, 23, 42, 0.65);
+            border-left: 3px solid #38bdf8;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            margin: 0.55rem 0;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+        .bv-terms-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 0.5rem 0.85rem;
+            border-radius: 8px;
+            margin-bottom: 0.55rem;
+            font-size: 0.88rem;
+            color: #fde68a;
+        }
+
+        /* Quick Word Chip Bar below Detail Card */
+        .bv-quick-words-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .bv-word-pill {
+            background: #0f172a;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #e2e8f0;
+            padding: 0.3rem 0.65rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .bv-word-pill:hover, .bv-word-pill.active {
+            transform: translateY(-1px);
+            border-color: white;
+            background: #334155;
+        }
+
+        /* 4-Category Sorting Box */
+        .bv-sorting-box {
+            background: rgba(15, 23, 42, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.4rem;
+            margin-top: 1.5rem;
+        }
+        .bv-bins-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .bv-sort-bin {
+            border-radius: 14px;
+            padding: 1rem;
+            min-height: 145px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px dashed rgba(255,255,255,0.25);
+        }
+        .bv-sort-bin:hover {
+            filter: brightness(1.15);
+        }
+
+        /* Dialogue Ordering Exercise (Tab 6) */
+        .bv-dialog-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 1.8rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+        .bv-dialog-slot {
+            background: #0f172a;
+            border: 2px dashed #475569;
+            border-radius: 12px;
+            padding: 0.85rem 1.1rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 0.65rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .bv-dialog-slot.filled {
+            border-style: solid;
+            border-color: #38bdf8;
+            background: #1e293b;
+        }
+        .bv-dialog-slot.correct-slot {
+            border-color: #22c55e !important;
+            background: rgba(34, 197, 94, 0.14) !important;
+        }
+        .bv-dialog-slot.wrong-slot {
+            border-color: #ef4444 !important;
+            background: rgba(239, 68, 68, 0.14) !important;
+        }
+        .bv-dialog-line-btn {
+            width: 100%;
+            text-align: left;
+            background: #1e293b;
+            border: 1.5px solid #475569;
+            color: #f8fafc;
+            padding: 0.85rem 1.1rem;
+            border-radius: 12px;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            transition: all 0.2s;
+            font-size: 0.98rem;
+            line-height: 1.45;
+        }
+        .bv-dialog-line-btn:hover {
+            border-color: #38bdf8;
+            background: #334155;
+            transform: translateY(-1px);
+        }
+        .bv-dialog-line-btn.placed {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .bv-speaker-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+            white-space: nowrap;
+        }
+        .speaker-kunde { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+        .speaker-mekaniker { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .speaker-mester { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .speaker-laerling { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    `;
+    viewContainer.appendChild(style);
+
+    // Hero Header
+    const heroHeader = document.createElement('div');
+    heroHeader.className = 'bv-hero-header';
+    heroHeader.innerHTML = `
+        <div class="bv-hero-badge">💼 Mit hverdagsliv • Scenarie 1: Arbejde</div>
+        <h1>🔧 På bilværkstedet</h1>
+        <p>Udforsk hverdagen på et dansk autoværksted med 32 målord og faste fagtermer fordelt på alle fire ordklasser.</p>
+        <div class="bv-ratio-strip">
+            <span class="bv-ratio-pill" style="color:#4ade80; border-color:#22c55e55;">🟢 16 Substantiver (50%)</span>
+            <span class="bv-ratio-pill" style="color:#f87171; border-color:#ef444455;">🔴 8 Verber (25%)</span>
+            <span class="bv-ratio-pill" style="color:#fb923c; border-color:#f9731655;">🟠 4 Adjektiver (12,5%)</span>
+            <span class="bv-ratio-pill" style="color:#38bdf8; border-color:#38bdf855;">🔵 4 Adverbier (12,5%)</span>
+        </div>
+    `;
+    viewContainer.appendChild(heroHeader);
+
+    // 6 Tabs Navigation
+    const tabsMenu = document.createElement('div');
+    tabsMenu.className = 'bv-tabs';
+    const tabs = [
+        { id: 'tab_vrimmel', label: '1. Vrimlebillede', icon: '🔍' },
+        { id: 'tab_detektiv', label: '2. Ord-detektiv', icon: '🕵️' },
+        { id: 'tab_syn_ant', label: '3. Synonymer & Antonymer', icon: '🔄' },
+        { id: 'tab_historie', label: '4. Historier', icon: '📖' },
+        { id: 'tab_saetning', label: '5. Sætningsbygning', icon: '✍️' },
+        { id: 'tab_dialog', label: '6. Mundtlige dialoger', icon: '💬' }
+    ];
+
+    let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
+        ? extraData.subPath
+        : 'tab_vrimmel';
+
+    tabs.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = `bv-tab-btn ${t.id === currentTab ? 'active' : ''}`;
+        btn.dataset.tab = t.id;
+        btn.innerHTML = `<span>${t.icon}</span> <span>${t.label}</span>`;
+        btn.onclick = () => switchTab(t.id);
+        tabsMenu.appendChild(btn);
+    });
+    viewContainer.appendChild(tabsMenu);
+
+    const panelsHolder = document.createElement('div');
+    viewContainer.appendChild(panelsHolder);
+
+    function switchTab(tabId) {
+        currentTab = tabId;
+        const lang = getLang();
+        history.pushState(null, '', `#/${lang}/mit_hverdagsliv_arbejde/${tabId}`);
+        tabsMenu.querySelectorAll('.bv-tab-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.tab === tabId);
+        });
+        panelsHolder.querySelectorAll('.bv-panel').forEach(p => {
+            p.classList.toggle('active', p.dataset.panel === tabId);
+        });
+    }
+
+    // ========================================================
+    // --- TAB 1: VRIMLEBILLEDE + ORDKLASSE-SORTERING
+    // ========================================================
+    const vrimmelPanel = document.createElement('div');
+    vrimmelPanel.className = `bv-panel ${currentTab === 'tab_vrimmel' ? 'active' : ''}`;
+    vrimmelPanel.dataset.panel = 'tab_vrimmel';
+
+    const vrimmelCard = document.createElement('div');
+    vrimmelCard.className = 'bv-vrimmel-card';
+
+    // Toolbar: Word Class Filter + Zoom + Pure Image
+    const toolbar = document.createElement('div');
+    toolbar.className = 'bv-toolbar';
+
+    const filterGroup = document.createElement('div');
+    filterGroup.className = 'bv-filter-group';
+    const filters = [
+        { id: 'all', label: 'Alle (32)' },
+        { id: 'substantiv', label: '🟢 Substantiver (16)' },
+        { id: 'verbum', label: '🔴 Verber (8)' },
+        { id: 'adjektiv', label: '🟠 Adjektiver (4)' },
+        { id: 'adverbium', label: '🔵 Adverbier (4)' }
+    ];
+    let activeFilter = 'all';
+
+    filters.forEach(f => {
+        const fb = document.createElement('button');
+        fb.className = `bv-filter-btn ${f.id === activeFilter ? 'active' : ''}`;
+        fb.textContent = f.label;
+        fb.onclick = () => {
+            activeFilter = f.id;
+            filterGroup.querySelectorAll('.bv-filter-btn').forEach(b => b.classList.remove('active'));
+            fb.classList.add('active');
+            stage.querySelectorAll('.bv-hotspot').forEach(hs => {
+                const wc = hs.dataset.wordclass;
+                hs.classList.toggle('filtered-out', activeFilter !== 'all' && wc !== activeFilter);
+            });
+        };
+        filterGroup.appendChild(fb);
+    });
+
+    const toolsRight = document.createElement('div');
+    toolsRight.className = 'bv-tools-right';
+
+    const zoomLevels = [
+        { id: '10', label: '🔍 1x', cls: '' },
+        { id: '15', label: '🔍 1.5x', cls: 'zoom-15' },
+        { id: '20', label: '🔍 2x', cls: 'zoom-20' }
+    ];
+    let activeZoom = '10';
+    zoomLevels.forEach(z => {
+        const zb = document.createElement('button');
+        zb.className = `bv-zoom-btn ${z.id === activeZoom ? 'active' : ''}`;
+        zb.textContent = z.label;
+        zb.onclick = () => {
+            activeZoom = z.id;
+            toolsRight.querySelectorAll('.bv-zoom-btn').forEach(b => b.classList.remove('active'));
+            zb.classList.add('active');
+            stage.classList.remove('zoom-15', 'zoom-20');
+            if (z.cls) stage.classList.add(z.cls);
+        };
+        toolsRight.appendChild(zb);
+    });
+
+    const pureBtn = document.createElement('button');
+    pureBtn.className = 'bv-pure-btn';
+    pureBtn.innerHTML = `🖼️ Rent billede`;
+    let pureMode = false;
+    pureBtn.onclick = () => {
+        pureMode = !pureMode;
+        stage.classList.toggle('pure-mode', pureMode);
+        pureBtn.classList.toggle('active', pureMode);
+    };
+    toolsRight.appendChild(pureBtn);
+
+    toolbar.appendChild(filterGroup);
+    toolbar.appendChild(toolsRight);
+    vrimmelCard.appendChild(toolbar);
+
+    // Viewport & Stage
+    const viewport = document.createElement('div');
+    viewport.className = 'bv-stage-viewport';
+
+    const stage = document.createElement('div');
+    stage.className = 'bv-stage';
+
+    const img = document.createElement('img');
+    img.src = 'assets/bilvaerksted_vrimmel.jpg';
+    img.onerror = () => { img.src = 'assets/klasse_kontor_vrimmel.jpg'; };
+    img.alt = 'På bilværkstedet vrimlebillede';
+    img.className = 'bv-img';
+    stage.appendChild(img);
+
+    // Detail Card
+    const detailBox = document.createElement('div');
+    detailBox.className = 'bv-detail-card';
+
+    // Quick Word Chips Bar
+    const quickBar = document.createElement('div');
+    quickBar.className = 'bv-quick-words-bar';
+
+    function selectWordItem(item) {
+        stage.querySelectorAll('.bv-hotspot').forEach(h => {
+            h.classList.toggle('active', h.dataset.id === item.id);
+        });
+        quickBar.querySelectorAll('.bv-word-pill').forEach(p => {
+            p.classList.toggle('active', p.dataset.id === item.id);
+        });
+
+        const meta = CLASS_META[item.wordClass];
+        const genderBadge = item.gender
+            ? `<span class="bv-class-badge" style="background:${item.gender === 'en' ? 'rgba(56,189,248,0.2)' : 'rgba(249,115,22,0.2)'}; color:${item.gender === 'en' ? '#38bdf8' : '#fb923c'}; border:1px solid ${item.gender === 'en' ? '#0284c7' : '#ea580c'};">${item.gender.toUpperCase()}-ORD</span>`
+            : '';
+        const coreBadge = item.isCore
+            ? `<span class="bv-class-badge" style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid #a855f7;">⭐ Kerneord</span>`
+            : `<span class="bv-class-badge" style="background:rgba(20,184,166,0.2); color:#5eead4; border:1px solid #14b8a6;">🔧 Fagterm / Nyt ord</span>`;
+
+        detailBox.innerHTML = `
+            <div style="flex: 1; min-width: 260px;">
+                <div class="bv-badge-row">
+                    <span class="bv-class-badge" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.color};">#${item.num} • ${meta.label}</span>
+                    ${genderBadge}
+                    ${coreBadge}
+                </div>
+                <div style="font-size: 1.65rem; font-weight: 800; color: white; margin-bottom: 0.25rem;">
+                    ${item.icon} ${item.word}
+                </div>
+                <div style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 0.4rem;">
+                    ${item.forms}
+                </div>
+                <div class="bv-def-box">
+                    <strong>📖 Betydning:</strong> ${item.definition}
+                </div>
+                <div class="bv-terms-box">
+                    <strong>🔩 Faste termer & vendinger:</strong> ${item.fixedTerms}
+                </div>
+                <div style="font-size: 1.05rem; color: #f8fafc; font-style: italic; margin-top: 0.4rem;">
+                    "💬 ${item.sentence}"
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="listen-word-btn" id="bv-listen-word" style="background:#2563eb; color:white; border:none; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
+                        🔊 Lyt til ordet
+                    </button>
+                    <button class="listen-word-btn" id="bv-listen-sentence" style="background:#0f172a; color:#38bdf8; border:1.5px solid #0284c7; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
+                        🔊 Lyt til sætning
+                    </button>
+                </div>
+            </div>
+        `;
+
+        detailBox.querySelector('#bv-listen-word').onclick = () => speakDanish(item.word);
+        detailBox.querySelector('#bv-listen-sentence').onclick = () => speakDanish(item.sentence);
+    }
+
+    WORKSHOP_WORDS.forEach(item => {
+        const spot = document.createElement('button');
+        spot.type = 'button';
+        spot.className = `bv-hotspot hs-${item.wordClass}`;
+        spot.style.left = `${item.x}%`;
+        spot.style.top = `${item.y}%`;
+        spot.dataset.id = item.id;
+        spot.dataset.wordclass = item.wordClass;
+        spot.textContent = item.num;
+        spot.title = `${item.num}. ${item.word} (${CLASS_META[item.wordClass].short})`;
+        spot.onclick = () => {
+            selectWordItem(item);
+            speakDanish(item.word);
+        };
+        stage.appendChild(spot);
+
+        const pill = document.createElement('button');
+        pill.type = 'button';
+        pill.className = 'bv-word-pill';
+        pill.dataset.id = item.id;
+        pill.style.borderLeft = `3px solid ${CLASS_META[item.wordClass].color}`;
+        pill.textContent = `${item.num}. ${item.word}`;
+        pill.onclick = () => {
+            selectWordItem(item);
+            speakDanish(item.word);
+        };
+        quickBar.appendChild(pill);
+    });
+
+    // Initialize detail card with word #1
+    selectWordItem(WORKSHOP_WORDS[0]);
+
+    viewport.appendChild(stage);
+    vrimmelCard.appendChild(viewport);
+    vrimmelCard.appendChild(detailBox);
+    vrimmelCard.appendChild(quickBar);
+    vrimmelPanel.appendChild(vrimmelCard);
+
+    // --- 4-KATEGORIS ORDKLASSE-SORTERING UNDER VRIMLEBILLEDET ---
+    const sortingBox = document.createElement('div');
+    sortingBox.className = 'bv-sorting-box';
+
+    let sortPlacedCount = 0;
+    let selectedSortItem = null;
+
+    const sortHeader = document.createElement('div');
+    sortHeader.style.cssText = 'display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;';
+    sortHeader.innerHTML = `
+        <div>
+            <h3 style="margin:0; font-size:1.25rem;">📦 Sorter værkstedets 32 målord i de 4 ordklasser</h3>
+            <p style="margin:0.25rem 0 0; color:#94a3b8; font-size:0.92rem;">Klik på et ord i banken og læg det i den rigtige ordklasse-kasse (50% substantiver, 25% verber, 12,5% adjektiver, 12,5% adverbier).</p>
+        </div>
+        <div style="display:flex; gap:0.6rem; align-items:center;">
+            <span id="bv-sort-progress" style="background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid #0284c7; padding:0.4rem 0.9rem; border-radius:20px; font-weight:800; font-size:0.88rem;">0 / ${WORKSHOP_WORDS.length} placeret</span>
+            <button id="bv-sort-reset" style="background:#334155; color:white; border:none; padding:0.45rem 0.9rem; border-radius:10px; font-weight:700; cursor:pointer;">🔄 Nulstil</button>
+        </div>
+    `;
+    sortingBox.appendChild(sortHeader);
+
+    const binsGrid = document.createElement('div');
+    binsGrid.className = 'bv-bins-4';
+
+    const binDefs = [
+        { key: 'substantiv', title: '🟢 Substantiver (16)', sub: 'Ting, personer & steder (en/et)', color: '#22c55e', bg: 'rgba(34, 197, 94, 0.1)' },
+        { key: 'verbum', title: '🔴 Verber (8)', sub: 'Handlinger på værkstedet (at...)', color: '#ef4444', bg: 'rgba(239, 68, 68, 0.1)' },
+        { key: 'adjektiv', title: '🟠 Adjektiver (4)', sub: 'Hvordan er tingen/bilen?', color: '#f97316', bg: 'rgba(249, 115, 22, 0.1)' },
+        { key: 'adverbium', title: '🔵 Adverbier (4)', sub: 'Hvordan foregår handlingen? / Holdning', color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.1)' }
+    ];
+
+    const binListEls = {};
+    binDefs.forEach(bd => {
+        const bin = document.createElement('div');
+        bin.className = 'bv-sort-bin';
+        bin.style.background = bd.bg;
+        bin.style.borderColor = bd.color;
+        bin.innerHTML = `
+            <div style="font-weight:800; font-size:1.05rem; color:${bd.color}; margin-bottom:0.2rem;">${bd.title}</div>
+            <div style="font-size:0.78rem; color:#94a3b8; margin-bottom:0.7rem;">${bd.sub}</div>
+            <div class="bv-bin-items" style="display:flex; flex-wrap:wrap; gap:0.4rem;"></div>
+        `;
+        binListEls[bd.key] = bin.querySelector('.bv-bin-items');
+
+        bin.onclick = () => {
+            if (!selectedSortItem) return;
+            if (selectedSortItem.wordClass === bd.key) {
+                const chip = document.createElement('span');
+                chip.style.cssText = `background:#0f172a; color:white; border:1px solid ${bd.color}; padding:0.25rem 0.6rem; border-radius:8px; font-size:0.82rem; font-weight:700;`;
+                chip.textContent = selectedSortItem.word;
+                binListEls[bd.key].appendChild(chip);
+
+                sortPlacedCount++;
+                const progEl = sortHeader.querySelector('#bv-sort-progress');
+                progEl.textContent = sortPlacedCount === WORKSHOP_WORDS.length
+                    ? '🏆 Alle 32 ord sorteret korrekt!'
+                    : `${sortPlacedCount} / ${WORKSHOP_WORDS.length} placeret`;
+
+                sortBank.querySelectorAll('.bv-sort-chip').forEach(btn => {
+                    if (btn.dataset.id === selectedSortItem.id) {
+                        btn.style.opacity = '0.28';
+                        btn.style.pointerEvents = 'none';
+                        btn.style.textDecoration = 'line-through';
+                        btn.style.borderColor = 'transparent';
+                    }
+                });
+                speakDanish(selectedSortItem.word);
+                selectedSortItem = null;
+            } else {
+                bin.style.transform = 'translateX(-6px)';
+                setTimeout(() => { bin.style.transform = 'translateX(6px)'; }, 80);
+                setTimeout(() => { bin.style.transform = ''; }, 160);
+            }
+        };
+        binsGrid.appendChild(bin);
+    });
+    sortingBox.appendChild(binsGrid);
+
+    const sortBank = document.createElement('div');
+    sortBank.style.cssText = 'display:flex; flex-wrap:wrap; gap:0.45rem; justify-content:center; background:rgba(30,41,59,0.55); padding:1rem; border-radius:14px;';
+
+    function renderSortBank() {
+        sortBank.innerHTML = '';
+        shuffleArray([...WORKSHOP_WORDS]).forEach(item => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'bv-sort-chip';
+            btn.dataset.id = item.id;
+            btn.style.cssText = 'background:#334155; color:white; border:2px solid transparent; padding:0.45rem 0.85rem; border-radius:10px; font-weight:700; font-size:0.88rem; cursor:pointer; transition:all 0.18s;';
+            btn.textContent = item.word;
+            btn.onclick = () => {
+                selectedSortItem = item;
+                sortBank.querySelectorAll('.bv-sort-chip').forEach(b => { b.style.borderColor = 'transparent'; b.style.background = '#334155'; });
+                btn.style.borderColor = '#38bdf8';
+                btn.style.background = '#1e293b';
+            };
+            sortBank.appendChild(btn);
+        });
+    }
+    renderSortBank();
+
+    sortHeader.querySelector('#bv-sort-reset').onclick = () => {
+        sortPlacedCount = 0;
+        selectedSortItem = null;
+        Object.values(binListEls).forEach(el => { el.innerHTML = ''; });
+        sortHeader.querySelector('#bv-sort-progress').textContent = `0 / ${WORKSHOP_WORDS.length} placeret`;
+        renderSortBank();
+    };
+
+    sortingBox.appendChild(sortBank);
+    vrimmelPanel.appendChild(sortingBox);
+    panelsHolder.appendChild(vrimmelPanel);
+
+    // ========================================================
+    // --- TAB 2: ORD-DETEKTIV (TRÆNER ALLE 4 KATEGORIER & DEFINITIONER)
+    // ========================================================
+    const detektivPanel = document.createElement('div');
+    detektivPanel.className = `bv-panel ${currentTab === 'tab_detektiv' ? 'active' : ''}`;
+    detektivPanel.dataset.panel = 'tab_detektiv';
+
+    const DETEKTIV_MISSIONS = [
+        {
+            badge: '🟢 Substantiver • Værktøj & Maskiner',
+            title: 'Find 3 redskaber eller maskiner, som mekanikeren bruger til at løfte og skrue med 🔧🏗️',
+            targetCount: 3,
+            options: [
+                { text: 'en autolift', correct: true },
+                { text: 'en donkraft', correct: true },
+                { text: 'en skruenøgle', correct: true },
+                { text: 'en forrude', correct: false },
+                { text: 'en regning', correct: false },
+                { text: 'heldigvis', correct: false }
+            ]
+        },
+        {
+            badge: '🔴 Verber • Handlinger på liften',
+            title: 'Find 3 verber (handlinger), som mekanikeren udfører på selve bilen 🛠️🔎',
+            targetCount: 3,
+            options: [
+                { text: 'at reparere', correct: true },
+                { text: 'at fejlsøge', correct: true },
+                { text: 'at spænde', correct: true },
+                { text: 'et batteri', correct: false },
+                { text: 'slidt', correct: false },
+                { text: 'en reservedel', correct: false }
+            ]
+        },
+        {
+            badge: '🟠 Adjektiver • Bilens tilstand',
+            title: 'Find de 3 adjektiver, der beskriver at noget på bilen er i stykker, tyndt eller uden luft ⚠️🚨',
+            targetCount: 3,
+            options: [
+                { text: 'slidt', correct: true },
+                { text: 'flad', correct: true },
+                { text: 'defekt', correct: true },
+                { text: 'køreklar', correct: false },
+                { text: 'hurtigt', correct: false },
+                { text: 'en bremse', correct: false }
+            ]
+        },
+        {
+            badge: '🔵 Adverbier • Måde & Holdning',
+            title: 'Find 3 adverbier, der beskriver HVORDAN mekanikeren arbejder (måde) eller vores holdning 🧤⚡',
+            targetCount: 3,
+            options: [
+                { text: 'grundigt', correct: true },
+                { text: 'forsigtigt', correct: true },
+                { text: 'heldigvis', correct: true },
+                { text: 'en motor', correct: false },
+                { text: 'at syne', correct: false },
+                { text: 'defekt', correct: false }
+            ]
+        },
+        {
+            badge: '🟢 Substantiver • Bilens vigtige dele',
+            title: 'Find 3 dele, der sidder på eller under selve bilen 🚗⚙️',
+            targetCount: 3,
+            options: [
+                { text: 'en udstødning', correct: true },
+                { text: 'en bremse', correct: true },
+                { text: 'en forrude', correct: true },
+                { text: 'en regning', correct: false },
+                { text: 'at påfylde', correct: false },
+                { text: 'hurtigt', correct: false }
+            ]
+        },
+        {
+            badge: '📖 Målordsdefinition • Forstå ud fra sammenhængen',
+            title: 'Find de 3 ord der passer til: 1) Væske der smører motoren, 2) Ny del fra lageret, 3) At hælde væske på 🛢️📦',
+            targetCount: 3,
+            options: [
+                { text: 'en motorolie', correct: true },
+                { text: 'en reservedel', correct: true },
+                { text: 'at påfylde', correct: true },
+                { text: 'en donkraft', correct: false },
+                { text: 'flad', correct: false },
+                { text: 'en forrude', correct: false }
+            ]
+        },
+        {
+            badge: '📋 Bilsyn & Afhentning • Tværs over ordklasser',
+            title: 'Find 3 ord der hører til, når bilen er færdig, godkendt og skal betales ved skranken ✅🧾',
+            targetCount: 3,
+            options: [
+                { text: 'at syne', correct: true },
+                { text: 'køreklar', correct: true },
+                { text: 'en regning', correct: true },
+                { text: 'et fladt dæk', correct: false },
+                { text: 'en donkraft', correct: false },
+                { text: 'defekt', correct: false }
+            ]
+        },
+        {
+            badge: '🛞 Hjulskift • Faste termer i praksis',
+            title: 'Find de 3 ord fra forskellige ordklasser, man bruger ved et hjulskift: tingen, handlingen og måden 🛞🔩',
+            targetCount: 3,
+            options: [
+                { text: 'et dæk (substantiv)', correct: true },
+                { text: 'at skifte (verbum)', correct: true },
+                { text: 'hurtigt (adverbium)', correct: true },
+                { text: 'en forrude (substantiv)', correct: false },
+                { text: 'at påfylde (verbum)', correct: false },
+                { text: 'en udstødning (substantiv)', correct: false }
+            ]
+        }
+    ];
+
+    let currMissionIdx = 0;
+    const missionCard = document.createElement('div');
+    missionCard.style.cssText = 'background:rgba(30,41,59,0.65); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:2rem; max-width:840px; margin:0 auto;';
+
+    function renderMission() {
+        missionCard.innerHTML = '';
+        const m = DETEKTIV_MISSIONS[currMissionIdx];
+        let found = 0;
+
+        const header = document.createElement('div');
+        header.innerHTML = `
+            <div style="display:inline-block; background:#f59e0b; color:#0f172a; font-weight:800; font-size:0.82rem; padding:0.3rem 0.85rem; border-radius:20px; margin-bottom:0.6rem;">
+                🕵️ Mission ${currMissionIdx + 1} / ${DETEKTIV_MISSIONS.length} • ${m.badge}
+            </div>
+            <h2 style="font-size:1.45rem; color:white; margin:0 0 0.5rem;">${m.title}</h2>
+            <p style="color:#94a3b8; margin:0 0 1.5rem;">Vælg alle ${m.targetCount} rigtige svar.</p>
+        `;
+        missionCard.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:0.9rem; margin-bottom:1.5rem;';
+
+        const feedback = document.createElement('div');
+        feedback.style.cssText = 'text-align:center; min-height:48px;';
+
+        shuffleArray([...m.options]).forEach(opt => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.style.cssText = 'background:#1e293b; border:2px solid #334155; color:white; padding:1.1rem; border-radius:14px; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all 0.2s;';
+            btn.textContent = opt.text;
+
+            btn.onclick = () => {
+                if (btn.dataset.done) return;
+                if (opt.correct) {
+                    btn.dataset.done = '1';
+                    btn.style.background = 'rgba(34, 197, 94, 0.25)';
+                    btn.style.borderColor = '#22c55e';
+                    btn.style.color = '#4ade80';
+                    found++;
+                    speakDanish(opt.text.replace(/\s*\(.*?\)/, ''));
+                    if (found === m.targetCount) {
+                        feedback.innerHTML = `
+                            <div style="color:#4ade80; font-size:1.2rem; font-weight:800; margin-bottom:0.8rem;">✓ Flot klaret! Du fandt alle ${m.targetCount} målord!</div>
+                            <button id="bv-next-mission" style="background:#22c55e; color:#0f172a; border:none; padding:0.75rem 1.5rem; border-radius:12px; font-weight:800; font-size:1rem; cursor:pointer;">
+                                ${currMissionIdx < DETEKTIV_MISSIONS.length - 1 ? 'Næste mission ➔' : 'Start forfra 🔄'}
+                            </button>
+                        `;
+                        feedback.querySelector('#bv-next-mission').onclick = () => {
+                            currMissionIdx = (currMissionIdx + 1) % DETEKTIV_MISSIONS.length;
+                            renderMission();
+                        };
+                    } else {
+                        feedback.innerHTML = `<div style="color:#4ade80; font-weight:700;">✓ Rigtigt! (${found} af ${m.targetCount} fundet)</div>`;
+                    }
+                } else {
+                    btn.style.background = 'rgba(239, 68, 68, 0.25)';
+                    btn.style.borderColor = '#ef4444';
+                    btn.style.color = '#f87171';
+                    feedback.innerHTML = `<div style="color:#f87171; font-weight:700;">✗ Ikke helt – prøv et andet ord fra værkstedet!</div>`;
+                    setTimeout(() => {
+                        btn.style.background = '#1e293b';
+                        btn.style.borderColor = '#334155';
+                        btn.style.color = 'white';
+                    }, 700);
+                }
+            };
+            grid.appendChild(btn);
+        });
+
+        missionCard.appendChild(grid);
+        missionCard.appendChild(feedback);
+    }
+    renderMission();
+    detektivPanel.appendChild(missionCard);
+    panelsHolder.appendChild(detektivPanel);
+
+    // ========================================================
+    // --- TAB 3: SYNONYMER & ANTONYMER (ALLE ORDKLASSER)
+    // ========================================================
+    const synAntPanel = document.createElement('div');
+    synAntPanel.className = `bv-panel ${currentTab === 'tab_syn_ant' ? 'active' : ''}`;
+    synAntPanel.dataset.panel = 'tab_syn_ant';
+
+    const SYN_ANT_QUESTIONS = [
+        {
+            type: 'Antonym (Det modsatte)',
+            wordClass: '🟠 Adjektiv',
+            prompt: 'Bremseklodserne på bilen er helt <strong>slidte</strong>. Hvad er det modsatte af <em>slidte</em>?',
+            correct: 'nye og friske',
+            options: ['nye og friske', 'flade og tomme', 'defekte og rustne', 'dyre at syne'],
+            explanation: '"Slidt" betyder brugt ned gennem lang tid – det modsatte er "ny".'
+        },
+        {
+            type: 'Antonym (Det modsatte)',
+            wordClass: '🟠 Adjektiv',
+            prompt: 'Motoren har en <strong>defekt</strong> del og kan ikke starte. Hvad er bilen, når fejlen er repareret?',
+            correct: 'køreklar',
+            options: ['køreklar', 'flad', 'slidt', 'punkteret'],
+            explanation: 'Når en "defekt" bil er blevet repareret på værkstedet, er den "køreklar" igen.'
+        },
+        {
+            type: 'Antonym (Det modsatte)',
+            wordClass: '🔴 Verbum',
+            prompt: 'Autoliften <strong>løfter</strong> bilen højt op i luften. Hvad er det modsatte af <em>at løfte</em>?',
+            correct: 'at sænke (ned)',
+            options: ['at sænke (ned)', 'at påfylde', 'at fejlsøge', 'at syne'],
+            explanation: 'Man "løfter" bilen op på liften og "sænker" den forsigtigt ned igen.'
+        },
+        {
+            type: 'Antonym (Det modsatte)',
+            wordClass: '🔴 Verbum',
+            prompt: 'Mekanikeren <strong>spænder</strong> hjulboltene fast med skruenøglen. Hvad gør han, når hjulet skal af?',
+            correct: 'løsner dem',
+            options: ['løsner dem', 'påfylder dem', 'syner dem', 'polerer dem'],
+            explanation: '"At spænde" (stramme) og "at løsne" er faste modsætninger, når man arbejder med værktøj.'
+        },
+        {
+            type: 'Antonym (Det modsatte)',
+            wordClass: '🔵 Adverbium',
+            prompt: 'Lærlingen skifter de fire vinterdæk <strong>hurtigt</strong>. Hvad er det modsatte af <em>hurtigt</em>?',
+            correct: 'langsomt',
+            options: ['langsomt', 'grundigt', 'heldigvis', 'forsigtigt'],
+            explanation: '"Hurtigt" og "langsomt" er de klassiske mådesadverbier for tempo.'
+        },
+        {
+            type: 'Antonym (Det modsatte)',
+            wordClass: '🔵 Holdningsadverbium',
+            prompt: 'Skaden på udstødningen er <strong>heldigvis</strong> billig at reparere. Hvad siger man, hvis den er meget dyr?',
+            correct: 'desværre',
+            options: ['desværre', 'forsigtigt', 'hurtigt', 'grundigt'],
+            explanation: '"Heldigvis" (positiv lettelse) har modpolen "desværre" (beklagelse).'
+        },
+        {
+            type: 'Synonym (Samme betydning)',
+            wordClass: '🔴 Verbum',
+            prompt: 'Mekanikeren <strong>tjekker</strong> bremser, lygter og dæktryk. Hvilket ord betyder det samme som <em>at tjekke</em>?',
+            correct: 'at kontrollere / efterse',
+            options: ['at kontrollere / efterse', 'at punktere', 'at afbestille', 'at ødelægge'],
+            explanation: 'På et værksted bruges "at tjekke", "at kontrollere" og "at efterse" som synonymer.'
+        },
+        {
+            type: 'Synonym (Samme betydning)',
+            wordClass: '🟢 Substantiv',
+            prompt: 'Kunden beder om et <strong>pristilbud</strong>, før mekanikeren går i gang. Hvad kalder man også et pristilbud?',
+            correct: 'et prisoverslag på reparationen',
+            options: ['et prisoverslag på reparationen', 'en donkraft på hjul', 'en defekt forrude', 'en slidt bremseklods'],
+            explanation: 'Et "pristilbud" eller "prisoverslag" fortæller kunden, hvad regningen cirka vil lyde på.'
+        },
+        {
+            type: 'Synonym (Samme betydning)',
+            wordClass: '🔵 Adverbium',
+            prompt: 'Mekanikeren undersøger motoren <strong>grundigt</strong>. Hvilket ord betyder det samme som <em>grundigt</em>?',
+            correct: 'nøje / omhyggeligt',
+            options: ['nøje / omhyggeligt', 'tilfældigt', 'sjusket', 'fladt'],
+            explanation: '"Grundigt", "nøje" og "omhyggeligt" betyder, at man tjekker alle detaljer.'
+        },
+        {
+            type: 'Synonym / Fast fagterm',
+            wordClass: '🟠 Adjektiv + 🟢 Substantiv',
+            prompt: 'Hvad betyder den faste vending, at en bil har fået <strong>et fladt dæk</strong>?',
+            correct: 'Dækket er punkteret og har tabt luften',
+            options: [
+                'Dækket er punkteret og har tabt luften',
+                'Dækket er helt nyt og klar til vinter',
+                'Bilen har fået ny motorolie på',
+                'Forruden har fået et lille stenslag'
+            ],
+            explanation: 'Et "fladt dæk" betyder, at dækket er punkteret og mangler luft.'
+        }
+    ];
+
+    let synIdx = 0;
+    const synCard = document.createElement('div');
+    synCard.style.cssText = 'background:rgba(30,41,59,0.65); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:2rem; max-width:840px; margin:0 auto;';
+
+    function renderSynAntQuestion() {
+        synCard.innerHTML = '';
+        const q = SYN_ANT_QUESTIONS[synIdx];
+
+        synCard.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+                <span style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid #a855f7; padding:0.3rem 0.85rem; border-radius:20px; font-weight:800; font-size:0.82rem;">
+                    🔄 Opgave ${synIdx + 1} / ${SYN_ANT_QUESTIONS.length} • ${q.type}
+                </span>
+                <span style="background:rgba(15,23,42,0.8); color:#cbd5e1; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.82rem; font-weight:700;">
+                    Ordklasse: ${q.wordClass}
+                </span>
+            </div>
+            <div style="font-size:1.35rem; color:white; line-height:1.5; margin-bottom:1.5rem;">
+                ${q.prompt}
+            </div>
+            <div id="bv-syn-opts" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.9rem; margin-bottom:1.2rem;"></div>
+            <div id="bv-syn-feedback" style="min-height:56px; text-align:center;"></div>
+        `;
+
+        const optsWrap = synCard.querySelector('#bv-syn-opts');
+        const fbWrap = synCard.querySelector('#bv-syn-feedback');
+
+        shuffleArray([...q.options]).forEach(opt => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.style.cssText = 'background:#1e293b; border:2px solid #475569; color:white; padding:1rem 1.2rem; border-radius:14px; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all 0.2s; text-align:center;';
+            b.textContent = opt;
+            b.onclick = () => {
+                if (opt === q.correct) {
+                    b.style.background = 'rgba(34, 197, 94, 0.25)';
+                    b.style.borderColor = '#22c55e';
+                    b.style.color = '#4ade80';
+                    speakDanish(opt);
+                    fbWrap.innerHTML = `
+                        <div style="background:rgba(34,197,94,0.15); border:1px solid #22c55e; color:#4ade80; padding:0.9rem; border-radius:12px; margin-bottom:0.8rem; font-weight:600;">
+                            ✓ Rigtigt! ${q.explanation}
+                        </div>
+                        <button id="bv-syn-next" style="background:#22c55e; color:#0f172a; border:none; padding:0.75rem 1.5rem; border-radius:12px; font-weight:800; cursor:pointer;">
+                            ${synIdx < SYN_ANT_QUESTIONS.length - 1 ? 'Næste opgave ➔' : 'Prøv igen fra start 🔄'}
+                        </button>
+                    `;
+                    fbWrap.querySelector('#bv-syn-next').onclick = () => {
+                        synIdx = (synIdx + 1) % SYN_ANT_QUESTIONS.length;
+                        renderSynAntQuestion();
+                    };
+                } else {
+                    b.style.background = 'rgba(239, 68, 68, 0.25)';
+                    b.style.borderColor = '#ef4444';
+                    b.style.color = '#f87171';
+                    fbWrap.innerHTML = `<div style="color:#f87171; font-weight:700;">✗ Prøv igen – tænk på betydningen i værkstedet!</div>`;
+                }
+            };
+            optsWrap.appendChild(b);
+        });
+    }
+    renderSynAntQuestion();
+    synAntPanel.appendChild(synCard);
+    panelsHolder.appendChild(synAntPanel);
+
+    // ========================================================
+    // --- TAB 4: HISTORIER (4 VÆRKSTEDSHISTORIER MED SPØRGSMÅL)
+    // ========================================================
+    const historiePanel = document.createElement('div');
+    historiePanel.className = `bv-panel ${currentTab === 'tab_historie' ? 'active' : ''}`;
+    historiePanel.dataset.panel = 'tab_historie';
+
+    const STORIES = [
+        {
+            title: '1. Et fladt dæk på vej til arbejde',
+            storyText: 'Mandag morgen opdager Jonas, at bilens ene bagdæk er helt fladt. Han kører forsigtigt hen til det lokale autoværksted. Lærlingen løfter bilen med en donkraft, tager det punkterede dæk af og skifter hurtigt til fire vinterdæk. Til sidst spænder han hjulboltene grundigt med en skruenøgle, så bilen igen er køreklar.',
+            questions: [
+                {
+                    q: '1. Hvad var problemet med Jonas’ bil mandag morgen?',
+                    options: [
+                        { text: 'Det ene dæk var fladt (punkteret) 🛞', correct: true },
+                        { text: 'Forruden var taget ud 🪟', correct: false },
+                        { text: 'Regningen var blevet væk 🧾', correct: false }
+                    ]
+                },
+                {
+                    q: '2. Hvordan kørte Jonas hen til autoværkstedet?',
+                    options: [
+                        { text: 'Forsigtigt (mådesadverbium) 🧤', correct: true },
+                        { text: 'Defekt (adjektiv) 🚨', correct: false },
+                        { text: 'Med en autolift 🏗️', correct: false }
+                    ]
+                },
+                {
+                    q: '3. Hvad gør lærlingen til sidst med skruenøglen?',
+                    options: [
+                        { text: 'Han spænder hjulboltene grundigt 🔩', correct: true },
+                        { text: 'Han påfylder sprinklervæske på dækket 🫗', correct: false },
+                        { text: 'Han skifter forruden 🪟', correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: '2. Den gule motorlampe lyser',
+            storyText: 'Midt på motorvejen begynder en gul advarselslampe at lyse, og motoren hakker. På autoværkstedet åbner mekanikeren motorhjelmen og fejlsøger på bilens computer. Testeren viser, at en lille elektrisk føler er defekt. Heldigvis har værkstedet den rigtige reservedel på hylden, og mekanikeren påfylder også frisk motorolie.',
+            questions: [
+                {
+                    q: '1. Hvad gør mekanikeren for at finde årsagen til, at motorlampen lyser?',
+                    options: [
+                        { text: 'Han fejlsøger med en computer/tester 💻', correct: true },
+                        { text: 'Han pumper dækkene op 🛞', correct: false },
+                        { text: 'Han vasker forruden 🪟', correct: false }
+                    ]
+                },
+                {
+                    q: '2. Hvorfor er kunden heldig (heldigvis)?',
+                    options: [
+                        { text: 'Fordi værkstedet har den nødvendige reservedel på lager 📦', correct: true },
+                        { text: 'Fordi hele motoren skal smides ud ⚙️', correct: false },
+                        { text: 'Fordi batteriet er helt fladt 🔋', correct: false }
+                    ]
+                },
+                {
+                    q: '3. Hvad påfylder mekanikeren til sidst?',
+                    options: [
+                        { text: 'Frisk motorolie 🛢️', correct: true },
+                        { text: 'En ny udstødning 💨', correct: false },
+                        { text: 'En donkraft ⚙️', correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: '3. Klargøring til periodisk bilsyn',
+            storyText: 'Marias bil skal synes i næste uge. Mekanikeren løfter bilen op på autoliften og gennemgår undervognen grundigt. Han ser, at de forreste bremser er meget slidte, og at der er et lille hul i udstødningen. Han reparerer udstødningen og skifter bremseklodserne, så bilen kan gå glat gennem syn.',
+            questions: [
+                {
+                    q: '1. Hvorfor løfter mekanikeren bilen op på autoliften?',
+                    options: [
+                        { text: 'For at tjekke undervognen grundigt før bilsyn 🔍', correct: true },
+                        { text: 'For at skrive en regning under bilen 🧾', correct: false },
+                        { text: 'For at lade batteriet op i loftet 🔋', correct: false }
+                    ]
+                },
+                {
+                    q: '2. Hvilke to ting under bilen trænger til at blive lavet?',
+                    options: [
+                        { text: 'De slidte bremser og den utætte udstødning 🛑💨', correct: true },
+                        { text: 'Forruden og rattet 🪟', correct: false },
+                        { text: 'Værktøjskassen og donkraften 🧰', correct: false }
+                    ]
+                }
+            ]
+        },
+        {
+            title: '4. Stenslag i forruden og et pristilbud',
+            storyText: 'En kold vintermorgen vil Peters bil ikke starte, fordi batteriet er fladt, og der er også kommet et stenslag i forruden. Værkstedet giver først Peter et uforpligtende pristilbud. Mekanikeren reparerer stenslaget i forruden og sætter et nyt batteri i. Da Peter henter sin køreklare bil, stemmer regningen præcis med tilbuddet.',
+            questions: [
+                {
+                    q: '1. Hvorfor ville Peters bil ikke starte om morgenen?',
+                    options: [
+                        { text: 'Fordi batteriet var fladt (uden strøm) 🔋', correct: true },
+                        { text: 'Fordi skruenøglen var slidt 🔧', correct: false },
+                        { text: 'Fordi dækkene var nye 🛞', correct: false }
+                    ]
+                },
+                {
+                    q: '2. Hvad fik Peter, inden mekanikeren gik i gang med arbejdet?',
+                    options: [
+                        { text: 'Et pristilbud (prisoverslag) på arbejdet 🧾', correct: true },
+                        { text: 'En ny autolift med hjem 🏗️', correct: false },
+                        { text: 'En defekt udstødning 💨', correct: false }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let activeStoryIdx = 0;
+    const storyCard = document.createElement('div');
+    storyCard.style.cssText = 'max-width:860px; margin:0 auto; background:rgba(30,41,59,0.65); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:1.8rem;';
+
+    function renderStory() {
+        storyCard.innerHTML = '';
+        const st = STORIES[activeStoryIdx];
+
+        const navRow = document.createElement('div');
+        navRow.style.cssText = 'display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1.5rem;';
+        STORIES.forEach((s, idx) => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.style.cssText = `padding:0.55rem 1rem; border-radius:12px; font-weight:700; font-size:0.9rem; cursor:pointer; border:2px solid ${idx === activeStoryIdx ? '#38bdf8' : '#334155'}; background:${idx === activeStoryIdx ? '#0284c7' : '#1e293b'}; color:white;`;
+            b.textContent = s.title;
+            b.onclick = () => {
+                activeStoryIdx = idx;
+                renderStory();
+            };
+            navRow.appendChild(b);
+        });
+        storyCard.appendChild(navRow);
+
+        const textBox = document.createElement('div');
+        textBox.style.cssText = 'background:#0f172a; border-left:4px solid #38bdf8; padding:1.3rem; border-radius:14px; margin-bottom:1.5rem;';
+        textBox.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+                <h3 style="margin:0; color:#38bdf8; font-size:1.25rem;">📖 ${st.title}</h3>
+                <button id="bv-listen-story" style="background:#2563eb; color:white; border:none; padding:0.45rem 1rem; border-radius:20px; font-weight:700; cursor:pointer;">🔊 Lyt til historien</button>
+            </div>
+            <p style="margin:0; font-size:1.1rem; line-height:1.7; color:#f1f5f9;">${st.storyText}</p>
+        `;
+        textBox.querySelector('#bv-listen-story').onclick = () => speakDanish(st.storyText);
+        storyCard.appendChild(textBox);
+
+        st.questions.forEach(qItem => {
+            const qBox = document.createElement('div');
+            qBox.style.cssText = 'background:#1e293b; border-radius:14px; padding:1.2rem; margin-bottom:1rem; border:1px solid rgba(255,255,255,0.08);';
+            qBox.innerHTML = `<div style="font-weight:800; font-size:1.05rem; margin-bottom:0.8rem; color:white;">${qItem.q}</div>`;
+
+            const optRow = document.createElement('div');
+            optRow.style.cssText = 'display:flex; flex-wrap:wrap; gap:0.6rem;';
+
+            qItem.options.forEach(o => {
+                const ob = document.createElement('button');
+                ob.type = 'button';
+                ob.style.cssText = 'background:#334155; color:white; border:none; padding:0.6rem 1.1rem; border-radius:10px; font-weight:700; cursor:pointer; transition:all 0.2s;';
+                ob.textContent = o.text;
+                ob.onclick = () => {
+                    if (o.correct) {
+                        ob.style.background = '#22c55e';
+                        ob.style.color = '#0f172a';
+                        speakDanish(o.text.replace(/[^\w\sæøåÆØÅ()-]/g, ''));
+                    } else {
+                        ob.style.background = '#ef4444';
+                    }
+                };
+                optRow.appendChild(ob);
+            });
+            qBox.appendChild(optRow);
+            storyCard.appendChild(qBox);
+        });
+    }
+    renderStory();
+    historiePanel.appendChild(storyCard);
+    panelsHolder.appendChild(historiePanel);
+
+    // ========================================================
+    // --- TAB 5: SÆTNINGSBYGNING (ALLE 4 KATEGORIER + PUSLESPIL)
+    // ========================================================
+    const saetningPanel = document.createElement('div');
+    saetningPanel.className = `bv-panel ${currentTab === 'tab_saetning' ? 'active' : ''}`;
+    saetningPanel.dataset.panel = 'tab_saetning';
+
+    const sbCard = document.createElement('div');
+    sbCard.style.cssText = 'max-width:940px; margin:0 auto; background:rgba(30,41,59,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:1.8rem;';
+
+    // Sub-tabs: 1) Fri Sætningsbygger (med alle 4 ordklasser) 2) 8 Sætnings-puslespil
+    const sbSubNav = document.createElement('div');
+    sbSubNav.style.cssText = 'display:flex; justify-content:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;';
+    const sbBtnFree = document.createElement('button');
+    sbBtnFree.style.cssText = 'background:#0284c7; color:white; border:none; padding:0.7rem 1.3rem; border-radius:12px; font-weight:800; cursor:pointer;';
+    sbBtnFree.textContent = '🛠️ Byg sætninger med alle 4 ordklasser';
+
+    const sbBtnPuzzle = document.createElement('button');
+    sbBtnPuzzle.style.cssText = 'background:#1e293b; color:#cbd5e1; border:1px solid #475569; padding:0.7rem 1.3rem; border-radius:12px; font-weight:800; cursor:pointer;';
+    sbBtnPuzzle.textContent = '🧩 Sætnings-puslespil (8 opgaver)';
+
+    sbSubNav.appendChild(sbBtnFree);
+    sbSubNav.appendChild(sbBtnPuzzle);
+    sbCard.appendChild(sbSubNav);
+
+    const freeWrap = document.createElement('div');
+    const puzzleWrap = document.createElement('div');
+    puzzleWrap.style.display = 'none';
+
+    sbBtnFree.onclick = () => {
+        freeWrap.style.display = 'block';
+        puzzleWrap.style.display = 'none';
+        sbBtnFree.style.background = '#0284c7';
+        sbBtnFree.style.color = 'white';
+        sbBtnPuzzle.style.background = '#1e293b';
+        sbBtnPuzzle.style.color = '#cbd5e1';
+    };
+    sbBtnPuzzle.onclick = () => {
+        freeWrap.style.display = 'none';
+        puzzleWrap.style.display = 'block';
+        sbBtnPuzzle.style.background = '#0284c7';
+        sbBtnPuzzle.style.color = 'white';
+        sbBtnFree.style.background = '#1e293b';
+        sbBtnFree.style.color = '#cbd5e1';
+    };
+
+    // Free Sentence Builder rows covering all 4 word classes
+    const builderRows = [
+        {
+            label: '1. Hvem? (🟠 Adjektiv + 🟢 Substantiv)',
+            color: '#22c55e',
+            options: ['Den erfarne mekaniker', 'Den unge lærling', 'Værkføreren', 'Mekanikeren']
+        },
+        {
+            label: '2. Handling (🔴 Verbum)',
+            color: '#ef4444',
+            options: ['reparerer', 'skifter', 'tjekker', 'spænder', 'fejlsøger']
+        },
+        {
+            label: '3. Hvordan / Holdning? (🔵 Adverbium)',
+            color: '#38bdf8',
+            options: ['grundigt', 'forsigtigt', 'hurtigt', 'heldigvis']
+        },
+        {
+            label: '4. Hvad? (🟠 Adjektiv + 🟢 Substantiv)',
+            color: '#f97316',
+            options: ['de slidte bremser', 'det flade dæk', 'den defekte udstødning', 'bilens motor', 'den revnede forrude']
+        },
+        {
+            label: '5. Hvor / Med hvad? (🟢 Værkstedsudtryk)',
+            color: '#a855f7',
+            options: ['på autoliften', 'med en skruenøgle', 'på autoværkstedet', 'før det periodiske bilsyn']
+        }
+    ];
+
+    const currentSelections = builderRows.map(r => r.options[0]);
+    const liveSentenceBox = document.createElement('div');
+    liveSentenceBox.style.cssText = 'background:#0f172a; border:2px solid #334155; border-radius:16px; padding:1.3rem; text-align:center; margin-bottom:1.4rem;';
+
+    function updateFreeBuilder() {
+        const full = `${currentSelections[0]} ${currentSelections[1]} ${currentSelections[2]} ${currentSelections[3]} ${currentSelections[4]}.`;
+        liveSentenceBox.innerHTML = `
+            <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:800; margin-bottom:0.4rem;">DIN SÆTNING MED ALLE 4 ORDKLASSER:</div>
+            <div style="font-size:1.35rem; font-weight:800; margin-bottom:0.9rem; line-height:1.45;">
+                <span style="color:#4ade80;">${currentSelections[0]}</span>
+                <span style="color:#f87171;">${currentSelections[1]}</span>
+                <span style="color:#38bdf8;">${currentSelections[2]}</span>
+                <span style="color:#fb923c;">${currentSelections[3]}</span>
+                <span style="color:#c084fc;">${currentSelections[4]}</span>.
+            </div>
+            <button id="bv-free-listen" style="background:#2563eb; color:white; border:none; padding:0.6rem 1.3rem; border-radius:20px; font-weight:700; cursor:pointer;">🔊 Lyt til sætningen</button>
+        `;
+        liveSentenceBox.querySelector('#bv-free-listen').onclick = () => speakDanish(full);
+    }
+
+    freeWrap.appendChild(liveSentenceBox);
+
+    builderRows.forEach((row, rIdx) => {
+        const rowEl = document.createElement('div');
+        rowEl.style.cssText = `background:rgba(15,23,42,0.55); border-left:4px solid ${row.color}; border-radius:12px; padding:0.9rem 1.1rem; margin-bottom:0.85rem;`;
+        rowEl.innerHTML = `<div style="font-weight:800; font-size:0.92rem; color:${row.color}; margin-bottom:0.55rem;">${row.label}</div>`;
+
+        const chipsWrap = document.createElement('div');
+        chipsWrap.style.cssText = 'display:flex; flex-wrap:wrap; gap:0.45rem;';
+
+        row.options.forEach(opt => {
+            const cb = document.createElement('button');
+            cb.type = 'button';
+            cb.style.cssText = `background:${currentSelections[rIdx] === opt ? row.color : '#1e293b'}; color:${currentSelections[rIdx] === opt ? '#0f172a' : '#e2e8f0'}; border:1px solid ${row.color}; padding:0.45rem 0.9rem; border-radius:10px; font-weight:700; font-size:0.9rem; cursor:pointer;`;
+            cb.textContent = opt;
+            cb.onclick = () => {
+                currentSelections[rIdx] = opt;
+                Array.from(chipsWrap.children).forEach(c => {
+                    c.style.background = '#1e293b';
+                    c.style.color = '#e2e8f0';
+                });
+                cb.style.background = row.color;
+                cb.style.color = '#0f172a';
+                updateFreeBuilder();
+            };
+            chipsWrap.appendChild(cb);
+        });
+        rowEl.appendChild(chipsWrap);
+        freeWrap.appendChild(rowEl);
+    });
+    updateFreeBuilder();
+
+    // 8 Sentence Puzzles
+    const PUZZLES = [
+        {
+            hint: 'Saml sætningen om mekanikeren, bremserne og autoliften:',
+            parts: ['Mekanikeren', 'tjekker', 'grundigt', 'de slidte bremser', 'på autoliften']
+        },
+        {
+            hint: 'Saml sætningen om lærlingen og det flade dæk:',
+            parts: ['Lærlingen', 'skifter', 'hurtigt', 'det flade dæk', 'med en donkraft']
+        },
+        {
+            hint: 'Saml sætningen om påfyldning af motorolie:',
+            parts: ['Han', 'påfylder', 'forsigtigt', 'frisk motorolie', 'på motoren']
+        },
+        {
+            hint: 'Saml sætningen om elektronisk fejlsøgning:',
+            parts: ['Mekanikeren', 'fejlsøger', 'den defekte motor', 'med en computer', 'på værkstedet']
+        },
+        {
+            hint: 'Saml sætningen om at efterspænde hjulboltene:',
+            parts: ['Han', 'spænder', 'hjulboltene', 'grundigt', 'med en skruenøgle']
+        },
+        {
+            hint: 'Saml sætningen om reservedelen på lageret:',
+            parts: ['Værkstedet', 'har', 'heldigvis', 'den rigtige reservedel', 'på hylden']
+        },
+        {
+            hint: 'Saml sætningen om bilsyn og køreklar bil:',
+            parts: ['Efter reparationen', 'er', 'kundens bil', 'helt køreklar', 'til bilsyn']
+        },
+        {
+            hint: 'Saml sætningen om pristilbud og regning:',
+            parts: ['Værkføreren', 'gennemgår', 'regningen', 'og pristilbuddet', 'med kunden']
+        }
+    ];
+
+    let puzzleIdx = 0;
+    let puzzleSlots = [];
+
+    function renderPuzzle() {
+        puzzleWrap.innerHTML = '';
+        const pz = PUZZLES[puzzleIdx];
+        puzzleSlots = new Array(pz.parts.length).fill(null);
+
+        const header = document.createElement('div');
+        header.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <span style="color:#38bdf8; font-weight:800;">🧩 Puslespil ${puzzleIdx + 1} / ${PUZZLES.length}</span>
+                <button id="bv-pz-reset" style="background:#334155; color:white; border:none; padding:0.4rem 0.85rem; border-radius:8px; font-weight:700; cursor:pointer;">🔄 Nulstil</button>
+            </div>
+            <div style="font-size:1.15rem; font-weight:700; color:white; margin-bottom:1rem;">${pz.hint}</div>
+        `;
+        puzzleWrap.appendChild(header);
+
+        const slotsRow = document.createElement('div');
+        slotsRow.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.65rem; margin-bottom:1.2rem;';
+
+        const bankRow = document.createElement('div');
+        bankRow.style.cssText = 'display:flex; flex-wrap:wrap; gap:0.55rem; justify-content:center; background:#0f172a; padding:1rem; border-radius:12px; margin-bottom:1rem;';
+
+        const fbRow = document.createElement('div');
+        fbRow.style.cssText = 'text-align:center; min-height:48px;';
+
+        const shuffledParts = shuffleArray([...pz.parts]);
+
+        function updatePuzzleUI() {
+            slotsRow.innerHTML = '';
+            puzzleSlots.forEach((val, idx) => {
+                const sl = document.createElement('div');
+                sl.style.cssText = `background:${val ? '#1e293b' : '#0f172a'}; border:2px ${val ? 'solid #38bdf8' : 'dashed #475569'}; border-radius:12px; padding:0.8rem; min-height:60px; display:flex; align-items:center; justify-content:center; font-weight:800; color:white; cursor:pointer; text-align:center;`;
+                sl.innerHTML = val ? `${val} <span style="margin-left:0.4rem; color:#94a3b8; font-size:0.75rem;">✕</span>` : `<span style="color:#64748b; font-size:0.82rem;">Led ${idx + 1}</span>`;
+                sl.onclick = () => {
+                    if (puzzleSlots[idx]) {
+                        puzzleSlots[idx] = null;
+                        fbRow.innerHTML = '';
+                        updatePuzzleUI();
+                    }
+                };
+                slotsRow.appendChild(sl);
+            });
+
+            bankRow.innerHTML = '';
+            shuffledParts.forEach(part => {
+                const isUsed = puzzleSlots.includes(part);
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.style.cssText = `background:#334155; color:white; border:1.5px solid #64748b; padding:0.6rem 1rem; border-radius:10px; font-weight:700; cursor:pointer; opacity:${isUsed ? '0.25' : '1'}; pointer-events:${isUsed ? 'none' : 'auto'};`;
+                b.textContent = part;
+                b.onclick = () => {
+                    const emptyIdx = puzzleSlots.indexOf(null);
+                    if (emptyIdx !== -1) {
+                        puzzleSlots[emptyIdx] = part;
+                        updatePuzzleUI();
+                        if (!puzzleSlots.includes(null)) {
+                            const isCorrect = puzzleSlots.every((w, i) => w === pz.parts[i]);
+                            const fullSent = pz.parts.join(' ') + '.';
+                            if (isCorrect) {
+                                speakDanish(fullSent);
+                                fbRow.innerHTML = `
+                                    <div style="color:#4ade80; font-weight:800; font-size:1.1rem; margin-bottom:0.6rem;">✓ Helt rigtigt! "${fullSent}"</div>
+                                    <button id="bv-pz-next" style="background:#22c55e; color:#0f172a; border:none; padding:0.65rem 1.3rem; border-radius:10px; font-weight:800; cursor:pointer;">Næste puslespil ➔</button>
+                                `;
+                                fbRow.querySelector('#bv-pz-next').onclick = () => {
+                                    puzzleIdx = (puzzleIdx + 1) % PUZZLES.length;
+                                    renderPuzzle();
+                                };
+                            } else {
+                                fbRow.innerHTML = `<div style="color:#f87171; font-weight:700;">✗ Ordstillingen passer ikke helt endnu – klik på et led for at flytte det!</div>`;
+                            }
+                        }
+                    }
+                };
+                bankRow.appendChild(b);
+            });
+        }
+
+        header.querySelector('#bv-pz-reset').onclick = () => {
+            puzzleSlots = new Array(pz.parts.length).fill(null);
+            fbRow.innerHTML = '';
+            updatePuzzleUI();
+        };
+
+        updatePuzzleUI();
+        puzzleWrap.appendChild(slotsRow);
+        puzzleWrap.appendChild(bankRow);
+        puzzleWrap.appendChild(fbRow);
+    }
+    renderPuzzle();
+
+    sbCard.appendChild(freeWrap);
+    sbCard.appendChild(puzzleWrap);
+    saetningPanel.appendChild(sbCard);
+    panelsHolder.appendChild(saetningPanel);
+
+    // ========================================================
+    // --- TAB 6: MUNDTLIGE DIALOGER I RIGTIG RÆKKEFØLGE (NY OPGAVE TIL SIDST)
+    // ========================================================
+    const dialogPanel = document.createElement('div');
+    dialogPanel.className = `bv-panel ${currentTab === 'tab_dialog' ? 'active' : ''}`;
+    dialogPanel.dataset.panel = 'tab_dialog';
+
+    const WORKSHOP_DIALOGUES = [
+        {
+            title: 'Dialog 1: Indlevering af bil med slidte bremser',
+            context: 'En kunde kommer ind på autoværkstedet om morgenen, fordi bremserne siger en mærkelig lyd.',
+            lines: [
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Godmorgen! Min bil siger en høj, skrabende lyd, hver gang jeg træder på bremsen.' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Godmorgen! Det lyder som om, at dine bremseklodser er slidte. Lad os løfte bilen op på autoliften og tjekke det.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Tak! Kan I også tjekke motorolien og dæktrykket, nu hvor bilen alligevel er på værksted?' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Selvfølgelig, vi gennemgår hele bilen grundigt og ringer til dig med et pristilbud, før vi skifter nogen reservedele.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Super, her er bilnøglen og mit telefonnummer. Hvornår tror du, at bilen er køreklar?' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Hvis vi har bremseklodserne på lager, er den heldigvis køreklar allerede inden klokken 15 i eftermiddag.' }
+            ]
+        },
+        {
+            title: 'Dialog 2: Telefonopkald om pristilbud og defekt udstødning',
+            context: 'Mekanikeren ringer til kunden efter at have fejlsøgt bilen på autoliften.',
+            lines: [
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Hej Sofie, det er Anders fra autoværkstedet. Vi har nu haft din bil oppe på liften og fejlsøgt den.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Hej Anders! Hvad fandt I ud af? Er det noget alvorligt med motoren?' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Motoren fejler heldigvis ingenting, men der er gået hul på den bagerste del af udstødningen, og batteriet er næsten fladt.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Nå for søren, det forklarer jo, hvorfor bilen larmede! Hvad vil det koste at reparere?' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'En ny udstødning og et nyt batteri inklusive arbejdsløn og moms bliver 3.400 kroner i alt.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Det lyder rimeligt. I må meget gerne skifte begge dele, så bilen bliver klar til bilsyn.' }
+            ]
+        },
+        {
+            title: 'Dialog 3: Hurtigt hjulskift ved punktering',
+            context: 'En bilist kommer ind med et fladt dæk, og mester og lærling hjælper med det samme.',
+            lines: [
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Undskyld, har I tid til at hjælpe mig? Mit højre forhjul er næsten helt fladt!' },
+                { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Ja, kør bare bilen forsigtigt ind i hal 2, så kigger vores lærling på dækket med det samme.' },
+                { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Jeg har løftet bilen med donkraften. Der sidder desværre en stor skrue midt i dækket.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Kan dækket lappes, eller er jeg nødt til at få skiftet til mine vinterdæk nu?' },
+                { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Dækmønstret på dine sommerdæk er alligevel ret slidt, så det bedste er at skifte til vinterdæk nu.' },
+                { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Jeg skifter alle fire hjul hurtigt og spænder boltene efter med skruenøglen, så er du videre om 20 minutter!' }
+            ]
+        },
+        {
+            title: 'Dialog 4: Mester og lærling samarbejder på værkstedet',
+            context: 'På værkstedsgulvet taler mester og lærling om dagens opgaver.',
+            lines: [
+                { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Mikkel, er du færdig med at skifte motorolie og oliefilter på den sorte stationcar?' },
+                { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Ja, jeg har lige påfyldt fire liter ny motorolie og tjekket oliestanden med oliepinden.' },
+                { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Godt arbejde! Husk også at tjekke forruden og påfylde blå sprinklervæske, før du sænker autoliften.' },
+                { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Det gør jeg. Jeg så faktisk et lille stenslag nederst i forruden – skal jeg reparere det?' },
+                { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Ja, gør det grundigt med det samme, så forruden ikke revner, når bilen skal synes i morgen.' },
+                { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Modtaget! Bagefter kører jeg bilen ud på parkeringspladsen og lægger nøglen ind ved kassen.' }
+            ]
+        },
+        {
+            title: 'Dialog 5: Afhentning af køreklar bil og gennemgang af regningen',
+            context: 'Kunden kommer tilbage sidst på eftermiddagen for at hente sin bil og betale regningen.',
+            lines: [
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Hej igen! Jeg fik en sms om, at min bil er færdig og køreklar.' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Ja, velkommen tilbage! Alt gik efter planen, og bilen er nu helt klar til bilsyn.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Hvor er det dejligt! Vil du gennemgå regningen med mig, så jeg kan se, hvad I har lavet?' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Selvfølgelig. Her står reservedelene øverst: nye bremseklodser, en ny pære og to liter motorolie.' },
+                { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Og prisen passer heldigvis præcis med det pristilbud, vi aftalte i morges. Jeg betaler med kort.' },
+                { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Tusind tak! Husk at få efterspændt hjulboltene om 100 kilometer – god køretur!' }
+            ]
+        }
+    ];
+
+    let currDialogIdx = 0;
+    const dialogCard = document.createElement('div');
+    dialogCard.className = 'bv-dialog-card';
+
+    function renderDialogueOrderingTask() {
+        dialogCard.innerHTML = '';
+        const dlg = WORKSHOP_DIALOGUES[currDialogIdx];
+        const totalLines = dlg.lines.length;
+        let placedLines = new Array(totalLines).fill(null);
+        const scrambledLines = shuffleArray(dlg.lines.map((line, origIdx) => ({ ...line, origIdx })));
+
+        // Ensure scrambled order is not accidentally identical to original order
+        if (scrambledLines.every((l, i) => l.origIdx === i) && scrambledLines.length > 1) {
+            const tmp = scrambledLines[0];
+            scrambledLines[0] = scrambledLines[1];
+            scrambledLines[1] = tmp;
+        }
+
+        // Top nav pills for the 5 dialogues
+        const navRow = document.createElement('div');
+        navRow.style.cssText = 'display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1.2rem;';
+        WORKSHOP_DIALOGUES.forEach((d, idx) => {
+            const pill = document.createElement('button');
+            pill.type = 'button';
+            pill.style.cssText = `padding:0.45rem 0.95rem; border-radius:20px; font-weight:800; font-size:0.85rem; cursor:pointer; border:1.5px solid ${idx === currDialogIdx ? '#38bdf8' : '#475569'}; background:${idx === currDialogIdx ? '#0284c7' : '#1e293b'}; color:white;`;
+            pill.textContent = `💬 Dialog ${idx + 1}`;
+            pill.onclick = () => {
+                currDialogIdx = idx;
+                renderDialogueOrderingTask();
+            };
+            navRow.appendChild(pill);
+        });
+        dialogCard.appendChild(navRow);
+
+        const header = document.createElement('div');
+        header.style.cssText = 'margin-bottom:1.4rem;';
+        header.innerHTML = `
+            <div style="display:inline-block; background:rgba(56,189,248,0.18); color:#38bdf8; border:1px solid #0284c7; padding:0.3rem 0.85rem; border-radius:20px; font-size:0.82rem; font-weight:800; margin-bottom:0.5rem;">
+                💬 Mundtlig dialog i rigtig rækkefølge (${currDialogIdx + 1} / ${WORKSHOP_DIALOGUES.length})
+            </div>
+            <h2 style="margin:0 0 0.4rem; font-size:1.5rem; color:white;">${dlg.title}</h2>
+            <p style="margin:0; color:#94a3b8; font-size:0.98rem;">
+                <strong>Situation:</strong> ${dlg.context}<br>
+                <em>Replikkerne herunder er kommet i tilfældig rækkefølge. Klik på replikkerne i den rigtige rækkefølge (1 til ${totalLines}), så samtalen giver mening!</em>
+            </p>
+        `;
+        dialogCard.appendChild(header);
+
+        // Ordered Slots Container
+        const slotsWrap = document.createElement('div');
+        slotsWrap.style.marginBottom = '1.5rem';
+
+        // Scrambled Bank Header + Container
+        const bankTitle = document.createElement('div');
+        bankTitle.style.cssText = 'font-weight:800; font-size:0.95rem; color:#cbd5e1; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;';
+        bankTitle.innerHTML = `
+            <span>🔀 Replikker i tilfældig rækkefølge (klik for at placere i næste ledige felt):</span>
+            <button id="bv-dlg-reset" style="background:#334155; color:white; border:none; padding:0.4rem 0.9rem; border-radius:8px; font-weight:700; cursor:pointer;">🔄 Nulstil dialog</button>
+        `;
+
+        const bankWrap = document.createElement('div');
+        const feedbackWrap = document.createElement('div');
+        feedbackWrap.style.cssText = 'margin-top:1.2rem; text-align:center; min-height:56px;';
+
+        function updateDialogUI(checkMode = false) {
+            slotsWrap.innerHTML = '';
+            placedLines.forEach((lineObj, slotIdx) => {
+                const slotEl = document.createElement('div');
+                let statusCls = '';
+                if (checkMode && lineObj) {
+                    statusCls = lineObj.origIdx === slotIdx ? 'correct-slot' : 'wrong-slot';
+                }
+                slotEl.className = `bv-dialog-slot ${lineObj ? 'filled' : ''} ${statusCls}`;
+
+                if (lineObj) {
+                    slotEl.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:0.6rem; flex:1;">
+                            <span style="background:#0f172a; color:#38bdf8; font-weight:800; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;">${slotIdx + 1}</span>
+                            <span class="bv-speaker-tag ${lineObj.roleClass}">${lineObj.speaker}</span>
+                            <span style="color:#f8fafc; font-weight:600; font-size:0.96rem;">"${lineObj.text}"</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:0.45rem;">
+                            <button type="button" class="bv-slot-listen" style="background:#334155; color:white; border:none; padding:0.35rem 0.6rem; border-radius:8px; cursor:pointer;" title="Lyt til replik">🔊</button>
+                            <span style="color:#94a3b8; font-size:0.85rem; padding:0 0.3rem;" title="Fjern replik">✕</span>
+                        </div>
+                    `;
+                    slotEl.querySelector('.bv-slot-listen').onclick = (e) => {
+                        e.stopPropagation();
+                        speakDanish(lineObj.text);
+                    };
+                    slotEl.onclick = () => {
+                        placedLines[slotIdx] = null;
+                        feedbackWrap.innerHTML = '';
+                        updateDialogUI(false);
+                    };
+                } else {
+                    slotEl.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:0.6rem; color:#64748b; font-weight:700;">
+                            <span style="background:#1e293b; color:#64748b; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;">${slotIdx + 1}</span>
+                            <span>Klik på replik nr. ${slotIdx + 1} herunder...</span>
+                        </div>
+                    `;
+                }
+                slotsWrap.appendChild(slotEl);
+            });
+
+            bankWrap.innerHTML = '';
+            scrambledLines.forEach(sLine => {
+                const isUsed = placedLines.some(p => p && p.origIdx === sLine.origIdx);
+                const btn = document.createElement('div');
+                btn.className = `bv-dialog-line-btn ${isUsed ? 'placed' : ''}`;
+                btn.innerHTML = `
+                    <div style="flex:1;">
+                        <span class="bv-speaker-tag ${sLine.roleClass}">${sLine.speaker}</span>
+                        <span>"${sLine.text}"</span>
+                    </div>
+                    <button type="button" class="bv-bank-listen" style="background:#0f172a; color:#38bdf8; border:1px solid #0284c7; padding:0.35rem 0.7rem; border-radius:8px; font-weight:700; cursor:pointer; flex-shrink:0;">🔊 Lyt</button>
+                `;
+                btn.querySelector('.bv-bank-listen').onclick = (e) => {
+                    e.stopPropagation();
+                    speakDanish(sLine.text);
+                };
+                btn.onclick = () => {
+                    const emptyIdx = placedLines.indexOf(null);
+                    if (emptyIdx !== -1) {
+                        placedLines[emptyIdx] = sLine;
+                        const allFilled = !placedLines.includes(null);
+                        updateDialogUI(allFilled);
+                        if (allFilled) {
+                            const isAllCorrect = placedLines.every((l, idx) => l.origIdx === idx);
+                            if (isAllCorrect) {
+                                feedbackWrap.innerHTML = `
+                                    <div style="background:rgba(34,197,94,0.18); border:1.5px solid #22c55e; color:#4ade80; padding:1rem; border-radius:14px; font-weight:800; font-size:1.1rem; margin-bottom:0.9rem;">
+                                        🎉 Perfekt! Du har sat hele den mundtlige værkstedsdialog i den helt rigtige rækkefølge!
+                                    </div>
+                                    <div style="display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
+                                        <button id="bv-play-full-dlg" style="background:#2563eb; color:white; border:none; padding:0.75rem 1.4rem; border-radius:12px; font-weight:800; cursor:pointer;">🔊 Afspil hele dialogen</button>
+                                        <button id="bv-next-dlg" style="background:#22c55e; color:#0f172a; border:none; padding:0.75rem 1.4rem; border-radius:12px; font-weight:800; cursor:pointer;">
+                                            ${currDialogIdx < WORKSHOP_DIALOGUES.length - 1 ? 'Næste dialog ➔' : 'Prøv dialog 1 igen 🔄'}
+                                        </button>
+                                    </div>
+                                `;
+                                feedbackWrap.querySelector('#bv-play-full-dlg').onclick = () => {
+                                    const allText = dlg.lines.map(l => l.text).join(' ');
+                                    speakDanish(allText);
+                                };
+                                feedbackWrap.querySelector('#bv-next-dlg').onclick = () => {
+                                    currDialogIdx = (currDialogIdx + 1) % WORKSHOP_DIALOGUES.length;
+                                    renderDialogueOrderingTask();
+                                };
+                            } else {
+                                feedbackWrap.innerHTML = `
+                                    <div style="background:rgba(239,68,68,0.18); border:1.5px solid #ef4444; color:#f87171; padding:0.9rem; border-radius:12px; font-weight:700;">
+                                        ⚠️ Nogle af replikkerne (markeret med rød kant) står ikke på den rigtige plads i samtalen. Klik på de røde felter for at tage dem ud og bytte rundt!
+                                    </div>
+                                `;
+                            }
+                        }
+                    }
+                };
+                bankWrap.appendChild(btn);
+            });
+        }
+
+        bankTitle.querySelector('#bv-dlg-reset').onclick = () => {
+            placedLines = new Array(totalLines).fill(null);
+            feedbackWrap.innerHTML = '';
+            updateDialogUI(false);
+        };
+
+        updateDialogUI(false);
+        dialogCard.appendChild(slotsWrap);
+        dialogCard.appendChild(bankTitle);
+        dialogCard.appendChild(bankWrap);
+        dialogCard.appendChild(feedbackWrap);
+    }
+
+    renderDialogueOrderingTask();
+    dialogPanel.appendChild(dialogCard);
+    panelsHolder.appendChild(dialogPanel);
+
+    container.appendChild(viewContainer);
+}

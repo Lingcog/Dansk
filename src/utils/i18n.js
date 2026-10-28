@@ -11,6 +11,7 @@ import { ordstillingPart2Translations } from './ordstilling_part2_translations.j
 import { groundingTranslations } from './grounding_translations.js';
 import { adjectiveComparisonTranslations } from './adjective_comparison_translations.js';
 import { sporgsmalStoriesTranslations } from './sporgsmal_stories_translations.js';
+import { mitHverdagslivTranslations } from './mit_hverdagsliv_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -76,7 +77,8 @@ const allLangs = new Set([
     ...Object.keys(ordstillingPart2Translations || {}),
     ...Object.keys(groundingTranslations || {}),
     ...Object.keys(adjectiveComparisonTranslations || {}),
-    ...Object.keys(sporgsmalStoriesTranslations || {})
+    ...Object.keys(sporgsmalStoriesTranslations || {}),
+    ...Object.keys(mitHverdagslivTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -93,6 +95,7 @@ allLangs.forEach(lang => {
         ...(ordstillingPart2Translations[lang] || {}),
         ...(groundingTranslations[lang] || {}),
         ...(adjectiveComparisonTranslations[lang] || {}),
+        ...(mitHverdagslivTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });
@@ -111,18 +114,32 @@ export function getLang() {
     return appState.lang || localStorage.getItem('appLang') || 'da';
 }
 
-export function getTranslation(key, params = {}) {
+export function getTranslation(key, params = {}, fallback = null) {
+    let fallbackText = fallback;
+    let actualParams = params;
+    if (typeof params === 'string') {
+        fallbackText = params;
+        actualParams = {};
+    }
+
     const currentLang = getLang();
     const langObj = translations[currentLang];
     let text = (langObj && langObj[key])
         ? langObj[key]
         : (currentLang !== 'da' && translations['en']?.[key]
             ? translations['en'][key]
-            : (translations['da']?.[key] || key));
+            : (translations['da']?.[key] || fallbackText || ''));
 
-    Object.keys(params).forEach(p => {
-        text = text.replace(`{${p}}`, params[p]);
-    });
+    // If still empty and no fallback was found, return key
+    if (!text && !fallbackText) {
+        text = key;
+    }
+
+    if (text && typeof text === 'string') {
+        Object.keys(actualParams || {}).forEach(p => {
+            text = text.replace(`{${p}}`, actualParams[p]);
+        });
+    }
 
     return text;
 }

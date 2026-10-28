@@ -165,9 +165,9 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'hub-hero';
     hero.innerHTML = `
-        <div class="hub-badge">🏡 Vrimlebilleder & Scenarier</div>
-        <h1 style="margin-top: 0.8rem;">${getTranslation('mit_hverdagsliv_title') || 'Mit hverdagsliv'}</h1>
-        <p>${getTranslation('mit_hverdagsliv_desc') || 'Udforsk forskellige emner og scenarier fra hverdagslivet gennem interaktive vrimlebilleder.'}</p>
+        <div class="hub-badge">${getTranslation('mit_hverdagsliv_badge', '🏡 Vrimlebilleder & Scenarier')}</div>
+        <h1 style="margin-top: 0.8rem;">${getTranslation('mit_hverdagsliv_title', 'Mit hverdagsliv')}</h1>
+        <p>${getTranslation('mit_hverdagsliv_desc', 'Udforsk forskellige emner og scenarier fra hverdagslivet gennem interaktive vrimlebilleder.')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -175,31 +175,31 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
     const scenes = [
         {
             id: 'mit_hverdagsliv_arbejde',
-            badge: '💼 Scenarie 1 • 2 arbejdspladser',
+            badge: getTranslation('mit_hverdagsliv_arbejde_badge', '💼 Scenarie 1 • 2 arbejdspladser'),
             icon: '💼',
-            title: getTranslation('mit_hverdagsliv_arbejde_title') || 'Arbejde',
-            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'Træn dansk på arbejdspladsen (de første 3 måneder): Vælg mellem 🔧 På bilværkstedet og 👩‍🍳 Som køkkenassistent i storkøkken og kantine.',
-            btnText: getTranslation('mit_hverdagsliv_arbejde_btn') || 'Vælg arbejdsplads (2 scenarier) ➔',
+            title: getTranslation('mit_hverdagsliv_arbejde_title', 'Arbejde'),
+            desc: getTranslation('mit_hverdagsliv_arbejde_desc', 'Træn dansk på arbejdspladsen (de første 3 måneder): Vælg mellem 🔧 På bilværkstedet og 👩‍🍳 Som køkkenassistent i storkøkken og kantine.'),
+            btnText: getTranslation('mit_hverdagsliv_arbejde_btn', 'Vælg arbejdsplads (2 scenarier) ➔'),
             img: 'assets/koekkenassistent_vrimmel.jpg',
             accent: '#38bdf8'
         },
         {
             id: 'mit_hverdagsliv_fritid',
-            badge: '⚽ Scenarie 2',
+            badge: getTranslation('mit_hverdagsliv_fritid_badge', '⚽ Scenarie 2'),
             icon: '⚽',
-            title: getTranslation('mit_hverdagsliv_fritid_title') || 'Fritid',
-            desc: getTranslation('mit_hverdagsliv_fritid_desc') || 'Udforsk fritidslivet, hobbyer, sport, samvær med venner og familie samt oplevelser i hverdagen.',
-            btnText: getTranslation('mit_hverdagsliv_fritid_btn') || 'Åbn Fritid ➔',
+            title: getTranslation('mit_hverdagsliv_fritid_title', 'Fritid'),
+            desc: getTranslation('mit_hverdagsliv_fritid_desc', 'Udforsk fritidslivet, hobbyer, sport, samvær med venner og familie samt oplevelser i hverdagen.'),
+            btnText: getTranslation('mit_hverdagsliv_fritid_btn', 'Åbn Fritid ➔'),
             img: 'assets/natur_fritid_vrimmel.jpg',
             accent: '#22c55e'
         },
         {
             id: 'mit_hverdagsliv_aarstider',
-            badge: '🍂 Scenarie 3',
+            badge: getTranslation('mit_hverdagsliv_aarstider_badge', '🍂 Scenarie 3'),
             icon: '🍂',
-            title: getTranslation('mit_hverdagsliv_aarstider_title') || 'Årstider',
-            desc: getTranslation('mit_hverdagsliv_aarstider_desc') || 'Udforsk forår, sommer, efterår og vinter – vejret, naturen og hverdagens skiftende aktiviteter året rundt.',
-            btnText: getTranslation('mit_hverdagsliv_aarstider_btn') || 'Åbn Årstider ➔',
+            title: getTranslation('mit_hverdagsliv_aarstider_title', 'Årstider'),
+            desc: getTranslation('mit_hverdagsliv_aarstider_desc', 'Udforsk forår, sommer, efterår og vinter – vejret, naturen og hverdagens skiftende aktiviteter året rundt.'),
+            btnText: getTranslation('mit_hverdagsliv_aarstider_btn', 'Åbn Årstider ➔'),
             img: 'assets/adverbier_tid_vrimmel.jpg',
             accent: '#f59e0b'
         }
@@ -569,8 +569,8 @@ export function renderMitHverdagslivArbejdeView(container, navigateFn, extraData
 export function renderMitHverdagslivFritidView(container, navigateFn) {
     renderScenarioSubView(container, navigateFn, {
         icon: '⚽',
-        title: getTranslation('mit_hverdagsliv_fritid_title') || 'Fritid',
-        desc: getTranslation('mit_hverdagsliv_fritid_desc') || 'Udforsk fritidslivet, hobbyer, sport, samvær med venner og familie samt oplevelser i hverdagen.',
+        title: getTranslation('mit_hverdagsliv_fritid_title', 'Fritid'),
+        desc: getTranslation('mit_hverdagsliv_fritid_desc', 'Udforsk fritidslivet, hobbyer, sport, samvær med venner og familie samt oplevelser i hverdagen.'),
         img: 'assets/natur_fritid_vrimmel.jpg',
         accent: '#22c55e'
     });
@@ -579,8 +579,8 @@ export function renderMitHverdagslivFritidView(container, navigateFn) {
 export function renderMitHverdagslivAarstiderView(container, navigateFn) {
     renderScenarioSubView(container, navigateFn, {
         icon: '🍂',
-        title: getTranslation('mit_hverdagsliv_aarstider_title') || 'Årstider',
-        desc: getTranslation('mit_hverdagsliv_aarstider_desc') || 'Udforsk forår, sommer, efterår og vinter – vejret, naturen og hverdagens skiftende aktiviteter året rundt.',
+        title: getTranslation('mit_hverdagsliv_aarstider_title', 'Årstider'),
+        desc: getTranslation('mit_hverdagsliv_aarstider_desc', 'Udforsk forår, sommer, efterår og vinter – vejret, naturen og hverdagens skiftende aktiviteter året rundt.'),
         img: 'assets/adverbier_tid_vrimmel.jpg',
         accent: '#f59e0b'
     });

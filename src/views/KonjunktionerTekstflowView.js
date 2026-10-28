@@ -1166,12 +1166,12 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 "Bussen kørte lige foran næsen på hende.",
                 "Hun tog en taxa for at nå frem til tiden."
             ],
-            flowStory: "I morges ringede vækkeuret ikke klokken 7. [blank_0] vågnede Mette først klokken 8. Hun skyndte sig ud til bussen, [blank_1] det regnede voldsomt. [blank_2] hun nåede stoppestedet, kørte bussen desværre lige foran hende. Hun tog [blank_3] en taxa for at nå frem.",
+            flowStory: "I morges ringede vækkeuret ikke klokken 7. [blank_0] vågnede Mette først klokken 8. Hun skyndte sig ud til bussen, [blank_1] det regnede voldsomt. [blank_2] hun nåede stoppestedet, kørte bussen desværre lige foran hende. [blank_3] hun tog en taxa for at nå frem.",
             blanks: {
                 "0": { options: ["Derfor", "Fordi", "Men"], answer: "Derfor" },
                 "1": { options: ["selvom", "fordi", "hvis"], answer: "selvom" },
                 "2": { options: ["Da", "Når", "Derfor"], answer: "Da" },
-                "3": { options: ["alligevel", "derfor", "men"], answer: "alligevel" }
+                "3": { options: ["Så", "Alligevel", "Men"], answer: "Så" }
             }
         },
         {

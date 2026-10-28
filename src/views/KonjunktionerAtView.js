@@ -45,14 +45,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
     viewContainer.appendChild(topBar);
 
-    // TTS Audio Helper
+    // Lydeksempler fjernet i denne flade
     function speakDanish(text) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'da-DK';
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
+        return;
     }
 
     // 18 "AT"-Constructions Data
@@ -1568,7 +1563,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             pin.onclick = (e) => {
                 e.stopPropagation();
                 updateInspector(item, true);
-                speakDanish(item.sentence);
             };
 
             stage.appendChild(pin);
@@ -1600,7 +1594,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                         <div class="inspector-badge-row">
                             <span class="inspector-badge">📐 ${item.formula}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale">🔊</button>
                     </div>
 
                     <h2 class="inspector-word-title">
@@ -1611,9 +1604,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     <div class="inspector-sentence-card" style="margin-top:0.4rem;">
                         <div class="sentence-quote-text">"${item.sentence}"</div>
                         ${showSentenceTrans ? `<div class="sentence-trans-text" style="color:#fde68a;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="insp-speak-sent" style="margin-top:0.3rem;">
-                            <span>🔊</span> ${getTranslation('konj_btn_listen_sentence')}
-                        </button>
                     </div>
                 </div>
 
@@ -1634,20 +1624,15 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 </div>
             `;
 
-            inspector.querySelector('#insp-speak-word').onclick = () => speakDanish(item.sentence);
-            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.sentence);
-
             inspector.querySelector('#insp-prev-btn').onclick = () => {
                 const idx = visibleWords.findIndex(w => w.id === item.id);
                 const prevItem = visibleWords[(idx - 1 + visibleWords.length) % visibleWords.length];
                 updateInspector(prevItem, false);
-                speakDanish(prevItem.sentence);
             };
             inspector.querySelector('#insp-next-btn').onclick = () => {
                 const idx = visibleWords.findIndex(w => w.id === item.id);
                 const nextItem = visibleWords[(idx + 1) % visibleWords.length];
                 updateInspector(nextItem, false);
-                speakDanish(nextItem.sentence);
             };
 
             if (shouldScroll) {
@@ -1802,9 +1787,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                         <div style="font-size:0.85rem; color:#fde68a;">${getTranslation('at_cog_det_box2_desc')}</div>
                     </div>
                 </div>
-                <button class="inspector-speak-btn" id="speak-bio-cognitive">
-                    <span>🔊</span> Lyt til eksemplet: "Jeg tror, at jeg hellere vil i biografen på torsdag"
-                </button>
             </div>
 
             <!-- DE 4 KOGNITIVE BILLEDER FOR ALLE TYPER "AT" -->
@@ -1844,11 +1826,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
         container.innerHTML = '';
         container.appendChild(card);
-
-        const speakBioBtn = card.querySelector('#speak-bio-cognitive');
-        if (speakBioBtn) {
-            speakBioBtn.onclick = () => speakDanish('Jeg tror, at jeg hellere vil i biografen på torsdag.');
-        }
     }
 
     function renderRoentgenSub1(container) {
@@ -1963,9 +1940,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     `).join('')}
                 </div>
                 <p style="color:#cbd5e1; font-weight:700; margin:1rem auto; max-width:700px;">💡 ${side.note}</p>
-                <button class="inspector-speak-btn" id="speak-sub1-btn">
-                    <span>🔊</span> Lyt: "${side.tokens.map(t => t.word).join(' ')}"
-                </button>
             </div>
         `;
 
@@ -1985,9 +1959,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         card.querySelector('#btn-subj-nyt').onclick = () => {
             selectedSubjMode = 'nyt';
             renderRoentgenSub1(container);
-        };
-        card.querySelector('#speak-sub1-btn').onclick = () => {
-            speakDanish(side.tokens.map(t => t.word).join(' '));
         };
     }
 
@@ -2026,14 +1997,12 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 <div style="background:#0f172a; border-radius:16px; padding:1.6rem; border:2px solid #ef4444;">
                     <h4 style="color:#fca5a5; margin-top:0;">${cur.modal.title}</h4>
                     <div style="font-size:1.35rem; font-weight:900; color:white; margin:1rem 0;">"${cur.modal.sent}"</div>
-                    <div style="color:#f87171; font-weight:700; margin-bottom:1rem;">${cur.modal.wrong}</div>
-                    <button class="inspector-speak-btn" data-sp="${cur.modal.sent}">🔊 Lyt</button>
+                    <div style="color:#f87171; font-weight:700;">${cur.modal.wrong}</div>
                 </div>
                 <div style="background:#0f172a; border-radius:16px; padding:1.6rem; border:2px solid #22c55e;">
                     <h4 style="color:#86efac; margin-top:0;">${cur.alm.title}</h4>
                     <div style="font-size:1.35rem; font-weight:900; color:white; margin:1rem 0;">"${cur.alm.sent}"</div>
-                    <div style="color:#f87171; font-weight:700; margin-bottom:1rem;">${cur.alm.wrong}</div>
-                    <button class="inspector-speak-btn" data-sp="${cur.alm.sent}">🔊 Lyt</button>
+                    <div style="color:#f87171; font-weight:700;">${cur.alm.wrong}</div>
                 </div>
             </div>
         `;
@@ -2046,9 +2015,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 selectedModalDemo = b.dataset.md;
                 renderRoentgenSub2(container);
             };
-        });
-        card.querySelectorAll('[data-sp]').forEach(b => {
-            b.onclick = () => speakDanish(b.dataset.sp);
         });
     }
 
@@ -2289,7 +2255,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     fbBox.className = 'detektiv-feedback-box show correct';
                     fbBox.innerHTML = `<strong>${r.explanations[opt]}</strong>`;
                     nextWrap.style.display = 'block';
-                    speakDanish(r.quote.replace('______', opt).replace(/"/g, ''));
                 } else {
                     btn.classList.add('wrong');
                     fbBox.className = 'detektiv-feedback-box show wrong';
@@ -2589,7 +2554,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 });
             } else {
                 const fullBuilt = ex.slots.map(s => s.expected).join(' ');
-                speakDanish(fullBuilt);
                 fbDiv.className = 'detektiv-feedback-box show correct';
                 fbDiv.innerHTML = `
                     <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">🎉 Perfekt: "${fullBuilt}"</div>
@@ -2696,8 +2660,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     fbBox.className = 'detektiv-feedback-box show correct';
                     fbBox.innerHTML = `<strong>🌟 Korrekt!</strong> ${q.explanation}`;
                     nextWrap.style.display = 'block';
-                    const spoken = q.quote.replace('______', opt).replace(/<[^>]+>/g, '');
-                    speakDanish(spoken);
                 } else {
                     firstAttempt = false;
                     btn.className = 'detektiv-opt-btn wrong';

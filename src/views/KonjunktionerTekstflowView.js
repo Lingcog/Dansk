@@ -1191,6 +1191,58 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 "2": { options: ["selvom", "fordi", "hvis"], answer: "selvom" },
                 "3": { options: ["Da", "Når", "Derfor"], answer: "Da" }
             }
+        },
+        {
+            title: "Aftensmad og lektielæsning",
+            staccatoSummary: "1. Sofie kom træt hjem. 2. Hun fortalte sin far om lektierne. 3. De spiste aftensmad tidligt. 4. Hun kunne få god tid.",
+            staccato: [
+                "Sofie kom træt hjem fra skole.",
+                "Hun fortalte sin far noget.",
+                "Hun havde mange lektier for til i morgen.",
+                "De spiste aftensmad tidligt.",
+                "Hun fik god tid til matematikken."
+            ],
+            flowStory: "Sofie kom træt hjem fra skole i dag. Hun fortalte sin far, [blank_0] hun havde mange lektier for til i morgen. [blank_1] hun satte sig til bordet, var maden allerede færdig. De spiste aftensmad tidligt, [blank_2] hun kunne få god tid til lektierne, [blank_3] matematikken var ret svær.",
+            blanks: {
+                "0": { options: ["at", "så", "om"], answer: "at" },
+                "1": { options: ["Da", "Hvis", "Fordi"], answer: "Da" },
+                "2": { options: ["så", "men", "da"], answer: "så" },
+                "3": { options: ["fordi", "selvom", "hvis"], answer: "fordi" }
+            }
+        },
+        {
+            title: "Et uventet opkald fra mekanikeren",
+            staccatoSummary: "1. Peter håbede bilen blev klar. 2. Mekanikeren ringede. 3. Reservedelen var forsinket. 4. Peter måtte tage toget.",
+            staccato: [
+                "Peter håbede bilen snart blev klar.",
+                "Mekanikeren ringede over middag.",
+                "Reservedelen var desværre forsinket.",
+                "Peter tog toget på arbejde resten af ugen."
+            ],
+            flowStory: "Peter håbede inderligt, [blank_0] bilen snart blev klar til syn. [blank_1] mekanikeren ringede over middag, forklarede han, [blank_2] reservedelen desværre var forsinket. [blank_3] Peter måtte tage toget på arbejde resten af ugen.",
+            blanks: {
+                "0": { options: ["at", "hvis", "når"], answer: "at" },
+                "1": { options: ["Da", "Fordi", "Selvom"], answer: "Da" },
+                "2": { options: ["at", "så", "om"], answer: "at" },
+                "3": { options: ["Så", "Men", "Fordi"], answer: "Så" }
+            }
+        },
+        {
+            title: "Jobsamtalen i kantinen",
+            staccatoSummary: "1. Hassan var nervøs før samtalen. 2. Han vidste han havde erfaring. 3. Chefen var imponeret. 4. Hassan fik jobbet.",
+            staccato: [
+                "Hassan var lidt nervøs før samtalen.",
+                "Han vidste han havde gode erfaringer.",
+                "Køkkenchefen hørte om hans erfaring.",
+                "Hassan fik tilbudt stillingen straks."
+            ],
+            flowStory: "Hassan var lidt nervøs før samtalen, [blank_0] han vidste godt, [blank_1] han havde gode erfaringer fra et storkøkken. [blank_2] chefen hørte om hans erfaring, blev hun meget imponeret. [blank_3] Hassan fik tilbudt stillingen med det samme!",
+            blanks: {
+                "0": { options: ["men", "så", "da"], answer: "men" },
+                "1": { options: ["at", "om", "hvis"], answer: "at" },
+                "2": { options: ["Da", "Hvis", "Fordi"], answer: "Da" },
+                "3": { options: ["Så", "Selvom", "Fordi"], answer: "Så" }
+            }
         }
     ];
 

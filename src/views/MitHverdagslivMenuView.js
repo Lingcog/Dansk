@@ -175,7 +175,7 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
             badge: '💼 Scenarie 1 • Bilværksted',
             icon: '💼',
             title: getTranslation('mit_hverdagsliv_arbejde_title') || 'Arbejde',
-            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'På bilværkstedet: Udforsk 32 målord (50% substantiver, 25% verber, 25% adjektiver & adverbier), faste fagtermer og mundtlige værkstedsdialoger.',
+            desc: getTranslation('mit_hverdagsliv_arbejde_desc') || 'På bilværkstedet: Udforsk målord på tværs af ordklasser, faste fagtermer, historier og mundtlige værkstedsdialoger.',
             btnText: getTranslation('mit_hverdagsliv_arbejde_btn') || 'Åbn Arbejde (Bilværksted) ➔',
             img: 'assets/bilvaerksted_vrimmel.jpg',
             accent: '#38bdf8'

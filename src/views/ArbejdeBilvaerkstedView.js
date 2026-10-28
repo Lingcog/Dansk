@@ -561,6 +561,576 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         adverbium: { label: '🔵 Adverbium', short: 'Adverbium', color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.18)' }
     };
 
+    // Sprogvalg til oversættelseshjælp i historier, vrimlebillede og dialoger
+    const SUPPORTED_TRANS_LANGS = [
+        { code: 'en', label: '🇬🇧 English (Engelsk)' },
+        { code: 'de', label: '🇩🇪 Deutsch (Tysk)' },
+        { code: 'es', label: '🇪🇸 Español (Spansk)' },
+        { code: 'pt', label: '🇵🇹 Português (Portugisisk)' },
+        { code: 'tr', label: '🇹🇷 Türkçe (Tyrkisk)' },
+        { code: 'ar', label: '🇸🇦 العربية (Arabisk)' },
+        { code: 'fa', label: '🇮🇷 فارسی (Farsi)' },
+        { code: 'ku', label: '☀️ Kurdî (Kurdisk)' },
+        { code: 'ur', label: '🇵🇰 اردو (Urdu)' },
+        { code: 'ru', label: '🇷🇺 Русский (Russisk)' },
+        { code: 'uk', label: '🇺🇦 Українська (Ukrainsk)' },
+        { code: 'zh', label: '🇨🇳 中文 (Kinesisk)' },
+        { code: 'vi', label: '🇻🇳 Tiếng Việt (Vietnamesisk)' },
+        { code: 'th', label: '🇹🇭 ไทย (Thai)' },
+        { code: 'ne', label: '🇳🇵 नेपाली (Nepalesisk)' },
+        { code: 'ps', label: '🇦🇫 پښتو (Pashto)' }
+    ];
+
+    function getPreferredTransLang() {
+        const appLang = getLang ? getLang() : 'da';
+        if (appLang && appLang !== 'da') return appLang;
+        return localStorage.getItem('bv_preferred_trans_lang') || 'en';
+    }
+
+    function setPreferredTransLang(code) {
+        localStorage.setItem('bv_preferred_trans_lang', code);
+    }
+
+    // Oversættelser for de 32 målord på forsiden af Bilværksted
+    const WORKSHOP_TRANSLATIONS = {
+        mekaniker: {
+            en: 'a car mechanic', de: 'ein Automechaniker / Kfz-Mechatroniker', es: 'un mecánico', pt: 'um mecânico', tr: 'bir oto tamircisi / makinist',
+            ar: 'ميكانيكي سيارات', fa: 'مکانیک خودرو', ku: 'mekanîkê erebeyan', ur: 'گاڑیوں کا مکینک', ru: 'автомеханик', uk: 'автомеханік',
+            zh: '汽车技工 / 机械师', vi: 'thợ sửa xe / thợ máy', th: 'ช่างซ่อมรถยนต์', ne: 'गाडीको मिस्त्री (मेकानिक)', ps: 'د موټرو مستري'
+        },
+        laerling: {
+            en: 'an apprentice / trainee mechanic', de: 'ein Lehrling / Auszubildender', es: 'un aprendiz', pt: 'um aprendiz', tr: 'bir çırak',
+            ar: 'متدرب مهني', fa: 'کارآموز / شاگرد مکانیک', ku: 'şagirt / fêrxwaz', ur: 'شاگرد / زیرِ تربیت مکینک', ru: 'ученик мастера / стажёр', uk: 'учень майстра / стажер',
+            zh: '学徒', vi: 'thợ học việc', th: 'ช่างฝึกหัด', ne: 'प्रशिक्षार्थी (सिकारु)', ps: 'شاګرد / زده کوونکی'
+        },
+        autolift: {
+            en: 'a car lift / vehicle hoist', de: 'eine Hebebühne', es: 'un elevador de coches', pt: 'um elevador automotivo', tr: 'bir araç kaldırma lifti',
+            ar: 'رافعة سيارات هيدروليكية', fa: 'جک بالابر خودرو', ku: 'lîfta erebeyan', ur: 'گاڑی اٹھانے والی لفٹ', ru: 'автомобильный подъёмник', uk: 'автомобільний підйомник',
+            zh: '汽车举升机', vi: 'cầu nâng ô tô', th: 'ลิฟต์ยกรถ', ne: 'गाडी उठाउने लिफ्ट', ps: 'د موټر پورته کولو لفټ'
+        },
+        motor: {
+            en: 'an engine / motor', de: 'ein Motor', es: 'un motor', pt: 'um motor', tr: 'bir motor',
+            ar: 'محرك السيارة', fa: 'موتور خودرو', ku: 'motor', ur: 'انجن / موٹر', ru: 'двигатель / мотор', uk: 'двигун / мотор',
+            zh: '发动机 / 引擎', vi: 'động cơ', th: 'เครื่องยนต์', ne: 'इन्जिन / मोटर', ps: 'انجن / موټر'
+        },
+        daek: {
+            en: 'a tire / tyre', de: 'ein Reifen', es: 'un neumático', pt: 'um pneu', tr: 'bir lastik',
+            ar: 'إطار سيارة (كفر)', fa: 'لاستیک / تایر', ku: 'teker / lastîk', ur: 'ٹائر', ru: 'шина / покрышка', uk: 'шина / покришка',
+            zh: '轮胎', vi: 'lốp xe', th: 'ยางรถยนต์', ne: 'टायर', ps: 'ټایر'
+        },
+        bremse: {
+            en: 'a brake (brake disc & brake pads)', de: 'eine Bremse (Bremsscheibe & Bremsbeläge)', es: 'un freno', pt: 'um freio / travão', tr: 'bir fren (fren balatası)',
+            ar: 'فرامل / مكابح', fa: 'ترمز (لنت و دیسک ترمز)', ku: 'fren', ur: 'بریک', ru: 'тормоз (тормозные колодки)', uk: 'гальмо (гальмівні колодки)',
+            zh: '刹车 / 制动器', vi: 'phanh xe / thắng xe', th: 'เบรก', ne: 'ब्रेक', ps: 'بریک'
+        },
+        motorolie: {
+            en: 'engine oil / motor oil', de: 'Motoröl', es: 'aceite de motor', pt: 'óleo do motor', tr: 'motor yağı',
+            ar: 'زيت المحرك', fa: 'روغن موتور', ku: 'rûnê motorê', ur: 'انجن آئل (موٹر آئل)', ru: 'моторное масло', uk: 'моторне мастило (олива)',
+            zh: '机油 / 发动机油', vi: 'dầu nhớt động cơ', th: 'น้ำมันเครื่อง', ne: 'इन्जिन तेल (मोबिल)', ps: 'د انجن تېل (مبلایل)'
+        },
+        vaerktoejskasse: {
+            en: 'a toolbox / tool trolley', de: 'ein Werkzeugkasten / Werkzeugwagen', es: 'una caja de herramientas', pt: 'uma caixa de ferramentas', tr: 'bir takım çantası',
+            ar: 'صندوق أدوات (عدة)', fa: 'جعبه ابزار', ku: 'qutiya amûran', ur: 'اوزاروں کا ڈبہ (ٹول باکس)', ru: 'ящик для инструментов', uk: 'ящик для інструментів',
+            zh: '工具箱', vi: 'hộp đựng dụng cụ', th: 'กล่องเครื่องมือ', ne: 'औजार बाकस (टुलबक्स)', ps: 'د سامانونو بکس'
+        },
+        skruenoegle: {
+            en: 'a wrench / spanner', de: 'ein Schraubenschlüssel', es: 'una llave inglesa', pt: 'uma chave inglesa / de boca', tr: 'bir ingiliz anahtarı / somun anahtarı',
+            ar: 'مفتاح ربط (صواميل)', fa: 'آچار', ku: ' mifteya بورiyan / açar', ur: 'رینچ / پانہ', ru: 'гаечный ключ', uk: 'гайковий ключ',
+            zh: '扳手', vi: 'cờ lê', th: 'ประแจ', ne: 'रेन्च / पाना', ps: 'رنچ / پانه'
+        },
+        donkraft: {
+            en: 'a car jack', de: 'ein Wagenheber', es: 'un gato hidráulico', pt: 'um macaco hidráulico', tr: 'bir kriko',
+            ar: 'رافعة يدوية (عفريتة السيارة)', fa: 'جک دستی خودرو', ku: 'krîko / ceka erebeyê', ur: 'گاڑی اٹھانے والا جیک', ru: 'домкрат', uk: 'домкрат',
+            zh: '千斤顶', vi: 'con đội / kích nâng xe', th: 'แม่แรงยกรถ', ne: 'ज्याक (गाडी उठाउने औजार)', ps: 'جک (د موټر پورته کولو وسیله)'
+        },
+        batteri: {
+            en: 'a car battery', de: 'eine Autobatterie', es: 'una batería de coche', pt: 'uma bateria', tr: 'bir akü',
+            ar: 'بطارية السيارة', fa: 'باتری خودرو', ku: 'bateriya erebeyê (akû)', ur: 'گاڑی کی بیٹری', ru: 'аккумулятор', uk: 'акумулятор',
+            zh: '汽车电瓶 / 蓄电池', vi: 'ắc quy ô tô', th: 'แบตเตอรี่รถยนต์', ne: 'ब्याट्री', ps: 'بطرۍ'
+        },
+        udstoedning: {
+            en: 'an exhaust pipe / exhaust system', de: 'ein Auspuff', es: 'un tubo de escape', pt: 'um escapamento / tubo de escape', tr: 'bir egzoz',
+            ar: 'عادم السيارة (شكمان)', fa: 'اگزوز خودرو', ku: 'egzoz', ur: 'سائلنسر / ایگزاسٹ پائپ', ru: 'выхлопная труба / глушитель', uk: 'вихлопна труба / глушник',
+            zh: '排气管', vi: 'ống xả', th: 'ท่อไอเสีย', ne: 'साइलेन्सर / धुवाँ निस्कने पाइप', ps: 'سلنسر / د لوګي نل'
+        },
+        forrude: {
+            en: 'a windshield / windscreen', de: 'eine Windschutzscheibe / Frontscheibe', es: 'un parabrisas', pt: 'um para-brisa', tr: 'bir ön cam',
+            ar: 'الزجاج الأمامي للسيارة', fa: 'شیشه جلو خودرو', ku: 'cama pêşiyê', ur: 'گاڑی کا اگلا شیشہ (ونڈ سکرین)', ru: 'лобовое стекло', uk: 'лобове скло',
+            zh: '挡风玻璃', vi: 'kính chắn gió trước', th: 'กระจกหน้ารถ', ne: 'अगाडिको सिसा (विन्डस्क्रिन)', ps: 'د موټر مخکینۍ ښیښه'
+        },
+        reservedel: {
+            en: 'a spare part / replacement part', de: 'ein Ersatzteil', es: 'un repuesto / pieza de recambio', pt: 'uma peça sobressalente', tr: 'bir yedek parça',
+            ar: 'قطعة غيار', fa: 'قطعه یدکی', ku: 'parçeyê yedek', ur: 'اضافی پرزہ (اسپیئر پارٹ)', ru: 'запчасть (запасная часть)', uk: 'запчастина',
+            zh: '备件 / 零配件', vi: 'phụ tùng thay thế', th: 'อะไหล่รถยนต์', ne: 'जगेडा पार्टपुर्जा (स्पेयर पार्ट)', ps: 'پرزه (اضافي پرزه)'
+        },
+        pristilbud: {
+            en: 'a price quote / cost estimate', de: 'ein Preisangebot / Kostenvoranschlag', es: 'un presupuesto', pt: 'um orçamento', tr: 'bir fiyat teklifi',
+            ar: 'عرض سعر / تقدير التكلفة', fa: 'پیشنهاد قیمت / برآورد هزینه', ku: 'pêşniyara bihayê', ur: 'قیمت کا تخمینہ (پرائس کوٹیشن)', ru: 'ценовое предложение / смета', uk: 'цінова пропозиція / кошторис',
+            zh: '报价单 / 估价', vi: 'báo giá', th: 'ใบเสนอราคา / ประเมินราคา', ne: 'मूल्य प्रस्ताव (अनुमानित खर्च)', ps: 'د بیې وړاندیز (اټکل)'
+        },
+        regning: {
+            en: 'a bill / invoice', de: 'eine Rechnung', es: 'una factura / cuenta', pt: 'uma fatura / conta', tr: 'bir fatura / hesap',
+            ar: 'فاتورة', fa: 'صورت‌حساب / فاکتور', ku: 'fatûre / hesab', ur: 'بل / رسید', ru: 'счёт (фактура)', uk: 'рахунок (фактура)',
+            zh: '账单 / 发票', vi: 'hóa đơn', th: 'ใบเสร็จ / บิลค่าซ่อม', ne: 'बिल', ps: 'بل / رسید'
+        },
+        reparere: {
+            en: 'to repair / to fix', de: 'reparieren', es: 'reparar / arreglar', pt: 'reparar / consertar', tr: 'tamir etmek / onarmak',
+            ar: 'يُصلح', fa: 'تعمیر کردن', ku: 'tamîr kirin / çêkirin', ur: 'مرمت کرنا', ru: 'ремонтировать / чинить', uk: 'ремонтувати / лагодити',
+            zh: '修理 / 维修', vi: 'sửa chữa', th: 'ซ่อมแซม', ne: 'मर्मत गर्नु / बनाउनु', ps: 'جوړول / ترمیمول'
+        },
+        skifte: {
+            en: 'to change / to replace', de: 'wechseln / austauschen', es: 'cambiar / reemplazar', pt: 'trocar / substituir', tr: 'değiştirmek',
+            ar: 'يُبدّل / يُغيّر', fa: 'تعویض کردن', ku: 'guherandin', ur: 'تبدیل کرنا / بدلنا', ru: 'менять / заменять', uk: 'міняти / замінювати',
+            zh: '更换', vi: 'thay thế', th: 'เปลี่ยน (เช่น เปลี่ยนยาง)', ne: 'फेर्नु / बदल्नु', ps: 'بدلول'
+        },
+        tjekke: {
+            en: 'to check / to inspect', de: 'prüfen / kontrollieren', es: 'revisar / comprobar', pt: 'verificar / checar', tr: 'kontrol etmek',
+            ar: 'يفحص / يتحقق من', fa: 'بررسی کردن / چک کردن', ku: 'kontrol kirin', ur: 'چیک کرنا / معائنہ کرنا', ru: 'проверять', uk: 'перевіряти',
+            zh: '检查', vi: 'kiểm tra', th: 'ตรวจสอบ / เช็ก', ne: 'जाँच गर्नु (चेक गर्नु)', ps: 'چک کول / کتل'
+        },
+        loefte: {
+            en: 'to lift / to raise', de: 'heben / anheben', es: 'levantar / elevar', pt: 'levantar / erguer', tr: 'kaldırmak',
+            ar: 'يرفع', fa: 'بلند کردن / بالا بردن', ku: 'bilind kirin / rakirin', ur: 'اٹھانا / اوپر کرنا', ru: 'поднимать', uk: 'піднімати',
+            zh: '举起 / 抬起', vi: 'nâng lên', th: 'ยกขึ้น', ne: 'उठाउनु / उचाल्नु', ps: 'پورته کول'
+        },
+        spaende: {
+            en: 'to tighten / to fasten (bolts)', de: 'festziehen / anziehen', es: 'apretar (tornillos/tuercas)', pt: 'apertar', tr: 'sıkmak (somunları)',
+            ar: 'يَشدّ / يربط بإحكام', fa: 'سفت کردن (پیچ‌ها)', ku: 'şidandin', ur: 'کسنا (قابلے مضبوط کرنا)', ru: 'затягивать (болты)', uk: 'затягувати (болти)',
+            zh: '拧紧', vi: 'siết chặt (ốc vít)', th: 'ขันให้แน่น', ne: 'कस्नु (नट-बोल्ट कस्नु)', ps: 'ټینګول (پیچونه)'
+        },
+        paafylde: {
+            en: 'to fill up / to top up (oil, fluid)', de: 'nachfüllen / auffüllen', es: 'rellenar / añadir líquido', pt: 'reabastecer / completar o nível', tr: 'doldurmak / eklemek (yağ, su)',
+            ar: 'يملأ / يضيف (زيت أو سائل)', fa: 'ریختن / پر کردن (روغن یا مایع)', ku: 'dagirtin / تێkirin', ur: 'بھرنا / ڈالنا (تیل یا پانی)', ru: 'доливать / заливать', uk: 'доливати / заливати',
+            zh: '加注 / 添满', vi: 'châm thêm / đổ đầy', th: 'เติม (น้ำมันเครื่อง / น้ำยา)', ne: 'थप्नु / भर्नु (तेल वा पानी)', ps: 'اچول / ډکول (تېل یا اوبه)'
+        },
+        fejlsoege: {
+            en: 'to troubleshoot / run diagnostics', de: 'Fehlersuche durchführen / diagnostizieren', es: 'diagnosticar fallos', pt: 'fazer diagnóstico de falhas', tr: 'arıza tespiti yapmak',
+            ar: 'يشخّص الأعطال بالكمبيوتر', fa: 'عیب‌یابی کردن (با دستگاه دیاگ)', ku: 'lêgerîna çewtiyan / arîzeyê dîtin', ur: 'خرابی تلاش کرنا (کمپیوٹر چیکنگ)', ru: 'проводить диагностику неисправностей', uk: 'проводити діагностику несправностей',
+            zh: '故障排查 / 电脑诊断', vi: 'chẩn đoán lỗi', th: 'ตรวจหาจุดเสีย / วิเคราะห์ปัญหา', ne: 'खराबी पत्ता लगाउनु', ps: 'عوارض لټول (د کمپیوټر په وسیله)'
+        },
+        syne: {
+            en: 'to pass mandatory vehicle inspection (MOT)', de: 'zum TÜV / zur Hauptuntersuchung bringen', es: 'pasar la inspección técnica (ITV)', pt: 'fazer a inspeção periódica', tr: 'araç muayenesinden geçirmek (TÜV)',
+            ar: 'يجري الفحص الفني الدوري للسيارة', fa: 'معاینه فنی کردن خودرو', ku: 'muayeneya fermî ya erebeyê kirin', ur: 'گاڑی کا سرکاری معائنہ (پاسنگ) کروانا', ru: 'проходить техосмотр', uk: 'проходити техогляд',
+            zh: '车辆年检', vi: 'đăng kiểm xe', th: 'ตรวจสภาพรถยนต์ตามกำหนด', ne: 'सवारी जाँचपास (प्रदूषण/प्राविधिक जाँच) गर्नु', ps: 'د موټر تخنیکي معاینه کول'
+        },
+        defekt: {
+            en: 'defective / broken / out of order', de: 'defekt / kaputt', es: 'defectuoso / averiado', pt: 'defeituoso / avariado', tr: 'arızalı / bozuk',
+            ar: 'معطّل / تالف', fa: 'خراب / معیوب', ku: 'xerabe / şikestî', ur: 'خراب / ناکارہ', ru: 'неисправный / сломанный', uk: 'несправний / зламаний',
+            zh: '损坏的 / 有故障的', vi: 'bị hỏng / bị lỗi', th: 'ชำรุด / เสีย', ne: 'बिग्रिएको / काम नगर्ने', ps: 'خراب / زیانمن شوی'
+        },
+        slidt: {
+            en: 'worn out / worn down', de: 'abgenutzt / verschlissen', es: 'desgastado', pt: 'gasto / desgastado', tr: 'aşınmış / yıpranmış',
+            ar: 'مستهلك / متآكل', fa: 'فرسوده / ساییده‌شده', ku: 'kevn / mehîyayî', ur: 'گھسا ہوا / پرانا', ru: 'изношенный / стёртый', uk: 'зношений / стертий',
+            zh: '磨损的', vi: 'bị mòn', th: 'สึกหรอ / เสื่อมสภาพ', ne: 'खिएर पुरानो भएको', ps: 'سولېدلی / زوړ شوی'
+        },
+        flad: {
+            en: 'flat (a flat tire / a dead battery)', de: 'platt (Reifen) / leer (Batterie)', es: 'pinchado / desinflado / descargado', pt: 'furado / vazio / descarregado', tr: 'patlak / inik (lastik) / bitmiş (akü)',
+            ar: 'مفرغ من الهواء (إطار) / فارغ الشحن (بطارية)', fa: 'پنچر / خوابیده (باتری خالی)', ku: 'teqiyayî / vala', ur: 'پنچر (ٹائر) / ختم (بیٹری)', ru: 'спущенный (о колесе) / разряженный', uk: 'спущений (про колесо) / розряджений',
+            zh: '瘪了的（轮胎）/ 没电的（电瓶）', vi: 'bị xẹp (lốp) / hết điện (ắc quy)', th: 'แบน (ยางแบน) / ไฟหมด (แบตหมด)', ne: 'हावा खुस्किएको (पन्चर) / चार्ज सकिएको', ps: 'پنچر شوی (ټایر) / خالي شوی (بطرۍ)'
+        },
+        koereklar: {
+            en: 'roadworthy / ready to drive', de: 'fahrbereit', es: 'listo para circular / conducir', pt: 'pronto para rodar / dirigir', tr: 'sürüşe hazır / trafiğe çıkmaya hazır',
+            ar: 'جاهز للقيادة والسير', fa: 'آماده حرکت و رانندگی', ku: 'amade ji bo ajotinê', ur: 'چلنے کے لیے بالکل تیار', ru: 'готовый к поездке (на ходу)', uk: 'готовий до поїздки (на ходу)',
+            zh: '修好可随时上路的', vi: 'sẵn sàng lăn bánh', th: 'พร้อมใช้งาน / พร้อมขับขี่', ne: 'चलाउन तयार (गुड्न तयार)', ps: 'د چلولو لپاره چمتو'
+        },
+        grundigt: {
+            en: 'thoroughly / carefully in detail', de: 'gründlich / sorgfältig', es: 'a fondo / minuciosamente', pt: 'minuciosamente / a fundo', tr: 'titizlikle / detaylıca',
+            ar: 'بدقة وعناية شاملة', fa: 'به‌طور کامل و دقیق', ku: 'bi hûrgilî / bi باشî', ur: 'مکمل تفصیل اور احتیاط سے', ru: 'тщательно / основательно', uk: 'ретельно / ґрунтовно',
+            zh: '彻底地 / 仔细地', vi: 'một cách kỹ lưỡng', th: 'อย่างละเอียดถี่ถ้วน', ne: 'राम्रोसँग / विस्तृत रूपमा', ps: 'په بشپړ غور او دقت سره'
+        },
+        forsigtigt: {
+            en: 'carefully / cautiously', de: 'vorsichtig / behutsam', es: 'con cuidado / cuidadosamente', pt: 'com cuidado / cuidadosamente', tr: 'dikkatlice',
+            ar: 'بحذر وعناية', fa: 'با احتیاط', ku: 'bi baldarî', ur: 'احتیاط سے', ru: 'осторожно / аккуратно', uk: 'обережно / акуратно',
+            zh: '小心地 / 谨慎地', vi: 'một cách cẩn thận', th: 'อย่างระมัดระวัง', ne: 'सावधानीपूर्वक / होसियारीसाथ', ps: 'په احتیاط سره'
+        },
+        hurtigt: {
+            en: 'quickly / fast', de: 'schnell / zügig', es: 'rápidamente / rápido', pt: 'rapidamente / rápido', tr: 'hızlıca / çabuk',
+            ar: 'بسرعة', fa: 'به‌سرعت / سریع', ku: 'bi lez / zû', ur: 'تیزی سے / جلدی سے', ru: 'быстро', uk: 'швидко',
+            zh: '快速地', vi: 'một cách nhanh chóng', th: 'อย่างรวดเร็ว', ne: 'छिटो / चाँडो', ps: 'په چټکۍ سره / ژر'
+        },
+        heldigvis: {
+            en: 'fortunately / luckily', de: 'glücklicherweise / zum Glück', es: 'afortunadamente / por suerte', pt: 'felizmente / por sorte', tr: 'neyse ki / şans eseri',
+            ar: 'لحسن الحظ', fa: 'خوشبختانه', ku: 'bi xêrê / baş e ku', ur: 'خوش قسمتی سے', ru: 'к счастью', uk: 'на щастя',
+            zh: '幸运的是 / 幸好', vi: 'may mắn thay', th: 'โชคดีที่...', ne: 'भाग्यवश / धन्न', ps: 'له نېکه مرغه'
+        }
+    };
+
+    // Attach translations to each item in WORKSHOP_WORDS
+    WORKSHOP_WORDS.forEach(item => {
+        item.translations = WORKSHOP_TRANSLATIONS[item.id] || {};
+    });
+
+    // Målord fra de ANDRE flader i "Lær nye ord" (Substantiver, Verber, Adjektiver, Adverbier), som optræder i historierne
+    const OTHER_LNO_WORDS = {
+        bil: {
+            id: 'bil',
+            word: 'en bil',
+            wordClass: 'substantiv',
+            surface: 'De 100 substantiver – Byrummet & Gaden',
+            targetView: 'byrummet_vrimmel',
+            icon: '🚗',
+            forms: 'en bil • bilen • biler • bilerne',
+            definition: 'Et motorkøretøj med fire hjul, som bruges til transport på vejene.',
+            sentence: 'Jonas kører sin bil hen til det lokale autoværksted.',
+            translations: {
+                en: 'a car', de: 'ein Auto / Wagen', es: 'un coche / carro', pt: 'um carro', tr: 'bir araba',
+                ar: 'سيارة', fa: 'خودرو / ماشین', ku: 'erebe / ترومبêl', ur: 'گاڑی / کار', ru: 'автомобиль / машина', uk: 'автомобіль / машина',
+                zh: '汽车', vi: 'xe ô tô', th: 'รถยนต์', ne: 'गाडी / कार', ps: 'موټر'
+            }
+        },
+        morgen: {
+            id: 'morgen',
+            word: 'en morgen',
+            wordClass: 'substantiv',
+            surface: 'De 100 substantiver – Hjemmet & Hverdagen',
+            targetView: 'hjemmet_vrimmel',
+            icon: '🌅',
+            forms: 'en morgen • morgenen • morgener • morgenerne',
+            definition: 'Den første del af dagen, når man står op og skal på arbejde.',
+            sentence: 'Mandag morgen opdager Jonas, at dækket er fladt.',
+            translations: {
+                en: 'a morning', de: 'ein Morgen', es: 'una mañana', pt: 'uma manhã', tr: 'bir sabah',
+                ar: 'صباح', fa: 'صبح', ku: 'sibeh', ur: 'صبح', ru: 'утро', uk: 'ранок',
+                zh: '早晨 / 早上', vi: 'buổi sáng', th: 'ตอนเช้า', ne: 'बिहान', ps: 'سهار'
+            }
+        },
+        uge: {
+            id: 'uge',
+            word: 'en uge',
+            wordClass: 'substantiv',
+            surface: 'De 100 substantiver – Klasse & Kontor',
+            targetView: 'klasse_kontor_vrimmel',
+            icon: '📅',
+            forms: 'en uge • ugen • uger • ugerne',
+            definition: 'En tidsperiode på syv dage fra mandag til søndag.',
+            sentence: 'Marias bil skal synes i næste uge.',
+            translations: {
+                en: 'a week', de: 'eine Woche', es: 'una semana', pt: 'uma semana', tr: 'bir hafta',
+                ar: 'أسبوع', fa: 'هفته', ku: 'hefte', ur: 'ہفتہ (سات دن)', ru: 'неделя', uk: 'тиждень',
+                zh: '星期 / 周', vi: 'tuần lễ', th: 'สัปดาห์', ne: 'हप्ता', ps: 'اونۍ'
+            }
+        },
+        computer: {
+            id: 'computer',
+            word: 'en computer',
+            wordClass: 'substantiv',
+            surface: 'De 100 substantiver – Klasse & Kontor',
+            targetView: 'klasse_kontor_vrimmel',
+            icon: '💻',
+            forms: 'en computer • computeren • computere • computerne',
+            definition: 'Elektronisk maskine til at behandle data – bruges også til fejlsøgning på moderne biler.',
+            sentence: 'Mekanikeren fejlsøger på bilens computer.',
+            translations: {
+                en: 'a computer', de: 'ein Computer / Rechner', es: 'un ordenador / computadora', pt: 'um computador', tr: 'bir bilgisayar',
+                ar: 'حاسوب / كمبيوتر', fa: 'رایانه / کامپیوتر', ku: 'kompîtur', ur: 'کمپیوٹر', ru: 'компьютер', uk: 'комп’ютер',
+                zh: '电脑 / 计算机', vi: 'máy tính', th: 'คอมพิวเตอร์', ne: 'कम्प्युटर', ps: 'کمپیوټر'
+            }
+        },
+        hylde: {
+            id: 'hylde',
+            word: 'en hylde',
+            wordClass: 'substantiv',
+            surface: 'De 100 substantiver – Hjemmet & Kontoret',
+            targetView: 'hjemmet_vrimmel',
+            icon: '🗄️',
+            forms: 'en hylde • hylden • hylder • hylderne',
+            definition: 'Vandret plade i et skab eller på en væg, hvor man opbevarer ting eller reservedele.',
+            sentence: 'Værkstedet har den rigtige reservedel på hylden.',
+            translations: {
+                en: 'a shelf', de: 'ein Regal / Regalbrett', es: 'un estante / repisa', pt: 'uma prateleira', tr: 'bir raf',
+                ar: 'رفّ', fa: 'قفسه / طاقچه', ku: 'ref', ur: 'شیلف / طاق', ru: 'полка', uk: 'полиця',
+                zh: '架子 / 搁板', vi: 'cái kệ / giá đỡ', th: 'ชั้นวางของ', ne: 'दराजको तख्ता / र्याक', ps: 'المارۍ / تاخچه'
+            }
+        },
+        motorvej: {
+            id: 'motorvej',
+            word: 'en motorvej',
+            wordClass: 'substantiv',
+            surface: 'De 100 substantiver – Byrummet & Gaden',
+            targetView: 'byrummet_vrimmel',
+            icon: '🛣️',
+            forms: 'en motorvej • motorvejen • motorveje • motorvejene',
+            definition: 'Bred vej med flere spor til hurtig biltrafik mellem byer.',
+            sentence: 'Midt på motorvejen begynder en gul advarselslampe at lyse.',
+            translations: {
+                en: 'a highway / motorway', de: 'eine Autobahn', es: 'una autopista', pt: 'uma autoestrada / rodovia', tr: 'bir otoyol / otoban',
+                ar: 'طريق سريع (أوتوستراد)', fa: 'بزرگراه / اتوبان', ku: 'otoban / rêya mezin', ur: 'موٹروے / شاہراہ', ru: 'автомагистраль / шоссе', uk: 'автомагістраль / шосе',
+                zh: '高速公路', vi: 'đường cao tốc', th: 'ทางด่วน / มอเตอร์เวย์', ne: 'राजमार्ग / द्रुतमार्ग', ps: 'لویه لاره (موټروې)'
+            }
+        },
+        koere: {
+            id: 'koere',
+            word: 'at køre',
+            wordClass: 'verbum',
+            surface: 'De 100 verber – Byrummet & Gaden',
+            targetView: 'verber_byrum',
+            icon: '🚙',
+            forms: 'at køre • kører • kørte • har kørt',
+            definition: 'At bevæge sig fremad i et køretøj eller styre en bil.',
+            sentence: 'Han kører forsigtigt hen til det lokale autoværksted.',
+            translations: {
+                en: 'to drive', de: 'fahren', es: 'conducir / manejar', pt: 'dirigir / conduzir', tr: 'sürmek (araba)',
+                ar: 'يقود (السيارة)', fa: 'رانندگی کردن', ku: 'ajotin', ur: 'گاڑی چلانا', ru: 'ехать / водить машину', uk: 'їхати / водити авто',
+                zh: '开车 / 驾驶', vi: 'lái xe', th: 'ขับรถ', ne: 'गाडी चलाउनु', ps: 'موټر چلول'
+            }
+        },
+        aabne: {
+            id: 'aabne',
+            word: 'at åbne',
+            wordClass: 'verbum',
+            surface: 'De 100 verber – Hjemmet & Hverdagen',
+            targetView: 'word_learning',
+            icon: '🔓',
+            forms: 'at åbne • åbner • åbnede • har åbnet',
+            definition: 'At lukke noget op (f.eks. en dør, et vindue eller en motorhjelm).',
+            sentence: 'På autoværkstedet åbner mekanikeren motorhjelmen.',
+            translations: {
+                en: 'to open', de: 'öffnen / aufmachen', es: 'abrir', pt: 'abrir', tr: 'açmak',
+                ar: 'يفتح', fa: 'باز کردن', ku: 'vekirin', ur: 'کھولنا', ru: 'открывать', uk: 'відчиняти / відкривати',
+                zh: '打开', vi: 'mở ra', th: 'เปิด', ne: 'खोल्नु', ps: 'خلاصول'
+            }
+        },
+        tage: {
+            id: 'tage',
+            word: 'at tage (af)',
+            wordClass: 'verbum',
+            surface: 'De 100 verber – Hverdagens handlinger',
+            targetView: 'word_learning',
+            icon: '✋',
+            forms: 'at tage • tager • tog • har taget',
+            definition: 'At gribe fat i noget eller fjerne noget (f.eks. tage et punkteret dæk af).',
+            sentence: 'Lærlingen tager det punkterede dæk af.',
+            translations: {
+                en: 'to take (off / remove)', de: 'nehmen / abnehmen', es: 'tomar / quitar', pt: 'pegar / tirar', tr: 'almak / çıkarmak',
+                ar: 'يأخذ / ينزع', fa: 'گرفتن / برداشتن', ku: 'girtin / derxistin', ur: 'لینا / اتارنا', ru: 'брать / снимать', uk: 'брати / знімати',
+                zh: '拿 / 拆下', vi: 'lấy / tháo ra', th: 'หยิบ / ถอดออก', ne: 'लिनु / निकाल्नु', ps: 'اخیستل / لرې کول'
+            }
+        },
+        hente: {
+            id: 'hente',
+            word: 'at hente',
+            wordClass: 'verbum',
+            surface: 'De 100 verber – Byrummet & Hverdagen',
+            targetView: 'verber_byrum',
+            icon: '🚶‍♂️',
+            forms: 'at hente • henter • hentede • har hentet',
+            definition: 'At gå eller køre hen til et sted for at tage noget eller nogen med tilbage.',
+            sentence: 'Peter henter sin køreklare bil på værkstedet.',
+            translations: {
+                en: 'to pick up / to fetch', de: 'abholen / holen', es: 'recoger / buscar', pt: 'buscar / pegar', tr: 'gidip almak / teslim almak',
+                ar: 'يستلم / يحضر', fa: 'تحویل گرفتن / آوردن', ku: 'anîn / wergirtin', ur: 'لینے جانا / وصول کرنا', ru: 'забирать', uk: 'забирати',
+                zh: '取回 / 接', vi: 'đón / lấy về', th: 'ไปรับ (รถ/ของ)', ne: 'लिन जानु', ps: 'راوړل / ترلاسه کول'
+            }
+        },
+        starte: {
+            id: 'starte',
+            word: 'at starte',
+            wordClass: 'verbum',
+            surface: 'De 100 verber – Hverdagens handlinger',
+            targetView: 'word_learning',
+            icon: '🔑',
+            forms: 'at starte • starter • startede • har startet',
+            definition: 'At gå i gang eller få en motor til at køre.',
+            sentence: 'En kold vintermorgen vil Peters bil ikke starte.',
+            translations: {
+                en: 'to start', de: 'starten / anspringen', es: 'arrancar / empezar', pt: 'dar partida / começar', tr: 'çalıştırmak / başlamak',
+                ar: 'يبدأ / يشتغل (المحرك)', fa: 'روشن شدن / شروع کردن', ku: 'dest pê kirin / xebitîn', ur: 'اسٹارٹ ہونا / شروع کرنا', ru: 'заводиться / начинать', uk: 'заводитися / починати',
+                zh: '启动 / 开始', vi: 'khởi động / bắt đầu', th: 'สตาร์ท (รถ) / เริ่มต้น', ne: 'स्टार्ट हुनु / सुरु गर्नु', ps: 'چالانېدل / پیل کول'
+            }
+        },
+        gul: {
+            id: 'gul',
+            word: 'gul',
+            wordClass: 'adjektiv',
+            surface: 'De 100 adjektiver – Farver & Udseende',
+            targetView: 'adjektiver_intro',
+            icon: '🟡',
+            forms: 'gul (en) • gult (et) • gule (flertal/bestemt)',
+            definition: 'Farve som solen eller en advarselslampe i bilens instrumentbræt.',
+            sentence: 'En gul advarselslampe begynder at lyse.',
+            translations: {
+                en: 'yellow', de: 'gelb', es: 'amarillo', pt: 'amarelo', tr: 'sarı',
+                ar: 'أصفر', fa: 'زرد', ku: 'zer', ur: 'پیلا / زرد', ru: 'жёлтый', uk: 'жовтий',
+                zh: '黄色的', vi: 'màu vàng', th: 'สีเหลือง', ne: 'पहेंलो', ps: 'ژېړ'
+            }
+        },
+        lille: {
+            id: 'lille',
+            word: 'lille',
+            wordClass: 'adjektiv',
+            surface: 'De 100 adjektiver – Størrelse & Form',
+            targetView: 'adjektiver_intro',
+            icon: '🤏',
+            forms: 'lille (en/et) • små (flertal)',
+            definition: 'Ikke stor; af begrænset størrelse eller omfang.',
+            sentence: 'Der er et lille hul i udstødningen.',
+            translations: {
+                en: 'small / little', de: 'klein', es: 'pequeño', pt: 'pequeno', tr: 'küçük',
+                ar: 'صغير', fa: 'کوچک', ku: 'biçûk', ur: 'چھوٹا', ru: 'маленький / небольшой', uk: 'маленький / невеликий',
+                zh: '小的', vi: 'nhỏ / bé', th: 'เล็ก', ne: 'सानो', ps: 'کوچنی / وړوکی'
+            }
+        },
+        kold: {
+            id: 'kold',
+            word: 'kold',
+            wordClass: 'adjektiv',
+            surface: 'De 100 adjektiver – Vejr & Temperatur',
+            targetView: 'adjektiver_intro',
+            icon: '🥶',
+            forms: 'kold (en) • koldt (et) • kolde (flertal/bestemt)',
+            definition: 'Med lav temperatur; det modsatte af varm.',
+            sentence: 'En kold vintermorgen vil Peters bil ikke starte.',
+            translations: {
+                en: 'cold', de: 'kalt', es: 'frío', pt: 'frio', tr: 'soğuk',
+                ar: 'بارد', fa: 'سرد', ku: 'sar', ur: 'ٹھنڈا / سرد', ru: 'холодный', uk: 'холодний',
+                zh: '寒冷的', vi: 'lạnh', th: 'หนาว / เย็น', ne: 'चिसो', ps: 'سوړ / یخ'
+            }
+        },
+        ny: {
+            id: 'ny',
+            word: 'ny / frisk',
+            wordClass: 'adjektiv',
+            surface: 'De 100 adjektiver – Tilstand & Kvalitet',
+            targetView: 'adjektiver_intro',
+            icon: '✨',
+            forms: 'ny (en) • nyt (et) • nye (flertal/bestemt)',
+            definition: 'Ikke brugt før; lige taget i brug eller helt frisk.',
+            sentence: 'Mekanikeren sætter et nyt batteri i og påfylder frisk motorolie.',
+            translations: {
+                en: 'new / fresh', de: 'neu / frisch', es: 'nuevo / fresco', pt: 'novo / fresco', tr: 'yeni / taze',
+                ar: 'جديد / طازج (نقي)', fa: 'نو / تازه', ku: 'nû / taze', ur: 'نیا / تازہ', ru: 'новый / свежий', uk: 'новий / свіжий',
+                zh: '新的 / 新鲜的', vi: 'mới', th: 'ใหม่', ne: 'नयाँ / ताजा', ps: 'نوی / تازه'
+            }
+        }
+    };
+
+    // Quick-Peek & Oversættelses-modal til målord fra "Bilværksted" og "Lær nye ord"
+    function openWorkshopWordModal(item, isFromOtherLno = false) {
+        const existing = document.querySelector('.bv-word-modal-overlay');
+        if (existing) existing.remove();
+
+        const meta = CLASS_META[item.wordClass] || CLASS_META.substantiv;
+        let currentLang = getPreferredTransLang();
+        const transMap = item.translations || {};
+
+        const overlay = document.createElement('div');
+        overlay.className = 'bv-word-modal-overlay';
+        overlay.style.cssText = 'position:fixed; inset:0; background:rgba(2,6,23,0.82); backdrop-filter:blur(6px); z-index:9999; display:flex; align-items:center; justify-content:center; padding:1rem; animation:bvFadeIn 0.2s ease;';
+
+        const modal = document.createElement('div');
+        modal.style.cssText = 'background:#0f172a; border:1.5px solid rgba(56,189,248,0.4); border-radius:22px; max-width:540px; width:100%; overflow:hidden; box-shadow:0 24px 50px rgba(0,0,0,0.65); color:#f8fafc;';
+
+        const sourceBadgeText = isFromOtherLno
+            ? `📚 Målord fra "${item.surface}"`
+            : `🔧 Målord #${item.num} fra Bilværkstedet • ${meta.label}`;
+
+        const cropHtml = !isFromOtherLno && item.x !== undefined
+            ? `<div style="height:155px; width:100%; background-image:url('assets/bilvaerksted_vrimmel.jpg'); background-size:280%; background-position:${item.x}% ${item.y}%; position:relative; border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(15,23,42,0.92), transparent 65%);"></div>
+                <span style="position:absolute; bottom:10px; left:14px; background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.color}; padding:0.25rem 0.7rem; border-radius:16px; font-weight:800; font-size:0.78rem;">${meta.label}</span>
+               </div>`
+            : `<div style="padding:0.9rem 1.3rem 0; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                <span style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.color}; padding:0.25rem 0.7rem; border-radius:16px; font-weight:800; font-size:0.78rem;">${meta.label}</span>
+               </div>`;
+
+        const langOptionsHtml = SUPPORTED_TRANS_LANGS.map(l =>
+            `<option value="${l.code}" ${l.code === currentLang ? 'selected' : ''}>${l.label}</option>`
+        ).join('');
+
+        modal.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1.2rem; background:#1e293b; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <span style="font-size:0.8rem; font-weight:800; color:#38bdf8;">${sourceBadgeText}</span>
+                <button id="bv-modal-close" style="background:rgba(255,255,255,0.1); color:white; border:none; width:30px; height:30px; border-radius:50%; font-weight:800; cursor:pointer;">✕</button>
+            </div>
+            ${cropHtml}
+            <div style="padding:1.25rem 1.35rem 1.4rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.3rem;">
+                    <div style="font-size:1.55rem; font-weight:800; color:white;">${item.icon || '🔹'} ${item.word}</div>
+                    <button id="bv-modal-speak" style="background:#2563eb; color:white; border:none; padding:0.45rem 0.95rem; border-radius:20px; font-weight:700; font-size:0.85rem; cursor:pointer;">🔊 Lyt til udtale</button>
+                </div>
+                <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:0.85rem;">${item.forms || ''}</div>
+
+                <!-- Oversættelses-boks med sprogvælger -->
+                <div style="background:rgba(56,189,248,0.12); border:1.5px solid #0284c7; border-radius:14px; padding:0.9rem 1rem; margin-bottom:0.9rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.45rem;">
+                        <span style="font-size:0.78rem; font-weight:800; color:#38bdf8; text-transform:uppercase;">🌍 Oversættelse (Hjælp til betydning):</span>
+                        <select id="bv-modal-lang-select" style="background:#0f172a; color:#f8fafc; border:1px solid #38bdf8; border-radius:8px; padding:0.25rem 0.55rem; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                            ${langOptionsHtml}
+                        </select>
+                    </div>
+                    <div id="bv-modal-trans-text" style="font-size:1.25rem; font-weight:800; color:#f8fafc;">
+                        ${transMap[currentLang] || transMap.en || item.word}
+                    </div>
+                </div>
+
+                <div style="background:rgba(15,23,42,0.85); border-left:4px solid #38bdf8; padding:0.75rem 0.95rem; border-radius:8px; margin-bottom:0.65rem; font-size:0.94rem; color:#e2e8f0; line-height:1.45;">
+                    <strong>📖 Dansk forklaring:</strong> ${item.definition}
+                </div>
+
+                ${item.fixedTerms ? `
+                <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); padding:0.6rem 0.9rem; border-radius:8px; margin-bottom:0.65rem; font-size:0.85rem; color:#fde68a;">
+                    <strong>🔩 Faste udtryk:</strong> ${item.fixedTerms}
+                </div>` : ''}
+
+                <div style="font-style:italic; color:#cbd5e1; font-size:0.92rem; margin-bottom:1.1rem;">
+                    "💬 ${item.sentence}"
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+                    ${!isFromOtherLno ? `
+                        <button id="bv-modal-goto-vrimmel" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; padding:0.6rem 1rem; border-radius:10px; font-weight:700; font-size:0.85rem; cursor:pointer;">
+                            🔍 Se på vrimlebilledet (Forsiden)
+                        </button>
+                    ` : `
+                        <button id="bv-modal-goto-lno" style="background:#1e293b; color:#c084fc; border:1px solid #a855f7; padding:0.6rem 1rem; border-radius:10px; font-weight:700; font-size:0.85rem; cursor:pointer;">
+                            ↗️ Åbn "${item.surface}"
+                        </button>
+                    `}
+                    <button id="bv-modal-continue" style="background:#22c55e; color:#0f172a; border:none; padding:0.65rem 1.25rem; border-radius:10px; font-weight:800; font-size:0.9rem; cursor:pointer;">
+                        Fortsæt læsningen ➔
+                    </button>
+                </div>
+            </div>
+        `;
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const close = () => overlay.remove();
+        modal.querySelector('#bv-modal-close').onclick = close;
+        modal.querySelector('#bv-modal-continue').onclick = close;
+        overlay.onclick = (e) => { if (e.target === overlay) close(); };
+
+        modal.querySelector('#bv-modal-speak').onclick = () => speakDanish(item.word);
+
+        const langSel = modal.querySelector('#bv-modal-lang-select');
+        const transOut = modal.querySelector('#bv-modal-trans-text');
+        langSel.onchange = () => {
+            currentLang = langSel.value;
+            setPreferredTransLang(currentLang);
+            transOut.textContent = transMap[currentLang] || transMap.en || item.word;
+        };
+
+        const gotoVrimmelBtn = modal.querySelector('#bv-modal-goto-vrimmel');
+        if (gotoVrimmelBtn) {
+            gotoVrimmelBtn.onclick = () => {
+                close();
+                switchTab('tab_vrimmel');
+                selectWordItem(item);
+            };
+        }
+
+        const gotoLnoBtn = modal.querySelector('#bv-modal-goto-lno');
+        if (gotoLnoBtn && item.targetView) {
+            gotoLnoBtn.onclick = () => {
+                close();
+                navigateFn(item.targetView);
+            };
+        }
+
+        speakDanish(item.word);
+    }
+
     // Styles
     const style = document.createElement('style');
     style.textContent = `
@@ -1001,12 +1571,6 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         <div class="bv-hero-badge">💼 Mit hverdagsliv • Scenarie 1: Arbejde</div>
         <h1>🔧 På bilværkstedet</h1>
         <p>Udforsk hverdagen på et dansk autoværksted med 32 målord og faste fagtermer fordelt på alle fire ordklasser.</p>
-        <div class="bv-ratio-strip">
-            <span class="bv-ratio-pill" style="color:#4ade80; border-color:#22c55e55;">🟢 16 Substantiver (50%)</span>
-            <span class="bv-ratio-pill" style="color:#f87171; border-color:#ef444455;">🔴 8 Verber (25%)</span>
-            <span class="bv-ratio-pill" style="color:#fb923c; border-color:#f9731655;">🟠 4 Adjektiver (12,5%)</span>
-            <span class="bv-ratio-pill" style="color:#38bdf8; border-color:#38bdf855;">🔵 4 Adverbier (12,5%)</span>
-        </div>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -1199,12 +1763,16 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                     <button class="listen-word-btn" id="bv-listen-sentence" style="background:#0f172a; color:#38bdf8; border:1.5px solid #0284c7; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
                         🔊 Lyt til sætning
                     </button>
+                    <button class="listen-word-btn" id="bv-show-trans" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1.5px solid #38bdf8; padding:0.7rem 1.1rem; border-radius:12px; font-weight:700; cursor:pointer;">
+                        🌍 Vis oversættelse
+                    </button>
                 </div>
             </div>
         `;
 
         detailBox.querySelector('#bv-listen-word').onclick = () => speakDanish(item.word);
         detailBox.querySelector('#bv-listen-sentence').onclick = () => speakDanish(item.sentence);
+        detailBox.querySelector('#bv-show-trans').onclick = () => openWorkshopWordModal(item, false);
     }
 
     WORKSHOP_WORDS.forEach(item => {
@@ -1257,7 +1825,7 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     sortHeader.innerHTML = `
         <div>
             <h3 style="margin:0; font-size:1.25rem;">📦 Sorter værkstedets 32 målord i de 4 ordklasser</h3>
-            <p style="margin:0.25rem 0 0; color:#94a3b8; font-size:0.92rem;">Klik på et ord i banken og læg det i den rigtige ordklasse-kasse (50% substantiver, 25% verber, 12,5% adjektiver, 12,5% adverbier).</p>
+            <p style="margin:0.25rem 0 0; color:#94a3b8; font-size:0.92rem;">Klik på et ord i banken og læg det i den rigtige ordklasse-kasse.</p>
         </div>
         <div style="display:flex; gap:0.6rem; align-items:center;">
             <span id="bv-sort-progress" style="background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid #0284c7; padding:0.4rem 0.9rem; border-radius:20px; font-weight:800; font-size:0.88rem;">0 / ${WORKSHOP_WORDS.length} placeret</span>
@@ -1821,6 +2389,111 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         }
     ];
 
+    // Map bøjningsformer i historierne til:
+    // 1) "bv:<id>" -> De 32 målord på forsiden af Bilværksted
+    // 2) "lno:<id>" -> Målord fra de andre flader i "Lær nye ord"
+    const STORY_WORD_LINKS = {
+        // Målord fra forsiden af Bilværksted (32 målord + faste sammensætninger i historierne)
+        'mekaniker': 'bv:mekaniker',
+        'mekanikeren': 'bv:mekaniker',
+        'lærling': 'bv:laerling',
+        'lærlingen': 'bv:laerling',
+        'autolift': 'bv:autolift',
+        'autoliften': 'bv:autolift',
+        'motor': 'bv:motor',
+        'motoren': 'bv:motor',
+        'motorhjelmen': 'bv:motor',
+        'dæk': 'bv:daek',
+        'dækket': 'bv:daek',
+        'bagdæk': 'bv:daek',
+        'vinterdæk': 'bv:daek',
+        'punkterede': 'bv:daek',
+        'bremser': 'bv:bremse',
+        'bremseklodserne': 'bv:bremse',
+        'motorolie': 'bv:motorolie',
+        'værktøjskassen': 'bv:vaerktoejskasse',
+        'skruenøgle': 'bv:skruenoegle',
+        'skruenøglen': 'bv:skruenoegle',
+        'donkraft': 'bv:donkraft',
+        'donkraften': 'bv:donkraft',
+        'batteri': 'bv:batteri',
+        'batteriet': 'bv:batteri',
+        'udstødningen': 'bv:udstoedning',
+        'forruden': 'bv:forrude',
+        'stenslag': 'bv:forrude',
+        'stenslaget': 'bv:forrude',
+        'reservedel': 'bv:reservedel',
+        'pristilbud': 'bv:pristilbud',
+        'tilbuddet': 'bv:pristilbud',
+        'regningen': 'bv:regning',
+        'autoværksted': 'bv:mekaniker',
+        'autoværkstedet': 'bv:mekaniker',
+        'værkstedet': 'bv:mekaniker',
+        'reparerer': 'bv:reparere',
+        'skifter': 'bv:skifte',
+        'tjekker': 'bv:tjekke',
+        'gennemgår': 'bv:tjekke',
+        'løfter': 'bv:loefte',
+        'spænder': 'bv:spaende',
+        'hjulboltene': 'bv:spaende',
+        'påfylder': 'bv:paafylde',
+        'fejlsøger': 'bv:fejlsoege',
+        'testeren': 'bv:fejlsoege',
+        'synes': 'bv:syne',
+        'bilsyn': 'bv:syne',
+        'syn': 'bv:syne',
+        'defekt': 'bv:defekt',
+        'slidte': 'bv:slidt',
+        'fladt': 'bv:flad',
+        'køreklar': 'bv:koereklar',
+        'køreklare': 'bv:koereklar',
+        'grundigt': 'bv:grundigt',
+        'forsigtigt': 'bv:forsigtigt',
+        'hurtigt': 'bv:hurtigt',
+        'heldigvis': 'bv:heldigvis',
+
+        // Målord fra de andre flader i "Lær nye ord" (Substantiver, Verber, Adjektiver)
+        'morgen': 'lno:morgen',
+        'vintermorgen': 'lno:morgen',
+        'bil': 'lno:bil',
+        'bilen': 'lno:bil',
+        'bilens': 'lno:bil',
+        'motorvejen': 'lno:motorvej',
+        'computer': 'lno:computer',
+        'hylden': 'lno:hylde',
+        'uge': 'lno:uge',
+        'kører': 'lno:koere',
+        'tager': 'lno:tage',
+        'åbner': 'lno:aabne',
+        'starte': 'lno:starte',
+        'henter': 'lno:hente',
+        'gul': 'lno:gul',
+        'lille': 'lno:lille',
+        'kold': 'lno:kold',
+        'nyt': 'lno:ny',
+        'frisk': 'lno:ny'
+    };
+
+    const sortedStoryAliases = Object.keys(STORY_WORD_LINKS).sort((a, b) => b.length - a.length);
+    const storyWordRegex = new RegExp(`(?<![\\wæøåÆØÅ])(${sortedStoryAliases.join('|')})(?![\\wæøåÆØÅ])`, 'gi');
+
+    function formatStoryTextWithWordLinks(rawText) {
+        return rawText.replace(storyWordRegex, (matchedWord) => {
+            const target = STORY_WORD_LINKS[matchedWord.toLowerCase()];
+            if (!target) return matchedWord;
+            const [prefix, id] = target.split(':');
+            if (prefix === 'bv') {
+                const wObj = WORKSHOP_WORDS.find(w => w.id === id);
+                const titleAttr = wObj ? `Klik for forklaring & oversættelse af '${wObj.word}' (Målord på Bilværkstedet)` : 'Klik for oversættelse';
+                return `<span class="bv-story-word-link bv-link-workshop" data-link-type="bv" data-word-id="${id}" title="${titleAttr}" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border-bottom:2px dashed #38bdf8; padding:0.05rem 0.35rem; border-radius:6px; font-weight:700; cursor:pointer; transition:all 0.15s; white-space:nowrap;">${matchedWord} <small style="font-size:0.72em;">🔧</small></span>`;
+            } else {
+                const lnoObj = OTHER_LNO_WORDS[id];
+                const titleAttr = lnoObj ? `Klik for forklaring & oversættelse af '${lnoObj.word}' (${lnoObj.surface})` : 'Klik for oversættelse';
+                return `<span class="bv-story-word-link bv-link-lno" data-link-type="lno" data-word-id="${id}" title="${titleAttr}" style="background:rgba(168,85,247,0.16); color:#d8b4fe; border-bottom:2px dashed #a855f7; padding:0.05rem 0.35rem; border-radius:6px; font-weight:700; cursor:pointer; transition:all 0.15s; white-space:nowrap;">${matchedWord} <small style="font-size:0.72em;">📚</small></span>`;
+            }
+        });
+    }
+
     let activeStoryIdx = 0;
     const storyCard = document.createElement('div');
     storyCard.style.cssText = 'max-width:860px; margin:0 auto; background:rgba(30,41,59,0.65); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:1.8rem;';
@@ -1830,7 +2503,7 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         const st = STORIES[activeStoryIdx];
 
         const navRow = document.createElement('div');
-        navRow.style.cssText = 'display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1.5rem;';
+        navRow.style.cssText = 'display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1.2rem;';
         STORIES.forEach((s, idx) => {
             const b = document.createElement('button');
             b.type = 'button';
@@ -1844,16 +2517,55 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         });
         storyCard.appendChild(navRow);
 
+        // Info-boks om klikbare ordlinks til både Bilværksted og de andre flader i "Lær nye ord"
+        const linkLegend = document.createElement('div');
+        linkLegend.style.cssText = 'background:rgba(15,23,42,0.85); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:0.75rem 1rem; margin-bottom:1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; font-size:0.86rem;';
+        const currTransLang = getPreferredTransLang();
+        linkLegend.innerHTML = `
+            <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center; color:#cbd5e1;">
+                <span>💡 <strong>Klik på de markerede ord i historien for oversættelse & forklaring:</strong></span>
+                <span style="background:rgba(56,189,248,0.16); color:#7dd3fc; border-bottom:2px dashed #38bdf8; padding:0.1rem 0.45rem; border-radius:6px; font-weight:700;">Målord fra Bilværksted 🔧</span>
+                <span style="background:rgba(168,85,247,0.16); color:#d8b4fe; border-bottom:2px dashed #a855f7; padding:0.1rem 0.45rem; border-radius:6px; font-weight:700;">Øvrige ord fra "Lær nye ord" 📚</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+                <span style="color:#94a3b8; font-weight:700;">🌍 Sprog:</span>
+                <select id="bv-story-trans-lang" style="background:#1e293b; color:white; border:1px solid #38bdf8; border-radius:8px; padding:0.25rem 0.5rem; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                    ${SUPPORTED_TRANS_LANGS.map(l => `<option value="${l.code}" ${l.code === currTransLang ? 'selected' : ''}>${l.label}</option>`).join('')}
+                </select>
+            </div>
+        `;
+        linkLegend.querySelector('#bv-story-trans-lang').onchange = (e) => {
+            setPreferredTransLang(e.target.value);
+        };
+        storyCard.appendChild(linkLegend);
+
         const textBox = document.createElement('div');
         textBox.style.cssText = 'background:#0f172a; border-left:4px solid #38bdf8; padding:1.3rem; border-radius:14px; margin-bottom:1.5rem;';
         textBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem;">
                 <h3 style="margin:0; color:#38bdf8; font-size:1.25rem;">📖 ${st.title}</h3>
                 <button id="bv-listen-story" style="background:#2563eb; color:white; border:none; padding:0.45rem 1rem; border-radius:20px; font-weight:700; cursor:pointer;">🔊 Lyt til historien</button>
             </div>
-            <p style="margin:0; font-size:1.1rem; line-height:1.7; color:#f1f5f9;">${st.storyText}</p>
+            <p id="bv-story-paragraph" style="margin:0; font-size:1.12rem; line-height:1.95; color:#f1f5f9;">${formatStoryTextWithWordLinks(st.storyText)}</p>
         `;
         textBox.querySelector('#bv-listen-story').onclick = () => speakDanish(st.storyText);
+
+        // Attach click listeners to all word links in the story
+        textBox.querySelectorAll('.bv-story-word-link').forEach(linkEl => {
+            linkEl.onclick = (e) => {
+                e.stopPropagation();
+                const linkType = linkEl.dataset.linkType;
+                const wordId = linkEl.dataset.wordId;
+                if (linkType === 'bv') {
+                    const item = WORKSHOP_WORDS.find(w => w.id === wordId);
+                    if (item) openWorkshopWordModal(item, false);
+                } else if (linkType === 'lno') {
+                    const lnoItem = OTHER_LNO_WORDS[wordId];
+                    if (lnoItem) openWorkshopWordModal(lnoItem, true);
+                }
+            };
+        });
+
         storyCard.appendChild(textBox);
 
         st.questions.forEach(qItem => {
@@ -2167,6 +2879,88 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                 { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Selvfølgelig, vi gennemgår hele bilen grundigt og ringer til dig med et pristilbud, før vi skifter nogen reservedele.' },
                 { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Super, her er bilnøglen og mit telefonnummer. Hvornår tror du, at bilen er køreklar?' },
                 { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Hvis vi har bremseklodserne på lager, er den heldigvis køreklar allerede inden klokken 15 i eftermiddag.' }
+            ],
+            difficultWords: [
+                {
+                    id: 'd1_skrabende',
+                    word: 'en skrabende lyd',
+                    da: 'En ru, skurrende lyd, når metal gnider mod metal.',
+                    trans: {
+                        en: 'a scraping / grinding sound', de: 'ein kratzendes / schleifendes Geräusch', es: 'un ruido chirriante / de roce', pt: 'um barulho de raspagem', tr: 'sürtünme / kazıma sesi',
+                        ar: 'صوت احتكاك / كشط معدني', fa: 'صدای سایش / خراشیدگی', ku: 'dengê xirxirê / lêketinê', ur: 'رگڑنے کی آواز', ru: 'скрежещущий звук', uk: 'скреготливий звук',
+                        zh: '刺耳的摩擦声 / 刮擦声', vi: 'tiếng cọ xát / tiếng ken két', th: 'เสียงเสียดสี / เสียงครูด', ne: 'घोटिएको / करकर आवाज', ps: 'د سولېدو / خرخر غږ'
+                    }
+                },
+                {
+                    id: 'd1_traeder',
+                    word: 'træder på bremsen',
+                    da: 'Trykker foden ned på bremsepedalen for at bremse bilen.',
+                    trans: {
+                        en: 'steps on the brake pedal', de: 'auf die Bremse tritt', es: 'pisa el freno', pt: 'pisa no freio', tr: 'frene basıyor',
+                        ar: 'يضغط على دواسة الفرامل', fa: 'پدال ترمز را فشار می‌دهد', ku: 'pê li frenê dike', ur: 'بریک پر پاؤں رکھتا ہے', ru: 'нажимает на тормоз', uk: 'натискає на гальма',
+                        zh: '踩刹车', vi: 'đạp phanh', th: 'เหยียบเบรก', ne: 'ब्रेक थिच्छ (पाउले)', ps: 'بریک وهي (پښه پرې ږدي)'
+                    }
+                },
+                {
+                    id: 'd1_bremseklodser',
+                    word: 'slidte bremseklodser',
+                    da: 'Bremsebelægninger, der er blevet tynde efter lang tids brug og skal skiftes.',
+                    trans: {
+                        en: 'worn-out brake pads', de: 'abgenutzte Bremsbeläge', es: 'pastillas de freno desgastadas', pt: 'pastilhas de freio gastas', tr: 'aşınmış fren balataları',
+                        ar: 'تيل / فحمات فرامل متآكلة', fa: 'لنت‌های ترمز فرسوده', ku: 'balatayên frenê yên mehîyayî', ur: 'گھسے ہوئے بریک پیڈز', ru: 'изношенные тормозные колодки', uk: 'зношені гальмівні колодки',
+                        zh: '磨损的刹车片', vi: 'má phanh bị mòn', th: 'ผ้าเบรกที่สึกหรอ', ne: 'खिएको ब्रेक प्याड', ps: 'سولېدلي بریک پیډونه'
+                    }
+                },
+                {
+                    id: 'd1_autolift',
+                    word: 'en autolift',
+                    da: 'Hydraulisk lift, der løfter bilen op, så mekanikeren kan arbejde under den.',
+                    trans: {
+                        en: 'a car lift / vehicle hoist', de: 'eine Hebebühne', es: 'un elevador de coches', pt: 'um elevador automotivo', tr: 'araç kaldırma lifti',
+                        ar: 'رافعة سيارات هيدروليكية', fa: 'جک بالابر خودرو', ku: 'lîfta erebeyan', ur: 'گاڑی اٹھانے والی لفٹ', ru: 'автомобильный подъёмник', uk: 'автомобільний підйомник',
+                        zh: '汽车举升机', vi: 'cầu nâng ô tô', th: 'ลิฟต์ยกรถ', ne: 'गाडी उठाउने लिफ्ट', ps: 'د موټر پورته کولو لفټ'
+                    }
+                },
+                {
+                    id: 'd1_daektryk',
+                    word: 'dæktrykket',
+                    da: 'Mængden af lufttryk inde i bilens dæk.',
+                    trans: {
+                        en: 'the tire pressure', de: 'der Reifendruck', es: 'la presión de los neumáticos', pt: 'a pressão dos pneus', tr: 'lastik basıncı',
+                        ar: 'ضغط الهواء في الإطارات', fa: 'فشار باد لاستیک‌ها', ku: 'pestana hewayê ya tekeran', ur: 'ٹائروں میں ہوا کا دباؤ', ru: 'давление в шинах', uk: 'тиск у шинах',
+                        zh: '胎压（轮胎气压）', vi: 'áp suất lốp xe', th: 'ลมยาง / ความดันลมยาง', ne: 'टायरको हावाको चाप', ps: 'د ټایرونو د هوا فشار'
+                    }
+                },
+                {
+                    id: 'd1_pristilbud',
+                    word: 'et pristilbud',
+                    da: 'Et overslag over, hvad reparationen vil koste, før arbejdet starter.',
+                    trans: {
+                        en: 'a price quote / cost estimate', de: 'ein Preisangebot / Kostenvoranschlag', es: 'un presupuesto', pt: 'um orçamento', tr: 'fiyat teklifi',
+                        ar: 'عرض سعر / تقدير التكلفة', fa: 'پیشنهاد قیمت / برآورد هزینه', ku: 'pêşniyara bihayê', ur: 'قیمت کا تخمینہ', ru: 'ценовое предложение / смета', uk: 'цінова пропозиція / кошторис',
+                        zh: '报价 / 维修估价', vi: 'báo giá sửa chữa', th: 'ใบเสนอราคา / ประเมินราคา', ne: 'मूल्य प्रस्ताव (अनुमानित खर्च)', ps: 'د بیې وړاندیز (اټکل)'
+                    }
+                },
+                {
+                    id: 'd1_reservedele',
+                    word: 'reservedele',
+                    da: 'Nye bildele, som sættes i bilen i stedet for de ødelagte dele.',
+                    trans: {
+                        en: 'spare parts / replacement parts', de: 'Ersatzteile', es: 'repuestos / piezas de recambio', pt: 'peças de reposição', tr: 'yedek parçalar',
+                        ar: 'قطع غيار', fa: 'قطعات یدکی', ku: 'parçeyên yedek', ur: 'اضافی پرزے (اسپیئر پارٹس)', ru: 'запчасти', uk: 'запчастини',
+                        zh: '备用零件 / 配件', vi: 'phụ tùng thay thế', th: 'อะไหล่รถยนต์', ne: 'स्पेयर पार्ट्स (पार्टपुर्जा)', ps: 'پرزې (اضافي پرزې)'
+                    }
+                },
+                {
+                    id: 'd1_paa_lager',
+                    word: 'på lager / køreklar',
+                    da: 'Hjemme på værkstedets hylde / klar og sikker til at køre på vejen igen.',
+                    trans: {
+                        en: 'in stock / ready to drive', de: 'auf Lager / fahrbereit', es: 'en stock / listo para conducir', pt: 'em estoque / pronto para rodar', tr: 'stokta (depoda) / sürüşe hazır',
+                        ar: 'متوفر في المخزن / جاهز للقيادة', fa: 'موجود در انبار / آماده حرکت', ku: 'li embarê هەیە / amade ji bo ajotinê', ur: 'اسٹاک میں موجود / چلنے کے لیے تیار', ru: 'в наличии на складе / готовый к поездке', uk: 'в наявності на складі / готовий до поїздки',
+                        zh: '有现货 / 修好可上路', vi: 'có sẵn trong kho / sẵn sàng lăn bánh', th: 'มีของในสต็อก / พร้อมใช้งาน', ne: 'स्टकमा छ / चलाउन तयार', ps: 'په ګودام کې شته / د چلولو لپاره چمتو'
+                    }
+                }
             ]
         },
         {
@@ -2179,6 +2973,88 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                 { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Nå for søren, det forklarer jo, hvorfor bilen larmede! Hvad vil det koste at reparere?' },
                 { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'En ny udstødning og et nyt batteri inklusive arbejdsløn og moms bliver 3.400 kroner i alt.' },
                 { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Det lyder rimeligt. I må meget gerne skifte begge dele, så bilen bliver klar til bilsyn.' }
+            ],
+            difficultWords: [
+                {
+                    id: 'd2_fejlsoegt',
+                    word: 'har fejlsøgt den',
+                    da: 'Har undersøgt bilen systematisk for at finde ud af, hvad der er galt.',
+                    trans: {
+                        en: 'have diagnosed / troubleshot it', de: 'haben die Fehlersuche durchgeführt', es: 'lo hemos diagnosticado', pt: 'fizemos o diagnóstico de falhas', tr: 'arıza tespitini yaptık',
+                        ar: 'قمنا بفحص وتشخيص الأعطال', fa: 'آن را عیب‌یابی کرده‌ایم', ku: 'me lêgerîna arîzeyê kir', ur: 'اس کی خرابی تلاش کر لی ہے', ru: 'провели диагностику неисправностей', uk: 'провели діагностику несправностей',
+                        zh: '已经进行了故障排查', vi: 'đã chẩn đoán lỗi', th: 'ได้ตรวจหาจุดเสียแล้ว', ne: 'खराबी पत्ता लगायौं', ps: 'موږ یې عوارض ولټول'
+                    }
+                },
+                {
+                    id: 'd2_alvorligt',
+                    word: 'noget alvorligt',
+                    da: 'Et stort, farligt eller dyrt problem.',
+                    trans: {
+                        en: 'something serious', de: 'etwas Ernstes', es: 'algo grave / serio', pt: 'algo grave / sério', tr: 'ciddi bir şey',
+                        ar: 'شيء خطير / جدي', fa: 'مشکل جدی', ku: 'tiştekî cidî / گران', ur: 'کوئی سنگین (بڑا) مسئلہ', ru: 'что-то серьёзное', uk: 'щось серйозне',
+                        zh: '严重的问题', vi: 'điều gì đó nghiêm trọng', th: 'เรื่องร้ายแรง / ปัญหาใหญ่', ne: 'केही गम्भीर समस्या', ps: 'کومه جدي ستونزه'
+                    }
+                },
+                {
+                    id: 'd2_fejler_ingenting',
+                    word: 'fejler ingenting',
+                    da: 'Virker helt som den skal; har ingen fejl.',
+                    trans: {
+                        en: 'has nothing wrong with it', de: 'hat keinerlei Fehler / ist völlig in Ordnung', es: 'no tiene ningún fallo', pt: 'não tem nada de errado', tr: 'hiçbir sorunu yok',
+                        ar: 'لا يعاني من أي عطل (سليم تماماً)', fa: 'هیچ ایرادی ندارد', ku: 'ti kêmasî تێda tune', ur: 'بالکل ٹھیک ہے (کوئی خرابی نہیں)', ru: 'полностью исправен', uk: 'повністю справний',
+                        zh: '没有任何毛病', vi: 'không bị sao cả (hoàn toàn tốt)', th: 'ไม่ได้เสียเลย / ปกติดีทุกอย่าง', ne: 'केही पनि बिग्रिएको छैन', ps: 'هیڅ عوارض نه لري'
+                    }
+                },
+                {
+                    id: 'd2_udstoedning',
+                    word: 'hul på udstødningen',
+                    da: 'Utæthed i røret under bilen, så bilen larmer meget, når man kører.',
+                    trans: {
+                        en: 'a hole in the exhaust pipe', de: 'ein Loch im Auspuff', es: 'un agujero en el tubo de escape', pt: 'um furo no escapamento', tr: 'egzozda delik',
+                        ar: 'ثقب في عادم السيارة (الشكمان)', fa: 'سوراخ در اگزوز', ku: 'qul di egzozê de', ur: 'سائلنسر (ایگزاسٹ) میں سوراخ', ru: 'дыра в глушителе (выхлопной трубе)', uk: 'дірка у вихлопній трубі (глушнику)',
+                        zh: '排气管破了个洞', vi: 'thủng ống xả', th: 'ท่อไอเสียรั่ว / เป็นรู', ne: 'साइलेन्सरमा प्वाल परेको', ps: 'په سلنسر کې سوری شوی'
+                    }
+                },
+                {
+                    id: 'd2_fladt_batteri',
+                    word: 'batteriet er næsten fladt',
+                    da: 'Bilens batteri har næsten ikke mere strøm tilbage.',
+                    trans: {
+                        en: 'the battery is almost dead / flat', de: 'die Batterie ist fast leer', es: 'la batería está casi descargada', pt: 'a bateria está quase arriada / sem carga', tr: 'akü neredeyse bitmiş',
+                        ar: 'البطارية شبه فارغة من الشحن', fa: 'باتری تقریباً خوابیده (خالی) است', ku: 'baterî hema hema vala bûye', ur: 'بیٹری تقریباً ختم (ڈاؤن) ہے', ru: 'аккумулятор почти разряжен', uk: 'акумулятор майже розряджений',
+                        zh: '电瓶快没电了', vi: 'ắc quy gần hết điện', th: 'แบตเตอรี่เกือบหมดไฟ', ne: 'ब्याट्रीको चार्ज झन्डै सकिएको छ', ps: 'بطرۍ نږدې خالي شوې ده'
+                    }
+                },
+                {
+                    id: 'd2_larmede',
+                    word: 'bilen larmede',
+                    da: 'Bilen lavede en meget høj støj.',
+                    trans: {
+                        en: 'the car made a loud noise', de: 'das Auto hat Lärm gemacht', es: 'el coche hacía mucho ruido', pt: 'o carro estava fazendo barulho', tr: 'araba gürültü yapıyordu',
+                        ar: 'كانت السيارة تصدر ضجيجاً عالياً', fa: 'ماشین صدای بلندی می‌داد', ku: 'erebeyê dengê bilind derdixist', ur: 'گاڑی بہت شور کر رہی تھی', ru: 'машина сильно шумела', uk: 'машина сильно шуміла',
+                        zh: '车子发出很大的噪音', vi: 'xe phát ra tiếng ồn lớn', th: 'รถส่งเสียงดังมาก', ne: 'गाडीले ठूलो आवाज निकाल्यो', ps: 'موټر ډېر شور کاوه'
+                    }
+                },
+                {
+                    id: 'd2_arbejdsloen_moms',
+                    word: 'inklusive arbejdsløn og moms',
+                    da: 'Prisen er med både mekanikerens arbejdstimer og 25% skat (moms) indregnet.',
+                    trans: {
+                        en: 'including labor cost and VAT (tax)', de: 'inklusive Arbeitslohn und Mehrwertsteuer', es: 'incluyendo mano de obra e IVA', pt: 'incluindo mão de obra e impostos (IVA)', tr: 'işçilik ücreti ve KDV dahil',
+                        ar: 'شاملاً أجور العمل وضريبة القيمة المضافة', fa: 'به همراه اجرت کار و مالیات بر ارزش افزوده', ku: 'bi heqdestê kar û باجê (KDV) ve', ur: 'مزدوری اور ٹیکس (مومس) سمیت', ru: 'включая стоимость работы и НДС', uk: 'включаючи вартість роботи та ПДВ',
+                        zh: '包含人工费和增值税', vi: 'bao gồm tiền công thợ và thuế VAT', th: 'รวมค่าแรงช่างและภาษีมูลค่าเพิ่มแล้ว', ne: 'ज्याला र भ्याट (कर) सहित', ps: 'د مزدورۍ او مالیې په ګډون'
+                    }
+                },
+                {
+                    id: 'd2_bilsyn',
+                    word: 'klar til bilsyn',
+                    da: 'Klar til den lovpligtige sikkerhedskontrol i synshallen.',
+                    trans: {
+                        en: 'ready for mandatory vehicle inspection (MOT)', de: 'bereit für den TÜV / die Hauptuntersuchung', es: 'listo para la inspección técnica (ITV)', pt: 'pronto para a inspeção veicular', tr: 'araç muayenesine (TÜV) hazır',
+                        ar: 'جاهز للفحص الفني الدوري', fa: 'آماده برای معاینه فنی خودرو', ku: 'amade ji bo muayeneya erebeyê', ur: 'گاڑی کے سرکاری معائنے (پاسنگ) کے لیے تیار', ru: 'готов к техосмотру', uk: 'готовий до техогляду',
+                        zh: '准备好通过车辆年检', vi: 'sẵn sàng cho kỳ đăng kiểm xe', th: 'พร้อมสำหรับการตรวจสภาพรถ', ne: 'सवारी जाँचपासका लागि तयार', ps: 'د موټر تخنیکي معاینې ته چمتو'
+                    }
+                }
             ]
         },
         {
@@ -2191,6 +3067,68 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                 { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Kan dækket lappes, eller er jeg nødt til at få skiftet til mine vinterdæk nu?' },
                 { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Dækmønstret på dine sommerdæk er alligevel ret slidt, så det bedste er at skifte til vinterdæk nu.' },
                 { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Jeg skifter alle fire hjul hurtigt og spænder boltene efter med skruenøglen, så er du videre om 20 minutter!' }
+            ],
+            difficultWords: [
+                {
+                    id: 'd3_forhjul',
+                    word: 'højre forhjul er fladt',
+                    da: 'Hjulet foran i højre side har tabt luften (er punkteret).',
+                    trans: {
+                        en: 'the front right tire is flat', de: 'das rechte Vorderrad ist platt', es: 'la rueda delantera derecha está pinchada', pt: 'o pneu dianteiro direito está furado', tr: 'sağ ön tekerlek patlak (inik)',
+                        ar: 'الإطار الأمامي الأيمن مفرغ من الهواء', fa: 'چرخ جلوی سمت راست پنچر است', ku: 'tekerê pêşiyê yê rastê teqiyaye', ur: 'دائیں طرف کا اگلا ٹائر پنچر ہے', ru: 'правое переднее колесо спущено', uk: 'праве переднє колесо спущене',
+                        zh: '右前轮瘪了（漏气了）', vi: 'bánh trước bên phải bị xẹp', th: 'ล้อหน้าขวาแบน', ne: 'दायाँतिरको अगाडिको पाङ्ग्रा पन्चर छ', ps: 'ښی مخکینی ټایر پنچر شوی دی'
+                    }
+                },
+                {
+                    id: 'd3_donkraft',
+                    word: 'løftet bilen med donkraften',
+                    da: 'Hævet bilen fra gulvet med en lille mekanisk/hydraulisk løfter.',
+                    trans: {
+                        en: 'lifted the car with the jack', de: 'das Auto mit dem Wagenheber angehoben', es: 'levantado el coche con el gato', pt: 'levantado o carro com o macaco', tr: 'arabayı krikoyla kaldırdım',
+                        ar: 'رفعت السيارة بالرافعة اليدوية (العفريتة)', fa: 'ماشین را با جک دستی بلند کردم', ku: 'min erebe bi krîkoyê bilind kir', ur: 'گاڑی کو جیک سے اٹھایا ہے', ru: 'поднял машину домкратом', uk: 'підняв машину домкратом',
+                        zh: '用千斤顶把车升起来了', vi: 'đã nâng xe lên bằng con đội (kích)', th: 'ยกรถขึ้นด้วยแม่แรงแล้ว', ne: 'ज्याकले गाडी उठाएको छु', ps: 'موټر مې په جک پورته کړی دی'
+                    }
+                },
+                {
+                    id: 'd3_lappes',
+                    word: 'kan dækket lappes?',
+                    da: 'Kan hullet i det punkterede dæk tætnes/repareres, så dækket kan bruges igen?',
+                    trans: {
+                        en: 'can the tire be patched / repaired?', de: 'kann der Reifen geflickt werden?', es: '¿se puede reparar el pinchazo del neumático?', pt: 'o pneu pode ser remendado?', tr: 'lastik yamanabilir mi?',
+                        ar: 'هل يمكن ترقيع (إصلاح) الإطار؟', fa: 'آیا لاستیک پنچرگیری (وصله) می‌شود؟', ku: 'ma teker dikare bê پîne kirin?', ur: 'کیا ٹائر کو پنکچر لگایا جا سکتا ہے؟', ru: 'можно ли заклеить (залатать) шину?', uk: 'чи можна залатати (заклеїти) шину?',
+                        zh: '轮胎可以补吗？', vi: 'lốp xe có vá được không?', th: 'ปะยางได้ไหม?', ne: 'के टायरमा टालो हाल्न (पन्चर टाल्न) मिल्छ?', ps: 'آیا ټایر پینه کېدای شي؟'
+                    }
+                },
+                {
+                    id: 'd3_daekmoenster',
+                    word: 'dækmønstret er slidt',
+                    da: 'Rillerne i dækkets gummi er blevet for lave til at stå godt fast på vejen.',
+                    trans: {
+                        en: 'the tire tread is worn down', de: 'das Reifenprofil ist abgefahren', es: 'el dibujo del neumático está desgastado', pt: 'os sulcos do pneu estão gastos', tr: 'lastik diş derinliği (deseni) aşınmış',
+                        ar: 'نقشة الإطار متآكلة (ممسوحة)', fa: 'عاج لاستیک ساییده شده است', ku: 'nexşê (xêzên) tekerê mehîyaye', ur: 'ٹائر کی گُڈی (نمونہ) گھس چکی ہے', ru: 'протектор шины изношен', uk: 'протектор шини зношений',
+                        zh: '轮胎花纹已经磨平了', vi: 'gai lốp (vân lốp) đã bị mòn', th: 'ดอกยางสึกหรอมากแล้ว', ne: 'टायरको गोटी (बुट्यान) खिइसकेको छ', ps: 'د ټایر نقشه (ګل) سولېدلی دی'
+                    }
+                },
+                {
+                    id: 'd3_vinterdaek',
+                    word: 'skifte til vinterdæk',
+                    da: 'Sætte dæk på, som er lavet til sne, frost og glatte vinterveje.',
+                    trans: {
+                        en: 'change to winter tires', de: 'auf Winterreifen wechseln', es: 'cambiar a neumáticos de invierno', pt: 'trocar para pneus de inverno', tr: 'kış lastiklerine geçmek',
+                        ar: 'التبديل إلى الإطارات الشتوية', fa: 'تعویض به لاستیک‌های زمستانی', ku: 'guherandina ser tekerên zivistanê', ur: 'سردیوں کے ٹائر لگوانا', ru: 'поменять на зимнюю резину', uk: 'перейти на зимову гуму (шини)',
+                        zh: '换上冬季轮胎', vi: 'thay sang lốp mùa đông', th: 'เปลี่ยนเป็นยางสำหรับฤดูหนาว', ne: 'जाडोयामको टायर फेर्नु', ps: 'د ژمي ټایرونه تړل'
+                    }
+                },
+                {
+                    id: 'd3_spaender_boltene',
+                    word: 'spænder boltene efter med skruenøglen',
+                    da: 'Strammer hjulboltene grundigt med en nøgle, så hjulene sidder helt fast.',
+                    trans: {
+                        en: 'tightens the wheel bolts with the wrench', de: 'zieht die Radbolzen mit dem Schraubenschlüssel nach', es: 'aprieta los tornillos con la llave inglesa', pt: 'aperta os parafusos com a chave de roda', tr: 'bijonları (somunları) anahtarla sıkıyor',
+                        ar: 'يشد صواميل العجلات بمفتاح الربط', fa: 'پیچ‌های چرخ را با آچار سفت می‌کند', ku: 'bûlên tekerê bi açarê dişidîne', ur: 'رینچ (پانے) سے پہیے کے قابلے کستا ہے', ru: 'затягивает колёсные болты гаечным ключом', uk: 'затягує колісні болти гайковим ключем',
+                        zh: '用扳手拧紧车轮螺栓', vi: 'siết chặt các ốc bánh xe bằng cờ lê', th: 'ขันน็อตล้อให้แน่นด้วยประแจ', ne: 'पानाले पाङ्ग्राको नट-बोल्ट कस्छ', ps: 'په رنچ سره د ټایر پیچونه کلکوي'
+                    }
+                }
             ]
         },
         {
@@ -2203,6 +3141,68 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                 { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Det gør jeg. Jeg så faktisk et lille stenslag nederst i forruden – skal jeg reparere det?' },
                 { speaker: 'Mester', roleClass: 'speaker-mester', text: 'Ja, gør det grundigt med det samme, så forruden ikke revner, når bilen skal synes i morgen.' },
                 { speaker: 'Lærling', roleClass: 'speaker-laerling', text: 'Modtaget! Bagefter kører jeg bilen ud på parkeringspladsen og lægger nøglen ind ved kassen.' }
+            ],
+            difficultWords: [
+                {
+                    id: 'd4_oliefilter',
+                    word: 'skifte motorolie og oliefilter',
+                    da: 'Tappe den gamle olie af motoren, sætte et nyt filter i og hælde ny olie på.',
+                    trans: {
+                        en: 'change engine oil and oil filter', de: 'Motoröl und Ölfilter wechseln', es: 'cambiar el aceite de motor y el filtro de aceite', pt: 'trocar o óleo do motor e o filtro de óleo', tr: 'motor yağını ve yağ filtresini değiştirmek',
+                        ar: 'تغيير زيت المحرك وفلتر الزيت', fa: 'تعویض روغن موتور و فیلتر روغن', ku: 'guherandina rûnê motorê û fîltreya rûn', ur: 'انجن آئل اور آئل فلٹر تبدیل کرنا', ru: 'поменять моторное масло и масляный фильтр', uk: 'замінити моторну оливу та масляний фільтр',
+                        zh: '更换机油和机油滤清器', vi: 'thay dầu động cơ và lọc dầu', th: 'เปลี่ยนน้ำมันเครื่องและไส้กรองน้ำมันเครื่อง', ne: 'इन्जिन तेल र आयल फिल्टर फेर्नु', ps: 'د انجن تېل او د تېلو فلټر بدلول'
+                    }
+                },
+                {
+                    id: 'd4_oliestand',
+                    word: 'tjekket oliestanden med oliepinden',
+                    da: 'Målt med metalpinden i motoren, at der er præcis nok olie på.',
+                    trans: {
+                        en: 'checked the oil level with the dipstick', de: 'den Ölstand mit dem Ölmessstab geprüft', es: 'comprobado el nivel de aceite con la varilla', pt: 'verificado o nível do óleo com a vareta', tr: 'yağ çubuğuyla yağ seviyesini kontrol ettim',
+                        ar: 'فحصت مستوى الزيت بواسطة سيخ القياس', fa: 'سطح روغن را با گیج روغن چک کردم', ku: 'min asta rûn bi شîşa pîvanê kontrol kir', ur: 'آئل گيج (سلاخ) سے تیل کی سطح چیک کی', ru: 'проверил уровень масла масляным щупом', uk: 'перевірив рівень оливи масляним щупом',
+                        zh: '用机油尺检查了油位', vi: 'đã kiểm tra mức dầu bằng que thăm dầu', th: 'เช็กระดับน้ำมันเครื่องด้วยก้านวัดน้ำมันแล้ว', ne: 'गेज डन्डीले तेलको मात्रा जाँच गरें', ps: 'د تېلو د ګیج په وسیله مې د تېلو کچه وکتله'
+                    }
+                },
+                {
+                    id: 'd4_sprinklervaeske',
+                    word: 'påfylde sprinklervæske',
+                    da: 'Hælde rensevæske på beholderen, så føreren kan vaske forruden under kørsel.',
+                    trans: {
+                        en: 'fill up windshield washer fluid', de: 'Scheibenwischwasser nachfüllen', es: 'rellenar el líquido limpiaparabrisas', pt: 'completar o fluido do limpador de para-brisa', tr: 'cam suyu doldurmak',
+                        ar: 'تعبئة سائل غسيل الزجاج الأمامي', fa: 'ریختن مایع شیشه‌شوی', ku: 'dagirtina ava şûştina camê', ur: 'شیشہ صاف کرنے والا پانی بھرنا', ru: 'долить жидкость стеклоомывателя', uk: 'долити рідину омивача скла',
+                        zh: '加注玻璃水（雨刮水）', vi: 'châm thêm nước rửa kính', th: 'เติมน้ำยาฉีดกระจก', ne: 'सिसा सफा गर्ने पानी भर्नु', ps: 'د ښیښې مینځلو اوبه اچول'
+                    }
+                },
+                {
+                    id: 'd4_saenker_autoliften',
+                    word: 'sænker autoliften',
+                    da: 'Kører liften ned igen, så bilen står nede på gulvet.',
+                    trans: {
+                        en: 'lowers the car lift', de: 'die Hebebühne absenkt', es: 'baja el elevador', pt: 'abaixa o elevador', tr: 'lifti indiriyor',
+                        ar: 'يُنزِل رافعة السيارة', fa: 'جک بالابر را پایین می‌آورد', ku: 'lîftê dadixe خوارê', ur: 'لفٹ کو نیچے کرتا ہے', ru: 'опускает подъёмник', uk: 'опускає підйомник',
+                        zh: '降下举升机', vi: 'hạ cầu nâng xuống', th: 'ลดลิฟต์ยกรถลง', ne: 'लिफ्ट तल झार्छ', ps: 'لفټ ښکته کوي'
+                    }
+                },
+                {
+                    id: 'd4_stenslag',
+                    word: 'et stenslag i forruden',
+                    da: 'Et lille mærke eller stjerne i bilens forrude fra en lille sten på vejen.',
+                    trans: {
+                        en: 'a stone chip in the windshield', de: 'ein Steinschlag in der Windschutzscheibe', es: 'un impacto de piedra en el parabrisas', pt: 'uma lasca de pedra no para-brisa', tr: 'ön camda taş izi (çatlağı)',
+                        ar: 'نقرة حصى في الزجاج الأمامي', fa: 'سنگ‌خوردگی روی شیشه جلو', ku: 'şopa kevir li cama pêşiyê', ur: 'اگلے شیشے پر پتھر لگنے کا نشان', ru: 'скол от камня на лобовом стекле', uk: 'скол від каменя на лобовому склі',
+                        zh: '挡风玻璃上的石击小裂痕', vi: 'vết đá văng trên kính chắn gió', th: 'รอยหินดีดใส่กระจกหน้ารถ', ne: 'अगाडिको सिसामा ढुङ्गाले लागेको दाग', ps: 'په مخکینۍ ښیښه کې د ډبرې لګېدو نښه'
+                    }
+                },
+                {
+                    id: 'd4_revner',
+                    word: 'så forruden ikke revner',
+                    da: 'Så glasset ikke flækker i en lang revne på tværs af ruden.',
+                    trans: {
+                        en: 'so the windshield does not crack', de: 'damit die Frontscheibe nicht reißt', es: 'para que el parabrisas no se agriete', pt: 'para que o para-brisa não rache', tr: 'ön cam çatlamasın diye',
+                        ar: 'حتى لا يتشقق الزجاج الأمامي', fa: 'تا شیشه جلو ترک نخورد', ku: 'da ku cama pêşiyê نەqelişe', ur: 'تاکہ اگلے شیشے میں دراڑ نہ پڑے', ru: 'чтобы лобовое стекло не треснуло', uk: 'щоб лобове скло не тріснуло',
+                        zh: '以免挡风玻璃裂开', vi: 'để kính chắn gió không bị nứt lan ra', th: 'เพื่อไม่ให้กระจกหน้ารถร้าว', ne: 'अगाडिको सिसा नचर्कियोस् भनेर', ps: 'ترڅو مخکینۍ ښیښه درز ونه کړي'
+                    }
+                }
             ]
         },
         {
@@ -2215,9 +3215,89 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                 { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Selvfølgelig. Her står reservedelene øverst: nye bremseklodser, en ny pære og to liter motorolie.' },
                 { speaker: 'Kunde', roleClass: 'speaker-kunde', text: 'Og prisen passer heldigvis præcis med det pristilbud, vi aftalte i morges. Jeg betaler med kort.' },
                 { speaker: 'Mekaniker', roleClass: 'speaker-mekaniker', text: 'Tusind tak! Husk at få efterspændt hjulboltene om 100 kilometer – god køretur!' }
+            ],
+            difficultWords: [
+                {
+                    id: 'd5_efter_planen',
+                    word: 'alt gik efter planen',
+                    da: 'Alt lykkedes som aftalt uden uventede problemer.',
+                    trans: {
+                        en: 'everything went according to plan', de: 'alles lief nach Plan', es: 'todo salió según lo planeado', pt: 'tudo correu conforme o planejado', tr: 'her şey plana uygun gitti',
+                        ar: 'سار كل شيء حسب الخطة', fa: 'همه‌چیز طبق برنامه پیش رفت', ku: 'her tişt li gorî planê çû', ur: 'سب کچھ منصوبے کے مطابق ہوا', ru: 'всё прошло по плану', uk: 'все пройшло за планом',
+                        zh: '一切都按计划顺利进行', vi: 'mọi thứ đều diễn ra đúng kế hoạch', th: 'ทุกอย่างเป็นไปตามแผนที่วางไว้', ne: 'सबै कुरा योजना अनुसार नै भयो', ps: 'هر څه د پلان له مخې ترسره شول'
+                    }
+                },
+                {
+                    id: 'd5_gennemgaa_regningen',
+                    word: 'gennemgå regningen',
+                    da: 'Kigge punkterne på fakturaen igennem sammen og forklare, hvad man betaler for.',
+                    trans: {
+                        en: 'go through / review the bill', de: 'die Rechnung durchgehen', es: 'revisar la factura', pt: 'revisar a fatura / conta', tr: 'faturayı birlikte gözden geçirmek',
+                        ar: 'مراجعة تفاصيل الفاتورة معاً', fa: 'بررسی کردن فاکتور با هم', ku: 'fatûreyê bi hev re derbas kirin', ur: 'بل کی تفصیلات ایک ساتھ دیکھنا', ru: 'просмотреть (разобрать) счёт', uk: 'переглянути (розібрати) рахунок',
+                        zh: '核对并讲解账单明细', vi: 'xem qua chi tiết hóa đơn', th: 'ตรวจสอบรายละเอียดในใบเสร็จร่วมกัน', ne: 'बिलको विवरण सँगै हेर्नु', ps: 'د بل جزئیات په ګډه کتل'
+                    }
+                },
+                {
+                    id: 'd5_ny_paere',
+                    word: 'en ny pære (forlygtepære)',
+                    da: 'En ny lyspære til bilens lygte, så lyset på bilen virker.',
+                    trans: {
+                        en: 'a new light bulb (headlight bulb)', de: 'eine neue Glühbirne (Scheinwerferlampe)', es: 'una bombilla nueva (de faro)', pt: 'uma lâmpada nova (do farol)', tr: 'yeni bir ampul (far ampulü)',
+                        ar: 'لمبة (مصباح) جديدة لسيارة', fa: 'یک لامپ جدید (لامپ چراغ خودرو)', ku: 'ampûleke nû ya çiraya erebeyê', ur: 'گاڑی کی لائٹ کا نیا بلب', ru: 'новая лампочка (для фары)', uk: 'нова лампочка (для фари)',
+                        zh: '一个新灯泡（车灯灯泡）', vi: 'một bóng đèn xe mới', th: 'หลอดไฟหน้ารถดวงใหม่', ne: 'नयाँ चिम (गाडीको बत्तीको बल्ब)', ps: 'نوی ګروپ (د موټر د څراغ ګروپ)'
+                    }
+                },
+                {
+                    id: 'd5_passer_praecis',
+                    word: 'passer præcis med pristilbuddet',
+                    da: 'Beløbet på regningen er nøjagtig det samme som den pris, værkstedet lovede.',
+                    trans: {
+                        en: 'matches the price quote exactly', de: 'stimmt genau mit dem Preisangebot überein', es: 'coincide exactamente con el presupuesto', pt: 'corresponde exatamente ao orçamento', tr: 'fiyat teklifiyle birebir uyuşuyor',
+                        ar: 'يطابق عرض السعر المتفق عليه تماماً', fa: 'دقیقاً با پیشنهاد قیمت مطابقت دارد', ku: 'bi تەمamî li پêşniyara bihayê tê', ur: 'بالکل قیمت کے تخمینے کے مطابق ہے', ru: 'точно совпадает со сметой', uk: 'точно збігається з ціновою пропозицією',
+                        zh: '与之前的报价完全一致', vi: 'khớp chính xác với báo giá', th: 'ตรงกับใบเสนอราคาที่ตกลงกันไว้เป๊ะ', ne: 'मूल्य प्रस्तावसँग ठ्याक्कै मिल्छ', ps: 'د بیې له وړاندیز سره کټ مټ سمون خوري'
+                    }
+                },
+                {
+                    id: 'd5_efterspaendt',
+                    word: 'få efterspændt hjulboltene',
+                    da: 'Kontrollere og stramme boltene på hjulene igen efter 100 km kørsel for sikkerhedens skyld.',
+                    trans: {
+                        en: 'have the wheel bolts retightened', de: 'die Radbolzen nachziehen lassen', es: 'volver a apretar los tornillos de las ruedas', pt: 'reapertar os parafusos das rodas', tr: 'tekerlek bijonlarını tekrar sıktırmak',
+                        ar: 'إعادة شد صواميل العجلات للتأكيد', fa: 'دوباره سفت کردن پیچ‌های چرخ (آچارکشی)', ku: 'ji nû ve şidandina bûlên tekeran', ur: 'پہیے کے قابلے دوبارہ کسوانا', ru: 'повторно подтянуть колёсные болты', uk: 'повторно підтягнути колісні болти',
+                        zh: '再次复紧车轮螺栓', vi: 'siết lại ốc bánh xe lần nữa', th: 'ขันน็อตล้อซ้ำอีกครั้งเพื่อความปลอดภัย', ne: 'पाङ्ग्राको नट-बोल्ट फेरि कसाउनु', ps: 'د ټایر پیچونه بیا ځلي کلکول'
+                    }
+                }
             ]
         }
     ];
+
+    // Selvstændigheds-point og oplåste hjælpeord pr. dialog
+    const DIALOG_SCORES_STORAGE_KEY = 'bilvaerksted_dialog_scores_v1';
+    let savedDialogScores = {};
+    try {
+        savedDialogScores = JSON.parse(localStorage.getItem(DIALOG_SCORES_STORAGE_KEY) || '{}') || {};
+    } catch (_) {
+        savedDialogScores = {};
+    }
+    const unlockedWordsPerDialog = {}; // { [dialogIdx]: Set<wordId> }
+
+    function getDialogUnlockedSet(idx) {
+        if (!unlockedWordsPerDialog[idx]) unlockedWordsPerDialog[idx] = new Set();
+        return unlockedWordsPerDialog[idx];
+    }
+
+    function calcDialogLivePoints(idx) {
+        const usedCount = getDialogUnlockedSet(idx).size;
+        return Math.max(20, 100 - usedCount * 10);
+    }
+
+    function getTotalSavedPoints() {
+        let sum = 0;
+        for (let i = 0; i < WORKSHOP_DIALOGUES.length; i++) {
+            sum += (savedDialogScores[i] !== undefined ? savedDialogScores[i] : 100);
+        }
+        return sum;
+    }
 
     let currDialogIdx = 0;
     const dialogCard = document.createElement('div');
@@ -2237,14 +3317,16 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
             scrambledLines[1] = tmp;
         }
 
-        // Top nav pills for the 5 dialogues
+        // Top nav pills for the 5 dialogues with earned badge
         const navRow = document.createElement('div');
         navRow.style.cssText = 'display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1.2rem;';
         WORKSHOP_DIALOGUES.forEach((d, idx) => {
             const pill = document.createElement('button');
             pill.type = 'button';
+            const savedScore = savedDialogScores[idx];
+            const scoreBadge = savedScore !== undefined ? ` • 🏆 ${savedScore}p` : '';
             pill.style.cssText = `padding:0.45rem 0.95rem; border-radius:20px; font-weight:800; font-size:0.85rem; cursor:pointer; border:1.5px solid ${idx === currDialogIdx ? '#38bdf8' : '#475569'}; background:${idx === currDialogIdx ? '#0284c7' : '#1e293b'}; color:white;`;
-            pill.textContent = `💬 Dialog ${idx + 1}`;
+            pill.textContent = `💬 Dialog ${idx + 1}${scoreBadge}`;
             pill.onclick = () => {
                 currDialogIdx = idx;
                 renderDialogueOrderingTask();
@@ -2252,6 +3334,31 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
             navRow.appendChild(pill);
         });
         dialogCard.appendChild(navRow);
+
+        // Live Scoreboard Banner
+        const scoreBanner = document.createElement('div');
+        scoreBanner.style.cssText = 'background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95)); border:1.5px solid rgba(245,158,11,0.45); border-radius:16px; padding:0.9rem 1.2rem; margin-bottom:1.3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;';
+
+        function updateScoreBannerUI() {
+            const livePts = calcDialogLivePoints(currDialogIdx);
+            const usedWords = getDialogUnlockedSet(currDialogIdx).size;
+            const medalIcon = livePts >= 90 ? '🥇 Guld-kurs' : (livePts >= 70 ? '🥈 Sølv-kurs' : '🥉 Bronze-kurs');
+            scoreBanner.innerHTML = `
+                <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+                    <span style="background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid #f59e0b; padding:0.35rem 0.85rem; border-radius:20px; font-weight:800; font-size:0.9rem;">
+                        🏆 Selvstændigheds-point i denne dialog: <strong style="font-size:1.05rem; color:white;">${livePts} / 100</strong> (${medalIcon})
+                    </span>
+                    <span style="color:#94a3b8; font-size:0.84rem;">
+                        💡 Åbnede hjælpeord i ordlisten nedenunder: <strong>${usedWords}</strong> (-${usedWords * 10} p)
+                    </span>
+                </div>
+                <div style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.35); padding:0.3rem 0.8rem; border-radius:12px; font-weight:800; font-size:0.82rem;">
+                    ⭐ Samlet score (5 dialoger): ${getTotalSavedPoints()} / 500 p
+                </div>
+            `;
+        }
+        updateScoreBannerUI();
+        dialogCard.appendChild(scoreBanner);
 
         const header = document.createElement('div');
         header.style.cssText = 'margin-bottom:1.4rem;';
@@ -2262,7 +3369,7 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
             <h2 style="margin:0 0 0.4rem; font-size:1.5rem; color:white;">${dlg.title}</h2>
             <p style="margin:0; color:#94a3b8; font-size:0.98rem;">
                 <strong>Situation:</strong> ${dlg.context}<br>
-                <em>Replikkerne herunder er kommet i tilfældig rækkefølge. Klik på replikkerne i den rigtige rækkefølge (1 til ${totalLines}), så samtalen giver mening!</em>
+                <em>Replikkerne herunder er kommet i tilfældig rækkefølge. Klik på replikkerne i den rigtige rækkefølge (1 til ${totalLines}), så samtalen giver mening! Har du brug for hjælp til svære ord, kan du åbne dem i den valgfrie ordliste nederst.</em>
             </p>
         `;
         dialogCard.appendChild(header);
@@ -2273,7 +3380,7 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
 
         // Scrambled Bank Header + Container
         const bankTitle = document.createElement('div');
-        bankTitle.style.cssText = 'font-weight:800; font-size:0.95rem; color:#cbd5e1; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;';
+        bankTitle.style.cssText = 'font-weight:800; font-size:0.95rem; color:#cbd5e1; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;';
         bankTitle.innerHTML = `
             <span>🔀 Replikker i tilfældig rækkefølge (klik for at placere i næste ledige felt):</span>
             <button id="bv-dlg-reset" style="background:#334155; color:white; border:none; padding:0.4rem 0.9rem; border-radius:8px; font-weight:700; cursor:pointer;">🔄 Nulstil dialog</button>
@@ -2350,13 +3457,30 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                         if (allFilled) {
                             const isAllCorrect = placedLines.every((l, idx) => l.origIdx === idx);
                             if (isAllCorrect) {
+                                const earnedPoints = calcDialogLivePoints(currDialogIdx);
+                                const usedCount = getDialogUnlockedSet(currDialogIdx).size;
+                                // Save best or current score
+                                savedDialogScores[currDialogIdx] = Math.max(savedDialogScores[currDialogIdx] || 0, earnedPoints);
+                                try {
+                                    localStorage.setItem(DIALOG_SCORES_STORAGE_KEY, JSON.stringify(savedDialogScores));
+                                } catch (_) {}
+                                updateScoreBannerUI();
+
+                                const medalLabel = earnedPoints >= 90
+                                    ? '🥇 GULD-MEDALJE (Klaret næsten helt uden ordhjælp!)'
+                                    : (earnedPoints >= 70 ? '🥈 SØLV-MEDALJE (Flot klaret med lidt ordhjælp!)' : '🥉 BRONZE-MEDALJE (Godt gennemført!)');
+
                                 feedbackWrap.innerHTML = `
-                                    <div style="background:rgba(34,197,94,0.18); border:1.5px solid #22c55e; color:#4ade80; padding:1rem; border-radius:14px; font-weight:800; font-size:1.1rem; margin-bottom:0.9rem;">
-                                        🎉 Perfekt! Du har sat hele den mundtlige værkstedsdialog i den helt rigtige rækkefølge!
+                                    <div style="background:rgba(34,197,94,0.18); border:1.5px solid #22c55e; color:#4ade80; padding:1.15rem; border-radius:16px; font-weight:800; font-size:1.08rem; margin-bottom:0.9rem;">
+                                        🎉 Perfekt! Du har sat hele den mundtlige værkstedsdialog i den rigtige rækkefølge!<br>
+                                        <span style="display:inline-block; margin-top:0.45rem; background:rgba(15,23,42,0.85); color:#fbbf24; border:1px solid #f59e0b; padding:0.35rem 0.9rem; border-radius:20px; font-size:0.95rem;">
+                                            🏆 Din score: ${earnedPoints} / 100 point (${usedCount} hjælpeord åbnet) • ${medalLabel}
+                                        </span>
                                     </div>
                                     <div style="display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
-                                        <button id="bv-play-full-dlg" style="background:#2563eb; color:white; border:none; padding:0.75rem 1.4rem; border-radius:12px; font-weight:800; cursor:pointer;">🔊 Afspil hele dialogen</button>
-                                        <button id="bv-next-dlg" style="background:#22c55e; color:#0f172a; border:none; padding:0.75rem 1.4rem; border-radius:12px; font-weight:800; cursor:pointer;">
+                                        <button id="bv-play-full-dlg" style="background:#2563eb; color:white; border:none; padding:0.75rem 1.3rem; border-radius:12px; font-weight:800; cursor:pointer;">🔊 Afspil hele dialogen</button>
+                                        ${usedCount > 0 ? `<button id="bv-retry-100" style="background:#f59e0b; color:#0f172a; border:none; padding:0.75rem 1.3rem; border-radius:12px; font-weight:800; cursor:pointer;">🔄 Prøv igen uden ordhjælp (100 p)</button>` : ''}
+                                        <button id="bv-next-dlg" style="background:#22c55e; color:#0f172a; border:none; padding:0.75rem 1.3rem; border-radius:12px; font-weight:800; cursor:pointer;">
                                             ${currDialogIdx < WORKSHOP_DIALOGUES.length - 1 ? 'Næste dialog ➔' : 'Prøv dialog 1 igen 🔄'}
                                         </button>
                                     </div>
@@ -2365,6 +3489,13 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                                     const allText = dlg.lines.map(l => l.text).join(' ');
                                     speakDanish(allText);
                                 };
+                                const retry100Btn = feedbackWrap.querySelector('#bv-retry-100');
+                                if (retry100Btn) {
+                                    retry100Btn.onclick = () => {
+                                        unlockedWordsPerDialog[currDialogIdx] = new Set();
+                                        renderDialogueOrderingTask();
+                                    };
+                                }
                                 feedbackWrap.querySelector('#bv-next-dlg').onclick = () => {
                                     currDialogIdx = (currDialogIdx + 1) % WORKSHOP_DIALOGUES.length;
                                     renderDialogueOrderingTask();
@@ -2389,11 +3520,106 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
             updateDialogUI(false);
         };
 
+        // ========================================================
+        // --- VALGFRI ORDLISTE NEDENUNDER MED SELVSTÆNDIGHEDS-POINT ---
+        // ========================================================
+        const glossarySection = document.createElement('div');
+        glossarySection.style.cssText = 'margin-top:1.8rem; background:rgba(15,23,42,0.85); border:1.5px solid rgba(56,189,248,0.3); border-radius:18px; padding:1.3rem;';
+
+        let glossaryTransLang = getPreferredTransLang();
+
+        function renderGlossarySection() {
+            const unlockedSet = getDialogUnlockedSet(currDialogIdx);
+            const wordsList = dlg.difficultWords || [];
+
+            glossarySection.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <div>
+                        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+                            <h3 style="margin:0; font-size:1.15rem; color:#38bdf8;">💡 Valgfri ordliste – Hjælp til svære ord i dialogen</h3>
+                            <span style="background:rgba(245,158,11,0.18); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:0.2rem 0.65rem; border-radius:12px; font-size:0.78rem; font-weight:800;">
+                                Jo færre ord du åbner, jo flere point får du! (-10 point pr. ord)
+                            </span>
+                        </div>
+                        <p style="margin:0.3rem 0 0; color:#94a3b8; font-size:0.88rem;">
+                            Prøv først at forstå samtalen ud fra sammenhængen. Hvis et udtryk er svært, kan du klikke på det herunder for at se oversættelse og dansk forklaring.
+                        </p>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.45rem;">
+                        <span style="font-size:0.82rem; font-weight:700; color:#cbd5e1;">🌍 Oversæt til:</span>
+                        <select id="bv-dlg-glossary-lang" style="background:#1e293b; color:white; border:1px solid #38bdf8; border-radius:8px; padding:0.3rem 0.6rem; font-size:0.82rem; font-weight:700; cursor:pointer;">
+                            ${SUPPORTED_TRANS_LANGS.map(l => `<option value="${l.code}" ${l.code === glossaryTransLang ? 'selected' : ''}>${l.label}</option>`).join('')}
+                        </select>
+                    </div>
+                </div>
+                <div id="bv-dlg-glossary-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:0.75rem;"></div>
+            `;
+
+            glossarySection.querySelector('#bv-dlg-glossary-lang').onchange = (e) => {
+                glossaryTransLang = e.target.value;
+                setPreferredTransLang(glossaryTransLang);
+                renderGlossarySection();
+            };
+
+            const gridEl = glossarySection.querySelector('#bv-dlg-glossary-grid');
+            wordsList.forEach(wItem => {
+                const isUnlocked = unlockedSet.has(wItem.id);
+                const card = document.createElement('div');
+                card.style.cssText = `background:${isUnlocked ? '#1e293b' : 'rgba(30,41,59,0.55)'}; border:1.5px ${isUnlocked ? 'solid #38bdf8' : 'dashed #475569'}; border-radius:12px; padding:0.85rem 1rem; transition:all 0.2s; display:flex; flex-direction:column; justify-content:space-between; gap:0.5rem;`;
+
+                if (!isUnlocked) {
+                    card.style.cursor = 'pointer';
+                    card.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
+                            <span style="font-weight:800; color:#f8fafc; font-size:0.98rem;">🔹 "${wItem.word}"</span>
+                            <button type="button" class="bv-gl-listen" style="background:#0f172a; color:#38bdf8; border:1px solid #334155; padding:0.25rem 0.5rem; border-radius:6px; cursor:pointer; font-size:0.8rem;" title="Lyt til udtrykket (gratis)">🔊</button>
+                        </div>
+                        <div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:8px; padding:0.45rem 0.65rem; font-size:0.8rem; font-weight:700; text-align:center;">
+                            🔒 Klik for at se oversættelse & forklaring (-10 point)
+                        </div>
+                    `;
+                    card.querySelector('.bv-gl-listen').onclick = (e) => {
+                        e.stopPropagation();
+                        speakDanish(wItem.word);
+                    };
+                    card.onclick = () => {
+                        unlockedSet.add(wItem.id);
+                        speakDanish(wItem.word);
+                        updateScoreBannerUI();
+                        renderGlossarySection();
+                    };
+                } else {
+                    const transStr = (wItem.trans && (wItem.trans[glossaryTransLang] || wItem.trans.en)) || wItem.word;
+                    card.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
+                            <span style="font-weight:800; color:#38bdf8; font-size:1rem;">🔓 "${wItem.word}"</span>
+                            <button type="button" class="bv-gl-listen" style="background:#2563eb; color:white; border:none; padding:0.25rem 0.6rem; border-radius:6px; cursor:pointer; font-size:0.8rem; font-weight:700;">🔊 Lyt</button>
+                        </div>
+                        <div style="background:rgba(56,189,248,0.14); border-left:3px solid #38bdf8; padding:0.45rem 0.65rem; border-radius:6px; color:white; font-weight:800; font-size:0.95rem;">
+                            🌍 ${transStr}
+                        </div>
+                        <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.4;">
+                            📖 <strong>Dansk:</strong> ${wItem.da}
+                        </div>
+                    `;
+                    card.querySelector('.bv-gl-listen').onclick = (e) => {
+                        e.stopPropagation();
+                        speakDanish(wItem.word);
+                    };
+                }
+
+                gridEl.appendChild(card);
+            });
+        }
+
+        renderGlossarySection();
+
         updateDialogUI(false);
         dialogCard.appendChild(slotsWrap);
         dialogCard.appendChild(bankTitle);
         dialogCard.appendChild(bankWrap);
         dialogCard.appendChild(feedbackWrap);
+        dialogCard.appendChild(glossarySection);
     }
 
     renderDialogueOrderingTask();

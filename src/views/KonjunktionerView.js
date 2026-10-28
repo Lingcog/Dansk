@@ -69,14 +69,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
     viewContainer.appendChild(topBar);
 
-    // TTS Audio Helper
+    // TTS Audio Helper (disabled)
     function speakDanish(text) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'da-DK';
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
+        return;
     }
 
     // 18 Conjunctions Data
@@ -1566,7 +1561,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             pin.onclick = (e) => {
                 e.stopPropagation();
                 updateInspector(item, true);
-                speakDanish(item.sentence);
             };
 
             stage.appendChild(pin);
@@ -1602,7 +1596,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                             <span class="inspector-badge">${item.clauseType}</span>
                             <span class="inspector-badge" style="background: rgba(234, 179, 8, 0.2); border-color: #eab308; color: #fde047;">${item.meaning}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale">🔊</button>
                     </div>
 
                     <h2 class="inspector-word-title">
@@ -1627,9 +1620,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div class="sentence-quote-text">"${highlightedSentence}"</div>
                         ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="insp-speak-sent" style="margin-top:0.8rem;">
-                            <span>🔊</span> ${getTranslation('konj_btn_listen_sentence')}
-                        </button>
                     </div>
 
                     <div class="inspector-actions" style="margin-top: 1rem;">
@@ -1639,20 +1629,15 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
             `;
 
-            inspector.querySelector('#insp-speak-word').onclick = () => speakDanish(item.word);
-            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.sentence);
-
             inspector.querySelector('#insp-prev-btn').onclick = () => {
                 const idx = visibleWords.findIndex(w => w.id === item.id);
                 const prevItem = visibleWords[(idx - 1 + visibleWords.length) % visibleWords.length];
                 updateInspector(prevItem, false);
-                speakDanish(prevItem.word);
             };
             inspector.querySelector('#insp-next-btn').onclick = () => {
                 const idx = visibleWords.findIndex(w => w.id === item.id);
                 const nextItem = visibleWords[(idx + 1) % visibleWords.length];
                 updateInspector(nextItem, false);
-                speakDanish(nextItem.word);
             };
 
             if (shouldScroll) {
@@ -1865,7 +1850,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     fbBox.className = 'detektiv-feedback-box show correct';
                     fbBox.innerHTML = `<strong>${r.explanations[opt]}</strong>`;
                     nextWrap.style.display = 'block';
-                    speakDanish(r.quote.replace('______', opt).replace(/"/g, ''));
                 } else {
                     btn.classList.add('wrong');
                     fbBox.className = 'detektiv-feedback-box show wrong';
@@ -2165,7 +2149,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 });
             } else {
                 const fullBuilt = ex.slots.map(s => s.expected).join(' ');
-                speakDanish(fullBuilt);
                 fbDiv.className = 'detektiv-feedback-box show correct';
                 fbDiv.innerHTML = `
                     <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">🎉 Perfekt: "${fullBuilt}"</div>
@@ -2272,8 +2255,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     fbBox.className = 'detektiv-feedback-box show correct';
                     fbBox.innerHTML = `<strong>🌟 Korrekt!</strong> ${q.explanation}`;
                     nextWrap.style.display = 'block';
-                    const spoken = q.quote.replace('______', opt).replace(/<[^>]+>/g, '');
-                    speakDanish(spoken);
                 } else {
                     firstAttempt = false;
                     btn.classList.add('wrong');
@@ -2869,10 +2850,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 <span>${storyMeta[currentStoryIdx].icon}</span>
                 <span>${storyMeta[currentStoryIdx].title}</span>
             </div>
-            <button type="button" class="btn-action-listen" id="btn-listen-story" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; font-weight: 700;">
-                <span>🔊</span>
-                <span>Lyt til teksten</span>
-            </button>
         `;
         storyCard.appendChild(storyHeader);
 
@@ -3031,16 +3008,6 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 updateStoryProgress();
             };
         });
-
-        // Speech synthesis for story
-        storyHeader.querySelector('#btn-listen-story').onclick = () => {
-            let spokenText = currentStory.text;
-            Object.keys(currentStory.blanks).forEach(i => {
-                const repl = userChoices[i] || currentStory.blanks[i].answer;
-                spokenText = spokenText.replace(`[blank_${i}]`, repl);
-            });
-            speakDanish(spokenText);
-        };
 
         updateStoryProgress();
         container.appendChild(storyCard);

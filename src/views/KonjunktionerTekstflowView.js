@@ -21,14 +21,9 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     topBar.querySelector('.tf-back-btn').onclick = () => navigateFn(extraData.from || 'top_konjunktioner');
     viewContainer.appendChild(topBar);
 
-    // TTS Audio Helper
+    // Oplæsning deaktiveret i Konjunktioner og bindeord
     function speakDanish(text) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'da-DK';
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
+        return;
     }
 
     // 8 Traffic Signals
@@ -618,7 +613,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 pin.classList.add('active');
                 selectedSignal = sig;
                 renderInspector(inspectorDiv, sig);
-                speakDanish(`${sig.word}. ${sig.example}`);
             };
             body.appendChild(pin);
         });
@@ -673,9 +667,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         <span style="font-size: 0.88rem; color: #94a3b8; font-weight: 700; margin-left: 0.4rem;">– ${sig.role}</span>
                         <div style="font-size: 0.88rem; color: #cbd5e1; margin-top: 0.1rem;">${translatedDesc}</div>
                     </div>
-                    <button type="button" id="btn-speak-signal" class="action-btn-primary" style="background: ${sig.color}; padding: 0.35rem 0.75rem; font-size: 0.82rem;">
-                        🔊 ${getTranslation('konj_btn_listen_sentence')}
-                    </button>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.7); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid ${sig.color}; margin-bottom: 0.5rem;">
@@ -697,10 +688,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 </div>
             </div>
         `;
-
-        container.querySelector('#btn-speak-signal').onclick = () => {
-            speakDanish(`${sig.word}. ${sig.example}`);
-        };
     }
 
     // ==========================================
@@ -816,9 +803,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 <h2 style="margin: 0; font-size: 1.15rem; color: #f8fafc;">${story.title}</h2>
                 <p style="margin: 0.1rem 0 0; color: #94a3b8; font-size: 0.82rem;">${story.desc}</p>
             </div>
-            <button type="button" id="btn-speak-flow-story" class="action-btn-primary" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 0.3rem 0.6rem; font-size: 0.8rem;">
-                🔊 Lyt
-            </button>
         `;
         card.appendChild(header);
 
@@ -943,16 +927,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 updateStoryProgress();
             };
         });
-
-        // Speech listener
-        header.querySelector('#btn-speak-flow-story').onclick = () => {
-            let spoken = story.text;
-            Object.keys(story.blanks).forEach(i => {
-                const repl = storyChoices[currentStoryIdx][i] || story.blanks[i].answer;
-                spoken = spoken.replace(`[blank_${i}]`, repl);
-            });
-            speakDanish(spoken);
-        };
 
         updateStoryProgress();
         parent.appendChild(card);
@@ -1108,7 +1082,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     feedback.style.border = '1px solid #22c55e';
                     feedback.style.color = '#4ade80';
                     feedback.innerHTML = `✓ <strong>Rigtigt!</strong> "${pz.correctWord}" er korrekt. ${pz.reason}`;
-                    speakDanish(`Rigtigt! ${pz.badText.replace(pz.wrongWord, pz.correctWord)}`);
                 } else {
                     btn.style.background = '#dc2626';
 
@@ -1273,11 +1246,8 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
             <!-- Kompakt sammenligning: Uden bindeord øverst -->
             <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; padding: 0.55rem 0.75rem; margin-bottom: 0.6rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                <div style="margin-bottom: 0.25rem;">
                     <span style="font-weight: 700; font-size: 0.8rem; color: #f87171;">Uden bindeord (hakkende):</span>
-                    <button type="button" id="btn-listen-staccato" class="action-btn-primary" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 0.2rem 0.5rem; font-size: 0.75rem;">
-                        🔊 Lyt
-                    </button>
                 </div>
                 <div style="color: #cbd5e1; font-size: 0.88rem; line-height: 1.45;">
                     ${item.staccatoSummary}
@@ -1286,11 +1256,8 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
             <!-- Med bindeord: Den interaktive opgave -->
             <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 0.75rem 0.85rem; margin-bottom: 0.6rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <div style="margin-bottom: 0.4rem;">
                     <span style="font-weight: 700; font-size: 0.82rem; color: #4ade80;">Med bindeord (flydende sprog):</span>
-                    <button type="button" id="btn-listen-flow" class="action-btn-primary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">
-                        🔊 Lyt til flow
-                    </button>
                 </div>
                 <div id="stac-flow-text" style="font-size: 1.02rem; line-height: 1.75; color: #ffffff;">
                 </div>
@@ -1367,18 +1334,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 updateProgress();
             };
         });
-
-        card.querySelector('#btn-listen-staccato').onclick = () => {
-            speakDanish(item.staccato.join('. '));
-        };
-        card.querySelector('#btn-listen-flow').onclick = () => {
-            let spoken = item.flowStory;
-            Object.keys(item.blanks).forEach(i => {
-                const repl = staccatoChoices[currentStaccatoIdx][i] || item.blanks[i].answer;
-                spoken = spoken.replace(`[blank_${i}]`, repl);
-            });
-            speakDanish(spoken);
-        };
 
         updateProgress();
         parent.appendChild(card);
@@ -1463,7 +1418,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     feedback.style.border = '1px solid #22c55e';
                     feedback.style.color = '#4ade80';
                     feedback.innerHTML = `✓ <strong>Rigtigt!</strong> "${item.ans}" er korrekt. ${item.expl}`;
-                    speakDanish(`Rigtigt! ${item.q.replace('____', item.ans)}`);
                 } else {
                     b.style.background = '#dc2626';
 
@@ -1898,7 +1852,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                                 </div>
                             </div>
                             <div style="display: flex; gap: 0.25rem; flex-shrink: 0;" onclick="event.stopPropagation();">
-                                <button class="opbygning-arrow-btn btn-speak-strip" title="Lyt">🔊</button>
                                 <button class="opbygning-arrow-btn btn-up" ${idx === 0 ? 'disabled' : ''} title="Flyt op">▲</button>
                                 <button class="opbygning-arrow-btn btn-down" ${idx === state.userOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
                             </div>
@@ -1922,7 +1875,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                                 </div>
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 0.25rem; flex-shrink: 0;" onclick="event.stopPropagation();">
-                                <button class="opbygning-arrow-btn btn-speak-strip" title="Lyt">🔊</button>
                                 <button class="opbygning-arrow-btn btn-up" ${idx === 0 ? 'disabled' : ''} title="Flyt op">▲</button>
                                 <button class="opbygning-arrow-btn btn-down" ${idx === state.userOrder.length - 1 ? 'disabled' : ''} title="Flyt ned">▼</button>
                             </div>
@@ -1949,10 +1901,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 };
 
                 // Button handlers
-                card.querySelector('.btn-speak-strip').onclick = (e) => {
-                    e.stopPropagation();
-                    speakDanish(strip.text);
-                };
                 card.querySelector('.btn-up').onclick = (e) => {
                     e.stopPropagation();
                     if (idx > 0) {
@@ -2005,18 +1953,11 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         Alle 9 strimler står i den logiske rækkefølge. Tekstflowet hænger nu fuldstændigt sammen.
                     </div>
                     <div style="display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap;">
-                        <button id="btn-speak-all" class="action-btn-primary" style="padding: 0.35rem 0.8rem; font-size: 0.82rem;">
-                            🔊 Lyt til hele e-mailen
-                        </button>
                         <button id="btn-go-model-b" class="action-btn-primary" style="background: #8b5cf6; padding: 0.35rem 0.8rem; font-size: 0.82rem;">
                             Se byggeklodserne (Model B) ➔
                         </button>
                     </div>
                 `;
-                feedbackBox.querySelector('#btn-speak-all').onclick = () => {
-                    const fullText = state.userOrder.map(s => s.text).join(' ');
-                    speakDanish(fullText);
-                };
                 feedbackBox.querySelector('#btn-go-model-b').onclick = () => {
                     opbygningSubTab = 'model_b';
                     renderTabOpbygning(parent);
@@ -2113,9 +2054,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                                     <span style="font-weight: 800; color: ${cat.color}; font-size: 0.95rem;">${cat.label}</span>
                                     <span style="color: #94a3b8; font-size: 0.8rem; margin-left: 0.35rem;">(${cat.desc})</span>
                                 </div>
-                                <button class="opbygning-arrow-btn btn-speak-block" data-cat="${cat.id}" style="width: auto; height: auto; padding: 0.2rem 0.5rem; font-size: 0.75rem;">
-                                    🔊 Lyt
-                                </button>
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                                 ${strips.map(s => `
@@ -2133,17 +2071,6 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     `;
                 }).join('')}
             `;
-
-            contentDiv.querySelectorAll('.btn-speak-block').forEach(btn => {
-                btn.onclick = () => {
-                    const cId = btn.getAttribute('data-cat');
-                    const cat = currentEx.categories.find(c => c.id === cId);
-                    if (cat) {
-                        const text = currentEx.data.filter(s => cat.strips.includes(s.id)).map(s => s.text).join(' ');
-                        speakDanish(text);
-                    }
-                };
-            });
         } else {
             // Farvelæg selv: Interactive categorization
             contentDiv.innerHTML = `

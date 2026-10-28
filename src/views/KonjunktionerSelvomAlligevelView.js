@@ -34,13 +34,9 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
+    // TTS Audio Helper (disabled)
     function speakDanish(text) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'da-DK';
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
+        return;
     }
 
     // 10 Hotspots on assets/selvom_alligevel_vrimmel.jpg
@@ -703,7 +699,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             `;
             pin.onclick = () => {
                 updateInspector(item, true);
-                speakDanish(item.sentence);
             };
             stage.appendChild(pin);
         });
@@ -743,7 +738,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                         <div style="font-size:0.75rem; font-weight:800; color:#fdba74; margin-bottom:0.3rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="sa-speak-btn">🔊 ${getTranslation('konj_btn_listen_sentence')}</button>
                     </div>
                     <div class="inspector-scene-box" style="border-left:3px solid #38bdf8;">
                         <div style="font-size:0.8rem; font-weight:800; color:#7dd3fc;">🧭 Kognitiv & Grammatisk Regel</div>
@@ -756,18 +750,15 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                 </div>
             `;
 
-            inspector.querySelector('#sa-speak-btn').onclick = () => speakDanish(item.sentence);
             inspector.querySelector('#sa-prev').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const prev = visibleWords[(i - 1 + visibleWords.length) % visibleWords.length];
                 updateInspector(prev, false);
-                speakDanish(prev.sentence);
             };
             inspector.querySelector('#sa-next').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const next = visibleWords[(i + 1) % visibleWords.length];
                 updateInspector(next, false);
-                speakDanish(next.sentence);
             };
             if (scroll) inspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -905,7 +896,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
                     fb.textContent = ok ? q.explanation : '⚠️ Tænk på illustrationen: Bygger vi 🧱 muren/forhindringen op (selvom), eller bryder ☄️ bolden igennem muren (alligevel)?';
-                    if (ok) speakDanish(q.quote.replace('______', q.correct).replace(/"/g, ''));
                 };
             });
             list.appendChild(card);
@@ -1067,7 +1057,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
                     fb.textContent = ok ? q.explanation : '⚠️ Tjek både hvem der er muren/bolden OG ordstillingen!';
-                    if (ok) speakDanish(q.correct);
                 };
             });
             list.appendChild(card);
@@ -1129,9 +1118,6 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     b.onclick = () => {
                         placed.push(pool[Number(b.dataset.add)]);
                         draw();
-                        if (placed.length === p.correct.length && placed.every((w, i) => w === p.correct[i])) {
-                            speakDanish(p.correct.join(' '));
-                        }
                     };
                 });
                 card.querySelectorAll('[data-rm]').forEach(b => {

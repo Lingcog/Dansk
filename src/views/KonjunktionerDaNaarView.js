@@ -36,14 +36,9 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
-    // TTS Audio Helper
+    // TTS Audio Helper (disabled)
     function speakDanish(text) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'da-DK';
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
+        return;
     }
 
     // 12 Hotspots on assets/da_naar_vrimmel.jpg
@@ -814,7 +809,6 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             `;
             pin.onclick = () => {
                 updateInspector(item, true);
-                speakDanish(item.sentence);
             };
             stage.appendChild(pin);
         });
@@ -854,7 +848,6 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                         <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; margin-bottom:0.3rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
                         ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="dn-speak-btn">🔊 ${getTranslation('konj_btn_listen_sentence')}</button>
                     </div>
                     <div class="inspector-scene-box" style="border-left:3px solid #f59e0b;">
                         <div style="font-size:0.8rem; font-weight:800; color:#fde68a;">🧭 Kognitiv & Grammatisk Regel</div>
@@ -867,18 +860,15 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                 </div>
             `;
 
-            inspector.querySelector('#dn-speak-btn').onclick = () => speakDanish(item.sentence);
             inspector.querySelector('#dn-prev').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const prev = visibleWords[(i - 1 + visibleWords.length) % visibleWords.length];
                 updateInspector(prev, false);
-                speakDanish(prev.sentence);
             };
             inspector.querySelector('#dn-next').onclick = () => {
                 const i = visibleWords.findIndex(w => w.id === item.id);
                 const next = visibleWords[(i + 1) % visibleWords.length];
                 updateInspector(next, false);
-                speakDanish(next.sentence);
             };
             if (scroll) inspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -1037,7 +1027,6 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     fb.innerHTML = isRight
                         ? `${q.explanation}`
                         : `⚠️ Ikke helt – tænk på om det er 📌 Tegnestiften (1 gang i fortiden = da), 🔁 Cirklen (vane = når) eller 🏹 Pilen (fremtid = når).`;
-                    if (isRight) speakDanish(q.quote.replace('______', q.correct).replace(/"/g, ''));
                 };
             });
             list.appendChild(item);
@@ -1269,9 +1258,6 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     b.onclick = () => {
                         placed.push(pool[Number(b.dataset.add)]);
                         draw();
-                        if (placed.length === p.correct.length && placed.every((w, i) => w === p.correct[i])) {
-                            speakDanish(p.correct.join(' '));
-                        }
                     };
                 });
                 card.querySelectorAll('[data-rm]').forEach(b => {

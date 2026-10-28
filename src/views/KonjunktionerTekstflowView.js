@@ -131,6 +131,32 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             example: 'Da jeg boede i Aarhus, cyklede jeg hver dag.',
             example_en: 'When I lived in Aarhus, I cycled every day.',
             translations: { en: 'when (past)', de: 'als', es: 'cuando (pasado)', ar: 'عِنْدَمَا', tr: '-diğinde', uk: 'коли' }
+        },
+        {
+            id: 'saa',
+            word: 'så',
+            role: 'Følge / resultat',
+            category: 'virkning',
+            color: '#f59e0b',
+            x: 18,
+            y: 68,
+            desc: 'Viser den direkte følge eller næste handling (uden inversion).',
+            example: 'Bussen var kørt, så hun tog en taxa for at nå frem.',
+            example_en: 'The bus had left, so she took a taxi to get there.',
+            translations: { en: 'so', de: 'also / so', es: 'así que', ar: 'لِذَلِكَ / إِذَنْ', tr: 'bu yüzden', uk: 'тож / тому' }
+        },
+        {
+            id: 'at',
+            word: 'at',
+            role: 'Udsagn og indhold',
+            category: 'indhold',
+            color: '#14b8a6',
+            x: 48,
+            y: 22,
+            desc: 'Forbinder en hovedsætning med en ledsætning om viden, udsagn eller fakta.',
+            example: 'Hun vidste godt, at det var vigtigt at komme til tiden.',
+            example_en: 'She knew very well that it was important to be on time.',
+            translations: { en: 'that', de: 'dass', es: 'que', ar: 'أَنَّ', tr: '-diğini / ki', uk: 'що' }
         }
     ];
 
@@ -575,14 +601,15 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         header.className = 'tf-stage-header';
         header.innerHTML = `
             <div style="font-weight: 700; font-size: 0.88rem; color: #f8fafc;">
-                Trafikcentralen: 8 centrale signaler
+                Trafikcentralen: 10 centrale signaler
             </div>
             <div id="tf-filter-btns">
-                <button class="action-btn-primary" data-filter="all" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; flex-shrink: 0;">Alle (8)</button>
+                <button class="action-btn-primary" data-filter="all" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; flex-shrink: 0;">Alle (10)</button>
                 <button class="action-btn-primary" data-filter="sideordning" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; background: #334155; flex-shrink: 0;">og, men</button>
-                <button class="action-btn-primary" data-filter="aarsag" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; background: #334155; flex-shrink: 0;">fordi, derfor</button>
+                <button class="action-btn-primary" data-filter="aarsag" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; background: #334155; flex-shrink: 0;">fordi, derfor, så</button>
                 <button class="action-btn-primary" data-filter="trods" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; background: #334155; flex-shrink: 0;">selvom, alligevel</button>
                 <button class="action-btn-primary" data-filter="tid" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; background: #334155; flex-shrink: 0;">da, når</button>
+                <button class="action-btn-primary" data-filter="indhold" style="padding: 0.25rem 0.55rem; font-size: 0.76rem; background: #334155; flex-shrink: 0;">at</button>
             </div>
         `;
         stageWrap.appendChild(header);
@@ -638,6 +665,8 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     } else if (f === 'trods' && cat === 'trods') {
                         p.style.display = 'flex';
                     } else if (f === 'tid' && cat === 'tid') {
+                        p.style.display = 'flex';
+                    } else if (f === 'indhold' && cat === 'indhold') {
                         p.style.display = 'flex';
                     } else {
                         p.style.display = 'none';
@@ -698,14 +727,16 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             id: 'historie1',
             title: '1. Mathias på cykel',
             desc: 'Cykelbuddet i snevejr.',
-            text: "Mathias er cykelbud. [blank_0] det sner, er det hårdt at cykle. I dag vælter sneen ned. [blank_1] kører han forsigtigt. Han fryser om fingrene, [blank_2] han glemte sine handsker. [blank_3] det er koldt, smiler han til kunderne. Han er træt, men han fortsætter [blank_4] med pakkerne. [blank_5] klokken slog 16 i går, var cyklen flad.",
+            text: "Mathias er cykelbud. [blank_0] det sner, er det hårdt at cykle. I dag vælter sneen ned. [blank_1] kører han forsigtigt. Han fryser om fingrene, [blank_2] han glemte sine handsker. [blank_3] det er koldt, smiler han til kunderne. Han er træt, men han fortsætter [blank_4] med pakkerne. [blank_5] klokken slog 16 i går, var cyklen flad. Mathias vidste godt, [blank_6] sikkerheden var vigtigst, [blank_7] han tændte cykellygten i mørket.",
             blanks: {
                 "0": { options: ["Når", "Da", "Fordi"], answer: "Når", hint: "'Når' bruges om gentagne vaner." },
                 "1": { options: ["Derfor", "Fordi", "Men"], answer: "Derfor", hint: "Den forsigtige kørsel er resultatet: 'Derfor'." },
                 "2": { options: ["fordi", "derfor", "selvom"], answer: "fordi", hint: "De glemte handsker er årsagen til kulden: 'fordi'." },
                 "3": { options: ["Selvom", "Alligevel", "Da"], answer: "Selvom", hint: "Kulden er en forhindring: 'Selvom'." },
                 "4": { options: ["alligevel", "selvom", "fordi"], answer: "alligevel", hint: "Han fortsætter på trods: 'alligevel'." },
-                "5": { options: ["Da", "Når", "Derfor"], answer: "Da", hint: "Én bestemt begivenhed i fortiden: 'Da'." }
+                "5": { options: ["Da", "Når", "Derfor"], answer: "Da", hint: "Én bestemt begivenhed i fortiden: 'Da'." },
+                "6": { options: ["at", "om", "hvis"], answer: "at", hint: "Udsagn om viden i ledsætning: 'at'." },
+                "7": { options: ["så", "fordi", "selvom"], answer: "så", hint: "Direkte handling og følge: 'så'." }
             }
         },
         {
@@ -740,14 +771,16 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             id: 'historie4',
             title: '4. Amina til samtale',
             desc: 'Den vigtige jobsamtale.',
-            text: "Amina søger job. [blank_0] hun skal til en vigtig samtale, forbereder hun sig grundigt. I går morges var hun spændt. [blank_1] hun trådte ind ad døren, bankede hendes hjerte. Hun var nervøs, [blank_2] hun gerne ville gøre et godt indtryk. [blank_3] øvede hun sin præsentation en ekstra gang. [blank_4] spørgsmålene var svære, svarede hun roligt. Da samtalen sluttede, fik hun jobbet [blank_5]!",
+            text: "Amina søger job. [blank_0] hun skal til en vigtig samtale, forbereder hun sig grundigt. I går morges var hun spændt. [blank_1] hun trådte ind ad døren, bankede hendes hjerte. Hun var nervøs, [blank_2] hun gerne ville gøre et godt indtryk. [blank_3] øvede hun sin præsentation en ekstra gang. [blank_4] spørgsmålene var svære, svarede hun roligt. Da samtalen sluttede, fik hun jobbet [blank_5]! Lederen sagde, [blank_6] Amina passede perfekt til teamet, [blank_7] hun fejrede nyheden med familien.",
             blanks: {
                 "0": { options: ["Når", "Da", "Derfor"], answer: "Når", hint: "Hendes faste forberedelsesvane: 'Når'." },
                 "1": { options: ["Da", "Når", "Fordi"], answer: "Da", hint: "Tidspunktet i går da hun trådte ind: 'Da'." },
                 "2": { options: ["fordi", "derfor", "alligevel"], answer: "fordi", hint: "Ønsket om et godt indtryk er årsagen: 'fordi'." },
                 "3": { options: ["Derfor", "Fordi", "Selvom"], answer: "Derfor", hint: "Handlingen der følger af nervøsiteten: 'Derfor'." },
                 "4": { options: ["Selvom", "Alligevel", "Da"], answer: "Selvom", hint: "De svære spørgsmål var forhindringen: 'Selvom'." },
-                "5": { options: ["med det samme", "alligevel", "fordi"], answer: "med det samme", hint: "Succesen kom lige efter samtalen." }
+                "5": { options: ["med det samme", "alligevel", "fordi"], answer: "med det samme", hint: "Succesen kom lige efter samtalen." },
+                "6": { options: ["at", "om", "hvorfor"], answer: "at", hint: "Udsagn fra lederen i ledsætning: 'at'." },
+                "7": { options: ["så", "men", "da"], answer: "så", hint: "Følge og fejring: 'så'." }
             }
         }
     ];
@@ -1015,6 +1048,22 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
             correctWord: "fordi",
             options: ["men", "fordi", "selvom", "derfor"],
             reason: "Forklaring og årsag: 'fordi'."
+        },
+        {
+            id: 11,
+            badText: "Bussen kørte lige foran hende, FORDI tog hun en taxa for at nå frem.",
+            wrongWord: "FORDI",
+            correctWord: "så",
+            options: ["fordi", "så", "men", "selvom"],
+            reason: "Taxaturen er den direkte handling og følge: 'så'."
+        },
+        {
+            id: 12,
+            badText: "Chefen lovede, HVAD han ville ringe tilbage inden klokken 15.",
+            wrongWord: "HVAD",
+            correctWord: "at",
+            options: ["hvad", "at", "om", "fordi"],
+            reason: "Udsagn og løfte i ledsætning kræver 'at'."
         }
     ];
 
@@ -1149,20 +1198,22 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         },
         {
             title: "Søndagsturen i skoven",
-            staccatoSummary: "1. Det var koldt udenfor. 2. Familien tog flyverdragter på. 3. De kørte ud til skoven. 4. Børnene legede gemmeleg. 5. De kørte hjem da solen gik ned.",
+            staccatoSummary: "1. Det var koldt udenfor. 2. Familien tog flyverdragter på. 3. Forældrene huskede at skoven var glat. 4. Børnene legede gemmeleg. 5. De kørte hjem da solen gik ned.",
             staccato: [
-                "Det var koldt udenfor.",
+                "Det var koldt udenfor i søndags.",
                 "Familien tog varme flyverdragter på.",
-                "De kørte ud til den store skov.",
-                "Børnene legede gemmeleg mellem træerne.",
-                "Solen gik ned og de kørte hjem."
+                "Forældrene huskede, at stierne var glatte.",
+                "De kom ud til den store skov.",
+                "Børnene legede gemmeleg, selvom kulden bed.",
+                "Solen gik ned, så de kørte hjem."
             ],
-            flowStory: "Det var koldt udenfor i søndags. [blank_0] tog familien varme flyverdragter på. [blank_1] de kom ud til skoven, legede børnene gemmeleg, [blank_2] kulden bed i kinderne. [blank_3] solen gik ned, kørte de glade hjem.",
+            flowStory: "Det var koldt udenfor i søndags. [blank_0] tog familien varme flyverdragter på. Forældrene huskede, [blank_1] stierne i skoven var glatte. [blank_2] de kom frem til skoven, legede børnene gemmeleg, [blank_3] kulden bed i kinderne. Solen gik hurtigt ned, [blank_4] de kørte glade hjem.",
             blanks: {
                 "0": { options: ["Derfor", "Fordi", "Men"], answer: "Derfor" },
-                "1": { options: ["Da", "Når", "Selvom"], answer: "Da" },
-                "2": { options: ["selvom", "fordi", "hvis"], answer: "selvom" },
-                "3": { options: ["Da", "Når", "Derfor"], answer: "Da" }
+                "1": { options: ["at", "om", "hvis"], answer: "at" },
+                "2": { options: ["Da", "Når", "Selvom"], answer: "Da" },
+                "3": { options: ["selvom", "fordi", "hvis"], answer: "selvom" },
+                "4": { options: ["så", "men", "da"], answer: "så" }
             }
         },
         {
@@ -1354,7 +1405,12 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         { q: "____ vækkeuret ringer, vågner jeg med det samme.", pair: ["Da", "Når"], ans: "Når", expl: "Gentagen hverdagsrutine: 'Når'." },
         { q: "Han var syg. ____ gik han glip af festen.", pair: ["Fordi", "Derfor"], ans: "Derfor", expl: "Resultatet af sygdommen: 'Derfor'." },
         { q: "Han bestod, ____ han havde læst grundigt.", pair: ["fordi", "derfor"], ans: "fordi", expl: "Læsningen var årsagen: 'fordi'." },
-        { q: "____ jeg var barn, troede jeg på julemanden.", pair: ["Da", "Når"], ans: "Da", expl: "Afsluttet tid i fortiden: 'Da'." }
+        { q: "____ jeg var barn, troede jeg på julemanden.", pair: ["Da", "Når"], ans: "Da", expl: "Afsluttet tid i fortiden: 'Da'." },
+        { q: "Det regnede kraftigt, ____ hun tog en taxa for at nå frem.", pair: ["så", "fordi"], ans: "så", expl: "Handling og konsekvens: 'så' ('fordi' ville give grunden til regnen)." },
+        { q: "Hun tog en taxa, ____ det regnede kraftigt.", pair: ["fordi", "så"], ans: "fordi", expl: "Årsagen til taxaturen: 'fordi'." },
+        { q: "Lars forklarede læreren, ____ han havde glemt sin bog.", pair: ["at", "om"], ans: "at", expl: "Udsagn om en faktisk hændelse: 'at'." },
+        { q: "Læreren spurgte Lars, ____ han havde husket sine lektier.", pair: ["om", "at"], ans: "om", expl: "Spørgsmål med ja/nej-valg: 'om' ('at' bruges til konstateringer)." },
+        { q: "Køkkenet manglede brød, ____ Hassan løb hen til bageren.", pair: ["så", "derfor"], ans: "så", expl: "Forbinder sætninger uden omvendt ordstilling ('så Hassan løb...')." }
     ];
 
     let duelIdx = 0;

@@ -28,7 +28,7 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage til Arbejde'}`;
+    backBtn.innerHTML = getTranslation('arbejde_back_to_hub', '← Tilbage til Arbejde');
     backBtn.onclick = () => navigateFn('mit_hverdagsliv_arbejde');
     topBar.appendChild(backBtn);
 
@@ -36,10 +36,10 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     workplaceSwitch.style.cssText = 'display:flex; gap:0.45rem; flex-wrap:wrap;';
     workplaceSwitch.innerHTML = `
         <button type="button" id="kk-switch-bil" style="background:#1e293b; color:#cbd5e1; border:1.5px solid #475569; padding:0.45rem 0.95rem; border-radius:20px; font-weight:800; font-size:0.84rem; cursor:pointer;">
-            🔧 Bilværksted
+            ${getTranslation('arbejde_switch_to_bil', '🔧 Skift til Bilværksted ➔')}
         </button>
         <button type="button" id="kk-switch-koekken" style="background:#16a34a; color:white; border:1.5px solid #4ade80; padding:0.45rem 0.95rem; border-radius:20px; font-weight:800; font-size:0.84rem; cursor:pointer;">
-            👩‍🍳 Køkkenassistent (Aktiv)
+            👩‍🍳 ${getTranslation('arbejde_koekken_title', 'Som køkkenassistent')} ${getTranslation('arbejde_active_label', '(Aktiv)')}
         </button>
     `;
     workplaceSwitch.querySelector('#kk-switch-bil').onclick = () => navigateFn('mit_hverdagsliv_arbejde_bilvaerksted');
@@ -1474,9 +1474,9 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     const heroHeader = document.createElement('div');
     heroHeader.className = 'kk-hero-header';
     heroHeader.innerHTML = `
-        <div class="kk-hero-badge">👩‍🍳 Mit hverdagsliv • Arbejde: Storkøkken & Kantine</div>
-        <h1>🥗 Som køkkenassistent</h1>
-        <p>Udforsk hverdagen i et dansk storkøkken og kantine med 32 målord, hygiejneudtryk, historier, dialoger og taletræning til dine første 3 måneder.</p>
+        <div class="kk-hero-badge">${getTranslation('arbejde_koekken_badge', '👩‍🍳 Mit hverdagsliv • Arbejde: Storkøkken & Kantine')}</div>
+        <h1>${getTranslation('arbejde_koekken_title', '🥗 Som køkkenassistent')}</h1>
+        <p>${getTranslation('arbejde_koekken_desc', 'Udforsk hverdagen i et dansk storkøkken og kantine med 32 målord, hygiejneudtryk, historier, dialoger og taletræning til dine første 3 måneder.')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -1484,13 +1484,13 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'kk-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede', icon: '🔍' },
-        { id: 'tab_detektiv', label: '2. Ord-detektiv', icon: '🕵️' },
-        { id: 'tab_syn_ant', label: '3. Synonymer & Antonymer', icon: '🔄' },
-        { id: 'tab_historie', label: '4. Historier', icon: '📖' },
-        { id: 'tab_saetning', label: '5. Sætningsbygning', icon: '✍️' },
-        { id: 'tab_dialog', label: '6. Mundtlige dialoger', icon: '💬' },
-        { id: 'tab_udtale', label: '7. Sig det højt (Betoning)', icon: '🎙️' }
+        { id: 'tab_vrimmel', label: getTranslation('arbejde_tab_vrimmel', '1. Vrimlebillede'), icon: '🔍' },
+        { id: 'tab_detektiv', label: getTranslation('arbejde_tab_detektiv', '2. Ord-detektiv'), icon: '🕵️' },
+        { id: 'tab_syn_ant', label: getTranslation('arbejde_tab_synonymer', '3. Synonymer & Antonymer'), icon: '🔄' },
+        { id: 'tab_historie', label: getTranslation('arbejde_tab_historier', '4. Historier'), icon: '📖' },
+        { id: 'tab_saetning', label: getTranslation('arbejde_tab_saetninger', '5. Sætningsbygning'), icon: '✍️' },
+        { id: 'tab_dialog', label: getTranslation('arbejde_tab_dialoger', '6. Mundtlige dialoger'), icon: '💬' },
+        { id: 'tab_udtale', label: getTranslation('arbejde_tab_betoning', '7. Sig det højt (Betoning)'), icon: '🎙️' }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
@@ -1539,11 +1539,11 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     const filterGroup = document.createElement('div');
     filterGroup.className = 'kk-filter-group';
     const filters = [
-        { key: 'all', label: 'Alle 32 målord' },
-        { key: 'substantiv', label: '🟢 Substantiver (16)' },
-        { key: 'verbum', label: '🔴 Verber (8)' },
-        { key: 'adjektiv', label: '🟠 Adjektiver (4)' },
-        { key: 'adverbium', label: '🔵 Adverbier (4)' }
+        { key: 'all', label: getTranslation('arbejde_filter_all', 'Alle 32 målord') },
+        { key: 'substantiv', label: `${getTranslation('arbejde_filter_sub', '🟢 Substantiver')} (16)` },
+        { key: 'verbum', label: `${getTranslation('arbejde_filter_vrb', '🔴 Verber')} (8)` },
+        { key: 'adjektiv', label: `${getTranslation('arbejde_filter_adj', '🟠 Adjektiver')} (4)` },
+        { key: 'adverbium', label: `${getTranslation('arbejde_filter_adv', '🔵 Adverbier')} (4)` }
     ];
 
     let activeWordClassFilter = 'all';
@@ -1569,9 +1569,9 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     toolsRight.className = 'kk-tools-right';
 
     [
-        { label: '🔍 1x', cls: '' },
-        { label: '🔍 1.5x', cls: 'zoom-15x' },
-        { label: '🔍 2x (Mobil)', cls: 'zoom-2x' }
+        { label: getTranslation('arbejde_zoom_1', '🔍 1x'), cls: '' },
+        { label: getTranslation('arbejde_zoom_15', '🔍 1.5x'), cls: 'zoom-15x' },
+        { label: getTranslation('arbejde_zoom_2', '🔍 2x (Mobil)'), cls: 'zoom-2x' }
     ].forEach((z, idx) => {
         const zb = document.createElement('button');
         zb.className = `kk-zoom-btn ${idx === 0 ? 'active' : ''}`;
@@ -1587,13 +1587,15 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'kk-pure-btn';
-    pureBtn.innerHTML = '🖼️ Vis rent billede';
     let isPure = false;
+    pureBtn.innerHTML = getTranslation('arbejde_pure_btn_show', '🖼️ Vis rent billede');
     pureBtn.onclick = () => {
         isPure = !isPure;
         stage.classList.toggle('pure-mode', isPure);
         pureBtn.classList.toggle('active', isPure);
-        pureBtn.innerHTML = isPure ? '🔢 Vis alle 32 tal' : '🖼️ Vis rent billede';
+        pureBtn.innerHTML = isPure
+            ? getTranslation('arbejde_pure_btn_hide', '🔢 Vis alle 32 tal')
+            : getTranslation('arbejde_pure_btn_show', '🖼️ Vis rent billede');
     };
     toolsRight.appendChild(pureBtn);
     toolbar.appendChild(toolsRight);
@@ -1627,11 +1629,11 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
 
         const meta = CLASS_META[item.wordClass];
         const genderBadge = item.gender
-            ? `<span class="kk-class-badge" style="background:${item.gender === 'en' ? 'rgba(56,189,248,0.2)' : 'rgba(249,115,22,0.2)'}; color:${item.gender === 'en' ? '#38bdf8' : '#fb923c'}; border:1px solid ${item.gender === 'en' ? '#0284c7' : '#ea580c'};">${item.gender.toUpperCase()}-ORD</span>`
+            ? `<span class="kk-class-badge" style="background:${item.gender === 'en' ? 'rgba(56,189,248,0.2)' : 'rgba(249,115,22,0.2)'}; color:${item.gender === 'en' ? '#38bdf8' : '#fb923c'}; border:1px solid ${item.gender === 'en' ? '#0284c7' : '#ea580c'};">${item.gender === 'en' ? getTranslation('arbejde_gender_en', 'EN-ORD') : getTranslation('arbejde_gender_et', 'ET-ORD')}</span>`
             : '';
         const coreBadge = item.isCore
-            ? `<span class="kk-class-badge" style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid #a855f7;">⭐ Kerneord</span>`
-            : `<span class="kk-class-badge" style="background:rgba(20,184,166,0.2); color:#5eead4; border:1px solid #14b8a6;">👩‍🍳 Fagterm i køkkenet</span>`;
+            ? `<span class="kk-class-badge" style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid #a855f7;">${getTranslation('arbejde_core_badge', '⭐ Kerneord')}</span>`
+            : `<span class="kk-class-badge" style="background:rgba(20,184,166,0.2); color:#5eead4; border:1px solid #14b8a6;">${getTranslation('arbejde_pro_badge', '👩‍🍳 Fagterm i køkkenet')}</span>`;
 
         detailBox.innerHTML = `
             <div style="flex: 1; min-width: 260px;">
@@ -1647,10 +1649,10 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     ${item.forms}
                 </div>
                 <div class="kk-def-box">
-                    <strong>📖 Betydning:</strong> ${item.definition}
+                    <strong>${getTranslation('arbejde_meaning_label', '📖 Betydning:')}</strong> ${item.definition}
                 </div>
                 <div class="kk-terms-box">
-                    <strong>👩‍🍳 Faste køkkenudtryk:</strong> ${item.fixedTerms}
+                    <strong>${getTranslation('arbejde_fixed_terms_label', '👩‍🍳 Faste køkkenudtryk:')}</strong> ${item.fixedTerms}
                 </div>
                 <div style="font-size: 1.05rem; color: #f8fafc; font-style: italic; margin-top: 0.4rem;">
                     "💬 ${item.sentence}"
@@ -1659,13 +1661,13 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <button class="listen-word-btn" id="kk-listen-word" style="background:#2563eb; color:white; border:none; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
-                        🔊 Lyt til ordet
+                        ${getTranslation('arbejde_listen_word', '🔊 Lyt til ordet')}
                     </button>
                     <button class="listen-word-btn" id="kk-listen-sentence" style="background:#0f172a; color:#38bdf8; border:1.5px solid #0284c7; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
-                        🔊 Lyt til sætning
+                        ${getTranslation('arbejde_listen_sentence', '🔊 Lyt til sætning')}
                     </button>
                     <button class="listen-word-btn" id="kk-show-trans" style="background:rgba(34,197,94,0.16); color:#4ade80; border:1.5px solid #22c55e; padding:0.7rem 1.1rem; border-radius:12px; font-weight:700; cursor:pointer;">
-                        🌍 Vis oversættelse
+                        ${getTranslation('arbejde_show_translation', '🌍 Vis oversættelse')}
                     </button>
                 </div>
             </div>

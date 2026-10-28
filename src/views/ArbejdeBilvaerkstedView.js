@@ -31,15 +31,15 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage til Arbejde'}`;
+    backBtn.innerHTML = getTranslation('arbejde_back_to_hub', '← Tilbage til Arbejde');
     backBtn.onclick = () => navigateFn('mit_hverdagsliv_arbejde');
     topBar.appendChild(backBtn);
 
     const workplaceSwitch = document.createElement('div');
     workplaceSwitch.style.cssText = 'display: flex; gap: 0.5rem; align-items: center;';
     workplaceSwitch.innerHTML = `
-        <span style="background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; color: #38bdf8; padding: 0.45rem 0.9rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem;">🔧 Bilværksted (Aktiv)</span>
-        <button id="switch-to-koekken-btn" style="background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.45); color: #fb923c; padding: 0.45rem 0.9rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer;">👩‍🍳 Skift til Køkkenassistent ➔</button>
+        <span style="background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; color: #38bdf8; padding: 0.45rem 0.9rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem;">🔧 ${getTranslation('arbejde_bilvaerksted_title', 'På bilværkstedet')} ${getTranslation('arbejde_active_label', '(Aktiv)')}</span>
+        <button id="switch-to-koekken-btn" style="background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.45); color: #fb923c; padding: 0.45rem 0.9rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer;">${getTranslation('arbejde_switch_to_koekken', '👩‍🍳 Skift til Køkkenassistent ➔')}</button>
     `;
     workplaceSwitch.querySelector('#switch-to-koekken-btn').onclick = () => navigateFn('mit_hverdagsliv_arbejde_koekken');
     topBar.appendChild(workplaceSwitch);
@@ -1579,9 +1579,9 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     const heroHeader = document.createElement('div');
     heroHeader.className = 'bv-hero-header';
     heroHeader.innerHTML = `
-        <div class="bv-hero-badge">💼 Mit hverdagsliv • Scenarie 1: Arbejde</div>
-        <h1>🔧 På bilværkstedet</h1>
-        <p>Udforsk hverdagen på et dansk autoværksted med 32 målord og faste fagtermer fordelt på alle fire ordklasser.</p>
+        <div class="bv-hero-badge">${getTranslation('arbejde_bilvaerksted_badge', '💼 Mit hverdagsliv • Scenarie 1: Arbejde')}</div>
+        <h1>${getTranslation('arbejde_bilvaerksted_title', '🔧 På bilværkstedet')}</h1>
+        <p>${getTranslation('arbejde_bilvaerksted_desc', 'Udforsk hverdagen på et dansk autoværksted med 32 målord og faste fagtermer fordelt på alle fire ordklasser.')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -1589,13 +1589,13 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'bv-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede', icon: '🔍' },
-        { id: 'tab_detektiv', label: '2. Ord-detektiv', icon: '🕵️' },
-        { id: 'tab_syn_ant', label: '3. Synonymer & Antonymer', icon: '🔄' },
-        { id: 'tab_historie', label: '4. Historier', icon: '📖' },
-        { id: 'tab_saetning', label: '5. Sætningsbygning', icon: '✍️' },
-        { id: 'tab_dialog', label: '6. Mundtlige dialoger', icon: '💬' },
-        { id: 'tab_udtale', label: '7. Sig det højt (Betoning)', icon: '🎙️' }
+        { id: 'tab_vrimmel', label: getTranslation('arbejde_tab_vrimmel', '1. Vrimlebillede'), icon: '🔍' },
+        { id: 'tab_detektiv', label: getTranslation('arbejde_tab_detektiv', '2. Ord-detektiv'), icon: '🕵️' },
+        { id: 'tab_syn_ant', label: getTranslation('arbejde_tab_synonymer', '3. Synonymer & Antonymer'), icon: '🔄' },
+        { id: 'tab_historie', label: getTranslation('arbejde_tab_historier', '4. Historier'), icon: '📖' },
+        { id: 'tab_saetning', label: getTranslation('arbejde_tab_saetninger', '5. Sætningsbygning'), icon: '✍️' },
+        { id: 'tab_dialog', label: getTranslation('arbejde_tab_dialoger', '6. Mundtlige dialoger'), icon: '💬' },
+        { id: 'tab_udtale', label: getTranslation('arbejde_tab_betoning', '7. Sig det højt (Betoning)'), icon: '🎙️' }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
@@ -1644,11 +1644,11 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     const filterGroup = document.createElement('div');
     filterGroup.className = 'bv-filter-group';
     const filters = [
-        { id: 'all', label: 'Alle (32)' },
-        { id: 'substantiv', label: '🟢 Substantiver (16)' },
-        { id: 'verbum', label: '🔴 Verber (8)' },
-        { id: 'adjektiv', label: '🟠 Adjektiver (4)' },
-        { id: 'adverbium', label: '🔵 Adverbier (4)' }
+        { id: 'all', label: getTranslation('arbejde_filter_all', 'Alle (32)') },
+        { id: 'substantiv', label: `${getTranslation('arbejde_filter_sub', '🟢 Substantiver')} (16)` },
+        { id: 'verbum', label: `${getTranslation('arbejde_filter_vrb', '🔴 Verber')} (8)` },
+        { id: 'adjektiv', label: `${getTranslation('arbejde_filter_adj', '🟠 Adjektiver')} (4)` },
+        { id: 'adverbium', label: `${getTranslation('arbejde_filter_adv', '🔵 Adverbier')} (4)` }
     ];
     let activeFilter = 'all';
 
@@ -1672,9 +1672,9 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     toolsRight.className = 'bv-tools-right';
 
     const zoomLevels = [
-        { id: '10', label: '🔍 1x', cls: '' },
-        { id: '15', label: '🔍 1.5x', cls: 'zoom-15' },
-        { id: '20', label: '🔍 2x', cls: 'zoom-20' }
+        { id: '10', label: getTranslation('arbejde_zoom_1', '🔍 1x'), cls: '' },
+        { id: '15', label: getTranslation('arbejde_zoom_15', '🔍 1.5x'), cls: 'zoom-15' },
+        { id: '20', label: getTranslation('arbejde_zoom_2', '🔍 2x'), cls: 'zoom-20' }
     ];
     let activeZoom = '10';
     zoomLevels.forEach(z => {
@@ -1693,12 +1693,15 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'bv-pure-btn';
-    pureBtn.innerHTML = `🖼️ Rent billede`;
     let pureMode = false;
+    pureBtn.innerHTML = getTranslation('arbejde_pure_btn_show', '🖼️ Rent billede');
     pureBtn.onclick = () => {
         pureMode = !pureMode;
         stage.classList.toggle('pure-mode', pureMode);
         pureBtn.classList.toggle('active', pureMode);
+        pureBtn.innerHTML = pureMode
+            ? getTranslation('arbejde_pure_btn_hide', '🔢 Vis alle 32 tal')
+            : getTranslation('arbejde_pure_btn_show', '🖼️ Rent billede');
     };
     toolsRight.appendChild(pureBtn);
 
@@ -1738,11 +1741,11 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
 
         const meta = CLASS_META[item.wordClass];
         const genderBadge = item.gender
-            ? `<span class="bv-class-badge" style="background:${item.gender === 'en' ? 'rgba(56,189,248,0.2)' : 'rgba(249,115,22,0.2)'}; color:${item.gender === 'en' ? '#38bdf8' : '#fb923c'}; border:1px solid ${item.gender === 'en' ? '#0284c7' : '#ea580c'};">${item.gender.toUpperCase()}-ORD</span>`
+            ? `<span class="bv-class-badge" style="background:${item.gender === 'en' ? 'rgba(56,189,248,0.2)' : 'rgba(249,115,22,0.2)'}; color:${item.gender === 'en' ? '#38bdf8' : '#fb923c'}; border:1px solid ${item.gender === 'en' ? '#0284c7' : '#ea580c'};">${item.gender === 'en' ? getTranslation('arbejde_gender_en', 'EN-ORD') : getTranslation('arbejde_gender_et', 'ET-ORD')}</span>`
             : '';
         const coreBadge = item.isCore
-            ? `<span class="bv-class-badge" style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid #a855f7;">⭐ Kerneord</span>`
-            : `<span class="bv-class-badge" style="background:rgba(20,184,166,0.2); color:#5eead4; border:1px solid #14b8a6;">🔧 Fagterm / Nyt ord</span>`;
+            ? `<span class="bv-class-badge" style="background:rgba(168,85,247,0.2); color:#d8b4fe; border:1px solid #a855f7;">${getTranslation('arbejde_core_badge', '⭐ Kerneord')}</span>`
+            : `<span class="bv-class-badge" style="background:rgba(20,184,166,0.2); color:#5eead4; border:1px solid #14b8a6;">${getTranslation('arbejde_pro_badge', '🔧 Fagterm / Nyt ord')}</span>`;
 
         detailBox.innerHTML = `
             <div style="flex: 1; min-width: 260px;">
@@ -1758,10 +1761,10 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
                     ${item.forms}
                 </div>
                 <div class="bv-def-box">
-                    <strong>📖 Betydning:</strong> ${item.definition}
+                    <strong>${getTranslation('arbejde_meaning_label', '📖 Betydning:')}</strong> ${item.definition}
                 </div>
                 <div class="bv-terms-box">
-                    <strong>🔩 Faste termer & vendinger:</strong> ${item.fixedTerms}
+                    <strong>${getTranslation('arbejde_fixed_terms_label', '🔩 Faste termer & vendinger:')}</strong> ${item.fixedTerms}
                 </div>
                 <div style="font-size: 1.05rem; color: #f8fafc; font-style: italic; margin-top: 0.4rem;">
                     "💬 ${item.sentence}"
@@ -1770,13 +1773,13 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
             <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <button class="listen-word-btn" id="bv-listen-word" style="background:#2563eb; color:white; border:none; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
-                        🔊 Lyt til ordet
+                        ${getTranslation('arbejde_listen_word', '🔊 Lyt til ordet')}
                     </button>
                     <button class="listen-word-btn" id="bv-listen-sentence" style="background:#0f172a; color:#38bdf8; border:1.5px solid #0284c7; padding:0.7rem 1.2rem; border-radius:12px; font-weight:700; cursor:pointer;">
-                        🔊 Lyt til sætning
+                        ${getTranslation('arbejde_listen_sentence', '🔊 Lyt til sætning')}
                     </button>
                     <button class="listen-word-btn" id="bv-show-trans" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1.5px solid #38bdf8; padding:0.7rem 1.1rem; border-radius:12px; font-weight:700; cursor:pointer;">
-                        🌍 Vis oversættelse
+                        ${getTranslation('arbejde_show_translation', '🌍 Vis oversættelse')}
                     </button>
                 </div>
             </div>

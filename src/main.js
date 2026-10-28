@@ -43,6 +43,12 @@ import { renderKoekkenHjemmetView } from './views/KoekkenHjemmetView.js';
 import { renderKlasseKontorView } from './views/KlasseKontorView.js';
 import { renderNaturFritidView } from './views/NaturFritidView.js';
 import { renderStationIndkoebView } from './views/StationIndkoebView.js';
+import {
+  renderMitHverdagslivMenuView,
+  renderMitHverdagslivArbejdeView,
+  renderMitHverdagslivFritidView,
+  renderMitHverdagslivAarstiderView
+} from './views/MitHverdagslivMenuView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
 import { renderSamtaleBoligMenuView } from './views/SamtaleBoligMenuView.js';
 import { renderSamtaleArbejdeMenuView } from './views/SamtaleArbejdeMenuView.js';
@@ -252,6 +258,18 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'station_indkoeb') {
     appState.currentView = 'station_indkoeb';
     renderStationIndkoebView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv') {
+    appState.currentView = 'mit_hverdagsliv';
+    renderMitHverdagslivMenuView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_arbejde') {
+    appState.currentView = 'mit_hverdagsliv_arbejde';
+    renderMitHverdagslivArbejdeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_fritid') {
+    appState.currentView = 'mit_hverdagsliv_fritid';
+    renderMitHverdagslivFritidView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_aarstider') {
+    appState.currentView = 'mit_hverdagsliv_aarstider';
+    renderMitHverdagslivAarstiderView(appDiv, navigate, extraData);
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);

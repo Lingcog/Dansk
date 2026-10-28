@@ -836,6 +836,20 @@ export function renderWordLearningView(container, navigateFn) {
         color: '#a855f7',
         badgeBg: 'rgba(168, 85, 247, 0.15)',
         fallbackProgress: 0
+      },
+      {
+        id: 'mit_hverdagsliv',
+        key: 'mit_hverdagsliv',
+        target: 'mit_hverdagsliv',
+        icon: '🏡',
+        title: 'Mit hverdagsliv',
+        subtext: 'Arbejde, Fritid & Årstider',
+        role: 'Vrimlebilleder',
+        roleHint: 'Udforsk scenarier',
+        desc: 'Udforsk forskellige emner og scenarier i hverdagen som vrimlebilleder: <strong>Arbejde</strong>, <strong>Fritid</strong> og <strong>Årstider</strong>.',
+        color: '#14b8a6',
+        badgeBg: 'rgba(20, 184, 166, 0.15)',
+        fallbackProgress: 0
       }
     ];
 

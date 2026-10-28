@@ -44,7 +44,7 @@ export const MODEL_A_GRAMMAR_TERMS = {
     part2_g1: "Adjektiv",
     part2_g2: "Substantiv / Pronomen",
     part2_g3: "Verbum",
-    part2_g4: "Centraladverbium",
+    part2_g4: "Holdningsadverbium",
     part2_g5: "Mådesadverbium",
     part2_g6: "Præposition (sted)",
     part2_g7: "Konjunktion + ledsætning",

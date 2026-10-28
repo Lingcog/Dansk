@@ -1942,12 +1942,176 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     panelsHolder.appendChild(vrimmelPanel);
 
     // ========================================================
-    // --- TAB 2: ORD-DETEKTIV (TRÆNER ALLE 4 KATEGORIER & DEFINITIONER)
+    // --- TAB 2: ORD-DETEKTIV (10 VISUELLE BILLEDJAGT-MISSIONER + 8 KATEGORI-OPGAVER)
     // ========================================================
     const detektivPanel = document.createElement('div');
     detektivPanel.className = `bv-panel ${currentTab === 'tab_detektiv' ? 'active' : ''}`;
     detektivPanel.dataset.panel = 'tab_detektiv';
 
+    // Sub-mode navigation for Ord-detektiv: 1. Billedjagt (Find på vrimlebillede) / 2. Kategori-quiz
+    const detektivModeNav = document.createElement('div');
+    detektivModeNav.style.cssText = 'display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:1.4rem;';
+    detektivModeNav.innerHTML = `
+        <button id="bv-det-mode-visual-btn" style="background:linear-gradient(135deg, #0284c7, #2563eb); color:white; border:none; padding:0.65rem 1.25rem; border-radius:14px; font-weight:800; font-size:0.92rem; cursor:pointer; box-shadow:0 4px 14px rgba(37,99,235,0.35); transition:all 0.2s;">
+            🎯 1. Billedjagt på vrimlebilledet (10 missioner)
+        </button>
+        <button id="bv-det-mode-quiz-btn" style="background:#1e293b; color:#94a3b8; border:1.5px solid #475569; padding:0.65rem 1.25rem; border-radius:14px; font-weight:700; font-size:0.92rem; cursor:pointer; transition:all 0.2s;">
+            📝 2. Kategori- & Begrebsquiz (8 opgaver)
+        </button>
+    `;
+    detektivPanel.appendChild(detektivModeNav);
+
+    const detektivVisualWrap = document.createElement('div');
+    detektivVisualWrap.id = 'bv-detektiv-visual-wrap';
+
+    const detektivQuizWrap = document.createElement('div');
+    detektivQuizWrap.id = 'bv-detektiv-quiz-wrap';
+    detektivQuizWrap.style.display = 'none';
+
+    detektivModeNav.querySelector('#bv-det-mode-visual-btn').onclick = () => {
+        detektivVisualWrap.style.display = 'block';
+        detektivQuizWrap.style.display = 'none';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.background = 'linear-gradient(135deg, #0284c7, #2563eb)';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.color = 'white';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.border = 'none';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.boxShadow = '0 4px 14px rgba(37,99,235,0.35)';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.background = '#1e293b';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.color = '#94a3b8';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.border = '1.5px solid #475569';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.boxShadow = 'none';
+    };
+
+    detektivModeNav.querySelector('#bv-det-mode-quiz-btn').onclick = () => {
+        detektivVisualWrap.style.display = 'none';
+        detektivQuizWrap.style.display = 'block';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.background = 'linear-gradient(135deg, #0284c7, #2563eb)';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.color = 'white';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.border = 'none';
+        detektivModeNav.querySelector('#bv-det-mode-quiz-btn').style.boxShadow = '0 4px 14px rgba(37,99,235,0.35)';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.background = '#1e293b';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.color = '#94a3b8';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.border = '1.5px solid #475569';
+        detektivModeNav.querySelector('#bv-det-mode-visual-btn').style.boxShadow = 'none';
+    };
+
+    // --- 1. VISUEL BILLEDJAGT PÅ VRIMLEBILLEDET (10 MISSIONER) ---
+    const DETEKTIV_IMAGE_MISSIONS = [
+        {
+            targetId: 'autolift',
+            clue: '🕵️ Mission 1 (🟢 Substantiv): Find den store hydrauliske autolift, som løfter den blå bil højt op i luften!'
+        },
+        {
+            targetId: 'skruenoegle',
+            clue: '🕵️ Mission 2 (🟢 Substantiv): Find skruenøglen, som mekanikeren holder i hånden under bilen for at spænde bolte!'
+        },
+        {
+            targetId: 'daek',
+            clue: '🕵️ Mission 3 (🟢 Substantiv): Find dækreolen til venstre, hvor der står både sommerdæk og vinterdæk!'
+        },
+        {
+            targetId: 'paafylde',
+            clue: '🕵️ Mission 4 (🔴 Verbum): Hvor hælder mekanikeren frisk motorolie direkte ned i motoren?'
+        },
+        {
+            targetId: 'fejlsoege',
+            clue: '🕵️ Mission 5 (🔴 Verbum): Hvor tilslutter mekanikeren diagnosetesteren for at fejlsøge bilens computer?'
+        },
+        {
+            targetId: 'spaende',
+            clue: '🕵️ Mission 6 (🔴 Verbum): Hvor sidder lærlingen og spænder hjulboltene fast på det røde baghjul?'
+        },
+        {
+            targetId: 'flad',
+            clue: '🕵️ Mission 7 (🟠 Adjektiv): Find det punkterede, flade dæk, som er taget af den røde bil på gulvet!'
+        },
+        {
+            targetId: 'slidt',
+            clue: '🕵️ Mission 8 (🟠 Adjektiv): Hvor tjekker mekanikeren de slidte bremseklodser og slidte dele under bilen?'
+        },
+        {
+            targetId: 'grundigt',
+            clue: '🕵️ Mission 9 (🔵 Adverbium): Hvor undersøger mekanikeren undervognen grundigt med sin arbejdslampe?'
+        },
+        {
+            targetId: 'forsigtigt',
+            clue: '🕵️ Mission 10 (🔵 Adverbium): Hvor hælder mekanikeren olien roligt og forsigtigt, så han ikke spilder på motoren?'
+        }
+    ];
+
+    let detImgIdx = 0;
+    let detImgScore = 0;
+
+    const detVisualCard = document.createElement('div');
+    detVisualCard.className = 'bv-vrimmel-card';
+
+    const detTop = document.createElement('div');
+    detTop.style.cssText = 'background:#1e293b; border:1.5px solid #22c55e; border-radius:16px; padding:1.1rem 1.3rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;';
+
+    const detClueEl = document.createElement('div');
+    detClueEl.style.cssText = 'font-size:1.12rem; font-weight:700; color:white; flex:1; min-width:240px;';
+
+    const detStatusEl = document.createElement('div');
+    detStatusEl.style.cssText = 'background:rgba(34,197,94,0.18); color:#4ade80; border:1px solid #22c55e; padding:0.4rem 0.95rem; border-radius:20px; font-weight:800; white-space:nowrap;';
+
+    detTop.appendChild(detClueEl);
+    detTop.appendChild(detStatusEl);
+    detVisualCard.appendChild(detTop);
+
+    const detFeedback = document.createElement('div');
+    detFeedback.style.cssText = 'min-height:36px; margin-bottom:0.8rem; font-weight:800; text-align:center; font-size:1.05rem;';
+    detVisualCard.appendChild(detFeedback);
+
+    const detViewport = document.createElement('div');
+    detViewport.className = 'bv-stage-viewport';
+    const detStage = document.createElement('div');
+    detStage.className = 'bv-stage';
+
+    const detImg = document.createElement('img');
+    detImg.src = 'assets/bilvaerksted_vrimmel.jpg';
+    detImg.onerror = () => { detImg.src = 'assets/klasse_kontor_vrimmel.jpg'; };
+    detImg.alt = 'Ord-detektiv på bilværkstedet';
+    detImg.className = 'bv-img';
+    detStage.appendChild(detImg);
+
+    function renderDetektivVisualState() {
+        const m = DETEKTIV_IMAGE_MISSIONS[detImgIdx];
+        detClueEl.textContent = m.clue;
+        detStatusEl.textContent = `Mission ${detImgIdx + 1} / ${DETEKTIV_IMAGE_MISSIONS.length} • Point: ${detImgScore}`;
+        detFeedback.innerHTML = '';
+    }
+
+    WORKSHOP_WORDS.forEach(item => {
+        const spot = document.createElement('button');
+        spot.type = 'button';
+        spot.className = `bv-hotspot hs-${item.wordClass}`;
+        spot.style.left = `${item.x}%`;
+        spot.style.top = `${item.y}%`;
+        spot.textContent = '?';
+        spot.title = 'Hvad er dette? Klik for at svare!';
+        spot.onclick = () => {
+            const currentMission = DETEKTIV_IMAGE_MISSIONS[detImgIdx];
+            if (item.id === currentMission.targetId) {
+                detImgScore++;
+                speakDanish(item.word);
+                detFeedback.innerHTML = `<span style="color:#4ade80;">✓ Flot fundet! Det var #${item.num} "${item.word}" (${CLASS_META[item.wordClass].short}).</span>`;
+                setTimeout(() => {
+                    detImgIdx = (detImgIdx + 1) % DETEKTIV_IMAGE_MISSIONS.length;
+                    renderDetektivVisualState();
+                }, 1500);
+            } else {
+                detFeedback.innerHTML = `<span style="color:#f87171;">✗ Det var "${item.word}" – prøv et andet pegefelt på værkstedet!</span>`;
+            }
+        };
+        detStage.appendChild(spot);
+    });
+
+    renderDetektivVisualState();
+    detViewport.appendChild(detStage);
+    detVisualCard.appendChild(detViewport);
+    detektivVisualWrap.appendChild(detVisualCard);
+    detektivPanel.appendChild(detektivVisualWrap);
+
+    // --- 2. EKSISTERENDE KATEGORI- & BEGREBSQUIZ (8 OPGAVER) ---
     const DETEKTIV_MISSIONS = [
         {
             badge: '🟢 Substantiver • Værktøj & Maskiner',
@@ -2128,7 +2292,8 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         missionCard.appendChild(feedback);
     }
     renderMission();
-    detektivPanel.appendChild(missionCard);
+    detektivQuizWrap.appendChild(missionCard);
+    detektivPanel.appendChild(detektivQuizWrap);
     panelsHolder.appendChild(detektivPanel);
 
     // ========================================================

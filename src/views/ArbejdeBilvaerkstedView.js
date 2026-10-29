@@ -873,7 +873,7 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
             id: 'koere',
             word: 'at køre',
             wordClass: 'verbum',
-            surface: 'De 100 verber – Byrummet & Gaden',
+            surface: 'De 100 verber – Byen og gaden',
             targetView: 'verber_byrum',
             icon: '🚙',
             forms: 'at køre • kører • kørte • har kørt',

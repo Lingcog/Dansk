@@ -35,7 +35,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 <span>Du undersøger ${focusName} i vrimlebilledet.</span>
             </div>
             <button class="return-banner-btn" id="return-task-btn">
-                ↩ Tilbage til din opgave i Byrummet og gaden
+                ↩ Tilbage til din opgave i Byen og gaden
             </button>
         `;
         returnBanner.querySelector('#return-task-btn').onclick = () => {
@@ -2938,7 +2938,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                                 I <em>De 100 verber: Byrummet</em> kan du lære alle 20 handlinger i byen med vrimlebilleder, datid, synonymer og detektiv-missioner!
                             </p>
                             <button class="verb-bridge-action-btn" id="go-to-verber-byrum-cta">
-                                <span>🔴</span> Gå til "De 100 verber – Byrummet & Gaden" ➔
+                                <span>🔴</span> Gå til "De 100 verber – Byen og gaden" ➔
                             </button>
                         </div>
                     ` : ''}

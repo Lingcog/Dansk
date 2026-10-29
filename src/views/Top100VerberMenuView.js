@@ -148,12 +148,12 @@ export function renderTop100VerberMenuView(container, navigateFn) {
     const grid = document.createElement('div');
     grid.className = 'hub-scenes-grid';
 
-    // 1. Scene 1: Byrummet & Gaden
+    // 1. Scene 1: Byen og gaden
     const cardByrum = document.createElement('div');
     cardByrum.className = 'scene-card';
     cardByrum.innerHTML = `
         <div class="scene-card-img-wrap">
-            <img src="assets/verber_byrum_vrimmel.jpg" alt="Byrummet vrimlebillede" class="scene-card-img">
+            <img src="assets/verber_byrum_vrimmel.jpg" alt="Byen vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
             <h3>${getTranslation('top100_verber_scene1_title')}</h3>

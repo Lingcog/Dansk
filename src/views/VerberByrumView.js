@@ -1261,7 +1261,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         { word: 'at se', nutid: 'ser', datid: 'så', x: 85, y: 76, sentence: 'Hun ser de flotte farverige blomster.' },
         { word: 'at smile', nutid: 'smiler', datid: 'smilede', x: 50, y: 44, sentence: 'Vennerne smiler til hinanden da de ses.' },
         { word: 'at hente', nutid: 'henter', datid: 'hentede', x: 16, y: 56, sentence: 'Hun henter frisk brød og grøntsager i butikken.' },
-        { word: 'at bringe', nutid: 'bringer', datid: 'bragte', x: 52, y: 84, sentence: 'Drengen bringer et brev til den røde postkasse.' },
+        { word: 'at bringe', nutid: 'bringer', datid: 'bragte', x: 53, y: 76, sentence: 'Anders bringer pakker ud.' },
         { word: 'at finde', nutid: 'finder', datid: 'fandt', x: 88, y: 82, sentence: 'Pigen finder en flot buket blomster.' },
         { word: 'at miste', nutid: 'mister', datid: 'mistede', x: 74, y: 48, sentence: 'Pas på ikke at miste din pung i menneskemængden!' },
         { word: 'at passe', nutid: 'passer', datid: 'passede', x: 38, y: 75, sentence: 'Cyklisten passer godt på fodgængerne.' },
@@ -1308,7 +1308,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
     const img = document.createElement('img');
     img.src = 'assets/verber_byrum_vrimmel.jpg';
-    img.alt = 'Byrummet og gaden vrimlebillede';
+    img.alt = 'Byen og gaden vrimlebillede';
     stage.appendChild(img);
 
     // Detail card container
@@ -1651,7 +1651,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             options: [
                 { text: "at hente en pakke 📦", correct: true },
                 { text: "at svømme 🏊", correct: false },
-                { text: "at bringe et brev ud ✉️", correct: true },
+                { text: "at bringe pakker ud 📦", correct: true },
                 { text: "at stege kød 🍳", correct: false },
                 { text: "at vente ved pakkeboksen ⏳", correct: true },
                 { text: "at synge opera 🎵", correct: false }
@@ -1864,30 +1864,30 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "4. Brevet i postkassen",
+            title: "4. Anders bringer pakker ud",
             steps: [
                 {
-                    q: "1. Hvad bringer drengen hen til gadehjørnet?",
+                    q: "1. Hvad laver Anders på fortovet?",
                     options: [
-                        { text: "Han bringer et fødselsdagsbrev ✉️", correct: true },
-                        { text: "Han bringer en tung sofa 🛋️", correct: false },
-                        { text: "Han bringer en gryde suppe 🍲", correct: false }
+                        { text: "Han bringer pakker ud til beboerne 📦", correct: true },
+                        { text: "Han sover på asfalten 🛌", correct: false },
+                        { text: "Han spiser en stor kage 🎂", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvor putter han brevet ned?",
+                    q: "2. Hvad bærer han i armene?",
                     options: [
-                        { text: "Han putter det i den røde postkasse 📮", correct: true },
-                        { text: "Han smider det i skraldespanden 🗑️", correct: false },
-                        { text: "Han river det i stykker 📄", correct: false }
+                        { text: "Han bærer en stak papkasser 📦", correct: true },
+                        { text: "Han bærer en levende krokodille 🐊", correct: false },
+                        { text: "Han bærer en spand maling 🎨", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvad gør han ved busstoppestedet?",
+                    q: "3. Hvad gør kvinden på bænken lige ved siden af?",
                     options: [
-                        { text: "Han venter på bussen hjem 🚌", correct: true },
-                        { text: "Han løber væk i panik 🏃", correct: false },
-                        { text: "Han maler bænken 🎨", correct: false }
+                        { text: "Hun kigger på sit ur og venter ⏱️", correct: true },
+                        { text: "Hun hopper i faldskærm 🪂", correct: false },
+                        { text: "Hun spiller trommer 🥁", correct: false }
                     ]
                 }
             ]

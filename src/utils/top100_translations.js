@@ -67,7 +67,7 @@ export const top100Translations = {
     "top100_verber_hub_title": "De 100 mest almindelige verber",
     "top100_verber_hub_desc": "Verber er sprogets motor og udtrykker handlinger, bevægelser, tilstande og relationer. Udforsk de 100 mest almindelige verber fordelt på fem levende scener med 20 verber i hver.",
     "top100_verber_hub_class_badge": "🔴 Ordklasse: verber (udsagnsord i rød farve)",
-    "top100_verber_scene1_title": "🏙️ Byrummet og gaden",
+    "top100_verber_scene1_title": "🏙️ Byen og gaden",
     "top100_verber_scene1_desc": "Bevægelse, transport og byliv: gå, komme, møde, køre, cykle, stoppe, vente, kigge, se, smile...",
     "top100_verber_scene1_btn": "Gå til byen ➔",
     "top100_verber_scene2_title": "🍳 Hjemmet og køkkenet",

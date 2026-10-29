@@ -26,7 +26,7 @@ export const verberTranslations = {
     "verber_return_title": "Du undersøger verbet:",
     "verber_return_sub": "Se handlingen på billedet nedenfor med nutid og datid.",
     "verber_return_back_btn": "⬅ Tilbage til {target}",
-    "verber_scene1_title": "Scene 1: Byrummet og gaden",
+    "verber_scene1_title": "Scene 1: Byen og gaden",
     "verber_scene1_desc": "Lær 20 uundværlige hverdagsverber om bevægelse, transport og sociale møder i byens gader.",
     "verber_scene2_title": "Scene 2: Hjemmet og køkkenet",
     "verber_scene2_desc": "Lær 20 uundværlige hverdagsverber om madlavning, huslige gøremål og hyggelige rutiner i hjemmet.",
@@ -2176,71 +2176,71 @@ export const verberWordTranslations = {
     "datid": "bragte",
     "da": {
       "meaning": "at bringe",
-      "sentence": "Drengen bringer et brev til den røde postkasse."
+      "sentence": "Anders bringer pakker ud."
     },
     "en": {
       "meaning": "to bring / deliver",
-      "sentence": "The boy delivers a letter to the red mailbox."
+      "sentence": "Anders delivers packages."
     },
     "de": {
-      "meaning": "bringen",
-      "sentence": "Der Junge bringt einen Brief zum roten Briefkasten."
+      "meaning": "bringen / austragen",
+      "sentence": "Anders bringt Pakete aus."
     },
     "es": {
-      "meaning": "llevar",
-      "sentence": "El niño lleva una carta al buzón rojo."
+      "meaning": "llevar / repartir",
+      "sentence": "Anders reparte paquetes."
     },
     "tr": {
-      "meaning": "götürmek",
-      "sentence": "Çocuk kırmızı posta kutusuna bir mektup götürüyor."
+      "meaning": "teslim etmek / dağıtmak",
+      "sentence": "Anders paketleri dağıtıyor."
     },
     "ru": {
-      "meaning": "приносить / доставлять",
-      "sentence": "Мальчик несёт письмо к красному почтовому ящику."
+      "meaning": "доставлять",
+      "sentence": "Андерс доставляет посылки."
     },
     "uk": {
-      "meaning": "приносити / доставляти",
-      "sentence": "Хлопчик несе лист до червоної поштової скриньки."
+      "meaning": "доставляти",
+      "sentence": "Андерс доставляє посилки."
     },
     "pt": {
-      "meaning": "trazer / levar",
-      "sentence": "O menino leva uma carta para a caixa de correio vermelha."
+      "meaning": "entregar",
+      "sentence": "Anders entrega encomendas."
     },
     "fa": {
-      "meaning": "رساندن / بردن",
-      "sentence": "پسر نامه‌ای را به صندوق پست قرمز می‌برد."
+      "meaning": "تحویل دادن / رساندن",
+      "sentence": "آندرس بسته‌ها را تحویل می‌دهد."
     },
     "ku": {
-      "meaning": "birin / gihandin",
-      "sentence": "Kurik nameyekê dibe qutiya posteyê ya sor."
+      "meaning": "gihandin / belavkirin",
+      "sentence": "Anders pakêtan belav dike."
     },
     "ar": {
-      "meaning": "يوصل / يحضر",
-      "sentence": "يوصل الصبي رسالة إلى صندوق البريد الأحمر."
+      "meaning": "يوصل / يوزع",
+      "sentence": "أندرس يوصل الطرود."
     },
     "zh": {
-      "meaning": "带来 / 送去",
-      "sentence": "男孩把一封信送到红色的邮箱里。"
+      "meaning": "派送 / 送递",
+      "sentence": "安德斯在派送包裹。"
     },
     "vi": {
-      "meaning": "mang đến / mang lại",
-      "sentence": "Cậu bé mang một bức thư đến hòm thư màu đỏ."
+      "meaning": "giao hàng",
+      "sentence": "Anders đi giao các bưu kiện."
     },
     "th": {
-      "meaning": "นำมา / นำไปส่ง",
-      "sentence": "เด็กชายนำจดหมายไปหย่อนที่ตู้ไปรษณีย์สีแดง"
+      "meaning": "นำส่ง / ส่งพัสดุ",
+      "sentence": "แอนเดอร์สกำลังนำพัสดุไปส่ง"
     },
     "ur": {
-      "meaning": "پہنچانا / لے جانا",
-      "sentence": "لڑکا سرخ لیٹر بکس میں خط لے کر جاتا ہے۔"
+      "meaning": "پہنچانا / ڈلیور کرنا",
+      "sentence": "اینڈرس پارسل ڈلیور کر رہا ہے۔"
     },
     "ne": {
-      "meaning": "पुर्‍याउनु",
-      "sentence": "केटाले रातो हुलाक बाकसमा चिठी पुर्‍याउँछ।"
+      "meaning": "पुर्‍याउनु / डेलिभर गर्नु",
+      "sentence": "एन्डर्सले पार्सलहरू पुर्‍याउँछ।"
     },
     "ps": {
-      "meaning": "وړل / رسول",
-      "sentence": "هلک سور پوست بکس ته یو لیک وړي."
+      "meaning": "وړل / وېشل",
+      "sentence": "انډرس پارسلونه ویشي."
     }
   },
   "at finde": {

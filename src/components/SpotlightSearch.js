@@ -206,7 +206,7 @@ function buildSearchIndex() {
             const cleanKey = rawKey.replace(/^at\s+/, '').trim();
             const scene = verbEntry.scene || 'byrum';
             let viewTarget = 'verber_byrum';
-            let sceneName = 'Byrummet & Gaden';
+            let sceneName = 'Byen og gaden';
             if (scene === 'hjem') { viewTarget = 'verber_hjem'; sceneName = 'Hjemmet & Køkkenet'; }
             else if (scene === 'klasse') { viewTarget = 'verber_klasse'; sceneName = 'Klassen & Kontoret'; }
             else if (scene === 'park') { viewTarget = 'verber_park'; sceneName = 'Naturen & Fritiden'; }

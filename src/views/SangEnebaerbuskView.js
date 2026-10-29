@@ -1114,8 +1114,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'When we do laundry today, we dose the detergent and let the machine do the heavy work.',
             vaerdighed: 'At vaske tøj er omsorg for familien, som sikrer renlighed og god sundhed i hverdagen.',
             vaerdighedEn: 'Doing laundry is family care that ensures cleanliness and good health in daily life.',
-            x: 18,
-            y: 60
+            x: 14,
+            y: 55
         },
         {
             id: 'tirsdag',
@@ -1134,8 +1134,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'When the machine finishes, the boy helps transfer the clean laundry into the basket.',
             vaerdighed: 'Når børn og voksne hjælper hinanden med vasketøjet, styrkes fællesskabet i hjemmet.',
             vaerdighedEn: 'When children and adults help each other with laundry, family cooperation is strengthened.',
-            x: 32,
-            y: 72
+            x: 24,
+            y: 75
         },
         {
             id: 'onsdag',
@@ -1154,8 +1154,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'When the gentle breeze blows, we hang the clothes on the drying rack by the open garden door.',
             vaerdighed: 'Naturlig lufttørring sparer strøm, skåner tøjets fibre og dufter vidunderligt af sommer.',
             vaerdighedEn: 'Natural air drying saves electricity, preserves clothing fibers, and smells wonderfully like summer.',
-            x: 44,
-            y: 46
+            x: 32,
+            y: 45
         },
         {
             id: 'torsdag',
@@ -1174,7 +1174,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'When the laundry is dry, we fold it carefully into neat piles and place it in the wardrobe.',
             vaerdighed: 'Et ryddeligt klædeskab skaber ro i sindet og gør morgenerne lette og overskuelige.',
             vaerdighedEn: 'An orderly wardrobe brings peace of mind and makes busy mornings smooth and easy.',
-            x: 62,
+            x: 42,
             y: 42
         },
         {
@@ -1194,8 +1194,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'When we iron shirts, we use hot steam so that all creases and wrinkles vanish completely.',
             vaerdighed: 'Nystrøget tøj giver personlig værdighed, elegance og selvtillid til fest og arbejde.',
             vaerdighedEn: 'Crisply pressed clothes provide personal dignity, elegance, and confidence for work and gatherings.',
-            x: 68,
-            y: 60
+            x: 55,
+            y: 56
         },
         {
             id: 'loerdag',
@@ -1214,8 +1214,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'On Saturday we mop the floor standing upright with the mop so the whole house smells clean.',
             vaerdighed: 'Rene gulve og et hygiejnisk hjem danner den trygge ramme om hele familiens liv.',
             vaerdighedEn: 'Clean floors and a hygienic home form the safe foundation for the whole family life.',
-            x: 84,
-            y: 68
+            x: 74,
+            y: 62
         },
         {
             id: 'soendag',
@@ -1234,8 +1234,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'On Sunday we relax with coffee and conversation in a clean, quiet, and well-kept home.',
             vaerdighed: 'Efter en uges flittigt arbejde er hvilen fuldt fortjent. Hjemmet er familiens trygge havn.',
             vaerdighedEn: 'After a week of diligent care, rest is fully earned. Home is the family safe haven.',
-            x: 91,
-            y: 42
+            x: 65,
+            y: 45
         },
         {
             id: 'enebaerbusk',
@@ -1254,8 +1254,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'Through the window sits the green juniper bush that gave name to the beloved singing game.',
             vaerdighed: 'Enebærbusken er stedsegrøn hele vinteren og er et gammelt symbol på sundhed og styrke.',
             vaerdighedEn: 'The juniper bush stays evergreen all winter and is an ancient symbol of health and strength.',
-            x: 21,
-            y: 30
+            x: 24,
+            y: 35
         },
 
         // HISTORISK TANKEBOBBEL & FORTIDENS REDSKABER
@@ -1276,8 +1276,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'In the 1800s, women washed all clothes by hand by scrubbing hard against a corrugated washboard.',
             vaerdighed: 'Det var et ufatteligt hårdt slid, der sled huden af hænderne i iskoldt vand.',
             vaerdighedEn: 'It was unimaginably hard labor that tore at the skin of their hands in freezing water.',
-            x: 61,
-            y: 22
+            x: 64,
+            y: 16
         },
         {
             id: 'hist_gruekedel',
@@ -1296,8 +1296,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'Water was heated in a cauldron over an open fire so linens and work clothes could be boiled clean.',
             vaerdighed: 'Ilden og den tunge røg krævede stor agtpågivenhed og fysisk råstyrke.',
             vaerdighedEn: 'The fire and heavy smoke required constant vigilance and immense physical strength.',
-            x: 67,
-            y: 25
+            x: 76,
+            y: 18
         },
         {
             id: 'hist_rulle',
@@ -1316,7 +1316,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'In the song they sing: "when we roll our clothes" – here they used a heavy mangle board over a rolling pin.',
             vaerdighed: 'Mangelbrættet var ofte en kærlighedsgave fra brudgommen med fine udskæringer af heste og hjerter.',
             vaerdighedEn: 'The mangle board was often a courtship gift carved with horses and hearts, passed down with love.',
-            x: 76,
+            x: 93,
             y: 24
         },
         {
@@ -1336,8 +1336,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'White linens were hung outdoors between tall trees so the sun could naturally bleach the fabric white.',
             vaerdighed: 'Solen og vinden var naturens eget blegemiddel og gav tøjet en frisk, ren duft.',
             vaerdighedEn: 'Sun and wind were nature’s own bleaching agents, bestowing a fresh, crisp outdoor scent.',
-            x: 82,
-            y: 15
+            x: 91,
+            y: 11
         },
         {
             id: 'hist_stryge',
@@ -1356,8 +1356,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'The iron was filled with glowing coals from the hearth and weighed several kilos to press across shirts.',
             vaerdighed: 'Det krævede stor øvelse, for gløderne måtte ikke drysse ud og svitse det fine tøj.',
             vaerdighedEn: 'It required great skill to ensure the flying sparks did not singe the precious white linens.',
-            x: 88,
-            y: 24
+            x: 84,
+            y: 34
         },
         {
             id: 'hist_skure',
@@ -1376,8 +1376,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             saetningEn: 'In the song they sing: "when we scour our floor" – maids knelt on bare knees scrubbing raw planks with sand.',
             vaerdighed: 'Skurebørsten og det fine sand gjorde træet kridhvidt til søndag, men sled hårdt på ryg og knæ.',
             vaerdighedEn: 'The brush and fine white sand made the wood pristine for Sunday, but severely wore down their knees.',
-            x: 57,
-            y: 84
+            x: 92,
+            y: 48
         }
     ];
 

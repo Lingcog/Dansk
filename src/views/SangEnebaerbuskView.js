@@ -590,8 +590,159 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         .lq-opt-btn.wrong { background: rgba(239, 68, 68, 0.25) !important; border-color: #ef4444 !important; color: #f87171 !important; }
 
         /* ----------------------------------------------------
-           TAB 3: 🕵️ Ord-detektiv (Moderne & Historiske redskaber)
+           TAB 3: 🕵️ Ord-detektiv (Billedjagt på vrimlebilledet & Gåder)
            ---------------------------------------------------- */
+        .det-submode-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.4rem;
+        }
+        .det-submode-btn {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1.5px solid #475569;
+            padding: 0.65rem 1.3rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .det-submode-btn:hover {
+            border-color: #22c55e;
+            color: white;
+        }
+        .det-submode-btn.active {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            border-color: #22c55e;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+        }
+
+        /* Visual Detektiv Billedjagt */
+        .det-visual-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        .det-top-bar {
+            background: #0f172a;
+            border: 1.5px solid #22c55e;
+            border-radius: 16px;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.15);
+        }
+        .det-clue-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            flex: 1;
+            min-width: 250px;
+            line-height: 1.5;
+        }
+        .det-status-pill {
+            background: rgba(34, 197, 94, 0.18);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 800;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+        .det-feedback-bar {
+            min-height: 38px;
+            margin-bottom: 0.8rem;
+            font-weight: 800;
+            text-align: center;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .det-stage-viewport {
+            width: 100%;
+            border-radius: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.14);
+            background: #090d16;
+            overflow: auto;
+            position: relative;
+            max-height: 72vh;
+        }
+        .det-stage {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+            user-select: none;
+        }
+        .det-stage img {
+            width: 100%;
+            display: block;
+            border-radius: 14px;
+        }
+        .det-hotspot {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.65);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.2s;
+            z-index: 5;
+            padding: 0;
+            line-height: 1;
+        }
+        .det-hotspot.hs-substantiv { background: rgba(22, 163, 74, 0.92); }
+        .det-hotspot.hs-verbum { background: rgba(220, 38, 38, 0.92); }
+        .det-hotspot.hs-adjektiv { background: rgba(234, 88, 12, 0.92); }
+        .det-hotspot.hs-adverbium { background: rgba(2, 132, 199, 0.92); }
+        .det-hotspot:hover, .det-hotspot.active {
+            transform: translate(-50%, -50%) scale(1.4);
+            z-index: 20;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4), 0 6px 14px rgba(0, 0, 0, 0.8);
+        }
+        .det-hotspot.correct-hit {
+            background: #22c55e !important;
+            transform: translate(-50%, -50%) scale(1.6) !important;
+            box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.6), 0 0 24px #22c55e !important;
+            z-index: 30 !important;
+        }
+        .det-hotspot.wrong-hit {
+            background: #ef4444 !important;
+            animation: shakeDet 0.4s ease;
+        }
+        @keyframes shakeDet {
+            0%, 100% { transform: translate(-50%, -50%); }
+            25% { transform: translate(-58%, -50%); }
+            75% { transform: translate(-42%, -50%); }
+        }
+        @media (max-width: 680px) {
+            .det-hotspot {
+                width: 20px;
+                height: 20px;
+                font-size: 0.62rem;
+                border-width: 1.5px;
+            }
+        }
+
         .detective-card {
             max-width: 860px;
             margin: 0 auto;
@@ -1779,7 +1930,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const tabsData = [
         { id: 'tab_vrimmel', icon: '🖼️', label: t('sange_tab_vrimmel', '1. Vrimlebillede & Tankebobbel') },
         { id: 'tab_sang', icon: '🎶', label: t('sange_tab_sang', '2. Syng med & Rytme') },
-        { id: 'tab_detektiv', icon: '🕵️', label: t('sange_tab_detektiv', '3. Ord-detektiv ("Rulle tøj" osv.)') },
+        { id: 'tab_detektiv', icon: '🕵️', label: t('sange_tab_detektiv', isEn ? '3. Word Detective (Find Objects)' : '3. Ord-detektiv (Billedjagt)') },
         { id: 'tab_saetning', icon: '🧩', label: t('sange_tab_saetning', '4. Sætningsbygger & Puslespil') },
         { id: 'tab_udvikling', icon: '⏳', label: t('sange_tab_udvikling', '5. Dengang & nu & Parring') }
     ];
@@ -2546,12 +2697,578 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     panelsHolder.appendChild(panelSang);
 
     // =========================================================================
-    // TAB 3: 🕵️ ORD-DETEKTIV ("Rulle tøj", mangelbræt, moderne & historiske redskaber)
+    // TAB 3: 🕵️ ORD-DETEKTIV (Billedjagt på vrimlebilledet & Gådequiz)
     // =========================================================================
     const panelDetektiv = document.createElement('div');
     panelDetektiv.className = `song-panel ${currentTab === 'tab_detektiv' ? 'active' : ''}`;
     panelDetektiv.dataset.panel = 'tab_detektiv';
 
+    // Sub-mode navigation for Ord-detektiv
+    const detSubmodeNav = document.createElement('div');
+    detSubmodeNav.className = 'det-submode-nav';
+    detSubmodeNav.innerHTML = `
+        <button class="det-submode-btn active" id="btn-det-visual">
+            🎯 ${isEn ? '1. Visual Picture Hunt (14 Missions)' : '1. Billedjagt på vrimlebilledet (14 missioner)'}
+        </button>
+        <button class="det-submode-btn" id="btn-det-quiz">
+            📝 ${isEn ? '2. Tool & Word Clue Quiz (12 Clues)' : '2. Gådequiz (12 gåder)'}
+        </button>
+    `;
+    panelDetektiv.appendChild(detSubmodeNav);
+
+    const detVisualWrap = document.createElement('div');
+    detVisualWrap.className = 'det-visual-wrap';
+
+    const detQuizWrap = document.createElement('div');
+    detQuizWrap.className = 'det-quiz-wrap';
+    detQuizWrap.style.display = 'none';
+
+    detSubmodeNav.querySelector('#btn-det-visual').onclick = () => {
+        detVisualWrap.style.display = 'block';
+        detQuizWrap.style.display = 'none';
+        detSubmodeNav.querySelector('#btn-det-visual').classList.add('active');
+        detSubmodeNav.querySelector('#btn-det-quiz').classList.remove('active');
+    };
+
+    detSubmodeNav.querySelector('#btn-det-quiz').onclick = () => {
+        detVisualWrap.style.display = 'none';
+        detQuizWrap.style.display = 'block';
+        detSubmodeNav.querySelector('#btn-det-quiz').classList.add('active');
+        detSubmodeNav.querySelector('#btn-det-visual').classList.remove('active');
+    };
+
+    // -------------------------------------------------------------------------
+    // 1. VISUEL BILLEDJAGT PÅ VRIMLEBILLEDET (35 HOTSPOTS & 14 MISSIONER)
+    // -------------------------------------------------------------------------
+    const DETEKTIV_ITEMS = [
+        // MODERNE HUSARBEJDE (Substantiver, Verber, Redskaber)
+        {
+            id: 'vasketoejskurv',
+            word: 'en vasketøjskurv',
+            wordEn: 'a laundry basket',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 22,
+            y: 73
+        },
+        {
+            id: 'vaskemaskine',
+            word: 'en moderne vaskemaskine',
+            wordEn: 'a modern washing machine',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 14,
+            y: 56
+        },
+        {
+            id: 'vaskemiddel',
+            word: 'flydende vaskemiddel',
+            wordEn: 'liquid laundry detergent',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 16,
+            y: 46
+        },
+        {
+            id: 'vaske_toej',
+            word: 'at vaske tøj i maskinen',
+            wordEn: 'to wash clothes in the machine',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 19,
+            y: 62
+        },
+        {
+            id: 'dreng_hjaelper',
+            word: 'at tømme vaskemaskinen',
+            wordEn: 'to empty the washing machine',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 25,
+            y: 65
+        },
+        {
+            id: 'toerrestativ',
+            word: 'et tørrestativ',
+            wordEn: 'a drying rack',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 33,
+            y: 48
+        },
+        {
+            id: 'toejklemmer',
+            word: 'tøjklemmer',
+            wordEn: 'clothespins',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 35,
+            y: 39
+        },
+        {
+            id: 'toerre_toej',
+            word: 'at hænge tøj til tørre',
+            wordEn: 'to hang clothes to dry',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 31,
+            y: 54
+        },
+        {
+            id: 'havedoer',
+            word: 'havedøren til haven',
+            wordEn: 'the garden door',
+            wordClass: 'adverbium',
+            category: 'moderne',
+            x: 27,
+            y: 22
+        },
+        {
+            id: 'enebaerbusk',
+            word: 'enebærbusken i haven',
+            wordEn: 'the juniper bush in the garden',
+            wordClass: 'adverbium',
+            category: 'moderne',
+            x: 23,
+            y: 36
+        },
+        {
+            id: 'toejbunker',
+            word: 'sammenfoldet tøj i bunker',
+            wordEn: 'neat stacks of folded clothes',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 43,
+            y: 44
+        },
+        {
+            id: 'folde_toej',
+            word: 'at folde tøjet sammen',
+            wordEn: 'to fold clothes',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 41,
+            y: 52
+        },
+        {
+            id: 'klaedeskab',
+            word: 'et klædeskab',
+            wordEn: 'a wardrobe / clothes closet',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 48,
+            y: 32
+        },
+        {
+            id: 'strygebraet',
+            word: 'et strygebræt',
+            wordEn: 'an ironing board',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 53,
+            y: 64
+        },
+        {
+            id: 'dampstrygejern',
+            word: 'et dampstrygejern',
+            wordEn: 'a steam iron',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 56,
+            y: 55
+        },
+        {
+            id: 'stryge_skjorter',
+            word: 'at stryge skjorter',
+            wordEn: 'to iron shirts',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 58,
+            y: 50
+        },
+        {
+            id: 'fladmoppe',
+            word: 'en ergonomisk gulvmoppe',
+            wordEn: 'an ergonomic flat mop',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 74,
+            y: 62
+        },
+        {
+            id: 'gulvspand',
+            word: 'en spand med sæbevand',
+            wordEn: 'a bucket of soapy water',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 71,
+            y: 71
+        },
+        {
+            id: 'vaske_gulv',
+            word: 'at vaske gulv',
+            wordEn: 'to mop the floor',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 67,
+            y: 65
+        },
+        {
+            id: 'kaffekop',
+            word: 'en kop kaffe',
+            wordEn: 'a cup of coffee',
+            wordClass: 'substantiv',
+            category: 'moderne',
+            x: 68,
+            y: 48
+        },
+        {
+            id: 'sofa',
+            word: 'sofaen til søndagshygge',
+            wordEn: 'the sofa for Sunday relaxation',
+            wordClass: 'adverbium',
+            category: 'moderne',
+            x: 64,
+            y: 44
+        },
+        {
+            id: 'holde_fri',
+            word: 'at holde fri og slappe af',
+            wordEn: 'to rest and relax',
+            wordClass: 'verbum',
+            category: 'moderne',
+            x: 61,
+            y: 38
+        },
+
+        // HISTORISK TANKEBOBBEL (1800-tallet)
+        {
+            id: 'vaskebraet',
+            word: 'et vaskebræt',
+            wordEn: 'a washboard',
+            wordClass: 'adjektiv',
+            category: 'historisk',
+            x: 64,
+            y: 16
+        },
+        {
+            id: 'vaskekar',
+            word: 'et vaskekar af træ',
+            wordEn: 'a wooden washtub',
+            wordClass: 'substantiv',
+            category: 'historisk',
+            x: 61,
+            y: 22
+        },
+        {
+            id: 'gruekedel',
+            word: 'en indmuret gruekedel',
+            wordEn: 'a built-in wash cauldron',
+            wordClass: 'adjektiv',
+            category: 'historisk',
+            x: 76,
+            y: 17
+        },
+        {
+            id: 'koge_toej',
+            word: 'at koge tøj over åben ild',
+            wordEn: 'to boil laundry over fire',
+            wordClass: 'verbum',
+            category: 'historisk',
+            x: 78,
+            y: 24
+        },
+        {
+            id: 'mangelbraet',
+            word: 'et mangelbræt (at rulle tøj)',
+            wordEn: 'a mangle board (rolling clothes)',
+            wordClass: 'adjektiv',
+            category: 'historisk',
+            x: 92,
+            y: 23
+        },
+        {
+            id: 'rullestok',
+            word: 'en rullestok af træ',
+            wordEn: 'a wooden roller pin',
+            wordClass: 'substantiv',
+            category: 'historisk',
+            x: 95,
+            y: 27
+        },
+        {
+            id: 'rulle_toej',
+            word: 'at rulle vort tøj',
+            wordEn: 'to roll our clothes',
+            wordClass: 'verbum',
+            category: 'historisk',
+            x: 89,
+            y: 25
+        },
+        {
+            id: 'toerresnor',
+            word: 'en tørresnor i haven',
+            wordEn: 'a clothesline in the garden',
+            wordClass: 'adverbium',
+            category: 'historisk',
+            x: 90,
+            y: 11
+        },
+        {
+            id: 'traeklemmer',
+            word: 'tøjklemmer af træ',
+            wordEn: 'wooden clothespins',
+            wordClass: 'substantiv',
+            category: 'historisk',
+            x: 86,
+            y: 9
+        },
+        {
+            id: 'kulstrygejern',
+            word: 'et tungt kulstrygejern',
+            wordEn: 'a heavy charcoal iron',
+            wordClass: 'adjektiv',
+            category: 'historisk',
+            x: 84,
+            y: 34
+        },
+        {
+            id: 'skureboerste',
+            word: 'en stiv skurebørste',
+            wordEn: 'a stiff scrubbing brush',
+            wordClass: 'adjektiv',
+            category: 'historisk',
+            x: 92,
+            y: 47
+        },
+        {
+            id: 'skure_gulv',
+            word: 'at skure gulv på knæ',
+            wordEn: 'to scrub the floor on knees',
+            wordClass: 'verbum',
+            category: 'historisk',
+            x: 90,
+            y: 41
+        },
+        {
+            id: 'sandspand',
+            word: 'fint hvidt sand til skuring',
+            wordEn: 'fine white scrubbing sand',
+            wordClass: 'substantiv',
+            category: 'historisk',
+            x: 85,
+            y: 45
+        }
+    ];
+
+    const DETEKTIV_MISSIONS = [
+        {
+            targetId: 'vasketoejskurv',
+            clue: '🕵️ Mission 1 (🟢 Substantiv): Find den flettede vasketøjskurv på gulvet ved vaskemaskinen, hvor tøjet lægges i!',
+            clueEn: '🕵️ Mission 1 (🟢 Noun): Find the laundry basket on the floor next to the washing machine!'
+        },
+        {
+            targetId: 'vaskemaskine',
+            clue: '🕵️ Mission 2 (🟢 Substantiv): Find den moderne vaskemaskine, som vasker tøjet rent med et tryk på en knap!',
+            clueEn: '🕵️ Mission 2 (🟢 Noun): Find the modern washing machine that washes clothes at the touch of a button!'
+        },
+        {
+            targetId: 'mangelbraet',
+            clue: '🕵️ Mission 3 (🟠 Historisk redskab): Find det udskårne mangelbræt af træ i tankeboblen, som man brugte til at ”rulle vort tøj”!',
+            clueEn: '🕵️ Mission 3 (🟠 Historical tool): Find the carved wooden mangle board in the thought bubble used to roll clothes!'
+        },
+        {
+            targetId: 'vaskemiddel',
+            clue: '🕵️ Mission 4 (🟢 Substantiv): Find flasken med flydende vaskemiddel, som hældes i vaskemaskinen!',
+            clueEn: '🕵️ Mission 4 (🟢 Noun): Find the bottle of liquid detergent poured into the washing machine!'
+        },
+        {
+            targetId: 'toerrestativ',
+            clue: '🕵️ Mission 5 (🟢 Substantiv): Find det sammenklappelige tørrestativ, hvor det våde tøj hænger til tørre!',
+            clueEn: '🕵️ Mission 5 (🟢 Noun): Find the folding drying rack where damp clothes hang to dry!'
+        },
+        {
+            targetId: 'vaskebraet',
+            clue: '🕵️ Mission 6 (🟠 Historisk redskab): Find det riflede vaskebræt i tankeboblen, som kvinderne skurede tøjet mod i hånden!',
+            clueEn: '🕵️ Mission 6 (🟠 Historical tool): Find the corrugated washboard in the thought bubble rubbed by hand!'
+        },
+        {
+            targetId: 'dampstrygejern',
+            clue: '🕵️ Mission 7 (🟢 Substantiv): Find det moderne dampstrygejern på strygebrættet, som glatter krøller ud!',
+            clueEn: '🕵️ Mission 7 (🟢 Noun): Find the modern steam iron on the ironing board that smoothes out wrinkles!'
+        },
+        {
+            targetId: 'kulstrygejern',
+            clue: '🕵️ Mission 8 (🟠 Historisk redskab): Find det tunge kulstrygejern i tankeboblen, som blev fyldt med glødende kul!',
+            clueEn: '🕵️ Mission 8 (🟠 Historical tool): Find the heavy charcoal iron in the thought bubble filled with hot coals!'
+        },
+        {
+            targetId: 'fladmoppe',
+            clue: '🕵️ Mission 9 (🟢 Substantiv): Find den ergonomiske gulvmoppe, som vasker gulvet, så man kan stå oprejst!',
+            clueEn: '🕵️ Mission 9 (🟢 Noun): Find the ergonomic flat mop used to wash the floor while standing upright!'
+        },
+        {
+            targetId: 'skureboerste',
+            clue: '🕵️ Mission 10 (🟠 Historisk redskab): Find den stive skurebørste i tankeboblen, som pigen lå på knæ med på trægulvet!',
+            clueEn: '🕵️ Mission 10 (🟠 Historical tool): Find the stiff scrubbing brush in the thought bubble used on knees on the floor!'
+        },
+        {
+            targetId: 'gruekedel',
+            clue: '🕵️ Mission 11 (🟠 Historisk redskab): Find den store indmurede gruekedel med ild under, hvor vandet kogte til storvask!',
+            clueEn: '🕵️ Mission 11 (🟠 Historical tool): Find the large cauldron over the fire where water boiled for wash day!'
+        },
+        {
+            targetId: 'enebaerbusk',
+            clue: '🕵️ Mission 12 (🔵 Natur / Symbol): Find den grønne enebærbusk ude i haven, som sanglegen handler om!',
+            clueEn: '🕵️ Mission 12 (🔵 Nature / Symbol): Find the green juniper bush outside in the garden that the song is about!'
+        },
+        {
+            targetId: 'kaffekop',
+            clue: '🕵️ Mission 13 (🟢 Hverdagsord): Find den varme kaffekop på bordet ved sofaen, som man hygger sig med om søndagen!',
+            clueEn: '🕵️ Mission 13 (🟢 Noun): Find the warm coffee cup by the sofa used to relax on Sunday!'
+        },
+        {
+            targetId: 'toerresnor',
+            clue: '🕵️ Mission 14 (🟠 Historisk): Find tørresnoren i haven i tankeboblen, hvor tøjet hang til tørre i vind og solskin!',
+            clueEn: '🕵️ Mission 14 (🟠 Historical): Find the clothesline in the garden in the thought bubble where laundry dried in the sun!'
+        }
+    ];
+
+    let visIdx = 0;
+    let visScore = 0;
+    let visClickLocked = false;
+
+    const detVisualCard = document.createElement('div');
+    detVisualCard.className = 'det-visual-card';
+
+    const detTopBar = document.createElement('div');
+    detTopBar.className = 'det-top-bar';
+
+    const detClueEl = document.createElement('div');
+    detClueEl.className = 'det-clue-title';
+
+    const detStatusEl = document.createElement('div');
+    detStatusEl.className = 'det-status-pill';
+
+    detTopBar.appendChild(detClueEl);
+    detTopBar.appendChild(detStatusEl);
+    detVisualCard.appendChild(detTopBar);
+
+    const detFeedbackEl = document.createElement('div');
+    detFeedbackEl.className = 'det-feedback-bar';
+    detVisualCard.appendChild(detFeedbackEl);
+
+    const detViewport = document.createElement('div');
+    detViewport.className = 'det-stage-viewport';
+
+    const detStage = document.createElement('div');
+    detStage.className = 'det-stage';
+
+    const detImg = document.createElement('img');
+    detImg.src = 'assets/sang_enebaerbusk_vrimmel.jpg';
+    detImg.alt = 'Ord-detektiv vrimlebillede - Find ting i hjemmet og tankeboblen';
+    detStage.appendChild(detImg);
+
+    function renderVisualMission() {
+        const m = DETEKTIV_MISSIONS[visIdx];
+        detClueEl.textContent = isEn ? m.clueEn : m.clue;
+        detStatusEl.textContent = `${isEn ? 'Mission' : 'Mission'} ${visIdx + 1} / ${DETEKTIV_MISSIONS.length} • ${isEn ? 'Points' : 'Point'}: ${visScore}`;
+        detFeedbackEl.innerHTML = '';
+        visClickLocked = false;
+    }
+
+    // Render all 35 hotspot pins on the vrimlebillede
+    DETEKTIV_ITEMS.forEach(item => {
+        const spot = document.createElement('button');
+        spot.type = 'button';
+        spot.className = `det-hotspot hs-${item.wordClass}`;
+        spot.style.left = `${item.x}%`;
+        spot.style.top = `${item.y}%`;
+        spot.textContent = '?';
+        spot.title = isEn ? item.wordEn : item.word;
+
+        spot.onclick = (e) => {
+            e.stopPropagation();
+            if (visClickLocked) return;
+
+            const currentMission = DETEKTIV_MISSIONS[visIdx];
+            const isCorrect = item.id === currentMission.targetId;
+
+            if (isCorrect) {
+                visClickLocked = true;
+                visScore++;
+                spot.classList.add('correct-hit');
+                speakDanish(item.word);
+                detFeedbackEl.innerHTML = `<span style="color:#4ade80;">✓ ${isEn ? 'Great find!' : 'Flot fundet!'} Det var "<strong>${item.word}</strong>" ${!isDa ? `(${item.wordEn})` : ''}</span>`;
+                detStatusEl.textContent = `${isEn ? 'Mission' : 'Mission'} ${visIdx + 1} / ${DETEKTIV_MISSIONS.length} • ${isEn ? 'Points' : 'Point'}: ${visScore}`;
+
+                setTimeout(() => {
+                    spot.classList.remove('correct-hit');
+                    if (visIdx + 1 < DETEKTIV_MISSIONS.length) {
+                        visIdx++;
+                        renderVisualMission();
+                    } else {
+                        renderVisualFinish();
+                    }
+                }, 1300);
+            } else {
+                spot.classList.add('wrong-hit');
+                speakDanish(item.word);
+                detFeedbackEl.innerHTML = `<span style="color:#f87171;">✗ ${isEn ? 'That was' : 'Det var'} "<strong>${item.word}</strong>" – ${isEn ? 'try another circle in the picture!' : 'prøv et andet pegefelt i billedet!'}</span>`;
+                setTimeout(() => {
+                    spot.classList.remove('wrong-hit');
+                }, 500);
+            }
+        };
+
+        detStage.appendChild(spot);
+    });
+
+    function renderVisualFinish() {
+        detVisualCard.innerHTML = `
+            <div style="text-align: center; padding: 2.5rem 1rem;">
+                <div style="font-size: 3.5rem; margin-bottom: 0.8rem;">🕵️‍♂️🎉🏆🧺</div>
+                <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">
+                    ${isEn ? 'Outstanding Detective Work!' : 'Fantastisk detektivarbejde!'}
+                </h2>
+                <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1rem;">
+                    ${isEn ? 'You completed all 14 missions and found every item!' : 'Du gennemførte alle 14 missioner og fandt alle genstandene på vrimlebilledet!'}
+                </p>
+                <div style="font-size: 1.4rem; color: #fbbf24; font-weight: 800; margin-bottom: 1.8rem;">
+                    ⭐ ${isEn ? 'Score' : 'Point'}: ${visScore} / ${DETEKTIV_MISSIONS.length}
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="detective-next-btn" id="btn-restart-visual-hunt" style="margin: 0;">
+                        🔄 ${isEn ? 'Play Visual Hunt Again' : 'Tag billedjagten igen'}
+                    </button>
+                    <button class="detective-next-btn" id="btn-go-to-quiz" style="margin: 0; background: #0284c7; color: white;">
+                        📝 ${isEn ? 'Try Word Clue Quiz' : 'Prøv gådequizzen'}
+                    </button>
+                </div>
+            </div>
+        `;
+        detVisualCard.querySelector('#btn-restart-visual-hunt').onclick = () => {
+            visIdx = 0;
+            visScore = 0;
+            detVisualCard.innerHTML = '';
+            detVisualCard.appendChild(detTopBar);
+            detVisualCard.appendChild(detFeedbackEl);
+            detVisualCard.appendChild(detViewport);
+            renderVisualMission();
+        };
+        detVisualCard.querySelector('#btn-go-to-quiz').onclick = () => {
+            detSubmodeNav.querySelector('#btn-det-quiz').click();
+        };
+    }
+
+    renderVisualMission();
+    detViewport.appendChild(detStage);
+    detVisualCard.appendChild(detViewport);
+    detVisualWrap.appendChild(detVisualCard);
+
+    // -------------------------------------------------------------------------
+    // 2. GÅDE- & BEGREBSQUIZ (12 GÅDER MED FLERVALG)
+    // -------------------------------------------------------------------------
     const detectiveCard = document.createElement('div');
     detectiveCard.className = 'detective-card';
 
@@ -2811,7 +3528,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     }
 
     renderDetectiveRound();
-    panelDetektiv.appendChild(detectiveCard);
+    detQuizWrap.appendChild(detectiveCard);
+
+    panelDetektiv.appendChild(detVisualWrap);
+    panelDetektiv.appendChild(detQuizWrap);
     panelsHolder.appendChild(panelDetektiv);
 
     // =========================================================================

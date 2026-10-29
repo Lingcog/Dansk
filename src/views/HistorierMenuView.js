@@ -61,6 +61,14 @@ export function renderHistorierMenuView(container, navigateFn) {
                 ? 'Series in 4 parts: The doctor, the boss, the pharmacy, and back to work. Build lines in the word puzzle and converse.'
                 : 'Serie i 4 dele: Lægen, chefen, apoteket og tilbage på job. Byg sætningerne i ordpuslespillet og tal med personerne.',
             action: () => navigateFn('historier_sygdom_job')
+        },
+        {
+            icon: '🎵',
+            title: isEn ? 'Danish Songs: The Juniper Bush' : 'Sange: Så går vi rundt om en enebærbusk',
+            desc: isEn 
+                ? 'Sing along to the classic song and master days of the week, word order with "når", and modern Danish vocabulary for household care.'
+                : 'Syng med på den klassiske sangleg og lær ugens dage, ledsætninger med "når" og moderne ordforråd til hjemmets opgaver og tøjpleje.',
+            action: () => navigateFn('sang_enebaerbusk')
         }
     ];
 

@@ -38,12 +38,18 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        .sang-enebaerbusk-view,
+        .sang-enebaerbusk-view * {
+            box-sizing: border-box;
+        }
         .sang-enebaerbusk-view {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.2rem 4rem;
             color: #f8fafc;
             font-family: inherit;
+            overflow-x: hidden;
         }
 
         .hero-song-header {
@@ -1335,20 +1341,420 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .sang-enebaerbusk-view { padding: 0.8rem 0.6rem 3rem; }
-            .hero-song-header h1 { font-size: 1.6rem; }
-            .hero-song-header p { font-size: 0.95rem; }
-            .vrimmel-card, .detective-card, .builder-card, .history-card, .listening-quiz-card {
-                padding: 1.1rem 0.8rem;
-                border-radius: 16px;
+            .sang-enebaerbusk-view {
+                padding: 0.5rem 0.65rem 3rem;
             }
-            .detective-options-grid, .lq-options-grid, .matching-columns-container {
+            .hero-song-header {
+                margin-bottom: 1.2rem;
+            }
+            .hero-song-header h1 {
+                font-size: 1.45rem;
+                line-height: 1.25;
+                word-break: break-word;
+            }
+            .hero-song-header p {
+                font-size: 0.88rem;
+                line-height: 1.45;
+            }
+            .hero-song-badge {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.7rem;
+            }
+
+            /* Tabs */
+            .song-tabs-nav {
+                gap: 0.35rem;
+                margin-bottom: 1.2rem;
+                padding-bottom: 0.4rem;
+                -webkit-overflow-scrolling: touch;
+            }
+            .song-tab-btn {
+                padding: 0.48rem 0.8rem;
+                font-size: 0.82rem;
+                border-radius: 10px;
+                flex-shrink: 0;
+            }
+
+            /* Cards General */
+            .vrimmel-card, .detective-card, .builder-card, .history-card, 
+            .listening-quiz-card, .music-staff-banner, .chorus-card, 
+            .song-audio-footer-card, .tribute-box {
+                padding: 0.9rem 0.7rem;
+                border-radius: 14px;
+            }
+
+            /* Tab 1: Vrimmel */
+            .vrimmel-control-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.6rem;
+                padding: 0.5rem;
+            }
+            .vrimmel-filter-group {
+                justify-content: center;
+                gap: 0.35rem;
+            }
+            .vrimmel-filter-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.78rem;
+            }
+            .pure-toggle-btn {
+                padding: 0.35rem 0.7rem;
+                font-size: 0.8rem;
+                justify-content: center;
+            }
+            .vrimmel-hotspot {
+                width: 28px;
+                height: 28px;
+                font-size: 0.82rem;
+                border-width: 2px;
+            }
+            .vrimmel-hotspot.active {
+                transform: translate(-50%, -50%) scale(1.22);
+            }
+            .hotspot-detail-card {
+                padding: 0.9rem 0.75rem;
+                flex-direction: column;
+                gap: 0.85rem;
+            }
+            .detail-info-left {
+                min-width: 0;
+                width: 100%;
+            }
+            .detail-title {
+                font-size: 1.22rem;
+                flex-wrap: wrap;
+            }
+            .detail-forms, .detail-redskaber, .detail-vaerdighed-note {
+                font-size: 0.84rem;
+            }
+            .detail-saetning-box {
+                font-size: 0.92rem;
+                padding: 0.6rem 0.8rem;
+            }
+            .detail-actions-right {
+                width: 100%;
+            }
+            .detail-actions-right .listen-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Tab 2: Sing Along */
+            .music-staff-banner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                gap: 0.8rem;
+            }
+            .msb-left {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.4rem;
+            }
+            .msb-icon {
+                width: 46px;
+                height: 46px;
+                font-size: 1.8rem;
+            }
+            .msb-title {
+                font-size: 1.1rem;
+            }
+            .msb-sub {
+                font-size: 0.82rem;
+            }
+            #btn-open-youtube-modal {
+                width: 100%;
+                justify-content: center;
+            }
+            .rhythm-guide-banner {
+                padding: 0.75rem 0.7rem;
+                font-size: 0.84rem;
+                gap: 0.6rem;
+            }
+            .chorus-card {
+                padding: 1rem 0.75rem;
+            }
+            .chorus-text {
+                font-size: 1.05rem;
+                line-height: 1.6;
+            }
+            .verses-grid {
                 grid-template-columns: 1fr;
+                gap: 0.85rem;
             }
-            .verses-grid { grid-template-columns: 1fr; }
-            .vrimmel-hotspot { width: 32px; height: 32px; font-size: 0.95rem; }
-            .hotspot-detail-card { padding: 1rem; }
-            .detail-title { font-size: 1.3rem; }
+            .verse-card {
+                padding: 1rem 0.75rem;
+            }
+            .verse-lyrics {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+            .stress-syllable {
+                font-size: 0.92rem;
+                padding: 0.05rem 0.25rem;
+            }
+            .verse-listen-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+            .listening-quiz-card {
+                padding: 1rem 0.75rem;
+            }
+            .lq-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .lq-prompt {
+                font-size: 1.05rem;
+            }
+            .lq-options-grid {
+                grid-template-columns: 1fr;
+                gap: 0.55rem;
+            }
+            .lq-opt-btn {
+                padding: 0.75rem 0.7rem;
+                font-size: 0.9rem;
+            }
+
+            /* Tab 3: Detective */
+            .det-category-nav {
+                gap: 0.35rem;
+            }
+            .det-cat-btn {
+                padding: 0.4rem 0.65rem;
+                font-size: 0.78rem;
+            }
+            .detective-score-bar {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.84rem;
+            }
+            .detective-clue-box {
+                padding: 1rem 0.75rem;
+            }
+            .detective-clue-text {
+                font-size: 1.05rem;
+                line-height: 1.45;
+            }
+            .detective-options-grid {
+                grid-template-columns: 1fr;
+                gap: 0.55rem;
+            }
+            .detective-opt-btn {
+                padding: 0.8rem 0.7rem;
+                font-size: 0.92rem;
+            }
+
+            /* Tab 4: Builder & Puzzle */
+            .saetning-intro-title {
+                font-size: 1.25rem;
+            }
+            .saetning-intro-desc {
+                font-size: 0.86rem;
+                line-height: 1.45;
+            }
+            .saetning-sub-tabs {
+                gap: 0.35rem;
+                margin-bottom: 1.2rem;
+            }
+            .saetning-sub-tab-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.82rem;
+            }
+            .puzzle-wrapper {
+                padding: 0.85rem 0.6rem;
+            }
+            .puzzle-pills-row {
+                gap: 0.3rem;
+                margin-bottom: 0.85rem;
+            }
+            .puzzle-pill {
+                width: 30px;
+                height: 30px;
+                font-size: 0.84rem;
+            }
+            .puzzle-question-card {
+                padding: 0.75rem 0.85rem;
+                margin-bottom: 0.8rem;
+                width: 100%;
+            }
+            .puzzle-question-title {
+                font-size: 1.08rem;
+            }
+            .puzzle-slots {
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
+                margin: 1.1rem 0;
+            }
+            .puzzle-slot {
+                min-height: 68px;
+                padding: 0.6rem 0.5rem;
+            }
+            .slot-hint-text {
+                font-size: 0.8rem;
+            }
+            .slot-word-content {
+                font-size: 1.05rem;
+            }
+            .puzzle-word-bank {
+                gap: 0.45rem;
+                margin-bottom: 1.2rem;
+            }
+            .puzzle-chip-btn {
+                padding: 0.55rem 0.9rem;
+                font-size: 0.88rem;
+            }
+            .puzzle-msg {
+                font-size: 0.92rem;
+                padding: 0.75rem 0.85rem;
+            }
+            .next-task-btn, .retry-task-btn {
+                padding: 0.6rem 1.1rem;
+                font-size: 0.88rem;
+            }
+
+            .step-builder-wrapper {
+                padding: 0.85rem 0.6rem;
+                gap: 0.9rem;
+            }
+            .builder-guided-row {
+                padding: 0.75rem 0.65rem;
+            }
+            .builder-guided-title {
+                font-size: 0.92rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            .builder-options-chips {
+                gap: 0.4rem;
+            }
+            .builder-choice-chip {
+                padding: 0.45rem 0.75rem;
+                font-size: 0.84rem;
+            }
+            .live-sentence-display {
+                padding: 1rem 0.75rem;
+            }
+            .live-sentence-text {
+                font-size: 1.25rem;
+            }
+            .live-rule-hint {
+                font-size: 0.82rem;
+            }
+
+            /* Tab 5: History & Matching */
+            .matching-game-section {
+                padding: 0.9rem 0.7rem;
+            }
+            .mgs-title {
+                font-size: 1.1rem;
+            }
+            .matching-columns-container {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+            .match-card-btn {
+                padding: 0.7rem 0.8rem;
+                font-size: 0.88rem;
+            }
+            .tribute-box {
+                padding: 0.9rem 0.75rem;
+            }
+            .tribute-text {
+                font-size: 0.92rem;
+                line-height: 1.5;
+            }
+            .comparison-grid, .discussion-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+            .comparison-item, .discussion-card {
+                padding: 0.9rem 0.75rem;
+            }
+            .comp-header, .disc-question {
+                font-size: 0.98rem;
+            }
+
+            /* Footer Audio */
+            .song-audio-footer-card {
+                padding: 1rem 0.75rem;
+                margin-top: 1.8rem;
+            }
+            .saf-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                gap: 0.8rem;
+            }
+            .saf-left {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.4rem;
+            }
+            .saf-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.8rem;
+            }
+            .saf-title {
+                font-size: 1.1rem;
+            }
+            .saf-sub {
+                font-size: 0.82rem;
+            }
+            .saf-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+            }
+            .saf-youtube-btn, .saf-embed-toggle-btn {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.88rem;
+                padding: 0.65rem 1rem;
+            }
+            .saf-embed-container iframe {
+                width: 100%;
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sang-enebaerbusk-view {
+                padding: 0.25rem 0.45rem 2.5rem;
+            }
+            .hero-song-header h1 {
+                font-size: 1.25rem;
+            }
+            .hero-song-header p {
+                font-size: 0.82rem;
+            }
+            .song-tab-btn {
+                padding: 0.42rem 0.65rem;
+                font-size: 0.78rem;
+            }
+            .vrimmel-hotspot {
+                width: 24px;
+                height: 24px;
+                font-size: 0.72rem;
+            }
+            .puzzle-pill {
+                width: 27px;
+                height: 27px;
+                font-size: 0.78rem;
+            }
+            .live-sentence-text {
+                font-size: 1.15rem;
+            }
+            .chorus-text {
+                font-size: 0.95rem;
+            }
         }
     `;
     viewContainer.appendChild(style);

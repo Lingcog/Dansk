@@ -811,6 +811,119 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         }
 
         /* ----------------------------------------------------
+           Melodi- og lydafspiller (Nederst)
+           ---------------------------------------------------- */
+        .song-audio-footer-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(15, 23, 42, 0.96));
+            border: 2px solid rgba(245, 158, 11, 0.45);
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            margin-top: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+        .saf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+        }
+        .saf-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .saf-icon {
+            font-size: 2.2rem;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .saf-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .saf-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+        .saf-sub {
+            font-size: 0.92rem;
+            color: #cbd5e1;
+        }
+        .saf-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .saf-youtube-btn {
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.4rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+        }
+        .saf-youtube-btn:hover {
+            background: #dc2626;
+            transform: scale(1.04);
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5);
+        }
+        .saf-embed-toggle-btn {
+            background: #334155;
+            color: #f8fafc;
+            border: 1px solid #64748b;
+            padding: 0.75rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .saf-embed-toggle-btn:hover {
+            background: #475569;
+            border-color: #fbbf24;
+        }
+        .saf-embed-toggle-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #fbbf24;
+        }
+        .saf-embed-container {
+            margin-top: 1.4rem;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #000;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        }
+        .saf-embed-container iframe {
+            display: block;
+            border: none;
+        }
+
+        /* ----------------------------------------------------
            Mobile Responsiveness
            ---------------------------------------------------- */
         @media (max-width: 768px) {
@@ -1061,17 +1174,18 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             dag: 'Musikken',
             dagEn: 'The Song',
             icon: '📻',
-            handling: 'radioen med sangen',
+            handling: 'radioen med melodien',
             handlingEn: 'the radio playing the song',
             nutid: 'spiller musik',
             datid: 'spillede musik',
             foerdatid: 'har spillet musik',
-            redskaber: 'en radio, musikglæde, en sangleg',
-            redskaberEn: 'a radio, musical joy, a singing game',
+            redskaber: 'en radio, en munter melodi, en sangleg',
+            redskaberEn: 'a radio, cheerful melody, a singing game',
             saetning: 'Radioen spiller sangen om enebærbusken, og musikken giver godt humør og lette fødder til arbejdet.',
             saetningEn: 'The radio plays the song about the juniper bush, bringing cheerful spirits to the chores.',
             vaerdighed: 'Sang og kultur binder generationer sammen og forvandler pligter til glæde og fællesskab.',
             vaerdighedEn: 'Singing and culture unite generations and transform everyday tasks into joyful community.',
+            youtubeUrl: 'https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT',
             x: 57,
             y: 22
         }
@@ -1150,6 +1264,11 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 <button class="listen-btn" id="btn-listen-hotspot">
                     <span>🔊</span> ${isEn ? 'Listen to sentence' : 'Lyt til sætning'}
                 </button>
+                ${item.youtubeUrl ? `
+                    <a href="${item.youtubeUrl}" target="_blank" rel="noopener noreferrer" class="listen-btn" style="background: #ef4444; color: white; text-decoration: none; margin-top: 0.4rem;">
+                        <span>▶️</span> ${isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube'}
+                    </a>
+                ` : ''}
             </div>
         `;
         detailCard.querySelector('#btn-listen-hotspot').onclick = () => {
@@ -1204,9 +1323,14 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             Så går vi rundt om en enebærbusk<br>
             tidlig en mandag morgen!
         </div>
-        <button class="listen-btn" id="btn-listen-chorus" style="margin: 0 auto;">
-            <span>🔊</span> ${isEn ? 'Listen to Chorus' : 'Lyt til omkvædet'}
-        </button>
+        <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 0.8rem;">
+            <button class="listen-btn" id="btn-listen-chorus">
+                <span>🔊</span> ${isEn ? 'Listen to Chorus' : 'Lyt til omkvædet'}
+            </button>
+            <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="listen-btn" style="background: #ef4444; color: white; text-decoration: none;">
+                <span>▶️</span> ${isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube'}
+            </a>
+        </div>
     `;
     chorusCard.querySelector('#btn-listen-chorus').onclick = () => {
         speakDanish('Så går vi rundt om en enebærbusk, enebærbusk, enebærbusk. Så går vi rundt om en enebærbusk, tidlig en mandag morgen!');
@@ -1894,6 +2018,58 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     historyCard.appendChild(discGrid);
     panelUdvikling.appendChild(historyCard);
     panelsHolder.appendChild(panelUdvikling);
+
+    // =========================================================================
+    // NEDERST: Melodi- og lydafspiller (YouTube)
+    // =========================================================================
+    const audioFooterCard = document.createElement('div');
+    audioFooterCard.className = 'song-audio-footer-card';
+    audioFooterCard.innerHTML = `
+        <div class="saf-header">
+            <div class="saf-left">
+                <div class="saf-icon">🎵</div>
+                <div class="saf-text">
+                    <div class="saf-title">${isEn ? 'Listen to the Melody: "Så går vi rundt om en enebærbusk"' : 'Lyt til melodien: "Så går vi rundt om en enebærbusk"'}</div>
+                    <div class="saf-sub">${isEn ? 'Sing along and play the cheerful traditional melody' : 'Syng med og lyt til den klassiske melodi til sanglegen her'}</div>
+                </div>
+            </div>
+            <div class="saf-actions">
+                <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="saf-youtube-btn">
+                    <span>▶️</span> ${isEn ? 'Play on YouTube' : 'Hør melodi på YouTube'}
+                </a>
+                <button class="saf-embed-toggle-btn" id="btn-toggle-yt-player">
+                    <span>📺</span> <span id="yt-toggle-label">${isEn ? 'Show Player' : 'Vis afspiller'}</span>
+                </button>
+            </div>
+        </div>
+        <div class="saf-embed-container" id="yt-embed-box" style="display: none;">
+            <iframe 
+                width="100%" 
+                height="320" 
+                src="https://www.youtube-nocookie.com/embed/Gr5KXEBk5F4" 
+                title="Så går vi rundt om en enebærbusk - Melodi" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    `;
+
+    let ytPlayerOpen = false;
+    const toggleBtn = audioFooterCard.querySelector('#btn-toggle-yt-player');
+    const embedBox = audioFooterCard.querySelector('#yt-embed-box');
+    const toggleLabel = audioFooterCard.querySelector('#yt-toggle-label');
+
+    toggleBtn.onclick = () => {
+        ytPlayerOpen = !ytPlayerOpen;
+        embedBox.style.display = ytPlayerOpen ? 'block' : 'none';
+        toggleBtn.classList.toggle('active', ytPlayerOpen);
+        toggleLabel.textContent = ytPlayerOpen 
+            ? (isEn ? 'Hide Player' : 'Skjul afspiller') 
+            : (isEn ? 'Show Player' : 'Vis afspiller');
+    };
+
+    viewContainer.appendChild(audioFooterCard);
 
     // Initial subPath routing check
     if (extraData && extraData.subPath) {

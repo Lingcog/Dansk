@@ -940,10 +940,298 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         }
 
         @media (max-width: 768px) {
-            .tids-hero h1 { font-size: 1.7rem; }
-            .golden-rule-banner { flex-direction: column; text-align: center; gap: 0.6rem; }
-            .sentence-display-box { flex-direction: column; align-items: flex-start; }
-            .sentence-actions { width: 100%; justify-content: flex-end; }
+            .tidsudtryk-view {
+                padding: 0.25rem 0.65rem 3rem;
+            }
+            .tids-hero {
+                margin-bottom: 1.2rem;
+            }
+            .tids-hero h1 {
+                font-size: 1.4rem;
+            }
+            .tids-hero p {
+                font-size: 0.88rem;
+                line-height: 1.45;
+            }
+            .byggeplads-pills {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.6rem;
+                gap: 0.35rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .golden-rule-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.6rem;
+                padding: 0.9rem 1rem;
+                margin-bottom: 1.2rem;
+            }
+            .golden-rule-icon {
+                font-size: 1.6rem;
+            }
+            .golden-rule-content h3 {
+                font-size: 0.98rem;
+            }
+            .golden-rule-content p {
+                font-size: 0.84rem;
+            }
+            .tids-tabs-nav {
+                margin-bottom: 1.2rem;
+                gap: 0.25rem;
+                padding: 0.25rem;
+            }
+            .tids-tab-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.82rem;
+            }
+            .vrimmel-stage-card {
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .vrimmel-stage-header {
+                padding: 0.8rem 1rem;
+            }
+            .vrimmel-stage-title {
+                font-size: 1rem;
+            }
+            .vrimmel-time-filter-bar {
+                padding: 0.5rem 0.75rem;
+                gap: 0.35rem;
+            }
+            .time-filter-btn {
+                padding: 0.35rem 0.65rem;
+                font-size: 0.78rem;
+            }
+            .hotspot-inspector {
+                padding: 1rem 0.85rem;
+            }
+            .inspector-top {
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .inspector-icon {
+                font-size: 1.4rem;
+            }
+            .inspector-time-heading {
+                font-size: 1.05rem;
+            }
+            .inspector-badge {
+                font-size: 0.72rem;
+                padding: 0.15rem 0.5rem;
+            }
+            .sentence-display-box {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.85rem 1rem;
+                gap: 0.75rem;
+            }
+            .sentence-text-lead {
+                font-size: 1.05rem;
+                line-height: 1.45;
+            }
+            .sentence-actions {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0.4rem;
+            }
+            .btn-action-listen, .btn-action-invert {
+                font-size: 0.8rem;
+                padding: 0.45rem 0.75rem;
+            }
+            .inspector-analysis-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+            .analysis-card {
+                padding: 0.75rem 0.85rem;
+            }
+            .analysis-card-title {
+                font-size: 0.72rem;
+            }
+            .analysis-card-val {
+                font-size: 0.98rem;
+            }
+            .analysis-card-desc {
+                font-size: 0.82rem;
+            }
+            .future-lab-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+                margin-bottom: 1.2rem;
+            }
+            .future-model-card {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .future-model-title {
+                font-size: 1.08rem;
+            }
+            .future-model-desc {
+                font-size: 0.84rem;
+                margin-bottom: 0.75rem;
+            }
+            .example-item {
+                font-size: 0.84rem;
+                padding: 0.55rem 0.75rem;
+            }
+            .mini-quiz-card {
+                padding: 1rem;
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .mini-quiz-header h3 {
+                font-size: 1.05rem;
+            }
+            .quiz-sentence-row {
+                font-size: 0.95rem;
+            }
+            .quiz-opt-btn {
+                padding: 0.45rem 0.8rem;
+                font-size: 0.82rem;
+            }
+            .vaerksted-card {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .vaerksted-sentence-box {
+                padding: 1rem 0.75rem;
+                font-size: 1.05rem;
+                margin-bottom: 1rem;
+                line-height: 1.45;
+            }
+            .blank-placeholder {
+                min-width: 80px;
+                padding: 0.1rem 0.4rem;
+            }
+            .vaerksted-choices-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+            .vaerksted-choice-btn {
+                padding: 0.75rem 0.85rem;
+                font-size: 0.92rem;
+            }
+            .vaerksted-feedback-banner {
+                padding: 0.8rem 0.9rem;
+                font-size: 0.88rem;
+            }
+            .btn-next-question {
+                width: 100%;
+                text-align: center;
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .timeline-section-card {
+                padding: 1rem;
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .timeline-track {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-bottom: 1.2rem;
+            }
+            .timeline-column {
+                padding: 0.85rem;
+            }
+            .timeline-col-header {
+                font-size: 0.95rem;
+                margin-bottom: 0.6rem;
+            }
+            .tidsord-chip {
+                padding: 0.45rem 0.65rem;
+                font-size: 0.82rem;
+            }
+            .frekvens-barometer {
+                padding: 0.85rem;
+            }
+            .frekvens-scale {
+                gap: 0.4rem;
+            }
+            .frekvens-step {
+                min-width: 65px;
+                padding: 0.5rem 0.3rem;
+            }
+            .frekvens-pct {
+                font-size: 0.7rem;
+            }
+            .frekvens-word {
+                font-size: 0.82rem;
+            }
+            .tids-exercise-card {
+                padding: 1rem;
+                border-radius: 14px;
+                margin-top: 1.2rem;
+            }
+            .tids-exercise-title {
+                font-size: 1.08rem;
+            }
+            .tids-exercise-desc {
+                font-size: 0.84rem;
+            }
+            .tids-sorter-active {
+                padding: 1rem 0.75rem;
+                margin-bottom: 1rem;
+            }
+            .tids-sorter-word {
+                font-size: 1.25rem;
+                margin-bottom: 0.8rem;
+            }
+            .tids-sorter-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .tids-pick-btn {
+                padding: 0.7rem 0.85rem;
+                font-size: 0.88rem;
+            }
+            .tids-sorter-buckets {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .tids-bucket {
+                min-height: auto;
+                padding: 0.85rem;
+            }
+            .frekvens-quiz-box {
+                padding: 0.95rem;
+            }
+            .frekvens-q-text {
+                font-size: 0.98rem;
+                margin-bottom: 0.8rem;
+            }
+            .frekvens-options-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+            .frekvens-opt-btn {
+                padding: 0.65rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tidsudtryk-view {
+                padding: 0.2rem 0.4rem 2.5rem;
+            }
+            .tids-hero h1 {
+                font-size: 1.25rem;
+            }
+            .tids-hero p {
+                font-size: 0.82rem;
+            }
+            .golden-rule-banner {
+                padding: 0.75rem 0.8rem;
+            }
+            .frekvens-options-grid {
+                grid-template-columns: 1fr;
+            }
+            .tids-tab-btn {
+                padding: 0.45rem 0.65rem;
+                font-size: 0.78rem;
+            }
         }
     `;
     viewContainer.appendChild(style);

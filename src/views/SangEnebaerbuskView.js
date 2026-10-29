@@ -9,7 +9,10 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 export function renderSangEnebaerbuskView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
-    const isEn = getLang() === 'en';
+    const lang = getLang();
+    const isDa = lang === 'da';
+    const isEn = lang === 'en';
+    const t = (key, fallback) => getTranslation(key, fallback);
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container sang-enebaerbusk-view';
@@ -20,7 +23,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${isEn ? 'Back to Stories' : 'Tilbage til Historier'}`;
+    backBtn.innerHTML = `← ${t('back', isEn ? 'Back to Stories' : 'Tilbage til Historier')}`;
     backBtn.onclick = () => navigateFn('historier_menu');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
@@ -1763,11 +1766,9 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const hero = document.createElement('div');
     hero.className = 'hero-song-header';
     hero.innerHTML = `
-        <div class="hero-song-badge">🎵 ${isEn ? 'Danish Songs & Everyday Life' : 'Danske sange & Hverdagsliv'}</div>
-        <h1>${isEn ? 'Så går vi rundt om en enebærbusk' : 'Så går vi rundt om en enebærbusk'}</h1>
-        <p>${isEn 
-            ? 'Sing along to Denmark’s classic singing game, explore contemporary household tasks alongside 19th-century traditions in the thought bubble, master sentence rhythm ("TÍD-lig MAN-dag MÓR-gen"), and celebrate the dignity of domestic care.' 
-            : 'Syng med på den klassiske danske sangleg, udforsk nutidens husarbejde og 1800-tallets traditioner i tankeboblen, træn naturlig dansk rytme ("TÍD-lig MAN-dag MÓR-gen"), og fejr værdigheden i hverdagens omsorgsarbejde.'}</p>
+        <div class="hero-song-badge">${t('sange_hero_badge', '🎵 Danske sange & Hverdagsliv')}</div>
+        <h1>${t('sange_hero_title', 'Så går vi rundt om en enebærbusk')}</h1>
+        <p>${t('sange_hero_desc', 'Syng med på den klassiske danske sangleg, udforsk nutidens husarbejde og 1800-tallets traditioner i tankeboblen, træn naturlig dansk rytme ("TÍD-lig MAN-dag MÓR-gen"), og fejr værdigheden i hverdagens omsorgsarbejde.')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1776,11 +1777,11 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     tabsMenu.className = 'song-tabs-nav';
 
     const tabsData = [
-        { id: 'tab_vrimmel', icon: '🖼️', label: isEn ? '1. Wimmelbild (Bubble)' : '1. Vrimlebillede & Tankebobbel' },
-        { id: 'tab_sang', icon: '🎶', label: isEn ? '2. Sing along & Rhythm' : '2. Syng med & Rytme' },
-        { id: 'tab_detektiv', icon: '🕵️', label: isEn ? '3. Word Detective' : '3. Ord-detektiv ("Rulle tøj" osv.)' },
-        { id: 'tab_saetning', icon: '🧩', label: isEn ? '4. Sentence Builder & Puzzle' : '4. Sætningsbygger & Puslespil' },
-        { id: 'tab_udvikling', icon: '⏳', label: isEn ? '5. Then & Now & Matching' : '5. Dengang & nu & Parring' }
+        { id: 'tab_vrimmel', icon: '🖼️', label: t('sange_tab_vrimmel', '1. Vrimlebillede & Tankebobbel') },
+        { id: 'tab_sang', icon: '🎶', label: t('sange_tab_sang', '2. Syng med & Rytme') },
+        { id: 'tab_detektiv', icon: '🕵️', label: t('sange_tab_detektiv', '3. Ord-detektiv ("Rulle tøj" osv.)') },
+        { id: 'tab_saetning', icon: '🧩', label: t('sange_tab_saetning', '4. Sætningsbygger & Puslespil') },
+        { id: 'tab_udvikling', icon: '⏳', label: t('sange_tab_udvikling', '5. Dengang & nu & Parring') }
     ];
 
     let currentTab = extraData.activeTab || 'tab_vrimmel';
@@ -2117,16 +2118,16 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const filterGroup = document.createElement('div');
     filterGroup.className = 'vrimmel-filter-group';
     filterGroup.innerHTML = `
-        <button class="vrimmel-filter-btn active" data-filter="all">🌟 ${isEn ? 'All (14)' : 'Alle (14 hotspots)'}</button>
-        <button class="vrimmel-filter-btn" data-filter="nutid">🏠 ${isEn ? 'Modern Home' : 'Nutidens hjem (7)'}</button>
-        <button class="vrimmel-filter-btn" data-filter="historisk">💭 ${isEn ? 'Thought Bubble (1800s)' : 'Historisk tankebobbel (6)'}</button>
+        <button class="vrimmel-filter-btn active" data-filter="all">${t('sange_filter_all', isEn ? '🌟 All (14)' : '🌟 Alle (14 hotspots)')}</button>
+        <button class="vrimmel-filter-btn" data-filter="nutid">${t('sange_filter_nutid', isEn ? '✨ Present (Modern home)' : '🏠 Nutidens hjem (7)')}</button>
+        <button class="vrimmel-filter-btn" data-filter="historisk">${t('sange_filter_historisk', isEn ? '⏳ Historical (Thought bubble)' : '💭 Historisk tankebobbel (6)')}</button>
     `;
     controlBar.appendChild(filterGroup);
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-toggle-btn';
     let pureModeActive = false;
-    pureBtn.innerHTML = `<span>🖼️</span> ${isEn ? 'Image only:' : 'Vis kun billedet:'} <strong id="pure-status">${isEn ? 'OFF' : 'FRA'}</strong>`;
+    pureBtn.innerHTML = `<span>🖼️</span> ${t('sange_pure_show', isEn ? 'Pure illustration' : 'Vis kun billedet:')} <strong id="pure-status">${isEn ? 'OFF' : 'FRA'}</strong>`;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
@@ -2150,34 +2151,43 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     detailCard.className = 'hotspot-detail-card';
 
     function showItemDetail(item) {
+        const dagTrans = t(`sange_item_${item.id}_dag`, isEn ? item.dagEn : item.dag);
+        const handlingTrans = t(`sange_item_${item.id}_handling`, isEn ? item.handlingEn : item.handling);
+        const redskaberTrans = t(`sange_item_${item.id}_redskaber`, isEn ? item.redskaberEn : item.redskaber);
+        const saetningTrans = t(`sange_item_${item.id}_saetning`, isEn ? item.saetningEn : item.saetning);
+        const vaerdighedTrans = t(`sange_item_${item.id}_vaerdighed`, isEn ? item.vaerdighedEn : item.vaerdighed);
+
         detailCard.innerHTML = `
             <div class="detail-info-left">
                 <div class="detail-badges">
-                    <span class="badge-pill badge-dag">${item.category === 'historisk' ? '💭' : '🗓️'} ${isEn ? item.dagEn : item.dag}</span>
-                    <span class="badge-pill badge-verbum">🔴 ${isEn ? 'Verb & Action' : 'Verbum & Handling'}</span>
+                    <span class="badge-pill badge-dag">${item.category === 'historisk' ? '💭' : '🗓️'} ${item.dag} ${!isDa && dagTrans !== item.dag ? `(${dagTrans})` : ''}</span>
+                    <span class="badge-pill badge-verbum">🔴 ${t('sange_action_label', isEn ? 'Action' : 'Handling')}</span>
                     <span class="badge-pill ${item.category === 'historisk' ? 'badge-historisk-tag' : 'badge-vaerdighed'}">
-                        ${item.category === 'historisk' ? (isEn ? '⏳ 1800s Rural Heritage' : '⏳ 1800-tallets kulturarv') : (isEn ? '✨ Modern Domestic Care' : '✨ Moderne omsorgsarbejde')}
+                        ${item.category === 'historisk' ? t('sange_filter_historisk', isEn ? '⏳ 1800s Rural Heritage' : '⏳ 1800-tallets kulturarv') : t('sange_tribute_badge', isEn ? '✨ Modern Domestic Care' : '✨ Moderne omsorgsarbejde')}
                     </span>
                 </div>
                 <div class="detail-title">
                     <span>${item.icon}</span> ${item.handling}
+                    ${!isDa && handlingTrans !== item.handling ? `<div style="font-size: 0.95rem; font-weight: 500; color: #94a3b8; margin-top: 0.15rem;">${handlingTrans}</div>` : ''}
                 </div>
                 <div class="detail-forms">
                     ${item.nutid} · ${item.datid} · ${item.foerdatid}
                 </div>
                 <div class="detail-redskaber">
-                    <strong>${item.category === 'historisk' ? (isEn ? 'Historical tools:' : 'Historiske redskaber:') : (isEn ? 'Modern tools:' : 'Moderne redskaber:')}</strong> ${isEn ? item.redskaberEn : item.redskaber}
+                    <strong>${t('sange_tools_label', isEn ? 'Tools:' : 'Redskaber:')}</strong> ${item.redskaber}
+                    ${!isDa && redskaberTrans !== item.redskaber ? `<div style="font-size: 0.88rem; color: #94a3b8; margin-top: 0.2rem;">${redskaberTrans}</div>` : ''}
                 </div>
                 <div class="detail-saetning-box">
                     "${item.saetning}"
+                    ${!isDa && saetningTrans !== item.saetning ? `<div style="font-size: 0.88rem; color: #cbd5e1; margin-top: 0.35rem; font-style: italic;">${saetningTrans}</div>` : ''}
                 </div>
                 <div class="detail-vaerdighed-note">
-                    <span>${item.category === 'historisk' ? '📜' : '💜'}</span> ${isEn ? item.vaerdighedEn : item.vaerdighed}
+                    <span>${item.category === 'historisk' ? '📜' : '💜'}</span> ${vaerdighedTrans}
                 </div>
             </div>
             <div class="detail-actions-right">
                 <button class="listen-btn" id="btn-listen-hotspot">
-                    <span>🔊</span> ${isEn ? 'Listen to sentence' : 'Lyt til sætning'}
+                    <span>🔊</span> ${t('sange_listen_sentence', isEn ? 'Listen to sentence' : 'Lyt til sætning')}
                 </button>
             </div>
         `;
@@ -2251,13 +2261,13 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         <div class="msb-left">
             <div class="msb-icon">🎼</div>
             <div class="msb-info">
-                <div class="msb-title">Melodi: Dansk traditionel sangleg</div>
-                <div class="msb-sub">6/8 takt · Muntert tempo · Naturlig dansk sætningsrytme</div>
+                <div class="msb-title">${t('sange_msb_title', 'Melodi: Dansk traditionel sangleg')}</div>
+                <div class="msb-sub">${t('sange_msb_sub', '6/8 takt · Muntert tempo · Naturlig dansk sætningsrytme')}</div>
             </div>
         </div>
         <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;">
             <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="saf-youtube-btn">
-                <span>▶️</span> ${isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube'}
+                <span>▶️</span> ${t('sange_msb_open_yt', isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube')}
             </a>
         </div>
     `;
@@ -2270,12 +2280,12 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         <div class="rgb-icon">🥁</div>
         <div class="rgb-content">
             <strong style="color: #fbbf24; font-size: 1.05rem;">
-                ${isEn ? 'Danish Sentence Rhythm & Word Stress' : 'Dansk rytme og trykfordeling'}
+                ${t('sange_rhythm_guide_title', isEn ? 'Danish Sentence Rhythm & Word Stress' : 'Dansk rytme og trykfordeling')}
             </strong>
             <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0.25rem 0 0; line-height: 1.5;">
-                ${isEn 
+                ${t('sange_rhythm_guide_desc', isEn 
                     ? 'The highlighted uppercase syllables show where the natural sentence stress falls (e.g. ”TÍD-lig MAN-dag MÓR-gen”). Practice singing or reading along with the beat!' 
-                    : 'De markerede stavelser med store bogstaver og accent viser det naturlige rytmiske tryk i sætningerne (f.eks. ”<span class="stress-syllable">TÍD</span>-lig <span class="stress-syllable">MÁN</span>-dag <span class="stress-syllable">MÓR</span>-gen”). Læg mærke til, hvordan sangens rytme følger hverdagsdanskens naturlige betoning!'}
+                    : 'De markerede stavelser med store bogstaver og accent viser det naturlige rytmiske tryk i sætningerne (f.eks. ”<span class="stress-syllable">TÍD</span>-lig <span class="stress-syllable">MÁN</span>-dag <span class="stress-syllable">MÓR</span>-gen”). Læg mærke til, hvordan sangens rytme følger hverdagsdanskens naturlige betoning!')}
             </p>
         </div>
     `;
@@ -2285,7 +2295,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const chorusCard = document.createElement('div');
     chorusCard.className = 'chorus-card';
     chorusCard.innerHTML = `
-        <span class="chorus-tag">🌿 ${isEn ? 'Chorus of the Song Game' : 'Sanglegens faste omkvæd'}</span>
+        <span class="chorus-tag">🌿 ${t('sange_chorus_tag', isEn ? 'Chorus of the Song Game' : 'Sanglegens faste omkvæd')}</span>
         <div class="chorus-text">
             Så <span class="stress-syllable">GÅR</span> vi rundt om en <span class="stress-syllable">É</span>-ne-bær-busk,<br>
             <span class="stress-syllable">É</span>-ne-bær-busk, <span class="stress-syllable">É</span>-ne-bær-busk.<br>
@@ -2294,10 +2304,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         </div>
         <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 0.8rem;">
             <button class="listen-btn" id="btn-listen-chorus">
-                <span>🔊</span> ${isEn ? 'Listen to Chorus' : 'Lyt til omkvædet'}
+                <span>🔊</span> ${t('sange_listen_chorus', isEn ? 'Listen to Chorus' : 'Lyt til omkvædet')}
             </button>
             <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="listen-btn" style="background: #ef4444; color: white; text-decoration: none;">
-                <span>▶️</span> ${isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube'}
+                <span>▶️</span> ${t('sange_msb_open_yt', isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube')}
             </a>
         </div>
     `;
@@ -2309,6 +2319,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     // Verses Data with permanent rhythm/stress marks
     const versesData = [
         {
+            id: 'mandag',
             dag: 'Mandag',
             dagEn: 'Monday',
             icon: '🧺',
@@ -2318,6 +2329,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             modernNote: isEn ? 'Modern: "når vi vasker vores tøj" (vores instead of archaic vort).' : 'Moderne: "når vi vasker vores tøj" (i dag siger vi vores frem for vort).'
         },
         {
+            id: 'tirsdag',
             dag: 'Tirsdag',
             dagEn: 'Tuesday',
             icon: '🧼',
@@ -2327,6 +2339,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             modernNote: isEn ? 'Drying & rinsing rhythm in 6/8 meter.' : '6/8 takt med tryk på ugedagen: TÍRS-dag MÓR-gen.'
         },
         {
+            id: 'onsdag',
             dag: 'Onsdag',
             dagEn: 'Wednesday',
             icon: '💨',
@@ -2336,6 +2349,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             modernNote: isEn ? 'Notice inversion: "Så gør vi sådan" (Så + gør + vi).' : 'Bemærk inversion: "Så gør vi sådan" (Forfelt + Verbum + Subjekt).'
         },
         {
+            id: 'torsdag',
             dag: 'Torsdag',
             dagEn: 'Thursday',
             icon: '🪓',
@@ -2345,6 +2359,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             modernNote: isEn ? 'Historically: "ruller vort tøj" (mangelbræt). Today: "folder tøjet sammen".' : 'Historisk: "ruller vort tøj" med mangelbræt og rulle. I dag: vi folder tøjet sammen.'
         },
         {
+            id: 'fredag',
             dag: 'Fredag',
             dagEn: 'Friday',
             icon: '👔',
@@ -2354,6 +2369,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             modernNote: isEn ? 'Dengang med kulstrygejern · I dag med dampstrygejern.' : 'Dengang med glødende kulstrygejern · I dag med let dampstrygejern.'
         },
         {
+            id: 'loerdag',
             dag: 'Lørdag',
             dagEn: 'Saturday',
             icon: '🧽',
@@ -2363,6 +2379,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             modernNote: isEn ? 'Historically: "skurer vort gulv" on bare knees with sand and brush.' : 'Historisk: "skurer vort gulv" på knæ med sand og skurebørste.'
         },
         {
+            id: 'soendag',
             dag: 'Søndag',
             dagEn: 'Sunday',
             icon: '☕',
@@ -2379,17 +2396,19 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     versesData.forEach(v => {
         const vCard = document.createElement('div');
         vCard.className = 'verse-card';
+        const dayTrans = t(`sange_item_${v.id}_dag`, isEn ? v.dagEn : v.dag);
+        const noteTrans = t(`sange_verse_${v.id}_note`, v.modernNote);
         vCard.innerHTML = `
             <div>
                 <div class="verse-header">
-                    <span class="verse-day-pill">${v.icon} ${isEn ? v.dagEn : v.dag}</span>
+                    <span class="verse-day-pill">${v.icon} ${v.dag} ${!isDa && dayTrans !== v.dag ? `(${dayTrans})` : ''}</span>
                     <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 700;">${v.action}</span>
                 </div>
                 <div class="verse-lyrics">${v.textStress}</div>
-                <div class="verse-note">💡 ${v.modernNote}</div>
+                <div class="verse-note">💡 ${noteTrans}</div>
             </div>
             <button class="verse-listen-btn">
-                <span>🔊</span> ${isEn ? 'Listen to verse' : 'Lyt til verset'}
+                <span>🔊</span> ${t('sange_listen_verse', isEn ? 'Listen to verse' : 'Lyt til verset')}
             </button>
         `;
         vCard.querySelector('.verse-listen-btn').onclick = () => {
@@ -2456,19 +2475,19 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             <div class="lq-header">
                 <div>
                     <span style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">
-                        🎧 ${isEn ? 'Listening Exercise' : 'Lytteøvelse (Lydklip)'}
+                        🎧 ${t('sange_lq_tag', isEn ? 'Listening Exercise' : 'Lytteøvelse (Lydklip)')}
                     </span>
                     <div class="lq-prompt" style="margin-top: 0.6rem;">
-                        ${isEn ? 'Which chore or day of the week is being sung about?' : 'Hvilken handling eller ugedag synges der om her?'}
+                        ${t('sange_lq_prompt', isEn ? 'Which chore or day of the week is being sung about?' : 'Hvilken handling eller ugedag synges der om her?')}
                     </div>
                 </div>
                 <div style="font-weight: 800; color: #fbbf24; font-size: 1.05rem;">
-                    ⭐ ${isEn ? 'Score' : 'Point'}: ${lqScore} / ${listeningQuestions.length}
+                    ⭐ ${t('sange_lq_score', isEn ? 'Score' : 'Point')}: ${lqScore} / ${listeningQuestions.length}
                 </div>
             </div>
             <div class="lq-play-box">
                 <button class="lq-play-btn" id="btn-play-lq-clip">
-                    <span>🔊</span> ${isEn ? 'Play Audio Clip' : 'Afspil lytteklippet'}
+                    <span>🔊</span> ${t('sange_lq_play', isEn ? 'Play Audio Clip' : 'Afspil lytteklippet')}
                 </button>
             </div>
             <div class="lq-options-grid" id="lq-options-container"></div>
@@ -2497,10 +2516,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 if (isCorrect) {
                     btn.classList.add('correct');
                     lqScore++;
-                    listeningQuizCard.querySelector('.lq-header div:last-child').textContent = `⭐ ${isEn ? 'Score' : 'Point'}: ${lqScore} / ${listeningQuestions.length}`;
+                    listeningQuizCard.querySelector('.lq-header div:last-child').textContent = `⭐ ${t('sange_lq_score', isEn ? 'Score' : 'Point')}: ${lqScore} / ${listeningQuestions.length}`;
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                            🎉 ${isEn ? 'Spot on!' : 'Helt rigtigt hørt!'} <strong>${opt}</strong>
+                            🎉 ${t('sange_lq_correct', isEn ? 'Spot on!' : 'Helt rigtigt hørt!')} <strong>${opt}</strong>
                         </div>
                         <div style="color: #cbd5e1; font-size: 0.95rem;">${q.tip}</div>
                     `;
@@ -2511,7 +2530,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     });
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                            ❌ ${isEn ? 'Not quite right.' : 'Ikke helt rigtigt.'} Det rigtige svar er <strong>${q.correct}</strong>
+                            ❌ ${t('sange_lq_wrong', isEn ? 'Not quite right.' : 'Ikke helt rigtigt.')} ${isEn ? 'The correct answer is' : 'Det rigtige svar er'} <strong>${q.correct}</strong>
                         </div>
                         <div style="color: #cbd5e1; font-size: 0.95rem;">${q.tip}</div>
                     `;
@@ -2523,8 +2542,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 nextBtn.className = 'detective-next-btn';
                 nextBtn.style.marginTop = '1rem';
                 nextBtn.innerHTML = lqIndex + 1 < listeningQuestions.length 
-                    ? `<span>${isEn ? 'Next Audio Clip' : 'Næste lytteklip'}</span> →` 
-                    : `<span>🏆 ${isEn ? 'See Quiz Result' : 'Se lytteresultat'}</span>`;
+                    ? `<span>${t('sange_lq_next', isEn ? 'Next Audio Clip' : 'Næste lytteklip')}</span> →` 
+                    : `<span>🏆 ${t('sange_lq_finish_btn', isEn ? 'See Quiz Result' : 'Se lytteresultat')}</span>`;
 
                 nextBtn.onclick = () => {
                     if (lqIndex + 1 < listeningQuestions.length) {
@@ -2546,13 +2565,13 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             <div style="text-align: center; padding: 1.8rem 1rem;">
                 <div style="font-size: 3.2rem; margin-bottom: 0.6rem;">🎧🎉🎶</div>
                 <h3 style="font-size: 1.6rem; color: #38bdf8; margin-bottom: 0.5rem;">
-                    ${isEn ? 'Listening Quiz Completed!' : 'Flot klaret! Du har et skarpt dansk øre!'}
+                    ${t('sange_lq_finish_title', isEn ? 'Listening Quiz Completed!' : 'Flot klaret! Du har et skarpt dansk øre!')}
                 </h3>
                 <p style="font-size: 1.15rem; color: #f8fafc; margin-bottom: 1.5rem;">
-                    ${isEn ? 'You scored' : 'Du fik'} <strong>${lqScore}</strong> ${isEn ? 'out of' : 'ud af'} <strong>${listeningQuestions.length}</strong> ${isEn ? 'points' : 'point'}!
+                    ${t('sange_lq_finish_scored', isEn ? 'You scored' : 'Du fik')} <strong>${lqScore}</strong> ${t('sange_lq_finish_outof', isEn ? 'out of' : 'ud af')} <strong>${listeningQuestions.length}</strong> ${t('sange_lq_finish_points', isEn ? 'points!' : 'point!')}
                 </p>
                 <button class="detective-next-btn" id="btn-restart-lq">
-                    🔄 ${isEn ? 'Try Listening Quiz Again' : 'Tag lyttequizzen igen'}
+                    🔄 ${t('sange_lq_restart', isEn ? 'Try Listening Quiz Again' : 'Tag lyttequizzen igen')}
                 </button>
             </div>
         `;
@@ -2706,9 +2725,9 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         const catNav = document.createElement('div');
         catNav.className = 'det-category-nav';
         catNav.innerHTML = `
-            <button class="det-cat-btn ${currentDetectiveCategory === 'all' ? 'active' : ''}" data-cat="all">🌟 ${isEn ? 'All tools (12)' : 'Alle redskaber (12)'}</button>
-            <button class="det-cat-btn ${currentDetectiveCategory === 'historisk' ? 'active' : ''}" data-cat="historisk">⏳ ${isEn ? 'Historical ("rulle tøj", mangelbræt osv.)' : 'Historiske ("Rulle tøj", mangelbræt, vaskebræt m.fl.)'}</button>
-            <button class="det-cat-btn ${currentDetectiveCategory === 'moderne' ? 'active' : ''}" data-cat="moderne">✨ ${isEn ? 'Modern appliances' : 'Moderne maskiner (vaskemaskine, dampjern osv.)'}</button>
+            <button class="det-cat-btn ${currentDetectiveCategory === 'all' ? 'active' : ''}" data-cat="all">${t('sange_det_cat_all', isEn ? '🌟 All tools (12)' : '🌟 Alle redskaber (12)')}</button>
+            <button class="det-cat-btn ${currentDetectiveCategory === 'historisk' ? 'active' : ''}" data-cat="historisk">${t('sange_det_cat_hist', isEn ? '⏳ Historical ("rulle tøj", mangelbræt osv.)' : '⏳ Historiske ("Rulle tøj", mangelbræt, vaskebræt m.fl.)')}</button>
+            <button class="det-cat-btn ${currentDetectiveCategory === 'moderne' ? 'active' : ''}" data-cat="moderne">${t('sange_det_cat_mod', isEn ? '✨ Modern appliances' : '✨ Moderne maskiner (vaskemaskine, dampjern osv.)')}</button>
         `;
         catNav.querySelectorAll('.det-cat-btn').forEach(b => {
             b.onclick = () => filterDetectiveChallenges(b.dataset.cat);
@@ -2719,8 +2738,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         const scoreBar = document.createElement('div');
         scoreBar.className = 'detective-score-bar';
         scoreBar.innerHTML = `
-            <span style="font-weight: 800; color: #fbbf24;">🕵️ ${isEn ? 'Clue' : 'Gåde'} ${detIdx + 1} / ${detFilteredList.length}</span>
-            <span style="font-weight: 800; color: #4ade80;">⭐ ${isEn ? 'Score' : 'Point'}: ${detScore}</span>
+            <span style="font-weight: 800; color: #fbbf24;">🕵️ ${t('sange_det_clue', isEn ? 'Clue' : 'Gåde')} ${detIdx + 1} / ${detFilteredList.length}</span>
+            <span style="font-weight: 800; color: #4ade80;">⭐ ${t('sange_det_score', isEn ? 'Score' : 'Point')}: ${detScore}</span>
         `;
         detectiveCard.appendChild(scoreBar);
 
@@ -2728,10 +2747,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         const clueBox = document.createElement('div');
         clueBox.className = 'detective-clue-box';
         clueBox.innerHTML = `
-            <div class="detective-clue-title">${challenge.category === 'historisk' ? (isEn ? '⏳ Historical Tool / Action' : '⏳ Historisk redskab eller handling') : (isEn ? '✨ Modern Tool' : '✨ Moderne husredskab')}</div>
+            <div class="detective-clue-title">${challenge.category === 'historisk' ? t('sange_det_hist_title', isEn ? '⏳ Historical Tool / Action' : '⏳ Historisk redskab eller handling') : t('sange_det_mod_title', isEn ? '✨ Modern Tool' : '✨ Moderne husredskab')}</div>
             <div class="detective-clue-text">"${isEn ? challenge.clueEn : challenge.clue}"</div>
             <button class="listen-btn" id="btn-listen-clue" style="margin: 0 auto; padding: 0.5rem 1rem; font-size: 0.85rem;">
-                <span>🔊</span> ${isEn ? 'Listen to clue' : 'Lyt til ledetråd'}
+                <span>🔊</span> ${t('sange_det_listen_clue', isEn ? 'Listen to clue' : 'Lyt til ledetråd')}
             </button>
         `;
         clueBox.querySelector('#btn-listen-clue').onclick = () => {
@@ -2761,10 +2780,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 if (isCorrect) {
                     btn.classList.add('correct');
                     detScore++;
-                    scoreBar.querySelector('span:nth-child(2)').textContent = `⭐ ${isEn ? 'Score' : 'Point'}: ${detScore}`;
+                    scoreBar.querySelector('span:nth-child(2)').textContent = `⭐ ${t('sange_det_score', isEn ? 'Score' : 'Point')}: ${detScore}`;
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                            🎉 ${isEn ? 'Correct!' : 'Helt rigtigt!'} <strong>${opt}</strong>
+                            🎉 ${t('sange_det_correct', isEn ? 'Correct!' : 'Helt rigtigt!')} <strong>${opt}</strong>
                         </div>
                         <div style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5;">${challenge.explanation}</div>
                     `;
@@ -2776,7 +2795,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     });
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                            ❌ ${isEn ? 'Not quite!' : 'Ikke helt!'} Det rigtige svar er <strong>${challenge.target}</strong>
+                            ❌ ${t('sange_det_wrong', isEn ? 'Not quite!' : 'Ikke helt!')} ${isEn ? 'The correct answer is' : 'Det rigtige svar er'} <strong>${challenge.target}</strong>
                         </div>
                         <div style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5;">${challenge.explanation}</div>
                     `;
@@ -2787,8 +2806,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'detective-next-btn';
                 nextBtn.innerHTML = detIdx + 1 < detFilteredList.length 
-                    ? `<span>${isEn ? 'Next Tool' : 'Næste redskab'}</span> →` 
-                    : `<span>🏆 ${isEn ? 'See Result' : 'Se dit resultat'}</span>`;
+                    ? `<span>${t('sange_det_next', isEn ? 'Next Tool' : 'Næste redskab')}</span> →` 
+                    : `<span>🏆 ${t('sange_det_see_result', isEn ? 'See Result' : 'Se dit resultat')}</span>`;
                 nextBtn.onclick = () => {
                     if (detIdx + 1 < detFilteredList.length) {
                         detIdx++;
@@ -2812,18 +2831,18 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             <div style="text-align: center; padding: 2rem 1rem;">
                 <div style="font-size: 3.5rem; margin-bottom: 0.8rem;">🎉🧺🪵🏆</div>
                 <h2 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 0.6rem;">
-                    ${isEn ? 'Outstanding Detective Work!' : 'Fantastisk detektivarbejde!'}
+                    ${t('sange_det_finish_title', isEn ? 'Outstanding Detective Work!' : 'Fantastisk detektivarbejde!')}
                 </h2>
                 <p style="font-size: 1.2rem; color: #f8fafc; margin-bottom: 1.5rem;">
-                    ${isEn ? 'You scored' : 'Du fik'} <strong>${detScore}</strong> ${isEn ? 'out of' : 'ud af'} <strong>${detFilteredList.length}</strong> ${isEn ? 'points' : 'point'}!
+                    ${t('sange_lq_finish_scored', isEn ? 'You scored' : 'Du fik')} <strong>${detScore}</strong> ${t('sange_lq_finish_outof', isEn ? 'out of' : 'ud af')} <strong>${detFilteredList.length}</strong> ${t('sange_lq_finish_points', isEn ? 'points!' : 'point!')}
                 </p>
                 <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6;">
-                    ${isEn 
+                    ${t('sange_det_finish_desc', isEn 
                         ? 'You now master the key Danish terms for both modern laundry tools and historical 19th-century traditions like "at rulle tøj" with a mangle board.' 
-                        : 'Du mestrer nu både de moderne redskaber og 1800-tallets historiske traditioner som "at rulle tøj" med mangelbræt, vaskebræt og kulstrygejern.'}
+                        : 'Du mestrer nu både de moderne redskaber og 1800-tallets historiske traditioner som "at rulle tøj" med mangelbræt, vaskebræt og kulstrygejern.')}
                 </p>
                 <button class="detective-next-btn" id="btn-restart-detective">
-                    🔄 ${isEn ? 'Try Again' : 'Prøv igen'}
+                    🔄 ${t('sange_det_restart', isEn ? 'Try Again' : 'Prøv igen')}
                 </button>
             </div>
         `;
@@ -2852,12 +2871,12 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const introBanner = document.createElement('div');
     introBanner.className = 'saetning-intro-banner';
     introBanner.innerHTML = `
-        <span class="saetning-intro-badge">🧩 ${isEn ? 'Sentence Order & Questions' : 'Ordstilling & Spørgsmål'}</span>
-        <h2 class="saetning-intro-title">${isEn ? 'Word Order: Answer Questions about the Week' : 'Sætningsbygger & Pusleopgaver: Svar på spørgsmål om ugen'}</h2>
+        <span class="saetning-intro-badge">🧩 ${t('sange_sb_badge', isEn ? 'Sentence Order & Questions' : 'Ordstilling & Spørgsmål')}</span>
+        <h2 class="saetning-intro-title">${t('sange_sb_title', isEn ? 'Word Order: Answer Questions about the Week' : 'Sætningsbygger & Pusleopgaver: Svar på spørgsmål om ugen')}</h2>
         <p class="saetning-intro-desc">
-            ${isEn 
+            ${t('sange_sb_desc', isEn 
                 ? 'Learn how to answer questions like <strong>"What does the mother do on Monday?"</strong> (Answer: <em>"Om mandagen vasker hun tøj"</em>). Notice the slots: the questions in each slot guide where the words belong!' 
-                : 'Lær at besvare spørgsmål som <strong>"Hvad laver moren om mandagen?"</strong> (Svar: <em>"Om mandagen vasker hun tøj"</em>). Spørgsmålene i felterne guider dig trin for trin til, hvor hvert ord skal anbringes!'}
+                : 'Lær at besvare spørgsmål som <strong>"Hvad laver moren om mandagen?"</strong> (Svar: <em>"Om mandagen vasker hun tøj"</em>). Spørgsmålene i felterne guider dig trin for trin til, hvor hvert ord skal anbringes!')}
         </p>
     `;
     builderCard.appendChild(introBanner);
@@ -2867,10 +2886,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     subTabsNav.className = 'saetning-sub-tabs';
     subTabsNav.innerHTML = `
         <button class="saetning-sub-tab-btn active" data-subtab="puzzle">
-            <span>🧩</span> ${isEn ? '1. Puzzle Tasks (10 Questions)' : '1. Pusleopgaver (10 spørgsmål)'}
+            <span>🧩</span> ${t('sange_subtab_puzzle', isEn ? '1. Puzzle Tasks (10 Questions)' : '1. Pusleopgaver (10 spørgsmål)')}
         </button>
         <button class="saetning-sub-tab-btn" data-subtab="builder">
-            <span>🧱</span> ${isEn ? '2. Step-by-Step Builder' : '2. Trin-for-trin sætningsbygger'}
+            <span>🧱</span> ${t('sange_subtab_builder', isEn ? '2. Step-by-Step Builder' : '2. Trin-for-trin sætningsbygger')}
         </button>
     `;
     builderCard.appendChild(subTabsNav);
@@ -2987,26 +3006,26 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
         const slotPrompts = [
             {
-                text: isEn ? '1. When does it happen? (Time first)' : '1. Hvornår sker det? (Tid forrest)',
-                grammar: isEn ? 'Time adverbial' : 'Tidsadverbium / Forfelt',
+                text: t('sange_slot_1_hint', isEn ? '1. When does it happen? (Time first)' : '1. Hvornår sker det? (Tid forrest)'),
+                grammar: t('sange_slot_1_tag', isEn ? 'Time adverbial' : 'Tidsadverbium / Forfelt'),
                 colorClass: 'slot-tid',
                 tagClass: 'tag-tid'
             },
             {
-                text: isEn ? '2. What is the action? (Verb in pos. 2!)' : '2. Hvad laver personen? (Handlingen er altid nr. 2!)',
-                grammar: isEn ? 'Verb (V2)' : 'Verbum (V2)',
+                text: t('sange_slot_2_hint', isEn ? '2. What is the action? (Verb in pos. 2!)' : '2. Hvad laver personen? (Handlingen er altid nr. 2!)'),
+                grammar: t('sange_slot_2_tag', isEn ? 'Verb (V2)' : 'Verbum (V2)'),
                 colorClass: 'slot-verbum',
                 tagClass: 'tag-verbum'
             },
             {
-                text: isEn ? '3. Who does it? (Subject moves behind)' : '3. Hvem gør det? (Personen rykker bagved)',
-                grammar: isEn ? 'Subject' : 'Subjekt',
+                text: t('sange_slot_3_hint', isEn ? '3. Who does it? (Subject moves behind)' : '3. Hvem gør det? (Personen rykker bagved)'),
+                grammar: t('sange_slot_3_tag', isEn ? 'Subject' : 'Subjekt'),
                 colorClass: 'slot-subjekt',
                 tagClass: 'tag-subjekt'
             },
             {
-                text: isEn ? '4. What or where? (Object / place)' : '4. Hvad eller hvor? (Hvad gør de ved det?)',
-                grammar: isEn ? 'Object / Place' : 'Objekt / Sted',
+                text: t('sange_slot_4_hint', isEn ? '4. What or where? (Object / place)' : '4. Hvad eller hvor? (Hvad gør de ved det?)'),
+                grammar: t('sange_slot_4_tag', isEn ? 'Object / Place' : 'Objekt / Sted'),
                 colorClass: 'slot-objekt',
                 tagClass: 'tag-objekt'
             }
@@ -3047,8 +3066,9 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             // Question Card
             const qCard = document.createElement('div');
             qCard.className = 'puzzle-question-card';
+            const qTrans = t(`sange_pq_${currentTaskIdx + 1}`, isEn ? task.questionEn : task.question);
             qCard.innerHTML = `
-                <h3 class="puzzle-question-title">❓ ${isEn ? task.questionEn : task.question}</h3>
+                <h3 class="puzzle-question-title">❓ ${task.question} ${!isDa && qTrans !== task.question ? `<div style="font-size: 0.95rem; font-weight: normal; color: #94a3b8; margin-top: 0.25rem;">(${qTrans})</div>` : ''}</h3>
             `;
             header.appendChild(qCard);
 
@@ -3152,7 +3172,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     feedbackBox.innerHTML = `
                         <div class="puzzle-msg success">
                             <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
-                                🎉 ${isEn ? 'Perfect word order!' : 'Helt rigtigt!'} "<strong>${sentence}</strong>"
+                                🎉 ${t('sange_puzzle_success', isEn ? 'Perfect word order!' : 'Helt rigtigt!')} "<strong>${sentence}</strong>"
                             </div>
                             <div style="font-size: 0.95rem; color: #f0fdf4; margin-top: 0.3rem;">
                                 💡 ${task.ruleTip}
@@ -3160,10 +3180,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                         </div>
                         <div class="puzzle-action-row">
                             <button class="next-task-btn" id="puzzle-listen-btn" style="background: #f59e0b; color: #0f172a;">
-                                <span>🔊</span> ${isEn ? 'Listen' : 'Lyt til udtale'}
+                                <span>🔊</span> ${t('sange_puzzle_listen', isEn ? 'Listen' : 'Lyt til udtale')}
                             </button>
                             <button class="next-task-btn" id="puzzle-next-btn">
-                                <span>${currentTaskIdx < tasks.length - 1 ? (isEn ? 'Next Question' : 'Næste spørgsmål') : (isEn ? 'Start Over' : 'Start forfra')}</span> →
+                                <span>${currentTaskIdx < tasks.length - 1 ? t('sange_puzzle_next', isEn ? 'Next Question' : 'Næste spørgsmål') : t('sange_puzzle_start_over', isEn ? 'Start Over' : 'Start forfra')}</span> →
                             </button>
                         </div>
                     `;
@@ -3180,14 +3200,14 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                                 ❌ ${isEn ? 'Not quite right yet!' : 'Ikke helt rigtigt!'}
                             </div>
                             <div style="font-size: 0.92rem;">
-                                ${isEn 
+                                ${t('sange_puzzle_error', isEn 
                                     ? 'Remember: The finite verb (action) MUST always stand in Position 2 immediately after the time phrase!' 
-                                    : 'Husk grundreglen: Handlingen (verbet) SKAL altid stå på 2. plads lige efter tidsudtrykket!'}
+                                    : 'Husk grundreglen: Handlingen (verbet) SKAL altid stå på 2. plads lige efter tidsudtrykket!')}
                             </div>
                         </div>
                         <div class="puzzle-action-row">
                             <button class="retry-task-btn" id="puzzle-retry-btn">
-                                <span>🔄</span> ${isEn ? 'Try Again' : 'Prøv igen'}
+                                <span>🔄</span> ${t('sange_puzzle_try_again', isEn ? 'Try Again' : 'Prøv igen')}
                             </button>
                         </div>
                     `;
@@ -3212,32 +3232,32 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     function setupStepBuilder(container) {
         const categories = [
             {
-                q: isEn ? '1. When does it happen? (Time in front position = pos. 1)' : '1. Hvornår sker det? (Tidsleddet forrest = 1. plads)',
-                grammar: isEn ? 'Time Adverbial / Front Field' : 'Tidsadverbium / Forfelt',
+                q: t('sange_sb_cat_1', isEn ? '1. When does it happen? (Time in front position = pos. 1)' : '1. Hvornår sker det? (Tidsleddet forrest = 1. plads)'),
+                grammar: t('sange_slot_1_tag', isEn ? 'Time Adverbial / Front Field' : 'Tidsadverbium / Forfelt'),
                 rowClass: 'row-tid',
                 selClass: 'sel-tid',
                 colorWord: 'word-color-tid',
                 options: ['Om mandagen', 'Om tirsdagen', 'Om onsdagen', 'Om torsdagen', 'Om fredagen', 'Om lørdagen', 'Om søndagen', 'Tidlig mandag morgen', 'I 1800-tallet']
             },
             {
-                q: isEn ? '2. What is the action? (The verb MUST be in position 2!)' : '2. Hvad laver personen? (Handlingen skal ALTID stå på 2. plads!)',
-                grammar: isEn ? 'Verb (V2)' : 'Verbum (V2)',
+                q: t('sange_sb_cat_2', isEn ? '2. What is the action? (The verb MUST be in position 2!)' : '2. Hvad laver personen? (Handlingen skal ALTID stå på 2. plads!)'),
+                grammar: t('sange_slot_2_tag', isEn ? 'Verb (V2)' : 'Verbum (V2)'),
                 rowClass: 'row-verbum',
                 selClass: 'sel-verbum',
                 colorWord: 'word-color-verbum',
                 options: ['vasker', 'skyller', 'tømmer', 'tørrer', 'folder', 'rullede', 'stryger', 'skurer', 'slapper']
             },
             {
-                q: isEn ? '3. Who performs the action? (Subject moves behind the verb)' : '3. Hvem laver handlingen? (Personen rykker om bag handlingen)',
-                grammar: isEn ? 'Subject' : 'Subjekt',
+                q: t('sange_sb_cat_3', isEn ? '3. Who performs the action? (Subject moves behind the verb)' : '3. Hvem laver handlingen? (Personen rykker om bag handlingen)'),
+                grammar: t('sange_slot_3_tag', isEn ? 'Subject' : 'Subjekt'),
                 rowClass: 'row-subjekt',
                 selClass: 'sel-subjekt',
                 colorWord: 'word-color-subjekt',
                 options: ['hun', 'moren', 'drengen', 'kvinden', 'vi', 'familien', 'pigerne']
             },
             {
-                q: isEn ? '4. What or where? (Object or prepositional phrase)' : '4. Hvad eller hvor? (Hvad sker der med tøjet / gulvet?)',
-                grammar: isEn ? 'Object / Place' : 'Objekt / Sted',
+                q: t('sange_sb_cat_4', isEn ? '4. What or where? (Object or prepositional phrase)' : '4. Hvad eller hvor? (Hvad sker der med tøjet / gulvet?)'),
+                grammar: t('sange_slot_4_tag', isEn ? 'Object / Place' : 'Objekt / Sted'),
                 rowClass: 'row-objekt',
                 selClass: 'sel-objekt',
                 colorWord: 'word-color-objekt',
@@ -3255,7 +3275,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
         function updateLiveDisplay() {
             outputBox.innerHTML = `
-                <div class="live-badge-label">✨ ${isEn ? 'Built Sentence (V2 Word Order)' : 'Din sammensatte sætning (V2-ordstilling)'}</div>
+                <div class="live-badge-label">✨ ${t('sange_sb_live_badge', isEn ? 'Built Sentence (V2 Word Order)' : 'Din sammensatte sætning (V2-ordstilling)')}</div>
                 <div class="live-sentence-text">
                     <span class="word-color-tid">${selections[0]}</span> 
                     <span class="word-color-verbum">${selections[1]}</span> 
@@ -3263,14 +3283,14 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     <span class="word-color-objekt">${selections[3]}</span>.
                 </div>
                 <div class="live-rule-hint">
-                    💡 <strong>${isEn ? 'Word order analysis:' : 'Ordstillingsanalyse:'}</strong> 
+                    💡 <strong>${t('sange_sb_analysis_label', isEn ? 'Word order analysis:' : 'Ordstillingsanalyse:')}</strong> 
                     1. <span class="word-color-tid">${selections[0]}</span> (Tid) ➔ 
                     2. <span class="word-color-verbum">${selections[1]}</span> (Verbum) ➔ 
                     3. <span class="word-color-subjekt">${selections[2]}</span> (Subjekt) ➔ 
                     4. <span class="word-color-objekt">${selections[3]}</span> (Objekt/Sted)
                 </div>
                 <button class="listen-btn" id="btn-live-listen" style="margin-top: 0.4rem; padding: 0.65rem 1.4rem;">
-                    <span>🔊</span> ${isEn ? 'Listen to sentence' : 'Lyt til sætningen'}
+                    <span>🔊</span> ${t('sange_sb_listen', isEn ? 'Listen to sentence' : 'Lyt til sætningen')}
                 </button>
             `;
             outputBox.querySelector('#btn-live-listen').onclick = () => {
@@ -3391,22 +3411,22 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         matchingSection.innerHTML = `
             <div class="mgs-header">
                 <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">
-                    🔗 ${isEn ? 'Matching Exercise' : 'Parringsøvelse: Forbind verbet med redskabet'}
+                    🔗 ${t('sange_match_tag', isEn ? 'Matching Exercise' : 'Parringsøvelse: Forbind verbet med redskabet')}
                 </span>
                 <div class="mgs-title" style="margin-top: 0.6rem;">
-                    ${isEn ? 'Connect the song’s verbs with the historical tools and modern equivalents:' : 'Forbind sangens verber med de historiske og moderne redskaber:'}
+                    ${t('sange_match_title', isEn ? 'Connect the song’s verbs with the historical tools and modern equivalents:' : 'Forbind sangens verber med de historiske og moderne redskaber:')}
                 </div>
                 <div class="mgs-sub">
-                    ${isEn ? 'Click a verb on the left, then click its corresponding tool on the right!' : 'Klik på et verbum til venstre, og klik derefter på det tilhørende redskab til højre!'}
+                    ${t('sange_match_sub', isEn ? 'Click a verb on the left, then click its corresponding tool on the right!' : 'Klik på et verbum til venstre, og klik derefter på det tilhørende redskab til højre!')}
                 </div>
             </div>
             <div class="matching-columns-container">
                 <div>
-                    <div class="mgs-col-title">🔴 ${isEn ? 'Verbs from the song' : 'Sangens verber'}</div>
+                    <div class="mgs-col-title">🔴 ${t('sange_match_col_verbs', isEn ? 'Verbs from the song' : 'Sangens verber')}</div>
                     <div class="mgs-cards-list" id="mgs-verbs-list"></div>
                 </div>
                 <div>
-                    <div class="mgs-col-title">⏳ ${isEn ? 'Historical tools (Dengang)' : 'Datidens redskaber (Dengang)'}</div>
+                    <div class="mgs-col-title">⏳ ${t('sange_match_col_tools', isEn ? 'Historical tools (Dengang)' : 'Datidens redskaber (Dengang)')}</div>
                     <div class="mgs-cards-list" id="mgs-tools-list"></div>
                 </div>
             </div>
@@ -3481,13 +3501,13 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                         feedbackBox.innerHTML = `
                             <div style="font-size: 2.2rem; margin-bottom: 0.4rem;">🏆🌟👑</div>
                             <div style="color: #fbbf24; font-weight: 800; font-size: 1.3rem; margin-bottom: 0.4rem;">
-                                ${isEn ? 'All pairs matched perfectly!' : 'Alle par er forbundet helt perfekt!'}
+                                ${t('sange_match_all_done', isEn ? 'All pairs matched perfectly!' : 'Alle par er forbundet helt perfekt!')}
                             </div>
                             <div style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1rem;">
                                 ${isEn ? 'You master all verbs and domestic tools across generations.' : 'Du har fuldt overblik over sangens verber og husarbejdets redskaber gennem tiderne.'}
                             </div>
                             <button class="builder-btn builder-btn-check" id="btn-restart-matching" style="margin: 0 auto;">
-                                🔄 ${isEn ? 'Play Matching Again' : 'Spil parring igen'}
+                                🔄 ${t('sange_match_reset', isEn ? 'Play Matching Again' : 'Spil parring igen')}
                             </button>
                         `;
                         feedbackBox.querySelector('#btn-restart-matching').onclick = () => {
@@ -3530,11 +3550,11 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const tributeBox = document.createElement('div');
     tributeBox.className = 'tribute-box';
     tributeBox.innerHTML = `
-        <span class="tribute-badge">👑 ${isEn ? 'Tribute to Domestic Care' : 'Hyldest til omsorgsarbejdet i hjemmet'}</span>
+        <span class="tribute-badge">👑 ${t('sange_tribute_badge', isEn ? 'Tribute to Domestic Care' : 'Hyldest til omsorgsarbejdet i hjemmet')}</span>
         <div class="tribute-text">
-            ${isEn 
+            ${t('sange_tribute_text', isEn 
                 ? '“Household care is the silent work that makes all other work possible. When clothes are clean, floors are washed, and the home is peaceful, it provides safety, health, and dignity for everyone. Domestic work deserves the utmost respect and recognition.”' 
-                : '“Husarbejde er det usynlige fundament, der gør alt andet arbejde i samfundet muligt. Når tøjet er rent, gulvet er vasket og hjemmet emmer af ro, skaber det sundhed, tryghed og livsglæde for hele familien. Husarbejde er et værdigt og værdifuldt arbejde, der fortjener den dybeste anerkendelse.”'}
+                : '“Husarbejde er det usynlige fundament, der gør alt andet arbejde i samfundet muligt. Når tøjet er rent, gulvet er vasket og hjemmet emmer af ro, skaber det sundhed, tryghed og livsglæde for hele familien. Husarbejde er et værdigt og værdifuldt arbejde, der fortjener den dybeste anerkendelse.”')}
         </div>
     `;
     historyCard.appendChild(tributeBox);
@@ -3648,16 +3668,16 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             <div class="saf-left">
                 <div class="saf-icon">🎵</div>
                 <div class="saf-text">
-                    <div class="saf-title">${isEn ? 'Listen to the Melody: "Så går vi rundt om en enebærbusk"' : 'Lyt til melodien: "Så går vi rundt om en enebærbusk"'}</div>
-                    <div class="saf-sub">${isEn ? 'Sing along and play the cheerful traditional melody' : 'Syng med og lyt til den klassiske melodi til sanglegen her'}</div>
+                    <div class="saf-title">${t('sange_saf_title', isEn ? 'Listen to the Melody: "Så går vi rundt om en enebærbusk"' : 'Lyt til melodien: "Så går vi rundt om en enebærbusk"')}</div>
+                    <div class="saf-sub">${t('sange_saf_sub', isEn ? 'Sing along and play the cheerful traditional melody' : 'Syng med og lyt til den klassiske melodi til sanglegen her')}</div>
                 </div>
             </div>
             <div class="saf-actions">
                 <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="saf-youtube-btn">
-                    <span>▶️</span> ${isEn ? 'Play on YouTube' : 'Hør melodi på YouTube'}
+                    <span>▶️</span> ${t('sange_saf_open_yt', isEn ? 'Play on YouTube' : 'Hør melodi på YouTube')}
                 </a>
                 <button class="saf-embed-toggle-btn" id="btn-toggle-yt-player">
-                    <span>📺</span> <span id="yt-toggle-label">${isEn ? 'Show Player' : 'Vis afspiller'}</span>
+                    <span>📺</span> <span id="yt-toggle-label">${t('sange_saf_embed', isEn ? 'Show Player' : 'Vis afspiller')}</span>
                 </button>
             </div>
         </div>
@@ -3684,8 +3704,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         embedBox.style.display = ytPlayerOpen ? 'block' : 'none';
         toggleBtn.classList.toggle('active', ytPlayerOpen);
         toggleLabel.textContent = ytPlayerOpen 
-            ? (isEn ? 'Hide Player' : 'Skjul afspiller') 
-            : (isEn ? 'Show Player' : 'Vis afspiller');
+            ? t('sange_saf_hide_embed', isEn ? 'Hide Player' : 'Skjul afspiller') 
+            : t('sange_saf_embed', isEn ? 'Show Player' : 'Vis afspiller');
     };
 
     viewContainer.appendChild(audioFooterCard);

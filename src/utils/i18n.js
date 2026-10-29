@@ -13,6 +13,7 @@ import { adjectiveComparisonTranslations } from './adjective_comparison_translat
 import { sporgsmalStoriesTranslations } from './sporgsmal_stories_translations.js';
 import { mitHverdagslivTranslations } from './mit_hverdagsliv_translations.js';
 import { arbejdeTranslations } from './arbejde_translations.js';
+import { sangeTranslations } from './sange_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -80,7 +81,8 @@ const allLangs = new Set([
     ...Object.keys(adjectiveComparisonTranslations || {}),
     ...Object.keys(sporgsmalStoriesTranslations || {}),
     ...Object.keys(mitHverdagslivTranslations || {}),
-    ...Object.keys(arbejdeTranslations || {})
+    ...Object.keys(arbejdeTranslations || {}),
+    ...Object.keys(sangeTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -99,6 +101,7 @@ allLangs.forEach(lang => {
         ...(adjectiveComparisonTranslations[lang] || {}),
         ...(mitHverdagslivTranslations[lang] || {}),
         ...(arbejdeTranslations[lang] || {}),
+        ...(sangeTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

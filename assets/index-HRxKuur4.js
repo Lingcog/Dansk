@@ -41013,10 +41013,298 @@ import{t as pn,a as mn,b as bn,s as un,v as fn,c as kn,d as vn,k as hn,e as yn,o
         }
 
         @media (max-width: 768px) {
-            .tids-hero h1 { font-size: 1.7rem; }
-            .golden-rule-banner { flex-direction: column; text-align: center; gap: 0.6rem; }
-            .sentence-display-box { flex-direction: column; align-items: flex-start; }
-            .sentence-actions { width: 100%; justify-content: flex-end; }
+            .tidsudtryk-view {
+                padding: 0.25rem 0.65rem 3rem;
+            }
+            .tids-hero {
+                margin-bottom: 1.2rem;
+            }
+            .tids-hero h1 {
+                font-size: 1.4rem;
+            }
+            .tids-hero p {
+                font-size: 0.88rem;
+                line-height: 1.45;
+            }
+            .byggeplads-pills {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.6rem;
+                gap: 0.35rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .golden-rule-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.6rem;
+                padding: 0.9rem 1rem;
+                margin-bottom: 1.2rem;
+            }
+            .golden-rule-icon {
+                font-size: 1.6rem;
+            }
+            .golden-rule-content h3 {
+                font-size: 0.98rem;
+            }
+            .golden-rule-content p {
+                font-size: 0.84rem;
+            }
+            .tids-tabs-nav {
+                margin-bottom: 1.2rem;
+                gap: 0.25rem;
+                padding: 0.25rem;
+            }
+            .tids-tab-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.82rem;
+            }
+            .vrimmel-stage-card {
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .vrimmel-stage-header {
+                padding: 0.8rem 1rem;
+            }
+            .vrimmel-stage-title {
+                font-size: 1rem;
+            }
+            .vrimmel-time-filter-bar {
+                padding: 0.5rem 0.75rem;
+                gap: 0.35rem;
+            }
+            .time-filter-btn {
+                padding: 0.35rem 0.65rem;
+                font-size: 0.78rem;
+            }
+            .hotspot-inspector {
+                padding: 1rem 0.85rem;
+            }
+            .inspector-top {
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .inspector-icon {
+                font-size: 1.4rem;
+            }
+            .inspector-time-heading {
+                font-size: 1.05rem;
+            }
+            .inspector-badge {
+                font-size: 0.72rem;
+                padding: 0.15rem 0.5rem;
+            }
+            .sentence-display-box {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.85rem 1rem;
+                gap: 0.75rem;
+            }
+            .sentence-text-lead {
+                font-size: 1.05rem;
+                line-height: 1.45;
+            }
+            .sentence-actions {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0.4rem;
+            }
+            .btn-action-listen, .btn-action-invert {
+                font-size: 0.8rem;
+                padding: 0.45rem 0.75rem;
+            }
+            .inspector-analysis-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+            .analysis-card {
+                padding: 0.75rem 0.85rem;
+            }
+            .analysis-card-title {
+                font-size: 0.72rem;
+            }
+            .analysis-card-val {
+                font-size: 0.98rem;
+            }
+            .analysis-card-desc {
+                font-size: 0.82rem;
+            }
+            .future-lab-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+                margin-bottom: 1.2rem;
+            }
+            .future-model-card {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .future-model-title {
+                font-size: 1.08rem;
+            }
+            .future-model-desc {
+                font-size: 0.84rem;
+                margin-bottom: 0.75rem;
+            }
+            .example-item {
+                font-size: 0.84rem;
+                padding: 0.55rem 0.75rem;
+            }
+            .mini-quiz-card {
+                padding: 1rem;
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .mini-quiz-header h3 {
+                font-size: 1.05rem;
+            }
+            .quiz-sentence-row {
+                font-size: 0.95rem;
+            }
+            .quiz-opt-btn {
+                padding: 0.45rem 0.8rem;
+                font-size: 0.82rem;
+            }
+            .vaerksted-card {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .vaerksted-sentence-box {
+                padding: 1rem 0.75rem;
+                font-size: 1.05rem;
+                margin-bottom: 1rem;
+                line-height: 1.45;
+            }
+            .blank-placeholder {
+                min-width: 80px;
+                padding: 0.1rem 0.4rem;
+            }
+            .vaerksted-choices-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+            .vaerksted-choice-btn {
+                padding: 0.75rem 0.85rem;
+                font-size: 0.92rem;
+            }
+            .vaerksted-feedback-banner {
+                padding: 0.8rem 0.9rem;
+                font-size: 0.88rem;
+            }
+            .btn-next-question {
+                width: 100%;
+                text-align: center;
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .timeline-section-card {
+                padding: 1rem;
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .timeline-track {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-bottom: 1.2rem;
+            }
+            .timeline-column {
+                padding: 0.85rem;
+            }
+            .timeline-col-header {
+                font-size: 0.95rem;
+                margin-bottom: 0.6rem;
+            }
+            .tidsord-chip {
+                padding: 0.45rem 0.65rem;
+                font-size: 0.82rem;
+            }
+            .frekvens-barometer {
+                padding: 0.85rem;
+            }
+            .frekvens-scale {
+                gap: 0.4rem;
+            }
+            .frekvens-step {
+                min-width: 65px;
+                padding: 0.5rem 0.3rem;
+            }
+            .frekvens-pct {
+                font-size: 0.7rem;
+            }
+            .frekvens-word {
+                font-size: 0.82rem;
+            }
+            .tids-exercise-card {
+                padding: 1rem;
+                border-radius: 14px;
+                margin-top: 1.2rem;
+            }
+            .tids-exercise-title {
+                font-size: 1.08rem;
+            }
+            .tids-exercise-desc {
+                font-size: 0.84rem;
+            }
+            .tids-sorter-active {
+                padding: 1rem 0.75rem;
+                margin-bottom: 1rem;
+            }
+            .tids-sorter-word {
+                font-size: 1.25rem;
+                margin-bottom: 0.8rem;
+            }
+            .tids-sorter-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .tids-pick-btn {
+                padding: 0.7rem 0.85rem;
+                font-size: 0.88rem;
+            }
+            .tids-sorter-buckets {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .tids-bucket {
+                min-height: auto;
+                padding: 0.85rem;
+            }
+            .frekvens-quiz-box {
+                padding: 0.95rem;
+            }
+            .frekvens-q-text {
+                font-size: 0.98rem;
+                margin-bottom: 0.8rem;
+            }
+            .frekvens-options-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+            .frekvens-opt-btn {
+                padding: 0.65rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tidsudtryk-view {
+                padding: 0.2rem 0.4rem 2.5rem;
+            }
+            .tids-hero h1 {
+                font-size: 1.25rem;
+            }
+            .tids-hero p {
+                font-size: 0.82rem;
+            }
+            .golden-rule-banner {
+                padding: 0.75rem 0.8rem;
+            }
+            .frekvens-options-grid {
+                grid-template-columns: 1fr;
+            }
+            .tids-tab-btn {
+                padding: 0.45rem 0.65rem;
+                font-size: 0.78rem;
+            }
         }
     `,t.appendChild(b);const q=document.createElement("div");q.className="tids-hero",q.innerHTML=`
         <div class="byggeplads-pills">
@@ -57510,6 +57798,231 @@ import{t as pn,a as mn,b as bn,s as un,v as fn,c as kn,d as vn,k as hn,e as yn,o
             background: rgba(245, 158, 11, 0.2);
             color: #fde68a;
             border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .punktet-broen-view {
+                padding: 0.25rem 0.65rem 3rem;
+            }
+            .pob-hero {
+                margin-bottom: 1.2rem;
+            }
+            .pob-hero h1 {
+                font-size: 1.4rem;
+            }
+            .pob-hero p {
+                font-size: 0.88rem;
+                line-height: 1.45;
+                margin-bottom: 0.8rem;
+            }
+            .pob-hero-badges {
+                gap: 0.4rem;
+            }
+            .pob-tag {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.65rem;
+            }
+            .pob-timeline-card {
+                padding: 0.85rem 0.65rem;
+                border-radius: 14px;
+                margin-bottom: 1.2rem;
+            }
+            .pob-timeline-caption {
+                font-size: 0.75rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+            .pob-nav-tabs {
+                margin-bottom: 1.2rem;
+                gap: 0.25rem;
+                padding: 0.25rem;
+            }
+            .pob-nav-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.82rem;
+            }
+            .pob-rules-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 1.2rem;
+            }
+            .rule-card {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .rule-card-header {
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .rule-icon {
+                font-size: 1.3rem;
+            }
+            .rule-title h3 {
+                font-size: 1.15rem;
+            }
+            .rule-title span {
+                font-size: 0.78rem;
+            }
+            .rule-formula {
+                padding: 0.55rem 0.75rem;
+                font-size: 0.82rem;
+                margin-bottom: 0.75rem;
+            }
+            .rule-body {
+                font-size: 0.88rem;
+                line-height: 1.45;
+                margin-bottom: 0.85rem;
+            }
+            .rule-points {
+                gap: 0.45rem;
+                margin-bottom: 0.85rem;
+            }
+            .rule-points li {
+                font-size: 0.82rem;
+                gap: 0.4rem;
+            }
+            .rule-chip {
+                font-size: 0.75rem;
+                padding: 0.15rem 0.45rem;
+            }
+            .pob-examples-list {
+                gap: 0.85rem;
+                margin-bottom: 1.2rem;
+            }
+            .example-card {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .example-title {
+                font-size: 0.98rem;
+                margin-bottom: 0.75rem;
+            }
+            .example-columns {
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
+            }
+            .example-box {
+                padding: 0.75rem 0.85rem;
+            }
+            .example-label {
+                font-size: 0.72rem;
+            }
+            .example-sentence {
+                font-size: 0.95rem;
+            }
+            .example-explanation {
+                font-size: 0.82rem;
+            }
+            .pob-task-container {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .task-sentence-box {
+                padding: 0.9rem 0.85rem;
+                font-size: 1.05rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+            .task-audio-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 0.95rem;
+            }
+            .task-hint {
+                font-size: 0.82rem;
+                margin-bottom: 0.85rem;
+            }
+            .task-choices-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+            .choice-btn {
+                padding: 0.75rem 0.85rem;
+                border-radius: 12px;
+            }
+            .choice-text {
+                font-size: 1.05rem;
+            }
+            .choice-type {
+                font-size: 0.75rem;
+            }
+            .task-feedback {
+                padding: 0.85rem 0.95rem;
+                font-size: 0.88rem;
+            }
+            .task-next-btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .sorter-container {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .sorter-instruction {
+                margin-bottom: 1rem;
+            }
+            .sorter-instruction h3 {
+                font-size: 1.08rem;
+            }
+            .sorter-instruction p {
+                font-size: 0.84rem;
+            }
+            .sorter-active-area {
+                padding: 0.9rem 0.75rem;
+                border-radius: 12px;
+                margin-bottom: 1rem;
+            }
+            .sorter-current-word {
+                font-size: 1.25rem;
+                margin-bottom: 0.8rem;
+            }
+            .sorter-direct-actions {
+                gap: 0.6rem;
+                flex-direction: column;
+            }
+            .sorter-pick-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.7rem 1rem;
+                font-size: 0.88rem;
+            }
+            .sorter-buckets-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+            .sorter-bucket {
+                min-height: auto;
+                padding: 0.9rem;
+                border-radius: 12px;
+            }
+            .bucket-title {
+                font-size: 0.95rem;
+            }
+            .placed-badge {
+                font-size: 0.78rem;
+                padding: 0.25rem 0.55rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .punktet-broen-view {
+                padding: 0.2rem 0.4rem 2.5rem;
+            }
+            .pob-hero h1 {
+                font-size: 1.25rem;
+            }
+            .pob-hero p {
+                font-size: 0.82rem;
+            }
+            .pob-nav-btn {
+                padding: 0.45rem 0.65rem;
+                font-size: 0.78rem;
+            }
         }
     `,t.appendChild(S);const A=document.createElement("div");A.className="pob-hero",A.innerHTML=`
         <h1>Datid og førnutid: punktet og broen</h1>

@@ -109,9 +109,9 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             pairType: 'frekvens',
             x: 28,
             y: 62,
-            sceneDesc: 'Postbuddet kommer tit forbi her.',
+            sceneDesc: 'Pakkebudet kommer tit forbi bageren.',
             meaning: 'Ofte / mange gange i hverdagen',
-            sentence: 'Bussen kommer tit forbi.',
+            sentence: 'Pakkebudet kommer tit forbi bageren.',
             ruleHint: 'Kort hverdagsord for "ofte". Bruges ekstremt meget i mundtligt dansk.'
         },
         {

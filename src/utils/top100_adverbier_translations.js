@@ -3524,71 +3524,71 @@ export const adverbierWordTranslations = {
     "fieldName": "tid",
     "da": {
       "meaning": "Ofte / mange gange i hverdagen",
-      "sentence": "Bussen kommer tit forbi."
+      "sentence": "Pakkebudet kommer tit forbi bageren."
     },
     "en": {
       "meaning": "often / frequently (informal daily Danish)",
-      "sentence": "The bus often comes by."
+      "sentence": "The parcel courier often comes by the bakery."
     },
     "de": {
       "meaning": "oft / häufig (Umgangssprache)",
-      "sentence": "Der Bus kommt oft vorbei."
+      "sentence": "Der Paketbote kommt oft bei der Bäckerei vorbei."
     },
     "es": {
       "meaning": "a menudo / con frecuencia (cotidiano)",
-      "sentence": "El autobús pasa a menudo."
+      "sentence": "El repartidor de paquetes pasa a menudo por la panadería."
     },
     "pt": {
       "meaning": "com frequência / muitas vezes (cotidiano)",
-      "sentence": "O ônibus passa com frequência por aqui."
+      "sentence": "O entregador de encomendas passa frequentemente pela padaria."
     },
     "tr": {
       "meaning": "sıkça / çok sık (günlük konuşma)",
-      "sentence": "Otobüs buradan sıkça geçer."
+      "sentence": "Kurye fırının önünden sık sık geçer."
     },
     "ar": {
       "meaning": "كثيرًا / بشكل متكرر (في الحياة اليومية)",
-      "sentence": "يمر الحافلة كثيرًا من هنا."
+      "sentence": "يمر ساعي الطرود كثيرًا بالمخبز."
     },
     "fa": {
       "meaning": "زیاد / مرتباً (در زبان روزمره)",
-      "sentence": "اتوبوس مرتباً از اینجا عبور می‌کند."
+      "sentence": "پیک مرسولات مرتباً از کنار نانوایی می‌گذرد."
     },
     "ku": {
       "meaning": "pir caran (di jiyana rojane de)",
-      "sentence": "Otobus pir caran ji vir derbas dibe."
+      "sentence": "Kuryeyê pakêtan pir caran di ber nanpêjiyê re derbas dibe."
     },
     "ur": {
       "meaning": "اکثر / بارہا (روزمرہ بول چال)",
-      "sentence": "بس اکثر یہاں سے گزرتی ہے۔"
+      "sentence": "پارسل ڈلیور کرنے والا اکثر بیکری کے پاس سے گزرتا ہے۔"
     },
     "ru": {
       "meaning": "часто / нередко (разговорное)",
-      "sentence": "Автобус часто проезжает мимо."
+      "sentence": "Курьер часто проходит мимо пекарни."
     },
     "uk": {
       "meaning": "часто / частенько (розмовне)",
-      "sentence": "Автобус частенько проїжджає повз."
+      "sentence": "Кур'єр часто проходить повз пекарню."
     },
     "zh": {
       "meaning": "经常 / 屡次（口语常用）",
-      "sentence": "公共汽车经常路过。"
+      "sentence": "快递员经常路过面包店。"
     },
     "vi": {
       "meaning": "thường / hay (khẩu ngữ)",
-      "sentence": "Xe buýt thường xuyên chạy ngang qua."
+      "sentence": "Người giao hàng thường xuyên đi ngang qua tiệm bánh."
     },
     "th": {
       "meaning": "บ่อยๆ (ภาษาพูดในชีวิตประจำวัน)",
-      "sentence": "รถเมล์วิ่งผ่านบ่อยๆ"
+      "sentence": "คนส่งพัสดุผ่านหน้าร้านเบเกอรี่บ่อยๆ"
     },
     "ne": {
       "meaning": "प्रायः (दैनिक कुराकानीमा)",
-      "sentence": "बस प्रायः यहाँबाट जान्छ।"
+      "sentence": "पार्सल डेलिभरी गर्ने प्रायः बेकरीको बाटो भएर जान्छ।"
     },
     "ps": {
       "meaning": "ډېر کله / بار بار",
-      "sentence": "بس ډېر کله له دې ځایه تېرېږي."
+      "sentence": "د پارسلونو وېشونکی اکثره د ډوډۍ پخونکي له مخې تېرېږي."
     }
   },
   "sjældent": {

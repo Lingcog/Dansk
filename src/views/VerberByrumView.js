@@ -1201,8 +1201,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'verber-hero-header';
     heroHeader.innerHTML = `
-        <h1>Scene 1: Byrummet & Gaden</h1>
-        <p>Lær 20 uundværlige hverdagsverber om bevægelse, transport og sociale møder i byens gader.</p>
+        <h1>${getTranslation('top100_verber_scene1_title')}</h1>
+        <p>${getTranslation('top100_verber_scene1_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -1480,7 +1480,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
         const badge = document.createElement('div');
         badge.className = 'mission-badge';
-        badge.textContent = `${mission.title} • Visuel Detektiv`;
+        badge.textContent = `${mission.title} • Visuel detektiv`;
         visualMissionCard.appendChild(badge);
 
         // Zoom viewfinder frame
@@ -2347,11 +2347,11 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
     const subTab1Btn = document.createElement('button');
     subTab1Btn.className = 'sb-sub-btn active';
-    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk og byg selv`;
 
     const subTab2Btn = document.createElement('button');
     subTab2Btn.className = 'sb-sub-btn';
-    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave og puslespil`;
 
     sbSubNav.appendChild(subTab1Btn);
     sbSubNav.appendChild(subTab2Btn);
@@ -2427,7 +2427,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             {
                 id: 'verbum',
                 title: '2. Hvad laver personen / dyret?',
-                role: 'Verbum (Kernen)',
+                role: 'Verbum (kernen)',
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
                 icon: '⚡',
@@ -2436,7 +2436,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             {
                 id: 'objekt',
                 title: '3. Hvilken genstand eller person?',
-                role: 'Objekt (Ting/Person)',
+                role: 'Objekt (ting/person)',
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
                 icon: '📦',
@@ -2445,7 +2445,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             {
                 id: 'sted',
                 title: '4. Hvor i byrummet sker det?',
-                role: 'Sted (Rum)',
+                role: 'Sted (rum)',
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
                 icon: '📍',
@@ -2612,7 +2612,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             <div style="font-size: 0.85rem; color: #f87171; font-weight: 800; text-transform: uppercase;">
                 Udfordring ${currentByrumChallengeIdx + 1} af ${byrumChallengeTasks.length}
             </div>
-            <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Find handlingen & saml puslespillet</h3>
+            <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Find handlingen og saml puslespillet</h3>
         `;
         header.appendChild(titleDiv);
 
@@ -2715,7 +2715,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     function renderByrumPuzzleStep(container, task) {
         container.innerHTML = `
             <div class="sb-puzzle-title">
-                <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                <span>🧩</span> Trin 2: Puslespillet – saml hele sætningen!
             </div>
             <div class="sb-puzzle-desc">
                 Klik på brikkerne i den rigtige danske ordstilling: <strong>1. Hvem ➔ 2. Handling (V2) ➔ 3. Hvilken ting ➔ 4. Hvor</strong>.

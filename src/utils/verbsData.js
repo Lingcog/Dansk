@@ -5,7 +5,7 @@ export const verbsData = [
         "verbs": ["kan", "skal", "vil", "må", "bør", "lader"],
         "exercises": [
             {
-                "title": "Modalverber - Sæt 1",
+                "title": "Modalverber – sæt 1",
                 "instruction": "Vælg det rigtige hjælpeverbum.",
                 "segments": [
                     { "type": "text", "content": "1. **[I can speak Danish]**\\nJeg " },
@@ -36,7 +36,7 @@ export const verbsData = [
         "verbs": ["er", "bliver", "lever", "bor", "findes", "sker", "har", "får", "betyder", "passer", "koster", "virker", "ligner", "gælder", "hedder"],
         "exercises": [
             {
-                "title": "Hvem er jeg? - Sæt 1",
+                "title": "Hvem er jeg? – sæt 1",
                 "instruction": "Vælg det rigtige verbum om din tilstand.",
                 "segments": [
                     { "type": "text", "content": "1. **[I am happy]**\\nJeg " },
@@ -91,7 +91,7 @@ export const verbsData = [
         "verbs": ["går", "kører", "rejser", "falder", "stiger", "kommer", "når", "vender", "følger", "fører", "bringer"],
         "exercises": [
             {
-                "title": "På farten - Sæt 1",
+                "title": "På farten – sæt 1",
                 "instruction": "Vælg det rigtige verbum om bevægelse.",
                 "segments": [
                     { "type": "text", "content": "1. **[I walk to school]**\\nJeg " },
@@ -146,7 +146,7 @@ export const verbsData = [
         "verbs": ["siger", "taler", "svarer", "spørger", "kalder", "beder", "fortæller", "skriver", "læser", "viser", "sender", "hjælper", "møder", "kræver", "sikrer"],
         "exercises": [
             {
-                "title": "Samtale - Sæt 1",
+                "title": "Samtale – sæt 1",
                 "instruction": "Vælg det rigtige verbum om kommunikation.",
                 "segments": [
                     { "type": "text", "content": "1. **[What do you say?]**\\nHvad " },
@@ -201,7 +201,7 @@ export const verbsData = [
         "verbs": ["ser", "hører", "mærker", "lyder", "ved", "tror", "mener", "tænker", "synes", "forstår", "kender", "lærer", "tæller", "vælger", "føler", "ønsker", "oplever", "søger"],
         "exercises": [
             {
-                "title": "Indre liv - Sæt 1",
+                "title": "Indre liv – sæt 1",
                 "instruction": "Vælg det rigtige verbum om dine tanker.",
                 "segments": [
                     { "type": "text", "content": "1. **[I know it]**\\nJeg " },
@@ -256,7 +256,7 @@ export const verbsData = [
         "verbs": ["gør", "tager", "bruger", "laver", "arbejder", "klarer", "handler", "ændrer", "lægger", "ligger", "sætter", "sidder", "stiller", "står", "holder", "giver", "finder", "trækker", "samler", "slår", "bryder", "bygger", "lukker", "skaber", "begynder", "starter", "fortsætter", "prøver", "forsøger", "venter", "betaler", "køber", "sælger", "vinder", "spiller"],
         "exercises": [
             {
-                "title": "I gang - Sæt 1",
+                "title": "I gang – sæt 1",
                 "instruction": "Vælg det rigtige verbum om handlinger.",
                 "segments": [
                     { "type": "text", "content": "1. **[I am doing my homework]**\\nJeg " },
@@ -307,11 +307,11 @@ export const verbsData = [
     },
     {
         "id": "tider",
-        "title": "Datid vs. Førnutid",
+        "title": "Datid vs. førnutid",
         "verbs": ["var", "har været", "kom", "er kommet", "drak", "har drukket", "har boet", "boede", "har læst", "læste"],
         "exercises": [
             {
-                "title": "Punktet eller Broen? - Sæt 1",
+                "title": "Punktet eller broen? – sæt 1",
                 "instruction": "Husk: Punktet (datid) er et bestemt tidspunkt. Broen (førnutid) forbinder fortid og nu.",
                 "segments": [
                     { "type": "text", "content": "1. **[I was in the cinema yesterday]**\\nJeg " },

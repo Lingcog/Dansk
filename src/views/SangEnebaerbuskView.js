@@ -1768,7 +1768,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     hero.innerHTML = `
         <div class="hero-song-badge">${t('sange_hero_badge', '🎵 Danske sange & Hverdagsliv')}</div>
         <h1>${t('sange_hero_title', 'Så går vi rundt om en enebærbusk')}</h1>
-        <p>${t('sange_hero_desc', 'Syng med på den klassiske danske sangleg, udforsk nutidens husarbejde og 1800-tallets traditioner i tankeboblen, træn naturlig dansk rytme ("TÍD-lig MAN-dag MÓR-gen"), og fejr værdigheden i hverdagens omsorgsarbejde.')}</p>
+        <p>${t('sange_hero_desc', 'Klassisk dansk sangleg om ugens gøremål – dengang og nu.')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -2161,10 +2161,6 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             <div class="detail-info-left">
                 <div class="detail-badges">
                     <span class="badge-pill badge-dag">${item.category === 'historisk' ? '💭' : '🗓️'} ${item.dag} ${!isDa && dagTrans !== item.dag ? `(${dagTrans})` : ''}</span>
-                    <span class="badge-pill badge-verbum">🔴 ${t('sange_action_label', isEn ? 'Action' : 'Handling')}</span>
-                    <span class="badge-pill ${item.category === 'historisk' ? 'badge-historisk-tag' : 'badge-vaerdighed'}">
-                        ${item.category === 'historisk' ? t('sange_filter_historisk', isEn ? '⏳ 1800s Rural Heritage' : '⏳ 1800-tallets kulturarv') : t('sange_tribute_badge', isEn ? '✨ Modern Domestic Care' : '✨ Moderne omsorgsarbejde')}
-                    </span>
                 </div>
                 <div class="detail-title">
                     <span>${item.icon}</span> ${item.handling}
@@ -2254,25 +2250,6 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const lyricsContainer = document.createElement('div');
     lyricsContainer.className = 'song-lyrics-container';
 
-    // Musical Staff Banner
-    const musicBanner = document.createElement('div');
-    musicBanner.className = 'music-staff-banner';
-    musicBanner.innerHTML = `
-        <div class="msb-left">
-            <div class="msb-icon">🎼</div>
-            <div class="msb-info">
-                <div class="msb-title">${t('sange_msb_title', 'Melodi: Dansk traditionel sangleg')}</div>
-                <div class="msb-sub">${t('sange_msb_sub', '6/8 takt · Muntert tempo · Naturlig dansk sætningsrytme')}</div>
-            </div>
-        </div>
-        <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;">
-            <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="saf-youtube-btn">
-                <span>▶️</span> ${t('sange_msb_open_yt', isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube')}
-            </a>
-        </div>
-    `;
-    lyricsContainer.appendChild(musicBanner);
-
     // Rhythm & Stress Guide Banner
     const rhythmBar = document.createElement('div');
     rhythmBar.className = 'rhythm-guide-banner';
@@ -2280,12 +2257,12 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         <div class="rgb-icon">🥁</div>
         <div class="rgb-content">
             <strong style="color: #fbbf24; font-size: 1.05rem;">
-                ${t('sange_rhythm_guide_title', isEn ? 'Danish Sentence Rhythm & Word Stress' : 'Dansk rytme og trykfordeling')}
+                ${t('sange_rhythm_title', isEn ? 'Sentence Rhythm & Word Stress' : 'Dansk rytme og trykfordeling')}
             </strong>
-            <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0.25rem 0 0; line-height: 1.5;">
-                ${t('sange_rhythm_guide_desc', isEn 
-                    ? 'The highlighted uppercase syllables show where the natural sentence stress falls (e.g. ”TÍD-lig MAN-dag MÓR-gen”). Practice singing or reading along with the beat!' 
-                    : 'De markerede stavelser med store bogstaver og accent viser det naturlige rytmiske tryk i sætningerne (f.eks. ”<span class="stress-syllable">TÍD</span>-lig <span class="stress-syllable">MÁN</span>-dag <span class="stress-syllable">MÓR</span>-gen”). Læg mærke til, hvordan sangens rytme følger hverdagsdanskens naturlige betoning!')}
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0.25rem 0 0; line-height: 1.4;">
+                ${t('sange_rhythm_desc', isEn 
+                    ? 'The highlighted uppercase syllables show the natural stress in the song and spoken Danish (e.g. ”TÍD-lig MAN-dag MÓR-gen”). Sing or read along!' 
+                    : 'De markerede stavelser med store bogstaver viser det naturlige tryk i sangen og i talt dansk (f.eks. ”<span class="stress-syllable">TÍD</span>-lig <span class="stress-syllable">MÁN</span>-dag <span class="stress-syllable">MÓR</span>-gen”). Syng eller læs med!')}
             </p>
         </div>
     `;
@@ -2304,11 +2281,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         </div>
         <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 0.8rem;">
             <button class="listen-btn" id="btn-listen-chorus">
-                <span>🔊</span> ${t('sange_listen_chorus', isEn ? 'Listen to Chorus' : 'Lyt til omkvædet')}
+                <span>🔊</span> ${t('sange_chorus_listen', isEn ? 'Listen to Chorus' : 'Lyt til omkvædet')}
             </button>
-            <a href="https://youtu.be/Gr5KXEBk5F4?si=m2tnGwcTjOeVaGbT" target="_blank" rel="noopener noreferrer" class="listen-btn" style="background: #ef4444; color: white; text-decoration: none;">
-                <span>▶️</span> ${t('sange_msb_open_yt', isEn ? 'Play Melody on YouTube' : 'Hør melodi på YouTube')}
-            </a>
         </div>
     `;
     chorusCard.querySelector('#btn-listen-chorus').onclick = () => {
@@ -2323,70 +2297,56 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             dag: 'Mandag',
             dagEn: 'Monday',
             icon: '🧺',
-            action: 'vasker',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">VÁS</span>-ker vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">VÁS</span>-ker vort <span class="stress-syllable">TØJ</span>, <span class="stress-syllable">VÁS</span>-ker vort <span class="stress-syllable">TØJ</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">VÁS</span>-ker vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">MÁN</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi vasker vort tøj, vasker vort tøj, vasker vort tøj. Så gør vi sådan, når vi vasker vort tøj, tidlig en mandag morgen.',
-            modernNote: isEn ? 'Modern: "når vi vasker vores tøj" (vores instead of archaic vort).' : 'Moderne: "når vi vasker vores tøj" (i dag siger vi vores frem for vort).'
+            tts: 'Så gør vi sådan, når vi vasker vort tøj, vasker vort tøj, vasker vort tøj. Så gør vi sådan, når vi vasker vort tøj, tidlig en mandag morgen.'
         },
         {
             id: 'tirsdag',
             dag: 'Tirsdag',
             dagEn: 'Tuesday',
             icon: '🧼',
-            action: 'skyller',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">SKÝL</span>-ler vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">SKÝL</span>-ler vort <span class="stress-syllable">TØJ</span>, <span class="stress-syllable">SKÝL</span>-ler vort <span class="stress-syllable">TØJ</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">SKÝL</span>-ler vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">TÍRS</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi skyller vort tøj, skyller vort tøj, skyller vort tøj. Så gør vi sådan, når vi skyller vort tøj, tidlig en tirsdag morgen.',
-            modernNote: isEn ? 'Drying & rinsing rhythm in 6/8 meter.' : '6/8 takt med tryk på ugedagen: TÍRS-dag MÓR-gen.'
+            tts: 'Så gør vi sådan, når vi skyller vort tøj, skyller vort tøj, skyller vort tøj. Så gør vi sådan, når vi skyller vort tøj, tidlig en tirsdag morgen.'
         },
         {
             id: 'onsdag',
             dag: 'Onsdag',
             dagEn: 'Wednesday',
             icon: '💨',
-            action: 'tørrer',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">TØR</span>-rer vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">TØR</span>-rer vort <span class="stress-syllable">TØJ</span>, <span class="stress-syllable">TØR</span>-rer vort <span class="stress-syllable">TØJ</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">TØR</span>-rer vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">ÓNS</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi tørrer vort tøj, tørrer vort tøj, tørrer vort tøj. Så gør vi sådan, når vi tørrer vort tøj, tidlig en onsdag morgen.',
-            modernNote: isEn ? 'Notice inversion: "Så gør vi sådan" (Så + gør + vi).' : 'Bemærk inversion: "Så gør vi sådan" (Forfelt + Verbum + Subjekt).'
+            tts: 'Så gør vi sådan, når vi tørrer vort tøj, tørrer vort tøj, tørrer vort tøj. Så gør vi sådan, når vi tørrer vort tøj, tidlig en onsdag morgen.'
         },
         {
             id: 'torsdag',
             dag: 'Torsdag',
             dagEn: 'Thursday',
             icon: '🪓',
-            action: 'ruller & folder',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">RÚL</span>-ler vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">RÚL</span>-ler vort <span class="stress-syllable">TØJ</span>, <span class="stress-syllable">RÚL</span>-ler vort <span class="stress-syllable">TØJ</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">RÚL</span>-ler vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">TÓRS</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi ruller vort tøj, ruller vort tøj, ruller vort tøj. Så gør vi sådan, når vi ruller vort tøj, tidlig en torsdag morgen.',
-            modernNote: isEn ? 'Historically: "ruller vort tøj" (mangelbræt). Today: "folder tøjet sammen".' : 'Historisk: "ruller vort tøj" med mangelbræt og rulle. I dag: vi folder tøjet sammen.'
+            tts: 'Så gør vi sådan, når vi ruller vort tøj, ruller vort tøj, ruller vort tøj. Så gør vi sådan, når vi ruller vort tøj, tidlig en torsdag morgen.'
         },
         {
             id: 'fredag',
             dag: 'Fredag',
             dagEn: 'Friday',
             icon: '👔',
-            action: 'stryger',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">STRÝ</span>-ger vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">STRÝ</span>-ger vort <span class="stress-syllable">TØJ</span>, <span class="stress-syllable">STRÝ</span>-ger vort <span class="stress-syllable">TØJ</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">STRÝ</span>-ger vort <span class="stress-syllable">TØJ</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">FRÉ</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi stryger vort tøj, stryger vort tøj, stryger vort tøj. Så gør vi sådan, når vi stryger vort tøj, tidlig en fredag morgen.',
-            modernNote: isEn ? 'Dengang med kulstrygejern · I dag med dampstrygejern.' : 'Dengang med glødende kulstrygejern · I dag med let dampstrygejern.'
+            tts: 'Så gør vi sådan, når vi stryger vort tøj, stryger vort tøj, stryger vort tøj. Så gør vi sådan, når vi stryger vort tøj, tidlig en fredag morgen.'
         },
         {
             id: 'loerdag',
             dag: 'Lørdag',
             dagEn: 'Saturday',
             icon: '🧽',
-            action: 'skurer & vasker gulv',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">SKÚ</span>-rer vort <span class="stress-syllable">GULV</span>,<br><span class="stress-syllable">SKÚ</span>-rer vort <span class="stress-syllable">GULV</span>, <span class="stress-syllable">SKÚ</span>-rer vort <span class="stress-syllable">GULV</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">SKÚ</span>-rer vort <span class="stress-syllable">GULV</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">LØR</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi skurer vort gulv, skurer vort gulv, skurer vort gulv. Så gør vi sådan, når vi skurer vort gulv, tidlig en lørdag morgen.',
-            modernNote: isEn ? 'Historically: "skurer vort gulv" on bare knees with sand and brush.' : 'Historisk: "skurer vort gulv" på knæ med sand og skurebørste.'
+            tts: 'Så gør vi sådan, når vi skurer vort gulv, skurer vort gulv, skurer vort gulv. Så gør vi sådan, når vi skurer vort gulv, tidlig en lørdag morgen.'
         },
         {
             id: 'soendag',
             dag: 'Søndag',
             dagEn: 'Sunday',
             icon: '☕',
-            action: 'holder fri & hygger',
             textStress: 'Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">HÓL</span>-der vor <span class="stress-syllable">FRI</span>,<br><span class="stress-syllable">HÓL</span>-der vor <span class="stress-syllable">FRI</span>, <span class="stress-syllable">HÝG</span>-ger os <span class="stress-syllable">BRAVT</span>.<br>Så <span class="stress-syllable">GØR</span> vi sådan, når vi <span class="stress-syllable">HÓL</span>-der vor <span class="stress-syllable">FRI</span>,<br><span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">SØN</span>-dag <span class="stress-syllable">MÓR</span>-gen.',
-            tts: 'Så gør vi sådan, når vi holder vor fri, holder vor fri, hygger os bravt. Så gør vi sådan, når vi holder vor fri, tidlig en søndag morgen.',
-            modernNote: isEn ? 'Sunday: Rest, reflection, family time, and well-deserved hygge.' : 'Søndag: Velfortjent hvile, ro, familietid og kaffehygge i det rene hjem.'
+            tts: 'Så gør vi sådan, når vi holder vor fri, holder vor fri, hygger os bravt. Så gør vi sådan, når vi holder vor fri, tidlig en søndag morgen.'
         }
     ];
 
@@ -2397,18 +2357,15 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         const vCard = document.createElement('div');
         vCard.className = 'verse-card';
         const dayTrans = t(`sange_item_${v.id}_dag`, isEn ? v.dagEn : v.dag);
-        const noteTrans = t(`sange_verse_${v.id}_note`, v.modernNote);
         vCard.innerHTML = `
             <div>
                 <div class="verse-header">
                     <span class="verse-day-pill">${v.icon} ${v.dag} ${!isDa && dayTrans !== v.dag ? `(${dayTrans})` : ''}</span>
-                    <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 700;">${v.action}</span>
                 </div>
                 <div class="verse-lyrics">${v.textStress}</div>
-                <div class="verse-note">💡 ${noteTrans}</div>
             </div>
             <button class="verse-listen-btn">
-                <span>🔊</span> ${t('sange_listen_verse', isEn ? 'Listen to verse' : 'Lyt til verset')}
+                <span>🔊</span> ${t('sange_verse_listen', isEn ? 'Listen to verse' : 'Lyt til verset')}
             </button>
         `;
         vCard.querySelector('.verse-listen-btn').onclick = () => {
@@ -2428,39 +2385,39 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const listeningQuestions = [
         {
             clipText: 'Så gør vi sådan, når vi ruller vort tøj, ruller vort tøj, ruller vort tøj.',
-            correct: 'Torsdag – at rulle tøj (mangelbræt)',
-            options: ['Torsdag – at rulle tøj (mangelbræt)', 'Mandag – at vaske tøj', 'Fredag – at stryge tøj', 'Lørdag – at skure gulv'],
-            tip: 'Verbet er "at rulle tøj" med et mangelbræt, som traditionelt hørte til om torsdagen!'
+            correct: 'Torsdag – at rulle tøj',
+            options: ['Torsdag – at rulle tøj', 'Mandag – at vaske tøj', 'Fredag – at stryge tøj', 'Lørdag – at skure gulv'],
+            tip: 'Verbet er "at rulle tøj" (torsdag).'
         },
         {
             clipText: 'Så gør vi sådan, når vi vasker vort tøj, tidlig en mandag morgen.',
             correct: 'Mandag – at vaske tøj',
             options: ['Mandag – at vaske tøj', 'Tirsdag – at skylle tøj', 'Onsdag – at tørre tøj', 'Lørdag – at vaske gulv'],
-            tip: 'Mandag var den faste vaskedag for ugens snavsede tøj!'
+            tip: 'Mandag vasker vi tøj.'
         },
         {
             clipText: 'Så gør vi sådan, når vi skurer vort gulv, tidlig en lørdag morgen.',
             correct: 'Lørdag – at skure gulv',
             options: ['Lørdag – at skure gulv', 'Onsdag – at tørre tøj', 'Torsdag – at rulle tøj', 'Søndag – at holde fri'],
-            tip: 'Lørdag skurede man gulvene rene med børste og sand inden søndag.'
+            tip: 'Lørdag skurer vi gulv.'
         },
         {
             clipText: 'Så gør vi sådan, når vi stryger vort tøj, tidlig en fredag morgen.',
             correct: 'Fredag – at stryge tøj',
             options: ['Fredag – at stryge tøj', 'Tirsdag – at skylle tøj', 'Mandag – at vaske tøj', 'Onsdag – at tørre tøj'],
-            tip: 'Fredag strøg man det tørre og rullede tøj med et varmt strygejern.'
+            tip: 'Fredag stryger vi tøj.'
         },
         {
             clipText: 'Så gør vi sådan, når vi tørrer vort tøj, tidlig en onsdag morgen.',
             correct: 'Onsdag – at tørre tøj',
             options: ['Onsdag – at tørre tøj', 'Torsdag – at rulle tøj', 'Fredag – at stryge tøj', 'Mandag – at vaske tøj'],
-            tip: 'Onsdag hang tøjet til tørre i den friske blæst!'
+            tip: 'Onsdag tørrer vi tøj.'
         },
         {
             clipText: 'Så gør vi sådan, når vi holder vor fri, hygger os bravt tidlig en søndag morgen.',
             correct: 'Søndag – at holde fri og hygge',
             options: ['Søndag – at holde fri og hygge', 'Lørdag – at skure gulv', 'Torsdag – at rulle tøj', 'Tirsdag – at skylle tøj'],
-            tip: 'Søndag var ugens hviledag med fællesskab og velfortjent ro.'
+            tip: 'Søndag holder vi fri.'
         }
     ];
 
@@ -2871,12 +2828,12 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const introBanner = document.createElement('div');
     introBanner.className = 'saetning-intro-banner';
     introBanner.innerHTML = `
-        <span class="saetning-intro-badge">🧩 ${t('sange_sb_badge', isEn ? 'Sentence Order & Questions' : 'Ordstilling & Spørgsmål')}</span>
-        <h2 class="saetning-intro-title">${t('sange_sb_title', isEn ? 'Word Order: Answer Questions about the Week' : 'Sætningsbygger & Pusleopgaver: Svar på spørgsmål om ugen')}</h2>
+        <span class="saetning-intro-badge">🧩 ${t('sange_sb_badge', isEn ? 'Sentence Order' : 'Ordstilling')}</span>
+        <h2 class="saetning-intro-title">${t('sange_sb_title', isEn ? 'Word Order: Answer Questions about the Week' : 'Svar på spørgsmål om ugen')}</h2>
         <p class="saetning-intro-desc">
             ${t('sange_sb_desc', isEn 
-                ? 'Learn how to answer questions like <strong>"What does the mother do on Monday?"</strong> (Answer: <em>"Om mandagen vasker hun tøj"</em>). Notice the slots: the questions in each slot guide where the words belong!' 
-                : 'Lær at besvare spørgsmål som <strong>"Hvad laver moren om mandagen?"</strong> (Svar: <em>"Om mandagen vasker hun tøj"</em>). Spørgsmålene i felterne guider dig trin for trin til, hvor hvert ord skal anbringes!')}
+                ? 'Place the words in the correct order (V2 word order). The slots guide you where each word belongs.' 
+                : 'Sæt ordene i rigtig rækkefølge (V2-ordstilling). Felterne guider dig til, hvor hvert ord skal stå.')}
         </p>
     `;
     builderCard.appendChild(introBanner);
@@ -3006,25 +2963,25 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
         const slotPrompts = [
             {
-                text: t('sange_slot_1_hint', isEn ? '1. When does it happen? (Time first)' : '1. Hvornår sker det? (Tid forrest)'),
-                grammar: t('sange_slot_1_tag', isEn ? 'Time adverbial' : 'Tidsadverbium / Forfelt'),
+                text: t('sange_slot_1_hint', isEn ? 'When? (Time)' : 'Hvornår?'),
+                grammar: t('sange_slot_1_tag', isEn ? 'Time' : 'Tid'),
                 colorClass: 'slot-tid',
                 tagClass: 'tag-tid'
             },
             {
-                text: t('sange_slot_2_hint', isEn ? '2. What is the action? (Verb in pos. 2!)' : '2. Hvad laver personen? (Handlingen er altid nr. 2!)'),
-                grammar: t('sange_slot_2_tag', isEn ? 'Verb (V2)' : 'Verbum (V2)'),
+                text: t('sange_slot_2_hint', isEn ? 'Action? (Verb)' : 'Hvad sker der?'),
+                grammar: t('sange_slot_2_tag', isEn ? 'Verb' : 'Verbum'),
                 colorClass: 'slot-verbum',
                 tagClass: 'tag-verbum'
             },
             {
-                text: t('sange_slot_3_hint', isEn ? '3. Who does it? (Subject moves behind)' : '3. Hvem gør det? (Personen rykker bagved)'),
+                text: t('sange_slot_3_hint', isEn ? 'Who? (Subject)' : 'Hvem?'),
                 grammar: t('sange_slot_3_tag', isEn ? 'Subject' : 'Subjekt'),
                 colorClass: 'slot-subjekt',
                 tagClass: 'tag-subjekt'
             },
             {
-                text: t('sange_slot_4_hint', isEn ? '4. What or where? (Object / place)' : '4. Hvad eller hvor? (Hvad gør de ved det?)'),
+                text: t('sange_slot_4_hint', isEn ? 'What / Where?' : 'Hvad / Hvor?'),
                 grammar: t('sange_slot_4_tag', isEn ? 'Object / Place' : 'Objekt / Sted'),
                 colorClass: 'slot-objekt',
                 tagClass: 'tag-objekt'
@@ -3232,23 +3189,23 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     function setupStepBuilder(container) {
         const categories = [
             {
-                q: t('sange_sb_cat_1', isEn ? '1. When does it happen? (Time in front position = pos. 1)' : '1. Hvornår sker det? (Tidsleddet forrest = 1. plads)'),
-                grammar: t('sange_slot_1_tag', isEn ? 'Time Adverbial / Front Field' : 'Tidsadverbium / Forfelt'),
+                q: t('sange_sb_cat_1', isEn ? '1. When? (Time)' : '1. Hvornår? (Tidsled)'),
+                grammar: t('sange_slot_1_tag', isEn ? 'Time' : 'Tid'),
                 rowClass: 'row-tid',
                 selClass: 'sel-tid',
                 colorWord: 'word-color-tid',
                 options: ['Om mandagen', 'Om tirsdagen', 'Om onsdagen', 'Om torsdagen', 'Om fredagen', 'Om lørdagen', 'Om søndagen', 'Tidlig mandag morgen', 'I 1800-tallet']
             },
             {
-                q: t('sange_sb_cat_2', isEn ? '2. What is the action? (The verb MUST be in position 2!)' : '2. Hvad laver personen? (Handlingen skal ALTID stå på 2. plads!)'),
-                grammar: t('sange_slot_2_tag', isEn ? 'Verb (V2)' : 'Verbum (V2)'),
+                q: t('sange_sb_cat_2', isEn ? '2. Action? (Verb)' : '2. Hvad sker der? (Verbum)'),
+                grammar: t('sange_slot_2_tag', isEn ? 'Verb' : 'Verbum'),
                 rowClass: 'row-verbum',
                 selClass: 'sel-verbum',
                 colorWord: 'word-color-verbum',
                 options: ['vasker', 'skyller', 'tømmer', 'tørrer', 'folder', 'rullede', 'stryger', 'skurer', 'slapper']
             },
             {
-                q: t('sange_sb_cat_3', isEn ? '3. Who performs the action? (Subject moves behind the verb)' : '3. Hvem laver handlingen? (Personen rykker om bag handlingen)'),
+                q: t('sange_sb_cat_3', isEn ? '3. Who? (Subject)' : '3. Hvem? (Subjekt)'),
                 grammar: t('sange_slot_3_tag', isEn ? 'Subject' : 'Subjekt'),
                 rowClass: 'row-subjekt',
                 selClass: 'sel-subjekt',
@@ -3256,7 +3213,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 options: ['hun', 'moren', 'drengen', 'kvinden', 'vi', 'familien', 'pigerne']
             },
             {
-                q: t('sange_sb_cat_4', isEn ? '4. What or where? (Object or prepositional phrase)' : '4. Hvad eller hvor? (Hvad sker der med tøjet / gulvet?)'),
+                q: t('sange_sb_cat_4', isEn ? '4. What / Where? (Object / place)' : '4. Hvad eller hvor? (Objekt / Sted)'),
                 grammar: t('sange_slot_4_tag', isEn ? 'Object / Place' : 'Objekt / Sted'),
                 rowClass: 'row-objekt',
                 selClass: 'sel-objekt',
@@ -3558,56 +3515,6 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         </div>
     `;
     historyCard.appendChild(tributeBox);
-
-    // Comparison Grid
-    const comparisonGrid = document.createElement('div');
-    comparisonGrid.className = 'comparison-grid';
-
-    const compData = [
-        {
-            title: isEn ? '1. Laundry: From River to A+++' : '1. Tøjvask: Fra gruekedel til A+++',
-            icon: '🧺',
-            then: isEn 
-                ? '1800s: Heavy wooden washboards, caustic soda, freezing river water, and boiling gruekedler. Took 2–3 full days of backbreaking labor every month.' 
-                : 'Dengang: Tunge vaskebrætter, lud, iskoldt åvand og tunge gruekedler over åben ild. Det tog 2-3 dages hårdt slid hver måned for kvinderne.',
-            now: isEn 
-                ? 'Today: Modern energy-efficient front-loader with specialized cycles. Clothes come out fresh at the press of a button.' 
-                : 'I dag: Moderne vaskemaskine med skåneprogram og timer. Maskinen klarer det tunge arbejde, mens vi kan bruge tiden på familie og uddannelse.'
-        },
-        {
-            title: isEn ? '2. Ironing: From Coals to Steam' : '2. Strygning: Fra glødende kul til damp',
-            icon: '👔',
-            then: isEn 
-                ? '1800s: Heavy cast-iron irons filled with glowing hot embers from the stove. Sparks, smoke, and constant soot hazards.' 
-                : 'Dengang: Tunge jern fyldt med glødende kul eller opvarmet på komfuret. Risiko for sod, brand og røg.',
-            now: isEn 
-                ? 'Today: Lightweight ergonomic steam irons and presses that smooth collars and fabrics gently in minutes.' 
-                : 'I dag: Letvægts dampstrygejern med teflonsål og fin damp, der glatter skjorter og kjoler ergonomisk på få minutter.'
-        },
-        {
-            title: isEn ? '3. Floor Care: From Knees to Mop' : '3. Gulve: Fra knæslid til ergonomisk moppe',
-            icon: '✨',
-            then: isEn 
-                ? '1800s: Scrubbing unpainted floorboards on hands and knees with abrasive sand and stiff horsehair brushes.' 
-                : 'Dengang: Skuring af rå trægulve på knæ med sand og stive børster, hvilket ødelagde knæ og ryg.',
-            now: isEn 
-                ? 'Today: Ergonomic flat microfibre mops and eco-friendly soap solutions that clean quickly while standing tall.' 
-                : 'I dag: Ergonomisk fladmoppe med mikrofiberklud og mild universalrengøring, der skåner ryg og led.'
-        }
-    ];
-
-    compData.forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'comparison-item';
-        item.innerHTML = `
-            <div class="comp-header"><span>${c.icon}</span> ${c.title}</div>
-            <div class="comp-era then"><strong>${isEn ? 'Then:' : 'Dengang:'}</strong> ${c.then}</div>
-            <div class="comp-era now"><strong>${isEn ? 'Now:' : 'I dag:'}</strong> ${c.now}</div>
-        `;
-        comparisonGrid.appendChild(item);
-    });
-
-    historyCard.appendChild(comparisonGrid);
 
     // Discussion Cards
     const discTitle = document.createElement('h3');

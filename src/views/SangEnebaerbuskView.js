@@ -694,10 +694,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         .detective-next-btn:hover { background: #fbbf24; transform: scale(1.03); }
 
         /* ----------------------------------------------------
-           TAB 4: 🧱 Sætningsbygger (Når & Så)
+           TAB 4: 🧱 Sætningsbygger & Pusleopgave (Ugens gøremål)
            ---------------------------------------------------- */
         .builder-card {
-            max-width: 860px;
+            max-width: 920px;
             margin: 0 auto;
             background: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -705,73 +705,386 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
-        .builder-grammar-legend {
+        .saetning-intro-banner {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .saetning-intro-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+        }
+        .saetning-intro-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 0.4rem;
+        }
+        .saetning-intro-desc {
+            color: #cbd5e1;
+            font-size: 0.98rem;
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Sub tabs */
+        .saetning-sub-tabs {
             display: flex;
             gap: 0.6rem;
+            margin-bottom: 1.8rem;
+            justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            background: #0f172a;
-            padding: 0.8rem 1.2rem;
-            border-radius: 14px;
-            font-size: 0.82rem;
-            font-weight: 700;
         }
-        .legend-chip { padding: 0.25rem 0.6rem; border-radius: 8px; }
-        .chip-forfelt { background: rgba(168, 85, 247, 0.25); color: #c084fc; border: 1px solid #a855f7; }
-        .chip-verbum { background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid #ef4444; }
-        .chip-subjekt { background: rgba(34, 197, 94, 0.25); color: #4ade80; border: 1px solid #22c55e; }
-        .chip-objekt { background: rgba(56, 189, 248, 0.25); color: #38bdf8; border: 1px solid #0284c7; }
-        .chip-adverbial { background: rgba(249, 115, 22, 0.25); color: #fb923c; border: 1px solid #ea580c; }
-
-        .builder-drop-zone {
-            min-height: 80px;
+        .saetning-sub-tab-btn {
             background: #0f172a;
-            border: 2px dashed #475569;
-            border-radius: 16px;
-            padding: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            transition: all 0.2s ease;
-        }
-        .builder-drop-zone.filled { border-color: #38bdf8; background: rgba(15, 23, 42, 0.85); }
-        .builder-drop-zone.success { border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
-        .builder-tiles-pool { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.6rem; min-height: 50px; }
-        .builder-word-tile {
-            padding: 0.7rem 1.2rem;
+            border: 1.5px solid #475569;
+            color: #cbd5e1;
+            padding: 0.7rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            user-select: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .builder-word-tile:hover { transform: translateY(-2px); filter: brightness(1.15); }
-        .tile-forfelt { background: #581c87; color: #e9d5ff; border: 1.5px solid #a855f7; }
-        .tile-verbum { background: #7f1d1d; color: #fecaca; border: 1.5px solid #ef4444; }
-        .tile-subjekt { background: #14532d; color: #bbf7d0; border: 1.5px solid #22c55e; }
-        .tile-objekt { background: #0c4a6e; color: #bae6fd; border: 1.5px solid #0284c7; }
-        .tile-adverbial { background: #7c2d12; color: #fed7aa; border: 1.5px solid #ea580c; }
-        .builder-controls-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .builder-btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .builder-btn-reset { background: #334155; color: #cbd5e1; border: 1px solid #475569; }
-        .builder-btn-check { background: #f59e0b; color: #0f172a; border: none; }
-        .builder-btn-next { background: #22c55e; color: white; border: none; }
+        .saetning-sub-tab-btn:hover { border-color: #fbbf24; color: white; }
+        .saetning-sub-tab-btn.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border-color: #fbbf24;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+        }
+
+        .saetning-sub-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .saetning-sub-panel.active {
+            display: block;
+        }
+
+        /* Pusleopgave styles */
+        .puzzle-wrapper {
+            background: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.6rem;
+        }
+        .puzzle-header { text-align: center; margin-bottom: 1.5rem; }
+        .puzzle-pills-row { display: flex; gap: 0.45rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.2rem; }
+        .puzzle-pill {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .puzzle-pill:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.08); }
+        .puzzle-pill.active {
+            border-color: #f59e0b;
+            background: #f59e0b;
+            color: #0f172a;
+            transform: scale(1.12);
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+        }
+        .puzzle-pill.completed { border-color: #22c55e; background: #15803d; color: #fff; }
+        .puzzle-pill.completed.active { border-color: #4ade80; background: #22c55e; box-shadow: 0 2px 10px rgba(34, 197, 94, 0.4); }
+
+        .puzzle-counter { font-size: 0.88rem; color: #fbbf24; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .puzzle-question-card {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1.5px solid rgba(245, 158, 11, 0.35);
+            border-radius: 14px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+        }
+        .puzzle-question-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin: 0;
+        }
+        .puzzle-guide-hint { color: #94a3b8; font-size: 0.92rem; }
+
+        .puzzle-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.85rem;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 820px) {
+            .puzzle-slots { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 520px) {
+            .puzzle-slots { grid-template-columns: 1fr; }
+        }
+
+        .puzzle-slot {
+            background: rgba(0, 0, 0, 0.35);
+            border: 2px dashed rgba(255, 255, 255, 0.25);
+            border-radius: 14px;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 0.8rem 0.6rem;
+            text-align: center;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        .puzzle-slot.filled {
+            border-style: solid;
+            cursor: pointer;
+        }
+        .puzzle-slot.slot-tid { border-color: rgba(168, 85, 247, 0.5); }
+        .puzzle-slot.slot-tid.filled { border-color: #a855f7; background: rgba(168, 85, 247, 0.2); }
+        .puzzle-slot.slot-verbum { border-color: rgba(239, 68, 68, 0.5); }
+        .puzzle-slot.slot-verbum.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .puzzle-slot.slot-subjekt { border-color: rgba(34, 197, 94, 0.5); }
+        .puzzle-slot.slot-subjekt.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.2); }
+        .puzzle-slot.slot-objekt { border-color: rgba(56, 189, 248, 0.5); }
+        .puzzle-slot.slot-objekt.filled { border-color: #0284c7; background: rgba(56, 189, 248, 0.2); }
+
+        .slot-hint-text {
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .slot-grammar-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.15rem 0.45rem;
+            border-radius: 6px;
+            margin-top: 0.25rem;
+            display: inline-block;
+        }
+        .tag-tid { background: rgba(168, 85, 247, 0.3); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.4); }
+        .tag-verbum { background: rgba(239, 68, 68, 0.3); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .tag-subjekt { background: rgba(34, 197, 94, 0.3); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .tag-objekt { background: rgba(56, 189, 248, 0.3); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.4); }
+
+        .slot-badge-num {
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            opacity: 0.8;
+            color: #94a3b8;
+        }
+        .slot-word-content {
+            font-size: 1.12rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0.4rem 0;
+            line-height: 1.3;
+        }
+        .slot-remove-btn {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 0.75rem;
+            color: #ef4444;
+            font-weight: 800;
+        }
+
+        .puzzle-word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 1.6rem;
+        }
+        .puzzle-chip-btn {
+            background: #1e293b;
+            border: 2px solid #475569;
+            color: #f8fafc;
+            padding: 0.75rem 1.3rem;
+            border-radius: 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .puzzle-chip-btn:hover:not(:disabled) {
+            background: #334155;
+            border-color: #fbbf24;
+            transform: translateY(-2px);
+        }
+        .puzzle-chip-btn:disabled {
+            opacity: 0.28;
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
+        .puzzle-feedback-area {
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .puzzle-msg {
+            font-size: 1.15rem;
+            padding: 0.9rem 1.4rem;
+            border-radius: 12px;
+            line-height: 1.5;
+            max-width: 650px;
+        }
+        .puzzle-msg.success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1.5px solid #22c55e;
+            color: #86efac;
+        }
+        .puzzle-msg.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1.5px solid #ef4444;
+            color: #fca5a5;
+        }
+        .puzzle-action-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .next-task-btn, .retry-task-btn {
+            padding: 0.7rem 1.4rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .next-task-btn { background: #22c55e; color: white; }
+        .next-task-btn:hover { background: #16a34a; transform: scale(1.04); }
+        .retry-task-btn { background: #f59e0b; color: #0f172a; }
+        .retry-task-btn:hover { background: #fbbf24; transform: scale(1.04); }
+
+        /* Sætningsbygger Trin-for-trin styles */
+        .step-builder-wrapper {
+            background: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+        .builder-guided-row {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 1.1rem;
+            border-left: 4px solid #fff;
+        }
+        .builder-guided-row.row-tid { border-left-color: #a855f7; }
+        .builder-guided-row.row-verbum { border-left-color: #ef4444; }
+        .builder-guided-row.row-subjekt { border-left-color: #22c55e; }
+        .builder-guided-row.row-objekt { border-left-color: #0284c7; }
+
+        .builder-guided-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .builder-options-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+        .builder-choice-chip {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+            padding: 0.55rem 1rem;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .builder-choice-chip:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #94a3b8;
+        }
+        .builder-choice-chip.selected {
+            font-weight: 800;
+            transform: scale(1.04);
+            color: white;
+        }
+        .builder-choice-chip.selected.sel-tid { background: #581c87; border-color: #c084fc; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+        .builder-choice-chip.selected.sel-verbum { background: #7f1d1d; border-color: #f87171; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+        .builder-choice-chip.selected.sel-subjekt { background: #14532d; border-color: #4ade80; box-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
+        .builder-choice-chip.selected.sel-objekt { background: #0c4a6e; border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+
+        .live-sentence-display {
+            background: #111e15;
+            border: 2px solid #22c55e;
+            border-radius: 16px;
+            padding: 1.4rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .live-badge-label {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #86efac;
+            font-weight: 800;
+        }
+        .live-sentence-text {
+            font-size: 1.55rem;
+            font-weight: 800;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+        .live-rule-hint {
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        .word-color-tid { color: #d8b4fe; }
+        .word-color-verbum { color: #f87171; }
+        .word-color-subjekt { color: #4ade80; }
+        .word-color-objekt { color: #38bdf8; }
 
         /* ----------------------------------------------------
            TAB 5: ⏳ Dengang og nu (Værdighed & Parringsøvelser)
@@ -1060,7 +1373,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         { id: 'tab_vrimmel', icon: '🖼️', label: isEn ? '1. Wimmelbild (Bubble)' : '1. Vrimlebillede & Tankebobbel' },
         { id: 'tab_sang', icon: '🎶', label: isEn ? '2. Sing along & Rhythm' : '2. Syng med & Rytme' },
         { id: 'tab_detektiv', icon: '🕵️', label: isEn ? '3. Word Detective' : '3. Ord-detektiv ("Rulle tøj" osv.)' },
-        { id: 'tab_saetning', icon: '🧱', label: isEn ? '4. Sentence Builder' : '4. Sætningsbygger (Når & Så)' },
+        { id: 'tab_saetning', icon: '🧩', label: isEn ? '4. Sentence Builder & Puzzle' : '4. Sætningsbygger & Puslespil' },
         { id: 'tab_udvikling', icon: '⏳', label: isEn ? '5. Then & Now & Matching' : '5. Dengang & nu & Parring' }
     ];
 
@@ -2120,7 +2433,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     panelsHolder.appendChild(panelDetektiv);
 
     // =========================================================================
-    // TAB 4: 🧱 SÆTNINGSBYGGER (Når, Så & Inversion)
+    // TAB 4: 🧱 SÆTNINGSBYGGER & PUSLEOPGAVE (Ugens gøremål & V2-ordstilling)
     // =========================================================================
     const panelSaetning = document.createElement('div');
     panelSaetning.className = `song-panel ${currentTab === 'tab_saetning' ? 'active' : ''}`;
@@ -2129,235 +2442,481 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const builderCard = document.createElement('div');
     builderCard.className = 'builder-card';
 
-    const builderPuzzles = [
-        {
-            prompt: 'Byg sætningen om fortidens tøjrulning (Forfelt ➔ Inversion):',
-            promptEn: 'Build the sentence about historical mangle rolling (Front field ➔ Inversion):',
-            targetTokens: ['I 1800-tallet', 'rullede', 'kvinderne', 'tøjet med et mangelbræt.'],
-            tokenTypes: ['forfelt', 'verbum', 'subjekt', 'objekt'],
-            fullSentence: 'I 1800-tallet rullede kvinderne tøjet med et mangelbræt.',
-            ruleTip: 'Forfelt ("I 1800-tallet") + Verbum på plads 2 ("rullede") + Subjekt ("kvinderne") + Præpositionsled.'
-        },
-        {
-            prompt: 'Byg sætningen med "når" (Ledsætning først ➔ Inversion i hovedsætningen):',
-            promptEn: 'Build the sentence with "når" (Subordinate clause first ➔ Inversion in main clause):',
-            targetTokens: ['Når vi vasker tøj,', 'sorterer', 'vi', 'farverne først.'],
-            tokenTypes: ['forfelt', 'verbum', 'subjekt', 'objekt'],
-            fullSentence: 'Når vi vasker tøj, sorterer vi farverne først.',
-            ruleTip: 'Når en ledsætning står forrest som Forfelt (Felt 1), kommer verbet på 2. plads: "sorterer" (V) + "vi" (S).'
-        },
-        {
-            prompt: 'Byg sangens klassiske verslinje med "Så" (Forfelt ➔ Verbum ➔ Subjekt):',
-            promptEn: 'Build the song’s classic line with "Så" (Front field ➔ Verb ➔ Subject):',
-            targetTokens: ['Så', 'gør', 'vi', 'sådan.'],
-            tokenTypes: ['forfelt', 'verbum', 'subjekt', 'adverbial'],
-            fullSentence: 'Så gør vi sådan.',
-            ruleTip: 'Ordet "Så" tager Forfeltet (Felt 1), så verbet "gør" står på 2. plads.'
-        },
-        {
-            prompt: 'Byg sætningen om mandag morgen (Tidsangivelse forrest ➔ Inversion):',
-            promptEn: 'Build the time expression (Time in front field ➔ Inversion):',
-            targetTokens: ['Tidlig en mandag morgen', 'starter', 'mor', 'vaskemaskinen.'],
-            tokenTypes: ['forfelt', 'verbum', 'subjekt', 'objekt'],
-            fullSentence: 'Tidlig en mandag morgen starter mor vaskemaskinen.',
-            ruleTip: 'Tidsudtrykket "Tidlig en mandag morgen" udgør ét samlet Forfelt. Derefter kommer verbet "starter".'
-        },
-        {
-            prompt: 'Byg sætningen om strygning med dampjern:',
-            promptEn: 'Build the sentence about ironing with a steam iron:',
-            targetTokens: ['Når skjorten er krøllet,', 'bruger', 'vi', 'et dampstrygejern.'],
-            tokenTypes: ['forfelt', 'verbum', 'subjekt', 'objekt'],
-            fullSentence: 'Når skjorten er krøllet, bruger vi et dampstrygejern.',
-            ruleTip: 'Ledsætning ("Når skjorten er krøllet,") + Verbum ("bruger") + Subjekt ("vi") + Objekt ("et dampstrygejern").'
-        }
-    ];
+    // Intro Banner
+    const introBanner = document.createElement('div');
+    introBanner.className = 'saetning-intro-banner';
+    introBanner.innerHTML = `
+        <span class="saetning-intro-badge">🧩 ${isEn ? 'Sentence Order & Questions' : 'Ordstilling & Spørgsmål'}</span>
+        <h2 class="saetning-intro-title">${isEn ? 'Word Order: Answer Questions about the Week' : 'Sætningsbygger & Pusleopgaver: Svar på spørgsmål om ugen'}</h2>
+        <p class="saetning-intro-desc">
+            ${isEn 
+                ? 'Learn how to answer questions like <strong>"What does the mother do on Monday?"</strong> (Answer: <em>"Om mandagen vasker hun tøj"</em>). Notice the slots: the questions in each slot guide where the words belong!' 
+                : 'Lær at besvare spørgsmål som <strong>"Hvad laver moren om mandagen?"</strong> (Svar: <em>"Om mandagen vasker hun tøj"</em>). Spørgsmålene i felterne guider dig trin for trin til, hvor hvert ord skal anbringes!'}
+        </p>
+    `;
+    builderCard.appendChild(introBanner);
 
-    let puzIdx = 0;
+    // Sub-tabs navigation
+    const subTabsNav = document.createElement('div');
+    subTabsNav.className = 'saetning-sub-tabs';
+    subTabsNav.innerHTML = `
+        <button class="saetning-sub-tab-btn active" data-subtab="puzzle">
+            <span>🧩</span> ${isEn ? '1. Puzzle Tasks (10 Questions)' : '1. Pusleopgaver (10 spørgsmål)'}
+        </button>
+        <button class="saetning-sub-tab-btn" data-subtab="builder">
+            <span>🧱</span> ${isEn ? '2. Step-by-Step Builder' : '2. Trin-for-trin sætningsbygger'}
+        </button>
+    `;
+    builderCard.appendChild(subTabsNav);
 
-    function renderBuilderPuzzle() {
-        builderCard.innerHTML = '';
-        const puzzle = builderPuzzles[puzIdx];
+    const puzzleContainer = document.createElement('div');
+    puzzleContainer.className = 'saetning-sub-panel active';
+    puzzleContainer.id = 'panel-puzzle-view';
 
-        // Grammar Legend
-        const legend = document.createElement('div');
-        legend.className = 'builder-grammar-legend';
-        legend.innerHTML = `
-            <span style="color: #94a3b8; margin-right: 0.4rem;">${isEn ? 'Grammar code:' : 'Grammatisk farvekode:'}</span>
-            <span class="legend-chip chip-forfelt">${isEn ? 'Purple: Front Field / Clause' : 'Lilla: Forfelt / Ledsætning'}</span>
-            <span class="legend-chip chip-verbum">${isEn ? 'Red: Verb (Pos. 2)' : 'Rød: Verbum (Plads 2)'}</span>
-            <span class="legend-chip chip-subjekt">${isEn ? 'Green: Subject' : 'Grøn: Subjekt'}</span>
-            <span class="legend-chip chip-objekt">${isEn ? 'Blue: Object' : 'Blå: Objekt'}</span>
-            <span class="legend-chip chip-adverbial">${isEn ? 'Orange: Adverbial' : 'Orange: Adverbial'}</span>
-        `;
-        builderCard.appendChild(legend);
+    const stepBuilderContainer = document.createElement('div');
+    stepBuilderContainer.className = 'saetning-sub-panel';
+    stepBuilderContainer.id = 'panel-step-builder-view';
 
-        // Header
-        const header = document.createElement('div');
-        header.className = 'builder-task-header';
-        header.innerHTML = `
-            <span class="builder-prompt-text">${isEn ? puzzle.promptEn : puzzle.prompt}</span>
-            <span style="color: #fbbf24; font-weight: 800; font-size: 0.9rem;">${isEn ? 'Exercise' : 'Øvelse'} ${puzIdx + 1} / ${builderPuzzles.length}</span>
-        `;
-        builderCard.appendChild(header);
+    builderCard.appendChild(puzzleContainer);
+    builderCard.appendChild(stepBuilderContainer);
 
-        // Drop zone
-        const dropZone = document.createElement('div');
-        dropZone.className = 'builder-drop-zone';
-
-        // Tiles pool
-        const tilesPool = document.createElement('div');
-        tilesPool.className = 'builder-tiles-pool';
-
-        let placedTokens = [];
-
-        const shuffledTokens = puzzle.targetTokens.map((token, i) => ({
-            text: token,
-            type: puzzle.tokenTypes[i],
-            origIndex: i
-        })).sort(() => Math.random() - 0.5);
-
-        function updateDropZoneUI() {
-            dropZone.innerHTML = '';
-            if (placedTokens.length === 0) {
-                dropZone.innerHTML = `<span style="color: #64748b; font-style: italic;">${isEn ? 'Click tiles below to build the sentence...' : 'Klik på brikkerne nedenfor for at placere dem her...'}</span>`;
-                dropZone.classList.remove('filled');
+    subTabsNav.querySelectorAll('.saetning-sub-tab-btn').forEach(btn => {
+        btn.onclick = () => {
+            subTabsNav.querySelectorAll('.saetning-sub-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const target = btn.dataset.subtab;
+            if (target === 'puzzle') {
+                puzzleContainer.classList.add('active');
+                stepBuilderContainer.classList.remove('active');
             } else {
-                dropZone.classList.add('filled');
-                placedTokens.forEach((item, idx) => {
-                    const tile = document.createElement('div');
-                    tile.className = `builder-word-tile tile-${item.type}`;
-                    tile.innerHTML = `<span>${item.text}</span> <span style="font-size: 0.75rem; opacity: 0.7;">✕</span>`;
-                    tile.onclick = () => {
-                        placedTokens.splice(idx, 1);
-                        tilesPool.appendChild(item.element);
-                        item.element.style.display = 'inline-flex';
-                        updateDropZoneUI();
-                        feedbackDiv.style.display = 'none';
-                    };
-                    dropZone.appendChild(tile);
-                });
+                stepBuilderContainer.classList.add('active');
+                puzzleContainer.classList.remove('active');
             }
-        }
+        };
+    });
 
-        shuffledTokens.forEach(item => {
-            const tileBtn = document.createElement('div');
-            tileBtn.className = `builder-word-tile tile-${item.type}`;
-            tileBtn.textContent = item.text;
-            item.element = tileBtn;
+    // -------------------------------------------------------------------------
+    // 1. PUSLEOPGAVE (Spørgsmål som: "Hvad laver moren om mandagen?")
+    // -------------------------------------------------------------------------
+    function setupPuzzleExercise(container) {
+        const tasks = [
+            {
+                question: 'Hvad laver moren om mandagen?',
+                questionEn: 'What does the mother do on Monday?',
+                correct: ['Om mandagen', 'vasker', 'hun', 'tøj.'],
+                scrambled: ['vasker', 'tøj.', 'Om mandagen', 'hun'],
+                ruleTip: 'Når tidsleddet "Om mandagen" står forrest, kommer verbet "vasker" på 2. plads og subjektet "hun" på 3. plads (inversion)!'
+            },
+            {
+                question: 'Hvad laver drengen om tirsdagen?',
+                questionEn: 'What does the boy do on Tuesday?',
+                correct: ['Om tirsdagen', 'tømmer', 'han', 'maskinen.'],
+                scrambled: ['maskinen.', 'Om tirsdagen', 'han', 'tømmer'],
+                ruleTip: 'Handlingen (verbet "tømmer") skal altid stå på 2. plads lige efter tidsudtrykket!'
+            },
+            {
+                question: 'Hvad laver kvinden om onsdagen?',
+                questionEn: 'What does the woman do on Wednesday?',
+                correct: ['Om onsdagen', 'tørrer', 'hun', 'tøjet.'],
+                scrambled: ['hun', 'Om onsdagen', 'tørrer', 'tøjet.'],
+                ruleTip: 'Tidsudtrykket ("Om onsdagen") tager 1. plads, hvorefter verbet ("tørrer") straks følger.'
+            },
+            {
+                question: 'Hvad laver kvinden om torsdagen?',
+                questionEn: 'What does the woman do on Thursday?',
+                correct: ['Om torsdagen', 'folder', 'hun', 'tøjet sammen.'],
+                scrambled: ['folder', 'tøjet sammen.', 'Om torsdagen', 'hun'],
+                ruleTip: 'Om torsdagen foldes det rene tøj omhyggeligt i bunker.'
+            },
+            {
+                question: 'Hvad laver moren om fredagen?',
+                questionEn: 'What does the mother do on Friday?',
+                correct: ['Om fredagen', 'stryger', 'hun', 'skjorterne.'],
+                scrambled: ['stryger', 'skjorterne.', 'hun', 'Om fredagen'],
+                ruleTip: 'Dampstrygejernet glatter alle krøller ud til weekenden.'
+            },
+            {
+                question: 'Hvad laver moren om lørdagen?',
+                questionEn: 'What does the mother do on Saturday?',
+                correct: ['Om lørdagen', 'vasker', 'hun', 'gulvet.'],
+                scrambled: ['gulvet.', 'vasker', 'Om lørdagen', 'hun'],
+                ruleTip: 'Med den ergonomiske fladmoppe vasker hun gulvet stående oprejst.'
+            },
+            {
+                question: 'Hvad laver familien om søndagen?',
+                questionEn: 'What does the family do on Sunday?',
+                correct: ['Om søndagen', 'slapper', 'familien', 'af i sofaen.'],
+                scrambled: ['familien', 'af i sofaen.', 'Om søndagen', 'slapper'],
+                ruleTip: 'Søndag er ugens velfortjente hviledag med ro, kaffe og hygge.'
+            },
+            {
+                question: 'Hvad gjorde kvinderne i 1800-tallet om torsdagen?',
+                questionEn: 'What did women do on Thursday in the 1800s?',
+                correct: ['I 1800-tallet', 'rullede', 'kvinderne', 'tøjet med et mangelbræt.'],
+                scrambled: ['rullede', 'tøjet med et mangelbræt.', 'kvinderne', 'I 1800-tallet'],
+                ruleTip: 'I sangen: "når vi ruller vort tøj" – kvinderne brugte et tungt mangelbræt og trærulle.'
+            },
+            {
+                question: 'Hvad gjorde pigen i 1800-tallet om lørdagen?',
+                questionEn: 'What did the maid do on Saturday in the 1800s?',
+                correct: ['I 1800-tallet', 'skurede', 'pigen', 'gulvet på knæ med sand.'],
+                scrambled: ['skurede', 'gulvet på knæ med sand.', 'I 1800-tallet', 'pigen'],
+                ruleTip: 'I sangen: "når vi skurer vort gulv" – pigerne lå på knæ og skurede med børste og fint sand.'
+            },
+            {
+                question: 'Hvornår danser vi rundt om enebærbusken?',
+                questionEn: 'When do we dance around the juniper bush?',
+                correct: ['Tidlig mandag morgen', 'går', 'vi', 'rundt om en enebærbusk.'],
+                scrambled: ['går', 'rundt om en enebærbusk.', 'Tidlig mandag morgen', 'vi'],
+                ruleTip: 'Tidsudtrykket "Tidlig mandag morgen" udgør forfeltet, og derefter følger verbet "går".'
+            }
+        ];
 
-            tileBtn.onclick = () => {
-                placedTokens.push(item);
-                tileBtn.style.display = 'none';
-                updateDropZoneUI();
-                feedbackDiv.style.display = 'none';
-            };
-            tilesPool.appendChild(tileBtn);
-        });
+        let currentTaskIdx = 0;
+        let userSlots = [null, null, null, null];
+        const completedTasks = new Set();
 
-        builderCard.appendChild(dropZone);
-        builderCard.appendChild(tilesPool);
+        const puzzleWrapper = document.createElement('div');
+        puzzleWrapper.className = 'puzzle-wrapper';
 
-        // Feedback box
-        const feedbackDiv = document.createElement('div');
-        feedbackDiv.style.display = 'none';
-        feedbackDiv.style.marginBottom = '1.2rem';
-        feedbackDiv.style.padding = '1.1rem';
-        feedbackDiv.style.borderRadius = '14px';
-        feedbackDiv.style.background = '#0f172a';
-        builderCard.appendChild(feedbackDiv);
+        const slotPrompts = [
+            {
+                text: isEn ? '1. When does it happen? (Time first)' : '1. Hvornår sker det? (Tid forrest)',
+                grammar: isEn ? 'Time adverbial' : 'Tidsadverbium / Forfelt',
+                colorClass: 'slot-tid',
+                tagClass: 'tag-tid'
+            },
+            {
+                text: isEn ? '2. What is the action? (Verb in pos. 2!)' : '2. Hvad laver personen? (Handlingen er altid nr. 2!)',
+                grammar: isEn ? 'Verb (V2)' : 'Verbum (V2)',
+                colorClass: 'slot-verbum',
+                tagClass: 'tag-verbum'
+            },
+            {
+                text: isEn ? '3. Who does it? (Subject moves behind)' : '3. Hvem gør det? (Personen rykker bagved)',
+                grammar: isEn ? 'Subject' : 'Subjekt',
+                colorClass: 'slot-subjekt',
+                tagClass: 'tag-subjekt'
+            },
+            {
+                text: isEn ? '4. What or where? (Object / place)' : '4. Hvad eller hvor? (Hvad gør de ved det?)',
+                grammar: isEn ? 'Object / Place' : 'Objekt / Sted',
+                colorClass: 'slot-objekt',
+                tagClass: 'tag-objekt'
+            }
+        ];
 
-        // Controls
-        const controlsRow = document.createElement('div');
-        controlsRow.className = 'builder-controls-row';
+        function renderCurrentTask() {
+            puzzleWrapper.innerHTML = '';
+            userSlots = [null, null, null, null];
 
-        const resetBtn = document.createElement('button');
-        resetBtn.className = 'builder-btn builder-btn-reset';
-        resetBtn.innerHTML = `<span>🔄</span> ${isEn ? 'Reset' : 'Nulstil'}`;
-        resetBtn.onclick = () => { renderBuilderPuzzle(); };
-        controlsRow.appendChild(resetBtn);
+            const task = tasks[currentTaskIdx];
 
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'builder-btn builder-btn-check';
-        checkBtn.innerHTML = `<span>✓</span> ${isEn ? 'Check Sentence' : 'Tjek sætning'}`;
-        checkBtn.onclick = () => {
-            const currentSentence = placedTokens.map(t => t.text).join(' ');
-            const targetSentence = puzzle.targetTokens.join(' ');
+            // Header
+            const header = document.createElement('div');
+            header.className = 'puzzle-header';
 
-            if (currentSentence === targetSentence) {
-                dropZone.classList.add('success');
-                feedbackDiv.style.display = 'block';
-                feedbackDiv.style.border = '1.5px solid #22c55e';
-                feedbackDiv.innerHTML = `
-                    <div style="color: #4ade80; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                        🎉 ${isEn ? 'Perfect Danish word order!' : 'Helt perfekt dansk ordstilling!'}
-                    </div>
-                    <div style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
-                        "${puzzle.fullSentence}"
-                    </div>
-                    <div style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.5; margin-bottom: 1rem;">
-                        💡 <strong>${isEn ? 'Grammar note:' : 'Grammatik-regel:'}</strong> ${puzzle.ruleTip}
-                    </div>
-                `;
+            // Pills navigation
+            const pillsRow = document.createElement('div');
+            pillsRow.className = 'puzzle-pills-row';
+            tasks.forEach((_, tIdx) => {
+                const pill = document.createElement('button');
+                pill.className = `puzzle-pill ${tIdx === currentTaskIdx ? 'active' : ''} ${completedTasks.has(tIdx) ? 'completed' : ''}`;
+                pill.textContent = tIdx + 1;
+                pill.title = `${isEn ? 'Exercise' : 'Opgave'} ${tIdx + 1}`;
+                pill.onclick = () => {
+                    currentTaskIdx = tIdx;
+                    renderCurrentTask();
+                };
+                pillsRow.appendChild(pill);
+            });
+            header.appendChild(pillsRow);
 
-                speakDanish(puzzle.fullSentence);
+            // Counter
+            const counterEl = document.createElement('div');
+            counterEl.className = 'puzzle-counter';
+            counterEl.textContent = `${isEn ? 'Question' : 'Spørgsmål'} ${currentTaskIdx + 1} / ${tasks.length}`;
+            header.appendChild(counterEl);
 
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'builder-btn builder-btn-next';
-                nextBtn.innerHTML = puzIdx + 1 < builderPuzzles.length 
-                    ? `<span>${isEn ? 'Next Sentence' : 'Næste sætning'}</span> →` 
-                    : `<span>🏆 ${isEn ? 'All Built!' : 'Alle sætninger gennemført!'}</span>`;
-                nextBtn.onclick = () => {
-                    if (puzIdx + 1 < builderPuzzles.length) {
-                        puzIdx++;
-                        renderBuilderPuzzle();
-                    } else {
-                        renderBuilderFinish();
+            // Question Card
+            const qCard = document.createElement('div');
+            qCard.className = 'puzzle-question-card';
+            qCard.innerHTML = `
+                <h3 class="puzzle-question-title">❓ ${isEn ? task.questionEn : task.question}</h3>
+            `;
+            header.appendChild(qCard);
+
+            const guideEl = document.createElement('div');
+            guideEl.className = 'puzzle-guide-hint';
+            guideEl.innerHTML = `
+                ${isEn ? 'Click the word chips below to place them in the correct slots in order:' : 'Klik på ordbrikkerne nedenfor for at placere dem i den rigtige rækkefølge i felterne:'}
+            `;
+            header.appendChild(guideEl);
+
+            puzzleWrapper.appendChild(header);
+
+            // 4 Guided Slots
+            const slotsContainer = document.createElement('div');
+            slotsContainer.className = 'puzzle-slots';
+
+            slotPrompts.forEach((promptItem, idx) => {
+                const slot = document.createElement('div');
+                slot.className = `puzzle-slot ${promptItem.colorClass}`;
+                slot.dataset.idx = idx;
+
+                slot.onclick = () => {
+                    if (userSlots[idx]) {
+                        userSlots[idx] = null;
+                        updateSlotsAndBank();
                     }
                 };
-                feedbackDiv.appendChild(nextBtn);
-            } else {
-                feedbackDiv.style.display = 'block';
-                feedbackDiv.style.border = '1.5px solid #ef4444';
-                feedbackDiv.innerHTML = `
-                    <div style="color: #f87171; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.4rem;">
-                        ❌ ${isEn ? 'Not quite right yet.' : 'Ikke helt rigtigt endnu.'}
-                    </div>
-                    <div style="color: #cbd5e1; font-size: 0.95rem;">
-                        ${isEn ? 'Tip: Remember that the finite verb must occupy Position 2 in the main clause!' : 'Husk V2-reglen: Det bøjede verbum skal altid stå på 2. plads i hovedsætningen!'}
-                    </div>
-                `;
+
+                slotsContainer.appendChild(slot);
+            });
+            puzzleWrapper.appendChild(slotsContainer);
+
+            // Word Bank
+            const bankContainer = document.createElement('div');
+            bankContainer.className = 'puzzle-word-bank';
+            puzzleWrapper.appendChild(bankContainer);
+
+            // Feedback Area
+            const feedbackBox = document.createElement('div');
+            feedbackBox.className = 'puzzle-feedback-area';
+            puzzleWrapper.appendChild(feedbackBox);
+
+            function updateSlotsAndBank() {
+                slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
+                    const word = userSlots[idx];
+                    const promptItem = slotPrompts[idx];
+
+                    if (word) {
+                        slotEl.classList.add('filled');
+                        slotEl.innerHTML = `
+                            <span class="slot-badge-num">${idx + 1}</span>
+                            <div class="slot-word-content">${word}</div>
+                            <span class="slot-grammar-tag ${promptItem.tagClass}">[${promptItem.grammar}]</span>
+                            <span class="slot-remove-btn" title="${isEn ? 'Remove word' : 'Fjern ord'}">✕</span>
+                        `;
+                    } else {
+                        slotEl.classList.remove('filled');
+                        slotEl.innerHTML = `
+                            <span class="slot-badge-num">${idx + 1}</span>
+                            <div class="slot-hint-text">${promptItem.text}</div>
+                            <span class="slot-grammar-tag ${promptItem.tagClass}">[${promptItem.grammar}]</span>
+                        `;
+                    }
+                });
+
+                bankContainer.innerHTML = '';
+                task.scrambled.forEach(word => {
+                    const isPlaced = userSlots.includes(word);
+                    const btn = document.createElement('button');
+                    btn.className = 'puzzle-chip-btn';
+                    btn.textContent = word;
+                    btn.disabled = isPlaced;
+
+                    btn.onclick = () => {
+                        const emptyIdx = userSlots.indexOf(null);
+                        if (emptyIdx !== -1) {
+                            userSlots[emptyIdx] = word;
+                            updateSlotsAndBank();
+                            checkAnswer();
+                        }
+                    };
+                    bankContainer.appendChild(btn);
+                });
             }
-        };
-        controlsRow.appendChild(checkBtn);
 
-        builderCard.appendChild(controlsRow);
-        updateDropZoneUI();
+            function checkAnswer() {
+                if (userSlots.includes(null)) {
+                    feedbackBox.innerHTML = '';
+                    return;
+                }
+
+                const isCorrect = userSlots.every((w, i) => w === task.correct[i]);
+                const sentence = userSlots.join(' ');
+
+                if (isCorrect) {
+                    completedTasks.add(currentTaskIdx);
+                    pillsRow.querySelectorAll('.puzzle-pill').forEach((pill, idx) => {
+                        if (completedTasks.has(idx)) pill.classList.add('completed');
+                    });
+
+                    feedbackBox.innerHTML = `
+                        <div class="puzzle-msg success">
+                            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
+                                🎉 ${isEn ? 'Perfect word order!' : 'Helt rigtigt!'} "<strong>${sentence}</strong>"
+                            </div>
+                            <div style="font-size: 0.95rem; color: #f0fdf4; margin-top: 0.3rem;">
+                                💡 ${task.ruleTip}
+                            </div>
+                        </div>
+                        <div class="puzzle-action-row">
+                            <button class="next-task-btn" id="puzzle-listen-btn" style="background: #f59e0b; color: #0f172a;">
+                                <span>🔊</span> ${isEn ? 'Listen' : 'Lyt til udtale'}
+                            </button>
+                            <button class="next-task-btn" id="puzzle-next-btn">
+                                <span>${currentTaskIdx < tasks.length - 1 ? (isEn ? 'Next Question' : 'Næste spørgsmål') : (isEn ? 'Start Over' : 'Start forfra')}</span> →
+                            </button>
+                        </div>
+                    `;
+                    feedbackBox.querySelector('#puzzle-listen-btn').onclick = () => speakDanish(sentence);
+                    feedbackBox.querySelector('#puzzle-next-btn').onclick = () => {
+                        currentTaskIdx = (currentTaskIdx + 1) % tasks.length;
+                        renderCurrentTask();
+                    };
+                    speakDanish(sentence);
+                } else {
+                    feedbackBox.innerHTML = `
+                        <div class="puzzle-msg error">
+                            <div style="font-weight: 800; margin-bottom: 0.3rem;">
+                                ❌ ${isEn ? 'Not quite right yet!' : 'Ikke helt rigtigt!'}
+                            </div>
+                            <div style="font-size: 0.92rem;">
+                                ${isEn 
+                                    ? 'Remember: The finite verb (action) MUST always stand in Position 2 immediately after the time phrase!' 
+                                    : 'Husk grundreglen: Handlingen (verbet) SKAL altid stå på 2. plads lige efter tidsudtrykket!'}
+                            </div>
+                        </div>
+                        <div class="puzzle-action-row">
+                            <button class="retry-task-btn" id="puzzle-retry-btn">
+                                <span>🔄</span> ${isEn ? 'Try Again' : 'Prøv igen'}
+                            </button>
+                        </div>
+                    `;
+                    feedbackBox.querySelector('#puzzle-retry-btn').onclick = () => {
+                        userSlots = [null, null, null, null];
+                        feedbackBox.innerHTML = '';
+                        updateSlotsAndBank();
+                    };
+                }
+            }
+
+            updateSlotsAndBank();
+        }
+
+        renderCurrentTask();
+        container.appendChild(puzzleWrapper);
     }
 
-    function renderBuilderFinish() {
-        builderCard.innerHTML = `
-            <div style="text-align: center; padding: 2rem 1rem;">
-                <div style="font-size: 3.5rem; margin-bottom: 0.8rem;">🌟🧱🇩🇰</div>
-                <h2 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 0.6rem;">
-                    ${isEn ? 'Sentence Master!' : 'Fantastisk! Du mestrer ledsætninger og V2-ordstilling!'}
-                </h2>
-                <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; font-size: 1.1rem;">
-                    ${isEn 
-                        ? 'You have successfully practiced Danish word order with "når", "så", and front-field time expressions.' 
-                        : 'Du har mestret inversion efter forfelt og ledsætninger med "når", så dine sætninger flyder naturligt og grammatisk korrekt.'}
-                </p>
-                <button class="builder-btn builder-btn-check" id="btn-restart-builder" style="margin: 0 auto;">
-                    🔄 ${isEn ? 'Try Again' : 'Byg igen'}
+    // -------------------------------------------------------------------------
+    // 2. TRIN-FOR-TRIN SÆTNINGSBYGGER (med vejledende spørgsmål i felterne)
+    // -------------------------------------------------------------------------
+    function setupStepBuilder(container) {
+        const categories = [
+            {
+                q: isEn ? '1. When does it happen? (Time in front position = pos. 1)' : '1. Hvornår sker det? (Tidsleddet forrest = 1. plads)',
+                grammar: isEn ? 'Time Adverbial / Front Field' : 'Tidsadverbium / Forfelt',
+                rowClass: 'row-tid',
+                selClass: 'sel-tid',
+                colorWord: 'word-color-tid',
+                options: ['Om mandagen', 'Om tirsdagen', 'Om onsdagen', 'Om torsdagen', 'Om fredagen', 'Om lørdagen', 'Om søndagen', 'Tidlig mandag morgen', 'I 1800-tallet']
+            },
+            {
+                q: isEn ? '2. What is the action? (The verb MUST be in position 2!)' : '2. Hvad laver personen? (Handlingen skal ALTID stå på 2. plads!)',
+                grammar: isEn ? 'Verb (V2)' : 'Verbum (V2)',
+                rowClass: 'row-verbum',
+                selClass: 'sel-verbum',
+                colorWord: 'word-color-verbum',
+                options: ['vasker', 'skyller', 'tømmer', 'tørrer', 'folder', 'rullede', 'stryger', 'skurer', 'slapper']
+            },
+            {
+                q: isEn ? '3. Who performs the action? (Subject moves behind the verb)' : '3. Hvem laver handlingen? (Personen rykker om bag handlingen)',
+                grammar: isEn ? 'Subject' : 'Subjekt',
+                rowClass: 'row-subjekt',
+                selClass: 'sel-subjekt',
+                colorWord: 'word-color-subjekt',
+                options: ['hun', 'moren', 'drengen', 'kvinden', 'vi', 'familien', 'pigerne']
+            },
+            {
+                q: isEn ? '4. What or where? (Object or prepositional phrase)' : '4. Hvad eller hvor? (Hvad sker der med tøjet / gulvet?)',
+                grammar: isEn ? 'Object / Place' : 'Objekt / Sted',
+                rowClass: 'row-objekt',
+                selClass: 'sel-objekt',
+                colorWord: 'word-color-objekt',
+                options: ['tøj', 'maskinen', 'tøjet på tørrestativet', 'tøjet i nydelige bunker', 'skjorterne med dampjern', 'tøjet med et mangelbræt', 'gulvet med en fladmoppe', 'af med en god kop kaffe']
+            }
+        ];
+
+        let selections = ['Om mandagen', 'vasker', 'hun', 'tøj'];
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'step-builder-wrapper';
+
+        const outputBox = document.createElement('div');
+        outputBox.className = 'live-sentence-display';
+
+        function updateLiveDisplay() {
+            outputBox.innerHTML = `
+                <div class="live-badge-label">✨ ${isEn ? 'Built Sentence (V2 Word Order)' : 'Din sammensatte sætning (V2-ordstilling)'}</div>
+                <div class="live-sentence-text">
+                    <span class="word-color-tid">${selections[0]}</span> 
+                    <span class="word-color-verbum">${selections[1]}</span> 
+                    <span class="word-color-subjekt">${selections[2]}</span> 
+                    <span class="word-color-objekt">${selections[3]}</span>.
+                </div>
+                <div class="live-rule-hint">
+                    💡 <strong>${isEn ? 'Word order analysis:' : 'Ordstillingsanalyse:'}</strong> 
+                    1. <span class="word-color-tid">${selections[0]}</span> (Tid) ➔ 
+                    2. <span class="word-color-verbum">${selections[1]}</span> (Verbum) ➔ 
+                    3. <span class="word-color-subjekt">${selections[2]}</span> (Subjekt) ➔ 
+                    4. <span class="word-color-objekt">${selections[3]}</span> (Objekt/Sted)
+                </div>
+                <button class="listen-btn" id="btn-live-listen" style="margin-top: 0.4rem; padding: 0.65rem 1.4rem;">
+                    <span>🔊</span> ${isEn ? 'Listen to sentence' : 'Lyt til sætningen'}
                 </button>
-            </div>
-        `;
-        builderCard.querySelector('#btn-restart-builder').onclick = () => {
-            puzIdx = 0;
-            renderBuilderPuzzle();
-        };
+            `;
+            outputBox.querySelector('#btn-live-listen').onclick = () => {
+                speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
+            };
+        }
+
+        categories.forEach((cat, catIdx) => {
+            const row = document.createElement('div');
+            row.className = `builder-guided-row ${cat.rowClass}`;
+
+            const title = document.createElement('div');
+            title.className = 'builder-guided-title';
+            title.innerHTML = `
+                <span>${cat.q}</span>
+                <span class="slot-grammar-tag ${cat.rowClass.replace('row-', 'tag-')}">[${cat.grammar}]</span>
+            `;
+            row.appendChild(title);
+
+            const chipsWrap = document.createElement('div');
+            chipsWrap.className = 'builder-options-chips';
+
+            cat.options.forEach(opt => {
+                const chip = document.createElement('button');
+                const isSelected = selections[catIdx] === opt;
+                chip.className = `builder-choice-chip ${isSelected ? 'selected ' + cat.selClass : ''}`;
+                chip.textContent = opt;
+
+                chip.onclick = () => {
+                    selections[catIdx] = opt;
+                    row.querySelectorAll('.builder-choice-chip').forEach(c => {
+                        c.className = 'builder-choice-chip';
+                    });
+                    chip.classList.add('selected', cat.selClass);
+                    updateLiveDisplay();
+                };
+
+                chipsWrap.appendChild(chip);
+            });
+
+            row.appendChild(chipsWrap);
+            wrapper.appendChild(row);
+        });
+
+        wrapper.appendChild(outputBox);
+        container.appendChild(wrapper);
+        updateLiveDisplay();
     }
 
-    renderBuilderPuzzle();
+    setupPuzzleExercise(puzzleContainer);
+    setupStepBuilder(stepBuilderContainer);
+
     panelSaetning.appendChild(builderCard);
     panelsHolder.appendChild(panelSaetning);
 

@@ -54,7 +54,7 @@ function renderFokusPaaSted(container, navigateFn) {
 
     // Title
     const title = document.createElement('h1');
-    title.textContent = "Fokus på sted";
+    title.textContent = getTranslation('alt_sted_title') || "Fokus på sted";
     viewContainer.appendChild(title);
 
     // Grammar Terms Toggle
@@ -1733,7 +1733,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
 
     // Title
     const title = document.createElement('h1');
-    title.textContent = "Fokus på holdning";
+    title.textContent = getTranslation('alt_holdning_title') || "Fokus på holdning";
     viewContainer.appendChild(title);
 
     // Grammar Terms Toggle

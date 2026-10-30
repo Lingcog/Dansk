@@ -53,7 +53,7 @@ export function renderOrdstillingView(container, navigateFn) {
     // --- Menu Area ---
     const intro = document.createElement('p');
     intro.className = 'subtitle';
-    intro.textContent = "Træn ordstilling: Inversion og centraladverbiernes placering.";
+    intro.textContent = getTranslation('ordstilling_subtitle') || "Træn ordstilling: Inversion og centraladverbiernes placering.";
     menuArea.appendChild(intro);
 
     const standardLevels = [
@@ -90,7 +90,8 @@ export function renderOrdstillingView(container, navigateFn) {
         const card = document.createElement('div');
         card.className = 'card';
         card.onclick = () => startExercise(l.key);
-        card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${categoryData.title}</div>`;
+        const cardTitle = getTranslation('ordstilling_cat_' + l.key) || categoryData.title;
+        card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${cardTitle}</div>`;
         grid.appendChild(card);
     });
     
@@ -125,7 +126,7 @@ export function renderOrdstillingView(container, navigateFn) {
             ? getTranslation('tid_page_title') 
             : (type === 'konjunktion') 
                 ? getTranslation('konj_page_title') 
-                : categoryData.title;
+                : (getTranslation('alt_' + type + '_title') || categoryData.title);
         card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${translatedTitle}</div>`;
         altGrid.appendChild(card);
     });
@@ -140,7 +141,7 @@ export function renderOrdstillingView(container, navigateFn) {
         gameArea.innerHTML = '';
         
         const categoryData = ordstillingData[categoryKey];
-        title.textContent = categoryData.title;
+        title.textContent = getTranslation('ordstilling_cat_' + categoryKey) || categoryData.title;
 
         const sentences = categoryData.sentences;
         let currentIdx = Math.floor(Math.random() * sentences.length);
@@ -154,7 +155,7 @@ export function renderOrdstillingView(container, navigateFn) {
 
         const pedFrame = document.createElement('div');
         pedFrame.className = 'pedagogical-frame';
-        pedFrame.innerHTML = categoryData.explanation;
+        pedFrame.innerHTML = getTranslation('ordstilling_exp_' + categoryKey) || categoryData.explanation;
 
         const splitArea = document.createElement('div');
         splitArea.className = 'split-sentence-area';
@@ -243,7 +244,7 @@ export function renderOrdstillingView(container, navigateFn) {
                         feedback.className = 'game-feedback success';
                         nextBtn.style.display = 'inline-block';
                     } else {
-                        feedback.textContent = currentSentence.hint;
+                        feedback.textContent = getTranslation('ordstilling_hint_' + categoryKey) || currentSentence.hint;
                         feedback.className = 'game-feedback error';
                         nextBtn.style.display = 'none';
                     }

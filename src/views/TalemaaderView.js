@@ -628,6 +628,23 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     faellesCard.innerHTML = `<div class="module-title">${getTranslation('faelles_tanker_title')}</div><div class="module-desc">${getTranslation('faelles_tanker_subtitle')}</div><button class="module-action-btn" style="background:#10b981;color:white;">${getTranslation('mader_medicin_btn')}</button>`;
     cardGrid.appendChild(faellesCard);
 
+    // Workshop Download Card
+    const workshopCard = document.createElement('div');
+    workshopCard.className = 'module-card';
+    workshopCard.style.borderColor = '#3b82f6';
+    workshopCard.style.background = 'linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(14, 165, 233, 0.06))';
+    workshopCard.innerHTML = `
+      <div style="font-size: 1.8rem; margin-bottom: 0.5rem;">📄 🎓</div>
+      <div class="module-title" style="color: #60a5fa;">Workshop: Livets gang med talemåder</div>
+      <div class="module-desc" style="margin-bottom: 1.2rem; line-height: 1.4;">
+        Printklart undervisningsmateriale (.docx) til DU3: Makker-arbejdsark med 20 talemåder, svarmuligheder, livssituationer og A/B rollespil.
+      </div>
+      <a href="${baseUrl}downloads/Workshop_Livets_Gang_Danske_Talemaader.docx" download="Workshop_Livets_Gang_Danske_Talemaader.docx" class="module-action-btn" style="background:#2563eb;color:white;text-align:center;text-decoration:none;display:block;padding:10px 14px;border-radius:8px;font-weight:bold;margin-top:auto;">
+        <i class="fas fa-file-word"></i> Hent Word-dokument (.docx)
+      </a>
+    `;
+    cardGrid.appendChild(workshopCard);
+
 
     
 
@@ -702,7 +719,6 @@ export function renderTalemaaderView(container, navigateFn, extraData = {}) {
     };
     faellesCard.innerHTML = `<div class="module-title">${getTranslation('faelles_tanker_title')}</div><div class="module-desc">${getTranslation('faelles_tanker_subtitle')}</div><button class="module-action-btn" style="background:#10b981;color:white;">${getTranslation('mader_medicin_btn')}</button>`;
     cardGrid.appendChild(faellesCard);
-
 
     // Add card for Mod 5 (Final)
     const card5 = document.createElement('div');

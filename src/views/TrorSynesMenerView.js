@@ -37,7 +37,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     verbHubBtn.style.background = 'rgba(239, 68, 68, 0.15)';
     verbHubBtn.style.borderColor = '#ef4444';
     verbHubBtn.style.color = '#f87171';
-    verbHubBtn.innerHTML = `🏃 Se Top 100 Verber ➔`;
+    verbHubBtn.innerHTML = getTranslation('tsm_top_verb_hub');
     verbHubBtn.onclick = () => navigateFn('top100_verber');
     topBar.appendChild(verbHubBtn);
 
@@ -211,17 +211,31 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             margin: 0 0 1.2rem 0;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.75rem;
             flex-grow: 1;
         }
         .compass-examples li {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #cbd5e1;
             display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            line-height: 1.4;
+            align-items: baseline;
+            gap: 0.6rem;
+            line-height: 1.5;
         }
+        .compass-examples .ex-icon {
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            line-height: 1;
+            transform: translateY(2px);
+        }
+        .compass-examples .ex-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .card-synes .compass-examples strong { color: #fde047; font-weight: 800; }
+        .card-tror .compass-examples strong { color: #d8b4fe; font-weight: 800; }
+        .card-mener .compass-examples strong { color: #7dd3fc; font-weight: 800; }
+        .card-ved .compass-examples strong { color: #86efac; font-weight: 800; }
         .compass-trap {
             background: rgba(239, 68, 68, 0.12);
             border-left: 3px solid #ef4444;
@@ -500,13 +514,13 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     const hero = document.createElement('div');
     hero.className = 'tsm-hero';
     hero.innerHTML = `
-        <h1>🤔 Tror, synes, mener eller ved?</h1>
-        <p>De 4 verber, der viser om du udtrykker personlig smag, et gæt, en holdning eller et faktum. Lær de gyldne regler og undgå de klassiske kursist-fælder.</p>
+        <h1>${getTranslation('tsm_hero_title')}</h1>
+        <p>${getTranslation('tsm_hero_desc')}</p>
         <div class="tsm-core-badges">
-            <span class="tsm-pill pill-synes">👅 SYNES = Egen smag & sansning</span>
-            <span class="tsm-pill pill-tror">🔮 TROR = Gæt, vejr & fremtid</span>
-            <span class="tsm-pill pill-mener">⚖️ MENER = Holdning & princip</span>
-            <span class="tsm-pill pill-ved">🔒 VED = 100% fakta & data</span>
+            <span class="tsm-pill pill-synes">${getTranslation('tsm_badge_synes')}</span>
+            <span class="tsm-pill pill-tror">${getTranslation('tsm_badge_tror')}</span>
+            <span class="tsm-pill pill-mener">${getTranslation('tsm_badge_mener')}</span>
+            <span class="tsm-pill pill-ved">${getTranslation('tsm_badge_ved')}</span>
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -515,10 +529,10 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'tsm-tabs-menu';
     const tabs = [
-        { id: 'tab_compass', label: '🧭 Det Store Regel-Kompas', icon: '' },
-        { id: 'tab_spotlight', label: '🔍 Situation-Spotlight', icon: '' },
-        { id: 'tab_quiz', label: '🎯 Interaktiv Quiz (10 opgaver)', icon: '' },
-        { id: 'tab_fejlen', label: '🚨 Spot Fejlen! (Rigtig eller forkert?)', icon: '' }
+        { id: 'tab_compass', label: getTranslation('tsm_tab_compass'), icon: '' },
+        { id: 'tab_spotlight', label: getTranslation('tsm_tab_spotlight'), icon: '' },
+        { id: 'tab_quiz', label: getTranslation('tsm_tab_quiz'), icon: '' },
+        { id: 'tab_fejlen', label: getTranslation('tsm_tab_fejlen'), icon: '' }
     ];
 
     let activeTab = 'tab_compass';
@@ -549,21 +563,20 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     <div class="compass-icon">👅</div>
                     <div class="compass-title-box">
                         <h3 style="color: #fde047;">SYNES</h3>
-                        <span style="color: #eab308;">Egen smag & sansning</span>
+                        <span style="color: #eab308;">${getTranslation('tsm_synes_tag')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
-                    Du har <strong>selv prøvet, smagt, set eller følt det</strong>. Det handler om dine egne sanser og din personlige smag.
+                    ${getTranslation('tsm_synes_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li>☕ "Jeg <strong>synes</strong>, kaffen smager godt."</li>
-                    <li>🎬 "Hvad <strong>synes</strong> du om filmen?" (efter du har set den)</li>
-                    <li>🥶 "Jeg <strong>synes</strong>, her er koldt i dag."</li>
+                    <li><span class="ex-icon">☕</span><span class="ex-text">"Jeg <strong>synes</strong>, kaffen smager godt."</span></li>
+                    <li><span class="ex-icon">🎬</span><span class="ex-text">"Hvad <strong>synes</strong> du om filmen?" (efter du har set den)</span></li>
+                    <li><span class="ex-icon">🥶</span><span class="ex-text">"Jeg <strong>synes</strong>, her er koldt i dag."</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>⚠️ Kursist-fælde:</strong>
-                    Du må ALDRIG bruge <em>synes</em> om noget, du ikke har oplevet endnu!<br>
-                    ❌ "Jeg synes, han kommer i morgen." (Brug <em>tror</em>!)
+                    <strong>${getTranslation('tsm_synes_trap_title')}</strong>
+                    ${getTranslation('tsm_synes_trap_desc')}
                 </div>
             </div>
 
@@ -573,20 +586,20 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     <div class="compass-icon">🔮</div>
                     <div class="compass-title-box">
                         <h3 style="color: #d8b4fe;">TROR</h3>
-                        <span style="color: #a855f7;">Gæt, vejr & fremtid</span>
+                        <span style="color: #a855f7;">${getTranslation('tsm_tror_tag')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
-                    Du <strong>ved det ikke med sikkerhed</strong>. Det er et gæt, en formodning eller noget, der sker i fremtiden.
+                    ${getTranslation('tsm_tror_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li>🌧️ "Jeg <strong>tror</strong>, det regner i morgen."</li>
-                    <li>🚌 "Jeg <strong>tror</strong>, bussen kommer lige om lidt."</li>
-                    <li>🎂 "Hvor gammel er han? – Jeg <strong>tror</strong>, han er 30."</li>
+                    <li><span class="ex-icon">🌧️</span><span class="ex-text">"Jeg <strong>tror</strong>, det regner i morgen."</span></li>
+                    <li><span class="ex-icon">🚌</span><span class="ex-text">"Jeg <strong>tror</strong>, bussen kommer lige om lidt."</span></li>
+                    <li><span class="ex-icon">🎂</span><span class="ex-text">"Hvor gammel er han? – Jeg <strong>tror</strong>, han er 30."</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>⚠️ Kursist-fælde:</strong>
-                    Mange siger fejlagtigt ❌ "Jeg synes, det regner i morgen". Men vejret er ikke din personlige smag – det er et meteorologisk gæt!
+                    <strong>${getTranslation('tsm_tror_trap_title')}</strong>
+                    ${getTranslation('tsm_tror_trap_desc')}
                 </div>
             </div>
 
@@ -596,20 +609,20 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     <div class="compass-icon">⚖️</div>
                     <div class="compass-title-box">
                         <h3 style="color: #7dd3fc;">MENER</h3>
-                        <span style="color: #38bdf8;">Holdning, etik & princip</span>
+                        <span style="color: #38bdf8;">${getTranslation('tsm_mener_tag')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
-                    En <strong>holdning eller overbevisning</strong> baseret på tanker, etik, politik eller logiske argumenter.
+                    ${getTranslation('tsm_mener_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li>🌱 "Jeg <strong>mener</strong>, vi bør passe bedre på klimaet."</li>
-                    <li>💼 "Hvad <strong>mener</strong> du om den nye regel på arbejdet?"</li>
-                    <li>🩺 "Lægen <strong>mener</strong>, at patienten skal hvile sig."</li>
+                    <li><span class="ex-icon">🌱</span><span class="ex-text">"Jeg <strong>mener</strong>, vi bør passe bedre på klimaet."</span></li>
+                    <li><span class="ex-icon">💼</span><span class="ex-text">"Hvad <strong>mener</strong> du om den nye regel på arbejdet?"</span></li>
+                    <li><span class="ex-icon">🩺</span><span class="ex-text">"Lægen <strong>mener</strong>, at patienten skal hvile sig."</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>💡 Husk:</strong>
-                    <em>Mener</em> er mere formelt og sagligt end <em>synes</em>. Man har argumenter og principper bag sin holdning.
+                    <strong>${getTranslation('tsm_mener_trap_title')}</strong>
+                    ${getTranslation('tsm_mener_trap_desc')}
                 </div>
             </div>
 
@@ -619,20 +632,20 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     <div class="compass-icon">🔒</div>
                     <div class="compass-title-box">
                         <h3 style="color: #86efac;">VED</h3>
-                        <span style="color: #22c55e;">100 % fakta & data</span>
+                        <span style="color: #22c55e;">${getTranslation('tsm_ved_tag')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
-                    Hverken et gæt eller en holdning. Det er <strong>objektiv sandhed, verificeret fakta eller data</strong>.
+                    ${getTranslation('tsm_ved_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li>⏰ "Jeg <strong>ved</strong>, at butikken lukker kl. 18."</li>
-                    <li>👑 "Jeg <strong>ved</strong>, at Danmarks hovedstad er København."</li>
-                    <li>❓ "<strong>Ved</strong> du, hvor stationen ligger?"</li>
+                    <li><span class="ex-icon">⏰</span><span class="ex-text">"Jeg <strong>ved</strong>, at butikken lukker kl. 18."</span></li>
+                    <li><span class="ex-icon">👑</span><span class="ex-text">"Jeg <strong>ved</strong>, at Danmarks hovedstad er København."</span></li>
+                    <li><span class="ex-icon">❓</span><span class="ex-text">"<strong>Ved</strong> du, hvor stationen ligger?"</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>💡 Benægtelse:</strong>
-                    Når du mangler oplysninger, hedder det: <em>"Jeg ved det ikke"</em>.
+                    <strong>${getTranslation('tsm_ved_trap_title')}</strong>
+                    ${getTranslation('tsm_ved_trap_desc')}
                 </div>
             </div>
         </div>
@@ -644,45 +657,48 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     const spotlightPanel = document.createElement('div');
     spotlightPanel.id = 'panel_spotlight';
 
-    const situations = [
-        {
-            id: 'kaffe',
-            title: '☕ Kaffen på caféen',
-            desc: 'Se hvordan det samme emne ændrer betydning efter verbet:',
-            items: [
-                { verb: 'synes', tagClass: 'pill-synes', text: 'Jeg synes, kaffen smager dejligt!', expl: 'Min personlige smagsoplevelse, mens jeg drikker den.' },
-                { verb: 'tror', tagClass: 'pill-tror', text: 'Jeg tror, kaffen er meget varm – pas på.', expl: 'Mit gæt/forventning, inden jeg har smagt.' },
-                { verb: 'mener', tagClass: 'pill-mener', text: 'Jeg mener, alle caféer bør servere økologisk kaffe.', expl: 'Mit etiske og principielle standpunkt.' },
-                { verb: 'ved', tagClass: 'pill-ved', text: 'Jeg ved, at en kop kaffe her koster 35 kr.', expl: 'Faktisk oplysning på menukortet.' }
-            ]
-        },
-        {
-            id: 'kollega',
-            title: '👤 Den nye kollega (Peter)',
-            desc: 'Hvordan omtaler du Peter ud fra viden vs. indtryk?',
-            items: [
-                { verb: 'synes', tagClass: 'pill-synes', text: 'Jeg synes, Peter virker rigtig flink og hjælpsom.', expl: 'Mit personlige indtryk efter at have hilst på ham.' },
-                { verb: 'tror', tagClass: 'pill-tror', text: 'Jeg tror, Peter bor i Odense.', expl: 'Et gæt på en personlig oplysning, jeg ikke kender sikkert.' },
-                { verb: 'mener', tagClass: 'pill-mener', text: 'Jeg mener, vi bør give Peter en grundigere oplæring.', expl: 'Min faglige holdning og forslag til ledelsen.' },
-                { verb: 'ved', tagClass: 'pill-ved', text: 'Jeg ved, at Peter starter officielt den 1. november.', expl: 'En bekræftet dato i kontrakten.' }
-            ]
-        },
-        {
-            id: 'vinter',
-            title: '🌦️ Den danske vinter',
-            desc: 'Sanser, vejrgæt, videnskabelig holdning og data:',
-            items: [
-                { verb: 'synes', tagClass: 'pill-synes', text: 'Jeg synes, den danske vinter er alt for lang og mørk.', expl: 'Min personlige følelse og kropslige oplevelse.' },
-                { verb: 'tror', tagClass: 'pill-tror', text: 'Jeg tror, det begynder at sne i eftermiddag.', expl: 'Mit gæt på vejret senere i dag.' },
-                { verb: 'mener', tagClass: 'pill-mener', text: 'Klimaforskere mener, at vintrene bliver vådere.', expl: 'Fagligt begrundet holdning / vurdering.' },
-                { verb: 'ved', tagClass: 'pill-ved', text: 'Meteorologerne ved, at gennemsnittet var 2 grader.', expl: 'Målte og dokumenterede vejrdata.' }
-            ]
-        }
-    ];
+    function getSituations() {
+        return [
+            {
+                id: 'kaffe',
+                title: getTranslation('tsm_sit_1_title'),
+                desc: getTranslation('tsm_sit_1_desc'),
+                items: [
+                    { verb: 'synes', tagClass: 'pill-synes', text: 'Jeg synes, kaffen smager dejligt!', expl: getTranslation('tsm_sit_1_synes_expl') },
+                    { verb: 'tror', tagClass: 'pill-tror', text: 'Jeg tror, kaffen er meget varm – pas på.', expl: getTranslation('tsm_sit_1_tror_expl') },
+                    { verb: 'mener', tagClass: 'pill-mener', text: 'Jeg mener, alle caféer bør servere økologisk kaffe.', expl: getTranslation('tsm_sit_1_mener_expl') },
+                    { verb: 'ved', tagClass: 'pill-ved', text: 'Jeg ved, at en kop kaffe her koster 35 kr.', expl: getTranslation('tsm_sit_1_ved_expl') }
+                ]
+            },
+            {
+                id: 'kollega',
+                title: getTranslation('tsm_sit_2_title'),
+                desc: getTranslation('tsm_sit_2_desc'),
+                items: [
+                    { verb: 'synes', tagClass: 'pill-synes', text: 'Jeg synes, Peter virker rigtig flink og hjælpsom.', expl: getTranslation('tsm_sit_2_synes_expl') },
+                    { verb: 'tror', tagClass: 'pill-tror', text: 'Jeg tror, Peter bor i Odense.', expl: getTranslation('tsm_sit_2_tror_expl') },
+                    { verb: 'mener', tagClass: 'pill-mener', text: 'Jeg mener, vi bør give Peter en grundigere oplæring.', expl: getTranslation('tsm_sit_2_mener_expl') },
+                    { verb: 'ved', tagClass: 'pill-ved', text: 'Jeg ved, at Peter starter officielt den 1. november.', expl: getTranslation('tsm_sit_2_ved_expl') }
+                ]
+            },
+            {
+                id: 'vinter',
+                title: getTranslation('tsm_sit_3_title'),
+                desc: getTranslation('tsm_sit_3_desc'),
+                items: [
+                    { verb: 'synes', tagClass: 'pill-synes', text: 'Jeg synes, den danske vinter er alt for lang og mørk.', expl: getTranslation('tsm_sit_3_synes_expl') },
+                    { verb: 'tror', tagClass: 'pill-tror', text: 'Jeg tror, det begynder at sne i eftermiddag.', expl: getTranslation('tsm_sit_3_tror_expl') },
+                    { verb: 'mener', tagClass: 'pill-mener', text: 'Klimaforskere mener, at vintrene bliver vådere.', expl: getTranslation('tsm_sit_3_mener_expl') },
+                    { verb: 'ved', tagClass: 'pill-ved', text: 'Meteorologerne ved, at gennemsnittet var 2 grader.', expl: getTranslation('tsm_sit_3_ved_expl') }
+                ]
+            }
+        ];
+    }
 
     let activeSituationIdx = 0;
 
     function renderSpotlightContent() {
+        const situations = getSituations();
         const sit = situations[activeSituationIdx];
         spotlightPanel.innerHTML = `
             <div class="spotlight-box">
@@ -723,80 +739,83 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     const quizPanel = document.createElement('div');
     quizPanel.id = 'panel_quiz';
 
-    const quizQuestions = [
-        {
-            sentenceBefore: "Hvad",
-            sentenceAfter: "du om denne kage? Den smager lidt stærkt af kanel.",
-            correct: "synes",
-            explanation: '"Synes" er det eneste rigtige ord her, fordi du spørger til personens egen smagsoplevelse (mad/smag).'
-        },
-        {
-            sentenceBefore: "Jeg",
-            sentenceAfter: "at bussen kører kl. 14:15, men lad os lige tjekke Rejseplanen for en sikkerheds skyld.",
-            correct: "tror",
-            explanation: 'Du er ikke 100% sikker og skal tjekke køreplanen = et gæt/formodning om fakta. Derfor bruges "tror".'
-        },
-        {
-            sentenceBefore: "Regeringen",
-            sentenceAfter: "at vi bør investere flere penge i den grønne omstilling.",
-            correct: "mener",
-            explanation: 'Dette er et politisk og samfundsmæssigt standpunkt med argumenter bag = "mener".'
-        },
-        {
-            sentenceBefore: "Jeg",
-            sentenceAfter: "at Danmarks hovedstad hedder København.",
-            correct: "ved",
-            explanation: 'Dette er en objektiv, ubestridelig sandhed/faktum. Derfor bruges "ved".'
-        },
-        {
-            sentenceBefore: "Jeg har aldrig set den nye James Bond film, men jeg",
-            sentenceAfter: "den er rigtig spændende.",
-            correct: "tror",
-            explanation: 'VIGTIG REGEL: Du har ALDRIG set filmen selv! Derfor må du IKKE bruge "synes". Du kan kun gætte = "tror".'
-        },
-        {
-            sentenceBefore: "Nu har jeg prøvet jakken på, og jeg",
-            sentenceAfter: "ærmerne er en smule for korte.",
-            correct: "synes",
-            explanation: 'Du har jakken på din krop og mærker det selv = personlig oplevelse = "synes".'
-        },
-        {
-            sentenceBefore: "Lægen",
-            sentenceAfter: "at patienten har brug for to ugers sygemelding.",
-            correct: "mener",
-            explanation: 'Lægens faglige vurdering og anbefaling = "mener".'
-        },
-        {
-            sentenceBefore: "Undskyld, er der nogen her, der",
-            sentenceAfter: "hvor det nærmeste apotek ligger?",
-            correct: "ved",
-            explanation: 'Du spørger efter en konkret adresse/faktum = "ved".'
-        },
-        {
-            sentenceBefore: "Hvor gammel er Mette? – Jeg",
-            sentenceAfter: "hun fylder 35 i næste måned.",
-            correct: "tror",
-            explanation: 'Du gætter på en alder/faktum, du ikke er helt sikker på = "tror".'
-        },
-        {
-            sentenceBefore: "Hvad",
-            sentenceAfter: "I, at vi som familie skal prioritere på vores budget?",
-            correct: "mener",
-            explanation: 'Her efterspørges en holdning og argumentation for familiens fælles prioritering = "mener".'
-        }
-    ];
+    function getQuizQuestions() {
+        return [
+            {
+                sentenceBefore: "Hvad",
+                sentenceAfter: "du om denne kage? Den smager lidt stærkt af kanel.",
+                correct: "synes",
+                explanation: getTranslation('tsm_q1_exp')
+            },
+            {
+                sentenceBefore: "Jeg",
+                sentenceAfter: "at bussen kører kl. 14:15, men lad os lige tjekke Rejseplanen for en sikkerheds skyld.",
+                correct: "tror",
+                explanation: getTranslation('tsm_q2_exp')
+            },
+            {
+                sentenceBefore: "Regeringen",
+                sentenceAfter: "at vi bør investere flere penge i den grønne omstilling.",
+                correct: "mener",
+                explanation: getTranslation('tsm_q3_exp')
+            },
+            {
+                sentenceBefore: "Jeg",
+                sentenceAfter: "at Danmarks hovedstad hedder København.",
+                correct: "ved",
+                explanation: getTranslation('tsm_q4_exp')
+            },
+            {
+                sentenceBefore: "Jeg har aldrig set den nye James Bond film, men jeg",
+                sentenceAfter: "den er rigtig spændende.",
+                correct: "tror",
+                explanation: getTranslation('tsm_q5_exp')
+            },
+            {
+                sentenceBefore: "Nu har jeg prøvet jakken på, og jeg",
+                sentenceAfter: "ærmerne er en smule for korte.",
+                correct: "synes",
+                explanation: getTranslation('tsm_q6_exp')
+            },
+            {
+                sentenceBefore: "Lægen",
+                sentenceAfter: "at patienten har brug for to ugers sygemelding.",
+                correct: "mener",
+                explanation: getTranslation('tsm_q7_exp')
+            },
+            {
+                sentenceBefore: "Undskyld, er der nogen her, der",
+                sentenceAfter: "hvor det nærmeste apotek ligger?",
+                correct: "ved",
+                explanation: getTranslation('tsm_q8_exp')
+            },
+            {
+                sentenceBefore: "Hvor gammel er Mette? – Jeg",
+                sentenceAfter: "hun fylder 35 i næste måned.",
+                correct: "tror",
+                explanation: getTranslation('tsm_q9_exp')
+            },
+            {
+                sentenceBefore: "Hvad",
+                sentenceAfter: "I, at vi som familie skal prioritere på vores budget?",
+                correct: "mener",
+                explanation: getTranslation('tsm_q10_exp')
+            }
+        ];
+    }
 
     let currQuizIdx = 0;
     const quizCard = document.createElement('div');
     quizCard.className = 'tsm-quiz-card';
 
     function renderQuizTask() {
+        const quizQuestions = getQuizQuestions();
         quizCard.innerHTML = '';
         const q = quizQuestions[currQuizIdx];
 
         const counterBadge = document.createElement('div');
         counterBadge.className = 'quiz-counter-badge';
-        counterBadge.textContent = `Opgave ${currQuizIdx + 1} af ${quizQuestions.length}`;
+        counterBadge.textContent = getTranslation('tsm_q_counter', { current: currQuizIdx + 1, total: quizQuestions.length });
         quizCard.appendChild(counterBadge);
 
         const fullSentence = `${q.sentenceBefore} ________ ${q.sentenceAfter}`;
@@ -804,7 +823,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         sentenceBox.className = 'quiz-sentence-box';
         sentenceBox.innerHTML = `
             <span>${fullSentence}</span>
-            <button class="quiz-audio-btn" title="Lyt til sætningen" id="btn-audio-quiz">🔊</button>
+            <button class="quiz-audio-btn" title="${getTranslation('tsm_q_listen_title')}" id="btn-audio-quiz">🔊</button>
         `;
         quizCard.appendChild(sentenceBox);
 
@@ -816,10 +835,10 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         optionsGrid.className = 'quiz-options-grid';
 
         const verbOptions = [
-            { text: 'synes', sub: 'Egen smag & sans' },
-            { text: 'tror', sub: 'Gæt & formodning' },
-            { text: 'mener', sub: 'Holdning & princip' },
-            { text: 'ved', sub: '100% fakta' }
+            { text: 'synes', sub: getTranslation('tsm_q_opt_synes_sub') },
+            { text: 'tror', sub: getTranslation('tsm_q_opt_tror_sub') },
+            { text: 'mener', sub: getTranslation('tsm_q_opt_mener_sub') },
+            { text: 'ved', sub: getTranslation('tsm_q_opt_ved_sub') }
         ];
 
         const feedbackBox = document.createElement('div');
@@ -846,7 +865,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     feedbackBox.style.border = '1px solid #22c55e';
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.4rem;">
-                            🎉 Rigtigt!
+                            ${getTranslation('tsm_q_correct_title')}
                         </div>
                         <div style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">
                             ${q.explanation}
@@ -866,7 +885,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     feedbackBox.style.border = '1px solid #ef4444';
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.4rem;">
-                            Ikke helt rigtigt – det rigtige verbum er "${q.correct}"
+                            ${getTranslation('tsm_q_wrong_title', { correct: q.correct })}
                         </div>
                         <div style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">
                             ${q.explanation}
@@ -876,7 +895,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
 
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'quiz-next-btn';
-                nextBtn.textContent = currQuizIdx < quizQuestions.length - 1 ? 'Næste opgave ➔' : 'Prøv forfra 🔄';
+                nextBtn.textContent = currQuizIdx < quizQuestions.length - 1 ? getTranslation('tsm_q_next_btn') : getTranslation('tsm_q_restart_btn');
                 nextBtn.onclick = () => {
                     currQuizIdx = (currQuizIdx + 1) % quizQuestions.length;
                     renderQuizTask();
@@ -900,62 +919,65 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     const fejlenPanel = document.createElement('div');
     fejlenPanel.id = 'panel_fejlen';
 
-    const trapSentences = [
-        {
-            sentence: '❌ "Jeg synes, det bliver solskin på lørdag."',
-            isRight: false,
-            correction: 'Rettelse: "Jeg tror, det bliver solskin på lørdag."',
-            expl: 'Vejret er et gæt om fremtiden, ikke din personlige smag. Derfor skal du bruge "tror".'
-        },
-        {
-            sentence: '✅ "Jeg synes, filmen var fantastisk, da jeg så den i biografen."',
-            isRight: true,
-            correction: 'Helt korrekt!',
-            expl: 'Du har selv set filmen, og det er din egen personlige smag og oplevelse. Derfor er "synes" det helt rigtige ord.'
-        },
-        {
-            sentence: '❌ "Jeg tror, kagen smager for sødt (sagt mens du spiser den)."',
-            isRight: false,
-            correction: 'Rettelse: "Jeg synes, kagen smager for sødt."',
-            expl: 'Når du spiser kagen lige nu, er det dine egne smagsløg og sanser. Så hedder det "synes", ikke "tror".'
-        },
-        {
-            sentence: '✅ "Lægen mener, at daglig motion nedsætter risikoen for sygdom."',
-            isRight: true,
-            correction: 'Helt korrekt!',
-            expl: '"Mener" bruges her om lægens faglige standpunkt og argument.'
-        },
-        {
-            sentence: '❌ "Jeg synes ikke, hvor rådhuset ligger."',
-            isRight: false,
-            correction: 'Rettelse: "Jeg ved ikke, hvor rådhuset ligger."',
-            expl: 'En bygnings placering er en objektiv faktaoplysning. Derfor hedder det altid "ved ikke".'
-        },
-        {
-            sentence: '✅ "Hvad mener du om Danmarks nye klimaaftale?"',
-            isRight: true,
-            correction: 'Helt korrekt!',
-            expl: 'Du spørger til en holdning, et princip og et argument.'
-        }
-    ];
+    function getTrapSentences() {
+        return [
+            {
+                sentence: '❌ "Jeg synes, det bliver solskin på lørdag."',
+                isRight: false,
+                correction: getTranslation('tsm_corr_label', { sentence: 'Jeg tror, det bliver solskin på lørdag.' }),
+                expl: getTranslation('tsm_trap_1_expl')
+            },
+            {
+                sentence: '✅ "Jeg synes, filmen var fantastisk, da jeg så den i biografen."',
+                isRight: true,
+                correction: getTranslation('tsm_corr_perfect'),
+                expl: getTranslation('tsm_trap_2_expl')
+            },
+            {
+                sentence: '❌ "Jeg tror, kagen smager for sødt (sagt mens du spiser den)."',
+                isRight: false,
+                correction: getTranslation('tsm_corr_label', { sentence: 'Jeg synes, kagen smager for sødt.' }),
+                expl: getTranslation('tsm_trap_3_expl')
+            },
+            {
+                sentence: '✅ "Lægen mener, at daglig motion nedsætter risikoen for sygdom."',
+                isRight: true,
+                correction: getTranslation('tsm_corr_perfect'),
+                expl: getTranslation('tsm_trap_4_expl')
+            },
+            {
+                sentence: '❌ "Jeg synes ikke, hvor rådhuset ligger."',
+                isRight: false,
+                correction: getTranslation('tsm_corr_label', { sentence: 'Jeg ved ikke, hvor rådhuset ligger.' }),
+                expl: getTranslation('tsm_trap_5_expl')
+            },
+            {
+                sentence: '✅ "Hvad mener du om Danmarks nye klimaaftale?"',
+                isRight: true,
+                correction: getTranslation('tsm_corr_perfect'),
+                expl: getTranslation('tsm_trap_6_expl')
+            }
+        ];
+    }
 
     fejlenPanel.innerHTML = `
         <div style="margin-bottom: 1.5rem;">
-            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🚨 Test dit sprog-radar: Er sætningen rigtig eller forkert?</h2>
-            <p style="color: #94a3b8;">Tryk på ✅ eller ❌ for hver sætning og se, om du kan gennemskue kursist-fælderne.</p>
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">${getTranslation('tsm_trap_header_title')}</h2>
+            <p style="color: #94a3b8;">${getTranslation('tsm_trap_header_desc')}</p>
         </div>
         <div id="traps-list"></div>
     `;
 
     const trapsHolder = fejlenPanel.querySelector('#traps-list');
+    const trapSentences = getTrapSentences();
     trapSentences.forEach((t, i) => {
         const item = document.createElement('div');
         item.className = 'trap-item';
         item.innerHTML = `
             <div class="trap-sentence">${t.sentence.replace(/^[❌✅]\s*/, '')}</div>
             <div class="trap-buttons" id="trap-btns-${i}">
-                <button class="trap-vote-btn trap-btn-right" id="vote-right-${i}">✅ Rigtigt dansk</button>
-                <button class="trap-vote-btn trap-btn-wrong" id="vote-wrong-${i}">❌ Forkert dansk</button>
+                <button class="trap-vote-btn trap-btn-right" id="vote-right-${i}">${getTranslation('tsm_btn_vote_right')}</button>
+                <button class="trap-vote-btn trap-btn-wrong" id="vote-wrong-${i}">${getTranslation('tsm_btn_vote_wrong')}</button>
             </div>
             <div class="trap-result" id="trap-res-${i}" style="display: none;"></div>
         `;
@@ -976,7 +998,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                 resBox.style.border = '1px solid #22c55e';
                 resBox.innerHTML = `
                     <div style="color: #4ade80; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem;">
-                        🎉 Godt spottet!
+                        ${getTranslation('tsm_trap_res_correct')}
                     </div>
                     <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 0.3rem;">${t.correction}</div>
                     <div style="color: #cbd5e1;">${t.expl}</div>
@@ -986,7 +1008,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                 resBox.style.border = '1px solid #ef4444';
                 resBox.innerHTML = `
                     <div style="color: #f87171; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem;">
-                        Øv, ikke helt!
+                        ${getTranslation('tsm_trap_res_wrong')}
                     </div>
                     <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 0.3rem;">${t.correction}</div>
                     <div style="color: #cbd5e1;">${t.expl}</div>

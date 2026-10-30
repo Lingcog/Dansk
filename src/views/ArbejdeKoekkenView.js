@@ -588,7 +588,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
         { code: 'vi', label: '🇻🇳 Tiếng Việt (Vietnamesisk)' },
         { code: 'th', label: '🇹🇭 ไทย (Thai)' },
         { code: 'ne', label: '🇳🇵 नेपाली (Nepalesisk)' },
-        { code: 'ps', label: '🇦🇫 پښتو (Pashto)' }
+        { code: 'ps', label: '🇦🇫 پښتو (Pashto)' },
+        { code: 'sq', label: '🇦🇱 Shqip (Albansk)' }
     ];
 
     function getPreferredTransLang() {
@@ -606,162 +607,194 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
         koekkenassistent: {
             en: 'a kitchen assistant / catering assistant', de: 'ein Küchenhelfer / Küchenassistent', es: 'un ayudante de cocina', pt: 'um auxiliar de cozinha', tr: 'bir mutfak asistanı / aşçı yardımcısı',
             ar: 'مساعد مطبخ', fa: 'کمک‌آشپز / دستیار آشپزخانه', ku: 'alîkarê metbexê', ur: 'کچن اسسٹنٹ (باورچی خانے کا مددگار)', ru: 'кухонный работник / помощник повара', uk: 'кухонний працівник / помічник кухаря',
-            zh: '厨房助手 / 帮厨', vi: 'phụ bếp / nhân viên hỗ trợ bếp', th: 'ผู้ช่วยกุ๊ก / พนักงานช่วยงานครัว', ne: 'भान्सा सहायक (किचन असिस्टेन्ट)', ps: 'د پخلنځي مرستیال'
+            zh: '厨房助手 / 帮厨', vi: 'phụ bếp / nhân viên hỗ trợ bếp', th: 'ผู้ช่วยกุ๊ก / พนักงานช่วยงานครัว', ne: 'भान्सा सहायक (किचन असिस्टेन्ट)', ps: 'د پخلنځي مرستیال',
+            sq: 'një ndihmës kuzhine / asistent në mensë'
         },
         kok: {
             en: 'a chef / head cook', de: 'ein Koch / Küchenchef', es: 'un cocinero / chef', pt: 'um cozinheiro / chef', tr: 'bir aşçı / mutfak şefi',
             ar: 'طاهٍ / رئيس الطهاة (شيف)', fa: 'آشپز / سرآشپز', ku: 'aşpêj / serokê metbexê', ur: 'باورچی / شیف', ru: 'повар / шеф-повар', uk: 'кухар / шеф-кухар',
-            zh: '厨师 / 主厨', vi: 'đầu bếp / bếp trưởng', th: 'เชฟ / หัวหน้าพ่อครัว', ne: 'भान्से / मुख्य कुक (सेफ)', ps: 'اشپز / سر اشپز'
+            zh: '厨师 / 主厨', vi: 'đầu bếp / bếp trưởng', th: 'เชฟ / หัวหน้าพ่อครัว', ne: 'भान्से / मुख्य कुक (सेफ)', ps: 'اشپز / سر اشپز',
+            sq: 'një kuzhinier / kryekuzhinier (shef)'
         },
         skaerebraet: {
             en: 'a cutting board / chopping board', de: 'ein Schneidebrett', es: 'una tabla de cortar', pt: 'uma tábua de corte', tr: 'bir kesme tahtası',
             ar: 'لوح تقطيع', fa: 'تخته گوشت / تخته برش', ku: 'texteyê hûrkirinê', ur: 'سبزی کاٹنے والا تختہ (چاپنگ بورڈ)', ru: 'разделочная доска', uk: 'обробна дошка',
-            zh: '砧板 / 切菜板', vi: 'thớt切 (thớt nhựa màu theo quy chuẩn)', th: 'เขียงหั่นผัก/เนื้อ', ne: 'अचानो / काट्ने बोर्ड (चपिङ बोर्ड)', ps: 'د ترکاري پرې کولو تخته'
+            zh: '砧板 / 切菜板', vi: 'thớt切 (thớt nhựa màu theo quy chuẩn)', th: 'เขียงหั่นผัก/เนื้อ', ne: 'अचानो / काट्ने बोर्ड (चपिङ बोर्ड)', ps: 'د ترکاري پرې کولو تخته',
+            sq: 'një dërrasë prerëse'
         },
         kokkekniv: {
             en: 'a chef’s knife', de: 'ein Kochmesser', es: 'un cuchillo de cocinero', pt: 'uma faca de chef', tr: 'bir şef bıçağı',
             ar: 'سكين الطاهي الكبير', fa: 'چاقوی سرآشپز', ku: 'kêra aşpêj', ur: 'باورچی کی بڑی چھری', ru: 'поварской нож (шеф-нож)', uk: 'кухарський ніж',
-            zh: '厨师刀 / 菜刀', vi: 'dao đầu bếp', th: 'มีดเชฟ / มีดทำครัว', ne: 'भान्साको ठूलो चक्कु', ps: 'د اشپزۍ لویه چاړه'
+            zh: '厨师刀 / 菜刀', vi: 'dao đầu bếp', th: 'มีดเชฟ / มีดทำครัว', ne: 'भान्साको ठूलो चक्कु', ps: 'د اشپزۍ لویه چاړه',
+            sq: 'një thikë kuzhine / thikë shefi'
         },
         gryde: {
             en: 'a cooking pot / stockpot', de: 'ein Kochtopf', es: 'una olla / cacerola', pt: 'uma panela / caldeirão', tr: 'bir tencere',
             ar: 'قدر طبخ كبير (حلة)', fa: 'قابلمه / دیگ بزرگ', ku: 'beroş / quşxane', ur: 'پتیلا / دیگچی', ru: 'кастрюля / котёл', uk: 'каструля / казан',
-            zh: '汤锅 / 大锅', vi: 'nồi nấu lớn', th: 'หม้อต้มขนาดใหญ่', ne: 'कसौंडी / ठूलो भाँडो', ps: 'دیګ / کټوه'
+            zh: '汤锅 / 大锅', vi: 'nồi nấu lớn', th: 'หม้อต้มขนาดใหญ่', ne: 'कसौंडी / ठूलो भाँडो', ps: 'دیګ / کټوه',
+            sq: 'një tenxhere gatimi'
         },
         industriovn: {
             en: 'a commercial oven / combi-steamer oven', de: 'ein Industrieofen / Kombidämpfer', es: 'un horno industrial', pt: 'um forno industrial', tr: 'bir endüstriyel fırın',
             ar: 'فرن صناعي كبير (فرن بخاري)', fa: 'فر صنعتی آشپزخانه', ku: 'firina pîşesaziyê ya metbexê', ur: 'بڑا کمرشل اوون (بھٹی)', ru: 'промышленная печь (пароконвектомат)', uk: 'промислова піч (пароконвектомат)',
-            zh: '商用大烤箱 / 蒸烤箱', vi: 'lò nướng công nghiệp', th: 'เตาอบอุตสาหกรรม', ne: 'ठूलो व्यावसायिक ओभन', ps: 'لوی صنعتي داش (اوون)'
+            zh: '商用大烤箱 / 蒸烤箱', vi: 'lò nướng công nghiệp', th: 'เตาอบอุตสาหกรรม', ne: 'ठूलो व्यावसायिक ओभन', ps: 'لوی صنعتي داش (اوون)',
+            sq: 'një furrë industriale / furrë profesionale'
         },
         bageplade: {
             en: 'a baking tray / sheet pan', de: 'ein Backblech', es: 'una bandeja de horno', pt: 'uma assadeira / tabuleiro', tr: 'bir fırın tepsisi',
             ar: 'صينية خبز للفرن', fa: 'سینی فر', ku: 'sîniya firinê', ur: 'بیکنگ ٹرے (اوون کی ٹرے)', ru: 'противень для выпечки', uk: 'деко для випікання',
-            zh: '烤盘', vi: 'khay nướng bánh', th: 'ถาดอบขนมปัง', ne: 'बेकिङ ट्रे (ओभनको ट्रे)', ps: 'د داش پتنوس (بیکنګ ټرې)'
+            zh: '烤盘', vi: 'khay nướng bánh', th: 'ถาดอบขนมปัง', ne: 'बेकिङ ट्रे (ओभनको ट्रे)', ps: 'د داش پتنوس (بیکنګ ټرې)',
+            sq: 'një tavë pjekjeje / tepsi'
         },
         koelerum: {
             en: 'a walk-in cold room / refrigerator room', de: 'ein Kühlraum / Kühlhaus', es: 'una cámara frigorífica', pt: 'uma câmara frigorífica', tr: 'bir soğuk hava deposu / soğuk oda',
             ar: 'غرفة تبريد (ثلاجة كبيرة)', fa: 'سردخانه آشپزخانه', ku: 'odeya sarincê (sarker)', ur: 'کولڈ روم (بڑا فریج کمرہ)', ru: 'холодильная камера', uk: 'холодильна камера',
-            zh: '步入式冷藏室 / 冷库', vi: 'phòng lạnh bảo quản thực phẩm', th: 'ห้องเย็นเก็บอาหาร', ne: 'चिस्यान कोठा (कोल्ड रुम)', ps: 'سړه خونه (یخچال خونه)'
+            zh: '步入式冷藏室 / 冷库', vi: 'phòng lạnh bảo quản thực phẩm', th: 'ห้องเย็นเก็บอาหาร', ne: 'चिस्यान कोठा (कोल्ड रुम)', ps: 'سړه خونه (یخچال خونه)',
+            sq: 'një dhomë frigoriferike (frigorifer i madh)'
         },
         opvaskemaskine: {
             en: 'a commercial dishwasher', de: 'eine Gewerbespülmaschine / Haubenspülmaschine', es: 'un lavavajillas industrial', pt: 'uma máquina de lavar louça industrial', tr: 'bir endüstriyel bulaşık makinesi',
             ar: 'غسالة صحون صناعية', fa: 'ماشین ظرف‌شویی صنعتی', ku: 'makîneya şûştina firaxan', ur: 'برتن دھونے والی بڑی مشین (ڈش واشر)', ru: 'промышленная посудомоечная машина', uk: 'промислова посудомийна машина',
-            zh: '商用洗碗机', vi: 'máy rửa bát công nghiệp', th: 'เครื่องล้างจานอุตสาหกรรม', ne: 'भाँडा माझ्ने मेसिन (डिसवासर)', ps: 'د لوښو مینځلو ماشین'
+            zh: '商用洗碗机', vi: 'máy rửa bát công nghiệp', th: 'เครื่องล้างจานอุตสาหกรรม', ne: 'भाँडा माझ्ने मेसिन (डिसवासर)', ps: 'د لوښو مینځلو ماشین',
+            sq: 'një lavastovilje industriale'
         },
         roeremaskine: {
             en: 'a commercial stand mixer / dough mixer', de: 'eine Rührmaschine / Knetmaschine', es: 'una batidora amasadora industrial', pt: 'uma batedeira / masseira industrial', tr: 'bir hamur yoğurma / karıştırma makinesi',
             ar: 'عجّانة / خلاط مطبخ كبير', fa: 'همزن صنعتی / خمیرگیر', ku: 'makîneya hevîr û têkelkirinê', ur: 'آٹا گوندھنے اور مکس کرنے والی مشین', ru: 'тестомес / кухонный миксер', uk: 'тістоміс / промисловий міксер',
-            zh: '商用搅拌机 / 和面机', vi: 'máy trộn bột công nghiệp', th: 'เครื่องผสมอาหาร / เครื่องนวดแป้ง', ne: 'पीठो मुछ्ने र फिट्ने मेसिन (मिक्सर)', ps: 'د اوړو اخښلو او ګډولو ماشین'
+            zh: '商用搅拌机 / 和面机', vi: 'máy trộn bột công nghiệp', th: 'เครื่องผสมอาหาร / เครื่องนวดแป้ง', ne: 'पीठो मुछ्ने र फिट्ने मेसिन (मिक्सर)', ps: 'د اوړو اخښلو او ګډولو ماشین',
+            sq: 'një mikser industrial / brumatëse'
         },
         forklaede: {
             en: 'an apron', de: 'eine Schürze', es: 'un delantal', pt: 'um avental', tr: 'bir mutfak önlüğü',
             ar: 'مئزر مطبخ (مريلة)', fa: 'پیش‌بند آشپزی', ku: 'pêşmal / berdilk', ur: 'ایپرن (پیش بند)', ru: 'фартук', uk: 'фартух',
-            zh: '围裙', vi: 'tạp dề', th: 'ผ้ากันเปื้อน', ne: 'एप्रोन (अगाडि लगाउने कपडा)', ps: 'پیش بند (اپرون)'
+            zh: '围裙', vi: 'tạp dề', th: 'ผ้ากันเปื้อน', ne: 'एप्रोन (अगाडि लगाउने कपडा)', ps: 'پیش بند (اپرون)',
+            sq: 'një përparëse kuzhine'
         },
         engangshandske: {
             en: 'a disposable glove', de: 'ein Einweghandschuh', es: 'un guante desechable', pt: 'uma luva descartável', tr: 'bir tek kullanımlık eldiven',
             ar: 'قفاز يُستخدم لمرة واحدة', fa: 'دستکش یک‌بارمصرف', ku: 'lepikê yekcarî', ur: 'ایک بار استعمال ہونے والا دستانہ', ru: 'одноразовая перчатка', uk: 'одноразова рукавичка',
-            zh: '一次性手套', vi: 'găng tay dùng một lần', th: 'ถุงมือยางใช้แล้วทิ้ง', ne: 'एकपटक प्रयोग गरिने पञ्जा (ग्लोभ्स)', ps: 'یو ځل کارېدونکې دستکشې'
+            zh: '一次性手套', vi: 'găng tay dùng một lần', th: 'ถุงมือยางใช้แล้วทิ้ง', ne: 'एकपटक प्रयोग गरिने पञ्जा (ग्लोभ्स)', ps: 'یو ځل کارېدونکې دستکشې',
+            sq: 'një dorezë njëpërdorimëshe'
         },
         raavare: {
             en: 'a raw ingredient / fresh produce', de: 'eine Rohware / frische Zutat', es: 'una materia prima / ingrediente fresco', pt: 'uma matéria-prima / ingrediente fresco', tr: 'bir hammadde / taze malzeme',
             ar: 'مادة غذائية خام (خضروات طازجة)', fa: 'ماده اولیه غذایی (سبزیجات تازه)', ku: 'madeya xav a xwarinê', ur: 'خام مال / تازہ سبزیاں اور اجزاء', ru: 'сырьё / свежие продукты (ингредиенты)', uk: 'сировина / свіжі продукти (інгредієнти)',
-            zh: '食材原料（生鲜蔬果）', vi: 'nguyên liệu thực phẩm tươi sống', th: 'วัตถุดิบสด (ผัก/เนื้อสัตว์)', ne: 'कच्चा पदार्थ (ताजा तरकारी र सामग्री)', ps: 'خام توکي (تازه ترکاري او مواد)'
+            zh: '食材原料（生鲜蔬果）', vi: 'nguyên liệu thực phẩm tươi sống', th: 'วัตถุดิบสด (ผัก/เนื้อสัตว์)', ne: 'कच्चा पदार्थ (ताजा तरकारी र सामग्री)', ps: 'خام توکي (تازه ترکاري او مواد)',
+            sq: 'lëndë e parë / përbërës i freskët'
         },
         datomaerkning: {
             en: 'a date label (shelf-life sticker)', de: 'eine Datumsbeschriftung / Haltbarkeitsetikett', es: 'una etiqueta de fecha y caducidad', pt: 'uma etiqueta de data de validade', tr: 'bir tarih etiketi (son kullanma etiketi)',
             ar: 'ملصق تاريخ الإنتاج والصلاحية', fa: 'برچسب تاریخ و ماندگاری', ku: 'etîketa dîrokê', ur: 'تاریخ کا لیبل (میعاد کی پرچی)', ru: 'маркировка даты (этикетка срока годности)', uk: 'маркування дати (етикетка терміну придатності)',
-            zh: '日期标签（保质期贴纸）', vi: 'nhãn ghi ngày tháng (hạn sử dụng)', th: 'ป้ายระบุวันที่ผลิตและวันหมดอายุ', ne: 'मिति लेखिएको स्टिकर (लेबल)', ps: 'د نېټې نښه (لیبل)'
+            zh: '日期标签（保质期贴纸）', vi: 'nhãn ghi ngày tháng (hạn sử dụng)', th: 'ป้ายระบุวันที่ผลิตและวันหมดอายุ', ne: 'मिति लेखिएको स्टिकर (लेबल)', ps: 'د نېټې نښه (لیبل)',
+            sq: 'etiketë me datë (data e skadencës)'
         },
         affaldsspand: {
             en: 'a waste bin / food waste container', de: 'ein Abfalleimer (Biomüll)', es: 'un cubo de basura orgánica', pt: 'uma lixeira de resíduos orgânicos', tr: 'bir çöp kutusu (organik atık kovası)',
             ar: 'سلة مهملات (نفايات الطعام)', fa: 'سطل زباله (پسماند غذایی)', ku: 'سطla çopê (paşmayiyên xwarinê)', ur: 'کچرے کا ڈبہ (کھانے کا فضلہ)', ru: 'мусорный бак (для пищевых отходов)', uk: 'сміттєвий бак (для харчових відходів)',
-            zh: '垃圾桶（厨余垃圾桶）', vi: 'thùng rác (rác thực phẩm)', th: 'ถังขยะเศษอาหาร', ne: 'फोहोर फाल्ने डस्टबिन', ps: 'د کثافاتو سطل (د خوړو پاتې شوني)'
+            zh: '垃圾桶（厨余垃圾桶）', vi: 'thùng rác (rác thực phẩm)', th: 'ถังขยะเศษอาหาร', ne: 'फोहोर फाल्ने डस्टबिन', ps: 'د کثافاتو سطل (د خوړو پاتې شوني)',
+            sq: 'kosh mbeturinash (mbetje ushqimore)'
         },
         buffet: {
             en: 'a buffet counter (canteen buffet)', de: 'ein Buffet / eine Kantinentheke', es: 'un bufé de comedor', pt: 'um buffet de refeitório', tr: 'bir açık büfe (kantin büfesi)',
             ar: 'بوفيه تقديم الطعام (في الكافتيريا)', fa: 'بوفه سلف‌سرویس غذاخوری', ku: 'bûfeya xwaringehê', ur: 'بوفے کاؤنٹر (کینٹین کی میز)', ru: 'шведский стол / линия раздачи в столовой', uk: 'шведський стіл / лінія роздачі в їдальні',
-            zh: '自助餐台（食堂餐台）', vi: 'quầy buffet (quầy thức ăn căng tin)', th: 'เคาน์เตอร์บุฟเฟต์ในโรงอาหาร', ne: 'बफे काउन्टर (क्यान्टिनको खाना राख्ने ठाउँ)', ps: 'د خوړو مېز (بوفې)'
+            zh: '自助餐台（食堂餐台）', vi: 'quầy buffet (quầy thức ăn căng tin)', th: 'เคาน์เตอร์บุฟเฟต์ในโรงอาหาร', ne: 'बफे काउन्टर (क्यान्टिनको खाना राख्ने ठाउँ)', ps: 'د خوړو مېز (بوفې)',
+            sq: 'bufe ushqimi (tavolinë vetëshërbimi)'
         },
         skraelle: {
             en: 'to peel (potatoes, carrots)', de: 'schälen (Kartoffeln, Karotten)', es: 'pelar (patatas, zanahorias)', pt: 'descascar (batatas, cenouras)', tr: 'soymak (patates, havuç)',
             ar: 'يُقشّر (البطاطس والجزر)', fa: 'پوست کندن (سیب‌زمینی، هویج)', ku: 'qelandin / qalik jê kirin', ur: 'چھیلنا (آلو، گاجر کا چھلکا اتارنا)', ru: 'чистить от кожуры (картофель, морковь)', uk: 'чистити від шкірки (картоплю, моркву)',
-            zh: '削皮（削土豆、胡萝卜皮）', vi: 'gọt vỏ (khoai tây, cà rốt)', th: 'ปอกเปลือก (มันฝรั่ง, แครอท)', ne: 'ताछ्नु / बोक्रा फाल्नु (आलु, गाजर)', ps: 'پوستول (کچالو او ګازرې سپینول)'
+            zh: '削皮（削土豆、胡萝卜皮）', vi: 'gọt vỏ (khoai tây, cà rốt)', th: 'ปอกเปลือก (มันฝรั่ง, แครอท)', ne: 'ताछ्नु / बोक्रा फाल्नु (आलु, गाजर)', ps: 'پوستول (کچالو او ګازرې سپینول)',
+            sq: 'të qërosh (patate, karota)'
         },
         snitte: {
             en: 'to slice finely / to chop', de: 'fein schneiden / schnippeln / hacken', es: 'cortar en juliana / picar fino', pt: 'fatiar fino / picar', tr: 'ince doğramak / kıymak',
             ar: 'يُقطّع إلى شرائح دقيقة / يفرم', fa: 'خرد کردن / خلالی بریدن سبزیجات', ku: 'hûr kirin (sebzeyan)', ur: 'باریک کاٹنا (سلاد اور سبزیاں)', ru: 'шинковать / мелко нарезать', uk: 'шинкувати / дрібно нарізати',
-            zh: '切丝 / 切碎（切蔬菜）', vi: 'thái nhỏ / băm nhỏ', th: 'ซอย / หั่นเป็นชิ้นเล็กๆ', ne: 'मसिना गरी काट्नु (सलाद/तरकारी)', ps: 'میده پرې کول (ترکاري او سلاد)'
+            zh: '切丝 / 切碎（切蔬菜）', vi: 'thái nhỏ / băm nhỏ', th: 'ซอย / หั่นเป็นชิ้นเล็กๆ', ne: 'मसिना गरी काट्नु (सलाद/तरकारी)', ps: 'میده پرې کول (ترکاري او سلاد)',
+            sq: 'të presësh hollë / të grish (perime)'
         },
         roere: {
             en: 'to stir (the pot)', de: 'umrühren (im Topf)', es: 'remover (la olla)', pt: 'mexer (a panela)', tr: 'karıştırmak (tencereyi)',
             ar: 'يُحرّك / يُقلّب (في القدر)', fa: 'هم زدن (در قابلمه)', ku: 'têkel kirin / لêxistin', ur: 'ہلانا / چمچ چلانا (پتیلے میں)', ru: 'помешивать (в кастрюле)', uk: 'помішувати (у каструлі)',
-            zh: '搅拌（搅动锅里的汤）', vi: 'khuấy đều (trong nồi)', th: 'คน (อาหารในหม้อ)', ne: 'चलाउनु (डाडुले भाँडोमा चलाउनु)', ps: 'لړل (په دیګ کې کاچوغه وهل)'
+            zh: '搅拌（搅动锅里的汤）', vi: 'khuấy đều (trong nồi)', th: 'คน (อาหารในหม้อ)', ne: 'चलाउनु (डाडुले भाँडोमा चलाउनु)', ps: 'لړل (په دیګ کې کاچوغه وهل)',
+            sq: 'të trazosh / të përziesh (në tenxhere)'
         },
         bage: {
             en: 'to bake / to roast in the oven', de: 'backen / im Ofen braten', es: 'hornear / cocer al horno', pt: 'assar (pão, bolo no forno)', tr: 'fırında pişirmek (ekmek, poğaça)',
             ar: 'يَخبز (في الفرن)', fa: 'پختن نان در فر', ku: 'patin (nan di firinê de)', ur: 'بیک کرنا (اوون میں روٹی/ڈبل روٹی پکانا)', ru: 'печь / выпекать в духовке', uk: 'пекти / випікати в печі',
-            zh: '烘焙 / 烤制（面包）', vi: 'nướng bánh (trong lò)', th: 'อบ (ขนมปังในเตาอบ)', ne: 'पकाउनु / बेक गर्नु (ओभनमा रोटी पकाउनु)', ps: 'پخول (په داش کې ډوډۍ پخول)'
+            zh: '烘焙 / 烤制（面包）', vi: 'nướng bánh (trong lò)', th: 'อบ (ขนมปังในเตาอบ)', ne: 'पकाउनु / बेक गर्नु (ओभनमा रोटी पकाउनु)', ps: 'پخول (په داش کې ډوډۍ پخول)',
+            sq: 'të pjekësh (në furrë)'
         },
         vaske_op: {
             en: 'to wash the dishes / do the dishwashing', de: 'abwaschen / Geschirr spülen', es: 'fregar los platos / lavar la vajilla', pt: 'lavar a louça', tr: 'bulaşık yıkamak',
             ar: 'يغسل الصحون والأواني', fa: 'ظرف شستن', ku: 'firax şûştin', ur: 'برتن دھونا', ru: 'мыть посуду', uk: 'мити посуд',
-            zh: '洗碗 / 清洗餐具', vi: 'rửa bát đĩa', th: 'ล้างจานและภาชนะ', ne: 'भाँडा माझ्नु', ps: 'لوښي مینځل'
+            zh: '洗碗 / 清洗餐具', vi: 'rửa bát đĩa', th: 'ล้างจานและภาชนะ', ne: 'भाँडा माझ्नु', ps: 'لوښي مینځل',
+            sq: 'të lash enët'
         },
         spritte_af: {
             en: 'to sanitize / disinfect and wipe down', de: 'desinfizieren / abwischen', es: 'desinfectar / limpiar con alcohol', pt: 'higienizar / desinfetar com álcool', tr: 'dezenfekte etmek / silip temizlemek',
             ar: 'يُعقّم ويمسح الأسطح بالكحول الطبي', fa: 'ضدعفونی کردن و تمیز کردن میز کار', ku: 'dezenfekte kirin û پaqij kirin', ur: 'سینیٹائز کرنا / جراثیم کش اسپرے سے صاف کرنا', ru: 'дезинфицировать / протирать антисептиком', uk: 'дезінфікувати / протирати антисептиком',
-            zh: '消毒擦拭（工作台面）', vi: 'khử trùng / lau sạch bằng cồn sát khuẩn', th: 'เช็ดทำความสะอาดและฆ่าเชื้อด้วยแอลกอฮอล์', ne: 'सेनिटाइज गर्नु / कीटाणुनाशकले पुछ्नु', ps: 'ضدعفوني کول او پاکول'
+            zh: '消毒擦拭（工作台面）', vi: 'khử trùng / lau sạch bằng cồn sát khuẩn', th: 'เช็ดทำความสะอาดและฆ่าเชื้อด้วยแอลกอฮอล์', ne: 'सेनिटाइज गर्नु / कीटाणुनाशकले पुछ्नु', ps: 'ضدعفوني کول او پاکول',
+            sq: 'të dezinfektosh (me alkool/spërkatës)'
         },
         anrette: {
             en: 'to plate / to arrange food nicely on platters', de: 'anrichten (Speisen auf Platten)', es: 'emplatar / presentar la comida', pt: 'impiatar / arrumar a comida nas travessas', tr: 'tabağa / servis tepsisine özenle dizmek',
             ar: 'يُرتّب ويُقدّم الطعام بشكل جميل', fa: 'چیدن و تزئین کردن غذا در دیس', ku: 'xwarinê bi xweşikî li ser sîniyê rêz kirin', ur: 'کھانے کو خوبصورتی سے ٹرے/پلیٹ میں سجانا', ru: 'сервировать / красиво выкладывать блюда', uk: 'сервірувати / красиво викладати страви',
-            zh: '摆盘 / 装盘陈列', vi: 'bày trí món ăn ra đĩa/khay', th: 'จัดจาน / จัดวางอาหารใส่ถาดเสิร์ฟอย่างสวยงาม', ne: 'खानालाई आकर्षक ढंगले पस्कनु / सजाउनु', ps: 'خواړه په ښکلي ډول په غوري کې برابرول'
+            zh: '摆盘 / 装盘陈列', vi: 'bày trí món ăn ra đĩa/khay', th: 'จัดจาน / จัดวางอาหารใส่ถาดเสิร์ฟอย่างสวยงาม', ne: 'खानालाई आकर्षक ढंगले पस्कनु / सजाउनु', ps: 'خواړه په ښکلي ډول په غوري کې برابرول',
+            sq: 'të shërbesh / të vendosësh në pjatancë'
         },
         smage_til: {
             en: 'to taste and season (with salt & pepper)', de: 'abschmecken (mit Salz und Pfeffer)', es: 'probar y rectificar de sal y pimienta', pt: 'provar e acertar o tempero', tr: 'tadına bakıp tuzunu biberini ayarlamak',
             ar: 'يتذوق الطعام ويضبط الملح والتوابل', fa: 'چشیدن و اندازه کردن نمک و ادویه غذا', ku: 'tam kirin û xwê û biharatê eyar kirin', ur: 'چکھ کر نمک مرچ برابر کرنا', ru: 'пробовать на вкус и доводить до вкуса специями', uk: 'куштувати і доводити до смаку спеціями',
-            zh: '尝味并调味（加盐和胡椒）', vi: 'nếm thử và nêm nếm gia vị', th: 'ชิมและปรุงรสให้กลมกล่อม', ne: 'चाखेर नुन-मसला मिलाउनु', ps: 'خوند کتل او مالګه او مصالحه برابرول'
+            zh: '尝味并调味（加盐和胡椒）', vi: 'nếm thử và nêm nếm gia vị', th: 'ชิมและปรุงรสให้กลมกล่อม', ne: 'चाखेर नुन-मसला मिलाउनु', ps: 'خوند کتل او مالګه او مصالحه برابرول',
+            sq: 'të provosh shijen (të rregullosh me kripë/piper)'
         },
         frisk: {
             en: 'fresh (fresh vegetables, freshly baked)', de: 'frisch (frisches Gemüse, frisch gebacken)', es: 'fresco (verduras frescas)', pt: 'fresco (legumes frescos)', tr: 'taze (taze sebzeler, taze pişmiş)',
             ar: 'طازج (خضروات طازجة / خبز طازج)', fa: 'تازه (سبزیجات تازه / نان تازه)', ku: 'taze / nû', ur: 'تازہ (تازہ سبزیاں / تازہ پکی ہوئی روٹی)', ru: 'свежий (свежие овощи / свежая выпечка)', uk: 'свіжий (свіжі овочі / свіжа випічка)',
-            zh: '新鲜的（新鲜蔬菜、刚出炉的）', vi: 'tươi mới (rau củ tươi, bánh mới nướng)', th: 'สดใหม่ (ผักสด / ขนมปังอบใหม่)', ne: 'ताजा (ताजा तरकारी / भर्खरै पाकेको)', ps: 'تازه (تازه ترکاري / تازه پخه شوې ډوډۍ)'
+            zh: '新鲜的（新鲜蔬菜、刚出炉的）', vi: 'tươi mới (rau củ tươi, bánh mới nướng)', th: 'สดใหม่ (ผักสด / ขนมปังอบใหม่)', ne: 'ताजा (ताजा तरकारी / भर्खरै पाकेको)', ps: 'تازه (تازه ترکاري / تازه پخه شوې ډوډۍ)',
+            sq: 'i/e freskët'
         },
         ren: {
             en: 'clean / hygienic', de: 'sauber / hygienisch', es: 'limpio / higiénico', pt: 'limpo / higiênico', tr: 'temiz / hijyenik',
             ar: 'نظيف / صحي ومعقّم', fa: 'تمیز / بهداشتی', ku: 'paqij / hîjyenîk', ur: 'صاف ستھرا / حفظانِ صحت کے مطابق', ru: 'чистый / гигиеничный', uk: 'чистий / гігієнічний',
-            zh: '干净的 / 卫生的', vi: 'sạch sẽ / hợp vệ sinh', th: 'สะอาด / ถูกสุขอนามัย', ne: 'सफा / स्वच्छ', ps: 'پاک / صحي'
+            zh: '干净的 / 卫生的', vi: 'sạch sẽ / hợp vệ sinh', th: 'สะอาด / ถูกสุขอนามัย', ne: 'सफा / स्वच्छ', ps: 'پاک / صحي',
+            sq: 'i/e pastër'
         },
         skarp: {
             en: 'sharp (a sharp knife)', de: 'scharf (ein scharfes Messer)', es: 'afilado (un cuchillo afilado)', pt: 'afiado (uma faca afiada)', tr: 'keskin (keskin bir bıçak)',
             ar: 'حادّ (سكين حاد)', fa: 'تیز (چاقوی تیز)', ku: 'tûj (kêra tûj)', ur: 'تیز دھار (تیز چھری)', ru: 'острый (острый нож)', uk: 'гострий (гострий ніж)',
-            zh: '锋利的（锋利的菜刀）', vi: 'sắc bén (con dao sắc)', th: 'คม (มีดที่คมมาก)', ne: 'धारिलो (तिखो चक्कु)', ps: 'تېره (تېره چاړه)'
+            zh: '锋利的（锋利的菜刀）', vi: 'sắc bén (con dao sắc)', th: 'คม (มีดที่คมมาก)', ne: 'धारिलो (तिखो चक्कु)', ps: 'تېره (تېره چاړه)',
+            sq: 'i/e mprehtë'
         },
         serveringsklar: {
             en: 'ready to serve', de: 'servierfertig / bereit zum Servieren', es: 'listo para servir', pt: 'pronto para servir', tr: 'servise hazır',
             ar: 'جاهز للتقديم', fa: 'آماده سرو و پذیرایی', ku: 'amade ji bo servîsê', ur: 'پیش کرنے (سرو کرنے) کے لیے تیار', ru: 'готовый к подаче на стол', uk: 'готовий до подачі на стіл',
-            zh: '准备好可以上菜/供应的', vi: 'sẵn sàng để phục vụ', th: 'พร้อมเสิร์ฟ', ne: 'पस्कनका लागि तयार', ps: 'د خوړلو او وړاندې کولو لپاره چمتو'
+            zh: '准备好可以上菜/供应的', vi: 'sẵn sàng để phục vụ', th: 'พร้อมเสิร์ฟ', ne: 'पस्कनका लागि तयार', ps: 'د خوړلو او وړاندې کولو لپاره چمتو',
+            sq: 'gati për t\'u shërbyer'
         },
         grundigt: {
             en: 'thoroughly / carefully in detail', de: 'gründlich / sorgfältig', es: 'a fondo / minuciosamente', pt: 'minuciosamente / bem lavado', tr: 'iyice / titizlikle',
             ar: 'بدقة وعناية تامة', fa: 'به‌طور کامل و بادقت', ku: 'bi باشî û bi hûrgilî', ur: 'مکمل طور پر / اچھی طرح سے', ru: 'тщательно / основательно', uk: 'ретельно / ґрунтовно',
-            zh: '彻底地 / 仔细地', vi: 'một cách kỹ lưỡng', th: 'อย่างละเอียดสะอาดหมดจด', ne: 'राम्रोसँग / मिहिनेतसाथ', ps: 'په بشپړ غور او دقت سره'
+            zh: '彻底地 / 仔细地', vi: 'một cách kỹ lưỡng', th: 'อย่างละเอียดสะอาดหมดจด', ne: 'राम्रोसँग / मिहिनेतसाथ', ps: 'په بشپړ غور او دقت سره',
+            sq: 'me themel / me shumë kujdes'
         },
         forsigtigt: {
             en: 'carefully / cautiously', de: 'vorsichtig', es: 'con cuidado', pt: 'com cuidado', tr: 'dikkatlice',
             ar: 'بحذر وانتباه', fa: 'با احتیاط', ku: 'bi baldarî', ur: 'احتیاط سے', ru: 'осторожно / аккуратно', uk: 'обережно / акуратно',
-            zh: '小心地 / 谨慎地', vi: 'một cách cẩn thận', th: 'อย่างระมัดระวัง', ne: 'सावधानीपूर्वक / होसियारीसाथ', ps: 'په احتیاط سره'
+            zh: '小心地 / 谨慎地', vi: 'một cách cẩn thận', th: 'อย่างระมัดระวัง', ne: 'सावधानीपूर्वक / होसियारीसाथ', ps: 'په احتیاط سره',
+            sq: 'me kujdes / ngadalë'
         },
         hurtigt: {
             en: 'quickly / fast', de: 'schnell / zügig', es: 'rápidamente / rápido', pt: 'rapidamente / rápido', tr: 'hızlıca / çabuk',
             ar: 'بسرعة', fa: 'به‌سرعت / سریع', ku: 'bi lez / zû', ur: 'تیزی سے / جلدی سے', ru: 'быстро', uk: 'швидко',
-            zh: '快速地 / 迅速地', vi: 'một cách nhanh chóng', th: 'อย่างรวดเร็ว', ne: 'छिटो / चाँडो', ps: 'په چټکۍ سره / ژر'
+            zh: '快速地 / 迅速地', vi: 'một cách nhanh chóng', th: 'อย่างรวดเร็ว', ne: 'छिटो / चाँडो', ps: 'په چټکۍ سره / ژر',
+            sq: 'shpejt / me nxitim'
         },
         heldigvis: {
             en: 'fortunately / luckily', de: 'glücklicherweise / zum Glück', es: 'afortunadamente / por suerte', pt: 'felizmente / por sorte', tr: 'neyse ki / şans eseri',
             ar: 'لحسن الحظ', fa: 'خوشبختانه', ku: 'bi xêrê / baş e ku', ur: 'خوش قسمتی سے', ru: 'к счастью', uk: 'на щастя',
-            zh: '幸运的是 / 幸好', vi: 'may mắn thay', th: 'โชคดีที่...', ne: 'भाग्यवश / धन्न', ps: 'له نېکه مرغه'
+            zh: '幸运的是 / 幸好', vi: 'may mắn thay', th: 'โชคดีที่...', ne: 'भाग्यवश / धन्न', ps: 'له نېکه مرغه',
+            sq: 'për fat të mirë'
         }
     };
 
@@ -784,7 +817,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'a morning', de: 'ein Morgen', es: 'una mañana', pt: 'uma manhã', tr: 'bir sabah',
                 ar: 'صباح', fa: 'صبح', ku: 'sibeh', ur: 'صبح', ru: 'утро', uk: 'ранок',
-                zh: '早晨 / 早上', vi: 'buổi sáng', th: 'ตอนเช้า', ne: 'बिहान', ps: 'سهار'
+                zh: '早晨 / 早上', vi: 'buổi sáng', th: 'ตอนเช้า', ne: 'बिहान', ps: 'سهار',
+                sq: 'një mëngjes'
             }
         },
         haand: {
@@ -800,7 +834,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'a hand (hands)', de: 'eine Hand (Hände)', es: 'una mano (manos)', pt: 'uma mão (mãos)', tr: 'bir el (eller)',
                 ar: 'يد (أيدٍ)', fa: 'دست (دست‌ها)', ku: 'dest', ur: 'ہاتھ', ru: 'рука (руки)', uk: 'рука (руки)',
-                zh: '手（双手）', vi: 'bàn tay (đôi tay)', th: 'มือ (ล้างมือ)', ne: 'हात (हातहरू)', ps: 'لاس (لاسونه)'
+                zh: '手（双手）', vi: 'bàn tay (đôi tay)', th: 'มือ (ล้างมือ)', ne: 'हात (हातहरू)', ps: 'لاس (لاسونه)',
+                sq: 'një dorë (duart)'
             }
         },
         vand: {
@@ -816,7 +851,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'water', de: 'Wasser', es: 'agua', pt: 'água', tr: 'su',
                 ar: 'ماء', fa: 'آب', ku: 'av', ur: 'پانی', ru: 'вода', uk: 'вода',
-                zh: '水', vi: 'nước', th: 'น้ำสะอาด', ne: 'पानी', ps: 'اوبه'
+                zh: '水', vi: 'nước', th: 'น้ำสะอาด', ne: 'पानी', ps: 'اوبه',
+                sq: 'ujë'
             }
         },
         bord: {
@@ -832,7 +868,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'a table (stainless worktable)', de: 'ein Tisch (Edelstahltisch)', es: 'una mesa de trabajo', pt: 'uma mesa / bancada', tr: 'bir masa (çelik tezgâh)',
                 ar: 'طاولة عمل', fa: 'میز کار استیل', ku: 'mase (maseya pola)', ur: 'میز (اسٹیل کی میز)', ru: 'стол (рабочий стол)', uk: 'стіл (робочий стіл)',
-                zh: '桌子（不锈钢工作台）', vi: 'bàn (bàn inox)', th: 'โต๊ะเตรียมอาหารสแตนเลส', ne: 'टेबल (स्टिलको टेबल)', ps: 'مېز (د کار مېز)'
+                zh: '桌子（不锈钢工作台）', vi: 'bàn (bàn inox)', th: 'โต๊ะเตรียมอาหารสแตนเลส', ne: 'टेबल (स्टिलको टेबल)', ps: 'مېز (د کار مېز)',
+                sq: 'një tavolinë (tavolinë çeliku inoks)'
             }
         },
         hylde: {
@@ -848,7 +885,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'a shelf', de: 'ein Regalbrett', es: 'un estante', pt: 'uma prateleira', tr: 'bir raf',
                 ar: 'رفّ', fa: 'قفسه', ku: 'ref', ur: 'شیلف / طاق', ru: 'полка', uk: 'полиця',
-                zh: '架子 / 搁板', vi: 'cái kệ', th: 'ชั้นวางของ', ne: 'दराजको तख्ता / र्याक', ps: 'المارۍ / تاخچه'
+                zh: '架子 / 搁板', vi: 'cái kệ', th: 'ชั้นวางของ', ne: 'दराजको तख्ता / र्याक', ps: 'المارۍ / تاخچه',
+                sq: 'një raft'
             }
         },
         broed: {
@@ -864,7 +902,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'bread / a loaf of bread', de: 'ein Brot', es: 'un pan', pt: 'um pão', tr: 'ekmek',
                 ar: 'خبز', fa: 'نان', ku: 'nan', ur: 'روٹی / ڈبل روٹی', ru: 'хлеб', uk: 'хліб',
-                zh: '面包', vi: 'bánh mì', th: 'ขนมปัง', ne: 'रोटी / पाउरोटी', ps: 'ډوډۍ'
+                zh: '面包', vi: 'bánh mì', th: 'ขนมปัง', ne: 'रोटी / पाउरोटी', ps: 'ډوډۍ',
+                sq: 'bukë'
             }
         },
         vaske: {
@@ -880,7 +919,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'to wash', de: 'waschen', es: 'lavar', pt: 'lavar', tr: 'yıkamak',
                 ar: 'يغسل', fa: 'شستن', ku: 'şûştin', ur: 'دھونا', ru: 'мыть', uk: 'мити',
-                zh: '洗 / 清洗', vi: 'rửa / giặt', th: 'ล้างทำความสะอาด', ne: 'धुनु', ps: 'مینځل'
+                zh: '洗 / 清洗', vi: 'rửa / giặt', th: 'ล้างทำความสะอาด', ne: 'धुनु', ps: 'مینځل',
+                sq: 'të lash'
             }
         },
         hente: {
@@ -896,7 +936,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'to fetch / to get', de: 'holen', es: 'traer / ir a buscar', pt: 'buscar / pegar', tr: 'gidip getirmek / almak',
                 ar: 'يُحضر / يجلب', fa: 'آوردن', ku: 'anîn', ur: 'لے کر آنا', ru: 'приносить / забирать', uk: 'приносити / забирати',
-                zh: '去取 / 拿来', vi: 'đi lấy / mang ra', th: 'ไปหยิบมา / ไปเอามา', ne: 'लिन जानु / ल्याउनु', ps: 'راوړل'
+                zh: '去取 / 拿来', vi: 'đi lấy / mang ra', th: 'ไปหยิบมา / ไปเอามา', ne: 'लिन जानु / ल्याउनु', ps: 'راوړل',
+                sq: 'të marrësh / të sjellësh'
             }
         },
         varm: {
@@ -912,7 +953,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'hot / warm', de: 'heiß / warm', es: 'caliente', pt: 'quente', tr: 'sıcak',
                 ar: 'ساخن / دافئ', fa: 'داغ / گرم', ku: 'germ', ur: 'گرم', ru: 'горячий / тёплый', uk: 'гарячий / теплий',
-                zh: '热的 / 烫的', vi: 'nóng / ấm', th: 'ร้อน / อุ่น', ne: 'तातो', ps: 'تود / ګرم'
+                zh: '热的 / 烫的', vi: 'nóng / ấm', th: 'ร้อน / อุ่น', ne: 'तातो', ps: 'تود / ګرم',
+                sq: 'i/e nxehtë'
             }
         },
         kold: {
@@ -928,7 +970,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
             translations: {
                 en: 'cold', de: 'kalt', es: 'frío', pt: 'frio', tr: 'soğuk',
                 ar: 'بارد', fa: 'سرد', ku: 'sar', ur: 'ٹھنڈا', ru: 'холодный', uk: 'холодний',
-                zh: '冷的 / 冰凉的', vi: 'lạnh', th: 'เย็น', ne: 'चिसो', ps: 'سوړ / یخ'
+                zh: '冷的 / 冰凉的', vi: 'lạnh', th: 'เย็น', ne: 'चिसो', ps: 'سوړ / یخ',
+                sq: 'i/e ftohtë'
             }
         }
     };
@@ -2676,7 +2719,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'fresh wholegrain rolls', de: 'frische Vollkornbrötchen', es: 'panecillos integrales frescos', pt: 'pãezinhos integrais frescos', tr: 'taze tam tahıllı ekmekler (sandviç ekmeği)',
                         ar: 'خبز صامولي طازج بالحبوب الكاملة', fa: 'نان‌های سبوس‌دار تازه', ku: 'nanikên nû yên bi danên tevahî', ur: 'تازہ چکی کے آٹے کے بن (روٹیاں)', ru: 'свежие цельнозерновые булочки', uk: 'свіжі цільнозернові булочки',
-                        zh: '新鲜出炉的全麦小餐包', vi: 'bánh mì nguyên cám tươi mới', th: 'ขนมปังโฮลเกรนอบใหม่', ne: 'ताजा गहुँको आँटाको बन (रोटी)', ps: 'تازه وربشو او غنمو ډوډۍ'
+                        zh: '新鲜出炉的全麦小餐包', vi: 'bánh mì nguyên cám tươi mới', th: 'ขนมปังโฮลเกรนอบใหม่', ne: 'ताजा गहुँको आँटाको बन (रोटी)', ps: 'تازه وربشو او غنمو ډوډۍ',
+                        sq: 'panine të freskëta me drithëra integrale'
                     }
                 },
                 {
@@ -2686,7 +2730,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'to peel potatoes and carrots', de: 'Kartoffeln und Karotten schälen', es: 'pelar patatas y zanahorias', pt: 'descascar batatas e cenouras', tr: 'patates ve havuçları soymak',
                         ar: 'تقشير البطاطس والجزر', fa: 'پوست کندن سیب‌زمینی و هویج', ku: 'qelandina kartol û gêzeran', ur: 'آلو اور گاجریں چھیلنا', ru: 'чистить картофель и морковь', uk: 'чистити картоплю та моркву',
-                        zh: '削土豆和胡萝卜皮', vi: 'gọt vỏ khoai tây và cà rốt', th: 'ปอกเปลือกมันฝรั่งและแครอท', ne: 'आलु र गाजर ताछ्नु', ps: 'کچالو او ګازرې سپینول (پوستول)'
+                        zh: '削土豆和胡萝卜皮', vi: 'gọt vỏ khoai tây và cà rốt', th: 'ปอกเปลือกมันฝรั่งและแครอท', ne: 'आलु र गाजर ताछ्नु', ps: 'کچالو او ګازرې سپینول (پوستول)',
+                        sq: 'të qërosh patate dhe karota'
                     }
                 },
                 {
@@ -2696,7 +2741,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'slices pointed cabbage and bell pepper finely', de: 'schneidet Spitzkohl und Paprika fein', es: 'corta fino el repollo y el pimiento', pt: 'fatia finamente o repolho e o pimentão', tr: 'sivri lahana ve tatlı biberi incecik doğruyor',
                         ar: 'يُقطّع الملفوف والفلفل الحلو إلى شرائح رفيعة', fa: 'کلم و فلفل دلمه‌ای را ریز خرد می‌کند', ku: 'kelem û îsota şîrîn hûr dike', ur: 'بند گوبھی اور شملہ مرچ باریک کاٹتا ہے', ru: 'тонко шинкует капусту и сладкий перец', uk: 'тонко шинкує капусту та солодкий перець',
-                        zh: '把牛心甘蓝和甜椒切成细丝', vi: 'thái nhỏ bắp cải và ớt chuông', th: 'ซอยกะหล่ำปลีและพริกหวานเป็นเส้นบางๆ', ne: 'बन्दागोभी र भेडेखुर्सानी मसिना गरी काट्छ', ps: 'کرم او شنه مرچک میده پرې کوي'
+                        zh: '把牛心甘蓝和甜椒切成细丝', vi: 'thái nhỏ bắp cải và ớt chuông', th: 'ซอยกะหล่ำปลีและพริกหวานเป็นเส้นบางๆ', ne: 'बन्दागोभी र भेडेखुर्सानी मसिना गरी काट्छ', ps: 'کرم او شنه مرچک میده پرې کوي',
+                        sq: 'pret hollë lakër dhe speca të ëmbël'
                     }
                 },
                 {
@@ -2706,7 +2752,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'the green cutting board (for vegetables)', de: 'das grüne Schneidebrett (für Gemüse)', es: 'la tabla de cortar verde (para verduras)', pt: 'a tábua de corte verde (para legumes)', tr: 'yeşil kesme tahtası (sebzeler için)',
                         ar: 'لوح التقطيع الأخضر (المخصص للخضروات)', fa: 'تخته برش سبز (مخصوص سبزیجات)', ku: 'texteyê hûrkirinê yê kesk (ji bo sebzeyan)', ur: 'سبز رنگ کا چاپنگ بورڈ (سبزیوں کے لیے)', ru: 'зелёная разделочная доска (для овощей)', uk: 'зелена обробна дошка (для овочів)',
-                        zh: '绿色砧板（蔬菜专用切菜板）', vi: 'thớt màu xanh lá (dùng riêng cho rau củ)', th: 'เขียงสีเขียว (สำหรับหั่นผัก)', ne: 'हरियो चपिङ बोर्ड (तरकारी काट्ने अचानो)', ps: 'شنه تخته (د ترکاري پرې کولو لپاره)'
+                        zh: '绿色砧板（蔬菜专用切菜板）', vi: 'thớt màu xanh lá (dùng riêng cho rau củ)', th: 'เขียงสีเขียว (สำหรับหั่นผัก)', ne: 'हरियो चपिङ बोर्ड (तरकारी काट्ने अचानो)', ps: 'شنه تخته (د ترکاري پرې کولو لپاره)',
+                        sq: 'dërrasa e gjelbër e prerjes (për perime)'
                     }
                 },
                 {
@@ -2716,7 +2763,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'the commercial oven', de: 'der Industrieofen / Kombidämpfer', es: 'el horno industrial', pt: 'o forno industrial', tr: 'endüstriyel fırın',
                         ar: 'الفرن الصناعي الكبير', fa: 'فر صنعتی آشپزخانه', ku: 'firina pîşesaziyê', ur: 'بڑا کمرشل اوون', ru: 'промышленная печь (пароконвектомат)', uk: 'промислова піч',
-                        zh: '商用大烤箱', vi: 'lò nướng công nghiệp', th: 'เตาอบอุตสาหกรรม', ne: 'ठूलो व्यावसायिक ओभन', ps: 'لوی صنعتي داش'
+                        zh: '商用大烤箱', vi: 'lò nướng công nghiệp', th: 'เตาอบอุตสาหกรรม', ne: 'ठूलो व्यावसायिक ओभन', ps: 'لوی صنعتي داش',
+                        sq: 'furra industriale'
                     }
                 }
             ]
@@ -2740,7 +2788,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'raw chicken on the red cutting board', de: 'rohes Hähnchen auf dem roten Schneidebrett', es: 'pollo crudo en la tabla de cortar roja', pt: 'frango cru na tábua de corte vermelha', tr: 'kırmızı kesme tahtasında çiğ tavuk',
                         ar: 'دجاج نيء على لوح التقطيع الأحمر', fa: 'مرغ خام روی تخته برش قرمز', ku: 'mirîşka xav li ser texteyê sor', ur: 'سرخ تختے پر کچا چکن (مرغی کا گوشت)', ru: 'сырая курица на красной разделочной доске', uk: 'сира курка на червоній обробній дошці',
-                        zh: '红色砧板上的生鸡肉', vi: 'thịt gà sống trên thớt màu đỏ', th: 'เนื้อไก่ดิบบนเขียงสีแดง', ne: 'रातो चपिङ बोर्डमा काँचो कुखुराको मासु', ps: 'په سره تخته باندې اومه د چرګ غوښه'
+                        zh: '红色砧板上的生鸡肉', vi: 'thịt gà sống trên thớt màu đỏ', th: 'เนื้อไก่ดิบบนเขียงสีแดง', ne: 'रातो चपिङ बोर्डमा काँचो कुखुराको मासु', ps: 'په سره تخته باندې اومه د چرګ غوښه',
+                        sq: 'pulë e papjekur / mish i gjallë pule'
                     }
                 },
                 {
@@ -2750,7 +2799,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'sanitizes the stainless table thoroughly', de: 'desinfiziert den Edelstahltisch gründlich', es: 'desinfecta a fondo la mesa de acero', pt: 'higieniza bem a bancada de inox', tr: 'çelik tezgâhı iyice dezenfekte ediyor',
                         ar: 'يُعقّم طاولة الفولاذ بدقة وعناية', fa: 'میز استیل را کاملاً ضدعفونی می‌کند', ku: 'maseya pola bi باشî dezenfekte dike', ur: 'اسٹیل کی میز کو اچھی طرح سینیٹائز کرتا ہے', ru: 'тщательно дезинфицирует стальной стол', uk: 'ретельно дезінфікує сталевий стіл',
-                        zh: '彻底消毒擦拭不锈钢工作台', vi: 'khử trùng kỹ bàn inox', th: 'เช็ดฆ่าเชื้อโต๊ะสแตนเลสอย่างสะอาดหมดจด', ne: 'स्टिलको टेबललाई राम्रोसँग सेनिटाइज गर्छ', ps: 'د فولادو مېز په بشپړ غور سره ضدعفوني کوي'
+                        zh: '彻底消毒擦拭不锈钢工作台', vi: 'khử trùng kỹ bàn inox', th: 'เช็ดฆ่าเชื้อโต๊ะสแตนเลสอย่างสะอาดหมดจด', ne: 'स्टिलको टेबललाई राम्रोसँग सेनिटाइज गर्छ', ps: 'د فولادو مېز په بشپړ غور سره ضدعفوني کوي',
+                        sq: 'dezinfekton tavolinën e çelikut me alkool'
                     }
                 },
                 {
@@ -2760,7 +2810,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'blue disposable gloves', de: 'blaue Einweghandschuhe', es: 'guantes desechables azules', pt: 'luvas descartáveis azuis', tr: 'mavi tek kullanımlık eldivenler',
                         ar: 'قفازات زرقاء تُستخدم لمرة واحدة', fa: 'دستکش‌های یک‌بارمصرف آبی', ku: 'lepikên şîn ên yekcarî', ur: 'نیلے رنگ کے ایک بار استعمال ہونے والے دستانے', ru: 'синие одноразовые перчатки', uk: 'сині одноразові рукавички',
-                        zh: '蓝色一次性手套', vi: 'găng tay dùng một lần màu xanh', th: 'ถุงมือยางสีฟ้าแบบใช้แล้วทิ้ง', ne: 'नीलो एकपटक प्रयोग गरिने पञ्जा', ps: 'شنې یو ځل کارېدونکې دستکشې'
+                        zh: '蓝色一次性手套', vi: 'găng tay dùng một lần màu xanh', th: 'ถุงมือยางสีฟ้าแบบใช้แล้วทิ้ง', ne: 'नीलो एकपटक प्रयोग गरिने पञ्जा', ps: 'شنې یو ځل کارېدونکې دستکشې',
+                        sq: 'doreza njëpërdorimëshe (për higjienë)'
                     }
                 },
                 {
@@ -2770,7 +2821,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'fresh herbs (parsley, dill, chives)', de: 'frische Kräuter (Petersilie, Dill, Schnittlauch)', es: 'hierbas aromáticas frescas', pt: 'ervas frescas (salsa, cebolinha)', tr: 'taze yeşillikler /香 otlar (maydanoz, dereotu)',
                         ar: 'أعشاب عطرية طازجة (بقدونس، شبت)', fa: 'سبزیجات معطر تازه (جعفری، شوید)', ku: 'giyayên bîhnxweş ên taze (bexdenûs, pîvaza kesk)', ur: 'تازہ ہرا دھنیا اور جڑی بوٹیاں', ru: 'свежая зелень (петрушка, укроп)', uk: 'свіжа зелень (петрушка, кріп)',
-                        zh: '新鲜香草（欧芹、莳萝、香葱）', vi: 'rau thơm tươi (mùi tây, thì là)', th: 'สมุนไพรสด (พาร์สลีย์, ผักชีฝรั่ง)', ne: 'ताजा हरियो धनियाँ र जडीबुटी', ps: 'تازه شنه بوټي (دڼیا او نور)'
+                        zh: '新鲜香草（欧芹、莳萝、香葱）', vi: 'rau thơm tươi (mùi tây, thì là)', th: 'สมุนไพรสด (พาร์สลีย์, ผักชีฝรั่ง)', ne: 'ताजा हरियो धनियाँ र जडीबुटी', ps: 'تازه شنه بوټي (دڼیا او نور)',
+                        sq: 'erëza të freskëta (majdanoz, borzilok)'
                     }
                 }
             ]
@@ -2794,7 +2846,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'watch out behind you! / hot behind!', de: 'Vorsicht hinter dir!', es: '¡cuidado detrás de ti!', pt: 'cuidado atrás de você!', tr: 'arkana dikkat et!',
                         ar: 'انتبه خلفك! (احذر وراءك)', fa: 'مواظب پشت سرت باش!', ku: 'hay ji pişt xwe هەbe!', ur: 'اپنے پیچھے دھیان رکھیں!', ru: 'осторожно сзади!', uk: 'обережно позаду!',
-                        zh: '小心身后！（注意后面）', vi: 'cẩn thận phía sau bạn!', th: 'ระวังข้างหลังด้วยครับ!', ne: 'तपाईंको पछाडि होसियार हुनुहोस्!', ps: 'شاته مو پام کوئ!'
+                        zh: '小心身后！（注意后面）', vi: 'cẩn thận phía sau bạn!', th: 'ระวังข้างหลังด้วยครับ!', ne: 'तपाईंको पछाडि होसियार हुनुहोस्!', ps: 'شاته مو پام کوئ!',
+                        sq: 'kujdes prapa teje!'
                     }
                 },
                 {
@@ -2804,7 +2857,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'just steps aside', de: 'tritt kurz zur Seite', es: 'se aparta a un lado', pt: 'dá um passo para o lado', tr: 'kenara çekiliyor',
                         ar: 'يتنحى جانباً لإفساح الطريق', fa: 'کنار می‌رود تا راه باز شود', ku: 'dide aliyekî', ur: 'ایک طرف ہٹ جاتا ہے', ru: 'отходит в сторону', uk: 'відходить убік',
-                        zh: '让到一旁（闪开让路）', vi: 'bước sang một bên nhường đường', th: 'หลบไปด้านข้างเพื่อเปิดทางให้', ne: 'छेउमा सर्छ (बाटो छोड्छ)', ps: 'یوې خواته کېږي (لاره ورکوي)'
+                        zh: '让到一旁（闪开让路）', vi: 'bước sang một bên nhường đường', th: 'หลบไปด้านข้างเพื่อเปิดทางให้', ne: 'छेउमा सर्छ (बाटो छोड्छ)', ps: 'یوې خواته کېږي (لاره ورکوي)',
+                        sq: 'lëviz mënjanë (liron rrugën)'
                     }
                 },
                 {
@@ -2814,7 +2868,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'so we protect our backs (safe lifting)', de: 'damit wir unseren Rücken schonen', es: 'para cuidar la espalda', pt: 'para protegermos as costas', tr: 'sırtımızı/belimizi korumak için',
                         ar: 'لكي نحمي ظهورنا عند الرفع', fa: 'تا مراقب کمرمان باشیم', ku: 'da ku em pişta xwe biparêzin', ur: 'تاکہ ہماری کمر محفوظ رہے', ru: 'чтобы поберечь спину', uk: 'щоб поберегти спину',
-                        zh: '这样能保护我们的腰背', vi: 'để bảo vệ lưng khi bê nặng', th: 'เพื่อป้องกันไม่ให้ปวดหลังเวลาออกแรงยก', ne: 'ताकि हाम्रो ढाड सुरक्षित रहोस्', ps: 'ترڅو خپله ملا خوندي وساتو'
+                        zh: '这样能保护我们的腰背', vi: 'để bảo vệ lưng khi bê nặng', th: 'เพื่อป้องกันไม่ให้ปวดหลังเวลาออกแรงยก', ne: 'ताकि हाम्रो ढाड सुरक्षित रहोस्', ps: 'ترڅو خپله ملا خوندي وساتو',
+                        sq: 'që të ruajmë shpinën nga dëmtimi'
                     }
                 },
                 {
@@ -2824,7 +2879,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'runs the racks through the commercial dishwasher', de: 'schiebt die Spülkörbe durch die Spülmaschine', es: 'pasa las bandejas por el lavavajillas', pt: 'passa as gavetas pela máquina de lavar louça', tr: 'bulaşık sepetlerini makineden geçiriyor',
                         ar: 'يُمرّر صواني الصحون عبر غسالة الصحون', fa: 'سبدهای ظرف را داخل ماشین ظرف‌شویی می‌گذارد', ku: 'sebetên firaxan di makîneyê re derbas dike', ur: 'برتنوں والی ٹرے ڈش واشر سے گزارتا ہے', ru: 'пропускает кассеты с посудой через посудомоечную машину', uk: 'пропускає касети з посудом через посудомийну машину',
-                        zh: '把洗碗篮推进商用洗碗机清洗', vi: 'đẩy các khay bát đĩa qua máy rửa bát', th: 'เลื่อนแร็คจานเข้าเครื่องล้างจานอุตสาหกรรม', ne: 'भाँडाको र्याकलाई डिसवासर मेसिनमा हालेर धुन्छ', ps: 'د لوښو ټرې د مینځلو په ماشین کې تېروي'
+                        zh: '把洗碗篮推进商用洗碗机清洗', vi: 'đẩy các khay bát đĩa qua máy rửa bát', th: 'เลื่อนแร็คจานเข้าเครื่องล้างจานอุตสาหกรรม', ne: 'भाँडाको र्याकलाई डिसवासर मेसिनमा हालेर धुन्छ', ps: 'د لوښو ټرې د مینځلو په ماشین کې تېروي',
+                        sq: 'fut tabakatë e enëve në lavastovilje'
                     }
                 }
             ]
@@ -2848,7 +2904,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'clean plastic containers with tight-fitting lids', de: 'saubere Plastikbehälter mit dicht schließendem Deckel', es: 'recipientes limpios con tapa hermética', pt: 'potes limpos com tampa hermética', tr: 'sıkı kapaklı temiz plastik kaplar',
                         ar: 'علب بلاستيكية نظيفة بأغطية محكمة الإغلاق', fa: 'ظرف‌های پلاستیکی تمیز با درِ کاملاً کیپ', ku: 'qutiyên پlastîk ên پaqij bi qapaxên girtî', ur: 'مضبوط ڈھکن والے صاف پلاسٹک کے ڈبے', ru: 'чистые пластиковые контейнеры с плотной крышкой', uk: 'чисті пластикові контейнери зі щільною кришкою',
-                        zh: '带密封盖的干净塑料保鲜盒', vi: 'hộp nhựa sạch có nắp đậy kín', th: 'กล่องพลาสติกสะอาดที่มีฝาปิดมิดชิด', ne: 'कसिएको बिर्को भएको सफा प्लास्टिकको बट्टा', ps: 'پاک پلاستیکي لوښي چې کلک سرپوښ لري'
+                        zh: '带密封盖的干净塑料保鲜盒', vi: 'hộp nhựa sạch có nắp đậy kín', th: 'กล่องพลาสติกสะอาดที่มีฝาปิดมิดชิด', ne: 'कसिएको बिर्को भएको सफा प्लास्टिकको बट्टा', ps: 'پاک پلاستیکي لوښي چې کلک سرپوښ لري',
+                        sq: 'kuti plastike të pastra me kapak të sigurt'
                     }
                 },
                 {
@@ -2858,7 +2915,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'use the oldest items first (First In, First Out)', de: 'die ältesten Waren zuerst verbrauchen (FIFO)', es: 'usar primero los productos más antiguos', pt: 'usar os produtos mais antigos primeiro', tr: 'en eski ürünleri ilk önce kullanmak (ilk giren ilk çıkar)',
                         ar: 'استخدام المواد الأقدم أولاً (ما يدخل أولاً يخرج أولاً)', fa: 'استفاده از مواد قدیمی‌تر در اولویت اول', ku: 'pêşî bikaranîna tiştên kevintir', ur: 'پہلے رکھی ہوئی چیزیں پہلے استعمال کرنا', ru: 'использовать более старые продукты первыми', uk: 'використовувати старіші продукти першими',
-                        zh: '先使用较早存放的食材（先进先出原则）', vi: 'dùng nguyên liệu cũ trước (nhập trước, xuất trước)', th: 'ของที่เก็บไว้ก่อนให้นำมาใช้ก่อน (FIFO)', ne: 'पहिले राखिएको सामान पहिले प्रयोग गर्नु', ps: 'پخواني توکي لومړی کارول'
+                        zh: '先使用较早存放的食材（先进先出原则）', vi: 'dùng nguyên liệu cũ trước (nhập trước, xuất trước)', th: 'ของที่เก็บไว้ก่อนให้นำมาใช้ก่อน (FIFO)', ne: 'पहिले राखिएको सामान पहिले प्रयोग गर्नु', ps: 'پخواني توکي لومړی کارول',
+                        sq: 'përdorni përbërësit më të vjetër fillimisht (FIFO)'
                     }
                 },
                 {
@@ -2868,7 +2926,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'shows below 5 degrees Celsius', de: 'zeigt unter 5 Grad an', es: 'marca menos de 5 grados', pt: 'marca abaixo de 5 graus', tr: '5 derecenin altını gösteriyor',
                         ar: 'يُظهر أقل من 5 درجات مئوية', fa: 'کمتر از ۵ درجه سانتی‌گراد را نشان می‌دهد', ku: 'di bin 5 pileyî de nîşan dide', ur: 'پانچ ڈگری سے کم درجہ حرارت دکھاتا ہے', ru: 'показывает ниже 5 градусов', uk: 'показує нижче 5 градусів',
-                        zh: '显示温度低于5摄氏度', vi: 'hiển thị dưới 5 độ C', th: 'แสดงอุณหภูมิต่ำกว่า 5 องศาเซลเซียس', ne: '५ डिग्रीभन्दा कम तापक्रम देखाउँछ', ps: 'تر ۵ درجو کمه تودوخه ښیي'
+                        zh: '显示温度低于5摄氏度', vi: 'hiển thị dưới 5 độ C', th: 'แสดงอุณหภูมิต่ำกว่า 5 องศาเซลเซียس', ne: '५ डिग्रीभन्दा कम तापक्रम देखाउँछ', ps: 'تر ۵ درجو کمه تودوخه ښیي',
+                        sq: 'tregon temperaturë nën 5 gradë Celsius'
                     }
                 }
             ]
@@ -2892,7 +2951,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'whether there is milk or cream in it (allergens)', de: 'ob Milch oder Sahne darin ist (Allergene)', es: 'si lleva leche o nata (alérgenos)', pt: 'se tem leite ou creme de leite (alergênicos)', tr: 'içinde süt veya krema olup olmadığı (alerjenler)',
                         ar: 'ما إذا كان يحتوي على حليب أو كريمة (مسببات الحساسية)', fa: 'این‌که آیا شیر یا خامه داخل آن هست (حساسیت غذایی)', ku: 'ka şîr an qeymax تێda هەیە (alerjen)', ur: 'کیا اس میں دودھ یا کریم شامل ہے (الرجی)', ru: 'есть ли в нём молоко или сливки (аллергены)', uk: 'чи є в ньому молоко або вершки (алергени)',
-                        zh: '里面是否含有牛奶或奶油（过敏原询问）', vi: 'có sữa hay kem tươi trong đó không (chất gây dị ứng)', th: 'มีส่วนผสมของนมหรือครีมไหม (สารก่อภูมิแพ้)', ne: 'यसमा दूध वा क्रिम छ कि छैन (एलर्जी सम्बन्धी)', ps: 'آیا په دې کې شیدې یا قیماق شته (حساسیت)'
+                        zh: '里面是否含有牛奶或奶油（过敏原询问）', vi: 'có sữa hay kem tươi trong đó không (chất gây dị ứng)', th: 'มีส่วนผสมของนมหรือครีมไหม (สารก่อภูมิแพ้)', ne: 'यसमा दूध वा क्रिम छ कि छैन (एलर्जी सम्बन्धी)', ps: 'آیا په دې کې شیدې یا قیماق شته (حساسیت)',
+                        sq: 'nëse ka qumësht ose pana (pyetje për alergjenë)'
                     }
                 },
                 {
@@ -2902,7 +2962,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'I will just ask the chef', de: 'ich frage kurz den Koch', es: 'voy a preguntarle al cocinero', pt: 'vou perguntar ao chef', tr: 'hemen aşçıya (şefe) sorayım',
                         ar: 'سأسأل الطاهي (الشيف) فوراً', fa: 'الان از سرآشپز می‌پرسم', ku: 'ez ê niha ji aşpêj bipirsim', ur: 'میں ابھی شیف سے پوچھتا ہوں', ru: 'я сейчас спрошу у повара', uk: 'я зараз запитаю у кухаря',
-                        zh: '我这就去问一下主厨', vi: 'tôi sẽ hỏi bếp trưởng ngay', th: 'เดี๋ยวผมไปถามเชฟให้สักครู่นะครับ', ne: 'म एकैछिनमा मुख्य कुकलाई सोध्छु', ps: 'زه به اوس له اشپز څخه وپوښتم'
+                        zh: '我这就去问一下主厨', vi: 'tôi sẽ hỏi bếp trưởng ngay', th: 'เดี๋ยวผมไปถามเชฟให้สักครู่นะครับ', ne: 'म एकैछिनमा मुख्य कुकलाई सोध्छु', ps: 'زه به اوس له اشپز څخه وپوښتم',
+                        sq: 'po shkoj të pyes kryekuzhinierin menjëherë'
                     }
                 },
                 {
@@ -2912,7 +2973,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                     trans: {
                         en: 'completely dairy-free and gluten-free', de: 'komplett laktosefrei (ohne Milch) und glutenfrei', es: 'totalmente sin leche y sin gluten', pt: 'totalmente sem leite e sem glúten', tr: 'tamamen sütsüz ve glütensiz',
                         ar: 'خالٍ تماماً من الحليب والغلوتين', fa: 'کاملاً بدون شیر و بدون گلوتن', ku: 'bi temamî bê şîr û bê glûten', ur: 'دودھ اور گلوٹین سے بالکل پاک', ru: 'полностью без молока и глютена', uk: 'повністю без молока та глютену',
-                        zh: '完全不含乳制品和麸质（无麸质）', vi: 'hoàn toàn không chứa sữa và gluten', th: 'ปราศจากนมและกลูเตน 100%', ne: 'दूध र ग्लुटेन बिल्कुलै नभएको', ps: 'په بشپړ ډول بې له شیدو او ګلوټین څخه'
+                        zh: '完全不含乳制品和麸质（无麸质）', vi: 'hoàn toàn không chứa sữa và gluten', th: 'ปราศจากนมและกลูเตน 100%', ne: 'दूध र ग्लुटेन बिल्कुलै नभएको', ps: 'په بشپړ ډول بې له شیدو او ګلوټین څخه',
+                        sq: 'plotësisht pa qumësht dhe pa gluten'
                     }
                 }
             ]
@@ -3347,7 +3409,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Chỉ hai phút thôi – tôi sẽ hỏi bếp trưởng ngay.',
                 th: 'รอสักสองนาทีนะครับ – เดี๋ยวผมไปถามเชฟให้ครับ',
                 ne: 'खाली दुई मिनेट – म मुख्य कुकलाई सोध्छु।',
-                ps: 'یوازې دوه دقیقې – زه به اوس له اشپز څخه وپوښتم.'
+                ps: 'یوازې دوه دقیقې – زه به اوس له اشپز څخه وپوښتم.',
+                sq: 'Vetëm dy minuta – po pyes shefin e kuzhinës menjëherë.'
             }
         },
         {
@@ -3390,7 +3453,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Vâng, tôi sẽ nhanh chóng lấy một khay mới từ trong bếp ra.',
                 th: 'มีครับ เดี๋ยวผมรีบไปหยิบถาดใหม่จากในครัวมาให้ครับ',
                 ne: 'हजुर, म भान्साबाट छिट्टै नयाँ किस्ती (ट्रे) ल्याउँछु।',
-                ps: 'هو، زه به ژر له پخلنځي څخه نوی غوری راوړم.'
+                ps: 'هو، زه به ژر له پخلنځي څخه نوی غوری راوړم.',
+                sq: 'Po, po shkoj të marr shpejt një pjatancë të re nga kuzhina.'
             }
         },
         {
@@ -3432,7 +3496,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Đã rõ – trước tiên tôi sẽ gọt năm cân cà rốt.',
                 th: 'รับทราบครับ – อย่างแรกผมจะปอกแครอทห้ากิโลกรัมก่อน',
                 ne: 'बुझें – पहिले म पाँच किलो गाजर ताछ्छु।',
-                ps: 'پوه شوم – لومړی زه پنځه کیلو ګازرې سپینوم.'
+                ps: 'پوه شوم – لومړی زه پنځه کیلو ګازرې سپینوم.',
+                sq: 'Në rregull – fillimisht po qëroj pesë kilogramë karota.'
             }
         },
         {
@@ -3475,7 +3540,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Cẩn thận nhé – tôi đang bưng khay nướng rất nóng!',
                 th: 'ระวังนะครับ – ผมกำลังถือถาดอบร้อนๆ มาครับ!',
                 ne: 'होसियार – म तातो बेकिङ ट्रे लिएर आउँदैछु!',
-                ps: 'پام کوئ – زه له تود پتنوس (ټرې) سره راځم!'
+                ps: 'پام کوئ – زه له تود پتنوس (ټرې) سره راځم!',
+                sq: 'Kujdes – po vij me një tavë të nxehtë!'
             }
         },
         {
@@ -3519,7 +3585,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Xin lỗi, bạn có thể giúp tôi bê nồi súp nặng này một chút được không?',
                 th: 'ขอโทษนะครับ ช่วยผมยกหม้อใบหนักนี้หน่อยได้ไหมครับ?',
                 ne: 'माफ गर्नुहोस्, के तपाईं मलाई यो गह्रौं भाँडो उचाल्न मद्दत गर्न सक्नुहुन्छ?',
-                ps: 'بښنه غواړم، آیا کولی شئ د دې درانه دیګ په پورته کولو کې راسره مرسته وکړئ؟'
+                ps: 'بښنه غواړم، آیا کولی شئ د دې درانه دیګ په پورته کولو کې راسره مرسته وکړئ؟',
+                sq: 'Më falni, a mund të më ndihmoni të ngre këtë tenxhere të rëndë?'
             }
         },
         {
@@ -3561,7 +3628,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Bạn có thể chỉ cho tôi cách dùng máy trộn một lần được không?',
                 th: 'ช่วยสอนวิธีใช้เครื่องผสมอาหารให้ผมดูสักครั้งได้ไหมครับ?',
                 ne: 'के तपाईं मलाई यो मिक्सर मेसिन एक पटक चलाएर देखाउन सक्नुहुन्छ?',
-                ps: 'آیا کولی شئ ماته یو ځل د اوړو ماشین وښایاست؟'
+                ps: 'آیا کولی شئ ماته یو ځل د اوړو ماشین وښایاست؟',
+                sq: 'A mund të ma tregoni një herë si përdoret mikseri industrial?'
             }
         },
         {
@@ -3606,7 +3674,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Vâng, trước tiên tôi rửa thớt, và sau đó tôi sẽ khử trùng mặt bàn.',
                 th: 'ครับ อย่างแรกผมจะล้างเขียงก่อน และหลังจากนั้นจะเช็ดฆ่าเชื้อโต๊ะครับ',
                 ne: 'हजुर, पहिले म चपिङ बोर्ड धुन्छु, र त्यसपछि टेबल सेनिटाइज गर्छु।',
-                ps: 'هو، لومړی زه د پرې کولو تخته مینځم، او وروسته مېز ضدعفوني کوم.'
+                ps: 'هو، لومړی زه د پرې کولو تخته مینځم، او وروسته مېز ضدعفوني کوم.',
+                sq: 'Po, fillimisht laj dërrasën e prerjes dhe më pas dezinfektoj tavolinën.'
             }
         },
         {
@@ -3647,7 +3716,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Chúng ta đang thiếu cà chua tươi trong phòng lạnh.',
                 th: 'ในห้องเย็นของเรามะเขือเทศสดหมดครับ',
                 ne: 'चिस्यान कोठा (कोल्ड रुम) मा ताजा गोलभेडा अपुग छ।',
-                ps: 'په سړه خونه کې تازه رومیان کم دي.'
+                ps: 'په سړه خونه کې تازه رومیان کم دي.',
+                sq: 'Ka mbetur pak domate e freskët në dhomën frigoriferike.'
             }
         },
         {
@@ -3691,7 +3761,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Vâng, cuối cùng tôi đã dán nhãn ngày tháng lên cả bốn hộp.',
                 th: 'ครับ สุดท้ายผมติดป้ายระบุวันที่บนกล่องทั้งสี่ใบเรียบร้อยแล้วครับ',
                 ne: 'हजुर, अन्त्यमा मैले चारवटै बट्टामा मितिको स्टिकर टाँसें।',
-                ps: 'هو، په پای کې مې په څلورو واړو لوښو د نېټې نښه ولګوله.'
+                ps: 'هو، په پای کې مې په څلورو واړو لوښو د نېټې نښه ولګوله.',
+                sq: 'Po, në fund u vendosa etiketën e datës të katër kutive.'
             }
         },
         {
@@ -3734,7 +3805,8 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
                 vi: 'Vâng, may mắn là món salad và bánh mì hiện đã hoàn toàn sẵn sàng để phục vụ.',
                 th: 'ครับ โชคดีที่ตอนนี้สลัดและขนมปังพร้อมเสิร์ฟเรียบร้อยแล้วครับ',
                 ne: 'हजुर, धन्न सलाद र रोटी अब पस्कनका लागि पूर्ण रूपमा तयार छन्।',
-                ps: 'هو، له نېکه مرغه سلاد او ډوډۍ اوس د وړاندې کولو لپاره بالکل چمتو دي.'
+                ps: 'هو، له نېکه مرغه سلاد او ډوډۍ اوس د وړاندې کولو لپاره بالکل چمتو دي.',
+                sq: 'Po, për fat të mirë sallata dhe buka janë gati për t\'u shërbyer.'
             }
         }
     ];

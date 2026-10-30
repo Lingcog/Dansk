@@ -18,7 +18,8 @@ export const LANGUAGES = [
     { code: 'es', label: 'Español', flag: '🇪🇸' },
     { code: 'uk', label: 'Українська', flag: '🇺🇦', icon: 'ukraine.png' },
     { code: 'ku', label: 'Kurdî', flag: '☀️', icon: 'kurdistan.png' },
-    { code: 'ps', label: 'پښتو', flag: '🇦🇫', icon: 'afghanistan.png', dir: 'rtl' }
+    { code: 'ps', label: 'پښتو', flag: '🇦🇫', icon: 'afghanistan.png', dir: 'rtl' },
+    { code: 'sq', label: 'Shqip (Albansk)', flag: '🇦🇱' }
 ];
 
 let isInitialized = false;

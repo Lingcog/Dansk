@@ -33,7 +33,8 @@ export function renderLanguageView(container, navigateFn) {
         { code: 'es', label: 'Español' },
         { code: 'uk', label: 'Українська', icon: 'ukraine.png' },
         { code: 'ku', label: 'Kurdî', icon: 'kurdistan.png' },
-        { code: 'ps', label: 'پښتو', icon: 'afghanistan.png' }
+        { code: 'ps', label: 'پښتو', icon: 'afghanistan.png' },
+        { code: 'sq', label: 'Shqip (Albansk)' }
     ];
 
     languages.forEach(l => {

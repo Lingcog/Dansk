@@ -1241,13 +1241,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     hero.className = 'tids-hero';
     hero.innerHTML = `
         <div class="byggeplads-pills">
-            <span>Sprogets byggeplads:</span>
-            <span class="pill-vrb">🔴 Verbum (handlingen)</span>
+            <span>${getTranslation('tids_byggeplads')}</span>
+            <span class="pill-vrb">${getTranslation('tids_verb_action')}</span>
             <span class="pill-plus">+</span>
-            <span class="pill-adv">🔵 Tidsudtryk (tidsankeret)</span>
+            <span class="pill-adv">${getTranslation('tids_adv_time')}</span>
         </div>
-        <h1>Tidsudtryk og handlinger</h1>
-        <p>I moderne hverdagsdansk bruger vi næsten altid <strong>nutid</strong>, når vi taler om fremtidige planer (<em>"Jeg rejser i morgen"</em>). Lær samspillet mellem handlingen og tiden.</p>
+        <h1>${getTranslation('tids_hero_title')}</h1>
+        <p>${getTranslation('tids_hero_desc')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1257,10 +1257,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     goldenBanner.innerHTML = `
         <div class="golden-rule-icon">💡</div>
         <div class="golden-rule-content">
-            <h3>Moderne dansk: nutid brugt om fremtid</h3>
-            <p>Du behøver ikke altid sige <em>"jeg skal rejse"</em>. Når der er et tidsudtryk som <span class="golden-rule-highlight">i morgen</span>, <span class="golden-rule-highlight">i aften</span> eller <span class="golden-rule-highlight">på fredag</span>, bruger vi som regel almindelig nutid:<br>
-            • <strong>"Jeg rejser til Italien i morgen."</strong> <em>(helt naturligt hverdagsdansk)</em><br>
-            • <strong>"Toget afgår klokken 11.15."</strong> &nbsp;•&nbsp; <strong>"Vi ses i aften!"</strong></p>
+            <h3>${getTranslation('tids_golden_title')}</h3>
+            <p>${getTranslation('tids_golden_desc')}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);
@@ -1270,10 +1268,10 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     tabsNav.className = 'tids-tabs-nav';
 
     const tabsData = [
-        { id: 'vrimmel', label: 'Vrimlebillede: tid og handling' },
-        { id: 'nutid_fremtid', label: 'Nutid som fremtid' },
-        { id: 'vaerksted', label: 'Træn tidsudtryk (10 opgaver)' },
-        { id: 'tidslinje', label: 'Tidslinje og frekvens' }
+        { id: 'vrimmel', label: getTranslation('tids_tab_vrimmel') },
+        { id: 'nutid_fremtid', label: getTranslation('tids_tab_nutid_fremtid') },
+        { id: 'vaerksted', label: getTranslation('tids_tab_vaerksted') },
+        { id: 'tidslinje', label: getTranslation('tids_tab_tidslinje') }
     ];
 
     let currentTab = extraData.subPath || 'vrimmel';
@@ -1305,111 +1303,114 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     // -------------------------------------------------------------
     // DATA: 6 Tidsudtryk i Vrimlebilledet (Fokus på TIDSANKERET)
     // -------------------------------------------------------------
-    const VRIMMEL_HOTSPOTS = [
-        {
-            id: 'rejser_imorgen',
-            timeTitle: 'I morgen',
-            timeCategory: 'Fremtid (planlagt)',
-            icon: '🔵',
-            color: '#38bdf8',
-            badgeBg: 'rgba(56, 189, 248, 0.15)',
-            badgeBorder: '#38bdf8',
-            x: 51,
-            y: 74,
-            straightSentence: 'Jeg rejser til Italien i morgen.',
-            inversionSentence: 'I morgen rejser jeg til Italien.',
-            verb: 'rejser',
-            verbTense: 'Nutid (præsens)',
-            timeWord: 'i morgen',
-            pedagogicalTip: 'Selvom rejsen sker i morgen, står verbet i almindelig nutid: <strong>"Jeg rejser i morgen"</strong>.'
-        },
-        {
-            id: 'drikker_kaffe_nu',
-            timeTitle: 'Lige nu',
-            timeCategory: 'Nutid (aktuel handling)',
-            icon: '🟢',
-            color: '#4ade80',
-            badgeBg: 'rgba(34, 197, 94, 0.15)',
-            badgeBorder: '#22c55e',
-            x: 67,
-            y: 80,
-            straightSentence: 'Vi drikker kaffe og spiser kage nu.',
-            inversionSentence: 'Nu drikker vi kaffe og spiser kage.',
-            verb: 'drikker',
-            verbTense: 'Nutid (præsens)',
-            timeWord: 'nu / lige nu',
-            pedagogicalTip: 'Handlingen foregår i dette øjeblik sammen med tidsudtrykket <em>nu</em>.'
-        },
-        {
-            id: 'drak_kaffe_imorges',
-            timeTitle: 'I morges',
-            timeCategory: 'Datid (afsluttet tidspunkt)',
-            icon: '🔴',
-            color: '#f87171',
-            badgeBg: 'rgba(239, 68, 68, 0.15)',
-            badgeBorder: '#ef4444',
-            x: 89,
-            y: 83,
-            straightSentence: 'Jeg drak kaffe i morges.',
-            inversionSentence: 'I morges drak jeg kaffe.',
-            verb: 'drak',
-            verbTense: 'Datid (præteritum)',
-            timeWord: 'i morges',
-            pedagogicalTip: 'Tidspunktet "i morges" er afsluttet, og verbet skal derfor stå i <strong>datid</strong> (<em>drak</em>).'
-        },
-        {
-            id: 'ses_iaften',
-            timeTitle: 'I aften',
-            timeCategory: 'Nær fremtid (aftale)',
-            icon: '🟣',
-            color: '#c084fc',
-            badgeBg: 'rgba(168, 85, 247, 0.15)',
-            badgeBorder: '#a855f7',
-            x: 18,
-            y: 72,
-            straightSentence: 'Vi ses til middag i aften!',
-            inversionSentence: 'I aften ses vi til middag!',
-            verb: 'ses',
-            verbTense: 'Nutid (reciprok form)',
-            timeWord: 'i aften',
-            pedagogicalTip: 'Vendingen <em>"Vi ses i aften"</em> er en fast hverdagsaftale, der udtrykkes i nutid med fremtidig betydning.'
-        },
-        {
-            id: 'toget_afgaar',
-            timeTitle: 'Klokken 11.15',
-            timeCategory: 'Køreplan og tidsplan',
-            icon: '⏱️',
-            color: '#38bdf8',
-            badgeBg: 'rgba(56, 189, 248, 0.15)',
-            badgeBorder: '#38bdf8',
-            x: 82,
-            y: 22,
-            straightSentence: 'Toget afgår klokken 11.15.',
-            inversionSentence: 'Klokken 11.15 afgår toget.',
-            verb: 'afgår',
-            verbTense: 'Nutid (præsens)',
-            timeWord: 'klokken 11.15',
-            pedagogicalTip: 'I køreplaner og faste programmer bruges altid nutid: <em>"Toget afgår kl. 11.15"</em>.'
-        },
-        {
-            id: 'cykler_altid',
-            timeTitle: 'Altid / hver dag',
-            timeCategory: 'Vane og gentagelse',
-            icon: '🔄',
-            color: '#fbbf24',
-            badgeBg: 'rgba(245, 158, 11, 0.15)',
-            badgeBorder: '#f59e0b',
-            x: 39,
-            y: 62,
-            straightSentence: 'Hun cykler altid på arbejde.',
-            inversionSentence: 'Hver dag cykler hun på arbejde.',
-            verb: 'cykler',
-            verbTense: 'Nutid (vane/gentagelse)',
-            timeWord: 'altid / hver dag',
-            pedagogicalTip: 'Frekvensord som <em>altid, tit</em> og <em>aldrig</em> fortæller, hvor ofte handlingen gentager sig.'
-        }
-    ];
+    function getVrimmelHotspots() {
+        return [
+            {
+                id: 'rejser_imorgen',
+                timeTitle: getTranslation('tids_spot_1_title'),
+                timeCategory: getTranslation('tids_spot_1_cat'),
+                icon: '🔵',
+                color: '#38bdf8',
+                badgeBg: 'rgba(56, 189, 248, 0.15)',
+                badgeBorder: '#38bdf8',
+                x: 51,
+                y: 74,
+                straightSentence: 'Jeg rejser til Italien i morgen.',
+                inversionSentence: 'I morgen rejser jeg til Italien.',
+                verb: 'rejser',
+                verbTense: 'Nutid (præsens)',
+                timeWord: 'i morgen',
+                pedagogicalTip: getTranslation('tids_spot_1_tip')
+            },
+            {
+                id: 'drikker_kaffe_nu',
+                timeTitle: getTranslation('tids_spot_2_title'),
+                timeCategory: getTranslation('tids_spot_2_cat'),
+                icon: '🟢',
+                color: '#4ade80',
+                badgeBg: 'rgba(34, 197, 94, 0.15)',
+                badgeBorder: '#22c55e',
+                x: 67,
+                y: 80,
+                straightSentence: 'Vi drikker kaffe og spiser kage nu.',
+                inversionSentence: 'Nu drikker vi kaffe og spiser kage.',
+                verb: 'drikker',
+                verbTense: 'Nutid (præsens)',
+                timeWord: 'nu / lige nu',
+                pedagogicalTip: getTranslation('tids_spot_2_tip')
+            },
+            {
+                id: 'drak_kaffe_imorges',
+                timeTitle: getTranslation('tids_spot_3_title'),
+                timeCategory: getTranslation('tids_spot_3_cat'),
+                icon: '🔴',
+                color: '#f87171',
+                badgeBg: 'rgba(239, 68, 68, 0.15)',
+                badgeBorder: '#ef4444',
+                x: 89,
+                y: 83,
+                straightSentence: 'Jeg drak kaffe i morges.',
+                inversionSentence: 'I morges drak jeg kaffe.',
+                verb: 'drak',
+                verbTense: 'Datid (præteritum)',
+                timeWord: 'i morges',
+                pedagogicalTip: getTranslation('tids_spot_3_tip')
+            },
+            {
+                id: 'ses_iaften',
+                timeTitle: getTranslation('tids_spot_4_title'),
+                timeCategory: getTranslation('tids_spot_4_cat'),
+                icon: '🟣',
+                color: '#c084fc',
+                badgeBg: 'rgba(168, 85, 247, 0.15)',
+                badgeBorder: '#a855f7',
+                x: 18,
+                y: 72,
+                straightSentence: 'Vi ses til middag i aften!',
+                inversionSentence: 'I aften ses vi til middag!',
+                verb: 'ses',
+                verbTense: 'Nutid (reciprok form)',
+                timeWord: 'i aften',
+                pedagogicalTip: getTranslation('tids_spot_4_tip')
+            },
+            {
+                id: 'toget_afgaar',
+                timeTitle: getTranslation('tids_spot_5_title'),
+                timeCategory: getTranslation('tids_spot_5_cat'),
+                icon: '⏱️',
+                color: '#38bdf8',
+                badgeBg: 'rgba(56, 189, 248, 0.15)',
+                badgeBorder: '#38bdf8',
+                x: 82,
+                y: 22,
+                straightSentence: 'Toget afgår klokken 11.15.',
+                inversionSentence: 'Klokken 11.15 afgår toget.',
+                verb: 'afgår',
+                verbTense: 'Nutid (præsens)',
+                timeWord: 'klokken 11.15',
+                pedagogicalTip: getTranslation('tids_spot_5_tip')
+            },
+            {
+                id: 'cykler_altid',
+                timeTitle: getTranslation('tids_spot_6_title'),
+                timeCategory: getTranslation('tids_spot_6_cat'),
+                icon: '🔄',
+                color: '#fbbf24',
+                badgeBg: 'rgba(245, 158, 11, 0.15)',
+                badgeBorder: '#f59e0b',
+                x: 39,
+                y: 62,
+                straightSentence: 'Hun cykler altid på arbejde.',
+                inversionSentence: 'Hver dag cykler hun på arbejde.',
+                verb: 'cykler',
+                verbTense: 'Nutid (vane/gentagelse)',
+                timeWord: 'altid / hver dag',
+                pedagogicalTip: getTranslation('tids_spot_6_tip')
+            }
+        ];
+    }
 
+    let VRIMMEL_HOTSPOTS = getVrimmelHotspots();
     let selectedHotspot = VRIMMEL_HOTSPOTS[0];
     let isInverted = false;
 
@@ -1435,13 +1436,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         stageCard.innerHTML = `
             <div class="vrimmel-stage-header">
-                <div class="vrimmel-stage-title">Tidsudtrykkene i byens hverdag</div>
-                <div class="vrimmel-stage-subtitle">Vælg et tidsanker på knapperne herunder eller tryk direkte på tidsmærkerne i billedet:</div>
+                <div class="vrimmel-stage-title">${getTranslation('tids_vrimmel_title')}</div>
+                <div class="vrimmel-stage-subtitle">${getTranslation('tids_vrimmel_subtitle')}</div>
             </div>
 
             <!-- Tids-knaprække: Intuitiv styring af tiderne -->
             <div class="vrimmel-time-filter-bar" id="time-filter-bar">
-                <span class="vrimmel-time-label">Tidsankre:</span>
+                <span class="vrimmel-time-label">${getTranslation('tids_vrimmel_time_anchors')}</span>
                 ${VRIMMEL_HOTSPOTS.map(spot => `
                     <button type="button" class="time-filter-btn ${spot.id === selectedHotspot.id ? 'active' : ''}" data-id="${spot.id}">
                         <span>${spot.icon}</span>
@@ -1522,7 +1523,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     <div class="inspector-title-area">
                         <span class="inspector-icon">${selectedHotspot.icon}</span>
                         <div>
-                            <h3 class="inspector-time-heading">Tidsanker: ${selectedHotspot.timeTitle}</h3>
+                            <h3 class="inspector-time-heading">${getTranslation('tids_inspector_heading', { title: selectedHotspot.timeTitle })}</h3>
                         </div>
                     </div>
                     <span class="inspector-badge" style="background: ${selectedHotspot.badgeBg}; border-color: ${selectedHotspot.badgeBorder}; color: ${selectedHotspot.color};">
@@ -1535,28 +1536,28 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     <div class="sentence-actions">
                         <button type="button" class="btn-action-listen" id="btn-listen">
                             <span>🔊</span>
-                            <span>Hør sætning</span>
+                            <span>${getTranslation('tids_listen_sentence')}</span>
                         </button>
                         <button type="button" class="btn-action-invert" id="btn-invert" title="Skift mellem ligefrem ordstilling og inversion">
                             <span>🔄</span>
-                            <span>${isInverted ? 'Vis ligefrem ordstilling' : 'Vend: sæt tiden forrest (inversion)'}</span>
+                            <span>${isInverted ? getTranslation('tids_show_straight') : getTranslation('tids_show_inversion')}</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="inspector-analysis-grid">
                     <div class="analysis-card">
-                        <div class="analysis-card-title">🔴 Verbum (handlingen)</div>
+                        <div class="analysis-card-title">${getTranslation('tids_card_verb_title')}</div>
                         <div class="analysis-card-val" style="color: #f87171;">${selectedHotspot.verb}</div>
-                        <div class="analysis-card-desc">Bøjningsform: <strong>${selectedHotspot.verbTense}</strong></div>
+                        <div class="analysis-card-desc">${getTranslation('tids_card_verb_desc', { tense: selectedHotspot.verbTense })}</div>
                     </div>
                     <div class="analysis-card">
-                        <div class="analysis-card-title">🔵 Tidsudtryk (tidsankeret)</div>
+                        <div class="analysis-card-title">${getTranslation('tids_card_time_title')}</div>
                         <div class="analysis-card-val" style="color: #38bdf8;">${selectedHotspot.timeWord}</div>
-                        <div class="analysis-card-desc">Tidskategori: <strong>${selectedHotspot.timeCategory}</strong></div>
+                        <div class="analysis-card-desc">${getTranslation('tids_card_time_desc', { cat: selectedHotspot.timeCategory })}</div>
                     </div>
                     <div class="analysis-card">
-                        <div class="analysis-card-title">💡 Grammatisk pointe</div>
+                        <div class="analysis-card-title">${getTranslation('tids_card_point_title')}</div>
                         <div class="analysis-card-desc">${selectedHotspot.pedagogicalTip}</div>
                     </div>
                 </div>
@@ -1585,10 +1586,10 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             <!-- Model 1 -->
             <div class="future-model-card">
                 <div>
-                    <div class="model-card-tag tag-model-1">Den mest almindelige hverdagsform</div>
-                    <div class="future-model-title">1. Nutid + tidsudtryk</div>
+                    <div class="model-card-tag tag-model-1">${getTranslation('tids_m1_tag')}</div>
+                    <div class="future-model-title">${getTranslation('tids_m1_title')}</div>
                     <div class="future-model-desc">
-                        I hverdagsdansk bruger vi næsten altid almindelig nutid, fordi tidsordet (<em>i morgen, i aften, om lidt</em>) allerede fastslår fremtiden.
+                        ${getTranslation('tids_m1_desc')}
                     </div>
                     <div class="example-list">
                         <div class="example-item">
@@ -1606,17 +1607,17 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     </div>
                 </div>
                 <div style="font-size: 0.85rem; color: #4ade80; font-weight: 600;">
-                    ✓ Den mest naturlige form i daglig samtale
+                    ${getTranslation('tids_m1_sub')}
                 </div>
             </div>
 
             <!-- Model 2 -->
             <div class="future-model-card">
                 <div>
-                    <div class="model-card-tag tag-model-2">Fast plan eller aftale</div>
-                    <div class="future-model-title">2. Skal + navneform</div>
+                    <div class="model-card-tag tag-model-2">${getTranslation('tids_m2_tag')}</div>
+                    <div class="future-model-title">${getTranslation('tids_m2_title')}</div>
                     <div class="future-model-desc">
-                        Bruges når der er en decideret fast plan, pligt eller officiel aftale (f.eks. læge, tandlæge, arbejde eller eksamen).
+                        ${getTranslation('tids_m2_desc')}
                     </div>
                     <div class="example-list">
                         <div class="example-item">
@@ -1634,17 +1635,17 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     </div>
                 </div>
                 <div style="font-size: 0.85rem; color: #fcd34d; font-weight: 600;">
-                    ✓ Bruges når noget er aftalt eller nødvendigt
+                    ${getTranslation('tids_m2_sub')}
                 </div>
             </div>
 
             <!-- Model 3 -->
             <div class="future-model-card">
                 <div>
-                    <div class="model-card-tag tag-model-3">Ønske eller forudsigelse</div>
-                    <div class="future-model-title">3. Vil + navneform</div>
+                    <div class="model-card-tag tag-model-3">${getTranslation('tids_m3_tag')}</div>
+                    <div class="future-model-title">${getTranslation('tids_m3_title')}</div>
                     <div class="future-model-desc">
-                        Bruges om noget man <em>har lyst til</em> (vil gerne), eller en uundgåelig forudsigelse (fx vejrudsigten).
+                        ${getTranslation('tids_m3_desc')}
                     </div>
                     <div class="example-list">
                         <div class="example-item">
@@ -1662,7 +1663,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     </div>
                 </div>
                 <div style="font-size: 0.85rem; color: #c084fc; font-weight: 600;">
-                    ✓ Viser hensigt ("vil gerne") eller forudsigelse
+                    ${getTranslation('tids_m3_sub')}
                 </div>
             </div>
         `;
@@ -1673,8 +1674,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         quizCard.className = 'mini-quiz-card';
         quizCard.innerHTML = `
             <div class="mini-quiz-header">
-                <h3>Peger sætningen på fremtid eller nutid?</h3>
-                <p>Læg mærke til verbet og tidsudtrykket i hver sætning:</p>
+                <h3>${getTranslation('tids_mq_header_title')}</h3>
+                <p>${getTranslation('tids_mq_header_desc')}</p>
             </div>
             <div id="quiz-list-container"></div>
         `;
@@ -1683,22 +1684,22 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             {
                 sentence: "Jeg ringer til dig i morgen tidlig.",
                 correct: "fremtid",
-                explanation: "Verbet 'ringer' er nutid, men tidsudtrykket 'i morgen tidlig' placerer handlingen i fremtiden."
+                explanation: getTranslation('tids_mq_q1_exp')
             },
             {
                 sentence: "Lige nu drikker jeg en kop kaffe på bænken.",
                 correct: "ligenu",
-                explanation: "'Lige nu' angiver det aktuelle øjeblik. Handlingen foregår i nutiden."
+                explanation: getTranslation('tids_mq_q2_exp')
             },
             {
                 sentence: "Vi flytter i næste måned.",
                 correct: "fremtid",
-                explanation: "'Flytter' er nutid, men 'i næste måned' placerer begivenheden i fremtiden."
+                explanation: getTranslation('tids_mq_q3_exp')
             },
             {
                 sentence: "Toget afgår om to minutter.",
                 correct: "fremtid",
-                explanation: "Køreplanen er fastsat, og 'om to minutter' peger ud i den nære fremtid."
+                explanation: getTranslation('tids_mq_q4_exp')
             }
         ];
 
@@ -1712,8 +1713,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     <button class="listen-icon-btn" title="Lyt">🔊</button>
                 </div>
                 <div class="quiz-options-row">
-                    <button type="button" class="quiz-opt-btn" data-choice="ligenu">Lige nu (nutid)</button>
-                    <button type="button" class="quiz-opt-btn" data-choice="fremtid">Fremtid (plan eller aftale)</button>
+                    <button type="button" class="quiz-opt-btn" data-choice="ligenu">${getTranslation('tids_mq_choice_now')}</button>
+                    <button type="button" class="quiz-opt-btn" data-choice="fremtid">${getTranslation('tids_mq_choice_future')}</button>
                 </div>
                 <div class="quiz-feedback-box" id="q-feedback-${idx}"></div>
             `;
@@ -1734,14 +1735,14 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                         feedbackEl.style.background = 'rgba(34, 197, 94, 0.12)';
                         feedbackEl.style.border = '1px solid rgba(34, 197, 94, 0.4)';
                         feedbackEl.style.color = '#4ade80';
-                        feedbackEl.innerHTML = `Korrekt! ${q.explanation}`;
+                        feedbackEl.innerHTML = getTranslation('tids_mq_correct', { exp: q.explanation });
                     } else {
                         btn.classList.add('wrong');
                         feedbackEl.style.display = 'block';
                         feedbackEl.style.background = 'rgba(239, 68, 68, 0.12)';
                         feedbackEl.style.border = '1px solid rgba(239, 68, 68, 0.4)';
                         feedbackEl.style.color = '#f87171';
-                        feedbackEl.innerHTML = `Prøv igen: ${q.explanation}`;
+                        feedbackEl.innerHTML = getTranslation('tids_mq_try_again', { exp: q.explanation });
                     }
                 };
             });
@@ -1757,104 +1758,107 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         const vaerkstedCard = document.createElement('div');
         vaerkstedCard.className = 'vaerksted-card';
 
-        const QUESTIONS = [
-            {
-                textBefore: "Jeg rejser til Italien ",
-                textAfter: ".",
-                correct: "i morgen",
-                options: ["i morgen", "i går", "for to dage siden"],
-                tip: "I moderne dansk bruger vi nutid ('rejser') sammen med 'i morgen' om fremtidige rejser.",
-                verbContext: "nutid om fremtid",
-                hasHint: true,
-                hintText: "Handlingen er en planlagt rejse i fremtiden."
-            },
-            {
-                textBefore: "Jeg drak en dejlig kop kaffe ",
-                textAfter: ".",
-                correct: "i morges",
-                options: ["i morges", "i morgen", "nu"],
-                tip: "Verbet 'drak' er datid (i fortiden). Derfor passer 'i morges'.",
-                verbContext: "datid (afsluttet tid)",
-                hasHint: true,
-                hintText: "Læg mærke til datidsformen 'drak'."
-            },
-            {
-                textBefore: "",
-                textAfter: " rejser vi til Italien.",
-                correct: "I morgen",
-                options: ["I morgen", "I går", "Forleden"],
-                tip: "Her har vi inversion: Tidsudtrykket 'I morgen' står på 1. plads, og verbet 'rejser' følger på 2. plads.",
-                verbContext: "tiden forrest (inversion)",
-                hasHint: true,
-                hintText: "Handlingen sker i fremtiden, og tiden står forrest."
-            },
-            {
-                textBefore: "Toget mod Århus afgår ",
-                textAfter: ".",
-                correct: "om fem minutter",
-                options: ["om fem minutter", "i går aftes", "sidste uge"],
-                tip: "Køreplaner omtales altid i nutid: 'Toget afgår om fem minutter'.",
-                verbContext: "køreplan i nutid",
-                hasHint: true,
-                hintText: "Køreplaner angives med nutidsform."
-            },
-            {
-                textBefore: "Vi ses til middag ",
-                textAfter: "!",
-                correct: "i aften",
-                options: ["i aften", "i forgårs", "for en uge siden"],
-                tip: "'Vi ses i aften' er en klassisk hverdagsaftale i nær fremtid.",
-                verbContext: "aftale i nær fremtid",
-                hasHint: true,
-                hintText: "Aftalen gælder senere i dag."
-            },
-            {
-                textBefore: "Hun cykler ",
-                textAfter: " på arbejde gennem byen.",
-                correct: "altid",
-                options: ["altid", "i går morges", "i forgårs"],
-                tip: "'Altid' er et frekvensadverbium, som beskriver en fast hverdagsrutine.",
-                verbContext: "gentagelse og vane",
-                hasHint: false
-            },
-            {
-                textBefore: "",
-                textAfter: " drak jeg en kold øl ved kanalen.",
-                correct: "I fredags",
-                options: ["I fredags", "I aften", "I morgen"],
-                tip: "'Drak' er datid, så her skal vi bruge det afsluttede tidsudtryk 'I fredags'.",
-                verbContext: "inversion i datid",
-                hasHint: false
-            },
-            {
-                textBefore: "I aften ",
-                textAfter: " vi en god film i biografen.",
-                correct: "ser",
-                options: ["ser", "så", "have set"],
-                tip: "I aften + nutidsformen 'ser' danner den naturlige hverdagsdanske fremtid.",
-                verbContext: "nutid om fremtid",
-                hasHint: false
-            },
-            {
-                textBefore: "Han ",
-                textAfter: " til tandlægen i morgen tidlig.",
-                correct: "skal",
-                options: ["skal", "var", "blev"],
-                tip: "Modalverbet 'skal' bruges ved faste aftaler og forpligtelser: 'skal til tandlægen'.",
-                verbContext: "aftale og nødvendighed",
-                hasHint: false
-            },
-            {
-                textBefore: "Vi flytter ind i den nye lejlighed ",
-                textAfter: ".",
-                correct: "i næste uge",
-                options: ["i næste uge", "i morges", "for to år siden"],
-                tip: "'Flytter' er nutid, og 'i næste uge' gør det til en planlagt flytning.",
-                verbContext: "planlagt fremtid",
-                hasHint: false
-            }
-        ];
+        function getVaerkstedQuestions() {
+            return [
+                {
+                    textBefore: "Jeg rejser til Italien ",
+                    textAfter: ".",
+                    correct: "i morgen",
+                    options: ["i morgen", "i går", "for to dage siden"],
+                    tip: getTranslation('tids_v_tip_1'),
+                    verbContext: getTranslation('tids_v_ctx_1'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_1')
+                },
+                {
+                    textBefore: "Jeg drak en dejlig kop kaffe ",
+                    textAfter: ".",
+                    correct: "i morges",
+                    options: ["i morges", "i morgen", "nu"],
+                    tip: getTranslation('tids_v_tip_2'),
+                    verbContext: getTranslation('tids_v_ctx_2'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_2')
+                },
+                {
+                    textBefore: "",
+                    textAfter: " rejser vi til Italien.",
+                    correct: "I morgen",
+                    options: ["I morgen", "I går", "Forleden"],
+                    tip: getTranslation('tids_v_tip_3'),
+                    verbContext: getTranslation('tids_v_ctx_3'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_3')
+                },
+                {
+                    textBefore: "Toget mod Århus afgår ",
+                    textAfter: ".",
+                    correct: "om fem minutter",
+                    options: ["om fem minutter", "i går aftes", "sidste uge"],
+                    tip: getTranslation('tids_v_tip_4'),
+                    verbContext: getTranslation('tids_v_ctx_4'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_4')
+                },
+                {
+                    textBefore: "Vi ses til middag ",
+                    textAfter: "!",
+                    correct: "i aften",
+                    options: ["i aften", "i forgårs", "for en uge siden"],
+                    tip: getTranslation('tids_v_tip_5'),
+                    verbContext: getTranslation('tids_v_ctx_5'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_5')
+                },
+                {
+                    textBefore: "Hun cykler ",
+                    textAfter: " på arbejde gennem byen.",
+                    correct: "altid",
+                    options: ["altid", "i går morges", "i forgårs"],
+                    tip: getTranslation('tids_v_tip_6'),
+                    verbContext: getTranslation('tids_v_ctx_6'),
+                    hasHint: false
+                },
+                {
+                    textBefore: "",
+                    textAfter: " drak jeg en kold øl ved kanalen.",
+                    correct: "I fredags",
+                    options: ["I fredags", "I aften", "I morgen"],
+                    tip: getTranslation('tids_v_tip_7'),
+                    verbContext: getTranslation('tids_v_ctx_7'),
+                    hasHint: false
+                },
+                {
+                    textBefore: "I aften ",
+                    textAfter: " vi en god film i biografen.",
+                    correct: "ser",
+                    options: ["ser", "så", "have set"],
+                    tip: getTranslation('tids_v_tip_8'),
+                    verbContext: getTranslation('tids_v_ctx_8'),
+                    hasHint: false
+                },
+                {
+                    textBefore: "Han ",
+                    textAfter: " til tandlægen i morgen tidlig.",
+                    correct: "skal",
+                    options: ["skal", "var", "blev"],
+                    tip: getTranslation('tids_v_tip_9'),
+                    verbContext: getTranslation('tids_v_ctx_9'),
+                    hasHint: false
+                },
+                {
+                    textBefore: "Vi flytter ind i den nye lejlighed ",
+                    textAfter: ".",
+                    correct: "i næste uge",
+                    options: ["i næste uge", "i morges", "for to år siden"],
+                    tip: getTranslation('tids_v_tip_10'),
+                    verbContext: getTranslation('tids_v_ctx_10'),
+                    hasHint: false
+                }
+            ];
+        }
 
+        const QUESTIONS = getVaerkstedQuestions();
         let currentIdx = 0;
         let score = 0;
 
@@ -1868,8 +1872,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     <div class="vaerksted-progress-fill" style="width: ${pct}%;"></div>
                 </div>
                 <div class="vaerksted-header">
-                    <span>Opgave ${currentIdx + 1} af ${QUESTIONS.length}</span>
-                    <span style="color: #38bdf8;">Kontekst: ${q.verbContext}</span>
+                    <span>${getTranslation('tids_v_task_count', { current: currentIdx + 1, total: QUESTIONS.length })}</span>
+                    <span style="color: #38bdf8;">${getTranslation('tids_v_context_label', { context: q.verbContext })}</span>
                 </div>
 
                 <div class="vaerksted-sentence-box">
@@ -1880,7 +1884,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
                 ${q.hasHint ? `
                     <div style="color: #38bdf8; font-size: 0.9rem; margin-bottom: 1.25rem; text-align: center;">
-                        💡 <strong>Hint:</strong> ${q.hintText}
+                        ${getTranslation('tids_v_hint_label', { hint: q.hintText })}
                     </div>
                 ` : ''}
 
@@ -1891,9 +1895,9 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <div class="vaerksted-actions-row">
                     <button type="button" class="btn-action-listen" id="btn-audio-full" style="display: none;">
                         <span>🔊</span>
-                        <span>Hør hele sætningen</span>
+                        <span>${getTranslation('tids_v_btn_listen')}</span>
                     </button>
-                    <button type="button" class="btn-next-question" id="btn-next">Næste opgave ➔</button>
+                    <button type="button" class="btn-next-question" id="btn-next">${currentIdx === QUESTIONS.length - 1 ? getTranslation('tids_v_btn_see_result') : getTranslation('tids_v_btn_next')}</button>
                 </div>
             `;
 
@@ -1919,14 +1923,14 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                         score++;
                         btn.classList.add('selected-correct');
                         feedbackBanner.className = 'vaerksted-feedback-banner correct';
-                        feedbackBanner.innerHTML = `<strong>Korrekt!</strong> ${q.tip}`;
+                        feedbackBanner.innerHTML = getTranslation('tids_v_feedback_correct', { tip: q.tip });
                     } else {
                         btn.classList.add('selected-wrong');
                         choicesGrid.querySelectorAll('.vaerksted-choice-btn').forEach(b => {
                             if (b.textContent.toLowerCase() === q.correct.toLowerCase()) b.classList.add('selected-correct');
                         });
                         feedbackBanner.className = 'vaerksted-feedback-banner wrong';
-                        feedbackBanner.innerHTML = `Det rigtige svar er <strong>"${q.correct}"</strong>.<br>${q.tip}`;
+                        feedbackBanner.innerHTML = getTranslation('tids_v_feedback_wrong', { correct: q.correct, tip: q.tip });
                     }
 
                     audioBtn.style.display = 'inline-flex';
@@ -1934,7 +1938,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
                     nextBtn.style.display = 'inline-block';
                     if (currentIdx === QUESTIONS.length - 1) {
-                        nextBtn.textContent = 'Se resultat';
+                        nextBtn.textContent = getTranslation('tids_v_btn_see_result');
                     }
                 };
 
@@ -1954,16 +1958,16 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         function renderResult() {
             vaerkstedCard.innerHTML = `
                 <div style="text-align: center; padding: 2rem 1rem;">
-                    <h2 style="font-size: 1.8rem; color: white; margin-bottom: 0.5rem;">Resultat</h2>
+                    <h2 style="font-size: 1.8rem; color: white; margin-bottom: 0.5rem;">${getTranslation('tids_v_res_title')}</h2>
                     <p style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 1.5rem;">
-                        Du fik <strong>${score}</strong> ud af <strong>${QUESTIONS.length}</strong> rigtige.
+                        ${getTranslation('tids_v_res_score', { score: score, total: QUESTIONS.length })}
                     </p>
                     <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6;">
-                        Du mestrer nu, hvordan vi på dansk bruger almindelig <strong>nutid</strong> sammen med tidsudtryk om fremtiden (<em>"jeg rejser i morgen"</em>), og hvordan tiden kan placeres forrest med inversion.
+                        ${getTranslation('tids_v_res_desc')}
                     </p>
                     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                         <button type="button" class="btn-action-listen" id="btn-restart" style="padding: 0.75rem 1.5rem; font-weight: 700; cursor: pointer;">
-                            Prøv forfra 🔄
+                            ${getTranslation('tids_v_btn_restart')}
                         </button>
                     </div>
                 </div>
@@ -1989,10 +1993,10 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         timelineCard.innerHTML = `
             <div style="margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0 0 0.3rem;">
-                    Tidsaksen: fortid, nutid og fremtid
+                    ${getTranslation('tids_axis_heading')}
                 </h3>
                 <p style="color: #94a3b8; font-size: 0.92rem; margin: 0;">
-                    Tryk på et tidsudtryk for at høre eksempelsætningen:
+                    ${getTranslation('tids_axis_sub')}
                 </p>
             </div>
 
@@ -2000,7 +2004,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <!-- Fortid -->
                 <div class="timeline-column">
                     <div class="timeline-col-header col-past">
-                        <span>Fortid (datid)</span>
+                        <span>${getTranslation('tids_col_past')}</span>
                     </div>
                     <div class="tidsord-chip-list">
                         <div class="tidsord-chip" data-sentence="I morges drak jeg kaffe.">
@@ -2029,7 +2033,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <!-- Nutid -->
                 <div class="timeline-column">
                     <div class="timeline-col-header col-now">
-                        <span>Nutid (lige nu)</span>
+                        <span>${getTranslation('tids_col_now')}</span>
                     </div>
                     <div class="tidsord-chip-list">
                         <div class="tidsord-chip" data-sentence="Nu drikker vi kaffe.">
@@ -2054,27 +2058,27 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <!-- Fremtid -->
                 <div class="timeline-column">
                     <div class="timeline-col-header col-future">
-                        <span>Fremtid (planlagt handling)</span>
+                        <span>${getTranslation('tids_col_future')}</span>
                     </div>
                     <div class="tidsord-chip-list">
                         <div class="tidsord-chip" data-sentence="Jeg rejser til Italien i morgen.">
-                            <span><strong>i morgen</strong> (nutid)</span>
+                            <span><strong>i morgen</strong> ${getTranslation('tids_chip_present_suffix')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Vi ses til middag i aften.">
-                            <span><strong>i aften</strong> (nutid)</span>
+                            <span><strong>i aften</strong> ${getTranslation('tids_chip_present_suffix')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Toget kører om lidt.">
-                            <span><strong>om lidt</strong> (nutid)</span>
+                            <span><strong>om lidt</strong> ${getTranslation('tids_chip_present_suffix')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="På fredag holder vi fest.">
-                            <span><strong>på fredag</strong> (nutid)</span>
+                            <span><strong>på fredag</strong> ${getTranslation('tids_chip_present_suffix')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Vi starter i næste uge.">
-                            <span><strong>i næste uge</strong> (nutid)</span>
+                            <span><strong>i næste uge</strong> ${getTranslation('tids_chip_present_suffix')}</span>
                             <span>🔊</span>
                         </div>
                     </div>
@@ -2099,22 +2103,22 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         const TIMELINE_MARKERS = [
             // Fortid (datid)
-            { word: 'i morges', target: 'past', label: 'Fortid (datid)' },
-            { word: 'i går', target: 'past', label: 'Fortid (datid)' },
-            { word: 'i forgårs', target: 'past', label: 'Fortid (datid)' },
-            { word: 'i lørdags', target: 'past', label: 'Fortid (datid)' },
-            { word: 'sidste uge', target: 'past', label: 'Fortid (datid)' },
+            { word: 'i morges', target: 'past', label: getTranslation('tids_col_past') },
+            { word: 'i går', target: 'past', label: getTranslation('tids_col_past') },
+            { word: 'i forgårs', target: 'past', label: getTranslation('tids_col_past') },
+            { word: 'i lørdags', target: 'past', label: getTranslation('tids_col_past') },
+            { word: 'sidste uge', target: 'past', label: getTranslation('tids_col_past') },
             // Nutid (lige nu)
-            { word: 'nu', target: 'now', label: 'Nutid (lige nu)' },
-            { word: 'lige nu', target: 'now', label: 'Nutid (lige nu)' },
-            { word: 'i dag', target: 'now', label: 'Nutid (lige nu)' },
-            { word: 'i dette øjeblik', target: 'now', label: 'Nutid (lige nu)' },
+            { word: 'nu', target: 'now', label: getTranslation('tids_col_now') },
+            { word: 'lige nu', target: 'now', label: getTranslation('tids_col_now') },
+            { word: 'i dag', target: 'now', label: getTranslation('tids_col_now') },
+            { word: 'i dette øjeblik', target: 'now', label: getTranslation('tids_col_now') },
             // Fremtid (planlagt)
-            { word: 'i morgen', target: 'future', label: 'Fremtid (planlagt handling)' },
-            { word: 'i aften', target: 'future', label: 'Fremtid (planlagt handling)' },
-            { word: 'om lidt', target: 'future', label: 'Fremtid (planlagt handling)' },
-            { word: 'på fredag', target: 'future', label: 'Fremtid (planlagt handling)' },
-            { word: 'i næste uge', target: 'future', label: 'Fremtid (planlagt handling)' }
+            { word: 'i morgen', target: 'future', label: getTranslation('tids_col_future') },
+            { word: 'i aften', target: 'future', label: getTranslation('tids_col_future') },
+            { word: 'om lidt', target: 'future', label: getTranslation('tids_col_future') },
+            { word: 'på fredag', target: 'future', label: getTranslation('tids_col_future') },
+            { word: 'i næste uge', target: 'future', label: getTranslation('tids_col_future') }
         ];
 
         let remainingMarkers = [...TIMELINE_MARKERS].sort(() => Math.random() - 0.5);
@@ -2128,9 +2132,9 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             const header = document.createElement('div');
             header.className = 'tids-exercise-header';
             header.innerHTML = `
-                <span class="tids-exercise-tag">Øvelse 1</span>
-                <h3 class="tids-exercise-title">Sortér tidsudtrykkene: datid, nutid eller fremtid</h3>
-                <p class="tids-exercise-desc">Afgør hvilken tid udtrykket peger på: fortid (datid), nutid (lige nu) eller fremtid (planlagt handling).</p>
+                <span class="tids-exercise-tag">${getTranslation('tids_ex1_tag')}</span>
+                <h3 class="tids-exercise-title">${getTranslation('tids_ex1_title')}</h3>
+                <p class="tids-exercise-desc">${getTranslation('tids_ex1_desc')}</p>
             `;
             sorterCard.appendChild(header);
 
@@ -2140,21 +2144,21 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 activeBox.className = 'tids-sorter-active';
                 activeBox.innerHTML = `
                     <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 0.4rem;">
-                        Hvor hører dette tidsudtryk til? (${remainingMarkers.length} tilbage)
+                        ${getTranslation('tids_ex1_q', { count: remainingMarkers.length })}
                     </div>
                     <div class="tids-sorter-word">"${currentItem.word}"</div>
                     <div class="tids-sorter-buttons">
                         <button type="button" class="tids-pick-btn btn-pick-past" id="btn-pick-past">
                             <span>📍</span>
-                            <span>Fortid (datid)</span>
+                            <span>${getTranslation('tids_ex1_btn_past')}</span>
                         </button>
                         <button type="button" class="tids-pick-btn btn-pick-now" id="btn-pick-now">
                             <span>🟢</span>
-                            <span>Nutid (lige nu)</span>
+                            <span>${getTranslation('tids_ex1_btn_now')}</span>
                         </button>
                         <button type="button" class="tids-pick-btn btn-pick-future" id="btn-pick-future">
                             <span>🔵</span>
-                            <span>Fremtid (planlagt)</span>
+                            <span>${getTranslation('tids_ex1_btn_future')}</span>
                         </button>
                     </div>
                     <div id="sorter-feedback" style="display: none; margin-top: 0.8rem; font-size: 0.92rem; font-weight: 700;"></div>
@@ -2166,7 +2170,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     if (chosen === currentItem.target) {
                         feedbackEl.style.display = 'block';
                         feedbackEl.style.color = '#4ade80';
-                        feedbackEl.textContent = `Korrekt! "${currentItem.word}" hører til ${currentItem.label.toLowerCase()}.`;
+                        feedbackEl.textContent = getTranslation('tids_ex1_correct', { word: currentItem.word, label: currentItem.label.toLowerCase() });
 
                         if (chosen === 'past') pastBucket.push(currentItem.word);
                         else if (chosen === 'now') nowBucket.push(currentItem.word);
@@ -2177,7 +2181,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     } else {
                         feedbackEl.style.display = 'block';
                         feedbackEl.style.color = '#f87171';
-                        feedbackEl.textContent = `Ikke helt. "${currentItem.word}" hører til ${currentItem.label.toLowerCase()}. Prøv igen!`;
+                        feedbackEl.textContent = getTranslation('tids_ex1_wrong', { word: currentItem.word, label: currentItem.label.toLowerCase() });
                     }
                 }
 
@@ -2191,12 +2195,12 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 doneBox.className = 'tids-sorter-active';
                 doneBox.innerHTML = `
                     <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">
-                        Flot klaret! Alle 14 tidsudtryk er placeret korrekt 🎉
+                        ${getTranslation('tids_ex1_done_title')}
                     </div>
                     <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.2rem;">
-                        Du har nu helt styr på, hvilke udtryk der knytter sig til fortid, nutid og fremtid.
+                        ${getTranslation('tids_ex1_done_desc')}
                     </p>
-                    <button type="button" class="task-next-btn" id="btn-restart-sorter">Prøv igen 🔄</button>
+                    <button type="button" class="task-next-btn" id="btn-restart-sorter">${getTranslation('tids_ex1_btn_restart')}</button>
                 `;
                 doneBox.querySelector('#btn-restart-sorter').onclick = () => {
                     remainingMarkers = [...TIMELINE_MARKERS].sort(() => Math.random() - 0.5);
@@ -2215,7 +2219,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <div class="tids-bucket bucket-past">
                     <div class="tids-bucket-header">
                         <span>📍</span>
-                        <span>Fortid (${pastBucket.length})</span>
+                        <span>${getTranslation('tids_bucket_past', { count: pastBucket.length })}</span>
                     </div>
                     <div class="tids-bucket-flow">
                         ${pastBucket.map(w => `<span class="placed-chip placed-past">${w}</span>`).join('')}
@@ -2225,7 +2229,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <div class="tids-bucket bucket-now">
                     <div class="tids-bucket-header">
                         <span>🟢</span>
-                        <span>Nutid (${nowBucket.length})</span>
+                        <span>${getTranslation('tids_bucket_now', { count: nowBucket.length })}</span>
                     </div>
                     <div class="tids-bucket-flow">
                         ${nowBucket.map(w => `<span class="placed-chip placed-now">${w}</span>`).join('')}
@@ -2235,7 +2239,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <div class="tids-bucket bucket-future">
                     <div class="tids-bucket-header">
                         <span>🔵</span>
-                        <span>Fremtid (${futureBucket.length})</span>
+                        <span>${getTranslation('tids_bucket_future', { count: futureBucket.length })}</span>
                     </div>
                     <div class="tids-bucket-flow">
                         ${futureBucket.map(w => `<span class="placed-chip placed-future">${w}</span>`).join('')}
@@ -2254,63 +2258,72 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         const sentenceCard = document.createElement('div');
         sentenceCard.className = 'tids-exercise-card';
 
-        const SENTENCE_TASKS = [
-            {
-                sentenceBefore: "Hvad laver du ",
-                sentenceAfter: "? – Jeg vasker op.",
-                options: ["lige nu", "i forgårs", "i morges"],
-                correct: "lige nu",
-                tenseCategory: "nutid",
-                explanation: 'Verbet "laver" står i nutid og beskriver den igangværende handling: "lige nu".',
-                fullSentence: "Hvad laver du lige nu? – Jeg vasker op."
-            },
-            {
-                sentenceBefore: "Vi spiste en dejlig middag hos mormor ",
-                sentenceAfter: ".",
-                options: ["i lørdags", "om lidt", "nu"],
-                correct: "i lørdags",
-                tenseCategory: "fortid",
-                explanation: '"Spiste" er datid og kræver et tidsudtryk om fortiden: "i lørdags".',
-                fullSentence: "Vi spiste en dejlig middag hos mormor i lørdags."
-            },
-            {
-                sentenceBefore: "Flyet afgår ",
-                sentenceAfter: ", så vi skal skynde os.",
-                options: ["om lidt", "i går", "i forgårs"],
-                correct: "om lidt",
-                tenseCategory: "fremtid",
-                explanation: '"Afgår" er nutid brugt om en nær handling i fremtiden: "om lidt".',
-                fullSentence: "Flyet afgår om lidt, så vi skal skynde os."
-            },
-            {
-                sentenceBefore: "Børnene cyklede i skole ",
-                sentenceAfter: " klokken 8.00.",
-                options: ["i morges", "i aften", "i næste uge"],
-                correct: "i morges",
-                tenseCategory: "fortid",
-                explanation: '"Cyklede" er datid og refererer til et overstået tidspunkt tidligere på dagen: "i morges".',
-                fullSentence: "Børnene cyklede i skole i morges klokken 8.00."
-            },
-            {
-                sentenceBefore: "Solen skinner dejligt ",
-                sentenceAfter: " over hele byen.",
-                options: ["i dag", "sidste uge", "i forgårs"],
-                correct: "i dag",
-                tenseCategory: "nutid",
-                explanation: '"Skinner" er nutid og beskriver vejret på selve dagen: "i dag".',
-                fullSentence: "Solen skinner dejligt i dag over hele byen."
-            },
-            {
-                sentenceBefore: "Vi holder stor havefest ",
-                sentenceAfter: ", hvis det bliver godt vejr.",
-                options: ["på fredag", "i forgårs", "i går"],
-                correct: "på fredag",
-                tenseCategory: "fremtid",
-                explanation: '"Holder" er nutid brugt om en planlagt handling i fremtiden: "på fredag".',
-                fullSentence: "Vi holder stor havefest på fredag, hvis det bliver godt vejr."
-            }
-        ];
+        function getSentenceTasks() {
+            return [
+                {
+                    sentenceBefore: "Hvad laver du ",
+                    sentenceAfter: "? – Jeg vasker op.",
+                    options: ["lige nu", "i forgårs", "i morges"],
+                    correct: "lige nu",
+                    tenseCategory: "nutid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_nutid'),
+                    explanation: getTranslation('tids_ex2_exp_1'),
+                    fullSentence: "Hvad laver du lige nu? – Jeg vasker op."
+                },
+                {
+                    sentenceBefore: "Vi spiste en dejlig middag hos mormor ",
+                    sentenceAfter: ".",
+                    options: ["i lørdags", "om lidt", "nu"],
+                    correct: "i lørdags",
+                    tenseCategory: "fortid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid'),
+                    explanation: getTranslation('tids_ex2_exp_2'),
+                    fullSentence: "Vi spiste en dejlig middag hos mormor i lørdags."
+                },
+                {
+                    sentenceBefore: "Flyet afgår ",
+                    sentenceAfter: ", så vi skal skynde os.",
+                    options: ["om lidt", "i går", "i forgårs"],
+                    correct: "om lidt",
+                    tenseCategory: "fremtid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid'),
+                    explanation: getTranslation('tids_ex2_exp_3'),
+                    fullSentence: "Flyet afgår om lidt, så vi skal skynde os."
+                },
+                {
+                    sentenceBefore: "Børnene cyklede i skole ",
+                    sentenceAfter: " klokken 8.00.",
+                    options: ["i morges", "i aften", "i næste uge"],
+                    correct: "i morges",
+                    tenseCategory: "fortid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid'),
+                    explanation: getTranslation('tids_ex2_exp_4'),
+                    fullSentence: "Børnene cyklede i skole i morges klokken 8.00."
+                },
+                {
+                    sentenceBefore: "Solen skinner dejligt ",
+                    sentenceAfter: " over hele byen.",
+                    options: ["i dag", "sidste uge", "i forgårs"],
+                    correct: "i dag",
+                    tenseCategory: "nutid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_nutid'),
+                    explanation: getTranslation('tids_ex2_exp_5'),
+                    fullSentence: "Solen skinner dejligt i dag over hele byen."
+                },
+                {
+                    sentenceBefore: "Vi holder stor havefest ",
+                    sentenceAfter: ", hvis det bliver godt vejr.",
+                    options: ["på fredag", "i forgårs", "i går"],
+                    correct: "på fredag",
+                    tenseCategory: "fremtid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid'),
+                    explanation: getTranslation('tids_ex2_exp_6'),
+                    fullSentence: "Vi holder stor havefest på fredag, hvis det bliver godt vejr."
+                }
+            ];
+        }
 
+        const SENTENCE_TASKS = getSentenceTasks();
         let taskIndex = 0;
         let taskScore = 0;
 
@@ -2321,17 +2334,17 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
             sentenceCard.innerHTML = `
                 <div class="tids-exercise-header">
-                    <span class="tids-exercise-tag">Øvelse 2</span>
-                    <h3 class="tids-exercise-title">Vælg det rigtige tidsudtryk til sætningen</h3>
-                    <p class="tids-exercise-desc">Kig på verbet i sætningen, og vælg det tidsudtryk, der passer til tiden (datid, nutid eller fremtid).</p>
+                    <span class="tids-exercise-tag">${getTranslation('tids_ex2_tag')}</span>
+                    <h3 class="tids-exercise-title">${getTranslation('tids_ex2_title')}</h3>
+                    <p class="tids-exercise-desc">${getTranslation('tids_ex2_desc')}</p>
                 </div>
 
                 <div class="vaerksted-progress-bar">
                     <div class="vaerksted-progress-fill" style="width: ${pct}%;"></div>
                 </div>
                 <div class="vaerksted-header">
-                    <span>Opgave ${taskIndex + 1} af ${SENTENCE_TASKS.length}</span>
-                    <span style="color: #38bdf8; text-transform: capitalize;">Tid: ${t.tenseCategory}</span>
+                    <span>${getTranslation('tids_ex2_task_count', { current: taskIndex + 1, total: SENTENCE_TASKS.length })}</span>
+                    <span style="color: #38bdf8; text-transform: capitalize;">${getTranslation('tids_ex2_tense_label', { tense: t.tenseCategoryLabel })}</span>
                 </div>
 
                 <div class="vaerksted-sentence-box">
@@ -2347,9 +2360,9 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <div class="vaerksted-actions-row">
                     <button type="button" class="btn-action-listen" id="btn-listen-sentence" style="display: none;">
                         <span>🔊</span>
-                        <span>Hør hele sætningen</span>
+                        <span>${getTranslation('tids_v_btn_listen')}</span>
                     </button>
-                    <button type="button" class="btn-next-question" id="btn-sentence-next">Næste opgave ➔</button>
+                    <button type="button" class="btn-next-question" id="btn-sentence-next">${taskIndex === SENTENCE_TASKS.length - 1 ? getTranslation('tids_v_btn_see_result') : getTranslation('tids_v_btn_next')}</button>
                 </div>
             `;
 
@@ -2373,14 +2386,14 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                         taskScore++;
                         btn.classList.add('selected-correct');
                         feedbackBanner.className = 'vaerksted-feedback-banner correct';
-                        feedbackBanner.innerHTML = `<strong>Korrekt!</strong> ${t.explanation}`;
+                        feedbackBanner.innerHTML = `<strong>${getTranslation('tids_correct')}</strong> ${t.explanation}`;
                     } else {
                         btn.classList.add('selected-wrong');
                         choicesGrid.querySelectorAll('.vaerksted-choice-btn').forEach(b => {
                             if (b.textContent === t.correct) b.classList.add('selected-correct');
                         });
                         feedbackBanner.className = 'vaerksted-feedback-banner wrong';
-                        feedbackBanner.innerHTML = `Det rigtige svar er <strong>"${t.correct}"</strong>.<br>${t.explanation}`;
+                        feedbackBanner.innerHTML = `${getTranslation('tids_v_feedback_wrong', { correct: t.correct, tip: t.explanation })}`;
                     }
 
                     listenBtn.style.display = 'inline-flex';
@@ -2388,7 +2401,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
                     nextBtn.style.display = 'inline-block';
                     if (taskIndex === SENTENCE_TASKS.length - 1) {
-                        nextBtn.textContent = 'Se resultat';
+                        nextBtn.textContent = getTranslation('tids_v_btn_see_result');
                     }
                 };
 
@@ -2408,15 +2421,15 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         function renderSentenceResult() {
             sentenceCard.innerHTML = `
                 <div style="text-align: center; padding: 2rem 1rem;">
-                    <span class="tids-exercise-tag">Øvelse 2 – Resultat</span>
-                    <h2 style="font-size: 1.8rem; color: white; margin: 0.8rem 0 0.5rem;">Resultat</h2>
+                    <span class="tids-exercise-tag">${getTranslation('tids_ex2_res_tag')}</span>
+                    <h2 style="font-size: 1.8rem; color: white; margin: 0.8rem 0 0.5rem;">${getTranslation('tids_ex2_res_title')}</h2>
                     <p style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 1.5rem;">
-                        Du fik <strong>${taskScore}</strong> ud af <strong>${SENTENCE_TASKS.length}</strong> rigtige!
+                        ${getTranslation('tids_ex2_res_score', { score: taskScore, total: SENTENCE_TASKS.length })}
                     </p>
                     <p style="color: #cbd5e1; max-width: 580px; margin: 0 auto 2rem; line-height: 1.6;">
-                        Godt arbejdet! Du kan nu genkende, hvordan tidsudtryk skal harmonere med verbernes tid i sætningen.
+                        ${getTranslation('tids_ex2_res_desc')}
                     </p>
-                    <button type="button" class="task-next-btn" id="btn-restart-sentence">Prøv forfra 🔄</button>
+                    <button type="button" class="task-next-btn" id="btn-restart-sentence">${getTranslation('tids_ex2_btn_restart')}</button>
                 </div>
             `;
             sentenceCard.querySelector('#btn-restart-sentence').onclick = () => {
@@ -2440,9 +2453,9 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             <div class="frekvens-barometer">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
                     <div style="font-weight: 700; font-size: 1.05rem; color: white;">
-                        Hvor ofte sker handlingen? (Frekvens)
+                        ${getTranslation('tids_fq_heading')}
                     </div>
-                    <span style="font-size: 0.8rem; color: #f59e0b; font-weight: 600;">Fra 0 % til 100 % – tryk for at lytte</span>
+                    <span style="font-size: 0.8rem; color: #f59e0b; font-weight: 600;">${getTranslation('tids_fq_sub')}</span>
                 </div>
                 <div class="frekvens-scale">
                     <div class="frekvens-step" id="step-0">
@@ -2479,44 +2492,47 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
         frekvensSection.querySelector('#step-100').onclick = () => speakDanish('Bageren smiler altid til kunderne.');
 
         // Frekvens Quiz logik
-        const FREKVENS_QUESTIONS = [
-            {
-                question: "Hvilket frekvensord svarer til 100 % (sker hver eneste gang)?",
-                options: ["altid", "sommetider", "aldrig", "sjældent"],
-                correct: "altid",
-                explanation: '"Altid" angiver 100 % – handlingen sker hver eneste gang uden undtagelse.',
-                exampleSentence: "Bageren smiler altid til kunderne."
-            },
-            {
-                question: "Hvor mange procent svarer 'sjældent' typisk til?",
-                options: ["20 %", "50 %", "75 %", "0 %"],
-                correct: "20 %",
-                explanation: '"Sjældent" er en lav frekvens (ca. 20 %) – det sker næsten ikke.',
-                exampleSentence: "Han kommer sjældent for sent."
-            },
-            {
-                question: "Hvilket ord betyder, at en handling overhovedet ikke finder sted (0 %)?",
-                options: ["aldrig", "sjældent", "sommetider", "tit / ofte"],
-                correct: "aldrig",
-                explanation: '"Aldrig" er 0 % – handlingen forekommer ikke.',
-                exampleSentence: "De kører aldrig i bil."
-            },
-            {
-                question: "Hvor mange procent svarer 'sommetider' (cirka halvdelen af gangene) til?",
-                options: ["50 %", "20 %", "75 %", "100 %"],
-                correct: "50 %",
-                explanation: '"Sommetider" svarer til ca. 50 % (nogle gange gør man, andre gange ikke).',
-                exampleSentence: "Sommetider går vi en tur ved vandet."
-            },
-            {
-                question: "Hvilket frekvensord svarer til 75 % (sker med høj frekvens)?",
-                options: ["tit / ofte", "sjældent", "sommetider", "aldrig"],
-                correct: "tit / ofte",
-                explanation: '"Tit / ofte" betyder høj frekvens (ca. 75 % af gangene).',
-                exampleSentence: "Bussen kommer tit forbi."
-            }
-        ];
+        function getFrekvensQuestions() {
+            return [
+                {
+                    question: getTranslation('tids_fq_q1'),
+                    options: ["altid", "sommetider", "aldrig", "sjældent"],
+                    correct: "altid",
+                    explanation: getTranslation('tids_fq_q1_exp'),
+                    exampleSentence: "Bageren smiler altid til kunderne."
+                },
+                {
+                    question: getTranslation('tids_fq_q2'),
+                    options: ["20 %", "50 %", "75 %", "0 %"],
+                    correct: "20 %",
+                    explanation: getTranslation('tids_fq_q2_exp'),
+                    exampleSentence: "Han kommer sjældent for sent."
+                },
+                {
+                    question: getTranslation('tids_fq_q3'),
+                    options: ["aldrig", "sjældent", "sommetider", "tit / ofte"],
+                    correct: "aldrig",
+                    explanation: getTranslation('tids_fq_q3_exp'),
+                    exampleSentence: "De kører aldrig i bil."
+                },
+                {
+                    question: getTranslation('tids_fq_q4'),
+                    options: ["50 %", "20 %", "75 %", "100 %"],
+                    correct: "50 %",
+                    explanation: getTranslation('tids_fq_q4_exp'),
+                    exampleSentence: "Sommetider går vi en tur ved vandet."
+                },
+                {
+                    question: getTranslation('tids_fq_q5'),
+                    options: ["tit / ofte", "sjældent", "sommetider", "aldrig"],
+                    correct: "tit / ofte",
+                    explanation: getTranslation('tids_fq_q5_exp'),
+                    exampleSentence: "Bussen kommer tit forbi."
+                }
+            ];
+        }
 
+        const FREKVENS_QUESTIONS = getFrekvensQuestions();
         let fqIndex = 0;
         let fqScore = 0;
         const fqContainer = frekvensSection.querySelector('#frekvens-quiz-container');
@@ -2532,10 +2548,10 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             box.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
                     <span class="tids-exercise-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                        Frekvens-quiz
+                        ${getTranslation('tids_fq_tag')}
                     </span>
                     <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 600;">
-                        Spørgsmål ${fqIndex + 1} af ${FREKVENS_QUESTIONS.length}
+                        ${getTranslation('tids_fq_q_count', { current: fqIndex + 1, total: FREKVENS_QUESTIONS.length })}
                     </span>
                 </div>
 
@@ -2552,10 +2568,10 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <div class="vaerksted-actions-row">
                     <button type="button" class="btn-action-listen" id="btn-fq-listen" style="display: none;">
                         <span>🔊</span>
-                        <span>Hør eksempelsætning</span>
+                        <span>${getTranslation('tids_fq_btn_listen')}</span>
                     </button>
                     <button type="button" class="btn-next-question" id="btn-fq-next" style="background: #f59e0b; color: #0f172a;">
-                        Næste spørgsmål ➔
+                        ${fqIndex === FREKVENS_QUESTIONS.length - 1 ? getTranslation('tids_fq_btn_see_res') : getTranslation('tids_fq_btn_next')}
                     </button>
                 </div>
             `;
@@ -2578,14 +2594,14 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                         fqScore++;
                         btn.classList.add('correct');
                         feedbackEl.className = 'vaerksted-feedback-banner correct';
-                        feedbackEl.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
+                        feedbackEl.innerHTML = `<strong>${getTranslation('tids_correct')}</strong> ${q.explanation}`;
                     } else {
                         btn.classList.add('wrong');
                         optGrid.querySelectorAll('.frekvens-opt-btn').forEach(b => {
                             if (b.textContent === q.correct) b.classList.add('correct');
                         });
                         feedbackEl.className = 'vaerksted-feedback-banner wrong';
-                        feedbackEl.innerHTML = `Svaret er <strong>"${q.correct}"</strong>.<br>${q.explanation}`;
+                        feedbackEl.innerHTML = getTranslation('tids_v_feedback_wrong', { correct: q.correct, tip: q.explanation });
                     }
 
                     listenBtn.style.display = 'inline-flex';
@@ -2593,7 +2609,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
                     nextBtn.style.display = 'inline-block';
                     if (fqIndex === FREKVENS_QUESTIONS.length - 1) {
-                        nextBtn.textContent = 'Se resultat';
+                        nextBtn.textContent = getTranslation('tids_fq_btn_see_res');
                     }
                 };
 
@@ -2616,17 +2632,17 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             fqContainer.innerHTML = `
                 <div class="frekvens-quiz-box" style="text-align: center; padding: 2rem 1rem;">
                     <span class="tids-exercise-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                        Frekvens-quiz – Resultat
+                        ${getTranslation('tids_fq_res_tag')}
                     </span>
-                    <h3 style="font-size: 1.6rem; color: white; margin: 0.8rem 0 0.4rem;">Flot klaret!</h3>
+                    <h3 style="font-size: 1.6rem; color: white; margin: 0.8rem 0 0.4rem;">${getTranslation('tids_fq_res_title')}</h3>
                     <p style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 1.4rem;">
-                        Du fik <strong>${fqScore}</strong> ud af <strong>${FREKVENS_QUESTIONS.length}</strong> rigtige!
+                        ${getTranslation('tids_fq_res_score', { score: fqScore, total: FREKVENS_QUESTIONS.length })}
                     </p>
                     <p style="color: #cbd5e1; max-width: 520px; margin: 0 auto 1.8rem; line-height: 1.6;">
-                        Du har nu godt greb om de 5 vigtigste frekvensadverbier fra 0 % (aldrig) til 100 % (altid).
+                        ${getTranslation('tids_fq_res_desc')}
                     </p>
                     <button type="button" class="task-next-btn" id="btn-restart-fq" style="background: #f59e0b; color: #0f172a;">
-                        Prøv quizzen igen 🔄
+                        ${getTranslation('tids_fq_btn_restart')}
                     </button>
                 </div>
             `;

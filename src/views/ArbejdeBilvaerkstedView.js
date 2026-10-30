@@ -589,7 +589,8 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         { code: 'vi', label: '🇻🇳 Tiếng Việt (Vietnamesisk)' },
         { code: 'th', label: '🇹🇭 ไทย (Thai)' },
         { code: 'ne', label: '🇳🇵 नेपाली (Nepalesisk)' },
-        { code: 'ps', label: '🇦🇫 پښتو (Pashto)' }
+        { code: 'ps', label: '🇦🇫 پښتو (Pashto)' },
+        { code: 'sq', label: '🇦🇱 Shqip (Albansk)' }
     ];
 
     function getPreferredTransLang() {

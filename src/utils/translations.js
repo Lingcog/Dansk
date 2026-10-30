@@ -24618,5 +24618,8 @@ export const translations = {
     "ugler_s5_p3": "画面不同，但我们都是人类。我们拥有完全相同的感受直觉和怀疑的能力。即使我们说不同的语言，我们也被同样的情感联系在一起。<strong>我们分享相同的真理。</strong>",
     "ugler_card_title": "事情并不总是表面看起来那样",
     "ugler_card_desc": "- 沼泽里有猫头鹰"
+  },
+  sq: {
+    "back": "Kthehu"
   }
 };

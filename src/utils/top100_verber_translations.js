@@ -1364,6 +1364,87 @@ export const verberTranslations = {
     "verber_tid_desc": "د فعل سم شکل وټاکئ چې په جمله کې د وخت له څرګندونې سره سمون ولري:",
     "verber_tid_marker_hint": "د وخت نښه \"{marker}\" وګورئ - ایا دا اوسني مهال ته اشاره کوي که تېر ته؟"
   }
+,
+  "sq": {
+      "verber_tab_1": "1. Figura me shumë detaje",
+      "verber_tab_2": "2. Detektiv vizual",
+      "verber_tab_3": "3. Gjej veprimet",
+      "verber_tab_4": "4. Histori",
+      "verber_tab_5": "5. Sinonime dhe antonime",
+      "verber_tab_6": "6. Ndërtuesi i fjalive",
+      "verber_tab_7": "7. Koha e tashme dhe e shkuar",
+      "verber_pure_label": "Shih figurën e pastër:",
+      "verber_status_off": "JO",
+      "verber_status_on": "PO",
+      "verber_badge_verbum": "🔴 Folje",
+      "verber_form_nutid": "Koha e tashme:",
+      "verber_form_datid": "Koha e kryer e thjeshtë:",
+      "verber_listen_word": "Dëgjo foljen synuar",
+      "verber_listen_sentence": "Dëgjo fjalinë përsëri",
+      "verber_reveal_trans": "Keni dyshime për foljen? Shfaq përkthimin",
+      "verber_trans_label": "Përkthimi",
+      "verber_return_pill": "🔴 Pamja e foljes",
+      "verber_return_title": "Po eksploroni foljen:",
+      "verber_return_sub": "Shihni veprimin në figurën më poshtë me kohën e tashme dhe të shkuar.",
+      "verber_return_back_btn": "⬅ Kthehu te {target}",
+      "verber_scene1_title": "Skena 1: Qyteti dhe rruga",
+      "verber_scene1_desc": "Mësoni 20 folje thelbësore të përditshme për lëvizjen, transportin dhe takimet shoqërore në rrugët e qytetit.",
+      "verber_scene2_title": "Skena 2: Shtëpia dhe kuzhina",
+      "verber_scene2_desc": "Mësoni 20 folje thelbësore të përditshme për gatimin, punët e shtëpisë dhe rutinat e ngrohta në shtëpi.",
+      "verber_scene3_title": "Skena 3: Klasa dhe zyra",
+      "verber_scene3_desc": "Mësoni 20 folje thelbësore të përditshme për komunikimin, mendimin, gjuhën dhe mësimin.",
+      "verber_scene4_title": "Skena 4: Natyra dhe koha e lirë",
+      "verber_scene4_desc": "Mësoni 20 folje thelbësore të përditshme për shqisat, ndjenjat, sportin, lojërat dhe jetën në natyrë.",
+      "verber_scene5_title": "Skena 5: Stacioni, blerjet dhe udhëtimi",
+      "verber_scene5_desc": "Mësoni 20 folje thelbësore të përditshme për transportin, blerjet, shitjet, udhëtimet dhe veprimet e zakonshme.",
+      "verber_correct": "✓ Përgjigje e saktë!",
+      "verber_wrong": "✗ Përgjigje e pasaktë. Provo përsëri!",
+      "verber_next_mission": "Misioni tjetër ➔",
+      "verber_next_action": "Veprimi tjetër ➔",
+      "verber_next_task": "Ushtrimi tjetër ➔",
+      "verber_next_story": "Shko te historia tjetër ➔",
+      "verber_restart": "Fillo nga e para 🔄",
+      "verber_restart_story": "Fillo nga e para ↺",
+      "verber_mission_badge": "Misioni {current} nga {total}",
+      "verber_action_badge": "Veprimi {current} nga {total}",
+      "verber_challenge_badge": "Detyra {current} nga {total}",
+      "verber_training_badge": "Praktika {current} nga {total}",
+      "verber_action_clue_intro": "Cilin veprim po shihni? Zgjidhni foljen e saktë:",
+      "verber_story_pill": "Historia {n}",
+      "verber_story_read_instruction": "Lexoni historinë ose zgjidhni përgjigjen e saktë për ta plotësuar atë:",
+      "verber_story_complete": "🎉 Të lumtë! Keni përfunduar historinë.",
+      "verber_syn_title": "Sinonimet dhe antonimet e përditshme",
+      "verber_syn_correct": "✓ Plotësisht e saktë! Pasqyrë e shkëlqyer gjuhësore.",
+      "verber_syn_wrong": "✗ Ende jo plotësisht e saktë. Provo përsëri!",
+      "verber_sb_tab_free": "✍️ Eksploro dhe ndërto vetë",
+      "verber_sb_tab_challenge": "🧩 Detyrë dhe puzzle",
+      "verber_sb_free_instruction": "Kliko mbi fjalët për të ndërtuar një fjali natyrore në danisht:",
+      "verber_sb_legend_subjekt": "1. Kush (Kryefjala – e gjelbër)",
+      "verber_sb_legend_verbum": "2. Veprimi (Folja – e kuqe)",
+      "verber_sb_legend_objekt": "3. Cila gjë (Kundrina – e gjelbër)",
+      "verber_sb_legend_sted": "4. Ku (Vendi – blu)",
+      "verber_sb_cat_subjekt": "1. Kush",
+      "verber_sb_cat_verbum": "2. Veprimi",
+      "verber_sb_cat_objekt": "3. Cila gjë",
+      "verber_sb_cat_sted": "4. Ku",
+      "verber_sb_role_subjekt": "Kryefjalë",
+      "verber_sb_role_verbum": "Folje",
+      "verber_sb_role_objekt": "Kundrinë",
+      "verber_sb_role_sted": "Vendi",
+      "verber_sb_slot_hvem": "1. Kush?",
+      "verber_sb_slot_handling": "2. Veprimi?",
+      "verber_sb_slot_ting": "3. Cila gjë?",
+      "verber_sb_slot_hvor": "4. Ku?",
+      "verber_sb_challenge_title": "🧩 Detyra {current} nga {total}: Ndërtoni fjalinë",
+      "verber_sb_challenge_desc": "Vendosni fjalët në 4 kutitë sipas rendit të saktë të fjalëve në danisht:",
+      "verber_sb_success": "🎉 Fantastike!",
+      "verber_sb_order_error": "✗ Rendi nuk është plotësisht i saktë.",
+      "verber_sb_order_reminder": "Mbani mend rendin e ngulitur të fjalëve në danisht: 1. Kush (Kryefjala) ➔ 2. Veprimi (Folja) ➔ 3. Cila gjë (Kundrina) ➔ 4. Ku (Vendi).",
+      "verber_sb_reset": "Rivendos fjalët 🔄",
+      "verber_tid_title": "Koha e tashme apo e shkuar?",
+      "verber_tid_desc": "Zgjidhni formën e saktë të foljes që i përshtatet shprehjes kohore në fjali:",
+      "verber_tid_marker_hint": "Shikoni treguesin e kohës \"{marker}\" – a tregon tani apo të shkuarën?"
+  }
 };
 
 export const verberWordTranslations = {
@@ -1438,6 +1519,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پلي تلل",
       "sentence": "خلک په ارامه پلي سړک باندې پلي ځي."
+    },
+    "sq": {
+      "meaning": "të ecësh / shkosh në këmbë",
+      "sentence": "Njerëzit ecin në rrugën e këndshme të këmbësorëve."
     }
   },
   "at komme": {
@@ -1511,6 +1596,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "راتلل",
       "sentence": "شین ښاري بس روان راځي."
+    },
+    "sq": {
+      "meaning": "të vish / mbërrish",
+      "sentence": "Autobusi blu i qytetit vjen duke ecur."
     }
   },
   "at møde": {
@@ -1584,6 +1673,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لیدل",
       "sentence": "دوه ملګري په کوڅه کې سره ګوري."
+    },
+    "sq": {
+      "meaning": "të takosh",
+      "sentence": "Dy miqtë takohen me njëri-tjetrin në rrugë."
     }
   },
   "at køre": {
@@ -1657,6 +1750,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "موټر چلول / تګ کول",
       "sentence": "بس د ښار له لارې تېرېږي."
+    },
+    "sq": {
+      "meaning": "të ngasësh / udhëtosh",
+      "sentence": "Autobusi lëviz nëpër qytet."
     }
   },
   "at cykle": {
@@ -1730,6 +1827,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "سایکل چلول",
       "sentence": "سړی په خوندي توګه د سایکل پر لار سایکل چلوي."
+    },
+    "sq": {
+      "meaning": "t'i japësh biçikletës",
+      "sentence": "Burri i jep biçikletës i sigurt në korsinë e biçikletave."
     }
   },
   "at stoppe": {
@@ -1803,6 +1904,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "درېدل",
       "sentence": "سړی د پیاده رو پر لار درېږي."
+    },
+    "sq": {
+      "meaning": "të ndalosh",
+      "sentence": "Burri ndalon te vija e këmbësorëve."
     }
   },
   "at vente": {
@@ -1876,6 +1981,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "انتظار کول",
       "sentence": "ښځه پر څوکۍ په صبر سره انتظار کوي."
+    },
+    "sq": {
+      "meaning": "të presësh",
+      "sentence": "Gruaja pret me durim në stol."
     }
   },
   "at kigge": {
@@ -1949,6 +2058,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کتل",
       "sentence": "ښځه د دوکان له کړکۍ دننه ګوري."
+    },
+    "sq": {
+      "meaning": "të shikosh",
+      "sentence": "Gruaja shikon nga dritarja e dyqanit."
     }
   },
   "at se": {
@@ -2022,6 +2135,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لیدل",
       "sentence": "هغه ښکلي رنګارنګ ګلان ویني."
+    },
+    "sq": {
+      "meaning": "të shohësh",
+      "sentence": "Ajo sheh lulet e bukura shumëngjyrëshe."
     }
   },
   "at smile": {
@@ -2095,6 +2212,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "مسکېدل",
       "sentence": "ملګري چې کله سره ګوري، نو یو بل ته مسکېږي."
+    },
+    "sq": {
+      "meaning": "të buzëqeshësh",
+      "sentence": "Miqtë i buzëqeshin njëri-tjetrit kur shihen."
     }
   },
   "at hente": {
@@ -2168,6 +2289,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "راوړل",
       "sentence": "هغه له دوکان څخه تازه ډوډۍ او سبزیجات راوړي."
+    },
+    "sq": {
+      "meaning": "të marrësh / sjellësh",
+      "sentence": "Babai merr vajzën e tij nga shkolla."
     }
   },
   "at bringe": {
@@ -2241,6 +2366,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "وړل / وېشل",
       "sentence": "انډرس پارسلونه ویشي."
+    },
+    "sq": {
+      "meaning": "të sjellësh / dërgosh",
+      "sentence": "Korrieri sjell një pako të rëndësishme."
     }
   },
   "at finde": {
@@ -2314,6 +2443,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "موندل",
       "sentence": "نجلۍ د ګلانو یو ښکلی ګېډۍ مومي."
+    },
+    "sq": {
+      "meaning": "të gjesh",
+      "sentence": "Ata gjejnë kafenenë e mirë në shesh."
     }
   },
   "at miste": {
@@ -2387,6 +2520,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "له لاسه ورکول / ورکول",
       "sentence": "پام کوئ چې په ګڼه ګوڼه کې مو بټوه ورکه نشي!"
+    },
+    "sq": {
+      "meaning": "të humbësh",
+      "sentence": "Burri humb portofolin në rrugë."
     }
   },
   "at passe": {
@@ -2460,6 +2597,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پام کول",
       "sentence": "سایکل چلوونکی د پیاده روانو ډېر پام ساتي."
+    },
+    "sq": {
+      "meaning": "të kujdesesh / përshtatesh",
+      "sentence": "Gjyshja kujdeset mirë për nipin në qytet."
     }
   },
   "at hjælpe": {
@@ -2533,6 +2674,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "مرسته کول",
       "sentence": "دوکاندار په دوکان کې د پېرودونکي مرسته کوي."
+    },
+    "sq": {
+      "meaning": "të ndihmosh",
+      "sentence": "Djali ndihmon gruan e moshuar me çantat."
     }
   },
   "at følge": {
@@ -2606,6 +2751,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "یو ځای تلل",
       "sentence": "جوړه د پلي لارې پر سر یو ځای روانه ده."
+    },
+    "sq": {
+      "meaning": "të ndjekësh / shoqërosh",
+      "sentence": "Qeni e ndjek me besnikëri pronarin e tij."
     }
   },
   "at ske": {
@@ -2679,6 +2828,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پېښېدل",
       "sentence": "په ښار کې ډېر په زړه پورې شیان پېښېږي."
+    },
+    "sq": {
+      "meaning": "të ndodhë",
+      "sentence": "Shumë gjëra ndodhin në rrugë çdo ditë."
     }
   },
   "at handle": {
@@ -2752,6 +2905,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "سودا اخیستل / پېرودل",
       "sentence": "ډېر خلک په کوچنیو دوکانونو کې سودا اخلي."
+    },
+    "sq": {
+      "meaning": "të bësh pazar / veprosh",
+      "sentence": "Njerëzit bëjnë pazar në dyqanin lokal."
     }
   },
   "at bo": {
@@ -2825,6 +2982,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "اوسېدل",
       "sentence": "ډېرې کورنۍ د ښار په ښکلو کورونو کې اوسي."
+    },
+    "sq": {
+      "meaning": "të banosh / jetosh",
+      "sentence": "Familja banon në një ndërtesë të bukur."
     }
   },
   "at spise": {
@@ -2898,6 +3059,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "خوړل",
       "sentence": "نجلۍ پر مېز ناسته ده او ناشته خوري."
+    },
+    "sq": {
+      "meaning": "të hash",
+      "sentence": "Vajza ulet në tryezë dhe ha mëngjes."
     }
   },
   "at drikke": {
@@ -2971,6 +3136,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "څښل",
       "sentence": "هغه له پیالې شیدې څښي."
+    },
+    "sq": {
+      "meaning": "të pish",
+      "sentence": "Ajo pi qumësht nga filxhani."
     }
   },
   "at åbne": {
@@ -3044,6 +3213,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "خلاصول",
       "sentence": "سړی د شیدو اخیستلو لپاره یخچال خلاصوي."
+    },
+    "sq": {
+      "meaning": "të hapësh",
+      "sentence": "Burri hap frigoriferin për të marrë qumësht."
     }
   },
   "at lukke": {
@@ -3117,6 +3290,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "تړل",
       "sentence": "د یخچال د دروازې تړل په یاد ولرئ."
+    },
+    "sq": {
+      "meaning": "të mbyllësh",
+      "sentence": "Mos harroni të mbyllni derën e frigoriferit."
     }
   },
   "at gøre": {
@@ -3190,6 +3367,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "چمتو کول / کول",
       "sentence": "ښځه ناشته چمتو کوي."
+    },
+    "sq": {
+      "meaning": "të bësh / përgatitësh",
+      "sentence": "Gruaja bën gati mëngjesin."
     }
   },
   "at sidde": {
@@ -3263,6 +3444,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کښېنستل",
       "sentence": "انا په نرمه هوسا څوکۍ کې ناسته ده."
+    },
+    "sq": {
+      "meaning": "të rrish ulur",
+      "sentence": "Gjyshja rri ulur në kolltukun e butë."
     }
   },
   "at stå": {
@@ -3336,6 +3521,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "درېدل",
       "sentence": "ښځه د پخلنځي مېز ته ولاړه ده او ډوډۍ پرې کوي."
+    },
+    "sq": {
+      "meaning": "të qëndrosh në këmbë",
+      "sentence": "Gruaja qëndron në këmbë pranë tavolinës së kuzhinës dhe pret bukë."
     }
   },
   "at ligge": {
@@ -3409,6 +3598,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پروت پاتې کېدل / پریوتل",
       "sentence": "پیشو په توده قالینه باندې پرته ده او ویده کېږي."
+    },
+    "sq": {
+      "meaning": "të jesh i shtrirë",
+      "sentence": "Macja është e shtrirë dhe fle mbi qilimin e ngrohtë."
     }
   },
   "at lægge": {
@@ -3482,6 +3675,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ایښودل",
       "sentence": "هغه ډوډۍ په ټوسټر کې ږدي."
+    },
+    "sq": {
+      "meaning": "të vendosësh (shtrirë)",
+      "sentence": "Ajo vendos bukën në thekëse buke."
     }
   },
   "at sætte": {
@@ -3555,6 +3752,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ایښودل",
       "sentence": "سړی د ګلانو ښکلی ګلدان پر المارۍ ږدي."
+    },
+    "sq": {
+      "meaning": "të vendosësh (drejt)",
+      "sentence": "Burri vendos vazon e bukur me lule në raft."
     }
   },
   "at holde": {
@@ -3628,6 +3829,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "نیول",
       "sentence": "هغه په خپلو لاسونو کې په زړه پورې کتاب نیسي."
+    },
+    "sq": {
+      "meaning": "të mbash",
+      "sentence": "Ajo mban librin emocionues në duar."
     }
   },
   "at tage": {
@@ -3701,6 +3906,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "اخیستل / راایستل",
       "sentence": "سړی د شیدو کارتن راوباسي."
+    },
+    "sq": {
+      "meaning": "të nxjerrësh / marrësh",
+      "sentence": "Burri nxjerr një kuti qumësht jashtë."
     }
   },
   "at give": {
@@ -3774,6 +3983,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ورکول",
       "sentence": "پلار خپلې لور ته د میوسلي یوه کاسه ورکوي."
+    },
+    "sq": {
+      "meaning": "të japësh",
+      "sentence": "Babai i jep vajzës së tij një tas me mysli."
     }
   },
   "at have": {
@@ -3847,6 +4060,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لرل",
       "sentence": "د دوی پر المارۍ ډېر مصالحې شته."
+    },
+    "sq": {
+      "meaning": "të kesh",
+      "sentence": "Ata kanë shumë erëza në raft."
     }
   },
   "at være": {
@@ -3920,6 +4137,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کېدل / اوسېدل",
       "sentence": "نجلۍ ویښه ده او د خوب په خونه کې خپل لاسونه غځوي."
+    },
+    "sq": {
+      "meaning": "të jesh",
+      "sentence": "Vajza është zgjuar dhe zgjat krahët në dhomën e gjumit."
     }
   },
   "at lade": {
@@ -3993,6 +4214,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پرېښودل",
       "sentence": "هغه د خوب د خونې دروازه خلاصه پرېږدي."
+    },
+    "sq": {
+      "meaning": "të lësh",
+      "sentence": "Ai e lë derën e dhomës së gjumit të hapur."
     }
   },
   "at ringe": {
@@ -4066,6 +4291,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "زنګ وهل",
       "sentence": "د خونې له دننه څخه ټیلیفون زنګ وهي."
+    },
+    "sq": {
+      "meaning": "të biesh (ziles / telefonit)",
+      "sentence": "Telefoni bie nga brenda dhomës."
     }
   },
   "at dele": {
@@ -4139,6 +4368,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "وېشل",
       "sentence": "ماشومان تازه ډوډۍ سره وېشي."
+    },
+    "sq": {
+      "meaning": "të ndash",
+      "sentence": "Fëmijët ndajnë bukën e freskët."
     }
   },
   "at falde": {
@@ -4212,6 +4445,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لوېدل / ویده کېدل",
       "sentence": "پیشو په لمر کې ویده کېږي."
+    },
+    "sq": {
+      "meaning": "të biesh (në gjumë)",
+      "sentence": "Macja bie në gjumë nën rrezet e diellit."
     }
   },
   "at flytte": {
@@ -4285,6 +4522,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لېږدول / خوځول",
       "sentence": "هغه ګلدان ښکته المارۍ ته لېږدوي."
+    },
+    "sq": {
+      "meaning": "të zhvendosësh / lëvizësh",
+      "sentence": "Ai e zhvendos vazon në raftin e poshtëm."
     }
   },
   "at sige": {
@@ -4358,6 +4599,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ویل",
       "sentence": "ښوونکی ټولګي ته سهار په خیر وايي."
+    },
+    "sq": {
+      "meaning": "të thuash",
+      "sentence": "Mësuesi thotë mirëmëngjes nxënësve."
     }
   },
   "at tale": {
@@ -4431,6 +4676,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "خبرې کول",
       "sentence": "زده کوونکي په ساعتونو کې ډنمارکي خبرې کوي."
+    },
+    "sq": {
+      "meaning": "të flasësh",
+      "sentence": "Nxënësit flasin danisht në klasë."
     }
   },
   "at spørge": {
@@ -4504,6 +4753,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پوښتل",
       "sentence": "یو زده کوونکی له ښوونکي څخه د یوې کلمې په اړه پوښتي."
+    },
+    "sq": {
+      "meaning": "të pyesësh",
+      "sentence": "Nxënësi ngre dorën dhe pyet për diçka."
     }
   },
   "at svare": {
@@ -4577,6 +4830,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ځواب ورکول",
       "sentence": "ښوونکی په مهربانۍ سره د پوښتنې ځواب ورکوي."
+    },
+    "sq": {
+      "meaning": "të përgjigjesh",
+      "sentence": "Mësuesi i përgjigjet pyetjes me durim."
     }
   },
   "at høre": {
@@ -4650,6 +4907,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "اورېدل",
       "sentence": "زده کوونکي د ډنمارکي غږیز فایل اوري."
+    },
+    "sq": {
+      "meaning": "të dëgjosh",
+      "sentence": "Të gjithë dëgjojnë me vëmendje shpjegimin."
     }
   },
   "at læse": {
@@ -4723,6 +4984,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لوستل",
       "sentence": "ښځه په کتاب کې یوه کیسه لولي."
+    },
+    "sq": {
+      "meaning": "të lexosh",
+      "sentence": "Vajza lexon një kapitull në libër."
     }
   },
   "at skrive": {
@@ -4796,6 +5061,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لیکل",
       "sentence": "زده کوونکی په پنسل یوه جمله لیکي."
+    },
+    "sq": {
+      "meaning": "të shkruash",
+      "sentence": "Djali shkruan shënime në fletoren e tij."
     }
   },
   "at tænke": {
@@ -4869,6 +5138,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "فکر کول",
       "sentence": "هغه د سختې پوښتنې په اړه فکر کوي."
+    },
+    "sq": {
+      "meaning": "të mendosh",
+      "sentence": "Ai mendon thellë për ushtrimin e vështirë."
     }
   },
   "at forstå": {
@@ -4942,6 +5215,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پوهېدل",
       "sentence": "اوس ټول په ګرامر پوهېږي."
+    },
+    "sq": {
+      "meaning": "të kuptosh",
+      "sentence": "Më në fund ajo e kupton rregullin e gramatikës."
     }
   },
   "at lære": {
@@ -5015,6 +5292,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "زده کول",
       "sentence": "دوی ډېر نوي ډنمارکي کلمې زده کوي."
+    },
+    "sq": {
+      "meaning": "të mësosh",
+      "sentence": "Ata mësojnë fjalë të reja çdo ditë."
     }
   },
   "at huske": {
@@ -5088,6 +5369,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "په یاد لرل",
       "sentence": "د سبا لپاره د کورنۍ دندې لیکل په یاد ولرئ!"
+    },
+    "sq": {
+      "meaning": "të mbash mend",
+      "sentence": "Është e rëndësishme të mbash mend fjalët e reja."
     }
   },
   "at glemme": {
@@ -5161,6 +5446,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "هېرول",
       "sentence": "هغه پر مېز خپل قلمدان هېروي."
+    },
+    "sq": {
+      "meaning": "të harrosh",
+      "sentence": "Ai nganjëherë harron fjalorin në shtëpi."
     }
   },
   "at forklare": {
@@ -5234,6 +5523,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "تشریح کول / تشریح ورکول",
       "sentence": "ښوونکی یو ځل بیا قاعده تشریح کوي."
+    },
+    "sq": {
+      "meaning": "të shpjegosh",
+      "sentence": "Mësuesi e shpjegon detyrën qartë në tabelë."
     }
   },
   "at vise": {
@@ -5307,6 +5600,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ښودل",
       "sentence": "ښوونکی پر تخته یو انځور ښيي."
+    },
+    "sq": {
+      "meaning": "të tregosh",
+      "sentence": "Ajo tregon zgjidhjen në kompjuter."
     }
   },
   "at bruge": {
@@ -5380,6 +5677,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کارول",
       "sentence": "سړی خپل لیپ ټاپ کاروي."
+    },
+    "sq": {
+      "meaning": "të përdorësh",
+      "sentence": "Ata përdorin fjalorin për të gjetur fjalën."
     }
   },
   "at arbejde": {
@@ -5453,6 +5754,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کار کول",
       "sentence": "دوه همکاران په ګروپ کې یو ځای کار کوي."
+    },
+    "sq": {
+      "meaning": "të punosh",
+      "sentence": "Nxënësit punojnë bashkë në çifte."
     }
   },
   "at sende": {
@@ -5526,6 +5831,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لېږل",
       "sentence": "همکار یو مهم برېښنالیک لېږي."
+    },
+    "sq": {
+      "meaning": "të dërgosh",
+      "sentence": "Ai ia dërgon detyrën me email mësuesit."
     }
   },
   "at søge": {
@@ -5599,6 +5908,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لټول",
       "sentence": "هغه په قاموس کې یوه کلمه لټوي."
+    },
+    "sq": {
+      "meaning": "të kërkosh",
+      "sentence": "Ajo kërkon informacion në internet."
     }
   },
   "at mene": {
@@ -5672,6 +5985,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "نظر لرل / فکر کول",
       "sentence": "د متن په اړه ستا نظر څه دی؟"
+    },
+    "sq": {
+      "meaning": "të mendosh / kesh mendim",
+      "sentence": "Çfarë mendon ti për këtë temë?"
     }
   },
   "at synes": {
@@ -5745,6 +6062,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ښکارېدل / ګڼل",
       "sentence": "د هغه په اند ډنمارکي په زړه پورې ده."
+    },
+    "sq": {
+      "meaning": "të mendosh / gjykosh",
+      "sentence": "Ajo mendon se gjuha daneze është emocionuese."
     }
   },
   "at løbe": {
@@ -5818,6 +6139,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ځغلېدل / منډه وهل",
       "sentence": "منډه جوړونکی د څوکۍ له څنګ څخه په چټکۍ منډه وهي."
+    },
+    "sq": {
+      "meaning": "të vraposh",
+      "sentence": "Burri vrapon një xhiro të shpejtë në park."
     }
   },
   "at spille": {
@@ -5891,6 +6216,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "لوبې کول",
       "sentence": "ماشومان په شنه چمن کې توپ لوبه کوي."
+    },
+    "sq": {
+      "meaning": "të luash (lojë/muzikë)",
+      "sentence": "Fëmijët luajnë futboll në bar."
     }
   },
   "at vinde": {
@@ -5964,6 +6293,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ګټل",
       "sentence": "ډله د فوټبال لوبه ګټي!"
+    },
+    "sq": {
+      "meaning": "të fitosh",
+      "sentence": "Skuadra e kuqe fiton ndeshjen."
     }
   },
   "at tabe": {
@@ -6037,6 +6370,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "بایلل / غورځول",
       "sentence": "نجلۍ په واښو کې توپ غورځوي."
+    },
+    "sq": {
+      "meaning": "të humbësh",
+      "sentence": "Ata humbasin ndeshjen, por buzëqeshin përsëri."
     }
   },
   "at kaste": {
@@ -6110,6 +6447,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ګوزار کول / غورځول",
       "sentence": "هلک خپل سپي ته یوه لرګۍ غورځوي."
+    },
+    "sq": {
+      "meaning": "të hedhësh",
+      "sentence": "Vajza hedh topin te qeni."
     }
   },
   "at gribe": {
@@ -6183,6 +6524,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "نیول / رانیول",
       "sentence": "سپی په هوا کې لرګۍ نیسي."
+    },
+    "sq": {
+      "meaning": "të kapësh",
+      "sentence": "Qeni e kap topin me shpejtësi në ajër."
     }
   },
   "at nyde": {
@@ -6256,6 +6601,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "خوند اخیستل",
       "sentence": "مېلمانه د ښکلې سهارني وخت څخه خوند اخلي."
+    },
+    "sq": {
+      "meaning": "të shijosh",
+      "sentence": "Familja shijon rrezet e ngrohta të diellit."
     }
   },
   "at føle": {
@@ -6329,6 +6678,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "احساس کول",
       "sentence": "هغه د لمر تودوخه احساسوي."
+    },
+    "sq": {
+      "meaning": "të ndjesh",
+      "sentence": "Ai ndihet i lumtur dhe i relaksuar sot."
     }
   },
   "at mærke": {
@@ -6402,6 +6755,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "حس کول",
       "sentence": "هغه نرمه هوا حس کوي."
+    },
+    "sq": {
+      "meaning": "të ndjesh / vëresh",
+      "sentence": "Ajo ndjen erën e freskët në lëkurë."
     }
   },
   "at skinne": {
@@ -6475,6 +6832,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ځلېدل",
       "sentence": "لمر په بې ورېځه اسمان کې ځلېږي."
+    },
+    "sq": {
+      "meaning": "të shkëlqesh",
+      "sentence": "Dielli shkëlqen nga një qiell pa re."
     }
   },
   "at vokse": {
@@ -6548,6 +6909,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "وده کول",
       "sentence": "ونې لویې او شنې وده کوي."
+    },
+    "sq": {
+      "meaning": "të rritesh",
+      "sentence": "Lulet rriten të larta në pranverë."
     }
   },
   "at leve": {
@@ -6621,6 +6986,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ژوند کول",
       "sentence": "مرغان په ونو کې ازاد ژوند کوي."
+    },
+    "sq": {
+      "meaning": "të jetosh",
+      "sentence": "Shumë kafshë të egra jetojnë në pyll."
     }
   },
   "at elske": {
@@ -6694,6 +7063,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "مینه لرل",
       "sentence": "دوی په ښکلي پارک کې چکر وهل ډېر خوښوي."
+    },
+    "sq": {
+      "meaning": "të duash / dashurosh",
+      "sentence": "Ajo e do natyrën dhe shëtitjet e gjata."
     }
   },
   "at ønske": {
@@ -6767,6 +7140,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "هیله لرل",
       "sentence": "هغه د یو ښکلي اوړي هیله کوي."
+    },
+    "sq": {
+      "meaning": "të dëshirosh",
+      "sentence": "Ai dëshiron një akullore të madhe në vapë."
     }
   },
   "at prøve": {
@@ -6840,6 +7217,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ازمویل / هڅه کول",
       "sentence": "هغه د پارک له لارې نوې لار ازموي."
+    },
+    "sq": {
+      "meaning": "të provosh",
+      "sentence": "Djali provon të ngjitet në pemën e lartë."
     }
   },
   "at opleve": {
@@ -6913,6 +7294,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "تجربه کول",
       "sentence": "دوی د پسرلي د ښکلې ورځې تجربه کوي."
+    },
+    "sq": {
+      "meaning": "të përjetosh",
+      "sentence": "Ata përjetojnë një perëndim dielli fantastik."
     }
   },
   "at fortælle": {
@@ -6986,6 +7371,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کیسه کول / ویل",
       "sentence": "نیکه پر څوکۍ یوه په زړه پورې کیسه کوي."
+    },
+    "sq": {
+      "meaning": "të tregosh / rrëfesh",
+      "sentence": "Gjyshi tregon një histori emocionuese."
     }
   },
   "at tro": {
@@ -7059,6 +7448,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "باور لرل",
       "sentence": "زه باور لرم چې لمر ټوله ماسپښین ځلېږي."
+    },
+    "sq": {
+      "meaning": "të besosh",
+      "sentence": "Unë besoj se nesër do të jetë mot i mirë."
     }
   },
   "at kende": {
@@ -7132,6 +7525,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پېژندل",
       "sentence": "دوی له کلي څخه یو بل ډېر ښه پېژني."
+    },
+    "sq": {
+      "meaning": "të njohësh",
+      "sentence": "Ajo i njeh të gjitha rrugët e vogla në pyll."
     }
   },
   "at ændre": {
@@ -7205,6 +7602,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "بدلېدل",
       "sentence": "د پارک پر سر هوا ژر بدلېږي."
+    },
+    "sq": {
+      "meaning": "të ndryshosh",
+      "sentence": "Moti ndryshon papritur nga dielli në shi."
     }
   },
   "at rejse": {
@@ -7278,6 +7679,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "سفر کول",
       "sentence": "مسافر په ګډه د اورګاډي له لارې جیلینډ ته سفر کوي."
+    },
+    "sq": {
+      "meaning": "të udhëtosh",
+      "sentence": "Ata udhëtojnë me tren nëpër të gjithë vendin."
     }
   },
   "at trække": {
@@ -7351,6 +7756,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کشول / ښکل",
       "sentence": "ښځه یو دروند څرخي سوټ کیس کشوي."
+    },
+    "sq": {
+      "meaning": "të tërheqësh",
+      "sentence": "Gruaja tërheq valixhen e rëndë në platformë."
     }
   },
   "at betale": {
@@ -7424,6 +7833,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پیسې ورکول / تادیه کول",
       "sentence": "پېرودونکی په خپل تادیاتي کارت پیسې ورکوي."
+    },
+    "sq": {
+      "meaning": "të paguash",
+      "sentence": "Ai paguan për biletën me kartë."
     }
   },
   "at købe": {
@@ -7497,6 +7910,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پېرودل / اخیستل",
       "sentence": "سړی له اتومات ماشین څخه د اورګاډي ټکټ اخلي."
+    },
+    "sq": {
+      "meaning": "të blesh",
+      "sentence": "Ajo blen një filxhan kafe për udhëtimin."
     }
   },
   "at sælge": {
@@ -7570,6 +7987,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پلورل",
       "sentence": "کیوسک ورځپاڼې او تود څښاک پلوري."
+    },
+    "sq": {
+      "meaning": "të shesësh",
+      "sentence": "Kioska shet gazeta dhe revista."
     }
   },
   "at vælge": {
@@ -7643,6 +8064,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ټاکل / غوره کول",
       "sentence": "هغه د کړکۍ څنګ ته ښه ځای غوره کوي."
+    },
+    "sq": {
+      "meaning": "të zgjedhësh",
+      "sentence": "Ai zgjedh një vend pranë dritares."
     }
   },
   "at gælde": {
@@ -7716,6 +8141,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "د اعتبار وړ اوسېدل",
       "sentence": "ټکټ له اوس څخه دوه ساعته د اعتبار وړ دی."
+    },
+    "sq": {
+      "meaning": "të vlejë",
+      "sentence": "Bileta vlen për të gjithë udhëtimin sot."
     }
   },
   "at virke": {
@@ -7789,6 +8218,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کار کول",
       "sentence": "د ټکټ ماشین په چټکۍ او اسانۍ سره کار کوي."
+    },
+    "sq": {
+      "meaning": "të funksionojë",
+      "sentence": "Makina e biletave më në fund funksionon përsëri."
     }
   },
   "at mangle": {
@@ -7862,6 +8295,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کمښت لرل / نه لرل",
       "sentence": "د هغه په بټوه کې د سفر کارت نشته."
+    },
+    "sq": {
+      "meaning": "të mungojë",
+      "sentence": "Atij i mungon një biletë e vlefshme."
     }
   },
   "at begynde": {
@@ -7935,6 +8372,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پیل کېدل",
       "sentence": "لوېدیځ لور ته سفر اوس پیلېږي."
+    },
+    "sq": {
+      "meaning": "të fillojë",
+      "sentence": "Udhëtimi fillon në orën tetë fiks."
     }
   },
   "at starte": {
@@ -8008,6 +8449,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پیل کول / روانېدل",
       "sentence": "اورګاډی له هال څخه بهر تلل پیل کوي."
+    },
+    "sq": {
+      "meaning": "të nisë",
+      "sentence": "Treni niset ngadalë nga stacioni."
     }
   },
   "at slutte": {
@@ -8081,6 +8526,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "پای ته رسېدل",
       "sentence": "د اورګاډي سفر یوازې نن شپه ناوخته پای ته رسېږي."
+    },
+    "sq": {
+      "meaning": "të mbarojë",
+      "sentence": "Udhëtimi mbaron në stacionin qendror."
     }
   },
   "at kalde": {
@@ -8154,6 +8603,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "بلل / غږ کول",
       "sentence": "لوډسپیکر مسافر پټلۍ ته رابولي."
+    },
+    "sq": {
+      "meaning": "të thërrasësh",
+      "sentence": "Altoparlanti thërret pasagjerët për në tren."
     }
   },
   "at bestemme": {
@@ -8227,6 +8680,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ټاکل / پریکړه کول",
       "sentence": "د مهالوېش له مخې د تګ وخت ټاکل کېږي."
+    },
+    "sq": {
+      "meaning": "të vendosësh",
+      "sentence": "Ajo vendos vetë se kur të niset."
     }
   },
   "at skabe": {
@@ -8300,6 +8757,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "رامنځته کول / جوړول",
       "sentence": "سفر ډېرې نوې تجربې رامنځته کوي."
+    },
+    "sq": {
+      "meaning": "të krijosh",
+      "sentence": "Orari i ri krijon më shumë lidhje."
     }
   },
   "at kunne": {
@@ -8373,6 +8834,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "توانېدل / کولای شم",
       "sentence": "له نېکمرغه هغه کولای شي په وخت اورګاډي ته ورسېږي."
+    },
+    "sq": {
+      "meaning": "të mundesh",
+      "sentence": "Ai mund të mbërrijë në kohë në tren."
     }
   },
   "at skulle": {
@@ -8446,6 +8911,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "باید / اړتیا لرل",
       "sentence": "مسافر باید د اعتبار وړ ټکټ وښيي."
+    },
+    "sq": {
+      "meaning": "të duhet",
+      "sentence": "Ajo duhet të ndërrojë tren në stacionin tjetër."
     }
   },
   "at ville": {
@@ -8519,6 +8988,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "غوښتل",
       "sentence": "ښځه غواړي له کیوسک څخه د اوبو بوتل واخلي."
+    },
+    "sq": {
+      "meaning": "të duash / synosh",
+      "sentence": "Ata duan të vizitojnë familjen në fundjavë."
     }
   },
   "at blive": {
@@ -8592,6 +9065,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "کېدل",
       "sentence": "اورګاډی نن نه ځنډېږي."
+    },
+    "sq": {
+      "meaning": "të bëhesh / qëndrosh",
+      "sentence": "Pasagjerët qëndrojnë ulur deri sa të ndalojë treni."
     }
   },
   "at få": {
@@ -8665,6 +9142,10 @@ export const verberWordTranslations = {
     "ps": {
       "meaning": "ترلاسه کول",
       "sentence": "هغه د اورګاډي چاپ شوی ټکټ ترلاسه کوي."
+    },
+    "sq": {
+      "meaning": "të marrësh",
+      "sentence": "Ai merr një vend të mirë në tren."
     }
   }
 };

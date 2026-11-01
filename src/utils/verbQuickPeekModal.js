@@ -24,7 +24,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Bussen kører gennem byen.",
         "meaning": "Bevæge sig fremad i et køretøj (bil, bus, tog).",
         "translations": {
-            "en": "to drive / ride", "de": "fahren", "es": "conducir / ir en coche", "ar": "يقود", "fa": "رانندگی کردن", "ku": "ajotin", "tr": "sürmek / gitmek", "uk": "їхати / водити", "ru": "ехать / водить", "vi": "lái xe", "zh": "驾驶 / 开车", "th": "ขับรถ", "pt": "dirigir", "ur": "گاڑی چلانا", "ne": "गाडी चलाउनु", "ps": "موټر چلول"
+            "en": "to drive / ride", "de": "fahren", "es": "conducir / ir en coche", "ar": "يقود", "fa": "رانندگی کردن", "ku": "ajotin", "tr": "sürmek / gitmek", "uk": "їхати / водити", "ru": "ехать / водить", "vi": "lái xe", "zh": "驾驶 / 开车", "th": "ขับรถ", "pt": "dirigir", "ur": "گاڑی چلانا", "ne": "गाडी चलाउनु", "ps": "موټر چلول", "sq": "të ngasësh / udhëtosh"
         }
     },
     "gå": {
@@ -39,7 +39,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Folk går på den hyggelige gågade.",
         "meaning": "Bevæge sig fremad på fødderne i et roligt tempo.",
         "translations": {
-            "en": "to walk", "de": "gehen / zu Fuß gehen", "es": "caminar / andar", "ar": "يمشي", "fa": "راه رفتن", "ku": "meşîn", "tr": "yürümek", "uk": "ходити / йти", "ru": "ходить / идти", "vi": "đi bộ", "zh": "步行 / 走路", "th": "เดิน", "pt": "andar / caminhar", "ur": "چلنا", "ne": "हिँड्नु", "ps": "پلي تلل"
+            "en": "to walk", "de": "gehen / zu Fuß gehen", "es": "caminar / andar", "ar": "يمشي", "fa": "راه رفتن", "ku": "meşîn", "tr": "yürümek", "uk": "ходити / йти", "ru": "ходить / идти", "vi": "đi bộ", "zh": "步行 / 走路", "th": "เดิน", "pt": "andar / caminhar", "ur": "چلنا", "ne": "हिँड्नु", "ps": "پلي تلل", "sq": "të ecësh / shkosh në këmbë"
         }
     },
     "møde": {
@@ -54,7 +54,7 @@ export const byrumVerbsRegistry = {
         "sentence": "De to venner møder hinanden på gaden.",
         "meaning": "Træffe eller hilse på en anden person i byen.",
         "translations": {
-            "en": "to meet", "de": "treffen / begegnen", "es": "encontrarse con", "ar": "يلتقي", "fa": "ملاقات کردن", "ku": "dîtin", "tr": "buluşmak / karşılaşmak", "uk": "зустрічати", "ru": "встречать", "vi": "gặp gỡ", "zh": "遇见 / 会面", "th": "พบ / เจอ", "pt": "encontrar", "ur": "ملنا", "ne": "भेट्नु", "ps": "ملاقات کول"
+            "en": "to meet", "de": "treffen / begegnen", "es": "encontrarse con", "ar": "يلتقي", "fa": "ملاقات کردن", "ku": "dîtin", "tr": "buluşmak / karşılaşmak", "uk": "зустрічати", "ru": "встречать", "vi": "gặp gỡ", "zh": "遇见 / 会面", "th": "พบ / เจอ", "pt": "encontrar", "ur": "ملنا", "ne": "भेट्नु", "ps": "ملاقات کول", "sq": "të takosh"
         }
     },
     "kigge": {
@@ -69,7 +69,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Kvinden kigger ind ad butiksvinduet.",
         "meaning": "Rette blikket mod noget interessant.",
         "translations": {
-            "en": "to look", "de": "schauen / gucken", "es": "mirar", "ar": "ينظر", "fa": "نگاه کردن", "ku": "nihêrîn", "tr": "bakmak", "uk": "дивитися", "ru": "смотреть / глядеть", "vi": "nhìn", "zh": "看 / 瞧", "th": "มอง / ดู", "pt": "olhar", "ur": "دیکھنا", "ne": "हेर्नु", "ps": "کتل"
+            "en": "to look", "de": "schauen / gucken", "es": "mirar", "ar": "ينظر", "fa": "نگاه کردن", "ku": "nihêrîn", "tr": "bakmak", "uk": "дивитися", "ru": "смотреть / глядеть", "vi": "nhìn", "zh": "看 / 瞧", "th": "มอง / ดู", "pt": "olhar", "ur": "دیکھنا", "ne": "हेर्नु", "ps": "کتل", "sq": "të shikosh"
         }
     },
     "vente": {
@@ -84,7 +84,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Kvinden venter tålmodigt på bænken.",
         "meaning": "Blive stående eller siddende indtil nogen kommer.",
         "translations": {
-            "en": "to wait", "de": "warten", "es": "esperar", "ar": "ينتظر", "fa": "منتظر ماندن", "ku": "bendeman", "tr": "beklemek", "uk": "чекати", "ru": "ждать", "vi": "chờ đợi", "zh": "等待", "th": "รอ", "pt": "esperar", "ur": "انتظار کرنا", "ne": "पर्खनु", "ps": "انتظار کول"
+            "en": "to wait", "de": "warten", "es": "esperar", "ar": "ينتظر", "fa": "منتظر ماندن", "ku": "bendeman", "tr": "beklemek", "uk": "чекати", "ru": "ждать", "vi": "chờ đợi", "zh": "等待", "th": "รอ", "pt": "esperar", "ur": "انتظار کرنا", "ne": "पर्खनु", "ps": "انتظار کول", "sq": "të presësh"
         }
     },
     "betale": {
@@ -99,7 +99,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Manden betaler med penge på caféen.",
         "meaning": "Give penge for en vare, kaffe eller service.",
         "translations": {
-            "en": "to pay", "de": "bezahlen", "es": "pagar", "ar": "يدفع", "fa": "پرداخت کردن", "ku": "pere dan", "tr": "ödemek", "uk": "платити", "ru": "платить", "vi": "thanh toán", "zh": "支付 / 付钱", "th": "จ่ายเงิน", "pt": "pagar", "ur": "ادائیگی کرنا", "ne": "तिर्नु", "ps": "پیسې ورکول"
+            "en": "to pay", "de": "bezahlen", "es": "pagar", "ar": "يدفع", "fa": "پرداخت کردن", "ku": "pere dan", "tr": "ödemek", "uk": "платити", "ru": "платить", "vi": "thanh toán", "zh": "支付 / 付钱", "th": "จ่ายเงิน", "pt": "pagar", "ur": "ادائیگی کرنا", "ne": "तिर्नु", "ps": "پیسې ورکول", "sq": "të paguash"
         }
     },
     "åbne": {
@@ -114,7 +114,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Drengen åbner døren foran skolen.",
         "meaning": "Gøre en dør eller et vindue åbent så man kan gå ind.",
         "translations": {
-            "en": "to open", "de": "öffnen", "es": "abrir", "ar": "يفتح", "fa": "باز کردن", "ku": "vekirin", "tr": "açmak", "uk": "відкривати", "ru": "открывать", "vi": "mở", "zh": "打开", "th": "เปิด", "pt": "abrir", "ur": "کھولنا", "ne": "खोल्नु", "ps": "خلاصول"
+            "en": "to open", "de": "öffnen", "es": "abrir", "ar": "يفتح", "fa": "باز کردن", "ku": "vekirin", "tr": "açmak", "uk": "відкривати", "ru": "открывать", "vi": "mở", "zh": "打开", "th": "เปิด", "pt": "abrir", "ur": "کھولنا", "ne": "खोल्नु", "ps": "خلاصول", "sq": "të hapësh"
         }
     },
     "have": {
@@ -129,7 +129,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Chaufføren har et problem ved lyskrydset.",
         "meaning": "Være i besiddelse af en genstand eller befinde sig i en situation.",
         "translations": {
-            "en": "to have", "de": "haben", "es": "tener", "ar": "يملك / لديه", "fa": "داشتن", "ku": "hebûn", "tr": "sahip olmak", "uk": "мати", "ru": "иметь", "vi": "có", "zh": "有 / 拥有", "th": "มี", "pt": "ter", "ur": "رکھنا", "ne": "हुनु", "ps": "لرل"
+            "en": "to have", "de": "haben", "es": "tener", "ar": "يملك / لديه", "fa": "داشتن", "ku": "hebûn", "tr": "sahip olmak", "uk": "мати", "ru": "иметь", "vi": "có", "zh": "有 / 拥有", "th": "มี", "pt": "ter", "ur": "رکھنا", "ne": "हुनु", "ps": "لرل", "sq": "të kesh"
         }
     },
     "cykle": {
@@ -144,7 +144,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Manden cykler sikkert på cykelstien.",
         "meaning": "Køre afsted på to hjul med pedaler.",
         "translations": {
-            "en": "to cycle / bike", "de": "radfahren", "es": "ir en bicicleta", "ar": "يركب دراجة", "fa": "دوچرخه‌سواری کردن", "ku": "duçerxe ajotin", "tr": "bisiklete binmek", "uk": "їздити на велосипеді", "ru": "ездить на велосипеде", "vi": "đi xe đạp", "zh": "骑自行车", "th": "ขี่จักรยาน", "pt": "andar de bicicleta", "ur": "سائیکل چلانا", "ne": "साइकल चलाउनु", "ps": "بايسکل چلول"
+            "en": "to cycle / bike", "de": "radfahren", "es": "ir en bicicleta", "ar": "يركب دراجة", "fa": "دوچرخه‌سواری کردن", "ku": "duçerxe ajotin", "tr": "bisiklete binmek", "uk": "їздити на велосипеді", "ru": "ездить на велосипеде", "vi": "đi xe đạp", "zh": "骑自行车", "th": "ขี่จักรยาน", "pt": "andar de bicicleta", "ur": "سائیکل چلانا", "ne": "साइकल चलाउनु", "ps": "بايسکل چلول", "sq": "t'i japësh biçikletës"
         }
     },
     "stoppe": {
@@ -159,7 +159,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Manden stopper ved fodgængerfeltet.",
         "meaning": "Bremse eller standse op i trafikken.",
         "translations": {
-            "en": "to stop", "de": "anhalten / stoppen", "es": "parar / detenerse", "ar": "يتوقف", "fa": "ایستادن", "ku": "sekinandin", "tr": "durmak", "uk": "зупинятися", "ru": "останавливаться", "vi": "dừng lại", "zh": "停下", "th": "หยุด", "pt": "parar", "ur": "رکنا", "ne": "रोकिनु", "ps": "درېدل"
+            "en": "to stop", "de": "anhalten / stoppen", "es": "parar / detenerse", "ar": "يتوقف", "fa": "ایستادن", "ku": "sekinandin", "tr": "durmak", "uk": "зупинятися", "ru": "останавливаться", "vi": "dừng lại", "zh": "停下", "th": "หยุด", "pt": "parar", "ur": "رکنا", "ne": "रोकिनु", "ps": "درېدل", "sq": "të ndalosh"
         }
     },
     "komme": {
@@ -174,7 +174,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Den blå bybus kommer kørende.",
         "meaning": "Nå frem eller ankomme til stoppestedet.",
         "translations": {
-            "en": "to come / arrive", "de": "kommen", "es": "venir / llegar", "ar": "يأتي", "fa": "آمدن", "ku": "hatin", "tr": "gelmek", "uk": "приходити", "ru": "приходить", "vi": "đến", "zh": "来 / 到来", "th": "มา", "pt": "vir / chegar", "ur": "آنا", "ne": "आउनु", "ps": "راغلل"
+            "en": "to come / arrive", "de": "kommen", "es": "venir / llegar", "ar": "يأتي", "fa": "آمدن", "ku": "hatin", "tr": "gelmek", "uk": "приходити", "ru": "приходить", "vi": "đến", "zh": "来 / 到来", "th": "มา", "pt": "vir / chegar", "ur": "آنا", "ne": "आउनु", "ps": "راغلل", "sq": "të vish / mbërrish"
         }
     },
     "se": {
@@ -189,7 +189,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Hun ser de flotte farverige blomster.",
         "meaning": "Opfatte noget med øjnene i bybilledet.",
         "translations": {
-            "en": "to see", "de": "sehen", "es": "ver", "ar": "يرى", "fa": "دیدن", "ku": "dîtin", "tr": "görmek", "uk": "бачити", "ru": "видеть", "vi": "thấy", "zh": "看见", "th": "เห็น", "pt": "ver", "ur": "دیکھنا", "ne": "देख्नु", "ps": "لیدل"
+            "en": "to see", "de": "sehen", "es": "ver", "ar": "يرى", "fa": "دیدن", "ku": "dîtin", "tr": "görmek", "uk": "бачити", "ru": "видеть", "vi": "thấy", "zh": "看见", "th": "เห็น", "pt": "ver", "ur": "دیکھنا", "ne": "देख्नु", "ps": "لیدل", "sq": "të shohësh"
         }
     },
     "finde": {
@@ -204,7 +204,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Pigen finder en flot buket blomster.",
         "meaning": "Opdage eller lokalisere en genstand.",
         "translations": {
-            "en": "to find", "de": "finden", "es": "encontrar", "ar": "يجد", "fa": "پیدا کردن", "ku": "peydakirin", "tr": "bulmak", "uk": "знаходити", "ru": "находить", "vi": "tìm thấy", "zh": "找到", "th": "พบ", "pt": "encontrar", "ur": "تلاش کرنا", "ne": "फेला पार्नु", "ps": "موندل"
+            "en": "to find", "de": "finden", "es": "encontrar", "ar": "يجد", "fa": "پیدا کردن", "ku": "peydakirin", "tr": "bulmak", "uk": "знаходити", "ru": "находить", "vi": "tìm thấy", "zh": "找到", "th": "พบ", "pt": "encontrar", "ur": "تلاش کرنا", "ne": "फेला पार्नु", "ps": "موندل", "sq": "të gjesh"
         }
     },
     "handle": {
@@ -219,7 +219,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Mange mennesker handler i de små butikker.",
         "meaning": "Købe ind i byens forretninger.",
         "translations": {
-            "en": "to shop", "de": "einkaufen", "es": "ir de compras", "ar": "يتسوق", "fa": "خرید کردن", "ku": "kirîn kirin", "tr": "alışveriş yapmak", "uk": "робити покупки", "ru": "делать покупки", "vi": "mua sắm", "zh": "购物", "th": "ซื้อของ", "pt": "fazer compras", "ur": "خریداری کرنا", "ne": "किनमेल गर्नु", "ps": "خریداره کول"
+            "en": "to shop", "de": "einkaufen", "es": "ir de compras", "ar": "يتسوق", "fa": "خرید کردن", "ku": "kirîn kirin", "tr": "alışveriş yapmak", "uk": "робити покупки", "ru": "делать покупки", "vi": "mua sắm", "zh": "购物", "th": "ซื้อของ", "pt": "fazer compras", "ur": "خریداری کرنا", "ne": "किनमेल गर्नु", "ps": "خریداره کول", "sq": "të bësh pazar / veprosh"
         }
     },
     "hjælpe": {
@@ -234,7 +234,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Ekspedienten hjælper kunden i butikken.",
         "meaning": "Give en håndsrækning eller vejlede en person.",
         "translations": {
-            "en": "to help", "de": "helfen", "es": "ayudar", "ar": "يساعد", "fa": "کمک کردن", "ku": "alîkarî kirin", "tr": "yardım etmek", "uk": "допомагати", "ru": "помогать", "vi": "giúp đỡ", "zh": "帮助", "th": "ช่วย", "pt": "ajudar", "ur": "مدد کرنا", "ne": "मद्दत गर्नु", "ps": "مرسته کول"
+            "en": "to help", "de": "helfen", "es": "ayudar", "ar": "يساعد", "fa": "کمک کردن", "ku": "alîkarî kirin", "tr": "yardım etmek", "uk": "допомагати", "ru": "помогать", "vi": "giúp đỡ", "zh": "帮助", "th": "ช่วย", "pt": "ajudar", "ur": "مدد کرنا", "ne": "मद्दत गर्नु", "ps": "مرسته کول", "sq": "të ndihmosh"
         }
     },
     "bo": {
@@ -249,7 +249,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Mange familier bor i de smukke byhuse.",
         "meaning": "Have fast bopæl eller hjem i et hus eller lejlighed.",
         "translations": {
-            "en": "to live / reside", "de": "wohnen", "es": "vivir", "ar": "يسكن", "fa": "زندگی کردن", "ku": "man", "tr": "yaşamak", "uk": "жити", "ru": "жить", "vi": "sống", "zh": "居住", "th": "อาศัยอยู่", "pt": "morar", "ur": "رہنا", "ne": "बस्नु", "ps": "اوسېدل"
+            "en": "to live / reside", "de": "wohnen", "es": "vivir", "ar": "يسكن", "fa": "زندگی کردن", "ku": "man", "tr": "yaşamak", "uk": "жити", "ru": "жить", "vi": "sống", "zh": "居住", "th": "อาศัยอยู่", "pt": "morar", "ur": "رہنا", "ne": "बस्नु", "ps": "اوسېدل", "sq": "të banosh / jetosh"
         }
     },
     "skinne": {
@@ -263,7 +263,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Solen skinner over byen.",
         "meaning": "Lyser varmt og klart fra himlen.",
         "translations": {
-            "en": "to shine", "de": "scheinen", "es": "brillar", "ar": "يشرق / يلمع", "fa": "درخشیدن", "ku": "biriqîn", "tr": "parlamak", "uk": "світити", "ru": "светить", "vi": "tỏa sáng", "zh": "照耀 / 发光", "th": "ส่องแสง", "pt": "brilhar", "ur": "چمکنا", "ne": "चम्कनु", "ps": "ځلېدل"
+            "en": "to shine", "de": "scheinen", "es": "brillar", "ar": "يشرق / يلمع", "fa": "درخشیدن", "ku": "biriqîn", "tr": "parlamak", "uk": "світити", "ru": "светить", "vi": "tỏa sáng", "zh": "照耀 / 发光", "th": "ส่องแสง", "pt": "brilhar", "ur": "چمکنا", "ne": "चम्कनु", "ps": "ځلېدل", "sq": "të shkëlqesh"
         }
     },
     "vise": {
@@ -277,7 +277,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Uret viser tiden.",
         "meaning": "Peger på eller demonstrerer noget for øjet.",
         "translations": {
-            "en": "to show", "de": "zeigen", "es": "mostrar", "ar": "يُظهر / يُبين", "fa": "نشان دادن", "ku": "nîşandan", "tr": "göstermek", "uk": "показувати", "ru": "показывать", "vi": "chỉ / hiển thị", "zh": "显示 / 展示", "th": "แสดง / ชี้บอก", "pt": "mostrar", "ur": "دکھانا", "ne": "देखाउनु", "ps": "ښودل"
+            "en": "to show", "de": "zeigen", "es": "mostrar", "ar": "يُظهر / يُبين", "fa": "نشان دادن", "ku": "nîşandan", "tr": "göstermek", "uk": "показувати", "ru": "показывать", "vi": "chỉ / hiển thị", "zh": "显示 / 展示", "th": "แสดง / ชี้บอก", "pt": "mostrar", "ur": "دکھانا", "ne": "देखाउनु", "ps": "ښودل", "sq": "të tregosh"
         }
     },
     "sidde": {
@@ -291,7 +291,7 @@ export const byrumVerbsRegistry = {
         "sentence": "De sidder på en café.",
         "meaning": "Hvile kroppen på en stol eller bænk.",
         "translations": {
-            "en": "to sit", "de": "sitzen", "es": "sentarse", "ar": "يجلس", "fa": "نشستن", "ku": "rûniştin", "tr": "oturmak", "uk": "сидіти", "ru": "сидеть", "vi": "ngồi", "zh": "坐", "th": "นั่ง", "pt": "sentar", "ur": "بیٹھنا", "ne": "बस्नु", "ps": "کښېناستل"
+            "en": "to sit", "de": "sitzen", "es": "sentarse", "ar": "يجلس", "fa": "نشستن", "ku": "rûniştin", "tr": "oturmak", "uk": "сидіти", "ru": "сидеть", "vi": "ngồi", "zh": "坐", "th": "นั่ง", "pt": "sentar", "ur": "بیٹھنا", "ne": "बस्नु", "ps": "کښېناستل", "sq": "të rrish ulur"
         }
     },
     "bruge": {
@@ -305,7 +305,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Kunden bruger penge.",
         "meaning": "Anvende penge, tid eller genstande.",
         "translations": {
-            "en": "to use / spend", "de": "benutzen / ausgeben", "es": "usar / gastar", "ar": "يستخدم / ينفق", "fa": "استفاده کردن / خرج کردن", "ku": "bikar anîn", "tr": "kullanmak / harcamak", "uk": "використовувати / витрачати", "ru": "использовать / тратить", "vi": "dùng / tiêu", "zh": "使用 / 花费", "th": "ใช้ / จ่าย", "pt": "usar / gastar", "ur": "استعمال کرنا / خرچ کرنا", "ne": "प्रयोग गर्नु", "ps": "کارول / لګول"
+            "en": "to use / spend", "de": "benutzen / ausgeben", "es": "usar / gastar", "ar": "يستخدم / ينفق", "fa": "استفاده کردن / خرج کردن", "ku": "bikar anîn", "tr": "kullanmak / harcamak", "uk": "використовувати / витрачати", "ru": "использовать / тратить", "vi": "dùng / tiêu", "zh": "使用 / 花费", "th": "ใช้ / จ่าย", "pt": "usar / gastar", "ur": "استعمال کرنا / خرچ کرنا", "ne": "प्रयोग गर्नु", "ps": "کارول / لګول", "sq": "të përdorësh / shpenzosh"
         }
     },
     "koste": {
@@ -319,7 +319,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Brødet koster tyve kroner.",
         "meaning": "Have en bestemt salgspris i kroner.",
         "translations": {
-            "en": "to cost", "de": "kosten", "es": "costar", "ar": "يكلف", "fa": "قیمت داشتن / ارزیدن", "ku": "bihabûn", "tr": "tutmak / mal olmak", "uk": "коштувати", "ru": "стоить", "vi": "có giá", "zh": "价值 / 售价", "th": "ราคา", "pt": "custar", "ur": "قیمت ہونا", "ne": "मूल्य पर्नु", "ps": "بیه لرل"
+            "en": "to cost", "de": "kosten", "es": "costar", "ar": "يكلف", "fa": "قیمت داشتن / ارزیدن", "ku": "bihabûn", "tr": "tutmak / mal olmak", "uk": "коштувати", "ru": "стоить", "vi": "có giá", "zh": "价值 / 售价", "th": "ราคา", "pt": "custar", "ur": "قیمت ہونا", "ne": "मूल्य पर्नु", "ps": "بیه لرل", "sq": "të kushtosh"
         }
     },
     "stå": {
@@ -333,7 +333,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Der står et stort træ og en mand på gaden.",
         "meaning": "Være placeret oprejst på fødderne eller jorden.",
         "translations": {
-            "en": "to stand", "de": "stehen", "es": "estar de pie / estar", "ar": "يقف", "fa": "ایستادن", "ku": "rawestîn", "tr": "ayakta durmak", "uk": "стояти", "ru": "стоять", "vi": "đứng", "zh": "站立 / 位于", "th": "ยืน / ตั้งอยู่", "pt": "ficar de pé / estar", "ur": "کھڑا ہونا", "ne": "उभिनु", "ps": "درېدل"
+            "en": "to stand", "de": "stehen", "es": "estar de pie / estar", "ar": "يقف", "fa": "ایستادن", "ku": "rawestîn", "tr": "ayakta durmak", "uk": "стояти", "ru": "стоять", "vi": "đứng", "zh": "站立 / 位于", "th": "ยืน / ตั้งอยู่", "pt": "ficar de pé / estar", "ur": "کھڑا ہونا", "ne": "उभिनु", "ps": "درېدل", "sq": "të qëndrosh në këmbë"
         }
     },
     "smile": {
@@ -347,7 +347,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Barnet smiler glad.",
         "meaning": "Vise glæde med munden og ansigtet.",
         "translations": {
-            "en": "to smile", "de": "lächeln", "es": "sonreír", "ar": "يبتسم", "fa": "لبخند زدن", "ku": "bişirîn", "tr": "gülümsemek", "uk": "усміхатися", "ru": "улыбаться", "vi": "mỉm cười", "zh": "微笑", "th": "ยิ้ม", "pt": "sorrir", "ur": "مسکرانا", "ne": "मुस्कुराउनु", "ps": "مسکېدل"
+            "en": "to smile", "de": "lächeln", "es": "sonreír", "ar": "يبتسم", "fa": "لبخند زدن", "ku": "bişirîn", "tr": "gülümsemek", "uk": "усміхатися", "ru": "улыбаться", "vi": "mỉm cười", "zh": "微笑", "th": "ยิ้ม", "pt": "sorrir", "ur": "مسکرانا", "ne": "मुस्कुराउनु", "ps": "مسکېدل", "sq": "të buzëqeshësh"
         }
     },
     "lege": {
@@ -361,7 +361,7 @@ export const byrumVerbsRegistry = {
         "sentence": "En dreng leger i solen på pladsen.",
         "meaning": "Have det sjovt og lege med venner eller legetøj.",
         "translations": {
-            "en": "to play (for children)", "de": "spielen", "es": "jugar", "ar": "يلعب", "fa": "بازی کردن", "ku": "lîstin", "tr": "oynamak", "uk": "гратися", "ru": "играть", "vi": "chơi đùa", "zh": "玩耍", "th": "เล่น", "pt": "brincar", "ur": "کھیلنا", "ne": "खेल्नु", "ps": "لوبې کول"
+            "en": "to play (for children)", "de": "spielen", "es": "jugar", "ar": "يلعب", "fa": "بازی کردن", "ku": "lîstin", "tr": "oynamak", "uk": "гратися", "ru": "играть", "vi": "chơi đùa", "zh": "玩耍", "th": "เล่น", "pt": "brincar", "ur": "کھیلنا", "ne": "खेल्नु", "ps": "لوبې کول", "sq": "të luash (fëmijët)"
         }
     },
     "tale": {
@@ -375,7 +375,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Hun taler venligt med en ven.",
         "meaning": "Bruge stemmen og ord til at samtale.",
         "translations": {
-            "en": "to speak / talk", "de": "sprechen / reden", "es": "hablar", "ar": "يتكلم / يتحدث", "fa": "صحبت کردن", "ku": "axaftin", "tr": "konuşmak", "uk": "говорити", "ru": "говорить", "vi": "nói chuyện", "zh": "说话 / 交谈", "th": "พูดคุย", "pt": "falar / conversar", "ur": "بات کرنا", "ne": "बोल्नु", "ps": "خبرې کول"
+            "en": "to speak / talk", "de": "sprechen / reden", "es": "hablar", "ar": "يتكلم / يتحدث", "fa": "صحبت کردن", "ku": "axaftin", "tr": "konuşmak", "uk": "говорити", "ru": "говорить", "vi": "nói chuyện", "zh": "说话 / 交谈", "th": "พูดคุย", "pt": "falar / conversar", "ur": "بات کرنا", "ne": "बोल्नु", "ps": "خبرې کول", "sq": "të flasësh"
         }
     },
     "holde": {
@@ -389,7 +389,7 @@ export const byrumVerbsRegistry = {
         "sentence": "En bil holder ved vejen.",
         "meaning": "Stå stille eller parkere med et køretøj.",
         "translations": {
-            "en": "to stop / park (vehicle)", "de": "halten / anhalten", "es": "parar / estacionar", "ar": "يقف (مركبة)", "fa": "توقف کردن (خودرو)", "ku": "sekinandin", "tr": "durmak (araç)", "uk": "зупинятися (авто)", "ru": "останавливаться (авто)", "vi": "đỗ xe / dừng lại", "zh": "停放 / 停下", "th": "จอด", "pt": "parar / estacionar", "ur": "گاڑی روکنا", "ne": "रोकिनु", "ps": "موټر درول"
+            "en": "to stop / park (vehicle)", "de": "halten / anhalten", "es": "parar / estacionar", "ar": "يقف (مركبة)", "fa": "توقف کردن (خودرو)", "ku": "sekinandin", "tr": "durmak (araç)", "uk": "зупинятися (авто)", "ru": "останавливаться (авто)", "vi": "đỗ xe / dừng lại", "zh": "停放 / 停下", "th": "จอด", "pt": "parar / estacionar", "ur": "گاڑی روکنا", "ne": "रोकिनु", "ps": "موټر درول", "sq": "të ndalosh / parkosh"
         }
     },
     "drikke": {
@@ -403,7 +403,7 @@ export const byrumVerbsRegistry = {
         "sentence": "De drikker varm kaffe.",
         "meaning": "Indtage kaffe eller anden væske.",
         "translations": {
-            "en": "to drink", "de": "trinken", "es": "beber", "ar": "يشرب", "fa": "نوشیدن", "ku": "vexwarin", "tr": "içmek", "uk": "пити", "ru": "пить", "vi": "uống", "zh": "喝", "th": "ดื่ม", "pt": "beber", "ur": "پینا", "ne": "पिउनु", "ps": "څښل"
+            "en": "to drink", "de": "trinken", "es": "beber", "ar": "يشرب", "fa": "نوشیدن", "ku": "vexwarin", "tr": "içmek", "uk": "пити", "ru": "пить", "vi": "uống", "zh": "喝", "th": "ดื่ม", "pt": "beber", "ur": "پینا", "ne": "पिउनु", "ps": "څښل", "sq": "të pish"
         }
     },
     "krydse": {
@@ -417,7 +417,7 @@ export const byrumVerbsRegistry = {
         "sentence": "Manden krydser gaden ved fodgængerfeltet.",
         "meaning": "Gå tværs over vejen.",
         "translations": {
-            "en": "to cross", "de": "überqueren", "es": "cruzar", "ar": "يعبر", "fa": "عبور کردن", "ku": "derbasbûn", "tr": "karşıya geçmek", "uk": "переходити", "ru": "переходить", "vi": "băng qua", "zh": "穿过 / 过马路", "th": "ข้าม", "pt": "cruzar / atravessar", "ur": "پار کرنا", "ne": "पार गर्नु", "ps": "پورې وتل"
+            "en": "to cross", "de": "überqueren", "es": "cruzar", "ar": "يعبر", "fa": "عبور کردن", "ku": "derbasbûn", "tr": "karşıya geçmek", "uk": "переходити", "ru": "переходить", "vi": "băng qua", "zh": "穿过 / 过马路", "th": "ข้าม", "pt": "cruzar / atravessar", "ur": "پار کرنا", "ne": "पार गर्नु", "ps": "پورې وتل", "sq": "të kalosh / kapërcesh"
         }
     }
 };

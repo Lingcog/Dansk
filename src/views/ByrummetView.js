@@ -2612,7 +2612,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             verbum: "betaler med",
             sted: "på caféen",
-            questionPrompt: "Hvad betaler Manden med på caféen?",
+            questionPrompt: "Hvad betaler manden med på caféen?",
             targetWord: "penge",
             distractors: ["en bil", "et træ", "en dør"],
             pedagogyNote: "Man bruger penge til at betale for kaffe og kage!"
@@ -2622,7 +2622,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             verbum: "kigger på",
             sted: "på vejen",
-            questionPrompt: "Hvad kigger Manden på på vejen?",
+            questionPrompt: "Hvad kigger manden på på vejen?",
             targetWord: "en cykel",
             distractors: ["en hund", "penge", "et hus"],
             pedagogyNote: "Manden kigger opgivende på sin flade cykel."
@@ -2632,7 +2632,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Drengen",
             verbum: "åbner",
             sted: "foran skolen",
-            questionPrompt: "Hvad åbner Drengen foran skolen?",
+            questionPrompt: "Hvad åbner drengen foran skolen?",
             targetWord: "en dør",
             distractors: ["penge", "en bil", "tiden"],
             pedagogyNote: "Drengen åbner døren for at gå ind i klasselokalet."
@@ -2642,7 +2642,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Lægen",
             verbum: "møder",
             sted: "på torvet",
-            questionPrompt: "Hvem møder Lægen på torvet?",
+            questionPrompt: "Hvem møder lægen på torvet?",
             targetWord: "en ven",
             distractors: ["en vej", "en dør", "en krone"],
             pedagogyNote: "Det er hyggeligt at møde en god ven i byen."
@@ -2652,7 +2652,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Familien",
             verbum: "går med",
             sted: "på gaden",
-            questionPrompt: "Hvad går Familien med på gaden?",
+            questionPrompt: "Hvad går familien med på gaden?",
             targetWord: "en hund",
             distractors: ["et hus", "et arbejde", "penge"],
             pedagogyNote: "Hunden logrer med halen, når den går tur med familien."
@@ -2662,7 +2662,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Pigen",
             verbum: "kigger på",
             sted: "i byen",
-            questionPrompt: "Hvad kigger Pigen på i byen?",
+            questionPrompt: "Hvad kigger pigen på i byen?",
             targetWord: "et træ",
             distractors: ["en dør", "en café", "et arbejde"],
             pedagogyNote: "Der står et smukt, grønt træ midt på pladsen."
@@ -2672,7 +2672,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             verbum: "har",
             sted: "på vejen",
-            questionPrompt: "Hvad har Manden på vejen?",
+            questionPrompt: "Hvad har manden på vejen?",
             targetWord: "et problem",
             distractors: ["en sol", "en hund", "en plads"],
             pedagogyNote: "Når cyklen er flad, har manden et problem."
@@ -2682,7 +2682,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             subjekt: "Vennen",
             verbum: "venter på",
             sted: "ved caféen",
-            questionPrompt: "Hvad venter Vennen på ved caféen?",
+            questionPrompt: "Hvad venter vennen på ved caféen?",
             targetWord: "en ven",
             distractors: ["et træ", "et hus", "penge"],
             pedagogyNote: "Det er rart at følges ad til en kop kaffe."

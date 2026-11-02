@@ -2430,7 +2430,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Faren",
             objekt: "en kop varm kaffe",
             sted: "ved bordet",
-            questionPrompt: "Hvad gør Faren med en kop varm kaffe ved bordet?",
+            questionPrompt: "Hvad gør faren med en kop varm kaffe ved bordet?",
             correctVerb: "drikker",
             distractors: ["sover", "cykler", "kaster"],
             pedagogyNote: "Man drikker kaffe, te og vand, når man er tørstig."
@@ -2440,7 +2440,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Pigen",
             objekt: "sin morgenmad",
             sted: "i køkkenet",
-            questionPrompt: "Hvad gør Pigen med sin morgenmad i køkkenet?",
+            questionPrompt: "Hvad gør pigen med sin morgenmad i køkkenet?",
             correctVerb: "spiser",
             distractors: ["kører", "åbner", "flytter"],
             pedagogyNote: "Man spiser mad for at få energi til dagen."
@@ -2450,7 +2450,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Drengen",
             objekt: "det kolde køleskab",
             sted: "i køkkenet",
-            questionPrompt: "Hvad gør Drengen med det kolde køleskab i køkkenet?",
+            questionPrompt: "Hvad gør drengen med det kolde køleskab i køkkenet?",
             correctVerb: "åbner",
             distractors: ["drikker", "sidder", "læser"],
             pedagogyNote: "Man åbner køleskabet for at tage mad og drikke ud."
@@ -2460,7 +2460,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Bedstemor",
             objekt: "den bløde lænestol",
             sted: "i stuen",
-            questionPrompt: "Hvad gør Bedstemor i den bløde lænestol i stuen?",
+            questionPrompt: "Hvad gør bedstemor i den bløde lænestol i stuen?",
             correctVerb: "sidder i",
             distractors: ["koger", "steger", "løber"],
             pedagogyNote: "Man sidder i en lænestol, når man vil hvile sig."
@@ -2470,7 +2470,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             objekt: "en kold mælk",
             sted: "fra køleskabet",
-            questionPrompt: "Hvad gør Manden med en kold mælk fra køleskabet?",
+            questionPrompt: "Hvad gør manden med en kold mælk fra køleskabet?",
             correctVerb: "tager",
             distractors: ["sover", "kører", "falder"],
             pedagogyNote: "Man tager en genstand med hånden."
@@ -2480,7 +2480,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Moren",
             objekt: "en flot vase",
             sted: "på reolen",
-            questionPrompt: "Hvad gør Moren med en flot vase på reolen?",
+            questionPrompt: "Hvad gør moren med en flot vase på reolen?",
             correctVerb: "sætter",
             distractors: ["drikker", "spiser", "åbner"],
             pedagogyNote: "Man sætter en vase eller kop ned på en flade."
@@ -2490,7 +2490,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Familien",
             objekt: "den varme kage",
             sted: "ved spisebordet",
-            questionPrompt: "Hvad gør Familien med den varme kage ved spisebordet?",
+            questionPrompt: "Hvad gør familien med den varme kage ved spisebordet?",
             correctVerb: "deler",
             distractors: ["lukker", "ringer", "står"],
             pedagogyNote: "Når man deler, får alle et stykke af kagen."
@@ -2500,7 +2500,7 @@ export function renderVerberHjemView(container, navigateFn, extraData = {}) {
             subjekt: "Katten",
             objekt: "på gulvtæppet",
             sted: "i stuen",
-            questionPrompt: "Hvad gør Katten på gulvtæppet i stuen?",
+            questionPrompt: "Hvad gør katten på gulvtæppet i stuen?",
             correctVerb: "ligger",
             distractors: ["koger", "drikker", "åbner"],
             pedagogyNote: "Katte ligger ned og sover, når de er mætte og trygge."

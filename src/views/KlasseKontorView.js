@@ -2318,7 +2318,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Læreren",
             verbum: "skriver med",
             sted: "ved bordet",
-            questionPrompt: "Hvad skriver Læreren med ved bordet?",
+            questionPrompt: "Hvad skriver læreren med ved bordet?",
             targetWord: "en blyant",
             distractors: ["en stol", "en taske", "et vindue"],
             pedagogyNote: "Man skriver med en spidset blyant på papiret."
@@ -2328,7 +2328,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Eleven",
             verbum: "stiller",
             sted: "i timen",
-            questionPrompt: "Hvad stiller Eleven i timen?",
+            questionPrompt: "Hvad stiller eleven i timen?",
             targetWord: "et spørgsmål",
             distractors: ["et ur", "et billede", "en lampe"],
             pedagogyNote: "Man rækker hånden op og stiller et spørgsmål til læreren."
@@ -2338,7 +2338,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Kursisten",
             verbum: "læser i",
             sted: "i klassen",
-            questionPrompt: "Hvad læser Kursisten i i klassen?",
+            questionPrompt: "Hvad læser kursisten i i klassen?",
             targetWord: "en bog",
             distractors: ["en computer", "en telefon", "et møde"],
             pedagogyNote: "Kursisten fordyber sig og læser teksten i bogen."
@@ -2348,7 +2348,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             verbum: "tænder for",
             sted: "på kontoret",
-            questionPrompt: "Hvad tænder Manden for på kontoret?",
+            questionPrompt: "Hvad tænder manden for på kontoret?",
             targetWord: "computeren",
             distractors: ["tasken", "stolen", "brevet"],
             pedagogyNote: "Manden tænder skærmen og computeren for at skrive e-mails."
@@ -2358,7 +2358,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Chefen",
             verbum: "åbner",
             sted: "ved bordet",
-            questionPrompt: "Hvad åbner Chefen ved bordet?",
+            questionPrompt: "Hvad åbner chefen ved bordet?",
             targetWord: "et brev",
             distractors: ["en blyant", "en tavle", "et ur"],
             pedagogyNote: "Chefen sprætter konvolutten op og læser brevet."
@@ -2368,7 +2368,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Pigen",
             verbum: "løser",
             sted: "i lokalet",
-            questionPrompt: "Hvad løser Pigen i lokalet?",
+            questionPrompt: "Hvad løser pigen i lokalet?",
             targetWord: "en opgave",
             distractors: ["en stol", "et vindue", "en lampe"],
             pedagogyNote: "Pigen tænker sig godt om og løser opgaven."
@@ -2378,7 +2378,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Gruppen",
             verbum: "holder",
             sted: "på kontoret",
-            questionPrompt: "Hvad holder Gruppen på kontoret?",
+            questionPrompt: "Hvad holder gruppen på kontoret?",
             targetWord: "et møde",
             distractors: ["en taske", "en blyant", "en bog"],
             pedagogyNote: "Kollegerne diskuterer og holder et vigtigt møde."
@@ -2388,7 +2388,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             subjekt: "Læreren",
             verbum: "kigger på",
             sted: "på væggen",
-            questionPrompt: "Hvad kigger Læreren på på væggen?",
+            questionPrompt: "Hvad kigger læreren på på væggen?",
             targetWord: "uret",
             distractors: ["bordet", "brevet", "sproget"],
             pedagogyNote: "Uret viser præcis hvad klokken er."

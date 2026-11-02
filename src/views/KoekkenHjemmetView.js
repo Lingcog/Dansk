@@ -2798,7 +2798,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Moren",
             verbum: "drikker",
             sted: "i køkkenet",
-            questionPrompt: "Hvad drikker Moren i køkkenet?",
+            questionPrompt: "Hvad drikker moren i køkkenet?",
             targetWord: "en kop kaffe",
             distractors: ["en stol", "et vindue", "en sko"],
             pedagogyNote: "Man drikker kaffe for at vågne om morgenen!"
@@ -2808,7 +2808,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Faren",
             verbum: "sidder på",
             sted: "ved bordet",
-            questionPrompt: "Hvad sidder Faren på ved bordet?",
+            questionPrompt: "Hvad sidder faren på ved bordet?",
             targetWord: "en stol",
             distractors: ["en kaffe", "et vindue", "en sol"],
             pedagogyNote: "Man sidder på en stol ved bordet."
@@ -2818,7 +2818,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Barnet",
             verbum: "spiser",
             sted: "i stuen",
-            questionPrompt: "Hvad spiser Barnet i stuen?",
+            questionPrompt: "Hvad spiser barnet i stuen?",
             targetWord: "en mad",
             distractors: ["en seng", "et træ", "et stykke tøj"],
             pedagogyNote: "Barnet spiser en mad, når det er sultent."
@@ -2828,7 +2828,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Katten",
             verbum: "kigger på",
             sted: "på gulvet",
-            questionPrompt: "Hvad kigger Katten på på gulvet?",
+            questionPrompt: "Hvad kigger katten på på gulvet?",
             targetWord: "en fisk",
             distractors: ["en kop", "et problem", "solen"],
             pedagogyNote: "Katte elsker fisk!"
@@ -2838,7 +2838,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Hunden",
             verbum: "sover i",
             sted: "i soveværelset",
-            questionPrompt: "Hvad sover Hunden i i soveværelset?",
+            questionPrompt: "Hvad sover hunden i i soveværelset?",
             targetWord: "sengen",
             distractors: ["koppen", "glasset", "vinduet"],
             pedagogyNote: "Hunden sover trygt i den bløde seng."
@@ -2848,7 +2848,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Gæsten",
             verbum: "drikker",
             sted: "i haven",
-            questionPrompt: "Hvad drikker Gæsten i haven?",
+            questionPrompt: "Hvad drikker gæsten i haven?",
             targetWord: "et glas vand",
             distractors: ["et bord", "et stykke tøj", "en sko"],
             pedagogyNote: "Gæsten slukker tørsten med koldt vand."
@@ -2858,7 +2858,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Faren",
             verbum: "åbner",
             sted: "i stuen",
-            questionPrompt: "Hvad åbner Faren i stuen?",
+            questionPrompt: "Hvad åbner faren i stuen?",
             targetWord: "et vindue",
             distractors: ["en kaffe", "et stykke kød", "en hund"],
             pedagogyNote: "Faren åbner et vindue for at få frisk luft ind."
@@ -2868,7 +2868,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Barnet",
             verbum: "tager",
             sted: "på fødderne",
-            questionPrompt: "Hvad tager Barnet på fødderne?",
+            questionPrompt: "Hvad tager barnet på fødderne?",
             targetWord: "skoene",
             distractors: ["træet", "solen", "maden"],
             pedagogyNote: "Man tager sko på fødderne, før man går ud."
@@ -2878,7 +2878,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Moren",
             verbum: "steger",
             sted: "i køkkenet",
-            questionPrompt: "Hvad steger Moren i køkkenet?",
+            questionPrompt: "Hvad steger moren i køkkenet?",
             targetWord: "et stykke kød",
             distractors: ["en seng", "en stol", "et vindue"],
             pedagogyNote: "Moren steger et stykke kød på panden."
@@ -2888,7 +2888,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             subjekt: "Faren",
             verbum: "kigger på",
             sted: "i haven",
-            questionPrompt: "Hvad kigger Faren på i haven?",
+            questionPrompt: "Hvad kigger faren på i haven?",
             targetWord: "et træ",
             distractors: ["sengen", "tøjet", "koppen"],
             pedagogyNote: "Ude i haven står der et stort grønt træ."

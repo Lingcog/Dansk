@@ -2400,7 +2400,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Passageren",
             objekt: "en togbillet",
             sted: "i automaten",
-            questionPrompt: "Hvad gør Passageren med en togbillet i automaten?",
+            questionPrompt: "Hvad gør passageren med en togbillet i automaten?",
             correctVerb: "køber",
             distractors: ["sover", "spiser", "koger"],
             pedagogyNote: "Man køber en billet for at have ret til at køre med toget."
@@ -2410,7 +2410,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Kvinden",
             objekt: "en tung kuffert",
             sted: "hen ad perronen",
-            questionPrompt: "Hvad gør Kvinden med en tung kuffert hen ad perronen?",
+            questionPrompt: "Hvad gør kvinden med en tung kuffert hen ad perronen?",
             correctVerb: "trækker",
             distractors: ["drikker", "hopper", "kaster"],
             pedagogyNote: "Man trækker en kuffert på hjul efter sig."
@@ -2420,7 +2420,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Kunden",
             objekt: "en kop kaffe",
             sted: "i kiosken",
-            questionPrompt: "Hvad gør Kunden med en kop kaffe i kiosken?",
+            questionPrompt: "Hvad gør kunden med en kop kaffe i kiosken?",
             correctVerb: "betaler for",
             distractors: ["cykler", "læser", "sover"],
             pedagogyNote: "Man betaler for sine varer med penge eller betalingskort."
@@ -2430,7 +2430,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Familien",
             objekt: "mod Jylland",
             sted: "med det røde tog",
-            questionPrompt: "Hvad gør Familien mod Jylland med det røde tog?",
+            questionPrompt: "Hvad gør familien mod Jylland med det røde tog?",
             correctVerb: "rejser",
             distractors: ["vasker", "koger", "steger"],
             pedagogyNote: "Man rejser, når man tager fra ét sted til et andet med tog eller bus."
@@ -2440,7 +2440,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             objekt: "en vinduesplads",
             sted: "i toget",
-            questionPrompt: "Hvad gør Manden med en vinduesplads i toget?",
+            questionPrompt: "Hvad gør manden med en vinduesplads i toget?",
             correctVerb: "vælger",
             distractors: ["taber", "spiser", "glemmer"],
             pedagogyNote: "Man vælger den plads, som man helst vil have."
@@ -2450,7 +2450,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Kunden",
             objekt: "sin billet",
             sted: "fra automaten",
-            questionPrompt: "Hvad gør Kunden med sin billet fra automaten?",
+            questionPrompt: "Hvad gør kunden med sin billet fra automaten?",
             correctVerb: "får",
             distractors: ["kaster", "løber", "hopper"],
             pedagogyNote: "Man får en billet eller kvittering ud af automaten."
@@ -2460,7 +2460,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Turisten",
             objekt: "småpenge",
             sted: "i pungen",
-            questionPrompt: "Hvad gør Turisten i forhold til småpenge i pungen?",
+            questionPrompt: "Hvad gør turisten i forhold til småpenge i pungen?",
             correctVerb: "mangler",
             distractors: ["drikker", "åbner", "rejser"],
             pedagogyNote: "Man mangler penge, når man ikke har nok."
@@ -2470,7 +2470,7 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             subjekt: "Ekspedienten",
             objekt: "en kold sodavand",
             sted: "til de rejsende",
-            questionPrompt: "Hvad gør Ekspedienten med en kold sodavand til de rejsende?",
+            questionPrompt: "Hvad gør ekspedienten med en kold sodavand til de rejsende?",
             correctVerb: "sælger",
             distractors: ["falder", "sover", "bager"],
             pedagogyNote: "En butik eller kiosk sælger varer til kunderne."

@@ -2422,7 +2422,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Læreren",
             objekt: "en grammatikregel",
             sted: "på tavlen",
-            questionPrompt: "Hvad gør Læreren med en grammatikregel på tavlen?",
+            questionPrompt: "Hvad gør læreren med en grammatikregel på tavlen?",
             correctVerb: "forklarer",
             distractors: ["drikker", "sover", "koger"],
             pedagogyNote: "Læreren forklarer reglerne, så kursisterne forstår dem."
@@ -2432,7 +2432,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Eleven",
             objekt: "en god sætning",
             sted: "i sit hæfte",
-            questionPrompt: "Hvad gør Eleven med en god sætning i sit hæfte?",
+            questionPrompt: "Hvad gør eleven med en god sætning i sit hæfte?",
             correctVerb: "skriver",
             distractors: ["hopper", "kører", "cykler"],
             pedagogyNote: "Man skriver med en blyant eller kuglepen i et hæfte."
@@ -2442,7 +2442,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Kursisten",
             objekt: "den svære tekst",
             sted: "i bogen",
-            questionPrompt: "Hvad gør Kursisten med den svære tekst i bogen?",
+            questionPrompt: "Hvad gør kursisten med den svære tekst i bogen?",
             correctVerb: "læser",
             distractors: ["steger", "vasker", "kaster"],
             pedagogyNote: "Man læser tekster i bøger og aviser med øjnene."
@@ -2452,7 +2452,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Kursisten",
             objekt: "hjælp til opgaven",
             sted: "i undervisningen",
-            questionPrompt: "Hvad gør Kursisten i forhold til hjælp til opgaven i undervisningen?",
+            questionPrompt: "Hvad gør kursisten i forhold til hjælp til opgaven i undervisningen?",
             correctVerb: "spørger om",
             distractors: ["køber", "spiser", "åbner"],
             pedagogyNote: "Man spørger om hjælp, når man er i tvivl."
@@ -2462,7 +2462,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Klassen",
             objekt: "en lydfil med udtale",
             sted: "foran computeren",
-            questionPrompt: "Hvad gør Klassen med en lydfil med udtale foran computeren?",
+            questionPrompt: "Hvad gør klassen med en lydfil med udtale foran computeren?",
             correctVerb: "hører",
             distractors: ["løber", "sidder", "deler"],
             pedagogyNote: "Man hører lydfiler og samtaler med ørerne."
@@ -2472,7 +2472,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Kursisterne",
             objekt: "mange nye ord",
             sted: "i sprogskolen",
-            questionPrompt: "Hvad gør Kursisterne med mange nye ord i sprogskolen?",
+            questionPrompt: "Hvad gør kursisterne med mange nye ord i sprogskolen?",
             correctVerb: "lærer",
             distractors: ["taber", "glemmer", "slukker"],
             pedagogyNote: "Når man træner og øver sig, lærer man et nyt sprog."
@@ -2482,7 +2482,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Kollegaen",
             objekt: "en bærbar computer",
             sted: "på kontoret",
-            questionPrompt: "Hvad gør Kollegaen med en bærbar computer på kontoret?",
+            questionPrompt: "Hvad gør kollegaen med en bærbar computer på kontoret?",
             correctVerb: "bruger",
             distractors: ["drikker", "koger", "spiller"],
             pedagogyNote: "Man bruger et redskab eller en computer til arbejdet."
@@ -2492,7 +2492,7 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             subjekt: "Kollegaen",
             objekt: "en vigtig e-mail",
             sted: "til chefen",
-            questionPrompt: "Hvad gør Kollegaen med en vigtig e-mail til chefen?",
+            questionPrompt: "Hvad gør kollegaen med en vigtig e-mail til chefen?",
             correctVerb: "sender",
             distractors: ["spiser", "kaster", "falder"],
             pedagogyNote: "Man sender breve, beskeder og e-mails til andre."

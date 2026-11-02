@@ -2519,7 +2519,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Manden",
             objekt: "på en cykel",
             sted: "på cykelstien ved vejen",
-            questionPrompt: "Hvad gør Manden på en cykel på cykelstien?",
+            questionPrompt: "Hvad gør manden på en cykel på cykelstien?",
             correctVerb: "cykler",
             distractors: ["sover", "koger", "drikker"],
             pedagogyNote: "Man cykler på en to-hjulet cykel for at komme hurtigt frem."
@@ -2529,7 +2529,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Vennerne",
             objekt: "hinanden",
             sted: "på gaden",
-            questionPrompt: "Hvad gør Vennerne med hinanden på gaden?",
+            questionPrompt: "Hvad gør vennerne med hinanden på gaden?",
             correctVerb: "møder",
             distractors: ["taber", "steger", "falder"],
             pedagogyNote: "Man møder andre mennesker, når man støder ind i dem i byen."
@@ -2539,7 +2539,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Kvinden",
             objekt: "friske varer",
             sted: "i butikken",
-            questionPrompt: "Hvad gør Kvinden med friske varer i butikken?",
+            questionPrompt: "Hvad gør kvinden med friske varer i butikken?",
             correctVerb: "handler",
             distractors: ["flyver", "svømmer", "sover"],
             pedagogyNote: "At handle betyder at købe varer ind i butikken."
@@ -2549,7 +2549,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Manden i bilen",
             objekt: "på sin ven",
             sted: "ved vejen",
-            questionPrompt: "Hvad gør Manden i bilen på vejen?",
+            questionPrompt: "Hvad gør manden i bilen på vejen?",
             correctVerb: "venter på",
             distractors: ["læser i", "koger", "kaster"],
             pedagogyNote: "Man venter på transportmidler eller på sin ven."
@@ -2559,7 +2559,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Børnene",
             objekt: "til fods",
             sted: "i skole",
-            questionPrompt: "Hvad gør Børnene til fods i skole?",
+            questionPrompt: "Hvad gør børnene til fods i skole?",
             correctVerb: "går",
             distractors: ["koger", "bager", "drikker"],
             pedagogyNote: "At gå er at bevæge sig fremad på sine egne fødder."
@@ -2569,7 +2569,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Chaufføren",
             objekt: "den store bil",
             sted: "ved lyskrydset",
-            questionPrompt: "Hvad gør Chaufføren med bilen ved lyskrydset?",
+            questionPrompt: "Hvad gør chaufføren med bilen ved lyskrydset?",
             correctVerb: "stopper",
             distractors: ["drikker", "sover", "lægger"],
             pedagogyNote: "Chaufføren stopper køretøjet, når lyset er rødt."
@@ -2579,7 +2579,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Turisten",
             objekt: "et stort bykort",
             sted: "på vejen",
-            questionPrompt: "Hvad gør Turisten med et stort bykort på vejen?",
+            questionPrompt: "Hvad gør turisten med et stort bykort på vejen?",
             correctVerb: "kigger på",
             distractors: ["steger", "hopper", "falder"],
             pedagogyNote: "Man kigger på noget med sine øjne for at orientere sig."
@@ -2589,7 +2589,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             subjekt: "Manden og hunden",
             objekt: "de tunge poser",
             sted: "foran døren",
-            questionPrompt: "Hvad gør Manden og hunden foran døren?",
+            questionPrompt: "Hvad gør manden og hunden foran døren?",
             correctVerb: "hjælper med",
             distractors: ["cykler i", "flyver over", "mister"],
             pedagogyNote: "Det er god stil at hjælpe andre, når poserne er tunge."

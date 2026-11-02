@@ -2401,7 +2401,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Løberen",
             objekt: "en lang tur",
             sted: "på stien",
-            questionPrompt: "Hvad gør Løberen med en lang tur på stien?",
+            questionPrompt: "Hvad gør løberen med en lang tur på stien?",
             correctVerb: "løber",
             distractors: ["sover", "koger", "spiser"],
             pedagogyNote: "Man løber stærkt for at træne kroppen og få god kondition."
@@ -2411,7 +2411,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Børnene",
             objekt: "et sjovt boldspil",
             sted: "på græsset",
-            questionPrompt: "Hvad gør Børnene med et sjovt boldspil på græsset?",
+            questionPrompt: "Hvad gør børnene med et sjovt boldspil på græsset?",
             correctVerb: "spiller",
             distractors: ["vasker", "køber", "åbner"],
             pedagogyNote: "Man spiller spil eller fodbold sammen med vennerne."
@@ -2421,7 +2421,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Drengen",
             objekt: "en træpind",
             sted: "til sin hund",
-            questionPrompt: "Hvad gør Drengen med en træpind til sin hund?",
+            questionPrompt: "Hvad gør drengen med en træpind til sin hund?",
             correctVerb: "kaster",
             distractors: ["drikker", "læser", "sover"],
             pedagogyNote: "Man kaster en pind eller en bold med armen."
@@ -2431,7 +2431,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Pigen",
             objekt: "den røde bold",
             sted: "i luften",
-            questionPrompt: "Hvad gør Pigen med den røde bold i luften?",
+            questionPrompt: "Hvad gør pigen med den røde bold i luften?",
             correctVerb: "griber",
             distractors: ["steger", "koger", "svømmer"],
             pedagogyNote: "Man griber en bold med hænderne, før den rører jorden."
@@ -2441,7 +2441,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Familien",
             objekt: "det gode vejr",
             sted: "i parken",
-            questionPrompt: "Hvad gør Familien med det gode vejr i parken?",
+            questionPrompt: "Hvad gør familien med det gode vejr i parken?",
             correctVerb: "nyder",
             distractors: ["glemmer", "slukker", "falder"],
             pedagogyNote: "Man nyder solen, maden eller en pause, når man har det dejligt."
@@ -2451,7 +2451,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Pigen",
             objekt: "den friske vind",
             sted: "ved søen",
-            questionPrompt: "Hvad gør Pigen med den friske vind ved søen?",
+            questionPrompt: "Hvad gør pigen med den friske vind ved søen?",
             correctVerb: "mærker",
             distractors: ["drikker", "spiser", "kaster"],
             pedagogyNote: "Man mærker kulde, varme eller vind på kroppen."
@@ -2461,7 +2461,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Bedstefar",
             objekt: "en spændende historie",
             sted: "på bænken",
-            questionPrompt: "Hvad gør Bedstefar med en spændende historie på bænken?",
+            questionPrompt: "Hvad gør bedstefar med en spændende historie på bænken?",
             correctVerb: "fortæller",
             distractors: ["løber", "hopper", "koger"],
             pedagogyNote: "Man fortæller historier og nyheder til andre mennesker."
@@ -2471,7 +2471,7 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             subjekt: "Vennerne",
             objekt: "den store kamp",
             sted: "på plænen",
-            questionPrompt: "Hvad gør Vennerne i den store kamp på plænen?",
+            questionPrompt: "Hvad gør vennerne i den store kamp på plænen?",
             correctVerb: "vinder",
             distractors: ["taber", "sover", "åbner"],
             pedagogyNote: "Man vinder en kamp, når man får flest mål eller point."

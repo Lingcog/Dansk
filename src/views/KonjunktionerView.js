@@ -36,9 +36,9 @@ import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_tra
  * 3. Konjunktions-Detektiven (10 gåder om betydning og ordstilling)
  * 4. Sætningsbyggeren & Puslespillet (Helsætning vs. Ledsætning & Ledsætning i Forfelt)
  * 5. Kontekst-testen (14 autentiske hverdagsdialoger)
- * 6. Da eller Når? & Tidskonjunktioner ⏳ (8 øvelser)
- * 7. Fordi, For, Så eller Derfor? (Årsag & Ordstilling) ⚡ (8 øvelser)
- * 8. At eller Om? & Hvis eller Selvom? 🎯 (10 øvelser)
+ * 6. Da eller Når? & Tidskonjunktioner (8 øvelser)
+ * 7. Fordi, For, Så eller Derfor? (Årsag & Ordstilling) (8 øvelser)
+ * 8. At eller Om? & Hvis eller Selvom? (10 øvelser)
  */
 export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
@@ -1421,14 +1421,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: getTranslation('konj_tab_vrimmel'), icon: '🖼️' },
-        { id: 'detektiv', label: getTranslation('konj_tab_detektiv'), icon: '🔍' },
-        { id: 'builder', label: getTranslation('konj_tab_builder'), icon: '🧩' },
-        { id: 'kontekst', label: getTranslation('konj_tab_kontekst'), icon: '🎯' },
-        { id: 'tid', label: getTranslation('konj_tab_tid'), icon: '⏳' },
-        { id: 'aarsag', label: getTranslation('konj_tab_aarsag'), icon: '⚡' },
-        { id: 'atom', label: getTranslation('konj_tab_atom'), icon: '🧭' },
-        { id: 'tekstflow', label: getTranslation('konj_tab_tekstflow'), icon: '📖' }
+        { id: 'vrimmel', label: getTranslation('konj_tab_vrimmel') },
+        { id: 'detektiv', label: getTranslation('konj_tab_detektiv') },
+        { id: 'builder', label: getTranslation('konj_tab_builder') },
+        { id: 'kontekst', label: getTranslation('konj_tab_kontekst') },
+        { id: 'tid', label: getTranslation('konj_tab_tid') },
+        { id: 'aarsag', label: getTranslation('konj_tab_aarsag') },
+        { id: 'atom', label: getTranslation('konj_tab_atom') },
+        { id: 'tekstflow', label: getTranslation('konj_tab_tekstflow') }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
@@ -1438,7 +1438,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === tab.id ? 'active' : ''}`;
         btn.id = `tab-btn-${tab.id}`;
-        btn.innerHTML = `<span>${tab.icon}</span> ${tab.label}`;
+        btn.textContent = tab.label;
         btn.onclick = () => switchTab(tab.id);
         nav.appendChild(btn);
     });
@@ -1523,7 +1523,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         const pureBtn = document.createElement('button');
         pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureBtn.textContent = isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker';
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -1599,12 +1599,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>🌉</span> ${item.word}
+                        ${item.word}
                     </h2>
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌍</span> ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}
+                            ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}
                         </div>
                         <div class="trans-word-val">${trans.word}</div>
                     </div>
@@ -1619,7 +1619,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     <div class="inspector-sentence-card">
                         <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div class="sentence-quote-text">"${highlightedSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0; margin-top:0.4rem;">🌍 "${trans.sentence}"</div>` : ''}
+                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0; margin-top:0.4rem;">"${trans.sentence}"</div>` : ''}
                     </div>
 
                     <div class="inspector-actions" style="margin-top: 1rem;">
@@ -1659,7 +1659,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['fordi', 'for', 'så'],
             correct: 'fordi',
             explanations: {
-                'fordi': '🌟 Skarpt set! Da "ikke" står FØR verbet ("jeg ikke kan"), er det en ledsætning – og derfor skal vi bruge "fordi"!',
+                'fordi': 'Skarpt set! Da "ikke" står FØR verbet ("jeg ikke kan"), er det en ledsætning – og derfor skal vi bruge "fordi"!',
                 'for': '"For" indleder en helsætning, så det ville kræve "..., for jeg kan ikke finde...".',
                 'så': '"Så" udtrykker resultat, ikke årsag.'
             }
@@ -1671,7 +1671,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['for', 'fordi', 'selvom'],
             correct: 'for',
             explanations: {
-                'for': '🌟 Fuldstændig rigtigt! Når "ikke" står EFTER verbet ("jeg kan ikke"), er det en helsætning – og så bruger vi "for"!',
+                'for': 'Fuldstændig rigtigt! Når "ikke" står EFTER verbet ("jeg kan ikke"), er det en helsætning – og så bruger vi "for"!',
                 'fordi': '"Fordi" kræver ledsætningsordstilling ("... fordi jeg ikke kan").',
                 'selvom': '"Selvom" kræver også ledsætningsordstilling og udtrykker kontrast.'
             }
@@ -1683,7 +1683,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['Da', 'Når', 'Mens'],
             correct: 'Da',
             explanations: {
-                'Da': '🌟 Præcis! Man fylder kun 30 år én gang i fortiden – derfor bruger vi "Da"!',
+                'Da': 'Præcis! Man fylder kun 30 år én gang i fortiden – derfor bruger vi "Da"!',
                 'Når': '"Når" bruges kun om nutid, fremtid eller gentagne vaner ("hver gang").',
                 'Mens': '"Mens" bruges om to handlinger, der varer ved samtidig.'
             }
@@ -1695,7 +1695,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['Når', 'Da', 'Indtil'],
             correct: 'Når',
             explanations: {
-                'Når': '🌟 Lige i øjet! Når noget sker "hver gang" (en vane), bruger vi altid "Når"!',
+                'Når': 'Lige i øjet! Når noget sker "hver gang" (en vane), bruger vi altid "Når"!',
                 'Da': '"Da" bruges kun om én enkeltstående gang i fortiden.',
                 'Indtil': '"Indtil" betyder "frem til det tidspunkt hvor".'
             }
@@ -1707,7 +1707,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['om', 'at', 'hvis'],
             correct: 'om',
             explanations: {
-                'om': '🌟 Korrekt! Efter "Ved du..." eller "Jeg ved ikke..." bruger man altid "om" ("whether/if") ved spørgsmål og usikkerhed.',
+                'om': 'Korrekt! Efter "Ved du..." eller "Jeg ved ikke..." bruger man altid "om" ("whether/if") ved spørgsmål og usikkerhed.',
                 'at': '"At" bruges kun, når man konstaterer et sikkert faktum ("Jeg ved, at bussen er kørt").',
                 'hvis': 'På dansk kan man IKKE bruge "hvis" efter "ved ikke" (modsat engelsk "if"). Her skal man bruge "om"!'
             }
@@ -1719,7 +1719,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['så', 'fordi', 'selvom'],
             correct: 'så',
             explanations: {
-                'så': '🌟 Rigtigt! Konjunktionen "så" giver resultatet i en helsætning uden inversion ("..., så vi bestilte pizza").',
+                'så': 'Rigtigt! Konjunktionen "så" giver resultatet i en helsætning uden inversion ("..., så vi bestilte pizza").',
                 'fordi': 'Pizzaen var resultatet, ikke årsagen til at køleskabet var tomt.',
                 'selvom': 'Der er ingen modsætning mellem tomt køleskab og at bestille mad.'
             }
@@ -1731,7 +1731,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['selvom', 'men', 'hvis'],
             correct: 'selvom',
             explanations: {
-                'selvom': '🌟 Perfekt! Både betydningen (på trods af) og ledsætningsordstillingen ("ikke havde") peger direkte på "selvom"!',
+                'selvom': 'Perfekt! Både betydningen (på trods af) og ledsætningsordstillingen ("ikke havde") peger direkte på "selvom"!',
                 'men': '"Men" er en helsætningskonjunktion og ville kræve "..., men han havde ikke øvet sig".',
                 'hvis': '"Hvis" udtrykker en betingelse, ikke "på trods af".'
             }
@@ -1743,7 +1743,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['mens', 'inden', 'siden'],
             correct: 'mens',
             explanations: {
-                'mens': '🌟 Korrekt! "Mens" ("while") binder to samtidige handlinger sammen.',
+                'mens': 'Korrekt! "Mens" ("while") binder to samtidige handlinger sammen.',
                 'inden': '"Inden" betyder "før".',
                 'siden': '"Siden" peger tilbage til et startpunkt i fortiden.'
             }
@@ -1755,7 +1755,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['indtil', 'så snart', 'mens'],
             correct: 'indtil',
             explanations: {
-                'indtil': '🌟 Rigtigt! "Indtil" ("until") markerer slutpunktet for, hvor længe vi venter.',
+                'indtil': 'Rigtigt! "Indtil" ("until") markerer slutpunktet for, hvor længe vi venter.',
                 'så snart': '"Så snart" betyder "i samme sekund som".',
                 'mens': '"Mens" fokuserer på sideløbende varighed uden slutgrænse.'
             }
@@ -1767,7 +1767,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             options: ['Hvis', 'Om', 'Selvom'],
             correct: 'Hvis',
             explanations: {
-                'Hvis': '🌟 Lige i skabet! "Hvis" udtrykker en betingelse ("på den betingelse at...").',
+                'Hvis': 'Lige i skabet! "Hvis" udtrykker en betingelse ("på den betingelse at...").',
                 'Om': '"Om" bruges kun til spørgende ledsætninger ("Jeg spurgte, om...").',
                 'Selvom': '"Selvom" betyder "på trods af".'
             }
@@ -1786,12 +1786,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         if (detektivIdx >= DETEKTIV_RIDDLES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:3.5rem; margin-bottom:1rem;">🕵️‍♀️🏆</div>
+                    <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:#6ee7b7;">Gennemført</div>
                     <h2 style="color:#6ee7b7; font-size:2rem; margin-bottom:0.5rem;">Konjunktions-Detektiven Gennemført!</h2>
                     <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du løste <strong>${detektivScore} ud af ${DETEKTIV_RIDDLES.length}</strong> gåder om konjunktioner og ordstilling!
                     </p>
-                    <button class="action-btn-primary" id="restart-detektiv">🔄 Prøv gåderne igen</button>
+                    <button class="action-btn-primary" id="restart-detektiv">Prøv gåderne igen</button>
                 </div>
             `;
             parent.appendChild(container);
@@ -1808,7 +1808,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         container.innerHTML = `
             <div class="progress-header">
-                <span>🔍 KONJUNKTIONS-DETEKTIVEN: GÅDE ${detektivIdx + 1} AF ${DETEKTIV_RIDDLES.length}</span>
+                <span>KONJUNKTIONS-DETEKTIVEN: GÅDE ${detektivIdx + 1} AF ${DETEKTIV_RIDDLES.length}</span>
                 <span>Score: ${detektivScore} / ${detektivIdx}</span>
             </div>
             <div class="progress-bar-wrap">
@@ -1824,7 +1824,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 <div class="detektiv-feedback-box" id="det-feedback"></div>
 
                 <div style="text-align:right; margin-top:1.5rem; display:none;" id="det-next-wrap">
-                    <button class="action-btn-primary" id="det-next-btn">Næste gåde ➔</button>
+                    <button class="action-btn-primary" id="det-next-btn">Næste gåde</button>
                 </div>
             </div>
         `;
@@ -1872,7 +1872,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     // ==========================================
     const BUILDER_EXERCISES = [
         {
-            modeLabel: '🔵 Model A: Ledsætning med "fordi" (IKKE før Verbet!)',
+            modeLabel: 'Model A: Ledsætning med "fordi" (IKKE før Verbet!)',
             context: 'Byg ledsætningen efter "Han bliver hjemme," (Husk: i en ledsætning står "ikke" FØR verbet!)',
             displayTemplate: 'Han bliver hjemme, [BLANK] han ikke er rask.',
             options: ['fordi', 'for', 'men'],
@@ -1886,7 +1886,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🟢 Model B: Helsætning med "for" (IKKE efter Verbet!)',
+            modeLabel: 'Model B: Helsætning med "for" (IKKE efter Verbet!)',
             context: 'Byg helsætningen efter "Han bliver hjemme," med "for" (Husk: i en helsætning står verbet FØR "ikke"!)',
             displayTemplate: 'Han bliver hjemme, [BLANK] han er ikke rask.',
             options: ['for', 'fordi', 'selvom'],
@@ -1900,7 +1900,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🔵 Model A: Ledsætning med "selvom" (IKKE før Verbet!)',
+            modeLabel: 'Model A: Ledsætning med "selvom" (IKKE før Verbet!)',
             context: 'Byg ledsætningen efter "De går en tur," (På trods af at solen ikke skinner)',
             displayTemplate: 'De går en tur, [BLANK] solen ikke skinner.',
             options: ['selvom', 'men', 'så'],
@@ -1914,7 +1914,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🟢 Model B: Helsætning med "så" (INGEN inversion!)',
+            modeLabel: 'Model B: Helsætning med "så" (INGEN inversion!)',
             context: 'Byg resultat-helsætningen efter "Det regner kraftigt," (Efter "så" står subjektet før verbet!)',
             displayTemplate: 'Det regner kraftigt, [BLANK] jeg tager bussen.',
             options: ['så', 'fordi', 'om'],
@@ -1928,7 +1928,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🔄 Model C: Ledsætning i Forfeltet ➔ INVERSION i hovedsætningen!',
+            modeLabel: 'Model C: Ledsætning i Forfeltet (Inversion i hovedsætningen)',
             context: 'Når ledsætningen står forrest ("Når det regner,"), skal hovedsætningens VERBUM komme før SUBJEKTET!',
             displayTemplate: '[BLANK] det regner, tager jeg bussen.',
             options: ['Når', 'For', 'Men'],
@@ -1942,7 +1942,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🔵 Model A: Ledsætning med "hvis" (IKKE før Verbet!)',
+            modeLabel: 'Model A: Ledsætning med "hvis" (IKKE før Verbet!)',
             context: 'Byg betingelsen efter "Vi tager på stranden,"',
             displayTemplate: 'Vi tager på stranden, [BLANK] det ikke regner.',
             options: ['hvis', 'eller', 'for'],
@@ -1956,7 +1956,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🔵 Model A: Spørgende ledsætning med "om" (IKKE før Verbet!)',
+            modeLabel: 'Model A: Spørgende ledsætning med "om" (IKKE før Verbet!)',
             context: 'Byg ledsætningen efter "Hun ved ikke," (Tvivl/spørgsmål)',
             displayTemplate: 'Hun ved ikke, [BLANK] bussen allerede er kørt.',
             options: ['om', 'at', 'så'],
@@ -1970,7 +1970,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            modeLabel: '🔄 Model C: Fortids-ledsætning med "Da" i Forfeltet ➔ INVERSION!',
+            modeLabel: 'Model C: Fortids-ledsætning med "Da" i Forfeltet (Inversion)',
             context: 'Én periode i fortiden ("Da jeg var barn,") står forrest i Forfeltet:',
             displayTemplate: '[BLANK] jeg var barn, boede vi i Odense.',
             options: ['Da', 'Når', 'Så'],
@@ -1998,12 +1998,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         if (builderIdx >= BUILDER_EXERCISES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:3.5rem; margin-bottom:1rem;">🧩🏆</div>
+                    <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:#6ee7b7;">Gennemført</div>
                     <h2 style="color:#6ee7b7; font-size:2rem; margin-bottom:0.5rem;">Sætningsbyggeren Gennemført!</h2>
                     <p style="font-size:1.15rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du har styr på ordstillingen i både <strong>helsætninger</strong>, <strong>ledsætninger</strong> og når <strong>ledsætningen står forrest i Forfeltet</strong>!
                     </p>
-                    <button class="action-btn-primary" id="restart-builder">🔄 Byg sætningerne igen</button>
+                    <button class="action-btn-primary" id="restart-builder">Byg sætningerne igen</button>
                 </div>
             `;
             parent.appendChild(container);
@@ -2038,7 +2038,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         card.innerHTML = `
             <div class="progress-header">
-                <span>🧩 SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
+                <span>SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
                 <span>${ex.modeLabel}</span>
             </div>
             <div class="progress-bar-wrap">
@@ -2079,9 +2079,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         btn.classList.add('correct');
                         fbDiv.className = 'detektiv-feedback-box show correct';
                         fbDiv.innerHTML = `
-                            <strong>🌟 ${ex.step1Explain}</strong>
+                            <strong>${ex.step1Explain}</strong>
                             <div style="margin-top:1rem;">
-                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætningsleddene 🧩 ➔</button>
+                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætningsleddene</button>
                             </div>
                         `;
                         fbDiv.querySelector('#go-step-2').onclick = () => {
@@ -2118,7 +2118,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 slotEl.innerHTML = `
                     <div class="slot-badge-callout callout-${slotDef.role}">${slotDef.label}</div>
                     <div style="font-size:1.2rem; font-weight:900; color:${filledVal ? 'white' : '#64748b'};">
-                        ${filledVal || (idx === currentSlotIdx ? 'Klik på brik 👇' : '...')}
+                        ${filledVal || (idx === currentSlotIdx ? 'Vælg brik' : '...')}
                     </div>
                 `;
                 slotsRow.appendChild(slotEl);
@@ -2151,9 +2151,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 const fullBuilt = ex.slots.map(s => s.expected).join(' ');
                 fbDiv.className = 'detektiv-feedback-box show correct';
                 fbDiv.innerHTML = `
-                    <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">🎉 Perfekt: "${fullBuilt}"</div>
+                    <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">Perfekt: "${fullBuilt}"</div>
                     <p style="margin:0 0 1rem;">Du mestrede ordstillingen!</p>
-                    <button class="action-btn-primary" id="next-builder-btn">Næste opgave ➔</button>
+                    <button class="action-btn-primary" id="next-builder-btn">Næste opgave</button>
                 `;
                 fbDiv.querySelector('#next-builder-btn').onclick = () => {
                     builderIdx++;
@@ -2190,12 +2190,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             const doneCard = document.createElement('div');
             doneCard.className = 'score-celebration-card';
             doneCard.innerHTML = `
-                <div style="font-size:3.5rem; margin-bottom:1rem;">🏆✨</div>
+                <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:#6ee7b7;">Gennemført</div>
                 <h2 style="color:#6ee7b7; font-size:2rem; margin-bottom:0.5rem;">${config.doneTitle}</h2>
                 <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                     Du fik <strong>${state.score} ud af ${questions.length}</strong> rigtige i første forsøg!
                 </p>
-                <button class="action-btn-primary" id="quiz-restart-btn">🔄 Tag opgaven igen</button>
+                <button class="action-btn-primary" id="quiz-restart-btn">Tag opgaven igen</button>
             `;
             wrap.appendChild(doneCard);
             parent.appendChild(wrap);
@@ -2228,7 +2228,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             <div class="detektiv-feedback-box" id="quiz-fb-box"></div>
 
             <div style="text-align:right; margin-top:1.5rem; display:none;" id="quiz-next-wrap">
-                <button class="action-btn-primary" id="quiz-next-btn">Næste opgave ➔</button>
+                <button class="action-btn-primary" id="quiz-next-btn">Næste opgave</button>
             </div>
         `;
 
@@ -2253,7 +2253,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         `<span style="color:#4ade80; text-decoration:underline; font-weight:900;">${opt}</span>`
                     );
                     fbBox.className = 'detektiv-feedback-box show correct';
-                    fbBox.innerHTML = `<strong>🌟 Korrekt!</strong> ${q.explanation}`;
+                    fbBox.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
                     nextWrap.style.display = 'block';
                 } else {
                     firstAttempt = false;
@@ -2291,14 +2291,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '<strong>A:</strong> "Går du med i kantinen?"<br><strong>B:</strong> "Nej tak, ______ jeg har ikke spist min madpakke endnu."',
             options: ['for', 'fordi', 'selvom'],
             correct: 'for',
-            explanation: 'Ordstillingen er "jeg har ikke" (ikke står EFTER verbet) ➔ derfor er det helsætningskonjunktionen "for"!'
+            explanation: 'Ordstillingen er "jeg har ikke" (ikke står EFTER verbet) → derfor er det helsætningskonjunktionen "for"!'
         },
         {
             context: '3/14 • Årsag i ledsætning ("ikke har")',
             quote: '<strong>A:</strong> "Hvorfor tager du en jakke på?"<br><strong>B:</strong> "Jeg tager jakke på, ______ radiatoren ikke virker på kontoret."',
             options: ['fordi', 'for', 'så'],
             correct: 'fordi',
-            explanation: 'Ordstillingen er "radiatoren ikke virker" (ikke står FØR verbet) ➔ derfor er det ledsætningskonjunktionen "fordi"!'
+            explanation: 'Ordstillingen er "radiatoren ikke virker" (ikke står FØR verbet) → derfor er det ledsætningskonjunktionen "fordi"!'
         },
         {
             context: '4/14 • Resultat uden inversion',
@@ -2340,7 +2340,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '<strong>A:</strong> "Hvor lærte du at tale så godt spansk?"<br><strong>B:</strong> "Det lærte jeg, ______ jeg boede i Madrid i 2019."',
             options: ['da', 'når', 'så snart'],
             correct: 'da',
-            explanation: 'Opholdet i Madrid i 2019 er en afsluttet periode i fortiden ➔ "da".'
+            explanation: 'Opholdet i Madrid i 2019 er en afsluttet periode i fortiden → "da".'
         },
         {
             context: '10/14 • Fremtid eller fast vane',
@@ -2361,7 +2361,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '<strong>A:</strong> "Er vi klar til at køre i sommerhus?"<br><strong>B:</strong> "Ja, men vi skal lige lukke alle vinduer, ______ vi låser døren."',
             options: ['inden', 'mens', 'siden'],
             correct: 'inden',
-            explanation: 'Vinduerne skal lukkes FØR vi låser døren ➔ "inden".'
+            explanation: 'Vinduerne skal lukkes FØR vi låser døren → "inden".'
         },
         {
             context: '13/14 • Fra fortid til nu',
@@ -2383,7 +2383,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         renderQuizEngine(parent, {
             state: kontekstState,
             questions: KONTEKST_QUESTIONS,
-            progressLabel: '🎯 KONTEKST-TESTEN',
+            progressLabel: 'KONTEKST-TESTEN',
             doneTitle: 'Kontekst-testen gennemført!'
         });
     }
@@ -2398,14 +2398,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '"______ jeg kom hjem fra arbejde i går aftes, stod der en pakke foran døren."',
             options: ['Da', 'Når', 'Mens'],
             correct: 'Da',
-            explanation: '"I går aftes" er én bestemt gang i fortiden ➔ "Da"!'
+            explanation: '"I går aftes" er én bestemt gang i fortiden → "Da"!'
         },
         {
             context: '2/8 • Fortid (Én gang) vs. Fremtid',
             quote: '"______ jeg kommer hjem fra arbejde i aften, vil jeg lave en stor gryde suppe."',
             options: ['Når', 'Da', 'Siden'],
             correct: 'Når',
-            explanation: '"I aften" ligger i fremtiden ➔ om fremtid bruger man ALTID "Når"!'
+            explanation: '"I aften" ligger i fremtiden → om fremtid bruger man ALTID "Når"!'
         },
         {
             context: '3/8 • Gentagen vane i fortiden ("Altid når...")',
@@ -2419,48 +2419,48 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '"______ mine bedsteforældre var unge, fandtes der hverken internet eller mobiltelefoner."',
             options: ['Da', 'Når', 'Så snart'],
             correct: 'Da',
-            explanation: 'Bedsteforældrene var kun unge i én sammenhængende periode i fortiden ➔ "Da".'
+            explanation: 'Bedsteforældrene var kun unge i én sammenhængende periode i fortiden → "Da".'
         },
         {
             context: '5/8 • Samtidighed vs. Før',
             quote: '"Husk at vaske hænder grundigt, ______ du begynder at skære grøntsagerne."',
             options: ['inden', 'mens', 'indtil'],
             correct: 'inden',
-            explanation: 'Man skal vaske hænder FØR man rører ved maden ➔ "inden".'
+            explanation: 'Man skal vaske hænder FØR man rører ved maden → "inden".'
         },
         {
             context: '6/8 • Samtidighed',
             quote: '"Børnene legede stille på gulvet, ______ forældrene drak formiddagskaffe."',
             options: ['mens', 'inden', 'efter at'],
             correct: 'mens',
-            explanation: 'Legen og kaffen foregik sideløbende på samme tid ➔ "mens".'
+            explanation: 'Legen og kaffen foregik sideløbende på samme tid → "mens".'
         },
         {
             context: '7/8 • Slutpunkt (Ventetid)',
             quote: '"Du må blive siddende i venteværelset, ______ lægen kalder dit navn."',
             options: ['indtil', 'siden', 'mens'],
             correct: 'indtil',
-            explanation: 'Ventetiden slutter i det øjeblik lægen kalder ➔ "indtil".'
+            explanation: 'Ventetiden slutter i det øjeblik lægen kalder → "indtil".'
         },
         {
             context: '8/8 • Efter en afsluttet handling',
             quote: '"Han følte sig meget mere frisk, ______ han havde sovet i otte timer."',
             options: ['efter at', 'inden', 'indtil'],
             correct: 'efter at',
-            explanation: 'Først sov han i otte timer, og bagefter følte han sig frisk ➔ "efter at".'
+            explanation: 'Først sov han i otte timer, og bagefter følte han sig frisk → "efter at".'
         }
     ];
 
     function renderTabTid(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⏳ Da eller når? og tidskonjunktioner</h2>
+                <h2>Da eller når? og tidskonjunktioner</h2>
                 <p>Lær den berømte danske forskel på <strong>da</strong> (én gang i fortiden) og <strong>når</strong> (nutid, fremtid og "hver gang"-vaner) samt tidsrækkefølge med <em>mens, inden, efter at, siden, indtil</em>.</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#f59e0b;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fbbf24;">📸 da</span>
+                        <span class="special-rule-word" style="color:#fbbf24;">da</span>
                         <span class="special-rule-role" style="background:rgba(245,158,11,0.2); color:#fde68a;">Én gang i fortiden</span>
                     </div>
                     <div class="special-rule-desc">Bruges KUN om en enkeltstående begivenhed eller én afsluttet periode i fortiden.</div>
@@ -2470,7 +2470,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#10b981;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#34d399;">🔄 når</span>
+                        <span class="special-rule-word" style="color:#34d399;">når</span>
                         <span class="special-rule-role" style="background:rgba(16,185,129,0.2); color:#a7f3d0;">Fremtid & Hver gang</span>
                     </div>
                     <div class="special-rule-desc">Bruges om 1) <strong>Fremtid</strong> og 2) <strong>Gentagelse/vane</strong> ("hver gang" – både i nutid og fortid!).</div>
@@ -2480,7 +2480,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#22d3ee;">🎧 mens</span>
+                        <span class="special-rule-word" style="color:#22d3ee;">mens</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Samtidighed</span>
                     </div>
                     <div class="special-rule-desc">To handlinger foregår sideløbende på samme tid.</div>
@@ -2490,7 +2490,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#a855f7;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#c084fc;">🔑 inden / efter at / indtil</span>
+                        <span class="special-rule-word" style="color:#c084fc;">inden / efter at / indtil</span>
                         <span class="special-rule-role" style="background:rgba(168,85,247,0.2); color:#d8b4fe;">Rækkefølge</span>
                     </div>
                     <div class="special-rule-desc"><strong>Inden</strong> = før. <strong>Efter at</strong> = bagefter. <strong>Indtil</strong> = frem til slutpunktet.</div>
@@ -2505,7 +2505,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             introHtml,
             state: tidState,
             questions: TID_QUESTIONS,
-            progressLabel: '⏳ DA ELLER NÅR & TID',
+            progressLabel: 'DA ELLER NÅR & TID',
             doneTitle: 'Tidskonjunktionerne mestret!'
         });
     }
@@ -2520,69 +2520,69 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '"Vi spiser indendørs i aften, ______ det ikke er varmt nok på terrassen."',
             options: ['fordi', 'for', 'så', 'derfor'],
             correct: 'fordi',
-            explanation: 'Sætning 2 er ÅRSAGEN, og "ikke" står FØR verbet ("det ikke er") ➔ Ledsætning med "fordi"!'
+            explanation: 'Sætning 2 er ÅRSAGEN, og "ikke" står FØR verbet ("det ikke er") → Ledsætning med "fordi"!'
         },
         {
             context: '2/8 • Kig på "ikke" + Årsag',
             quote: '"Vi spiser indendørs i aften, ______ det er ikke varmt nok på terrassen."',
             options: ['for', 'fordi', 'så', 'derfor'],
             correct: 'for',
-            explanation: 'Sætning 2 er ÅRSAGEN, men nu står "ikke" EFTER verbet ("det er ikke") ➔ Helsætning med "for"!'
+            explanation: 'Sætning 2 er ÅRSAGEN, men nu står "ikke" EFTER verbet ("det er ikke") → Helsætning med "for"!'
         },
         {
             context: '3/8 • Resultat UDEN inversion (Subjekt før Verbum)',
             quote: '"Det er ikke varmt nok på terrassen, ______ vi spiser indendørs i aften."',
             options: ['så', 'derfor', 'fordi', 'for'],
             correct: 'så',
-            explanation: 'Sætning 2 er RESULTATET, og subjektet ("vi") står FØR verbet ("spiser") ➔ Helsætningskonjunktionen "så"!'
+            explanation: 'Sætning 2 er RESULTATET, og subjektet ("vi") står FØR verbet ("spiser") → Helsætningskonjunktionen "så"!'
         },
         {
             context: '4/8 • Resultat MED inversion (Verbum før Subjekt)',
             quote: '"Det er ikke varmt nok på terrassen. ______ spiser vi indendørs i aften."',
             options: ['Derfor', 'Så', 'Fordi', 'For'],
             correct: 'Derfor',
-            explanation: 'Sætning 2 er RESULTATET, og verbet ("spiser") står FØR subjektet ("vi") ➔ Konnektivt adverbium "Derfor"!'
+            explanation: 'Sætning 2 er RESULTATET, og verbet ("spiser") står FØR subjektet ("vi") → Konnektivt adverbium "Derfor"!'
         },
         {
             context: '5/8 • Adverbium ("aldrig") FØR verbet',
             quote: '"Han kender ikke vejen til museet, ______ han aldrig har besøgt byen før."',
             options: ['fordi', 'for', 'så', 'derfor'],
             correct: 'fordi',
-            explanation: 'Tidsadverbiet "aldrig" står FØR hjælpeverbet ("aldrig har") ➔ Ledsætning med "fordi"!'
+            explanation: 'Tidsadverbiet "aldrig" står FØR hjælpeverbet ("aldrig har") → Ledsætning med "fordi"!'
         },
         {
             context: '6/8 • Adverbium ("aldrig") EFTER verbet',
             quote: '"Han kender ikke vejen til museet, ______ han har aldrig besøgt byen før."',
             options: ['for', 'fordi', 'så', 'derfor'],
             correct: 'for',
-            explanation: 'Hjælpeverbet står FØR "aldrig" ("har aldrig") ➔ Helsætning med "for"!'
+            explanation: 'Hjælpeverbet står FØR "aldrig" ("har aldrig") → Helsætning med "for"!'
         },
         {
             context: '7/8 • Resultat uden inversion',
             quote: '"Batteriet på min telefon var fladt, ______ jeg kunne ikke ringe til dig."',
             options: ['så', 'derfor', 'fordi', 'for'],
             correct: 'så',
-            explanation: 'Efter kommaet står "jeg kunne" (Subjekt før Verbum = ingen inversion) ➔ "så"!'
+            explanation: 'Efter kommaet står "jeg kunne" (Subjekt før Verbum = ingen inversion) → "så"!'
         },
         {
             context: '8/8 • Resultat med inversion',
             quote: '"Batteriet på min telefon var fladt, og ______ kunne jeg ikke ringe til dig."',
             options: ['derfor', 'så', 'fordi', 'for'],
             correct: 'derfor',
-            explanation: 'Her står verbet før subjektet ("kunne jeg" = inversion) ➔ "derfor"!'
+            explanation: 'Her står verbet før subjektet ("kunne jeg" = inversion) → "derfor"!'
         }
     ];
 
     function renderTabAarsag(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⚡ Fordi, for, så eller derfor?</h2>
+                <h2>Fordi, for, så eller derfor?</h2>
                 <p>Løs den klassiske udfordring ved at tjekke to ting: 1) Er sætning 2 en <strong>årsag</strong> eller et <strong>resultat</strong>? 2) Hvordan er <strong>ordstillingen</strong>?</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#22d3ee;">🔵 fordi</span>
+                        <span class="special-rule-word" style="color:#22d3ee;">fordi</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Årsag + IKKE før V</span>
                     </div>
                     <div class="special-rule-desc">Ledsætning: Subjekt + <strong>ikke/aldrig</strong> + Verbum.</div>
@@ -2592,7 +2592,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#4ade80;">🟢 for</span>
+                        <span class="special-rule-word" style="color:#4ade80;">for</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Årsag + V før IKKE</span>
                     </div>
                     <div class="special-rule-desc">Helsætning: Subjekt + Verbum + <strong>ikke/aldrig</strong>.</div>
@@ -2602,7 +2602,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#a855f7;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#c084fc;">🟣 så</span>
+                        <span class="special-rule-word" style="color:#c084fc;">så</span>
                         <span class="special-rule-role" style="background:rgba(168,85,247,0.2); color:#d8b4fe;">Resultat UDEN inv.</span>
                     </div>
                     <div class="special-rule-desc">Helsætningskonjunktion: <strong>Subjekt + Verbum</strong>.</div>
@@ -2612,7 +2612,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#eab308;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fde047;">🟡 derfor</span>
+                        <span class="special-rule-word" style="color:#fde047;">derfor</span>
                         <span class="special-rule-role" style="background:rgba(234,179,8,0.2); color:#fef08a;">Resultat MED inv.</span>
                     </div>
                     <div class="special-rule-desc">Konnektivt adverbium (Felt 7): <strong>Verbum + Subjekt</strong>!</div>
@@ -2627,7 +2627,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             introHtml,
             state: aarsagState,
             questions: AARSAG_QUESTIONS,
-            progressLabel: '⚡ FORDI, FOR, SÅ ELLER DERFOR',
+            progressLabel: 'FORDI, FOR, SÅ ELLER DERFOR',
             doneTitle: 'Årsag og ordstilling mestret!'
         });
     }
@@ -2663,35 +2663,35 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             quote: '"Du må meget gerne låne min cykel i morgen, ______ du passer godt på den."',
             options: ['hvis', 'om', 'selvom'],
             correct: 'hvis',
-            explanation: 'Her er det en ægte betingelse ("på den betingelse at du passer på den") ➔ "hvis"!'
+            explanation: 'Her er det en ægte betingelse ("på den betingelse at du passer på den") → "hvis"!'
         },
         {
             context: '5/10 • Betingelse (hvis) vs. Trods (selvom)',
             quote: '"Vi gennemfører udendørskoncerten i aften, ______ det begynder at regne!"',
             options: ['selvom', 'hvis', 'om'],
             correct: 'selvom',
-            explanation: 'Koncerten gennemføres PÅ TRODS AF regn ➔ "selvom"!'
+            explanation: 'Koncerten gennemføres PÅ TRODS AF regn → "selvom"!'
         },
         {
             context: '6/10 • Betingelse (hvis) vs. Trods (selvom)',
             quote: '"Vi aflyser udendørskoncerten i aften, ______ det begynder at tordne og lyne."',
             options: ['hvis', 'selvom', 'at'],
             correct: 'hvis',
-            explanation: 'Tordenvejr er betingelsen, der udløser en aflysning ➔ "hvis"!'
+            explanation: 'Tordenvejr er betingelsen, der udløser en aflysning → "hvis"!'
         },
         {
             context: '7/10 • Kontrast i helsætning (men) vs. ledsætning (selvom)',
             quote: '"Kagen så lidt mærkelig ud, ______ den smagte faktisk helt vidunderligt!"',
             options: ['men', 'selvom', 'hvis'],
             correct: 'men',
-            explanation: 'Se på ordstillingen: "den smagte faktisk" ("faktisk" står EFTER verbet = helsætning) ➔ "men"!'
+            explanation: 'Se på ordstillingen: "den smagte faktisk" ("faktisk" står EFTER verbet = helsætning) → "men"!'
         },
         {
             context: '8/10 • Kontrast i ledsætning ("faktisk" FØR verbet)',
             quote: '"Han klagede over maden, ______ den faktisk smagte helt vidunderligt!"',
             options: ['selvom', 'men', 'for'],
             correct: 'selvom',
-            explanation: 'Se på ordstillingen: "den faktisk smagte" ("faktisk" står FØR verbet = ledsætning) ➔ "selvom"!'
+            explanation: 'Se på ordstillingen: "den faktisk smagte" ("faktisk" står FØR verbet = ledsætning) → "selvom"!'
         },
         {
             context: '9/10 • Undersøge et åbent spørgsmål',
@@ -2712,13 +2712,13 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     function renderTabAtOm(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🧭 At eller om? og hvis eller selvom?</h2>
+                <h2>At eller om? og hvis eller selvom?</h2>
                 <p>Undgå de klassiske fælder mellem fakta (<em>at</em>), spørgende tvivl (<em>om</em>), betingelse (<em>hvis</em>) og modstand (<em>selvom</em>).</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#4ade80;">✅ at</span>
+                        <span class="special-rule-word" style="color:#4ade80;">at</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Fakta & Udsagn</span>
                     </div>
                     <div class="special-rule-desc">Bruges når noget præsenteres som viden, udsagn eller mening (<em>sige, vide, tro, se at...</em>).</div>
@@ -2728,7 +2728,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#22d3ee;">❓ om</span>
+                        <span class="special-rule-word" style="color:#22d3ee;">om</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Tvivl & Ja/Nej-spørgsmål</span>
                     </div>
                     <div class="special-rule-desc">Bruges ved usikkerhed og indirekte spørgsmål (<em>spørge, ikke vide, tjekke om...</em>).</div>
@@ -2738,7 +2738,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#eab308;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fde047;">🔑 hvis</span>
+                        <span class="special-rule-word" style="color:#fde047;">hvis</span>
                         <span class="special-rule-role" style="background:rgba(234,179,8,0.2); color:#fef08a;">Betingelse</span>
                     </div>
                     <div class="special-rule-desc">Opstiller et krav eller en betingelse for, at noget andet sker.</div>
@@ -2748,7 +2748,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 </div>
                 <div class="special-rule-card" style="border-color:#f97316;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fb923c;">🌧️ selvom</span>
+                        <span class="special-rule-word" style="color:#fb923c;">selvom</span>
                         <span class="special-rule-role" style="background:rgba(249,115,22,0.2); color:#fdba74;">Trods modstand</span>
                     </div>
                     <div class="special-rule-desc">Handlingen gennemføres <strong>på trods af</strong> en forhindring.</div>
@@ -2763,7 +2763,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             introHtml,
             state: atomState,
             questions: ATOM_QUESTIONS,
-            progressLabel: '🧭 AT/OM & HVIS/SELVOM',
+            progressLabel: 'AT/OM & HVIS/SELVOM',
             doneTitle: 'At, om, hvis og selvom mestret!'
         });
     }
@@ -2784,15 +2784,15 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         introCard.className = 'special-intro-card';
         introCard.innerHTML = `
             <div class="special-intro-badge" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7;">
-                🚦 KULMINATIONEN: FRA ISOLEREDE REGLER TIL TEKSTENS TRAFIK & FLYDENDE TEKSTFLOW
+                KULMINATIONEN: FRA ISOLEREDE REGLER TIL TEKSTENS TRAFIK & FLYDENDE TEKSTFLOW
             </div>
-            <h2 class="special-intro-title">Konjunktioner i Sammenhængende Tekst & Tekstens Trafik 🚦</h2>
+            <h2 class="special-intro-title">Konjunktioner i Sammenhængende Tekst & Tekstens Trafik</h2>
             <p class="special-intro-desc">
                 Konjunktioner er sprogets færdselsregler! I virkelighedens hverdagsdansk bruger vi bindeord til at skabe årsagskæder, kontraster og tidsforløb i hele historier.
             </p>
             <div style="margin-top: 1.2rem; text-align: center;">
                 <button type="button" id="btn-open-traffic-flade" class="action-btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 0.85rem 1.8rem; font-size: 1rem; border-radius: 12px; cursor: pointer;">
-                    🚦 Åbn den fulde særskilte flade: Tekstens Trafik (6 Øvelsesbaner & Vrimlebillede) ➔
+                    Åbn den fulde særskilte flade: Tekstens Trafik (6 Øvelsesbaner & Vrimlebillede)
                 </button>
             </div>
         `;
@@ -2811,9 +2811,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         storyTabsBar.style.marginBottom = '2rem';
 
         const storyMeta = [
-            { icon: '🚲', title: 'Historie 1: Peter cykelbud i sneen' },
-            { icon: '🌿', title: 'Historie 2: Anna gartneren i parken' },
-            { icon: '☕', title: 'Historie 3: Lars tjeneren på caféen' }
+            { icon: '', title: 'Historie 1: Peter cykelbud i sneen' },
+            { icon: '', title: 'Historie 2: Anna gartneren i parken' },
+            { icon: '', title: 'Historie 3: Lars tjeneren på caféen' }
         ];
 
         storyMeta.forEach((sm, sIdx) => {
@@ -2821,7 +2821,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             btn.className = `adv-tab-btn ${currentStoryIdx === sIdx ? 'active' : ''}`;
             btn.style.padding = '0.7rem 1.3rem';
             btn.style.borderRadius = '14px';
-            btn.innerHTML = `<span>${sm.icon}</span> ${sm.title}`;
+            btn.textContent = sm.title;
             btn.onclick = () => {
                 currentStoryIdx = sIdx;
                 renderTabTekstflow(parent);
@@ -2918,7 +2918,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         analysisBox.style.marginBottom = '1.5rem';
         analysisBox.innerHTML = `
             <div style="font-weight: 800; font-size: 0.95rem; color: #fde047; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
-                <span>💡</span>
+                
                 <span>Hvorfor fungerer dette tekstflow?</span>
             </div>
             <div style="font-size: 0.92rem; color: #cbd5e1; line-height: 1.5;">
@@ -2946,7 +2946,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         nextStoryBtn.style.borderRadius = '12px';
         nextStoryBtn.style.fontWeight = '800';
         nextStoryBtn.style.cursor = 'pointer';
-        nextStoryBtn.innerHTML = currentStoryIdx < 2 ? `Gå til næste historie (${currentStoryIdx + 2}/3) ➔` : `Start forfra 🔄`;
+        nextStoryBtn.innerHTML = currentStoryIdx < 2 ? `Gå til næste historie (${currentStoryIdx + 2}/3)` : `Start forfra`;
         nextStoryBtn.onclick = () => {
             if (currentStoryIdx < 2) {
                 currentStoryIdx++;
@@ -2992,7 +2992,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     feedbackArea.style.background = 'rgba(34, 197, 94, 0.15)';
                     feedbackArea.style.border = '1.5px solid #22c55e';
                     feedbackArea.style.color = '#4ade80';
-                    feedbackArea.innerHTML = `🎉 <strong>Rigtigt!</strong> "${val}" passer perfekt ind i tekstens flow.`;
+                    feedbackArea.innerHTML = `<strong>Rigtigt!</strong> "${val}" passer perfekt ind i tekstens flow.`;
                 } else {
                     sel.style.background = 'rgba(239, 68, 68, 0.2)';
                     sel.style.border = '2px solid #ef4444';
@@ -3002,7 +3002,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     feedbackArea.style.border = '1.5px solid #ef4444';
                     feedbackArea.style.color = '#f87171';
                     const hint = (blankData.feedback && blankData.feedback[val]) || `Prøv igen. Det rigtige ord her er "${blankData.answer}".`;
-                    feedbackArea.innerHTML = `⚠️ <strong>Overvej logikken:</strong> ${hint}`;
+                    feedbackArea.innerHTML = `<strong>Overvej logikken:</strong> ${hint}`;
                 }
 
                 updateStoryProgress();

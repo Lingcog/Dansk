@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * AdverbierGradView - Felt 4: Grad & Intensitet (Hvor meget? Hvor kraftigt?)
@@ -2398,7 +2399,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     const goldenBanner = document.createElement('div');
     goldenBanner.className = 'golden-rule-banner';
     goldenBanner.innerHTML = `
-        <div class="rule-icon">⚖️</div>
+        <div class="rule-icon">${renderDsIcon('scale', '⚖️', { size: 28 })}</div>
         <div class="rule-content">
             <h4>${getTranslation('adv_rule_title')}</h4>
             <p>${getTranslation('adv_f4_rule_skala')}</p>
@@ -2411,11 +2412,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')}`, icon: '🖼️' },
-        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: '🌡️' },
-        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
-        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🏗️' },
-        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '📝' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')}`, icon: renderDsIcon('image', '🖼️') },
+        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: renderDsIcon('thermometer', '🌡️') },
+        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: renderDsIcon('search', '🔍') },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: renderDsIcon('layers', '🏗️') },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: renderDsIcon('fileText', '📝') }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';
@@ -2506,7 +2507,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         const pureToggleBtn = document.createElement('button');
         pureToggleBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureToggleBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureToggleBtn.innerHTML = `<span>${isPureMode ? renderDsIcon('eyeOff', '👁️') : renderDsIcon('tag', '🏷️')}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
         pureToggleBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -2580,7 +2581,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 'mellem': 'Mellem styrke (40-75%)',
                 'hoej': 'Høj styrke (85-95%)',
                 'fuld': 'Fuld styrke (100%)',
-                'overskud': '⚠️ Over grænsen (>100%)'
+                'overskud': `${renderDsIcon('alertTriangle', '⚠️', { size: 14 })} Over grænsen (>100%)`
             };
             const catText = categoryLabels[item.category] || item.tier;
 
@@ -2588,44 +2589,44 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 <div class="inspector-left">
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: rgba(168, 85, 247, 0.25); border: 1.5px solid #c084fc; color: #c084fc; font-weight: 800;">📍 Målord: ${item.word}</span>
+                            <span class="inspector-badge" style="background: rgba(168, 85, 247, 0.25); border: 1.5px solid #c084fc; color: #c084fc; font-weight: 800;">${renderDsIcon('mapPin', '📍', { size: 14 })} Målord: ${item.word}</span>
                             <span class="inspector-badge">Intensitet: ${item.tier}</span>
                             <span class="inspector-cat-badge">${catText}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">${renderDsIcon('volume', '🔊', { size: 18 })}</button>
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>🌡️</span> ${item.word}
+                        <span>${renderDsIcon('thermometer', '🌡️', { size: 24 })}</span> ${item.word}
                     </h2>
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                            <span>${renderDsIcon('globe', '🌐', { size: 14 })}</span> OVERSÆTTELSE (${langLabel})
                         </div>
                         <div class="trans-word-val">"${trans.word}"</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">📍 Situation på torvet</div>
+                        <div class="scene-heading">${renderDsIcon('mapPin', '📍', { size: 15 })} Situation på torvet</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: #c084fc;">💬 Eksempelsætning</div>
+                        <div class="scene-heading" style="color: #c084fc;">${renderDsIcon('messageSquare', '💬', { size: 16 })} Eksempelsætning</div>
                         <p class="sentence-quote-text">"${item.contextSentence}"</p>
                         ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
                         <button class="inspector-speak-btn" id="inspector-action-speak">
-                            <span>🗣️</span> Hør sætning
+                            <span>${renderDsIcon('volume', '🗣️', { size: 16 })}</span> Hør sætning
                         </button>
                     </div>
 
                     <div class="grad-meter-box">
                         <div class="meter-label-row">
                             <span>Skala: ${item.levelPercent}%</span>
-                            <span>${item.levelPercent > 100 ? '⚠️ Grænsen overskredet!' : item.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
+                            <span>${item.levelPercent > 100 ? `${renderDsIcon('alertTriangle', '⚠️', { size: 14 })} Grænsen overskredet!` : item.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
                         </div>
                         <div class="meter-track">
                             <div class="meter-fill" style="width: ${pctWidth}%;"></div>
@@ -2633,7 +2634,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     </div>
 
                     <div class="inspector-scene-box" style="border-left: 4px solid #a855f7;">
-                        <div class="scene-heading" style="color: #c084fc;">💡 Grammatisk tip</div>
+                        <div class="scene-heading" style="color: #c084fc;">${renderDsIcon('lightbulb', '💡', { size: 15 })} Grammatisk tip</div>
                         <p class="scene-text">${item.ruleHint}</p>
                     </div>
 

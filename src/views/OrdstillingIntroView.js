@@ -3,6 +3,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
 import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
 import { ordstillingPart2BuilderWordTranslations } from '../utils/ordstilling_part2_translations.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 export function renderOrdstillingIntroView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
@@ -203,7 +204,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part1_q1'),
                 ans: 'En kvinde',
                 colorClass: 'step-green',
-                icon: '👤',
+                icon: renderDsIcon('user', '👤', { size: 16 }),
                 grammar: getTranslation('part1_g1')
             },
             {
@@ -211,7 +212,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part1_q2'),
                 ans: 'cykler',
                 colorClass: 'step-red',
-                icon: '🚲',
+                icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
                 grammar: getTranslation('part1_g2')
             },
             {
@@ -219,7 +220,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part1_q3'),
                 ans: 'på gaden',
                 colorClass: 'step-yellow',
-                icon: '📍',
+                icon: renderDsIcon('mapPin', '📍', { size: 16 }),
                 grammar: getTranslation('part1_g3')
             },
             {
@@ -227,7 +228,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part1_q4'),
                 ans: 'om morgenen',
                 colorClass: 'step-gray',
-                icon: '⏰',
+                icon: renderDsIcon('clock', '⏰', { size: 16 }),
                 grammar: getTranslation('part1_g4')
             }
         ];
@@ -240,7 +241,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 <div class="step-card-content">
                     <div class="step-q">${item.icon} ${item.q}</div>
                     <div class="step-ans">${item.ans}</div>
-                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                    <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
                 </div>
             `;
             stepGrid.appendChild(card);
@@ -250,15 +251,19 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         // Extra Grammar Info Box (visible when grammar mode is active)
         const grammarInfo = document.createElement('div');
         grammarInfo.className = 'grammar-extra-info';
+        const rawGrammarTitle = getTranslation('part1_grammar_box_title') || '';
+        const cleanGrammarTitle = rawGrammarTitle.replace(/^🎓\s*/, '');
+        const rawGrammarNote = getTranslation('part1_grammar_box_note') || '';
+        const cleanGrammarNote = rawGrammarNote.replace(/^💡\s*/, '');
         grammarInfo.innerHTML = `
-            <h4>${getTranslation('part1_grammar_box_title')}</h4>
+            <h4>${renderDsIcon('graduationCap', '🎓', { size: 18 })} ${cleanGrammarTitle}</h4>
             <p>${getTranslation('part1_grammar_box_substantiv')}</p>
             <p>${getTranslation('part1_grammar_box_verbum')}</p>
             <p>${getTranslation('part1_grammar_box_praeposition')}</p>
             <p>${getTranslation('part1_grammar_box_tidsadverbium')}</p>
             <p>${getTranslation('part1_grammar_box_adjektiv')}</p>
             <p>${getTranslation('part1_grammar_box_konjunktion')}</p>
-            <small>${getTranslation('part1_grammar_box_note')}</small>
+            <small>${renderDsIcon('lightbulb', '💡', { size: 14 })} ${cleanGrammarNote}</small>
         `;
         part1Container.appendChild(grammarInfo);
 
@@ -274,7 +279,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 <span class="word-gray">om morgenen</span>.
             </div>
             <button class="listen-btn" title="Hør udtale">
-                <span>🔊</span> ${getTranslation('part1_listen_btn')}
+                <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> ${getTranslation('part1_listen_btn')}
             </button>
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
@@ -284,8 +289,10 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         // --- PRØV SELV AT LAVE EN SÆTNING ---
         const tryHeader = document.createElement('div');
         tryHeader.className = 'section-divider';
+        const rawTryTitle = getTranslation('part1_try_title') || '';
+        const cleanTryTitle = rawTryTitle.replace(/^✍️\s*/, '');
         tryHeader.innerHTML = `
-            <h2>${getTranslation('part1_try_title')}</h2>
+            <h2>${renderDsIcon('edit', '✍️', { size: 22 })} ${cleanTryTitle}</h2>
             <p>${getTranslation('part1_try_desc')}</p>
         `;
         part1Container.appendChild(tryHeader);
@@ -382,7 +389,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <span class="word-yellow">${selections[2]}</span> 
                     <span class="word-gray">${selections[3]}</span>.
                 </div>
-                <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                <button class="listen-btn-small" title="Lyt"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part1_listen_pronunciation')}</button>
             `;
             const listenBtn = outputBox.querySelector('.listen-btn-small');
             listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
@@ -630,7 +637,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                             ${getTranslation('part1_feedback_correct')} "<strong>${sentence}</strong>"
                         </div>
                         <div class="puzzle-action-row">
-                            <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                            <button class="listen-btn-small" id="puzzle-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part1_listen_pronunciation')}</button>
                             <button class="next-task-btn" id="puzzle-next-btn">
                                 ${currentTaskIdx < tasks.length - 1 ? getTranslation('part1_next_task') : getTranslation('part1_start_over')}
                             </button>
@@ -755,7 +762,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part2_adv_q1'),
                 ans: 'En kvinde',
                 colorClass: 'step-green',
-                icon: '👤',
+                icon: renderDsIcon('user', '👤', { size: 16 }),
                 note: getTranslation('part2_adv_note_1'),
                 grammar: getTranslation('part2_adv_g1')
             },
@@ -764,7 +771,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part2_adv_q2'),
                 ans: 'cykler',
                 colorClass: 'step-red',
-                icon: '🚲',
+                icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
                 note: getTranslation('part2_adv_note_2'),
                 grammar: getTranslation('part2_adv_g2')
             },
@@ -773,7 +780,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part2_adv_q3'),
                 ans: 'ikke / faktisk / vist',
                 colorClass: 'step-blue',
-                icon: '⚡',
+                icon: renderDsIcon('activity', '⚡', { size: 16 }),
                 note: getTranslation('part2_adv_note_3'),
                 grammar: getTranslation('part2_adv_g3')
             },
@@ -782,7 +789,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part2_adv_q4'),
                 ans: 'på gaden',
                 colorClass: 'step-yellow',
-                icon: '📍',
+                icon: renderDsIcon('mapPin', '📍', { size: 16 }),
                 note: getTranslation('part2_adv_note_4'),
                 grammar: getTranslation('part2_adv_g4')
             },
@@ -791,7 +798,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part2_adv_q5'),
                 ans: 'om morgenen',
                 colorClass: 'step-gray',
-                icon: '⏰',
+                icon: renderDsIcon('clock', '⏰', { size: 16 }),
                 note: getTranslation('part2_adv_note_5'),
                 grammar: getTranslation('part2_adv_g5')
             }
@@ -806,7 +813,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <div class="step-q">${item.icon} ${item.q}</div>
                     <div class="step-ans">${item.ans}</div>
                     <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                    <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
                 </div>
             `;
             stepGrid.appendChild(card);
@@ -854,7 +861,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <div class="adv-chips-wrap"></div>
                 </div>
                 <button class="listen-btn" title="Lyt til sætningen">
-                    <span>🔊</span> ${getTranslation('part1_listen_btn')}
+                    <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> ${getTranslation('part1_listen_btn')}
                 </button>
             `;
 
@@ -1037,7 +1044,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <span class="word-yellow">${selections[4]}</span> 
                     <span class="word-gray">${selections[5]}</span>.
                 </div>
-                <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                <button class="listen-btn-small" title="Lyt"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part1_listen_pronunciation')}</button>
             `;
             const listenBtn = outputBox.querySelector('.listen-btn-small');
             listenBtn.onclick = () => speakDanish(spokenSentence);
@@ -1323,7 +1330,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                             ${transText ? `<div class="puzzle-trans-text" style="font-size: 1rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem;">"${transText}"</div>` : ''}
                         </div>
                         <div class="puzzle-action-row">
-                            <button class="listen-btn-small" id="puzzle-5-listen-btn">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                            <button class="listen-btn-small" id="puzzle-5-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part1_listen_pronunciation')}</button>
                             <button class="next-task-btn" id="puzzle-5-next-btn">
                                 ${currentTaskIdx < tasks.length - 1 ? getTranslation('part1_next_task') : getTranslation('part1_start_over')}
                             </button>
@@ -1458,7 +1465,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part3_modal_q1'),
                 ans: 'En kvinde',
                 colorClass: 'step-green',
-                icon: '👤',
+                icon: renderDsIcon('user', '👤', { size: 16 }),
                 note: 'Hovedpersonen',
                 grammar: getTranslation('part3_modal_g1')
             },
@@ -1467,7 +1474,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part3_modal_q2'),
                 ans: 'kan / skal / vil / må / bør',
                 colorClass: 'step-pink',
-                icon: '⚡',
+                icon: renderDsIcon('activity', '⚡', { size: 16 }),
                 note: getTranslation('part3_modal_note_2'),
                 grammar: getTranslation('part3_modal_g2')
             },
@@ -1476,7 +1483,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part3_modal_q3'),
                 ans: 'ikke / altid / gerne',
                 colorClass: 'step-blue',
-                icon: '🛡️',
+                icon: renderDsIcon('prohibited', '🛡️', { size: 16 }),
                 note: getTranslation('part3_modal_note_3'),
                 grammar: getTranslation('part3_modal_g3')
             },
@@ -1485,7 +1492,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part3_modal_q4'),
                 ans: 'cykle (infinitiv)',
                 colorClass: 'step-red',
-                icon: '🚲',
+                icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
                 note: getTranslation('part3_modal_note_4'),
                 grammar: getTranslation('part3_modal_g4')
             },
@@ -1494,7 +1501,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part3_modal_q5'),
                 ans: 'på gaden',
                 colorClass: 'step-yellow',
-                icon: '📍',
+                icon: renderDsIcon('mapPin', '📍', { size: 16 }),
                 note: 'Baggrund / ramme',
                 grammar: getTranslation('part3_modal_g5')
             },
@@ -1503,7 +1510,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 q: getTranslation('part3_modal_q6'),
                 ans: 'om morgenen',
                 colorClass: 'step-gray',
-                icon: '⏰',
+                icon: renderDsIcon('clock', '⏰', { size: 16 }),
                 note: 'Tidspunkt',
                 grammar: getTranslation('part3_modal_g6')
             }
@@ -1518,7 +1525,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <div class="step-q">${item.icon} ${item.q}</div>
                     <div class="step-ans">${item.ans}</div>
                     <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                    <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
                 </div>
             `;
             stepGrid.appendChild(card);
@@ -1572,7 +1579,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     </div>
                 </div>
                 <button class="listen-btn" title="Lyt til sætningen">
-                    <span>🔊</span> ${getTranslation('part1_listen_btn')}
+                    <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> ${getTranslation('part1_listen_btn')}
                 </button>
             `;
 
@@ -1722,7 +1729,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <span class="word-yellow">${selections[4]}</span> 
                     <span class="word-gray">${selections[5]}</span>.
                 </div>
-                <button class="listen-btn-small" title="Lyt">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                <button class="listen-btn-small" title="Lyt"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part1_listen_pronunciation')}</button>
             `;
             const listenBtn = outputBox.querySelector('.listen-btn-small');
             listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]} ${selections[4]} ${selections[5]}`);
@@ -1983,7 +1990,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                             ${getTranslation('part3_modal_puzzle_correct')} "<strong>${sentence}</strong>"
                         </div>
                         <div class="puzzle-action-row">
-                            <button class="listen-btn-small" id="puzzle-6-listen-btn">🔊 ${getTranslation('part1_listen_pronunciation')}</button>
+                            <button class="listen-btn-small" id="puzzle-6-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part1_listen_pronunciation')}</button>
                             <button class="next-task-btn" id="puzzle-6-next-btn">
                                 ${currentTaskIdx < tasks.length - 1 ? getTranslation('part1_next_task') : getTranslation('part1_start_over')}
                             </button>
@@ -2123,13 +2130,13 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
         stepGrid.className = 'simple-steps-grid';
 
         const stepItems = [
-            { num: '1', q: getTranslation('part2_q1'), ans: 'Den travle', colorClass: 'step-orange', icon: '🎨', note: getTranslation('part2_note_1'), grammar: getTranslation('part2_g1') },
-            { num: '2', q: getTranslation('part2_q2'), ans: 'kvinde', colorClass: 'step-green', icon: '👤', note: getTranslation('part2_note_2'), grammar: getTranslation('part2_g2') },
-            { num: '3', q: getTranslation('part2_q3'), ans: 'cykler', colorClass: 'step-red', icon: '🚲', note: getTranslation('part2_note_3'), grammar: getTranslation('part2_g3') },
-            { num: '4', q: getTranslation('part2_q4'), ans: 'heldigvis', colorClass: 'step-blue', icon: '🌤️', note: getTranslation('part2_note_4'), grammar: getTranslation('part2_g4'), isHoldning: true },
-            { num: '5', q: getTranslation('part2_q5'), ans: 'forsigtigt', colorClass: 'step-cyan', icon: '⚡', note: getTranslation('part2_note_5'), grammar: getTranslation('part2_g5') },
-            { num: '6', q: getTranslation('part2_q6'), ans: 'på gaden', colorClass: 'step-yellow', icon: '📍', note: getTranslation('part2_note_6'), grammar: getTranslation('part2_g6') },
-            { num: '7', q: getTranslation('part2_q7'), ans: 'mens det sner', colorClass: 'step-purple', icon: '❄️', note: getTranslation('part2_note_7'), grammar: getTranslation('part2_g7') }
+            { num: '1', q: getTranslation('part2_q1'), ans: 'Den travle', colorClass: 'step-orange', icon: renderDsIcon('tag', '🎨', { size: 16 }), note: getTranslation('part2_note_1'), grammar: getTranslation('part2_g1') },
+            { num: '2', q: getTranslation('part2_q2'), ans: 'kvinde', colorClass: 'step-green', icon: renderDsIcon('user', '👤', { size: 16 }), note: getTranslation('part2_note_2'), grammar: getTranslation('part2_g2') },
+            { num: '3', q: getTranslation('part2_q3'), ans: 'cykler', colorClass: 'step-red', icon: renderDsIcon('bicycle', '🚲', { size: 16 }), note: getTranslation('part2_note_3'), grammar: getTranslation('part2_g3') },
+            { num: '4', q: getTranslation('part2_q4'), ans: 'heldigvis', colorClass: 'step-blue', icon: renderDsIcon('thought', '🌤️', { size: 16 }), note: getTranslation('part2_note_4'), grammar: getTranslation('part2_g4'), isHoldning: true },
+            { num: '5', q: getTranslation('part2_q5'), ans: 'forsigtigt', colorClass: 'step-cyan', icon: renderDsIcon('activity', '⚡', { size: 16 }), note: getTranslation('part2_note_5'), grammar: getTranslation('part2_g5') },
+            { num: '6', q: getTranslation('part2_q6'), ans: 'på gaden', colorClass: 'step-yellow', icon: renderDsIcon('mapPin', '📍', { size: 16 }), note: getTranslation('part2_note_6'), grammar: getTranslation('part2_g6') },
+            { num: '7', q: getTranslation('part2_q7'), ans: 'mens det sner', colorClass: 'step-purple', icon: renderDsIcon('clock', '❄️', { size: 16 }), note: getTranslation('part2_note_7'), grammar: getTranslation('part2_g7') }
         ];
 
         stepItems.forEach(item => {
@@ -2141,7 +2148,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <div class="step-q">${item.icon} ${item.q}</div>
                     <div class="step-ans" ${item.isHoldning ? 'id="step-card-7-adv-ans"' : ''}>${item.ans}</div>
                     <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                    <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
                 </div>
             `;
             stepGrid.appendChild(card);
@@ -2166,7 +2173,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 <span class="word-purple">mens det sner</span>.
             </div>
             <div class="adv-switcher-row">
-                <span class="adv-switcher-hint">🌤️ ${getTranslation('part1_5_adv_switcher_label') || 'Prøv at skifte holdningsadverbium (trin 4):'}</span>
+                <span class="adv-switcher-hint">${renderDsIcon('thought', '🌤️', { size: 14 })} ${getTranslation('part1_5_adv_switcher_label') || 'Prøv at skifte holdningsadverbium (trin 4):'}</span>
                 <div class="adv-chips-wrap">
                     ${part4HoldningsAdverbs.map(adv => `
                         <button class="adv-quick-chip ${adv === currentPart4Adv ? 'active' : ''}" data-adv="${adv}">${adv}</button>
@@ -2174,7 +2181,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                 </div>
             </div>
             <button class="listen-btn" title="${getTranslation('part2_listen_btn')}">
-                <span>🔊</span> ${getTranslation('part2_listen_btn')}
+                <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> ${getTranslation('part2_listen_btn')}
             </button>
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
@@ -2331,7 +2338,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                     <span class="word-yellow">${selections[5]}</span>, 
                     <span class="word-purple">${selections[6]}</span>.
                 </div>
-                <button class="listen-btn-small" title="${getTranslation('part2_listen_pronunciation')}">🔊 ${getTranslation('part2_listen_pronunciation')}</button>
+                <button class="listen-btn-small" title="${getTranslation('part2_listen_pronunciation')}"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part2_listen_pronunciation')}</button>
             `;
             const listenBtn = outputBox.querySelector('.listen-btn-small');
             listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]} ${selections[4]} ${selections[5]}, ${selections[6]}`);
@@ -2575,7 +2582,7 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
                             ${getTranslation('part2_puzzle_correct')} "<strong>${sentence}</strong>"
                         </div>
                         <div class="puzzle-action-row">
-                            <button class="listen-btn-small" id="puzzle-7-listen-btn">🔊 ${getTranslation('part2_listen_pronunciation')}</button>
+                            <button class="listen-btn-small" id="puzzle-7-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('part2_listen_pronunciation')}</button>
                             <button class="next-task-btn" id="puzzle-7-next-btn">
                                 ${currentTaskIdx < tasks.length - 1 ? getTranslation('part2_next_task') : getTranslation('part2_start_over')}
                             </button>
@@ -2909,6 +2916,18 @@ export function renderOrdstillingIntroView(container, navigateFn, extraData = {}
             .simple-step-card.step-pink { border-color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
             .simple-step-card.step-cyan { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
 
+            .step-badge {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.1rem;
+                color: #fff;
+                flex-shrink: 0;
+            }
             .step-green .step-badge { background: #22c55e; }
             .step-red .step-badge { background: #ef4444; }
             .step-orange .step-badge { background: #f97316; }

@@ -3,10 +3,11 @@ import { baseUrl } from '../utils/config.js';
 import { getLang, getTranslation } from '../utils/i18n.js';
 import { ordstillingData } from '../utils/ordstillingData.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 export function renderOrdstillingView(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container ordstilling-view';
 
     // Top bar with back button
     const topBar = document.createElement('div');
@@ -53,21 +54,21 @@ export function renderOrdstillingView(container, navigateFn) {
     // --- Menu Area ---
     const intro = document.createElement('p');
     intro.className = 'subtitle';
-    intro.textContent = getTranslation('ordstilling_subtitle') || "Træn ordstilling: Inversion og centraladverbiernes placering.";
+    intro.textContent = getTranslation('ordstilling_subtitle', "Træn ordstilling: Inversion og centraladverbiernes placering.");
     menuArea.appendChild(intro);
 
     const standardLevels = [
-        { key: 'hovedsaetninger', icon: '🏠' },
-        { key: 'ledsaetninger', icon: '🧩' },
-        { key: 'inversion', icon: '🔄' },
-        { key: 'master', icon: '🏆' }
+        { key: 'hovedsaetninger', icon: renderDsIcon('home', '🏠', { size: 30 }) },
+        { key: 'ledsaetninger', icon: renderDsIcon('puzzle', '🧩', { size: 30 }) },
+        { key: 'inversion', icon: renderDsIcon('refresh', '🔄', { size: 30 }) },
+        { key: 'master', icon: renderDsIcon('trophy', '🏆', { size: 30 }) }
     ];
 
     const altLevels = [
-        { key: 'alt_tid', icon: '🕒' },
-        { key: 'alt_konjunktion', icon: '🔗' },
-        { key: 'alt_holdning', icon: '🌤️' },
-        { key: 'alt_sted', icon: '📍' }
+        { key: 'alt_tid', icon: renderDsIcon('clock', '🕒', { size: 30 }) },
+        { key: 'alt_konjunktion', icon: renderDsIcon('link', '🔗', { size: 30 }) },
+        { key: 'alt_holdning', icon: renderDsIcon('thought', '🌤️', { size: 30 }) },
+        { key: 'alt_sted', icon: renderDsIcon('mapPin', '📍', { size: 30 }) }
     ];
 
     const grid = document.createElement('div');
@@ -75,13 +76,11 @@ export function renderOrdstillingView(container, navigateFn) {
     const introCard = document.createElement('div');
     introCard.className = 'card special-highlight';
     introCard.style.gridColumn = '1 / -1';
-    introCard.style.background = 'rgba(76, 175, 80, 0.15)';
-    introCard.style.border = '2px solid rgba(76, 175, 80, 0.4)';
     introCard.onclick = () => navigateFn('ordstilling_intro');
     introCard.innerHTML = `
-        <div class="card-icon" style="font-size: 3rem;">📷</div>
+        <div class="card-icon" style="font-size: 2.4rem;">${renderDsIcon('camera', '📷', { size: 40 })}</div>
         <div class="card-title">${getTranslation("ordstilling_intro_title")}</div>
-        <div class="card-desc" style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;">${getTranslation("ordstilling_intro_subtitle")}</div>
+        <div class="card-desc" style="margin-top: 0.5rem; font-size: 0.95rem;">${getTranslation("ordstilling_intro_subtitle")}</div>
     `;
     grid.appendChild(introCard);
 
@@ -90,7 +89,7 @@ export function renderOrdstillingView(container, navigateFn) {
         const card = document.createElement('div');
         card.className = 'card';
         card.onclick = () => startExercise(l.key);
-        const cardTitle = getTranslation('ordstilling_cat_' + l.key) || categoryData.title;
+        const cardTitle = getTranslation('ordstilling_cat_' + l.key, categoryData.title);
         card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${cardTitle}</div>`;
         grid.appendChild(card);
     });
@@ -98,14 +97,14 @@ export function renderOrdstillingView(container, navigateFn) {
     menuArea.appendChild(grid);
     
     const altHeader = document.createElement('h2');
-    altHeader.textContent = getTranslation('ordstilling_alt_header') || "Alternative sætninger";
+    altHeader.textContent = getTranslation('ordstilling_alt_header', "Alternative sætninger");
     altHeader.style.marginTop = '2.5rem';
     altHeader.style.marginBottom = '0.5rem';
     altHeader.style.textAlign = 'center';
     menuArea.appendChild(altHeader);
     
     const altSub = document.createElement('p');
-    altSub.textContent = getTranslation('ordstilling_alt_sub') || "Verbet står altid på 2. plads når man begynder uden subjekt.";
+    altSub.textContent = getTranslation('ordstilling_alt_sub', "Verbet står altid på 2. plads når man begynder uden subjekt.");
     altSub.className = 'subtitle';
     altSub.style.marginBottom = '1.5rem';
     menuArea.appendChild(altSub);
@@ -123,10 +122,10 @@ export function renderOrdstillingView(container, navigateFn) {
         card.onclick = () => navigateFn('ordstilling_alt_intro', { subPath: type });
         
         const translatedTitle = (type === 'tid') 
-            ? getTranslation('tid_page_title') 
+            ? getTranslation('tid_page_title', 'Fokus på tid') 
             : (type === 'konjunktion') 
-                ? getTranslation('konj_page_title') 
-                : (getTranslation('alt_' + type + '_title') || categoryData.title);
+                ? getTranslation('konj_page_title', 'Fokus på konjunktioner') 
+                : getTranslation('alt_' + type + '_title', categoryData.title);
         card.innerHTML = `<div class="card-icon">${l.icon}</div><div class="card-title">${translatedTitle}</div>`;
         altGrid.appendChild(card);
     });
@@ -141,7 +140,7 @@ export function renderOrdstillingView(container, navigateFn) {
         gameArea.innerHTML = '';
         
         const categoryData = ordstillingData[categoryKey];
-        title.textContent = getTranslation('ordstilling_cat_' + categoryKey) || categoryData.title;
+        title.textContent = getTranslation('ordstilling_cat_' + categoryKey, categoryData.title);
 
         const sentences = categoryData.sentences;
         let currentIdx = Math.floor(Math.random() * sentences.length);
@@ -155,7 +154,7 @@ export function renderOrdstillingView(container, navigateFn) {
 
         const pedFrame = document.createElement('div');
         pedFrame.className = 'pedagogical-frame';
-        pedFrame.innerHTML = getTranslation('ordstilling_exp_' + categoryKey) || categoryData.explanation;
+        pedFrame.innerHTML = getTranslation('ordstilling_exp_' + categoryKey, categoryData.explanation);
 
         const splitArea = document.createElement('div');
         splitArea.className = 'split-sentence-area';
@@ -240,11 +239,11 @@ export function renderOrdstillingView(container, navigateFn) {
                     const isCorrect = Array.isArray(currentSentence.correct) ? currentSentence.correct.includes(answer) : answer === currentSentence.correct;
                     
                     if (isCorrect) {
-                        feedback.textContent = getTranslation('correctOrder') || 'Helt rigtigt!';
+                        feedback.textContent = getTranslation('correctOrder', 'Helt rigtigt!');
                         feedback.className = 'game-feedback success';
                         nextBtn.style.display = 'inline-block';
                     } else {
-                        feedback.textContent = getTranslation('ordstilling_hint_' + categoryKey) || currentSentence.hint;
+                        feedback.textContent = getTranslation('ordstilling_hint_' + categoryKey, currentSentence.hint);
                         feedback.className = 'game-feedback error';
                         nextBtn.style.display = 'none';
                     }

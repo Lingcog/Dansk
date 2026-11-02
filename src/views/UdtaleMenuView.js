@@ -1,8 +1,9 @@
 import { getTranslation } from '../utils/i18n.js';
+import { dsSvgIcons } from '../utils/designSystemIcons.js';
 
 export function renderUdtaleMenuView(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container udtale-menu-view';
 
     // Top bar
     const topBar = document.createElement('div');
@@ -28,36 +29,42 @@ export function renderUdtaleMenuView(container, navigateFn) {
     const cardsData = [
         {
             icon: '🍏',
+            svgIcon: dsSvgIcons.letters(22),
             title: 'Træn bogstaverne D, R og G',
             desc: 'Disse bogstaver forandrer lyd forskellige steder i et ord',
             action: () => navigateFn('traen_bogstaver', { level: 'let' })
         },
         {
             icon: '💬',
+            svgIcon: dsSvgIcons.messageSquare(22),
             title: 'Dialoger - træn udtale i rigtige dialoger',
             desc: 'Trinvis samtaletræning i hverdagen',
             action: () => navigateFn('dialoger_udtale')
         },
         {
             icon: '📖',
+            svgIcon: dsSvgIcons.bookOpen(22),
             title: 'Læsetræning (lyd for lyd)',
             desc: 'Tæl lyde, byg et ord og hør forskel.',
             action: () => navigateFn('laesetraening')
         },
         {
             icon: '🅰️',
+            svgIcon: dsSvgIcons.type(22),
             title: 'Leg med vokaler',
             desc: 'Træn fonetisk præcision med sjove rimesætninger.',
             action: () => navigateFn('leg_med_vokaler')
         },
         {
             icon: '🎤',
+            svgIcon: dsSvgIcons.mic(22),
             title: getTranslation('udtaleDictaphoneTitle') || 'Diktafon - leg med udtale',
             desc: getTranslation('udtaleDictaphoneDesc') || 'Den frie diktafon: Skriv en sætning og test din udtale, eller tal frit fra leveren.',
             action: () => navigateFn('leg_med_udtale')
         },
         {
             icon: '⚡',
+            svgIcon: dsSvgIcons.zap(22),
             title: 'Det danske stød',
             desc: 'Træn det unikke danske stød. Rammer du forkert, fanger maskinen et helt andet ord!',
             action: () => navigateFn('det_danske_stoed')
@@ -74,7 +81,10 @@ export function renderUdtaleMenuView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        icon.innerHTML = `
+            <span class="card-icon-emoji">${data.icon}</span>
+            <span class="card-icon-svg" aria-hidden="true">${data.svgIcon}</span>
+        `;
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';

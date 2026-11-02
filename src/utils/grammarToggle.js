@@ -1,4 +1,5 @@
 import { getTranslation } from './i18n.js';
+import { renderDsIcon } from './designSystemIcons.js';
 
 // Utility for toggling grammatical terminology mode across Ordstilling views
 const STORAGE_KEY = 'ordstilling_show_grammar';
@@ -32,7 +33,7 @@ export function createGrammarToggle(container, onToggleCallback = null) {
     function updateBtn() {
         toggleBtn.className = `grammar-toggle-pill ${isActive ? 'active' : ''}`;
         toggleBtn.innerHTML = `
-            <span class="toggle-icon">🎓</span>
+            <span class="toggle-icon">${renderDsIcon('graduationCap', '🎓', { size: 18 })}</span>
             <span class="toggle-text">${getTranslation('grammar_terms_toggle') || 'Grammatiske fagudtryk:'}</span>
             <span class="toggle-badge ${isActive ? 'on' : 'off'}">${isActive ? (getTranslation('toggle_on') || 'TIL') : (getTranslation('toggle_off') || 'FRA')}</span>
         `;

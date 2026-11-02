@@ -16,6 +16,7 @@ import { arbejdeTranslations } from './arbejde_translations.js';
 import { sangeTranslations } from './sange_translations.js';
 import { tidsudtrykTranslations } from './tidsudtryk_translations.js';
 import { trorSynesMenerTranslations } from './tror_synes_mener_translations.js';
+import { ordstillingHubTranslations } from './ordstilling_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -86,7 +87,8 @@ const allLangs = new Set([
     ...Object.keys(arbejdeTranslations || {}),
     ...Object.keys(sangeTranslations || {}),
     ...Object.keys(tidsudtrykTranslations || {}),
-    ...Object.keys(trorSynesMenerTranslations || {})
+    ...Object.keys(trorSynesMenerTranslations || {}),
+    ...Object.keys(ordstillingHubTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -108,6 +110,7 @@ allLangs.forEach(lang => {
         ...(sangeTranslations[lang] || {}),
         ...(tidsudtrykTranslations[lang] || {}),
         ...(trorSynesMenerTranslations[lang] || {}),
+        ...(ordstillingHubTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

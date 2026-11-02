@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * KonjunktionerAtView - Felt 4 (Særskilt Fokusfelt): Ordet "AT" i alle sætningskonstruktioner
@@ -1423,14 +1424,14 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: getTranslation('at_tab_vrimmel'), icon: '🖼️' },
-        { id: 'roentgen', label: getTranslation('at_tab_roentgen'), icon: '🔬' },
-        { id: 'detektiv', label: getTranslation('at_tab_detektiv'), icon: '🔍' },
-        { id: 'builder', label: getTranslation('at_tab_builder'), icon: '🧩' },
-        { id: 'kontekst', label: getTranslation('at_tab_kontekst'), icon: '🎯' },
-        { id: 'modal', label: getTranslation('at_tab_modal'), icon: '🚦' },
-        { id: 'sammensat', label: getTranslation('at_tab_sammensat'), icon: '🛠️' },
-        { id: 'praep', label: getTranslation('at_tab_praep'), icon: '🔗' }
+        { id: 'vrimmel', label: '1. "AT"-Universet' },
+        { id: 'roentgen', label: '2. "AT"-Røntgenmaskinen' },
+        { id: 'detektiv', label: '3. "AT"-Detektiven' },
+        { id: 'builder', label: '4. Sætningsbyggeren' },
+        { id: 'kontekst', label: '5. Kontekst-testen' },
+        { id: 'modal', label: '6. Modal-fælden' },
+        { id: 'sammensat', label: '7. Sammensatte bindeord' },
+        { id: 'praep', label: '8. Præposition + AT' }
     ];
 
     let currentTab = 'vrimmel';
@@ -1439,7 +1440,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === tab.id ? 'active' : ''}`;
         btn.id = `tab-btn-${tab.id}`;
-        btn.innerHTML = `<span>${tab.icon}</span> ${tab.label}`;
+        btn.textContent = tab.label;
         btn.onclick = () => switchTab(tab.id);
         nav.appendChild(btn);
     });
@@ -1661,16 +1662,16 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         subtabs.className = 'vaerksted-subtabs';
 
         const subList = [
-            { id: 'kognitiv_ramme', label: '💭 1. Den Kognitive Nøgle: Tankeboblen & Billedrammen ("Jeg tror, at...")' },
-            { id: 'konj_vs_inf', label: '🔍 2. Samme Person (Infinitiv-at) vs. Ny Person (Ledsætnings-at)' },
-            { id: 'modal_faelde', label: '🚫 3. Modalverbum-Fælden: Hvornår er "at" FORBUDT?' },
-            { id: 'fem_overblik', label: '📐 4. De 5 "AT"-Konstruktioner på ét ark' }
+            { id: 'kognitiv_ramme', label: '1. Den Kognitive Nøgle: Tankeboblen & Billedrammen ("Jeg tror, at...")' },
+            { id: 'konj_vs_inf', label: '2. Samme Person (Infinitiv-at) vs. Ny Person (Ledsætnings-at)' },
+            { id: 'modal_faelde', label: '3. Modalverbum-Fælden: Hvornår er "at" FORBUDT?' },
+            { id: 'fem_overblik', label: '4. De 5 "AT"-Konstruktioner på ét ark' }
         ];
 
         subList.forEach(st => {
             const btn = document.createElement('button');
             btn.className = `vaerksted-subtab-btn ${activeRoentgenSub === st.id ? 'active' : ''}`;
-            btn.textContent = st.label;
+            btn.innerHTML = st.label;
             btn.onclick = () => {
                 activeRoentgenSub = st.id;
                 renderTabRoentgen(parent);
@@ -1713,7 +1714,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     <h4 style="color:white; margin:0 0 1rem; font-size:1.15rem;">${getTranslation('at_cog_card_a_title')}</h4>
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
                         <div style="flex:1; background:#1e293b; border:2px solid #22c55e; border-radius:12px; padding:0.9rem; text-align:center;">
-                            <div style="font-size:1.4rem;">🌧️🖼️ 1</div>
+                            <div style="font-size:0.85rem; font-weight:800; color:#86efac; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.4rem;">Situation 1</div>
                             <div style="font-weight:800; color:#86efac; font-size:0.95rem;">"Jeg har travlt onsdag"</div>
                             <div style="font-size:0.75rem; color:#94a3b8;">${getTranslation('at_cog_card_a_img1_label')}</div>
                         </div>
@@ -1721,7 +1722,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                             ➔ SÅ / DERFOR ➔
                         </div>
                         <div style="flex:1; background:#1e293b; border:2px solid #22c55e; border-radius:12px; padding:0.9rem; text-align:center;">
-                            <div style="font-size:1.4rem;">🎬🖼️ 2</div>
+                            <div style="font-size:0.85rem; font-weight:800; color:#86efac; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.4rem;">Situation 2</div>
                             <div style="font-weight:800; color:#86efac; font-size:0.95rem;">"jeg tager i biografen torsdag"</div>
                             <div style="font-size:0.75rem; color:#94a3b8;">${getTranslation('at_cog_card_a_img2_label')}</div>
                         </div>
@@ -1741,8 +1742,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     <div style="background:#1e293b; border:2px solid #22c55e; border-radius:16px; padding:1rem; position:relative;">
                         <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
                             <div style="text-align:center; min-width:110px;">
-                                <div style="font-size:1.6rem;">🧑💭</div>
-                                <div style="font-weight:900; color:#86efac; font-size:1.05rem;">"Jeg tror, ..."</div>
+                                <div style="font-weight:900; color:#86efac; font-size:1.05rem; margin-bottom:0.2rem;">"Jeg tror, ..."</div>
                                 <div style="font-size:0.73rem; color:#94a3b8;">${getTranslation('at_cog_card_b_frame_label')}</div>
                             </div>
                             <!-- Indre Tankeboble med AT som selve rammen -->
@@ -1793,21 +1793,18 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             <h3 style="text-align:center; color:#fde68a; margin:1.5rem 0 1rem;">${getTranslation('at_cog_4types_title')}</h3>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
                 <div style="background:#0f172a; border-top:4px solid #22c55e; border-radius:14px; padding:1.1rem;">
-                    <div style="font-size:1.6rem; margin-bottom:0.3rem;">💭📦</div>
-                    <div style="font-weight:900; color:#86efac; margin-bottom:0.3rem;">${getTranslation('at_cog_type1_title')}</div>
+                    <div style="font-weight:900; color:#86efac; margin-bottom:0.3rem;">1. ${getTranslation('at_cog_type1_title')}</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
                         ${getTranslation('at_cog_type1_desc')}
                     </div>
                 </div>
                 <div style="background:#0f172a; border-top:4px solid #f59e0b; border-radius:14px; padding:1.1rem;">
-                    <div style="font-size:1.6rem; margin-bottom:0.3rem;">🏹🎯</div>
-                    <div style="font-weight:900; color:#fde68a; margin-bottom:0.3rem;">${getTranslation('at_cog_type2_title')}</div>
+                    <div style="font-weight:900; color:#fde68a; margin-bottom:0.3rem;">2. ${getTranslation('at_cog_type2_title')}</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
                         ${getTranslation('at_cog_type2_desc')}
                     </div>
                 </div>
                 <div style="background:#0f172a; border-top:4px solid #ef4444; border-radius:14px; padding:1.1rem;">
-                    <div style="font-size:1.6rem; margin-bottom:0.3rem;">⚡🚗</div>
                     <div style="font-weight:900; color:#fca5a5; margin-bottom:0.3rem;">3. Den Indre Motor (Ingen "at"!)</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
                         <strong>Modalverber (kan, vil, skal)</strong> sidder direkte på motoren uden afstand – derfor ingen pil:<br>
@@ -1815,8 +1812,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     </div>
                 </div>
                 <div style="background:#0f172a; border-top:4px solid #a855f7; border-radius:14px; padding:1.1rem;">
-                    <div style="font-size:1.6rem; margin-bottom:0.3rem;">🧭🔗</div>
-                    <div style="font-weight:900; color:#d8b4fe; margin-bottom:0.3rem;">${getTranslation('at_cog_type3_title')}</div>
+                    <div style="font-weight:900; color:#d8b4fe; margin-bottom:0.3rem;">4. ${getTranslation('at_cog_type3_title')}</div>
                     <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
                         ${getTranslation('at_cog_type3_desc')}
                     </div>
@@ -1833,7 +1829,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             haaber: {
                 label: 'Jeg håber...',
                 samme: {
-                    title: '1️⃣ SAMME PERSON (Kun "Jeg") ➔ Infinitivmærket "at" + Infinitiv!',
+                    title: '1. Samme person (Kun "Jeg") ➔ Infinitivmærket "at" + Infinitiv!',
                     tokens: [
                         { role: 'Subjekt + Verbum', word: 'Jeg håber', color: '#22c55e' },
                         { role: 'Infinitivmærke', word: 'at', color: '#f59e0b' },
@@ -1843,7 +1839,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     note: 'Når det er "Jeg", der både håber og kommer, behøver vi intet nyt subjekt: "at" + infinitiv ("at komme").'
                 },
                 nyt: {
-                    title: '2️⃣ NY PERSON ("Jeg" + "du") ➔ Konjunktionen "at" + Ledsætning!',
+                    title: '2. Ny person ("Jeg" + "du") ➔ Konjunktionen "at" + Ledsætning!',
                     tokens: [
                         { role: 'Hovedsætning', word: 'Jeg håber,', color: '#22c55e' },
                         { role: 'Ledsætningskonj.', word: 'at', color: '#f59e0b' },
@@ -1856,7 +1852,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             glad_for: {
                 label: 'Jeg er glad for...',
                 samme: {
-                    title: '1️⃣ SAMME PERSON (Kun "Jeg") ➔ glad for at + Infinitiv!',
+                    title: '1. Samme person (Kun "Jeg") ➔ glad for at + Infinitiv!',
                     tokens: [
                         { role: 'Subjekt + Præp.', word: 'Jeg er glad for', color: '#22c55e' },
                         { role: 'Infinitivmærke', word: 'at', color: '#f59e0b' },
@@ -1866,7 +1862,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     note: 'Jeg er glad + jeg bor i Danmark ➔ "glad for at bo i Danmark" (Infinitiv).'
                 },
                 nyt: {
-                    title: '2️⃣ NY PERSON ("Jeg" + "du") ➔ glad for, at + Ledsætning!',
+                    title: '2. Ny person ("Jeg" + "du") ➔ glad for, at + Ledsætning!',
                     tokens: [
                         { role: 'Subjekt + Præp.', word: 'Jeg er glad for,', color: '#22c55e' },
                         { role: 'Ledsætningskonj.', word: 'at', color: '#f59e0b' },
@@ -1879,7 +1875,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             for_at_fordi: {
                 label: 'Formål (for at) vs. Årsag (fordi)...',
                 samme: {
-                    title: '1️⃣ FORMÅL med samme person ➔ "for at" + Infinitiv!',
+                    title: '1. Formål med samme person ➔ "for at" + Infinitiv!',
                     tokens: [
                         { role: 'Hovedsætning', word: 'Hun sparer op', color: '#22c55e' },
                         { role: 'Formåls-bindeord', word: 'for at', color: '#f59e0b' },
@@ -1889,7 +1885,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                     note: 'Efter "for at" kommer der ALTID en infinitiv ("købe") uden subjekt!'
                 },
                 nyt: {
-                    title: '2️⃣ ÅRSAG med subjekt og modalverbum ➔ "fordi" + Ledsætning!',
+                    title: '2. Årsag med subjekt og modalverbum ➔ "fordi" + Ledsætning!',
                     tokens: [
                         { role: 'Hovedsætning', word: 'Hun sparer op,', color: '#22c55e' },
                         { role: 'Ledsætningskonj.', word: 'fordi', color: '#06b6d4' },
@@ -1907,7 +1903,6 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">🔍 Samme Person (Infinitiv) vs. Ny Person (Ledsætning)</h2>
             <h2 style="text-align:center; color:#fde68a; margin-bottom:0.5rem;">${getTranslation('at_sub1_title')}</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:780px; margin:0 auto 1.2rem;">
                 ${getTranslation('at_sub1_desc')}
@@ -1922,10 +1917,10 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
             <div style="display:flex; gap:1rem; justify-content:center; margin:1.5rem 0; flex-wrap:wrap;">
                 <button class="word-sel-btn ${selectedSubjMode === 'samme' ? 'active' : ''}" id="btn-subj-samme" style="min-width:260px;">
-                    1️⃣ Samme person (AT + Infinitiv)
+                    1. Samme person (AT + Infinitiv)
                 </button>
                 <button class="word-sel-btn ${selectedSubjMode === 'nyt' ? 'active' : ''}" id="btn-subj-nyt" style="min-width:260px;">
-                    2️⃣ Ny person / Ledsætning (AT + Subjekt + Verbum)
+                    2. Ny person / Ledsætning (AT + Subjekt + Verbum)
                 </button>
             </div>
 
@@ -1939,7 +1934,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                         </div>
                     `).join('')}
                 </div>
-                <p style="color:#cbd5e1; font-weight:700; margin:1rem auto; max-width:700px;">💡 ${side.note}</p>
+                <p style="color:#cbd5e1; font-weight:700; margin:1rem auto; max-width:700px;">${side.note}</p>
             </div>
         `;
 
@@ -1965,16 +1960,16 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     function renderRoentgenSub2(container) {
         const pairs = {
             kan: {
-                modal: { title: '🚫 Modalverbum: KAN (Ingen "at"!)', sent: 'Jeg kan svømme 500 meter.', wrong: '❌ *Jeg kan at svømme' },
-                alm: { title: '✅ Almindeligt verbum: ELSKER / PLEJER (Skal have "at"!)', sent: 'Jeg plejer at svømme 500 meter.', wrong: '❌ *Jeg plejer svømme' }
+                modal: { title: 'Modalverbum: KAN (Ingen "at"!)', sent: 'Jeg kan svømme 500 meter.', wrong: '*Jeg kan at svømme (Ukorrekt)' },
+                alm: { title: 'Almindeligt verbum: ELSKER / PLEJER (Skal have "at"!)', sent: 'Jeg plejer at svømme 500 meter.', wrong: '*Jeg plejer svømme (Ukorrekt)' }
             },
             vil: {
-                modal: { title: '🚫 Modalverbum: VIL (Ingen "at"!)', sent: 'Hun vil rejse til Spanien.', wrong: '❌ *Hun vil at rejse' },
-                alm: { title: '✅ Almindeligt verbum: ØNSKER / HÅBER (Skal have "at"!)', sent: 'Hun ønsker at rejse til Spanien.', wrong: '❌ *Hun ønsker rejse' }
+                modal: { title: 'Modalverbum: VIL (Ingen "at"!)', sent: 'Hun vil rejse til Spanien.', wrong: '*Hun vil at rejse (Ukorrekt)' },
+                alm: { title: 'Almindeligt verbum: ØNSKER / HÅBER (Skal have "at"!)', sent: 'Hun ønsker at rejse til Spanien.', wrong: '*Hun ønsker rejse (Ukorrekt)' }
             },
             skal: {
-                modal: { title: '🚫 Modalverbum: SKAL / MÅ (Ingen "at"!)', sent: 'Vi skal købe mælk på vejen hjem.', wrong: '❌ *Vi skal at købe' },
-                alm: { title: '✅ Almindeligt verbum: HUSKER / BLIVER NØDT TIL (Skal have "at"!)', sent: 'Vi bliver nødt til at købe mælk.', wrong: '❌ *Vi husker købe' }
+                modal: { title: 'Modalverbum: SKAL / MÅ (Ingen "at"!)', sent: 'Vi skal købe mælk på vejen hjem.', wrong: '*Vi skal at købe (Ukorrekt)' },
+                alm: { title: 'Almindeligt verbum: HUSKER / BLIVER NØDT TIL (Skal have "at"!)', sent: 'Vi bliver nødt til at købe mælk.', wrong: '*Vi husker købe (Ukorrekt)' }
             }
         };
 
@@ -2788,7 +2783,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         renderQuizEngine(parent, {
             state: kontekstState,
             questions: KONTEKST_QUESTIONS,
-            progressLabel: '🎯 Kontekst-testen ("at")',
+            progressLabel: 'Kontekst-testen ("at")',
             doneTitle: 'Kontekst-testen med "at" gennemført!'
         });
     }
@@ -2859,7 +2854,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     function renderTabModal(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🚦 Med "at" eller Uden "at"? (Modalverbum-Fælden)</h2>
+                <h2>Med "at" eller Uden "at"? (Modalverbum-Fælden)</h2>
                 <p>Træn rygmarvsrefleksen: De 6 modalverber (<strong>kan, skal, vil, må, bør, tør</strong>) afviser <em>at</em>, mens almindelige verber (<strong>plejer, håber, ønsker, husker, glemmer, prøver</strong>) kræver <em>at</em>!</p>
             </div>
         `;
@@ -2867,7 +2862,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             introHtml,
             state: modalState,
             questions: MODAL_QUESTIONS,
-            progressLabel: '🚦 MED ELLER UDEN "AT"',
+            progressLabel: 'MED ELLER UDEN "AT"',
             doneTitle: 'Modalverbum-fælden mestret!'
         });
     }
@@ -2938,7 +2933,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     function renderTabSammensat(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🛠️ For at, ved at, uden at eller fordi?</h2>
+                <h2>For at, ved at, uden at eller fordi?</h2>
                 <p>Lær hvornår man bruger de sammensatte bindeord med <strong>at + infinitiv</strong> (<em>for at</em> = formål, <em>ved at</em> = metode, <em>uden at</em> = fravær) i modsætning til <strong>fordi + subjekt + verbum</strong>.</p>
             </div>
         `;
@@ -2946,7 +2941,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             introHtml,
             state: sammensatState,
             questions: SAMMENSAT_QUESTIONS,
-            progressLabel: '🛠️ SAMMENSATTE "AT"-UDTRYK',
+            progressLabel: 'SAMMENSATTE "AT"-UDTRYK',
             doneTitle: 'For at, ved at, uden at og fordi mestret!'
         });
     }
@@ -3031,7 +3026,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     function renderTabPraep(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🔗 Præposition + AT (Faste forbindelser)</h2>
+                <h2>Præposition + AT (Faste forbindelser)</h2>
                 <p>På dansk elsker vi at sætte en præposition foran <strong>at</strong> – både foran infinitiv (<em>god til at, træt af at, bange for at, kom til at</em>) og foran ledsætninger (<em>glad for, at / sikker på, at / drømmer om, at</em>).</p>
             </div>
         `;
@@ -3039,7 +3034,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             introHtml,
             state: praepState,
             questions: PRAEP_QUESTIONS,
-            progressLabel: '🔗 PRÆPOSITION + AT',
+            progressLabel: 'PRÆPOSITION + AT',
             doneTitle: 'Præposition + "at" mestret!'
         });
     }

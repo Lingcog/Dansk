@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { createGrammarToggle } from '../utils/grammarToggle.js';
 import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
 import { altIntroBuilderWordTranslations } from '../utils/alt_intro_translations.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 export function renderOrdstillingAltIntroView(container, navigateFn, type = 'tid') {
     if (type === 'tid') {
@@ -38,9 +39,34 @@ function speakDanish(text) {
 // ========================================================
 // --- FOKUS PÅ STED: 4 ENKLE SPØRGSMÅL (IDENTISK MED 1. DEL)
 // ========================================================
+
+function createAltIntroTabsNav(activeType, navigateFn) {
+    const tabsContainer = document.createElement("div");
+    tabsContainer.className = "intro-tabs-nav";
+
+    const tabs = [
+        { type: "tid", label: getTranslation("tid_page_title") || "1. Fokus på tid", sub: "Tidsadverbium forrest" },
+        { type: "konjunktion", label: getTranslation("konj_page_title") || "2. Fokus på konjunktion", sub: "Ledsætning forrest" },
+        { type: "holdning", label: getTranslation("alt_holdning_title") || "3. Fokus på holdning", sub: "Holdningsadverbium forrest" },
+        { type: "sted", label: getTranslation("alt_sted_title") || "4. Fokus på sted", sub: "Sted forrest" }
+    ];
+
+    tabs.forEach(t => {
+        const btn = document.createElement("button");
+        btn.className = `intro-tab-btn ${activeType === t.type ? "active" : ""}`;
+        btn.innerHTML = `<strong>${t.label}</strong> <span>${t.sub}</span>`;
+        btn.onclick = () => {
+            navigateFn("ordstilling_alt_intro", { subPath: t.type });
+        };
+        tabsContainer.appendChild(btn);
+    });
+
+    return tabsContainer;
+}
+
 function renderFokusPaaSted(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container ordstilling-intro-view';
 
     // Top bar with back button
     const topBar = document.createElement('div');
@@ -72,6 +98,7 @@ function renderFokusPaaSted(container, navigateFn) {
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #94a3b8;"></span> <strong style="color: #cbd5e1;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
+    viewContainer.appendChild(createAltIntroTabsNav('sted', navigateFn));
 
     // Hero Explanation Card
     const introCard = document.createElement('div');
@@ -155,7 +182,7 @@ function renderFokusPaaSted(container, navigateFn) {
             q: 'Hvor sker det?',
             ans: 'På gaden',
             colorClass: 'step-yellow',
-            icon: '📍',
+            icon: renderDsIcon('mapPin', '📍', { size: 16 }),
             note: 'Stedet sættes forrest',
             grammar: 'Præposition (sted)'
         },
@@ -164,7 +191,7 @@ function renderFokusPaaSted(container, navigateFn) {
             q: 'Hvad laver personen eller tingen?',
             ans: 'cykler',
             colorClass: 'step-red',
-            icon: '🚲',
+            icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
             note: 'Handlingen SKAL være nr. 2!',
             grammar: 'Verbum (inversion: 2. plads!)'
         },
@@ -173,7 +200,7 @@ function renderFokusPaaSted(container, navigateFn) {
             q: 'Hvad eller hvem taler vi om?',
             ans: 'en kvinde',
             colorClass: 'step-green',
-            icon: '👤',
+            icon: renderDsIcon('user', '👤', { size: 16 }),
             note: 'Personen rykker om bagved',
             grammar: 'Substantiv / Pronomen (subjekt)'
         },
@@ -182,7 +209,7 @@ function renderFokusPaaSted(container, navigateFn) {
             q: 'Hvornår sker det?',
             ans: 'om morgenen',
             colorClass: 'step-gray',
-            icon: '⏰',
+            icon: renderDsIcon('clock', '⏰', { size: 16 }),
             note: 'Tiden kommer til sidst',
             grammar: 'Tidsadverbium'
         }
@@ -197,7 +224,7 @@ function renderFokusPaaSted(container, navigateFn) {
                 <div class="step-q">${item.icon} ${item.q}</div>
                 <div class="step-ans">${item.ans}</div>
                 <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
             </div>
         `;
         stepGrid.appendChild(card);
@@ -216,7 +243,7 @@ function renderFokusPaaSted(container, navigateFn) {
             <span class="word-gray">om morgenen</span>.
         </div>
         <button class="listen-btn" title="Hør udtale">
-            <span>🔊</span> Hør sætningen
+            <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> Hør sætningen
         </button>
     `;
     const listenBtn = resultBox.querySelector('.listen-btn');
@@ -227,7 +254,7 @@ function renderFokusPaaSted(container, navigateFn) {
     const tryHeader = document.createElement('div');
     tryHeader.className = 'section-divider';
     tryHeader.innerHTML = `
-        <h2>✍️ Prøv selv at lave en sætning med fokus på sted</h2>
+        <h2>Prøv selv at lave en sætning med fokus på sted</h2>
         <p>Husk: Stedet kommer først, og handlingen er ALTID nummer 2!</p>
     `;
     viewContainer.appendChild(tryHeader);
@@ -327,7 +354,7 @@ function setupStedStepBuilder(container) {
                 <span class="word-green">${selections[2]}</span> 
                 <span class="word-gray">${selections[3]}</span>.
             </div>
-            <button class="listen-btn-small" title="Lyt">🔊 Hør udtale</button>
+            <button class="listen-btn-small" title="Lyt"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> Hør udtale</button>
         `;
         const listenBtn = outputBox.querySelector('.listen-btn-small');
         listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
@@ -459,7 +486,7 @@ function setupStedPuzzleExercise(container) {
         guideEl.className = 'puzzle-guide';
         guideEl.innerHTML = `
             Klik på ordene i den rigtige rækkefølge med fokus på sted:
-            <br><small>1. Hvor? ➔ 2. Hvad sker der? ➔ 3. Hvem/hvad? ➔ 4. Hvornår?</small>
+            <br><small>1. Hvor? → 2. Hvad sker der? → 3. Hvem/hvad? → 4. Hvornår?</small>
         `;
         header.appendChild(guideEl);
 
@@ -512,7 +539,7 @@ function setupStedPuzzleExercise(container) {
                     slotEl.innerHTML = `
                         <span class="slot-number">${idx + 1}</span>
                         <span class="slot-text">${word}</span>
-                        <span class="slot-remove">✕</span>
+                        <span class="slot-remove">×</span>
                     `;
                 } else {
                     slotEl.classList.remove('filled');
@@ -557,12 +584,12 @@ function setupStedPuzzleExercise(container) {
 
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg success">
-                        🎉 Rigtigt! "<strong>${sentence}</strong>"
+                        Rigtigt! "<strong>${sentence}</strong>"
                     </div>
                     <div class="puzzle-action-row">
-                        <button class="listen-btn-small" id="puzzle-listen-btn">🔊 Hør udtale</button>
+                        <button class="listen-btn-small" id="puzzle-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> Hør udtale</button>
                         <button class="next-task-btn" id="puzzle-next-btn">
-                            ${currentTaskIdx < tasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentTaskIdx < tasks.length - 1 ? 'Næste opgave →' : 'Start forfra'}
                         </button>
                     </div>
                 `;
@@ -574,9 +601,9 @@ function setupStedPuzzleExercise(container) {
             } else {
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg error">
-                        Ikke helt rigtigt endnu. Husk rækkefølgen: Stedet først (1) ➔ Handlingen ALTID som nr. 2!
+                        Ikke helt rigtigt endnu. Husk rækkefølgen: Stedet først (1) → Handlingen ALTID som nr. 2!
                     </div>
-                    <button class="retry-task-btn" id="puzzle-retry-btn">Prøv igen 🔄</button>
+                    <button class="retry-task-btn" id="puzzle-retry-btn">Prøv igen</button>
                 `;
                 feedbackBox.querySelector('#puzzle-retry-btn').onclick = () => {
                     userSlots = [null, null, null, null];
@@ -598,7 +625,7 @@ function setupStedPuzzleExercise(container) {
 // ========================================================
 function renderFokusPaaTid(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container ordstilling-intro-view';
 
     // Top bar with back button
     const topBar = document.createElement('div');
@@ -630,6 +657,7 @@ function renderFokusPaaTid(container, navigateFn) {
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #94a3b8;"></span> <strong style="color: #cbd5e1;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
+    viewContainer.appendChild(createAltIntroTabsNav('tid', navigateFn));
 
     // Hero Explanation Card
     const introCard = document.createElement('div');
@@ -710,7 +738,7 @@ function renderFokusPaaTid(container, navigateFn) {
             q: getTranslation('tid_q1'),
             ans: 'Om morgenen',
             colorClass: 'step-gray',
-            icon: '⏰',
+            icon: renderDsIcon('clock', '⏰', { size: 16 }),
             note: getTranslation('tid_note_1'),
             grammar: getTranslation('tid_g1')
         },
@@ -719,7 +747,7 @@ function renderFokusPaaTid(container, navigateFn) {
             q: getTranslation('tid_q2'),
             ans: 'cykler',
             colorClass: 'step-red',
-            icon: '🚲',
+            icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
             note: getTranslation('tid_note_2'),
             grammar: getTranslation('tid_g2')
         },
@@ -728,7 +756,7 @@ function renderFokusPaaTid(container, navigateFn) {
             q: getTranslation('tid_q3'),
             ans: 'en kvinde',
             colorClass: 'step-green',
-            icon: '👤',
+            icon: renderDsIcon('user', '👤', { size: 16 }),
             note: getTranslation('tid_note_3'),
             grammar: getTranslation('tid_g3')
         },
@@ -737,7 +765,7 @@ function renderFokusPaaTid(container, navigateFn) {
             q: getTranslation('tid_q4'),
             ans: 'på gaden',
             colorClass: 'step-yellow',
-            icon: '📍',
+            icon: renderDsIcon('mapPin', '📍', { size: 16 }),
             note: getTranslation('tid_note_4'),
             grammar: getTranslation('tid_g4')
         }
@@ -752,7 +780,7 @@ function renderFokusPaaTid(container, navigateFn) {
                 <div class="step-q">${item.icon} ${item.q}</div>
                 <div class="step-ans">${item.ans}</div>
                 <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
             </div>
         `;
         stepGrid.appendChild(card);
@@ -772,7 +800,7 @@ function renderFokusPaaTid(container, navigateFn) {
         </div>
         ${getLang() !== 'da' ? `<div class="banner-sentence-trans" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem; margin-bottom: 0.8rem;">"${getTranslation('tid_s0')}"</div>` : ''}
         <button class="listen-btn" title="${getTranslation('tid_listen_btn')}">
-            <span>🔊</span> ${getTranslation('tid_listen_btn')}
+            <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> ${getTranslation('tid_listen_btn')}
         </button>
     `;
     const listenBtn = resultBox.querySelector('.listen-btn');
@@ -879,7 +907,7 @@ function setupTidStepBuilder(container) {
                 <span class="word-green">${selections[2]}</span> 
                 <span class="word-yellow">${selections[3]}</span>.
             </div>
-            <button class="listen-btn-small" title="${getTranslation('tid_listen_pronunciation')}">🔊 ${getTranslation('tid_listen_pronunciation')}</button>
+            <button class="listen-btn-small" title="${getTranslation('tid_listen_pronunciation')}"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('tid_listen_pronunciation')}</button>
         `;
         const listenBtn = outputBox.querySelector('.listen-btn-small');
         listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
@@ -1063,7 +1091,7 @@ function setupTidPuzzleExercise(container) {
                     slotEl.innerHTML = `
                         <span class="slot-number">${idx + 1}</span>
                         <span class="slot-text">${word}</span>
-                        <span class="slot-remove">✕</span>
+                        <span class="slot-remove">×</span>
                     `;
                 } else {
                     slotEl.classList.remove('filled');
@@ -1115,7 +1143,7 @@ function setupTidPuzzleExercise(container) {
                         ${transText ? `<div class="puzzle-trans-text" style="font-size: 1rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem;">"${transText}"</div>` : ''}
                     </div>
                     <div class="puzzle-action-row">
-                        <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${getTranslation('tid_listen_pronunciation')}</button>
+                        <button class="listen-btn-small" id="puzzle-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('tid_listen_pronunciation')}</button>
                         <button class="next-task-btn" id="puzzle-next-btn">
                             ${currentTaskIdx < tasks.length - 1 ? getTranslation('tid_next_task') : getTranslation('tid_start_over')}
                         </button>
@@ -1153,7 +1181,7 @@ function setupTidPuzzleExercise(container) {
 // ========================================================
 function renderFokusPaaKonjunktion(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container ordstilling-intro-view';
 
     // Top bar with back button
     const topBar = document.createElement('div');
@@ -1185,6 +1213,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #94a3b8;"></span> <strong style="color: #cbd5e1;">Tid (Tidsadverbium)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
+    viewContainer.appendChild(createAltIntroTabsNav('konjunktion', navigateFn));
 
     // Hero Explanation Card
     const introCard = document.createElement('div');
@@ -1265,7 +1294,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             q: getTranslation('konj_q1'),
             ans: 'Da det regnede,',
             colorClass: 'step-purple',
-            icon: '🔗',
+            icon: renderDsIcon('link', '🔗', { size: 16 }),
             note: getTranslation('konj_note_1'),
             grammar: getTranslation('konj_g1')
         },
@@ -1274,7 +1303,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             q: getTranslation('konj_q2'),
             ans: 'cyklede',
             colorClass: 'step-red',
-            icon: '🚲',
+            icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
             note: getTranslation('konj_note_2'),
             grammar: getTranslation('konj_g2')
         },
@@ -1283,7 +1312,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             q: getTranslation('konj_q3'),
             ans: 'en kvinde',
             colorClass: 'step-green',
-            icon: '👤',
+            icon: renderDsIcon('user', '👤', { size: 16 }),
             note: getTranslation('konj_note_3'),
             grammar: getTranslation('konj_g3')
         },
@@ -1292,7 +1321,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
             q: getTranslation('konj_q4'),
             ans: 'på gaden',
             colorClass: 'step-yellow',
-            icon: '📍',
+            icon: renderDsIcon('mapPin', '📍', { size: 16 }),
             note: getTranslation('konj_note_4'),
             grammar: getTranslation('konj_g4')
         }
@@ -1307,7 +1336,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
                 <div class="step-q">${item.icon} ${item.q}</div>
                 <div class="step-ans">${item.ans}</div>
                 <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
             </div>
         `;
         stepGrid.appendChild(card);
@@ -1327,7 +1356,7 @@ function renderFokusPaaKonjunktion(container, navigateFn) {
         </div>
         ${getLang() !== 'da' ? `<div class="banner-sentence-trans" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem; margin-bottom: 0.8rem;">"${getTranslation('konj_s0')}"</div>` : ''}
         <button class="listen-btn" title="${getTranslation('konj_listen_btn')}">
-            <span>🔊</span> ${getTranslation('konj_listen_btn')}
+            <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> ${getTranslation('konj_listen_btn')}
         </button>
     `;
     const listenBtn = resultBox.querySelector('.listen-btn');
@@ -1434,7 +1463,7 @@ function setupKonjunktionStepBuilder(container) {
                 <span class="word-green">${selections[2]}</span> 
                 <span class="word-yellow">${selections[3]}</span>.
             </div>
-            <button class="listen-btn-small" title="${getTranslation('konj_listen_pronunciation')}">🔊 ${getTranslation('konj_listen_pronunciation')}</button>
+            <button class="listen-btn-small" title="${getTranslation('konj_listen_pronunciation')}"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('konj_listen_pronunciation')}</button>
         `;
         const listenBtn = outputBox.querySelector('.listen-btn-small');
         listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
@@ -1618,7 +1647,7 @@ function setupKonjunktionPuzzleExercise(container) {
                     slotEl.innerHTML = `
                         <span class="slot-number">${idx + 1}</span>
                         <span class="slot-text">${word}</span>
-                        <span class="slot-remove">✕</span>
+                        <span class="slot-remove">×</span>
                     `;
                 } else {
                     slotEl.classList.remove('filled');
@@ -1681,7 +1710,7 @@ function setupKonjunktionPuzzleExercise(container) {
                         ${transText ? `<div class="puzzle-trans-text" style="font-size: 1rem; color: #cbd5e1; font-style: italic; margin-top: 0.4rem;">"${transText}"</div>` : ''}
                     </div>
                     <div class="puzzle-action-row">
-                        <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${getTranslation('konj_listen_pronunciation')}</button>
+                        <button class="listen-btn-small" id="puzzle-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> ${getTranslation('konj_listen_pronunciation')}</button>
                         <button class="next-task-btn" id="puzzle-next-btn">
                             ${currentTaskIdx < tasks.length - 1 ? getTranslation('konj_next_task') : getTranslation('konj_start_over')}
                         </button>
@@ -1719,7 +1748,7 @@ function setupKonjunktionPuzzleExercise(container) {
 // ========================================================
 function renderFokusPaaHoldning(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container ordstilling-intro-view';
 
     // Top bar with back button
     const topBar = document.createElement('div');
@@ -1750,6 +1779,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
         <div class="grammar-system-item"><span class="grammar-dot" style="background: #eab308;"></span> <strong style="color: #fde047;">Sted (Præposition)</strong></div>
     `;
     viewContainer.appendChild(grammarBanner);
+    viewContainer.appendChild(createAltIntroTabsNav('holdning', navigateFn));
 
     // Hero Explanation Card
     const introCard = document.createElement('div');
@@ -1833,7 +1863,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             q: 'Hvad mener eller føler du om det?',
             ans: 'Heldigvis',
             colorClass: 'step-blue',
-            icon: '🌤️',
+            icon: renderDsIcon('thought', '🌤️', { size: 16 }),
             note: 'Holdningen sættes forrest',
             grammar: 'Centraladverbium'
         },
@@ -1842,7 +1872,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             q: 'Hvad laver personen eller tingen?',
             ans: 'cykler',
             colorClass: 'step-red',
-            icon: '🚲',
+            icon: renderDsIcon('bicycle', '🚲', { size: 16 }),
             note: 'Handlingen SKAL være nr. 2!',
             grammar: 'Verbum (inversion: 2. plads!)'
         },
@@ -1851,7 +1881,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             q: 'Hvad eller hvem taler vi om?',
             ans: 'en kvinde',
             colorClass: 'step-green',
-            icon: '👤',
+            icon: renderDsIcon('user', '👤', { size: 16 }),
             note: 'Personen rykker om bagved',
             grammar: 'Substantiv / Pronomen (subjekt)'
         },
@@ -1860,7 +1890,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             q: 'Hvor sker det?',
             ans: 'på gaden',
             colorClass: 'step-yellow',
-            icon: '📍',
+            icon: renderDsIcon('mapPin', '📍', { size: 16 }),
             note: 'Stedet til sidst',
             grammar: 'Præposition (sted)'
         }
@@ -1875,7 +1905,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
                 <div class="step-q">${item.icon} ${item.q}</div>
                 <div class="step-ans">${item.ans}</div>
                 <small style="color: #94a3b8; font-size: 0.8rem;">${item.note}</small>
-                <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                <div class="grammar-badge">${renderDsIcon('tag', '🏷️', { size: 13 })} ${item.grammar}</div>
             </div>
         `;
         stepGrid.appendChild(card);
@@ -1894,7 +1924,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
             <span class="word-yellow">på gaden</span>.
         </div>
         <button class="listen-btn" title="Hør udtale">
-            <span>🔊</span> Hør sætningen
+            <span>${renderDsIcon('volume', '🔊', { size: 16 })}</span> Hør sætningen
         </button>
     `;
     const listenBtn = resultBox.querySelector('.listen-btn');
@@ -1905,7 +1935,7 @@ function renderFokusPaaHoldning(container, navigateFn) {
     const tryHeader = document.createElement('div');
     tryHeader.className = 'section-divider';
     tryHeader.innerHTML = `
-        <h2>✍️ Prøv selv at lave en sætning med fokus på holdning</h2>
+        <h2>Prøv selv at lave en sætning med fokus på holdning</h2>
         <p>Husk: Holdningen kommer først, og handlingen er ALTID nummer 2!</p>
     `;
     viewContainer.appendChild(tryHeader);
@@ -2005,7 +2035,7 @@ function setupHoldningStepBuilder(container) {
                 <span class="word-green">${selections[2]}</span> 
                 <span class="word-yellow">${selections[3]}</span>.
             </div>
-            <button class="listen-btn-small" title="Lyt">🔊 Hør udtale</button>
+            <button class="listen-btn-small" title="Lyt"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> Hør udtale</button>
         `;
         const listenBtn = outputBox.querySelector('.listen-btn-small');
         listenBtn.onclick = () => speakDanish(`${selections[0]} ${selections[1]} ${selections[2]} ${selections[3]}`);
@@ -2137,7 +2167,7 @@ function setupHoldningPuzzleExercise(container) {
         guideEl.className = 'puzzle-guide';
         guideEl.innerHTML = `
             Klik på ordene i den rigtige rækkefølge med fokus på holdning:
-            <br><small>1. Hvad mener du? ➔ 2. Hvad sker der? ➔ 3. Hvem/hvad? ➔ 4. Hvor?</small>
+            <br><small>1. Hvad mener du? → 2. Hvad sker der? → 3. Hvem/hvad? → 4. Hvor?</small>
         `;
         header.appendChild(guideEl);
 
@@ -2190,7 +2220,7 @@ function setupHoldningPuzzleExercise(container) {
                     slotEl.innerHTML = `
                         <span class="slot-number">${idx + 1}</span>
                         <span class="slot-text">${word}</span>
-                        <span class="slot-remove">✕</span>
+                        <span class="slot-remove">×</span>
                     `;
                 } else {
                     slotEl.classList.remove('filled');
@@ -2235,12 +2265,12 @@ function setupHoldningPuzzleExercise(container) {
 
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg success">
-                        🎉 Rigtigt! "<strong>${sentence}</strong>"
+                        Rigtigt! "<strong>${sentence}</strong>"
                     </div>
                     <div class="puzzle-action-row">
-                        <button class="listen-btn-small" id="puzzle-listen-btn">🔊 Hør udtale</button>
+                        <button class="listen-btn-small" id="puzzle-listen-btn"><span>${renderDsIcon('volume', '🔊', { size: 14 })}</span> Hør udtale</button>
                         <button class="next-task-btn" id="puzzle-next-btn">
-                            ${currentTaskIdx < tasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentTaskIdx < tasks.length - 1 ? 'Næste opgave →' : 'Start forfra'}
                         </button>
                     </div>
                 `;
@@ -2252,9 +2282,9 @@ function setupHoldningPuzzleExercise(container) {
             } else {
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg error">
-                        Ikke helt rigtigt endnu. Husk rækkefølgen: Holdningen først (1) ➔ Handlingen ALTID som nr. 2!
+                        Ikke helt rigtigt endnu. Husk rækkefølgen: Holdningen først (1) → Handlingen ALTID som nr. 2!
                     </div>
-                    <button class="retry-task-btn" id="puzzle-retry-btn">Prøv igen 🔄</button>
+                    <button class="retry-task-btn" id="puzzle-retry-btn">Prøv igen</button>
                 `;
                 feedbackBox.querySelector('#puzzle-retry-btn').onclick = () => {
                     userSlots = [null, null, null, null];
@@ -2495,6 +2525,18 @@ function ensureIntroStyles() {
         .simple-step-card.step-pink { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
         .simple-step-card.step-cyan { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
 
+        .step-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
         .step-green .step-badge { background: #22c55e; }
         .step-red .step-badge { background: #ef4444; }
         .step-orange .step-badge { background: #f97316; }

@@ -11,16 +11,18 @@ export function renderMainView(container, navigateFn) {
     subtitle.className = 'subtitle';
     subtitle.textContent = getTranslation('subtitle');
 
-    // Cards Data Wrapper
+    // Cards Data Wrapper with both classic Emoji and Vinrød Præcision Monochrome Vector SVG
     const cardsData = [
         {
             icon: '✨',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><polyline points="9 16 11 18 15 14"></polyline></svg>`,
             titleKey: 'dagensOpgave',
             descKey: 'dagensOpgaveDesc',
             action: () => navigateFn('dagens_opgave') // Navigates to DagensOpgaveView
         },
         {
             icon: '🧠',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="10" y1="7" x2="16" y2="7"></line><line x1="10" y1="11" x2="14" y2="11"></line></svg>`,
             titleKey: 'laerNyeOrd',
             descKey: 'laerEtNytOrdDesc',
             action: () => navigateFn('word_learning')
@@ -28,12 +30,14 @@ export function renderMainView(container, navigateFn) {
 
         {
             icon: '🕹️',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`,
             titleKey: 'Interaktive historier',
             descKey: 'Lær dansk ved at læse historier',
             action: () => navigateFn('historier_menu')
         },
         {
             icon: '💬',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
             titleKey: 'lavSporgsmal',
             descKey: 'lavSporgsmalDesc',
             action: () => navigateFn('lav_sporgsmal')
@@ -41,18 +45,21 @@ export function renderMainView(container, navigateFn) {
 
         {
             icon: '🎙️',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>`,
             titleKey: 'traenUdtale',
             descKey: 'udtaleDesc',
             action: () => navigateFn('traen_udtale')
         },
         {
             icon: '🗣️',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>`,
             titleKey: 'samtaleTraening',
             descKey: 'samtaleTraeningDesc',
             action: () => navigateFn('samtale_traening')
         },
         {
             icon: '✍️',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path><path d="M15 5l4 4"></path></svg>`,
             titleKey: 'skriveHjaelp',
             descKey: 'skriveHjaelpDesc',
             action: () => navigateFn('skrive_hjaelp')
@@ -60,6 +67,7 @@ export function renderMainView(container, navigateFn) {
 
         {
             icon: '🎨',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path></svg>`,
             titleKey: 'talemaader',
             descKey: 'talemaaderDesc',
             action: () => navigateFn('talemaader')
@@ -76,7 +84,10 @@ export function renderMainView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        icon.innerHTML = `
+            <span class="card-icon-emoji">${data.icon}</span>
+            <span class="card-icon-svg" aria-hidden="true">${data.svgIcon}</span>
+        `;
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';

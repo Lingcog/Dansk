@@ -1,4 +1,5 @@
 import { getTranslation } from '../utils/i18n.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * PunktetOgBroenView - Didaktisk flade til:
@@ -811,8 +812,8 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         <h1>Datid og førnutid: punktet og broen</h1>
         <p>Lær forskellen mellem et afsluttet tidspunkt i fortiden og en handling, der rækker ind i nutiden.</p>
         <div class="pob-hero-badges">
-            <span class="pob-tag tag-punkt">📍 Punktet (datid): afsluttet tid</span>
-            <span class="pob-tag tag-bro">🌉 Broen (førnutid): forbindelse til nu</span>
+            <span class="pob-tag tag-punkt">${renderDsIcon('pointInTime', '📍', { size: 14 })} Punktet (datid): afsluttet tid</span>
+            <span class="pob-tag tag-bro">${renderDsIcon('bridge', '🌉', { size: 14 })} Broen (førnutid): forbindelse til nu</span>
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -916,7 +917,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
             <!-- 1. Punktet (Datid) -->
             <div class="rule-card rule-punkt">
                 <div class="rule-card-header">
-                    <span class="rule-icon">📍</span>
+                    <span class="rule-icon">${renderDsIcon('pointInTime', '📍', { size: 24 })}</span>
                     <div class="rule-title">
                         <h3>Punktet</h3>
                         <span>Datid (præteritum)</span>
@@ -949,7 +950,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
             <!-- 2. Broen (Førnutid) -->
             <div class="rule-card rule-bro">
                 <div class="rule-card-header">
-                    <span class="rule-icon">🌉</span>
+                    <span class="rule-icon">${renderDsIcon('bridge', '🌉', { size: 24 })}</span>
                     <div class="rule-title">
                         <h3>Broen</h3>
                         <span>Førnutid (perfektum)</span>
@@ -990,7 +991,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
     const examplePairs = [
         {
             title: 'At bo et sted',
-            icon: '🏠',
+            icon: renderDsIcon('home', '🏠', { size: 16 }),
             punkt: {
                 sentence: 'Jeg boede i Spanien i to år.',
                 explanation: 'Handlingen er afsluttet. Jeg bor ikke i Spanien i dag.'
@@ -1002,7 +1003,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         },
         {
             title: 'At drikke kaffe',
-            icon: '☕',
+            icon: renderDsIcon('coffee', '☕', { size: 16 }),
             punkt: {
                 sentence: 'Vi drak kaffe for en time siden.',
                 explanation: '"For en time siden" låser handlingen fast til et bestemt tidspunkt i fortiden.'
@@ -1014,7 +1015,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         },
         {
             title: 'At tabe sine nøgler',
-            icon: '🔑',
+            icon: renderDsIcon('keyRule', '🔑', { size: 16 }),
             punkt: {
                 sentence: 'I går tabte jeg mine nøgler (men naboen fandt dem).',
                 explanation: 'Handlingen skete i går, og problemet blev løst. Ingen konsekvens nu.'
@@ -1026,7 +1027,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         },
         {
             title: 'At gå i biografen',
-            icon: '🎬',
+            icon: renderDsIcon('film', '🎬', { size: 16 }),
             punkt: {
                 sentence: 'I fredags var jeg i biografen.',
                 explanation: '"I fredags" er et lukket tidspunkt i fortiden.'
@@ -1204,7 +1205,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         sentenceBox.className = 'task-sentence-box';
         sentenceBox.innerHTML = `
             <span>${task.sentenceBefore} <span style="text-decoration: underline; color: #38bdf8;">_____</span> ${task.sentenceAfter}</span>
-            <button class="task-audio-btn" title="Lyt til sætningen" id="btn-audio-task">🔊</button>
+            <button class="task-audio-btn" title="Lyt til sætningen" id="btn-audio-task">${renderDsIcon('volume', '🔊', { size: 16 })}</button>
         `;
         taskContainer.appendChild(sentenceBox);
 
@@ -1216,7 +1217,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         if (task.hint) {
             const hintEl = document.createElement('div');
             hintEl.className = 'task-hint';
-            hintEl.innerHTML = `<span>💡 Hint:</span> ${task.hint}`;
+            hintEl.innerHTML = `<span>${renderDsIcon('lightbulb', '💡', { size: 15 })} Hint:</span> ${task.hint}`;
             taskContainer.appendChild(hintEl);
         }
 
@@ -1336,10 +1337,10 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
                 <div class="sorter-current-word">"${currentItem.word}"</div>
                 <div class="sorter-direct-actions">
                     <button class="sorter-pick-btn btn-punkt-pick" id="btn-pick-punkt">
-                        📍 Punktet (datid)
+                        ${renderDsIcon('pointInTime', '📍', { size: 16 })} Punktet (datid)
                     </button>
                     <button class="sorter-pick-btn btn-bro-pick" id="btn-pick-bro">
-                        🌉 Broen (førnutid)
+                        ${renderDsIcon('bridge', '🌉', { size: 16 })} Broen (førnutid)
                     </button>
                 </div>
                 <div id="sorter-feedback" style="display: none; margin-top: 0.8rem; font-size: 0.9rem; font-weight: 600;"></div>

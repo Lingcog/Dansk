@@ -1,9 +1,10 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { renderDsIcon, dsSvgIcons } from '../utils/designSystemIcons.js';
 
 export function renderDialogerUdtaleMenuView(container, navigateFn) {
     const isEn = getLang() === 'en';
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container dialoger-udtale-menu-view';
 
     // Top bar
     const topBar = document.createElement('div');
@@ -17,7 +18,8 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
 
     // Header Title
     const title = document.createElement('h1');
-    title.textContent = isEn ? '💬 Dialogues - practice pronunciation in real dialogues' : '💬 Dialoger - træn udtale i rigtige dialoger';
+    const titleText = isEn ? 'Dialogues - practice pronunciation in real dialogues' : 'Dialoger - træn udtale i rigtige dialoger';
+    title.innerHTML = `${renderDsIcon('messageSquare', '💬', { size: 28 })} ${titleText}`;
     viewContainer.appendChild(title);
 
     const subtitle = document.createElement('p');
@@ -29,12 +31,14 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
     const cardsData = [
         {
             icon: '🤝',
+            svgIcon: dsSvgIcons.handshake(22),
             title: isEn ? 'Introduce yourself to someone' : 'Præsenter dig for en anden',
             status: 'active',
             action: () => navigateFn('dialog_praesenter')
         },
         {
             icon: '🩺',
+            svgIcon: dsSvgIcons.stethoscope(22),
             title: isEn ? 'Illness & job' : 'Sygdom & job',
             status: 'active',
             action: () => navigateFn('dialoger_sygdom_job')
@@ -56,7 +60,10 @@ export function renderDialogerUdtaleMenuView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        icon.innerHTML = `
+            <span class="card-icon-emoji">${data.icon}</span>
+            <span class="card-icon-svg" aria-hidden="true">${data.svgIcon}</span>
+        `;
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';

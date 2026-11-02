@@ -1,3 +1,5 @@
+@import './styles/theme-vinroed-praecision.css';
+
 :root {
   --bg-color: #4a040b;
   --card-bg: rgba(255, 255, 255, 0.08);
@@ -133,6 +135,30 @@ p.subtitle {
 .card-icon {
   font-size: 2rem;
   margin-bottom: 1rem;
+}
+
+.card-icon-svg {
+  display: none;
+}
+
+.card-icon-emoji {
+  display: inline-block;
+}
+
+/* Global Design System Icon wrapper */
+.ds-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.ds-icon-svg {
+  display: none;
+}
+
+.ds-icon-emoji {
+  display: inline;
 }
 
 .card-title {

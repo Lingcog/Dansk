@@ -1,8 +1,9 @@
 import { getTranslation } from '../utils/i18n.js';
+import { renderDsIcon, dsSvgIcons } from '../utils/designSystemIcons.js';
 
 export function renderDagensOpgaveView(container, navigateFn) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container dagens-opgave-view';
 
     // Top bar with Back Button
     const topBar = document.createElement('div');
@@ -21,34 +22,39 @@ export function renderDagensOpgaveView(container, navigateFn) {
     subtitle.className = 'subtitle';
     subtitle.textContent = getTranslation('dagensOpgaveDesc');
 
-    // Cards Data Wrapper
+    // Cards Data Wrapper with both classic Emoji and Vinrød Præcision Monochrome Vector SVG
     const cardsData = [
         {
             icon: '🏗️',
+            svgIcon: dsSvgIcons.layers(22),
             titleKey: 'howToBuildSentence',
             descKey: 'howToBuildSentenceDesc',
             action: () => navigateFn('grounding')
         },
         {
             icon: '⏰',
+            svgIcon: dsSvgIcons.clock(22),
             titleKey: 'traenTidsudtryk',
             descKey: 'traenTidsudtrykDesc',
             action: () => navigateFn('traen_tidsudtryk')
         },
         {
             icon: '📖',
+            svgIcon: dsSvgIcons.bookOpen(22),
             titleKey: 'traenGrammatik',
             descKey: 'grammatikDesc',
             action: () => navigateFn('traen_grammatik')
         },
         {
             icon: '🧩',
+            svgIcon: dsSvgIcons.puzzle(22),
             titleKey: 'ordstilling',
             descKey: 'ordstillingDesc',
             action: () => navigateFn('ordstilling')
         },
         {
             icon: '🤔',
+            svgIcon: dsSvgIcons.thought(22),
             titleKey: 'trorSynesMenerTitle',
             descKey: 'trorSynesMenerDesc',
             fallbackTitle: 'Tror / synes / mener / ved?',
@@ -57,6 +63,7 @@ export function renderDagensOpgaveView(container, navigateFn) {
         },
         {
             icon: '🌉',
+            svgIcon: dsSvgIcons.bridge(22),
             titleKey: 'verberTider',
             descKey: 'punktetOgBroenDesc',
             fallbackTitle: 'Datid vs. Førnutid (punktet & broen)',
@@ -65,6 +72,7 @@ export function renderDagensOpgaveView(container, navigateFn) {
         },
         {
             icon: '🫂',
+            svgIcon: dsSvgIcons.users(22),
             titleKey: 'hvilketOrd',
             descKey: 'hvilketOrdDesc',
             action: () => navigateFn('pronomen')
@@ -81,7 +89,10 @@ export function renderDagensOpgaveView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        icon.innerHTML = `
+            <span class="card-icon-emoji">${data.icon}</span>
+            <span class="card-icon-svg" aria-hidden="true">${data.svgIcon}</span>
+        `;
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
@@ -119,18 +130,16 @@ export function renderDagensOpgaveView(container, navigateFn) {
     const kofiLink = document.createElement('a');
     kofiLink.href = 'https://ko-fi.com/dansktraening';
     kofiLink.target = '_blank';
-    kofiLink.className = 'gemini-btn';
+    kofiLink.className = 'gemini-btn support-btn support-kofi';
     kofiLink.style.textDecoration = 'none';
-    kofiLink.style.backgroundColor = '#ff5e5b';
-    kofiLink.textContent = '☕ Buy me a coffee';
+    kofiLink.innerHTML = `${renderDsIcon('coffee', '☕', { size: 16 })} Buy me a coffee`;
 
     const mpLink = document.createElement('a');
     mpLink.href = 'https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in';
     mpLink.target = '_blank';
-    mpLink.className = 'gemini-btn';
+    mpLink.className = 'gemini-btn support-btn support-mp';
     mpLink.style.textDecoration = 'none';
-    mpLink.style.backgroundColor = '#5a78ff';
-    mpLink.textContent = '📱 Støt med MobilePay';
+    mpLink.innerHTML = `${renderDsIcon('smartphone', '📱', { size: 16 })} Støt med MobilePay`;
 
     supportArea.appendChild(kofiLink);
     supportArea.appendChild(mpLink);

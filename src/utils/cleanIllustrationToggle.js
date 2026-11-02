@@ -1,4 +1,5 @@
 import { getTranslation } from './i18n.js';
+import { renderDsIcon } from './designSystemIcons.js';
 
 const STORAGE_KEY = 'ordstilling_pure_illustration';
 
@@ -33,7 +34,7 @@ export function createCleanIllustrationToggle(photoWrap, onToggleCallback = null
         const label = getTranslation('clean_illustration_btn') || 'Se ren illustration:';
         const status = isActive ? (getTranslation('toggle_on') || 'TIL') : (getTranslation('toggle_off') || 'FRA');
         btn.innerHTML = `
-            <span class="pure-btn-icon">🖼️</span>
+            <span class="pure-btn-icon">${renderDsIcon('image', '🖼️', { size: 18 })}</span>
             <span class="pure-btn-text">${label}</span>
             <strong class="pure-status-tag">${status}</strong>
         `;

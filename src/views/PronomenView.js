@@ -1,6 +1,7 @@
 import { baseUrl } from '../utils/config.js';
 import { getTranslation, appState } from '../utils/i18n.js';
 import { pronomenData } from '../utils/pronomenData.js';
+import { renderDsIcon, dsSvgIcons } from '../utils/designSystemIcons.js';
 
 import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './AdverbDialogExerciseView.js';
@@ -8,7 +9,7 @@ import { initConjunctionChoiceExerciseView } from './ConjunctionChoiceExerciseVi
 
 export function renderPronomenView(container, navigateFn, extraData) {
     const viewContainer = document.createElement('div');
-    viewContainer.className = 'view-container';
+    viewContainer.className = 'view-container pronomen-view';
 
     // handle initial deep linking if coming from grounding or elsewhere
     const initialCategory = extraData?.category || null;
@@ -60,7 +61,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
     const pronomenCard = document.createElement('div');
     pronomenCard.className = 'card';
     pronomenCard.innerHTML = `
-        <div class="card-icon">👥</div>
+        <div class="card-icon">
+            <span class="card-icon-emoji">👥</span>
+            <span class="card-icon-svg" aria-hidden="true">${dsSvgIcons.users(22)}</span>
+        </div>
         <div class="card-title">${getTranslation('hanHamHans')}</div>
     `;
     pronomenCard.onclick = () => navigateFn('pronomen', { subPath: 'p' });
@@ -68,7 +72,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
     const derErCard = document.createElement('div');
     derErCard.className = 'card';
     derErCard.innerHTML = `
-        <div class="card-icon">🚪</div>
+        <div class="card-icon">
+            <span class="card-icon-emoji">🚪</span>
+            <span class="card-icon-svg" aria-hidden="true">${dsSvgIcons.door(22)}</span>
+        </div>
         <div class="card-title">${getTranslation('derErDetEr')}</div>
     `;
     derErCard.onclick = () => navigateFn('pronomen', { subPath: 'der_er_det_er' });
@@ -76,7 +83,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
     const bestemthedCard = document.createElement('div');
     bestemthedCard.className = 'card';
     bestemthedCard.innerHTML = `
-        <div class="card-icon">🏷️</div>
+        <div class="card-icon">
+            <span class="card-icon-emoji">🏷️</span>
+            <span class="card-icon-svg" aria-hidden="true">${dsSvgIcons.tag(22)}</span>
+        </div>
         <div class="card-title">En kat / katten? (Artikler & Bestemthed)</div>
     `;
     bestemthedCard.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
@@ -99,18 +109,16 @@ export function renderPronomenView(container, navigateFn, extraData) {
     const kofiLink = document.createElement('a');
     kofiLink.href = 'https://ko-fi.com/dansktraening';
     kofiLink.target = '_blank';
-    kofiLink.className = 'gemini-btn';
+    kofiLink.className = 'gemini-btn support-btn support-kofi';
     kofiLink.style.textDecoration = 'none';
-    kofiLink.style.backgroundColor = '#ff5e5b';
-    kofiLink.textContent = '☕ Buy me a coffee';
+    kofiLink.innerHTML = `${renderDsIcon('coffee', '☕', { size: 16 })} Buy me a coffee`;
 
     const mpLink = document.createElement('a');
     mpLink.href = 'https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in';
     mpLink.target = '_blank';
-    mpLink.className = 'gemini-btn';
+    mpLink.className = 'gemini-btn support-btn support-mp';
     mpLink.style.textDecoration = 'none';
-    mpLink.style.backgroundColor = '#5a78ff';
-    mpLink.textContent = '📱 Støt med MobilePay';
+    mpLink.innerHTML = `${renderDsIcon('smartphone', '📱', { size: 16 })} Støt med MobilePay`;
 
     supportArea.appendChild(kofiLink);
     supportArea.appendChild(mpLink);
@@ -145,20 +153,20 @@ export function renderPronomenView(container, navigateFn, extraData) {
         let items = [];
         if (category === 'pronomen') {
             items = [
-                { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', img: 'pronominer_spotlight.png' },
-                { key: 'pronominerObjekt', type: 'objekt', icon: '👤', img: 'objekt_vand.jpg' },
-                { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', img: 'ejefald_guide_voksne.jpg' }
+                { key: 'pronominerSubjekt', type: 'subjekt', icon: '🔦', svgIcon: dsSvgIcons.search(22), img: 'pronominer_spotlight.png' },
+                { key: 'pronominerObjekt', type: 'objekt', icon: '👤', svgIcon: dsSvgIcons.user(22), img: 'objekt_vand.jpg' },
+                { key: 'pronominerPossessiv', type: 'possessiv', icon: '🏠', svgIcon: dsSvgIcons.home(22), img: 'ejefald_guide_voksne.jpg' }
             ];
         } else if (category === 'artikler_menu') {
             items = [
-                { title: 'En/et? (artikler)', type: 'artikler', icon: '🏷️' },
-                { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', icon: '🏷️' }
+                { title: 'En/et? (artikler)', type: 'artikler', icon: '🏷️', svgIcon: dsSvgIcons.tag(22) },
+                { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', icon: '🏷️', svgIcon: dsSvgIcons.tag(22) }
             ];
         } else if (category === 'adverbier_menu') {
             items = [
-                { title: 'Holdninger - adverbier', type: 'adverbier_holdninger', icon: '💨' },
-                { title: 'Dialog - adverbier', type: 'adverbier_dialog', icon: '💬' },
-                { title: 'Tid - adverbier', type: 'adverbier_tid', icon: '⏱️' }
+                { title: 'Holdninger - adverbier', type: 'adverbier_holdninger', icon: '💨', svgIcon: dsSvgIcons.thought(22) },
+                { title: 'Dialog - adverbier', type: 'adverbier_dialog', icon: '💬', svgIcon: dsSvgIcons.messageSquare(22) },
+                { title: 'Tid - adverbier', type: 'adverbier_tid', icon: '⏱️', svgIcon: dsSvgIcons.clock(22) }
             ];
         }
 
@@ -199,7 +207,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
             const icon = document.createElement('div');
             icon.className = 'card-icon';
-            icon.textContent = item.icon;
+            icon.innerHTML = `
+                <span class="card-icon-emoji">${item.icon}</span>
+                <span class="card-icon-svg" aria-hidden="true">${item.svgIcon || dsSvgIcons.tag(22)}</span>
+            `;
 
             const cardTitle = document.createElement('div');
             cardTitle.className = 'card-title';
@@ -239,7 +250,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
             const icon = document.createElement('div');
             icon.className = 'card-icon';
-            icon.textContent = '📝';
+            icon.innerHTML = `
+                <span class="card-icon-emoji">📝</span>
+                <span class="card-icon-svg" aria-hidden="true">${dsSvgIcons.edit(22)}</span>
+            `;
 
             const cardTitle = document.createElement('div');
             cardTitle.className = 'card-title';
@@ -273,12 +287,12 @@ export function renderPronomenView(container, navigateFn, extraData) {
         illustrationContainer.innerHTML = '';
 
         const verbGroups = [
-            { key: 'verberHjaelpe', type: 'hjaelpe', icon: '💡' },
-            { key: 'verberTilstand', type: 'tilstand', icon: '🏠' },
-            { key: 'verberBevaegelse', type: 'bevaegelse', icon: '🚶' },
-            { key: 'verberHandling', type: 'handling', icon: '🛠️' },
-            { key: 'verberInteraktion', type: 'interaktion', icon: '🗣️' },
-            { key: 'verberIndreLiv', type: 'indre_liv', icon: '🧠' }
+            { key: 'verberHjaelpe', type: 'hjaelpe', icon: '💡', svgIcon: dsSvgIcons.lightbulb(22) },
+            { key: 'verberTilstand', type: 'tilstand', icon: '🏠', svgIcon: dsSvgIcons.home(22) },
+            { key: 'verberBevaegelse', type: 'bevaegelse', icon: '🚶', svgIcon: dsSvgIcons.activity(22) },
+            { key: 'verberHandling', type: 'handling', icon: '🛠️', svgIcon: dsSvgIcons.edit(22) },
+            { key: 'verberInteraktion', type: 'interaktion', icon: '🗣️', svgIcon: dsSvgIcons.messageSquare(22) },
+            { key: 'verberIndreLiv', type: 'indre_liv', icon: '🧠', svgIcon: dsSvgIcons.thought(22) }
         ];
 
         verbGroups.forEach(group => {
@@ -288,7 +302,10 @@ export function renderPronomenView(container, navigateFn, extraData) {
 
             const icon = document.createElement('div');
             icon.className = 'card-icon';
-            icon.textContent = group.icon;
+            icon.innerHTML = `
+                <span class="card-icon-emoji">${group.icon}</span>
+                <span class="card-icon-svg" aria-hidden="true">${group.svgIcon}</span>
+            `;
 
             const cardTitle = document.createElement('div');
             cardTitle.className = 'card-title';

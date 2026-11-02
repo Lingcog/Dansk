@@ -1,0 +1,1469 @@
+/* ==========================================================================
+   Design System: Vinrød Præcision (Alpha)
+   Platform: Træning i dansk (Mikael Fabrin)
+   Disciplineret modulært designsystem til sprogundervisning
+   ========================================================================== */
+
+:root[data-theme="vinroed-praecision"],
+body[data-theme="vinroed-praecision"] {
+  /* Farver: Hovedbaggrunde og flader */
+  --vp-bg: #4A040B;             /* Dyb mørk bordeaux (hovedbaggrund) */
+  --vp-bg-glow: #6B0F1A;        /* Varmere vinrød (brugt i top-right radial gradient) */
+  --vp-surface: #5C0812;        /* Mørk rubinrød til kort og modulflader */
+  --vp-surface-hover: #73101C;  /* Lettere vinrød ved interaktiv hover på kort */
+  --vp-surface-input: #380207;  /* Dybere kontrastfelt til skrivehjælp og tekstinput */
+
+  /* Grænser og konturer */
+  --vp-border: #851825;         /* Dæmpet bordeaux-kant til adskillelse af moduler */
+  --vp-border-focus: #FFC9CD;   /* Lys rosa fokus-ring til tastaturnavigation */
+
+  /* Tekst og læselighed */
+  --vp-text: #FFFFFF;           /* Ren hvid for maksimal læsbarhed og kontrast */
+  --vp-text-muted: #FFC9CD;     /* Lys rosa / dæmpet rødlig kontrasttekst til undertitler */
+  --vp-text-subtle: #D49B9F;    /* Dæmpet rosa til metadata, tags og hjælpetekster */
+
+  /* Semantiske funktionsfarver */
+  --vp-primary: #FF4D5E;        /* Livlig koralrød accent reserveret til primære CTA-handlinger */
+  --vp-accent: #FF4D5E;
+  --vp-feedback: #FBBF24;       /* Amber 400 til pædagogisk vejledning og sprogtips */
+  --vp-success: #34D399;        /* Emerald 400 til bekræftede, korrekte svar */
+  --vp-error: #F87171;          /* Red 400 til grammatiske fejlretninger */
+
+  /* Typografi */
+  --vp-font-family: 'Outfit', sans-serif;
+  --vp-font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --vp-space-xs: 4px;
+  --vp-space-sm: 8px;
+  --vp-space-md: 16px;
+  --vp-space-lg: 24px;
+  --vp-space-xl: 32px;
+  --vp-space-xxl: 48px;
+
+  /* Rounded */
+  --vp-radius-none: 0px;
+  --vp-radius-sm: 6px;          /* Inputfelter, tags og sprogvælger */
+  --vp-radius-md: 10px;         /* Læringsmodul-kort og dialoger */
+  --vp-radius-lg: 16px;         /* Store containere og modaler */
+  --vp-radius-pill: 9999px;     /* Statusknapper og filterpiller */
+}
+
+/* ==========================================================================
+   Global & Forside Overrides under Vinrød Præcision
+   ========================================================================== */
+
+body[data-theme="vinroed-praecision"],
+[data-theme="vinroed-praecision"] body {
+  background-color: var(--vp-bg) !important;
+  background-image: radial-gradient(circle at top right, var(--vp-bg-glow), var(--vp-bg)) !important;
+  color: var(--vp-text) !important;
+  font-family: var(--vp-font-family) !important;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="vinroed-praecision"] h1 {
+  font-family: var(--vp-font-family) !important;
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--vp-text) !important;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="vinroed-praecision"] p.subtitle {
+  font-family: var(--vp-font-family);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--vp-text-muted);
+  margin-bottom: 2.2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+[data-theme="vinroed-praecision"] .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+/* Modulære læringskort (forside) */
+[data-theme="vinroed-praecision"] .card {
+  background-color: var(--vp-surface) !important;
+  color: var(--vp-text) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important; /* 10px */
+  padding: var(--vp-space-lg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="vinroed-praecision"] .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 77, 94, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+[data-theme="vinroed-praecision"] .card:hover {
+  background-color: var(--vp-surface-hover) !important;
+  border-color: rgba(255, 201, 205, 0.5) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 77, 94, 0.2) !important;
+}
+
+[data-theme="vinroed-praecision"] .card:hover::before {
+  opacity: 1;
+}
+
+[data-theme="vinroed-praecision"] .card:active {
+  transform: scale(0.985) !important;
+  outline: 2px solid var(--vp-border-focus) !important;
+}
+
+/* Disciplinerede Ikon-Badges med Monokrome Vektor-SVG (Opgør med rå emojis) */
+[data-theme="vinroed-praecision"] .card-icon {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: var(--vp-radius-sm) !important; /* 6px */
+  background-color: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.35rem !important;
+  margin-bottom: 1rem !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+[data-theme="vinroed-praecision"] .card-icon-emoji {
+  display: none !important;
+}
+
+[data-theme="vinroed-praecision"] .card-icon-svg {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--vp-text-muted) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+[data-theme="vinroed-praecision"] .card-icon-svg svg {
+  display: block;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="vinroed-praecision"] .card:hover .card-icon {
+  border-color: var(--vp-primary) !important;
+  background-color: #4a040b !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 12px rgba(255, 77, 94, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .card:hover .card-icon-svg {
+  color: #FFFFFF !important;
+  filter: drop-shadow(0 0 4px rgba(255, 77, 94, 0.6));
+  transform: scale(1.06);
+}
+
+/* Global monokrome SVG-vektorikoner */
+[data-theme="vinroed-praecision"] .ds-icon-emoji {
+  display: none !important;
+}
+
+[data-theme="vinroed-praecision"] .ds-icon-svg {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: -0.15em !important;
+  color: currentColor !important;
+}
+
+[data-theme="vinroed-praecision"] .ds-icon-svg svg {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  stroke: currentColor !important;
+}
+
+[data-theme="vinroed-praecision"] .card-title {
+  font-family: var(--vp-font-family);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--vp-text);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="vinroed-praecision"] .card-desc {
+  font-family: var(--vp-font-family);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--vp-text-muted);
+  line-height: 1.5;
+}
+
+[data-theme="vinroed-praecision"] footer {
+  margin-top: 3.5rem;
+  padding: 1.5rem 1rem;
+  color: var(--vp-text-subtle);
+  font-size: 0.875rem;
+  border-top: 1px solid rgba(133, 24, 37, 0.4);
+}
+
+[data-theme="vinroed-praecision"] footer a {
+  color: var(--vp-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dotted rgba(255, 201, 205, 0.5);
+  padding-bottom: 1px;
+  transition: all 0.15s ease;
+}
+
+[data-theme="vinroed-praecision"] footer a:hover {
+  color: var(--vp-primary);
+  border-bottom-color: var(--vp-primary);
+}
+
+
+[data-theme="vinroed-praecision"] .back-btn {
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .back-btn:hover {
+  color: #FFFFFF !important;
+  background: var(--vp-surface-hover) !important;
+}
+
+/* ==========================================================================
+   1. FLADE: ORDSTILLING INTRO (/ordstilling_intro/part1)
+   ========================================================================== */
+
+/* Fanemenu: 1. del vs 2. del vs 3. del vs 4. del */
+[data-theme="vinroed-praecision"] .intro-tabs-nav {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 6px !important;
+  gap: 6px !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-tab-btn {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: var(--vp-text-muted) !important;
+  transition: all 0.2s ease !important;
+  padding: 0.75rem 1rem !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-tab-btn strong {
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-tab-btn span {
+  color: var(--vp-text-subtle) !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-tab-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-border) !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-tab-btn.active {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-primary) !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.25) !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-tab-btn.active strong {
+  color: #FFFFFF !important;
+}
+
+/* Hero card i Ordstilling */
+[data-theme="vinroed-praecision"] .intro-hero-card {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: var(--vp-space-lg) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-hero-card h2 {
+  color: #FFFFFF !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+[data-theme="vinroed-praecision"] .intro-hero-card .hero-desc {
+  color: var(--vp-text-muted) !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Grammar system banner */
+[data-theme="vinroed-praecision"] .grammar-system-banner {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 0.75rem 1.25rem !important;
+}
+
+/* Toggles i Ordstilling (Grammatiske fagudtryk & Se ren illustration) */
+[data-theme="vinroed-praecision"] .grammar-toggle-pill {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-pill) !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+[data-theme="vinroed-praecision"] .grammar-toggle-pill:hover {
+  background: var(--vp-surface-hover) !important;
+  color: #FFFFFF !important;
+  border-color: var(--vp-border-focus) !important;
+}
+
+[data-theme="vinroed-praecision"] .grammar-toggle-pill.active {
+  background: var(--vp-surface) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 12px rgba(255, 77, 94, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .grammar-toggle-pill .toggle-badge.off {
+  background: var(--vp-surface) !important;
+  color: var(--vp-text-subtle) !important;
+  border: 1px solid var(--vp-border) !important;
+}
+
+[data-theme="vinroed-praecision"] .grammar-toggle-pill .toggle-badge.on {
+  background: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-photo-toggle-btn {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-pill) !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-photo-toggle-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  color: #FFFFFF !important;
+  border-color: var(--vp-border-focus) !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-photo-toggle-btn.active {
+  background: var(--vp-surface) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(255, 77, 94, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-photo-toggle-btn .pure-status-tag {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-subtle) !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-photo-toggle-btn.active .pure-status-tag {
+  background: var(--vp-primary) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* 4 Step Cards Grid */
+[data-theme="vinroed-praecision"] .simple-steps-grid {
+  gap: 14px !important;
+}
+
+[data-theme="vinroed-praecision"] .simple-step-card {
+  background: var(--vp-surface) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 1.1rem !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .simple-step-card:hover {
+  background: var(--vp-surface-hover) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Farvede didaktiske ringe / rammer for hvert grammatisk led */
+[data-theme="vinroed-praecision"] .simple-step-card.step-green {
+  border: 2px solid #22c55e !important;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-red {
+  border: 2px solid #ef4444 !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-yellow {
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 4px 16px rgba(234, 179, 8, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-gray {
+  border: 2px solid #94a3b8 !important;
+  box-shadow: 0 4px 16px rgba(148, 163, 184, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-blue {
+  border: 2px solid #0284c7 !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-orange {
+  border: 2px solid #f97316 !important;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-pink {
+  border: 2px solid #f43f5e !important;
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-purple {
+  border: 2px solid #8b5cf6 !important;
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2) !important;
+}
+[data-theme="vinroed-praecision"] .simple-step-card.step-cyan {
+  border: 2px solid #06b6d4 !important;
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.2) !important;
+}
+
+/* Cirkulære farvede ring-badges (1, 2, 3, 4 osv.) */
+[data-theme="vinroed-praecision"] .simple-step-card .step-badge {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 800 !important;
+  font-size: 1rem !important;
+  flex-shrink: 0 !important;
+  border: none !important;
+}
+
+[data-theme="vinroed-praecision"] .step-green .step-badge {
+  background: #22c55e !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-red .step-badge {
+  background: #ef4444 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-yellow .step-badge {
+  background: #eab308 !important;
+  color: #1a1a1a !important;
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-gray .step-badge {
+  background: #94a3b8 !important;
+  color: #0f172a !important;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-blue .step-badge {
+  background: #0284c7 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-orange .step-badge {
+  background: #f97316 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-pink .step-badge {
+  background: #f43f5e !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-purple .step-badge {
+  background: #8b5cf6 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35) !important;
+}
+[data-theme="vinroed-praecision"] .step-cyan .step-badge {
+  background: #06b6d4 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .simple-step-card .step-q {
+  color: var(--vp-text-subtle) !important;
+  font-size: 0.85rem !important;
+}
+
+/* Svarordet (En kvinde, cykler, på gaden, om morgenen) med grammatisk farve */
+[data-theme="vinroed-praecision"] .simple-step-card .step-ans {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
+[data-theme="vinroed-praecision"] .step-green .step-ans { color: #4ade80 !important; }
+[data-theme="vinroed-praecision"] .step-red .step-ans { color: #f87171 !important; }
+[data-theme="vinroed-praecision"] .step-yellow .step-ans { color: #fde047 !important; }
+[data-theme="vinroed-praecision"] .step-gray .step-ans { color: #cbd5e1 !important; }
+[data-theme="vinroed-praecision"] .step-blue .step-ans { color: #60a5fa !important; }
+[data-theme="vinroed-praecision"] .step-orange .step-ans { color: #fb923c !important; }
+[data-theme="vinroed-praecision"] .step-pink .step-ans { color: #fda4af !important; }
+[data-theme="vinroed-praecision"] .step-purple .step-ans { color: #c084fc !important; }
+[data-theme="vinroed-praecision"] .step-cyan .step-ans { color: #22d3ee !important; }
+
+/* Grammatik-tagget under svarordet */
+[data-theme="vinroed-praecision"] .simple-step-card .grammar-badge {
+  border-radius: var(--vp-radius-sm) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  padding: 3px 8px !important;
+}
+[data-theme="vinroed-praecision"] .step-green .grammar-badge {
+  border: 1px solid rgba(34, 197, 94, 0.5) !important;
+  color: #4ade80 !important;
+  background: rgba(34, 197, 94, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-red .grammar-badge {
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+  color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-yellow .grammar-badge {
+  border: 1px solid rgba(234, 179, 8, 0.5) !important;
+  color: #fde047 !important;
+  background: rgba(234, 179, 8, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-gray .grammar-badge {
+  border: 1px solid rgba(148, 163, 184, 0.5) !important;
+  color: #cbd5e1 !important;
+  background: rgba(148, 163, 184, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-blue .grammar-badge {
+  border: 1px solid rgba(2, 132, 199, 0.5) !important;
+  color: #60a5fa !important;
+  background: rgba(2, 132, 199, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-orange .grammar-badge {
+  border: 1px solid rgba(249, 115, 22, 0.5) !important;
+  color: #fb923c !important;
+  background: rgba(249, 115, 22, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-pink .grammar-badge {
+  border: 1px solid rgba(244, 63, 94, 0.5) !important;
+  color: #fda4af !important;
+  background: rgba(244, 63, 94, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-purple .grammar-badge {
+  border: 1px solid rgba(139, 92, 246, 0.5) !important;
+  color: #c084fc !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+[data-theme="vinroed-praecision"] .step-cyan .grammar-badge {
+  border: 1px solid rgba(6, 182, 212, 0.5) !important;
+  color: #22d3ee !important;
+  background: rgba(6, 182, 212, 0.12) !important;
+}
+
+/* Færdig sætning banner */
+[data-theme="vinroed-praecision"] .finished-sentence-banner {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 1.4rem !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .finished-sentence-banner .listen-btn {
+  background: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--vp-radius-sm) !important;
+  font-weight: 600 !important;
+  padding: 0.6rem 1.2rem !important;
+  box-shadow: 0 3px 10px rgba(255, 77, 94, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .finished-sentence-banner .listen-btn:hover {
+  background: #ff6473 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Puslespil og Bygger øvelsesfaner */
+[data-theme="vinroed-praecision"] .exercise-sub-tabs {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 4px !important;
+}
+
+[data-theme="vinroed-praecision"] .ex-sub-tab {
+  background: transparent !important;
+  color: var(--vp-text-muted) !important;
+  border: none !important;
+  border-radius: var(--vp-radius-sm) !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="vinroed-praecision"] .ex-sub-tab.active {
+  background: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(255, 77, 94, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .puzzle-wrapper {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: var(--vp-space-lg) !important;
+}
+
+[data-theme="vinroed-praecision"] .puzzle-slot {
+  background: var(--vp-surface-input) !important;
+  border: 1px dashed var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .puzzle-pill {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+}
+
+[data-theme="vinroed-praecision"] .puzzle-pill.active {
+  background: var(--vp-primary) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+}
+
+
+/* ==========================================================================
+   FLADE: ORDSTILLING HOVEDMENU & TRÆNING (/ordstilling)
+   ========================================================================== */
+
+[data-theme="vinroed-praecision"] .ordstilling-view h1 {
+  color: #FFFFFF !important;
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  margin-bottom: 0.4rem !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view h2 {
+  color: #FFFFFF !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .subtitle {
+  color: var(--vp-text-muted) !important;
+  font-size: 1.05rem !important;
+  text-align: center !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 1.25rem !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 1.6rem !important;
+  text-align: center !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  cursor: pointer !important;
+  color: #FFFFFF !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.6rem !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-primary) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(255, 77, 94, 0.25) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card .card-icon {
+  font-size: 2.2rem !important;
+  margin-bottom: 0.2rem !important;
+  color: var(--vp-primary) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card .card-title {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card.special-highlight {
+  background: linear-gradient(135deg, rgba(92, 8, 18, 0.95), rgba(56, 2, 7, 0.98)) !important;
+  border: 1.5px solid var(--vp-primary) !important;
+  box-shadow: 0 6px 24px rgba(255, 77, 94, 0.25) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card.special-highlight:hover {
+  background: linear-gradient(135deg, rgba(115, 16, 28, 0.98), rgba(92, 8, 18, 0.98)) !important;
+  border-color: #FFA3AC !important;
+  box-shadow: 0 10px 30px rgba(255, 77, 94, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card.special-highlight .card-title {
+  font-size: 1.45rem !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .card.special-highlight .card-desc {
+  color: var(--vp-text-muted) !important;
+  font-size: 0.95rem !important;
+}
+
+/* Sætningspuslespils-område i OrdstillingView */
+[data-theme="vinroed-praecision"] .ordstilling-view .pedagogical-frame {
+  background: var(--vp-surface-input) !important;
+  border-left: 4px solid var(--vp-primary) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 1.3rem 1.6rem !important;
+  color: var(--vp-text-muted) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.65 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .pedagogical-frame strong {
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .split-sentence-area {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 1.4rem 1.6rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .locked-text {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  font-size: 1.35rem !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .result-sentence-area {
+  background: var(--vp-surface-input) !important;
+  border: 2px dashed rgba(255, 77, 94, 0.4) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  min-height: 64px !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .word-pool {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 1.2rem !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .word-chip {
+  background: #181113 !important;
+  border: 1.5px solid rgba(255, 77, 94, 0.35) !important;
+  color: #FFF8F6 !important;
+  border-radius: var(--vp-radius-sm) !important;
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+  padding: 0.65rem 1.15rem !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .word-chip:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(255, 77, 94, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .result-chip {
+  background: var(--vp-surface) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 10px rgba(255, 77, 94, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .gemini-btn {
+  background: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  padding: 0.85rem 1.8rem !important;
+  border-radius: var(--vp-radius-sm) !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .gemini-btn:hover {
+  background: var(--vp-primary-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 77, 94, 0.5) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .game-feedback.success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid #10b981 !important;
+  color: #6ee7b7 !important;
+  font-weight: 700 !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .ordstilling-view .game-feedback.error {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid #ef4444 !important;
+  color: #fca5a5 !important;
+  font-weight: 700 !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+
+/* ==========================================================================
+   2. FLADE: PUNKTET OG BROEN (/punktet_og_broen)
+   ========================================================================== */
+
+/* Hero */
+[data-theme="vinroed-praecision"] .punktet-broen-view .pob-hero h1 {
+  color: #FFFFFF !important;
+  font-size: 2.2rem !important;
+}
+
+[data-theme="vinroed-praecision"] .punktet-broen-view .pob-hero p {
+  color: var(--vp-text-muted) !important;
+}
+
+[data-theme="vinroed-praecision"] .pob-tag {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-pill) !important;
+}
+
+/* Tidslinjekort (erstatter slate-900 #0f172a med vinrød surface) */
+[data-theme="vinroed-praecision"] .pob-timeline-card {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important; /* 10px */
+  padding: var(--vp-space-lg) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .pob-timeline-caption {
+  border-top: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-subtle) !important;
+}
+
+/* Fanebjælke */
+[data-theme="vinroed-praecision"] .pob-nav-tabs {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: 5px !important;
+  gap: 5px !important;
+}
+
+[data-theme="vinroed-praecision"] .pob-nav-btn {
+  background: transparent !important;
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="vinroed-praecision"] .pob-nav-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .pob-nav-btn.active {
+  background: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 10px rgba(255, 77, 94, 0.35) !important;
+}
+
+/* Hovedregel Kort (Datid vs Førnutid) */
+[data-theme="vinroed-praecision"] .rule-card {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  padding: var(--vp-space-lg) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="vinroed-praecision"] .rule-card.rule-punkt {
+  border-top: 3px solid #ef4444 !important;
+}
+
+[data-theme="vinroed-praecision"] .rule-card.rule-bro {
+  border-top: 3px solid #f59e0b !important;
+}
+
+[data-theme="vinroed-praecision"] .rule-formula {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: var(--vp-text-muted) !important;
+}
+
+
+/* ==========================================================================
+   3. FLADE: KONJUNKTIONER "AT" RØNTGEN (/konjunktioner_at/roentgen)
+   ========================================================================== */
+
+/* Hero tekst i Konjunktioner AT */
+[data-theme="vinroed-praecision"] .konjunktioner-at-view .at-hero h1 {
+  background: none !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+[data-theme="vinroed-praecision"] .konjunktioner-at-view .at-hero p {
+  color: var(--vp-text-muted) !important;
+}
+
+/* Hovedcontainer - gennemsigtig så --vp-bg (#4A040B) er den dybe base bag bjælkerne */
+[data-theme="vinroed-praecision"] .vaerksted-container {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Undermenu i Røntgen: 1. Den Kognitive Nøgle vs. 2, 3, 4 */
+[data-theme="vinroed-praecision"] .vaerksted-subtabs {
+  background: var(--vp-surface-input) !important; /* #380207 - dyb kontrastbundflade */
+  border: 1px solid var(--vp-border) !important;   /* #851825 - dæmpet kant */
+  border-radius: var(--vp-radius-md) !important;   /* 10px */
+  padding: 6px !important;
+  gap: 6px !important;
+  margin-bottom: 1.5rem !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-subtab-btn {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--vp-radius-sm) !important;   /* 6px */
+  color: var(--vp-text-muted) !important;          /* #FFC9CD */
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  padding: 0.75rem 1.1rem !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-subtab-btn:hover {
+  background: var(--vp-surface-hover) !important;  /* #73101C - lettere vinrød glød */
+  border-color: var(--vp-border) !important;       /* #851825 */
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-subtab-btn.active {
+  background: var(--vp-surface) !important;        /* #5C0812 - mørk rubinrød overflade */
+  border: 1px solid var(--vp-primary) !important;  /* #FF4D5E - koralrød accentkant */
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.25) !important;
+}
+
+/* Sub-vælger knapper (f.eks. kan svømme vs. plejer at svømme, 1. Samme person vs. 2. Ny person) */
+[data-theme="vinroed-praecision"] .word-selector-grid {
+  gap: 8px !important;
+}
+
+[data-theme="vinroed-praecision"] .word-sel-btn {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: var(--vp-text-muted) !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .word-sel-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-border-focus) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .word-sel-btn.active {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.25) !important;
+}
+
+/* Røntgen Kognitivt Kort & Paneler */
+[data-theme="vinroed-praecision"] .vaerksted-card {
+  background: var(--vp-surface) !important;        /* #5C0812 */
+  border: 1px solid var(--vp-border) !important;   /* #851825 */
+  border-radius: var(--vp-radius-md) !important;   /* 10px */
+  padding: var(--vp-space-lg) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-card h2 {
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-card p {
+  color: var(--vp-text-muted) !important;
+}
+
+/* Kontrastpaneler i Røntgen */
+[data-theme="vinroed-praecision"] .vaerksted-card [style*="background:#0f172a"],
+[data-theme="vinroed-praecision"] .vaerksted-card [style*="background: #0f172a"] {
+  background: var(--vp-surface-input) !important; /* #380207 */
+  border-color: var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-card [style*="background:#1e293b"],
+[data-theme="vinroed-praecision"] .vaerksted-card [style*="background: #1e293b"] {
+  background: var(--vp-surface-input) !important; /* #380207 */
+  border-color: var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .vaerksted-card [style*="background:#0284c7"],
+[data-theme="vinroed-praecision"] .vaerksted-card [style*="background: #0284c7"] {
+  background: var(--vp-primary) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  box-shadow: 0 2px 8px rgba(255, 77, 94, 0.35) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Forslag 2: Kort-løs introtekst & rubinrøde opgavekort i Konjunktioner AT
+   -------------------------------------------------------------------------- */
+
+/* 1. Introteksten gøres "kort-løs" - ingen kold skifergrå boks, ren rolig typografi */
+[data-theme="vinroed-praecision"] .special-intro-box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 1.6rem 0 !important;
+  margin-bottom: 1.2rem !important;
+  text-align: center !important;
+}
+
+[data-theme="vinroed-praecision"] .special-intro-box h2 {
+  color: #FFFFFF !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 0.6rem !important;
+}
+
+[data-theme="vinroed-praecision"] .special-intro-box p {
+  color: var(--vp-text-muted) !important;
+  font-size: 1.08rem !important;
+  max-width: 760px !important;
+  margin: 0 auto !important;
+  line-height: 1.6 !important;
+}
+
+/* 2. Selve opgave-kortet: Mørk rubinrød (--vp-surface #5C0812) med diskret vinrød kant */
+[data-theme="vinroed-praecision"] .exercise-action-card,
+[data-theme="vinroed-praecision"] .detektiv-card,
+[data-theme="vinroed-praecision"] .builder-card {
+  background: var(--vp-surface) !important;        /* #5C0812 */
+  border: 1px solid var(--vp-border) !important;   /* #851825 */
+  border-radius: var(--vp-radius-md) !important;   /* 10px */
+  padding: var(--vp-space-xl) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 3. Progress bar og headers i opgaven */
+[data-theme="vinroed-praecision"] .progress-header {
+  color: var(--vp-text-muted) !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="vinroed-praecision"] .progress-bar-wrap {
+  background: var(--vp-surface-input) !important; /* #380207 */
+}
+
+[data-theme="vinroed-praecision"] .progress-bar-fill {
+  background: var(--vp-primary) !important;      /* #FF4D5E */
+}
+
+/* 4. Kontekst-tag / opgave-mærkat */
+[data-theme="vinroed-praecision"] .detektiv-context-tag {
+  background: var(--vp-surface-input) !important; /* #380207 */
+  border: 1px solid var(--vp-border) !important;   /* #851825 */
+  color: var(--vp-text-muted) !important;          /* #FFC9CD */
+  border-radius: var(--vp-radius-pill) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  padding: 0.3rem 0.85rem !important;
+}
+
+/* 5. Citatboks / dialogboks: Forslag 3 - Lys varm papir-metafor med dyb mørk blækskrift */
+[data-theme="vinroed-praecision"] .exercise-dialog-quote,
+[data-theme="vinroed-praecision"] .detektiv-sentence-quote {
+  background: #FFF8F6 !important; /* Lys, varm elfenbensfarvet papirflade */
+  border: 1px solid #E2D1D3 !important;
+  border-left: 6px solid var(--vp-primary) !important; /* #FF4D5E koralrød didaktisk markør */
+  border-radius: var(--vp-radius-sm) !important; /* 8px */
+  color: #2D1418 !important; /* Dyb mørk blæksort for maksimal læsbarhed */
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  line-height: 1.7 !important;
+  padding: 1.5rem 1.8rem !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="vinroed-praecision"] .exercise-dialog-quote span,
+[data-theme="vinroed-praecision"] .detektiv-sentence-quote span {
+  color: #15803d !important; /* Dyb skovgrøn tekst på den lyse papirflade ved udfyldt svar */
+  font-weight: 900 !important;
+  text-decoration: underline !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-sentence-display {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-left: 4px solid var(--vp-primary) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: #FFFFFF !important;
+}
+
+/* 6. Svarknapper: Forslag 1 (Varm dyb trækul #181113) + Forslag 2 (Koralrød kant-glød #FF4D5E) */
+[data-theme="vinroed-praecision"] .detektiv-opt-btn {
+  background: #181113 !important; /* Forslag 1: Varm dyb trækulsbund, neutral mod den røde flade */
+  border: 1.5px solid #4D282E !important; /* Defineret bordeaux-grå kant i hvile */
+  border-radius: var(--vp-radius-sm) !important; /* 8px */
+  color: #FFFFFF !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  padding: 1.05rem 1.3rem !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .detektiv-opt-btn:hover {
+  background: #23161A !important; /* Lettere oplyst varm trækul */
+  border-color: var(--vp-primary) !important; /* Forslag 2: Koralrød accentkant! */
+  color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(255, 77, 94, 0.35), 0 4px 12px rgba(0, 0, 0, 0.4) !important; /* Forslag 2: Aktiv kant-glød */
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="vinroed-praecision"] .detektiv-opt-btn.correct {
+  background: #143521 !important; /* Smaragdgrøn bekræftelse */
+  border: 2px solid #22c55e !important;
+  color: #4ade80 !important;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .detektiv-opt-btn.wrong {
+  background: #3b171a !important;
+  border: 2px solid #ef4444 !important;
+  color: #fca5a5 !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* 7. Feedback-boks ved svar */
+[data-theme="vinroed-praecision"] .detektiv-feedback-box {
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .detektiv-feedback-box.correct {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border: 1px solid #22c55e !important;
+  color: #86efac !important;
+}
+
+[data-theme="vinroed-praecision"] .detektiv-feedback-box.wrong {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid #ef4444 !important;
+  color: #fca5a5 !important;
+}
+
+/* 8. Primær handlingsknap (Næste opgave) */
+[data-theme="vinroed-praecision"] .action-btn-primary {
+  background: var(--vp-primary) !important;      /* #FF4D5E */
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--vp-radius-sm) !important; /* 6px */
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .action-btn-primary:hover {
+  background: #ff6b7a !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) !important;
+}
+
+
+/* ==========================================================================
+   4. FLADE: ADVERBIER GRAD VRIMMEL (/adverbier_grad/tab_vrimmel)
+   ========================================================================== */
+
+/* Hero: Væk med lilla gradient-tekst */
+[data-theme="vinroed-praecision"] .adverbier-grad-view .grad-hero h1 {
+  background: none !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  font-size: 2.3rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+[data-theme="vinroed-praecision"] .adverbier-grad-view .grad-hero p {
+  color: var(--vp-text-muted) !important;
+}
+
+/* Gylden didaktisk regel-banner */
+[data-theme="vinroed-praecision"] .golden-rule-banner {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important; /* 10px */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+  padding: 1.2rem 1.8rem !important;
+}
+
+[data-theme="vinroed-praecision"] .golden-rule-banner h4 {
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .golden-rule-banner p {
+  color: var(--vp-text-muted) !important;
+}
+
+[data-theme="vinroed-praecision"] .rule-pill {
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+/* Faner i Konjunktioner AT & Adverbier */
+[data-theme="vinroed-praecision"] .adv-tabs-nav {
+  background: var(--vp-surface-input) !important; /* #380207 - dyb kontrastbundflade */
+  border: 1px solid var(--vp-border) !important;   /* #851825 - dæmpet kant */
+  border-radius: var(--vp-radius-md) !important;   /* 10px */
+  padding: 6px !important;
+  gap: 6px !important;
+}
+
+[data-theme="vinroed-praecision"] .adv-tab-btn {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--vp-radius-sm) !important;   /* 6px */
+  color: var(--vp-text-muted) !important;          /* #FFC9CD */
+  font-weight: 600 !important;
+  padding: 0.75rem 1.1rem !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+[data-theme="vinroed-praecision"] .adv-tab-btn:hover {
+  background: var(--vp-surface-hover) !important;  /* #73101C - lettere vinrød glød */
+  border-color: var(--vp-border) !important;       /* #851825 */
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .adv-tab-btn.active {
+  background: var(--vp-surface) !important;        /* #5C0812 - mørk rubinrød overflade */
+  border: 1px solid var(--vp-primary) !important;  /* #FF4D5E - koralrød accentkant */
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.25) !important;
+}
+
+/* Vrimlebilled-scene kort */
+[data-theme="vinroed-praecision"] .vrimmel-stage-card {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .vrimmel-controls-bar {
+  background: var(--vp-surface-input) !important;
+  border-bottom: 1px solid var(--vp-border) !important;
+}
+
+[data-theme="vinroed-praecision"] .filter-btn {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .filter-btn.active {
+  background: var(--vp-primary) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(255, 77, 94, 0.3) !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-toggle-btn {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .pure-toggle-btn.active {
+  background: var(--vp-primary) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* Inspector modul for mål-ord */
+[data-theme="vinroed-praecision"] .vrimmel-inspector {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-badge,
+[data-theme="vinroed-praecision"] .inspector-cat-badge {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: var(--vp-text-muted) !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-audio-btn {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-audio-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-primary) !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-word-title {
+  color: #FFFFFF !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-trans-box,
+[data-theme="vinroed-praecision"] .inspector-scene-box {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-sentence-card {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-speak-btn {
+  background: var(--vp-primary) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(255, 77, 94, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .grad-meter-box {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .meter-track {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--vp-border) !important;
+}
+
+[data-theme="vinroed-praecision"] .meter-fill {
+  background: linear-gradient(90deg, #FBBF24, var(--vp-primary)) !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-btn-action {
+  border-radius: var(--vp-radius-sm) !important;
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="vinroed-praecision"] .inspector-btn-action:hover {
+  background: var(--vp-surface-hover) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] #inspector-action-next {
+  background: var(--vp-primary) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(255, 77, 94, 0.35) !important;
+}
+
+/* Støt-knapper i bunden af visninger (f.eks. Dagens Opgave) */
+[data-theme="vinroed-praecision"] .support-links a.gemini-btn {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-bright) !important;
+  border-radius: var(--vp-radius-sm) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.65rem 1.25rem !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .support-links a.gemini-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-primary) !important;
+  box-shadow: 0 4px 14px rgba(255, 77, 94, 0.25) !important;
+  transform: translateY(-2px);
+}
+
+

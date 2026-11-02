@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { byrumWordTranslations } from '../utils/top100_translations.js';
 import { formatVerbLinks, attachVerbLinkListeners, openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * ByrummetView - Didaktisk vrimlebillede for semantisk felt: Byrummet (byen, gaden, hverdagen)
@@ -703,7 +704,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .category-badge {
-            display: inline-block; background: #8b5cf6; color: white; font-weight: 800;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+            background: #8b5cf6; color: white; font-weight: 800;
             font-size: 0.85rem; padding: 0.35rem 0.9rem; border-radius: 20px; text-transform: uppercase;
             letter-spacing: 0.5px; margin-bottom: 0.8rem;
         }
@@ -1239,11 +1241,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'byrum-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: '🕵️' },
-        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: '💭' },
-        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: '🔄' },
-        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: '✍️' }
+        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: renderDsIcon('eye', '', { size: 16 }) },
+        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: renderDsIcon('thought', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: renderDsIcon('layers', '', { size: 16 }) },
+        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: renderDsIcon('edit', '', { size: 16 }) }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -1252,7 +1254,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const btn = document.createElement('button');
         btn.className = `byrum-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `<span class="byrum-tab-icon">${t.icon}</span> <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -1300,9 +1302,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         { word: 'en skole', clean: 'skole', gender: 'en', bestemt: 'skolen', flertal: 'skoler', x: 88, y: 28, icon: '🏫', sentence: 'Børnene går i skole.' },
         { word: 'en dør', clean: 'dør', gender: 'en', bestemt: 'døren', flertal: 'døre', x: 88, y: 44, icon: '🚪', sentence: 'Døren er åben.' },
         { word: 'en ven', clean: 'ven', gender: 'en', bestemt: 'vennen', flertal: 'venner', x: 93, y: 60, icon: '🫂', sentence: 'Hun taler med en ven.' },
-        { word: 'en bil', clean: 'bil', gender: 'en', bestemt: 'bilen', flertal: 'biler', x: 71, y: 76, icon: '🚗', sentence: 'En bil holder på vejen.' },
-        { word: 'en mand', clean: 'mand', gender: 'en', bestemt: 'manden', flertal: 'mænd', x: 78.5, y: 71, icon: '👨', sentence: 'En mand står på gaden.' },
-        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 75, y: 68, icon: '⚠️', sentence: 'Manden har et problem.' }
+        { word: 'en cykel', clean: 'cykel', gender: 'en', bestemt: 'cyklen', flertal: 'cykler', x: 71, y: 76, icon: '🚲', sentence: 'Manden har en flad cykel.' },
+        { word: 'en mand', clean: 'mand', gender: 'en', bestemt: 'manden', flertal: 'mænd', x: 78.5, y: 71, icon: '👨', sentence: 'Manden tager sig til hovedet.' },
+        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 75, y: 68, icon: '⚠️', sentence: 'Manden har et problem: hjulet er fladt.' }
     ];
 
     // ========================================================
@@ -1624,10 +1626,10 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const byrumMissions = [
         {
             id: "byrum_m1_title",
-            title: "Find 3 ord for trafik (🚗)",
+            title: "Find 3 ord for trafik og transport (🚲)",
             targetCount: 3,
             options: [
-                { text: "en bil", correct: true },
+                { text: "en cykel", correct: true },
                 { text: "et hus", correct: false },
                 { text: "en tur", correct: true },
                 { text: "en læge", correct: false },
@@ -1800,22 +1802,22 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const byrumStories = [
         {
-            title: "1. Bilen stopper",
-            fullStoryText: "En bil kører på vejen. Der er en fejl på bilen. Manden har et problem. Han ringer efter hjælp.",
+            title: "1. En flad cykel",
+            fullStoryText: "En mand cykler på vejen. Pludselig er cyklen flad. Manden har et problem og tager sig til hovedet. Han må lappe cyklen.",
             steps: [
                 {
-                    q: "1. Hvad kører på vejen?",
+                    q: "1. Hvad er der sket på vejen?",
                     options: [
-                        { text: "En bil 🚗", correct: true },
+                        { text: "Cyklen er flad 🚲", correct: true },
                         { text: "En seng 🛏️", correct: false },
                         { text: "Et træ 🌳", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad sker der?",
+                    q: "2. Hvad gør manden?",
                     options: [
                         { text: "En ferie 🏖️", correct: false },
-                        { text: "Der er en fejl ⚙️", correct: true },
+                        { text: "Han tager sig til hovedet 🤦‍♂️", correct: true },
                         { text: "En kage 🍰", correct: false }
                     ]
                 },
@@ -1828,10 +1830,10 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     ]
                 },
                 {
-                    q: "4. Hvad gør manden?",
+                    q: "4. Hvad skal manden gøre?",
                     options: [
                         { text: "Han spiser en is 🍦", correct: false },
-                        { text: "Han ringer efter hjælp 💡", correct: true }
+                        { text: "Han må lappe cyklen 🚲", correct: true }
                     ]
                 }
             ]
@@ -2090,98 +2092,98 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const byrumCategoryTasks = [
         {
             type: "find_overemne",
-            subwords: ["en bil 🚗", "en cykel 🚲", "en bus 🚌"],
+            subwords: ["en bil", "en cykel", "en bus"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Transport 🚗", correct: true },
-                { text: "Møbler 🪑", correct: false },
-                { text: "Mad 🍞", correct: false }
+                { text: "Transport", correct: true },
+                { text: "Møbler", correct: false },
+                { text: "Mad", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["et hus 🏠", "en skole 🏫", "en butik 🏪"],
+            subwords: ["et hus", "en skole", "en butik"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Bygninger og steder 🏢", correct: true },
-                { text: "Kroppen 🦶", correct: false },
-                { text: "Tøj 👟", correct: false }
+                { text: "Bygninger og steder", correct: true },
+                { text: "Kroppen", correct: false },
+                { text: "Tøj", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Penge og handel 🪙",
+            overemne: "Penge og handel",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "penge 🪙", correct: true },
-                { text: "en krone 👑", correct: true },
-                { text: "en pris 🏷️", correct: true },
-                { text: "et træ 🌳", correct: false },
-                { text: "en seng 🛏️", correct: false },
-                { text: "en hund 🐕", correct: false }
+                { text: "penge", correct: true },
+                { text: "en krone", correct: true },
+                { text: "en pris", correct: true },
+                { text: "et træ", correct: false },
+                { text: "en seng", correct: false },
+                { text: "en hund", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Mennesker og roller 🧑‍🤝‍🧑",
+            overemne: "Mennesker og roller",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en mand 👨", correct: true },
-                { text: "en pige 👧", correct: true },
-                { text: "en ven 🤝", correct: true },
-                { text: "en vej 🛣️", correct: false },
-                { text: "en dør 🚪", correct: false },
-                { text: "et vindue 🪟", correct: false }
+                { text: "en mand", correct: true },
+                { text: "en pige", correct: true },
+                { text: "en ven", correct: true },
+                { text: "en vej", correct: false },
+                { text: "en dør", correct: false },
+                { text: "et vindue", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en mor 👩", "en far 👨", "et barn 🧒"],
+            subwords: ["en mor", "en far", "et barn"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Familie 👨‍👩‍👧", correct: true },
-                { text: "Vejret 🌤️", correct: false },
-                { text: "Møbler 🪑", correct: false }
+                { text: "Familie", correct: true },
+                { text: "Vejret", correct: false },
+                { text: "Møbler", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en sol ☀️", "et træ 🌳", "en vind 💨"],
+            subwords: ["en sol", "et træ", "en vind"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Natur og vejr ☀️", correct: true },
-                { text: "Skole 🏫", correct: false },
-                { text: "Transport 🚗", correct: false }
+                { text: "Natur og vejr", correct: true },
+                { text: "Skole", correct: false },
+                { text: "Transport", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Byens steder og rum 🏙️",
+            overemne: "Byens steder og rum",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en by 🏙️", correct: true },
-                { text: "en plads ⛲", correct: true },
-                { text: "en café ☕", correct: true },
-                { text: "en seng 🛏️", correct: false },
-                { text: "et vindue 🪟", correct: false },
-                { text: "en fisk 🐟", correct: false }
+                { text: "en by", correct: true },
+                { text: "en plads", correct: true },
+                { text: "en café", correct: true },
+                { text: "en seng", correct: false },
+                { text: "et vindue", correct: false },
+                { text: "en fisk", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Husets dele 🏠",
+            overemne: "Husets dele",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en dør 🚪", correct: true },
-                { text: "et vindue 🪟", correct: true },
-                { text: "et tag 🏠", correct: true },
-                { text: "en bil 🚗", correct: false },
-                { text: "en læge 🧑‍⚕️", correct: false },
-                { text: "en hund 🐕", correct: false }
+                { text: "en dør", correct: true },
+                { text: "et vindue", correct: true },
+                { text: "et tag", correct: true },
+                { text: "en bil", correct: false },
+                { text: "en læge", correct: false },
+                { text: "en hund", correct: false }
             ]
         }
     ];
@@ -2224,7 +2226,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         const badge = document.createElement('div');
         badge.className = 'category-badge';
-        badge.textContent = `🏷️ ${getTranslation('top100_task_counter').replace('{current}', currByrumCategoryIdx + 1).replace('{total}', byrumCategoryTasks.length)}`;
+        badge.innerHTML = `${renderDsIcon('tag', '', { size: 14 })} <span>${getTranslation('top100_task_counter').replace('{current}', currByrumCategoryIdx + 1).replace('{total}', byrumCategoryTasks.length)}</span>`;
         categoryCard.appendChild(badge);
 
         if (task.type === 'find_overemne') {
@@ -2270,7 +2272,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                         feedbackEl.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ ${getTranslation("top100_correct_overemne_prefix")} ${opt.text}
+                                🎉 ${getTranslation("top100_correct_overemne_prefix")} ${opt.text}
                             </div>
                             <button class="mission-next-btn" id="next-category-btn">${getTranslation('top100_next_task_btn')}</button>
                         `;
@@ -2350,8 +2352,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                             };
                         } else {
                             feedbackEl.innerHTML = `
-                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                    ✓ Rigtigt svaret! (${selectedCount} af ${task.targetCount})
+                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    ${renderDsIcon('check', '', { size: 16 })} <span>Rigtigt svaret! (${selectedCount} af ${task.targetCount})</span>
                                 </div>
                             `;
                         }
@@ -2486,7 +2488,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
                 icon: '📦',
-                options: ['penge', 'en bil', 'en dør', 'en ven', 'en hund', 'et træ', 'en café', 'et problem']
+                options: ['penge', 'en cykel', 'en dør', 'en ven', 'en hund', 'et træ', 'en café', 'et problem']
             },
             {
                 id: 'sted',
@@ -2499,7 +2501,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             }
         ];
 
-        let selected = ['Kvinden', 'kører i', 'en bil', 'på vejen'];
+        let selected = ['Manden', 'kigger på', 'en cykel', 'på vejen'];
 
         const rowsContainer = freeBuilderContainer.querySelector('#free-builder-rows-byrum');
         const liveSentenceEl = freeBuilderContainer.querySelector('#free-live-sentence-byrum');
@@ -2599,14 +2601,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             pedagogyNote: "Man bruger penge til at betale for kaffe og kage!"
         },
         {
-            context: "Kvinden skal hurtigt på arbejde om morgenen.",
-            subjekt: "Kvinden",
-            verbum: "kører i",
+            context: "Manden skal cykle en tur, men dækket er fladt.",
+            subjekt: "Manden",
+            verbum: "kigger på",
             sted: "på vejen",
-            questionPrompt: "Hvad kører Kvinden i på vejen?",
-            targetWord: "en bil",
+            questionPrompt: "Hvad kigger Manden på på vejen?",
+            targetWord: "en cykel",
             distractors: ["en hund", "penge", "et hus"],
-            pedagogyNote: "Bilen kører hurtigt afsted på kørebanen."
+            pedagogyNote: "Manden kigger opgivende på sin flade cykel."
         },
         {
             context: "Klokken ringer ind til første time i skolen.",
@@ -2649,14 +2651,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             pedagogyNote: "Der står et smukt, grønt træ midt på pladsen."
         },
         {
-            context: "Bilen vil pludselig ikke starte ved vejkanten.",
-            subjekt: "Chaufføren",
+            context: "Cyklen er flad, og manden tager sig til hovedet.",
+            subjekt: "Manden",
             verbum: "har",
-            sted: "ved lyskrydset",
-            questionPrompt: "Hvad har Chaufføren ved lyskrydset?",
+            sted: "på vejen",
+            questionPrompt: "Hvad har Manden på vejen?",
             targetWord: "et problem",
             distractors: ["en sol", "en hund", "en plads"],
-            pedagogyNote: "Når motoren går i stå, har chaufføren et problem."
+            pedagogyNote: "Når cyklen er flad, har manden et problem."
         },
         {
             context: "Vennen står utålmodigt og kigger på uret foran caféen.",

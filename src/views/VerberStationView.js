@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { verberWordTranslations } from '../utils/top100_verber_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
 
 /**
  * VerberStationView - Didaktisk vrimlebillede for Scene 1: Banegården / Rejsen
@@ -883,63 +884,122 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
 
         .sb-puzzle-slots {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
-        }
-        @media (max-width: 768px) {
-            .sb-puzzle-slots {
-                grid-template-columns: 1fr;
-            }
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
         .sb-puzzle-slot {
-            background: rgba(30, 41, 59, 0.7);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            min-height: 70px;
-            padding: 0.75rem;
+            background: #0b1329;
+            border: 2px dashed #475569;
+            border-radius: 14px;
+            padding: 1rem 0.8rem;
+            min-height: 104px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
             text-align: center;
-            transition: all 0.2s ease;
             position: relative;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
         }
-        .sb-puzzle-slot.slot-0 { border-color: rgba(34, 197, 94, 0.4); }
-        .sb-puzzle-slot.slot-1 { border-color: rgba(239, 68, 68, 0.5); }
-        .sb-puzzle-slot.slot-2 { border-color: rgba(34, 197, 94, 0.4); }
-        .sb-puzzle-slot.slot-3 { border-color: rgba(56, 189, 248, 0.4); }
+        .sb-puzzle-slot.slot-0 {
+            border-color: rgba(34, 197, 94, 0.55);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+        }
+        .sb-puzzle-slot.slot-1 {
+            border-color: rgba(239, 68, 68, 0.55);
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+        }
+        .sb-puzzle-slot.slot-2 {
+            border-color: rgba(34, 197, 94, 0.55);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+        }
+        .sb-puzzle-slot.slot-3 {
+            border-color: rgba(56, 189, 248, 0.55);
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+        }
+
+        .sb-puzzle-slot .slot-hint {
+            font-size: 1.15rem;
+            color: #ffffff;
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+        }
+        .sb-puzzle-slot .slot-trans {
+            font-size: 0.92rem;
+            font-weight: 600;
+            line-height: 1.25;
+            margin-top: 0.2rem;
+            letter-spacing: 0.2px;
+        }
+        .sb-puzzle-slot.slot-0 .slot-trans { color: #86efac; }
+        .sb-puzzle-slot.slot-1 .slot-trans { color: #fca5a5; }
+        .sb-puzzle-slot.slot-2 .slot-trans { color: #86efac; }
+        .sb-puzzle-slot.slot-3 .slot-trans { color: #7dd3fc; }
+
+        .sb-puzzle-slot .slot-role {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 0.35rem;
+            font-weight: 800;
+            opacity: 0.9;
+        }
+        .sb-puzzle-slot.slot-0 .slot-role { color: #4ade80; }
+        .sb-puzzle-slot.slot-1 .slot-role { color: #f87171; }
+        .sb-puzzle-slot.slot-2 .slot-role { color: #4ade80; }
+        .sb-puzzle-slot.slot-3 .slot-role { color: #38bdf8; }
 
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: rgba(15, 23, 42, 0.9);
-            cursor: pointer;
+            background: #1e293b;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
         }
-        .sb-puzzle-slot.filled.slot-0 { border-color: #22c55e; color: #86efac; }
-        .sb-puzzle-slot.filled.slot-1 { border-color: #ef4444; color: #fca5a5; font-weight: 800; }
-        .sb-puzzle-slot.filled.slot-2 { border-color: #22c55e; color: #86efac; }
-        .sb-puzzle-slot.filled.slot-3 { border-color: #38bdf8; color: #7dd3fc; }
-
-        .slot-hint {
-            font-size: 0.75rem;
+        .sb-puzzle-slot.filled.slot-0 { border-color: #22c55e; }
+        .sb-puzzle-slot.filled.slot-1 { border-color: #ef4444; }
+        .sb-puzzle-slot.filled.slot-2 { border-color: #22c55e; }
+        .sb-puzzle-slot.filled.slot-3 { border-color: #0284c7; }
+        .sb-puzzle-slot.filled .slot-filled-word {
             font-weight: 800;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.2rem;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            color: #ffffff;
+            margin-bottom: 0.15rem;
         }
-        .slot-role {
-            font-size: 0.7rem;
-            color: #64748b;
-        }
-        .slot-remove {
+        .sb-puzzle-slot.filled .slot-remove {
             position: absolute;
-            top: 4px;
-            right: 6px;
-            font-size: 0.8rem;
+            top: 6px;
+            right: 8px;
+            font-size: 0.85rem;
             color: #94a3b8;
-            opacity: 0.7;
+            transition: color 0.2s;
+        }
+        .sb-puzzle-slot.filled:hover .slot-remove {
+            color: #f87171;
+        }
+
+        @media (max-width: 640px) {
+            .sb-puzzle-slots {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+            }
+            .sb-puzzle-slot {
+                min-height: 96px;
+                padding: 0.8rem 0.5rem;
+            }
+            .sb-puzzle-slot .slot-hint {
+                font-size: 1.05rem;
+            }
+            .sb-puzzle-slot .slot-trans {
+                font-size: 0.85rem;
+            }
+            .sb-puzzle-slot .slot-role {
+                font-size: 0.72rem;
+            }
         }
 
         .sb-puzzle-bank {
@@ -2594,6 +2654,8 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
 
     // Step 2: Puzzle (Saml sætningen i V2 / SVO-rækkefølge)
     function renderStationPuzzleStep(container, task) {
+        const lang = getLang();
+
         container.innerHTML = `
             <div class="sb-puzzle-title">
                 <span>🧩</span> Trin 2: Puslespillet – saml hele sætningen!
@@ -2605,20 +2667,16 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             <!-- 4 Slots -->
             <div class="sb-puzzle-slots" id="station-puzzle-slots-verb">
                 <div class="sb-puzzle-slot slot-0" data-idx="0">
-                    <span class="slot-hint">1. Hvem?</span>
-                    <span class="slot-role">[Subjekt]</span>
+                    ${renderPuzzleSlotInnerHtml(0, lang)}
                 </div>
                 <div class="sb-puzzle-slot slot-1" data-idx="1">
-                    <span class="slot-hint">2. Handling?</span>
-                    <span class="slot-role">[Verbum - V2]</span>
+                    ${renderPuzzleSlotInnerHtml(1, lang, '[Verbum - V2]')}
                 </div>
                 <div class="sb-puzzle-slot slot-2" data-idx="2">
-                    <span class="slot-hint">3. Hvilken ting?</span>
-                    <span class="slot-role">[Objekt]</span>
+                    ${renderPuzzleSlotInnerHtml(2, lang)}
                 </div>
                 <div class="sb-puzzle-slot slot-3" data-idx="3">
-                    <span class="slot-hint">4. Hvor?</span>
-                    <span class="slot-role">[Sted]</span>
+                    ${renderPuzzleSlotInnerHtml(3, lang)}
                 </div>
             </div>
 
@@ -2642,30 +2700,18 @@ export function renderVerberStationView(container, navigateFn, extraData = {}) {
             // Update slots
             slotsEl.querySelectorAll('.sb-puzzle-slot').forEach((slot, idx) => {
                 const word = placedSlots[idx];
-                const hints = [
-                    { h: '1. Hvem?', r: '[Subjekt]' },
-                    { h: '2. Handling?', r: '[Verbum - V2]' },
-                    { h: '3. Hvilken ting?', r: '[Objekt]' },
-                    { h: '4. Hvor?', r: '[Sted]' }
-                ];
+                const hint = getGrammarSlotHint(idx, lang, idx === 1 ? '[Verbum - V2]' : null);
 
                 if (word) {
                     slot.className = `sb-puzzle-slot filled slot-${idx}`;
-                    slot.innerHTML = `
-                        <span class="slot-remove" title="Fjern">✕</span>
-                        <span style="font-weight: 800; font-size: 1.05rem;">${word}</span>
-                        <span class="slot-role">${hints[idx].r}</span>
-                    `;
+                    slot.innerHTML = renderPuzzleSlotFilledHtml(word, hint.role);
                     slot.onclick = () => {
                         placedSlots[idx] = null;
                         updateSlotsAndBank();
                     };
                 } else {
                     slot.className = `sb-puzzle-slot slot-${idx}`;
-                    slot.innerHTML = `
-                        <span class="slot-hint">${hints[idx].h}</span>
-                        <span class="slot-role">${hints[idx].r}</span>
-                    `;
+                    slot.innerHTML = renderPuzzleSlotInnerHtml(idx, lang, idx === 1 ? '[Verbum - V2]' : null);
                     slot.onclick = null;
                 }
             });

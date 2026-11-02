@@ -1803,135 +1803,152 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const byrumStories = [
         {
             title: "1. En flad cykel",
-            fullStoryText: "En mand cykler på vejen. Pludselig er cyklen flad. Manden har et problem og tager sig til hovedet. Han må lappe cyklen.",
+            fullStoryText: "Der er biler og cykler på vejen. Manden har en flad cykel. Manden tager sig til hovedet. Manden har et problem: hjulet er fladt.",
             steps: [
                 {
-                    q: "1. Hvad er der sket på vejen?",
+                    q: "1. Hvad er der på vejen?",
                     options: [
-                        { text: "Cyklen er flad 🚲", correct: true },
-                        { text: "En seng 🛏️", correct: false },
-                        { text: "Et træ 🌳", correct: false }
+                        { text: "Biler og cykler", correct: true },
+                        { text: "En seng", correct: false },
+                        { text: "Et træ", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad gør manden?",
+                    q: "2. Hvad har manden?",
                     options: [
-                        { text: "En ferie 🏖️", correct: false },
-                        { text: "Han tager sig til hovedet 🤦‍♂️", correct: true },
-                        { text: "En kage 🍰", correct: false }
+                        { text: "En kage", correct: false },
+                        { text: "En flad cykel", correct: true },
+                        { text: "En gave", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvad har manden?",
+                    q: "3. Hvad gør manden?",
                     options: [
-                        { text: "Et problem ⚠️", correct: true },
-                        { text: "En gave 🎁", correct: false },
-                        { text: "En sol ☀️", correct: false }
+                        { text: "Manden sover", correct: false },
+                        { text: "Manden tager sig til hovedet", correct: true },
+                        { text: "Manden spiser mad", correct: false }
                     ]
                 },
                 {
-                    q: "4. Hvad skal manden gøre?",
+                    q: "4. Hvad er mandens problem?",
                     options: [
-                        { text: "Han spiser en is 🍦", correct: false },
-                        { text: "Han må lappe cyklen 🚲", correct: true }
+                        { text: "Døren er åben", correct: false },
+                        { text: "Hjulet er fladt", correct: true },
+                        { text: "Brødet koster penge", correct: false }
                     ]
                 }
             ]
         },
         {
-            title: "2. En kaffe med en ven",
-            fullStoryText: "De mødes på pladsen. De går på café. Kunden bruger penge. De drikker kaffe.",
+            title: "2. På café på pladsen",
+            fullStoryText: "Der er mange på pladsen. De sidder på en café. Hun taler med en ven. Kunden bruger penge. Brødet koster tyve kroner.",
             steps: [
                 {
-                    q: "1. Hvor mødes de?",
+                    q: "1. Hvor er der mange mennesker?",
                     options: [
-                        { text: "På pladsen 🏛️", correct: true },
-                        { text: "I sengen 🛏️", correct: false },
-                        { text: "I skoven 🌲", correct: false }
+                        { text: "På pladsen", correct: true },
+                        { text: "I sengen", correct: false },
+                        { text: "I skoven", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvor går de hen?",
+                    q: "2. Hvor sidder de?",
                     options: [
-                        { text: "Hjem i seng 😴", correct: false },
-                        { text: "På en café ☕", correct: true },
-                        { text: "I skole 🏫", correct: false }
+                        { text: "I en skole", correct: false },
+                        { text: "På en café", correct: true },
+                        { text: "I et træ", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvad gør kunden?",
+                    q: "3. Hvem taler hun med?",
                     options: [
-                        { text: "Kunden sover 💤", correct: false },
-                        { text: "Kunden bruger penge 🪙", correct: true },
-                        { text: "Kunden løber 🏃", correct: false }
+                        { text: "En ven", correct: true },
+                        { text: "En læge", correct: false },
+                        { text: "En hund", correct: false }
                     ]
                 },
                 {
-                    q: "4. Hvad gør de bagefter?",
+                    q: "4. Hvad koster brødet?",
                     options: [
-                        { text: "De drikker kaffe ☕", correct: true },
-                        { text: "De køber en bil 🚗", correct: false },
-                        { text: "De vasker op 🧼", correct: false }
+                        { text: "Fem kroner", correct: false },
+                        { text: "Tyve kroner", correct: true },
+                        { text: "Hundrede kroner", correct: false }
                     ]
                 }
             ]
         },
         {
             title: "3. På vej i skole",
-            fullStoryText: "Pigen åbner døren. Hun cykler på vejen. Hun møder sine venner.",
+            fullStoryText: "Hun bor i en stor by. Hun bor i et gult hus. Døren er åben, og vinduet er åbent. En pige går i skole. Børnene går i skole.",
             steps: [
                 {
-                    q: "1. Hvad åbner pigen?",
+                    q: "1. Hvilket hus bor hun i?",
                     options: [
-                        { text: "Fjernsynet 📺", correct: false },
-                        { text: "Døren 🚪", correct: true },
-                        { text: "En sko 👟", correct: false }
+                        { text: "Et gult hus", correct: true },
+                        { text: "Et rødt hus", correct: false },
+                        { text: "Et blåt hus", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad gør hun?",
+                    q: "2. Hvordan er døren og vinduet?",
                     options: [
-                        { text: "Hun sover 🛌", correct: false },
-                        { text: "Hun cykler på vejen 🚲", correct: true },
-                        { text: "Hun svømmer 🏊", correct: false }
+                        { text: "De er lukket", correct: false },
+                        { text: "De er åbne", correct: true },
+                        { text: "De er gået i stykker", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvem møder hun?",
+                    q: "3. Hvor går pigen hen?",
                     options: [
-                        { text: "Sine venner 🎒", correct: true },
-                        { text: "En kat 🐈", correct: false },
-                        { text: "En læge 🩺", correct: false }
+                        { text: "I seng", correct: false },
+                        { text: "I skole", correct: true },
+                        { text: "På café", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvem går i skole?",
+                    options: [
+                        { text: "Lægen", correct: false },
+                        { text: "Børnene", correct: true },
+                        { text: "Hunden", correct: false }
                     ]
                 }
             ]
         },
         {
-            title: "4. En tur med hunden",
-            fullStoryText: "Manden går en tur med en hund. De ser et stort træ. Familien smiler til hunden.",
+            title: "4. En tur i solen",
+            fullStoryText: "Solen skinner. Der står et stort træ. Manden går med en hund. En familie går en tur. Barnet smiler, og en dreng leger i solen.",
             steps: [
                 {
-                    q: "1. Hvem går en tur?",
+                    q: "1. Hvad gør solen?",
                     options: [
-                        { text: "Manden og en hund 🐕", correct: true },
-                        { text: "En læge og en bil 🚗", correct: false },
-                        { text: "En kat og en fisk 🐟", correct: false }
+                        { text: "Solen skinner", correct: true },
+                        { text: "Det regner", correct: false },
+                        { text: "Solen sover", correct: false }
                     ]
                 },
                 {
-                    q: "2. Hvad ser de?",
+                    q: "2. Hvad står der i byen?",
                     options: [
-                        { text: "En seng 🛏️", correct: false },
-                        { text: "Et stort træ 🌳", correct: true },
-                        { text: "Et komfur 🍳", correct: false }
+                        { text: "Et stort træ", correct: true },
+                        { text: "En seng", correct: false },
+                        { text: "En ovn", correct: false }
                     ]
                 },
                 {
-                    q: "3. Hvad gør familien?",
+                    q: "3. Hvem går manden med?",
                     options: [
-                        { text: "De sover 😴", correct: false },
-                        { text: "De smiler til hunden 😊", correct: true },
-                        { text: "De løber væk 🏃", correct: false }
+                        { text: "En hest", correct: false },
+                        { text: "En hund", correct: true },
+                        { text: "En kat", correct: false }
+                    ]
+                },
+                {
+                    q: "4. Hvad gør barnet?",
+                    options: [
+                        { text: "Barnet græder", correct: false },
+                        { text: "Barnet smiler", correct: true },
+                        { text: "Barnet sover", correct: false }
                     ]
                 }
             ]

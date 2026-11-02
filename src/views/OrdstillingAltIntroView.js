@@ -3,6 +3,7 @@ import { createGrammarToggle } from '../utils/grammarToggle.js';
 import { createCleanIllustrationToggle } from '../utils/cleanIllustrationToggle.js';
 import { altIntroBuilderWordTranslations } from '../utils/alt_intro_translations.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { getOrdstillingSlotHint, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
 
 export function renderOrdstillingAltIntroView(container, navigateFn, type = 'tid') {
     if (type === 'tid') {
@@ -496,18 +497,23 @@ function setupStedPuzzleExercise(container) {
         const slotsContainer = document.createElement('div');
         slotsContainer.className = 'puzzle-slots';
 
-        const slotPrompts = [
-            { text: "1. Hvor? (Sted)", grammar: "Præposition (sted)" },
-            { text: "2. Hvad laver? (Handling)", grammar: "Verbum (2. plads)" },
-            { text: "3. Hvem / hvad? (Person)", grammar: "Substantiv" },
-            { text: "4. Hvornår? (Tid)", grammar: "Tidsadverbium" }
+        const lang = getLang();
+        const slotData = [
+            getOrdstillingSlotHint('hvor', '1. ', '[STED]', lang),
+            getOrdstillingSlotHint('hvad_laver', '2. ', '[VERBUM - V2]', lang),
+            getOrdstillingSlotHint('hvem_hvad', '3. ', '[SUBJEKT]', lang),
+            getOrdstillingSlotHint('hvornaar', '4. ', '[TID]', lang)
         ];
 
-        slotPrompts.forEach((promptItem, idx) => {
+        slotData.forEach((item, idx) => {
             const slot = document.createElement('div');
             const colorClass = idx === 0 ? 'sted-slot-yellow' : idx === 1 ? 'sted-slot-red' : idx === 2 ? 'sted-slot-green' : 'sted-slot-gray';
             slot.className = `puzzle-slot ${colorClass}`;
-            slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+            slot.innerHTML = `
+                <span class="slot-hint">${item.danish}</span>
+                <span class="slot-trans">${item.translation}</span>
+                <span class="slot-role">${item.role}</span>
+            `;
             slot.dataset.idx = idx;
 
             slot.onclick = () => {
@@ -534,16 +540,17 @@ function setupStedPuzzleExercise(container) {
         function updateSlotsAndBank() {
             slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
                 const word = userSlots[idx];
+                const item = slotData[idx];
                 if (word) {
                     slotEl.classList.add('filled');
-                    slotEl.innerHTML = `
-                        <span class="slot-number">${idx + 1}</span>
-                        <span class="slot-text">${word}</span>
-                        <span class="slot-remove">×</span>
-                    `;
+                    slotEl.innerHTML = renderPuzzleSlotFilledHtml(word, item.role, idx + 1);
                 } else {
                     slotEl.classList.remove('filled');
-                    slotEl.innerHTML = `<span class="slot-hint">${slotPrompts[idx].text}</span><span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>`;
+                    slotEl.innerHTML = `
+                        <span class="slot-hint">${item.danish}</span>
+                        <span class="slot-trans">${item.translation}</span>
+                        <span class="slot-role">${item.role}</span>
+                    `;
                 }
             });
 
@@ -1050,18 +1057,23 @@ function setupTidPuzzleExercise(container) {
         const slotsContainer = document.createElement('div');
         slotsContainer.className = 'puzzle-slots';
 
-        const slotPrompts = [
-            { text: getTranslation('tid_slot_hint_1'), grammar: getTranslation('tid_g1') },
-            { text: getTranslation('tid_slot_hint_2'), grammar: getTranslation('tid_g2') },
-            { text: getTranslation('tid_slot_hint_3'), grammar: getTranslation('tid_g3') },
-            { text: getTranslation('tid_slot_hint_4'), grammar: getTranslation('tid_g4') }
+        const lang = getLang();
+        const slotData = [
+            getOrdstillingSlotHint('hvornaar', '1. ', `[${getTranslation('tid_g1') || 'TID'}]`, lang),
+            getOrdstillingSlotHint('hvad_laver', '2. ', `[${getTranslation('tid_g2') || 'VERBUM - V2'}]`, lang),
+            getOrdstillingSlotHint('hvem_hvad', '3. ', `[${getTranslation('tid_g3') || 'SUBJEKT'}]`, lang),
+            getOrdstillingSlotHint('hvor', '4. ', `[${getTranslation('tid_g4') || 'STED'}]`, lang)
         ];
 
-        slotPrompts.forEach((promptItem, idx) => {
+        slotData.forEach((item, idx) => {
             const slot = document.createElement('div');
             const colorClass = idx === 0 ? 'tid-slot-gray' : idx === 1 ? 'tid-slot-red' : idx === 2 ? 'tid-slot-green' : 'tid-slot-yellow';
             slot.className = `puzzle-slot ${colorClass}`;
-            slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+            slot.innerHTML = `
+                <span class="slot-hint">${item.danish}</span>
+                <span class="slot-trans">${item.translation}</span>
+                <span class="slot-role">${item.role}</span>
+            `;
             slot.dataset.idx = idx;
 
             slot.onclick = () => {
@@ -1086,16 +1098,17 @@ function setupTidPuzzleExercise(container) {
         function updateSlotsAndBank() {
             slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
                 const word = userSlots[idx];
+                const item = slotData[idx];
                 if (word) {
                     slotEl.classList.add('filled');
-                    slotEl.innerHTML = `
-                        <span class="slot-number">${idx + 1}</span>
-                        <span class="slot-text">${word}</span>
-                        <span class="slot-remove">×</span>
-                    `;
+                    slotEl.innerHTML = renderPuzzleSlotFilledHtml(word, item.role, idx + 1);
                 } else {
                     slotEl.classList.remove('filled');
-                    slotEl.innerHTML = `<span class="slot-hint">${slotPrompts[idx].text}</span><span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>`;
+                    slotEl.innerHTML = `
+                        <span class="slot-hint">${item.danish}</span>
+                        <span class="slot-trans">${item.translation}</span>
+                        <span class="slot-role">${item.role}</span>
+                    `;
                 }
             });
 
@@ -1606,18 +1619,23 @@ function setupKonjunktionPuzzleExercise(container) {
         const slotsContainer = document.createElement('div');
         slotsContainer.className = 'puzzle-slots';
 
-        const slotPrompts = [
-            { text: getTranslation('konj_slot_hint_1'), grammar: getTranslation('konj_g1') },
-            { text: getTranslation('konj_slot_hint_2'), grammar: getTranslation('konj_g2') },
-            { text: getTranslation('konj_slot_hint_3'), grammar: getTranslation('konj_g3') },
-            { text: getTranslation('konj_slot_hint_4'), grammar: getTranslation('konj_g4') }
+        const lang = getLang();
+        const slotData = [
+            getOrdstillingSlotHint('ledsaetning', '1. ', `[${getTranslation('konj_g1') || 'LEDSÆTNING'}]`, lang),
+            getOrdstillingSlotHint('hvad_laver', '2. ', `[${getTranslation('konj_g2') || 'VERBUM - V2'}]`, lang),
+            getOrdstillingSlotHint('hvem_hvad', '3. ', `[${getTranslation('konj_g3') || 'SUBJEKT'}]`, lang),
+            getOrdstillingSlotHint('slutfelt', '4. ', `[${getTranslation('konj_g4') || 'SLUTFELT'}]`, lang)
         ];
 
-        slotPrompts.forEach((promptItem, idx) => {
+        slotData.forEach((item, idx) => {
             const slot = document.createElement('div');
             const colorClass = idx === 0 ? 'konj-slot-purple' : idx === 1 ? 'konj-slot-red' : idx === 2 ? 'konj-slot-green' : 'konj-slot-yellow';
             slot.className = `puzzle-slot ${colorClass}`;
-            slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+            slot.innerHTML = `
+                <span class="slot-hint">${item.danish}</span>
+                <span class="slot-trans">${item.translation}</span>
+                <span class="slot-role">${item.role}</span>
+            `;
             slot.dataset.idx = idx;
 
             slot.onclick = () => {
@@ -1642,16 +1660,17 @@ function setupKonjunktionPuzzleExercise(container) {
         function updateSlotsAndBank() {
             slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
                 const word = userSlots[idx];
+                const item = slotData[idx];
                 if (word) {
                     slotEl.classList.add('filled');
-                    slotEl.innerHTML = `
-                        <span class="slot-number">${idx + 1}</span>
-                        <span class="slot-text">${word}</span>
-                        <span class="slot-remove">×</span>
-                    `;
+                    slotEl.innerHTML = renderPuzzleSlotFilledHtml(word, item.role, idx + 1);
                 } else {
                     slotEl.classList.remove('filled');
-                    slotEl.innerHTML = `<span class="slot-hint">${slotPrompts[idx].text}</span><span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>`;
+                    slotEl.innerHTML = `
+                        <span class="slot-hint">${item.danish}</span>
+                        <span class="slot-trans">${item.translation}</span>
+                        <span class="slot-role">${item.role}</span>
+                    `;
                 }
             });
 
@@ -2177,18 +2196,23 @@ function setupHoldningPuzzleExercise(container) {
         const slotsContainer = document.createElement('div');
         slotsContainer.className = 'puzzle-slots';
 
-        const slotPrompts = [
-            { text: "1. Hvad mener du? (Holdning)", grammar: "Centraladverbium" },
-            { text: "2. Hvad laver? (Handling)", grammar: "Verbum (2. plads)" },
-            { text: "3. Hvem / hvad? (Person)", grammar: "Substantiv" },
-            { text: "4. Hvor? (Sted)", grammar: "Præposition (sted)" }
+        const lang = getLang();
+        const slotData = [
+            getOrdstillingSlotHint('holdning', '1. ', '[HOLDNING]', lang),
+            getOrdstillingSlotHint('hvad_laver', '2. ', '[VERBUM - V2]', lang),
+            getOrdstillingSlotHint('hvem_hvad', '3. ', '[SUBJEKT]', lang),
+            getOrdstillingSlotHint('hvor', '4. ', '[STED]', lang)
         ];
 
-        slotPrompts.forEach((promptItem, idx) => {
+        slotData.forEach((item, idx) => {
             const slot = document.createElement('div');
             const colorClass = idx === 0 ? 'holdning-slot-blue' : idx === 1 ? 'holdning-slot-red' : idx === 2 ? 'holdning-slot-green' : 'holdning-slot-yellow';
             slot.className = `puzzle-slot ${colorClass}`;
-            slot.innerHTML = `<span class="slot-hint">${promptItem.text}</span><span class="grammar-hint-slot">[${promptItem.grammar}]</span>`;
+            slot.innerHTML = `
+                <span class="slot-hint">${item.danish}</span>
+                <span class="slot-trans">${item.translation}</span>
+                <span class="slot-role">${item.role}</span>
+            `;
             slot.dataset.idx = idx;
 
             slot.onclick = () => {
@@ -2215,16 +2239,17 @@ function setupHoldningPuzzleExercise(container) {
         function updateSlotsAndBank() {
             slotsContainer.querySelectorAll('.puzzle-slot').forEach((slotEl, idx) => {
                 const word = userSlots[idx];
+                const item = slotData[idx];
                 if (word) {
                     slotEl.classList.add('filled');
-                    slotEl.innerHTML = `
-                        <span class="slot-number">${idx + 1}</span>
-                        <span class="slot-text">${word}</span>
-                        <span class="slot-remove">×</span>
-                    `;
+                    slotEl.innerHTML = renderPuzzleSlotFilledHtml(word, item.role, idx + 1);
                 } else {
                     slotEl.classList.remove('filled');
-                    slotEl.innerHTML = `<span class="slot-hint">${slotPrompts[idx].text}</span><span class="grammar-hint-slot">[${slotPrompts[idx].grammar}]</span>`;
+                    slotEl.innerHTML = `
+                        <span class="slot-hint">${item.danish}</span>
+                        <span class="slot-trans">${item.translation}</span>
+                        <span class="slot-role">${item.role}</span>
+                    `;
                 }
             });
 
@@ -2730,60 +2755,162 @@ function ensureIntroStyles() {
 
         .puzzle-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.9rem; margin-bottom: 1.8rem; }
         .puzzle-slot {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            min-height: 70px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 2px dashed rgba(255, 255, 255, 0.25);
+            border-radius: 14px;
+            min-height: 104px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 0.6rem;
+            padding: 0.8rem 0.6rem;
             text-align: center;
-            transition: all 0.25s;
+            transition: all 0.25s ease;
             position: relative;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
         }
-        .puzzle-slot.filled { background: rgba(76, 175, 80, 0.15); border-style: solid; border-color: #4CAF50; cursor: pointer; }
+        .puzzle-slot.filled {
+            background: #1e293b;
+            border-style: solid;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+        }
 
         /* Tid slot colors */
-        .puzzle-slot.tid-slot-gray.filled { border-color: #94a3b8; background: rgba(148, 163, 184, 0.15); }
-        .puzzle-slot.tid-slot-gray.filled .slot-text { color: #cbd5e1; }
-        .puzzle-slot.tid-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
-        .puzzle-slot.tid-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.tid-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
-        .puzzle-slot.tid-slot-yellow.filled .slot-text { color: #fde047; }
+        .puzzle-slot.tid-slot-gray { border-color: rgba(148, 163, 184, 0.55); background: linear-gradient(180deg, rgba(148, 163, 184, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.tid-slot-gray .slot-trans { color: #cbd5e1; }
+        .puzzle-slot.tid-slot-gray .slot-role { color: #94a3b8; }
+        .puzzle-slot.tid-slot-gray.filled { border-color: #94a3b8; }
+
+        .puzzle-slot.tid-slot-red { border-color: rgba(239, 68, 68, 0.55); background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.tid-slot-red .slot-trans { color: #fca5a5; }
+        .puzzle-slot.tid-slot-red .slot-role { color: #f87171; }
+        .puzzle-slot.tid-slot-red.filled { border-color: #ef4444; }
+
+        .puzzle-slot.tid-slot-green { border-color: rgba(34, 197, 94, 0.55); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.tid-slot-green .slot-trans { color: #86efac; }
+        .puzzle-slot.tid-slot-green .slot-role { color: #4ade80; }
+        .puzzle-slot.tid-slot-green.filled { border-color: #22c55e; }
+
+        .puzzle-slot.tid-slot-yellow { border-color: rgba(234, 179, 8, 0.55); background: linear-gradient(180deg, rgba(234, 179, 8, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.tid-slot-yellow .slot-trans { color: #fde047; }
+        .puzzle-slot.tid-slot-yellow .slot-role { color: #facc15; }
+        .puzzle-slot.tid-slot-yellow.filled { border-color: #eab308; }
 
         /* Konjunktion slot colors */
-        .puzzle-slot.konj-slot-purple.filled { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.15); }
-        .puzzle-slot.konj-slot-purple.filled .slot-text { color: #c084fc; }
-        .puzzle-slot.konj-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
-        .puzzle-slot.konj-slot-red.filled .slot-text { color: #f87171; }
-        .puzzle-slot.konj-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.konj-slot-green.filled .slot-text { color: #4ade80; }
-        .puzzle-slot.konj-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
-        .puzzle-slot.konj-slot-yellow.filled .slot-text { color: #fde047; }
+        .puzzle-slot.konj-slot-purple { border-color: rgba(139, 92, 246, 0.55); background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.konj-slot-purple .slot-trans { color: #e9d5ff; }
+        .puzzle-slot.konj-slot-purple .slot-role { color: #c084fc; }
+        .puzzle-slot.konj-slot-purple.filled { border-color: #8b5cf6; }
+
+        .puzzle-slot.konj-slot-red { border-color: rgba(239, 68, 68, 0.55); background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.konj-slot-red .slot-trans { color: #fca5a5; }
+        .puzzle-slot.konj-slot-red .slot-role { color: #f87171; }
+        .puzzle-slot.konj-slot-red.filled { border-color: #ef4444; }
+
+        .puzzle-slot.konj-slot-green { border-color: rgba(34, 197, 94, 0.55); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.konj-slot-green .slot-trans { color: #86efac; }
+        .puzzle-slot.konj-slot-green .slot-role { color: #4ade80; }
+        .puzzle-slot.konj-slot-green.filled { border-color: #22c55e; }
+
+        .puzzle-slot.konj-slot-yellow { border-color: rgba(234, 179, 8, 0.55); background: linear-gradient(180deg, rgba(234, 179, 8, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.konj-slot-yellow .slot-trans { color: #fde047; }
+        .puzzle-slot.konj-slot-yellow .slot-role { color: #facc15; }
+        .puzzle-slot.konj-slot-yellow.filled { border-color: #eab308; }
 
         /* Sted slot colors */
-        .puzzle-slot.sted-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
-        .puzzle-slot.sted-slot-yellow.filled .slot-text { color: #fde047; }
-        .puzzle-slot.sted-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
-        .puzzle-slot.sted-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.sted-slot-gray.filled { border-color: #94a3b8; background: rgba(148, 163, 184, 0.15); }
-        .puzzle-slot.sted-slot-gray.filled .slot-text { color: #cbd5e1; }
+        .puzzle-slot.sted-slot-yellow { border-color: rgba(234, 179, 8, 0.55); background: linear-gradient(180deg, rgba(234, 179, 8, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.sted-slot-yellow .slot-trans { color: #fde047; }
+        .puzzle-slot.sted-slot-yellow .slot-role { color: #facc15; }
+        .puzzle-slot.sted-slot-yellow.filled { border-color: #eab308; }
+
+        .puzzle-slot.sted-slot-red { border-color: rgba(239, 68, 68, 0.55); background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.sted-slot-red .slot-trans { color: #fca5a5; }
+        .puzzle-slot.sted-slot-red .slot-role { color: #f87171; }
+        .puzzle-slot.sted-slot-red.filled { border-color: #ef4444; }
+
+        .puzzle-slot.sted-slot-green { border-color: rgba(34, 197, 94, 0.55); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.sted-slot-green .slot-trans { color: #86efac; }
+        .puzzle-slot.sted-slot-green .slot-role { color: #4ade80; }
+        .puzzle-slot.sted-slot-green.filled { border-color: #22c55e; }
+
+        .puzzle-slot.sted-slot-gray { border-color: rgba(148, 163, 184, 0.55); background: linear-gradient(180deg, rgba(148, 163, 184, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.sted-slot-gray .slot-trans { color: #cbd5e1; }
+        .puzzle-slot.sted-slot-gray .slot-role { color: #94a3b8; }
+        .puzzle-slot.sted-slot-gray.filled { border-color: #94a3b8; }
 
         /* Holdning slot colors */
-        .puzzle-slot.holdning-slot-blue.filled { border-color: #0284c7; background: rgba(2, 132, 199, 0.15); }
-        .puzzle-slot.holdning-slot-blue.filled .slot-text { color: #60a5fa; }
-        .puzzle-slot.holdning-slot-red.filled { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
-        .puzzle-slot.holdning-slot-green.filled { border-color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-        .puzzle-slot.holdning-slot-yellow.filled { border-color: #eab308; background: rgba(234, 179, 8, 0.15); }
-        .puzzle-slot.holdning-slot-yellow.filled .slot-text { color: #fde047; }
+        .puzzle-slot.holdning-slot-blue { border-color: rgba(2, 132, 199, 0.55); background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.holdning-slot-blue .slot-trans { color: #7dd3fc; }
+        .puzzle-slot.holdning-slot-blue .slot-role { color: #38bdf8; }
+        .puzzle-slot.holdning-slot-blue.filled { border-color: #0284c7; }
 
-        .slot-hint { font-size: 0.85rem; color: #888; font-style: italic; }
-        .slot-number { position: absolute; top: 4px; left: 8px; font-size: 0.75rem; font-weight: bold; opacity: 0.7; }
-        .slot-text { font-size: 1.15rem; font-weight: bold; color: #fff; }
-        .slot-remove { position: absolute; top: 4px; right: 8px; font-size: 0.75rem; color: #ff6b6b; }
+        .puzzle-slot.holdning-slot-red { border-color: rgba(239, 68, 68, 0.55); background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.holdning-slot-red .slot-trans { color: #fca5a5; }
+        .puzzle-slot.holdning-slot-red .slot-role { color: #f87171; }
+        .puzzle-slot.holdning-slot-red.filled { border-color: #ef4444; }
+
+        .puzzle-slot.holdning-slot-green { border-color: rgba(34, 197, 94, 0.55); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.holdning-slot-green .slot-trans { color: #86efac; }
+        .puzzle-slot.holdning-slot-green .slot-role { color: #4ade80; }
+        .puzzle-slot.holdning-slot-green.filled { border-color: #22c55e; }
+
+        .puzzle-slot.holdning-slot-yellow { border-color: rgba(234, 179, 8, 0.55); background: linear-gradient(180deg, rgba(234, 179, 8, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%); }
+        .puzzle-slot.holdning-slot-yellow .slot-trans { color: #fde047; }
+        .puzzle-slot.holdning-slot-yellow .slot-role { color: #facc15; }
+        .puzzle-slot.holdning-slot-yellow.filled { border-color: #eab308; }
+
+        .slot-hint {
+            font-size: 1.15rem;
+            color: #ffffff;
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+        }
+        .slot-trans {
+            font-size: 0.92rem;
+            font-weight: 600;
+            line-height: 1.25;
+            margin-top: 0.2rem;
+            letter-spacing: 0.2px;
+        }
+        .slot-role {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 0.35rem;
+            font-weight: 800;
+            opacity: 0.9;
+        }
+        .slot-number {
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            opacity: 0.75;
+            color: #94a3b8;
+        }
+        .slot-filled-word, .slot-text {
+            font-weight: 800;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            color: #ffffff;
+            margin-bottom: 0.15rem;
+        }
+        .slot-remove {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        .puzzle-slot.filled:hover .slot-remove {
+            color: #f87171;
+        }
 
         .puzzle-bank { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-bottom: 1.5rem; }
         .puzzle-word-btn {

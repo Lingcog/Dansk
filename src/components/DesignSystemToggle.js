@@ -6,6 +6,12 @@
 
 const STORAGE_KEY = 'ds_preview_mode';
 
+export function isLocalhost() {
+    if (typeof window === 'undefined') return false;
+    const host = window.location.hostname;
+    return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '' || host.endsWith('.local');
+}
+
 export function getActiveDesignTheme() {
     // 1. Tjek URL query param ?design=alpha eller ?design=classic
     const urlParams = new URLSearchParams(window.location.search);
@@ -49,6 +55,22 @@ export function applyDesignTheme(mode) {
 }
 
 export function initDesignSystemToggle() {
+    // 1. Aktivér altid aktuelt tema (også i liveudgaven, hvor Vinrød Præcision er standard)
+    const initialMode = getActiveDesignTheme();
+    applyDesignTheme(initialMode);
+
+    // Lyt på ruteskift for at sikre temaet forbliver aktivt
+    window.addEventListener('hashchange', () => {
+        applyDesignTheme(getActiveDesignTheme());
+    });
+
+    // 2. Toggle-knappen Klassisk / Vinrød skal KUN være tilgængelig på localhost
+    if (!isLocalhost()) {
+        const existingContainer = document.getElementById('ds-toggle-container');
+        if (existingContainer) existingContainer.remove();
+        return;
+    }
+
     // Sikr at styles kun injiceres én gang
     if (!document.getElementById('ds-toggle-styles')) {
         const style = document.createElement('style');
@@ -175,13 +197,4 @@ export function initDesignSystemToggle() {
 
         document.body.appendChild(container);
     }
-
-    // Lyt også på ruteskift for at sikre temaet og knappen forbliver aktive
-    window.addEventListener('hashchange', () => {
-        applyDesignTheme(getActiveDesignTheme());
-    });
-
-    // Aktivér aktuelt tema
-    const initialMode = getActiveDesignTheme();
-    applyDesignTheme(initialMode);
 }

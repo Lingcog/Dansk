@@ -1012,18 +1012,35 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             margin-bottom: 0.8rem;
         }
         .sb-context-chip {
-            padding: 0.5rem 0.9rem;
-            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
         }
-        .sb-context-chip.subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.3); }
-        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
+        .sb-context-chip.subjekt, .sb-context-chip.objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); }
+        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.35); }
+        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.35); }
+        .sb-chip-role {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            opacity: 0.95;
+        }
+        .sb-chip-role .chip-trans {
+            font-weight: 600;
+            text-transform: none;
+            opacity: 0.85;
+            margin-left: 0.25rem;
+        }
+        .legend-trans, .sb-cat-trans {
+            font-weight: 600;
+            opacity: 0.85;
+            font-size: 0.9em;
+        }
 
         .sb-question-box {
             background: rgba(56, 189, 248, 0.08);
@@ -2792,21 +2809,27 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         challengeContainer.appendChild(header);
 
         // Step 1: Context & Semantic Match
+        const lang = getLang();
+        const h0 = getGrammarSlotHint(0, lang);
+        const h1 = getGrammarSlotHint(1, lang);
+        const h2 = getGrammarSlotHint(2, lang);
+        const h3 = getGrammarSlotHint(3, lang);
+
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
             <div class="sb-context-title">📍 <em>${task.context}</em></div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
-                    <span class="sb-chip-role">1. Hvem?</span>
+                    <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
                     <span>${task.subjekt}</span>
                 </div>
                 <div class="sb-context-chip verbum clickable-verb-peek" title="Gå til verbumfladen for '${task.verbum}' ↗️" style="cursor: pointer;">
-                    <span class="sb-chip-role">2. Handling</span>
+                    <span class="sb-chip-role">${h1.danish} <span class="chip-trans">(${h1.translation})</span></span>
                     <span>${task.verbum} <span class="verb-chip-info-tag">↗️</span></span>
                 </div>
                 <div class="sb-context-chip sted">
-                    <span class="sb-chip-role">4. Hvor?</span>
+                    <span class="sb-chip-role">${h3.danish} <span class="chip-trans">(${h3.translation})</span></span>
                     <span>${task.sted}</span>
                 </div>
             </div>
@@ -2830,8 +2853,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const qBox = document.createElement('div');
         qBox.className = 'sb-question-box';
         qBox.innerHTML = `
-            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
-                Spørgsmål 3: Genstand / Objekt (Kernen i opgaven)
+            <div style="font-size: 0.92rem; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.5px;">
+                Spørgsmål 3: ${h2.danish} <span style="opacity: 0.85; font-weight: 600; text-transform: none;">(${h2.translation})</span> – Genstand / Objekt
             </div>
             <div class="sb-question-text">${task.questionPrompt}</div>
         `;

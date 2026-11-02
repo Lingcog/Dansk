@@ -811,18 +811,35 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             margin-bottom: 0.8rem;
         }
         .sb-context-chip {
-            padding: 0.5rem 0.9rem;
-            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
         }
-        .sb-context-chip.subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.3); }
-        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
+        .sb-context-chip.subjekt, .sb-context-chip.objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); }
+        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.35); }
+        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.35); }
+        .sb-chip-role {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            opacity: 0.95;
+        }
+        .sb-chip-role .chip-trans {
+            font-weight: 600;
+            text-transform: none;
+            opacity: 0.85;
+            margin-left: 0.25rem;
+        }
+        .legend-trans, .sb-cat-trans {
+            font-weight: 600;
+            opacity: 0.85;
+            font-size: 0.9em;
+        }
 
         .sb-question-box {
             background: rgba(239, 68, 68, 0.08);
@@ -2356,6 +2373,12 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
     // --- SUB-TAB 1: DEN FRIE SÆTNINGSBYGGER (UDFORSK)
     // ========================================================
     function setupFreeBuilder() {
+        const lang = getLang();
+        const h0 = getGrammarSlotHint(0, lang);
+        const h1 = getGrammarSlotHint(1, lang);
+        const h2 = getGrammarSlotHint(2, lang);
+        const h3 = getGrammarSlotHint(3, lang);
+
         freeBuilderContainer.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger i klassen og på kontoret</h3>
@@ -2366,10 +2389,10 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
 
             <!-- Grammatisk farveforklaring -->
             <div class="grammar-legend-bar">
-                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> ${getTranslation('verber_sb_legend_subjekt')}</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> ${getTranslation('verber_sb_legend_verbum')}</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> ${getTranslation('verber_sb_legend_objekt')}</div>
-                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> ${getTranslation('verber_sb_legend_sted')}</div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> ${h0.danish} <span class="legend-trans">(${h0.translation})</span></div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> ${h1.danish} <span class="legend-trans">(${h1.translation})</span></div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> ${h2.danish} <span class="legend-trans">(${h2.translation})</span></div>
+                <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> ${h3.danish} <span class="legend-trans">(${h3.translation})</span></div>
             </div>
 
             <div id="free-builder-rows-klasse-verb"></div>
@@ -2387,8 +2410,8 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         const freeCategories = [
             {
                 id: 'subjekt',
-                title: '1. Hvem taler vi om?',
-                role: 'Subjekt',
+                title: `${h0.danish} <span class="sb-cat-trans">(${h0.translation})</span> – Hvem taler vi om?`,
+                role: `Subjekt (${h0.translation})`,
                 catClass: 'sb-cat-subjekt',
                 badgeClass: 'badge-cat-subjekt',
                 icon: '👤',
@@ -2396,8 +2419,8 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             },
             {
                 id: 'verbum',
-                title: '2. Hvad laver personen / dyret?',
-                role: 'Verbum (kernen)',
+                title: `${h1.danish} <span class="sb-cat-trans">(${h1.translation})</span> – Hvad laver personen / dyret?`,
+                role: `Verbum (${h1.translation})`,
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
                 icon: '⚡',
@@ -2405,8 +2428,8 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             },
             {
                 id: 'objekt',
-                title: '3. Hvilken genstand eller ting?',
-                role: 'Objekt (ting)',
+                title: `${h2.danish} <span class="sb-cat-trans">(${h2.translation})</span> – Hvilken genstand eller ting?`,
+                role: `Objekt (${h2.translation})`,
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
                 icon: '📦',
@@ -2414,7 +2437,11 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
             },
             {
                 id: 'sted',
-                title: '4. Hvor i klassen eller på kontoret sker det?',
+                title: `${h3.danish} <span class="sb-cat-trans">(${h3.translation})</span> – Hvor i klassen eller på kontoret sker det?`,
+                role: `Sted (${h3.translation})`,
+                catClass: 'sb-cat-sted',
+                badgeClass: 'badge-cat-sted',
+                icon: '📍',
                 role: 'Sted (rum)',
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
@@ -2602,21 +2629,27 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         challengeContainer.appendChild(header);
 
         // Step 1: Context & Semantic Match
+        const lang = getLang();
+        const h0 = getGrammarSlotHint(0, lang);
+        const h1 = getGrammarSlotHint(1, lang);
+        const h2 = getGrammarSlotHint(2, lang);
+        const h3 = getGrammarSlotHint(3, lang);
+
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
             <div class="sb-context-title">📍 <em>${formatNounLinks(task.context)}</em></div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
-                    <span class="sb-chip-role">1. Hvem?</span>
+                    <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
                     <span>${formatNounLinks(task.subjekt)}</span>
                 </div>
                 <div class="sb-context-chip objekt">
-                    <span class="sb-chip-role">3. Hvilken ting?</span>
+                    <span class="sb-chip-role">${h2.danish} <span class="chip-trans">(${h2.translation})</span></span>
                     <span>${formatNounLinks(task.objekt)}</span>
                 </div>
                 <div class="sb-context-chip sted">
-                    <span class="sb-chip-role">4. Hvor?</span>
+                    <span class="sb-chip-role">${h3.danish} <span class="chip-trans">(${h3.translation})</span></span>
                     <span>${formatNounLinks(task.sted)}</span>
                 </div>
             </div>
@@ -2628,8 +2661,8 @@ export function renderVerberKlasseView(container, navigateFn, extraData = {}) {
         const qBox = document.createElement('div');
         qBox.className = 'sb-question-box';
         qBox.innerHTML = `
-            <div style="font-size: 0.85rem; color: #f87171; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
-                Spørgsmål 2: Handlingen (Kernen i opgaven)
+            <div style="font-size: 0.92rem; color: #f87171; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.5px;">
+                Spørgsmål 2: ${h1.danish} <span style="opacity: 0.85; font-weight: 600; text-transform: none;">(${h1.translation})</span> – Handlingen
             </div>
             <div class="sb-question-text">${formatNounLinks(task.questionPrompt)}</div>
         `;

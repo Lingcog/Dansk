@@ -6,27 +6,27 @@
 
 :root[data-theme="vinroed-praecision"],
 body[data-theme="vinroed-praecision"] {
-  /* Farver: Hovedbaggrunde og flader (Standard: Vinrød bund + Dyb Skovgrøn) */
-  --vp-bg: #4A040B;             /* Dyb mørk vinrød (hovedbaggrund) */
+  /* Farver: Hovedbaggrunde og flader (Forsiden & standard: Vinrød Præcision) */
+  --vp-bg: #4A040B;             /* Dyb mørk bordeaux (hovedbaggrund) */
   --vp-bg-glow: #6B0F1A;        /* Varmere vinrød (brugt i top-right radial gradient) */
-  --vp-surface: #073518;        /* Dyb skovgrøn til kort og modulflader */
-  --vp-surface-hover: #0c4f24;  /* Mellem skovgrøn ved interaktiv hover på kort */
-  --vp-surface-input: #02220e;  /* Helt mørk skovgrøn bund til skrivehjælp og tekstinput */
+  --vp-surface: #5C0812;        /* Mørk rubinrød til forsidekort og modulflader */
+  --vp-surface-hover: #73101C;  /* Lettere vinrød ved interaktiv hover på kort */
+  --vp-surface-input: #380207;  /* Dybere kontrastfelt til skrivehjælp og tekstinput */
 
   /* Grænser og konturer */
-  --vp-border: #136832;         /* Skovgrøn kant til adskillelse af moduler */
-  --vp-border-focus: #a7f3d0;   /* Lys mint fokus-ring til tastaturnavigation */
+  --vp-border: #851825;         /* Dæmpet bordeaux-kant til adskillelse af moduler */
+  --vp-border-focus: #FFC9CD;   /* Lys rosa fokus-ring til tastaturnavigation */
 
   /* Tekst og læselighed */
   --vp-text: #FFFFFF;           /* Ren hvid for maksimal læsbarhed og kontrast */
-  --vp-text-muted: #a7f3d0;     /* Lys mint kontrasttekst til undertitler */
-  --vp-text-subtle: #86efac;    /* Dæmpet grøn til metadata, tags og hjælpetekster */
+  --vp-text-muted: #FFC9CD;     /* Lys rosa / dæmpet rødlig kontrasttekst til undertitler */
+  --vp-text-subtle: #D49B9F;    /* Dæmpet rosa til metadata, tags og hjælpetekster */
 
   /* Semantiske funktionsfarver */
-  --vp-primary: #22c55e;        /* Livlig grøn accent reserveret til primære CTA-handlinger */
-  --vp-accent: #22c55e;
+  --vp-primary: #FF4D5E;        /* Livlig koralrød accent reserveret til primære CTA-handlinger */
+  --vp-accent: #FF4D5E;
   --vp-feedback: #FBBF24;       /* Amber 400 til pædagogisk vejledning og sprogtips */
-  --vp-success: #22c55e;        /* Grøn til bekræftede, korrekte svar */
+  --vp-success: #34D399;        /* Emerald 400 til bekræftede, korrekte svar */
   --vp-error: #F87171;          /* Red 400 til grammatiske fejlretninger */
 
   /* Typografi */

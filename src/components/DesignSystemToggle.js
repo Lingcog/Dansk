@@ -150,17 +150,17 @@ export function getActiveDesignTheme() {
     const urlParams = new URLSearchParams(window.location.search);
     const param = urlParams.get('design');
     if (param && (COLOR_PALETTES[param] || param === 'alpha' || param === 'classic')) {
-        return param === 'alpha' ? 'combo-vinroed-skov' : param;
+        return param === 'alpha' ? 'vinroed' : param;
     }
 
-    // 2. Tjek localStorage (hvis gemt værdi er det gamle 'vinroed' eller 'alpha', opgraderes til 'combo-vinroed-skov')
+    // 2. Tjek localStorage (hvis gemt 'combo-vinroed-skov' fra tidligere test, nulstil til vinroed)
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && stored !== 'vinroed' && stored !== 'alpha' && (COLOR_PALETTES[stored] || stored === 'classic')) {
-        return stored;
+    if (stored && stored !== 'combo-vinroed-skov' && (COLOR_PALETTES[stored] || stored === 'classic')) {
+        return stored === 'alpha' ? 'vinroed' : stored;
     }
 
-    // Standard design: 'combo-vinroed-skov' (Vinrød bund #4A040B + Skovgrønne flader #073518)
-    return 'combo-vinroed-skov';
+    // Standard app-tema: 'vinroed' (Forsiden i ren vinrød præcision med monokrome ikoner)
+    return 'vinroed';
 }
 
 export function applyDesignTheme(mode) {

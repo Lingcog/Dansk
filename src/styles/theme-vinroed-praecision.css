@@ -6,27 +6,27 @@
 
 :root[data-theme="vinroed-praecision"],
 body[data-theme="vinroed-praecision"] {
-  /* Farver: Hovedbaggrunde og flader */
-  --vp-bg: #4A040B;             /* Dyb mørk bordeaux (hovedbaggrund) */
+  /* Farver: Hovedbaggrunde og flader (Standard: Vinrød bund + Dyb Skovgrøn) */
+  --vp-bg: #4A040B;             /* Dyb mørk vinrød (hovedbaggrund) */
   --vp-bg-glow: #6B0F1A;        /* Varmere vinrød (brugt i top-right radial gradient) */
-  --vp-surface: #5C0812;        /* Mørk rubinrød til kort og modulflader */
-  --vp-surface-hover: #73101C;  /* Lettere vinrød ved interaktiv hover på kort */
-  --vp-surface-input: #380207;  /* Dybere kontrastfelt til skrivehjælp og tekstinput */
+  --vp-surface: #073518;        /* Dyb skovgrøn til kort og modulflader */
+  --vp-surface-hover: #0c4f24;  /* Mellem skovgrøn ved interaktiv hover på kort */
+  --vp-surface-input: #02220e;  /* Helt mørk skovgrøn bund til skrivehjælp og tekstinput */
 
   /* Grænser og konturer */
-  --vp-border: #851825;         /* Dæmpet bordeaux-kant til adskillelse af moduler */
-  --vp-border-focus: #FFC9CD;   /* Lys rosa fokus-ring til tastaturnavigation */
+  --vp-border: #136832;         /* Skovgrøn kant til adskillelse af moduler */
+  --vp-border-focus: #a7f3d0;   /* Lys mint fokus-ring til tastaturnavigation */
 
   /* Tekst og læselighed */
   --vp-text: #FFFFFF;           /* Ren hvid for maksimal læsbarhed og kontrast */
-  --vp-text-muted: #FFC9CD;     /* Lys rosa / dæmpet rødlig kontrasttekst til undertitler */
-  --vp-text-subtle: #D49B9F;    /* Dæmpet rosa til metadata, tags og hjælpetekster */
+  --vp-text-muted: #a7f3d0;     /* Lys mint kontrasttekst til undertitler */
+  --vp-text-subtle: #86efac;    /* Dæmpet grøn til metadata, tags og hjælpetekster */
 
   /* Semantiske funktionsfarver */
-  --vp-primary: #FF4D5E;        /* Livlig koralrød accent reserveret til primære CTA-handlinger */
-  --vp-accent: #FF4D5E;
+  --vp-primary: #22c55e;        /* Livlig grøn accent reserveret til primære CTA-handlinger */
+  --vp-accent: #22c55e;
   --vp-feedback: #FBBF24;       /* Amber 400 til pædagogisk vejledning og sprogtips */
-  --vp-success: #34D399;        /* Emerald 400 til bekræftede, korrekte svar */
+  --vp-success: #22c55e;        /* Grøn til bekræftede, korrekte svar */
   --vp-error: #F87171;          /* Red 400 til grammatiske fejlretninger */
 
   /* Typografi */
@@ -1590,50 +1590,145 @@ body[data-color-mode="groen-granit"] {
 }
 
 /* ==========================================================================
-   Substantiv-fladen / Byrummet Vrimmel integreret under Præcision Themes
+   Substantiv-fladerne (Top 100 Hub & alle 5 scener):
+   Løsning 1: Vinrød bund (#4A040B) + Dyb Skovgrønne flader (#073518)
    ========================================================================== */
 
-[data-theme="vinroed-praecision"] .byrum-tabs {
-  background: var(--vp-surface-input) !important;
-  border: 1px solid var(--vp-border) !important;
-  border-radius: var(--vp-radius-md) !important;
+.byrum-vrimmel-view,
+.klasse-vrimmel-view,
+.koekken-vrimmel-view,
+.natur-vrimmel-view,
+.station-vrimmel-view,
+.top100-substantiver-hub,
+[data-theme="vinroed-praecision"] .byrum-vrimmel-view,
+[data-theme="vinroed-praecision"] .klasse-vrimmel-view,
+[data-theme="vinroed-praecision"] .koekken-vrimmel-view,
+[data-theme="vinroed-praecision"] .natur-vrimmel-view,
+[data-theme="vinroed-praecision"] .station-vrimmel-view,
+[data-theme="vinroed-praecision"] .top100-substantiver-hub {
+  --vp-bg: #4A040B !important;
+  --vp-bg-glow: #6B0F1A !important;
+  --vp-surface: #073518 !important;
+  --vp-surface-hover: #0c4f24 !important;
+  --vp-surface-input: #02220e !important;
+  --vp-border: #136832 !important;
+  --vp-border-focus: #a7f3d0 !important;
+  --vp-border-light: #1b793c !important;
+  --vp-primary: #22c55e !important;
+  --vp-accent: #22c55e !important;
+  --vp-text: #FFFFFF !important;
+  --vp-text-muted: #a7f3d0 !important;
+  --vp-text-subtle: #86efac !important;
+
+  --by-bg: #4A040B !important;
+  --by-surface: #073518 !important;
+  --by-surface-hover: #0c4f24 !important;
+  --by-surface-input: #02220e !important;
+  --by-border: #136832 !important;
+  --by-border-light: #1b793c !important;
+  --by-primary: #22c55e !important;
+  --by-text: #FFFFFF !important;
+  --by-text-muted: #a7f3d0 !important;
+  --by-text-subtle: #86efac !important;
 }
 
-[data-theme="vinroed-praecision"] .byrum-tab-btn {
-  color: var(--vp-text-muted) !important;
-  border-radius: var(--vp-radius-sm) !important;
+/* Hero Headers */
+[data-theme="vinroed-praecision"] .byrum-hero-header h1,
+[data-theme="vinroed-praecision"] .klasse-hero-header h1,
+[data-theme="vinroed-praecision"] .koekken-hero-header h1,
+[data-theme="vinroed-praecision"] .natur-hero-header h1,
+[data-theme="vinroed-praecision"] .station-hero-header h1,
+[data-theme="vinroed-praecision"] .hub-hero h1 {
+  color: #FFFFFF !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
 }
 
-[data-theme="vinroed-praecision"] .byrum-tab-btn:hover {
-  background: var(--vp-surface-hover) !important;
+[data-theme="vinroed-praecision"] .byrum-hero-header p,
+[data-theme="vinroed-praecision"] .klasse-hero-header p,
+[data-theme="vinroed-praecision"] .koekken-hero-header p,
+[data-theme="vinroed-praecision"] .natur-hero-header p,
+[data-theme="vinroed-praecision"] .station-hero-header p,
+[data-theme="vinroed-praecision"] .hub-hero p {
+  color: #FFFFFF !important;
+  opacity: 0.95 !important;
+}
+
+/* Tabs Navigationsrammer */
+[data-theme="vinroed-praecision"] .byrum-tabs,
+[data-theme="vinroed-praecision"] .klasse-tabs,
+[data-theme="vinroed-praecision"] .koekken-tabs,
+[data-theme="vinroed-praecision"] .natur-tabs,
+[data-theme="vinroed-praecision"] .station-tabs {
+  background: #02220e !important;
+  border: 1.5px solid #136832 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .byrum-tab-btn,
+[data-theme="vinroed-praecision"] .klasse-tab-btn,
+[data-theme="vinroed-praecision"] .koekken-tab-btn,
+[data-theme="vinroed-praecision"] .natur-tab-btn,
+[data-theme="vinroed-praecision"] .station-tab-btn {
+  color: #a7f3d0 !important;
+  border-radius: 12px !important;
+}
+
+[data-theme="vinroed-praecision"] .byrum-tab-btn:hover,
+[data-theme="vinroed-praecision"] .klasse-tab-btn:hover,
+[data-theme="vinroed-praecision"] .koekken-tab-btn:hover,
+[data-theme="vinroed-praecision"] .natur-tab-btn:hover,
+[data-theme="vinroed-praecision"] .station-tab-btn:hover {
+  background: #0c4f24 !important;
   color: #FFFFFF !important;
 }
 
-[data-theme="vinroed-praecision"] .byrum-tab-btn.active {
-  background: var(--vp-primary) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+[data-theme="vinroed-praecision"] .byrum-tab-btn.active,
+[data-theme="vinroed-praecision"] .klasse-tab-btn.active,
+[data-theme="vinroed-praecision"] .koekken-tab-btn.active,
+[data-theme="vinroed-praecision"] .natur-tab-btn.active,
+[data-theme="vinroed-praecision"] .station-tab-btn.active {
+  background: #22c55e !important;
+  color: #02220e !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45) !important;
 }
 
+/* Modulkort og flader i Dyb Skovgrøn (#073518) */
 [data-theme="vinroed-praecision"] .vrimmel-card,
 [data-theme="vinroed-praecision"] .mission-card,
 [data-theme="vinroed-praecision"] .story-container,
 [data-theme="vinroed-praecision"] .sorting-game-box,
-[data-theme="vinroed-praecision"] .hotspot-detail-card {
-  background: var(--vp-surface) !important;
-  border: 1px solid var(--vp-border) !important;
-  border-radius: var(--vp-radius-md) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+[data-theme="vinroed-praecision"] .hotspot-detail-card,
+[data-theme="vinroed-praecision"] .category-card,
+[data-theme="vinroed-praecision"] .sentence-builder-card,
+[data-theme="vinroed-praecision"] .scene-card {
+  background: #073518 !important;
+  border: 1.5px solid #136832 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45) !important;
+  color: #FFFFFF !important;
 }
 
+/* Dybeste bundfelter og inputrammer i Skovgrøn (#02220e) */
 [data-theme="vinroed-praecision"] .clue-btn,
 [data-theme="vinroed-praecision"] .story-step-card,
 [data-theme="vinroed-praecision"] .story-nav-btn,
 [data-theme="vinroed-praecision"] .sort-word-chip,
 [data-theme="vinroed-praecision"] .radar-toggle-btn,
-[data-theme="vinroed-praecision"] .pure-image-toggle-btn {
-  background: var(--vp-surface-input) !important;
-  border: 1.5px solid var(--vp-border) !important;
+[data-theme="vinroed-praecision"] .pure-image-toggle-btn,
+[data-theme="vinroed-praecision"] .sb-context-card,
+[data-theme="vinroed-praecision"] .sb-question-box,
+[data-theme="vinroed-praecision"] .sb-live-box,
+[data-theme="vinroed-praecision"] .sb-puzzle-bank,
+[data-theme="vinroed-praecision"] .grammar-system-banner,
+[data-theme="vinroed-praecision"] .grammar-legend-bar,
+[data-theme="vinroed-praecision"] .vrimmel-stage,
+[data-theme="vinroed-praecision"] .sort-bin {
+  background: #02220e !important;
+  border: 1.5px solid #136832 !important;
   color: #FFFFFF !important;
   transition: all 0.2s ease !important;
 }
@@ -1643,8 +1738,8 @@ body[data-color-mode="groen-granit"] {
 [data-theme="vinroed-praecision"] .sort-word-chip:hover,
 [data-theme="vinroed-praecision"] .radar-toggle-btn:hover,
 [data-theme="vinroed-praecision"] .pure-image-toggle-btn:hover {
-  background: var(--vp-surface-hover) !important;
-  border-color: var(--vp-primary) !important;
+  background: #0c4f24 !important;
+  border-color: #22c55e !important;
   color: #FFFFFF !important;
 }
 
@@ -1665,15 +1760,30 @@ body[data-color-mode="groen-granit"] {
 }
 
 [data-theme="vinroed-praecision"] .story-nav-btn.active {
-  background: var(--vp-primary) !important;
-  border-color: var(--vp-primary) !important;
-  color: #FFFFFF !important;
+  background: #22c55e !important;
+  border-color: #22c55e !important;
+  color: #02220e !important;
+  font-weight: 800 !important;
 }
 
 [data-theme="vinroed-praecision"] .sort-progress-badge {
-  background: var(--vp-surface-input) !important;
-  border: 1px solid var(--vp-border) !important;
-  color: var(--vp-text-muted) !important;
+  background: #02220e !important;
+  border: 1px solid #136832 !important;
+  color: #a7f3d0 !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-action-btn,
+[data-theme="vinroed-praecision"] .mission-next-btn {
+  background: #22c55e !important;
+  color: #02220e !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45) !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-action-btn:hover,
+[data-theme="vinroed-praecision"] .mission-next-btn:hover {
+  background: #4ade80 !important;
+  color: #02220e !important;
 }
 
 /* ==========================================================================
@@ -1682,8 +1792,8 @@ body[data-color-mode="groen-granit"] {
    ========================================================================== */
 
 [data-theme="vinroed-praecision"] .sb-category-row {
-  background: var(--vp-surface-input, #02220e) !important;
-  border: 1px solid var(--vp-border, #136832) !important;
+  background: #02220e !important;
+  border: 1.5px solid #136832 !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
@@ -1693,14 +1803,14 @@ body[data-color-mode="groen-granit"] {
 
 /* Uvalgte knapper */
 [data-theme="vinroed-praecision"] .sb-chip-btn {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   color: #e2e8f0 !important;
 }
 
 [data-theme="vinroed-praecision"] .sb-chip-btn:hover {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
   color: #FFFFFF !important;
 }
 

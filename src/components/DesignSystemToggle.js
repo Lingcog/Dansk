@@ -150,17 +150,17 @@ export function getActiveDesignTheme() {
     const urlParams = new URLSearchParams(window.location.search);
     const param = urlParams.get('design');
     if (param && (COLOR_PALETTES[param] || param === 'alpha' || param === 'classic')) {
-        return param === 'alpha' ? 'vinroed' : param;
+        return param === 'alpha' ? 'combo-vinroed-skov' : param;
     }
 
-    // 2. Tjek localStorage
+    // 2. Tjek localStorage (hvis gemt værdi er det gamle 'vinroed' eller 'alpha', opgraderes til 'combo-vinroed-skov')
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && (COLOR_PALETTES[stored] || stored === 'alpha' || stored === 'classic')) {
-        return stored === 'alpha' ? 'vinroed' : stored;
+    if (stored && stored !== 'vinroed' && stored !== 'alpha' && (COLOR_PALETTES[stored] || stored === 'classic')) {
+        return stored;
     }
 
-    // Standard: i localhost starter vi på 'combo-vinroed-skov' for at vise kombinationen med det samme!
-    return isLocalhost() ? 'combo-vinroed-skov' : 'vinroed';
+    // Standard design: 'combo-vinroed-skov' (Vinrød bund #4A040B + Skovgrønne flader #073518)
+    return 'combo-vinroed-skov';
 }
 
 export function applyDesignTheme(mode) {

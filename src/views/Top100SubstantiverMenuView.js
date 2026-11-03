@@ -1,4 +1,10 @@
 import { getTranslation } from '../utils/i18n.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripLeadingEmoji(text) {
+    if (!text) return '';
+    return text.replace(/^[\p{Extended_Pictographic}\s\uFE0F]+/u, '').trim();
+}
 
 /**
  * Top100SubstantiverMenuView - Hub for de 100 mest almindelige danske substantiver.
@@ -25,10 +31,36 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
     const style = document.createElement('style');
     style.textContent = `
         .top100-substantiver-hub {
+            --by-bg: #4A040B;
+            --by-surface: #073518;
+            --by-surface-hover: #0c4f24;
+            --by-surface-input: #02220e;
+            --by-border: #136832;
+            --by-border-light: #1b793c;
+            --by-primary: #22c55e;
+            --by-text: #FFFFFF;
+            --by-text-muted: #a7f3d0;
+            --by-text-subtle: #86efac;
+
             max-width: 1100px;
             margin: 0 auto;
             padding: 1.5rem 1.5rem 4rem;
             color: #f8fafc;
+        }
+        .top100-substantiver-hub .ds-icon-emoji {
+            display: none !important;
+        }
+        .top100-substantiver-hub .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .top100-substantiver-hub .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
         }
         .hub-hero {
             text-align: center;
@@ -38,12 +70,14 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             font-size: 2.4rem;
             font-weight: 800;
             margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #38bdf8, #818cf8, #f43f5e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
         }
         .hub-hero p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
+            opacity: 0.95;
             font-size: 1.15rem;
             max-width: 750px;
             margin: 0 auto 1.5rem;
@@ -75,8 +109,8 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             gap: 1.2rem;
             margin: 1rem auto 2.5rem;
             padding: 0.8rem 1.4rem;
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 16px;
             max-width: 850px;
             font-size: 0.9rem;
@@ -100,8 +134,8 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             margin-bottom: 3rem;
         }
         .scene-card {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 24px;
             overflow: hidden;
             cursor: pointer;
@@ -110,19 +144,19 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             flex-direction: column;
             text-decoration: none;
             color: inherit;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .scene-card:hover {
             transform: translateY(-8px);
-            border-color: #38bdf8;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.3);
+            border-color: var(--by-primary, #22c55e);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(34, 197, 94, 0.3);
         }
         .scene-card-img-wrap {
             position: relative;
             width: 100%;
             height: 200px;
             overflow: hidden;
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
         }
         .scene-card-img {
             width: 100%;
@@ -137,8 +171,8 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             position: absolute;
             top: 1rem;
             left: 1rem;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(2, 34, 14, 0.88);
+            border: 1px solid var(--by-border-light, #1b793c);
             backdrop-filter: blur(8px);
             padding: 0.35rem 0.8rem;
             border-radius: 20px;
@@ -160,17 +194,22 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             font-size: 1.4rem;
             font-weight: 800;
             margin-bottom: 0.6rem;
-            color: white;
+            color: #FFFFFF;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
         .scene-card-content p {
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             font-size: 0.95rem;
             line-height: 1.5;
             margin-bottom: 1.2rem;
             flex-grow: 1;
+        }
+        .scene-card-content p em {
+            color: #FFFFFF;
+            font-style: normal;
+            font-weight: 700;
         }
         .scene-features-tags {
             display: flex;
@@ -179,21 +218,21 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             margin-bottom: 1.2rem;
         }
         .feature-tag {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
+            color: var(--by-text-subtle, #86efac);
             padding: 0.25rem 0.6rem;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
         }
         .scene-action-btn {
-            background: #2563eb;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
             border: none;
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1rem;
             text-align: center;
             transition: all 0.2s ease;
@@ -201,9 +240,11 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            cursor: pointer;
         }
         .scene-card:hover .scene-action-btn {
-            background: #3b82f6;
+            background: #4ade80;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.45);
         }
 
         /* Coming soon card */
@@ -244,9 +285,9 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <img src="assets/byrum_vrimmel.jpg" alt="Byen vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
-            <h3>${getTranslation('top100_scene1_title')}</h3>
+            <h3>${renderDsIcon('city', '', { size: 24 })} <span>${stripLeadingEmoji(getTranslation('top100_scene1_title'))}</span></h3>
             <p>${getTranslation('top100_scene1_desc')}</p>
-            <button class="scene-action-btn">${getTranslation('top100_scene1_btn')}</button>
+            <button class="scene-action-btn">${stripLeadingEmoji(getTranslation('top100_scene1_btn'))} →</button>
         </div>
     `;
     cardByrum.onclick = () => navigateFn('byrummet_vrimmel');
@@ -260,9 +301,9 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <img src="assets/koekken_vrimmel.jpg" alt="Hjemmet og køkkenet vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
-            <h3>${getTranslation('top100_scene2_title')}</h3>
+            <h3>${renderDsIcon('coffee', '', { size: 24 })} <span>${stripLeadingEmoji(getTranslation('top100_scene2_title'))}</span></h3>
             <p>${getTranslation('top100_scene2_desc')}</p>
-            <button class="scene-action-btn">${getTranslation('top100_scene2_btn')}</button>
+            <button class="scene-action-btn">${stripLeadingEmoji(getTranslation('top100_scene2_btn'))} →</button>
         </div>
     `;
     cardKoekken.onclick = () => navigateFn('koekken_hjemmet');
@@ -276,9 +317,9 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <img src="assets/klasse_kontor_vrimmel.jpg" alt="Undervisningslokalet og kontoret vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
-            <h3>${getTranslation('top100_scene3_title')}</h3>
+            <h3>${renderDsIcon('graduationCap', '', { size: 24 })} <span>${stripLeadingEmoji(getTranslation('top100_scene3_title'))}</span></h3>
             <p>${getTranslation('top100_scene3_desc')}</p>
-            <button class="scene-action-btn">${getTranslation('top100_scene3_btn')}</button>
+            <button class="scene-action-btn">${stripLeadingEmoji(getTranslation('top100_scene3_btn'))} →</button>
         </div>
     `;
     cardKlasse.onclick = () => navigateFn('klasse_kontor');
@@ -292,9 +333,9 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <img src="assets/natur_fritid_vrimmel.jpg" alt="Naturen og fritiden vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
-            <h3>${getTranslation('top100_scene4_title')}</h3>
+            <h3>${renderDsIcon('compass', '', { size: 24 })} <span>${stripLeadingEmoji(getTranslation('top100_scene4_title'))}</span></h3>
             <p>${getTranslation('top100_scene4_desc')}</p>
-            <button class="scene-action-btn">${getTranslation('top100_scene4_btn')}</button>
+            <button class="scene-action-btn">${stripLeadingEmoji(getTranslation('top100_scene4_btn'))} →</button>
         </div>
     `;
     cardNatur.onclick = () => navigateFn('natur_fritid');
@@ -308,9 +349,9 @@ export function renderTop100SubstantiverMenuView(container, navigateFn) {
             <img src="assets/station_indkoeb_vrimmel.jpg" alt="Stationen, indkøb og tiden vrimlebillede" class="scene-card-img">
         </div>
         <div class="scene-card-content">
-            <h3>${getTranslation('top100_scene5_title')}</h3>
+            <h3>${renderDsIcon('clock', '', { size: 24 })} <span>${stripLeadingEmoji(getTranslation('top100_scene5_title'))}</span></h3>
             <p>${getTranslation('top100_scene5_desc')}</p>
-            <button class="scene-action-btn">${getTranslation('top100_scene5_btn')}</button>
+            <button class="scene-action-btn">${stripLeadingEmoji(getTranslation('top100_scene5_btn'))} →</button>
         </div>
     `;
     cardStation.onclick = () => navigateFn('station_indkoeb');

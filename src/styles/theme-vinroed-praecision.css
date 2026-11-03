@@ -1466,4 +1466,272 @@ body[data-theme="vinroed-praecision"],
   transform: translateY(-2px);
 }
 
+/* ==========================================================================
+   Alternative Dyb Mørkegrøn Præcision Paletter (Substantiv-flader & test)
+   ========================================================================== */
+
+/* Kombination 1: Vinrød bund + Dyb Skovgrønne kort/moduler (Erstatter grå med mørkegrøn) */
+:root[data-color-mode="combo-vinroed-skov"],
+body[data-color-mode="combo-vinroed-skov"] {
+  --vp-bg: #4A040B;             /* Dyb vinrød hovedbaggrund */
+  --vp-bg-glow: #6B0F1A;        /* Varm vinrød radial glød */
+  --vp-surface: #073518;        /* Meget mørkegrøn til opgavekort (erstatter den grå) */
+  --vp-surface-hover: #0c4f24;  /* Lettere grøn ved hover */
+  --vp-surface-input: #02220e;  /* Helt mørkegrøn kontrastbund til chips og faner */
+  --vp-border: #136832;         /* Dæmpet skovgrøn kant */
+  --vp-border-focus: #a7f3d0;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #a7f3d0;     /* Lys mintgrøn kontrasttekst */
+  --vp-text-subtle: #6ee7b7;
+  --vp-primary: #22c55e;        /* Klar grøn substantiv-accent */
+  --vp-accent: #22c55e;
+}
+
+/* Kombination 2: Vinrød bund + Dyb Smaragd (Erstatter grå med smaragd) */
+:root[data-color-mode="combo-vinroed-smaragd"],
+body[data-color-mode="combo-vinroed-smaragd"] {
+  --vp-bg: #4A040B;             /* Dyb vinrød hovedbaggrund */
+  --vp-bg-glow: #6B0F1A;        /* Varm vinrød glød */
+  --vp-surface: #043626;        /* Dyb smaragdgrøn til opgavekort (erstatter den grå) */
+  --vp-surface-hover: #08523b;
+  --vp-surface-input: #022318;  /* Helt mørk smaragd kontrastbund */
+  --vp-border: #0c6e52;         /* Smaragd kant */
+  --vp-border-focus: #99f6e4;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #99f6e4;
+  --vp-text-subtle: #5eead4;
+  --vp-primary: #14b8a6;
+  --vp-accent: #14b8a6;
+}
+
+/* Kombination 3: Vinrød bund + Ultra-mørk Botanisk (Erstatter grå med mørk leksikongrøn) */
+:root[data-color-mode="combo-vinroed-botanisk"],
+body[data-color-mode="combo-vinroed-botanisk"] {
+  --vp-bg: #4A040B;             /* Dyb vinrød hovedbaggrund */
+  --vp-bg-glow: #6B0F1A;        /* Varm vinrød glød */
+  --vp-surface: #0a2d13;        /* Varm meget mørkegrøn (erstatter den grå) */
+  --vp-surface-hover: #12451f;
+  --vp-surface-input: #041d0b;  /* Helt mørk bund */
+  --vp-border: #1d612b;
+  --vp-border-focus: #bbf7d0;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #bbf7d0;
+  --vp-text-subtle: #86efac;
+  --vp-primary: #22c55e;
+  --vp-accent: #22c55e;
+}
+
+/* Helgrøn A: Dyb Skovgrøn / Nordic Pine */
+:root[data-color-mode="groen-skov"],
+body[data-color-mode="groen-skov"] {
+  --vp-bg: #063618;
+  --vp-bg-glow: #0a5426;
+  --vp-surface: #08441f;
+  --vp-surface-hover: #0c5c2a;
+  --vp-surface-input: #032511;
+  --vp-border: #136832;
+  --vp-border-focus: #a7f3d0;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #a7f3d0;
+  --vp-text-subtle: #6ee7b7;
+  --vp-primary: #22c55e;
+  --vp-accent: #22c55e;
+}
+
+/* Helgrøn B: Dyb Smaragd / Royal Emerald */
+:root[data-color-mode="groen-smaragd"],
+body[data-color-mode="groen-smaragd"] {
+  --vp-bg: #03392a;
+  --vp-bg-glow: #065741;
+  --vp-surface: #054835;
+  --vp-surface-hover: #076147;
+  --vp-surface-input: #02281d;
+  --vp-border: #0c6e52;
+  --vp-border-focus: #99f6e4;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #99f6e4;
+  --vp-text-subtle: #5eead4;
+  --vp-primary: #14b8a6;
+  --vp-accent: #14b8a6;
+}
+
+/* Helgrøn C: Botanisk Mørkegrøn / British Racing Green */
+:root[data-color-mode="groen-botanisk"],
+body[data-color-mode="groen-botanisk"] {
+  --vp-bg: #0d3214;
+  --vp-bg-glow: #164d21;
+  --vp-surface: #11401b;
+  --vp-surface-hover: #175424;
+  --vp-surface-input: #08230d;
+  --vp-border: #1d612b;
+  --vp-border-focus: #bbf7d0;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #bbf7d0;
+  --vp-text-subtle: #86efac;
+  --vp-primary: #22c55e;
+  --vp-accent: #22c55e;
+}
+
+/* Helgrøn D: Dyb Granit-Fyr / Nordic Spruce */
+:root[data-color-mode="groen-granit"],
+body[data-color-mode="groen-granit"] {
+  --vp-bg: #0f3325;
+  --vp-bg-glow: #184d39;
+  --vp-surface: #154231;
+  --vp-surface-hover: #1c5741;
+  --vp-surface-input: #092319;
+  --vp-border: #216149;
+  --vp-border-focus: #a7f3d0;
+  --vp-text: #FFFFFF;
+  --vp-text-muted: #a7f3d0;
+  --vp-text-subtle: #6ee7b7;
+  --vp-primary: #10b981;
+  --vp-accent: #10b981;
+}
+
+/* ==========================================================================
+   Substantiv-fladen / Byrummet Vrimmel integreret under Præcision Themes
+   ========================================================================== */
+
+[data-theme="vinroed-praecision"] .byrum-tabs {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+}
+
+[data-theme="vinroed-praecision"] .byrum-tab-btn {
+  color: var(--vp-text-muted) !important;
+  border-radius: var(--vp-radius-sm) !important;
+}
+
+[data-theme="vinroed-praecision"] .byrum-tab-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .byrum-tab-btn.active {
+  background: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .vrimmel-card,
+[data-theme="vinroed-praecision"] .mission-card,
+[data-theme="vinroed-praecision"] .story-container,
+[data-theme="vinroed-praecision"] .sorting-game-box,
+[data-theme="vinroed-praecision"] .hotspot-detail-card {
+  background: var(--vp-surface) !important;
+  border: 1px solid var(--vp-border) !important;
+  border-radius: var(--vp-radius-md) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="vinroed-praecision"] .clue-btn,
+[data-theme="vinroed-praecision"] .story-step-card,
+[data-theme="vinroed-praecision"] .story-nav-btn,
+[data-theme="vinroed-praecision"] .sort-word-chip,
+[data-theme="vinroed-praecision"] .radar-toggle-btn,
+[data-theme="vinroed-praecision"] .pure-image-toggle-btn {
+  background: var(--vp-surface-input) !important;
+  border: 1.5px solid var(--vp-border) !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="vinroed-praecision"] .clue-btn:hover,
+[data-theme="vinroed-praecision"] .story-nav-btn:hover,
+[data-theme="vinroed-praecision"] .sort-word-chip:hover,
+[data-theme="vinroed-praecision"] .radar-toggle-btn:hover,
+[data-theme="vinroed-praecision"] .pure-image-toggle-btn:hover {
+  background: var(--vp-surface-hover) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .clue-btn.selected-correct {
+  background: linear-gradient(135deg, #16a34a, #15803d) !important;
+  border-color: #86efac !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.6) !important;
+}
+
+[data-theme="vinroed-praecision"] .clue-btn.selected-wrong {
+  background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+  border-color: #fca5a5 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6) !important;
+}
+
+[data-theme="vinroed-praecision"] .story-nav-btn.active {
+  background: var(--vp-primary) !important;
+  border-color: var(--vp-primary) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="vinroed-praecision"] .sort-progress-badge {
+  background: var(--vp-surface-input) !important;
+  border: 1px solid var(--vp-border) !important;
+  color: var(--vp-text-muted) !important;
+}
+
+/* ==========================================================================
+   Sætningsbygger (tab_saetning) Knap- og Rækkekontraster
+   Løsning på "grøn-i-grøn" kollision: Solide brikker med hvid skrift og dybde
+   ========================================================================== */
+
+[data-theme="vinroed-praecision"] .sb-category-row {
+  background: var(--vp-surface-input, #02220e) !important;
+  border: 1px solid var(--vp-border, #136832) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-category-title {
+  color: #FFFFFF !important;
+}
+
+/* Uvalgte knapper */
+[data-theme="vinroed-praecision"] .sb-chip-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #e2e8f0 !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-chip-btn:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+/* Valgte knapper: Solide, lysstærke læringsbrikker (forsvinder ALDRIG i baggrunden) */
+[data-theme="vinroed-praecision"] .sb-cat-subjekt .sb-chip-btn.selected,
+[data-theme="vinroed-praecision"] .sb-cat-objekt .sb-chip-btn.selected {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #86efac !important;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-cat-verbum .sb-chip-btn.selected {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #fca5a5 !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="vinroed-praecision"] .sb-cat-sted .sb-chip-btn.selected {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #93c5fd !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+
 

@@ -33,11 +33,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const focusName = extraData.focusWord ? `"${extraData.focusWord}"` : 'målordet';
         returnBanner.innerHTML = `
             <div class="return-banner-left">
-                <span class="badge-b-pulse">↗️ Mulighed B (Test)</span>
+                <span class="badge-b-pulse">Mulighed B</span>
                 <span>Du undersøger ${focusName} i vrimlebilledet.</span>
             </div>
             <button class="return-banner-btn" id="return-task-btn">
-                ↩ Tilbage til din opgave i Byen og gaden
+                ← Tilbage til din opgave i Byen og gaden
             </button>
         `;
         returnBanner.querySelector('#return-task-btn').onclick = () => {
@@ -63,6 +63,17 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const style = document.createElement('style');
     style.textContent = `
         .byrum-vrimmel-view {
+            --by-bg: #4A040B;
+            --by-surface: #073518;
+            --by-surface-hover: #0c4f24;
+            --by-surface-input: #02220e;
+            --by-border: #136832;
+            --by-border-light: #1b793c;
+            --by-primary: #22c55e;
+            --by-text: #FFFFFF;
+            --by-text-muted: #a7f3d0;
+            --by-text-subtle: #86efac;
+
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
@@ -210,6 +221,22 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             opacity: 0.85;
         }
 
+        .byrum-vrimmel-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .byrum-vrimmel-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .byrum-vrimmel-view .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
+        }
+
         .byrum-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -218,16 +245,27 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #38bdf8, #818cf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .byrum-hero-header .byrum-hero-icon {
+            display: inline-flex;
+            align-items: center;
+            color: #FFFFFF;
         }
         .byrum-hero-header p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
             font-size: 1.1rem;
             max-width: 780px;
             margin: 0 auto;
             line-height: 1.5;
+            opacity: 0.95;
         }
 
         /* Tabs Navigation */
@@ -237,18 +275,19 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
             gap: 0.6rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--by-surface-input, #02220e);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--by-border, #136832);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
         }
         .byrum-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             border: none;
             padding: 0.7rem 1.2rem;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -257,13 +296,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .byrum-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            background: var(--by-surface-hover, #0c4f24);
         }
         .byrum-tab-btn.active {
-            background: #3b82f6;
-            color: white;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45);
         }
 
         /* Panels */
@@ -281,11 +321,12 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         /* Stage Card */
         .vrimmel-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .radar-control-bar {
             display: flex;
@@ -295,7 +336,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 1rem;
             margin-bottom: 1.2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--by-border, #136832);
         }
         .radar-toggle-wrapper {
             display: flex;
@@ -303,9 +344,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 1rem;
         }
         .radar-toggle-btn {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             color: #f1f5f9;
-            border: 2px solid #64748b;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.6rem 1.3rem;
             border-radius: 25px;
             font-weight: 700;
@@ -316,6 +357,10 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             align-items: center;
             gap: 0.5rem;
         }
+        .radar-toggle-btn:hover {
+            background: var(--by-surface-hover, #0c4f24);
+            border-color: var(--by-primary, #22c55e);
+        }
         .radar-toggle-btn.active {
             background: linear-gradient(135deg, #0284c7, #ea580c);
             border-color: #38bdf8;
@@ -323,9 +368,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             color: white;
         }
         .pure-image-toggle-btn {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             color: #f1f5f9;
-            border: 2px solid #64748b;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.6rem 1.3rem;
             border-radius: 25px;
             font-weight: 700;
@@ -337,8 +382,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .pure-image-toggle-btn:hover {
-            border-color: #10b981;
-            background: #334155;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .pure-image-toggle-btn.active {
             background: linear-gradient(135deg, #059669, #10b981);
@@ -431,8 +476,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         /* Detail card */
         .hotspot-detail-card {
-            background: #1e293b;
-            border: 1px solid #475569;
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -552,11 +597,12 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         /* Sorting Game */
         .sorting-game-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 18px;
             padding: 1.5rem;
             margin-top: 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
         .sorting-header-row {
             display: flex;
@@ -567,9 +613,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.2rem;
         }
         .sort-progress-badge {
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-            border: 1px solid #0284c7;
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1px solid var(--by-border, #136832);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-weight: 800;
@@ -597,29 +643,29 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         .bin-title-et { color: #fb923c; }
         .bin-items-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .chip-in-bin {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             padding: 0.4rem 0.8rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
             color: white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--by-border, #136832);
         }
         .words-bank-row {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--by-surface-input, #02220e);
             padding: 1.2rem;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--by-border, #136832);
         }
         .sort-word-chip {
-            background: #334155;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid transparent;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.5rem 1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -627,23 +673,38 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .sort-word-chip:hover { background: #475569; transform: translateY(-2px); }
-        .sort-word-chip.selected { border-color: #38bdf8; box-shadow: 0 0 14px rgba(56, 189, 248, 0.6); background: #1e293b; }
-        .sort-word-chip.placed { opacity: 0.35; pointer-events: none; background: #0f172a; text-decoration: line-through; }
-        .reset-sort-btn {
-            background: #475569; color: white; border: none; padding: 0.6rem 1.2rem;
-            border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+        .sort-word-chip:hover {
+            background: var(--by-surface-hover, #0c4f24);
+            border-color: var(--by-primary, #22c55e);
+            transform: translateY(-2px);
         }
-        .reset-sort-btn:hover { background: #64748b; }
+        .sort-word-chip.selected {
+            border-color: var(--by-primary, #22c55e);
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.6);
+            background: var(--by-surface-input, #02220e);
+        }
+        .sort-word-chip.placed { opacity: 0.35; pointer-events: none; background: #041d0b; text-decoration: line-through; }
+        .reset-sort-btn {
+            background: var(--by-surface-input, #02220e);
+            color: white;
+            border: 1.5px solid var(--by-border, #136832);
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .reset-sort-btn:hover { background: var(--by-surface-hover, #0c4f24); }
 
         /* Detective Cards */
         .mission-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .mission-badge {
             display: inline-block; background: #f59e0b; color: #000; font-weight: 800;
@@ -653,56 +714,70 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;
         }
         .clue-btn {
-            background: #1e293b; border: 2px solid #334155; color: white; padding: 1.2rem;
+            background: var(--by-surface-input, #02220e); border: 1.5px solid var(--by-border, #136832); color: white; padding: 1.2rem;
             border-radius: 14px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease;
             text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
         }
-        .clue-btn:hover { border-color: #38bdf8; transform: translateY(-3px); }
-        .clue-btn.selected-correct { background: rgba(34, 197, 94, 0.25); border-color: #22c55e; color: #4ade80; }
-        .clue-btn.selected-wrong { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #f87171; }
+        .clue-btn:hover { border-color: var(--by-primary, #22c55e); background: var(--by-surface-hover, #0c4f24); transform: translateY(-3px); }
+        .clue-btn.selected-correct {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.6) !important;
+        }
+        .clue-btn.selected-wrong {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6) !important;
+        }
         .mission-next-btn {
-            background: #22c55e; color: #0f172a; font-weight: 800; border: none; padding: 0.8rem 1.6rem;
+            background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800; border: none; padding: 0.8rem 1.6rem;
             border-radius: 12px; font-size: 1rem; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45);
         }
 
         /* Micro-story */
         .story-container {
-            max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
+            max-width: 800px; margin: 0 auto; background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832); border-radius: 20px; padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .story-nav-pills {
             display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
         }
         .story-nav-btn {
-            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            background: var(--by-surface-input, #02220e); color: var(--by-text-muted, #a7f3d0); border: 1.5px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-nav-btn:hover { border-color: #38bdf8; color: white; transform: translateY(-2px); }
+        .story-nav-btn:hover { border-color: var(--by-primary, #22c55e); background: var(--by-surface-hover, #0c4f24); color: white; transform: translateY(-2px); }
         .story-nav-btn.active {
-            background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+            background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800; border-color: #86efac; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45);
         }
         .story-step-card {
-            background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #38bdf8;
+            background: var(--by-surface-input, #02220e); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--by-border, #136832); border-left: 5px solid var(--by-primary, #22c55e);
             transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
-            background: #334155; color: white; border: none; padding: 0.6rem 1.2rem;
+            background: #0b3d1b; color: white; border: 1.5px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-opt-btn:hover { background: #475569; }
-        .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
-        .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
+        .story-opt-btn:hover { background: #125727; border-color: var(--by-primary, #22c55e); }
+        .story-opt-btn.correct { background: linear-gradient(135deg, #16a34a, #15803d) !important; border-color: #86efac !important; color: #ffffff !important; font-weight: 800 !important; }
+        .story-opt-btn.wrong { background: linear-gradient(135deg, #dc2626, #b91c1c) !important; border-color: #fca5a5 !important; color: white !important; font-weight: 800 !important; }
         .story-explanation-box {
-            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; border-radius: 14px;
-            padding: 1.2rem; margin-top: 1.5rem; font-size: 1rem; color: #4ade80; text-align: center;
+            background: rgba(34, 197, 94, 0.2); border: 1.5px solid var(--by-primary, #22c55e); border-radius: 14px;
+            padding: 1.2rem; margin-top: 1.5rem; font-size: 1rem; color: var(--by-text-muted, #a7f3d0); text-align: center;
         }
 
         /* Overemne & Underemne (Model C) */
         .category-card {
-            max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
-            text-align: center;
+            max-width: 800px; margin: 0 auto; background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832); border-radius: 20px; padding: 2rem;
+            text-align: center; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .category-badge {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
@@ -714,23 +789,23 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.2rem 0 1.6rem;
         }
         .category-word-chip {
-            background: #0f172a; border: 2px solid #38bdf8; color: #f8fafc;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-primary, #22c55e); color: #f8fafc;
             padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 700; font-size: 1.1rem;
         }
         .category-options-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.2rem;
         }
         .category-opt-btn {
-            background: #1e293b; border: 2px solid #334155; color: white; padding: 1.1rem;
+            background: var(--by-surface-input, #02220e); border: 1.5px solid var(--by-border, #136832); color: white; padding: 1.1rem;
             border-radius: 14px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
             text-align: center;
         }
-        .category-opt-btn:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .category-opt-btn:hover { border-color: var(--by-primary, #22c55e); background: var(--by-surface-hover, #0c4f24); transform: translateY(-2px); }
         .category-opt-btn.selected-correct {
-            background: rgba(34, 197, 94, 0.25) !important; border-color: #22c55e !important; color: #4ade80 !important;
+            background: linear-gradient(135deg, #16a34a, #15803d) !important; border-color: #86efac !important; color: #ffffff !important; font-weight: 800 !important;
         }
         .category-opt-btn.selected-wrong {
-            background: rgba(239, 68, 68, 0.25) !important; border-color: #ef4444 !important; color: #f87171 !important;
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important; border-color: #fca5a5 !important; color: #f87171 !important; font-weight: 800 !important;
         }
 
         /* =========================================
@@ -739,11 +814,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         .sentence-builder-card {
             max-width: 960px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
 
         /* Sub-navigation for Tab 5 */
@@ -752,14 +827,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--by-border, #136832);
             padding-bottom: 1rem;
             flex-wrap: wrap;
         }
         .sb-sub-btn {
-            background: rgba(15, 23, 42, 0.6);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -772,14 +847,15 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         }
         .sb-sub-btn:hover {
             color: white;
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .sb-sub-btn.active {
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: white;
-            border-color: #38bdf8;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            border-color: #86efac;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.45);
         }
 
         /* Grammar Legend */
@@ -790,9 +866,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 1.2rem;
             margin-bottom: 1.5rem;
             padding: 0.6rem 1rem;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--by-surface-input, #02220e);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--by-border, #136832);
             font-size: 0.85rem;
         }
         .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
@@ -806,11 +882,12 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         /* Free Builder Styles */
         .sb-category-row {
             margin-bottom: 1.3rem;
-            background: rgba(15, 23, 42, 0.45);
+            background: var(--by-surface-input, #02220e);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--by-border, #136832);
             border-left: 4px solid #64748b;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
         }
         .sb-cat-subjekt { border-left-color: #22c55e; }
         .sb-cat-verbum { border-left-color: #ef4444; }
@@ -828,7 +905,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         .sb-category-title {
             font-size: 0.95rem;
             font-weight: 700;
-            color: #e2e8f0;
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -840,10 +917,10 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             padding: 0.2rem 0.5rem;
             border-radius: 6px;
         }
-        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .badge-cat-objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-cat-sted { background: rgba(2, 132, 199, 0.15); color: #60a5fa; border: 1px solid rgba(2, 132, 199, 0.3); }
+        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .badge-cat-verbum { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-cat-objekt { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .badge-cat-sted { background: rgba(2, 132, 199, 0.2); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.4); }
 
         .sb-chips-grid {
             display: flex;
@@ -851,9 +928,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-chip-btn {
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 1px solid #475569;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
             padding: 0.55rem 1rem;
             border-radius: 10px;
             font-size: 0.95rem;
@@ -863,42 +940,42 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         }
         .sb-chip-btn:hover {
             color: white;
-            border-color: #94a3b8;
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-2px);
         }
         .sb-chip-btn.selected {
             font-weight: 800;
             transform: translateY(-2px);
         }
-        .sb-cat-subjekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+        /* LØSNING 1: SOLIDE BRIKKER */
+        .sb-cat-subjekt .sb-chip-btn.selected,
+        .sb-cat-objekt .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #86efac !important;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-verbum .sb-chip-btn.selected {
-            background: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
-        }
-        .sb-cat-objekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #fca5a5 !important;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-sted .sb-chip-btn.selected {
-            background: rgba(2, 132, 199, 0.25);
-            color: #93c5fd;
-            border-color: #0284c7;
-            box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #93c5fd !important;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
 
         /* Live Result Box */
         .sb-live-box {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--by-surface-input, #02220e);
+            border: 2px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.4rem;
             margin-top: 1.5rem;
@@ -930,9 +1007,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         .word-tid { color: #c084fc; }
 
         .sb-listen-btn {
-            background: #1e293b;
+            background: var(--by-surface, #073518);
             color: #f8fafc;
-            border: 1px solid #38bdf8;
+            border: 1.5px solid var(--by-primary, #22c55e);
             padding: 0.65rem 1.4rem;
             border-radius: 25px;
             font-size: 1rem;
@@ -944,8 +1021,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-listen-btn:hover {
-            background: rgba(56, 189, 248, 0.15);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            background: var(--by-surface-hover, #0c4f24);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.35);
             transform: scale(1.03);
         }
 
@@ -970,9 +1047,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #475569;
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1px solid var(--by-border, #136832);
             font-size: 0.8rem;
             font-weight: 700;
             display: flex;
@@ -982,27 +1059,28 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .sb-task-pill.active {
-            border-color: #38bdf8;
-            color: white;
-            background: #0284c7;
+            border-color: var(--by-primary, #22c55e);
+            color: #02220e;
+            background: var(--by-primary, #22c55e);
+            font-weight: 800;
         }
         .sb-task-pill.done {
-            background: #22c55e;
-            color: #0f172a;
+            background: #16a34a;
+            color: #ffffff;
             border-color: #22c55e;
         }
 
         /* Step 1: Semantic Match */
         .sb-context-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 14px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
         }
         .sb-context-title {
             font-size: 1.05rem;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             margin-bottom: 0.8rem;
         }
         .sb-context-elements {
@@ -1020,9 +1098,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             flex-direction: column;
             gap: 0.2rem;
         }
-        .sb-context-chip.subjekt, .sb-context-chip.objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); }
-        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.35); }
-        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.35); }
+        .sb-context-chip.subjekt, .sb-context-chip.objekt { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.2); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.4); }
         .sb-chip-role {
             font-size: 0.82rem;
             text-transform: uppercase;
@@ -1043,8 +1121,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         }
 
         .sb-question-box {
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 12px;
             padding: 1rem 1.3rem;
             margin-bottom: 1.5rem;
@@ -1062,9 +1140,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-option-btn {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             color: white;
-            border: 2px solid #475569;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 1rem 1.2rem;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -1074,27 +1152,29 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .sb-option-btn:hover {
-            border-color: #38bdf8;
-            background: #334155;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-2px);
         }
         .sb-option-btn.correct {
-            background: rgba(34, 197, 94, 0.25);
-            border-color: #22c55e;
-            color: #4ade80;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5) !important;
         }
         .sb-option-btn.incorrect {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: #ef4444;
-            color: #f87171;
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
             animation: shakeBin 0.4s ease;
         }
 
         /* Step 2: Puzzle */
         .sb-puzzle-section {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -1111,7 +1191,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         }
         .sb-puzzle-desc {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             margin-bottom: 1.2rem;
         }
         .sb-puzzle-slots {
@@ -1121,8 +1201,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-puzzle-slot {
-            background: #0b1329;
-            border: 2px dashed #475569;
+            background: #041d0b;
+            border: 2px dashed var(--by-border, #136832);
             border-radius: 14px;
             padding: 1rem 0.8rem;
             min-height: 104px;
@@ -1134,23 +1214,23 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             transition: all 0.25s ease;
             text-align: center;
             position: relative;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
         }
         .sb-puzzle-slot.slot-0 {
             border-color: rgba(34, 197, 94, 0.55);
-            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
         .sb-puzzle-slot.slot-1 {
             border-color: rgba(239, 68, 68, 0.55);
-            background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
         .sb-puzzle-slot.slot-2 {
             border-color: rgba(34, 197, 94, 0.55);
-            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
         .sb-puzzle-slot.slot-3 {
             border-color: rgba(56, 189, 248, 0.55);
-            background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
 
         .sb-puzzle-slot .slot-hint {
@@ -1188,13 +1268,24 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: #1e293b;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
         }
-        .sb-puzzle-slot.filled.slot-0 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-1 { border-color: #ef4444; }
-        .sb-puzzle-slot.filled.slot-2 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-3 { border-color: #0284c7; }
+        .sb-puzzle-slot.filled.slot-0 {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+        }
+        .sb-puzzle-slot.filled.slot-1 {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+        }
+        .sb-puzzle-slot.filled.slot-2 {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+        }
+        .sb-puzzle-slot.filled.slot-3 {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            border-color: #93c5fd !important;
+        }
         .sb-puzzle-slot.filled .slot-filled-word {
             font-weight: 800;
             font-size: 1.25rem;
@@ -1207,11 +1298,13 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             top: 6px;
             right: 8px;
             font-size: 0.85rem;
-            color: #94a3b8;
-            transition: color 0.2s;
+            color: #ffffff;
+            opacity: 0.8;
+            transition: all 0.2s;
         }
         .sb-puzzle-slot.filled:hover .slot-remove {
-            color: #f87171;
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         @media (max-width: 640px) {
@@ -1241,14 +1334,15 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             justify-content: center;
             margin-bottom: 1.2rem;
             padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 12px;
             min-height: 60px;
         }
         .sb-puzzle-chip {
-            background: #1e293b;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid #64748b;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.65rem 1.2rem;
             border-radius: 10px;
             font-size: 1rem;
@@ -1257,7 +1351,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             transition: all 0.2s ease;
         }
         .sb-puzzle-chip:hover {
-            border-color: #38bdf8;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.placed {
@@ -1295,18 +1390,19 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             margin-top: 0.6rem;
         }
         .sb-action-btn {
-            background: #0284c7;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
             border: none;
             padding: 0.7rem 1.4rem;
             border-radius: 10px;
             font-size: 1rem;
-            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45);
         }
         .sb-action-btn:hover {
-            background: #0369a1;
+            background: #4ade80;
             transform: translateY(-2px);
         }
     `;
@@ -1315,8 +1411,10 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     // Hero Header
     const heroHeader = document.createElement('div');
     heroHeader.className = 'byrum-hero-header';
+    const rawHeroTitle = getTranslation('byrum_hero_title');
+    const cleanHeroTitle = rawHeroTitle.replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim() || 'Byen';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('byrum_hero_title')}</h1>
+        <h1><span class="byrum-hero-icon">${renderDsIcon('city', '', { size: 30 })}</span> <span>${cleanHeroTitle}</span></h1>
         <p>${getTranslation('byrum_hero_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
@@ -1363,32 +1461,32 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     // --- 24 NØGLEORD I BYRUMMET (Højfrekvens fra top 100)
     // ========================================================
     const byrumWords = [
-        { word: 'en sol', clean: 'sol', gender: 'en', bestemt: 'solen', flertal: 'sole', x: 65, y: 8, icon: '☀️', sentence: 'Solen skinner.' },
-        { word: 'en tid', clean: 'tid', gender: 'en', bestemt: 'tiden', flertal: 'tider', x: 56, y: 17, icon: '⏰', sentence: 'Uret viser tiden.' },
-        { word: 'en by', clean: 'by', gender: 'en', bestemt: 'byen', flertal: 'byer', x: 35, y: 25, icon: '🏙️', sentence: 'Hun bor i en stor by.' },
-        { word: 'et hus', clean: 'hus', gender: 'et', bestemt: 'huset', flertal: 'huse', x: 10, y: 15, icon: '🏠', sentence: 'Hun bor i et gult hus.' },
-        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 4, y: 12, icon: '🪟', sentence: 'Vinduet er åbent.' },
-        { word: 'en café', clean: 'virksomhed', gender: 'en', bestemt: 'caféen', flertal: 'caféer', x: 21, y: 32, icon: '☕', sentence: 'De sidder på en café.' },
-        { word: 'penge', clean: 'penge', gender: 'en', bestemt: 'pengene', flertal: 'penge', x: 8.5, y: 63, icon: '🪙', sentence: 'Kunden bruger penge.' },
-        { word: 'en krone', clean: 'krone', gender: 'en', bestemt: 'kronen', flertal: 'kroner', x: 5.5, y: 55, icon: '🏷️', sentence: 'Brødet koster tyve kroner.' },
-        { word: 'et arbejde', clean: 'arbejde', gender: 'et', bestemt: 'arbejdet', flertal: 'arbejder', x: 14, y: 56, icon: '💼', sentence: 'Hun har et godt arbejde.' },
-        { word: 'en læge', clean: 'læge', gender: 'en', bestemt: 'lægen', flertal: 'læger', x: 21, y: 74, icon: '🩺', sentence: 'Lægen går på gaden.' },
-        { word: 'en hund', clean: 'hund', gender: 'en', bestemt: 'hunden', flertal: 'hunde', x: 29.5, y: 88, icon: '🐕', sentence: 'Manden går med en hund.' },
-        { word: 'et træ', clean: 'træ', gender: 'et', bestemt: 'træet', flertal: 'træer', x: 39, y: 24, icon: '🌳', sentence: 'Der står et stort træ.' },
-        { word: 'en kvinde', clean: 'kvinde', gender: 'en', bestemt: 'kvinden', flertal: 'kvinder', x: 42, y: 68, icon: '👩', sentence: 'En kvinde cykler på gaden.' },
-        { word: 'en tur', clean: 'tur', gender: 'en', bestemt: 'turen', flertal: 'ture', x: 43.5, y: 82, icon: '🚲', sentence: 'Hun går en tur.' },
-        { word: 'en vej', clean: 'vej', gender: 'en', bestemt: 'vejen', flertal: 'veje', x: 47, y: 74, icon: '🛣️', sentence: 'Der er biler og cykler på vejen.' },
-        { word: 'en familie', clean: 'familie', gender: 'en', bestemt: 'familien', flertal: 'familier', x: 50, y: 58, icon: '👨‍👩‍👧', sentence: 'En familie går en tur.' },
-        { word: 'et barn', clean: 'barn', gender: 'et', bestemt: 'barnet', flertal: 'børn', x: 55.5, y: 63, icon: '👶', sentence: 'Barnet smiler.' },
-        { word: 'en plads', clean: 'plads', gender: 'en', bestemt: 'pladsen', flertal: 'pladser', x: 63, y: 56, icon: '🏛️', sentence: 'Der er mange på pladsen.' },
-        { word: 'en dreng', clean: 'dreng', gender: 'en', bestemt: 'drengen', flertal: 'drenge', x: 62.5, y: 58, icon: '👦', sentence: 'En dreng leger i solen.' },
-        { word: 'en pige', clean: 'pige', gender: 'en', bestemt: 'pigen', flertal: 'piger', x: 82, y: 53, icon: '👧', sentence: 'En pige går i skole.' },
-        { word: 'en skole', clean: 'skole', gender: 'en', bestemt: 'skolen', flertal: 'skoler', x: 88, y: 28, icon: '🏫', sentence: 'Børnene går i skole.' },
-        { word: 'en dør', clean: 'dør', gender: 'en', bestemt: 'døren', flertal: 'døre', x: 88, y: 44, icon: '🚪', sentence: 'Døren er åben.' },
-        { word: 'en ven', clean: 'ven', gender: 'en', bestemt: 'vennen', flertal: 'venner', x: 93, y: 60, icon: '🫂', sentence: 'Hun taler med en ven.' },
-        { word: 'en cykel', clean: 'cykel', gender: 'en', bestemt: 'cyklen', flertal: 'cykler', x: 71, y: 76, icon: '🚲', sentence: 'Manden har en flad cykel.' },
-        { word: 'en mand', clean: 'mand', gender: 'en', bestemt: 'manden', flertal: 'mænd', x: 78.5, y: 71, icon: '👨', sentence: 'Manden tager sig til hovedet.' },
-        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 75, y: 68, icon: '⚠️', sentence: 'Manden har et problem: hjulet er fladt.' }
+        { word: 'en sol', clean: 'sol', gender: 'en', bestemt: 'solen', flertal: 'sole', x: 65, y: 8, iconName: 'lightbulb', sentence: 'Solen skinner.' },
+        { word: 'en tid', clean: 'tid', gender: 'en', bestemt: 'tiden', flertal: 'tider', x: 56, y: 17, iconName: 'clock', sentence: 'Uret viser tiden.' },
+        { word: 'en by', clean: 'by', gender: 'en', bestemt: 'byen', flertal: 'byer', x: 35, y: 25, iconName: 'city', sentence: 'Hun bor i en stor by.' },
+        { word: 'et hus', clean: 'hus', gender: 'et', bestemt: 'huset', flertal: 'huse', x: 10, y: 15, iconName: 'home', sentence: 'Hun bor i et gult hus.' },
+        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 4, y: 12, iconName: 'home', sentence: 'Vinduet er åbent.' },
+        { word: 'en café', clean: 'virksomhed', gender: 'en', bestemt: 'caféen', flertal: 'caféer', x: 21, y: 32, iconName: 'coffee', sentence: 'De sidder på en café.' },
+        { word: 'penge', clean: 'penge', gender: 'en', bestemt: 'pengene', flertal: 'penge', x: 8.5, y: 63, iconName: 'tag', sentence: 'Kunden bruger penge.' },
+        { word: 'en krone', clean: 'krone', gender: 'en', bestemt: 'kronen', flertal: 'kroner', x: 5.5, y: 55, iconName: 'tag', sentence: 'Brødet koster tyve kroner.' },
+        { word: 'et arbejde', clean: 'arbejde', gender: 'et', bestemt: 'arbejdet', flertal: 'arbejder', x: 14, y: 56, iconName: 'fileText', sentence: 'Hun har et godt arbejde.' },
+        { word: 'en læge', clean: 'læge', gender: 'en', bestemt: 'lægen', flertal: 'læger', x: 21, y: 74, iconName: 'stethoscope', sentence: 'Lægen går på gaden.' },
+        { word: 'en hund', clean: 'hund', gender: 'en', bestemt: 'hunden', flertal: 'hunde', x: 29.5, y: 88, iconName: 'user', sentence: 'Manden går med en hund.' },
+        { word: 'et træ', clean: 'træ', gender: 'et', bestemt: 'træet', flertal: 'træer', x: 39, y: 24, iconName: 'mapPin', sentence: 'Der står et stort træ.' },
+        { word: 'en kvinde', clean: 'kvinde', gender: 'en', bestemt: 'kvinden', flertal: 'kvinder', x: 42, y: 68, iconName: 'user', sentence: 'En kvinde cykler på gaden.' },
+        { word: 'en tur', clean: 'tur', gender: 'en', bestemt: 'turen', flertal: 'ture', x: 43.5, y: 82, iconName: 'bicycle', sentence: 'Hun går en tur.' },
+        { word: 'en vej', clean: 'vej', gender: 'en', bestemt: 'vejen', flertal: 'veje', x: 47, y: 74, iconName: 'mapPin', sentence: 'Der er biler og cykler på vejen.' },
+        { word: 'en familie', clean: 'familie', gender: 'en', bestemt: 'familien', flertal: 'familier', x: 50, y: 58, iconName: 'users', sentence: 'En familie går en tur.' },
+        { word: 'et barn', clean: 'barn', gender: 'et', bestemt: 'barnet', flertal: 'børn', x: 55.5, y: 63, iconName: 'user', sentence: 'Barnet smiler.' },
+        { word: 'en plads', clean: 'plads', gender: 'en', bestemt: 'pladsen', flertal: 'pladser', x: 63, y: 56, iconName: 'city', sentence: 'Der er mange på pladsen.' },
+        { word: 'en dreng', clean: 'dreng', gender: 'en', bestemt: 'drengen', flertal: 'drenge', x: 62.5, y: 58, iconName: 'user', sentence: 'En dreng leger i solen.' },
+        { word: 'en pige', clean: 'pige', gender: 'en', bestemt: 'pigen', flertal: 'piger', x: 82, y: 53, iconName: 'user', sentence: 'En pige går i skole.' },
+        { word: 'en skole', clean: 'skole', gender: 'en', bestemt: 'skolen', flertal: 'skoler', x: 88, y: 28, iconName: 'graduationCap', sentence: 'Børnene går i skole.' },
+        { word: 'en dør', clean: 'dør', gender: 'en', bestemt: 'døren', flertal: 'døre', x: 88, y: 44, iconName: 'door', sentence: 'Døren er åben.' },
+        { word: 'en ven', clean: 'ven', gender: 'en', bestemt: 'vennen', flertal: 'venner', x: 93, y: 60, iconName: 'handshake', sentence: 'Hun taler med en ven.' },
+        { word: 'en cykel', clean: 'cykel', gender: 'en', bestemt: 'cyklen', flertal: 'cykler', x: 71, y: 76, iconName: 'bicycle', sentence: 'Manden har en flad cykel.' },
+        { word: 'en mand', clean: 'mand', gender: 'en', bestemt: 'manden', flertal: 'mænd', x: 78.5, y: 71, iconName: 'user', sentence: 'Manden tager sig til hovedet.' },
+        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 75, y: 68, iconName: 'alertTriangle', sentence: 'Manden har et problem: hjulet er fladt.' }
     ];
 
     // ========================================================
@@ -1407,14 +1505,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status-byrum">${getTranslation('vrimmel_status_off')}</strong>`;
+    pureBtn.innerHTML = `<span>${renderDsIcon('image', '', { size: 16 })}</span> <span>${getTranslation('vrimmel_pure_btn')}</span> <strong id="pure-mode-status-byrum">${getTranslation('vrimmel_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status-byrum').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
+        pureBtn.querySelector('#pure-mode-status-byrum').textContent = pureModeActive ? getTranslation('vrimmel_status_on') : getTranslation('vrimmel_status_off');
     };
 
     controlBar.appendChild(pureBtn);
@@ -1461,23 +1559,24 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 <div style="flex: 1; min-width: 250px;">
                     <div>
                         <span class="badge-substantiv">${getTranslation('vrimmel_badge_substantiv')}</span>
-                        <span class="detail-word-badge badge-${bw.gender}">${bw.gender === 'en' ? getTranslation('vrimmel_badge_en') : getTranslation('vrimmel_badge_et')}</span>
+                        <span class="detail-word-badge badge-${bw.gender}">${bw.gender === 'en' ? getTranslation('vrimmel_badge_en').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim() : getTranslation('vrimmel_badge_et').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim()}</span>
                     </div>
-                    <div class="detail-main-word">
-                        ${bw.icon} ${bw.word}
-                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
+                    <div class="detail-main-word" style="display: flex; align-items: center; gap: 0.6rem;">
+                        <span>${renderDsIcon(bw.iconName || 'tag', '', { size: 24 })}</span>
+                        <span>${bw.word}</span>
+                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #a7f3d0; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                     </div>
                     <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${bw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${bw.flertal}</strong></div>
                     <div class="detail-sentence">"${formatVerbLinks(bw.sentence)}"</div>
-                    ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
+                    ${transSentence ? `<div style="font-size: 0.95rem; color: #a7f3d0; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                         <button class="listen-word-btn" id="listen-byrum-word">
-                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
+                            <span>${renderDsIcon('volume', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_listen_btn')}</span>
                         </button>
                         <button class="mic-speak-btn" id="mic-byrum-word">
-                            <span>🎤</span> ${getTranslation('vrimmel_mic_btn')}
+                            <span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback-byrum"></div>
@@ -1521,7 +1620,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         rec.onstart = () => {
                             isListening = true;
                             micBtn.classList.add('listening');
-                            micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('activity', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_listening')}</span>`;
                             feedbackBox.className = 'speech-feedback-box listening';
                             feedbackBox.textContent = `${getTranslation('vrimmel_mic_prompt')} "${bw.clean}"...`;
                         };
@@ -1538,7 +1637,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
                             if (isMatch) {
                                 feedbackBox.className = 'speech-feedback-box correct';
-                                feedbackBox.innerHTML = `${getTranslation('vrimmel_mic_correct')} <strong>"${spoken}"</strong> ✓`;
+                                const cleanCorrectMsg = getTranslation('vrimmel_mic_correct').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
+                                feedbackBox.innerHTML = `✓ ${cleanCorrectMsg} <strong>"${spoken}"</strong>`;
                             } else {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.innerHTML = getTranslation('vrimmel_mic_incorrect').replace('{spoken}', spoken);
@@ -1548,7 +1648,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         rec.onerror = (err) => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>`;
                             if (err.error !== 'no-speech') {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.textContent = `Mikrofon: ${err.error}`;
@@ -1558,7 +1658,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         rec.onend = () => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>`;
                         };
 
                         rec.start();
@@ -1593,10 +1693,14 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const sortHeader = document.createElement('div');
     sortHeader.className = 'sorting-header-row';
+    const cleanSortTitle = getTranslation('sort_byrum_title').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
     sortHeader.innerHTML = `
         <div>
-            <h3 style="font-size: 1.3rem; margin: 0;">📦 ${getTranslation('sort_byrum_title')}</h3>
-            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
+            <h3 style="font-size: 1.3rem; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('layers', '', { size: 20 })}</span>
+                <span>${cleanSortTitle}</span>
+            </h3>
+            <p style="color: var(--by-text-muted, #a7f3d0); margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
         </div>
         <div class="sort-progress-badge" id="byrum-sort-progress">${getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', byrumWords.length)}</div>
     `;
@@ -1605,13 +1709,15 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const binsContainer = document.createElement('div');
     binsContainer.className = 'bins-container';
 
+    const cleanBinEnTitle = getTranslation('sort_bin_en_title').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
     const binEn = document.createElement('div');
     binEn.className = 'sort-bin bin-en';
-    binEn.innerHTML = `<div class="bin-title bin-title-en">${getTranslation('sort_bin_en_title')}</div><div class="bin-items-list" id="bin-byrum-en"></div>`;
+    binEn.innerHTML = `<div class="bin-title bin-title-en" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 16 })} <span>${cleanBinEnTitle}</span></div><div class="bin-items-list" id="bin-byrum-en"></div>`;
 
+    const cleanBinEtTitle = getTranslation('sort_bin_et_title').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
     const binEt = document.createElement('div');
     binEt.className = 'sort-bin bin-et';
-    binEt.innerHTML = `<div class="bin-title bin-title-et">${getTranslation('sort_bin_et_title')}</div><div class="bin-items-list" id="bin-byrum-et"></div>`;
+    binEt.innerHTML = `<div class="bin-title bin-title-et" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 16 })} <span>${cleanBinEtTitle}</span></div><div class="bin-items-list" id="bin-byrum-et"></div>`;
 
     binsContainer.appendChild(binEn);
     binsContainer.appendChild(binEt);
@@ -1666,7 +1772,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             });
 
             if (byrumPlacedCount === byrumWords.length) {
-                sortHeader.querySelector('#byrum-sort-progress').innerHTML = getTranslation('sort_all_complete');
+                const cleanComplete = getTranslation('sort_all_complete').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
+                sortHeader.querySelector('#byrum-sort-progress').innerHTML = `✓ ${cleanComplete}`;
             }
 
             selectedSortWord = null;
@@ -1684,7 +1791,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const resetBtn = document.createElement('button');
     resetBtn.className = 'reset-sort-btn';
-    resetBtn.innerHTML = getTranslation('sort_reset_btn');
+    const cleanResetBtn = getTranslation('sort_reset_btn').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
+    resetBtn.innerHTML = `<span>${renderDsIcon('refresh', '', { size: 16 })}</span> <span>${cleanResetBtn}</span>`;
+    resetBtn.style.display = 'inline-flex';
+    resetBtn.style.alignItems = 'center';
+    resetBtn.style.gap = '0.5rem';
     resetBtn.onclick = () => {
         byrumPlacedCount = 0;
         selectedSortWord = null;
@@ -1710,7 +1821,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
     const byrumMissions = [
         {
             id: "byrum_m1_title",
-            title: "Find 3 ord for trafik og transport (🚲)",
+            title: "Find 3 ord for trafik og transport",
+            iconName: "bicycle",
             targetCount: 3,
             options: [
                 { text: "en cykel", correct: true },
@@ -1722,7 +1834,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 personer eller roller i byrummet 🧑‍🤝‍🧑",
+            title: "Find 3 personer eller roller i byrummet",
+            iconName: "users",
             targetCount: 3,
             options: [
                 { text: "en læge", correct: true },
@@ -1734,7 +1847,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 steder eller bygninger 🏢",
+            title: "Find 3 steder eller bygninger",
+            iconName: "city",
             targetCount: 3,
             options: [
                 { text: "en by", correct: true },
@@ -1746,7 +1860,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting med tid eller økonomi ⏰💰",
+            title: "Find 3 ting med tid eller økonomi",
+            iconName: "clock",
             targetCount: 3,
             options: [
                 { text: "en tid", correct: true },
@@ -1758,7 +1873,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 familiemedlemmer eller børn 👨‍👩‍👧",
+            title: "Find 3 familiemedlemmer eller børn",
+            iconName: "user",
             targetCount: 3,
             options: [
                 { text: "en familie", correct: true },
@@ -1770,7 +1886,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting på en bygning eller et hus 🏠🚪",
+            title: "Find 3 ting på en bygning eller et hus",
+            iconName: "home",
             targetCount: 3,
             options: [
                 { text: "et hus", correct: true },
@@ -1784,6 +1901,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         {
             id: "byrum_m7_title",
             title: "Find 3 ting i naturen (træ / kat / fugl)",
+            iconName: "mapPin",
             targetCount: 3,
             options: [
                 { text: "et træ", correct: true },
@@ -1805,12 +1923,21 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const m = byrumMissions[currMissionIdx];
         let selectedCount = 0;
 
+        const rawTitle = (m.id && getTranslation(m.id)) ? getTranslation(m.id) : m.title;
+        const cleanTitle = rawTitle.replace(/\s*[\(\[\{][^\)\]\}]*[\)\]\}]\s*$/, '').replace(/[\s\p{Emoji}\uFE0F]+/gu, '').trim() || rawTitle;
+
         const header = document.createElement('div');
         header.className = 'mission-header';
         header.innerHTML = `
-            <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${byrumMissions.length}</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem;">${(m.id && getTranslation(m.id)) ? getTranslation(m.id) : m.title}</div>
-            <div style="font-size: 0.95rem; color: #94a3b8;">${getTranslation('byrum_detektiv_count_prompt')}</div>
+            <div class="mission-badge" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                <span>${renderDsIcon('search', '', { size: 14 })}</span>
+                <span>${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${byrumMissions.length}</span>
+            </div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem;">
+                <span>${renderDsIcon(m.iconName || 'search', '', { size: 22 })}</span>
+                <span>${cleanTitle}</span>
+            </div>
+            <div style="font-size: 0.95rem; color: var(--by-text-muted, #a7f3d0);">${getTranslation('byrum_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);
 
@@ -1837,12 +1964,15 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     selectedCount++;
 
                     if (selectedCount === m.targetCount) {
+                        const cleanDetektivComplete = getTranslation('byrum_detektiv_complete').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
+                        const nextBtnText = currMissionIdx < byrumMissions.length - 1 ? getTranslation('byrum_detektiv_next') : getTranslation('byrum_detektiv_restart').replace(/[\s\p{Emoji}\uFE0F]+/gu, '').trim();
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! ${getTranslation('byrum_detektiv_complete')}
+                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>Rigtigt svaret! ${cleanDetektivComplete}</span>
                             </div>
                             <button class="mission-next-btn" id="next-byrum-mission">
-                                ${currMissionIdx < byrumMissions.length - 1 ? getTranslation('byrum_detektiv_next') : getTranslation('byrum_detektiv_restart')}
+                                ${nextBtnText}
                             </button>
                         `;
                         feedbackEl.querySelector('#next-byrum-mission').onclick = () => {
@@ -1851,8 +1981,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         };
                     } else {
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! (${selectedCount} af ${m.targetCount})
+                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                                <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                <span>Rigtigt svaret! (${selectedCount} af ${m.targetCount})</span>
                             </div>
                         `;
                     }
@@ -2078,15 +2209,21 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         if (story.fullStoryText) {
             const storyBox = document.createElement('div');
             storyBox.className = 'story-text-preview-box';
-            storyBox.style.background = 'rgba(15, 23, 42, 0.65)';
-            storyBox.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+            storyBox.style.background = 'var(--by-surface-input, #02220e)';
+            storyBox.style.border = '1px solid var(--by-border, #136832)';
             storyBox.style.borderRadius = '14px';
             storyBox.style.padding = '1rem 1.4rem';
             storyBox.style.marginBottom = '1.8rem';
             storyBox.style.fontSize = '1.08rem';
             storyBox.style.lineHeight = '1.65';
             storyBox.style.color = '#e2e8f0';
-            storyBox.innerHTML = `📖 <strong>Historie:</strong> ${formatVerbLinks(story.fullStoryText)}`;
+            storyBox.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; color: var(--by-text-muted, #a7f3d0); font-weight: 800;">
+                    <span>${renderDsIcon('bookOpen', '', { size: 18 })}</span>
+                    <span>Historie:</span>
+                </div>
+                <div>${formatVerbLinks(story.fullStoryText)}</div>
+            `;
             storyContainer.appendChild(storyBox);
         }
 
@@ -2161,12 +2298,13 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         const isLastStory = currByrumStoryIdx === byrumStories.length - 1;
         completeBox.innerHTML = `
-            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
-                🎉 Flot klaret! Du har gennemført historien.
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #4ade80;">
+                <span>${renderDsIcon('check', '', { size: 22 })}</span>
+                <span>Flot klaret! Du har gennemført historien.</span>
             </div>
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
-                <button class="story-opt-btn" id="btn-next-byrum-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
-                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                <button class="story-opt-btn" id="btn-next-byrum-story" style="background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <span>${isLastStory ? 'Start forfra' : 'Gå til næste historie'}</span> <span>➔</span>
                 </button>
             </div>
         `;
@@ -2298,16 +2436,18 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
         if (currByrumCategoryIdx >= byrumCategoryTasks.length) {
             categoryCard.innerHTML = `
-                <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">🎉</div>
+                <div style="margin-bottom: 0.6rem; color: var(--by-primary, #22c55e); display: flex; justify-content: center;">
+                    ${renderDsIcon('trophy', '', { size: 48 })}
+                </div>
                 <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">${getTranslation('top100_category_complete_title')}</h2>
-                <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.6rem;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; margin-bottom: 1.6rem;">
                     ${getTranslation('top100_category_complete_desc')}
                 </p>
                 <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
                     <button class="mission-next-btn" id="restart-byrum-category-btn" style="background: #475569; color: white;">
                         ${getTranslation('top100_start_over_btn')}
                     </button>
-                    <button class="mission-next-btn" id="byrum-category-next-tab-btn" style="background: #22c55e; color: #0f172a;">
+                    <button class="mission-next-btn" id="byrum-category-next-tab-btn" style="background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800;">
                         ${getTranslation('top100_goto_saetning_btn')}
                     </button>
                 </div>
@@ -2333,7 +2473,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         if (task.type === 'find_overemne') {
             const promptTitle = document.createElement('h3');
             promptTitle.style.fontSize = '1.35rem';
-            promptTitle.style.color = '#94a3b8';
+            promptTitle.style.color = 'var(--by-text-muted, #a7f3d0)';
             promptTitle.style.margin = '0.3rem 0 0.8rem';
             promptTitle.textContent = getTranslation('top100_underemner_label');
             categoryCard.appendChild(promptTitle);
@@ -2371,9 +2511,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     if (opt.correct) {
                         btn.classList.add('selected-correct');
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                        const cleanOveremnePrefix = getTranslation("top100_correct_overemne_prefix").replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                🎉 ${getTranslation("top100_correct_overemne_prefix")} ${opt.text}
+                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>${cleanOveremnePrefix} ${opt.text}</span>
                             </div>
                             <button class="mission-next-btn" id="next-category-btn">${getTranslation('top100_next_task_btn')}</button>
                         `;
@@ -2400,7 +2542,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
             // task.type === 'find_underemner'
             const promptTitle = document.createElement('div');
             promptTitle.style.fontSize = '0.95rem';
-            promptTitle.style.color = '#94a3b8';
+            promptTitle.style.color = 'var(--by-text-muted, #a7f3d0)';
             promptTitle.style.textTransform = 'uppercase';
             promptTitle.style.letterSpacing = '0.5px';
             promptTitle.textContent = getTranslation('top100_overemne_label');
@@ -2439,9 +2581,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         selectedCount++;
 
                         if (selectedCount === task.targetCount) {
+                            const cleanUnderemnerComplete = getTranslation('top100_correct_all_underemner').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
                             feedbackEl.innerHTML = `
-                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                    🎉 ${getTranslation('top100_correct_all_underemner')}
+                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                    <span>${cleanUnderemnerComplete}</span>
                                 </div>
                                 <button class="mission-next-btn" id="next-category-btn">
                                     ${currByrumCategoryIdx < byrumCategoryTasks.length - 1 ? getTranslation('top100_next_task_btn') : getTranslation('top100_see_result_btn')}
@@ -2454,7 +2598,8 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                         } else {
                             feedbackEl.innerHTML = `
                                 <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                                    ${renderDsIcon('check', '', { size: 16 })} <span>Rigtigt svaret! (${selectedCount} af ${task.targetCount})</span>
+                                    <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                    <span>Rigtigt svaret! (${selectedCount} af ${task.targetCount})</span>
                                 </div>
                             `;
                         }
@@ -2496,11 +2641,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
     const subTab1Btn = document.createElement('button');
     subTab1Btn.className = 'sb-sub-btn active';
-    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+    subTab1Btn.innerHTML = `<span>${renderDsIcon('edit', '', { size: 16 })}</span> <span>1. Udforsk & Byg selv</span>`;
 
     const subTab2Btn = document.createElement('button');
     subTab2Btn.className = 'sb-sub-btn';
-    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+    subTab2Btn.innerHTML = `<span>${renderDsIcon('puzzle', '', { size: 16 })}</span> <span>2. Opgave & Puslespil</span>`;
 
     sbSubNav.appendChild(subTab1Btn);
     sbSubNav.appendChild(subTab2Btn);
@@ -2538,7 +2683,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         freeBuilderContainer.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger i byrummet</h3>
-                <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                     Vælg et element fra hver række herunder. Prøv forskellige kombinationer og lyt til hvordan sætningen lyder på dansk!
                 </p>
             </div>
@@ -2558,7 +2703,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 <div class="sb-live-label">Din samlede sætning</div>
                 <div class="sb-live-sentence" id="free-live-sentence-byrum"></div>
                 <button class="sb-listen-btn" id="free-listen-btn-byrum">
-                    <span>🔊</span> Hør udtale
+                    <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør udtale</span>
                 </button>
             </div>
         `;
@@ -2570,7 +2715,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 role: 'Subjekt',
                 catClass: 'sb-cat-subjekt',
                 badgeClass: 'badge-cat-subjekt',
-                icon: '👤',
+                iconName: 'user',
                 options: ['Manden', 'Kvinden', 'Lægen', 'Drengen', 'Pigen', 'Familien', 'Vennen', 'Chaufføren']
             },
             {
@@ -2579,7 +2724,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 role: 'Verbum',
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
-                icon: '⚡',
+                iconName: 'zap',
                 options: ['kører i', 'går en tur på', 'betaler med', 'åbner', 'møder', 'kigger på', 'venter på', 'har']
             },
             {
@@ -2588,7 +2733,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 role: 'Objekt (Ting)',
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
-                icon: '📦',
+                iconName: 'tag',
                 options: ['penge', 'en cykel', 'en dør', 'en ven', 'en hund', 'et træ', 'en café', 'et problem']
             },
             {
@@ -2597,7 +2742,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 role: 'Sted (Rum)',
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
-                icon: '📍',
+                iconName: 'mapPin',
                 options: ['på gaden', 'på torvet', 'ved caféen', 'foran skolen', 'ved lyskrydset', 'på vejen', 'i byen', 'ved huset']
             }
         ];
@@ -2611,7 +2756,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         function updateSentence() {
             liveSentenceEl.innerHTML = `
                 <span class="grammar-word word-substantiv">${selected[0]}</span>
-                <span class="grammar-word word-verbum clickable-verb-peek" title="Gå til verbumfladen for '${selected[1]}' ↗️">${selected[1]} <small style="font-size: 0.78rem; opacity: 0.9;">↗️</small></span>
+                <span class="grammar-word word-verbum clickable-verb-peek" title="Gå til verbumfladen for '${selected[1]}'">${selected[1]}</span>
                 <span class="grammar-word word-substantiv">${selected[2]}</span>
                 <span class="grammar-word word-sted">${selected[3]}</span>.
             `;
@@ -2638,8 +2783,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
 
             row.innerHTML = `
                 <div class="sb-category-header">
-                    <div class="sb-category-title">
-                        <span>${cat.icon}</span> ${cat.title}
+                    <div class="sb-category-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon(cat.iconName, '', { size: 18 })}</span>
+                        <span>${cat.title}</span>
                     </div>
                     <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                 </div>
@@ -2653,7 +2799,7 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 btn.className = `sb-chip-btn ${selected[catIdx] === opt ? 'selected' : ''}`;
                 
                 if (cat.id === 'verbum') {
-                    btn.innerHTML = `<span>${opt}</span> <span class="verb-quick-info-btn" title="Gå til verbumfladen for '${opt}' ↗️">↗️</span>`;
+                    btn.innerHTML = `<span>${opt}</span> <span class="verb-quick-info-btn" title="Gå til verbumfladen for '${opt}'">${renderDsIcon('link', '', { size: 12 })}</span>`;
                     const infoBtn = btn.querySelector('.verb-quick-info-btn');
                     if (infoBtn) {
                         infoBtn.onclick = (e) => {
@@ -2818,15 +2964,18 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title">📍 <em>${task.context}</em></div>
+            <div class="sb-context-title" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span>${renderDsIcon('mapPin', '', { size: 16 })}</span>
+                <em>${task.context}</em>
+            </div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
                     <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
                     <span>${task.subjekt}</span>
                 </div>
-                <div class="sb-context-chip verbum clickable-verb-peek" title="Gå til verbumfladen for '${task.verbum}' ↗️" style="cursor: pointer;">
+                <div class="sb-context-chip verbum clickable-verb-peek" title="Gå til verbumfladen for '${task.verbum}'" style="cursor: pointer;">
                     <span class="sb-chip-role">${h1.danish} <span class="chip-trans">(${h1.translation})</span></span>
-                    <span>${task.verbum} <span class="verb-chip-info-tag">↗️</span></span>
+                    <span style="display: inline-flex; align-items: center; gap: 0.25rem;">${task.verbum} <span class="verb-chip-info-tag">${renderDsIcon('link', '', { size: 12 })}</span></span>
                 </div>
                 <div class="sb-context-chip sted">
                     <span class="sb-chip-role">${h3.danish} <span class="chip-trans">(${h3.translation})</span></span>
@@ -2910,8 +3059,9 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
         const lang = getLang();
 
         container.innerHTML = `
-            <div class="sb-puzzle-title">
-                <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+            <div class="sb-puzzle-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('puzzle', '', { size: 20 })}</span>
+                <span>Trin 2: Puslespillet – Saml hele sætningen!</span>
             </div>
             <div class="sb-puzzle-desc">
                 Klik på brikkerne i den rigtige danske ordstilling: <strong>1. Hvem ➔ 2. Handling ➔ 3. Hvilken ting ➔ 4. Hvor</strong>.
@@ -3017,33 +3167,38 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                 const isLastTask = currentByrumChallengeIdx === byrumChallengeTasks.length - 1;
 
                 feedbackEl.innerHTML = `
-                    <div class="sb-feedback-msg success">
-                        🎉 Fantastisk! "<strong>${fullSentence}</strong>" ✓
+                    <div class="sb-feedback-msg success" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon('check', '', { size: 18 })}</span>
+                        <span>Fantastisk! "<strong>${fullSentence}</strong>"</span>
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
-                        💡 ${task.pedagogyNote}
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                        <span>${renderDsIcon('lightbulb', '', { size: 16 })}</span>
+                        <span>${task.pedagogyNote}</span>
                     </div>
 
                     ${(isAllDone || isLastTask) ? `
                         <div class="verb-bridge-cta-card">
-                            <div class="verb-bridge-badge">🚀 Næste skridt i dit sprog</div>
+                            <div class="verb-bridge-badge" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                                <span>${renderDsIcon('zap', '', { size: 14 })}</span>
+                                <span>Næste skridt i dit sprog</span>
+                            </div>
                             <h4 class="verb-bridge-title">Du mestrer byens ting – vil du mestre handlingerne?</h4>
                             <p class="verb-bridge-desc">
                                 I dine sætninger brugte du handlinger som <strong>kører, møder, venter</strong> og <strong>kigger</strong>.<br>
                                 I <em>De 100 verber: Byrummet</em> kan du lære alle 20 handlinger i byen med vrimlebilleder, datid, synonymer og detektiv-missioner!
                             </p>
                             <button class="verb-bridge-action-btn" id="go-to-verber-byrum-cta">
-                                <span>🔴</span> Gå til "De 100 verber – Byen og gaden" ➔
+                                <span>Gå til "De 100 verber – Byen og gaden"</span> <span>➔</span>
                             </button>
                         </div>
                     ` : ''}
 
                     <div class="sb-action-row">
                         <button class="sb-listen-btn" id="byrum-listen-full">
-                            <span>🔊</span> Hør sætningen igen
+                            <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør sætningen igen</span>
                         </button>
                         <button class="sb-action-btn" id="byrum-next-btn">
-                            ${currentByrumChallengeIdx < byrumChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentByrumChallengeIdx < byrumChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra ➔'}
                         </button>
                     </div>
                 `;
@@ -3063,11 +3218,11 @@ export function renderByrummetView(container, navigateFn, extraData = {}) {
                     <div class="sb-feedback-msg error">
                         ✗ Rækkefølgen er ikke helt rigtig.
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.6rem;">
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.6rem;">
                         Husk rækkefølgen på dansk: 1. Hvem (Subjekt) ➔ 2. Handling (Verbum) ➔ 3. Hvilken ting (Objekt) ➔ 4. Hvor (Sted).
                     </div>
-                    <button class="sb-action-btn" id="byrum-retry-btn" style="background: #475569;">
-                        Nulstil brikker 🔄
+                    <button class="sb-action-btn" id="byrum-retry-btn" style="background: #475569; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon('refresh', '', { size: 16 })}</span> <span>Nulstil brikker</span>
                     </button>
                 `;
 

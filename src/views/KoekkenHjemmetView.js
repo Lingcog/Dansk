@@ -1,7 +1,13 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { kitchenWordTranslations } from '../utils/top100_translations.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
+
+function stripLeadingEmoji(text) {
+    if (!text) return '';
+    return text.replace(/^[\p{Extended_Pictographic}\s\uFE0F]+/u, '').trim();
+}
 
 /**
  * KoekkenHjemmetView - Test-prototype for semantisk ordforråd: Køkkenet & Hjemmet
@@ -177,11 +183,38 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
     const style = document.createElement('style');
     style.textContent = `
         .koekken-vrimmel-view {
+            --by-bg: #4A040B;
+            --by-surface: #073518;
+            --by-surface-hover: #0c4f24;
+            --by-surface-input: #02220e;
+            --by-border: #136832;
+            --by-border-light: #1b793c;
+            --by-primary: #22c55e;
+            --by-text: #FFFFFF;
+            --by-text-muted: #a7f3d0;
+            --by-text-subtle: #86efac;
+
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
         }
+        .koekken-vrimmel-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .koekken-vrimmel-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .koekken-vrimmel-view .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
+        }
+
         .kv-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -190,15 +223,22 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
         }
         .kv-hero-header p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
             font-size: 1.1rem;
-            max-width: 750px;
+            max-width: 780px;
             margin: 0 auto;
+            line-height: 1.5;
+            opacity: 0.95;
         }
 
         /* Tabs Navigation */
@@ -208,18 +248,19 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             flex-wrap: wrap;
             gap: 0.6rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--by-surface-input, #02220e);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--by-border, #136832);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
         }
         .kv-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             border: none;
             padding: 0.7rem 1.2rem;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -228,13 +269,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .kv-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            background: var(--by-surface-hover, #0c4f24);
         }
         .kv-tab-btn.active {
-            background: #3b82f6;
-            color: white;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45);
         }
 
         /* Panel Container */
@@ -254,11 +296,12 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
            TAB 1: VRIMLEBILLEDE & FARVE-RADAR
            ========================================= */
         .vrimmel-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .radar-control-bar {
             display: flex;
@@ -268,7 +311,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 1rem;
             margin-bottom: 1.2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--by-border, #136832);
         }
         .radar-toggle-wrapper {
             display: flex;
@@ -296,9 +339,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             color: white;
         }
         .pure-image-toggle-btn {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             color: #f1f5f9;
-            border: 2px solid #64748b;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.6rem 1.3rem;
             border-radius: 25px;
             font-weight: 700;
@@ -310,14 +353,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .pure-image-toggle-btn:hover {
-            border-color: #10b981;
-            background: #334155;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .pure-image-toggle-btn.active {
-            background: linear-gradient(135deg, #059669, #10b981);
-            border-color: #34d399;
-            box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            border-color: #86efac;
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.5);
         }
         .vrimmel-stage.pure-mode .vrimmel-hotspot {
             display: none !important;
@@ -356,7 +399,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             line-height: 0;
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
         }
         .vrimmel-img {
             width: 100%;
@@ -379,15 +422,15 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             border: 2px solid white;
             transition: all 0.25s ease;
             z-index: 10;
-            background: rgba(30, 41, 59, 0.85);
+            background: rgba(2, 34, 14, 0.85);
             color: #f8fafc;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
         .vrimmel-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.3);
             z-index: 20;
-            background: #3b82f6;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
         }
 
         /* When Radar is Active */
@@ -416,8 +459,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
         /* Hotspot popup card */
         .hotspot-detail-card {
-            background: #1e293b;
-            border: 1px solid #475569;
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -460,12 +503,12 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         }
         .detail-forms {
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             margin-bottom: 0.5rem;
         }
         .detail-sentence {
             font-size: 1.05rem;
-            color: #e2e8f0;
+            color: #FFFFFF;
             font-style: italic;
         }
         .detail-sentence .udtale-word {
@@ -483,9 +526,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             text-decoration: underline wavy #ef4444;
         }
         .listen-word-btn {
-            background: #2563eb;
+            background: var(--by-surface-hover, #0c4f24);
             color: white;
-            border: none;
+            border: 1.5px solid var(--by-border-light, #1b793c);
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
@@ -497,13 +540,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .listen-word-btn:hover {
-            background: #1d4ed8;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
             transform: scale(1.05);
         }
         .mic-speak-btn {
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
             color: #f8fafc;
-            border: 2px solid #64748b;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
@@ -515,8 +559,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .mic-speak-btn:hover {
-            border-color: #38bdf8;
-            background: #1e293b;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .mic-speak-btn.listening {
             border-color: #ef4444;
@@ -567,11 +611,12 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
         /* En/Et Sorting Game */
         .sorting-game-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 18px;
             padding: 1.5rem;
             margin-top: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .sorting-header-row {
             display: flex;
@@ -584,11 +629,12 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         .sorting-header-row h3 {
             font-size: 1.3rem;
             margin: 0;
+            color: #FFFFFF;
         }
         .sort-progress-badge {
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-            border: 1px solid #0284c7;
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border: 1px solid var(--by-border, #136832);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-weight: 800;
@@ -635,29 +681,29 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .chip-in-bin {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             padding: 0.4rem 0.8rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
             color: white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--by-border, #136832);
         }
         .words-bank-row {
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem;
             justify-content: center;
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--by-surface-input, #02220e);
             padding: 1.2rem;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--by-border, #136832);
         }
         .sort-word-chip {
-            background: #334155;
+            background: var(--by-surface-hover, #0c4f24);
             color: white;
-            border: 2px solid transparent;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -666,18 +712,20 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             transition: all 0.2s ease;
         }
         .sort-word-chip:hover {
-            background: #475569;
+            border-color: var(--by-primary, #22c55e);
+            background: #15803d;
             transform: translateY(-2px);
         }
         .sort-word-chip.selected {
-            border-color: #38bdf8;
-            box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
-            background: #1e293b;
+            border-color: #86efac;
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.6);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
         }
         .sort-word-chip.placed {
             opacity: 0.35;
             pointer-events: none;
-            background: #0f172a;
+            background: #02220e;
             text-decoration: line-through;
         }
         .sort-actions-bar {
@@ -689,36 +737,42 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 1rem;
         }
         .reset-sort-btn {
-            background: #475569;
+            background: var(--by-surface-input, #02220e);
             color: white;
-            border: none;
+            border: 1px solid var(--by-border, #136832);
             padding: 0.6rem 1.2rem;
             border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .reset-sort-btn:hover {
-            background: #64748b;
+            background: var(--by-surface-hover, #0c4f24);
         }
 
         /* =========================================
            TAB 2: DETEKTIV-MISSIONEN
            ========================================= */
         .mission-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .mission-header {
             text-align: center;
             margin-bottom: 1.8rem;
         }
         .mission-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             background: #f59e0b;
             color: #000;
             font-weight: 800;
@@ -736,7 +790,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         }
         .mission-counter {
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
         }
         .clues-grid {
             display: grid;
@@ -745,8 +799,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-bottom: 2rem;
         }
         .clue-btn {
-            background: #1e293b;
-            border: 2px solid #334155;
+            background: var(--by-surface-input, #02220e);
+            border: 1.5px solid var(--by-border, #136832);
             color: white;
             padding: 1.2rem;
             border-radius: 14px;
@@ -761,18 +815,21 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.4rem;
         }
         .clue-btn:hover {
-            border-color: #38bdf8;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-3px);
         }
         .clue-btn.selected-correct {
-            background: rgba(34, 197, 94, 0.25);
-            border-color: #22c55e;
-            color: #4ade80;
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
         .clue-btn.selected-wrong {
-            background: rgba(239, 68, 68, 0.25);
-            border-color: #ef4444;
-            color: #f87171;
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
         .mission-feedback {
             text-align: center;
@@ -780,8 +837,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-top: 1rem;
         }
         .mission-next-btn {
-            background: #22c55e;
-            color: #0f172a;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
             font-weight: 800;
             border: none;
             padding: 0.8rem 1.6rem;
@@ -792,7 +849,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-top: 1rem;
         }
         .mission-next-btn:hover {
-            background: #16a34a;
+            background: #4ade80;
             transform: scale(1.05);
         }
 
@@ -802,28 +859,30 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         .story-container {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .story-nav-pills {
             display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
         }
         .story-nav-btn {
-            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            background: var(--by-surface-input, #02220e); color: var(--by-text-muted, #a7f3d0); border: 1.5px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-nav-btn:hover { border-color: #38bdf8; color: white; transform: translateY(-2px); }
+        .story-nav-btn:hover { border-color: var(--by-primary, #22c55e); color: white; transform: translateY(-2px); }
         .story-nav-btn.active {
-            background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+            background: var(--by-primary, #22c55e); color: #02220e; border-color: #86efac; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35); font-weight: 800;
         }
         .story-step-card {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            border-left: 5px solid #38bdf8;
+            border-left: 5px solid var(--by-primary, #22c55e);
             transition: all 0.3s ease;
         }
         .story-step-card.active-step {
@@ -842,9 +901,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-top: 0.8rem;
         }
         .story-opt-btn {
-            background: #334155;
+            background: var(--by-surface, #073518);
             color: white;
-            border: none;
+            border: 1px solid var(--by-border, #136832);
             padding: 0.6rem 1.2rem;
             border-radius: 10px;
             font-weight: 700;
@@ -852,15 +911,20 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             transition: all 0.2s ease;
         }
         .story-opt-btn:hover {
-            background: #475569;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .story-opt-btn.correct {
-            background: #22c55e !important;
-            color: #0f172a;
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
         .story-opt-btn.wrong {
-            background: #ef4444 !important;
-            color: white;
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
         .story-explanation-box {
             background: rgba(34, 197, 94, 0.15);
@@ -874,19 +938,22 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         }
 
         /* =========================================
-           TAB 4: OVEREMNE OG UNDEREMNE (Model C)
+           TAB 4: OVEREMNE OG UNDEREMNE
            ========================================= */
         .category-card {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
         .category-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             background: #8b5cf6;
             color: white;
             font-weight: 800;
@@ -905,8 +972,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin: 1.2rem 0 1.6rem;
         }
         .category-word-chip {
-            background: #0f172a;
-            border: 2px solid #38bdf8;
+            background: var(--by-surface-input, #02220e);
+            border: 1.5px solid var(--by-border, #136832);
             color: #f8fafc;
             padding: 0.6rem 1.2rem;
             border-radius: 12px;
@@ -920,8 +987,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-top: 1.2rem;
         }
         .category-opt-btn {
-            background: #1e293b;
-            border: 2px solid #334155;
+            background: var(--by-surface-input, #02220e);
+            border: 1.5px solid var(--by-border, #136832);
             color: white;
             padding: 1.1rem;
             border-radius: 14px;
@@ -932,18 +999,21 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             text-align: center;
         }
         .category-opt-btn:hover {
-            border-color: #38bdf8;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-2px);
         }
         .category-opt-btn.selected-correct {
-            background: rgba(34, 197, 94, 0.25) !important;
-            border-color: #22c55e !important;
-            color: #4ade80 !important;
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
         .category-opt-btn.selected-wrong {
-            background: rgba(239, 68, 68, 0.25) !important;
-            border-color: #ef4444 !important;
-            color: #f87171 !important;
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
 
         /* =========================================
@@ -959,20 +1029,33 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
+        /* =========================================
+           TAB 5: SÆTNINGSBYGGER (UDFORSK & OPGAVER)
+           ========================================= */
+        .sentence-builder-card {
+            max-width: 960px;
+            margin: 0 auto;
+            background: var(--by-surface, #073518);
+            border: 1.5px solid var(--by-border, #136832);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+
         /* Sub-navigation for Tab 5 */
         .sb-sub-nav {
             display: flex;
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--by-border, #136832);
             padding-bottom: 1rem;
             flex-wrap: wrap;
         }
         .sb-sub-btn {
-            background: rgba(15, 23, 42, 0.6);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -985,14 +1068,15 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         }
         .sb-sub-btn:hover {
             color: white;
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .sb-sub-btn.active {
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: white;
-            border-color: #38bdf8;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            border-color: #86efac;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.45);
         }
 
         /* Grammar Legend */
@@ -1003,9 +1087,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 1.2rem;
             margin-bottom: 1.5rem;
             padding: 0.6rem 1rem;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--by-surface-input, #02220e);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--by-border, #136832);
             font-size: 0.85rem;
         }
         .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
@@ -1019,10 +1103,10 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         /* Free Builder Styles */
         .sb-category-row {
             margin-bottom: 1.3rem;
-            background: rgba(15, 23, 42, 0.45);
+            background: var(--by-surface-input, #02220e);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--by-border, #136832);
             border-left: 4px solid #64748b;
         }
         .sb-cat-subjekt { border-left-color: #22c55e; }
@@ -1041,7 +1125,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         .sb-category-title {
             font-size: 0.95rem;
             font-weight: 700;
-            color: #e2e8f0;
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -1053,10 +1137,10 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             padding: 0.2rem 0.5rem;
             border-radius: 6px;
         }
-        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .badge-cat-objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-cat-sted { background: rgba(2, 132, 199, 0.15); color: #60a5fa; border: 1px solid rgba(2, 132, 199, 0.3); }
+        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .badge-cat-verbum { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-cat-objekt { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .badge-cat-sted { background: rgba(2, 132, 199, 0.2); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.4); }
 
         .sb-chips-grid {
             display: flex;
@@ -1064,9 +1148,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .sb-chip-btn {
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 1px solid #475569;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
             padding: 0.55rem 1rem;
             border-radius: 10px;
             font-size: 0.95rem;
@@ -1076,42 +1160,43 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         }
         .sb-chip-btn:hover {
             color: white;
-            border-color: #94a3b8;
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-2px);
         }
         .sb-chip-btn.selected {
             font-weight: 800;
             transform: translateY(-2px);
         }
-        .sb-cat-subjekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+
+        /* LØSNING 1: SOLIDE BRIKKER */
+        .sb-cat-subjekt .sb-chip-btn.selected,
+        .sb-cat-objekt .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #86efac !important;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-verbum .sb-chip-btn.selected {
-            background: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
-        }
-        .sb-cat-objekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #fca5a5 !important;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-sted .sb-chip-btn.selected {
-            background: rgba(2, 132, 199, 0.25);
-            color: #93c5fd;
-            border-color: #0284c7;
-            box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #93c5fd !important;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
 
         /* Live Result Box */
         .sb-live-box {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--by-surface-input, #02220e);
+            border: 2px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.4rem;
             margin-top: 1.5rem;
@@ -1143,9 +1228,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         .word-tid { color: #c084fc; }
 
         .sb-listen-btn {
-            background: #1e293b;
+            background: var(--by-surface, #073518);
             color: #f8fafc;
-            border: 1px solid #38bdf8;
+            border: 1.5px solid var(--by-primary, #22c55e);
             padding: 0.65rem 1.4rem;
             border-radius: 25px;
             font-size: 1rem;
@@ -1157,8 +1242,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .sb-listen-btn:hover {
-            background: rgba(56, 189, 248, 0.15);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            background: var(--by-surface-hover, #0c4f24);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.35);
             transform: scale(1.03);
         }
         .sb-mic-btn {
@@ -1199,9 +1284,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #475569;
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1px solid var(--by-border, #136832);
             font-size: 0.8rem;
             font-weight: 700;
             display: flex;
@@ -1211,27 +1296,28 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             transition: all 0.2s;
         }
         .sb-task-pill.active {
-            border-color: #38bdf8;
-            color: white;
-            background: #0284c7;
+            border-color: var(--by-primary, #22c55e);
+            color: #02220e;
+            background: var(--by-primary, #22c55e);
+            font-weight: 800;
         }
         .sb-task-pill.done {
-            background: #22c55e;
-            color: #0f172a;
+            background: #16a34a;
+            color: #ffffff;
             border-color: #22c55e;
         }
 
         /* Step 1: Semantic Match */
         .sb-context-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 14px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
         }
         .sb-context-title {
             font-size: 1.05rem;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             margin-bottom: 0.8rem;
         }
         .sb-context-elements {
@@ -1241,22 +1327,28 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-bottom: 0.8rem;
         }
         .sb-context-chip {
-            padding: 0.5rem 0.9rem;
-            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
         }
-        .sb-context-chip.subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.3); }
-        .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
+        .sb-context-chip.subjekt { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .sb-context-chip.sted { background: rgba(2, 132, 199, 0.2); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.4); }
+        .sb-chip-role {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            opacity: 0.95;
+        }
 
         .sb-question-box {
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 12px;
             padding: 1rem 1.3rem;
             margin-bottom: 1.5rem;
@@ -1274,9 +1366,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-bottom: 1.5rem;
         }
         .sb-option-btn {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             color: white;
-            border: 2px solid #475569;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 1rem 1.2rem;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -1286,27 +1378,29 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             text-align: center;
         }
         .sb-option-btn:hover {
-            border-color: #38bdf8;
-            background: #334155;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-2px);
         }
         .sb-option-btn.correct {
-            background: rgba(34, 197, 94, 0.25);
-            border-color: #22c55e;
-            color: #4ade80;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5) !important;
         }
         .sb-option-btn.incorrect {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: #ef4444;
-            color: #f87171;
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
             animation: shakeBin 0.4s ease;
         }
 
         /* Step 2: Puzzle */
         .sb-puzzle-section {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -1323,7 +1417,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         }
         .sb-puzzle-desc {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             margin-bottom: 1.2rem;
         }
         .sb-puzzle-slots {
@@ -1333,8 +1427,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-bottom: 1.5rem;
         }
         .sb-puzzle-slot {
-            background: #0b1329;
-            border: 2px dashed #475569;
+            background: #041d0b;
+            border: 2px dashed var(--by-border, #136832);
             border-radius: 14px;
             padding: 1rem 0.8rem;
             min-height: 104px;
@@ -1346,23 +1440,23 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             transition: all 0.25s ease;
             text-align: center;
             position: relative;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
         }
         .sb-puzzle-slot.slot-0 {
             border-color: rgba(34, 197, 94, 0.55);
-            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
         .sb-puzzle-slot.slot-1 {
             border-color: rgba(239, 68, 68, 0.55);
-            background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
         .sb-puzzle-slot.slot-2 {
             border-color: rgba(34, 197, 94, 0.55);
-            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
         .sb-puzzle-slot.slot-3 {
             border-color: rgba(56, 189, 248, 0.55);
-            background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(4, 29, 11, 0.95) 100%);
         }
 
         .sb-puzzle-slot .slot-hint {
@@ -1400,13 +1494,24 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: #1e293b;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
         }
-        .sb-puzzle-slot.filled.slot-0 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-1 { border-color: #ef4444; }
-        .sb-puzzle-slot.filled.slot-2 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-3 { border-color: #0284c7; }
+        .sb-puzzle-slot.filled.slot-0 {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+        }
+        .sb-puzzle-slot.filled.slot-1 {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+        }
+        .sb-puzzle-slot.filled.slot-2 {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+        }
+        .sb-puzzle-slot.filled.slot-3 {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            border-color: #93c5fd !important;
+        }
         .sb-puzzle-slot.filled .slot-filled-word {
             font-weight: 800;
             font-size: 1.25rem;
@@ -1419,11 +1524,13 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             top: 6px;
             right: 8px;
             font-size: 0.85rem;
-            color: #94a3b8;
-            transition: color 0.2s;
+            color: #ffffff;
+            opacity: 0.8;
+            transition: all 0.2s;
         }
         .sb-puzzle-slot.filled:hover .slot-remove {
-            color: #f87171;
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         @media (max-width: 640px) {
@@ -1453,14 +1560,15 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             justify-content: center;
             margin-bottom: 1.2rem;
             padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 12px;
             min-height: 60px;
         }
         .sb-puzzle-chip {
-            background: #1e293b;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid #64748b;
+            border: 1.5px solid var(--by-border, #136832);
             padding: 0.65rem 1.2rem;
             border-radius: 10px;
             font-size: 1rem;
@@ -1469,33 +1577,36 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             transition: all 0.2s ease;
         }
         .sb-puzzle-chip:hover {
-            border-color: #38bdf8;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.placed {
             opacity: 0.25;
             pointer-events: none;
-            cursor: default;
+            text-decoration: line-through;
         }
+
+        /* Feedback box */
         .sb-feedback-box {
-            margin-top: 1rem;
             text-align: center;
+            margin-top: 1rem;
         }
         .sb-feedback-msg {
-            padding: 0.8rem 1.2rem;
-            border-radius: 10px;
+            font-size: 1.15rem;
             font-weight: 700;
-            font-size: 1.05rem;
             margin-bottom: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
             display: inline-block;
         }
         .sb-feedback-msg.success {
-            background: rgba(34, 197, 94, 0.2);
+            background: rgba(34, 197, 94, 0.15);
             color: #4ade80;
             border: 1px solid #22c55e;
         }
         .sb-feedback-msg.error {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.15);
             color: #f87171;
             border: 1px solid #ef4444;
         }
@@ -1507,18 +1618,21 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             margin-top: 0.6rem;
         }
         .sb-action-btn {
-            background: #0284c7;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
             border: none;
             padding: 0.7rem 1.4rem;
             border-radius: 10px;
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
         .sb-action-btn:hover {
-            background: #0369a1;
+            background: #4ade80;
             transform: translateY(-2px);
         }
     `;
@@ -1527,8 +1641,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
     // Hero Header
     const heroHeader = document.createElement('div');
     heroHeader.className = 'kv-hero-header';
+    const cleanHeroTitle = stripLeadingEmoji(getTranslation('koekken_hero_title')) || 'Køkkenet og hjemmet';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('koekken_hero_title')}</h1>
+        <h1><span class="kv-hero-icon">${renderDsIcon('coffee', '', { size: 30 })}</span> <span>${cleanHeroTitle}</span></h1>
         <p>${getTranslation('koekken_hero_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
@@ -1537,11 +1652,11 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'kv-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: '🕵️' },
-        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: '💭' },
-        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: '🔄' },
-        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: '✍️' }
+        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: renderDsIcon('eye', '', { size: 16 }) },
+        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: renderDsIcon('thought', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: renderDsIcon('layers', '', { size: 16 }) },
+        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: renderDsIcon('edit', '', { size: 16 }) }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -1550,7 +1665,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         const btn = document.createElement('button');
         btn.className = `kv-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `<span class="kv-tab-icon">${t.icon}</span> <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -1576,26 +1691,26 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
     // --- NØGLEORD DATA (Præcis 20 ord fra top 100 frekvensliste)
     // ========================================================
     const kitchenWords = [
-        { word: 'en sol', clean: 'sol', gender: 'en', bestemt: 'solen', flertal: 'sole', x: 8.8, y: 18, icon: '☀️', sentence: 'Solen skinner ind ad vinduet.' },
-        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 15, y: 11, icon: '🪟', sentence: 'Hun åbner et vindue.' },
-        { word: 'et træ', clean: 'træ', gender: 'et', bestemt: 'træet', flertal: 'træer', x: 19.5, y: 23, icon: '🌳', sentence: 'Der står et træ i haven.' },
-        { word: 'en hund', clean: 'hund', gender: 'en', bestemt: 'hunden', flertal: 'hunde', x: 11.5, y: 70, icon: '🐕', sentence: 'Hunden spiser mad.' },
-        { word: 'en kat', clean: 'kat', gender: 'en', bestemt: 'katten', flertal: 'katte', x: 18.5, y: 67, icon: '🐈', sentence: 'Katten kigger på madskålen.' },
-        { word: 'et barn', clean: 'barn', gender: 'et', bestemt: 'barnet', flertal: 'børn', x: 28.5, y: 55, icon: '👶', sentence: 'Barnet spiser mad.' },
-        { word: 'en mor', clean: 'mor', gender: 'en', bestemt: 'moren', flertal: 'mødre', x: 34, y: 44, icon: '👩', sentence: 'Moren laver mad.' },
-        { word: 'en far', clean: 'far', gender: 'en', bestemt: 'faren', flertal: 'fædre', x: 49, y: 46, icon: '👨', sentence: 'Faren taler ved bordet.' },
-        { word: 'en seng', clean: 'seng', gender: 'en', bestemt: 'sengen', flertal: 'senge', x: 60, y: 38, icon: '🛏️', sentence: 'Sengen står inde i soveværelset.' },
-        { word: 'et stykke tøj', clean: 'stykke tøj', gender: 'et', bestemt: 'tøjet', flertal: 'tøj', x: 71, y: 32, icon: '🧥', sentence: 'Tøjet hænger på en knage.' },
-        { word: 'en sko', clean: 'sko', gender: 'en', bestemt: 'skoen', flertal: 'sko', x: 71, y: 53, icon: '👟', sentence: 'Skoene står på gulvet.' },
-        { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 29, y: 83, icon: '🪑', sentence: 'Drengen sidder på en stol.' },
-        { word: 'en mad', clean: 'mad', gender: 'en', bestemt: 'maden', flertal: 'madder', x: 38, y: 64, icon: '🍞', sentence: 'De spiser mad sammen.' },
-        { word: 'en kop', clean: 'kop', gender: 'en', bestemt: 'koppen', flertal: 'kopper', x: 42, y: 58, icon: '☕', sentence: 'Hun drikker en kop kaffe.' },
-        { word: 'et stykke kød', clean: 'stykke kød', gender: 'et', bestemt: 'kødet', flertal: 'kød', x: 44.5, y: 68, icon: '🥩', sentence: 'De spiser kød til aften.' },
-        { word: 'en fisk', clean: 'fisk', gender: 'en', bestemt: 'fisken', flertal: 'fisk', x: 47.5, y: 70, icon: '🐟', sentence: 'De spiser fisk til frokost.' },
-        { word: 'et glas', clean: 'glas', gender: 'et', bestemt: 'glasset', flertal: 'glas', x: 54.5, y: 64, icon: '🥛', sentence: 'Hun drikker et glas vand.' },
-        { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 57, y: 68, icon: '🪑', sentence: 'Familien sidder ved bordet.' },
-        { word: 'en kaffe', clean: 'kaffe', gender: 'en', bestemt: 'kaffen', flertal: 'kaffe', x: 90.5, y: 49, icon: '☕', sentence: 'Faren drikker varm kaffe.' },
-        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 93, y: 79, icon: '⚠️', sentence: 'Kaffen vælter – det er et problem.' }
+        { word: 'en sol', clean: 'sol', gender: 'en', bestemt: 'solen', flertal: 'sole', x: 8.8, y: 18, iconName: 'lightbulb', sentence: 'Solen skinner ind ad vinduet.' },
+        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 15, y: 11, iconName: 'home', sentence: 'Hun åbner et vindue.' },
+        { word: 'et træ', clean: 'træ', gender: 'et', bestemt: 'træet', flertal: 'træer', x: 19.5, y: 23, iconName: 'mapPin', sentence: 'Der står et træ i haven.' },
+        { word: 'en hund', clean: 'hund', gender: 'en', bestemt: 'hunden', flertal: 'hunde', x: 11.5, y: 70, iconName: 'user', sentence: 'Hunden spiser mad.' },
+        { word: 'en kat', clean: 'kat', gender: 'en', bestemt: 'katten', flertal: 'katte', x: 18.5, y: 67, iconName: 'eye', sentence: 'Katten kigger på madskålen.' },
+        { word: 'et barn', clean: 'barn', gender: 'et', bestemt: 'barnet', flertal: 'børn', x: 28.5, y: 55, iconName: 'user', sentence: 'Barnet spiser mad.' },
+        { word: 'en mor', clean: 'mor', gender: 'en', bestemt: 'moren', flertal: 'mødre', x: 34, y: 44, iconName: 'user', sentence: 'Moren laver mad.' },
+        { word: 'en far', clean: 'far', gender: 'en', bestemt: 'faren', flertal: 'fædre', x: 49, y: 46, iconName: 'user', sentence: 'Faren taler ved bordet.' },
+        { word: 'en seng', clean: 'seng', gender: 'en', bestemt: 'sengen', flertal: 'senge', x: 60, y: 38, iconName: 'home', sentence: 'Sengen står inde i soveværelset.' },
+        { word: 'et stykke tøj', clean: 'stykke tøj', gender: 'et', bestemt: 'tøjet', flertal: 'tøj', x: 71, y: 32, iconName: 'tag', sentence: 'Tøjet hænger på en knage.' },
+        { word: 'en sko', clean: 'sko', gender: 'en', bestemt: 'skoen', flertal: 'sko', x: 71, y: 53, iconName: 'tag', sentence: 'Skoene står på gulvet.' },
+        { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 29, y: 83, iconName: 'home', sentence: 'Drengen sidder på en stol.' },
+        { word: 'en mad', clean: 'mad', gender: 'en', bestemt: 'maden', flertal: 'madder', x: 38, y: 64, iconName: 'coffee', sentence: 'De spiser mad sammen.' },
+        { word: 'en kop', clean: 'kop', gender: 'en', bestemt: 'koppen', flertal: 'kopper', x: 42, y: 58, iconName: 'coffee', sentence: 'Hun drikker en kop kaffe.' },
+        { word: 'et stykke kød', clean: 'stykke kød', gender: 'et', bestemt: 'kødet', flertal: 'kød', x: 44.5, y: 68, iconName: 'coffee', sentence: 'De spiser kød til aften.' },
+        { word: 'en fisk', clean: 'fisk', gender: 'en', bestemt: 'fisken', flertal: 'fisk', x: 47.5, y: 70, iconName: 'coffee', sentence: 'De spiser fisk til frokost.' },
+        { word: 'et glas', clean: 'glas', gender: 'et', bestemt: 'glasset', flertal: 'glas', x: 54.5, y: 64, iconName: 'coffee', sentence: 'Hun drikker et glas vand.' },
+        { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 57, y: 68, iconName: 'home', sentence: 'Familien sidder ved bordet.' },
+        { word: 'en kaffe', clean: 'kaffe', gender: 'en', bestemt: 'kaffen', flertal: 'kaffe', x: 90.5, y: 49, iconName: 'coffee', sentence: 'Faren drikker varm kaffe.' },
+        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 93, y: 79, iconName: 'alertTriangle', sentence: 'Kaffen vælter – det er et problem.' }
     ];
 
     // ========================================================
@@ -1614,14 +1729,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status">${getTranslation('vrimmel_status_off')}</strong>`;
+    pureBtn.innerHTML = `<span>${renderDsIcon('image', '', { size: 16 })}</span> <span>${getTranslation('vrimmel_pure_btn')}</span> <strong id="pure-mode-status">${getTranslation('vrimmel_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
+        pureBtn.querySelector('#pure-mode-status').textContent = pureModeActive ? getTranslation('vrimmel_status_on') : getTranslation('vrimmel_status_off');
     };
 
     controlBar.appendChild(pureBtn);
@@ -1670,24 +1785,25 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 <div style="flex: 1; min-width: 250px;">
                     <div>
                         <span class="badge-substantiv">${getTranslation('vrimmel_badge_substantiv')}</span>
-                        <span class="detail-word-badge badge-${kw.gender}">${kw.gender === 'en' ? getTranslation('vrimmel_badge_en') : getTranslation('vrimmel_badge_et')}</span>
+                        <span class="detail-word-badge badge-${kw.gender}">${kw.gender === 'en' ? stripLeadingEmoji(getTranslation('vrimmel_badge_en')) : stripLeadingEmoji(getTranslation('vrimmel_badge_et'))}</span>
                     </div>
-                    <div class="detail-main-word">
-                        ${kw.icon} ${kw.word}
-                        <button id="listen-curr-word" style="background: none; border: none; cursor: pointer; font-size: 1.15rem; margin-left: 0.5rem; vertical-align: middle;" title="Hør ordet">🔊</button>
-                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
+                    <div class="detail-main-word" style="display: flex; align-items: center; gap: 0.6rem;">
+                        <span>${renderDsIcon(kw.iconName || 'tag', '', { size: 24 })}</span>
+                        <span>${kw.word}</span>
+                        <button id="listen-curr-word" style="background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; color: var(--by-text-subtle, #86efac);" title="Hør ordet">${renderDsIcon('volume', '', { size: 18 })}</button>
+                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #a7f3d0; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                     </div>
                     <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${kw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${kw.flertal}</strong></div>
                     <div class="detail-sentence" id="vrimmel-sentence-display">"${sentenceWordsHtml}"</div>
-                    ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
+                    ${transSentence ? `<div style="font-size: 0.95rem; color: #a7f3d0; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                         <button class="listen-word-btn" id="listen-curr-sentence">
-                            <span>🔊</span> Hør sætning
+                            <span>${renderDsIcon('volume', '', { size: 18 })}</span> <span>Hør sætning</span>
                         </button>
                         <button class="mic-speak-btn" id="mic-curr-sentence">
-                            <span>🎤</span> Udtal sætning
+                            <span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>Udtal sætning</span>
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback"></div>
@@ -1756,10 +1872,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
     const sortHeader = document.createElement('div');
     sortHeader.className = 'sorting-header-row';
+    const cleanSortTitle = stripLeadingEmoji(getTranslation('sort_kitchen_title'));
     sortHeader.innerHTML = `
         <div>
-            <h3>📦 ${getTranslation('sort_kitchen_title')}</h3>
-            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
+            <h3 style="font-size: 1.3rem; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('layers', '', { size: 20 })}</span>
+                <span>${cleanSortTitle}</span>
+            </h3>
+            <p style="color: var(--by-text-muted, #a7f3d0); margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
         </div>
         <div class="sort-progress-badge" id="sort-progress-text">${getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', 20)}</div>
     `;
@@ -1768,13 +1888,15 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
     const binsContainer = document.createElement('div');
     binsContainer.className = 'bins-container';
 
+    const cleanBinEnTitle = stripLeadingEmoji(getTranslation('sort_bin_en_title'));
     const binEn = document.createElement('div');
     binEn.className = 'sort-bin bin-en';
-    binEn.innerHTML = `<div class="bin-title bin-title-en">${getTranslation('sort_bin_en_title')}</div><div class="bin-items-list" id="bin-en-items"></div>`;
+    binEn.innerHTML = `<div class="bin-title bin-title-en" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 16 })} <span>${cleanBinEnTitle}</span></div><div class="bin-items-list" id="bin-en-items"></div>`;
 
+    const cleanBinEtTitle = stripLeadingEmoji(getTranslation('sort_bin_et_title'));
     const binEt = document.createElement('div');
     binEt.className = 'sort-bin bin-et';
-    binEt.innerHTML = `<div class="bin-title bin-title-et">${getTranslation('sort_bin_et_title')}</div><div class="bin-items-list" id="bin-et-items"></div>`;
+    binEt.innerHTML = `<div class="bin-title bin-title-et" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 16 })} <span>${cleanBinEtTitle}</span></div><div class="bin-items-list" id="bin-et-items"></div>`;
 
     binsContainer.appendChild(binEn);
     binsContainer.appendChild(binEt);
@@ -1871,7 +1993,11 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
     const resetBtn = document.createElement('button');
     resetBtn.className = 'reset-sort-btn';
-    resetBtn.innerHTML = getTranslation('sort_reset_btn');
+    const cleanResetBtn = stripLeadingEmoji(getTranslation('sort_reset_btn'));
+    resetBtn.innerHTML = `<span>${renderDsIcon('refresh', '', { size: 16 })}</span> <span>${cleanResetBtn}</span>`;
+    resetBtn.style.display = 'inline-flex';
+    resetBtn.style.alignItems = 'center';
+    resetBtn.style.gap = '0.5rem';
     resetBtn.onclick = () => {
         placedCount = 0;
         currentSelectedWord = null;
@@ -1896,7 +2022,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
     const missions = [
         {
-            title: "Find 3 ting, man kan drikke ☕",
+            title: "Find 3 ting, man kan drikke",
+            iconName: "coffee",
             targetCount: 3,
             options: [
                 { text: "en kaffe", correct: true },
@@ -1908,7 +2035,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 ting, man kan spise 🍽️",
+            title: "Find 3 ting, man kan spise",
+            iconName: "coffee",
             targetCount: 3,
             options: [
                 { text: "en mad", correct: true },
@@ -1920,7 +2048,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 personer eller familiemedlemmer 👨‍👩‍👧",
+            title: "Find 3 personer eller familiemedlemmer",
+            iconName: "users",
             targetCount: 3,
             options: [
                 { text: "en mor", correct: true },
@@ -1932,7 +2061,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 møbler i hjemmet 🪑",
+            title: "Find 3 møbler i hjemmet",
+            iconName: "home",
             targetCount: 3,
             options: [
                 { text: "et bord", correct: true },
@@ -1944,7 +2074,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 dyr eller kæledyr 🐕🐈",
+            title: "Find 3 dyr eller kæledyr",
+            iconName: "user",
             targetCount: 3,
             options: [
                 { text: "en hund", correct: true },
@@ -1956,7 +2087,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 ting man kan have på 👕👟",
+            title: "Find 3 ting man kan have på",
+            iconName: "tag",
             targetCount: 3,
             options: [
                 { text: "et stykke tøj", correct: true },
@@ -1968,7 +2100,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 genstande af glas eller porcelæn 🥛☕",
+            title: "Find 3 genstande af glas eller porcelæn",
+            iconName: "coffee",
             targetCount: 3,
             options: [
                 { text: "et glas", correct: true },
@@ -1980,7 +2113,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
             ]
         },
         {
-            title: "Find 3 ting man ser ud ad vinduet ☀️🌳",
+            title: "Find 3 ting man ser ud ad vinduet",
+            iconName: "mapPin",
             targetCount: 3,
             options: [
                 { text: "en sol", correct: true },
@@ -2006,8 +2140,14 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         const header = document.createElement('div');
         header.className = 'mission-header';
         header.innerHTML = `
-            <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currentMissionIdx + 1} / ${missions.length}</div>
-            <div class="mission-title">${m.title}</div>
+            <div class="mission-badge" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                <span>${renderDsIcon('search', '', { size: 14 })}</span>
+                <span>${getTranslation('tab_label_detektiv')} ${currentMissionIdx + 1} / ${missions.length}</span>
+            </div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem;">
+                <span>${renderDsIcon(m.iconName || 'search', '', { size: 22 })}</span>
+                <span>${m.title}</span>
+            </div>
             <div class="mission-counter">${getTranslation('koekken_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);
@@ -2033,12 +2173,15 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                     selectedCount++;
 
                     if (selectedCount === m.targetCount) {
+                        const cleanDetektivComplete = stripLeadingEmoji(getTranslation('koekken_detektiv_complete'));
+                        const nextBtnText = currentMissionIdx < missions.length - 1 ? getTranslation('koekken_detektiv_next') : stripLeadingEmoji(getTranslation('koekken_detektiv_restart'));
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! ${getTranslation('koekken_detektiv_complete')}
+                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>Rigtigt svaret! ${cleanDetektivComplete}</span>
                             </div>
                             <button class="mission-next-btn" id="next-mission-btn">
-                                ${currentMissionIdx < missions.length - 1 ? getTranslation('koekken_detektiv_next') : getTranslation('koekken_detektiv_restart')}
+                                ${nextBtnText}
                             </button>
                         `;
                         feedbackEl.querySelector('#next-mission-btn').onclick = () => {
@@ -2047,8 +2190,9 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                         };
                     } else {
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! (${selectedCount} af ${m.targetCount})
+                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                                <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                <span>Rigtigt svaret! (${selectedCount} af ${m.targetCount})</span>
                             </div>
                         `;
                     }
@@ -2090,32 +2234,32 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 {
                     q: "1. Hvad står på bordet?",
                     options: [
-                        { text: "En kop kaffe ☕", correct: true },
-                        { text: "En sko 👟", correct: false },
-                        { text: "Et træ 🌳", correct: false }
+                        { text: "En kop kaffe", correct: true },
+                        { text: "En sko", correct: false },
+                        { text: "Et træ", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad sker der?",
                     options: [
-                        { text: "En ferie 🏖️", correct: false },
-                        { text: "Et uheld 💥", correct: true },
-                        { text: "En hund 🐕", correct: false }
+                        { text: "En ferie", correct: false },
+                        { text: "Et uheld", correct: true },
+                        { text: "En hund", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad er der nu?",
                     options: [
-                        { text: "Et problem ⚠️", correct: true },
-                        { text: "En gave 🎁", correct: false },
-                        { text: "Et barn 👶", correct: false }
+                        { text: "Et problem", correct: true },
+                        { text: "En gave", correct: false },
+                        { text: "Et barn", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvad gør kvinden?",
                     options: [
-                        { text: "Hun sover i sengen 🛏️", correct: false },
-                        { text: "Hun bruger en klud 🧽", correct: true }
+                        { text: "Hun sover i sengen", correct: false },
+                        { text: "Hun bruger en klud", correct: true }
                     ]
                 }
             ]
@@ -2127,33 +2271,33 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 {
                     q: "1. Hvor vågner barnet?",
                     options: [
-                        { text: "I sengen 🛏️", correct: true },
-                        { text: "I køleskabet ❄️", correct: false },
-                        { text: "På bordet 🪵", correct: false }
+                        { text: "I sengen", correct: true },
+                        { text: "I køleskabet", correct: false },
+                        { text: "På bordet", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad tager barnet på?",
                     options: [
-                        { text: "En tallerken 🍽️", correct: false },
-                        { text: "Tøj og sko 👟", correct: true },
-                        { text: "En lampe 💡", correct: false }
+                        { text: "En tallerken", correct: false },
+                        { text: "Tøj og sko", correct: true },
+                        { text: "En lampe", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvor sidder barnet?",
                     options: [
-                        { text: "I vasken 🧼", correct: false },
-                        { text: "På en stol 🪑", correct: true },
-                        { text: "Under sengen 🛏️", correct: false }
+                        { text: "I vasken", correct: false },
+                        { text: "På en stol", correct: true },
+                        { text: "Under sengen", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvad gør familien?",
                     options: [
-                        { text: "De spiser mad 🍞", correct: true },
-                        { text: "De sover igen 😴", correct: false },
-                        { text: "De køber et hus 🏠", correct: false }
+                        { text: "De spiser mad", correct: true },
+                        { text: "De sover igen", correct: false },
+                        { text: "De køber et hus", correct: false }
                     ]
                 }
             ]
@@ -2165,33 +2309,33 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 {
                     q: "1. Hvem laver mad?",
                     options: [
-                        { text: "Moren laver mad 👩", correct: true },
-                        { text: "Hunden 🐕", correct: false },
-                        { text: "Katten 🐈", correct: false }
+                        { text: "Moren laver mad", correct: true },
+                        { text: "Hunden", correct: false },
+                        { text: "Katten", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad spiser de?",
                     options: [
-                        { text: "De spiser papir 📄", correct: false },
-                        { text: "De spiser fisk 🐟", correct: true },
-                        { text: "De spiser sko 👟", correct: false }
+                        { text: "De spiser papir", correct: false },
+                        { text: "De spiser fisk", correct: true },
+                        { text: "De spiser sko", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad drikker de?",
                     options: [
-                        { text: "En gryde 🍲", correct: false },
-                        { text: "Et glas vand 🥛", correct: true },
-                        { text: "En kop te ☕", correct: false }
+                        { text: "En gryde", correct: false },
+                        { text: "Et glas vand", correct: true },
+                        { text: "En kop te", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvad gør faren?",
                     options: [
-                        { text: "Faren sover 💤", correct: false },
-                        { text: "Faren taler ved bordet 👨", correct: true },
-                        { text: "Faren løber 🏃", correct: false }
+                        { text: "Faren sover", correct: false },
+                        { text: "Faren taler ved bordet", correct: true },
+                        { text: "Faren løber", correct: false }
                     ]
                 }
             ]
@@ -2203,25 +2347,25 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 {
                     q: "1. Hvor kigger katten hen?",
                     options: [
-                        { text: "På madskålen 🐈", correct: true },
-                        { text: "På et tog 🚆", correct: false },
-                        { text: "På en cykel 🚲", correct: false }
+                        { text: "På madskålen", correct: true },
+                        { text: "På et tog", correct: false },
+                        { text: "På en cykel", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør faren?",
                     options: [
-                        { text: "Han taber koppen 💥", correct: false },
-                        { text: "Han giver katten mad 🥣", correct: true },
-                        { text: "Han går i seng 🛏️", correct: false }
+                        { text: "Han taber koppen", correct: false },
+                        { text: "Han giver katten mad", correct: true },
+                        { text: "Han går i seng", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør katten og hunden?",
                     options: [
-                        { text: "De læser en bog 📖", correct: false },
-                        { text: "De spiser mad 🐕", correct: true },
-                        { text: "De sover på bordet 😴", correct: false }
+                        { text: "De læser en bog", correct: false },
+                        { text: "De spiser mad", correct: true },
+                        { text: "De sover på bordet", correct: false }
                     ]
                 }
             ]
@@ -2366,98 +2510,98 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
     const kitchenCategoryTasks = [
         {
             type: "find_overemne",
-            subwords: ["et bord 🪑", "en stol 🪑", "en seng 🛏️"],
+            subwords: ["et bord", "en stol", "en seng"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Møbler 🪑", correct: true },
-                { text: "Transport 🚗", correct: false },
-                { text: "Vejr ☀️", correct: false }
+                { text: "Møbler", correct: true },
+                { text: "Transport", correct: false },
+                { text: "Vejr", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en hund 🐕", "en kat 🐈", "en fisk 🐟"],
+            subwords: ["en hund", "en kat", "en fisk"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Dyr og kæledyr 🐾", correct: true },
-                { text: "Bygninger 🏢", correct: false },
-                { text: "Tøj 👟", correct: false }
+                { text: "Dyr og kæledyr", correct: true },
+                { text: "Bygninger", correct: false },
+                { text: "Tøj", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Service og køkkenting 🍽️",
+            overemne: "Service og køkkenting",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en tallerken 🍽️", correct: true },
-                { text: "en kop ☕", correct: true },
-                { text: "et glas 🥛", correct: true },
-                { text: "et træ 🌳", correct: false },
-                { text: "en cykel 🚲", correct: false },
-                { text: "en sol ☀️", correct: false }
+                { text: "en tallerken", correct: true },
+                { text: "en kop", correct: true },
+                { text: "et glas", correct: true },
+                { text: "et træ", correct: false },
+                { text: "en cykel", correct: false },
+                { text: "en sol", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Mad og drikke 🍞",
+            overemne: "Mad og drikke",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "brød 🍞", correct: true },
-                { text: "mælk 🥛", correct: true },
-                { text: "kaffe ☕", correct: true },
-                { text: "en lampe 💡", correct: false },
-                { text: "en dør 🚪", correct: false },
-                { text: "en radio 📻", correct: false }
+                { text: "brød", correct: true },
+                { text: "mælk", correct: true },
+                { text: "kaffe", correct: true },
+                { text: "en lampe", correct: false },
+                { text: "en dør", correct: false },
+                { text: "en radio", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en hund 🐕", "en kat 🐈", "en fisk 🐟"],
+            subwords: ["en hund", "en kat", "en fisk"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Dyr og kæledyr 🐾", correct: true },
-                { text: "Tøj 👟", correct: false },
-                { text: "Transport 🚗", correct: false }
+                { text: "Dyr og kæledyr", correct: true },
+                { text: "Tøj", correct: false },
+                { text: "Transport", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["et stykke tøj 👕", "en sko 👟", "en jakke 🧥"],
+            subwords: ["et stykke tøj", "en sko", "en jakke"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Tøj og påklædning 👗", correct: true },
-                { text: "Møbler 🪑", correct: false },
-                { text: "Mad 🍞", correct: false }
+                { text: "Tøj og påklædning", correct: true },
+                { text: "Møbler", correct: false },
+                { text: "Mad", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Morgenmad og drikkevarer ☕",
+            overemne: "Morgenmad og drikkevarer",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "kaffe ☕", correct: true },
-                { text: "en mad 🥪", correct: true },
-                { text: "et glas vand 🥛", correct: true },
-                { text: "en sko 👟", correct: false },
-                { text: "en seng 🛏️", correct: false },
-                { text: "et træ 🌳", correct: false }
+                { text: "kaffe", correct: true },
+                { text: "en mad", correct: true },
+                { text: "et glas vand", correct: true },
+                { text: "en sko", correct: false },
+                { text: "en seng", correct: false },
+                { text: "et træ", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Husets rum og inventar 🛋️",
+            overemne: "Husets rum og inventar",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en seng 🛏️", correct: true },
-                { text: "en stol 🪑", correct: true },
-                { text: "et vindue 🪟", correct: true },
-                { text: "en kat 🐈", correct: false },
-                { text: "en fisk 🐟", correct: false },
-                { text: "et stykke kød 🥩", correct: false }
+                { text: "en seng", correct: true },
+                { text: "en stol", correct: true },
+                { text: "et vindue", correct: true },
+                { text: "en kat", correct: false },
+                { text: "en fisk", correct: false },
+                { text: "et stykke kød", correct: false }
             ]
         }
     ];
@@ -2471,7 +2615,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
         if (currKitchenCategoryIdx >= kitchenCategoryTasks.length) {
             categoryCard.innerHTML = `
-                <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">🎉</div>
+                <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">${renderDsIcon('trophy', '', { size: 48 })}</div>
                 <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">${getTranslation('top100_category_complete_title')}</h2>
                 <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.6rem;">
                     ${getTranslation('top100_category_complete_desc')}
@@ -2500,7 +2644,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
         const badge = document.createElement('div');
         badge.className = 'category-badge';
-        badge.textContent = `🏷️ ${getTranslation('top100_task_counter').replace('{current}', currKitchenCategoryIdx + 1).replace('{total}', kitchenCategoryTasks.length)}`;
+        badge.innerHTML = `<span style="display: inline-flex; align-items: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 14 })} <span>${getTranslation('top100_task_counter').replace('{current}', currKitchenCategoryIdx + 1).replace('{total}', kitchenCategoryTasks.length)}</span></span>`;
         categoryCard.appendChild(badge);
 
         if (task.type === 'find_overemne') {
@@ -2669,11 +2813,11 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
     const subTab1Btn = document.createElement('button');
     subTab1Btn.className = 'sb-sub-btn active';
-    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+    subTab1Btn.innerHTML = `<span>${renderDsIcon('edit', '', { size: 16 })}</span> <span>1. Udforsk & Byg selv</span>`;
 
     const subTab2Btn = document.createElement('button');
     subTab2Btn.className = 'sb-sub-btn';
-    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+    subTab2Btn.innerHTML = `<span>${renderDsIcon('puzzle', '', { size: 16 })}</span> <span>2. Opgave & Puslespil</span>`;
 
     sbSubNav.appendChild(subTab1Btn);
     sbSubNav.appendChild(subTab2Btn);
@@ -2711,7 +2855,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         freeBuilderContainer.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger</h3>
-                <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                     Vælg et element fra hver række herunder. Prøv forskellige kombinationer og lyt til hvordan sætningen lyder på dansk!
                 </p>
             </div>
@@ -2732,10 +2876,10 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 <div class="sb-live-sentence" id="free-live-sentence"></div>
                 <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
                     <button class="sb-listen-btn" id="free-listen-btn">
-                        <span>🔊</span> Hør udtale
+                        <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør udtale</span>
                     </button>
                     <button class="sb-listen-btn sb-mic-btn" id="free-mic-btn">
-                        <span>🎤</span> Test din udtale
+                        <span>${renderDsIcon('mic', '', { size: 16 })}</span> <span>Test din udtale</span>
                     </button>
                 </div>
                 <div class="speech-feedback-box" id="free-speech-feedback" style="max-width: 600px; margin: 0.8rem auto 0; text-align: center;"></div>
@@ -2749,7 +2893,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 role: 'Subjekt',
                 catClass: 'sb-cat-subjekt',
                 badgeClass: 'badge-cat-subjekt',
-                icon: '👤',
+                icon: renderDsIcon('user', '', { size: 16 }),
                 options: ['Faren', 'Moren', 'Barnet', 'Hunden', 'Katten', 'Gæsten', 'Pigen', 'Drengen']
             },
             {
@@ -2758,7 +2902,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 role: 'Verbum',
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
-                icon: '⚡',
+                icon: renderDsIcon('zap', '', { size: 16 }),
                 options: ['drikker', 'spiser', 'sidder på', 'åbner', 'kigger på', 'finder', 'tager', 'steger']
             },
             {
@@ -2767,7 +2911,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 role: 'Objekt (Ting)',
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
-                icon: '📦',
+                icon: renderDsIcon('tag', '', { size: 16 }),
                 options: ['en kop kaffe', 'et glas vand', 'en mad', 'et vindue', 'en stol', 'en sko', 'et stykke kød', 'en fisk']
             },
             {
@@ -2776,7 +2920,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 role: 'Sted (Rum)',
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
-                icon: '📍',
+                icon: renderDsIcon('mapPin', '', { size: 16 }),
                 options: ['i køkkenet', 'ved bordet', 'i stuen', 'i haven', 'i soveværelset', 'på gulvet', 'ved vinduet', 'i sofaen']
             }
         ];
@@ -2976,10 +3120,13 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
 
         const titleDiv = document.createElement('div');
         titleDiv.innerHTML = `
-            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 800; text-transform: uppercase;">
+            <div style="font-size: 0.85rem; color: #86efac; font-weight: 800; text-transform: uppercase;">
                 Udfordring ${currentChallengeIdx + 1} af ${challengeTasks.length}
             </div>
-            <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Find tingen & saml puslespillet</h3>
+            <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('puzzle', '', { size: 22 })}</span>
+                <span>Find tingen & saml puslespillet</span>
+            </h3>
         `;
         header.appendChild(titleDiv);
 
@@ -3002,7 +3149,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title">📍 <em>${task.context}</em></div>
+            <div class="sb-context-title" style="display: flex; align-items: center; gap: 0.4rem;"><span>${renderDsIcon('mapPin', '', { size: 16 })}</span> <em>${task.context}</em></div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
                     <span class="sb-chip-role">1. Hvem?</span>
@@ -3083,8 +3230,8 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
         const lang = getLang();
 
         container.innerHTML = `
-            <div class="sb-puzzle-title">
-                <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+            <div class="sb-puzzle-title" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span>${renderDsIcon('puzzle', '', { size: 20 })}</span> <span>Trin 2: Puslespillet – Saml hele sætningen!</span>
             </div>
             <div class="sb-puzzle-desc">
                 Klik på brikkerne i den rigtige danske ordstilling: <strong>1. Hvem ➔ 2. Handling ➔ 3. Hvilken ting ➔ 4. Hvor</strong>.
@@ -3187,21 +3334,23 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                 speakDanish(fullSentence);
 
                 feedbackEl.innerHTML = `
-                    <div class="sb-feedback-msg success">
-                        🎉 Fantastisk! "<strong>${fullSentence}</strong>" ✓
+                    <div class="sb-feedback-msg success" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                        <span>Fantastisk! "<strong>${fullSentence}</strong>"</span>
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
-                        💡 ${task.pedagogyNote}
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                        <span>${renderDsIcon('lightbulb', '', { size: 16 })}</span>
+                        <span>${task.pedagogyNote}</span>
                     </div>
                     <div class="sb-action-row">
                         <button class="sb-listen-btn" id="puzzle-listen-full">
-                            <span>🔊</span> Hør sætningen igen
+                            <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør sætningen igen</span>
                         </button>
                         <button class="sb-listen-btn sb-mic-btn" id="puzzle-mic-btn">
-                            <span>🎤</span> Gentag sætningen
+                            <span>${renderDsIcon('mic', '', { size: 16 })}</span> <span>Gentag sætningen</span>
                         </button>
                         <button class="sb-action-btn" id="puzzle-next-btn">
-                            ${currentChallengeIdx < challengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentChallengeIdx < challengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra ↺'}
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="puzzle-speech-feedback" style="margin-top: 0.8rem; text-align: center;"></div>
@@ -3221,7 +3370,7 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                     fullSentence,
                     (evalResult) => {
                         puzzleFeedback.className = 'speech-feedback-box correct';
-                        puzzleFeedback.innerHTML = `🎉 Perfekt udtalt! "<strong>${evalResult.spoken}</strong>" ⭐`;
+                        puzzleFeedback.innerHTML = `Perfekt udtalt! "<strong>${evalResult.spoken}</strong>" ⭐`;
                         slotsEl.querySelectorAll('.sb-puzzle-slot').forEach(s => {
                             s.style.boxShadow = '0 0 18px rgba(74, 222, 128, 0.8)';
                             setTimeout(() => s.style.boxShadow = '', 2500);
@@ -3233,11 +3382,11 @@ export function renderKoekkenHjemmetView(container, navigateFn, extraData = {}) 
                     <div class="sb-feedback-msg error">
                         ✗ Rækkefølgen er ikke helt rigtig.
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.6rem;">
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.6rem;">
                         Husk rækkefølgen på dansk: 1. Hvem (Subjekt) ➔ 2. Handling (Verbum) ➔ 3. Hvilken ting (Objekt) ➔ 4. Hvor (Sted).
                     </div>
-                    <button class="sb-action-btn" id="puzzle-retry-btn" style="background: #475569;">
-                        Nulstil brikker 🔄
+                    <button class="sb-action-btn" id="puzzle-retry-btn" style="background: #475569; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <span>${renderDsIcon('refresh', '', { size: 16 })}</span> <span>Nulstil brikker</span>
                     </button>
                 `;
 

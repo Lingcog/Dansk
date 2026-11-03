@@ -1,7 +1,13 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { klasseWordTranslations } from '../utils/top100_translations.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
+
+function stripLeadingEmoji(text) {
+    if (!text) return '';
+    return text.replace(/^[\p{Extended_Pictographic}\s\uFE0F]+/u, '').trim();
+}
 
 /**
  * KlasseKontorView - Didaktisk vrimlebillede for semantisk felt: Undervisningslokalet og kontoret
@@ -38,11 +44,38 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     const style = document.createElement('style');
     style.textContent = `
         .klasse-vrimmel-view {
+            --by-bg: #4A040B;
+            --by-surface: #073518;
+            --by-surface-hover: #0c4f24;
+            --by-surface-input: #02220e;
+            --by-border: #136832;
+            --by-border-light: #1b793c;
+            --by-primary: #22c55e;
+            --by-text: #FFFFFF;
+            --by-text-muted: #a7f3d0;
+            --by-text-subtle: #86efac;
+
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
         }
+        .klasse-vrimmel-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .klasse-vrimmel-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .klasse-vrimmel-view .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
+        }
+
         .klasse-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -51,16 +84,22 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #38bdf8, #818cf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
         }
         .klasse-hero-header p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
             font-size: 1.1rem;
             max-width: 780px;
             margin: 0 auto;
             line-height: 1.5;
+            opacity: 0.95;
         }
 
         /* Tabs Navigation */
@@ -70,14 +109,14 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
             gap: 0.6rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--by-surface, #073518);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--by-border, #136832);
         }
         .klasse-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             border: none;
             padding: 0.7rem 1.2rem;
             border-radius: 12px;
@@ -91,12 +130,13 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         }
         .klasse-tab-btn:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .klasse-tab-btn.active {
-            background: #3b82f6;
-            color: white;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
         }
 
         /* Panels */
@@ -114,8 +154,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
         /* Stage Card */
         .vrimmel-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 2rem;
@@ -128,12 +168,12 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             gap: 1rem;
             margin-bottom: 1.2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--by-border, #136832);
         }
         .pure-image-toggle-btn {
-            background: #1e293b;
-            color: #f1f5f9;
-            border: 2px solid #64748b;
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text);
+            border: 2px solid var(--by-border, #136832);
             padding: 0.6rem 1.3rem;
             border-radius: 25px;
             font-weight: 700;
@@ -145,13 +185,13 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .pure-image-toggle-btn:hover {
-            border-color: #10b981;
-            background: #334155;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .pure-image-toggle-btn.active {
-            background: linear-gradient(135deg, #059669, #10b981);
-            border-color: #34d399;
-            box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
+            background: linear-gradient(135deg, #15803d, #22c55e);
+            border-color: #86efac;
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.5);
             color: white;
         }
         .vrimmel-stage.pure-mode .vrimmel-hotspot {
@@ -166,7 +206,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             line-height: 0;
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
         }
         .vrimmel-img {
             width: 100%;
@@ -189,21 +229,21 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             border: 2px solid white;
             transition: all 0.25s ease;
             z-index: 10;
-            background: rgba(30, 41, 59, 0.85);
+            background: rgba(7, 53, 24, 0.85);
             color: #f8fafc;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
         .vrimmel-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.3);
             z-index: 20;
-            background: #3b82f6;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
         }
 
         /* Detail card */
         .hotspot-detail-card {
-            background: #1e293b;
-            border: 1px solid #475569;
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -239,7 +279,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         .badge-en { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
         .badge-et { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid #ea580c; }
         .detail-main-word { font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.3rem; }
-        .detail-forms { font-size: 0.95rem; color: #94a3b8; margin-bottom: 0.5rem; }
+        .detail-forms { font-size: 0.95rem; color: var(--by-text-muted, #a7f3d0); margin-bottom: 0.5rem; }
         .detail-sentence { font-size: 1.05rem; color: #e2e8f0; font-style: italic; }
         .listen-word-btn {
             background: #2563eb;
@@ -257,9 +297,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         }
         .listen-word-btn:hover { background: #1d4ed8; transform: scale(1.05); }
         .mic-speak-btn {
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
             color: #f8fafc;
-            border: 2px solid #64748b;
+            border: 2px solid var(--by-border, #136832);
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
@@ -271,8 +311,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .mic-speak-btn:hover {
-            border-color: #38bdf8;
-            background: #1e293b;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .mic-speak-btn.listening {
             border-color: #ef4444;
@@ -323,8 +363,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
         /* Sorting Game */
         .sorting-game-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 18px;
             padding: 1.5rem;
             margin-top: 2rem;
@@ -338,9 +378,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.2rem;
         }
         .sort-progress-badge {
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-            border: 1px solid #0284c7;
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--by-text-subtle, #86efac);
+            border: 1px solid var(--by-border-light, #1b793c);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-weight: 800;
@@ -368,29 +408,29 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         .bin-title-et { color: #fb923c; }
         .bin-items-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .chip-in-bin {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             padding: 0.4rem 0.8rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
             color: white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--by-border, #136832);
         }
         .words-bank-row {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--by-surface-input, #02220e);
             padding: 1.2rem;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--by-border, #136832);
         }
         .sort-word-chip {
-            background: #334155;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid transparent;
+            border: 2px solid var(--by-border, #136832);
             padding: 0.5rem 1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -398,9 +438,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .sort-word-chip:hover { background: #475569; transform: translateY(-2px); }
-        .sort-word-chip.selected { border-color: #38bdf8; box-shadow: 0 0 14px rgba(56, 189, 248, 0.6); background: #1e293b; }
-        .sort-word-chip.placed { opacity: 0.35; pointer-events: none; background: #0f172a; text-decoration: line-through; }
+        .sort-word-chip:hover { background: var(--by-surface-hover, #0c4f24); transform: translateY(-2px); }
+        .sort-word-chip.selected { border-color: var(--by-primary, #22c55e); box-shadow: 0 0 14px rgba(34, 197, 94, 0.6); background: var(--by-surface-hover, #0c4f24); }
+        .sort-word-chip.placed { opacity: 0.35; pointer-events: none; background: #02220e; text-decoration: line-through; }
         .reset-sort-btn {
             background: #475569; color: white; border: none; padding: 0.6rem 1.2rem;
             border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
@@ -409,8 +449,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
         /* Detective Cards */
         .mission-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             max-width: 800px;
@@ -424,44 +464,44 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;
         }
         .clue-btn {
-            background: #1e293b; border: 2px solid #334155; color: white; padding: 1.2rem;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-border, #136832); color: white; padding: 1.2rem;
             border-radius: 14px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease;
             text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
         }
-        .clue-btn:hover { border-color: #38bdf8; transform: translateY(-3px); }
+        .clue-btn:hover { border-color: var(--by-primary, #22c55e); transform: translateY(-3px); }
         .clue-btn.selected-correct { background: rgba(34, 197, 94, 0.25); border-color: #22c55e; color: #4ade80; }
         .clue-btn.selected-wrong { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #f87171; }
         .mission-next-btn {
-            background: #22c55e; color: #0f172a; font-weight: 800; border: none; padding: 0.8rem 1.6rem;
+            background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800; border: none; padding: 0.8rem 1.6rem;
             border-radius: 12px; font-size: 1rem; cursor: pointer; transition: all 0.2s ease;
         }
 
         /* Micro-story */
         .story-container {
-            max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
+            max-width: 800px; margin: 0 auto; background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832); border-radius: 20px; padding: 2rem;
         }
         .story-nav-pills {
             display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
         }
         .story-nav-btn {
-            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            background: var(--by-surface-input, #02220e); color: var(--by-text-muted, #a7f3d0); border: 2px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-nav-btn:hover { border-color: #38bdf8; color: white; transform: translateY(-2px); }
+        .story-nav-btn:hover { border-color: var(--by-primary, #22c55e); color: white; transform: translateY(-2px); }
         .story-nav-btn.active {
-            background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+            background: var(--by-primary, #22c55e); color: #02220e; border-color: var(--by-border-light, #1b793c); font-weight: 800; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
         .story-step-card {
-            background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #38bdf8;
+            background: var(--by-surface-input, #02220e); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid var(--by-primary, #22c55e);
             transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
-            background: #334155; color: white; border: none; padding: 0.6rem 1.2rem;
+            background: var(--by-surface, #073518); color: white; border: 1px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-opt-btn:hover { background: #475569; }
+        .story-opt-btn:hover { background: var(--by-surface-hover, #0c4f24); }
         .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
         .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
         .story-explanation-box {
@@ -471,8 +511,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
         /* Overemne & Underemne (Model C) */
         .category-card {
-            max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
+            max-width: 800px; margin: 0 auto; background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832); border-radius: 20px; padding: 2rem;
             text-align: center;
         }
         .category-badge {
@@ -484,18 +524,18 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.2rem 0 1.6rem;
         }
         .category-word-chip {
-            background: #0f172a; border: 2px solid #38bdf8; color: #f8fafc;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-primary, #22c55e); color: #f8fafc;
             padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 700; font-size: 1.1rem;
         }
         .category-options-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.2rem;
         }
         .category-opt-btn {
-            background: #1e293b; border: 2px solid #334155; color: white; padding: 1.1rem;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-border, #136832); color: white; padding: 1.1rem;
             border-radius: 14px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
             text-align: center;
         }
-        .category-opt-btn:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .category-opt-btn:hover { border-color: var(--by-primary, #22c55e); transform: translateY(-2px); }
         .category-opt-btn.selected-correct {
             background: rgba(34, 197, 94, 0.25) !important; border-color: #22c55e !important; color: #4ade80 !important;
         }
@@ -509,8 +549,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         .sentence-builder-card {
             max-width: 960px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -522,14 +562,14 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--by-border, #136832);
             padding-bottom: 1rem;
             flex-wrap: wrap;
         }
         .sb-sub-btn {
-            background: rgba(15, 23, 42, 0.6);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1px solid var(--by-border, #136832);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -542,14 +582,15 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         }
         .sb-sub-btn:hover {
             color: white;
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .sb-sub-btn.active {
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: white;
-            border-color: #38bdf8;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            border-color: var(--by-border-light, #1b793c);
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
         }
 
         /* Grammar Legend */
@@ -558,6 +599,13 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             justify-content: center;
             flex-wrap: wrap;
             gap: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--by-surface-input, #02220e);
+            border-radius: 12px;
+            border: 1px solid var(--by-border, #136832);
+            font-size: 0.85rem;
+        }
             margin-bottom: 1.5rem;
             padding: 0.6rem 1rem;
             background: rgba(15, 23, 42, 0.7);
@@ -640,29 +688,28 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             font-weight: 800;
             transform: translateY(-2px);
         }
-        .sb-cat-subjekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+        /* Løsning 1: Højkontrast solide chips */
+        .sb-category-row.sb-cat-subjekt .sb-chip-btn.selected,
+        .sb-category-row.sb-cat-objekt .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            color: #FFFFFF !important;
+            border-color: #86efac !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45) !important;
         }
-        .sb-cat-verbum .sb-chip-btn.selected {
-            background: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+        .sb-category-row.sb-cat-verbum .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            color: #FFFFFF !important;
+            border-color: #fca5a5 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.45) !important;
         }
-        .sb-cat-objekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
-        }
-        .sb-cat-sted .sb-chip-btn.selected {
-            background: rgba(2, 132, 199, 0.25);
-            color: #93c5fd;
-            border-color: #0284c7;
-            box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+        .sb-category-row.sb-cat-sted .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            color: #FFFFFF !important;
+            border-color: #93c5fd !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.45) !important;
         }
 
         /* Live Result Box */
@@ -939,32 +986,45 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         .sb-puzzle-slot.slot-2 .slot-role { color: #4ade80; }
         .sb-puzzle-slot.slot-3 .slot-role { color: #38bdf8; }
 
+        /* Løsning 1: Højkontrast solide slots */
         .sb-puzzle-slot.filled {
-            border-style: solid;
-            background: #1e293b;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            border-style: solid !important;
+            color: #FFFFFF !important;
         }
-        .sb-puzzle-slot.filled.slot-0 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-1 { border-color: #ef4444; }
-        .sb-puzzle-slot.filled.slot-2 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-3 { border-color: #0284c7; }
-        .sb-puzzle-slot.filled .slot-filled-word {
-            font-weight: 800;
-            font-size: 1.25rem;
-            line-height: 1.2;
-            color: #ffffff;
-            margin-bottom: 0.15rem;
+        .sb-puzzle-slot.filled.slot-0,
+        .sb-puzzle-slot.filled.slot-2 {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            border-color: #86efac !important;
+            box-shadow: 0 4px 16px rgba(22, 163, 74, 0.5) !important;
+        }
+        .sb-puzzle-slot.filled.slot-1 {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-color: #fca5a5 !important;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5) !important;
+        }
+        .sb-puzzle-slot.filled.slot-3 {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            border-color: #93c5fd !important;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.5) !important;
+        }
+        .sb-puzzle-slot.filled .sb-puzzle-slot-role {
+            color: #FFFFFF !important;
+            opacity: 0.9 !important;
+        }
+        .sb-puzzle-slot.filled .sb-puzzle-slot-text {
+            color: #FFFFFF !important;
+            font-weight: 800 !important;
         }
         .sb-puzzle-slot.filled .slot-remove {
             position: absolute;
             top: 6px;
             right: 8px;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: #FFFFFF;
             transition: color 0.2s;
         }
         .sb-puzzle-slot.filled:hover .slot-remove {
-            color: #f87171;
+            color: #fca5a5;
         }
 
         @media (max-width: 640px) {
@@ -994,14 +1054,15 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             justify-content: center;
             margin-bottom: 1.2rem;
             padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--by-surface-input, #02220e);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 12px;
             min-height: 60px;
         }
         .sb-puzzle-chip {
-            background: #1e293b;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid #64748b;
+            border: 2px solid var(--by-border, #136832);
             padding: 0.65rem 1.2rem;
             border-radius: 10px;
             font-size: 1rem;
@@ -1010,7 +1071,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             transition: all 0.2s ease;
         }
         .sb-puzzle-chip:hover {
-            border-color: #38bdf8;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.placed {
@@ -1048,18 +1110,21 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             margin-top: 0.6rem;
         }
         .sb-action-btn {
-            background: #0284c7;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
             border: none;
             padding: 0.7rem 1.4rem;
             border-radius: 10px;
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
         .sb-action-btn:hover {
-            background: #0369a1;
+            background: #4ade80;
             transform: translateY(-2px);
         }
     `;
@@ -1068,8 +1133,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     // Hero Header
     const heroHeader = document.createElement('div');
     heroHeader.className = 'klasse-hero-header';
+    const cleanHeroTitle = stripLeadingEmoji(getTranslation('klasse_hero_title')) || 'Undervisningslokalet og kontoret';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('klasse_hero_title')}</h1>
+        <h1><span class="klasse-hero-icon">${renderDsIcon('graduationCap', '', { size: 30 })}</span> <span>${cleanHeroTitle}</span></h1>
         <p>${getTranslation('klasse_hero_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
@@ -1078,11 +1144,11 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'klasse-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: '🕵️' },
-        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: '💭' },
-        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: '🔄' },
-        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: '✍️' }
+        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: renderDsIcon('eye', '', { size: 16 }) },
+        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: renderDsIcon('thought', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: renderDsIcon('layers', '', { size: 16 }) },
+        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: renderDsIcon('edit', '', { size: 16 }) }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -1091,7 +1157,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         const btn = document.createElement('button');
         btn.className = `klasse-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `<span class="klasse-tab-icon">${t.icon}</span> <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -1116,30 +1182,30 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     // --- 24 NØGLEORD I UNDERVISNINGSLOKALET OG KONTORET
     // ========================================================
     const klasseWords = [
-        { word: 'et billede', clean: 'billede', gender: 'et', bestemt: 'billedet', flertal: 'billeder', x: 9, y: 35, icon: '🖼️', sentence: 'Der hænger et billede på væggen.' },
-        { word: 'en lampe', clean: 'lampe', gender: 'en', bestemt: 'lampen', flertal: 'lamper', x: 26, y: 16, icon: '💡', sentence: 'Lampen giver lys.' },
-        { word: 'et ur', clean: 'ur', gender: 'et', bestemt: 'uret', flertal: 'ure', x: 42.5, y: 19, icon: '🕒', sentence: 'Uret hænger på væggen.' },
-        { word: 'en tavle', clean: 'tavle', gender: 'en', bestemt: 'tavlen', flertal: 'tavler', x: 33, y: 41, icon: '🟩', sentence: 'Læreren skriver på tavlen.' },
-        { word: 'et sprog', clean: 'sprog', gender: 'et', bestemt: 'sproget', flertal: 'sprog', x: 38, y: 34, icon: '🇩🇰', sentence: 'Kursisterne lærer dansk.' },
-        { word: 'et spørgsmål', clean: 'spørgsmål', gender: 'et', bestemt: 'spørgsmålet', flertal: 'spørgsmål', x: 23.5, y: 36, icon: '❓', sentence: 'Eleven stiller et spørgsmål.' },
-        { word: 'en elev', clean: 'elev', gender: 'en', bestemt: 'eleven', flertal: 'elever', x: 22, y: 53, icon: '🙋‍♂️', sentence: 'En elev rækker hånden op.' },
-        { word: 'en lærer', clean: 'lærer', gender: 'en', bestemt: 'læreren', flertal: 'lærere', x: 54.5, y: 45, icon: '👩‍🏫', sentence: 'En lærer underviser klassen.' },
-        { word: 'et svar', clean: 'svar', gender: 'et', bestemt: 'svaret', flertal: 'svar', x: 61, y: 29, icon: '✅', sentence: 'Læreren kender svaret.' },
-        { word: 'en bog', clean: 'bog', gender: 'en', bestemt: 'bogen', flertal: 'bøger', x: 19.5, y: 67, icon: '📖', sentence: 'Han læser i en bog.' },
-        { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 23, y: 73, icon: '🪑', sentence: 'Bogen ligger på bordet.' },
-        { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 9, y: 75, icon: '🪑', sentence: 'Kursisten sidder på en stol.' },
-        { word: 'et papir', clean: 'papir', gender: 'et', bestemt: 'papiret', flertal: 'papirer', x: 39, y: 70, icon: '📄', sentence: 'Hun skriver på et papir.' },
-        { word: 'en opgave', clean: 'opgave', gender: 'en', bestemt: 'opgaven', flertal: 'opgaver', x: 34, y: 64, icon: '📝', sentence: 'Hun løser en opgave.' },
-        { word: 'en blyant', clean: 'blyant', gender: 'en', bestemt: 'blyanten', flertal: 'blyanter', x: 43, y: 71.5, icon: '✏️', sentence: 'Han skriver med en blyant.' },
-        { word: 'en telefon', clean: 'telefon', gender: 'en', bestemt: 'telefonen', flertal: 'telefoner', x: 46, y: 71, icon: '📱', sentence: 'Telefonen ligger på bordet.' },
-        { word: 'en taske', clean: 'taske', gender: 'en', bestemt: 'tasken', flertal: 'tasker', x: 50, y: 90, icon: '🎒', sentence: 'Tasken står på gulvet.' },
-        { word: 'et arbejde', clean: 'arbejde', gender: 'et', bestemt: 'arbejdet', flertal: 'arbejder', x: 70, y: 47, icon: '💼', sentence: 'Hun er på arbejde.' },
-        { word: 'et møde', clean: 'møde', gender: 'et', bestemt: 'mødet', flertal: 'møder', x: 78.5, y: 44, icon: '🤝', sentence: 'De har et møde i dag.' },
-        { word: 'en idé', clean: 'idé', gender: 'en', bestemt: 'idéen', flertal: 'idéer', x: 84.5, y: 25.5, icon: '💡', sentence: 'Han får en god idé.' },
-        { word: 'et brev', clean: 'brev', gender: 'et', bestemt: 'brevet', flertal: 'breve', x: 83.5, y: 47.5, icon: '✉️', sentence: 'Hun åbner et brev.' },
-        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 97, y: 31, icon: '🪟', sentence: 'Lyset kommer ind ad et vindue.' },
-        { word: 'en computer', clean: 'computer', gender: 'en', bestemt: 'computeren', flertal: 'computere', x: 82.5, y: 83, icon: '💻', sentence: 'Manden arbejder ved en computer.' },
-        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 80.5, y: 74, icon: '⚠️', sentence: 'Der er et problem med computeren.' }
+        { word: 'et billede', clean: 'billede', gender: 'et', bestemt: 'billedet', flertal: 'billeder', x: 9, y: 35, iconName: 'image', sentence: 'Der hænger et billede på væggen.' },
+        { word: 'en lampe', clean: 'lampe', gender: 'en', bestemt: 'lampen', flertal: 'lamper', x: 26, y: 16, iconName: 'lightbulb', sentence: 'Lampen giver lys.' },
+        { word: 'et ur', clean: 'ur', gender: 'et', bestemt: 'uret', flertal: 'ure', x: 42.5, y: 19, iconName: 'clock', sentence: 'Uret hænger på væggen.' },
+        { word: 'en tavle', clean: 'tavle', gender: 'en', bestemt: 'tavlen', flertal: 'tavler', x: 33, y: 41, iconName: 'edit', sentence: 'Læreren skriver på tavlen.' },
+        { word: 'et sprog', clean: 'sprog', gender: 'et', bestemt: 'sproget', flertal: 'sprog', x: 38, y: 34, iconName: 'globe', sentence: 'Kursisterne lærer dansk.' },
+        { word: 'et spørgsmål', clean: 'spørgsmål', gender: 'et', bestemt: 'spørgsmålet', flertal: 'spørgsmål', x: 23.5, y: 36, iconName: 'thought', sentence: 'Eleven stiller et spørgsmål.' },
+        { word: 'en elev', clean: 'elev', gender: 'en', bestemt: 'eleven', flertal: 'elever', x: 22, y: 53, iconName: 'user', sentence: 'En elev rækker hånden op.' },
+        { word: 'en lærer', clean: 'lærer', gender: 'en', bestemt: 'læreren', flertal: 'lærere', x: 54.5, y: 45, iconName: 'graduationCap', sentence: 'En lærer underviser klassen.' },
+        { word: 'et svar', clean: 'svar', gender: 'et', bestemt: 'svaret', flertal: 'svar', x: 61, y: 29, iconName: 'check', sentence: 'Læreren kender svaret.' },
+        { word: 'en bog', clean: 'bog', gender: 'en', bestemt: 'bogen', flertal: 'bøger', x: 19.5, y: 67, iconName: 'bookOpen', sentence: 'Han læser i en bog.' },
+        { word: 'et bord', clean: 'bord', gender: 'et', bestemt: 'bordet', flertal: 'borde', x: 23, y: 73, iconName: 'home', sentence: 'Bogen ligger på bordet.' },
+        { word: 'en stol', clean: 'stol', gender: 'en', bestemt: 'stolen', flertal: 'stole', x: 9, y: 75, iconName: 'home', sentence: 'Kursisten sidder på en stol.' },
+        { word: 'et papir', clean: 'papir', gender: 'et', bestemt: 'papiret', flertal: 'papirer', x: 39, y: 70, iconName: 'fileText', sentence: 'Hun skriver på et papir.' },
+        { word: 'en opgave', clean: 'opgave', gender: 'en', bestemt: 'opgaven', flertal: 'opgaver', x: 34, y: 64, iconName: 'edit', sentence: 'Hun løser en opgave.' },
+        { word: 'en blyant', clean: 'blyant', gender: 'en', bestemt: 'blyanten', flertal: 'blyanter', x: 43, y: 71.5, iconName: 'edit', sentence: 'Han skriver med en blyant.' },
+        { word: 'en telefon', clean: 'telefon', gender: 'en', bestemt: 'telefonen', flertal: 'telefoner', x: 46, y: 71, iconName: 'smartphone', sentence: 'Telefonen ligger på bordet.' },
+        { word: 'en taske', clean: 'taske', gender: 'en', bestemt: 'tasken', flertal: 'tasker', x: 50, y: 90, iconName: 'tag', sentence: 'Tasken står på gulvet.' },
+        { word: 'et arbejde', clean: 'arbejde', gender: 'et', bestemt: 'arbejdet', flertal: 'arbejder', x: 70, y: 47, iconName: 'fileText', sentence: 'Hun er på arbejde.' },
+        { word: 'et møde', clean: 'møde', gender: 'et', bestemt: 'mødet', flertal: 'møder', x: 78.5, y: 44, iconName: 'handshake', sentence: 'De har et møde i dag.' },
+        { word: 'en idé', clean: 'idé', gender: 'en', bestemt: 'idéen', flertal: 'idéer', x: 84.5, y: 25.5, iconName: 'lightbulb', sentence: 'Han får en god idé.' },
+        { word: 'et brev', clean: 'brev', gender: 'et', bestemt: 'brevet', flertal: 'breve', x: 83.5, y: 47.5, iconName: 'fileText', sentence: 'Hun åbner et brev.' },
+        { word: 'et vindue', clean: 'vindue', gender: 'et', bestemt: 'vinduet', flertal: 'vinduer', x: 97, y: 31, iconName: 'home', sentence: 'Lyset kommer ind ad et vindue.' },
+        { word: 'en computer', clean: 'computer', gender: 'en', bestemt: 'computeren', flertal: 'computere', x: 82.5, y: 83, iconName: 'smartphone', sentence: 'Manden arbejder ved en computer.' },
+        { word: 'et problem', clean: 'problem', gender: 'et', bestemt: 'problemet', flertal: 'problemer', x: 80.5, y: 74, iconName: 'alertTriangle', sentence: 'Der er et problem med computeren.' }
     ];
 
     // ========================================================
@@ -1158,14 +1224,14 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status-klasse">${getTranslation('vrimmel_status_off')}</strong>`;
+    pureBtn.innerHTML = `<span>${renderDsIcon('image', '', { size: 16 })}</span> <span>${getTranslation('vrimmel_pure_btn')}</span> <strong id="pure-mode-status-klasse">${getTranslation('vrimmel_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status-klasse').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
+        pureBtn.querySelector('#pure-mode-status-klasse').textContent = pureModeActive ? getTranslation('vrimmel_status_on') : getTranslation('vrimmel_status_off');
     };
 
     controlBar.appendChild(pureBtn);
@@ -1212,23 +1278,24 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 <div style="flex: 1; min-width: 250px;">
                     <div>
                         <span class="badge-substantiv">${getTranslation('vrimmel_badge_substantiv')}</span>
-                        <span class="detail-word-badge badge-${kw.gender}">${kw.gender === 'en' ? getTranslation('vrimmel_badge_en') : getTranslation('vrimmel_badge_et')}</span>
+                        <span class="detail-word-badge badge-${kw.gender}">${kw.gender === 'en' ? stripLeadingEmoji(getTranslation('vrimmel_badge_en')) : stripLeadingEmoji(getTranslation('vrimmel_badge_et'))}</span>
                     </div>
-                    <div class="detail-main-word">
-                        ${kw.icon} ${kw.word}
-                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
+                    <div class="detail-main-word" style="display: flex; align-items: center; gap: 0.6rem;">
+                        <span>${renderDsIcon(kw.iconName || 'tag', '', { size: 24 })}</span>
+                        <span>${kw.word}</span>
+                        ${transMeaning ? `<span style="font-size: 1.1rem; color: #a7f3d0; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                     </div>
                     <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${kw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${kw.flertal}</strong></div>
                     <div class="detail-sentence">"${kw.sentence}"</div>
-                    ${transSentence ? `<div style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
+                    ${transSentence ? `<div style="font-size: 0.95rem; color: #a7f3d0; font-style: italic; margin-top: 0.2rem;">"${transSentence}"</div>` : ''}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                         <button class="listen-word-btn" id="listen-klasse-word">
-                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
+                            <span>${renderDsIcon('volume', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_listen_btn')}</span>
                         </button>
                         <button class="mic-speak-btn" id="mic-klasse-word">
-                            <span>🎤</span> ${getTranslation('vrimmel_mic_btn')}
+                            <span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback-klasse"></div>
@@ -1265,7 +1332,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                         rec.onstart = () => {
                             isListening = true;
                             micBtn.classList.add('listening');
-                            micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('activity', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_listening')}</span>`;
                             feedbackBox.className = 'speech-feedback-box listening';
                             feedbackBox.textContent = `${getTranslation('vrimmel_mic_prompt')} "${kw.clean}"...`;
                         };
@@ -1292,7 +1359,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                         rec.onerror = (err) => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>`;
                             if (err.error !== 'no-speech') {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.textContent = `Mikrofon: ${err.error}`;
@@ -1302,7 +1369,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                         rec.onend = () => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>`;
                         };
 
                         rec.start();
@@ -1332,10 +1399,14 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
     const sortHeader = document.createElement('div');
     sortHeader.className = 'sorting-header-row';
+    const cleanSortTitle = stripLeadingEmoji(getTranslation('sort_klasse_title'));
     sortHeader.innerHTML = `
         <div>
-            <h3 style="font-size: 1.3rem; margin: 0;">📦 ${getTranslation('sort_klasse_title')}</h3>
-            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
+            <h3 style="font-size: 1.3rem; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('layers', '', { size: 20 })}</span>
+                <span>${cleanSortTitle}</span>
+            </h3>
+            <p style="color: var(--by-text-muted, #a7f3d0); margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
         </div>
         <div class="sort-progress-badge" id="klasse-sort-progress">${getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', klasseWords.length)}</div>
     `;
@@ -1344,13 +1415,15 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     const binsContainer = document.createElement('div');
     binsContainer.className = 'bins-container';
 
+    const cleanBinEnTitle = stripLeadingEmoji(getTranslation('sort_bin_en_title'));
     const binEn = document.createElement('div');
     binEn.className = 'sort-bin bin-en';
-    binEn.innerHTML = `<div class="bin-title bin-title-en">${getTranslation('sort_bin_en_title')}</div><div class="bin-items-list" id="bin-klasse-en"></div>`;
+    binEn.innerHTML = `<div class="bin-title bin-title-en" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 16 })} <span>${cleanBinEnTitle}</span></div><div class="bin-items-list" id="bin-klasse-en"></div>`;
 
+    const cleanBinEtTitle = stripLeadingEmoji(getTranslation('sort_bin_et_title'));
     const binEt = document.createElement('div');
     binEt.className = 'sort-bin bin-et';
-    binEt.innerHTML = `<div class="bin-title bin-title-et">${getTranslation('sort_bin_et_title')}</div><div class="bin-items-list" id="bin-klasse-et"></div>`;
+    binEt.innerHTML = `<div class="bin-title bin-title-et" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem;">${renderDsIcon('tag', '', { size: 16 })} <span>${cleanBinEtTitle}</span></div><div class="bin-items-list" id="bin-klasse-et"></div>`;
 
     binsContainer.appendChild(binEn);
     binsContainer.appendChild(binEt);
@@ -1405,7 +1478,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             });
 
             if (klassePlacedCount === klasseWords.length) {
-                sortHeader.querySelector('#klasse-sort-progress').innerHTML = getTranslation('sort_all_complete');
+                const cleanComplete = stripLeadingEmoji(getTranslation('sort_all_complete'));
+                sortHeader.querySelector('#klasse-sort-progress').innerHTML = `✓ ${cleanComplete}`;
             }
 
             selectedSortWord = null;
@@ -1423,7 +1497,11 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
     const resetBtn = document.createElement('button');
     resetBtn.className = 'reset-sort-btn';
-    resetBtn.innerHTML = getTranslation('sort_reset_btn');
+    const cleanResetBtn = stripLeadingEmoji(getTranslation('sort_reset_btn'));
+    resetBtn.innerHTML = `<span>${renderDsIcon('refresh', '', { size: 16 })}</span> <span>${cleanResetBtn}</span>`;
+    resetBtn.style.display = 'inline-flex';
+    resetBtn.style.alignItems = 'center';
+    resetBtn.style.gap = '0.5rem';
     resetBtn.onclick = () => {
         klassePlacedCount = 0;
         selectedSortWord = null;
@@ -1448,7 +1526,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
     const klasseMissions = [
         {
-            title: "Find 3 ting, man læser eller skriver med 📖✏️",
+            title: "Find 3 ting, man læser eller skriver med",
+            iconName: "bookOpen",
             targetCount: 3,
             options: [
                 { text: "en bog", correct: true },
@@ -1460,7 +1539,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ord om sprog og kommunikation 💬",
+            title: "Find 3 ord om sprog og kommunikation",
+            iconName: "thought",
             targetCount: 3,
             options: [
                 { text: "et spørgsmål", correct: true },
@@ -1472,7 +1552,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 personer eller aktiviteter i lokalet 🧑‍🏫🤝",
+            title: "Find 3 personer eller aktiviteter i lokalet",
+            iconName: "users",
             targetCount: 3,
             options: [
                 { text: "en lærer", correct: true },
@@ -1484,7 +1565,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting med teknologi eller kontor 💻✉️",
+            title: "Find 3 ting med teknologi eller kontor",
+            iconName: "smartphone",
             targetCount: 3,
             options: [
                 { text: "en computer", correct: true },
@@ -1496,7 +1578,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 møbler eller inventar i lokalet 🪑💡",
+            title: "Find 3 møbler eller inventar i lokalet",
+            iconName: "home",
             targetCount: 3,
             options: [
                 { text: "et bord", correct: true },
@@ -1508,7 +1591,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting i skoletasken 🎒📚",
+            title: "Find 3 ting i skoletasken",
+            iconName: "tag",
             targetCount: 3,
             options: [
                 { text: "en taske", correct: true },
@@ -1520,7 +1604,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ord om tid og planlægning ⏰📅",
+            title: "Find 3 ord om tid og planlægning",
+            iconName: "clock",
             targetCount: 3,
             options: [
                 { text: "et ur", correct: true },
@@ -1532,7 +1617,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ord om tanker og idéer 💡❓",
+            title: "Find 3 ord om tanker og idéer",
+            iconName: "lightbulb",
             targetCount: 3,
             options: [
                 { text: "en idé", correct: true },
@@ -1557,9 +1643,15 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         const header = document.createElement('div');
         header.className = 'mission-header';
         header.innerHTML = `
-            <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${klasseMissions.length}</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem;">${m.title}</div>
-            <div style="font-size: 0.95rem; color: #94a3b8;">${getTranslation('klasse_detektiv_count_prompt')}</div>
+            <div class="mission-badge" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                <span>${renderDsIcon('search', '', { size: 14 })}</span>
+                <span>${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${klasseMissions.length}</span>
+            </div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem;">
+                <span>${renderDsIcon(m.iconName || 'search', '', { size: 22 })}</span>
+                <span>${m.title}</span>
+            </div>
+            <div style="font-size: 0.95rem; color: var(--by-text-muted, #a7f3d0);">${getTranslation('klasse_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);
 
@@ -1584,12 +1676,15 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                     selectedCount++;
 
                     if (selectedCount === m.targetCount) {
+                        const cleanDetektivComplete = stripLeadingEmoji(getTranslation('klasse_detektiv_complete'));
+                        const nextBtnText = currMissionIdx < klasseMissions.length - 1 ? getTranslation('klasse_detektiv_next') : stripLeadingEmoji(getTranslation('klasse_detektiv_restart'));
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! ${getTranslation('klasse_detektiv_complete')}
+                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>Rigtigt svaret! ${cleanDetektivComplete}</span>
                             </div>
                             <button class="mission-next-btn" id="next-klasse-mission">
-                                ${currMissionIdx < klasseMissions.length - 1 ? getTranslation('klasse_detektiv_next') : getTranslation('klasse_detektiv_restart')}
+                                ${nextBtnText}
                             </button>
                         `;
                         feedbackEl.querySelector('#next-klasse-mission').onclick = () => {
@@ -1598,8 +1693,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                         };
                     } else {
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! (${selectedCount} af ${m.targetCount})
+                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                                <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                <span>Rigtigt svaret! (${selectedCount} af ${m.targetCount})</span>
                             </div>
                         `;
                     }
@@ -1639,32 +1735,32 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad arbejder han ved?",
                     options: [
-                        { text: "En computer 💻", correct: true },
-                        { text: "En seng 🛏️", correct: false },
-                        { text: "Et træ 🌳", correct: false }
+                        { text: "En computer", correct: true },
+                        { text: "En seng", correct: false },
+                        { text: "Et træ", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad sker der?",
                     options: [
-                        { text: "En ferie 🏖️", correct: false },
-                        { text: "Der er en fejl ⚙️", correct: true },
-                        { text: "En kage 🍰", correct: false }
+                        { text: "En ferie", correct: false },
+                        { text: "Der er en fejl", correct: true },
+                        { text: "En kage", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad har manden?",
                     options: [
-                        { text: "Et problem med computeren ⚠️", correct: true },
-                        { text: "En gave 🎁", correct: false },
-                        { text: "En sol ☀️", correct: false }
+                        { text: "Et problem med computeren", correct: true },
+                        { text: "En gave", correct: false },
+                        { text: "En sol", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvad gør han?",
                     options: [
-                        { text: "Han sover på gulvet 😴", correct: false },
-                        { text: "Han stiller et spørgsmål 💡", correct: true }
+                        { text: "Han sover på gulvet", correct: false },
+                        { text: "Han stiller et spørgsmål", correct: true }
                     ]
                 }
             ]
@@ -1676,33 +1772,33 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad gør læreren?",
                     options: [
-                        { text: "Læreren skriver på tavlen 🟩", correct: true },
-                        { text: "Læreren sover 😴", correct: false },
-                        { text: "Læreren spiser is 🍦", correct: false }
+                        { text: "Læreren skriver på tavlen", correct: true },
+                        { text: "Læreren sover", correct: false },
+                        { text: "Læreren spiser is", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad læser kursisterne i?",
                     options: [
-                        { text: "De kigger på en sko 👟", correct: false },
-                        { text: "De læser i en bog 📖", correct: true },
-                        { text: "De læser på et træ 🌳", correct: false }
+                        { text: "De kigger på en sko", correct: false },
+                        { text: "De læser i en bog", correct: true },
+                        { text: "De læser på et træ", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør en elev?",
                     options: [
-                        { text: "Eleven stiller et spørgsmål ❓", correct: true },
-                        { text: "Eleven løber hjem 🏃", correct: false },
-                        { text: "Eleven gemmer sig 🙈", correct: false }
+                        { text: "Eleven stiller et spørgsmål", correct: true },
+                        { text: "Eleven løber hjem", correct: false },
+                        { text: "Eleven gemmer sig", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvad gør læreren?",
                     options: [
-                        { text: "Læreren giver et svar ✅", correct: true },
-                        { text: "Læreren slukker lyset 💡", correct: false },
-                        { text: "Læreren går 🚪", correct: false }
+                        { text: "Læreren giver et svar", correct: true },
+                        { text: "Læreren slukker lyset", correct: false },
+                        { text: "Læreren går", correct: false }
                     ]
                 }
             ]
@@ -1714,25 +1810,25 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad har de to kolleger?",
                     options: [
-                        { text: "De har et møde 🤝", correct: true },
-                        { text: "De holder en fest 🎉", correct: false },
-                        { text: "De sover 😴", correct: false }
+                        { text: "De har et møde", correct: true },
+                        { text: "De holder en fest", correct: false },
+                        { text: "De sover", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad kigger de på?",
                     options: [
-                        { text: "En hund 🐕", correct: false },
-                        { text: "Et papir 📄", correct: true },
-                        { text: "En bil 🚗", correct: false }
+                        { text: "En hund", correct: false },
+                        { text: "Et papir", correct: true },
+                        { text: "En bil", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad får kollegaen?",
                     options: [
-                        { text: "En god idé 💡", correct: true },
-                        { text: "En kop te ☕", correct: false },
-                        { text: "En ny sko 👟", correct: false }
+                        { text: "En god idé", correct: true },
+                        { text: "En kop te", correct: false },
+                        { text: "En ny sko", correct: false }
                     ]
                 }
             ]
@@ -1744,25 +1840,25 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvor tager hun blyanten fra?",
                     options: [
-                        { text: "Fra tasken 🎒", correct: true },
-                        { text: "Fra køleskabet ❄️", correct: false },
-                        { text: "Fra haven 🌲", correct: false }
+                        { text: "Fra tasken", correct: true },
+                        { text: "Fra køleskabet", correct: false },
+                        { text: "Fra haven", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør hun?",
                     options: [
-                        { text: "Hun klipper papiret ✂️", correct: false },
-                        { text: "Hun skriver ord med en blyant ✏️", correct: true },
-                        { text: "Hun sover 😴", correct: false }
+                        { text: "Hun klipper papiret", correct: false },
+                        { text: "Hun skriver ord med en blyant", correct: true },
+                        { text: "Hun sover", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad sker der til sidst?",
                     options: [
-                        { text: "Hun glemmer opgaven ❌", correct: false },
-                        { text: "Hun løser opgaven 📝", correct: true },
-                        { text: "Hun går hjem 🏃", correct: false }
+                        { text: "Hun glemmer opgaven", correct: false },
+                        { text: "Hun løser opgaven", correct: true },
+                        { text: "Hun går hjem", correct: false }
                     ]
                 }
             ]
@@ -1910,98 +2006,98 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
     const klasseCategoryTasks = [
         {
             type: "find_overemne",
-            subwords: ["en lærer 👨‍🏫", "en elev 👩‍🎓", "en klasse 🏫"],
+            subwords: ["en lærer", "en elev", "en klasse"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Skole og undervisning 🏫", correct: true },
-                { text: "Transport 🚗", correct: false },
-                { text: "Køkken 🍳", correct: false }
+                { text: "Skole og undervisning", correct: true },
+                { text: "Transport", correct: false },
+                { text: "Køkken", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en computer 💻", "en skærm 🖥️", "en mus 🖱️"],
+            subwords: ["en computer", "en skærm", "en mus"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Teknologi og IT 💻", correct: true },
-                { text: "Møbler 🪑", correct: false },
-                { text: "Dyr 🐾", correct: false }
+                { text: "Teknologi og IT", correct: true },
+                { text: "Møbler", correct: false },
+                { text: "Dyr", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Skrive- og læsemateriale ✏️",
+            overemne: "Skrive- og læsemateriale",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en bog 📖", correct: true },
-                { text: "en blyant ✏️", correct: true },
-                { text: "et papir 📄", correct: true },
-                { text: "et komfur 🍳", correct: false },
-                { text: "en seng 🛏️", correct: false },
-                { text: "en bil 🚗", correct: false }
+                { text: "en bog", correct: true },
+                { text: "en blyant", correct: true },
+                { text: "et papir", correct: true },
+                { text: "et komfur", correct: false },
+                { text: "en seng", correct: false },
+                { text: "en bil", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Arbejde og opgaver 💼",
+            overemne: "Arbejde og opgaver",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "et møde 🤝", correct: true },
-                { text: "en opgave 📝", correct: true },
-                { text: "en pause ☕", correct: true },
-                { text: "et træ 🌳", correct: false },
-                { text: "en kat 🐈", correct: false },
-                { text: "en vej 🛣️", correct: false }
+                { text: "et møde", correct: true },
+                { text: "en opgave", correct: true },
+                { text: "en pause", correct: true },
+                { text: "et træ", correct: false },
+                { text: "en kat", correct: false },
+                { text: "en vej", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["et bord 🪵", "en stol 🪑", "en reol 📚"],
+            subwords: ["et bord", "en stol", "en reol"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Møbler i lokalet 🪑", correct: true },
-                { text: "Mad 🍞", correct: false },
-                { text: "Dyr 🐾", correct: false }
+                { text: "Møbler i lokalet", correct: true },
+                { text: "Mad", correct: false },
+                { text: "Dyr", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en telefon 📱", "et brev ✉️", "en e-mail 📧"],
+            subwords: ["en telefon", "et brev", "en e-mail"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Kommunikation 💬", correct: true },
-                { text: "Transport 🚗", correct: false },
-                { text: "Tøj 👟", correct: false }
+                { text: "Kommunikation", correct: true },
+                { text: "Transport", correct: false },
+                { text: "Tøj", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Udstyr i undervisningen 🎒",
+            overemne: "Udstyr i undervisningen",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en taske 🎒", correct: true },
-                { text: "en tavle 🧑‍🏫", correct: true },
-                { text: "en lampe 💡", correct: true },
-                { text: "en cykel 🚲", correct: false },
-                { text: "en hund 🐕", correct: false },
-                { text: "et brød 🍞", correct: false }
+                { text: "en taske", correct: true },
+                { text: "en tavle", correct: true },
+                { text: "en lampe", correct: true },
+                { text: "en cykel", correct: false },
+                { text: "en hund", correct: false },
+                { text: "et brød", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Sprog og læring 📖",
+            overemne: "Sprog og læring",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "et sprog 🗣️", correct: true },
-                { text: "et spørgsmål ❓", correct: true },
-                { text: "et svar 💡", correct: true },
-                { text: "en seng 🛏️", correct: false },
-                { text: "et vindue 🪟", correct: false },
-                { text: "en kop ☕", correct: false }
+                { text: "et sprog", correct: true },
+                { text: "et spørgsmål", correct: true },
+                { text: "et svar", correct: true },
+                { text: "en seng", correct: false },
+                { text: "et vindue", correct: false },
+                { text: "en kop", correct: false }
             ]
         }
     ];
@@ -2015,16 +2111,18 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
         if (currKlasseCategoryIdx >= klasseCategoryTasks.length) {
             categoryCard.innerHTML = `
-                <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">🎉</div>
+                <div style="margin-bottom: 0.6rem; color: var(--by-primary, #22c55e); display: flex; justify-content: center;">
+                    ${renderDsIcon('trophy', '', { size: 48 })}
+                </div>
                 <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">${getTranslation('top100_category_complete_title')}</h2>
-                <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.6rem;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; margin-bottom: 1.6rem;">
                     ${getTranslation('top100_category_complete_desc')}
                 </p>
                 <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
                     <button class="mission-next-btn" id="restart-klasse-category-btn" style="background: #475569; color: white;">
                         ${getTranslation('top100_start_over_btn')}
                     </button>
-                    <button class="mission-next-btn" id="klasse-category-next-tab-btn" style="background: #22c55e; color: #0f172a;">
+                    <button class="mission-next-btn" id="klasse-category-next-tab-btn" style="background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800;">
                         ${getTranslation('top100_goto_saetning_btn')}
                     </button>
                 </div>
@@ -2044,13 +2142,13 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
         const badge = document.createElement('div');
         badge.className = 'category-badge';
-        badge.textContent = `🏷️ ${getTranslation('top100_task_counter').replace('{current}', currKlasseCategoryIdx + 1).replace('{total}', klasseCategoryTasks.length)}`;
+        badge.innerHTML = `${renderDsIcon('tag', '', { size: 14 })} <span>${getTranslation('top100_task_counter').replace('{current}', currKlasseCategoryIdx + 1).replace('{total}', klasseCategoryTasks.length)}</span>`;
         categoryCard.appendChild(badge);
 
         if (task.type === 'find_overemne') {
             const promptTitle = document.createElement('h3');
             promptTitle.style.fontSize = '1.35rem';
-            promptTitle.style.color = '#94a3b8';
+            promptTitle.style.color = 'var(--by-text-muted, #a7f3d0)';
             promptTitle.style.margin = '0.3rem 0 0.8rem';
             promptTitle.textContent = getTranslation('top100_underemner_label');
             categoryCard.appendChild(promptTitle);
@@ -2088,9 +2186,11 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                     if (opt.correct) {
                         btn.classList.add('selected-correct');
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                        const cleanOveremnePrefix = getTranslation("top100_correct_overemne_prefix").replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ ${getTranslation("top100_correct_overemne_prefix")} ${opt.text}
+                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>${cleanOveremnePrefix} ${opt.text}</span>
                             </div>
                             <button class="mission-next-btn" id="next-category-btn">${getTranslation('top100_next_task_btn')}</button>
                         `;
@@ -2131,7 +2231,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
             categoryCard.appendChild(mainCategoryTitle);
 
             const qEl = document.createElement('p');
-            qEl.style.color = '#cbd5e1';
+            qEl.style.color = 'var(--by-text-muted, #a7f3d0)';
             qEl.style.fontSize = '1.05rem';
             qEl.style.marginBottom = '1.2rem';
             qEl.textContent = getTranslation('top100_q_find_underemner');
@@ -2156,9 +2256,11 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                         selectedCount++;
 
                         if (selectedCount === task.targetCount) {
+                            const cleanUnderemnerComplete = getTranslation('top100_correct_all_underemner').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
                             feedbackEl.innerHTML = `
-                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                    🎉 ${getTranslation('top100_correct_all_underemner')}
+                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                    <span>${cleanUnderemnerComplete}</span>
                                 </div>
                                 <button class="mission-next-btn" id="next-category-btn">
                                     ${currKlasseCategoryIdx < klasseCategoryTasks.length - 1 ? getTranslation('top100_next_task_btn') : getTranslation('top100_see_result_btn')}
@@ -2170,8 +2272,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                             };
                         } else {
                             feedbackEl.innerHTML = `
-                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                    ✓ Rigtigt svaret! (${selectedCount} af ${task.targetCount})
+                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                    <span>Rigtigt svaret! (${selectedCount} af ${task.targetCount})</span>
                                 </div>
                             `;
                         }
@@ -2213,11 +2316,11 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
     const subTab1Btn = document.createElement('button');
     subTab1Btn.className = 'sb-sub-btn active';
-    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+    subTab1Btn.innerHTML = `<span>${renderDsIcon('edit', '', { size: 16 })}</span> <span>1. Udforsk & Byg selv</span>`;
 
     const subTab2Btn = document.createElement('button');
     subTab2Btn.className = 'sb-sub-btn';
-    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+    subTab2Btn.innerHTML = `<span>${renderDsIcon('puzzle', '', { size: 16 })}</span> <span>2. Opgave & Puslespil</span>`;
 
     sbSubNav.appendChild(subTab1Btn);
     sbSubNav.appendChild(subTab2Btn);
@@ -2255,7 +2358,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         freeBuilderContainer.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger i klassen & på kontoret</h3>
-                <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                     Vælg et element fra hver række herunder. Prøv forskellige kombinationer og lyt til hvordan sætningen lyder på dansk!
                 </p>
             </div>
@@ -2275,7 +2378,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 <div class="sb-live-label">Din samlede sætning</div>
                 <div class="sb-live-sentence" id="free-live-sentence-klasse"></div>
                 <button class="sb-listen-btn" id="free-listen-btn-klasse">
-                    <span>🔊</span> Hør udtale
+                    <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør udtale</span>
                 </button>
             </div>
         `;
@@ -2287,7 +2390,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 role: 'Subjekt',
                 catClass: 'sb-cat-subjekt',
                 badgeClass: 'badge-cat-subjekt',
-                icon: '👤',
+                iconName: 'user',
                 options: ['Læreren', 'Eleven', 'Kursisten', 'Kollegaen', 'Chefen', 'Manden', 'Kvinden', 'Gruppen']
             },
             {
@@ -2296,7 +2399,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 role: 'Verbum',
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
-                icon: '⚡',
+                iconName: 'zap',
                 options: ['læser i', 'skriver med', 'løser', 'stiller', 'åbner', 'tænder for', 'holder', 'kigger på']
             },
             {
@@ -2305,7 +2408,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 role: 'Objekt (Ting)',
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
-                icon: '📦',
+                iconName: 'tag',
                 options: ['en bog', 'en blyant', 'en opgave', 'et spørgsmål', 'computeren', 'et møde', 'et brev', 'uret']
             },
             {
@@ -2314,7 +2417,7 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 role: 'Sted (Rum)',
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
-                icon: '📍',
+                iconName: 'mapPin',
                 options: ['i klassen', 'på kontoret', 'ved bordet', 'på stolen', 'foran tavlen', 'ved computeren', 'i lokalet', 'ved vinduet']
             }
         ];
@@ -2344,8 +2447,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
 
             row.innerHTML = `
                 <div class="sb-category-header">
-                    <div class="sb-category-title">
-                        <span>${cat.icon}</span> ${cat.title}
+                    <div class="sb-category-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon(cat.iconName, '', { size: 18 })}</span>
+                        <span>${cat.title}</span>
                     </div>
                     <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                 </div>
@@ -2498,21 +2602,30 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         challengeContainer.appendChild(header);
 
         // Step 1: Context & Semantic Match
+        const lang = getLang();
+        const h0 = getGrammarSlotHint(0, lang);
+        const h1 = getGrammarSlotHint(1, lang);
+        const h2 = getGrammarSlotHint(2, lang);
+        const h3 = getGrammarSlotHint(3, lang);
+
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title">📍 <em>${task.context}</em></div>
+            <div class="sb-context-title" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span>${renderDsIcon('mapPin', '', { size: 16 })}</span>
+                <em>${task.context}</em>
+            </div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
-                    <span class="sb-chip-role">1. Hvem?</span>
+                    <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
                     <span>${task.subjekt}</span>
                 </div>
                 <div class="sb-context-chip verbum">
-                    <span class="sb-chip-role">2. Handling</span>
+                    <span class="sb-chip-role">${h1.danish} <span class="chip-trans">(${h1.translation})</span></span>
                     <span>${task.verbum}</span>
                 </div>
                 <div class="sb-context-chip sted">
-                    <span class="sb-chip-role">4. Hvor?</span>
+                    <span class="sb-chip-role">${h3.danish} <span class="chip-trans">(${h3.translation})</span></span>
                     <span>${task.sted}</span>
                 </div>
             </div>
@@ -2523,8 +2636,8 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         const qBox = document.createElement('div');
         qBox.className = 'sb-question-box';
         qBox.innerHTML = `
-            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
-                Spørgsmål 3: Genstand / Objekt (Kernen i opgaven)
+            <div style="font-size: 0.92rem; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.5px;">
+                Spørgsmål 3: ${h2.danish} <span style="opacity: 0.85; font-weight: 600; text-transform: none;">(${h2.translation})</span> – Genstand / Objekt
             </div>
             <div class="sb-question-text">${task.questionPrompt}</div>
         `;
@@ -2580,8 +2693,9 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
         const lang = getLang();
 
         container.innerHTML = `
-            <div class="sb-puzzle-title">
-                <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+            <div class="sb-puzzle-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('puzzle', '', { size: 20 })}</span>
+                <span>Trin 2: Puslespillet – Saml hele sætningen!</span>
             </div>
             <div class="sb-puzzle-desc">
                 Klik på brikkerne i den rigtige danske ordstilling: <strong>1. Hvem ➔ 2. Handling ➔ 3. Hvilken ting ➔ 4. Hvor</strong>.
@@ -2684,18 +2798,20 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                 speakDanish(fullSentence);
 
                 feedbackEl.innerHTML = `
-                    <div class="sb-feedback-msg success">
-                        🎉 Fantastisk! "<strong>${fullSentence}</strong>" ✓
+                    <div class="sb-feedback-msg success" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon('check', '', { size: 18 })}</span>
+                        <span>Fantastisk! "<strong>${fullSentence}</strong>"</span>
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
-                        💡 ${task.pedagogyNote}
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                        <span>${renderDsIcon('lightbulb', '', { size: 16 })}</span>
+                        <span>${task.pedagogyNote}</span>
                     </div>
                     <div class="sb-action-row">
                         <button class="sb-listen-btn" id="klasse-listen-full">
-                            <span>🔊</span> Hør sætningen igen
+                            <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør sætningen igen</span>
                         </button>
                         <button class="sb-action-btn" id="klasse-next-btn">
-                            ${currentKlasseChallengeIdx < klasseChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentKlasseChallengeIdx < klasseChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra ➔'}
                         </button>
                     </div>
                 `;
@@ -2710,11 +2826,11 @@ export function renderKlasseKontorView(container, navigateFn, extraData = {}) {
                     <div class="sb-feedback-msg error">
                         ✗ Rækkefølgen er ikke helt rigtig.
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.6rem;">
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.6rem;">
                         Husk rækkefølgen på dansk: 1. Hvem (Subjekt) ➔ 2. Handling (Verbum) ➔ 3. Hvilken ting (Objekt) ➔ 4. Hvor (Sted).
                     </div>
                     <button class="sb-action-btn" id="klasse-retry-btn" style="background: #475569;">
-                        Nulstil brikker 🔄
+                        Nulstil brikker
                     </button>
                 `;
 

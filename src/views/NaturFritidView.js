@@ -2,6 +2,12 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { naturWordTranslations } from '../utils/top100_translations.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripLeadingEmoji(str) {
+    if (!str) return '';
+    return str.replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
+}
 
 /**
  * NaturFritidView - Didaktisk vrimlebillede for semantisk felt: Naturen og fritiden
@@ -38,11 +44,38 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     const style = document.createElement('style');
     style.textContent = `
         .natur-vrimmel-view {
+            --by-bg: #4A040B;
+            --by-surface: #073518;
+            --by-surface-hover: #0c4f24;
+            --by-surface-input: #02220e;
+            --by-border: #136832;
+            --by-border-light: #1b793c;
+            --by-primary: #22c55e;
+            --by-text: #FFFFFF;
+            --by-text-muted: #a7f3d0;
+            --by-text-subtle: #86efac;
+
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
         }
+        .natur-vrimmel-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .natur-vrimmel-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .natur-vrimmel-view .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
+        }
+
         .natur-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -51,16 +84,22 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #34d399, #10b981, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
         }
         .natur-hero-header p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
             font-size: 1.1rem;
             max-width: 780px;
             margin: 0 auto;
             line-height: 1.5;
+            opacity: 0.95;
         }
 
         /* Tabs Navigation */
@@ -70,14 +109,14 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
             gap: 0.6rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--by-surface, #073518);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--by-border, #136832);
         }
         .natur-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--by-text-muted, #a7f3d0);
             border: none;
             padding: 0.7rem 1.2rem;
             border-radius: 12px;
@@ -91,12 +130,13 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         }
         .natur-tab-btn:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .natur-tab-btn.active {
-            background: #10b981;
-            color: white;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
         }
 
         /* Panels */
@@ -114,8 +154,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         /* Stage Card */
         .vrimmel-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 2rem;
@@ -128,12 +168,12 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             gap: 1rem;
             margin-bottom: 1.2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--by-border, #136832);
         }
         .pure-image-toggle-btn {
-            background: #1e293b;
-            color: #f1f5f9;
-            border: 2px solid #64748b;
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text);
+            border: 2px solid var(--by-border, #136832);
             padding: 0.6rem 1.3rem;
             border-radius: 25px;
             font-weight: 700;
@@ -145,13 +185,13 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .pure-image-toggle-btn:hover {
-            border-color: #10b981;
-            background: #334155;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .pure-image-toggle-btn.active {
-            background: linear-gradient(135deg, #059669, #10b981);
-            border-color: #34d399;
-            box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
+            background: linear-gradient(135deg, #15803d, #22c55e);
+            border-color: #86efac;
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.5);
             color: white;
         }
         .vrimmel-stage.pure-mode .vrimmel-hotspot {
@@ -166,7 +206,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             line-height: 0;
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
         }
         .vrimmel-img {
             width: 100%;
@@ -189,21 +229,21 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             border: 2px solid white;
             transition: all 0.25s ease;
             z-index: 10;
-            background: rgba(30, 41, 59, 0.85);
+            background: rgba(7, 53, 24, 0.85);
             color: #f8fafc;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
         .vrimmel-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.3);
             z-index: 20;
-            background: #10b981;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
         }
 
         /* Detail card */
         .hotspot-detail-card {
-            background: #1e293b;
-            border: 1px solid #475569;
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -239,7 +279,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         .badge-en { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
         .badge-et { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid #ea580c; }
         .detail-main-word { font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.3rem; }
-        .detail-forms { font-size: 0.95rem; color: #94a3b8; margin-bottom: 0.5rem; }
+        .detail-forms { font-size: 0.95rem; color: var(--by-text-muted, #a7f3d0); margin-bottom: 0.5rem; }
         .detail-sentence { font-size: 1.05rem; color: #e2e8f0; font-style: italic; }
         .listen-word-btn {
             background: #2563eb;
@@ -257,9 +297,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         }
         .listen-word-btn:hover { background: #1d4ed8; transform: scale(1.05); }
         .mic-speak-btn {
-            background: #0f172a;
+            background: var(--by-surface-input, #02220e);
             color: #f8fafc;
-            border: 2px solid #64748b;
+            border: 2px solid var(--by-border, #136832);
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-weight: 700;
@@ -271,8 +311,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .mic-speak-btn:hover {
-            border-color: #38bdf8;
-            background: #1e293b;
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .mic-speak-btn.listening {
             border-color: #ef4444;
@@ -323,8 +363,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         /* Sorting Game */
         .sorting-game-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 18px;
             padding: 1.5rem;
             margin-top: 2rem;
@@ -338,9 +378,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.2rem;
         }
         .sort-progress-badge {
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-            border: 1px solid #0284c7;
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--by-text-subtle, #86efac);
+            border: 1px solid var(--by-border-light, #1b793c);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-weight: 800;
@@ -368,29 +408,29 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         .bin-title-et { color: #fb923c; }
         .bin-items-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .chip-in-bin {
-            background: #1e293b;
+            background: var(--by-surface-input, #02220e);
             padding: 0.4rem 0.8rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
             color: white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--by-border, #136832);
         }
         .words-bank-row {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--by-surface-input, #02220e);
             padding: 1.2rem;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--by-border, #136832);
         }
         .sort-word-chip {
-            background: #334155;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid transparent;
+            border: 2px solid var(--by-border, #136832);
             padding: 0.5rem 1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -398,9 +438,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .sort-word-chip:hover { background: #475569; transform: translateY(-2px); }
-        .sort-word-chip.selected { border-color: #38bdf8; box-shadow: 0 0 14px rgba(56, 189, 248, 0.6); background: #1e293b; }
-        .sort-word-chip.placed { opacity: 0.35; pointer-events: none; background: #0f172a; text-decoration: line-through; }
+        .sort-word-chip:hover { background: var(--by-surface-hover, #0c4f24); transform: translateY(-2px); }
+        .sort-word-chip.selected { border-color: var(--by-primary, #22c55e); box-shadow: 0 0 14px rgba(34, 197, 94, 0.6); background: var(--by-surface-hover, #0c4f24); }
+        .sort-word-chip.placed { opacity: 0.35; pointer-events: none; background: #02220e; text-decoration: line-through; }
         .reset-sort-btn {
             background: #475569; color: white; border: none; padding: 0.6rem 1.2rem;
             border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
@@ -409,8 +449,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         /* Detective Cards */
         .mission-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             max-width: 800px;
@@ -424,44 +464,44 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;
         }
         .clue-btn {
-            background: #1e293b; border: 2px solid #334155; color: white; padding: 1.2rem;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-border, #136832); color: white; padding: 1.2rem;
             border-radius: 14px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease;
             text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
         }
-        .clue-btn:hover { border-color: #38bdf8; transform: translateY(-3px); }
+        .clue-btn:hover { border-color: var(--by-primary, #22c55e); transform: translateY(-3px); }
         .clue-btn.selected-correct { background: rgba(34, 197, 94, 0.25); border-color: #22c55e; color: #4ade80; }
         .clue-btn.selected-wrong { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #f87171; }
         .mission-next-btn {
-            background: #22c55e; color: #0f172a; font-weight: 800; border: none; padding: 0.8rem 1.6rem;
+            background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800; border: none; padding: 0.8rem 1.6rem;
             border-radius: 12px; font-size: 1rem; cursor: pointer; transition: all 0.2s ease;
         }
 
         /* Micro-story */
         .story-container {
-            max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
+            max-width: 800px; margin: 0 auto; background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832); border-radius: 20px; padding: 2rem;
         }
         .story-nav-pills {
             display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.8rem;
         }
         .story-nav-btn {
-            background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 0.6rem 1.2rem;
+            background: var(--by-surface-input, #02220e); color: var(--by-text-muted, #a7f3d0); border: 2px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-nav-btn:hover { border-color: #10b981; color: white; transform: translateY(-2px); }
+        .story-nav-btn:hover { border-color: var(--by-primary, #22c55e); color: white; transform: translateY(-2px); }
         .story-nav-btn.active {
-            background: #059669; color: white; border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+            background: var(--by-primary, #22c55e); color: #02220e; border-color: var(--by-border-light, #1b793c); font-weight: 800; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
         .story-step-card {
-            background: #1e293b; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid #10b981;
+            background: var(--by-surface-input, #02220e); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 5px solid var(--by-primary, #22c55e);
             transition: all 0.3s ease;
         }
         .story-options-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
         .story-opt-btn {
-            background: #334155; color: white; border: none; padding: 0.6rem 1.2rem;
+            background: var(--by-surface, #073518); color: white; border: 1px solid var(--by-border, #136832); padding: 0.6rem 1.2rem;
             border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
-        .story-opt-btn:hover { background: #475569; }
+        .story-opt-btn:hover { background: var(--by-surface-hover, #0c4f24); }
         .story-opt-btn.correct { background: #22c55e !important; color: #0f172a; }
         .story-opt-btn.wrong { background: #ef4444 !important; color: white; }
         .story-explanation-box {
@@ -471,8 +511,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         /* Overemne & Underemne (Model C) */
         .category-card {
-            max-width: 800px; margin: 0 auto; background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
+            max-width: 800px; margin: 0 auto; background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832); border-radius: 20px; padding: 2rem;
             text-align: center;
         }
         .category-badge {
@@ -484,18 +524,18 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.2rem 0 1.6rem;
         }
         .category-word-chip {
-            background: #0f172a; border: 2px solid #10b981; color: #f8fafc;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-primary, #22c55e); color: #f8fafc;
             padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 700; font-size: 1.1rem;
         }
         .category-options-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.2rem;
         }
         .category-opt-btn {
-            background: #1e293b; border: 2px solid #334155; color: white; padding: 1.1rem;
+            background: var(--by-surface-input, #02220e); border: 2px solid var(--by-border, #136832); color: white; padding: 1.1rem;
             border-radius: 14px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
             text-align: center;
         }
-        .category-opt-btn:hover { border-color: #10b981; transform: translateY(-2px); }
+        .category-opt-btn:hover { border-color: var(--by-primary, #22c55e); transform: translateY(-2px); }
         .category-opt-btn.selected-correct {
             background: rgba(34, 197, 94, 0.25) !important; border-color: #22c55e !important; color: #4ade80 !important;
         }
@@ -509,8 +549,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         .sentence-builder-card {
             max-width: 960px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface, #073518);
+            border: 1px solid var(--by-border, #136832);
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -522,14 +562,14 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--by-border, #136832);
             padding-bottom: 1rem;
             flex-wrap: wrap;
         }
         .sb-sub-btn {
-            background: rgba(15, 23, 42, 0.6);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--by-surface-input, #02220e);
+            color: var(--by-text-muted, #a7f3d0);
+            border: 1px solid var(--by-border, #136832);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -542,14 +582,15 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         }
         .sb-sub-btn:hover {
             color: white;
-            border-color: #34d399;
-            background: rgba(52, 211, 153, 0.1);
+            border-color: var(--by-primary, #22c55e);
+            background: var(--by-surface-hover, #0c4f24);
         }
         .sb-sub-btn.active {
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: white;
-            border-color: #34d399;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
+            font-weight: 800;
+            border-color: var(--by-border-light, #1b793c);
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
         }
 
         /* Grammar Legend */
@@ -560,9 +601,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             gap: 1.2rem;
             margin-bottom: 1.5rem;
             padding: 0.6rem 1rem;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--by-surface-input, #02220e);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--by-border, #136832);
             font-size: 0.85rem;
         }
         .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
@@ -640,29 +681,28 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             font-weight: 800;
             transform: translateY(-2px);
         }
-        .sb-cat-subjekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+        /* Løsning 1: Højkontrast solide chips */
+        .sb-category-row.sb-cat-subjekt .sb-chip-btn.selected,
+        .sb-category-row.sb-cat-objekt .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            color: #FFFFFF !important;
+            border-color: #86efac !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45) !important;
         }
-        .sb-cat-verbum .sb-chip-btn.selected {
-            background: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+        .sb-category-row.sb-cat-verbum .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            color: #FFFFFF !important;
+            border-color: #fca5a5 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.45) !important;
         }
-        .sb-cat-objekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
-        }
-        .sb-cat-sted .sb-chip-btn.selected {
-            background: rgba(2, 132, 199, 0.25);
-            color: #93c5fd;
-            border-color: #0284c7;
-            box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+        .sb-category-row.sb-cat-sted .sb-chip-btn.selected {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            color: #FFFFFF !important;
+            border-color: #93c5fd !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.45) !important;
         }
 
         /* Live Result Box */
@@ -702,7 +742,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         .sb-listen-btn {
             background: #1e293b;
             color: #f8fafc;
-            border: 1px solid #34d399;
+            border: 1px solid #38bdf8;
             padding: 0.65rem 1.4rem;
             border-radius: 25px;
             font-size: 1rem;
@@ -714,8 +754,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-listen-btn:hover {
-            background: rgba(52, 211, 153, 0.15);
-            box-shadow: 0 0 15px rgba(52, 211, 153, 0.3);
+            background: rgba(56, 189, 248, 0.15);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
             transform: scale(1.03);
         }
 
@@ -752,9 +792,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .sb-task-pill.active {
-            border-color: #34d399;
+            border-color: #38bdf8;
             color: white;
-            background: #059669;
+            background: #0284c7;
         }
         .sb-task-pill.done {
             background: #22c55e;
@@ -796,8 +836,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         .sb-chip-role { font-size: 0.72rem; text-transform: uppercase; opacity: 0.8; }
 
         .sb-question-box {
-            background: rgba(52, 211, 153, 0.08);
-            border: 1px solid rgba(52, 211, 153, 0.25);
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
             border-radius: 12px;
             padding: 1rem 1.3rem;
             margin-bottom: 1.5rem;
@@ -827,7 +867,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .sb-option-btn:hover {
-            border-color: #34d399;
+            border-color: #38bdf8;
             background: #334155;
             transform: translateY(-2px);
         }
@@ -994,14 +1034,14 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             justify-content: center;
             margin-bottom: 1.2rem;
             padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--by-surface-input, #02220e);
             border-radius: 12px;
             min-height: 60px;
         }
         .sb-puzzle-chip {
-            background: #1e293b;
+            background: var(--by-surface, #073518);
             color: white;
-            border: 2px solid #64748b;
+            border: 2px solid var(--by-border, #136832);
             padding: 0.65rem 1.2rem;
             border-radius: 10px;
             font-size: 1rem;
@@ -1010,7 +1050,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             transition: all 0.2s ease;
         }
         .sb-puzzle-chip:hover {
-            border-color: #34d399;
+            border-color: var(--by-primary, #22c55e);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.placed {
@@ -1048,18 +1088,18 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             margin-top: 0.6rem;
         }
         .sb-action-btn {
-            background: #059669;
-            color: white;
+            background: var(--by-primary, #22c55e);
+            color: #02220e;
             border: none;
             padding: 0.7rem 1.4rem;
             border-radius: 10px;
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .sb-action-btn:hover {
-            background: #047857;
+            background: #4ade80;
             transform: translateY(-2px);
         }
     `;
@@ -1069,7 +1109,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'natur-hero-header';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('natur_hero_title')}</h1>
+        <h1>${renderDsIcon('compass', '', { size: 30 })} <span>${stripLeadingEmoji(getTranslation('natur_hero_title'))}</span></h1>
         <p>${getTranslation('natur_hero_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
@@ -1078,11 +1118,11 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'natur-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), icon: '🕵️' },
-        { id: 'tab_historie', label: getTranslation('tab_label_historie'), icon: '💭' },
-        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), icon: '🔄' },
-        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), icon: '✍️' }
+        { id: 'tab_vrimmel', label: getTranslation('tab_label_vrimmel'), iconName: 'search' },
+        { id: 'tab_detektiv', label: getTranslation('tab_label_detektiv'), iconName: 'eye' },
+        { id: 'tab_historie', label: getTranslation('tab_label_historie'), iconName: 'thought' },
+        { id: 'tab_kontekst', label: getTranslation('tab_label_kontekst'), iconName: 'layers' },
+        { id: 'tab_saetning', label: getTranslation('tab_label_saetning'), iconName: 'edit' }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -1091,7 +1131,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         const btn = document.createElement('button');
         btn.className = `natur-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `<span>${renderDsIcon(t.iconName, '', { size: 18 })}</span> <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -1116,27 +1156,27 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     // --- 21 NØGLEORD I NATUREN OG FRITIDEN
     // ========================================================
     const naturWords = [
-        { word: 'en fugl', clean: 'fugl', gender: 'en', bestemt: 'fuglen', flertal: 'fugle', x: 18, y: 10, icon: '🐦', sentence: 'En fugl flyver på himlen.' },
-        { word: 'en luft', clean: 'luft', gender: 'en', bestemt: 'luften', flertal: 'lufte', x: 25, y: 24, icon: '🌬️', sentence: 'Luften er frisk ude ved havet.' },
-        { word: 'et vejr', clean: 'vejr', gender: 'et', bestemt: 'vejret', flertal: 'vejr', x: 41, y: 11, icon: '🌤️', sentence: 'Det er godt vejr i dag.' },
-        { word: 'et vand', clean: 'vand', gender: 'et', bestemt: 'vandet', flertal: 'vande', x: 10, y: 41, icon: '🌊', sentence: 'Vandet er koldt.' },
-        { word: 'en strand', clean: 'strand', gender: 'en', bestemt: 'stranden', flertal: 'strande', x: 26, y: 46, icon: '🏖️', sentence: 'Børnene leger på en strand.' },
-        { word: 'en bold', clean: 'bold', gender: 'en', bestemt: 'bolden', flertal: 'bolde', x: 14.5, y: 71, icon: '⚽', sentence: 'De spiller med en bold.' },
-        { word: 'en blomst', clean: 'blomst', gender: 'en', bestemt: 'blomsten', flertal: 'blomster', x: 21, y: 86, icon: '🌸', sentence: 'Hun plukker en blomst.' },
-        { word: 'en skov', clean: 'skov', gender: 'en', bestemt: 'skoven', flertal: 'skove', x: 73, y: 20, icon: '🌲', sentence: 'De går en tur i en skov.' },
-        { word: 'en musik', clean: 'musik', gender: 'en', bestemt: 'musikken', flertal: 'musik', x: 37, y: 47, icon: '🎵', sentence: 'De lytter til musik.' },
-        { word: 'en ferie', clean: 'ferie', gender: 'en', bestemt: 'ferien', flertal: 'ferier', x: 48, y: 45, icon: '🏖️', sentence: 'Familien holder ferie.' },
-        { word: 'en fest', clean: 'fest', gender: 'en', bestemt: 'festen', flertal: 'fester', x: 57, y: 48, icon: '🎉', sentence: 'De holder en fest.' },
-        { word: 'et hjerte', clean: 'hjerte', gender: 'et', bestemt: 'hjertet', flertal: 'hjerter', x: 60.5, y: 31, icon: '❤️', sentence: 'Ballonen ligner et hjerte.' },
-        { word: 'en gave', clean: 'gave', gender: 'en', bestemt: 'gaven', flertal: 'gaver', x: 51, y: 59, icon: '🎁', sentence: 'Hun åbner en gave.' },
-        { word: 'en film', clean: 'film', gender: 'en', bestemt: 'filmen', flertal: 'film', x: 46.5, y: 71.5, icon: '🎬', sentence: 'De ser en film.' },
-        { word: 'et spil', clean: 'spil', gender: 'et', bestemt: 'spillet', flertal: 'spil', x: 53.5, y: 67, icon: '🎲', sentence: 'De spiller et spil.' },
-        { word: 'et liv', clean: 'liv', gender: 'et', bestemt: 'livet', flertal: 'liv', x: 64, y: 55, icon: '🌱', sentence: 'Der er liv i parken.' },
-        { word: 'et menneske', clean: 'menneske', gender: 'et', bestemt: 'mennesket', flertal: 'mennesker', x: 76.5, y: 53, icon: '🧑', sentence: 'Et venligt menneske hjælper.' },
-        { word: 'en hånd', clean: 'hånd', gender: 'en', bestemt: 'hånden', flertal: 'hænder', x: 83, y: 61, icon: '🫱', sentence: 'Han rækker en hånd frem.' },
-        { word: 'et hoved', clean: 'hoved', gender: 'et', bestemt: 'hovedet', flertal: 'hoveder', x: 88.5, y: 50, icon: '🗣️', sentence: 'Han har ondt i hovedet.' },
-        { word: 'et øje', clean: 'øje', gender: 'et', bestemt: 'øjet', flertal: 'øjne', x: 87.5, y: 53.5, icon: '👁️', sentence: 'Han lukker et øje.' },
-        { word: 'en fod', clean: 'fod', gender: 'en', bestemt: 'foden', flertal: 'fødder', x: 83.5, y: 77.5, icon: '🦶', sentence: 'Han har ondt i foden.' }
+        { word: 'en fugl', clean: 'fugl', gender: 'en', bestemt: 'fuglen', flertal: 'fugle', x: 18, y: 10, iconName: 'user', sentence: 'En fugl flyver på himlen.' },
+        { word: 'en luft', clean: 'luft', gender: 'en', bestemt: 'luften', flertal: 'lufte', x: 25, y: 24, iconName: 'activity', sentence: 'Luften er frisk ude ved havet.' },
+        { word: 'et vejr', clean: 'vejr', gender: 'et', bestemt: 'vejret', flertal: 'vejr', x: 41, y: 11, iconName: 'thermometer', sentence: 'Det er godt vejr i dag.' },
+        { word: 'et vand', clean: 'vand', gender: 'et', bestemt: 'vandet', flertal: 'vande', x: 10, y: 41, iconName: 'tag', sentence: 'Vandet er koldt.' },
+        { word: 'en strand', clean: 'strand', gender: 'en', bestemt: 'stranden', flertal: 'strande', x: 26, y: 46, iconName: 'mapPin', sentence: 'Børnene leger på en strand.' },
+        { word: 'en bold', clean: 'bold', gender: 'en', bestemt: 'bolden', flertal: 'bolde', x: 14.5, y: 71, iconName: 'activity', sentence: 'De spiller med en bold.' },
+        { word: 'en blomst', clean: 'blomst', gender: 'en', bestemt: 'blomsten', flertal: 'blomster', x: 21, y: 86, iconName: 'tag', sentence: 'Hun plukker en blomst.' },
+        { word: 'en skov', clean: 'skov', gender: 'en', bestemt: 'skoven', flertal: 'skove', x: 73, y: 20, iconName: 'mapPin', sentence: 'De går en tur i en skov.' },
+        { word: 'en musik', clean: 'musik', gender: 'en', bestemt: 'musikken', flertal: 'musik', x: 37, y: 47, iconName: 'volume', sentence: 'De lytter til musik.' },
+        { word: 'en ferie', clean: 'ferie', gender: 'en', bestemt: 'ferien', flertal: 'ferier', x: 48, y: 45, iconName: 'compass', sentence: 'Familien holder ferie.' },
+        { word: 'en fest', clean: 'fest', gender: 'en', bestemt: 'festen', flertal: 'fester', x: 57, y: 48, iconName: 'trophy', sentence: 'De holder en fest.' },
+        { word: 'et hjerte', clean: 'hjerte', gender: 'et', bestemt: 'hjertet', flertal: 'hjerter', x: 60.5, y: 31, iconName: 'activity', sentence: 'Ballonen ligner et hjerte.' },
+        { word: 'en gave', clean: 'gave', gender: 'en', bestemt: 'gaven', flertal: 'gaver', x: 51, y: 59, iconName: 'tag', sentence: 'Hun åbner en gave.' },
+        { word: 'en film', clean: 'film', gender: 'en', bestemt: 'filmen', flertal: 'film', x: 46.5, y: 71.5, iconName: 'film', sentence: 'De ser en film.' },
+        { word: 'et spil', clean: 'spil', gender: 'et', bestemt: 'spillet', flertal: 'spil', x: 53.5, y: 67, iconName: 'puzzle', sentence: 'De spiller et spil.' },
+        { word: 'et liv', clean: 'liv', gender: 'et', bestemt: 'livet', flertal: 'liv', x: 64, y: 55, iconName: 'user', sentence: 'Der er liv i parken.' },
+        { word: 'et menneske', clean: 'menneske', gender: 'et', bestemt: 'mennesket', flertal: 'mennesker', x: 76.5, y: 53, iconName: 'user', sentence: 'Et venligt menneske hjælper.' },
+        { word: 'en hånd', clean: 'hånd', gender: 'en', bestemt: 'hånden', flertal: 'hænder', x: 83, y: 61, iconName: 'user', sentence: 'Han rækker en hånd frem.' },
+        { word: 'et hoved', clean: 'hoved', gender: 'et', bestemt: 'hovedet', flertal: 'hoveder', x: 88.5, y: 50, iconName: 'user', sentence: 'Han har ondt i hovedet.' },
+        { word: 'et øje', clean: 'øje', gender: 'et', bestemt: 'øjet', flertal: 'øjne', x: 87.5, y: 53.5, iconName: 'eye', sentence: 'Han lukker et øje.' },
+        { word: 'en fod', clean: 'fod', gender: 'en', bestemt: 'foden', flertal: 'fødder', x: 83.5, y: 77.5, iconName: 'user', sentence: 'Han har ondt i foden.' }
     ];
 
     // ========================================================
@@ -1155,14 +1195,14 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('vrimmel_pure_btn')} <strong id="pure-mode-status-natur">${getTranslation('vrimmel_status_off')}</strong>`;
+    pureBtn.innerHTML = `<span>${renderDsIcon('image', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_pure_btn')}</span> <strong id="pure-mode-status-natur">${getTranslation('vrimmel_status_off')}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status-natur').textContent = pureModeActive ? `${getTranslation('vrimmel_status_on')} 🖼️` : getTranslation('vrimmel_status_off');
+        pureBtn.querySelector('#pure-mode-status-natur').textContent = pureModeActive ? getTranslation('vrimmel_status_on') : getTranslation('vrimmel_status_off');
     };
 
     controlBar.appendChild(pureBtn);
@@ -1211,8 +1251,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                         <span class="badge-substantiv">${getTranslation('vrimmel_badge_substantiv')}</span>
                         <span class="detail-word-badge badge-${nw.gender}">${nw.gender === 'en' ? getTranslation('vrimmel_badge_en') : getTranslation('vrimmel_badge_et')}</span>
                     </div>
-                    <div class="detail-main-word">
-                        ${nw.icon} ${nw.word}
+                    <div class="detail-main-word" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span>${renderDsIcon(nw.iconName, '', { size: 24 })}</span>
+                        <span>${nw.word}</span>
                         ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                     </div>
                     <div class="detail-forms">${getTranslation('vrimmel_form_bestemt')} <strong>${nw.bestemt}</strong> | ${getTranslation('vrimmel_form_flertal')} <strong>${nw.flertal}</strong></div>
@@ -1222,10 +1263,10 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start;">
                     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                         <button class="listen-word-btn" id="listen-natur-word">
-                            <span>🔊</span> ${getTranslation('vrimmel_listen_btn')}
+                            <span>${renderDsIcon('volume', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_listen_btn')}</span>
                         </button>
                         <button class="mic-speak-btn" id="mic-natur-word">
-                            <span>🎤</span> ${getTranslation('vrimmel_mic_btn')}
+                            <span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>
                         </button>
                     </div>
                     <div class="speech-feedback-box" id="speech-feedback-natur"></div>
@@ -1262,7 +1303,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                         rec.onstart = () => {
                             isListening = true;
                             micBtn.classList.add('listening');
-                            micBtn.innerHTML = `<span>🔴</span> ${getTranslation('vrimmel_mic_listening')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_listening')}</span>`;
                             feedbackBox.className = 'speech-feedback-box listening';
                             feedbackBox.textContent = `${getTranslation('vrimmel_mic_prompt')} "${nw.clean}"...`;
                         };
@@ -1289,7 +1330,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                         rec.onerror = (err) => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>`;
                             if (err.error !== 'no-speech') {
                                 feedbackBox.className = 'speech-feedback-box incorrect';
                                 feedbackBox.textContent = `Mikrofon: ${err.error}`;
@@ -1299,7 +1340,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                         rec.onend = () => {
                             isListening = false;
                             micBtn.classList.remove('listening');
-                            micBtn.innerHTML = `<span>🎤</span> ${getTranslation('vrimmel_mic_btn')}`;
+                            micBtn.innerHTML = `<span>${renderDsIcon('mic', '', { size: 18 })}</span> <span>${getTranslation('vrimmel_mic_btn')}</span>`;
                         };
 
                         rec.start();
@@ -1331,8 +1372,11 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     sortHeader.className = 'sorting-header-row';
     sortHeader.innerHTML = `
         <div>
-            <h3 style="font-size: 1.3rem; margin: 0;">📦 ${getTranslation('sort_natur_title')}</h3>
-            <p style="color: #94a3b8; margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
+            <h3 style="font-size: 1.3rem; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('layers', '', { size: 20 })}</span>
+                <span>${stripLeadingEmoji(getTranslation('sort_natur_title'))}</span>
+            </h3>
+            <p style="color: var(--by-text-muted, #a7f3d0); margin: 0.2rem 0 0; font-size: 0.95rem;">${getTranslation('sort_instruction')}</p>
         </div>
         <div class="sort-progress-badge" id="natur-sort-progress">${getTranslation('sort_progress_text').replace('{n}', 0).replace('{total}', naturWords.length)}</div>
     `;
@@ -1420,7 +1464,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
     const resetBtn = document.createElement('button');
     resetBtn.className = 'reset-sort-btn';
-    resetBtn.innerHTML = getTranslation('sort_reset_btn');
+    resetBtn.innerHTML = `<span>${renderDsIcon('refresh', '', { size: 16 })}</span> <span>${stripLeadingEmoji(getTranslation('sort_reset_btn'))}</span>`;
     resetBtn.onclick = () => {
         naturPlacedCount = 0;
         selectedSortWord = null;
@@ -1445,7 +1489,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
     const naturMissions = [
         {
-            title: "Find 3 dele af kroppen 🫱🦶",
+            title: "Find 3 dele af kroppen",
             targetCount: 3,
             options: [
                 { text: "en hånd", correct: true },
@@ -1457,7 +1501,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting i naturen og landskabet 🌲🏖️",
+            title: "Find 3 ting i naturen og landskabet",
             targetCount: 3,
             options: [
                 { text: "en skov", correct: true },
@@ -1469,7 +1513,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ord om fest og ferie 🎉🎁",
+            title: "Find 3 ord om fest og ferie",
             targetCount: 3,
             options: [
                 { text: "en fest", correct: true },
@@ -1481,7 +1525,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ting til leg og underholdning ⚽🎲",
+            title: "Find 3 ting til leg og underholdning",
             targetCount: 3,
             options: [
                 { text: "en bold", correct: true },
@@ -1493,7 +1537,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ord om sanser og hovedet 👁️🧠",
+            title: "Find 3 ord om sanser og hovedet",
             targetCount: 3,
             options: [
                 { text: "et øje", correct: true },
@@ -1505,7 +1549,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 elementer i vejret og luften 🌬️💧",
+            title: "Find 3 elementer i vejret og luften",
             targetCount: 3,
             options: [
                 { text: "en luft", correct: true },
@@ -1517,7 +1561,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 levende væsner i naturen 🐦🌿",
+            title: "Find 3 levende væsner i naturen",
             targetCount: 3,
             options: [
                 { text: "en fugl", correct: true },
@@ -1529,7 +1573,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             ]
         },
         {
-            title: "Find 3 ord om kultur og fritid 🎵🎬",
+            title: "Find 3 ord om kultur og fritid",
             targetCount: 3,
             options: [
                 { text: "en musik", correct: true },
@@ -1554,9 +1598,12 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         const header = document.createElement('div');
         header.className = 'mission-header';
         header.innerHTML = `
-            <div class="mission-badge">🕵️ ${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${naturMissions.length}</div>
+            <div class="mission-badge" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                <span>${renderDsIcon('eye', '', { size: 14 })}</span>
+                <span>${getTranslation('tab_label_detektiv')} ${currMissionIdx + 1} / ${naturMissions.length}</span>
+            </div>
             <div style="font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 0.4rem;">${m.title}</div>
-            <div style="font-size: 0.95rem; color: #94a3b8;">${getTranslation('natur_detektiv_count_prompt')}</div>
+            <div style="font-size: 0.95rem; color: var(--by-text-muted, #a7f3d0);">${getTranslation('natur_detektiv_count_prompt')}</div>
         `;
         missionCard.appendChild(header);
 
@@ -1582,8 +1629,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
                     if (selectedCount === m.targetCount) {
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! ${getTranslation('natur_detektiv_complete')}
+                            <div style="color: #4ade80; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>Rigtigt svaret! ${getTranslation('natur_detektiv_complete')}</span>
                             </div>
                             <button class="mission-next-btn" id="next-natur-mission">
                                 ${currMissionIdx < naturMissions.length - 1 ? getTranslation('natur_detektiv_next') : getTranslation('natur_detektiv_restart')}
@@ -1595,8 +1643,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                         };
                     } else {
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                ✓ Rigtigt svaret! (${selectedCount} af ${m.targetCount})
+                            <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                                <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                <span>Rigtigt svaret! (${selectedCount} af ${m.targetCount})</span>
                             </div>
                         `;
                     }
@@ -1636,32 +1685,32 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvor har løberen ondt?",
                     options: [
-                        { text: "I foden 🦶", correct: true },
-                        { text: "I bogen 📖", correct: false },
-                        { text: "I bilen 🚗", correct: false }
+                        { text: "I foden", correct: true },
+                        { text: "I bogen", correct: false },
+                        { text: "I bilen", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad skete der?",
                     options: [
-                        { text: "En ferie 🏖️", correct: false },
-                        { text: "Et uheld på stien 💥", correct: true },
-                        { text: "En kage 🍰", correct: false }
+                        { text: "En ferie", correct: false },
+                        { text: "Et uheld på stien", correct: true },
+                        { text: "En kage", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad har løberen?",
                     options: [
-                        { text: "Et problem ⚠️", correct: true },
-                        { text: "En gave 🎁", correct: false },
-                        { text: "En bold ⚽", correct: false }
+                        { text: "Et problem", correct: true },
+                        { text: "En gave", correct: false },
+                        { text: "En bold", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvem hjælper ham?",
                     options: [
-                        { text: "En kat løber forbi 🐈", correct: false },
-                        { text: "En ven giver en hånd 💡", correct: true }
+                        { text: "En kat løber forbi", correct: false },
+                        { text: "En ven giver en hånd", correct: true }
                     ]
                 }
             ]
@@ -1673,33 +1722,33 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvordan er vejret?",
                     options: [
-                        { text: "Godt vejr og sol 🌤️", correct: true },
-                        { text: "Sne og frost ❄️", correct: false },
-                        { text: "Det er nat 🌙", correct: false }
+                        { text: "Godt vejr og sol", correct: true },
+                        { text: "Sne og frost", correct: false },
+                        { text: "Det er nat", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvordan er luften?",
                     options: [
-                        { text: "Luften er mørk 🌑", correct: false },
-                        { text: "Luften er frisk ude ved havet 🌊", correct: true },
-                        { text: "Luften er meget kold 🧊", correct: false }
+                        { text: "Luften er mørk", correct: false },
+                        { text: "Luften er frisk ude ved havet", correct: true },
+                        { text: "Luften er meget kold", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad lytter de til?",
                     options: [
-                        { text: "De lytter til musik 🎵", correct: true },
-                        { text: "De lytter til et tog 🚆", correct: false },
-                        { text: "De lytter til en bil 🚗", correct: false }
+                        { text: "De lytter til musik", correct: true },
+                        { text: "De lytter til et tog", correct: false },
+                        { text: "De lytter til en bil", correct: false }
                     ]
                 },
                 {
                     q: "4. Hvad finder pigen?",
                     options: [
-                        { text: "En computer 💻", correct: false },
-                        { text: "En smuk blomst 🌸", correct: true },
-                        { text: "En seng 🛏️", correct: false }
+                        { text: "En computer", correct: false },
+                        { text: "En smuk blomst", correct: true },
+                        { text: "En seng", correct: false }
                     ]
                 }
             ]
@@ -1711,25 +1760,25 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvor leger børnene?",
                     options: [
-                        { text: "På stranden 🏖️", correct: true },
-                        { text: "I et skab 🚪", correct: false },
-                        { text: "På et tag 🏠", correct: false }
+                        { text: "På stranden", correct: true },
+                        { text: "I et skab", correct: false },
+                        { text: "På et tag", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvordan er vandet?",
                     options: [
-                        { text: "Vandet er varmt som kaffe ☕", correct: false },
-                        { text: "Vandet er friskt 🌊", correct: true },
-                        { text: "Vandet er tørt 🏜️", correct: false }
+                        { text: "Vandet er varmt som kaffe", correct: false },
+                        { text: "Vandet er friskt", correct: true },
+                        { text: "Vandet er tørt", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad leger de med?",
                     options: [
-                        { text: "En blyant ✏️", correct: false },
-                        { text: "En bold ⚽", correct: true },
-                        { text: "En computer 💻", correct: false }
+                        { text: "En blyant", correct: false },
+                        { text: "En bold", correct: true },
+                        { text: "En computer", correct: false }
                     ]
                 }
             ]
@@ -1741,25 +1790,25 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad holder familien?",
                     options: [
-                        { text: "En fest 🎉", correct: true },
-                        { text: "En pause i sengen 🛏️", correct: false },
-                        { text: "Et møde på kontoret 💼", correct: false }
+                        { text: "En fest", correct: true },
+                        { text: "En pause i sengen", correct: false },
+                        { text: "Et møde på kontoret", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad åbner pigen?",
                     options: [
-                        { text: "Et vindue 🪟", correct: false },
-                        { text: "En gave 🎁", correct: true },
-                        { text: "En dør 🚪", correct: false }
+                        { text: "Et vindue", correct: false },
+                        { text: "En gave", correct: true },
+                        { text: "En dør", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør de sammen?",
                     options: [
-                        { text: "De sover 💤", correct: false },
-                        { text: "De spiller et spil 🎲", correct: true },
-                        { text: "De løber væk 🏃", correct: false }
+                        { text: "De sover", correct: false },
+                        { text: "De spiller et spil", correct: true },
+                        { text: "De løber væk", correct: false }
                     ]
                 }
             ]
@@ -1873,12 +1922,13 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         const isLastStory = currNaturStoryIdx === naturStories.length - 1;
         completeBox.innerHTML = `
-            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
-                🎉 Flot klaret! Du har gennemført historien.
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #4ade80;">
+                <span>${renderDsIcon('check', '', { size: 22 })}</span>
+                <span>Flot klaret! Du har gennemført historien.</span>
             </div>
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
-                <button class="story-opt-btn" id="btn-next-natur-story" style="background: #22c55e; color: #0f172a; font-weight: 800;">
-                    ${isLastStory ? 'Start forfra ↺' : 'Gå til næste historie ➔'}
+                <button class="story-opt-btn" id="btn-next-natur-story" style="background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <span>${isLastStory ? 'Start forfra' : 'Gå til næste historie'}</span> <span>➔</span>
                 </button>
             </div>
         `;
@@ -1904,98 +1954,98 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     const naturCategoryTasks = [
         {
             type: "find_overemne",
-            subwords: ["sol ☀️", "vind 💨", "luft 🍃"],
+            subwords: ["sol", "vind", "luft"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Vejret 🌤️", correct: true },
-                { text: "Møbler 🪑", correct: false },
-                { text: "Teknologi 💻", correct: false }
+                { text: "Vejret", correct: true },
+                { text: "Møbler", correct: false },
+                { text: "Teknologi", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en fod 🦶", "en hånd ✋", "et hoved 👤"],
+            subwords: ["en fod", "en hånd", "et hoved"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Kroppen 🦶", correct: true },
-                { text: "Transport 🚗", correct: false },
-                { text: "Mad 🍞", correct: false }
+                { text: "Kroppen", correct: true },
+                { text: "Transport", correct: false },
+                { text: "Mad", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Fritid og leg ⚽",
+            overemne: "Fritid og leg",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en bold ⚽", correct: true },
-                { text: "et spil 🎲", correct: true },
-                { text: "musik 🎵", correct: true },
-                { text: "en stol 🪑", correct: false },
-                { text: "en butik 🏪", correct: false },
-                { text: "et kontor 💼", correct: false }
+                { text: "en bold", correct: true },
+                { text: "et spil", correct: true },
+                { text: "musik", correct: true },
+                { text: "en stol", correct: false },
+                { text: "en butik", correct: false },
+                { text: "et kontor", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Naturen 🌲",
+            overemne: "Naturen",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "et træ 🌳", correct: true },
-                { text: "en blomst 🌸", correct: true },
-                { text: "en skov 🌲", correct: true },
-                { text: "en computer 💻", correct: false },
-                { text: "en seng 🛏️", correct: false },
-                { text: "penge 🪙", correct: false }
+                { text: "et træ", correct: true },
+                { text: "en blomst", correct: true },
+                { text: "en skov", correct: true },
+                { text: "en computer", correct: false },
+                { text: "en seng", correct: false },
+                { text: "penge", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en luft 🌬️", "et vejr 🌦️", "en regn 🌧️"],
+            subwords: ["en luft", "et vejr", "en regn"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Vejr og elementer 🌦️", correct: true },
-                { text: "Møbler 🪑", correct: false },
-                { text: "Tøj 👟", correct: false }
+                { text: "Vejr og elementer", correct: true },
+                { text: "Møbler", correct: false },
+                { text: "Tøj", correct: false }
             ]
         },
         {
             type: "find_overemne",
-            subwords: ["en film 🎬", "et spil 🎲", "en musik 🎵"],
+            subwords: ["en film", "et spil", "en musik"],
             question: "Hvilket overemne passer til disse underemner?",
             options: [
-                { text: "Underholdning 🎬", correct: true },
-                { text: "Kroppen 🦶", correct: false },
-                { text: "Mad 🍞", correct: false }
+                { text: "Underholdning", correct: true },
+                { text: "Kroppen", correct: false },
+                { text: "Mad", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Kroppen og sundhed 🫀",
+            overemne: "Kroppen og sundhed",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "et hjerte 🫀", correct: true },
-                { text: "et øje 👁️", correct: true },
-                { text: "en hånd 🖐️", correct: true },
-                { text: "en strand 🏖️", correct: false },
-                { text: "et vejr 🌦️", correct: false },
-                { text: "en bold ⚽", correct: false }
+                { text: "et hjerte", correct: true },
+                { text: "et øje", correct: true },
+                { text: "en hånd", correct: true },
+                { text: "en strand", correct: false },
+                { text: "et vejr", correct: false },
+                { text: "en bold", correct: false }
             ]
         },
         {
             type: "find_underemner",
-            overemne: "Ferie og udflugt 🏖️",
+            overemne: "Ferie og udflugt",
             targetCount: 3,
             question: "Vælg de 3 underemner, der passer til overemnet:",
             options: [
-                { text: "en strand 🏖️", correct: true },
-                { text: "en skov 🌲", correct: true },
-                { text: "en ferie ✈️", correct: true },
-                { text: "en bog 📖", correct: false },
-                { text: "et kontor 💼", correct: false },
-                { text: "en bil 🚗", correct: false }
+                { text: "en strand", correct: true },
+                { text: "en skov", correct: true },
+                { text: "en ferie", correct: true },
+                { text: "en bog", correct: false },
+                { text: "et kontor", correct: false },
+                { text: "en bil", correct: false }
             ]
         }
     ];
@@ -2009,16 +2059,18 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         if (currNaturCategoryIdx >= naturCategoryTasks.length) {
             categoryCard.innerHTML = `
-                <div style="font-size: 2.8rem; margin-bottom: 0.6rem;">🎉</div>
+                <div style="margin-bottom: 0.6rem; color: var(--by-primary, #22c55e); display: flex; justify-content: center;">
+                    ${renderDsIcon('trophy', '', { size: 48 })}
+                </div>
                 <h2 style="font-size: 1.8rem; color: #4ade80; margin-bottom: 0.6rem;">${getTranslation('top100_category_complete_title')}</h2>
-                <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.6rem;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; margin-bottom: 1.6rem;">
                     ${getTranslation('top100_category_complete_desc')}
                 </p>
                 <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
                     <button class="mission-next-btn" id="restart-natur-category-btn" style="background: #475569; color: white;">
                         ${getTranslation('top100_start_over_btn')}
                     </button>
-                    <button class="mission-next-btn" id="natur-category-next-tab-btn" style="background: #22c55e; color: #0f172a;">
+                    <button class="mission-next-btn" id="natur-category-next-tab-btn" style="background: var(--by-primary, #22c55e); color: #02220e; font-weight: 800;">
                         ${getTranslation('top100_goto_saetning_btn')}
                     </button>
                 </div>
@@ -2038,13 +2090,13 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
         const badge = document.createElement('div');
         badge.className = 'category-badge';
-        badge.textContent = `🏷️ ${getTranslation('top100_task_counter').replace('{current}', currNaturCategoryIdx + 1).replace('{total}', naturCategoryTasks.length)}`;
+        badge.innerHTML = `${renderDsIcon('tag', '', { size: 14 })} <span>${getTranslation('top100_task_counter').replace('{current}', currNaturCategoryIdx + 1).replace('{total}', naturCategoryTasks.length)}</span>`;
         categoryCard.appendChild(badge);
 
         if (task.type === 'find_overemne') {
             const promptTitle = document.createElement('h3');
             promptTitle.style.fontSize = '1.35rem';
-            promptTitle.style.color = '#94a3b8';
+            promptTitle.style.color = 'var(--by-text-muted, #a7f3d0)';
             promptTitle.style.margin = '0.3rem 0 0.8rem';
             promptTitle.textContent = getTranslation('top100_underemner_label');
             categoryCard.appendChild(promptTitle);
@@ -2082,9 +2134,11 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                     if (opt.correct) {
                         btn.classList.add('selected-correct');
                         grid.querySelectorAll('.category-opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                        const cleanOveremnePrefix = getTranslation("top100_correct_overemne_prefix").replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
                         feedbackEl.innerHTML = `
-                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ✓ ${getTranslation("top100_correct_overemne_prefix")} ${opt.text}
+                            <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                <span>${cleanOveremnePrefix} ${opt.text}</span>
                             </div>
                             <button class="mission-next-btn" id="next-category-btn">${getTranslation('top100_next_task_btn')}</button>
                         `;
@@ -2119,13 +2173,13 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
             const mainCategoryTitle = document.createElement('h2');
             mainCategoryTitle.style.fontSize = '1.8rem';
-            mainCategoryTitle.style.color = '#10b981';
+            mainCategoryTitle.style.color = '#38bdf8';
             mainCategoryTitle.style.margin = '0.3rem 0 0.8rem';
             mainCategoryTitle.textContent = task.overemne;
             categoryCard.appendChild(mainCategoryTitle);
 
             const qEl = document.createElement('p');
-            qEl.style.color = '#cbd5e1';
+            qEl.style.color = 'var(--by-text-muted, #a7f3d0)';
             qEl.style.fontSize = '1.05rem';
             qEl.style.marginBottom = '1.2rem';
             qEl.textContent = getTranslation('top100_q_find_underemner');
@@ -2150,9 +2204,11 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                         selectedCount++;
 
                         if (selectedCount === task.targetCount) {
+                            const cleanUnderemnerComplete = getTranslation('top100_correct_all_underemner').replace(/^[\s\p{Emoji}\uFE0F]+/u, '').trim();
                             feedbackEl.innerHTML = `
-                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                    🎉 ${getTranslation('top100_correct_all_underemner')}
+                                <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <span>${renderDsIcon('check', '', { size: 20 })}</span>
+                                    <span>${cleanUnderemnerComplete}</span>
                                 </div>
                                 <button class="mission-next-btn" id="next-category-btn">
                                     ${currNaturCategoryIdx < naturCategoryTasks.length - 1 ? getTranslation('top100_next_task_btn') : getTranslation('top100_see_result_btn')}
@@ -2164,8 +2220,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                             };
                         } else {
                             feedbackEl.innerHTML = `
-                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;">
-                                    ✓ Rigtigt svaret! (${selectedCount} af ${task.targetCount})
+                                <div style="color: #4ade80; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <span>${renderDsIcon('check', '', { size: 16 })}</span>
+                                    <span>Rigtigt svaret! (${selectedCount} af ${task.targetCount})</span>
                                 </div>
                             `;
                         }
@@ -2207,11 +2264,11 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
     const subTab1Btn = document.createElement('button');
     subTab1Btn.className = 'sb-sub-btn active';
-    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+    subTab1Btn.innerHTML = `<span>${renderDsIcon('edit', '', { size: 16 })}</span> <span>1. Udforsk & Byg selv</span>`;
 
     const subTab2Btn = document.createElement('button');
     subTab2Btn.className = 'sb-sub-btn';
-    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+    subTab2Btn.innerHTML = `<span>${renderDsIcon('puzzle', '', { size: 16 })}</span> <span>2. Opgave & Puslespil</span>`;
 
     sbSubNav.appendChild(subTab1Btn);
     sbSubNav.appendChild(subTab2Btn);
@@ -2249,7 +2306,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         freeBuilderContainer.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger i naturen og fritiden</h3>
-                <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                     Vælg et element fra hver række herunder. Prøv forskellige kombinationer og lyt til hvordan sætningen lyder på dansk!
                 </p>
             </div>
@@ -2269,7 +2326,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 <div class="sb-live-label">Din samlede sætning</div>
                 <div class="sb-live-sentence" id="free-live-sentence-natur"></div>
                 <button class="sb-listen-btn" id="free-listen-btn-natur">
-                    <span>🔊</span> Hør udtale
+                    <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør udtale</span>
                 </button>
             </div>
         `;
@@ -2281,7 +2338,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 role: 'Subjekt',
                 catClass: 'sb-cat-subjekt',
                 badgeClass: 'badge-cat-subjekt',
-                icon: '👤',
+                iconName: 'user',
                 options: ['Børnene', 'Familien', 'Manden', 'Pigen', 'Drengen', 'Vennerne', 'Gæsten', 'Fuglen']
             },
             {
@@ -2290,7 +2347,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 role: 'Verbum',
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
-                icon: '⚡',
+                iconName: 'zap',
                 options: ['spiller med', 'plukker', 'lytter til', 'åbner', 'kigger på', 'svømmer i', 'holder', 'spiller']
             },
             {
@@ -2299,7 +2356,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 role: 'Objekt (Ting)',
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
-                icon: '📦',
+                iconName: 'tag',
                 options: ['en bold', 'en blomst', 'god musik', 'en gave', 'et spil', 'det kolde vand', 'en ferie', 'en fugl']
             },
             {
@@ -2308,7 +2365,7 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 role: 'Sted (Rum)',
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
-                icon: '📍',
+                iconName: 'mapPin',
                 options: ['på stranden', 'i skoven', 'i parken', 'i haven', 'ved vandet', 'til festen', 'på græsset', 'i naturen']
             }
         ];
@@ -2338,8 +2395,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
 
             row.innerHTML = `
                 <div class="sb-category-header">
-                    <div class="sb-category-title">
-                        <span>${cat.icon}</span> ${cat.title}
+                    <div class="sb-category-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon(cat.iconName, '', { size: 18 })}</span>
+                        <span>${cat.title}</span>
                     </div>
                     <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                 </div>
@@ -2492,21 +2550,30 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         challengeContainer.appendChild(header);
 
         // Step 1: Context & Semantic Match
+        const lang = getLang();
+        const h0 = getGrammarSlotHint(0, lang);
+        const h1 = getGrammarSlotHint(1, lang);
+        const h2 = getGrammarSlotHint(2, lang);
+        const h3 = getGrammarSlotHint(3, lang);
+
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title">📍 <em>${task.context}</em></div>
+            <div class="sb-context-title" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span>${renderDsIcon('mapPin', '', { size: 16 })}</span>
+                <em>${task.context}</em>
+            </div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
-                    <span class="sb-chip-role">1. Hvem?</span>
+                    <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
                     <span>${task.subjekt}</span>
                 </div>
                 <div class="sb-context-chip verbum">
-                    <span class="sb-chip-role">2. Handling</span>
+                    <span class="sb-chip-role">${h1.danish} <span class="chip-trans">(${h1.translation})</span></span>
                     <span>${task.verbum}</span>
                 </div>
                 <div class="sb-context-chip sted">
-                    <span class="sb-chip-role">4. Hvor?</span>
+                    <span class="sb-chip-role">${h3.danish} <span class="chip-trans">(${h3.translation})</span></span>
                     <span>${task.sted}</span>
                 </div>
             </div>
@@ -2517,8 +2584,8 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         const qBox = document.createElement('div');
         qBox.className = 'sb-question-box';
         qBox.innerHTML = `
-            <div style="font-size: 0.85rem; color: #34d399; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
-                Spørgsmål 3: Genstand / Objekt (Kernen i opgaven)
+            <div style="font-size: 0.92rem; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.5px;">
+                Spørgsmål 3: ${h2.danish} <span style="opacity: 0.85; font-weight: 600; text-transform: none;">(${h2.translation})</span> – Genstand / Objekt
             </div>
             <div class="sb-question-text">${task.questionPrompt}</div>
         `;
@@ -2574,8 +2641,9 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         const lang = getLang();
 
         container.innerHTML = `
-            <div class="sb-puzzle-title">
-                <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+            <div class="sb-puzzle-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>${renderDsIcon('puzzle', '', { size: 20 })}</span>
+                <span>Trin 2: Puslespillet – Saml hele sætningen!</span>
             </div>
             <div class="sb-puzzle-desc">
                 Klik på brikkerne i den rigtige danske ordstilling: <strong>1. Hvem ➔ 2. Handling ➔ 3. Hvilken ting ➔ 4. Hvor</strong>.
@@ -2678,18 +2746,20 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                 speakDanish(fullSentence);
 
                 feedbackEl.innerHTML = `
-                    <div class="sb-feedback-msg success">
-                        🎉 Fantastisk! "<strong>${fullSentence}</strong>" ✓
+                    <div class="sb-feedback-msg success" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>${renderDsIcon('check', '', { size: 18 })}</span>
+                        <span>Fantastisk! "<strong>${fullSentence}</strong>"</span>
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
-                        💡 ${task.pedagogyNote}
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                        <span>${renderDsIcon('lightbulb', '', { size: 16 })}</span>
+                        <span>${task.pedagogyNote}</span>
                     </div>
                     <div class="sb-action-row">
                         <button class="sb-listen-btn" id="natur-listen-full">
-                            <span>🔊</span> Hør sætningen igen
+                            <span>${renderDsIcon('volume', '', { size: 16 })}</span> <span>Hør sætningen igen</span>
                         </button>
                         <button class="sb-action-btn" id="natur-next-btn">
-                            ${currentNaturChallengeIdx < naturChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra 🔄'}
+                            ${currentNaturChallengeIdx < naturChallengeTasks.length - 1 ? 'Næste opgave ➔' : 'Start forfra ➔'}
                         </button>
                     </div>
                 `;
@@ -2704,11 +2774,11 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
                     <div class="sb-feedback-msg error">
                         ✗ Rækkefølgen er ikke helt rigtig.
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.6rem;">
+                    <div style="color: var(--by-text-muted, #a7f3d0); font-size: 0.95rem; margin-bottom: 0.6rem;">
                         Husk rækkefølgen på dansk: 1. Hvem (Subjekt) ➔ 2. Handling (Verbum) ➔ 3. Hvilken ting (Objekt) ➔ 4. Hvor (Sted).
                     </div>
                     <button class="sb-action-btn" id="natur-retry-btn" style="background: #475569;">
-                        Nulstil brikker 🔄
+                        Nulstil brikker
                     </button>
                 `;
 

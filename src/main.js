@@ -613,5 +613,5 @@ if ('caches' in window) {
   });
 }
 
-// Cache buster Fri Oct 16 23:06:00 CEST 2026
-console.log('App version: Fri Oct 16 23:06:00 CEST 2026');
+// Cache buster Wed Nov 4 15:06:00 CET 2026
+console.log('App version: Wed Nov 4 15:06:00 CET 2026 - Safirblaa Adverbier');

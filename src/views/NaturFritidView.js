@@ -3,6 +3,12 @@ import { naturWordTranslations } from '../utils/top100_translations.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import {
+    getSubstantivInstruction,
+    getSubstantivCategoryQuestion,
+    getSubstantivContextTranslation,
+    getSubstantivQuestionPromptTranslation
+} from '../utils/substantiv_saetningsbygger_translations.js';
 
 function stripLeadingEmoji(str) {
     if (!str) return '';
@@ -2303,12 +2309,19 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
     // --- SUB-TAB 1: DEN FRIE SÆTNINGSBYGGER (UDFORSK)
     // ========================================================
     function setupFreeBuilder() {
+        const lang = getLang();
+        const instructionTrans = getSubstantivInstruction(lang);
+
         freeBuilderContainer.innerHTML = `
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger i naturen og fritiden</h3>
                 <p style="color: var(--by-text-muted, #a7f3d0); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                     Vælg et element fra hver række herunder. Prøv forskellige kombinationer og lyt til hvordan sætningen lyder på dansk!
                 </p>
+                ${lang !== 'da' && instructionTrans ? `
+                <p style="color: #e2e8f0; font-size: 0.95rem; opacity: 0.88; max-width: 650px; margin: 0.35rem auto 0; font-style: italic;">
+                    ${instructionTrans}
+                </p>` : ''}
             </div>
 
             <!-- Grammatisk farveforklaring -->
@@ -2392,12 +2405,14 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         freeCategories.forEach((cat, catIdx) => {
             const row = document.createElement('div');
             row.className = `sb-category-row ${cat.catClass}`;
+            const catTrans = lang !== 'da' ? getSubstantivCategoryQuestion(cat.title, lang) : '';
 
             row.innerHTML = `
                 <div class="sb-category-header">
-                    <div class="sb-category-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div class="sb-category-title" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                         <span>${renderDsIcon(cat.iconName, '', { size: 18 })}</span>
                         <span>${cat.title}</span>
+                        ${catTrans ? `<span class="sb-cat-trans" style="font-size: 0.88rem; opacity: 0.85; font-weight: normal; color: #a7f3d0;">(${catTrans})</span>` : ''}
                     </div>
                     <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                 </div>
@@ -2555,13 +2570,18 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
         const h1 = getGrammarSlotHint(1, lang);
         const h2 = getGrammarSlotHint(2, lang);
         const h3 = getGrammarSlotHint(3, lang);
+        const contextTrans = lang !== 'da' ? getSubstantivContextTranslation(task.context, lang) : '';
+        const qTrans = lang !== 'da' ? getSubstantivQuestionPromptTranslation(task.questionPrompt, lang) : '';
 
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                <span>${renderDsIcon('mapPin', '', { size: 16 })}</span>
-                <em>${task.context}</em>
+            <div class="sb-context-title" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; text-align: center;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span>${renderDsIcon('mapPin', '', { size: 16 })}</span>
+                    <em>${task.context}</em>
+                </div>
+                ${contextTrans ? `<div class="sb-context-trans" style="font-size: 0.92rem; opacity: 0.9; color: #a7f3d0; font-style: italic;">(${contextTrans})</div>` : ''}
             </div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
@@ -2587,7 +2607,10 @@ export function renderNaturFritidView(container, navigateFn, extraData = {}) {
             <div style="font-size: 0.92rem; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.5px;">
                 Spørgsmål 3: ${h2.danish} <span style="opacity: 0.85; font-weight: 600; text-transform: none;">(${h2.translation})</span> – Genstand / Objekt
             </div>
-            <div class="sb-question-text">${task.questionPrompt}</div>
+            <div class="sb-question-text">
+                ${task.questionPrompt}
+                ${qTrans ? `<div style="font-size: 0.92rem; opacity: 0.88; font-weight: normal; margin-top: 0.25rem; color: #bae6fd;">(${qTrans})</div>` : ''}
+            </div>
         `;
         challengeContainer.appendChild(qBox);
 

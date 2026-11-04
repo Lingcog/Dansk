@@ -1,6 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierGradView - Felt 4: Grad & Intensitet (Hvor meget? Hvor kraftigt?)
@@ -37,6 +43,9 @@ import { renderDsIcon } from '../utils/designSystemIcons.js';
 export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-grad-view';
 
@@ -50,6 +59,40 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -474,7 +517,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 "meaning": "Høj intensitet (positiv eller neutral)",
                 "sentence": "Han er meget glad.",
                 "contextSentence": "Det er sommer, og han er meget glad for sin store is.",
-                "ruleHint": "⚠️ VIGTIGT: \"Meget\" er neutralt eller positivt. Hvis der opstår et problem, bruger vi \"for\"!",
+                "ruleHint": "OBS: VIGTIGT: \"Meget\" er neutralt eller positivt. Hvis der opstår et problem, bruger vi \"for\"!",
                 "levelPercent": 85,
                 "translations": {
                         "en": {
@@ -794,7 +837,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 "meaning": "Over grænsen / skaber et problem",
                 "sentence": "Kaffen er for varm.",
                 "contextSentence": "Han brænder tungen, fordi kaffen er for varm.",
-                "ruleHint": "⚠️ NØGLEREGEL: \"For\" betyder at en grænse er overskredet med negativ følge (kan ikke drikkes).",
+                "ruleHint": "OBS: NØGLEREGEL: \"For\" betyder at en grænse er overskredet med negativ følge (kan ikke drikkes).",
                 "levelPercent": 110,
                 "translations": {
                         "en": {
@@ -900,9 +943,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(168, 85, 247, 0.15);
-            border: 1px solid #c084fc;
-            color: #c084fc;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1.2rem;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -915,12 +958,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             font-size: 2.6rem;
             font-weight: 900;
             margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, #e9d5ff, #c084fc, #9333ea);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
         }
         .grad-hero p {
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 1.15rem;
             max-width: 780px;
             margin: 0 auto 1.5rem;
@@ -929,13 +974,13 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         /* Golden Didactic Rule Banner */
         .golden-rule-banner {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
-            border: 2px solid #a855f7;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 1.3rem 2rem;
             max-width: 860px;
             margin: 0 auto 2.5rem;
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             display: flex;
             align-items: center;
             gap: 1.5rem;
@@ -943,15 +988,16 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .rule-icon {
             font-size: 2.6rem;
             flex-shrink: 0;
+            color: var(--adv-border-focus, #93C5FD);
         }
         .rule-content h4 {
-            color: #e9d5ff;
+            color: #FFFFFF;
             font-size: 1.15rem;
             font-weight: 800;
             margin-bottom: 0.3rem;
         }
         .rule-content p {
-            color: #cbd5e1;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.98rem;
             line-height: 1.5;
             margin: 0;
@@ -986,15 +1032,16 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.75rem;
             justify-content: center;
             margin-bottom: 2.2rem;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface, #0A192F);
             padding: 0.6rem;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
         }
         .adv-tab-btn {
             background: transparent;
-            color: #94a3b8;
-            border: none;
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid transparent;
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -1006,13 +1053,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .adv-tab-btn:hover {
-            color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
+            color: #FFFFFF;
+            background: var(--adv-surface-hover, #112240);
         }
         .adv-tab-btn.active {
-            background: #9333ea;
-            color: white;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            background: var(--adv-primary, #3B82F6);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
 
         /* Tab 1: Vrimmel Layout */
@@ -1022,19 +1070,19 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
 
         .vrimmel-stage-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .vrimmel-controls-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0.8rem 1.2rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adv-surface-input, #050E1A);
+            border-bottom: 1.5px solid var(--adv-border, #1E3A66);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
@@ -1044,9 +1092,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: none;
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.4rem 0.85rem;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -1055,13 +1103,15 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .filter-btn.active {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
+            box-shadow: 0 2px 10px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .pure-toggle-btn {
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.4rem 0.85rem;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -1073,9 +1123,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .pure-toggle-btn.active {
-            background: #c084fc;
-            color: #0f172a;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
+            color: #FFFFFF;
             font-weight: 800;
+            box-shadow: 0 2px 10px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
 
         .vrimmel-stage {
@@ -1093,15 +1145,15 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             user-select: none;
         }
 
-        /* Hotspot Pins */
+        /* Hotspot Pins (Pegefelter i Safirblå) */
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            background: #9333ea;
-            border: 3px solid #ffffff;
+            background: #1D4ED8;
+            border: 2.5px solid #ffffff;
             color: white;
             font-weight: 900;
             font-size: 0.8rem;
@@ -1109,20 +1161,21 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(168, 85, 247, 0.7);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(59, 130, 246, 0.7);
             transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
         .hotspot-pin:hover {
             transform: translate(-50%, -50%) scale(1.3);
-            background: #c084fc;
-            box-shadow: 0 6px 20px rgba(192, 132, 252, 0.9);
+            background: #2563EB;
+            box-shadow: 0 6px 20px rgba(96, 165, 250, 0.9);
             z-index: 20;
         }
         .hotspot-pin.active {
-            background: #ec4899;
+            background: #3B82F6;
             transform: translate(-50%, -50%) scale(1.4);
-            box-shadow: 0 0 25px rgba(236, 72, 153, 0.95);
+            border-color: #BAE6FD;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.95);
             z-index: 30;
         }
         .hotspot-label {
@@ -1130,25 +1183,25 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             top: 105%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.9);
-            color: white;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-border-focus, #93C5FD);
             font-size: 0.72rem;
             font-weight: 800;
             padding: 0.15rem 0.5rem;
             border-radius: 6px;
             white-space: nowrap;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--adv-border-focus, #93C5FD);
             pointer-events: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
 
-        /* Inspector Card (2 columns placed cleanly below stage) */
+        /* Inspector Card */
         .vrimmel-inspector {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(168, 85, 247, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(168, 85, 247, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             display: grid;
             grid-template-columns: 1.15fr 1fr;
             gap: 2rem;
@@ -1158,8 +1211,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .vrimmel-inspector.updated {
             animation: inspectorPulse 0.4s ease-out;
-            border-color: #c084fc;
-            box-shadow: 0 0 35px rgba(168, 85, 247, 0.45), 0 10px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 0 35px var(--adv-glow, rgba(59, 130, 246, 0.45)), 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         @keyframes inspectorPulse {
             0% { transform: translateY(6px) scale(0.99); }
@@ -1195,9 +1248,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .inspector-badge {
-            background: rgba(168, 85, 247, 0.2);
-            border: 1px solid #c084fc;
-            color: #c084fc;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.35rem 0.85rem;
             border-radius: 12px;
             font-size: 0.85rem;
@@ -1222,9 +1275,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.7rem;
         }
         .inspector-audio-btn {
-            background: #334155;
+            background: var(--adv-surface-input, #050E1A);
             color: #cbd5e1;
-            border: none;
+            border: 1px solid var(--adv-border, #1E3A66);
             width: 42px;
             height: 42px;
             border-radius: 50%;
@@ -1236,24 +1289,24 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             font-size: 1.2rem;
         }
         .inspector-audio-btn:hover {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             transform: scale(1.1);
         }
         .inspector-trans-box {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(15, 23, 42, 0.85));
-            border: 1.5px solid #a855f7;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 0.9rem 1.3rem;
             display: flex;
             flex-direction: column;
             gap: 0.35rem;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
         }
         .trans-badge-label {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #c084fc;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             display: flex;
@@ -1266,14 +1319,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             color: #f8fafc;
         }
         .inspector-scene-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .scene-heading {
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             margin-bottom: 0.4rem;
             text-transform: uppercase;
@@ -1285,10 +1338,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             margin: 0;
         }
         .inspector-sentence-card {
-            background: rgba(168, 85, 247, 0.12);
-            border: 1.5px solid rgba(168, 85, 247, 0.35);
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.1rem 1.3rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .sentence-quote-text {
             font-size: 1.25rem;
@@ -1305,7 +1359,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             line-height: 1.4;
         }
         .inspector-speak-btn {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.5rem 1rem;
@@ -1317,16 +1371,17 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
+            box-shadow: 0 2px 8px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .inspector-speak-btn:hover {
-            background: #a855f7;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: translateY(-2px);
         }
         .grad-meter-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .meter-label-row {
             display: flex;
@@ -1349,7 +1404,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             height: 100%;
             border-radius: 6px;
             transition: width 0.4s ease;
-            background: linear-gradient(90deg, #38bdf8, #a855f7, #ef4444);
+            background: linear-gradient(90deg, #38bdf8, #3B82F6, #1D4ED8);
         }
         .inspector-actions {
             display: flex;
@@ -1358,9 +1413,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .inspector-btn-action {
             flex: 1;
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: none;
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.85rem;
             border-radius: 12px;
             font-weight: 700;
@@ -1373,15 +1428,16 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .inspector-btn-action:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
         }
 
         /* Tab 2: Aha-værkstedet (Intensitetsskalaen & Meget vs. For) */
         .vaerksted-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 950px;
             margin: 0 auto;
         }
@@ -1393,9 +1449,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .vaerksted-subtab-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: 2px solid transparent;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.6rem;
             border-radius: 14px;
             font-size: 1.05rem;
@@ -1404,17 +1460,18 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .vaerksted-subtab-btn.active {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: #a855f7;
-            color: #c084fc;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
 
         /* Termometer Skala Simulator */
         .termometer-lab-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 18px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
             text-align: center;
         }
@@ -1429,21 +1486,21 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             padding: 0.8rem 1.2rem;
             border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .ladder-row:hover {
             transform: scale(1.02);
-            border-color: #c084fc;
+            border-color: var(--adv-border-focus, #93C5FD);
         }
         .ladder-row.selected {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: #a855f7;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--adv-primary, #3B82F6);
+            box-shadow: 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .ladder-pct {
             font-size: 1rem;
@@ -1454,7 +1511,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .ladder-word {
             font-size: 1.15rem;
             font-weight: 800;
-            color: #e9d5ff;
+            color: #FFFFFF;
         }
         .ladder-example {
             font-size: 0.95rem;
@@ -1473,7 +1530,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             .contrast-showcase-grid { grid-template-columns: 1fr; }
         }
         .contrast-box {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.5rem;
             border: 2px solid;
@@ -1509,27 +1566,27 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         /* Tab 3: Grads-Detektiven */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 850px;
             margin: 0 auto;
         }
         .detektiv-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .detektiv-context-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(168, 85, 247, 0.2);
-            border: 1px solid #c084fc;
-            color: #c084fc;
+            background: var(--adv-surface, #0A192F);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.35rem 0.9rem;
             border-radius: 10px;
             font-size: 0.85rem;
@@ -1548,10 +1605,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             font-size: 1.45rem;
             font-weight: 800;
             color: white;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.2rem;
             border-radius: 14px;
-            border-left: 5px solid #a855f7;
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-left: 5px solid var(--adv-primary, #3B82F6);
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -1565,9 +1623,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             .detektiv-options-grid { grid-template-columns: 1fr; }
         }
         .detektiv-opt-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #f8fafc;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 1.1rem 1.4rem;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -1580,8 +1638,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             justify-content: space-between;
         }
         .detektiv-opt-btn:hover {
-            border-color: #c084fc;
-            background: #334155;
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: var(--adv-surface-hover, #112240);
             transform: translateY(-2px);
         }
         .detektiv-opt-btn.correct {
@@ -1615,7 +1673,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: block;
         }
         .detektiv-next-btn {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.9rem 2.2rem;
@@ -1626,18 +1684,19 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: block;
             margin-left: auto;
             transition: all 0.2s;
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .detektiv-next-btn:hover {
-            background: #7e22ce;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: translateY(-2px);
         }
 
-        /* Tab 4: Sætningsbyggeren (Faste grammatiske farver: Grøn, Rød, Lilla, Blå) */
+        /* Tab 4: Sætningsbyggeren (Faste grammatiske farver: Grøn, Rød, Safirblå, Cyan) */
         .saetning-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -1648,9 +1707,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             margin-bottom: 2rem;
         }
         .sb-sub-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: 2px solid transparent;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.6rem;
             border-radius: 14px;
             font-size: 1.05rem;
@@ -1662,9 +1721,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-sub-btn.active {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: #a855f7;
-            color: #c084fc;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
 
         /* Grammar Legend Bar */
@@ -1675,9 +1735,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 1.2rem;
             margin-bottom: 1.8rem;
             padding: 0.7rem 1.2rem;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             font-size: 0.88rem;
         }
         .grammar-legend-item {
@@ -1695,7 +1755,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .chip-legend-subjekt { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
         .chip-legend-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
-        .chip-legend-grad { background: #a855f7; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6); }
+        .chip-legend-grad { background: var(--adv-primary, #3B82F6); box-shadow: 0 0 6px var(--adv-glow, rgba(59, 130, 246, 0.6)); }
         .chip-legend-rest { background: #0ea5e9; box-shadow: 0 0 6px rgba(14, 165, 233, 0.6); }
 
         /* Sektion 1 Category Rows */
@@ -1706,15 +1766,15 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             margin-bottom: 2.5rem;
         }
         .category-row-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.4rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-left: 4px solid #64748b;
         }
         .category-row-card.cat-row-subjekt { border-left-color: #22c55e; }
         .category-row-card.cat-row-verbum { border-left-color: #ef4444; }
-        .category-row-card.cat-row-grad { border-left-color: #a855f7; }
+        .category-row-card.cat-row-grad { border-left-color: var(--adv-primary, #3B82F6); }
         .category-row-card.cat-row-rest { border-left-color: #0ea5e9; }
 
         .category-row-header {
@@ -1732,7 +1792,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .cat-title-subjekt { color: #4ade80; }
         .cat-title-verbum { color: #f87171; }
-        .cat-title-grad { color: #c084fc; }
+        .cat-title-grad { color: var(--adv-border-focus, #93C5FD); }
         .cat-title-rest { color: #38bdf8; }
 
         .cat-grammar-role {
@@ -1745,7 +1805,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .cat-grammar-role.badge-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
         .cat-grammar-role.badge-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .cat-grammar-role.badge-grad { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .cat-grammar-role.badge-grad { background: rgba(59, 130, 246, 0.15); color: var(--adv-border-focus, #93C5FD); border: 1px solid var(--adv-border, #1E3A66); }
         .cat-grammar-role.badge-rest { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
 
         .category-options-flex {
@@ -1754,9 +1814,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.6rem;
         }
         .cat-option-chip {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #e2e8f0;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.6rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -1769,7 +1829,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .cat-option-chip.chip-subjekt:hover { border-color: #22c55e; }
         .cat-option-chip.chip-verbum:hover { border-color: #ef4444; }
-        .cat-option-chip.chip-grad:hover { border-color: #a855f7; }
+        .cat-option-chip.chip-grad:hover { border-color: var(--adv-primary, #3B82F6); }
         .cat-option-chip.chip-rest:hover { border-color: #0ea5e9; }
 
         .cat-option-chip.chip-subjekt.selected {
@@ -1785,10 +1845,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
         }
         .cat-option-chip.chip-grad.selected {
-            background: rgba(168, 85, 247, 0.25) !important;
-            color: #e9d5ff !important;
-            border-color: #a855f7 !important;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4) !important;
+            background: var(--adv-primary, #3B82F6) !important;
+            color: #FFFFFF !important;
+            border-color: var(--adv-border-focus, #93C5FD) !important;
+            box-shadow: 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.5)) !important;
         }
         .cat-option-chip.chip-rest.selected {
             background: rgba(14, 165, 233, 0.25) !important;
@@ -1799,17 +1859,17 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         /* Live Sentence Showcase */
         .live-sentence-showcase {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .live-sentence-label {
             font-size: 0.85rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.8rem;
@@ -1828,7 +1888,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
         .live-word-subjekt { color: #4ade80; text-decoration: underline 3px #22c55e; }
         .live-word-verbum { color: #f87171; text-decoration: underline 3px #ef4444; }
-        .live-word-grad { color: #c084fc; text-decoration: underline 3px #a855f7; }
+        .live-word-grad { color: var(--adv-border-focus, #93C5FD); text-decoration: underline 3px var(--adv-primary, #3B82F6); }
         .live-word-rest { color: #38bdf8; text-decoration: underline 3px #0ea5e9; }
 
         .live-sentence-actions {
@@ -1837,7 +1897,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 1rem;
         }
         .live-audio-btn {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.7rem 1.6rem;
@@ -1849,9 +1909,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            box-shadow: 0 4px 12px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .live-audio-btn:hover {
-            background: #7e22ce;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: scale(1.04);
         }
 
@@ -1873,8 +1934,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: #334155;
-            color: #cbd5e1;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1882,32 +1943,32 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s;
-            border: 2px solid transparent;
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .sb-task-pill:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
             transform: scale(1.08);
         }
         .sb-task-pill.active {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border-color: #c084fc;
-            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 12px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .sb-task-pill.done {
             border-color: #22c55e;
             color: #86efac;
         }
         .sb-context-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.3rem 1.5rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .sb-context-title {
             font-size: 1.1rem;
-            color: #e9d5ff;
+            color: #FFFFFF;
             margin-bottom: 1rem;
             line-height: 1.5;
         }
@@ -1917,7 +1978,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.8rem;
         }
         .sb-context-chip {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-size: 0.9rem;
@@ -1925,23 +1986,23 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             display: inline-flex;
             gap: 0.5rem;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .sb-context-chip.subjekt { border-left: 3px solid #22c55e; color: #4ade80; }
         .sb-context-chip.verbum { border-left: 3px solid #ef4444; color: #f87171; }
-        .sb-context-chip.grad { border-left: 3px solid #a855f7; color: #c084fc; }
+        .sb-context-chip.grad { border-left: 3px solid var(--adv-primary, #3B82F6); color: var(--adv-border-focus, #93C5FD); }
         .sb-context-chip.rest { border-left: 3px solid #0ea5e9; color: #38bdf8; }
         .sb-context-chip.target-placeholder {
-            background: rgba(168, 85, 247, 0.18) !important;
-            border: 2px dashed #a855f7 !important;
-            border-left: 4px solid #a855f7 !important;
-            color: #c084fc !important;
-            box-shadow: 0 0 16px rgba(168, 85, 247, 0.35) !important;
-            animation: pulse-purple-slot 2s infinite ease-in-out;
+            background: rgba(59, 130, 246, 0.18) !important;
+            border: 2px dashed var(--adv-primary, #3B82F6) !important;
+            border-left: 4px solid var(--adv-primary, #3B82F6) !important;
+            color: var(--adv-border-focus, #93C5FD) !important;
+            box-shadow: 0 0 16px var(--adv-glow, rgba(59, 130, 246, 0.35)) !important;
+            animation: pulse-blue-slot 2s infinite ease-in-out;
         }
-        @keyframes pulse-purple-slot {
-            0%, 100% { border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 0 10px rgba(168, 85, 247, 0.2); }
-            50% { border-color: #c084fc; box-shadow: 0 0 22px rgba(168, 85, 247, 0.55); }
+        @keyframes pulse-blue-slot {
+            0%, 100% { border-color: rgba(59, 130, 246, 0.5); box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
+            50% { border-color: var(--adv-border-focus, #93C5FD); box-shadow: 0 0 22px rgba(59, 130, 246, 0.55); }
         }
         .sb-context-chip.target-placeholder.chip-filled {
             background: rgba(34, 197, 94, 0.2) !important;
@@ -1959,8 +2020,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         }
 
         .sb-target-sentence-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            border: 2px solid rgba(168, 85, 247, 0.45);
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.1rem 1.4rem;
             margin: 0.9rem 0 1.2rem 0;
@@ -1970,7 +2031,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .sb-target-sentence-label {
             font-size: 0.82rem;
             font-weight: 800;
-            color: #c084fc;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.5rem;
@@ -1995,14 +2056,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             justify-content: center;
             min-width: 110px;
             padding: 0.2rem 1rem;
-            border: 2px dashed #a855f7;
-            background: rgba(168, 85, 247, 0.16);
+            border: 2px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.16);
             border-radius: 8px;
-            color: #c084fc;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             letter-spacing: 2px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 14px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 14px var(--adv-glow, rgba(59, 130, 246, 0.3));
         }
         .sb-sentence-blank.filled {
             border: 2px solid #22c55e;
@@ -2013,8 +2074,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             transform: scale(1.04);
         }
         .sb-question-box {
-            background: rgba(168, 85, 247, 0.1);
-            border: 1.5px solid #a855f7;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
@@ -2031,9 +2092,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             margin-bottom: 2rem;
         }
         .sb-option-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 1rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -2043,8 +2104,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .sb-option-btn:hover {
-            background: #475569;
-            border-color: #a855f7;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-2px);
         }
         .sb-option-btn.correct {
@@ -2059,17 +2120,17 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         /* Puzzle Section */
         .sb-puzzle-section {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 18px;
             padding: 2rem;
-            border: 2px solid #a855f7;
+            border: 2px solid var(--adv-border, #1E3A66);
             margin-top: 1.5rem;
             animation: fadeIn 0.35s ease;
         }
         .sb-puzzle-title {
             font-size: 1.35rem;
             font-weight: 800;
-            color: #c084fc;
+            color: var(--adv-border-focus, #93C5FD);
             margin-bottom: 0.4rem;
             display: flex;
             align-items: center;
@@ -2084,8 +2145,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         /* Architecture Flow Diagram */
         .sb-structure-diagram {
-            background: #1e293b;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 16px;
             padding: 1.4rem;
             margin-bottom: 1.8rem;
@@ -2099,9 +2160,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.8rem;
         }
         .structure-diagram-badge {
-            background: rgba(168, 85, 247, 0.2);
-            border: 1.5px solid #a855f7;
-            color: #c084fc;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-weight: 800;
@@ -2123,26 +2184,26 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .flow-step {
             flex: 1;
             min-width: 130px;
-            background: #0f172a;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 0.9rem 0.5rem;
             text-align: center;
             position: relative;
         }
         .flow-step.active-target {
-            border: 2.5px solid #a855f7;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(15, 23, 42, 0.9));
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            border: 2.5px solid var(--adv-primary, #3B82F6);
+            background: var(--adv-surface, #0A192F);
+            box-shadow: 0 0 20px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .flow-step.flow-subjekt { border-color: rgba(34, 197, 94, 0.4); }
         .flow-step.flow-subjekt .flow-num { color: #4ade80; }
         .flow-step.flow-verbum { border-color: rgba(239, 68, 68, 0.4); }
         .flow-step.flow-verbum .flow-num { color: #f87171; }
         .flow-step.flow-grad,
-        .flow-step.flow-adverbium { border-color: rgba(168, 85, 247, 0.6); }
+        .flow-step.flow-adverbium { border-color: var(--adv-border-focus, #93C5FD); }
         .flow-step.flow-grad .flow-num,
-        .flow-step.flow-adverbium .flow-num { color: #c084fc; }
+        .flow-step.flow-adverbium .flow-num { color: var(--adv-border-focus, #93C5FD); }
         .flow-step.flow-rest { border-color: rgba(14, 165, 233, 0.4); }
         .flow-step.flow-rest .flow-num { color: #38bdf8; }
 
@@ -2152,14 +2213,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             color: #94a3b8;
             margin-bottom: 0.25rem;
         }
-        .flow-step.active-target .flow-num { color: #c084fc; }
+        .flow-step.active-target .flow-num { color: var(--adv-border-focus, #93C5FD); }
         .flow-title {
             font-size: 0.95rem;
             font-weight: 800;
             color: white;
         }
         .flow-target-tag {
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             font-size: 0.7rem;
             font-weight: 800;
@@ -2167,7 +2228,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             border-radius: 6px;
             margin-top: 0.4rem;
             display: inline-block;
-            box-shadow: 0 2px 8px rgba(168, 85, 247, 0.5);
+            box-shadow: 0 2px 8px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .flow-arrow {
             font-size: 1.3rem;
@@ -2186,8 +2247,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #1e293b;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px dashed var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
             min-height: 90px;
@@ -2201,14 +2262,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             cursor: pointer;
         }
         .sb-puzzle-slot.target-adverbium-slot {
-            border: 2.5px dashed #a855f7;
-            background: rgba(168, 85, 247, 0.08);
-            box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.2);
+            border: 2.5px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.08);
+            box-shadow: inset 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.2));
         }
         .sb-puzzle-slot.filled {
             border-style: solid;
             border-color: #38bdf8;
-            background: #0f172a;
+            background: var(--adv-surface, #0A192F);
         }
         .sb-puzzle-slot.slot-type-subjekt.filled {
             border-color: #22c55e !important;
@@ -2223,9 +2284,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .sb-puzzle-slot.slot-type-grad.filled,
         .sb-puzzle-slot.slot-type-adverbium.filled,
         .sb-puzzle-slot.target-adverbium-slot.filled {
-            border-color: #a855f7 !important;
-            color: #e9d5ff !important;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), #0f172a) !important;
+            border-color: var(--adv-primary, #3B82F6) !important;
+            color: #FFFFFF !important;
+            background: var(--adv-surface, #0A192F) !important;
+            box-shadow: 0 0 16px var(--adv-glow, rgba(59, 130, 246, 0.4)) !important;
         }
         .sb-puzzle-slot.slot-type-rest.filled {
             border-color: #0ea5e9 !important;
@@ -2236,7 +2298,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .slot-target-callout {
             position: absolute;
             top: -12px;
-            background: #9333ea;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             font-size: 0.72rem;
             font-weight: 800;
@@ -2265,9 +2327,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.8rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.9rem 1.6rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -2279,14 +2341,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-puzzle-chip:hover {
-            background: #475569;
-            border-color: #c084fc;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-border-focus, #93C5FD);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.chip-is-adv {
-            border-color: #a855f7;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), #334155);
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+            border-color: var(--adv-primary, #3B82F6);
+            background: var(--adv-surface, #0A192F);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .sb-puzzle-chip.used {
             opacity: 0.25;
@@ -2295,7 +2357,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .reset-slots-btn {
             background: transparent;
             color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.55rem 1.2rem;
             border-radius: 10px;
             font-size: 0.9rem;
@@ -2310,18 +2372,18 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         /* Tab 5: Kontekst Testen */
         .kontekst-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 850px;
             margin: 0 auto;
         }
         .cloze-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .cloze-sentence-display {
@@ -2334,8 +2396,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .cloze-blank {
             display: inline-block;
             min-width: 130px;
-            border-bottom: 3px solid #a855f7;
-            color: #c084fc;
+            border-bottom: 3px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             padding: 0 0.5rem;
             text-align: center;
@@ -2347,9 +2409,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .cloze-option-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #f8fafc;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 1.1rem;
             border-radius: 12px;
             font-size: 1.1rem;
@@ -2359,8 +2421,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .cloze-option-btn:hover {
-            border-color: #c084fc;
-            background: #334155;
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: var(--adv-surface-hover, #112240);
             transform: translateY(-2px);
         }
         .cloze-option-btn.correct {
@@ -2373,13 +2435,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             border-color: #ef4444 !important;
         }
         .cloze-didactic-feedback {
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 12px;
             padding: 1.2rem;
             font-size: 1.05rem;
             line-height: 1.6;
             margin-bottom: 1.5rem;
-            border-left: 4px solid #a855f7;
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
             color: #e2e8f0;
         }
     `;
@@ -2389,9 +2452,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'grad-hero';
     hero.innerHTML = `
-        <div class="grad-hero-tag">${getTranslation('top100_adv_f4_badge')}</div>
-        <h1>${getTranslation('adv_f4_hero_title')}</h1>
-        <p>${getTranslation('adv_f4_hero_desc')}</p>
+        <div class="grad-hero-tag">${stripAllEmojis(getTranslation('top100_adv_f4_badge'))}</div>
+        <h1>${stripAllEmojis(getTranslation('adv_f4_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f4_hero_desc'))}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -2399,10 +2462,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     const goldenBanner = document.createElement('div');
     goldenBanner.className = 'golden-rule-banner';
     goldenBanner.innerHTML = `
-        <div class="rule-icon">${renderDsIcon('scale', '⚖️', { size: 28 })}</div>
+        <div class="rule-icon">${renderDsIcon('scale', '', { size: 28 })}</div>
         <div class="rule-content">
-            <h4>${getTranslation('adv_rule_title')}</h4>
-            <p>${getTranslation('adv_f4_rule_skala')}</p>
+            <h4>${stripAllEmojis(getTranslation('adv_rule_title'))}</h4>
+            <p>${stripAllEmojis(getTranslation('adv_f4_rule_skala'))}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);
@@ -2412,11 +2475,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')}`, icon: renderDsIcon('image', '🖼️') },
-        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: renderDsIcon('thermometer', '🌡️') },
-        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: renderDsIcon('search', '🔍') },
-        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: renderDsIcon('layers', '🏗️') },
-        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: renderDsIcon('fileText', '📝') }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')}`, icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: renderDsIcon('thermometer', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: renderDsIcon('target', '', { size: 16 }) }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'tab_vrimmel';
@@ -2425,7 +2488,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     tabsConfig.forEach(t => {
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${t.id === currentTab ? 'active' : ''}`;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `${t.icon} <span>${stripAllEmojis(t.label)}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabButtons[t.id] = btn;
         tabsNav.appendChild(btn);
@@ -2507,7 +2570,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         const pureToggleBtn = document.createElement('button');
         pureToggleBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureToggleBtn.innerHTML = `<span>${isPureMode ? renderDsIcon('eyeOff', '👁️') : renderDsIcon('tag', '🏷️')}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureToggleBtn.innerHTML = `<span>${isPureMode ? renderDsIcon('eyeOff', '') : renderDsIcon('tag', '')}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
         pureToggleBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -2581,7 +2644,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 'mellem': 'Mellem styrke (40-75%)',
                 'hoej': 'Høj styrke (85-95%)',
                 'fuld': 'Fuld styrke (100%)',
-                'overskud': `${renderDsIcon('alertTriangle', '⚠️', { size: 14 })} Over grænsen (>100%)`
+                'overskud': `${renderDsIcon('alertTriangle', '', { size: 14 })} Over grænsen (>100%)`
             };
             const catText = categoryLabels[item.category] || item.tier;
 
@@ -2589,52 +2652,52 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 <div class="inspector-left">
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: rgba(168, 85, 247, 0.25); border: 1.5px solid #c084fc; color: #c084fc; font-weight: 800;">${renderDsIcon('mapPin', '📍', { size: 14 })} Målord: ${item.word}</span>
+                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border: 1.5px solid var(--adv-border-focus, #93C5FD); color: var(--adv-border-focus, #93C5FD); font-weight: 800;">${renderDsIcon('mapPin', '', { size: 14 })} Målord: ${item.word}</span>
                             <span class="inspector-badge">Intensitet: ${item.tier}</span>
                             <span class="inspector-cat-badge">${catText}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">${renderDsIcon('volume', '🔊', { size: 18 })}</button>
+                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">${renderDsIcon('volume', '', { size: 18 })}</button>
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>${renderDsIcon('thermometer', '🌡️', { size: 24 })}</span> ${item.word}
+                        <span>${renderDsIcon('thermometer', '', { size: 24 })}</span> ${item.word}
                     </h2>
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>${renderDsIcon('globe', '🌐', { size: 14 })}</span> OVERSÆTTELSE (${langLabel})
+                            <span>${renderDsIcon('globe', '', { size: 14 })}</span> OVERSÆTTELSE (${langLabel})
                         </div>
                         <div class="trans-word-val">"${trans.word}"</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">${renderDsIcon('mapPin', '📍', { size: 15 })} Situation på torvet</div>
+                        <div class="scene-heading">${renderDsIcon('mapPin', '', { size: 15 })} Situation på torvet</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: #c084fc;">${renderDsIcon('messageSquare', '💬', { size: 16 })} Eksempelsætning</div>
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">${renderDsIcon('messageSquare', '', { size: 16 })} Eksempelsætning</div>
                         <p class="sentence-quote-text">"${item.contextSentence}"</p>
                         ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
                         <button class="inspector-speak-btn" id="inspector-action-speak">
-                            <span>${renderDsIcon('volume', '🗣️', { size: 16 })}</span> Hør sætning
+                            <span>${renderDsIcon('volume', '', { size: 16 })}</span> Hør sætning
                         </button>
                     </div>
 
                     <div class="grad-meter-box">
                         <div class="meter-label-row">
                             <span>Skala: ${item.levelPercent}%</span>
-                            <span>${item.levelPercent > 100 ? `${renderDsIcon('alertTriangle', '⚠️', { size: 14 })} Grænsen overskredet!` : item.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
+                            <span>${item.levelPercent > 100 ? `${renderDsIcon('alertTriangle', '', { size: 14 })} Grænsen overskredet!` : item.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
                         </div>
                         <div class="meter-track">
                             <div class="meter-fill" style="width: ${pctWidth}%;"></div>
                         </div>
                     </div>
 
-                    <div class="inspector-scene-box" style="border-left: 4px solid #a855f7;">
-                        <div class="scene-heading" style="color: #c084fc;">${renderDsIcon('lightbulb', '💡', { size: 15 })} Grammatisk tip</div>
+                    <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">${renderDsIcon('lightbulb', '', { size: 15 })} Grammatisk tip</div>
                         <p class="scene-text">${item.ruleHint}</p>
                     </div>
 
@@ -2642,8 +2705,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                         <button class="inspector-btn-action" id="inspector-action-prev">
                             ← Forrige ord
                         </button>
-                        <button class="inspector-btn-action" style="background: #9333ea;" id="inspector-action-next">
-                            Næste ord ➔
+                        <button class="inspector-btn-action" style="background: var(--adv-primary, #3B82F6);" id="inspector-action-next">
+                            Næste ord →
                         </button>
                     </div>
                 </div>
@@ -2700,7 +2763,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         { pct: '85%', word: 'meget', ex: 'Kaffen er meget varm.', note: 'Rigtig varm, perfekt til kaffetørsten.' },
         { pct: '95%', word: 'utroligt', ex: 'Kaffen er utroligt varm.', note: 'Damper voldsomt fra koppen.' },
         { pct: '100%', word: 'helt', ex: 'Koppen er helt fuld.', note: 'Fyldt helt til kanten.' },
-        { pct: '>100%', word: 'for / alt for', ex: 'Kaffen er alt for varm!', note: '⚠️ Man kan ikke drikke den – man brænder sig!' }
+        { pct: '>100%', word: 'for / alt for', ex: 'Kaffen er alt for varm!', note: 'OBS: Man kan ikke drikke den – man brænder sig!' }
     ];
 
     function renderTabVaerksted(parent) {
@@ -2711,7 +2774,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; color: #e9d5ff; margin-bottom: 0.5rem;">Aha-værkstedet: Skala & Kontraster</h2>
+                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: Skala & Kontraster</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
                     Få 100% styr på hvordan ordene skruer op og ned for styrken, og forstå den afgørende forskel på <em>meget</em> og <em>for</em>.
                 </p>
@@ -2719,10 +2782,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
             <div class="vaerksted-tabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'skala' ? 'active' : ''}" id="v-subtab-skala">
-                    🌡️ 1. Intensitetsskalaen (0% ➔ >100%)
+                    1. Intensitetsskalaen (0% → >100%)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'contrast' ? 'active' : ''}" id="v-subtab-contrast">
-                    ⚖️ 2. "Meget" vs. "For" (Det gyldne skel)
+                    2. "Meget" vs. "For" (Det gyldne skel)
                 </button>
             </div>
 
@@ -2756,7 +2819,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         const step = LADDER_STEPS[selectedLadderIdx];
 
         card.innerHTML = `
-            <h3 style="font-size: 1.45rem; color: #c084fc; margin-bottom: 0.6rem;">
+            <h3 style="font-size: 1.45rem; color: var(--adv-border-focus, #93C5FD); margin-bottom: 0.6rem;">
                 Klik på et niveau på termometret:
             </h3>
             <p style="color: #94a3b8; font-size: 1rem; margin-bottom: 1.5rem;">
@@ -2765,8 +2828,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
             <div class="termometer-ladder" id="ladder-container"></div>
 
-            <div style="background: rgba(15, 23, 42, 0.9); border: 2px solid #a855f7; border-radius: 16px; padding: 1.5rem; max-width: 650px; margin: 0 auto; text-align: center;">
-                <div style="font-size: 0.85rem; color: #c084fc; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
+            <div style="background: var(--adv-surface, #0A192F); border: 2px solid var(--adv-border, #1E3A66); border-radius: 16px; padding: 1.5rem; max-width: 650px; margin: 0 auto; text-align: center;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
                     Niveau: ${step.pct} styrke
                 </div>
                 <div style="font-size: 1.6rem; font-weight: 900; color: white; margin-bottom: 0.8rem;" id="step-live-sentence">
@@ -2776,7 +2839,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     ${step.note}
                 </div>
                 <button class="live-audio-btn" style="margin: 0 auto;" id="step-speak-btn">
-                    <span>🔊</span> Hør udtale
+                    Hør udtale
                 </button>
             </div>
         `;
@@ -2786,7 +2849,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             const row = document.createElement('div');
             row.className = `ladder-row ${selectedLadderIdx === idx ? 'selected' : ''}`;
             row.innerHTML = `
-                <span class="ladder-pct" style="color: ${idx >= 9 ? '#f87171' : idx >= 7 ? '#c084fc' : '#38bdf8'};">${item.pct}</span>
+                <span class="ladder-pct" style="color: ${idx >= 9 ? '#f87171' : idx >= 7 ? '#60a5fa' : '#38bdf8'};">${item.pct}</span>
                 <span class="ladder-word">${item.word}</span>
                 <span class="ladder-example">"${item.ex}"</span>
             `;
@@ -2818,14 +2881,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             <div class="contrast-showcase-grid">
                 <!-- Case 1: Kaffen -->
                 <div class="contrast-box meget">
-                    <div class="contrast-header">🟢 "Meget varm"</div>
+                    <div class="contrast-header">"Meget varm"</div>
                     <div class="contrast-sentence">"Kaffen er meget varm, og jeg nyder den!"</div>
                     <div class="contrast-desc">
                         Det er en <strong>positiv eller neutral</strong> konstatering. Kaffen er varm som kaffe skal være, og man glæder sig til at drikke den.
                     </div>
                 </div>
                 <div class="contrast-box for">
-                    <div class="contrast-header">🔴 "For varm"</div>
+                    <div class="contrast-header">"For varm"</div>
                     <div class="contrast-sentence">"Kaffen er for varm, så jeg brænder tungen!"</div>
                     <div class="contrast-desc">
                         En grænse er overskredet! Der er opstået et <strong>problem</strong>, og handlingen kan ikke gennemføres uden ubehag.
@@ -2834,14 +2897,14 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
                 <!-- Case 2: Kufferten -->
                 <div class="contrast-box meget">
-                    <div class="contrast-header">🟢 "Meget tung"</div>
+                    <div class="contrast-header">"Meget tung"</div>
                     <div class="contrast-sentence">"Kufferten er meget tung, men jeg kan godt bære den."</div>
                     <div class="contrast-desc">
                         Høj vægt, men manden er stærk nok til at klare opgaven.
                     </div>
                 </div>
                 <div class="contrast-box for">
-                    <div class="contrast-header">🔴 "Alt for tung"</div>
+                    <div class="contrast-header">"Alt for tung"</div>
                     <div class="contrast-sentence">"Kufferten er alt for tung – hjulene knækker!"</div>
                     <div class="contrast-desc">
                         Vægten er uacceptabel og skaber en umulig situation.
@@ -2851,12 +2914,12 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
             <div style="background: rgba(15, 23, 42, 0.8); border: 2px solid #38bdf8; border-radius: 16px; padding: 1.5rem; text-align: center; max-width: 650px; margin: 0 auto;">
                 <div style="font-size: 1.15rem; font-weight: 800; color: #38bdf8; margin-bottom: 0.4rem;">
-                    🎯 Tommelfingerregel til hverdagen:
+                    Tommelfingerregel til hverdagen:
                 </div>
                 <div style="color: #e2e8f0; line-height: 1.6;">
                     Spørg dig selv: <em>"Er det et problem, eller kan det ikke lade sig gøre?"</em><br>
-                    ➔ Hvis <strong>JA</strong>: Brug <strong>for</strong> eller <strong>alt for</strong>.<br>
-                    ➔ Hvis <strong>NEJ</strong> (det er bare kraftigt eller dejligt): Brug <strong>meget</strong> eller <strong>virkelig</strong>.
+                    → Hvis <strong>JA</strong>: Brug <strong>for</strong> eller <strong>alt for</strong>.<br>
+                    → Hvis <strong>NEJ</strong> (det er bare kraftigt eller dejligt): Brug <strong>meget</strong> eller <strong>virkelig</strong>.
                 </div>
             </div>
         `;
@@ -2886,7 +2949,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'slet ikke', hint: 'Forkert. "Slet ikke" betyder 0% varm.', isCorrect: false }
             ],
             correctWord: 'for',
-            feedbackCorrect: '✓ Lige præcis! Når det gør ondt eller ikke kan drikkes, er kaffen <strong>for</strong> varm.',
+            feedbackCorrect: '&#10003; Lige præcis! Når det gør ondt eller ikke kan drikkes, er kaffen <strong>for</strong> varm.',
             feedbackWrong: 'Husk reglen: Når man brænder tungen, er der et problem. Derfor hedder det <strong>for</strong> varm!'
         },
         {
@@ -2902,7 +2965,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'næsten', hint: 'Næsten betyder 90%, men her er alt spist op!', isCorrect: false }
             ],
             correctWord: 'fuldstændig',
-            feedbackCorrect: '✓ Flot! Når der intet er tilbage, er tallerkenen <strong>fuldstændig</strong> tom (100%).',
+            feedbackCorrect: '&#10003; Flot! Når der intet er tilbage, er tallerkenen <strong>fuldstændig</strong> tom (100%).',
             feedbackWrong: 'Når alt er spist op til sidste krumme, bruger man <strong>fuldstændig</strong> tom.'
         },
         {
@@ -2918,7 +2981,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'slet ikke', hint: 'Forkert. 0% tung passer ikke på 45 kg!', isCorrect: false }
             ],
             correctWord: 'alt for',
-            feedbackCorrect: '✓ Suverænt! Når noget ikke kan løftes, er det <strong>alt for</strong> tungt.',
+            feedbackCorrect: '&#10003; Suverænt! Når noget ikke kan løftes, er det <strong>alt for</strong> tungt.',
             feedbackWrong: 'Prøv at tænke på problemet: Han kan slet ikke løfte den, så den er <strong>alt for</strong> tung.'
         },
         {
@@ -2934,7 +2997,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'slet ikke', hint: 'Forkert. Modsat hvad der sker.', isCorrect: false }
             ],
             correctWord: 'virkelig',
-            feedbackCorrect: '✓ Nemlig! Når noget er skønt, bruger vi <strong>virkelig</strong> eller <strong>meget</strong>, aldrig "for".',
+            feedbackCorrect: '&#10003; Nemlig! Når noget er skønt, bruger vi <strong>virkelig</strong> eller <strong>meget</strong>, aldrig "for".',
             feedbackWrong: 'Pas på! "For" bruges kun ved problemer. Godt vejr er <strong>virkelig</strong> dejligt!'
         },
         {
@@ -2950,7 +3013,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'en smule', hint: 'Forkert. Han har overhovedet ingen kuldefornemmelse.', isCorrect: false }
             ],
             correctWord: 'slet ikke',
-            feedbackCorrect: '✓ Helt rigtigt! <strong>Slet ikke</strong> betyder absolut 0%.',
+            feedbackCorrect: '&#10003; Helt rigtigt! <strong>Slet ikke</strong> betyder absolut 0%.',
             feedbackWrong: 'Når der slet ingen kulde er, bruger vi <strong>slet ikke</strong>.'
         },
         {
@@ -2966,7 +3029,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'ganske', hint: 'Forkert.', isCorrect: false }
             ],
             correctWord: 'alt for',
-            feedbackCorrect: '✓ Rigtigt! Chilien overstiger børnenes grænse og er <strong>alt for</strong> stærk.',
+            feedbackCorrect: '&#10003; Rigtigt! Chilien overstiger børnenes grænse og er <strong>alt for</strong> stærk.',
             feedbackWrong: 'Børnene kan ikke spise det uden tårer, så chilien er <strong>alt for</strong> stærk.'
         },
         {
@@ -2982,7 +3045,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'en smule', hint: 'Forkert.', isCorrect: false }
             ],
             correctWord: 'meget',
-            feedbackCorrect: '✓ Godt spottet! Han cykler hurtigt med vilje, så han cykler <strong>meget</strong> hurtigt.',
+            feedbackCorrect: '&#10003; Godt spottet! Han cykler hurtigt med vilje, så han cykler <strong>meget</strong> hurtigt.',
             feedbackWrong: 'Han har fuld kontrol over cyklen, så han cykler <strong>meget</strong> hurtigt.'
         },
         {
@@ -2998,7 +3061,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { word: 'overhovedet ikke', hint: 'Forkert.', isCorrect: false }
             ],
             correctWord: 'alt for',
-            feedbackCorrect: '✓ Perfekt! Når samtalen blokeres, er musikken <strong>alt for</strong> høj.',
+            feedbackCorrect: '&#10003; Perfekt! Når samtalen blokeres, er musikken <strong>alt for</strong> høj.',
             feedbackWrong: 'Det er umuligt at snakke sammen, så musikken spiller <strong>alt for</strong> højt.'
         }
     ];
@@ -3013,8 +3076,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         detektivWrap.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <div style="font-size: 0.95rem; font-weight: 800; color: #c084fc; text-transform: uppercase;">
-                    🔍 Grads-Detektiven • Opgave ${detektivIndex + 1} af ${DETEKTIV_TASKS.length}
+                <div style="font-size: 0.95rem; font-weight: 800; color: var(--adv-border-focus, #93C5FD); text-transform: uppercase;">
+                    Grads-Detektiven • Opgave ${detektivIndex + 1} af ${DETEKTIV_TASKS.length}
                 </div>
                 <div style="font-size: 1.1rem; font-weight: 800; color: #4ade80;">
                     Score: ${detektivScore} point
@@ -3022,15 +3085,15 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">📍 ${task.scene}</div>
+                <div class="detektiv-context-tag">${task.scene}</div>
                 <div class="detektiv-prompt-text">${task.context}</div>
-                <div class="detektiv-sentence-quote">${task.sentence.replace('_____', '<span style="color: #c084fc; text-decoration: underline;">_____</span>')}</div>
+                <div class="detektiv-sentence-quote">${task.sentence.replace('_____', '<span style="color: var(--adv-border-focus, #93C5FD); text-decoration: underline;">_____</span>')}</div>
 
                 <div class="detektiv-options-grid" id="detektiv-options"></div>
                 <div class="detektiv-feedback" id="detektiv-feedback-box"></div>
 
                 <button class="detektiv-next-btn" id="detektiv-next-btn" style="display: none;">
-                    ${detektivIndex < DETEKTIV_TASKS.length - 1 ? 'Næste opgave ➔' : 'Se dit resultat 🏆'}
+                    ${detektivIndex < DETEKTIV_TASKS.length - 1 ? 'Næste opgave →' : 'Se dit resultat'}
                 </button>
             </div>
         `;
@@ -3042,7 +3105,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         task.options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'detektiv-opt-btn';
-            btn.innerHTML = `<span>${opt.word}</span> <span style="font-size: 0.85rem; color: #94a3b8;">➔</span>`;
+            btn.innerHTML = `<span>${opt.word}</span> <span style="font-size: 0.85rem; color: #94a3b8;">→</span>`;
 
             btn.onclick = () => {
                 if (detektivAnswered) return;
@@ -3091,17 +3154,17 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         const pct = Math.round((detektivScore / maxScore) * 100);
 
         wrap.innerHTML = `
-            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
-            <h2 style="font-size: 2.2rem; color: #c084fc; margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+            <h2 style="font-size: 2.2rem; color: var(--adv-border-focus, #93C5FD); margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
             <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                 Du fik <strong>${detektivScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
             </p>
             <div style="background: rgba(15, 23, 42, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                ${pct >= 80 ? '🌟 Suverænt! Du har fuldstændig styr på forskellen mellem "meget" og "for" samt de andre gradsadverbier.' : 'God indsats! Prøv igen for at få 100% styr på nuancerne.'}
+                ${pct >= 80 ? 'Suverænt! Du har fuldstændig styr på forskellen mellem "meget" og "for" samt de andre gradsadverbier.' : 'God indsats! Prøv igen for at få 100% styr på nuancerne.'}
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">🔄 Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren ➔</button>
+                <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">Prøv igen</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren →</button>
             </div>
         `;
 
@@ -3192,10 +3255,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             structureTitle: 'Gradsadverbiets placering: Direkte foran adjektivet "varm"',
             structureNote: 'Gradsadverbiet modificerer adjektivet og står på plads 3.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '☕', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Gradsadverbium', icon: '🌡️', type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'Hvad/Hvordan?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('coffee', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
+                { num: '4. plads', title: 'Hvad/Hvordan?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem/Hvad?', '2. Handling/Er?', '3. Hvor meget? ⭐', '4. Hvordan ellers?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adjektivled]'],
@@ -3218,10 +3281,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             structureTitle: 'Gradsadverbiets placering: Direkte foran adjektivet "tomt"',
             structureNote: '"Fuldstændig" angiver 100% tilstand foran adjektivet.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '🍰', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Gradsadverbium', icon: '🌡️', type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'Hvordan?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('coffee', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
+                { num: '4. plads', title: 'Hvordan?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvad?', '2. Handling/Er?', '3. Hvor meget? ⭐', '4. Hvordan?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adjektivled]'],
@@ -3244,10 +3307,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             structureTitle: 'Gradsadverbiets placering: Direkte foran adjektivet "tung"',
             structureNote: '"Uhyre" forstærker adjektivet kraftigt.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '🧳', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Gradsadverbium', icon: '🌡️', type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'For hvem?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('tag', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
+                { num: '4. plads', title: 'For hvem?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvad?', '2. Er?', '3. Hvor meget? ⭐', '4. For hvem?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Præpositionsled]'],
@@ -3270,10 +3333,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             structureTitle: 'Gradsadverbium foran et mådesadverbium ("godt")',
             structureNote: '"Ret" modificerer adverbiet "godt" og står på 3. plads.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '🎷', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Gradsadverbium', icon: '🌡️', type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'Hvor?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('activity', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
+                { num: '4. plads', title: 'Hvor?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvor meget? ⭐', '4. Hvordan og hvor?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adverbium + Sted]'],
@@ -3296,10 +3359,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             structureTitle: 'Benægtende gradsadverbium efter verbet',
             structureNote: '"Slet ikke" står lige efter det finitte verbum som centraladverbium.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Gradsadverbium', icon: '🌡️', type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'Hvor/Hvornår?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
+                { num: '4. plads', title: 'Hvor/Hvornår?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvor meget? ⭐', '4. I hvilket vejr?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Præpositionsled]'],
@@ -3322,10 +3385,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             structureTitle: 'Gradsadverbiet "for" foran adverbiet "stærkt"',
             structureNote: '"For" angiver det problematiske overskud.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '🍲', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Gradsadverbium', icon: '🌡️', type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'For hvem?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('coffee', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
+                { num: '4. plads', title: 'For hvem?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvad?', '2. Sansning?', '3. Hvor meget? ⭐', '4. For hvem?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adverbium + Restled]'],
@@ -3346,11 +3409,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${saetningSubTab === 'builder' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>🏗️</span> 1. Udforsk sætningen (Byg selv)`;
+        subTab1Btn.innerHTML = `<span>1. Udforsk sætningen (Byg selv)</span>`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${saetningSubTab === 'puzzle' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>🧩</span> 2. Pusleopgaven (Udfordring)`;
+        subTab2Btn.innerHTML = `<span>2. Pusleopgaven (Udfordring)</span>`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -3406,7 +3469,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-subjekt">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-subjekt">
-                                <span>👤</span> 1. Hvem eller hvad taler vi om?
+                                1. Hvem eller hvad taler vi om?
                             </div>
                             <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
                         </div>
@@ -3417,7 +3480,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-verbum">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-verbum">
-                                <span>⚡</span> 2. Hvad laver eller er personen eller tingen?
+                                2. Hvad laver eller er personen eller tingen?
                             </div>
                             <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
                         </div>
@@ -3428,7 +3491,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-grad">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-grad">
-                                <span>🌡️</span> 3. Hvor meget eller i hvor høj grad? (Gradsadverbium)
+                                3. Hvor meget eller i hvor høj grad? (Gradsadverbium)
                             </div>
                             <span class="cat-grammar-role badge-grad">[Gradsadverbium]</span>
                         </div>
@@ -3439,7 +3502,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-rest">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-rest">
-                                <span>📍</span> 4. Hvad, hvordan eller hvor ellers?
+                                4. Hvad, hvordan eller hvor ellers?
                             </div>
                             <span class="cat-grammar-role badge-rest">[Adjektivled / Restled]</span>
                         </div>
@@ -3453,7 +3516,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="live-sentence-text" id="live-sentence-text"></div>
                     <div class="live-sentence-actions">
                         <button class="live-audio-btn" id="live-audio-speak-btn">
-                            <span>🔊</span> Hør sætning
+                            Hør sætning
                         </button>
                     </div>
                 </div>
@@ -3510,7 +3573,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
             const titleDiv = document.createElement('div');
             titleDiv.innerHTML = `
-                <div style="font-size: 0.85rem; color: #c084fc; font-weight: 800; text-transform: uppercase;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase;">
                     Udfordring ${currentGradChallengeIdx + 1} af ${GRAD_CHALLENGE_TASKS.length}
                 </div>
                 <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg gradsadverbiet & saml puslespillet</h3>
@@ -3568,7 +3631,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em></div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -3585,7 +3648,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             const qBox = document.createElement('div');
             qBox.className = 'sb-question-box';
             qBox.innerHTML = `
-                <div style="font-size: 0.85rem; color: #c084fc; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
                     Trin 1: Vælg det rigtige gradsadverbium
                 </div>
                 <div class="sb-question-text">${task.questionPrompt}</div>
@@ -3640,7 +3703,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                         feedbackDiv.style.display = 'block';
                         feedbackDiv.style.borderLeftColor = '#22c55e';
                         feedbackDiv.innerHTML = `
-                            <strong style="color: #4ade80;">✓ Rigtigt valgt!</strong>
+                            <strong style="color: #4ade80;">&#10003; Rigtigt valgt!</strong>
                             <p style="margin: 0.4rem 0 0 0;">${task.pedagogyNote}</p>
                         `;
                         speakDanish(opt);
@@ -3672,7 +3735,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         function renderGradPuzzleStep(puzContainer, task) {
             puzContainer.innerHTML = `
                 <div class="sb-puzzle-title">
-                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                    Trin 2: Puslespillet – Saml hele sætningen!
                 </div>
                 <div class="sb-puzzle-desc">
                     Læg mærke til den fremhævede plads med <strong>⭐</strong> – der skal gradsadverbiet placeres. Klik på brikkerne i den rigtige rækkefølge:
@@ -3682,7 +3745,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 <div class="sb-structure-diagram">
                     <div class="structure-diagram-header">
                         <span class="structure-diagram-badge">
-                            📌 ${task.structureTitle}
+                            ${task.structureTitle}
                         </span>
                         <span class="structure-diagram-hint">${task.structureNote}</span>
                     </div>
@@ -3694,7 +3757,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                                 <div class="flow-title">${step.title}</div>
                                 ${step.isTarget ? '<div class="flow-target-tag">HER STÅR GRADEN!</div>' : ''}
                             </div>
-                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">➔</div>' : ''}
+                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">→</div>' : ''}
                         `).join('')}
                     </div>
                 </div>
@@ -3729,7 +3792,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     if (isAdvSlot) {
                         const callout = document.createElement('div');
                         callout.className = 'slot-target-callout';
-                        callout.innerHTML = isFilled ? '✓ Gradsadverbium' : '⭐ Gradens plads ⭐';
+                        callout.innerHTML = isFilled ? '&#10003; Gradsadverbium' : 'Gradens plads';
                         slot.appendChild(callout);
                     }
 
@@ -3737,7 +3800,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                         const wordSpan = document.createElement('span');
                         wordSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
                         wordSpan.style.fontWeight = '800';
-                        if (isAdvSlot) wordSpan.style.color = '#c084fc';
+                        if (isAdvSlot) wordSpan.style.color = 'var(--adv-border-focus, #93C5FD)';
                         wordSpan.textContent = placedWords[idx];
                         slot.appendChild(wordSpan);
 
@@ -3749,7 +3812,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                         const hintSpan = document.createElement('span');
                         hintSpan.className = 'slot-hint';
                         hintSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
-                        if (isAdvSlot) hintSpan.style.color = '#c084fc';
+                        if (isAdvSlot) hintSpan.style.color = 'var(--adv-border-focus, #93C5FD)';
                         hintSpan.textContent = slotLabel;
                         slot.appendChild(hintSpan);
 
@@ -3785,9 +3848,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     if (isCorrect) {
                         completedGradChallenges.add(currentGradChallengeIdx);
                         statusEl.innerHTML = `
-                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <span style="color: #60a5fa; margin-right: 1rem;">Perfekt samlet!</span>
                             <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="grad-task-next-btn">
-                                ${currentGradChallengeIdx < GRAD_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Gå til Kontekst-testen 🏆'}
+                                ${currentGradChallengeIdx < GRAD_CHALLENGE_TASKS.length - 1 ? 'Næste opgave →' : 'Gå til Kontekst-testen →'}
                             </button>
                         `;
                         speakDanish(placedWords.join(' '));
@@ -3958,8 +4021,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <div style="font-size: 0.95rem; font-weight: 800; color: #c084fc; text-transform: uppercase;">
-                    📝 Kontekst-testen • Opgave ${kontekstIndex + 1} af ${KONTEKST_TASKS.length}
+                <div style="font-size: 0.95rem; font-weight: 800; color: var(--adv-border-focus, #93C5FD); text-transform: uppercase;">
+                    Kontekst-testen • Opgave ${kontekstIndex + 1} af ${KONTEKST_TASKS.length}
                 </div>
                 <div style="font-size: 1.1rem; font-weight: 800; color: #4ade80;">
                     Score: ${kontekstScore} point
@@ -3967,7 +4030,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             </div>
 
             <div class="cloze-card">
-                <div class="detektiv-context-tag">📍 Situation: ${task.scene}</div>
+                <div class="detektiv-context-tag">Situation: ${task.scene}</div>
                 <div class="cloze-sentence-display" id="cloze-display">
                     ${task.sentence.replace('_____', '<span class="cloze-blank" id="cloze-blank-slot">_____</span>')}
                 </div>
@@ -3976,7 +4039,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 <div id="cloze-feedback"></div>
 
                 <button class="detektiv-next-btn" id="cloze-next-btn" style="display: none;">
-                    ${kontekstIndex < KONTEKST_TASKS.length - 1 ? 'Næste sætning ➔' : 'Afslut testen 🏆'}
+                    ${kontekstIndex < KONTEKST_TASKS.length - 1 ? 'Næste sætning →' : 'Afslut testen'}
                 </button>
             </div>
         `;
@@ -4002,7 +4065,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     kontekstScore += 10;
                     speakDanish(opt);
                     feedbackBox.className = 'cloze-didactic-feedback';
-                    feedbackBox.innerHTML = `<strong>✓ Rigtigt!</strong> ${task.feedback}`;
+                    feedbackBox.innerHTML = `<strong>&#10003; Rigtigt!</strong> ${task.feedback}`;
                 } else {
                     btn.classList.add('wrong');
                     feedbackBox.className = 'cloze-didactic-feedback';
@@ -4043,17 +4106,17 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         const pct = Math.round((kontekstScore / maxScore) * 100);
 
         wrap.innerHTML = `
-            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎉</div>
-            <h2 style="font-size: 2.2rem; color: #c084fc; margin-bottom: 0.5rem;">Kontekst-testen er gennemført!</h2>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+            <h2 style="font-size: 2.2rem; color: var(--adv-border-focus, #93C5FD); margin-bottom: 0.5rem;">Kontekst-testen er gennemført!</h2>
             <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                 Du opnåede <strong>${kontekstScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
             </p>
             <div style="background: rgba(15, 23, 42, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                ${pct >= 80 ? '🌟 Suverænt! Du mestrer nu gradsadverbierne og ved præcis, hvornår noget er for meget, helt perfekt eller bare en smule.' : 'Godt forsøgt! Tag testen en gang til for at få fuldt udbytte af nuancerne.'}
+                ${pct >= 80 ? 'Suverænt! Du mestrer nu gradsadverbierne og ved præcis, hvornår noget er for meget, helt perfekt eller bare en smule.' : 'Godt forsøgt! Tag testen en gang til for at få fuldt udbytte af nuancerne.'}
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="detektiv-next-btn" style="margin: 0;" id="kontekst-retry-btn">🔄 Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til Adverbie-Oversigten ➔</button>
+                <button class="detektiv-next-btn" style="margin: 0;" id="kontekst-retry-btn">Prøv igen</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til Adverbie-Oversigten</button>
             </div>
         `;
 

@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * KonjunktionerAtView - Felt 4 (Særskilt Fokusfelt): Ordet "AT" i alle sætningskonstruktioner
@@ -25,6 +26,7 @@ import { renderDsIcon } from '../utils/designSystemIcons.js';
  */
 export function renderKonjunktionerAtView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+    applyKonjNuance(getActiveKonjNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container konjunktioner-at-view';
@@ -178,7 +180,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             sceneDesc: 'Børnene i vandet kan svømme helt uden hjælp (Bemærk: "kan svømme" – aldrig *"kan at svømme"!).',
             sentence: 'Han kan svømme hurtigt. (ALDRIG "kan at"!)',
             contextSentence: 'Alle børnene i bassinet kan svømme, og bagefter vil de spise is sammen.',
-            ruleHint: '🔥 VIGTIGSTE REGEL: Efter de 6 modalverber (KAN, SKAL, VIL, MÅ, BØR, TØR) må man ALDRIG bruge "at"! Det hedder: "Jeg kan svømme", "Jeg vil lære dansk", "Jeg skal gå nu".',
+            ruleHint: 'VIGTIGSTE REGEL: Efter de 6 modalverber (KAN, SKAL, VIL, MÅ, BØR, TØR) må man ALDRIG bruge "at"! Det hedder: "Jeg kan svømme", "Jeg vil lære dansk", "Jeg skal gå nu".',
             translations: {
                 en: { word: 'can / must / will (NO "at"!)', sentence: 'All the children in the pool can swim, and afterwards they will eat ice cream.' },
                 de: { word: 'kann / muss / will (OHNE "at"!)', sentence: 'Alle Kinder im Becken können schwimmen, und danach wollen sie Eis essen.' },
@@ -1526,7 +1528,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
         const pureBtn = document.createElement('button');
         pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureBtn.textContent = isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker';
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -1593,25 +1595,25 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 <div class="inspector-left">
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
-                            <span class="inspector-badge">📐 ${item.formula}</span>
+                            <span class="inspector-badge">${item.formula}</span>
                         </div>
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>🌟</span> ${item.word}
+                        ${item.word}
                     </h2>
-                    ${showWordTrans ? `<div class="trans-word-val" style="color:#6ee7b7; font-size:1.15rem; font-weight:700;">🌍 ${trans.word}</div>` : ''}
+                    ${showWordTrans ? `<div class="trans-word-val" style="color:#6ee7b7; font-size:1.15rem; font-weight:700;">${trans.word}</div>` : ''}
 
                     <div class="inspector-sentence-card" style="margin-top:0.4rem;">
                         <div class="sentence-quote-text">"${item.sentence}"</div>
-                        ${showSentenceTrans ? `<div class="sentence-trans-text" style="color:#fde68a;">🌍 "${trans.sentence}"</div>` : ''}
+                        ${showSentenceTrans ? `<div class="sentence-trans-text" style="color:#fde68a;">"${trans.sentence}"</div>` : ''}
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-scene-box" style="border-left: 3px solid #f59e0b; background:#0f172a; padding:1.2rem; border-radius:14px;">
                         <div style="font-size:0.85rem; font-weight:800; color:#f59e0b; margin-bottom:0.4rem;">
-                            💡 ${item.meaning}
+                            ${item.meaning}
                         </div>
                         <p style="color:#cbd5e1; font-size:0.95rem; line-height:1.55; margin:0;">
                             ${item.ruleHint}
@@ -2059,7 +2061,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['for', 'til', 'ved'],
             correct: 'for',
             explanations: {
-                'for': '🌟 Præcis! Det faste udtryk hedder "glad for, at + ledsætning".',
+                'for': 'Præcis! Det faste udtryk hedder "glad for, at + ledsætning".',
                 'til': '"Til" bruges i "god til at" eller "glæder mig til at", ikke efter "glad".',
                 'ved': '"Ved at" beskriver en metode.'
             }
@@ -2071,7 +2073,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['svømme', 'at svømme', 'svømmer'],
             correct: 'svømme',
             explanations: {
-                'svømme': '🌟 Fuldstændig rigtigt! Efter modalverber (kan, skal, vil, må, bør, tør) må man ALDRIG bruge "at"!',
+                'svømme': 'Fuldstændig rigtigt! Efter modalverber (kan, skal, vil, må, bør, tør) må man ALDRIG bruge "at"!',
                 'at svømme': 'Pas på! Efter "kan" er "at" forbudt på dansk.',
                 'svømmer': 'Efter et modalverbum står næste verbum altid i infinitiv ("svømme"), ikke nutid.'
             }
@@ -2083,7 +2085,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['at købe', 'købe', 'køber'],
             correct: 'at købe',
             explanations: {
-                'at købe': '🌟 Lige i øjet! "Plejer" er ikke et modalverbum, så det SKAL altid følges af "at + infinitiv"!',
+                'at købe': 'Lige i øjet! "Plejer" er ikke et modalverbum, så det SKAL altid følges af "at + infinitiv"!',
                 'købe': 'Man kan ikke udelade "at" efter "plejer".',
                 'køber': 'Efter "plejer at" står verbet i infinitiv.'
             }
@@ -2095,7 +2097,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['for at', 'fordi', 'så at'],
             correct: 'for at',
             explanations: {
-                'for at': '🌟 Skarpt set! Når vi udtrykker et FORMÅL efterfulgt af en infinitiv uden subjekt ("forbedre"), bruger vi altid "for at"!',
+                'for at': 'Skarpt set! Når vi udtrykker et FORMÅL efterfulgt af en infinitiv uden subjekt ("forbedre"), bruger vi altid "for at"!',
                 'fordi': '"Fordi" kræver en hel ledsætning med subjekt og finit verbum ("... fordi hun vil forbedre...").',
                 'så at': '"Så at" kræver også subjekt og finit verbum.'
             }
@@ -2107,7 +2109,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['fordi', 'for at', 'ved at'],
             correct: 'fordi',
             explanations: {
-                'fordi': '🌟 Korrekt! Så snart der følger et subjekt og et bøjet verbum ("hun gerne vil..."), bruger vi ledsætningskonjunktionen "fordi"!',
+                'fordi': 'Korrekt! Så snart der følger et subjekt og et bøjet verbum ("hun gerne vil..."), bruger vi ledsætningskonjunktionen "fordi"!',
                 'for at': '"For at" bruges kun foran infinitiv uden subjekt ("for at forbedre").',
                 'ved at': '"Ved at" bruges kun foran infinitiv ("ved at se film").'
             }
@@ -2119,7 +2121,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['kom til at', 'gik til at', 'fik til at'],
             correct: 'kom til at',
             explanations: {
-                'kom til at': '🌟 Perfekt! "At komme til at + infinitiv" er det faste danske udtryk for at gøre noget ved et uheld.',
+                'kom til at': 'Perfekt! "At komme til at + infinitiv" er det faste danske udtryk for at gøre noget ved et uheld.',
                 'gik til at': 'Dette udtryk findes ikke på dansk.',
                 'fik til at': '"Få nogen til at gøre noget" betyder at overtale eller påvirke en anden.'
             }
@@ -2131,7 +2133,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['ved at', 'uden at', 'for at'],
             correct: 'ved at',
             explanations: {
-                'ved at': '🌟 Rigtigt! "Ved at + infinitiv" forklarer metoden eller midlet ("by following the recipe").',
+                'ved at': 'Rigtigt! "Ved at + infinitiv" forklarer metoden eller midlet ("by following the recipe").',
                 'uden at': '"Uden at" ville betyde, at han slet ikke brugte opskriften.',
                 'for at': '"For at" udtrykker målet, ikke metoden.'
             }
@@ -2143,7 +2145,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['han ikke kan komme', 'han kan ikke komme', 'kan han ikke komme'],
             correct: 'han ikke kan komme',
             explanations: {
-                'han ikke kan komme': '🌟 Lige i skabet! Konjunktionen "at" indleder en ledsætning, så "ikke" SKAL stå FØR verbet ("han ikke kan komme")!',
+                'han ikke kan komme': 'Lige i skabet! Konjunktionen "at" indleder en ledsætning, så "ikke" SKAL stå FØR verbet ("han ikke kan komme")!',
                 'han kan ikke komme': 'Det er helsætningsordstilling ("kan ikke"). I en "at"-ledsætning rykker "ikke" frem foran verbet.',
                 'kan han ikke komme': 'Der er aldrig spørgende inversion inde i en "at"-ledsætning.'
             }
@@ -2155,7 +2157,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['så', 'for', 'meget'],
             correct: 'så',
             explanations: {
-                'så': '🌟 Præcis! Konstruktionen hedder "så + adjektiv + , at + ledsætning" ("så varm, at...").',
+                'så': 'Præcis! Konstruktionen hedder "så + adjektiv + , at + ledsætning" ("så varm, at...").',
                 'for': '"For varm" bruges med "til at" ("Kaffen er for varm til at drikke"), ikke med ", at".',
                 'meget': '"Meget varm" kan ikke binde en "at"-ledsætning på uden "så".'
             }
@@ -2167,7 +2169,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             options: ['til at', 'for at', 'om at'],
             correct: 'til at',
             explanations: {
-                'til at': '🌟 Super vigtig detalje! Efter "for + adjektiv" ("for varm, for dyr, for tung") bruger man altid "til at + infinitiv" ("for varm til at drikke")!',
+                'til at': 'Super vigtig detalje! Efter "for + adjektiv" ("for varm, for dyr, for tung") bruger man altid "til at + infinitiv" ("for varm til at drikke")!',
                 'for at': '"For at" bruges ikke efter "alt for + adjektiv".',
                 'om at': '"Om at" bruges efter verber som "drømme om at" eller "aftale om at".'
             }
@@ -2186,12 +2188,11 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         if (detektivIdx >= DETEKTIV_RIDDLES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:3.5rem; margin-bottom:1rem;">🕵️‍♂️🌟</div>
                     <h2 style="color:#fde68a; font-size:2rem; margin-bottom:0.5rem;">"AT"-Detektiven Gennemført!</h2>
                     <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du løste <strong>${detektivScore} ud af ${DETEKTIV_RIDDLES.length}</strong> gåder om "at"-konstruktionerne!
                     </p>
-                    <button class="action-btn-primary" id="restart-detektiv">🔄 Prøv gåderne igen</button>
+                    <button class="action-btn-primary" id="restart-detektiv">Prøv gåderne igen</button>
                 </div>
             `;
             parent.appendChild(container);
@@ -2208,7 +2209,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
         container.innerHTML = `
             <div class="progress-header">
-                <span>🔍 "AT"-DETEKTIVEN: GÅDE ${detektivIdx + 1} AF ${DETEKTIV_RIDDLES.length}</span>
+                <span>"AT"-DETEKTIVEN: GÅDE ${detektivIdx + 1} AF ${DETEKTIV_RIDDLES.length}</span>
                 <span>Score: ${detektivScore} / ${detektivIdx}</span>
             </div>
             <div class="progress-bar-wrap">
@@ -2272,7 +2273,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
     // ==========================================
     const BUILDER_EXERCISES = [
         {
-            modeLabel: '1️⃣ Ledsætnings-at: subjekt + ikke + verbum',
+            modeLabel: '1. Ledsætnings-at: subjekt + ikke + verbum',
             context: 'Byg ledsætningen efter "Hun siger," (Husk: i en "at"-ledsætning står "ikke" FØR verbet!)',
             displayTemplate: 'Hun siger, [BLANK] hun ikke kommer for sent.',
             options: ['at', 'for at', 'til at'],
@@ -2286,7 +2287,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '2️⃣ Præposition + at + infinitiv (samme person)',
+            modeLabel: '2. Præposition + at + infinitiv (samme person)',
             context: 'Byg sætningen: Kokken er dygtig til en færdighed ("god til at bage")',
             displayTemplate: 'Kokken er [BLANK] bage frisk brød.',
             options: ['god til at', 'god for at', 'god om at'],
@@ -2300,7 +2301,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '3️⃣ Præposition + , at + ledsætning (ny person)',
+            modeLabel: '3. Præposition + , at + ledsætning (ny person)',
             context: 'Byg sætningen: Jeg er glad + du ikke gik tidligt ("glad for, at du ikke gik")',
             displayTemplate: 'Jeg er [BLANK] du ikke gik tidligt.',
             options: ['glad for, at', 'glad til, at', 'glad ved, at'],
@@ -2314,7 +2315,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '4️⃣ Formål: "for at" + infinitiv (uden subjekt!)',
+            modeLabel: '4. Formål: "for at" + infinitiv (uden subjekt!)',
             context: 'Byg formålet: Hvorfor sparer pigen penge op?',
             displayTemplate: 'Hun sparer op [BLANK] købe en ny cykel.',
             options: ['for at', 'fordi', 'ved at'],
@@ -2328,7 +2329,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '5️⃣ Metode: "ved at" + infinitiv',
+            modeLabel: '5. Metode: "ved at" + infinitiv',
             context: 'Byg metoden: Hvordan træner han sin udtale?',
             displayTemplate: 'Han træner udtale [BLANK] tale i mikrofonen.',
             options: ['ved at', 'for at', 'uden at'],
@@ -2342,7 +2343,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '6️⃣ Uheld i hverdagen: "kom til at" + infinitiv',
+            modeLabel: '6. Uheld i hverdagen: "kom til at" + infinitiv',
             context: 'Byg uheldet: Han væltede melet uden vilje',
             displayTemplate: 'Han [BLANK] spilde mel på gulvet.',
             options: ['kom til at', 'gik til at', 'var til at'],
@@ -2356,7 +2357,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '7️⃣ Konsekvens: "så varm, at" + ledsætning',
+            modeLabel: '7. Konsekvens: "så varm, at" + ledsætning',
             context: 'Byg konsekvens-ledsætningen efter "Kaffen er så varm," (Husk: "ikke" FØR verbet!)',
             displayTemplate: 'Kaffen er [BLANK] hun ikke kan drikke den.',
             options: ['så varm, at', 'for varm, at', 'meget varm, at'],
@@ -2370,7 +2371,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             ]
         },
         {
-            modeLabel: '8️⃣ Fravær: "uden at" + infinitiv',
+            modeLabel: '8. Fravær: "uden at" + infinitiv',
             context: 'Byg sætningen: Han listede ud ad døren uden en lyd',
             displayTemplate: 'Han gik [BLANK] sige farvel til nogen.',
             options: ['uden at', 'ved at', 'for at'],
@@ -2398,12 +2399,11 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
         if (builderIdx >= BUILDER_EXERCISES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:3.5rem; margin-bottom:1rem;">🧩🌟</div>
                     <h2 style="color:#fde68a; font-size:2rem; margin-bottom:0.5rem;">"AT"-Sætningsbyggeren Gennemført!</h2>
                     <p style="font-size:1.15rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du har bygget alle typer af sætninger med <strong><em>at</em></strong> – både med infinitiv og med ledsætningsordstilling!
                     </p>
-                    <button class="action-btn-primary" id="restart-builder">🔄 Byg sætningerne igen</button>
+                    <button class="action-btn-primary" id="restart-builder">Byg sætningerne igen</button>
                 </div>
             `;
             parent.appendChild(container);
@@ -2438,7 +2438,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
 
         card.innerHTML = `
             <div class="progress-header">
-                <span>🧩 "AT"-SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
+                <span>"AT"-SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
                 <span>${ex.modeLabel}</span>
             </div>
             <div class="progress-bar-wrap">
@@ -2479,9 +2479,9 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                         btn.classList.add('correct');
                         fbDiv.className = 'detektiv-feedback-box show correct';
                         fbDiv.innerHTML = `
-                            <strong>🌟 ${ex.step1Explain}</strong>
+                            <strong>${ex.step1Explain}</strong>
                             <div style="margin-top:1rem;">
-                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætningsleddene 🧩 ➔</button>
+                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætningsleddene ➔</button>
                             </div>
                         `;
                         fbDiv.querySelector('#go-step-2').onclick = () => {
@@ -2518,7 +2518,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 slotEl.innerHTML = `
                     <div class="slot-badge-callout callout-${slotDef.role}">${slotDef.label}</div>
                     <div style="font-size:1.15rem; font-weight:900; color:${filledVal ? 'white' : '#64748b'};">
-                        ${filledVal || (idx === currentSlotIdx ? 'Klik på brik 👇' : '...')}
+                        ${filledVal || (idx === currentSlotIdx ? 'Klik på brik' : '...')}
                     </div>
                 `;
                 slotsRow.appendChild(slotEl);
@@ -2551,7 +2551,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                 const fullBuilt = ex.slots.map(s => s.expected).join(' ');
                 fbDiv.className = 'detektiv-feedback-box show correct';
                 fbDiv.innerHTML = `
-                    <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">🎉 Perfekt: "${fullBuilt}"</div>
+                    <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">Perfekt: "${fullBuilt}"</div>
                     <p style="margin:0 0 1rem;">Du samlede "at"-konstruktionen i helt rigtig rækkefølge!</p>
                     <button class="action-btn-primary" id="next-builder-btn">Næste opgave ➔</button>
                 `;
@@ -2590,12 +2590,11 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
             const doneCard = document.createElement('div');
             doneCard.className = 'score-celebration-card';
             doneCard.innerHTML = `
-                <div style="font-size:3.5rem; margin-bottom:1rem;">🏆🌟</div>
                 <h2 style="color:#fde68a; font-size:2rem; margin-bottom:0.5rem;">${config.doneTitle}</h2>
                 <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                     Du fik <strong>${state.score} ud af ${questions.length}</strong> rigtige i første forsøg!
                 </p>
-                <button class="action-btn-primary" id="quiz-restart-btn">🔄 Tag opgaven igen</button>
+                <button class="action-btn-primary" id="quiz-restart-btn">Tag opgaven igen</button>
             `;
             wrap.appendChild(doneCard);
             parent.appendChild(wrap);
@@ -2653,7 +2652,7 @@ export function renderKonjunktionerAtView(container, navigateFn, extraData = {})
                         `<span style="color:#4ade80; text-decoration:underline; font-weight:900;">${opt}</span>`
                     );
                     fbBox.className = 'detektiv-feedback-box show correct';
-                    fbBox.innerHTML = `<strong>🌟 Korrekt!</strong> ${q.explanation}`;
+                    fbBox.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
                     nextWrap.style.display = 'block';
                 } else {
                     firstAttempt = false;

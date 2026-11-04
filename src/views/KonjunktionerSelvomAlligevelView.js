@@ -1,18 +1,20 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
+import { getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * KonjunktionerSelvomAlligevelView - Særskilt Flade: "SELVOM" og "ALLIGEVEL"
  *
  * Kombinerer:
  *  1. Interaktivt Vrimlebillede (assets/selvom_alligevel_vrimmel.jpg) med 10 parrede hotspots:
- *     - 🧱 SELVOM (Muren / Forhindringen): Ledsætningskonjunktion (Subjekt + IKKE + Verbum)
- *     - ☄️ ALLIGEVEL (Bolden der bryder gennem muren): Konnektivt adverbium (Inversion i front eller på midterpladsen)
+ *     - SELVOM (Muren / Forhindringen): Ledsætningskonjunktion (Subjekt + IKKE + Verbum)
+ *     - ALLIGEVEL (Bolden der bryder gennem muren): Konnektivt adverbium (Inversion i front eller på midterpladsen)
  *  2. Den kognitive illustration fra Træning 2 (selvom_alligevel_guide.png) integreret direkte i fladen
  *  3. Ordstillings-røntgen & Sætnings-Transformeren (Omskriv "Selvom det regner, går vi en tur" ↔ "Det regner, men vi går alligevel en tur" / "Det regner. Alligevel går vi en tur")
  */
 export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, extraData = {}) {
+    applyKonjNuance(getActiveKonjNuance());
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -44,16 +46,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'selvom_regn',
             word: 'selvom (forhindringen = regnen)',
-            shortLabel: '🧱 selvom (det regner)',
+            shortLabel: 'selvom (det regner)',
             category: 'selvom',
-            cognitiveIcon: '🧱 Muren / Forhindringen (Ledsætning)',
+            cognitiveIcon: 'Muren / Forhindringen (Ledsætning)',
             x: 16,
             y: 12,
             meaning: 'Bygger muren/forhindringen op i en ledsætning ("although / even though")',
             sceneDesc: 'De mørke skyer øsregner ned over parken – regnen er den forhindring (muren), man normalt ville blive stoppet af.',
             sentence: 'Selvom det regner, går vi en tur.',
             contextSentence: 'Selvom det øsregner og blæser i parken, lufter parret glade deres hund.',
-            ruleHint: '🧱 SELVOM = MUREN: "Selvom" står altid foran selve FORHINDRINGEN ("det regner"). Og fordi "selvom"-sætningen står forrest her, kommer der INVERSION efter kommaet: "... GÅR VI en tur"!',
+            ruleHint: 'SELVOM = MUREN: "Selvom" står altid foran selve FORHINDRINGEN ("det regner"). Og fordi "selvom"-sætningen står forrest her, kommer der INVERSION efter kommaet: "... GÅR VI en tur"!',
             translations: {
                 en: { word: 'although / even though (+ obstacle clause)', sentence: 'Even though it is pouring rain and windy in the park, the couple happily walks their dog.' },
                 de: { word: 'obwohl (+ Nebensatz = Hindernis)', sentence: 'Obwohl es im Park in Strömen regnet, geht das Paar fröhlich mit dem Hund spazieren.' },
@@ -66,16 +68,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'alligevel_regn',
             word: 'alligevel (gennembruddet trods regn)',
-            shortLabel: '☄️ alligevel (går en tur)',
+            shortLabel: 'alligevel (går en tur)',
             category: 'alligevel',
-            cognitiveIcon: '☄️ Bolden gennem muren (Trods-handling)',
+            cognitiveIcon: 'Bolden gennem muren (Trods-handling)',
             x: 18,
             y: 34,
             meaning: 'Viser at handlingen gennemføres PÅ TRODS af forhindringen ("anyway / nevertheless")',
             sceneDesc: 'Parret i gult og rødt regntøj lader sig ikke stoppe af regnen – de går tur alligevel!',
             sentence: 'Det regner, men vi går alligevel en tur.',
             contextSentence: 'Vejret er vådt og gråt i dag. Alligevel tager de regntøj på og går ud i parken.',
-            ruleHint: '☄️ ALLIGEVEL = GENNEMBRUDDET: Muren ("Det regner") er allerede nævnt først. Nu bryder handlingen igennem muren med "alligevel"!',
+            ruleHint: 'ALLIGEVEL = GENNEMBRUDDET: Muren ("Det regner") er allerede nævnt først. Nu bryder handlingen igennem muren med "alligevel"!',
             translations: {
                 en: { word: 'anyway / nevertheless (breaking through the obstacle)', sentence: 'It is raining, but we are going for a walk anyway.' },
                 de: { word: 'trotzdem / dennoch (Durchbruch)', sentence: 'Es regnet, aber wir machen trotzdem einen Spaziergang.' },
@@ -88,16 +90,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'selvom_sne_bud',
             word: 'selvom (sne og kulde)',
-            shortLabel: '🧱 selvom (det sner)',
+            shortLabel: 'selvom (det sner)',
             category: 'selvom',
-            cognitiveIcon: '🧱 Muren / Forhindringen',
+            cognitiveIcon: 'Muren / Forhindringen',
             x: 10,
             y: 62,
             meaning: 'Introducerer den svære situation i en ledsætning',
             sceneDesc: 'Sneen ligger tykt på den stejle bakke, hvor cykelbuddet kører op med pakker.',
             sentence: 'Selvom han fryser i sneen, smiler han til kunderne.',
             contextSentence: 'Cykelbuddet bringer varm mad ud til tiden, selvom vejene er dækket af sne.',
-            ruleHint: '🧱 SELVOM kan både stå FORREST ("Selvom han fryser, smiler han") og BAGERST efter komma ("Han smiler, selvom han fryser") – men det står ALTID lige foran selve forhindringen!',
+            ruleHint: 'SELVOM kan både stå FORREST ("Selvom han fryser, smiler han") og BAGERST efter komma ("Han smiler, selvom han fryser") – men det står ALTID lige foran selve forhindringen!',
             translations: {
                 en: { word: 'even though (snow and cold)', sentence: 'Even though he is freezing in the snow, he smiles at the customers.' },
                 de: { word: 'obwohl (Schnee und Kälte)', sentence: 'Obwohl er im Schnee friert, lächelt er die Kunden an.' },
@@ -110,16 +112,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'alligevel_sne_bud',
             word: 'alligevel (fortsætter på trods)',
-            shortLabel: '☄️ fortsætter alligevel',
+            shortLabel: 'fortsætter alligevel',
             category: 'alligevel',
-            cognitiveIcon: '☄️ Bolden gennem muren (Sidst/Midt i helsætning)',
+            cognitiveIcon: 'Bolden gennem muren (Sidst/Midt i helsætning)',
             x: 16,
             y: 80,
             meaning: 'Står i den sætning, der gennemføres på trods af problemet',
             sceneDesc: 'Cykelbuddet træder hårdt i pedalerne og gennemfører sin vagt trods snevejret.',
             sentence: 'Det er en hård vagt, men han fortsætter alligevel.',
             contextSentence: 'Bakken er stejl og glat, men cykelbuddet gennemfører alligevel hele sin rute.',
-            ruleHint: '☄️ PLACERING AF ALLIGEVEL: Efter "men" står "alligevel" inde i helsætningen efter verbet ("... men han fortsætter ALLIGEVEL").',
+            ruleHint: 'PLACERING AF ALLIGEVEL: Efter "men" står "alligevel" inde i helsætningen efter verbet ("... men han fortsætter ALLIGEVEL").',
             translations: {
                 en: { word: 'continues anyway', sentence: 'It is a tough shift, but he continues anyway.' },
                 de: { word: 'macht trotzdem weiter', sentence: 'Es ist eine harte Schicht, aber er macht trotzdem weiter.' },
@@ -132,16 +134,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'selvom_muren_midte',
             word: 'selvom (selve muren i parken)',
-            shortLabel: '🧱 Muren = SELVOM',
+            shortLabel: 'Muren = SELVOM',
             category: 'selvom',
-            cognitiveIcon: '🧱 Den Visuelle Mur-Metafor',
+            cognitiveIcon: 'Den Visuelle Mur-Metafor',
             x: 48,
             y: 47,
             meaning: 'Visuelt symbol: "Selvom" bygger muren op!',
             sceneDesc: 'Midt i parken står murstensmuren som en forhindring på løbebanen, men løberen springer over den.',
             sentence: 'Selvom muren står i vejen, stopper løberen ikke.',
             contextSentence: 'Hun gennemfører forhindringsløbet i parken, selvom muren ikke er nem at hoppe over.',
-            ruleHint: '🧲 HUSK "IKKE"-MAGNETEN: I en "selvom"-ledsætning står "ikke" altid FØR verbet ("... selvom muren IKKE er nem")!',
+            ruleHint: 'HUSK "IKKE"-MAGNETEN: I en "selvom"-ledsætning står "ikke" altid FØR verbet ("... selvom muren IKKE er nem")!',
             translations: {
                 en: { word: 'although (the brick wall obstacle)', sentence: 'Even though the wall is in the way, the runner does not stop.' },
                 de: { word: 'obwohl (die Mauer als Hindernis)', sentence: 'Obwohl die Mauer im Weg steht, hält die Läuferin nicht an.' },
@@ -154,16 +156,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'alligevel_bolden_midte',
             word: 'alligevel (bolden gennem muren!)',
-            shortLabel: '☄️ Bolden = ALLIGEVEL',
+            shortLabel: 'Bolden = ALLIGEVEL',
             category: 'alligevel',
-            cognitiveIcon: '☄️ Den Visuelle Bold-Metafor',
+            cognitiveIcon: 'Den Visuelle Bold-Metafor',
             x: 58,
             y: 50,
             meaning: 'Visuelt symbol: "Alligevel" er bolden, der brager lige gennem muren!',
             sceneDesc: 'Den blå kugle brager direkte igennem murstensmuren, så stenene flyver til alle sider!',
             sentence: 'Muren er tyk, men bolden bryder alligevel igennem!',
             contextSentence: 'Forhindringen så umulig ud. Alligevel fløj den blå bold direkte igennem muren!',
-            ruleHint: '☄️ DEN KOGNITIVE HUSKEREGEL: Spørg dig selv: Er jeg ved at beskrive MUREN/PROBLEMET (➔ selvom), eller er jeg ved at beskrive GENNEMBRUDDET/HANDLINGEN PÅ TRODS (➔ alligevel)?',
+            ruleHint: 'DEN KOGNITIVE HUSKEREGEL: Spørg dig selv: Er jeg ved at beskrive MUREN/PROBLEMET (➔ selvom), eller er jeg ved at beskrive GENNEMBRUDDET/HANDLINGEN PÅ TRODS (➔ alligevel)?',
             translations: {
                 en: { word: 'nevertheless / anyway (the ball smashing through)', sentence: 'The wall is thick, but the ball breaks through anyway!' },
                 de: { word: 'trotzdem (der Ball durchbricht die Mauer)', sentence: 'Die Mauer ist dick, aber der Ball bricht trotzdem durch!' },
@@ -176,16 +178,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'selvom_syg',
             word: 'selvom (han er syg)',
-            shortLabel: '🧱 selvom (han er syg)',
+            shortLabel: 'selvom (han er syg)',
             category: 'selvom',
-            cognitiveIcon: '🧱 Muren / Forhindringen (Sygdom)',
+            cognitiveIcon: 'Muren / Forhindringen (Sygdom)',
             x: 88,
             y: 19,
             meaning: 'Sygdommen er forhindringen, som indledes med "selvom"',
             sceneDesc: 'Manden på værelset har halstørklæde på og feber på termometeret.',
             sentence: 'Selvom han er syg, arbejder han ved computeren.',
             contextSentence: 'Han besvarer de vigtigste mails hjemmefra, selvom han ikke føler sig rask.',
-            ruleHint: '🧱 BEMÆRK: Hvis du sætter "Selvom" foran "han er syg", er selve sygdommen muren. Du må ALDRIG bruge både "selvom" og "men" i samme sætning!',
+            ruleHint: 'BEMÆRK: Hvis du sætter "Selvom" foran "han er syg", er selve sygdommen muren. Du må ALDRIG bruge både "selvom" og "men" i samme sætning!',
             translations: {
                 en: { word: 'even though (he is sick)', sentence: 'Even though he is sick, he works at the computer.' },
                 de: { word: 'obwohl (er krank ist)', sentence: 'Obwohl er krank ist, arbeitet er am Computer.' },
@@ -198,16 +200,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'alligevel_syg',
             word: 'alligevel (arbejder på trods af feber)',
-            shortLabel: '☄️ arbejder alligevel',
+            shortLabel: 'arbejder alligevel',
             category: 'alligevel',
-            cognitiveIcon: '☄️ Gennembruddet (Inversion i front / midt)',
+            cognitiveIcon: 'Gennembruddet (Inversion i front / midt)',
             x: 82,
             y: 34,
             meaning: 'Arbejdet gennemføres på trods af feberen',
             sceneDesc: 'Manden drikker varm te og skriver videre på sin laptop trods feberen.',
             sentence: 'Han er syg, men han tager alligevel på arbejde.',
             contextSentence: 'Han har lidt feber i dag. Alligevel gør han rapporten færdig før mødet.',
-            ruleHint: '🔄 INVERSION NÅR ALLIGEVEL STÅR FORREST: "Han har feber. ALLIGEVEL GØR HAN rapporten færdig" (Verbum FØR Subjekt!).',
+            ruleHint: 'INVERSION NÅR ALLIGEVEL STÅR FORREST: "Han har feber. ALLIGEVEL GØR HAN rapporten færdig" (Verbum FØR Subjekt!).',
             translations: {
                 en: { word: 'works anyway / nevertheless', sentence: 'He is sick, but he goes to work anyway.' },
                 de: { word: 'arbeitet trotzdem', sentence: 'Er ist krank, aber er geht trotzdem zur Arbeit.' },
@@ -220,16 +222,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'alligevel_gammel_bil',
             word: 'alligevel (bilen kører godt)',
-            shortLabel: '☄️ kører alligevel godt',
+            shortLabel: 'kører alligevel godt',
             category: 'alligevel',
-            cognitiveIcon: '☄️ Gennembruddet (Den gamle bil)',
+            cognitiveIcon: 'Gennembruddet (Den gamle bil)',
             x: 75,
             y: 63,
             meaning: 'Bilen præsterer godt mod forventning',
             sceneDesc: 'Den lille gamle orange bil drøner friskt op ad bakken i snevejret.',
             sentence: 'Bilen er gammel, men den kører alligevel godt.',
             contextSentence: 'Den lille orange bil har kørt mange tusinde kilometer. Alligevel starter den hver eneste morgen.',
-            ruleHint: '☄️ SAMMENLIGN DE TO MÅDER AT SIGE DET PÅ: 1) "Selvom bilen er gammel [🧱 muren], kører den godt." ↔ 2) "Bilen er gammel, men den kører alligevel godt [☄️ bolden]!"',
+            ruleHint: 'SAMMENLIGN DE TO MÅDER AT SIGE DET PÅ: 1) "Selvom bilen er gammel [muren], kører den godt." ↔ 2) "Bilen er gammel, men den kører alligevel godt [bolden]!"',
             translations: {
                 en: { word: 'drives well anyway', sentence: 'The car is old, but it drives well anyway.' },
                 de: { word: 'fährt trotzdem gut', sentence: 'Das Auto ist alt, aber es fährt trotzdem gut.' },
@@ -242,16 +244,16 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         {
             id: 'selvom_drivhus',
             word: 'selvom (koldt udenfor drivhuset)',
-            shortLabel: '🧱 selvom (det er koldt ude)',
+            shortLabel: 'selvom (det er koldt ude)',
             category: 'selvom',
-            cognitiveIcon: '🧱 Muren / Kontrasten',
+            cognitiveIcon: 'Muren / Kontrasten',
             x: 89,
             y: 83,
             meaning: 'Kontrast mellem kulden udenfor og varmen i drivhuset',
             sceneDesc: 'Gartneren står i grønne planter inde i det lune drivhus, mens sneen ligger udenfor.',
             sentence: 'Selvom det er vinter udenfor, gror blomsterne i drivhuset.',
             contextSentence: 'Blomsterne spirer flot i det lune drivhus, selvom der ligger sne på jorden udenfor.',
-            ruleHint: '🧱 HUSK: "Selvom" binder to sætninger sammen uden brug af "men" eller "alligevel" (eller man kan sige det ekstra tydeligt i talesprog, men i skriftsprog er "Selvom X, så Y" klarest!).',
+            ruleHint: 'HUSK: "Selvom" binder to sætninger sammen uden brug af "men" eller "alligevel" (eller man kan sige det ekstra tydeligt i talesprog, men i skriftsprog er "Selvom X, så Y" klarest!).',
             translations: {
                 en: { word: 'even though (it is winter outside)', sentence: 'Even though it is winter outside, the flowers grow in the greenhouse.' },
                 de: { word: 'obwohl (es draußen Winter ist)', sentence: 'Obwohl draußen Winter ist, wachsen die Blumen im Gewächshaus.' },
@@ -591,12 +593,12 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: getTranslation('selvall_tab_vrimmel'), icon: '🖼️' },
-        { id: 'kognitiv', label: getTranslation('selvall_tab_kognitiv'), icon: '🔬' },
-        { id: 'traening2', label: getTranslation('selvall_tab_traening'), icon: '🧱' },
-        { id: 'detektiv', label: getTranslation('selvall_tab_detektiv'), icon: '🔍' },
-        { id: 'transformer', label: '5. Sætnings-transformeren (selvom ↔ alligevel)', icon: '🔄' },
-        { id: 'builder', label: '6. Sætningsbyggeren og puslespillet', icon: '🧩' }
+        { id: 'vrimmel', label: getTranslation('selvall_tab_vrimmel') },
+        { id: 'kognitiv', label: getTranslation('selvall_tab_kognitiv') },
+        { id: 'traening2', label: getTranslation('selvall_tab_traening') },
+        { id: 'detektiv', label: getTranslation('selvall_tab_detektiv') },
+        { id: 'transformer', label: '5. Sætnings-transformeren (selvom ↔ alligevel)' },
+        { id: 'builder', label: '6. Sætningsbyggeren og puslespillet' }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
@@ -605,7 +607,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === t.id ? 'active' : ''}`;
         btn.id = `sa-tab-${t.id}`;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.textContent = t.label;
         btn.onclick = () => switchTab(t.id);
         nav.appendChild(btn);
     });
@@ -653,8 +655,8 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         filtersDiv.className = 'vrimmel-filters';
         [
             { id: 'alle', label: 'Alle scener (10)' },
-            { id: 'selvom', label: '🧱 Selvom: muren / forhindringen (5)' },
-            { id: 'alligevel', label: '☄️ Alligevel: bolden / gennembruddet (5)' }
+            { id: 'selvom', label: 'Selvom: muren / forhindringen (5)' },
+            { id: 'alligevel', label: 'Alligevel: bolden / gennembruddet (5)' }
         ].forEach(f => {
             const b = document.createElement('button');
             b.className = `filter-btn ${activeFilter === f.id ? 'active' : ''}`;
@@ -670,7 +672,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
 
         const pureBtn = document.createElement('button');
         pureBtn.className = 'pure-toggle-btn';
-        pureBtn.innerHTML = `${isPureMode ? '👁️ Skjul mærker' : '🏷️ Vis mærker'}`;
+        pureBtn.innerHTML = `${isPureMode ? 'Skjul mærker' : 'Vis mærker'}`;
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -724,7 +726,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     </div>
                     <h2 class="inspector-word-title">${item.word}</h2>
                     <div class="inspector-trans-box">
-                        <div style="font-size:0.75rem; font-weight:800; color:#fdba74; text-transform:uppercase;">🌍 ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}</div>
+                        <div style="font-size:0.75rem; font-weight:800; color:#fdba74; text-transform:uppercase;">${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}</div>
                         <div style="font-size:1.3rem; font-weight:800; color:white; margin-top:0.2rem;">${trans.word}</div>
                         <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.2rem;">${item.meaning}</div>
                     </div>
@@ -737,10 +739,10 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     <div class="inspector-sentence-card">
                         <div style="font-size:0.75rem; font-weight:800; color:#fdba74; margin-bottom:0.3rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
-                        ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
+                        ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">"${trans.sentence}"</div>` : ''}
                     </div>
                     <div class="inspector-scene-box" style="border-left:3px solid #38bdf8;">
-                        <div style="font-size:0.8rem; font-weight:800; color:#7dd3fc;">🧭 Kognitiv & Grammatisk Regel</div>
+                        <div style="font-size:0.8rem; font-weight:800; color:#7dd3fc;">Kognitiv & Grammatisk Regel</div>
                         <p style="color:#cbd5e1; margin:0.3rem 0 0;">${item.ruleHint}</p>
                     </div>
                     <div style="display:flex; gap:0.8rem;">
@@ -813,49 +815,49 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             quote: '"Det regner, men vi går ______ en tur."',
             options: ['alligevel', 'selvom'],
             correct: 'alligevel',
-            explanation: '☄️ Korrekt! Regnen (muren) kender vi allerede – nu bryder bolden igennem muren med "alligevel"!'
+            explanation: 'Korrekt! Regnen (muren) kender vi allerede – nu bryder bolden igennem muren med "alligevel"!'
         },
         {
             quote: '"______ det regner, går vi en tur."',
             options: ['Selvom', 'Alligevel'],
             correct: 'Selvom',
-            explanation: '🧱 Korrekt! Før bolden kan bryde igennem, bygger vi muren/forhindringen ("det regner") op med "Selvom"!'
+            explanation: 'Korrekt! Før bolden kan bryde igennem, bygger vi muren/forhindringen ("det regner") op med "Selvom"!'
         },
         {
             quote: '"Han er syg, men han tager ______ på arbejde."',
             options: ['alligevel', 'selvom'],
             correct: 'alligevel',
-            explanation: '☄️ Korrekt! Sygdommen er muren, og han bryder igennem den og tager på arbejde "alligevel".'
+            explanation: 'Korrekt! Sygdommen er muren, og han bryder igennem den og tager på arbejde "alligevel".'
         },
         {
             quote: '"______ han er syg, tager han på arbejde."',
             options: ['Selvom', 'Alligevel'],
             correct: 'Selvom',
-            explanation: '🧱 Korrekt! Her præsenterer vi selve forhindringen ("han er syg") først – det kræver muren "Selvom".'
+            explanation: 'Korrekt! Her præsenterer vi selve forhindringen ("han er syg") først – det kræver muren "Selvom".'
         },
         {
             quote: '"Bilen er gammel, men den kører ______ godt."',
             options: ['alligevel', 'selvom'],
             correct: 'alligevel',
-            explanation: '☄️ Korrekt! Bilen kører godt PÅ TRODS AF alderen (bolden bryder gennem muren = alligevel).'
+            explanation: 'Korrekt! Bilen kører godt PÅ TRODS AF alderen (bolden bryder gennem muren = alligevel).'
         },
         {
             quote: '"______ bilen er meget gammel, kører den rigtig godt."',
             options: ['Selvom', 'Alligevel'],
             correct: 'Selvom',
-            explanation: '🧱 Korrekt! Her står forhindringen ("bilen er meget gammel") lige efter hullet ➔ "Selvom".'
+            explanation: 'Korrekt! Her står forhindringen ("bilen er meget gammel") lige efter hullet ➔ "Selvom".'
         },
         {
             quote: '"______ Peter fryser i snevejret, smiler han til kunderne."',
             options: ['Selvom', 'Alligevel'],
             correct: 'Selvom',
-            explanation: '🧱 Korrekt! Kulden ("Peter fryser") er muren, som vi starter med at bygge op.'
+            explanation: 'Korrekt! Kulden ("Peter fryser") er muren, som vi starter med at bygge op.'
         },
         {
             quote: '"Det er en hård vagt i snevejret, men Peter fortsætter ______."',
             options: ['alligevel', 'selvom'],
             correct: 'alligevel',
-            explanation: '☄️ Korrekt! Han bryder igennem den hårde vagt og fortsætter "alligevel".'
+            explanation: 'Korrekt! Han bryder igennem den hårde vagt og fortsætter "alligevel".'
         }
     ];
 
@@ -864,10 +866,10 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         box.className = 'detektiv-container';
         box.innerHTML = `
             <div style="text-align:center; margin-bottom:1.5rem;">
-                <h2 style="color:#fdba74; margin:0 0 0.5rem;">🧱 Træning 2: Selvom eller Alligevel? (Med Kognitiv Illustration)</h2>
+                <h2 style="color:#fdba74; margin:0 0 0.5rem;">Træning 2: Selvom eller Alligevel? (Med Kognitiv Illustration)</h2>
                 <img src="${baseUrl}selvom_alligevel_guide.png" alt="Selvom vs Alligevel guide" style="max-width:560px; width:100%; border-radius:16px; border:2px solid #f97316; margin:0.6rem auto; display:block; background:white;" />
                 <p style="color:#cbd5e1; max-width:720px; margin:0.5rem auto 0;">
-                    <em>🧱 <strong>'Selvom'</strong> er muren / forhindringen. ☄️ <strong>'Alligevel'</strong> er bolden, der kommer igennem muren (handlingen gennemføres trods forhindringen).</em>
+                    <em><strong>'Selvom'</strong> er muren / forhindringen. <strong>'Alligevel'</strong> er bolden, der kommer igennem muren (handlingen gennemføres trods forhindringen).</em>
                 </p>
             </div>
             <div id="sa-t2-list"></div>
@@ -895,7 +897,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     fb.style.display = 'block';
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
-                    fb.textContent = ok ? q.explanation : '⚠️ Tænk på illustrationen: Bygger vi 🧱 muren/forhindringen op (selvom), eller bryder ☄️ bolden igennem muren (alligevel)?';
+                    fb.textContent = ok ? q.explanation : 'Tænk på illustrationen: Bygger vi muren/forhindringen op (selvom), eller bryder bolden igennem muren (alligevel)?';
                 };
             });
             list.appendChild(card);
@@ -911,49 +913,49 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
             quote: '"Vi hyggede os rigtig meget til havefesten, selvom solen ______."',
             options: ['ikke skinnede', 'skinnede ikke'],
             correct: 'ikke skinnede',
-            explanation: '🌟 Præcis! "Selvom" er en ledsætningskonjunktion, så "ikke" står FØR verbet ("ikke skinnede")!'
+            explanation: 'Præcis! "Selvom" er en ledsætningskonjunktion, så "ikke" står FØR verbet ("ikke skinnede")!'
         },
         {
             tag: 'Gåde 2 • Ordstilling når "Alligevel" står forrest efter punktum',
             quote: '"Solen skinnede slet ikke til havefesten. Alligevel ______ rigtig meget!"',
             options: ['hyggede vi os', 'vi hyggede os'],
             correct: 'hyggede vi os',
-            explanation: '🌟 Fuldstændig rigtigt! "Alligevel" er et konnektivt adverbium. Når det står på Plads 1 efter punktum, udløser det INVERSION: "Alligevel hyggede vi os"!'
+            explanation: 'Fuldstændig rigtigt! "Alligevel" er et konnektivt adverbium. Når det står på Plads 1 efter punktum, udløser det INVERSION: "Alligevel hyggede vi os"!'
         },
         {
             tag: 'Gåde 3 • Mur eller Bold?',
             quote: '"Jakken var egentlig alt for dyr. ______ købte han den, fordi han elskede farven."',
-            options: ['Alligevel (☄️ Bolden)', 'Selvom (🧱 Muren)'],
-            correct: 'Alligevel (☄️ Bolden)',
-            explanation: '🌟 Rigtigt! Muren ("Jakken var alt for dyr") er allerede nævnt i første sætning. Nu bryder han igennem og køber den "Alligevel"!'
+            options: ['Alligevel (Bolden)', 'Selvom (Muren)'],
+            correct: 'Alligevel (Bolden)',
+            explanation: 'Rigtigt! Muren ("Jakken var alt for dyr") er allerede nævnt i første sætning. Nu bryder han igennem og køber den "Alligevel"!'
         },
         {
             tag: 'Gåde 4 • Mur eller Bold?',
             quote: '"Han købte jakken, ______ den egentlig var alt for dyr."',
-            options: ['selvom (🧱 Muren)', 'alligevel (☄️ Bolden)'],
-            correct: 'selvom (🧱 Muren)',
-            explanation: '🌟 Lige i øjet! Her kommer selve forhindringen ("den var alt for dyr") efter kommaet ➔ muren "selvom"!'
+            options: ['selvom (Muren)', 'alligevel (Bolden)'],
+            correct: 'selvom (Muren)',
+            explanation: 'Lige i øjet! Her kommer selve forhindringen ("den var alt for dyr") efter kommaet ➔ muren "selvom"!'
         },
         {
             tag: 'Gåde 5 • Ledsætning med "Selvom" i front',
             quote: '"Selvom kaffen er blevet lunken, ______ med et smil."',
             options: ['drikker hun den', 'hun drikker den'],
             correct: 'drikker hun den',
-            explanation: '🌟 Perfekt! Hele "Selvom"-ledsætningen fylder Forfeltet (Plads 1), så der kommer inversion i hovedsætningen: "drikker hun den"!'
+            explanation: 'Perfekt! Hele "Selvom"-ledsætningen fylder Forfeltet (Plads 1), så der kommer inversion i hovedsætningen: "drikker hun den"!'
         },
         {
             tag: 'Gåde 6 • Pas på dobbelt-konjunktion!',
             quote: '"Selvom jeg var meget træt efter rejsen, ______."',
             options: ['gik jeg ud at spise med mine venner', 'men jeg gik ud at spise med mine venner'],
             correct: 'gik jeg ud at spise med mine venner',
-            explanation: '🌟 Vigtig regel! Når du allerede har brugt "Selvom", må du IKKE sætte "men" foran hovedsætningen – hovedsætningen starter direkte med verbet ("gik jeg...")!'
+            explanation: 'Vigtig regel! Når du allerede har brugt "Selvom", må du IKKE sætte "men" foran hovedsætningen – hovedsætningen starter direkte med verbet ("gik jeg...")!'
         }
     ];
 
     function renderTabDetektiv(parent) {
         const box = document.createElement('div');
         box.className = 'detektiv-container';
-        box.innerHTML = `<h2 style="text-align:center; color:#fdba74; margin-top:0;">🔍 Mur- eller Bold-Detektiven & Ordstilling</h2><div id="sa-det-list"></div>`;
+        box.innerHTML = `<h2 style="text-align:center; color:#fdba74; margin-top:0;">Mur- eller Bold-Detektiven & Ordstilling</h2><div id="sa-det-list"></div>`;
         parent.appendChild(box);
         const list = box.querySelector('#sa-det-list');
 
@@ -977,7 +979,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     fb.style.display = 'block';
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
-                    fb.textContent = ok ? q.explanation : '⚠️ Prøv igen!';
+                    fb.textContent = ok ? q.explanation : 'Prøv igen!';
                 };
             });
             list.appendChild(card);
@@ -989,7 +991,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     // ==========================================
     const TRANSFORM_QUESTIONS = [
         {
-            original: '🧱 Original med SELVOM: "Selvom det regner, går vi en tur."',
+            original: 'Original med SELVOM: "Selvom det regner, går vi en tur."',
             prompt: 'Omskriv nu den samme situation til en sætning med ALLIGEVEL:',
             options: [
                 'Det regner, men vi går alligevel en tur.',
@@ -997,10 +999,10 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                 'Det regner, selvom vi går alligevel en tur.'
             ],
             correct: 'Det regner, men vi går alligevel en tur.',
-            explanation: '🌟 Perfekt! Først nævnes regnen ("Det regner"), og i næste sætning bryder vi igennem med "... men vi går alligevel en tur"!'
+            explanation: 'Perfekt! Først nævnes regnen ("Det regner"), og i næste sætning bryder vi igennem med "... men vi går alligevel en tur"!'
         },
         {
-            original: '☄️ Original med ALLIGEVEL: "Han er ikke rask, men han tager alligevel på arbejde."',
+            original: 'Original med ALLIGEVEL: "Han er ikke rask, men han tager alligevel på arbejde."',
             prompt: 'Omskriv nu sætningen, så den bruger SELVOM (og pas på placeringen af "ikke"!):',
             options: [
                 'Han tager på arbejde, selvom han ikke er rask.',
@@ -1008,10 +1010,10 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                 'Selvom han tager på arbejde, er han ikke rask.'
             ],
             correct: 'Han tager på arbejde, selvom han ikke er rask.',
-            explanation: '🌟 Skarpt! Forhindringen ("han ikke er rask") skal stå efter "selvom", og i ledsætningen rykker "ikke" frem FØR verbet ("ikke er")!'
+            explanation: 'Skarpt! Forhindringen ("han ikke er rask") skal stå efter "selvom", og i ledsætningen rykker "ikke" frem FØR verbet ("ikke er")!'
         },
         {
-            original: '🧱 Original med SELVOM: "Bilen kører godt, selvom den er meget gammel."',
+            original: 'Original med SELVOM: "Bilen kører godt, selvom den er meget gammel."',
             prompt: 'Omskriv til to sætninger, hvor ALLIGEVEL står allerforrest i sætning 2 (Husk Inversion!):',
             options: [
                 'Bilen er meget gammel. Alligevel kører den godt.',
@@ -1019,7 +1021,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                 'Alligevel bilen er meget gammel, kører den godt.'
             ],
             correct: 'Bilen er meget gammel. Alligevel kører den godt.',
-            explanation: '🌟 Mesterligt! Først muren ("Bilen er meget gammel."), og derefter "Alligevel kører den godt" med INVERSION (kører den)!'
+            explanation: 'Mesterligt! Først muren ("Bilen er meget gammel."), og derefter "Alligevel kører den godt" med INVERSION (kører den)!'
         }
     ];
 
@@ -1027,7 +1029,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
         const box = document.createElement('div');
         box.className = 'detektiv-container';
         box.innerHTML = `
-            <h2 style="text-align:center; color:#7dd3fc; margin-top:0;">🔄 Sætnings-Transformeren: Omskriv mellem Selvom og Alligevel</h2>
+            <h2 style="text-align:center; color:#7dd3fc; margin-top:0;">Sætnings-Transformeren: Omskriv mellem Selvom og Alligevel</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:740px; margin:0 auto 1.5rem;">
                 Når du kan omskrive en <strong><em>selvom</em></strong>-sætning til en <strong><em>alligevel</em></strong>-sætning (og omvendt), mestrer du både den kognitive forskel og ordstillingen!
             </p>
@@ -1056,7 +1058,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                     fb.style.display = 'block';
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
-                    fb.textContent = ok ? q.explanation : '⚠️ Tjek både hvem der er muren/bolden OG ordstillingen!';
+                    fb.textContent = ok ? q.explanation : 'Tjek både hvem der er muren/bolden OG ordstillingen!';
                 };
             });
             list.appendChild(card);
@@ -1068,17 +1070,17 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     // ==========================================
     const PUZZLES = [
         {
-            title: 'Puslespil 1 • 🧱 Selvom-ledsætning i front med inversion',
+            title: 'Puslespil 1 • Selvom-ledsætning i front med inversion',
             hint: 'Start med muren ("Selvom det regner,"), og husk at sætte verbet FØR subjektet i hovedsætningen:',
             correct: ['Selvom det regner,', 'går', 'vi', 'en tur.']
         },
         {
-            title: 'Puslespil 2 • ☄️ Alligevel efter "men" i hovedsætning',
+            title: 'Puslespil 2 • Alligevel efter "men" i hovedsætning',
             hint: 'Start med muren ("Det regner, men"), og sæt derefter "alligevel" efter verbet:',
             correct: ['Det regner, men', 'vi', 'går', 'alligevel en tur.']
         },
         {
-            title: 'Puslespil 3 • ☄️ Alligevel i front med inversion',
+            title: 'Puslespil 3 • Alligevel i front med inversion',
             hint: 'Start med "Det regner. Alligevel", og husk at bytte om på verbum og subjekt:',
             correct: ['Det regner.', 'Alligevel', 'går', 'vi en tur.']
         }
@@ -1087,7 +1089,7 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
     function renderTabBuilder(parent) {
         const box = document.createElement('div');
         box.className = 'detektiv-container';
-        box.innerHTML = `<h2 style="text-align:center; color:#fdba74; margin-top:0;">🧩 Sætningsbyggeren: Selvom vs. Alligevel</h2><div id="sa-puz-list"></div>`;
+        box.innerHTML = `<h2 style="text-align:center; color:#fdba74; margin-top:0;">Sætningsbyggeren: Selvom vs. Alligevel</h2><div id="sa-puz-list"></div>`;
         parent.appendChild(box);
         const list = box.querySelector('#sa-puz-list');
 
@@ -1110,9 +1112,9 @@ export function renderKonjunktionerSelvomAlligevelView(container, navigateFn, ex
                             const used = placed.includes(w);
                             return `<button class="detektiv-opt-btn" data-add="${idx}" ${used ? 'disabled style="opacity:0.3;"' : 'style="padding:0.55rem 1rem; font-size:1rem;"'}>${w}</button>`;
                         }).join('')}
-                        <button class="detektiv-opt-btn" id="reset-puz" style="padding:0.55rem 1rem; font-size:0.9rem; background:#334155;">🔄 Nulstil</button>
+                        <button class="detektiv-opt-btn" id="reset-puz" style="padding:0.55rem 1rem; font-size:0.9rem; background:#334155;">Nulstil</button>
                     </div>
-                    ${isDone ? `<div style="margin-top:1rem; color:#4ade80; font-weight:800;">🌟 Perfekt ordstilling! "${p.correct.join(' ')}"</div>` : ''}
+                    ${isDone ? `<div style="margin-top:1rem; color:#4ade80; font-weight:800;">Perfekt ordstilling! "${p.correct.join(' ')}"</div>` : ''}
                 `;
                 card.querySelectorAll('[data-add]').forEach(b => {
                     b.onclick = () => {

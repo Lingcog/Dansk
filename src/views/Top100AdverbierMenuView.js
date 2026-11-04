@@ -1,11 +1,22 @@
 import { getTranslation } from '../utils/i18n.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+
+function stripLeadingEmoji(text) {
+    if (!text) return '';
+    return text.replace(/^[\p{Extended_Pictographic}\s\uFE0F]+/u, '').trim();
+}
 
 /**
  * Top100AdverbierMenuView - Hub for de mest almindelige danske adverbier.
  * 7 semantiske felter med pædagogiske råd og flersproget støtte.
+ * 'Vinrød Præcision' design system med Dyb safirblå tema og monokrome vektorsymboler.
  */
 export function renderTop100AdverbierMenuView(container, navigateFn) {
     container.innerHTML = '';
+
+    // Aktivér valgt adverbium-nuance (standard: Dyb safirblå / adv-safir)
+    applyAdvNuance(getActiveAdvNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container top100-adverbier-hub';
@@ -24,12 +35,70 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --adv-bg: #4A040B;
+            --adv-bg-glow: #6B0F1A;
+            --adv-surface: #0A192F;
+            --adv-surface-hover: #112240;
+            --adv-surface-input: #050E1A;
+            --adv-border: #1E3A66;
+            --adv-border-focus: #93C5FD;
+            --adv-primary: #3B82F6;
+            --adv-primary-hover: #1D4ED8;
+            --adv-glow: rgba(59, 130, 246, 0.7);
+            --adv-text: #FFFFFF;
+            --adv-text-muted: #BFDBFE;
+            --adv-text-subtle: #93C5FD;
+        }
+
+        body[data-adv-nuance] {
+            background-color: var(--adv-bg, #4A040B) !important;
+            background-image: radial-gradient(circle at top right, var(--adv-bg-glow, #6B0F1A), var(--adv-bg, #4A040B)) !important;
+        }
+
         .top100-adverbier-hub {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1.5rem 1.5rem 4rem;
-            color: #f8fafc;
+            color: #FFFFFF;
+            font-family: var(--vp-font-family, 'Outfit', sans-serif);
         }
+
+        .top100-adverbier-hub .ds-icon-emoji {
+            display: none !important;
+        }
+        .top100-adverbier-hub .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .top100-adverbier-hub .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
+        }
+
+        .top100-adverbier-hub .top-bar {
+            margin-bottom: 1.2rem;
+        }
+        .top100-adverbier-hub .back-btn {
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .top100-adverbier-hub .back-btn:hover {
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
+        }
+
         .hub-hero {
             text-align: center;
             margin-bottom: 2.5rem;
@@ -38,12 +107,14 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            letter-spacing: -0.02em;
         }
         .hub-hero p {
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 1.15rem;
             max-width: 750px;
             margin: 0 auto 1.5rem;
@@ -57,29 +128,30 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             margin-bottom: 3rem;
         }
         .scene-card {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            background: var(--adv-surface, #0A192F);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.35s ease;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
             color: inherit;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
             position: relative;
         }
         .scene-card:hover {
-            transform: translateY(-8px);
-            border-color: #38bdf8;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.35);
+            transform: translateY(-4px);
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: var(--adv-surface-hover, #112240);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 20px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .scene-card-img-wrap {
             position: relative;
             width: 100%;
             height: 200px;
             overflow: hidden;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
         }
         .scene-card-img {
             width: 100%;
@@ -103,29 +175,32 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             font-weight: 700;
             padding: 0.3rem 0.75rem;
             border-radius: 9999px;
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(59, 130, 246, 0.16);
+            color: var(--adv-text-subtle, #93C5FD);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
         .scene-card-content h3 {
             font-size: 1.35rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            color: white;
+            color: #FFFFFF;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         .scene-card-content p {
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.95rem;
             line-height: 1.5;
             margin-bottom: 1.2rem;
             flex-grow: 1;
         }
         .scene-action-btn {
-            background: #0284c7;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.8rem 1.4rem;
@@ -138,22 +213,25 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            box-shadow: 0 4px 14px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .scene-card:hover .scene-action-btn {
-            background: #0369a1;
+            background: var(--adv-primary-hover, #1D4ED8);
+            box-shadow: 0 6px 18px var(--adv-glow, rgba(59, 130, 246, 0.55));
         }
 
         /* Pedagogical Advice Box */
         .adv-pedagogical-box {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--adv-surface, #0A192F);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2rem;
             margin-top: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
         }
         .adv-pedagogical-box h2 {
             font-size: 1.4rem;
-            color: #f8fafc;
+            color: #FFFFFF;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -166,22 +244,22 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
             margin-top: 1.2rem;
         }
         .adv-pedagogical-item {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.2rem;
         }
         .adv-pedagogical-item h3 {
             font-size: 1.05rem;
             font-weight: 700;
-            color: #38bdf8;
+            color: var(--adv-text-subtle, #93C5FD);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.4rem;
         }
         .adv-pedagogical-item p {
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.92rem;
             line-height: 1.5;
             margin: 0;
@@ -205,6 +283,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
     const fields = [
         {
             id: 'adverbier_sted',
+            icon: 'mapPin',
             badge: getTranslation('top100_adv_f1_badge'),
             img: 'assets/adverbier_sted_vrimmel.jpg',
             title: getTranslation('top100_adv_f1_title'),
@@ -213,6 +292,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_tid',
+            icon: 'clock',
             badge: getTranslation('top100_adv_f2_badge'),
             img: 'assets/adverbier_tid_vrimmel.jpg',
             title: getTranslation('top100_adv_f2_title'),
@@ -221,6 +301,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_maade',
+            icon: 'zap',
             badge: getTranslation('top100_adv_f3_badge'),
             img: 'assets/adverbier_maade_vrimmel.jpg',
             title: getTranslation('top100_adv_f3_title'),
@@ -229,6 +310,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_grad',
+            icon: 'thermometer',
             badge: getTranslation('top100_adv_f4_badge'),
             img: 'assets/adverbier_grad_vrimmel.jpg',
             title: getTranslation('top100_adv_f4_title'),
@@ -237,6 +319,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_smaaord',
+            icon: 'messageSquare',
             badge: getTranslation('top100_adv_f5_badge'),
             img: 'assets/adverbier_smaaord_vrimmel.jpg',
             title: getTranslation('top100_adv_f5_title'),
@@ -245,6 +328,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_holdning',
+            icon: 'compass',
             badge: getTranslation('top100_adv_f6_badge'),
             img: 'assets/adverbier_holdning_vrimmel.jpg',
             title: getTranslation('top100_adv_f6_title'),
@@ -253,6 +337,7 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
         },
         {
             id: 'adverbier_konnektion',
+            icon: 'bridge',
             badge: getTranslation('top100_adv_f7_badge'),
             img: 'assets/adverbier_konnektion_vrimmel.jpg',
             title: getTranslation('top100_adv_f7_title'),
@@ -269,10 +354,10 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
                 <img src="${f.img}" alt="${f.title}" class="scene-card-img">
             </div>
             <div class="scene-card-content">
-                <span class="scene-card-badge">${f.badge}</span>
-                <h3>${f.title}</h3>
+                <span class="scene-card-badge">${renderDsIcon(f.icon, '', { size: 14 })} <span>${stripLeadingEmoji(f.badge)}</span></span>
+                <h3>${renderDsIcon(f.icon, '', { size: 22 })} <span>${stripLeadingEmoji(f.title)}</span></h3>
                 <p>${f.desc}</p>
-                <button class="scene-action-btn">${f.btnText}</button>
+                <button class="scene-action-btn">${stripLeadingEmoji(f.btnText)}</button>
             </div>
         `;
         card.onclick = () => navigateFn(f.id);
@@ -285,18 +370,18 @@ export function renderTop100AdverbierMenuView(container, navigateFn) {
     const infoBox = document.createElement('div');
     infoBox.className = 'adv-pedagogical-box';
     infoBox.innerHTML = `
-        <h2>💡 ${getTranslation('top100_adv_ped_title')}</h2>
+        <h2>${renderDsIcon('lightbulb', '', { size: 22 })} <span>${stripLeadingEmoji(getTranslation('top100_adv_ped_title'))}</span></h2>
         <div class="adv-pedagogical-grid">
             <div class="adv-pedagogical-item">
-                <h3>🔄 ${getTranslation('top100_adv_ped_item1_title')}</h3>
+                <h3>${renderDsIcon('refresh', '', { size: 18 })} <span>${stripLeadingEmoji(getTranslation('top100_adv_ped_item1_title'))}</span></h3>
                 <p>${getTranslation('top100_adv_ped_item1_desc')}</p>
             </div>
             <div class="adv-pedagogical-item">
-                <h3>⚖️ ${getTranslation('top100_adv_ped_item2_title')}</h3>
+                <h3>${renderDsIcon('scale', '', { size: 18 })} <span>${stripLeadingEmoji(getTranslation('top100_adv_ped_item2_title'))}</span></h3>
                 <p>${getTranslation('top100_adv_ped_item2_desc')}</p>
             </div>
             <div class="adv-pedagogical-item">
-                <h3>💬 ${getTranslation('top100_adv_ped_item3_title')}</h3>
+                <h3>${renderDsIcon('messageSquare', '', { size: 18 })} <span>${stripLeadingEmoji(getTranslation('top100_adv_ped_item3_title'))}</span></h3>
                 <p>${getTranslation('top100_adv_ped_item3_desc')}</p>
             </div>
         </div>

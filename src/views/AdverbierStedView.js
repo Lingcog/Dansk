@@ -1,5 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierStedView - Felt 1: Sted (Retning vs. Hvile)
@@ -12,6 +19,9 @@ import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations
  */
 export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-sted-view';
@@ -26,6 +36,40 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? 'active' : ''}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join('')}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -320,11 +364,119 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     // View Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --adv-bg: #4A040B;
+            --adv-bg-glow: #6B0F1A;
+            --adv-surface: #0A192F;
+            --adv-surface-hover: #112240;
+            --adv-surface-input: #050E1A;
+            --adv-border: #1E3A66;
+            --adv-border-focus: #60A5FA;
+            --adv-primary: #3B82F6;
+            --adv-primary-hover: #2563EB;
+            --adv-glow: rgba(59, 130, 246, 0.45);
+            --adv-text: #FFFFFF;
+            --adv-text-muted: #BFDBFE;
+            --adv-text-subtle: #93C5FD;
+        }
+
+        body[data-adv-nuance] {
+            background-color: var(--adv-bg, #4A040B) !important;
+            background-image: radial-gradient(circle at top right, var(--adv-bg-glow, #6B0F1A), var(--adv-bg, #4A040B)) !important;
+        }
+
+        /* Localhost Nuance Toggle Bar */
+        .adv-localhost-toggle-bar {
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-radius: 16px;
+            padding: 0.85rem 1.2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .adv-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: #FFFFFF;
+        }
+        .adv-pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--adv-primary, #3B82F6);
+            box-shadow: 0 0 10px var(--adv-primary, #3B82F6);
+            display: inline-block;
+            animation: advPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes advPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .adv-toggle-hint {
+            color: var(--adv-text-muted, #BFDBFE);
+            font-size: 0.85rem;
+        }
+        .adv-toggle-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .adv-nuance-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            color: var(--adv-text-muted, #BFDBFE);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .adv-nuance-btn:hover {
+            color: #FFFFFF;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
+            transform: translateY(-1px);
+        }
+        .adv-nuance-btn.active {
+            background: var(--adv-primary, #3B82F6);
+            color: #FFFFFF;
+            border-color: var(--adv-border-focus, #60A5FA);
+            box-shadow: 0 0 14px var(--adv-glow, rgba(59, 130, 246, 0.5));
+        }
+
         .adverbier-sted-view {
             max-width: 1240px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
+        }
+
+        .adverbier-sted-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .adverbier-sted-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .adverbier-sted-view .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
         }
         .adv-hero {
             text-align: center;
@@ -334,16 +486,19 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             font-size: 2.3rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            letter-spacing: -0.01em;
         }
         .adv-hero p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
             font-size: 1.1rem;
             max-width: 820px;
             margin: 0 auto 1.2rem;
             line-height: 1.5;
+            opacity: 0.95;
         }
         .adv-rule-banner {
             display: flex;
@@ -364,7 +519,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         .rule-retning {
             background: rgba(14, 165, 233, 0.15);
             border: 1.5px solid #0ea5e9;
-            color: #38bdf8;
+            color: var(--adv-border-focus, #93C5FD);
         }
         .rule-hvile {
             background: rgba(245, 158, 11, 0.15);
@@ -372,40 +527,51 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             color: #fbbf24;
         }
 
-        /* Tabs Nav */
-        .adv-tabs-nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 0.5rem;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Tabs Nav - Oversigtsrammen med opgaver i Dyb safirblå */
+        html[data-theme] .adverbier-sted-view .adv-tabs-nav,
+        body[data-adv-nuance] .adv-tabs-nav,
+        .adverbier-sted-view .adv-tabs-nav {
+            display: flex !important;
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+            gap: 0.5rem !important;
+            margin-bottom: 2rem !important;
+            background: var(--adv-surface, #0A192F) !important;
+            padding: 0.6rem !important;
+            border-radius: 16px !important;
+            border: 2px solid var(--adv-border, #1E3A66) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
         }
-        .adv-tab-btn {
-            background: transparent;
-            color: #94a3b8;
-            border: none;
-            padding: 0.65rem 1.1rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.92rem;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
+        html[data-theme] .adverbier-sted-view .adv-tab-btn,
+        body[data-adv-nuance] .adv-tab-btn,
+        .adverbier-sted-view .adv-tab-btn {
+            background: transparent !important;
+            color: var(--adv-text-muted, #BFDBFE) !important;
+            border: 1px solid transparent !important;
+            padding: 0.65rem 1.15rem !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            font-size: 0.92rem !important;
+            cursor: pointer !important;
+            transition: all 0.25s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.45rem !important;
         }
-        .adv-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+        html[data-theme] .adverbier-sted-view .adv-tab-btn:hover,
+        body[data-adv-nuance] .adv-tab-btn:hover,
+        .adverbier-sted-view .adv-tab-btn:hover {
+            color: #FFFFFF !important;
+            background: var(--adv-surface-hover, #112240) !important;
+            border-color: var(--adv-border, #1E3A66) !important;
         }
-        .adv-tab-btn.active {
-            background: #0ea5e9;
-            color: white;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+        html[data-theme] .adverbier-sted-view .adv-tab-btn.active,
+        body[data-adv-nuance] .adv-tab-btn.active,
+        .adverbier-sted-view .adv-tab-btn.active {
+            background: var(--adv-primary, #3B82F6) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid var(--adv-border-focus, #93C5FD) !important;
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5)) !important;
         }
 
         /* Tab 1: Vrimmel Styling */
@@ -416,10 +582,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
             gap: 1rem;
             margin-bottom: 1rem;
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             padding: 0.8rem 1.2rem;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .filter-group {
             display: flex;
@@ -427,9 +593,9 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #334155;
+            background: var(--adv-surface-hover, #112240);
             color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.4rem 0.9rem;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -441,9 +607,9 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             color: white;
         }
         .filter-btn.active {
-            background: #0ea5e9;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border-color: #38bdf8;
+            border-color: var(--adv-border-focus, #60A5FA);
             font-weight: 700;
         }
         .toggle-pins-btn {
@@ -468,8 +634,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            background: #090d16;
+            border: 2px solid var(--adv-border, #1E3A66);
+            background: var(--adv-surface-input, #050E1A);
             margin-bottom: 2rem;
         }
         .vrimmel-bg-img {
@@ -513,18 +679,20 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
         }
         .hotspot-pin.active {
-            transform: translate(-50%, -50%) scale(1.15);
+            transform: translate(-50%, -50%) scale(1.18);
             z-index: 30;
-            box-shadow: 0 0 16px #38bdf8, 0 4px 12px rgba(0, 0, 0, 0.8);
-            border-color: #38bdf8;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.95), 0 0 35px rgba(59, 130, 246, 0.55), 0 4px 14px rgba(0, 0, 0, 0.85);
+            border: 2px solid #BAE6FD !important;
         }
         .pin-retning {
-            background: rgba(2, 132, 199, 0.92);
+            background: linear-gradient(135deg, #1D4ED8, #3B82F6);
             color: white;
+            border-color: #93C5FD;
         }
         .pin-hvile {
-            background: rgba(217, 119, 6, 0.92);
+            background: linear-gradient(135deg, #0369A1, #0284C7);
             color: white;
+            border-color: #BAE6FD;
         }
 
         @media (max-width: 768px) {
@@ -542,10 +710,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         /* Inspector Card */
         .inspector-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 1.8rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
@@ -585,7 +753,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         .badge-retning {
             background: rgba(14, 165, 233, 0.2);
             border: 1.5px solid #38bdf8;
-            color: #38bdf8;
+            color: var(--adv-border-focus, #60A5FA);
         }
         .badge-hvile {
             background: rgba(245, 158, 11, 0.2);
@@ -593,7 +761,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             color: #fbbf24;
         }
         .inspector-speak-btn {
-            background: #334155;
+            background: var(--adv-surface-hover, #112240);
             color: white;
             border: 1px solid rgba(255,255,255,0.2);
             width: 44px;
@@ -607,12 +775,12 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .inspector-speak-btn:hover {
-            background: #0ea5e9;
+            background: var(--adv-primary, #3B82F6);
             transform: scale(1.1);
         }
         .inspector-scene-desc {
-            background: rgba(15, 23, 42, 0.6);
-            border-left: 4px solid #0ea5e9;
+            background: var(--adv-surface-input, #050E1A);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
             padding: 0.8rem 1rem;
             border-radius: 0 12px 12px 0;
             font-size: 0.95rem;
@@ -635,29 +803,29 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             line-height: 1.4;
         }
         .inspector-sentence-text strong {
-            color: #38bdf8;
+            color: var(--adv-border-focus, #60A5FA);
         }
         .inspector-right {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.4rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .pair-switch-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 12px;
             padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--adv-border, #1E3A66);
             display: flex;
             flex-direction: column;
             gap: 0.6rem;
         }
         .pair-switch-header {
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -693,10 +861,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         /* Tab 2: Detektiv Viewfinder */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
             max-width: 900px;
             margin: 0 auto;
@@ -710,7 +878,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             gap: 1rem;
         }
         .detektiv-progress-badge {
-            background: #0ea5e9;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             padding: 0.4rem 1rem;
             border-radius: 20px;
@@ -735,7 +903,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             border: 3px solid #38bdf8;
             box-shadow: 0 0 30px rgba(56, 189, 248, 0.3), inset 0 0 30px rgba(0,0,0,0.8);
             margin-bottom: 1.5rem;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
         }
         .viewfinder-inner-img {
             width: 100%;
@@ -776,15 +944,15 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 0.85rem;
-            color: #38bdf8;
+            color: var(--adv-border-focus, #60A5FA);
             font-weight: 700;
         }
         .detektiv-prompt-box {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.3rem;
             border-radius: 14px;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .detektiv-prompt-text {
             font-size: 1.15rem;
@@ -802,9 +970,9 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             .detektiv-choices { grid-template-columns: 1fr; }
         }
         .detektiv-choice-btn {
-            background: #334155;
+            background: var(--adv-surface-hover, #112240);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1rem 1.4rem;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -817,20 +985,23 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             gap: 0.6rem;
         }
         .detektiv-choice-btn:hover:not(:disabled) {
-            background: #475569;
-            border-color: #38bdf8;
+            background: rgba(30, 58, 102, 0.85);
+            border-color: #60A5FA;
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.6);
             transform: translateY(-2px);
         }
         .detektiv-choice-btn.correct {
-            background: #15803d !important;
-            border-color: #22c55e !important;
+            background: linear-gradient(135deg, #15803D 0%, #22C55E 100%) !important;
+            border-color: #86EFAC !important;
             color: white !important;
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
         }
         .detektiv-choice-btn.wrong {
-            background: #b91c1c !important;
-            border-color: #ef4444 !important;
+            background: linear-gradient(135deg, #991B1B 0%, #DC2626 100%) !important;
+            border-color: #FCA5A5 !important;
             color: white !important;
-            opacity: 0.7;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.6) !important;
+            opacity: 0.75;
         }
         .detektiv-feedback-box {
             padding: 1.2rem;
@@ -851,7 +1022,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             color: #fee2e2;
         }
         .detektiv-next-btn {
-            background: #0ea5e9;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.9rem 2rem;
@@ -870,10 +1041,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         /* Tab 3: Retnings-Vippen (Sorteringsspil) */
         .vippe-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -888,7 +1059,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             margin-bottom: 0.5rem;
         }
         .vippe-intro p {
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 1.05rem;
         }
         .vippe-zones-grid {
@@ -901,7 +1072,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             .vippe-zones-grid { grid-template-columns: 1fr; }
         }
         .vippe-drop-zone {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 18px;
             padding: 1.5rem;
             min-height: 240px;
@@ -914,7 +1085,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             border-color: rgba(14, 165, 233, 0.5);
         }
         .zone-retning.highlight {
-            border-color: #38bdf8;
+            border-color: var(--adv-border-focus, #60A5FA);
             background: rgba(14, 165, 233, 0.08);
         }
         .zone-hvile {
@@ -947,15 +1118,15 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             align-content: flex-start;
         }
         .vippe-unassigned-pool {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.4rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .pool-header {
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-weight: 700;
             margin-bottom: 1rem;
             text-transform: uppercase;
@@ -967,7 +1138,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             justify-content: center;
         }
         .vippe-chip {
-            background: #334155;
+            background: var(--adv-surface-hover, #112240);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 0.6rem 1.1rem;
@@ -984,13 +1155,15 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         .vippe-chip:hover {
             transform: translateY(-2px);
             background: #475569;
-            border-color: #38bdf8;
+            border-color: var(--adv-border-focus, #60A5FA);
         }
         .vippe-chip.selected {
-            background: #0ea5e9;
-            border-color: white;
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
-            transform: scale(1.08);
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%) !important;
+            border: 2px solid #BAE6FD !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 0 22px rgba(59, 130, 246, 0.95), 0 0 38px rgba(59, 130, 246, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+            transform: scale(1.08) !important;
+            font-weight: 800 !important;
         }
         .vippe-feedback {
             text-align: center;
@@ -1009,8 +1182,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         .sentence-builder-card {
             max-width: 960px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -1026,8 +1199,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         }
         .sb-sub-btn {
             background: rgba(15, 23, 42, 0.6);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -1040,13 +1213,13 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         }
         .sb-sub-btn:hover {
             color: white;
-            border-color: #38bdf8;
+            border-color: var(--adv-border-focus, #60A5FA);
             background: rgba(14, 165, 233, 0.1);
         }
         .sb-sub-btn.active {
             background: linear-gradient(135deg, #0284c7, #0ea5e9);
             color: white;
-            border-color: #38bdf8;
+            border-color: var(--adv-border-focus, #60A5FA);
             box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
         }
         .grammar-legend-bar {
@@ -1058,41 +1231,57 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             padding: 0.6rem 1rem;
             background: rgba(15, 23, 42, 0.7);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             font-size: 0.85rem;
         }
         .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
         .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
         .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
         .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
-        .chip-sted { background: #0ea5e9; box-shadow: 0 0 6px rgba(14, 165, 233, 0.6); }
+        .chip-sted { background: var(--adv-primary, #3B82F6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.9); }
         .chip-rest { background: #a855f7; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6); }
 
         .sb-category-row {
             margin-bottom: 1.3rem;
-            background: rgba(15, 23, 42, 0.45);
+            background: rgba(10, 25, 47, 0.65);
             border-radius: 14px;
-            padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-left: 4px solid #64748b;
+            padding: 1.1rem 1.3rem;
+            border: 1px solid var(--adv-border, #1E3A66);
+            border-left: 5px solid #475569;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+            transition: all 0.25s ease;
         }
-        .sb-cat-subjekt { border-left-color: #22c55e; }
-        .sb-cat-verbum { border-left-color: #ef4444; }
-        .sb-cat-sted { border-left-color: #0ea5e9; }
-        .sb-cat-rest { border-left-color: #a855f7; }
+        .sb-cat-subjekt { 
+            border-left-color: #22c55e; 
+            box-shadow: -3px 0 12px rgba(34, 197, 94, 0.25), 0 4px 18px rgba(0, 0, 0, 0.25); 
+        }
+        .sb-cat-verbum { 
+            border-left-color: #ef4444; 
+            box-shadow: -3px 0 12px rgba(239, 68, 68, 0.25), 0 4px 18px rgba(0, 0, 0, 0.25); 
+        }
+        .sb-cat-sted { 
+            border-left-color: var(--adv-primary, #3B82F6) !important; 
+            background: rgba(10, 25, 47, 0.88) !important;
+            border-color: rgba(59, 130, 246, 0.35) !important;
+            box-shadow: -4px 0 18px rgba(59, 130, 246, 0.45), 0 6px 24px rgba(0, 0, 0, 0.35) !important; 
+        }
+        .sb-cat-rest { 
+            border-left-color: #a855f7; 
+            box-shadow: -3px 0 12px rgba(168, 85, 247, 0.25), 0 4px 18px rgba(0, 0, 0, 0.25); 
+        }
 
         .sb-category-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.8rem;
             flex-wrap: wrap;
             gap: 0.4rem;
         }
         .sb-category-title {
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             font-weight: 700;
-            color: #e2e8f0;
+            color: #FFFFFF;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -1101,98 +1290,156 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
-            padding: 0.2rem 0.5rem;
-            border-radius: 6px;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
         }
-        .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .badge-cat-sted { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
-        .badge-cat-rest { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-cat-subjekt { 
+            background: rgba(34, 197, 94, 0.18); 
+            color: #86efac; 
+            border: 1.5px solid #22c55e; 
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); 
+        }
+        .badge-cat-verbum { 
+            background: rgba(239, 68, 68, 0.18); 
+            color: #fca5a5; 
+            border: 1.5px solid #ef4444; 
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); 
+        }
+        .badge-cat-sted { 
+            background: rgba(59, 130, 246, 0.28); 
+            color: #FFFFFF; 
+            border: 1.5px solid #60A5FA; 
+            box-shadow: 0 0 14px rgba(59, 130, 246, 0.6); 
+            text-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+        }
+        .badge-cat-rest { 
+            background: rgba(168, 85, 247, 0.18); 
+            color: #e9d5ff; 
+            border: 1.5px solid #a855f7; 
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.3); 
+        }
 
         .sb-chips-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
         .sb-chip-btn {
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 1px solid #475569;
-            padding: 0.55rem 1rem;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            background: rgba(10, 25, 47, 0.75);
+            color: #e2e8f0;
+            border: 1.5px solid rgba(255, 255, 255, 0.16);
+            padding: 0.6rem 1.1rem;
+            border-radius: 12px;
+            font-size: 0.96rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
         }
-        .sb-chip-btn:hover {
-            color: white;
-            border-color: #94a3b8;
+        .sb-chip-btn:hover:not(.selected) {
+            color: #FFFFFF;
             transform: translateY(-2px);
         }
+        .sb-cat-subjekt .sb-chip-btn:hover:not(.selected) {
+            background: rgba(20, 83, 45, 0.45);
+            border-color: #4ade80;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+        }
+        .sb-cat-verbum .sb-chip-btn:hover:not(.selected) {
+            background: rgba(127, 29, 29, 0.45);
+            border-color: #f87171;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
+        }
+        .sb-cat-sted .sb-chip-btn:hover:not(.selected) {
+            background: rgba(30, 58, 102, 0.55);
+            border-color: #60a5fa;
+            box-shadow: 0 0 14px rgba(59, 130, 246, 0.45);
+        }
+        .sb-cat-rest .sb-chip-btn:hover:not(.selected) {
+            background: rgba(88, 28, 135, 0.45);
+            border-color: #c084fc;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+        }
+
         .sb-chip-btn.selected {
             font-weight: 800;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
         }
         .sb-cat-subjekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #15803D 0%, #22C55E 100%) !important;
+            color: #FFFFFF !important;
+            border: 2px solid #BBF7D0 !important;
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.85), 0 0 32px rgba(34, 197, 94, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
         }
         .sb-cat-verbum .sb-chip-btn.selected {
-            background: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, #B91C1C 0%, #EF4444 100%) !important;
+            color: #FFFFFF !important;
+            border: 2px solid #FECACA !important;
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.85), 0 0 32px rgba(239, 68, 68, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
         }
         .sb-cat-sted .sb-chip-btn.selected {
-            background: rgba(14, 165, 233, 0.25);
-            color: #7dd3fc;
-            border-color: #0ea5e9;
-            box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%) !important;
+            color: #FFFFFF !important;
+            border: 2px solid #BAE6FD !important;
+            box-shadow: 0 0 22px rgba(59, 130, 246, 0.95), 0 0 38px rgba(59, 130, 246, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.3px;
         }
         .sb-cat-rest .sb-chip-btn.selected {
-            background: rgba(168, 85, 247, 0.25);
-            color: #d8b4fe;
-            border-color: #a855f7;
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+            background: linear-gradient(135deg, #7E22CE 0%, #A855F7 100%) !important;
+            color: #FFFFFF !important;
+            border: 2px solid #F3E8FF !important;
+            box-shadow: 0 0 18px rgba(168, 85, 247, 0.85), 0 0 32px rgba(168, 85, 247, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
         }
 
         .sb-live-box {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 16px;
             padding: 1.4rem;
-            margin-top: 1.5rem;
+            margin-top: 1.8rem;
             text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
         }
         .sb-live-label {
-            font-size: 0.8rem;
-            color: #94a3b8;
+            font-size: 0.82rem;
+            color: var(--adv-text-muted, #BFDBFE);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.6rem;
-            font-weight: 700;
+            letter-spacing: 0.6px;
+            margin-bottom: 0.7rem;
+            font-weight: 800;
         }
         .sb-live-sentence {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             flex-wrap: wrap;
         }
         .grammar-word { font-weight: 800; }
-        .word-substantiv { color: #4ade80; }
-        .word-verbum { color: #f87171; }
-        .word-sted { color: #38bdf8; }
-        .word-rest { color: #c084fc; }
+        .word-substantiv { color: #86efac; text-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
+        .word-verbum { color: #fca5a5; text-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+        .word-sted { 
+            color: #FFFFFF; 
+            background: linear-gradient(135deg, rgba(29, 78, 216, 0.45), rgba(59, 130, 246, 0.55));
+            border: 1.5px solid #60A5FA;
+            padding: 0.15rem 0.65rem;
+            border-radius: 8px;
+            box-shadow: 0 0 16px rgba(59, 130, 246, 0.65);
+            text-shadow: 0 0 10px rgba(147, 197, 253, 0.9);
+            font-size: 1.45rem;
+        }
+        .word-rest { color: #e9d5ff; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
 
         .sb-listen-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #f8fafc;
             border: 1px solid #0ea5e9;
             padding: 0.65rem 1.4rem;
@@ -1229,8 +1476,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background: #1e293b;
-            color: #94a3b8;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
             border: 1px solid #475569;
             font-size: 0.85rem;
             font-weight: 700;
@@ -1241,7 +1488,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .sb-task-pill.active {
-            border-color: #38bdf8;
+            border-color: var(--adv-border-focus, #60A5FA);
             color: white;
             background: #0284c7;
         }
@@ -1253,7 +1500,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         .sb-context-card {
             background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
@@ -1285,7 +1532,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         .sb-context-chip.target-placeholder {
             background: rgba(56, 189, 248, 0.15);
             border: 2px dashed #38bdf8;
-            color: #38bdf8;
+            color: var(--adv-border-focus, #60A5FA);
             box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
         }
         .sb-context-chip.target-placeholder.chip-filled {
@@ -1308,7 +1555,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         .sb-target-sentence-label {
             font-size: 0.82rem;
             font-weight: 800;
-            color: #38bdf8;
+            color: var(--adv-border-focus, #60A5FA);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.5rem;
@@ -1332,23 +1579,23 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             align-items: center;
             justify-content: center;
             min-width: 110px;
-            padding: 0.2rem 1rem;
-            border: 2px dashed #38bdf8;
-            background: rgba(56, 189, 248, 0.16);
-            border-radius: 8px;
-            color: #38bdf8;
+            padding: 0.25rem 1.1rem;
+            border: 2px dashed #60A5FA;
+            background: rgba(59, 130, 246, 0.22);
+            border-radius: 10px;
+            color: #BAE6FD;
             font-weight: 800;
             letter-spacing: 2px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
         }
         .sb-sentence-blank.filled {
-            border: 2px solid #22c55e;
-            background: rgba(34, 197, 94, 0.22);
-            color: #4ade80;
+            border: 2px solid #86EFAC;
+            background: linear-gradient(135deg, rgba(21, 128, 61, 0.85), rgba(34, 197, 94, 0.85));
+            color: #FFFFFF;
             letter-spacing: normal;
-            box-shadow: 0 0 16px rgba(34, 197, 94, 0.45);
-            transform: scale(1.04);
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.8);
+            transform: scale(1.05);
         }
 
         .sb-question-box {
@@ -1371,37 +1618,41 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-option-btn {
-            background: #1e293b;
+            background: rgba(10, 25, 47, 0.85);
             color: white;
-            border: 2px solid #475569;
-            padding: 0.9rem 1.2rem;
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            padding: 0.95rem 1.3rem;
             border-radius: 14px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
         .sb-option-btn:hover {
-            border-color: #38bdf8;
-            background: #334155;
-            transform: translateY(-2px);
+            border-color: #60A5FA;
+            background: rgba(30, 58, 102, 0.85);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px) scale(1.03);
         }
         .sb-option-btn.correct {
-            background: rgba(34, 197, 94, 0.25);
-            border-color: #22c55e;
-            color: #4ade80;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #15803D 0%, #22C55E 100%) !important;
+            border-color: #86EFAC !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            font-weight: 800 !important;
         }
         .sb-option-btn.incorrect {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: #ef4444;
-            color: #f87171;
+            background: linear-gradient(135deg, #991B1B 0%, #DC2626 100%) !important;
+            border-color: #FCA5A5 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.6) !important;
         }
 
         .sb-puzzle-section {
             background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -1418,7 +1669,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         }
         .sb-puzzle-desc {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             margin-bottom: 1.2rem;
         }
         .sb-puzzle-slots {
@@ -1428,7 +1679,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-puzzle-slot {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border: 2px dashed #475569;
             border-radius: 12px;
             padding: 0.9rem;
@@ -1444,7 +1695,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         }
         .sb-puzzle-slot .slot-hint {
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-weight: 700;
         }
         .sb-puzzle-slot .slot-role {
@@ -1456,11 +1707,12 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         }
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: rgba(14, 165, 233, 0.15);
-            border-color: #38bdf8;
+            background: linear-gradient(135deg, rgba(29, 78, 216, 0.85), rgba(59, 130, 246, 0.95));
+            border: 2px solid #BAE6FD;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 800;
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
         .sb-puzzle-chips {
             display: flex;
@@ -1470,25 +1722,31 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: rgba(10, 25, 47, 0.85);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.6rem 1.1rem;
-            border-radius: 10px;
-            font-size: 1rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            padding: 0.65rem 1.2rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
         }
         .sb-puzzle-chip:hover {
-            background: #475569;
-            border-color: #38bdf8;
-            transform: translateY(-2px);
+            background: rgba(30, 58, 102, 0.85);
+            border-color: #60A5FA;
+            box-shadow: 0 0 16px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px) scale(1.03);
         }
         .sb-puzzle-chip.used {
             opacity: 0.25;
             pointer-events: none;
         }
+        .reset-slots-btn {
+            background: transparent;
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.7rem 1.2rem;
             border-radius: 10px;
             font-weight: 600;
@@ -1500,7 +1758,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             border-color: white;
         }
         .check-saetning-btn {
-            background: #0ea5e9;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.8rem 1.8rem;
@@ -1517,18 +1775,18 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         /* Tab 5: Kontekst-testen (Model C Cloze) */
         .kontekst-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 900px;
             margin: 0 auto;
         }
         .cloze-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .cloze-sentence-display {
@@ -1542,10 +1800,11 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             display: inline-block;
             min-width: 130px;
             padding: 0.2rem 1rem;
-            border-bottom: 3px solid #38bdf8;
-            color: #38bdf8;
+            border-bottom: 3px solid #60A5FA;
+            color: #93C5FD;
             font-weight: 800;
             text-align: center;
+            text-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
         }
         .cloze-options-grid {
             display: grid;
@@ -1557,34 +1816,40 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             margin-right: auto;
         }
         .cloze-option-btn {
-            background: #334155;
+            background: rgba(10, 25, 47, 0.85);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            padding: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            padding: 1.15rem;
             border-radius: 14px;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
         }
         .cloze-option-btn:hover:not(:disabled) {
-            background: #475569;
-            border-color: #38bdf8;
-            transform: translateY(-3px);
+            background: rgba(30, 58, 102, 0.85);
+            border-color: #60A5FA;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            transform: translateY(-3px) scale(1.03);
         }
         .cloze-option-btn.correct {
-            background: #15803d !important;
-            border-color: #22c55e !important;
+            background: linear-gradient(135deg, #15803D 0%, #22C55E 100%) !important;
+            border-color: #86EFAC !important;
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            color: #FFFFFF !important;
         }
         .cloze-option-btn.wrong {
-            background: #b91c1c !important;
-            border-color: #ef4444 !important;
-            opacity: 0.6;
+            background: linear-gradient(135deg, #991B1B 0%, #DC2626 100%) !important;
+            border-color: #FCA5A5 !important;
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.6) !important;
+            color: #FFFFFF !important;
+            opacity: 0.75;
         }
         .cloze-didactic-feedback {
-            background: rgba(14, 165, 233, 0.1);
-            border: 1.5px solid #0ea5e9;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1.5px solid var(--adv-primary, #3B82F6);
             padding: 1.2rem 1.5rem;
             border-radius: 14px;
             font-size: 1.05rem;
@@ -1592,6 +1857,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             color: #e0f2fe;
             margin-bottom: 1.5rem;
             animation: fadeIn 0.3s ease;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
 
         @keyframes fadeIn {
@@ -1605,16 +1871,14 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'adv-hero';
     hero.innerHTML = `
-        <h1>${getTranslation('adv_f1_hero_title')}</h1>
-        <p>${getTranslation('adv_f1_hero_desc')}</p>
+        <h1>${stripAllEmojis(getTranslation('adv_f1_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f1_hero_desc'))}</p>
         <div class="adv-rule-banner">
             <div class="rule-card-mini rule-retning">
-                <span>🚀</span>
-                <span><strong>${getTranslation('adv_filter_direction')}:</strong> ${getTranslation('adv_f1_rule_retning')}</span>
+                <span><strong>${stripAllEmojis(getTranslation('adv_filter_direction'))}:</strong> ${stripAllEmojis(getTranslation('adv_f1_rule_retning'))}</span>
             </div>
             <div class="rule-card-mini rule-hvile">
-                <span>🏡</span>
-                <span><strong>${getTranslation('adv_filter_rest')}:</strong> ${getTranslation('adv_f1_rule_hvile')}</span>
+                <span><strong>${stripAllEmojis(getTranslation('adv_filter_rest'))}:</strong> ${stripAllEmojis(getTranslation('adv_f1_rule_hvile'))}</span>
             </div>
         </div>
     `;
@@ -1625,18 +1889,18 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (18)`, icon: '🖼️' },
-        { id: 'tab_detektiv', label: `2. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
-        { id: 'tab_vippe', label: `3. ${getTranslation('adv_tab_vippe')}`, icon: '⚖️' },
-        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🧱' },
-        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '🎯' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (18)`, icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: `2. ${getTranslation('adv_tab_detektiv')}`, icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_vippe', label: `3. ${getTranslation('adv_tab_vippe')}`, icon: renderDsIcon('balance', '', { size: 16 }) },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: renderDsIcon('target', '', { size: 16 }) }
     ];
 
     const tabButtons = {};
     tabsConfig.forEach(t => {
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${t.id === currentTab ? 'active' : ''}`;
-        btn.innerHTML = `<span>${t.icon}</span> <span>${t.label}</span>`;
+        btn.innerHTML = `${t.icon} <span>${stripAllEmojis(t.label)}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabButtons[t.id] = btn;
         tabsNav.appendChild(btn);
@@ -1693,8 +1957,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const filterButtons = [
             { id: 'all', label: 'Vis alle (18)' },
-            { id: 'retning', label: '🚀 Kun Retning (10)' },
-            { id: 'hvile', label: '🏡 Kun Hvile (8)' }
+            { id: 'retning', label: 'Kun Retning (10)' },
+            { id: 'hvile', label: 'Kun Hvile (8)' }
         ];
 
         filterButtons.forEach(fb => {
@@ -1711,7 +1975,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const togglePinsBtn = document.createElement('button');
         togglePinsBtn.className = 'toggle-pins-btn';
-        togglePinsBtn.innerHTML = `<span>${showPins ? '👁️ Skjul markører' : '👁️ Vis markører'}</span>`;
+        togglePinsBtn.innerHTML = `<span>${showPins ? 'Skjul markører' : 'Vis markører'}</span>`;
         togglePinsBtn.onclick = () => {
             showPins = !showPins;
             renderTabVrimmel(parent);
@@ -1740,7 +2004,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                 pin.style.left = `${item.x}%`;
                 pin.style.top = `${item.y}%`;
 
-                const icon = item.type === 'retning' ? '➔' : '📍';
+                const icon = item.type === 'retning' ? '→' : '•';
                 pin.innerHTML = `<span class="pin-icon">${icon}</span><span class="pin-text">${item.word}</span>`;
 
                 pin.onclick = (e) => {
@@ -1783,7 +2047,12 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const speakBtn = document.createElement('button');
         speakBtn.className = 'inspector-speak-btn';
         speakBtn.title = getTranslation('adv_listen_word');
-        speakBtn.innerHTML = '🔊';
+        speakBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+        `;
         speakBtn.onclick = () => speakDanish(currentWordData.word);
         wordHeader.appendChild(speakBtn);
         leftCol.appendChild(wordHeader);
@@ -1798,13 +2067,18 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         sentBox.innerHTML = `
             <div class="inspector-sentence-text">
                 "${currentWordData.sentence.replace(new RegExp(`\\b${currentWordData.word}\\b`, 'gi'), `<strong>${currentWordData.word}</strong>`)}"
-                ${transSentence ? `<div class="inspector-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
+                ${transSentence ? `<div class="inspector-trans-sentence" style="font-size: 0.95rem; color: var(--adv-text-muted, #BFDBFE); font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
         `;
         const sentSpeakBtn = document.createElement('button');
         sentSpeakBtn.className = 'inspector-speak-btn';
         sentSpeakBtn.title = getTranslation('adv_listen_sentence');
-        sentSpeakBtn.innerHTML = '🗣️';
+        sentSpeakBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+        `;
         sentSpeakBtn.onclick = () => speakDanish(currentWordData.sentence);
         sentBox.appendChild(sentSpeakBtn);
         leftCol.appendChild(sentBox);
@@ -1819,13 +2093,13 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             const pairSwitch = document.createElement('div');
             pairSwitch.className = 'pair-switch-card';
             pairSwitch.innerHTML = `
-                <div class="pair-switch-header">🔄 Modstykke (${currentWordData.pairType === 'hvile' ? 'Hvile' : 'Retning'}):</div>
+                <div class="pair-switch-header">Modstykke (${currentWordData.pairType === 'hvile' ? 'Hvile' : 'Retning'}):</div>
             `;
             const pairBtn = document.createElement('button');
             pairBtn.className = 'pair-action-btn';
             pairBtn.innerHTML = `
                 <span>Se og sammenlign med: <strong>"${currentWordData.pairWord}"</strong></span>
-                <span>➔</span>
+                <span>→</span>
             `;
             pairBtn.onclick = () => {
                 selectedWordId = currentWordData.pairId;
@@ -1839,7 +2113,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const ruleBox = document.createElement('div');
         ruleBox.className = 'rule-explanation-box';
         ruleBox.innerHTML = `
-            <div style="font-weight: 800; margin-bottom: 0.4rem; color: #38bdf8;">💡 Betydning & Regel:</div>
+            <div style="font-weight: 800; margin-bottom: 0.4rem; color: var(--adv-border-focus, #93C5FD);">Betydning & Regel:</div>
             <p style="margin-bottom: 0.5rem;">${currentWordData.meaning}.</p>
             <p>${currentWordData.ruleHint}</p>
         `;
@@ -1953,7 +2227,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         header.className = 'detektiv-header';
         header.innerHTML = `
             <div class="detektiv-progress-badge">Mission ${detektivIdx + 1} af ${DETEKTIV_MISSIONS.length}</div>
-            <div class="detektiv-score-badge">⭐ Score: ${detektivScore} point</div>
+            <div class="detektiv-score-badge">Score: ${detektivScore} point</div>
         `;
         container.appendChild(header);
 
@@ -1978,7 +2252,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const tag = document.createElement('div');
         tag.className = 'viewfinder-tag';
-        tag.textContent = `🎯 ${mission.tag}`;
+        tag.textContent = mission.tag;
         frame.appendChild(tag);
 
         container.appendChild(frame);
@@ -1987,7 +2261,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const promptBox = document.createElement('div');
         promptBox.className = 'detektiv-prompt-box';
         promptBox.innerHTML = `
-            <div class="detektiv-prompt-text">🔍 <strong>Situation:</strong> ${mission.prompt}</div>
+            <div class="detektiv-prompt-text"><strong>Situation:</strong> ${mission.prompt}</div>
         `;
         container.appendChild(promptBox);
 
@@ -2001,7 +2275,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'detektiv-next-btn';
-        nextBtn.textContent = detektivIdx < DETEKTIV_MISSIONS.length - 1 ? 'Næste mission ➔' : 'Se resultat 🎉';
+        nextBtn.textContent = detektivIdx < DETEKTIV_MISSIONS.length - 1 ? 'Næste mission →' : 'Se resultat';
         nextBtn.style.display = 'none';
 
         mission.options.forEach((opt) => {
@@ -2021,7 +2295,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                     btn.classList.add('correct');
                     detektivScore += 10;
                     feedbackBox.className = 'detektiv-feedback-box correct';
-                    feedbackBox.innerHTML = `<strong>✨ Rigtigt!</strong> ${opt.explain}`;
+                    feedbackBox.innerHTML = `<strong>Rigtigt!</strong> ${opt.explain}`;
                     speakDanish(opt.text.replace(/^[A-B]\)\s*/, ''));
                 } else {
                     btn.classList.add('wrong');
@@ -2030,12 +2304,12 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                         if (o.correct) allBtns[i].classList.add('correct');
                     });
                     feedbackBox.className = 'detektiv-feedback-box wrong';
-                    feedbackBox.innerHTML = `<strong>💡 Pædagogisk forklaring:</strong> ${opt.explain}`;
+                    feedbackBox.innerHTML = `<strong>Pædagogisk forklaring:</strong> ${opt.explain}`;
                 }
 
                 feedbackBox.style.display = 'block';
                 nextBtn.style.display = 'block';
-                header.querySelector('.detektiv-score-badge').textContent = `⭐ Score: ${detektivScore} point`;
+                header.querySelector('.detektiv-score-badge').textContent = `Score: ${detektivScore} point`;
             };
 
             choicesGrid.appendChild(btn);
@@ -2062,9 +2336,9 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     function renderDetektivSummary(container, parent) {
         container.innerHTML = `
             <div style="text-align: center; padding: 2rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">🏆</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: #4ade80; margin-bottom: 1rem;">Gennemført!</div>
                 <h2 style="font-size: 2.2rem; margin-bottom: 0.8rem; color: white;">Fantastisk detektiv-arbejde!</h2>
-                <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 1.5rem;">
+                <p style="font-size: 1.2rem; color: var(--adv-text-muted, #BFDBFE); margin-bottom: 1.5rem;">
                     Du gennemførte alle 8 missioner og opnåede <strong>${detektivScore} af ${DETEKTIV_MISSIONS.length * 10} point</strong>!
                 </p>
                 <div style="background: rgba(14, 165, 233, 0.15); border: 1px solid #0ea5e9; border-radius: 14px; padding: 1.2rem; max-width: 600px; margin: 0 auto 2rem; color: #e0f2fe; text-align: left; line-height: 1.6;">
@@ -2073,7 +2347,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                     • Stilstand på stedet tilføjer <strong>-e</strong>: <em>hjemme, inde, ude, oppe, nede, fremme, henne</em>.
                 </div>
                 <button class="detektiv-next-btn" style="margin: 0 auto; display: inline-block;" id="restart-detektiv">
-                    🔄 Prøv igen
+                    Prøv igen
                 </button>
             </div>
         `;
@@ -2120,7 +2394,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const intro = document.createElement('div');
         intro.className = 'vippe-intro';
         intro.innerHTML = `
-            <h2>⚖️ Retnings-Vippen</h2>
+            <h2>Retnings-Vippen</h2>
             <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>Retning</strong> eller <strong>Hvile</strong>?</p>
         `;
         container.appendChild(intro);
@@ -2134,8 +2408,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         zoneRetning.className = `vippe-drop-zone zone-retning ${selectedVippeWord ? 'highlight' : ''}`;
         zoneRetning.innerHTML = `
             <div class="zone-header">
-                <span class="zone-title" style="color: #38bdf8;">🚀 Retning</span>
-                <span style="font-weight: 800; font-size: 0.9rem; color: #38bdf8;">${vippeRetningList.length} ord</span>
+                <span class="zone-title" style="color: var(--adv-border-focus, #93C5FD);">Retning</span>
+                <span style="font-weight: 800; font-size: 0.9rem; color: var(--adv-border-focus, #93C5FD);">${vippeRetningList.length} ord</span>
             </div>
         `;
         const chipsRetning = document.createElement('div');
@@ -2145,7 +2419,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             chip.className = 'vippe-chip';
             chip.style.borderColor = '#38bdf8';
             chip.style.background = 'rgba(14, 165, 233, 0.2)';
-            chip.innerHTML = `<span>🚀</span> <span>${w.word}</span>`;
+            chip.innerHTML = `<span>→</span> <span>${w.word}</span>`;
             chipsRetning.appendChild(chip);
         });
         zoneRetning.appendChild(chipsRetning);
@@ -2161,7 +2435,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         zoneHvile.className = `vippe-drop-zone zone-hvile ${selectedVippeWord ? 'highlight' : ''}`;
         zoneHvile.innerHTML = `
             <div class="zone-header">
-                <span class="zone-title" style="color: #fbbf24;">🏡 Hvile</span>
+                <span class="zone-title" style="color: #fbbf24;">Hvile</span>
                 <span style="font-weight: 800; font-size: 0.9rem; color: #fbbf24;">${vippeHvileList.length} ord</span>
             </div>
         `;
@@ -2172,7 +2446,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             chip.className = 'vippe-chip';
             chip.style.borderColor = '#f59e0b';
             chip.style.background = 'rgba(245, 158, 11, 0.2)';
-            chip.innerHTML = `<span>🏡</span> <span>${w.word}</span>`;
+            chip.innerHTML = `<span>•</span> <span>${w.word}</span>`;
             chipsHvile.appendChild(chip);
         });
         zoneHvile.appendChild(chipsHvile);
@@ -2189,8 +2463,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const feedbackBox = document.createElement('div');
         feedbackBox.className = 'vippe-feedback';
         feedbackBox.innerHTML = selectedVippeWord
-            ? `<span style="color: #38bdf8;">Valgt ord: <strong>"${selectedVippeWord.word}"</strong>. Klik nu på Retning eller Hvile ovenfor!</span>`
-            : `<span style="color: #94a3b8;">Vælg et ord i puljen nedenfor for at placere det.</span>`;
+            ? `<span style="color: var(--adv-border-focus, #93C5FD);">Valgt ord: <strong>"${selectedVippeWord.word}"</strong>. Klik nu på Retning eller Hvile ovenfor!</span>`
+            : `<span style="color: var(--adv-text-muted, #BFDBFE);">Vælg et ord i puljen nedenfor for at placere det.</span>`;
         container.appendChild(feedbackBox);
 
         // Unassigned Pool
@@ -2217,11 +2491,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         } else {
             pool.innerHTML = `
                 <div style="text-align: center; padding: 1.5rem;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎉</div>
                     <h3 style="color: #22c55e; font-size: 1.5rem; margin-bottom: 0.5rem;">Perfekt sorteret!</h3>
                     <p style="color: #cbd5e1; margin-bottom: 1rem;">Du har mestret alle 16 stedsadverbier og deres retnings-/hvile-former!</p>
                     <button class="detektiv-next-btn" style="margin: 0 auto; display: inline-block;" id="reset-vippe-btn">
-                        🔄 Start forfra
+                        Start forfra
                     </button>
                 </div>
             `;
@@ -2254,13 +2527,13 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
                 feedbackBox.style.background = 'rgba(34, 197, 94, 0.15)';
                 feedbackBox.style.color = '#22c55e';
-                feedbackBox.innerHTML = `✨ Rigtigt! <strong>"${removedWord.word}"</strong> er ${targetType === 'retning' ? 'retning (f.eks. ' + removedWord.hint + ')' : 'hvile (f.eks. ' + removedWord.hint + ')'}.`;
+                feedbackBox.innerHTML = `<strong>Rigtigt!</strong> <strong>"${removedWord.word}"</strong> er ${targetType === 'retning' ? 'retning (f.eks. ' + removedWord.hint + ')' : 'hvile (f.eks. ' + removedWord.hint + ')'}.`;
                 renderTabVippe(parent);
             } else {
                 // Incorrect
                 feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
                 feedbackBox.style.color = '#ef4444';
-                feedbackBox.innerHTML = `💡 Prøv igen: <strong>"${selectedVippeWord.word}"</strong> ${selectedVippeWord.word.endsWith('e') ? 'har -e og angiver ro på stedet (hvile)!' : 'er kort form uden -e og angiver bevægelse mod mål (retning)!'}`;
+                feedbackBox.innerHTML = `<strong>Prøv igen:</strong> <strong>"${selectedVippeWord.word}"</strong> ${selectedVippeWord.word.endsWith('e') ? 'har -e og angiver ro på stedet (hvile)!' : 'er kort form uden -e og angiver bevægelse mod mål (retning)!'}`;
             }
         }
 
@@ -2282,7 +2555,6 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             role: 'Subjekt',
             catClass: 'sb-cat-subjekt',
             badgeClass: 'badge-cat-subjekt',
-            icon: '👤',
             options: ['Manden', 'Børnene', 'Hunden', 'Lucas', 'Emma', 'Mor', 'Postbuddet', 'Katten']
         },
         {
@@ -2291,7 +2563,6 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             role: 'Verbum (Handling)',
             catClass: 'sb-cat-verbum',
             badgeClass: 'badge-cat-verbum',
-            icon: '⚡',
             options: ['går', 'cykler', 'løber', 'slapper af', 'solbader', 'springer', 'vinker', 'bærer vasketøj']
         },
         {
@@ -2300,7 +2571,6 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             role: 'Stedsadverbium',
             catClass: 'sb-cat-sted',
             badgeClass: 'badge-cat-sted',
-            icon: '🧭',
             options: ['hjem', 'hjemme', 'ind', 'inde', 'ud', 'ude', 'op', 'oppe', 'ned', 'nede']
         },
         {
@@ -2309,7 +2579,6 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             role: 'Restled / Præposition',
             catClass: 'sb-cat-rest',
             badgeClass: 'badge-cat-rest',
-            icon: '📍',
             options: ['i haven', 'i stuen', 'på sit værelse', 'i kælderen', 'ad trappen', 'efter arbejde', 'ved huset', 'på vejen']
         }
     ];
@@ -2413,11 +2682,11 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${currentStedSubTab === 'free' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+        subTab1Btn.innerHTML = `1. Udforsk & Byg selv`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${currentStedSubTab === 'challenge' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+        subTab2Btn.innerHTML = `2. Opgave & Puslespil`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -2456,7 +2725,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             freeContainer.innerHTML = `
                 <div style="text-align: center; margin-bottom: 1.5rem;">
                     <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med stedsadverbier</h3>
-                    <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
+                    <p style="color: var(--adv-text-muted, #BFDBFE); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                         Vælg ét element fra hver række herunder. Læg mærke til spørgsmålene, og lyt til hvordan sætningen lyder!
                     </p>
                 </div>
@@ -2474,7 +2743,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                     <div class="sb-live-label">Din samlede sætning</div>
                     <div class="sb-live-sentence" id="sted-free-live-sentence"></div>
                     <button class="sb-listen-btn" id="sted-free-listen-btn">
-                        <span>🔊</span> Hør udtale
+                        Hør udtale
                     </button>
                 </div>
             `;
@@ -2501,9 +2770,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                 row.className = `sb-category-row ${cat.catClass}`;
                 row.innerHTML = `
                     <div class="sb-category-header">
-                        <div class="sb-category-title">
-                            <span>${cat.icon}</span> ${cat.title}
-                        </div>
+                        <div class="sb-category-title">${cat.title}</div>
                         <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                     </div>
                     <div class="sb-chips-grid"></div>
@@ -2544,7 +2811,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
             const titleDiv = document.createElement('div');
             titleDiv.innerHTML = `
-                <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 800; text-transform: uppercase;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #60A5FA); font-weight: 800; text-transform: uppercase;">
                     Udfordring ${currentStedChallengeIdx + 1} af ${STED_CHALLENGE_TASKS.length}
                 </div>
                 <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg adverbiet & saml puslespillet</h3>
@@ -2602,7 +2869,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em></div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -2619,7 +2886,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             const qBox = document.createElement('div');
             qBox.className = 'sb-question-box';
             qBox.innerHTML = `
-                <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
                     Trin 1: Vælg det rigtige stedsadverbium
                 </div>
                 <div class="sb-question-text">${task.questionPrompt}</div>
@@ -2665,7 +2932,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                         // 2. Fill adverb chip in context elements
                         const advChipVal = contextCard.querySelector('#sb-chip-adv-val');
                         if (advChipVal) {
-                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">✓</span>`;
+                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">&#10003;</span>`;
                         }
                         const advChip = contextCard.querySelector('#sb-context-chip-adv');
                         if (advChip) {
@@ -2676,11 +2943,11 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                         feedbackDiv.innerHTML = `
                             <div class="sb-pedagogy-alert" style="margin-bottom: 1.2rem; padding: 1rem 1.4rem; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; border-radius: 12px; color: #f8fafc; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
                                 <div>
-                                    <strong style="color: #4ade80; font-size: 1.15rem;">🎉 Rigtigt stedsadverbium!</strong>
+                                    <strong style="color: #4ade80; font-size: 1.15rem;">Rigtigt stedsadverbium!</strong>
                                     <div style="margin-top: 0.25rem; color: #cbd5e1;">${task.pedagogyNote}</div>
                                 </div>
                                 <button class="sb-listen-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;" id="sb-speak-target-btn">
-                                    <span>🔊</span> Hør sætning
+                                    Hør sætning
                                 </button>
                             </div>
                         `;
@@ -2719,7 +2986,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         function renderStedPuzzleStep(puzContainer, task) {
             puzContainer.innerHTML = `
                 <div class="sb-puzzle-title">
-                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                    Trin 2: Puslespillet – Saml hele sætningen!
                 </div>
                 <div class="sb-puzzle-desc">
                     Klik på brikkerne i den rigtige rækkefølge for at udfylde pladserne:
@@ -2782,9 +3049,9 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                     if (isCorrect) {
                         completedStedChallenges.add(currentStedChallengeIdx);
                         statusEl.innerHTML = `
-                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <span style="color: #22c55e; margin-right: 1rem;">Perfekt samlet!</span>
                             <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="sted-task-next-btn">
-                                ${currentStedChallengeIdx < STED_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Afslut puslespil 🏆'}
+                                ${currentStedChallengeIdx < STED_CHALLENGE_TASKS.length - 1 ? 'Næste opgave →' : 'Afslut puslespil'}
                             </button>
                         `;
                         speakDanish(placedWords.join(' '));
@@ -2794,7 +3061,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                                 currentStedChallengeIdx++;
                                 setupChallengeSection();
                             } else {
-                                statusEl.innerHTML = `<span style="color: #38bdf8;">Alle 6 udfordringer gennemført flot! 🌟</span>`;
+                                statusEl.innerHTML = `<span style="color: var(--adv-border-focus, #93C5FD);">Alle 6 udfordringer gennemført flot!</span>`;
                             }
                         };
                     } else {
@@ -2923,7 +3190,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         header.className = 'detektiv-header';
         header.innerHTML = `
             <div class="detektiv-progress-badge">Spørgsmål ${clozeIdx + 1} af ${CLOZE_QUESTIONS.length}</div>
-            <div class="detektiv-score-badge">⭐ Score: ${clozeScore} point</div>
+            <div class="detektiv-score-badge">Score: ${clozeScore} point</div>
         `;
         container.appendChild(header);
 
@@ -2948,7 +3215,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'detektiv-next-btn';
-        nextBtn.textContent = clozeIdx < CLOZE_QUESTIONS.length - 1 ? 'Næste sætning ➔' : 'Afslut opgaven 🎉';
+        nextBtn.textContent = clozeIdx < CLOZE_QUESTIONS.length - 1 ? 'Næste sætning →' : 'Afslut opgaven';
         nextBtn.style.display = 'none';
 
         q.options.forEach(opt => {
@@ -2969,19 +3236,19 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                 if (opt === q.correct) {
                     btn.classList.add('correct');
                     clozeScore += 10;
-                    feedbackBox.innerHTML = `<strong>✨ Rigtigt!</strong> ${q.feedback}`;
+                    feedbackBox.innerHTML = `<strong>Rigtigt!</strong> ${q.feedback}`;
                     speakDanish(`${q.sentenceBefore} ${opt} ${q.sentenceAfter}`);
                 } else {
                     btn.classList.add('wrong');
                     q.options.forEach((o, i) => {
                         if (o === q.correct) allBtns[i].classList.add('correct');
                     });
-                    feedbackBox.innerHTML = `<strong>💡 Pædagogisk forklaring:</strong> ${q.feedback}`;
+                    feedbackBox.innerHTML = `<strong>Pædagogisk forklaring:</strong> ${q.feedback}`;
                 }
 
                 feedbackBox.style.display = 'block';
                 nextBtn.style.display = 'block';
-                header.querySelector('.detektiv-score-badge').textContent = `⭐ Score: ${clozeScore} point`;
+                header.querySelector('.detektiv-score-badge').textContent = `Score: ${clozeScore} point`;
             };
 
             optionsGrid.appendChild(btn);
@@ -3008,23 +3275,23 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
     function renderClozeSummary(container, parent) {
         container.innerHTML = `
             <div style="text-align: center; padding: 2.5rem;">
-                <div style="font-size: 4.5rem; margin-bottom: 1rem;">🌟</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: #4ade80; margin-bottom: 1rem;">Gennemført!</div>
                 <h2 style="font-size: 2.2rem; margin-bottom: 0.8rem; color: white;">Superflot klaret!</h2>
-                <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 1.5rem;">
+                <p style="font-size: 1.2rem; color: var(--adv-text-muted, #BFDBFE); margin-bottom: 1.5rem;">
                     Du gennemførte kontekst-testen med <strong>${clozeScore} af ${CLOZE_QUESTIONS.length * 10} point</strong>!
                 </p>
                 <div style="background: rgba(14, 165, 233, 0.15); border: 1px solid #0ea5e9; border-radius: 14px; padding: 1.4rem; max-width: 650px; margin: 0 auto 2rem; color: #e0f2fe; text-align: left; line-height: 1.6;">
                     <strong>Husk de 3 gyldne huskeregler:</strong><br>
-                    1. <strong>Tjek verbet:</strong> Bevæger subjektet sig (gå, cykle, køre, løbe, flyve)? ➔ Kort form (<em>hjem, ind, ud, op, ned</em>).<br>
-                    2. <strong>Er der ro på stedet?</strong> (sidde, stå, ligge, være, sove)? ➔ Lang form med <strong>-e</strong> (<em>hjemme, inde, ude, oppe, nede</em>).<br>
+                    1. <strong>Tjek verbet:</strong> Bevæger subjektet sig (gå, cykle, køre, løbe, flyve)? → Kort form (<em>hjem, ind, ud, op, ned</em>).<br>
+                    2. <strong>Er der ro på stedet?</strong> (sidde, stå, ligge, være, sove)? → Lang form med <strong>-e</strong> (<em>hjemme, inde, ude, oppe, nede</em>).<br>
                     3. <strong>Målet nået:</strong> Når rejsen er slut og du er ankommet, er du <em>fremme</em>!
                 </div>
                 <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                     <button class="detektiv-next-btn" id="restart-cloze-btn">
-                        🔄 Tag testen igen
+                        Tag testen igen
                     </button>
-                    <button class="detektiv-next-btn" style="background: #334155;" id="back-to-hub-btn">
-                        🧭 Tilbage til Adverbier-oversigten
+                    <button class="detektiv-next-btn" style="background: var(--adv-surface-hover, #112240);" id="back-to-hub-btn">
+                        ← Tilbage til Adverbier-oversigten
                     </button>
                 </div>
             </div>

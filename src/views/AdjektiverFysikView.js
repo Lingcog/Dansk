@@ -2,6 +2,8 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { isLocalhost, getActiveAdjNuance, applyAdjNuance, ADJ_PALETTES } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * AdjektiverFysikView - Felt 1: Fysiske egenskaber, form & sanser
@@ -17,6 +19,9 @@ import { shuffleArray } from '../utils/shuffle.js';
 export function renderAdjektiverFysikView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér mørk orange nuance (standard: Mørk Rav)
+    applyAdjNuance(getActiveAdjNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adjektiver-fysik-view';
 
@@ -31,6 +36,40 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdjNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adj-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adj-toggle-label">
+                <span class="adj-pulse-dot"></span>
+                <strong>Localhost Nuance-vælger:</strong>
+                <span class="adj-toggle-hint">Vælg mellem 4 mørke orange nuancer live:</span>
+            </div>
+            <div class="adj-toggle-buttons">
+                ${Object.values(ADJ_PALETTES).map(p => `
+                    <button class="adj-nuance-btn ${p.id === activeNuance ? 'active' : ''}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        ${p.name}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adj-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdjNuance(nuance);
+                testBar.querySelectorAll('.adj-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
+
     // TTS Audio Helper (isoleret udtale)
     function speakDanish(text) {
         if (!('speechSynthesis' in window)) return;
@@ -44,12 +83,127 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --adj-bg: #4A040B;
+            --adj-bg-glow: #6B0F1A;
+            --adj-surface: #341808;
+            --adj-surface-hover: #48230D;
+            --adj-surface-input: #1C0B03;
+            --adj-border: #6E3311;
+            --adj-border-focus: #fb923c;
+            --adj-primary: #ea580c;
+            --adj-primary-hover: #f97316;
+            --adj-text: #FFFFFF;
+            --adj-text-muted: #fed7aa;
+            --adj-text-subtle: #fdba74;
+        }
+
+        body[data-adj-nuance] {
+            background-color: var(--adj-bg) !important;
+            background-image: radial-gradient(circle at top right, var(--adj-bg-glow), var(--adj-bg)) !important;
+        }
+
         .adjektiver-fysik-view {
             max-width: 1240px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
-            color: #f8fafc;
+            color: var(--adj-text, #FFFFFF);
+            font-family: var(--vp-font-family, 'Outfit', sans-serif);
         }
+
+        /* Localhost Nuance Toggle Bar */
+        .adj-localhost-toggle-bar {
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            border-radius: 16px;
+            padding: 0.85rem 1.2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .adj-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: #FFFFFF;
+        }
+        .adj-pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--adj-primary, #ea580c);
+            box-shadow: 0 0 10px var(--adj-primary, #ea580c);
+            display: inline-block;
+            animation: adjPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes adjPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .adj-toggle-hint {
+            color: var(--adj-text-muted, #fed7aa);
+            font-size: 0.85rem;
+        }
+        .adj-toggle-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .adj-nuance-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: var(--adj-text-muted, #fed7aa);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .adj-nuance-btn:hover {
+            color: #FFFFFF;
+            background: var(--adj-surface-hover, #48230D);
+            border-color: var(--adj-primary, #ea580c);
+            transform: translateY(-1px);
+        }
+        .adj-nuance-btn.active {
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            border-color: var(--adj-border-focus, #fb923c);
+            box-shadow: 0 0 12px rgba(234, 88, 12, 0.5);
+            font-weight: 800;
+        }
+
+        /* Top Bar & Back Button */
+        .adjektiver-fysik-view .top-bar {
+            margin-bottom: 1.2rem;
+        }
+        .adjektiver-fysik-view .back-btn {
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .adjektiver-fysik-view .back-btn:hover {
+            background: var(--adj-surface-hover, #48230D);
+            border-color: var(--adj-primary, #ea580c);
+        }
+
+        /* Hero Header: Ren hvid tekst uden forstyrrende gradient-fill */
         .adj-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -58,13 +212,13 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #a855f7, #38bdf8, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
         .adj-hero-header p {
-            color: #94a3b8;
-            font-size: 1.1rem;
+            color: var(--adj-text-muted, #fed7aa);
+            font-size: 1.05rem;
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.5;
@@ -77,18 +231,19 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--adj-surface-input, #1C0B03);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
         .adj-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             border: none;
             padding: 0.65rem 1.1rem;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.92rem;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -97,13 +252,14 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             gap: 0.45rem;
         }
         .adj-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+            color: #FFFFFF;
+            background: var(--adj-surface-hover, #48230D);
         }
         .adj-tab-btn.active {
-            background: #a855f7;
-            color: white;
-            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.4);
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.45);
         }
 
         /* Panels */
@@ -121,11 +277,11 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
         /* Tab 1: Split-Screen Contrast Canvas */
         .contrast-canvas-card {
-            background: #1e293b;
+            background: var(--adj-surface, #341808);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid var(--adj-border, #6E3311);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             margin-bottom: 2rem;
         }
         .contrast-control-bar {
@@ -133,24 +289,24 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             justify-content: space-between;
             align-items: center;
             padding: 0.9rem 1.4rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adj-surface-input, #1C0B03);
+            border-bottom: 1.5px solid var(--adj-border, #6E3311);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
         .contrast-instruction {
-            color: #cbd5e1;
+            color: var(--adj-text-muted, #fed7aa);
             font-size: 0.95rem;
             font-weight: 600;
         }
         .pure-toggle-btn {
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e2e8f0;
+            border: 1px solid var(--adj-border, #6E3311);
+            color: var(--adj-text-muted, #fed7aa);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
@@ -158,20 +314,20 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             gap: 0.4rem;
         }
         .pure-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
+            background: var(--adj-surface-hover, #48230D);
+            color: #FFFFFF;
         }
         .pure-toggle-btn.active {
-            background: #a855f7;
-            border-color: #a855f7;
-            color: white;
+            background: var(--adj-primary, #ea580c);
+            border-color: var(--adj-border-focus, #fb923c);
+            color: #FFFFFF;
         }
 
         .contrast-split-stage {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2px;
-            background: #0f172a;
+            background: var(--adj-surface-input, #1C0B03);
             position: relative;
         }
         @media (max-width: 820px) {
@@ -182,21 +338,22 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         .stage-half {
             position: relative;
             overflow: hidden;
-            background: #0f172a;
+            background: var(--adj-surface-input, #1C0B03);
         }
         .stage-half-header {
             position: absolute;
             top: 12px;
             left: 12px;
             z-index: 10;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(20, 8, 3, 0.88);
             backdrop-filter: blur(8px);
             padding: 0.35rem 0.85rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--adj-border, #6E3311);
             pointer-events: none;
+            color: var(--adj-text-muted, #fed7aa);
         }
         .stage-half-header.warm { color: #f59e0b; border-color: rgba(245, 158, 11, 0.4); }
         .stage-half-header.cool { color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); }
@@ -215,7 +372,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: rgba(168, 85, 247, 0.88);
+            background: var(--adj-primary, #ea580c);
             border: 2px solid white;
             color: white;
             display: flex;
@@ -230,8 +387,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         }
         .adj-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.22);
-            background: #a855f7;
-            box-shadow: 0 0 18px rgba(168, 85, 247, 0.8);
+            background: var(--adj-primary-hover, #f97316);
+            box-shadow: 0 0 18px rgba(234, 88, 12, 0.8);
         }
         .adj-hotspot.active {
             background: #22c55e !important;
@@ -258,12 +415,12 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
         /* Detail Card */
         .adj-detail-card {
-            background: #1e293b;
+            background: var(--adj-surface, #341808);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.8rem;
             margin-top: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
@@ -274,7 +431,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding-bottom: 1rem;
         }
         .adj-title-group {
@@ -285,10 +442,10 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         .adj-main-word {
             font-size: 2rem;
             font-weight: 800;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .adj-tts-btn {
-            background: #a855f7;
+            background: var(--adj-primary, #ea580c);
             border: none;
             color: white;
             padding: 0.5rem 0.9rem;
@@ -302,13 +459,13 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             transition: all 0.2s ease;
         }
         .adj-tts-btn:hover {
-            background: #9333ea;
+            background: var(--adj-primary-hover, #f97316);
             transform: scale(1.05);
         }
         .adj-modpol-pill {
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
+            background: rgba(234, 88, 12, 0.15);
+            border: 1px solid var(--adj-primary, #ea580c);
+            color: var(--adj-border-focus, #fb923c);
             padding: 0.5rem 1.1rem;
             border-radius: 20px;
             font-size: 1rem;
@@ -320,7 +477,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             transition: all 0.2s ease;
         }
         .adj-modpol-pill:hover {
-            background: rgba(56, 189, 248, 0.25);
+            background: rgba(234, 88, 12, 0.25);
             transform: translateY(-2px);
         }
 
@@ -330,8 +487,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             gap: 1rem;
         }
         .adj-congruence-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1px solid var(--adj-border, #6E3311);
             padding: 1rem;
             border-radius: 14px;
         }
@@ -339,27 +496,30 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             font-size: 0.8rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             letter-spacing: 0.5px;
             margin-bottom: 0.4rem;
         }
         .adj-congruence-val {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .adj-congruence-val mark {
             background: transparent;
-            color: #c084fc;
+            color: var(--adj-border-focus, #fb923c);
             font-weight: 800;
         }
         .adj-example-box {
-            background: rgba(168, 85, 247, 0.1);
-            border-left: 4px solid #a855f7;
+            background: var(--adj-surface-input, #1C0B03);
+            border-left: 4px solid var(--adj-primary, #ea580c);
+            border-top: 1px solid var(--adj-border, #6E3311);
+            border-right: 1px solid var(--adj-border, #6E3311);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding: 1.2rem;
             border-radius: 10px;
             font-size: 1.15rem;
-            color: #e2e8f0;
+            color: #FFFFFF;
             line-height: 1.5;
         }
 
@@ -367,48 +527,49 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         .task-card {
             max-width: 850px;
             margin: 0 auto;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--adj-surface, #341808);
+            border: 1.5px solid var(--adj-border, #6E3311);
             border-radius: 24px;
             padding: 2.2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            color: #FFFFFF;
         }
         .task-top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding-bottom: 1rem;
         }
         .task-counter {
             font-size: 0.95rem;
-            font-weight: 700;
-            color: #c084fc;
+            font-weight: 800;
+            color: var(--adj-border-focus, #fb923c);
         }
         .task-score {
             font-size: 0.95rem;
-            color: #94a3b8;
-            font-weight: 600;
+            color: var(--adj-text-muted, #fed7aa);
+            font-weight: 700;
         }
         .task-prompt-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.4rem;
             border-radius: 16px;
             margin-bottom: 1.6rem;
             font-size: 1.3rem;
             line-height: 1.5;
-            color: #f8fafc;
+            color: #FFFFFF;
             text-align: center;
         }
         .task-prompt-box strong {
-            color: #c084fc;
+            color: var(--adj-border-focus, #fb923c);
             font-size: 1.4rem;
         }
         .task-subprompt {
             font-size: 1.1rem;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             margin-top: 0.6rem;
         }
         .task-options-grid {
@@ -418,8 +579,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             margin-bottom: 1.5rem;
         }
         .task-opt-btn {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px solid var(--adj-border, #6E3311);
             color: white;
             padding: 1.1rem;
             border-radius: 14px;
@@ -430,9 +591,9 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             text-align: center;
         }
         .task-opt-btn:hover:not(:disabled) {
-            border-color: #a855f7;
+            border-color: var(--adj-primary, #ea580c);
             transform: translateY(-2px);
-            background: rgba(168, 85, 247, 0.1);
+            background: var(--adj-surface-hover, #48230D);
         }
         .task-opt-btn.correct {
             background: rgba(34, 197, 94, 0.25) !important;
@@ -445,8 +606,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             color: #f87171 !important;
         }
         .task-feedback-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.3rem;
             border-radius: 14px;
             margin-top: 1.2rem;
@@ -462,9 +623,28 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             color: #fca5a5;
         }
         .task-next-btn {
-            background: #a855f7;
+            background: var(--adj-primary, #ea580c);
             color: white;
             border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: inline-block;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+        }
+        .task-next-btn:hover {
+            background: var(--adj-primary-hover, #f97316);
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.55);
+            transform: translateY(-2px);
+        }
+        .task-secondary-btn {
+            background: var(--adj-surface-hover, #48230D);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: #FFFFFF;
             padding: 0.85rem 1.8rem;
             border-radius: 12px;
             font-weight: 700;
@@ -474,15 +654,15 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             display: inline-block;
             transition: all 0.2s ease;
         }
-        .task-next-btn:hover {
-            background: #9333ea;
-            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.4);
+        .task-secondary-btn:hover {
+            background: var(--adj-border, #6E3311);
+            transform: translateY(-2px);
         }
 
         /* Grammar Guide Link Banner in Tab 5 */
         .adj-grammar-link-box {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(56, 189, 248, 0.15));
-            border: 1px solid rgba(168, 85, 247, 0.4);
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             border-radius: 16px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.8rem;
@@ -493,7 +673,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             gap: 1rem;
         }
         .adj-go-grammar-btn {
-            background: #a855f7;
+            background: var(--adj-primary, #ea580c);
             color: white;
             border: none;
             padding: 0.65rem 1.2rem;
@@ -508,21 +688,21 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             gap: 0.4rem;
         }
         .adj-go-grammar-btn:hover {
-            background: #9333ea;
+            background: var(--adj-primary-hover, #f97316);
             transform: translateY(-2px);
         }
         .feedback-grammar-link {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            color: #38bdf8;
+            color: var(--adj-border-focus, #fb923c);
             font-weight: 700;
             margin-top: 0.6rem;
             text-decoration: underline;
             cursor: pointer;
         }
         .feedback-grammar-link:hover {
-            color: #7dd3fc;
+            color: #fed7aa;
         }
 
         /* Tab 4: Barometret Specific Styles */
@@ -536,72 +716,104 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #0f172a;
-            border: 2px dashed #475569;
-            padding: 1rem;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px dashed var(--adj-border, #6E3311);
+            padding: 1.2rem;
             border-radius: 16px;
-            min-height: 80px;
+            min-height: 85px;
             gap: 0.8rem;
             overflow-x: auto;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
         }
         .barometer-slot {
             flex: 1;
-            min-width: 120px;
-            height: 60px;
-            border: 2px solid #334155;
-            background: rgba(255, 255, 255, 0.03);
+            min-width: 125px;
+            height: 64px;
+            border: 2px solid var(--adj-border, #6E3311);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             font-size: 0.95rem;
             position: relative;
             cursor: pointer;
             transition: all 0.2s ease;
+            user-select: none;
+        }
+        .barometer-slot:hover {
+            border-color: var(--adj-primary, #ea580c);
+            background: var(--adj-surface-hover, #48230D);
         }
         .barometer-slot.filled {
-            border-color: #a855f7;
-            background: rgba(168, 85, 247, 0.15);
-            color: white;
+            border-color: var(--adj-border-focus, #fb923c);
+            background: linear-gradient(135deg, var(--adj-primary, #ea580c) 0%, #c2410c 100%);
+            color: #FFFFFF;
+            font-weight: 800;
             font-size: 1.05rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
         }
         .barometer-pool {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
             justify-content: center;
-            margin: 1.2rem 0;
+            margin: 1.4rem 0;
         }
         .barometer-chip {
-            background: #0f172a;
-            border: 2px solid #a855f7;
-            color: white;
-            padding: 0.75rem 1.3rem;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px solid var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            padding: 0.75rem 1.4rem;
             border-radius: 20px;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        .barometer-chip:hover {
-            transform: scale(1.06);
-            background: #a855f7;
+        .barometer-chip:hover:not(.used) {
+            transform: scale(1.06) translateY(-2px);
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
         }
         .barometer-chip.used {
-            opacity: 0.3;
+            opacity: 0.25;
             pointer-events: none;
-            border-color: #475569;
+            border-color: var(--adj-border, #6E3311);
+            transform: none;
         }
         .scale-indicators {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             padding: 0 0.5rem;
+        }
+        #check-scale-btn {
+            background: var(--adj-primary, #ea580c) !important;
+            border: none !important;
+            color: #FFFFFF !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
+        }
+        #check-scale-btn:hover:not(:disabled) {
+            background: var(--adj-primary-hover, #f97316) !important;
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.55) !important;
+            transform: translateY(-2px);
+        }
+        #check-scale-btn:disabled {
+            opacity: 0.4 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
         }
     `;
     viewContainer.appendChild(style);
@@ -619,12 +831,12 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
-        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: '👁️' },
-        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: '⚔️' },
-        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: '🔄' },
-        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: '🌡️' },
-        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: '🧩' },
-        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: '📖' }
+        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: renderDsIcon('eye', '', { size: 18 }) },
+        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: renderDsIcon('compare', '', { size: 18 }) },
+        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: renderDsIcon('refresh', '', { size: 18 }) },
+        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: renderDsIcon('thermometer', '', { size: 18 }) },
+        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: renderDsIcon('puzzle', '', { size: 18 }) },
+        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: renderDsIcon('bookOpen', '', { size: 18 }) }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -633,7 +845,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const btn = document.createElement('button');
         btn.className = `adj-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `<span class="adj-tab-icon">${t.icon}</span> <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -666,7 +878,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'stor',
                 side: 'left',
                 x: 82, y: 86,
-                itemLabel: 'Stor taske 🎒',
+                itemLabel: 'Stor taske',
                 faelles: 'en stor taske',
                 intet: 'et stort hus',
                 flertal: 'de store tasker',
@@ -676,7 +888,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'lille',
                 side: 'right',
                 x: 51, y: 49,
-                itemLabel: 'Lille taske 👛',
+                itemLabel: 'Lille taske',
                 faelles: 'en lille taske',
                 intet: 'et lille hus',
                 flertal: 'de små huse (bemærk: små!)',
@@ -689,7 +901,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'lang',
                 side: 'left',
                 x: 67, y: 39,
-                itemLabel: 'Lang vej 🛣️',
+                itemLabel: 'Lang vej',
                 faelles: 'en lang vej',
                 intet: 'et langt brev',
                 flertal: 'de lange veje',
@@ -699,7 +911,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'kort',
                 side: 'right',
                 x: 48, y: 22,
-                itemLabel: 'Kort pause ⏱️',
+                itemLabel: 'Kort pause',
                 faelles: 'en kort tur',
                 intet: 'et kort brev',
                 flertal: 'de korte ture',
@@ -712,7 +924,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'høj',
                 side: 'left',
                 x: 12, y: 34,
-                itemLabel: 'Høj mand 👨',
+                itemLabel: 'Høj mand',
                 faelles: 'en høj mand',
                 intet: 'et højt træ',
                 flertal: 'de høje træer',
@@ -722,7 +934,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'lav',
                 side: 'right',
                 x: 43, y: 86,
-                itemLabel: 'Lav stol 🪑',
+                itemLabel: 'Lav stol',
                 faelles: 'en lav stol',
                 intet: 'et lavt bord',
                 flertal: 'de lave stole',
@@ -735,7 +947,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'bred',
                 side: 'left',
                 x: 25, y: 58,
-                itemLabel: 'Bred vej 🛣️',
+                itemLabel: 'Bred vej',
                 faelles: 'en bred vej',
                 intet: 'et bredt bord',
                 flertal: 'de brede veje',
@@ -745,7 +957,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'smal',
                 side: 'right',
                 x: 65, y: 83,
-                itemLabel: 'Smal dør 🚪',
+                itemLabel: 'Smal dør',
                 faelles: 'en smal dør',
                 intet: 'et smalt vindue',
                 flertal: 'de smalle døre',
@@ -758,7 +970,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'tung',
                 side: 'right',
                 x: 59, y: 65,
-                itemLabel: 'Tung taske 🏋️',
+                itemLabel: 'Tung taske',
                 faelles: 'en tung taske',
                 intet: 'et tungt bord',
                 flertal: 'de tunge tasker',
@@ -768,7 +980,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'let',
                 side: 'left',
                 x: 49, y: 11,
-                itemLabel: 'Let pose 🛍️',
+                itemLabel: 'Let pose',
                 faelles: 'en let pose',
                 intet: 'et let arbejde',
                 flertal: 'de lette poser',
@@ -781,7 +993,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'varm',
                 side: 'left',
                 x: 64, y: 67,
-                itemLabel: 'Varm kaffe ☕',
+                itemLabel: 'Varm kaffe',
                 faelles: 'en varm kop kaffe',
                 intet: 'et varmt brød',
                 flertal: 'de varme kopper',
@@ -791,7 +1003,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'kold',
                 side: 'right',
                 x: 10, y: 53,
-                itemLabel: 'Koldt vand 🧊',
+                itemLabel: 'Koldt vand',
                 faelles: 'en kold mælk',
                 intet: 'et koldt glas vand',
                 flertal: 'de kolde dage',
@@ -804,7 +1016,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'hård',
                 side: 'right',
                 x: 32, y: 69,
-                itemLabel: 'Hård stol 🪑',
+                itemLabel: 'Hård stol',
                 faelles: 'en hård stol',
                 intet: 'et hårdt bord',
                 flertal: 'de hårde stole',
@@ -814,7 +1026,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'blød',
                 side: 'left',
                 x: 52, y: 63,
-                itemLabel: 'Blød seng 🛏️',
+                itemLabel: 'Blød seng',
                 faelles: 'en blød seng',
                 intet: 'et blødt stykke tøj',
                 flertal: 'de bløde senge',
@@ -827,7 +1039,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'fast',
                 side: 'right',
                 x: 89, y: 81,
-                itemLabel: 'Fast arbejde 💼',
+                itemLabel: 'Fast arbejde',
                 faelles: 'en fast dør',
                 intet: 'et fast arbejde',
                 flertal: 'de faste stole',
@@ -837,7 +1049,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'løs',
                 side: 'left',
                 x: 12, y: 80,
-                itemLabel: 'Løs sko 👟',
+                itemLabel: 'Løs sko',
                 faelles: 'en løs sko',
                 intet: 'et løst stykke tøj',
                 flertal: 'de løse sko',
@@ -850,7 +1062,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'fuld',
                 side: 'left',
                 x: 70, y: 65,
-                itemLabel: 'Fuld bus 🚌',
+                itemLabel: 'Fuld bus',
                 faelles: 'en fuld bus',
                 intet: 'et fuldt glas',
                 flertal: 'de fulde busser',
@@ -860,7 +1072,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'tom',
                 side: 'right',
                 x: 91, y: 16,
-                itemLabel: 'Tom kop ☕',
+                itemLabel: 'Tom kop',
                 faelles: 'en tom taske',
                 intet: 'et tomt glas',
                 flertal: 'de tomme kopper',
@@ -873,7 +1085,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'åben',
                 side: 'left',
                 x: 83, y: 46,
-                itemLabel: 'Åben dør 🚪',
+                itemLabel: 'Åben dør',
                 faelles: 'en åben dør',
                 intet: 'et åbent vindue',
                 flertal: 'de åbne butikker',
@@ -883,7 +1095,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                 word: 'lukket',
                 side: 'right',
                 x: 65, y: 29,
-                itemLabel: 'Lukket butik 🏪',
+                itemLabel: 'Lukket butik',
                 faelles: 'en lukket butik',
                 intet: 'et lukket vindue',
                 flertal: 'de lukkede døre',
@@ -913,18 +1125,18 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
     const instructionText = document.createElement('div');
     instructionText.className = 'contrast-instruction';
-    instructionText.innerHTML = `💡 <em>${getTranslation('adj_click_hotspot_hint')}</em>`;
+    instructionText.innerHTML = `<em>${getTranslation('adj_click_hotspot_hint')}</em>`;
     ctrlBar.appendChild(instructionText);
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('adj_pure_label')} <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
+    pureBtn.innerHTML = `<span>${renderDsIcon('image', '', { size: 16 })}</span> <span>${getTranslation('adj_pure_label')}</span> <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
     let isPureMode = false;
     pureBtn.onclick = () => {
         isPureMode = !isPureMode;
         stage.classList.toggle('pure-mode', isPureMode);
         pureBtn.classList.toggle('active', isPureMode);
-        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? `${getTranslation('adj_status_on')} 🖼️` : getTranslation('adj_status_off');
+        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? getTranslation('adj_status_on') : getTranslation('adj_status_off');
     };
     ctrlBar.appendChild(pureBtn);
     contrastCard.appendChild(ctrlBar);
@@ -981,14 +1193,13 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${item.me.side === 'left' ? '☀️' : '❄️'}</span>
                     <span class="adj-main-word">${item.me.word}</span>
                     ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
-                    <button class="adj-tts-btn" id="card-tts-btn">🔊 ${getTranslation('adj_listen_pronunciation')}</button>
+                    <button class="adj-tts-btn" id="card-tts-btn">${renderDsIcon('volume', '', { size: 16 })} <span>${getTranslation('adj_listen_pronunciation')}</span></button>
                     <span style="color: #94a3b8; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at se modpolen">
-                    <span>⚔️ ${getTranslation('adj_modpol_label')}</span>
+                    <span>${getTranslation('adj_modpol_label')}</span>
                     <strong>${item.other.word}</strong>
                     <span>➔</span>
                 </div>
@@ -1010,7 +1221,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             </div>
 
             <div class="adj-example-box">
-                <strong>💬 ${getTranslation('adj_example_sentence')}</strong><br>
+                <strong>${getTranslation('adj_example_sentence')}</strong><br>
                 "${formatNounLinks(item.me.context)}"
                 ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
@@ -1056,92 +1267,92 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
     const antonymDuels = [
         {
-            stimulus: 'Kaffen i koppen er meget <strong>VARM ☕</strong>.',
+            stimulus: 'Kaffen i koppen er meget <strong>VARM</strong>.',
             question: 'Hvad er vandet med isterninger i glasset?',
             targetWord: 'varm',
-            correct: 'kold 🧊',
-            options: ['kold 🧊', 'hård 🪑', 'blød 🛏️', 'lun 🌡️'],
+            correct: 'kold',
+            options: ['kold', 'hård', 'blød', 'lun'],
             wrongExplanation: 'Hård og blød handler om overfladen på en stol. Til temperatur hedder det kold!',
             congruenceBonus: 'En <strong>varm</strong> kop kaffe ↔ Et <strong>koldt</strong> glas vand.'
         },
         {
-            stimulus: 'Manden bærer en taske med 20 bøger. Den er meget <strong>TUNG 🎒</strong>.',
+            stimulus: 'Manden bærer en taske med 20 bøger. Den er meget <strong>TUNG</strong>.',
             question: 'Hvad er posen med ét brød?',
             targetWord: 'tung',
-            correct: 'let 🛍️',
-            options: ['let 🛍️', 'lille 🏠', 'løs 👟', 'lav 🪑'],
+            correct: 'let',
+            options: ['let', 'lille', 'løs', 'lav'],
             wrongExplanation: 'Når det gælder vægt og kilo, er modpolen til tung altid let!',
             congruenceBonus: 'En <strong>tung</strong> taske ↔ En <strong>let</strong> pose.'
         },
         {
-            stimulus: 'Stolen af træ er <strong>HÅRD</strong> at sidde på 🪑.',
+            stimulus: 'Stolen af træ er <strong>HÅRD</strong> at sidde på.',
             question: 'Hvad er sengen at sove i?',
             targetWord: 'hård',
-            correct: 'blød 🛏️',
-            options: ['blød 🛏️', 'varm ☕', 'let 🛍️', 'fast 🚪'],
+            correct: 'blød',
+            options: ['blød', 'varm', 'let', 'fast'],
             wrongExplanation: 'Varm handler om temperatur. Når vi mærker på en stol eller seng, er modpolen blød!',
             congruenceBonus: 'En <strong>hård</strong> stol ↔ En <strong>blød</strong> seng.'
         },
         {
-            stimulus: 'Familien bor i et <strong>STORT</strong> hus med mange værelser 🏠.',
+            stimulus: 'Familien bor i et <strong>STORT</strong> hus med mange værelser.',
             question: 'Hvad er et hus med kun ét lille værelse?',
             targetWord: 'stor',
-            correct: 'lille 🏡',
-            options: ['lille 🏡', 'kort ⏱️', 'smal 🚪', 'lav 🪑'],
+            correct: 'lille',
+            options: ['lille', 'kort', 'smal', 'lav'],
             wrongExplanation: 'Kort er tid, og smal er bredde. Modpolen til stor er lille!',
             congruenceBonus: 'Et <strong>stort</strong> hus ↔ Et <strong>lille</strong> hus (og de små børn).'
         },
         {
-            stimulus: 'Døren til butikken er <strong>ÅBEN 🚪</strong>.',
+            stimulus: 'Døren til butikken er <strong>ÅBEN</strong>.',
             question: 'Hvad er døren, når butikken lukker om aftenen?',
             targetWord: 'åben',
-            correct: 'lukket 🔒',
-            options: ['lukket 🔒', 'tom 🥛', 'fast 💼', 'smal 🚪'],
+            correct: 'lukket',
+            options: ['lukket', 'tom', 'fast', 'smal'],
             wrongExplanation: 'En dør eller et vindue er enten åbent eller lukket!',
             congruenceBonus: 'En <strong>åben</strong> dør ↔ En <strong>lukket</strong> dør (et åbent vindue ↔ et lukket vindue).'
         },
         {
-            stimulus: 'Bussen er helt <strong>FULD</strong> af mennesker klokken 8 🚌.',
+            stimulus: 'Bussen er helt <strong>FULD</strong> af mennesker klokken 8.',
             question: 'Hvad er bussen, når der ikke er nogen mennesker?',
             targetWord: 'fuld',
-            correct: 'tom 🚌',
-            options: ['tom 🚌', 'løs 👟', 'let 🛍️', 'kort ⏱️'],
+            correct: 'tom',
+            options: ['tom', 'løs', 'let', 'kort'],
             wrongExplanation: 'Når en bus eller et glas ikke har noget indhold, er den tom!',
             congruenceBonus: 'En <strong>fuld</strong> bus ↔ En <strong>tom</strong> bus (et fuldt glas ↔ et tomt glas).'
         },
         {
-            stimulus: 'Vejen til byen er meget <strong>LANG 🛣️</strong>.',
+            stimulus: 'Vejen til byen er meget <strong>LANG</strong>.',
             question: 'Hvad er en pause på to minutter?',
             targetWord: 'lang',
-            correct: 'kort ⏱️',
-            options: ['kort ⏱️', 'lille 🏠', 'smal 🚪', 'lav 🪑'],
+            correct: 'kort',
+            options: ['kort', 'lille', 'smal', 'lav'],
             wrongExplanation: 'Om tid og vej er modpolen til lang altid kort!',
             congruenceBonus: 'En <strong>lang</strong> vej ↔ En <strong>kort</strong> pause (en kort tur).'
         },
         {
-            stimulus: 'Læreren i klassen er en meget <strong>HØJ</strong> mand 👨.',
+            stimulus: 'Læreren i klassen er en meget <strong>HØJ</strong> mand.',
             question: 'Hvad er det lille barn på fire år?',
             targetWord: 'høj',
-            correct: 'lav 🧒',
-            options: ['lav 🧒', 'kort ⏱️', 'lille 🏠', 'blød 🛏️'],
+            correct: 'lav',
+            options: ['lav', 'kort', 'lille', 'blød'],
             wrongExplanation: 'Når vi måler højden på en person eller et bord, er modpolen lav!',
             congruenceBonus: 'En <strong>høj</strong> mand ↔ En <strong>lav</strong> mand (et højt bord ↔ et lavt bord).'
         },
         {
-            stimulus: 'Bilen kører på en <strong>BRED</strong> vej 🛣️.',
+            stimulus: 'Bilen kører på en <strong>BRED</strong> vej.',
             question: 'Hvad er stien, hvor to cykler ikke kan køre ved siden af hinanden?',
             targetWord: 'bred',
-            correct: 'smal 🚲',
-            options: ['smal 🚲', 'kort ⏱️', 'lav 🪑', 'lille 🏠'],
+            correct: 'smal',
+            options: ['smal', 'kort', 'lav', 'lille'],
             wrongExplanation: 'Når vi taler om vejens bredde, hedder modpolerne bred og smal!',
             congruenceBonus: 'En <strong>bred</strong> vej ↔ En <strong>smal</strong> vej (en bred seng ↔ en smal seng).'
         },
         {
-            stimulus: 'Døren er låst og sidder helt <strong>FAST 🚪</strong>.',
+            stimulus: 'Døren er låst og sidder helt <strong>FAST</strong>.',
             question: 'Hvad er skoen, hvis den er lige ved at falde af?',
             targetWord: 'fast',
-            correct: 'løs 👟',
-            options: ['løs 👟', 'blød 🛏️', 'let 🛍️', 'åben 🚪'],
+            correct: 'løs',
+            options: ['løs', 'blød', 'let', 'åben'],
             wrongExplanation: 'Når en sko eller en dør ikke sidder fast, er den løs!',
             congruenceBonus: 'En <strong>fast</strong> dør ↔ En <strong>løs</strong> sko.'
         }
@@ -1158,7 +1369,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const item = antonymDuels[currentDuelIndex];
         antonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">⚔️ Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
+                <span class="task-counter">Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
                 <span class="task-score">Point: <strong>${duelScore}</strong></span>
             </div>
             <div class="task-prompt-box">
@@ -1193,8 +1404,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎉 Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
-                            <span style="display:inline-block; margin-top:0.5rem; color:#f8fafc;">✨ <strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
+                            <strong>Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
+                            <span style="display:inline-block; margin-top:0.5rem; color:#f8fafc;"><strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
                         </div>
                     `;
                 } else {
@@ -1221,14 +1432,14 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                         renderDuel();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length}) 🏆`;
+                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length})`;
                     nextBtn.onclick = () => {
                         antonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
+                                <div style="margin-bottom: 1rem; color: #f59e0b;">${renderDsIcon("trophy", "", { size: 56 })}</div>
                                 <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Flot klaret i Antonym-duellen!</h2>
                                 <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${duelScore}</strong> ud af <strong>${antonymDuels.length}</strong> rigtige modpoler.</p>
-                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen 🔄</button>
+                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen</button>
                             </div>
                         `;
                         antonymCard.querySelector('#restart-duel-btn').onclick = () => {
@@ -1268,7 +1479,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         },
         {
             word: 'kold',
-            sentence: 'Vandet i glasset er meget <strong>KOLDT</strong> 🧊.',
+            sentence: 'Vandet i glasset er meget <strong>KOLDT</strong>.',
             question: 'Hvilket ord betyder næsten det samme?',
             correct: 'kølig / iskold',
             options: ['kølig / iskold', 'våd', 'blød', 'varm'],
@@ -1351,7 +1562,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         const item = synonymTasks[currentSynonymIndex];
         synonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">🔄 Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
+                <span class="task-counter">Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
                 <span class="task-score">Point: <strong>${synonymScore}</strong></span>
             </div>
             <div class="task-prompt-box">
@@ -1384,7 +1595,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                     synonymCard.querySelector('.task-score strong').textContent = synonymScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎯 Rigtigt!</strong> ${item.explanation}
+                            <strong>Rigtigt!</strong> ${item.explanation}
                         </div>
                     `;
                 } else {
@@ -1408,14 +1619,14 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                         renderSynonymTask();
                     };
                 } else {
-                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length}) 🌟`;
+                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length})`;
                     nextBtn.onclick = () => {
                         synonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🌟</div>
+                                <div style="margin-bottom: 1rem; color: #f59e0b;">${renderDsIcon("trophy", "", { size: 56 })}</div>
                                 <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Godt ordforråd!</h2>
                                 <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${synonymScore}</strong> ud af <strong>${synonymTasks.length}</strong> rigtige nuancer.</p>
-                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen 🔄</button>
+                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen</button>
                             </div>
                         `;
                         synonymCard.querySelector('#restart-syn-btn').onclick = () => {
@@ -1446,7 +1657,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
     const barometerChallenges = [
         {
             id: 'f1_s1',
-            title: '🌡️ Skala 1: Temperatur',
+            title: 'Skala 1: Temperatur',
             desc: 'Arranger ordene efter temperatur fra koldest til varmest:',
             lowLabel: '🥶 Koldest',
             highLabel: '🔥 Varmest',
@@ -1454,42 +1665,42 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
         },
         {
             id: 'f1_s2',
-            title: '📐 Skala 2: Størrelse',
+            title: 'Skala 2: Størrelse',
             desc: 'Arranger ordene efter størrelse fra mindst til størst:',
-            lowLabel: '🔬 Mindst',
-            highLabel: '🐘 Størst',
+            lowLabel: 'Mindst',
+            highLabel: 'Størst',
             correctOrder: ['lillebitte', 'lille', 'mellemstor', 'stor', 'enorm']
         },
         {
             id: 'f1_s3',
-            title: '⚖️ Skala 3: Vægt',
+            title: 'Skala 3: Vægt',
             desc: 'Arranger ordene fra lettest til tungest:',
-            lowLabel: '🪶 Lettest',
-            highLabel: '🪨 Tungest',
+            lowLabel: 'Lettest',
+            highLabel: 'Tungest',
             correctOrder: ['fjerlet', 'let', 'tung', 'blytung']
         },
         {
             id: 'f1_s4',
-            title: '🛋️ Skala 4: Hårdhed og tekstur',
+            title: 'Skala 4: Hårdhed og tekstur',
             desc: 'Arranger ordene fra blødest til hårdest:',
-            lowLabel: '☁️ Blødest',
-            highLabel: '💎 Hårdest',
+            lowLabel: 'Blødest',
+            highLabel: 'Hårdest',
             correctOrder: ['fløjlsblød', 'blød', 'fast', 'stenhård']
         },
         {
             id: 'f1_s5',
-            title: '🫙 Skala 5: Rumindhold',
+            title: 'Skala 5: Rumindhold',
             desc: 'Arranger ordene fra tomt til fuldt:',
-            lowLabel: '🫙 Helt tomt',
-            highLabel: '📦 Helt fyldt',
+            lowLabel: 'Helt tomt',
+            highLabel: 'Helt fyldt',
             correctOrder: ['helt tom', 'halvtom', 'halvfuld', 'propfuld']
         },
         {
             id: 'f1_s6',
-            title: '📏 Skala 6: Længde og varighed',
+            title: 'Skala 6: Længde og varighed',
             desc: 'Arranger ordene fra kortest til længst:',
-            lowLabel: '⚡ Kortest',
-            highLabel: '♾️ Længst',
+            lowLabel: 'Kortest',
+            highLabel: 'Længst',
             correctOrder: ['ultrakort', 'kort', 'lang', 'uendelig lang']
         }
     ];
@@ -1529,8 +1740,8 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
 
             <div class="barometer-pool" id="barometer-chips"></div>
 
-            <div style="display:flex; justify-content:center; gap:1rem; margin-top:1.5rem;">
-                <button class="task-next-btn" style="background:#475569;" id="reset-scale-btn">${getTranslation('adj_baro_reset_btn')}</button>
+            <div style="display:flex; justify-content:center; gap:1rem; margin-top:1.5rem; flex-wrap:wrap;">
+                <button class="task-secondary-btn" id="reset-scale-btn">${getTranslation('adj_baro_reset_btn')}</button>
                 <button class="task-next-btn" id="check-scale-btn" disabled>${getTranslation('adj_baro_check_btn')}</button>
             </div>
             <div id="barometer-feedback" style="margin-top:1.2rem;"></div>
@@ -1710,7 +1921,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
             <!-- Grammatisk Guide Banner med direkte link -->
             <div class="adj-grammar-link-box">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <span style="font-size: 1.8rem;">📖</span>
+                    <span style="display:inline-flex; align-items:center; color:#f8fafc;">${renderDsIcon("bookOpen", "", { size: 28 })}</span>
                     <div>
                         <div style="font-weight: 700; color: #f8fafc; font-size: 1.05rem;">
                             ${getTranslation('adj_grammar_banner_title')}
@@ -1762,11 +1973,11 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                     kongruensCard.querySelector('.task-score strong').textContent = kongruensScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎉 Helt rigtigt!</strong><br>
+                            <strong>Helt rigtigt!</strong><br>
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 Læs hele reglen i bøjningsguiden her ➔
+                                    Læs hele reglen i bøjningsguiden her ➔
                                 </a>
                             </div>
                         </div>
@@ -1782,7 +1993,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 Se bøjningsguiden for hjælp til -t og -e ➔
+                                    Se bøjningsguiden for hjælp til -t og -e ➔
                                 </a>
                             </div>
                         </div>
@@ -1803,19 +2014,19 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                         renderKongruensTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se bøjningsresultat (${kongruensScore}/${kongruensTasks.length}) 🏆`;
+                    nextBtn.textContent = `Se bøjningsresultat (${kongruensScore}/${kongruensTasks.length})`;
                     nextBtn.onclick = () => {
                         kongruensCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🧩</div>
+                                <div style="margin-bottom: 1rem; color: #f59e0b;">${renderDsIcon("trophy", "", { size: 56 })}</div>
                                 <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Stærk kongruens-træning!</h2>
                                 <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 1.5rem;">Du fik <strong>${kongruensScore}</strong> ud af <strong>${kongruensTasks.length}</strong> rigtige endelser.</p>
                                 <div style="margin-bottom: 2rem;">
                                     <button class="adj-go-grammar-btn" id="finish-guide-link-btn" style="margin: 0 auto;">
-                                        📖 Gå til den store bøjningsguide ➔
+                                        Gå til den store bøjningsguide ➔
                                     </button>
                                 </div>
-                                <button class="task-next-btn" id="restart-kong-btn">Prøv igen 🔄</button>
+                                <button class="task-next-btn" id="restart-kong-btn">Prøv igen</button>
                             </div>
                         `;
                         kongruensCard.querySelector('#finish-guide-link-btn').onclick = () => navigateFn('adjective_comparison');
@@ -1938,7 +2149,7 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                     storyCard.querySelector('.task-score strong').textContent = storyScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>👏 Helt rigtigt!</strong> ${item.explanation}
+                            <strong>Helt rigtigt!</strong> ${item.explanation}
                         </div>
                     `;
                 } else {
@@ -1962,14 +2173,14 @@ export function renderAdjektiverFysikView(container, navigateFn, extraData = {})
                         renderStoryTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length}) 🌟`;
+                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length})`;
                     nextBtn.onclick = () => {
                         storyCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎉</div>
+                                <div style="margin-bottom: 1rem; color: #f59e0b;">${renderDsIcon("trophy", "", { size: 56 })}</div>
                                 <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Super flot forståelse!</h2>
                                 <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${storyScore}</strong> ud af <strong>${historieTasks.length}</strong> rigtige svar.</p>
-                                <button class="task-next-btn" id="restart-story-btn">Prøv igen 🔄</button>
+                                <button class="task-next-btn" id="restart-story-btn">Prøv igen</button>
                             </div>
                         `;
                         storyCard.querySelector('#restart-story-btn').onclick = () => {

@@ -1,21 +1,23 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
+import { getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * KonjunktionerDaNaarView - Særskilt Flade: "DA" og "NÅR"
  *
  * Kombinerer:
  *  1. Interaktivt Vrimlebillede (assets/da_naar_vrimmel.jpg) med 12 hotspots opdelt i:
- *     - 📌 DA (Tegnestiften): Én bestemt gang / afsluttet periode i fortiden
- *     - 🔁 NÅR (Cirklen / Rundkørslen): Gentagne vaner ("hver gang" – både i nutid og fortid!)
- *     - 🏹 NÅR (Fremtidspilen): Begivenheder i fremtiden
+ *     - DA (Tegnestiften): Én bestemt gang / afsluttet periode i fortiden
+ *     - NÅR (Cirklen / Rundkørslen): Gentagne vaner ("hver gang" – både i nutid og fortid!)
+ *     - NÅR (Fremtidspilen): Begivenheder i fremtiden
  *  2. Den kognitive illustration fra Træning 2 (da_naar_guide_future.jpg) integreret direkte i fladen
  *  3. Ordstillings-røntgen ("IKKE"-magneten i da/når-ledsætninger + Inversion når da/når står forrest)
  *  4. 6 interaktive faner inkl. Træning 2-opgaverne, Da/Når-Detektiven, Sætningsbyggeren og Fortids-Duellen
  */
 export function renderKonjunktionerDaNaarView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+    applyKonjNuance(getActiveKonjNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container da-naar-view';
@@ -43,21 +45,21 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
 
     // 12 Hotspots on assets/da_naar_vrimmel.jpg
     const DA_NAAR_DATA = [
-        // 📌 DA: Tegnestiften (Fortid 1 gang / specifik periode)
+        // DA: Tegnestiften (Fortid 1 gang / specifik periode)
         {
             id: 'da_cykel',
             word: 'da (fortid • 1 gang)',
-            shortLabel: '📌 da (lærte at cykle)',
+            shortLabel: 'da (lærte at cykle)',
             targetWord: 'da',
             category: 'da_fortid',
-            cognitiveIcon: '📌 Tegnestiften (Én gang i fortiden)',
+            cognitiveIcon: 'Tegnestiften (Én gang i fortiden)',
             x: 9,
             y: 20,
             meaning: 'Peger på en specifik, afsluttet begivenhed i fortiden ("when" in the past)',
             sceneDesc: 'På væggen hænger billedet af drengen på den røde cykel, da han lærte at cykle som 5-årig.',
             sentence: 'Jeg var meget stolt, da jeg lærte at cykle.',
             contextSentence: 'Da jeg var fem år gammel, fik jeg min første røde cykel i fødselsdagsgave.',
-            ruleHint: '📌 TEGNESTIFTEN: At lære at cykle eller være 5 år gammel skete kun ÉN gang i fortiden ➔ Derfor bruger vi altid "da"!',
+            ruleHint: 'TEGNESTIFTEN: At lære at cykle eller være 5 år gammel skete kun ÉN gang i fortiden ➔ Derfor bruger vi altid "da"!',
             translations: {
                 en: { word: 'when (single event/period in the past)', sentence: 'When I was five years old, I got my first red bicycle as a birthday present.' },
                 de: { word: 'als (einmalig in der Vergangenheit)', sentence: 'Als ich fünf Jahre alt war, bekam ich mein erstes rotes Fahrrad.' },
@@ -70,17 +72,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'da_italien',
             word: 'da (ferieminde i fortiden)',
-            shortLabel: '📌 da (i Italien)',
+            shortLabel: 'da (i Italien)',
             targetWord: 'da',
             category: 'da_fortid',
-            cognitiveIcon: '📌 Tegnestiften (Afsluttet periode i fortiden)',
+            cognitiveIcon: 'Tegnestiften (Afsluttet periode i fortiden)',
             x: 23,
             y: 24,
             meaning: 'Sætter en tegnestift i en bestemt ferie eller barndomsperiode i fortiden',
             sceneDesc: 'Familiebilledet fra stranden viser den sommer, da familien var i Italien og spiste is.',
             sentence: 'Jeg var i Italien, da jeg var barn.',
             contextSentence: 'Vi spiste store vaffelis på stranden, da vi var på sommerferie i Italien.',
-            ruleHint: '📌 TEGNESTIFTEN: Barndommen og ferien i Italien er afsluttede kapitler i fortiden ➔ "da jeg var barn".',
+            ruleHint: 'TEGNESTIFTEN: Barndommen og ferien i Italien er afsluttede kapitler i fortiden ➔ "da jeg var barn".',
             translations: {
                 en: { word: 'when (in the past)', sentence: 'We ate big ice cream cones on the beach when we were on summer holiday in Italy.' },
                 de: { word: 'als (in der Vergangenheit)', sentence: 'Wir aßen großes Eis am Strand, als wir im Sommerurlaub in Italien waren.' },
@@ -93,17 +95,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'da_karakter',
             word: 'da (bestemt øjeblik i fortiden)',
-            shortLabel: '📌 da (så karakter)',
+            shortLabel: 'da (så karakter)',
             targetWord: 'da',
             category: 'da_fortid',
-            cognitiveIcon: '📌 Tegnestiften (Konkret øjeblik i fortiden)',
+            cognitiveIcon: 'Tegnestiften (Konkret øjeblik i fortiden)',
             x: 20,
             y: 42,
             meaning: 'Ét konkret øjeblik i fortiden, hvor noget skete',
             sceneDesc: 'På billedet står studenten med sit eksamensbevis i hånden i det øjeblik, han bestod.',
             sentence: 'Jeg blev meget glad, da jeg så min karakter.',
             contextSentence: 'Da han endelig bestod sin sidste eksamen, krammede han sin kæreste i solen.',
-            ruleHint: '📌 TEGNESTIFTEN: At se sin eksamenskarakter skete på ét bestemt tidspunkt i fortiden. Bemærk også inversion når "Da..." står forrest: "Da han bestod, KRAMMEDE HAN..."!',
+            ruleHint: 'TEGNESTIFTEN: At se sin eksamenskarakter skete på ét bestemt tidspunkt i fortiden. Bemærk også inversion når "Da..." står forrest: "Da han bestod, KRAMMEDE HAN..."!',
             translations: {
                 en: { word: 'when (specific moment in the past)', sentence: 'When he finally passed his final exam, he hugged his girlfriend in the sun.' },
                 de: { word: 'als (bestimmter Moment in der Vergangenheit)', sentence: 'Als er endlich seine letzte Prüfung bestand, umarmte er seine Freundin.' },
@@ -116,17 +118,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'da_huen',
             word: 'da (+ "ikke" før verbet)',
-            shortLabel: '📌 da (fik huen på)',
+            shortLabel: 'da (fik huen på)',
             targetWord: 'da',
             category: 'da_fortid',
-            cognitiveIcon: '📌 Tegnestiften + Ledsætnings-ordstilling',
+            cognitiveIcon: 'Tegnestiften + Ledsætnings-ordstilling',
             x: 7,
             y: 54,
             meaning: 'Ledsætning med "da" har altid "ikke/aldrig" FØR verbet',
             sceneDesc: 'Pigen på billedet kaster studenterhuen i luften af glæde.',
             sentence: 'Hun græd af glæde, da hun fik studenterhuen på.',
             contextSentence: 'Hun troede næsten ikke sine egne øjne, da hun ikke længere havde flere eksamener tilbage.',
-            ruleHint: '🧲 HUSK: Både "da" og "når" er LEDSÆTNINGSKONJUNKTIONER! Derfor står "ikke" altid FØR verbet efter "da" og "når" ("... da hun IKKE havde...").',
+            ruleHint: 'HUSK: Både "da" og "når" er LEDSÆTNINGSKONJUNKTIONER! Derfor står "ikke" altid FØR verbet efter "da" og "når" ("... da hun IKKE havde...").',
             translations: {
                 en: { word: 'when (+ subclause word order)', sentence: 'She cried with joy when she put on her graduation cap.' },
                 de: { word: 'als (+ Nebensatz-Wortstellung)', sentence: 'Sie weinte vor Freude, als sie die Studentenmütze aufsetzte.' },
@@ -139,17 +141,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'da_igaar_bus',
             word: 'da (i går / i morges)',
-            shortLabel: '📌 da (det regnede i går)',
+            shortLabel: 'da (det regnede i går)',
             targetWord: 'da',
             category: 'da_fortid',
-            cognitiveIcon: '📌 Tegnestiften ("i går / i morges / sidste uge")',
+            cognitiveIcon: 'Tegnestiften ("i går / i morges / sidste uge")',
             x: 25,
             y: 55,
             meaning: 'Tidsudtryk som "i går", "i morges", "i søndags" udløser "da"',
             sceneDesc: 'På billedet står pigen ved busstoppestedet i regnvejret i går eftermiddags.',
             sentence: 'Det øsregnede, da jeg ventede på bussen i går.',
             contextSentence: 'Da jeg gik ud ad døren i morges klokken otte, begyndte det pludselig at regne.',
-            ruleHint: '📌 SIGNALORD FOR "DA": Ord som "i går", "i morges", "i 2020", "sidste år", "pludselig" viser, at det kun skete én bestemt gang i fortiden ➔ brug "da"!',
+            ruleHint: 'SIGNALORD FOR "DA": Ord som "i går", "i morges", "i 2020", "sidste år", "pludselig" viser, at det kun skete én bestemt gang i fortiden ➔ brug "da"!',
             translations: {
                 en: { word: 'when (yesterday / this morning)', sentence: 'It was pouring rain when I waited for the bus yesterday.' },
                 de: { word: 'als (gestern / heute Morgen)', sentence: 'Es goss in Strömen, als ich gestern auf den Bus wartete.' },
@@ -160,21 +162,21 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             }
         },
 
-        // 🔁 NÅR: Cirklen / Rundkørslen (Gentagen vane - "hver gang")
+        // NÅR: Cirklen / Rundkørslen (Gentagen vane - "hver gang")
         {
             id: 'naar_kaffe',
             word: 'når (fast vane • hver morgen)',
-            shortLabel: '🔁 når (morgenkaffe)',
+            shortLabel: 'når (morgenkaffe)',
             targetWord: 'når',
             category: 'naar_vane',
-            cognitiveIcon: '🔁 Cirklen (Gentagen vane: "hver gang")',
+            cognitiveIcon: 'Cirklen (Gentagen vane: "hver gang")',
             x: 45,
             y: 24,
             meaning: 'Bruges om faste rutiner og vaner, der gentager sig ("whenever / every time")',
             sceneDesc: 'Hver morgen klokken 7 brygger manden i køkkenet en kop varm kaffe.',
             sentence: 'Jeg drikker altid kaffe, når jeg står op om morgenen.',
             contextSentence: 'Når vækkeuret ringer klokken syv, går han straks ud i køkkenet og tænder kaffemaskinen.',
-            ruleHint: '🔁 CIRKLEN (RUNDKØRSLEN): Når noget sker IGEN OG IGEN (hver morgen, altid, plejer), bruger vi altid "når"!',
+            ruleHint: 'CIRKLEN (RUNDKØRSLEN): Når noget sker IGEN OG IGEN (hver morgen, altid, plejer), bruger vi altid "når"!',
             translations: {
                 en: { word: 'when / whenever (repeated habit)', sentence: 'I always drink coffee when I get up in the morning.' },
                 de: { word: 'wenn / jedes Mal wenn (Gewohnheit)', sentence: 'Ich trinke immer Kaffee, wenn ich morgens aufstehe.' },
@@ -187,17 +189,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'naar_paraply',
             word: 'når (hver gang det regner)',
-            shortLabel: '🔁 når (det regner)',
+            shortLabel: 'når (det regner)',
             targetWord: 'når',
             category: 'naar_vane',
-            cognitiveIcon: '🔁 Cirklen (Altid / hver gang)',
+            cognitiveIcon: 'Cirklen (Altid / hver gang)',
             x: 55,
             y: 42,
             meaning: 'Generel regel eller vane i hverdagen ("whenever it rains")',
             sceneDesc: 'Kvinden i midten slår sin gule paraply op og har gummistøvler på, hver gang det regner.',
             sentence: 'Når det regner, tager jeg altid paraply med.',
             contextSentence: 'Hun tager altid sine gule gummistøvler på, når det regner og er vådt udenfor.',
-            ruleHint: '🔁 SE FORSKELLEN: "DA det regnede i går, blev jeg våd" (📌 1 gang i fortiden) ↔ "NÅR det regner, tager jeg altid paraply med" (🔁 Cirklen: hver gang)!',
+            ruleHint: 'SE FORSKELLEN: "DA det regnede i går, blev jeg våd" (1 gang i fortiden) ↔ "NÅR det regner, tager jeg altid paraply med" (Cirklen: hver gang)!',
             translations: {
                 en: { word: 'when / whenever (general truth/habit)', sentence: 'When it rains, I always bring an umbrella.' },
                 de: { word: 'wenn (immer wenn es regnet)', sentence: 'Wenn es regnet, nehme ich immer einen Regenschirm mit.' },
@@ -210,17 +212,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'naar_hund',
             word: 'når (gentagen glæde)',
-            shortLabel: '🔁 når (ser min hund)',
+            shortLabel: 'når (ser min hund)',
             targetWord: 'når',
             category: 'naar_vane',
-            cognitiveIcon: '🔁 Cirklen (Gentagen hændelse)',
+            cognitiveIcon: 'Cirklen (Gentagen hændelse)',
             x: 43,
             y: 74,
             meaning: 'Noget der udløser det samme resultat hver gang',
             sceneDesc: 'Hunden ved hoveddøren logrer glad med halen, hver gang kvinden kommer hjem.',
             sentence: 'Jeg bliver meget glad, når jeg ser min hund.',
             contextSentence: 'Hunden logrer vildt med halen, når familien kommer hjem om eftermiddagen.',
-            ruleHint: '🔁 PRØV "HVER GANG"-TESTEN: Hvis du kan erstatte ordet med "hver gang" ("Jeg bliver glad, HVER GANG jeg ser min hund"), skal det ALTID være "når"!',
+            ruleHint: 'PRØV "HVER GANG"-TESTEN: Hvis du kan erstatte ordet med "hver gang" ("Jeg bliver glad, HVER GANG jeg ser min hund"), skal det ALTID være "når"!',
             translations: {
                 en: { word: 'when / every time', sentence: 'I get very happy when I see my dog.' },
                 de: { word: 'wenn / jedes Mal wenn', sentence: 'Ich werde sehr froh, wenn ich meinen Hund sehe.' },
@@ -233,17 +235,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'naar_gartner',
             word: 'når (betingelse i tid)',
-            shortLabel: '🔁 når (det er tørvejr)',
+            shortLabel: 'når (det er tørvejr)',
             targetWord: 'når',
             category: 'naar_vane',
-            cognitiveIcon: '🔁 Cirklen (Fast arbejdsrutine)',
+            cognitiveIcon: 'Cirklen (Fast arbejdsrutine)',
             x: 64,
             y: 74,
             meaning: 'Beskriver hvornår en fast handling plejer at finde sted',
             sceneDesc: 'Gartneren i de grønne overalls slår græsplænen i solskinnet.',
             sentence: 'Gartneren klipper kun græsset, når det er tørvejr.',
             contextSentence: 'Når solen skinner over parken, slår gartneren græsset og vander blomsterne.',
-            ruleHint: '🔁 OGSÅ VANE I FORTIDEN! Selv i datid bruger man "når", hvis det skete MANGE GANGE ("Da jeg var barn [1 periode], legede vi altid ude, NÅR solen skinnede [hver gang]!").',
+            ruleHint: 'OGSÅ VANE I FORTIDEN! Selv i datid bruger man "når", hvis det skete MANGE GANGE ("Da jeg var barn [1 periode], legede vi altid ude, NÅR solen skinnede [hver gang]!").',
             translations: {
                 en: { word: 'when (whenever weather is dry)', sentence: 'The gardener only mows the grass when the weather is dry.' },
                 de: { word: 'wenn (immer bei trockenem Wetter)', sentence: 'Der Gärtner mäht das Gras nur, wenn es trocken ist.' },
@@ -254,21 +256,21 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             }
         },
 
-        // 🏹 NÅR: Fremtidspilen (Fremtidige begivenheder)
+        // NÅR: Fremtidspilen (Fremtidige begivenheder)
         {
             id: 'naar_fremtid_rejse',
             word: 'når (fremtid • rejse)',
-            shortLabel: '🏹 når (vi rejser)',
+            shortLabel: 'når (vi rejser)',
             targetWord: 'når',
             category: 'naar_fremtid',
-            cognitiveIcon: '🏹 Fremtidspilen (Endnu ikke sket!)',
+            cognitiveIcon: 'Fremtidspilen (Endnu ikke sket!)',
             x: 76,
             y: 27,
             meaning: 'Bruges om alt i fremtiden – selv hvis det kun sker én gang i fremtiden!',
             sceneDesc: 'Drengen kigger i kikkerten ud mod flyet og palmestranden, som venter i fremtiden.',
             sentence: 'Vi skal bade hver dag, når vi kommer ned til varmen.',
             contextSentence: 'Når flyet lander på ferieøen i næste uge, løber vi direkte ned på stranden.',
-            ruleHint: '🏹 FREMTIDSPILEN: På dansk kan man ALDRIG bruge "da" om fremtiden! Selv hvis rejsen kun sker én enkelt gang i morgen eller næste år, hedder det ALTID "når"!',
+            ruleHint: 'FREMTIDSPILEN: På dansk kan man ALDRIG bruge "da" om fremtiden! Selv hvis rejsen kun sker én enkelt gang i morgen eller næste år, hedder det ALTID "når"!',
             translations: {
                 en: { word: 'when (in the future)', sentence: 'When the plane lands on the holiday island next week, we will run straight to the beach.' },
                 de: { word: 'wenn (in der Zukunft – NIEMALS "da"!)', sentence: 'Wenn das Flugzeug nächste Woche landet, laufen wir direkt zum Strand.' },
@@ -281,17 +283,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'naar_kalender',
             word: 'når (fremtidsplan i kalenderen)',
-            shortLabel: '🏹 når (bliver færdig)',
+            shortLabel: 'når (bliver færdig)',
             targetWord: 'når',
             category: 'naar_fremtid',
-            cognitiveIcon: '🏹 Fremtidspilen (Plan i kalenderen)',
+            cognitiveIcon: 'Fremtidspilen (Plan i kalenderen)',
             x: 84,
             y: 53,
             meaning: 'Peger fremad i kalenderen mod et kommende tidspunkt',
             sceneDesc: 'Kalenderbladene bladrer fremad mod næste måned og nye fremtidsplaner.',
             sentence: 'Når jeg bliver 18 år i næste måned, vil jeg tage kørekort.',
             contextSentence: 'Når sommerferien starter om to uger, tager vi i sommerhus ved Vesterhavet.',
-            ruleHint: '🏹 PAS PÅ FÆLDEN: "DA jeg blev 10 år [i fortiden]" ↔ "NÅR jeg bliver 18 år [i fremtiden]". Fremtid = ALTID "når"!',
+            ruleHint: 'PAS PÅ FÆLDEN: "DA jeg blev 10 år [i fortiden]" ↔ "NÅR jeg bliver 18 år [i fremtiden]". Fremtid = ALTID "når"!',
             translations: {
                 en: { word: 'when (future milestone)', sentence: 'When I turn 18 next month, I want to get a driver\'s license.' },
                 de: { word: 'wenn (zukünftiger Zeitpunkt)', sentence: 'Wenn ich nächsten Monat 18 werde, mache ich den Führerschein.' },
@@ -304,17 +306,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         {
             id: 'naar_ringer',
             word: 'når (kommer hjem om lidt)',
-            shortLabel: '🏹 når (kommer hjem)',
+            shortLabel: 'når (kommer hjem)',
             targetWord: 'når',
             category: 'naar_fremtid',
-            cognitiveIcon: '🏹 Fremtidspilen + Inversion',
+            cognitiveIcon: 'Fremtidspilen + Inversion',
             x: 92,
             y: 76,
             meaning: 'Handling der sker lige om lidt eller senere i dag',
             sceneDesc: 'Den unge mand står klar med mobilen foran opgangen for at ringe, når han kommer hjem.',
             sentence: 'Når jeg kommer hjem, ringer jeg til dig.',
             contextSentence: 'Jeg sender en besked og ringer til dig, når jeg kommer hjem fra skole i eftermiddag.',
-            ruleHint: '🔄 INVERSION VED LEDSÆTNING I FRONT: Når sætningen starter med "Når jeg kommer hjem," fylder hele ledsætningen Plads 1 (Forfeltet) – derfor bytter Verbum og Subjekt plads efter kommaet: "... RINGER JEG til dig"!',
+            ruleHint: 'INVERSION VED LEDSÆTNING I FRONT: Når sætningen starter med "Når jeg kommer hjem," fylder hele ledsætningen Plads 1 (Forfeltet) – derfor bytter Verbum og Subjekt plads efter kommaet: "... RINGER JEG til dig"!',
             translations: {
                 en: { word: 'when (later today / soon)', sentence: 'When I get home, I will call you.' },
                 de: { word: 'wenn (später heute / bald)', sentence: 'Wenn ich nach Hause komme, rufe ich dich an.' },
@@ -700,12 +702,12 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: getTranslation('danaar_tab_vrimmel'), icon: '🖼️' },
-        { id: 'kognitiv', label: getTranslation('danaar_tab_kognitiv'), icon: '🔬' },
-        { id: 'traening2', label: getTranslation('danaar_tab_traening'), icon: '📅' },
-        { id: 'detektiv', label: getTranslation('danaar_tab_detektiv'), icon: '🔍' },
-        { id: 'fortidsduel', label: getTranslation('danaar_tab_duel'), icon: '⚔️' },
-        { id: 'builder', label: getTranslation('danaar_tab_builder'), icon: '🧩' }
+        { id: 'vrimmel', label: getTranslation('danaar_tab_vrimmel') },
+        { id: 'kognitiv', label: getTranslation('danaar_tab_kognitiv') },
+        { id: 'traening2', label: getTranslation('danaar_tab_traening') },
+        { id: 'detektiv', label: getTranslation('danaar_tab_detektiv') },
+        { id: 'fortidsduel', label: getTranslation('danaar_tab_duel') },
+        { id: 'builder', label: getTranslation('danaar_tab_builder') }
     ];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
@@ -714,7 +716,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === t.id ? 'active' : ''}`;
         btn.id = `dn-tab-${t.id}`;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.textContent = t.label;
         btn.onclick = () => switchTab(t.id);
         nav.appendChild(btn);
     });
@@ -762,9 +764,9 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         filtersDiv.className = 'vrimmel-filters';
         [
             { id: 'alle', label: 'Alle scener (12)' },
-            { id: 'da_fortid', label: '📌 Da: fortid 1 gang (5)' },
-            { id: 'naar_vane', label: '🔁 Når: gentagen vane (4)' },
-            { id: 'naar_fremtid', label: '🏹 Når: fremtid (3)' }
+            { id: 'da_fortid', label: 'Da: fortid 1 gang (5)' },
+            { id: 'naar_vane', label: 'Når: gentagen vane (4)' },
+            { id: 'naar_fremtid', label: 'Når: fremtid (3)' }
         ].forEach(f => {
             const b = document.createElement('button');
             b.className = `filter-btn ${activeFilter === f.id ? 'active' : ''}`;
@@ -780,7 +782,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
 
         const pureBtn = document.createElement('button');
         pureBtn.className = 'pure-toggle-btn';
-        pureBtn.innerHTML = `${isPureMode ? '👁️ Skjul mærker' : '🏷️ Vis mærker'}`;
+        pureBtn.innerHTML = `${isPureMode ? 'Skjul mærker' : 'Vis mærker'}`;
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -834,7 +836,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     </div>
                     <h2 class="inspector-word-title">${item.word}</h2>
                     <div class="inspector-trans-box">
-                        <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; text-transform:uppercase;">🌍 ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}</div>
+                        <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; text-transform:uppercase;">${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}</div>
                         <div style="font-size:1.3rem; font-weight:800; color:white; margin-top:0.2rem;">${trans.word}</div>
                         <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.2rem;">${item.meaning}</div>
                     </div>
@@ -847,10 +849,10 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     <div class="inspector-sentence-card">
                         <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; margin-bottom:0.3rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div style="font-size:1.25rem; font-weight:800; color:white; margin-bottom:0.4rem;">"${item.sentence}"</div>
-                        ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">🌍 "${trans.sentence}"</div>` : ''}
+                        ${trans.sentence ? `<div style="color:#fde68a; font-size:0.92rem; margin-bottom:0.7rem;">"${trans.sentence}"</div>` : ''}
                     </div>
                     <div class="inspector-scene-box" style="border-left:3px solid #f59e0b;">
-                        <div style="font-size:0.8rem; font-weight:800; color:#fde68a;">🧭 Kognitiv & Grammatisk Regel</div>
+                        <div style="font-size:0.8rem; font-weight:800; color:#fde68a;">Kognitiv & Grammatisk Regel</div>
                         <p style="color:#cbd5e1; margin:0.3rem 0 0;">${item.ruleHint}</p>
                     </div>
                     <div style="display:flex; gap:0.8rem;">
@@ -940,49 +942,49 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             quote: '"Jeg var i Italien, ______ jeg var barn."',
             options: ['da', 'når'],
             correct: 'da',
-            explanation: '📌 Korrekt! Vi sætter tegnestiften "da" i en specifik, afsluttet periode i fortiden ("da jeg var barn").'
+            explanation: 'Korrekt! Vi sætter tegnestiften "da" i en specifik, afsluttet periode i fortiden ("da jeg var barn").'
         },
         {
             quote: '"______ jeg kommer hjem, ringer jeg til dig."',
             options: ['Når', 'Da'],
             correct: 'Når',
-            explanation: '🏹 Korrekt! "Når" bruges, fordi vi kigger fremad i tiden (den lysende fremtidspil).'
+            explanation: 'Korrekt! "Når" bruges, fordi vi kigger fremad i tiden (den lysende fremtidspil).'
         },
         {
             quote: '"Jeg blev meget glad, ______ jeg så min karakter."',
             options: ['da', 'når'],
             correct: 'da',
-            explanation: '📌 Korrekt! At se sin karakter skete på ét bestemt tidspunkt i fortiden – det kræver tegnestiften "da".'
+            explanation: 'Korrekt! At se sin karakter skete på ét bestemt tidspunkt i fortiden – det kræver tegnestiften "da".'
         },
         {
             quote: '"______ det regner, tager jeg altid paraply med."',
             options: ['Når', 'Da'],
             correct: 'Når',
-            explanation: '🔁 Korrekt! Ordet "altid" viser, at det er en vane, der gentager sig igen og igen (den grønne cirkel).'
+            explanation: 'Korrekt! Ordet "altid" viser, at det er en vane, der gentager sig igen og igen (den grønne cirkel).'
         },
         {
             quote: '"Vi spiste is, ______ vi var på stranden i går."',
             options: ['da', 'når'],
             correct: 'da',
-            explanation: '📌 Korrekt! Strandturen skete "i går", som er en enkeltstående, afsluttet begivenhed i fortiden (tegnestiften).'
+            explanation: 'Korrekt! Strandturen skete "i går", som er en enkeltstående, afsluttet begivenhed i fortiden (tegnestiften).'
         },
         {
             quote: '"Peter bringer mad ud på cykel. ______ det sner, er det svært at cykle."',
             options: ['Når', 'Da'],
             correct: 'Når',
-            explanation: '🔁 Korrekt! Det sner flere gange om vinteren – en tilbagevendende situation kræver cirklen "Når".'
+            explanation: 'Korrekt! Det sner flere gange om vinteren – en tilbagevendende situation kræver cirklen "Når".'
         },
         {
             quote: '"______ Peter kørte hjemmefra klokken 16 i går, var det stadig lyst."',
             options: ['Da', 'Når'],
             correct: 'Da',
-            explanation: '📌 Korrekt! Klokken 16 i går er ét præcist punktnedslag i fortiden (tegnestiften).'
+            explanation: 'Korrekt! Klokken 16 i går er ét præcist punktnedslag i fortiden (tegnestiften).'
         },
         {
             quote: '"Anna er gartner i parken. Hun klipper kun græsset, ______ det er tørvejr."',
             options: ['når', 'da'],
             correct: 'når',
-            explanation: '🔁 Korrekt! En fast arbejdsrutine (hver gang det er tørvejr) kræver "når".'
+            explanation: 'Korrekt! En fast arbejdsrutine (hver gang det er tørvejr) kræver "når".'
         }
     ];
 
@@ -991,10 +993,10 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         box.className = 'detektiv-container';
         box.innerHTML = `
             <div style="text-align:center; margin-bottom:1.5rem;">
-                <h2 style="color:#6ee7b7; margin:0 0 0.5rem;">📅 Træning 2: Da eller Når? (Med Kognitiv Illustration)</h2>
+                <h2 style="color:#6ee7b7; margin:0 0 0.5rem;">Træning 2: Da eller Når? (Med Kognitiv Illustration)</h2>
                 <img src="${baseUrl}da_naar_guide_future.jpg" alt="Da eller Når guide" style="max-width:460px; width:100%; border-radius:16px; border:2px solid #10b981; margin:0.6rem auto; display:block; background:white;" />
                 <p style="color:#cbd5e1; max-width:700px; margin:0.5rem auto 0;">
-                    <em>📌 <strong>'Da'</strong> peger på et enkeltstående punkt i fortiden (tegnestiften). 🔁 <strong>'Når'</strong> bruges om gentagne vaner (cirklen) eller 🏹 begivenheder i fremtiden (pilen).</em>
+                    <em><strong>'Da'</strong> peger på et enkeltstående punkt i fortiden (tegnestiften). <strong>'Når'</strong> bruges om gentagne vaner (cirklen) eller begivenheder i fremtiden (pilen).</em>
                 </p>
             </div>
             <div id="t2-list"></div>
@@ -1026,7 +1028,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     fb.style.color = isRight ? '#86efac' : '#fca5a5';
                     fb.innerHTML = isRight
                         ? `${q.explanation}`
-                        : `⚠️ Ikke helt – tænk på om det er 📌 Tegnestiften (1 gang i fortiden = da), 🔁 Cirklen (vane = når) eller 🏹 Pilen (fremtid = når).`;
+                        : `Ikke helt – tænk på om det er Tegnestiften (1 gang i fortiden = da), Cirklen (vane = når) eller Pilen (fremtid = når).`;
                 };
             });
             list.appendChild(item);
@@ -1038,53 +1040,53 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     // ==========================================
     const DETEKTIV_QUESTIONS = [
         {
-            tag: 'Gåde 1 • 📌 Tegnestift, 🔁 Cirkel eller 🏹 Pil?',
+            tag: 'Gåde 1 • Tegnestift, Cirkel eller Pil?',
             quote: '"______ jeg fyldte 25 år i 2022, holdt vi en stor fest i haven."',
-            options: ['Da (📌 Tegnestift i fortid)', 'Når (🔁 Cirkel / Vane)', 'Når (🏹 Fremtidspil)'],
-            correct: 'Da (📌 Tegnestift i fortid)',
-            explanation: '🌟 Lige i øjet! Man fylder kun 25 år én gang, og 2022 er i fortiden ➔ 📌 Tegnestiften "Da"!'
+            options: ['Da (Tegnestift i fortid)', 'Når (Cirkel / Vane)', 'Når (Fremtidspil)'],
+            correct: 'Da (Tegnestift i fortid)',
+            explanation: 'Lige i øjet! Man fylder kun 25 år én gang, og 2022 er i fortiden ➔ Tegnestiften "Da"!'
         },
         {
-            tag: 'Gåde 2 • 📌 Tegnestift, 🔁 Cirkel eller 🏹 Pil?',
+            tag: 'Gåde 2 • Tegnestift, Cirkel eller Pil?',
             quote: '"______ jeg fylder 30 år til næste år, vil jeg invitere alle mine venner."',
-            options: ['Når (🏹 Fremtidspil)', 'Da (📌 Tegnestift i fortid)', 'Når (🔁 Cirkel / Vane)'],
-            correct: 'Når (🏹 Fremtidspil)',
-            explanation: '🌟 Præcis! Selvom man kun fylder 30 år én gang, ligger det i FREMTIDEN ("til næste år") – og i fremtiden bruger man ALTID "Når"!'
+            options: ['Når (Fremtidspil)', 'Da (Tegnestift i fortid)', 'Når (Cirkel / Vane)'],
+            correct: 'Når (Fremtidspil)',
+            explanation: 'Præcis! Selvom man kun fylder 30 år én gang, ligger det i FREMTIDEN ("til næste år") – og i fremtiden bruger man ALTID "Når"!'
         },
         {
             tag: 'Gåde 3 • Hverdags-rutine',
             quote: '"Jeg hører altid dansk podcast i toget, ______ jeg kører på arbejde om morgenen."',
-            options: ['når (🔁 Cirkel / Vane)', 'da (📌 Tegnestift i fortid)'],
-            correct: 'når (🔁 Cirkel / Vane)',
-            explanation: '🌟 Rigtigt! "Altid" og "om morgenen" viser en fast gentagen rutine ➔ 🔁 Cirklen "når".'
+            options: ['når (Cirkel / Vane)', 'da (Tegnestift i fortid)'],
+            correct: 'når (Cirkel / Vane)',
+            explanation: 'Rigtigt! "Altid" og "om morgenen" viser en fast gentagen rutine ➔ Cirklen "når".'
         },
         {
             tag: 'Gåde 4 • Pludselig hændelse i morges',
             quote: '"Jeg tabte desværre min kaffekop på gulvet, ______ telefonen pludselig ringede i morges."',
-            options: ['da (📌 Tegnestift i fortid)', 'når (🔁 Cirkel / Vane)'],
-            correct: 'da (📌 Tegnestift i fortid)',
-            explanation: '🌟 Korrekt! "Pludselig" og "i morges" udpeger én konkret episode i fortiden ➔ 📌 "da".'
+            options: ['da (Tegnestift i fortid)', 'når (Cirkel / Vane)'],
+            correct: 'da (Tegnestift i fortid)',
+            explanation: 'Korrekt! "Pludselig" og "i morges" udpeger én konkret episode i fortiden ➔ "da".'
         },
         {
             tag: 'Gåde 5 • Ordstilling efter "da"',
             quote: '"Vi gik ind på en hyggelig café, da det ______ at regne mere."',
             options: ['ikke så ud til', 'så ikke ud til'],
             correct: 'ikke så ud til',
-            explanation: '🌟 Skarpt! Efter ledsætningskonjunktionen "da" står "ikke" FØR verbet ("da det ikke så...").'
+            explanation: 'Skarpt! Efter ledsætningskonjunktionen "da" står "ikke" FØR verbet ("da det ikke så...").'
         },
         {
             tag: 'Gåde 6 • Ordstilling efter "Når"-ledsætning i front',
             quote: '"Når undervisningen slutter klokken 12, ______ sammen i kantinen."',
             options: ['spiser vi frokost', 'vi spiser frokost'],
             correct: 'spiser vi frokost',
-            explanation: '🌟 Perfekt! Når ledsætningen ("Når undervisningen slutter kl. 12,") står forrest, kommer der INVERSION i hovedsætningen: "spiser vi"!'
+            explanation: 'Perfekt! Når ledsætningen ("Når undervisningen slutter kl. 12,") står forrest, kommer der INVERSION i hovedsætningen: "spiser vi"!'
         }
     ];
 
     function renderTabDetektiv(parent) {
         const box = document.createElement('div');
         box.className = 'detektiv-container';
-        box.innerHTML = `<h2 style="text-align:center; color:#6ee7b7; margin-top:0;">🔍 Da/Når-Detektiven: Symboler & Ordstilling</h2><div id="det-list"></div>`;
+        box.innerHTML = `<h2 style="text-align:center; color:#6ee7b7; margin-top:0;">Da/Når-Detektiven: Symboler & Ordstilling</h2><div id="det-list"></div>`;
         parent.appendChild(box);
         const list = box.querySelector('#det-list');
 
@@ -1108,7 +1110,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     fb.style.display = 'block';
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
-                    fb.textContent = ok ? q.explanation : '⚠️ Prøv igen!';
+                    fb.textContent = ok ? q.explanation : 'Prøv igen!';
                 };
             });
             list.appendChild(card);
@@ -1124,42 +1126,42 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
             quote: '"Da jeg var barn, badede vi altid ved stranden, ______ solen skinnede."',
             options: ['når', 'da'],
             correct: 'når',
-            explanation: '🔁 MESTER-DETALJEN: Selvom verbet er i datid ("skinnede"), skete det HVER GANG solen skinnede ("altid")! Gentagne vaner i fortiden bruger cirklen "når"!'
+            explanation: 'MESTER-DETALJEN: Selvom verbet er i datid ("skinnede"), skete det HVER GANG solen skinnede ("altid")! Gentagne vaner i fortiden bruger cirklen "når"!'
         },
         {
             context: '2/6 • En konkret dag sidste sommer (1 gang i fortiden)',
             quote: '"Vi badede ved stranden i går, ______ solen endelig kom frem kl. 14."',
             options: ['da', 'når'],
             correct: 'da',
-            explanation: '📌 Her handler det om én bestemt gang i går kl. 14 ➔ tegnestiften "da"!'
+            explanation: 'Her handler det om én bestemt gang i går kl. 14 ➔ tegnestiften "da"!'
         },
         {
             context: '3/6 • Bedstefars besøg (Hver søndag i gamle dage)',
             quote: '"I gamle dage fik vi altid varm kakao, ______ vi besøgte vores bedsteforældre om søndagen."',
             options: ['når', 'da'],
             correct: 'når',
-            explanation: '🔁 "Altid" og "om søndagen" = en gentagen vane i fortiden ("hver gang vi besøgte dem") ➔ "når"!'
+            explanation: '"Altid" og "om søndagen" = en gentagen vane i fortiden ("hver gang vi besøgte dem") ➔ "når"!'
         },
         {
             context: '4/6 • Første møde (Kun én gang!)',
             quote: '"Jeg boede i Aarhus, ______ jeg mødte min mand for første gang."',
             options: ['da', 'når'],
             correct: 'da',
-            explanation: '📌 Man møder kun nogen "for første gang" én gang i fortiden ➔ "da"!'
+            explanation: 'Man møder kun nogen "for første gang" én gang i fortiden ➔ "da"!'
         },
         {
             context: '5/6 • Vane på det gamle arbejde',
             quote: '"På mit gamle arbejde holdt vi altid en kort kaffepause, ______ klokken blev ti."',
             options: ['når', 'da'],
             correct: 'når',
-            explanation: '🔁 "Altid" viser, at kaffepausen gentog sig hver eneste dag kl. 10 ➔ "når"!'
+            explanation: '"Altid" viser, at kaffepausen gentog sig hver eneste dag kl. 10 ➔ "når"!'
         },
         {
             context: '6/6 • Strømafbrydelsen i fredags',
             quote: '"Vi sad midt i aftensmaden i fredags, ______ lyset pludselig gik ud."',
             options: ['da', 'når'],
             correct: 'da',
-            explanation: '📌 "I fredags" og "pludselig" = én enkeltstående hændelse i fortiden ➔ "da"!'
+            explanation: '"I fredags" og "pludselig" = én enkeltstående hændelse i fortiden ➔ "da"!'
         }
     ];
 
@@ -1167,9 +1169,9 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         const box = document.createElement('div');
         box.className = 'detektiv-container';
         box.innerHTML = `
-            <h2 style="text-align:center; color:#fde68a; margin-top:0;">⚔️ Fortids-Duellen: Én gang i fortiden (da) vs. Vane i fortiden (når)</h2>
+            <h2 style="text-align:center; color:#fde68a; margin-top:0;">Fortids-Duellen: Én gang i fortiden (da) vs. Vane i fortiden (når)</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:760px; margin:0 auto 1.5rem;">
-                Mange tror, at al datid hedder <em>da</em>. Men husk <strong>Cirklen 🔁</strong>: Hvis noget skete <strong>mange gange som en vane i fortiden</strong> (<em>"Hver gang det regnede..."</em>), skal du stadig bruge <strong><em>når</em></strong>!
+                Mange tror, at al datid hedder <em>da</em>. Men husk <strong>Cirklen</strong>: Hvis noget skete <strong>mange gange som en vane i fortiden</strong> (<em>"Hver gang det regnede..."</em>), skal du stadig bruge <strong><em>når</em></strong>!
             </p>
             <div id="duel-list"></div>
         `;
@@ -1196,7 +1198,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                     fb.style.display = 'block';
                     fb.style.background = ok ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
                     fb.style.color = ok ? '#86efac' : '#fca5a5';
-                    fb.textContent = ok ? q.explanation : '⚠️ Prøv igen: Skete det kun ÉN gang (📌 da) eller HVER gang som en vane (🔁 når)?';
+                    fb.textContent = ok ? q.explanation : 'Prøv igen: Skete det kun ÉN gang (da) eller HVER gang som en vane (når)?';
                 };
             });
             list.appendChild(card);
@@ -1208,17 +1210,17 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     // ==========================================
     const PUZZLES = [
         {
-            title: 'Puslespil 1 • 📌 Da-ledsætning med "ikke" før verbet',
+            title: 'Puslespil 1 • Da-ledsætning med "ikke" før verbet',
             hint: 'Start med hovedsætningen "Vi blev hjemme,", og sæt derefter "da"-ledsætningen sammen (Husk: Subjekt + ikke + Verbum!):',
             correct: ['Vi blev hjemme,', 'da', 'bussen', 'ikke kom.']
         },
         {
-            title: 'Puslespil 2 • 🏹 Når-ledsætning i front udløser inversion!',
+            title: 'Puslespil 2 • Når-ledsætning i front udløser inversion!',
             hint: 'Start med ledsætningen "Når jeg kommer hjem,", og husk at bytte om på verbum og subjekt i hovedsætningen:',
             correct: ['Når jeg kommer hjem,', 'ringer', 'jeg', 'til dig.']
         },
         {
-            title: 'Puslespil 3 • 🔁 Når-vane i front med inversion',
+            title: 'Puslespil 3 • Når-vane i front med inversion',
             hint: 'Start med "Når det regner,", og sæt derefter verbet FØR subjektet:',
             correct: ['Når det regner,', 'tager', 'jeg altid', 'paraply med.']
         }
@@ -1227,7 +1229,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     function renderTabBuilder(parent) {
         const box = document.createElement('div');
         box.className = 'detektiv-container';
-        box.innerHTML = `<h2 style="text-align:center; color:#6ee7b7; margin-top:0;">🧩 Sætningsbyggeren: Ordstilling med Da & Når</h2><div id="puz-list"></div>`;
+        box.innerHTML = `<h2 style="text-align:center; color:#6ee7b7; margin-top:0;">Sætningsbyggeren: Ordstilling med Da & Når</h2><div id="puz-list"></div>`;
         parent.appendChild(box);
         const list = box.querySelector('#puz-list');
 
@@ -1250,9 +1252,9 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
                             const used = placed.includes(w);
                             return `<button class="detektiv-opt-btn" data-add="${idx}" ${used ? 'disabled style="opacity:0.3;"' : 'style="padding:0.55rem 1rem; font-size:1rem;"'}>${w}</button>`;
                         }).join('')}
-                        <button class="detektiv-opt-btn" id="reset-puz" style="padding:0.55rem 1rem; font-size:0.9rem; background:#334155;">🔄 Nulstil</button>
+                        <button class="detektiv-opt-btn" id="reset-puz" style="padding:0.55rem 1rem; font-size:0.9rem; background:#334155;">Nulstil</button>
                     </div>
-                    ${isDone ? `<div style="margin-top:1rem; color:#4ade80; font-weight:800;">🌟 Perfekt ordstilling! "${p.correct.join(' ')}"</div>` : ''}
+                    ${isDone ? `<div style="margin-top:1rem; color:#4ade80; font-weight:800;">Perfekt ordstilling! "${p.correct.join(' ')}"</div>` : ''}
                 `;
                 card.querySelectorAll('[data-add]').forEach(b => {
                     b.onclick = () => {

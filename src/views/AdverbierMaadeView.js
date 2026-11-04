@@ -1,5 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierMaadeView - Felt 3: Måde (-t reglen)
@@ -18,6 +25,9 @@ import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations
 export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-maade-view';
 
@@ -31,6 +41,40 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -98,7 +142,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             sentence: 'Han læser stille i bogen.',
             tingExample: 'Caféen er et stille sted.',
             handlingExample: 'Han læser stille.',
-            ruleHint: '⚠️ Særregel: "Stille" ender allerede på -e, så det får IKKE noget ekstra -t!'
+            ruleHint: 'OBS: Særregel: "Stille" ender allerede på -e, så det får IKKE noget ekstra -t!'
         },
         {
             id: 'pænt',
@@ -224,7 +268,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             sentence: 'Han drejede forkert.',
             tingExample: 'Det var den forkerte vej.',
             handlingExample: 'Han kørte forkert.',
-            ruleHint: '⚠️ "Forkert" har allerede -t i grundform både som adjektiv og adverbium!'
+            ruleHint: 'OBS: "Forkert" har allerede -t i grundform både som adjektiv og adverbium!'
         },
         {
             id: 'tydeligt',
@@ -280,7 +324,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             sentence: 'Ballonen svæver let.',
             tingExample: 'Det er en let ballon.',
             handlingExample: 'Ballonen stiger let til vejrs.',
-            ruleHint: '⚠️ "Let" ender allerede på -t i grundform: en let taske / løfter den let.'
+            ruleHint: 'OBS: "Let" ender allerede på -t i grundform: en let taske / løfter den let.'
         },
         {
             id: 'lavt',
@@ -349,9 +393,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             font-size: 2.4rem;
             font-weight: 800;
             margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, #f472b6, #ec4899, #db2777);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .adv-hero p {
             color: #94a3b8;
@@ -368,8 +413,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin: 0 auto;
         }
         .rule-card-mini {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 16px;
             padding: 1rem 1.3rem;
             display: flex;
@@ -380,30 +425,31 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             text-align: left;
         }
         .rule-ting {
-            border-left: 5px solid #38bdf8;
-            background: rgba(56, 189, 248, 0.08);
+            border-left: 5px solid #60A5FA;
+            background: rgba(96, 165, 250, 0.08);
         }
         .rule-handling {
-            border-left: 5px solid #ec4899;
-            background: rgba(236, 72, 153, 0.08);
+            border-left: 5px solid var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.12);
         }
 
-        /* Tabs Navigation */
+        /* Tabs Navigation - Dyb Safirblå ramme */
         .adv-tabs-nav {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
             justify-content: center;
             margin-bottom: 2.2rem;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface, #0A192F);
             padding: 0.6rem;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
         }
         .adv-tab-btn {
             background: transparent;
-            color: #94a3b8;
-            border: none;
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid transparent;
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -415,13 +461,15 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .adv-tab-btn:hover {
-            color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
+            color: #FFFFFF;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-border, #1E3A66);
         }
         .adv-tab-btn.active {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
 
         /* Tab 1: Vrimmel Layout */
@@ -436,10 +484,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
 
         .vrimmel-stage-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .vrimmel-controls-bar {
@@ -447,8 +495,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             justify-content: space-between;
             align-items: center;
             padding: 0.8rem 1.2rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adv-surface-input, #050E1A);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
@@ -457,9 +505,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .filter-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: none;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.4rem 0.85rem;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -467,9 +515,15 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             cursor: pointer;
             transition: all 0.2s;
         }
+        .filter-btn:hover {
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
+            color: #FFFFFF;
+        }
         .filter-btn.active {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
+            border-color: var(--adv-border-focus, #93C5FD);
         }
         .pure-toggle-btn {
             background: rgba(255, 255, 255, 0.08);
@@ -485,9 +539,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.4rem;
         }
         .pure-toggle-btn.active {
-            background: #3b82f6;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border-color: #60a5fa;
+            border-color: var(--adv-border-focus, #93C5FD);
         }
 
         .vrimmel-canvas-wrapper {
@@ -503,7 +557,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             display: block;
         }
 
-        /* Hotspot Pins */
+        /* Hotspot Pins (Pegefelter i Safirblå) */
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
@@ -534,24 +588,24 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             backdrop-filter: blur(4px);
         }
         .pin-has-t {
-            background: linear-gradient(135deg, #ec4899, #be185d);
-            border: 1.5px solid #f472b6;
+            background: linear-gradient(135deg, #1D4ED8, #3B82F6);
+            border: 1.5px solid #93C5FD;
         }
         .pin-special {
-            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-            border: 1.5px solid #a78bfa;
+            background: linear-gradient(135deg, #0284C7, #0EA5E9);
+            border: 1.5px solid #BAE6FD;
         }
         .hotspot-pin.selected .pin-pill {
-            box-shadow: 0 0 0 3px #ffffff, 0 8px 20px rgba(236, 72, 153, 0.8);
+            box-shadow: 0 0 0 3px #ffffff, 0 8px 20px rgba(59, 130, 246, 0.85);
             transform: translateY(-2px);
         }
 
         /* Inspector Card */
         .vrimmel-inspector-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 1.8rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             position: sticky;
             top: 2rem;
@@ -561,13 +615,13 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             align-items: center;
             justify-content: space-between;
             margin-bottom: 1.2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
             padding-bottom: 1rem;
         }
         .inspector-title-wrap h2 {
             font-size: 2rem;
             font-weight: 800;
-            color: #f472b6;
+            color: #FFFFFF;
             margin: 0 0 0.3rem;
             display: flex;
             align-items: center;
@@ -579,12 +633,12 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             font-weight: 700;
             padding: 0.2rem 0.6rem;
             border-radius: 8px;
-            background: rgba(236, 72, 153, 0.15);
-            color: #f472b6;
-            border: 1px solid rgba(236, 72, 153, 0.4);
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--adv-border-focus, #93C5FD);
+            border: 1px solid var(--adv-border-focus, #93C5FD);
         }
         .inspector-audio-btn {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             width: 44px;
@@ -596,17 +650,17 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             font-size: 1.25rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+            box-shadow: 0 4px 12px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .inspector-audio-btn:hover {
             transform: scale(1.1);
-            background: #db2777;
+            background: var(--adv-primary-hover, #1D4ED8);
         }
 
         /* Aha Golden Box */
         .aha-golden-box {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(15, 23, 42, 0.8));
-            border: 2px solid #ec4899;
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 16px;
             padding: 1.2rem;
             margin-bottom: 1.4rem;
@@ -614,7 +668,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .aha-header {
             font-size: 0.95rem;
             font-weight: 800;
-            color: #f472b6;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.8rem;
@@ -629,10 +683,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 0.8rem;
         }
         .aha-contrast-card {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface, #0A192F);
             border-radius: 12px;
             padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .aha-tag {
             font-size: 0.75rem;
@@ -640,8 +694,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             text-transform: uppercase;
             margin-bottom: 0.3rem;
         }
-        .tag-ting { color: #38bdf8; }
-        .tag-handling { color: #f472b6; }
+        .tag-ting { color: #60A5FA; }
+        .tag-handling { color: #93C5FD; }
         .aha-sentence {
             font-size: 0.95rem;
             font-weight: 600;
@@ -649,15 +703,23 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
 
         .inspector-scene-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
             padding: 1rem 1.2rem;
             margin-bottom: 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
+        }
+        .inspector-sentence-card,
+        .inspector-sentence-box {
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .scene-heading {
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 700;
             margin-bottom: 0.4rem;
             text-transform: uppercase;
@@ -675,9 +737,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .inspector-btn-action {
             flex: 1;
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: none;
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.8rem;
             border-radius: 12px;
             font-weight: 700;
@@ -689,15 +751,16 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .inspector-btn-action:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
         }
 
         /* Tab 2: Aha-værkstedet (-t Transformeren & Parringer) */
         .vaerksted-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 950px;
             margin: 0 auto;
         }
@@ -708,9 +771,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 2rem;
         }
         .vaerksted-subtab-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: 2px solid transparent;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.6rem;
             border-radius: 14px;
             font-size: 1.05rem;
@@ -719,17 +782,17 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             transition: all 0.2s;
         }
         .vaerksted-subtab-btn.active {
-            background: rgba(236, 72, 153, 0.2);
-            border-color: #ec4899;
-            color: #f472b6;
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
         }
 
         /* Transformer Lab */
         .transformer-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 18px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
             text-align: center;
         }
@@ -741,9 +804,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 2rem;
         }
         .trans-word-chip {
-            background: #334155;
-            color: #cbd5e1;
-            border: none;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.6rem 1.1rem;
             border-radius: 10px;
             font-weight: 700;
@@ -751,9 +814,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             transition: all 0.2s;
         }
         .trans-word-chip.active {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 12px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .trans-stage {
             display: flex;
@@ -764,15 +828,15 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             flex-wrap: wrap;
         }
         .trans-box {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 14px;
             padding: 1.4rem;
             min-width: 260px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             text-align: center;
         }
-        .trans-box.ting { border-color: #38bdf8; }
-        .trans-box.handling { border-color: #ec4899; }
+        .trans-box.ting { border-color: #60A5FA; }
+        .trans-box.handling { border-color: var(--adv-primary, #3B82F6); }
         .trans-box-tag {
             font-size: 0.8rem;
             font-weight: 800;
@@ -790,7 +854,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             font-style: italic;
         }
         .trans-action-button {
-            background: linear-gradient(135deg, #ec4899, #be185d);
+            background: linear-gradient(135deg, #1D4ED8, #3B82F6);
             color: white;
             border: none;
             padding: 1.1rem 2rem;
@@ -798,7 +862,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             font-size: 1.2rem;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.45);
+            box-shadow: 0 8px 25px var(--adv-glow, rgba(59, 130, 246, 0.45));
             transition: all 0.25s;
             display: inline-flex;
             align-items: center;
@@ -806,7 +870,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .trans-action-button:hover {
             transform: scale(1.04);
-            box-shadow: 0 12px 30px rgba(236, 72, 153, 0.6);
+            box-shadow: 0 12px 30px var(--adv-glow, rgba(59, 130, 246, 0.6));
         }
 
         /* Match Pairs */
@@ -827,14 +891,14 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .pairs-heading {
             font-size: 1.1rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adv-border-focus, #93C5FD);
             text-align: center;
             margin-bottom: 0.5rem;
         }
         .pair-card-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1rem 1.4rem;
             border-radius: 12px;
             font-size: 1.15rem;
@@ -846,12 +910,12 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             justify-content: space-between;
         }
         .pair-card-btn:hover {
-            background: #475569;
-            border-color: #ec4899;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
         }
         .pair-card-btn.selected {
-            border-color: #ec4899;
-            background: rgba(236, 72, 153, 0.25);
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: rgba(59, 130, 246, 0.25);
         }
         .pair-card-btn.matched {
             background: rgba(34, 197, 94, 0.2) !important;
@@ -862,10 +926,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         /* Tab 3: Detektiv (-t reglen) */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 850px;
             margin: 0 auto;
         }
@@ -875,33 +939,34 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .detektiv-header h2 {
             font-size: 1.8rem;
-            color: #f472b6;
+            color: #FFFFFF;
             margin-bottom: 0.5rem;
         }
         .detektiv-progress {
             display: flex;
             justify-content: space-between;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.95rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
         }
         .detektiv-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .detektiv-context-tag {
             display: inline-block;
-            background: rgba(236, 72, 153, 0.15);
-            color: #f472b6;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.3rem 0.8rem;
             border-radius: 8px;
             font-weight: 700;
             font-size: 0.85rem;
             margin-bottom: 1rem;
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .detektiv-prompt-sentence {
             font-size: 1.35rem;
@@ -913,19 +978,19 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .detektiv-blank {
             display: inline-block;
             min-width: 120px;
-            border-bottom: 3px solid #ec4899;
-            color: #f472b6;
+            border-bottom: 3px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             text-align: center;
             padding: 0 0.5rem;
         }
         .detektiv-question-hint {
             background: rgba(30, 41, 59, 0.7);
-            border-left: 4px solid #38bdf8;
+            border-left: 4px solid var(--adv-primary, #3B82F6);
             padding: 0.8rem 1rem;
             border-radius: 8px;
             font-size: 0.95rem;
-            color: #bae6fd;
+            color: var(--adv-text-muted, #BFDBFE);
             margin-bottom: 1.5rem;
         }
         .detektiv-options {
@@ -938,9 +1003,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             .detektiv-options { grid-template-columns: 1fr; }
         }
         .detektiv-opt-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1.2rem;
             border-radius: 14px;
             font-size: 1.2rem;
@@ -953,13 +1018,13 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.3rem;
         }
         .detektiv-opt-btn:hover:not(:disabled) {
-            background: #475569;
-            border-color: #ec4899;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-2px);
         }
         .detektiv-opt-sub {
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-weight: 500;
         }
         .detektiv-opt-btn.correct {
@@ -990,7 +1055,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             color: #fee2e2;
         }
         .detektiv-next-btn {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.9rem 2.2rem;
@@ -1003,16 +1068,16 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             transition: all 0.2s;
         }
         .detektiv-next-btn:hover {
-            background: #db2777;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: translateY(-2px);
         }
 
         /* Tab 4: Sætningsbyggeren */
         .saetning-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -1023,9 +1088,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 2rem;
         }
         .sb-sub-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: 2px solid transparent;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.6rem;
             border-radius: 14px;
             font-size: 1.05rem;
@@ -1037,9 +1102,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .sb-sub-btn.active {
-            background: rgba(236, 72, 153, 0.2);
-            border-color: #ec4899;
-            color: #f472b6;
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
         }
 
         /* Grammar Legend Bar */
@@ -1050,9 +1115,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 1.2rem;
             margin-bottom: 1.8rem;
             padding: 0.7rem 1.2rem;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             font-size: 0.88rem;
         }
         .grammar-legend-item {
@@ -1070,7 +1135,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .chip-legend-subjekt { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
         .chip-legend-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
-        .chip-legend-maade { background: #ec4899; box-shadow: 0 0 6px rgba(236, 72, 153, 0.6); }
+        .chip-legend-maade { background: var(--adv-primary, #3B82F6); box-shadow: 0 0 6px var(--adv-glow, rgba(59, 130, 246, 0.6)); }
         .chip-legend-rest { background: #0ea5e9; box-shadow: 0 0 6px rgba(14, 165, 233, 0.6); }
 
         /* Sektion 1 Category Rows */
@@ -1081,15 +1146,15 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 2.5rem;
         }
         .category-row-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.4rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-left: 4px solid #64748b;
         }
         .category-row-card.cat-row-subjekt { border-left-color: #22c55e; }
         .category-row-card.cat-row-verbum { border-left-color: #ef4444; }
-        .category-row-card.cat-row-maade { border-left-color: #ec4899; }
+        .category-row-card.cat-row-maade { border-left-color: var(--adv-primary, #3B82F6); }
         .category-row-card.cat-row-rest { border-left-color: #0ea5e9; }
 
         .category-row-header {
@@ -1107,7 +1172,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .cat-title-subjekt { color: #4ade80; }
         .cat-title-verbum { color: #f87171; }
-        .cat-title-maade { color: #f472b6; }
+        .cat-title-maade { color: var(--adv-border-focus, #93C5FD); }
         .cat-title-rest { color: #38bdf8; }
         .cat-grammar-role {
             font-size: 0.8rem;
@@ -1119,7 +1184,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .cat-grammar-role.badge-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
         .cat-grammar-role.badge-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .cat-grammar-role.badge-maade { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .cat-grammar-role.badge-maade { background: rgba(59, 130, 246, 0.15); color: var(--adv-border-focus, #93C5FD); border: 1px solid rgba(59, 130, 246, 0.3); }
         .cat-grammar-role.badge-rest { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
 
         .category-options-flex {
@@ -1128,9 +1193,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.6rem;
         }
         .cat-option-chip {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #e2e8f0;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.6rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -1143,7 +1208,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .cat-option-chip.chip-subjekt:hover { border-color: #22c55e; }
         .cat-option-chip.chip-verbum:hover { border-color: #ef4444; }
-        .cat-option-chip.chip-maade:hover { border-color: #ec4899; }
+        .cat-option-chip.chip-maade:hover { border-color: var(--adv-primary, #3B82F6); }
         .cat-option-chip.chip-rest:hover { border-color: #0ea5e9; }
 
         .cat-option-chip.chip-subjekt.selected {
@@ -1159,10 +1224,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
         }
         .cat-option-chip.chip-maade.selected {
-            background: rgba(236, 72, 153, 0.25) !important;
-            color: #f472b6 !important;
-            border-color: #ec4899 !important;
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4) !important;
+            background: rgba(59, 130, 246, 0.25) !important;
+            color: #BAE6FD !important;
+            border-color: var(--adv-primary, #3B82F6) !important;
+            box-shadow: 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.4)) !important;
         }
         .cat-option-chip.chip-rest.selected {
             background: rgba(14, 165, 233, 0.25) !important;
@@ -1173,8 +1238,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         /* Live Sentence Showcase */
         .live-sentence-showcase {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
@@ -1183,7 +1248,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .live-sentence-label {
             font-size: 0.85rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             text-transform: uppercase;
             letter-spacing: 0.06em;
             margin-bottom: 0.8rem;
@@ -1201,7 +1266,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .live-word-subjekt { color: #4ade80; }
         .live-word-verbum { color: #f87171; }
-        .live-word-maade { color: #f472b6; text-decoration: underline; }
+        .live-word-maade { color: var(--adv-border-focus, #93C5FD); text-decoration: underline; }
         .live-word-rest { color: #38bdf8; }
 
         .live-sentence-actions {
@@ -1210,7 +1275,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 1rem;
         }
         .live-audio-btn {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.8rem 1.6rem;
@@ -1224,7 +1289,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .live-audio-btn:hover {
-            background: #db2777;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: scale(1.05);
         }
 
@@ -1245,8 +1310,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: #334155;
-            color: #cbd5e1;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1254,28 +1319,28 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s;
-            border: 2px solid transparent;
+            border: 2px solid var(--adv-border, #1E3A66);
         }
         .sb-task-pill:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
             transform: scale(1.08);
         }
         .sb-task-pill.active {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border-color: #f472b6;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 12px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .sb-task-pill.done {
             border-color: #22c55e;
             color: #86efac;
         }
         .sb-context-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.3rem 1.5rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .sb-context-title {
             font-size: 1.1rem;
@@ -1289,7 +1354,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.8rem;
         }
         .sb-context-chip {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-size: 0.9rem;
@@ -1297,23 +1362,23 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             display: inline-flex;
             gap: 0.5rem;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .sb-context-chip.subjekt { border-left: 3px solid #22c55e; color: #4ade80; }
         .sb-context-chip.verbum { border-left: 3px solid #ef4444; color: #f87171; }
-        .sb-context-chip.maade { border-left: 3px solid #ec4899; color: #f472b6; }
+        .sb-context-chip.maade { border-left: 3px solid var(--adv-primary, #3B82F6); color: var(--adv-border-focus, #93C5FD); }
         .sb-context-chip.rest { border-left: 3px solid #0ea5e9; color: #38bdf8; }
         .sb-context-chip.target-placeholder {
-            background: rgba(236, 72, 153, 0.18) !important;
-            border: 2px dashed #ec4899 !important;
-            border-left: 4px solid #ec4899 !important;
-            color: #f472b6 !important;
-            box-shadow: 0 0 16px rgba(236, 72, 153, 0.35) !important;
-            animation: pulse-pink-slot 2s infinite ease-in-out;
+            background: rgba(59, 130, 246, 0.18) !important;
+            border: 2px dashed var(--adv-primary, #3B82F6) !important;
+            border-left: 4px solid var(--adv-primary, #3B82F6) !important;
+            color: var(--adv-border-focus, #93C5FD) !important;
+            box-shadow: 0 0 16px var(--adv-glow, rgba(59, 130, 246, 0.35)) !important;
+            animation: pulse-blue-slot 2s infinite ease-in-out;
         }
-        @keyframes pulse-pink-slot {
-            0%, 100% { border-color: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.2); }
-            50% { border-color: #ec4899; box-shadow: 0 0 22px rgba(236, 72, 153, 0.55); }
+        @keyframes pulse-blue-slot {
+            0%, 100% { border-color: rgba(59, 130, 246, 0.5); box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
+            50% { border-color: #3B82F6; box-shadow: 0 0 22px rgba(59, 130, 246, 0.55); }
         }
         .sb-context-chip.target-placeholder.chip-filled {
             background: rgba(34, 197, 94, 0.2) !important;
@@ -1331,8 +1396,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
 
         .sb-target-sentence-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            border: 2px solid rgba(236, 72, 153, 0.45);
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.1rem 1.4rem;
             margin: 0.9rem 0 1.2rem 0;
@@ -1342,7 +1407,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .sb-target-sentence-label {
             font-size: 0.82rem;
             font-weight: 800;
-            color: #f472b6;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.5rem;
@@ -1367,14 +1432,14 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             justify-content: center;
             min-width: 110px;
             padding: 0.2rem 1rem;
-            border: 2px dashed #ec4899;
-            background: rgba(236, 72, 153, 0.16);
+            border: 2px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.16);
             border-radius: 8px;
-            color: #f472b6;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             letter-spacing: 2px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 14px rgba(236, 72, 153, 0.3);
+            box-shadow: 0 0 14px var(--adv-glow, rgba(59, 130, 246, 0.3));
         }
         .sb-sentence-blank.filled {
             border: 2px solid #22c55e;
@@ -1385,8 +1450,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             transform: scale(1.04);
         }
         .sb-question-box {
-            background: rgba(236, 72, 153, 0.1);
-            border: 1.5px solid #ec4899;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
@@ -1403,9 +1468,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 2rem;
         }
         .sb-option-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1415,8 +1480,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             text-align: center;
         }
         .sb-option-btn:hover {
-            background: #475569;
-            border-color: #ec4899;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-2px);
         }
         .sb-option-btn.correct {
@@ -1431,24 +1496,24 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         /* Puzzle Section */
         .sb-puzzle-section {
-            background: #0f172a;
+            background: var(--adv-surface, #0A192F);
             border-radius: 18px;
             padding: 2rem;
-            border: 2px solid #ec4899;
+            border: 2px solid var(--adv-border, #1E3A66);
             margin-top: 1.5rem;
             animation: fadeIn 0.35s ease;
         }
         .sb-puzzle-title {
             font-size: 1.35rem;
             font-weight: 800;
-            color: #f472b6;
+            color: #FFFFFF;
             margin-bottom: 0.4rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         .sb-puzzle-desc {
-            color: #cbd5e1;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
             line-height: 1.5;
@@ -1456,8 +1521,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         /* Architecture Flow Diagram */
         .sb-structure-diagram {
-            background: #1e293b;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            background: var(--adv-surface-input, #050E1A);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 16px;
             padding: 1.4rem;
             margin-bottom: 1.8rem;
@@ -1471,16 +1536,16 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.8rem;
         }
         .structure-diagram-badge {
-            background: rgba(236, 72, 153, 0.2);
-            border: 1.5px solid #ec4899;
-            color: #f472b6;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-weight: 800;
             font-size: 0.9rem;
         }
         .structure-diagram-hint {
-            color: #94a3b8;
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.92rem;
             font-style: italic;
         }
@@ -1495,24 +1560,24 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .flow-step {
             flex: 1;
             min-width: 130px;
-            background: #0f172a;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 0.9rem 0.5rem;
             text-align: center;
             position: relative;
         }
         .flow-step.active-target {
-            border: 2.5px solid #ec4899;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(15, 23, 42, 0.9));
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+            border: 2.5px solid var(--adv-primary, #3B82F6);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(15, 23, 42, 0.9));
+            box-shadow: 0 0 20px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .flow-step.flow-subjekt { border-color: rgba(34, 197, 94, 0.4); }
         .flow-step.flow-subjekt .flow-num { color: #4ade80; }
         .flow-step.flow-verbum { border-color: rgba(239, 68, 68, 0.4); }
         .flow-step.flow-verbum .flow-num { color: #f87171; }
-        .flow-step.flow-adverbium { border-color: rgba(236, 72, 153, 0.6); }
-        .flow-step.flow-adverbium .flow-num { color: #f472b6; }
+        .flow-step.flow-adverbium { border-color: var(--adv-primary, #3B82F6); }
+        .flow-step.flow-adverbium .flow-num { color: var(--adv-border-focus, #93C5FD); }
         .flow-step.flow-rest { border-color: rgba(14, 165, 233, 0.4); }
         .flow-step.flow-rest .flow-num { color: #38bdf8; }
         .flow-num {
@@ -1521,14 +1586,14 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             color: #94a3b8;
             margin-bottom: 0.25rem;
         }
-        .flow-step.active-target .flow-num { color: #f472b6; }
+        .flow-step.active-target .flow-num { color: var(--adv-border-focus, #93C5FD); }
         .flow-title {
             font-size: 0.95rem;
             font-weight: 800;
             color: white;
         }
         .flow-target-tag {
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             font-size: 0.7rem;
             font-weight: 800;
@@ -1536,7 +1601,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             border-radius: 6px;
             margin-top: 0.4rem;
             display: inline-block;
-            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.5);
+            box-shadow: 0 2px 8px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
         .flow-arrow {
             font-size: 1.3rem;
@@ -1555,7 +1620,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
@@ -1570,9 +1635,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             cursor: pointer;
         }
         .sb-puzzle-slot.target-adverbium-slot {
-            border: 2.5px dashed #ec4899;
-            background: rgba(236, 72, 153, 0.08);
-            box-shadow: inset 0 0 15px rgba(236, 72, 153, 0.2);
+            border: 2.5px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.08);
+            box-shadow: inset 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.2));
         }
         .sb-puzzle-slot.filled {
             border-style: solid;
@@ -1591,9 +1656,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .sb-puzzle-slot.slot-type-adverbium.filled,
         .sb-puzzle-slot.target-adverbium-slot.filled {
-            border-color: #ec4899 !important;
-            color: #f472b6 !important;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), #0f172a) !important;
+            border-color: var(--adv-primary, #3B82F6) !important;
+            color: #BAE6FD !important;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), #0f172a) !important;
         }
         .sb-puzzle-slot.slot-type-rest.filled {
             border-color: #0ea5e9 !important;
@@ -1603,7 +1668,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         .slot-target-callout {
             position: absolute;
             top: -12px;
-            background: #ec4899;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             font-size: 0.72rem;
             font-weight: 800;
@@ -1632,9 +1697,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-bottom: 1.8rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.9rem 1.6rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1646,14 +1711,14 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             gap: 0.5rem;
         }
         .sb-puzzle-chip:hover {
-            background: #475569;
-            border-color: #ec4899;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.chip-is-adv {
-            border-color: #ec4899;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), #334155);
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
+            border-color: var(--adv-primary, #3B82F6);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), #0A192F);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .sb-puzzle-chip.used {
             opacity: 0.25;
@@ -1661,8 +1726,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         }
         .reset-slots-btn {
             background: transparent;
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.55rem 1.2rem;
             border-radius: 10px;
             font-size: 0.9rem;
@@ -1677,18 +1742,18 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         /* Tab 5: Kontekst Testen */
         .kontekst-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 850px;
             margin: 0 auto;
         }
         .cloze-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .cloze-sentence-display {
@@ -1702,8 +1767,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             display: inline-block;
             min-width: 130px;
             padding: 0.2rem 1rem;
-            border-bottom: 3px solid #ec4899;
-            color: #f472b6;
+            border-bottom: 3px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             text-align: center;
         }
@@ -1717,9 +1782,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             margin-right: auto;
         }
         .cloze-option-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1.1rem;
             border-radius: 14px;
             font-size: 1.2rem;
@@ -1729,8 +1794,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             text-align: center;
         }
         .cloze-option-btn:hover:not(:disabled) {
-            background: #475569;
-            border-color: #ec4899;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-3px);
         }
         .cloze-option-btn.correct {
@@ -1743,13 +1808,13 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             opacity: 0.6;
         }
         .cloze-didactic-feedback {
-            background: rgba(236, 72, 153, 0.12);
-            border: 1.5px solid #ec4899;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 1.2rem 1.5rem;
             border-radius: 14px;
             font-size: 1.05rem;
             line-height: 1.6;
-            color: #fce7f3;
+            color: #BAE6FD;
             margin-bottom: 1.5rem;
             animation: fadeIn 0.3s ease;
         }
@@ -1765,19 +1830,17 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
     const hero = document.createElement('div');
     hero.className = 'adv-hero';
     hero.innerHTML = `
-        <h1>${getTranslation('adv_f3_hero_title')}</h1>
-        <p>${getTranslation('adv_f3_hero_desc')}</p>
+        <h1>${stripAllEmojis(getTranslation('adv_f3_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f3_hero_desc'))}</p>
         <div class="adv-rule-banner">
             <div class="rule-card-mini rule-ting">
-                <span style="font-size: 1.5rem;">🚗</span>
                 <div>
-                    ${getTranslation('adv_f3_rule_adjektiv')}
+                    ${stripAllEmojis(getTranslation('adv_f3_rule_adjektiv'))}
                 </div>
             </div>
             <div class="rule-card-mini rule-handling">
-                <span style="font-size: 1.5rem;">🏃</span>
                 <div>
-                    ${getTranslation('adv_f3_rule_adverbium')}
+                    ${stripAllEmojis(getTranslation('adv_f3_rule_adverbium'))}
                 </div>
             </div>
         </div>
@@ -1789,18 +1852,18 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (20)`, icon: '🖼️' },
-        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: '💡' },
-        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
-        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🧱' },
-        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '🎯' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (20)`, icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'tab_vaerksted', label: `2. ${getTranslation('adv_tab_vaerksted')}`, icon: renderDsIcon('lightbulb', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: `3. ${getTranslation('adv_tab_detektiv')}`, icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: renderDsIcon('target', '', { size: 16 }) }
     ];
 
     const tabButtons = {};
     tabsConfig.forEach(t => {
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${t.id === currentTab ? 'active' : ''}`;
-        btn.innerHTML = `<span>${t.icon}</span> <span>${t.label}</span>`;
+        btn.innerHTML = `${t.icon} <span>${stripAllEmojis(t.label)}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabButtons[t.id] = btn;
         tabsNav.appendChild(btn);
@@ -1876,7 +1939,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         const pureToggle = document.createElement('button');
         pureToggle.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureToggle.innerHTML = isPureMode ? '👁️ Vis hotspots' : '✨ Skjul hotspots (ren kunst)';
+        pureToggle.innerHTML = isPureMode ? 'Vis hotspots' : 'Skjul hotspots (ren kunst)';
         pureToggle.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(container);
@@ -1907,7 +1970,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
                 pin.innerHTML = `
                     <div class="pin-pill ${item.hasTRule ? 'pin-has-t' : 'pin-special'}">
-                        <span>${item.hasTRule ? '⚡' : '✨'}</span>
+                        <span>${item.hasTRule ? '-t' : 'særord'}</span>
                         <span>${item.word}</span>
                     </div>
                 `;
@@ -1951,25 +2014,25 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                         <h2>
                             ${word.word}
                             ${transMeaning ? `<span class="inspector-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
-                            <span class="inspector-badge">${word.hasTRule ? '⚡ -t regel' : '✨ Særord'}</span>
+                            <span class="inspector-badge">${word.hasTRule ? '-t regel' : 'Særord'}</span>
                         </h2>
                         <div style="color: #94a3b8; font-size: 0.95rem;">${word.meaning}</div>
                     </div>
-                    <button class="inspector-audio-btn" id="inspector-play-btn" title="${getTranslation('adv_listen_word')}">🔊</button>
+                    <button class="inspector-audio-btn" id="inspector-play-btn" title="${getTranslation('adv_listen_word')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                 </div>
 
                 <!-- Aha Contrast Box -->
                 <div class="aha-golden-box">
                     <div class="aha-header">
-                        <span>💡</span> Den Gyldne Aha-Regel
+                        Den Gyldne Aha-Regel
                     </div>
                     <div class="aha-contrast-row">
                         <div class="aha-contrast-card">
-                            <div class="aha-tag tag-ting">🚗 Ting (Adjektiv)</div>
+                            <div class="aha-tag tag-ting">Ting (Adjektiv)</div>
                             <div class="aha-sentence">${word.tingExample}</div>
                         </div>
                         <div class="aha-contrast-card">
-                            <div class="aha-tag tag-handling">🏃 Handling (Adverbium)</div>
+                            <div class="aha-tag tag-handling">Handling (Adverbium)</div>
                             <div class="aha-sentence">${word.handlingExample}</div>
                         </div>
                     </div>
@@ -1980,7 +2043,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
                 <!-- Example Sentence Box -->
                 <div class="inspector-sentence-box" style="margin-top: 1rem; background: rgba(0, 0, 0, 0.25); border-radius: 12px; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
-                    <div style="font-weight: 700; color: #38bdf8; margin-bottom: 0.3rem;">💬 ${getTranslation('adv_example_title')}:</div>
+                    <div style="font-weight: 700; color: #38bdf8; margin-bottom: 0.3rem;">${getTranslation('adv_example_title')}:</div>
                     <div style="font-size: 1.05rem; color: #f8fafc;">
                         "${word.sentence.replace(new RegExp(`\\b${word.word}\\b`, 'gi'), `<strong>${word.word}</strong>`)}"
                     </div>
@@ -1994,10 +2057,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
                 <div class="inspector-actions">
                     <button class="inspector-btn-action" id="insp-speak-sentence">
-                        <span>🗣️</span> ${getTranslation('adv_listen_sentence')}
+                        ${getTranslation('adv_listen_sentence')}
                     </button>
                     <button class="inspector-btn-action" id="insp-go-vaerksted">
-                        <span>💡</span> Træn i Aha-værkstedet
+                        Træn i Aha-værkstedet
                     </button>
                 </div>
             `;
@@ -2072,12 +2135,12 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
     // Contrast Pairs Data
     const CONTRAST_PAIRS = [
-        { id: 1, left: 'hurtigt', right: 'langsomt', emoji: '🏃' },
-        { id: 2, left: 'højt', right: 'stille / lavt', emoji: '🎺' },
-        { id: 3, left: 'godt', right: 'dårligt', emoji: '🍰' },
-        { id: 4, left: 'nemt', right: 'svært', emoji: '🎈' },
-        { id: 5, left: 'pænt', right: 'grimt', emoji: '🎨' },
-        { id: 6, left: 'sammen', right: 'alene', emoji: '⚽' }
+        { id: 1, left: 'hurtigt', right: 'langsomt', emoji: '' },
+        { id: 2, left: 'højt', right: 'stille / lavt', emoji: '' },
+        { id: 3, left: 'godt', right: 'dårligt', emoji: '' },
+        { id: 4, left: 'nemt', right: 'svært', emoji: '' },
+        { id: 5, left: 'pænt', right: 'grimt', emoji: '' },
+        { id: 6, left: 'sammen', right: 'alene', emoji: '' }
     ];
 
     let matchedPairIds = [];
@@ -2092,16 +2155,16 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem; color: #f472b6; margin-bottom: 0.5rem;">💡 Aha-værkstedet</h2>
+                <h2 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet</h2>
                 <p style="color: #94a3b8; margin: 0;">Mærk forvandlingen for dine egne øjne og træn mådernes modsætninger.</p>
             </div>
 
             <div class="vaerksted-tabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'transformer' ? 'active' : ''}" id="v-tab-trans">
-                    ⚡ 1. Den Magiske -t Knap (Transformeren)
+                    1. Den Magiske -t Knap (Transformeren)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'pairs' ? 'active' : ''}" id="v-tab-pairs">
-                    🔄 2. Modsat-måder (Parrings-øvelse)
+                    2. Modsat-måder (Parrings-øvelse)
                 </button>
             </div>
 
@@ -2138,33 +2201,33 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 <div class="trans-stage">
                     <!-- Left: Ting Box -->
                     <div class="trans-box ting">
-                        <div class="trans-box-tag" style="color: #38bdf8;">🚗 Ting (Adjektiv)</div>
+                        <div class="trans-box-tag" style="color: #38bdf8;">Ting (Adjektiv)</div>
                         <div class="trans-box-word" style="color: #38bdf8;">${cur.adj}</div>
                         <div class="trans-box-sentence">"${cur.tingSentence}"</div>
-                        <button class="filter-btn" style="margin-top: 0.8rem; background: #0369a1;" id="audio-ting-btn">🔊 Hør sætning</button>
+                        <button class="filter-btn" style="margin-top: 0.8rem; background: #0369a1;" id="audio-ting-btn">Hør sætning</button>
                     </div>
 
-                    <div style="font-size: 2rem; color: #ec4899; font-weight: 800;">➔</div>
+                    <div style="font-size: 2rem; color: var(--adv-primary, #3B82F6); font-weight: 800;">→</div>
 
                     <!-- Right: Handling Box -->
-                    <div class="trans-box handling" style="${transformerIsTransformed ? 'box-shadow: 0 0 25px rgba(236, 72, 153, 0.5);' : 'opacity: 0.4; filter: grayscale(80%);'}">
-                        <div class="trans-box-tag" style="color: #f472b6;">🏃 Handling (Adverbium)</div>
-                        <div class="trans-box-word" style="color: #f472b6;">
+                    <div class="trans-box handling" style="${transformerIsTransformed ? 'box-shadow: 0 0 25px var(--adv-glow, rgba(59, 130, 246, 0.5));' : 'opacity: 0.4; filter: grayscale(80%);'}">
+                        <div class="trans-box-tag" style="color: var(--adv-border-focus, #93C5FD);">Handling (Adverbium)</div>
+                        <div class="trans-box-word" style="color: var(--adv-border-focus, #93C5FD);">
                             ${transformerIsTransformed ? cur.adv : `${cur.adj} + ?`}
                         </div>
                         <div class="trans-box-sentence">
                             ${transformerIsTransformed ? `"${cur.handlingSentence}"` : '(Tryk på knappen herunder!)'}
                         </div>
-                        ${transformerIsTransformed ? '<button class="filter-btn" style="margin-top: 0.8rem; background: #be185d;" id="audio-handling-btn">🔊 Hør sætning</button>' : ''}
+                        ${transformerIsTransformed ? '<button class="filter-btn" style="margin-top: 0.8rem; background: var(--adv-primary, #3B82F6);" id="audio-handling-btn">Hør sætning</button>' : ''}
                     </div>
                 </div>
 
                 <button class="trans-action-button" id="trans-trigger-btn">
-                    <span>⚡</span> ${transformerIsTransformed ? '✓ -t er sat på! (Prøv næste ord)' : 'Sæt -t på for handling!'}
+                    ${transformerIsTransformed ? '&#10003; -t er sat på! (Prøv næste ord)' : 'Sæt -t på for handling!'}
                 </button>
 
                 <div style="margin-top: 1.5rem; background: rgba(30, 41, 59, 0.7); padding: 1.2rem; border-radius: 14px; color: #e2e8f0; font-size: 1.05rem; line-height: 1.5;">
-                    💡 <strong>Aha!</strong> ${cur.explanation}
+                    <strong>Aha!</strong> ${cur.explanation}
                 </div>
             </div>
         `;
@@ -2173,7 +2236,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         TRANSFORMER_PAIRS.forEach((p, idx) => {
             const chip = document.createElement('button');
             chip.className = `trans-word-chip ${selectedTransformerIndex === idx ? 'active' : ''}`;
-            chip.textContent = `${p.adj} ➔ ${p.adv}`;
+            chip.textContent = `${p.adj} → ${p.adv}`;
             chip.onclick = () => {
                 selectedTransformerIndex = idx;
                 transformerIsTransformed = false;
@@ -2209,7 +2272,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     </div>
                 </div>
 
-                <div id="pairs-progress-status" style="text-align: center; font-weight: 800; color: #f472b6; font-size: 1.1rem;">
+                <div id="pairs-progress-status" style="text-align: center; font-weight: 800; color: var(--adv-border-focus, #93C5FD); font-size: 1.1rem;">
                     Matchet: ${matchedPairIds.length} af ${CONTRAST_PAIRS.length} par
                 </div>
             </div>
@@ -2225,7 +2288,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
             const btn = document.createElement('button');
             btn.className = `pair-card-btn ${isMatched ? 'matched' : ''} ${isSelected ? 'selected' : ''}`;
-            btn.innerHTML = `<span>${pair.emoji} ${pair.left}</span> <span>${isMatched ? '✓' : '➔'}</span>`;
+            btn.innerHTML = `<span>${pair.left}</span> <span>${isMatched ? '&#10003;' : '→'}</span>`;
 
             btn.onclick = () => {
                 if (isMatched) return;
@@ -2245,7 +2308,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
             const btn = document.createElement('button');
             btn.className = `pair-card-btn ${isMatched ? 'matched' : ''} ${isSelected ? 'selected' : ''}`;
-            btn.innerHTML = `<span>${isMatched ? '✓' : '➔'}</span> <span>${pair.right}</span>`;
+            btn.innerHTML = `<span>${isMatched ? '&#10003;' : '→'}</span> <span>${pair.right}</span>`;
 
             btn.onclick = () => {
                 if (isMatched) return;
@@ -2281,8 +2344,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'hurtig',
             targetType: 'handling',
             hint: 'Spørg dig selv: Beskriver ordet bussen (en ting) eller måden den kører på (en handling)?',
-            feedbackCorrect: '💡 Fantastisk! Ordet beskriver verbet "kører" (handlingen) – derfor skal vi sætte -t på: hurtig + t = hurtigt!',
-            feedbackWrong: '⚠️ Prøv igen! Hvis det beskriver en handling (kører), skal vi sætte -t på ordet.'
+            feedbackCorrect: 'Fantastisk! Ordet beskriver verbet "kører" (handlingen) – derfor skal vi sætte -t på: hurtig + t = hurtigt!',
+            feedbackWrong: 'OBS: Prøv igen! Hvis det beskriver en handling (kører), skal vi sætte -t på ordet.'
         },
         {
             id: 2,
@@ -2292,8 +2355,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'hurtigt',
             targetType: 'ting',
             hint: 'Beskriver ordet bussen selv, eller hvordan den kører?',
-            feedbackCorrect: '💡 Præcis! Her beskriver ordet selve bussen (substantivet/tingen). Derfor er det et adjektiv UDEN adverbie-t: en hurtig bus!',
-            feedbackWrong: '⚠️ Pas på! Her taler vi om tingen (bussen), ikke handlingen at køre. Så skal der ikke -t på.'
+            feedbackCorrect: 'Præcis! Her beskriver ordet selve bussen (substantivet/tingen). Derfor er det et adjektiv UDEN adverbie-t: en hurtig bus!',
+            feedbackWrong: 'OBS: Pas på! Her taler vi om tingen (bussen), ikke handlingen at køre. Så skal der ikke -t på.'
         },
         {
             id: 3,
@@ -2303,8 +2366,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'smuk',
             targetType: 'handling',
             hint: 'Beskriver ordet sangstemmen/handlingen at synge, eller Anna selv?',
-            feedbackCorrect: '💡 Lige i øjet! Ordet beskriver verbet "synger" (handlingen). Smuk + t = smukt!',
-            feedbackWrong: '⚠️ Ikke helt. Ordet knytter sig til verbet "synger", så vi skal have -t på.'
+            feedbackCorrect: 'Lige i øjet! Ordet beskriver verbet "synger" (handlingen). Smuk + t = smukt!',
+            feedbackWrong: 'OBS: Ikke helt. Ordet knytter sig til verbet "synger", så vi skal have -t på.'
         },
         {
             id: 4,
@@ -2314,8 +2377,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'god',
             targetType: 'handling',
             hint: 'Hvordan smager den? Beskriver fornemmelsen/handlingen.',
-            feedbackCorrect: '💡 Rigtigt! "Godt" beskriver måden noget smager eller udføres på: "smager godt", "laver mad godt"!',
-            feedbackWrong: '⚠️ Husk: "En god suppe" (ting), men "suppen smager godt" (handling/sansning).'
+            feedbackCorrect: 'Rigtigt! "Godt" beskriver måden noget smager eller udføres på: "smager godt", "laver mad godt"!',
+            feedbackWrong: 'OBS: Husk: "En god suppe" (ting), men "suppen smager godt" (handling/sansning).'
         },
         {
             id: 5,
@@ -2325,8 +2388,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'stillet',
             targetType: 'special',
             hint: 'Læg mærke til ordets endelse – ender det allerede på -e?',
-            feedbackCorrect: '💡 Brilliant! "Stille" ender allerede på -e og får aldrig et ekstra -t: "at sidde stille".',
-            feedbackWrong: '⚠️ Pas på særreglen: "Stille" ender på -e og får IKKE ekstra -t.'
+            feedbackCorrect: 'Brilliant! "Stille" ender allerede på -e og får aldrig et ekstra -t: "at sidde stille".',
+            feedbackWrong: 'OBS: Pas på særreglen: "Stille" ender på -e og får IKKE ekstra -t.'
         },
         {
             id: 6,
@@ -2336,8 +2399,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'hård',
             targetType: 'handling',
             hint: 'Beskriver ordet hammerens kraft (handlingen at slå), eller stenen?',
-            feedbackCorrect: '💡 Helt rigtigt! Det beskriver handlingen "slår". Hård + t = hårdt!',
-            feedbackWrong: '⚠️ Prøv igen. Det er måden han slår på, så vi skal have -t på.'
+            feedbackCorrect: 'Helt rigtigt! Det beskriver handlingen "slår". Hård + t = hårdt!',
+            feedbackWrong: 'OBS: Prøv igen. Det er måden han slår på, så vi skal have -t på.'
         },
         {
             id: 7,
@@ -2347,8 +2410,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'tydelig',
             targetType: 'handling',
             hint: 'Hvordan forklarer hun? Beskriver handlingen "forklarer".',
-            feedbackCorrect: '💡 Korrekt! Ordet beskriver måden hun forklarer på (verbum). Tydelig + t = tydeligt!',
-            feedbackWrong: '⚠️ Hun forklarer på en tydelig måde: forklare tydeligt!'
+            feedbackCorrect: 'Korrekt! Ordet beskriver måden hun forklarer på (verbum). Tydelig + t = tydeligt!',
+            feedbackWrong: 'OBS: Hun forklarer på en tydelig måde: forklare tydeligt!'
         },
         {
             id: 8,
@@ -2358,8 +2421,8 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             distractorWord: 'forsigtig',
             targetType: 'handling',
             hint: 'Hvordan bar han den? Han passede på under handlingen.',
-            feedbackCorrect: '💡 Super flot! Han bar den forsigtigt. Ordet beskriver verbet "bar".',
-            feedbackWrong: '⚠️ Han udførte handlingen med stor omhu: bar forsigtigt!'
+            feedbackCorrect: 'Super flot! Han bar den forsigtigt. Ordet beskriver verbet "bar".',
+            feedbackWrong: 'OBS: Han udførte handlingen med stor omhu: bar forsigtigt!'
         }
     ];
 
@@ -2377,7 +2440,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         detektivWrap.innerHTML = `
             <div class="detektiv-header">
-                <h2>🔍 -t Detektiven: Ting eller Handling?</h2>
+                <h2>-t Detektiven: Ting eller Handling?</h2>
                 <p style="color: #94a3b8; margin: 0;">Træn den gyldne regel: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>?</p>
             </div>
 
@@ -2387,18 +2450,18 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">📍 Kontekst: ${task.sceneContext}</div>
+                <div class="detektiv-context-tag">Kontekst: ${task.sceneContext}</div>
                 <div class="detektiv-prompt-sentence">
                     ${task.sentenceParts[0]}<span class="detektiv-blank" id="detektiv-blank">_____</span>${task.sentenceParts[1]}
                 </div>
                 <div class="detektiv-question-hint">
-                    💡 <strong>Detektivens ledetråd:</strong> ${task.hint}
+                    <strong>Detektivens ledetråd:</strong> ${task.hint}
                 </div>
 
                 <div class="detektiv-options" id="detektiv-options-grid"></div>
                 <div id="detektiv-feedback-box"></div>
                 <button class="detektiv-next-btn" id="detektiv-next-btn" style="display: none;">
-                    ${detektivIndex < DETEKTIV_TASKS.length - 1 ? 'Næste opgave ➔' : 'Se samlet resultat 🏆'}
+                    ${detektivIndex < DETEKTIV_TASKS.length - 1 ? 'Næste opgave →' : 'Se samlet resultat'}
                 </button>
             </div>
         `;
@@ -2472,17 +2535,17 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         const pct = Math.round((detektivScore / maxScore) * 100);
 
         wrap.innerHTML = `
-            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
-            <h2 style="font-size: 2.2rem; color: #f472b6; margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+            <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
             <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                 Du fik <strong>${detektivScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
             </p>
             <div style="background: rgba(15, 23, 42, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                ${pct >= 80 ? '🌟 Fantastisk! Du har fuldstændig knækket koden til hvornår danskerne sætter -t på handlinger.' : 'God indsats! Prøv igen for at få 100% styr på -t reglen.'}
+                ${pct >= 80 ? 'Fantastisk! Du har fuldstændig knækket koden til hvornår danskerne sætter -t på handlinger.' : 'God indsats! Prøv igen for at få 100% styr på -t reglen.'}
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">🔄 Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren ➔</button>
+                <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">Prøv igen</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren →</button>
             </div>
         `;
 
@@ -2573,10 +2636,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             structureTitle: 'Normal ordstilling: Mådesadverbiet "hurtigt" på 3. plads',
             structureNote: 'Mådesadverbiet placeres naturligt efter verbet for at beskrive handlingen.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Mådesadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'HER STÅR ADVERBIET!' },
-                { num: '4. plads', title: 'Hvorhen?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvorhen?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. Hvorhen?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Præpositionsled]'],
@@ -2599,10 +2662,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             structureTitle: 'Normal ordstilling: Mådesadverbiet "pænt" på 3. plads',
             structureNote: 'Ordet knytter sig direkte til verbet "pynter" og placeres på 3. plads.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Mådesadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'HER STÅR ADVERBIET!' },
-                { num: '4. plads', title: 'Hvad?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvad?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. Hvad?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Objekt]'],
@@ -2625,10 +2688,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             structureTitle: 'Normal ordstilling: Mådesadverbiet "hårdt" på 3. plads',
             structureNote: 'Hårdt angiver styrken i slaget og placeres lige efter verbet.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Mådesadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'HER STÅR ADVERBIET!' },
-                { num: '4. plads', title: 'Hvorpå?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvorpå?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. Hvorpå?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Præpositionsled]'],
@@ -2651,10 +2714,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             structureTitle: 'Normal ordstilling: Mådesadverbiet "tydeligt" på 3. plads',
             structureNote: 'Tydeligt beskriver måden der tales på og følger verbet.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Mådesadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'HER STÅR ADVERBIET!' },
-                { num: '4. plads', title: 'For hvem?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'For hvem?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. For hvem?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Præpositionsled]'],
@@ -2677,10 +2740,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             structureTitle: 'Normal ordstilling: Mådesadverbiet "blødt" på 3. plads',
             structureNote: 'Blødt knytter sig til landingen og står på plads 3.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Mådesadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'HER STÅR ADVERBIET!' },
-                { num: '4. plads', title: 'Hvor?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvor?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. Hvor?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Præpositionsled]'],
@@ -2703,10 +2766,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             structureTitle: 'Normal ordstilling: Mådesadverbiet "forsigtigt" på 3. plads',
             structureNote: 'Forsigtigt beskriver håndteringen af isen og står på 3. plads.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Mådesadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'HER STÅR ADVERBIET!' },
-                { num: '4. plads', title: 'Hvad?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvad?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvordan? ⭐', '4. Hvad?'],
             roles: ['[Subjekt]', '[Verbum]', '[Mådesadverbium]', '[Objekt]'],
@@ -2727,11 +2790,11 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${saetningSubTab === 'builder' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk sætningen (Hjælpespørgsmål)`;
+        subTab1Btn.innerHTML = `<span>1. Udforsk sætningen (Hjælpespørgsmål)</span>`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${saetningSubTab === 'puzzle' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>🧩</span> 2. Pusleopgaven (Udfordring)`;
+        subTab2Btn.innerHTML = `<span>2. Pusleopgaven (Udfordring)</span>`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -2787,7 +2850,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-subjekt">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-subjekt">
-                                <span>👤</span> 1. Hvem eller hvad taler vi om?
+                                1. Hvem eller hvad taler vi om?
                             </div>
                             <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
                         </div>
@@ -2798,7 +2861,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-verbum">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-verbum">
-                                <span>⚡</span> 2. Hvad laver personen eller tingen?
+                                2. Hvad laver personen eller tingen?
                             </div>
                             <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
                         </div>
@@ -2820,7 +2883,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-rest">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-rest">
-                                <span>📍</span> 4. Hvor, hvad eller hvordan ellers?
+                                4. Hvor, hvad eller hvordan ellers?
                             </div>
                             <span class="cat-grammar-role badge-rest">[Restled / Præpositionsled / Objekt]</span>
                         </div>
@@ -2834,7 +2897,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="live-sentence-text" id="live-sentence-text"></div>
                     <div class="live-sentence-actions">
                         <button class="live-audio-btn" id="live-audio-speak-btn">
-                            <span>🔊</span> Hør sætning
+                            Hør sætning
                         </button>
                     </div>
                 </div>
@@ -2891,7 +2954,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
             const titleDiv = document.createElement('div');
             titleDiv.innerHTML = `
-                <div style="font-size: 0.85rem; color: #f472b6; font-weight: 800; text-transform: uppercase;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase;">
                     Udfordring ${currentMaadeChallengeIdx + 1} af ${MAADE_CHALLENGE_TASKS.length}
                 </div>
                 <h3 style="font-size: 1.5rem; color: white; margin: 0.2rem 0;">Vælg adverbiet & saml puslespillet</h3>
@@ -2949,7 +3012,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em></div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -2966,7 +3029,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             const qBox = document.createElement('div');
             qBox.className = 'sb-question-box';
             qBox.innerHTML = `
-                <div style="font-size: 0.85rem; color: #f472b6; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
+                <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
                     Trin 1: Vælg det rigtige mådesadverbium
                 </div>
                 <div class="sb-question-text">${task.questionPrompt}</div>
@@ -3012,7 +3075,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                         // 2. Fill adverb chip in context elements
                         const advChipVal = contextCard.querySelector('#sb-chip-adv-val');
                         if (advChipVal) {
-                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">✓</span>`;
+                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">&#10003;</span>`;
                         }
                         const advChip = contextCard.querySelector('#sb-context-chip-adv');
                         if (advChip) {
@@ -3023,11 +3086,11 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                         feedbackDiv.innerHTML = `
                             <div class="sb-pedagogy-alert" style="margin-bottom: 1.2rem; padding: 1rem 1.4rem; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; border-radius: 12px; color: #f8fafc; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
                                 <div>
-                                    <strong style="color: #4ade80; font-size: 1.15rem;">🎉 Rigtigt mådesadverbium!</strong>
+                                    <strong style="color: #60a5fa; font-size: 1.15rem;">Rigtigt mådesadverbium!</strong>
                                     <div style="margin-top: 0.25rem; color: #cbd5e1;">${task.pedagogyNote}</div>
                                 </div>
                                 <button class="sb-listen-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;" id="sb-speak-target-btn">
-                                    <span>🔊</span> Hør sætning
+                                    Hør sætning
                                 </button>
                             </div>
                         `;
@@ -3066,7 +3129,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         function renderMaadePuzzleStep(puzContainer, task) {
             puzContainer.innerHTML = `
                 <div class="sb-puzzle-title">
-                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                    Trin 2: Puslespillet – Saml hele sætningen!
                 </div>
                 <div class="sb-puzzle-desc">
                     Læg mærke til den fremhævede plads med <strong>⭐</strong> – der skal mådesadverbiet placeres. Klik på brikkerne i den rigtige rækkefølge:
@@ -3076,7 +3139,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 <div class="sb-structure-diagram">
                     <div class="structure-diagram-header">
                         <span class="structure-diagram-badge">
-                            📌 ${task.structureTitle}
+                            ${task.structureTitle}
                         </span>
                         <span class="structure-diagram-hint">${task.structureNote}</span>
                     </div>
@@ -3088,7 +3151,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                                 <div class="flow-title">${step.title}</div>
                                 ${step.isTarget ? '<div class="flow-target-tag">HER STÅR ADVERBIET!</div>' : ''}
                             </div>
-                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">➔</div>' : ''}
+                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">→</div>' : ''}
                         `).join('')}
                     </div>
                 </div>
@@ -3123,7 +3186,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     if (isAdvSlot) {
                         const callout = document.createElement('div');
                         callout.className = 'slot-target-callout';
-                        callout.innerHTML = isFilled ? '✓ Adverbium' : '⭐ Adverbiets plads ⭐';
+                        callout.innerHTML = isFilled ? '&#10003; Adverbium' : 'Adverbiets plads';
                         slot.appendChild(callout);
                     }
 
@@ -3131,7 +3194,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                         const wordSpan = document.createElement('span');
                         wordSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
                         wordSpan.style.fontWeight = '800';
-                        if (isAdvSlot) wordSpan.style.color = '#f472b6';
+                        if (isAdvSlot) wordSpan.style.color = 'var(--adv-border-focus, #93C5FD)';
                         wordSpan.textContent = placedWords[idx];
                         slot.appendChild(wordSpan);
 
@@ -3143,7 +3206,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                         const hintSpan = document.createElement('span');
                         hintSpan.className = 'slot-hint';
                         hintSpan.style.marginTop = isAdvSlot ? '0.45rem' : '0';
-                        if (isAdvSlot) hintSpan.style.color = '#f472b6';
+                        if (isAdvSlot) hintSpan.style.color = 'var(--adv-border-focus, #93C5FD)';
                         hintSpan.textContent = slotLabel;
                         slot.appendChild(hintSpan);
 
@@ -3179,9 +3242,9 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     if (isCorrect) {
                         completedMaadeChallenges.add(currentMaadeChallengeIdx);
                         statusEl.innerHTML = `
-                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <span style="color: #60a5fa; margin-right: 1rem;">Perfekt samlet!</span>
                             <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="maade-task-next-btn">
-                                ${currentMaadeChallengeIdx < MAADE_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Gå til Kontekst-testen 🏆'}
+                                ${currentMaadeChallengeIdx < MAADE_CHALLENGE_TASKS.length - 1 ? 'Næste opgave →' : 'Gå til Kontekst-testen →'}
                             </button>
                         `;
                         speakDanish(placedWords.join(' '));
@@ -3225,7 +3288,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'langsomt',
             options: ['langsomt', 'hurtigt', 'højt'],
-            feedback: '💡 Rigtigt! Når vejen er glat, må man sætte farten ned og køre langsomt for ikke at glide!'
+            feedback: 'Rigtigt! Når vejen er glat, må man sætte farten ned og køre langsomt for ikke at glide!'
         },
         {
             id: 2,
@@ -3234,7 +3297,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'stille',
             options: ['stille', 'højt', 'grimt'],
-            feedback: '💡 Rigtigt! På biblioteket må man ikke larme – man skal tale stille!'
+            feedback: 'Rigtigt! På biblioteket må man ikke larme – man skal tale stille!'
         },
         {
             id: 3,
@@ -3243,7 +3306,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'godt',
             options: ['godt', 'dårligt', 'hårdt'],
-            feedback: '💡 Rigtigt! Når kagen smager fantastisk, har konditoren bagt godt!'
+            feedback: 'Rigtigt! Når kagen smager fantastisk, har konditoren bagt godt!'
         },
         {
             id: 4,
@@ -3252,7 +3315,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'hurtigt',
             options: ['hurtigt', 'langsomt', 'blødt'],
-            feedback: '💡 Rigtigt! En person i god form løber i højt tempo: hurtigt!'
+            feedback: 'Rigtigt! En person i god form løber i højt tempo: hurtigt!'
         },
         {
             id: 5,
@@ -3261,7 +3324,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'forsigtigt',
             options: ['forsigtigt', 'forkert', 'hårdt'],
-            feedback: '💡 Rigtigt! Man bærer skrøbelige ting forsigtigt, så de ikke går i stykker.'
+            feedback: 'Rigtigt! Man bærer skrøbelige ting forsigtigt, så de ikke går i stykker.'
         },
         {
             id: 6,
@@ -3270,7 +3333,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'tydeligt',
             options: ['tydeligt', 'stille', 'svært'],
-            feedback: '💡 Rigtigt! En klar stemme gør, at læreren taler tydeligt og er nem at forstå.'
+            feedback: 'Rigtigt! En klar stemme gør, at læreren taler tydeligt og er nem at forstå.'
         },
         {
             id: 7,
@@ -3279,7 +3342,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'nemt',
             options: ['nemt', 'svært', 'grimt'],
-            feedback: '💡 Rigtigt! Når opgaven er let, klarer man den nemt.'
+            feedback: 'Rigtigt! Når opgaven er let, klarer man den nemt.'
         },
         {
             id: 8,
@@ -3288,7 +3351,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'sammen',
             options: ['sammen', 'alene', 'forkert'],
-            feedback: '💡 Rigtigt! Gode venner hygger sig bedst, når de leger sammen.'
+            feedback: 'Rigtigt! Gode venner hygger sig bedst, når de leger sammen.'
         },
         {
             id: 9,
@@ -3297,7 +3360,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'hårdt',
             options: ['hårdt', 'blødt', 'stille'],
-            feedback: '💡 Rigtigt! Et genstridigt søm kræver stor fysisk kraft: at slå hårdt!'
+            feedback: 'Rigtigt! Et genstridigt søm kræver stor fysisk kraft: at slå hårdt!'
         },
         {
             id: 10,
@@ -3306,7 +3369,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'blødt',
             options: ['blødt', 'hårdt', 'højt'],
-            feedback: '💡 Rigtigt! Katte lander lydløst og skånsomt: at lande blødt.'
+            feedback: 'Rigtigt! Katte lander lydløst og skånsomt: at lande blødt.'
         },
         {
             id: 11,
@@ -3315,7 +3378,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'højt',
             options: ['højt', 'lavt', 'pænt'],
-            feedback: '💡 Rigtigt! Naboerne klagede over larmen, fordi han spillede med høj volumen: for højt!'
+            feedback: 'Rigtigt! Naboerne klagede over larmen, fordi han spillede med høj volumen: for højt!'
         },
         {
             id: 12,
@@ -3324,7 +3387,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'pænt',
             options: ['pænt', 'grimt', 'svært'],
-            feedback: '💡 Rigtigt! Kagen blev pyntet med stor elegance og omhu: pænt!'
+            feedback: 'Rigtigt! Kagen blev pyntet med stor elegance og omhu: pænt!'
         },
         {
             id: 13,
@@ -3333,7 +3396,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'rigtigt',
             options: ['rigtigt', 'forkert', 'dårligt'],
-            feedback: '💡 Rigtigt! Han fulgte kortet og fandt den rigtige vej: han drejede rigtigt!'
+            feedback: 'Rigtigt! Han fulgte kortet og fandt den rigtige vej: han drejede rigtigt!'
         },
         {
             id: 14,
@@ -3342,7 +3405,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             blank: '_____',
             correct: 'alene',
             options: ['alene', 'sammen', 'hårdt'],
-            feedback: '💡 Rigtigt! Han ville gerne være for sig selv i fred og ro: at gå alene.'
+            feedback: 'Rigtigt! Han ville gerne være for sig selv i fred og ro: at gå alene.'
         }
     ];
 
@@ -3360,7 +3423,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem; color: #f472b6; margin-bottom: 0.5rem;">🎯 Kontekst-testen</h2>
+                <h2 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Kontekst-testen</h2>
                 <p style="color: #94a3b8; margin: 0;">Vælg det rigtige mådesadverbium ud fra sætningens mening og logik.</p>
             </div>
 
@@ -3370,7 +3433,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             </div>
 
             <div class="cloze-card">
-                <div class="detektiv-context-tag">📍 Situation: ${task.scene}</div>
+                <div class="detektiv-context-tag">Situation: ${task.scene}</div>
                 <div class="cloze-sentence-display" id="cloze-display">
                     ${task.sentence.replace('_____', '<span class="cloze-blank" id="cloze-blank-slot">_____</span>')}
                 </div>
@@ -3379,7 +3442,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 <div id="cloze-feedback"></div>
 
                 <button class="detektiv-next-btn" id="cloze-next-btn" style="display: none;">
-                    ${kontekstIndex < KONTEKST_TASKS.length - 1 ? 'Næste sætning ➔' : 'Afslut testen 🏆'}
+                    ${kontekstIndex < KONTEKST_TASKS.length - 1 ? 'Næste sætning →' : 'Afslut testen'}
                 </button>
             </div>
         `;
@@ -3405,7 +3468,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     kontekstScore += 10;
                     speakDanish(opt);
                     feedbackBox.className = 'cloze-didactic-feedback';
-                    feedbackBox.innerHTML = `<strong>✓ Rigtigt!</strong> ${task.feedback}`;
+                    feedbackBox.innerHTML = `<strong>Rigtigt!</strong> ${task.feedback}`;
                 } else {
                     btn.classList.add('wrong');
                     feedbackBox.className = 'cloze-didactic-feedback';
@@ -3446,17 +3509,17 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         const pct = Math.round((kontekstScore / maxScore) * 100);
 
         wrap.innerHTML = `
-            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎉</div>
-            <h2 style="font-size: 2.2rem; color: #f472b6; margin-bottom: 0.5rem;">Kontekst-testen er gennemført!</h2>
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+            <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Kontekst-testen er gennemført!</h2>
             <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                 Du opnåede <strong>${kontekstScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
             </p>
             <div style="background: rgba(15, 23, 42, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                ${pct >= 80 ? '🌟 Suverænt! Du forstår nu præcis, hvordan de danske mådesadverbier bruges i praksis i forskellige hverdagssituationer.' : 'Godt forsøgt! Tag testen en gang til for at få fuldt udbytte.'}
+                ${pct >= 80 ? 'Suverænt! Du forstår nu præcis, hvordan de danske mådesadverbier bruges i praksis i forskellige hverdagssituationer.' : 'Godt forsøgt! Tag testen en gang til for at få fuldt udbytte.'}
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="detektiv-next-btn" style="margin: 0;" id="kontekst-retry-btn">🔄 Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til Adverbie-Oversigten ➔</button>
+                <button class="detektiv-next-btn" style="margin: 0;" id="kontekst-retry-btn">Prøv igen</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til Adverbie-Oversigten</button>
             </div>
         `;
 

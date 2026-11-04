@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { conjunctionData } from '../utils/conjunctionData.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
+import { isLocalhost, KONJ_PALETTES, getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * KonjunktionerView - Selvstændig flade om Helsætnings- og Ledsætningskonjunktioner
@@ -43,6 +44,9 @@ import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_tra
 export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér valgt konjunktion-nuance (standard: Dyb Ametyst-Nat)
+    applyKonjNuance(getActiveKonjNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container konjunktioner-view';
 
@@ -68,6 +72,40 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     topBar.appendChild(backBtn);
 
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveKonjNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'konj-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="konj-toggle-label">
+                <span class="konj-pulse-dot"></span>
+                <strong>Localhost Konjunktion-nuance:</strong>
+                <span class="konj-toggle-hint">Vælg mellem 4 dyb lilla nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="konj-toggle-buttons">
+                ${Object.values(KONJ_PALETTES).map(p => `
+                    <button class="konj-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.konj-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyKonjNuance(nuance);
+                testBar.querySelectorAll('.konj-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper (disabled)
     function speakDanish(text) {
@@ -477,8 +515,100 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --konj-bg: #4A040B;
+            --konj-bg-glow: #6B0F1A;
+            --konj-surface: #1E0E2E;
+            --konj-surface-hover: #2D1544;
+            --konj-surface-input: #12071D;
+            --konj-border: #4C2373;
+            --konj-border-focus: #C084FC;
+            --konj-primary: #A855F7;
+            --konj-primary-hover: #9333EA;
+            --konj-glow: rgba(168, 85, 247, 0.6);
+            --konj-text: #FFFFFF;
+            --konj-text-muted: #E9D5FF;
+            --konj-text-subtle: #C084FC;
+        }
+
+        body[data-konj-nuance] {
+            background-color: var(--konj-bg, #4A040B) !important;
+            background-image: radial-gradient(circle at top right, var(--konj-bg-glow, #6B0F1A), var(--konj-bg, #4A040B)) !important;
+        }
+
+        /* Localhost Nuance Toggle Bar */
+        .konj-localhost-toggle-bar {
+            background: var(--konj-surface-input, #12071D);
+            border: 1.5px solid var(--konj-border, #4C2373);
+            border-radius: 16px;
+            padding: 0.85rem 1.2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .konj-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: #FFFFFF;
+        }
+        .konj-pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--konj-primary, #A855F7);
+            box-shadow: 0 0 10px var(--konj-primary, #A855F7);
+            display: inline-block;
+            animation: konjPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes konjPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .konj-toggle-hint {
+            color: var(--konj-text-muted, #E9D5FF);
+            font-size: 0.85rem;
+        }
+        .konj-toggle-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .konj-nuance-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--konj-border, #4C2373);
+            color: var(--konj-text-muted, #E9D5FF);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .konj-nuance-btn:hover {
+            color: #FFFFFF;
+            background: var(--konj-surface-hover, #2D1544);
+            border-color: var(--konj-primary, #A855F7);
+            transform: translateY(-1px);
+        }
+        .konj-nuance-btn.active {
+            background: var(--konj-primary, #A855F7);
+            color: #FFFFFF;
+            border-color: var(--konj-border-focus, #C084FC);
+            box-shadow: 0 0 14px var(--konj-glow, rgba(168, 85, 247, 0.5));
+        }
+
         .konjunktioner-view {
-            max-width: 960px;
+            max-width: 1040px;
             margin: 0 auto;
             padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
@@ -486,59 +616,73 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         .konj-hero {
             text-align: center;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
         }
         .konj-hero h1 {
-            font-size: 1.85rem;
+            font-size: 2.2rem;
             font-weight: 900;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             line-height: 1.25;
-            background: linear-gradient(135deg, #6ee7b7, #10b981, #0ea5e9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            letter-spacing: -0.01em;
         }
         .konj-hero p {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            max-width: 680px;
-            margin: 0 auto 0.8rem;
+            color: #FFFFFF !important;
+            font-size: 1.05rem;
+            max-width: 780px;
+            margin: 0 auto 1rem;
             line-height: 1.5;
+            opacity: 0.95;
         }
 
-        /* Tabs Navigation */
-        .adv-tabs-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            justify-content: center;
-            margin-bottom: 1.2rem;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 0.35rem;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Tabs Navigation - Oversigtsramme i Dyb Lilla */
+        html[data-theme] .konjunktioner-view .adv-tabs-nav,
+        body[data-konj-nuance] .adv-tabs-nav,
+        .konjunktioner-view .adv-tabs-nav {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 0.5rem !important;
+            justify-content: center !important;
+            margin-bottom: 2rem !important;
+            background: var(--konj-surface, #1E0E2E) !important;
+            padding: 0.6rem !important;
+            border-radius: 16px !important;
+            border: 2px solid var(--konj-border, #4C2373) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
         }
-        .adv-tab-btn {
-            background: transparent;
-            color: #94a3b8;
-            border: none;
-            padding: 0.45rem 0.8rem;
-            border-radius: 10px;
-            font-size: 0.84rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
+        html[data-theme] .konjunktioner-view .adv-tab-btn,
+        body[data-konj-nuance] .adv-tab-btn,
+        .konjunktioner-view .adv-tab-btn {
+            background: transparent !important;
+            color: var(--konj-text-muted, #E9D5FF) !important;
+            border: 1px solid transparent !important;
+            padding: 0.6rem 1.1rem !important;
+            border-radius: 12px !important;
+            font-size: 0.9rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.45rem !important;
         }
-        .adv-tab-btn:hover {
-            color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
+        html[data-theme] .konjunktioner-view .adv-tab-btn:hover,
+        body[data-konj-nuance] .adv-tab-btn:hover,
+        .konjunktioner-view .adv-tab-btn:hover {
+            color: #FFFFFF !important;
+            background: var(--konj-surface-hover, #2D1544) !important;
+            border-color: var(--konj-border, #4C2373) !important;
         }
-        .adv-tab-btn.active {
-            background: #059669;
-            color: white;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        html[data-theme] .konjunktioner-view .adv-tab-btn.active,
+        body[data-konj-nuance] .adv-tab-btn.active,
+        .konjunktioner-view .adv-tab-btn.active {
+            background: var(--konj-primary, #A855F7) !important;
+            border: 1.5px solid var(--konj-border-focus, #C084FC) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 15px var(--konj-glow, rgba(168, 85, 247, 0.5)) !important;
         }
 
         /* Vrimmel Layout */
@@ -547,19 +691,19 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin: 0 auto;
         }
         .vrimmel-stage-card {
-            background: #1e293b;
-            border-radius: 16px;
+            background: var(--konj-surface);
+            border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--konj-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .vrimmel-controls-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.5rem 0.8rem;
-            background: rgba(15, 23, 42, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.6rem 1rem;
+            background: var(--konj-surface-input);
+            border-bottom: 1px solid var(--konj-border);
             flex-wrap: wrap;
             gap: 0.5rem;
         }
@@ -569,42 +713,52 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.35rem 0.7rem;
-            border-radius: 8px;
-            font-size: 0.82rem;
+            background: var(--konj-surface);
+            color: var(--konj-text-muted);
+            border: 1.5px solid var(--konj-border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.84rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
         }
         .filter-btn:hover {
-            background: #475569;
-            color: white;
+            background: var(--konj-surface-hover);
+            border-color: var(--konj-primary);
+            color: #FFFFFF;
+            transform: translateY(-1px);
         }
         .filter-btn.active {
-            background: #059669;
-            color: white;
-            border-color: #10b981;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+            background: var(--konj-primary);
+            color: #FFFFFF;
+            border-color: var(--konj-border-focus);
+            box-shadow: 0 4px 15px var(--konj-glow);
         }
         .pure-toggle-btn {
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10b981;
-            color: #a7f3d0;
-            padding: 0.35rem 0.7rem;
-            border-radius: 8px;
+            background: var(--konj-surface);
+            border: 1.5px solid var(--konj-border);
+            color: var(--konj-text-muted);
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            transition: all 0.2s;
+        }
+        .pure-toggle-btn:hover {
+            background: var(--konj-surface-hover);
+            border-color: var(--konj-primary);
+            color: #FFFFFF;
         }
         .pure-toggle-btn.active {
-            background: #047857;
-            color: white;
+            background: var(--konj-primary);
+            color: #FFFFFF;
+            border-color: var(--konj-border-focus);
+            box-shadow: 0 4px 15px var(--konj-glow);
         }
 
         .vrimmel-stage {
@@ -613,7 +767,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             line-height: 0;
             user-select: none;
             overflow: hidden;
-            background: #0f172a;
+            background: #0f0714;
         }
         .vrimmel-img {
             width: 100%;
@@ -624,26 +778,26 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            background: #059669;
+            background: var(--konj-primary);
             border: 2px solid #ffffff;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 14px var(--konj-glow);
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
         .hotspot-pin:hover {
             transform: translate(-50%, -50%) scale(1.25);
-            background: #10b981;
-            box-shadow: 0 0 20px #10b981;
+            background: var(--konj-border-focus);
+            box-shadow: 0 0 20px var(--konj-glow);
             z-index: 25;
         }
         .hotspot-pin.active {
@@ -658,27 +812,27 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            color: #a7f3d0;
-            border: 1px solid #10b981;
-            padding: 0.15rem 0.45rem;
+            background: var(--konj-surface-input);
+            color: var(--konj-text-muted);
+            border: 1px solid var(--konj-border-focus);
+            padding: 0.2rem 0.55rem;
             border-radius: 6px;
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             font-weight: 800;
             white-space: nowrap;
-            margin-top: 3px;
+            margin-top: 4px;
             pointer-events: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
         /* Målords Præsentationsboks */
         .vrimmel-inspector {
-            background: #1e293b;
-            border: 2px solid #10b981;
-            border-radius: 16px;
-            margin-top: 1rem;
-            padding: 1.2rem 1.4rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            background: var(--konj-surface);
+            border: 2px solid var(--konj-border);
+            border-radius: 20px;
+            margin-top: 1.2rem;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             display: grid;
             grid-template-columns: 1.1fr 1fr;
             gap: 1.4rem;
@@ -705,19 +859,19 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .inspector-badge {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid #10b981;
-            color: #a7f3d0;
-            padding: 0.2rem 0.6rem;
-            border-radius: 7px;
+            background: var(--konj-surface-input);
+            border: 1px solid var(--konj-border-focus);
+            color: var(--konj-text-muted);
+            padding: 0.25rem 0.7rem;
+            border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
         }
         .inspector-audio-btn {
-            background: #059669;
+            background: var(--konj-primary);
             color: white;
-            border: none;
+            border: 1px solid var(--konj-border-focus);
             width: 38px;
             height: 38px;
             border-radius: 50%;
@@ -727,10 +881,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             font-size: 1.15rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 12px var(--konj-glow);
         }
         .inspector-audio-btn:hover {
-            background: #10b981;
+            background: var(--konj-primary-hover);
             transform: scale(1.08);
         }
         .inspector-word-title {
@@ -743,15 +897,16 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin: 0;
         }
         .inspector-trans-box {
-            background: #0f172a;
-            border-radius: 10px;
+            background: var(--konj-surface-input);
+            border-radius: 12px;
             padding: 0.75rem 1rem;
-            border-left: 3px solid #10b981;
+            border: 1px solid var(--konj-border);
+            border-left: 4px solid var(--konj-primary);
         }
         .trans-badge-label {
             font-size: 0.72rem;
             font-weight: 800;
-            color: #6ee7b7;
+            color: var(--konj-border-focus);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.2rem;
@@ -762,35 +917,36 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .trans-word-val {
             font-size: 1.15rem;
             font-weight: 800;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .inspector-scene-box {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 10px;
+            background: var(--konj-surface-input);
+            border-radius: 12px;
             padding: 0.75rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--konj-border);
         }
         .scene-heading {
             font-size: 0.78rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--konj-text-muted);
             margin-bottom: 0.3rem;
             text-transform: uppercase;
         }
         .scene-text {
-            color: #cbd5e1;
-            font-size: 0.88rem;
+            color: #FFFFFF;
+            opacity: 0.9;
+            font-size: 0.9rem;
             line-height: 1.45;
             margin: 0;
         }
         .inspector-sentence-card {
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 1rem 1.1rem;
-            border: 1.5px solid rgba(16, 185, 129, 0.35);
+            background: var(--konj-surface-input);
+            border-radius: 14px;
+            padding: 1rem 1.15rem;
+            border: 1.5px solid var(--konj-border);
         }
         .sentence-quote-text {
-            font-size: 1.12rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: white;
             line-height: 1.45;
@@ -798,14 +954,14 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         }
         .sentence-trans-text {
             font-size: 0.92rem;
-            color: #94a3b8;
+            color: var(--konj-text-muted);
             font-style: italic;
             margin-bottom: 0.5rem;
         }
         .inspector-speak-btn {
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10b981;
-            color: #a7f3d0;
+            background: var(--konj-surface);
+            border: 1px solid var(--konj-border);
+            color: var(--konj-text-muted);
             padding: 0.45rem 0.85rem;
             border-radius: 8px;
             font-weight: 700;
@@ -817,8 +973,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .inspector-speak-btn:hover {
-            background: #10b981;
-            color: #0f172a;
+            background: var(--konj-primary);
+            border-color: var(--konj-border-focus);
+            color: #FFFFFF;
         }
         .inspector-actions {
             display: flex;
@@ -827,11 +984,11 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         }
         .inspector-btn-action {
             flex: 1;
-            background: #334155;
+            background: var(--konj-surface);
+            border: 1.5px solid var(--konj-border);
             color: white;
-            border: none;
             padding: 0.65rem;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
@@ -839,7 +996,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .inspector-btn-action:hover {
-            background: #475569;
+            background: var(--konj-surface-hover);
+            border-color: var(--konj-primary);
+            color: #FFFFFF;
+            transform: translateY(-1px);
         }
 
         /* Mobile Responsive Scaling */
@@ -907,33 +1067,35 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .vaerksted-subtab-btn {
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: var(--konj-surface);
+            color: var(--konj-text-muted);
+            border: 2px solid var(--konj-border);
             padding: 0.75rem 1.4rem;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 0.95rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
         }
         .vaerksted-subtab-btn:hover {
-            border-color: #10b981;
+            border-color: var(--konj-primary);
+            background: var(--konj-surface-hover);
             color: white;
+            transform: translateY(-1px);
         }
         .vaerksted-subtab-btn.active {
-            background: #059669;
-            border-color: #6ee7b7;
+            background: var(--konj-primary);
+            border-color: var(--konj-border-focus);
             color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 16px var(--konj-glow);
         }
 
         .vaerksted-card {
-            background: #1e293b;
+            background: var(--konj-surface);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--konj-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             margin-bottom: 2rem;
         }
 
@@ -944,9 +1106,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin: 1.5rem 0;
         }
         .word-sel-btn {
-            background: #0f172a;
-            color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: var(--konj-surface-input);
+            color: var(--konj-text-muted);
+            border: 2px solid var(--konj-border);
             padding: 0.85rem 1rem;
             border-radius: 12px;
             font-weight: 800;
@@ -956,14 +1118,16 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .word-sel-btn:hover {
-            border-color: #10b981;
+            border-color: var(--konj-primary);
+            background: var(--konj-surface-hover);
             color: white;
+            transform: translateY(-1px);
         }
         .word-sel-btn.active {
-            border-color: #6ee7b7;
-            background: rgba(16, 185, 129, 0.2);
-            color: #a7f3d0;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            border-color: var(--konj-border-focus);
+            background: var(--konj-primary);
+            color: #FFFFFF;
+            box-shadow: 0 4px 16px var(--konj-glow);
         }
 
         .syntax-boxes-row {
@@ -975,8 +1139,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin: 1.5rem 0;
         }
         .syntax-token-box {
-            background: #0f172a;
-            border: 2.5px solid;
+            background: var(--konj-surface-input);
+            border: 2px solid var(--konj-border);
             border-radius: 14px;
             padding: 0.9rem 1.2rem;
             min-width: 110px;
@@ -991,6 +1155,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            color: var(--konj-border-focus);
         }
         .syntax-token-word {
             font-size: 1.3rem;
@@ -1000,29 +1165,31 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         /* Detektiven & Quizzer */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--konj-surface);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--konj-border);
             max-width: 880px;
             margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .detektiv-card {
-            background: #0f172a;
-            border-radius: 16px;
+            background: var(--konj-surface);
+            border-radius: 18px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 2px solid var(--konj-border);
             margin-bottom: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
         }
         .detektiv-context-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid #10b981;
-            color: #a7f3d0;
+            background: var(--konj-surface-input);
+            border: 1.5px solid var(--konj-border);
+            color: var(--konj-text-muted);
             padding: 0.35rem 0.9rem;
-            border-radius: 10px;
+            border-radius: 9999px;
             font-size: 0.85rem;
             font-weight: 800;
             margin-bottom: 1.2rem;
@@ -1039,13 +1206,15 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             font-size: 1.4rem;
             font-weight: 800;
             color: white;
-            background: rgba(15, 23, 42, 0.7);
-            padding: 1.3rem;
+            background: var(--konj-surface-input);
+            padding: 1.4rem;
             border-radius: 14px;
-            border-left: 5px solid #10b981;
+            border: 1.5px solid var(--konj-border);
+            border-left: 5px solid var(--konj-primary);
             margin-bottom: 2rem;
             text-align: center;
             line-height: 1.6;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .detektiv-options-grid {
             display: grid;
@@ -1054,9 +1223,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .detektiv-opt-btn {
-            background: #1e293b;
-            color: #f8fafc;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            background: var(--konj-surface);
+            color: #FFFFFF;
+            border: 2px solid var(--konj-border);
             padding: 1.1rem 1.4rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1064,19 +1233,22 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
         }
         .detektiv-opt-btn:hover {
-            border-color: #10b981;
-            background: #334155;
+            border-color: var(--konj-primary);
+            background: var(--konj-surface-hover);
+            color: #FFFFFF;
+            box-shadow: 0 0 16px var(--konj-glow);
             transform: translateY(-2px);
         }
         .detektiv-opt-btn.correct {
-            background: rgba(34, 197, 94, 0.25) !important;
+            background: #143521 !important;
             border-color: #22c55e !important;
             color: #4ade80 !important;
         }
         .detektiv-opt-btn.wrong {
-            background: rgba(239, 68, 68, 0.25) !important;
+            background: #3b171a !important;
             border-color: #ef4444 !important;
             color: #fca5a5 !important;
         }
@@ -1091,13 +1263,13 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         }
         .detektiv-feedback-box.show { display: block; }
         .detektiv-feedback-box.correct {
-            background: rgba(34, 197, 94, 0.12);
-            border: 2px solid #22c55e;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1.5px solid #22c55e;
             color: #86efac;
         }
         .detektiv-feedback-box.wrong {
-            background: rgba(239, 68, 68, 0.12);
-            border: 2px solid #ef4444;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid #ef4444;
             color: #fca5a5;
         }
 
@@ -1107,21 +1279,21 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin: 0 auto;
         }
         .builder-card {
-            background: #1e293b;
+            background: var(--konj-surface);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--konj-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .builder-step-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid #10b981;
-            color: #a7f3d0;
-            padding: 0.4rem 1rem;
-            border-radius: 12px;
+            background: var(--konj-surface-input);
+            border: 1.5px solid var(--konj-border);
+            color: var(--konj-text-muted);
+            padding: 0.4rem 1.1rem;
+            border-radius: 9999px;
             font-weight: 800;
             font-size: 0.85rem;
             text-transform: uppercase;
@@ -1137,28 +1309,29 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             .flow-container { grid-template-columns: 1fr 1fr; }
         }
         .flow-step {
-            background: #0f172a;
+            background: var(--konj-surface-input);
             border-radius: 12px;
             padding: 0.9rem;
             text-align: center;
-            border: 2px solid;
+            border: 2px solid var(--konj-border);
         }
         .flow-step.flow-subjekt { border-color: #22c55e; }
         .flow-step.flow-verbum { border-color: #ef4444; }
         .flow-step.flow-adverbium { border-color: #06b6d4; }
         .flow-step.flow-rest { border-color: #0ea5e9; }
-        .flow-step.flow-konj { border-color: #eab308; }
-        .flow-step-num { font-size: 0.75rem; font-weight: 800; margin-bottom: 0.2rem; color: #cbd5e1; }
+        .flow-step.flow-konj { border-color: var(--konj-border-focus); }
+        .flow-step-num { font-size: 0.75rem; font-weight: 800; margin-bottom: 0.2rem; color: var(--konj-text-muted); }
         .flow-step-title { font-size: 0.95rem; font-weight: 800; color: white; }
 
         .sb-sentence-display {
             font-size: 1.4rem;
             font-weight: 800;
             color: white;
-            background: #0f172a;
+            background: var(--konj-surface-input);
             padding: 1.4rem;
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid var(--konj-border);
+            border-left: 5px solid var(--konj-primary);
             text-align: center;
             margin-bottom: 1.8rem;
             display: flex;
@@ -1166,26 +1339,28 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             justify-content: center;
             flex-wrap: wrap;
             gap: 0.6rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .sb-blank-slot {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             min-width: 110px;
-            padding: 0.2rem 1rem;
-            border: 2.5px dashed #10b981;
-            background: rgba(16, 185, 129, 0.15);
+            padding: 0.25rem 1rem;
+            border: 2px dashed var(--konj-border-focus);
+            background: var(--konj-surface-input);
             border-radius: 10px;
-            color: #6ee7b7;
+            color: var(--konj-border-focus);
             font-weight: 900;
             letter-spacing: 2px;
             transition: all 0.3s;
         }
         .sb-blank-slot.filled {
-            border: 2px solid #22c55e;
-            background: rgba(34, 197, 94, 0.22);
-            color: #4ade80;
+            border: 2px solid var(--konj-border-focus);
+            background: var(--konj-primary);
+            color: #FFFFFF;
             letter-spacing: normal;
+            box-shadow: 0 0 16px var(--konj-glow);
         }
 
         .sb-puzzle-slots {
@@ -1198,8 +1373,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #0f172a;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+            background: var(--konj-surface-input);
+            border: 2px dashed var(--konj-border);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
             min-height: 95px;
@@ -1214,10 +1389,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .sb-puzzle-slot.slot-verbum { border-color: #ef4444; }
         .sb-puzzle-slot.slot-adverbium { border-color: #06b6d4; }
         .sb-puzzle-slot.slot-rest { border-color: #0ea5e9; }
-        .sb-puzzle-slot.slot-konj { border-color: #eab308; }
+        .sb-puzzle-slot.slot-konj { border-color: var(--konj-border-focus); }
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: rgba(15, 23, 42, 0.9);
+            background: var(--konj-surface);
+            border-color: var(--konj-primary);
+            box-shadow: 0 0 16px var(--konj-glow);
         }
         .slot-badge-callout {
             font-size: 0.75rem;
@@ -1229,7 +1406,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         .callout-verbum { color: #fca5a5; }
         .callout-adverbium { color: #22d3ee; }
         .callout-rest { color: #7dd3fc; }
-        .callout-konj { color: #fde047; }
+        .callout-konj { color: var(--konj-border-focus); }
 
         .sb-puzzle-chips {
             display: flex;
@@ -1239,18 +1416,22 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin-bottom: 2rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: var(--konj-surface);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--konj-border);
             padding: 0.8rem 1.4rem;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 1.15rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
         }
         .sb-puzzle-chip:hover {
-            border-color: #10b981;
+            border-color: var(--konj-primary);
+            background: var(--konj-surface-hover);
+            color: #FFFFFF;
+            box-shadow: 0 0 16px var(--konj-glow);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.used {
@@ -1264,20 +1445,21 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin: 0 auto;
         }
         .special-intro-box {
-            background: #1e293b;
+            background: var(--konj-surface);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--konj-border);
             margin-bottom: 2rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .special-intro-box h2 {
             font-size: 2.1rem;
-            color: #6ee7b7;
+            color: #FFFFFF !important;
             margin-bottom: 0.6rem;
         }
         .special-intro-box p {
-            color: #cbd5e1;
+            color: var(--konj-text-muted);
             font-size: 1.08rem;
             max-width: 780px;
             margin: 0 auto;
@@ -1290,10 +1472,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             margin-bottom: 2.5rem;
         }
         .special-rule-card {
-            background: #0f172a;
+            background: var(--konj-surface-input);
             border-radius: 16px;
             padding: 1.4rem;
-            border: 2px solid;
+            border: 1.5px solid var(--konj-border);
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
@@ -1311,6 +1493,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            color: #FFFFFF;
         }
         .special-rule-role {
             font-size: 0.72rem;
@@ -1318,63 +1501,73 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             padding: 0.2rem 0.6rem;
             border-radius: 6px;
             text-transform: uppercase;
+            background: var(--konj-surface);
+            border: 1px solid var(--konj-border);
+            color: var(--konj-text-muted);
         }
         .special-rule-desc {
             font-size: 0.92rem;
-            color: #cbd5e1;
+            color: #FFFFFF;
+            opacity: 0.9;
             line-height: 1.5;
             flex-grow: 1;
         }
         .special-rule-example {
-            background: rgba(15, 23, 42, 0.8);
-            padding: 0.8rem;
+            background: var(--konj-surface);
+            padding: 0.85rem;
             border-radius: 10px;
-            border-left: 3px solid;
+            border: 1px solid var(--konj-border);
+            border-left: 3px solid var(--konj-primary);
             font-size: 0.95rem;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
 
         .exercise-action-card {
-            background: #1e293b;
+            background: var(--konj-surface);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--konj-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
         .progress-header {
             display: flex;
             justify-content: space-between;
-            color: #94a3b8;
+            color: var(--konj-text-muted);
             font-weight: 800;
             font-size: 0.95rem;
             margin-bottom: 0.8rem;
         }
         .progress-bar-wrap {
             height: 8px;
-            background: #334155;
+            background: var(--konj-surface-input);
+            border: 1px solid var(--konj-border);
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 2rem;
         }
         .progress-bar-fill {
             height: 100%;
-            background: #10b981;
+            background: var(--konj-primary);
+            box-shadow: 0 0 12px var(--konj-glow);
             transition: width 0.3s ease;
         }
         .exercise-dialog-quote {
             font-size: 1.35rem;
             color: white;
             line-height: 1.75;
-            background: #0f172a;
+            background: var(--konj-surface-input);
             padding: 1.5rem;
             border-radius: 14px;
-            border-left: 5px solid #10b981;
+            border: 1.5px solid var(--konj-border);
+            border-left: 5px solid var(--konj-primary);
             margin-bottom: 1.8rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
 
         .action-btn-primary {
-            background: #059669;
+            background: var(--konj-primary);
+            border: 1.5px solid var(--konj-border-focus);
             color: white;
-            border: none;
             padding: 0.85rem 1.6rem;
             border-radius: 12px;
             font-weight: 800;
@@ -1384,20 +1577,27 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 4px 16px var(--konj-glow);
         }
         .action-btn-primary:hover {
-            background: #10b981;
+            background: var(--konj-primary-hover);
+            border-color: var(--konj-border-focus);
+            box-shadow: 0 6px 20px var(--konj-glow);
             transform: translateY(-2px);
         }
 
         .score-celebration-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-            border: 2px solid #10b981;
+            background: var(--konj-surface);
+            border: 2px solid var(--konj-border);
             border-radius: 20px;
             padding: 2.5rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeIn {
@@ -1586,7 +1786,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
             const highlightedSentence = item.sentence.replace(
                 new RegExp(`\\b(${item.word})\\b`, 'i'),
-                `<span style="color: #6ee7b7; text-decoration: underline;">$1</span>`
+                `<span style="color: var(--konj-border-focus); text-decoration: underline;">$1</span>`
             );
 
             inspector.innerHTML = `
@@ -1619,12 +1819,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     <div class="inspector-sentence-card">
                         <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
                         <div class="sentence-quote-text">"${highlightedSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#a7f3d0; margin-top:0.4rem;">"${trans.sentence}"</div>` : ''}
+                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:var(--konj-text-muted); margin-top:0.4rem;">"${trans.sentence}"</div>` : ''}
                     </div>
 
                     <div class="inspector-actions" style="margin-top: 1rem;">
                         <button class="inspector-btn-action" id="insp-prev-btn">${getTranslation('konj_btn_prev_word')}</button>
-                        <button class="inspector-btn-action" id="insp-next-btn" style="background:#059669;">${getTranslation('konj_btn_next_word')}</button>
+                        <button class="inspector-btn-action" id="insp-next-btn" style="background:var(--konj-primary); border-color:var(--konj-border-focus);">${getTranslation('konj_btn_next_word')}</button>
                     </div>
                 </div>
             `;
@@ -1786,9 +1986,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         if (detektivIdx >= DETEKTIV_RIDDLES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:#6ee7b7;">Gennemført</div>
-                    <h2 style="color:#6ee7b7; font-size:2rem; margin-bottom:0.5rem;">Konjunktions-Detektiven Gennemført!</h2>
-                    <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
+                    <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:var(--konj-border-focus);">Gennemført</div>
+                    <h2 style="color:var(--konj-border-focus); font-size:2rem; margin-bottom:0.5rem;">Konjunktions-Detektiven Gennemført!</h2>
+                    <p style="font-size:1.2rem; color:var(--konj-text-muted); margin-bottom:1.5rem;">
                         Du løste <strong>${detektivScore} ud af ${DETEKTIV_RIDDLES.length}</strong> gåder om konjunktioner og ordstilling!
                     </p>
                     <button class="action-btn-primary" id="restart-detektiv">Prøv gåderne igen</button>
@@ -1845,7 +2045,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     answered = true;
                     detektivScore++;
                     btn.classList.add('correct');
-                    const filledQuote = r.quote.replace('______', `<span style="color:#4ade80; text-decoration:underline;">${opt}</span>`);
+                    const filledQuote = r.quote.replace('______', `<span style="color:var(--konj-border-focus); text-decoration:underline;">${opt}</span>`);
                     container.querySelector('#det-quote').innerHTML = filledQuote;
                     fbBox.className = 'detektiv-feedback-box show correct';
                     fbBox.innerHTML = `<strong>${r.explanations[opt]}</strong>`;
@@ -1998,9 +2198,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         if (builderIdx >= BUILDER_EXERCISES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:#6ee7b7;">Gennemført</div>
-                    <h2 style="color:#6ee7b7; font-size:2rem; margin-bottom:0.5rem;">Sætningsbyggeren Gennemført!</h2>
-                    <p style="font-size:1.15rem; color:#cbd5e1; margin-bottom:1.5rem;">
+                    <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:var(--konj-border-focus);">Gennemført</div>
+                    <h2 style="color:var(--konj-border-focus); font-size:2rem; margin-bottom:0.5rem;">Sætningsbyggeren Gennemført!</h2>
+                    <p style="font-size:1.15rem; color:var(--konj-text-muted); margin-bottom:1.5rem;">
                         Du har styr på ordstillingen i både <strong>helsætninger</strong>, <strong>ledsætninger</strong> og når <strong>ledsætningen står forrest i Forfeltet</strong>!
                     </p>
                     <button class="action-btn-primary" id="restart-builder">Byg sætningerne igen</button>
@@ -2047,7 +2247,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
             <div class="flow-container">${flowHtml}</div>
 
-            <div style="color:#a7f3d0; font-weight:700; margin-bottom:0.8rem; text-align:center;">
+            <div style="color:var(--konj-text-muted); font-weight:700; margin-bottom:0.8rem; text-align:center;">
                 ${ex.context}
             </div>
 
@@ -2190,9 +2390,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             const doneCard = document.createElement('div');
             doneCard.className = 'score-celebration-card';
             doneCard.innerHTML = `
-                <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:#6ee7b7;">Gennemført</div>
-                <h2 style="color:#6ee7b7; font-size:2rem; margin-bottom:0.5rem;">${config.doneTitle}</h2>
-                <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
+                <div style="font-size:2rem; margin-bottom:1rem; font-weight:800; color:var(--konj-border-focus);">Gennemført</div>
+                <h2 style="color:var(--konj-border-focus); font-size:2rem; margin-bottom:0.5rem;">${config.doneTitle}</h2>
+                <p style="font-size:1.2rem; color:var(--konj-text-muted); margin-bottom:1.5rem;">
                     Du fik <strong>${state.score} ud af ${questions.length}</strong> rigtige i første forsøg!
                 </p>
                 <button class="action-btn-primary" id="quiz-restart-btn">Tag opgaven igen</button>
@@ -2250,7 +2450,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     btn.classList.add('correct');
                     card.querySelector('#quiz-quote-box').innerHTML = q.quote.replace(
                         '______',
-                        `<span style="color:#4ade80; text-decoration:underline; font-weight:900;">${opt}</span>`
+                        `<span style="color:var(--konj-border-focus); text-decoration:underline; font-weight:900;">${opt}</span>`
                     );
                     fbBox.className = 'detektiv-feedback-box show correct';
                     fbBox.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
@@ -2783,7 +2983,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         const introCard = document.createElement('div');
         introCard.className = 'special-intro-card';
         introCard.innerHTML = `
-            <div class="special-intro-badge" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7;">
+            <div class="special-intro-badge" style="background: var(--konj-surface-input); border: 1.5px solid var(--konj-border); color: var(--konj-text-muted); padding: 0.35rem 0.9rem; border-radius: 9999px; display: inline-block; font-weight: 800; font-size: 0.8rem; margin-bottom: 0.8rem;">
                 KULMINATIONEN: FRA ISOLEREDE REGLER TIL TEKSTENS TRAFIK & FLYDENDE TEKSTFLOW
             </div>
             <h2 class="special-intro-title">Konjunktioner i Sammenhængende Tekst & Tekstens Trafik</h2>
@@ -2857,11 +3057,11 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         const storyTextBox = document.createElement('div');
         storyTextBox.style.fontSize = '1.25rem';
         storyTextBox.style.lineHeight = '2';
-        storyTextBox.style.color = '#f1f5f9';
-        storyTextBox.style.background = 'rgba(15, 23, 42, 0.6)';
+        storyTextBox.style.color = '#FFFFFF';
+        storyTextBox.style.background = 'var(--konj-surface-input)';
         storyTextBox.style.padding = '2rem';
         storyTextBox.style.borderRadius = '16px';
-        storyTextBox.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+        storyTextBox.style.border = '1.5px solid var(--konj-border)';
         storyTextBox.style.marginBottom = '1.5rem';
 
         const parts = currentStory.text.split(/(\[blank_\d+\])/);
@@ -2877,7 +3077,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
                 let selectStyle = 'display: inline-block; padding: 0.35rem 0.8rem; border-radius: 10px; font-weight: 800; font-size: 1.15rem; cursor: pointer; transition: all 0.2s ease; margin: 0 0.3rem;';
                 if (!chosen) {
-                    selectStyle += ' background: rgba(30, 41, 59, 0.9); border: 2px dashed #38bdf8; color: #38bdf8;';
+                    selectStyle += ' background: var(--konj-surface); border: 2px dashed var(--konj-border-focus); color: var(--konj-border-focus);';
                 } else if (isCorrect) {
                     selectStyle += ' background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; color: #4ade80;';
                 } else {
@@ -2911,8 +3111,8 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         // Story analysis box (Didaktisk forklaring på flowet)
         const analysisBox = document.createElement('div');
-        analysisBox.style.background = 'rgba(255, 255, 255, 0.04)';
-        analysisBox.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+        analysisBox.style.background = 'var(--konj-surface-input)';
+        analysisBox.style.border = '1.5px solid var(--konj-border)';
         analysisBox.style.borderRadius = '14px';
         analysisBox.style.padding = '1.2rem 1.5rem';
         analysisBox.style.marginBottom = '1.5rem';
@@ -2968,7 +3168,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             for (let i = 0; i < totalBlanks; i++) {
                 if (userChoices[i] === currentStory.blanks[i].answer) correctCount++;
             }
-            statusInfo.innerHTML = `Fremgang: <span style="color:#6ee7b7; font-weight:900;">${correctCount}</span> af ${totalBlanks} bindeord korrekt`;
+            statusInfo.innerHTML = `Fremgang: <span style="color:var(--konj-border-focus); font-weight:900;">${correctCount}</span> af ${totalBlanks} bindeord korrekt`;
         }
 
         selects.forEach(sel => {
@@ -2980,9 +3180,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 userChoices[bIdx] = val;
 
                 if (!val) {
-                    sel.style.background = 'rgba(30, 41, 59, 0.9)';
-                    sel.style.border = '2px dashed #38bdf8';
-                    sel.style.color = '#38bdf8';
+                    sel.style.background = 'var(--konj-surface)';
+                    sel.style.border = '2px dashed var(--konj-border-focus)';
+                    sel.style.color = 'var(--konj-border-focus)';
                     feedbackArea.style.display = 'none';
                 } else if (val === blankData.answer) {
                     sel.style.background = 'rgba(34, 197, 94, 0.2)';

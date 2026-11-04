@@ -1,5 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierSmaaordView - Felt 5: De 5 Magiske Småord (Modalpartiklerne i dialog)
@@ -36,6 +43,9 @@ import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations
 export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-smaaord-view';
 
@@ -49,6 +59,40 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -783,9 +827,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(6, 182, 212, 0.15);
-            border: 1px solid #22d3ee;
-            color: #22d3ee;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1.2rem;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -798,9 +842,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             font-size: 2.6rem;
             font-weight: 900;
             margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, #a5f3fc, #22d3ee, #0891b2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .smaaord-hero p {
             color: #94a3b8;
@@ -812,13 +857,13 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         /* Golden Didactic Rule Banner */
         .golden-rule-banner {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
-            border: 2px solid #06b6d4;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 1.4rem 2rem;
             max-width: 900px;
             margin: 0 auto 2.5rem;
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             gap: 1.5rem;
@@ -828,7 +873,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             flex-shrink: 0;
         }
         .rule-content h4 {
-            color: #a5f3fc;
+            color: var(--adv-border-focus, #93C5FD);
             font-size: 1.2rem;
             font-weight: 800;
             margin-bottom: 0.35rem;
@@ -850,27 +895,28 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 800;
-            background: rgba(6, 182, 212, 0.15);
-            border: 1px solid #06b6d4;
-            color: #22d3ee;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
         }
 
-        /* Tabs Navigation */
+        /* Tabs Navigation - Dyb Safirblå ramme */
         .adv-tabs-nav {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
             justify-content: center;
             margin-bottom: 2.2rem;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface, #0A192F);
             padding: 0.6rem;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
         }
         .adv-tab-btn {
             background: transparent;
-            color: #94a3b8;
-            border: none;
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid transparent;
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -882,25 +928,27 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             gap: 0.5rem;
         }
         .adv-tab-btn:hover {
-            color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
+            color: #FFFFFF;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-border, #1E3A66);
         }
         .adv-tab-btn.active {
-            background: #0891b2;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
 
-        /* Tab 1: Vrimmel Layout (Clean, No Duplicate Inspector) */
+        /* Tab 1: Vrimmel Layout */
         .vrimmel-layout {
             max-width: 1050px;
             margin: 0 auto;
         }
         .vrimmel-stage-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .vrimmel-controls-bar {
@@ -908,8 +956,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             justify-content: space-between;
             align-items: center;
             padding: 0.8rem 1.2rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adv-surface-input, #050E1A);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
@@ -919,9 +967,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #334155;
-            color: #cbd5e1;
-            border: none;
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.4rem 0.85rem;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -929,9 +977,15 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             cursor: pointer;
             transition: all 0.2s;
         }
+        .filter-btn:hover {
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
+            color: #FFFFFF;
+        }
         .filter-btn.active {
-            background: #0891b2;
+            background: var(--adv-primary, #3B82F6);
             color: white;
+            border-color: var(--adv-border-focus, #93C5FD);
         }
         .pure-toggle-btn {
             background: rgba(255, 255, 255, 0.08);
@@ -948,9 +1002,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             transition: all 0.2s;
         }
         .pure-toggle-btn.active {
-            background: #22d3ee;
-            color: #0f172a;
-            font-weight: 800;
+            background: var(--adv-primary, #3B82F6);
+            color: white;
+            border-color: var(--adv-border-focus, #93C5FD);
         }
 
         .vrimmel-stage {
@@ -968,15 +1022,15 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             user-select: none;
         }
 
-        /* Hotspot Pins */
+        /* Hotspot Pins (Pegefelter i Safirblå) */
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            background: #0891b2;
-            border: 3px solid #ffffff;
+            background: #1D4ED8;
+            border: 2.5px solid #ffffff;
             color: white;
             font-weight: 900;
             font-size: 0.8rem;
@@ -984,20 +1038,21 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(6, 182, 212, 0.7);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(59, 130, 246, 0.7);
             transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
         .hotspot-pin:hover {
             transform: translate(-50%, -50%) scale(1.3);
-            background: #22d3ee;
-            box-shadow: 0 6px 20px rgba(34, 211, 238, 0.9);
+            background: #2563EB;
+            box-shadow: 0 6px 20px rgba(96, 165, 250, 0.9);
             z-index: 20;
         }
         .hotspot-pin.active {
-            background: #06b6d4;
+            background: #3B82F6;
             transform: translate(-50%, -50%) scale(1.4);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.95);
+            border-color: #BAE6FD;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.95), 0 0 45px rgba(59, 130, 246, 0.6);
             z-index: 30;
         }
         .hotspot-label {
@@ -1005,26 +1060,25 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             top: 105%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.92);
-            color: white;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-text-muted, #BFDBFE);
             font-size: 0.74rem;
             font-weight: 800;
             padding: 0.2rem 0.55rem;
             border-radius: 6px;
             white-space: nowrap;
-            border: 1px solid rgba(34, 211, 238, 0.4);
+            border: 1px solid var(--adv-border-focus, #93C5FD);
             pointer-events: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
 
-
-        /* Inspector Card (Target Word Presentation below stage) */
+        /* Inspector Card */
         .vrimmel-inspector {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(6, 182, 212, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: grid;
             grid-template-columns: 1.15fr 1fr;
             gap: 2rem;
@@ -1034,8 +1088,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .vrimmel-inspector.updated {
             animation: inspectorPulse 0.4s ease-out;
-            border-color: #22d3ee;
-            box-shadow: 0 0 35px rgba(34, 211, 238, 0.45), 0 10px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 0 35px var(--adv-glow, rgba(59, 130, 246, 0.45)), 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         @keyframes inspectorPulse {
             0% { transform: translateY(6px) scale(0.99); }
@@ -1059,7 +1113,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             align-items: center;
             justify-content: space-between;
             margin-bottom: 0.6rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
             padding-bottom: 0.8rem;
             gap: 0.8rem;
             flex-wrap: wrap;
@@ -1071,9 +1125,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             flex-wrap: wrap;
         }
         .inspector-badge {
-            background: rgba(6, 182, 212, 0.2);
-            border: 1px solid #22d3ee;
-            color: #22d3ee;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.35rem 0.85rem;
             border-radius: 12px;
             font-size: 0.85rem;
@@ -1089,9 +1143,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             gap: 0.7rem;
         }
         .inspector-audio-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: none;
+            border: 1px solid var(--adv-border, #1E3A66);
             width: 42px;
             height: 42px;
             border-radius: 50%;
@@ -1103,24 +1157,25 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             font-size: 1.2rem;
         }
         .inspector-audio-btn:hover {
-            background: #0891b2;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             transform: scale(1.1);
         }
         .inspector-trans-box {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(15, 23, 42, 0.85));
-            border: 1.5px solid #06b6d4;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
             border-radius: 14px;
             padding: 0.9rem 1.3rem;
             display: flex;
             flex-direction: column;
             gap: 0.35rem;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         .trans-badge-label {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #22d3ee;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             display: flex;
@@ -1133,14 +1188,14 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: #f8fafc;
         }
         .inspector-scene-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .scene-heading {
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 800;
             margin-bottom: 0.4rem;
             text-transform: uppercase;
@@ -1152,10 +1207,11 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin: 0;
         }
         .inspector-sentence-card {
-            background: rgba(6, 182, 212, 0.12);
-            border: 1.5px solid rgba(6, 182, 212, 0.35);
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 1.1rem 1.3rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .sentence-quote-text {
             font-size: 1.25rem;
@@ -1172,9 +1228,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             line-height: 1.4;
         }
         .inspector-speak-btn {
-            background: #0891b2;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border: none;
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-weight: 700;
@@ -1186,7 +1242,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             gap: 0.4rem;
         }
         .inspector-speak-btn:hover {
-            background: #06b6d4;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: translateY(-2px);
         }
         .inspector-actions {
@@ -1196,9 +1252,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .inspector-btn-action {
             flex: 1;
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: none;
+            border: 1.5px solid var(--adv-border, #1E3A66);
             padding: 0.85rem;
             border-radius: 12px;
             font-weight: 700;
@@ -1211,7 +1267,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             gap: 0.5rem;
         }
         .inspector-btn-action:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
         }
 
         /* Tab 2: Aha-værkstedet */
@@ -1227,9 +1284,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             flex-wrap: wrap;
         }
         .vaerksted-subtab-btn {
-            background: #1e293b;
-            color: #94a3b8;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: var(--adv-surface, #0A192F);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.6rem;
             border-radius: 14px;
             font-weight: 800;
@@ -1238,22 +1295,22 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             transition: all 0.2s;
         }
         .vaerksted-subtab-btn:hover {
-            border-color: #22d3ee;
+            border-color: var(--adv-primary, #3B82F6);
             color: white;
         }
         .vaerksted-subtab-btn.active {
-            background: #0891b2;
-            border-color: #22d3ee;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
 
         /* Matrix Card */
         .matrix-table-wrap {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 1.8rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             margin-bottom: 2rem;
             overflow-x: auto;
@@ -1265,11 +1322,11 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .matrix-table th {
             padding: 1rem;
-            background: #0f172a;
-            color: #22d3ee;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-border-focus, #93C5FD);
             font-size: 0.95rem;
             font-weight: 800;
-            border-bottom: 2px solid rgba(34, 211, 238, 0.3);
+            border-bottom: 2px solid var(--adv-border, #1E3A66);
         }
         .matrix-table td {
             padding: 1.2rem 1rem;
@@ -1280,25 +1337,25 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .matrix-word-badge {
             display: inline-block;
-            background: rgba(6, 182, 212, 0.2);
-            border: 1.5px solid #22d3ee;
-            color: #22d3ee;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.3rem 0.8rem;
             border-radius: 8px;
             font-weight: 900;
             font-size: 1.1rem;
         }
         .matrix-row:hover {
-            background: rgba(6, 182, 212, 0.08);
+            background: rgba(59, 130, 246, 0.08);
         }
 
         /* Sentence Transformer Card */
         .transformer-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid #06b6d4;
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.25);
+            border: 2px solid var(--adv-border, #1E3A66);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             text-align: center;
         }
         .transformer-base {
@@ -1314,9 +1371,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin-bottom: 2rem;
         }
         .trans-opt-btn {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.7rem 1.4rem;
             border-radius: 12px;
             font-size: 1.15rem;
@@ -1325,19 +1382,19 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             transition: all 0.2s;
         }
         .trans-opt-btn:hover {
-            border-color: #22d3ee;
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-2px);
         }
         .trans-opt-btn.active {
-            background: #0891b2;
-            border-color: #22d3ee;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
         .trans-display-box {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.8rem;
-            border: 2px solid rgba(34, 211, 238, 0.3);
+            border: 2px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .trans-quote {
@@ -1347,7 +1404,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin-bottom: 0.8rem;
         }
         .trans-quote span.highlight {
-            color: #22d3ee;
+            color: var(--adv-border-focus, #93C5FD);
             text-decoration: underline;
         }
         .trans-explanation {
@@ -1358,27 +1415,27 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         /* Tab 3: Dialog-Detektiven */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 850px;
             margin: 0 auto;
         }
         .detektiv-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .detektiv-context-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(6, 182, 212, 0.2);
-            border: 1px solid #22d3ee;
-            color: #22d3ee;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.35rem 0.9rem;
             border-radius: 10px;
             font-size: 0.85rem;
@@ -1397,10 +1454,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             font-size: 1.45rem;
             font-weight: 800;
             color: white;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--adv-surface, #0A192F);
             padding: 1.2rem;
             border-radius: 14px;
-            border-left: 5px solid #06b6d4;
+            border-left: 5px solid var(--adv-primary, #3B82F6);
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -1411,9 +1468,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin-bottom: 1.5rem;
         }
         .detektiv-opt-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #f8fafc;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1.1rem 1.4rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1423,8 +1480,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             text-align: center;
         }
         .detektiv-opt-btn:hover {
-            border-color: #22d3ee;
-            background: #334155;
+            border-color: var(--adv-primary, #3B82F6);
+            background: var(--adv-surface-hover, #112240);
             transform: translateY(-2px);
         }
         .detektiv-opt-btn.correct {
@@ -1458,25 +1515,25 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: #fca5a5;
         }
 
-        /* Tab 4: Sætningsbyggeren (To-trins model med konsistente farver) */
+        /* Tab 4: Sætningsbyggeren */
         .builder-container {
             max-width: 950px;
             margin: 0 auto;
         }
         .builder-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .builder-step-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(6, 182, 212, 0.2);
-            border: 1px solid #22d3ee;
-            color: #22d3ee;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1rem;
             border-radius: 12px;
             font-weight: 800;
@@ -1496,20 +1553,20 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             .flow-container { grid-template-columns: 1fr 1fr; }
         }
         .flow-step {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 12px;
             padding: 0.9rem;
             text-align: center;
-            border: 2px solid;
+            border: 2px solid var(--adv-border, #1E3A66);
         }
         .flow-step.flow-subjekt { border-color: #22c55e; }
         .flow-step.flow-verbum { border-color: #ef4444; }
-        .flow-step.flow-smaaord { border-color: #06b6d4; }
+        .flow-step.flow-smaaord { border-color: var(--adv-primary, #3B82F6); }
         .flow-step.flow-rest { border-color: #0ea5e9; }
         .flow-step-num { font-size: 0.75rem; font-weight: 800; margin-bottom: 0.2rem; }
         .flow-step.flow-subjekt .flow-step-num { color: #86efac; }
         .flow-step.flow-verbum .flow-step-num { color: #fca5a5; }
-        .flow-step.flow-smaaord .flow-step-num { color: #22d3ee; }
+        .flow-step.flow-smaaord .flow-step-num { color: var(--adv-border-focus, #93C5FD); }
         .flow-step.flow-rest .flow-step-num { color: #7dd3fc; }
         .flow-step-title { font-size: 0.95rem; font-weight: 800; color: white; }
 
@@ -1518,10 +1575,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             font-size: 1.45rem;
             font-weight: 800;
             color: white;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.4rem;
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             text-align: center;
             margin-bottom: 1.8rem;
             display: flex;
@@ -1536,13 +1593,13 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             justify-content: center;
             min-width: 110px;
             padding: 0.2rem 1rem;
-            border: 2.5px dashed #06b6d4;
-            background: rgba(6, 182, 212, 0.15);
+            border: 2.5px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.15);
             border-radius: 10px;
-            color: #22d3ee;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 900;
             letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.3));
             transition: all 0.3s;
         }
         .sb-blank-slot.filled {
@@ -1563,7 +1620,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
@@ -1578,9 +1635,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             cursor: pointer;
         }
         .sb-puzzle-slot.slot-smaaord {
-            border: 2.5px dashed #06b6d4;
-            background: rgba(6, 182, 212, 0.08);
-            box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.2);
+            border: 2.5px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.08);
+            box-shadow: inset 0 0 15px var(--adv-glow, rgba(59, 130, 246, 0.2));
         }
         .sb-puzzle-slot.filled.slot-subjekt {
             border-style: solid;
@@ -1596,9 +1653,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .sb-puzzle-slot.filled.slot-smaaord {
             border-style: solid;
-            border-color: #06b6d4 !important;
-            background: rgba(6, 182, 212, 0.25) !important;
-            color: #22d3ee !important;
+            border-color: var(--adv-primary, #3B82F6) !important;
+            background: rgba(59, 130, 246, 0.25) !important;
+            color: #BAE6FD !important;
         }
         .sb-puzzle-slot.filled.slot-rest {
             border-style: solid;
@@ -1618,7 +1675,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .callout-subjekt { background: #22c55e; color: #022c22; }
         .callout-verbum { background: #ef4444; color: white; }
-        .callout-smaaord { background: #06b6d4; color: #082f49; }
+        .callout-smaaord { background: var(--adv-primary, #3B82F6); color: white; }
         .callout-rest { background: #0ea5e9; color: white; }
 
         .sb-puzzle-chips {
@@ -1629,9 +1686,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin-bottom: 1.8rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.9rem 1.6rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1643,8 +1700,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             gap: 0.5rem;
         }
         .sb-puzzle-chip:hover {
-            background: #475569;
-            border-color: #22d3ee;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.used {
@@ -1667,20 +1724,21 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .progress-bar-wrap {
             height: 10px;
-            background: #334155;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 2rem;
         }
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #0891b2, #22d3ee);
+            background: var(--adv-primary, #3B82F6);
             transition: width 0.3s ease;
         }
         .action-btn-primary {
-            background: #0891b2;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border: none;
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
             padding: 0.85rem 1.8rem;
             border-radius: 12px;
             font-size: 1.05rem;
@@ -1692,8 +1750,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             gap: 0.5rem;
         }
         .action-btn-primary:hover {
-            background: #0e7490;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+            background: var(--adv-primary-hover, #1D4ED8);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
             transform: translateY(-2px);
         }
 
@@ -1708,7 +1766,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .special-intro-box h2 {
             font-size: 2.2rem;
-            color: #a5f3fc;
+            color: #FFFFFF;
             margin-bottom: 0.5rem;
             font-weight: 900;
         }
@@ -1726,10 +1784,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin-bottom: 2.2rem;
         }
         .special-rule-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 18px;
             padding: 1.3rem 1.4rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             transition: all 0.25s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
             display: flex;
@@ -1738,7 +1796,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         }
         .special-rule-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.25);
+            box-shadow: 0 8px 25px var(--adv-glow, rgba(59, 130, 246, 0.25));
+            border-color: var(--adv-primary, #3B82F6);
         }
         .special-rule-header {
             display: flex;
@@ -1766,7 +1825,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             line-height: 1.45;
         }
         .special-rule-example {
-            background: rgba(15, 23, 42, 0.75);
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
             border-radius: 10px;
             padding: 0.65rem 0.9rem;
             font-size: 0.95rem;
@@ -1779,9 +1839,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             margin-top: 0.2rem;
         }
         .rule-speak-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: none;
+            border: 1px solid var(--adv-border, #1E3A66);
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -1794,7 +1854,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             transition: all 0.2s;
         }
         .rule-speak-btn:hover {
-            background: #06b6d4;
+            background: var(--adv-primary, #3B82F6);
             transform: scale(1.1);
         }
 
@@ -1803,19 +1863,22 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: white;
             line-height: 1.8;
             margin-bottom: 2rem;
-            background: rgba(15, 23, 42, 0.75);
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.5rem;
             border-radius: 14px;
-            border-left: 5px solid #06b6d4;
+            border-left: 5px solid var(--adv-primary, #3B82F6);
+            border-top: 1px solid var(--adv-border, #1E3A66);
+            border-right: 1px solid var(--adv-border, #1E3A66);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
         }
 
         .score-celebration-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-            border: 2px solid #22d3ee;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2.5rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
         @keyframes fadeIn {
@@ -1830,10 +1893,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     hero.className = 'smaaord-hero';
     hero.innerHTML = `
         <div class="smaaord-hero-tag">
-            ${getTranslation('top100_adv_f5_badge')}
+            ${stripAllEmojis(getTranslation('top100_adv_f5_badge'))}
         </div>
-        <h1>${getTranslation('adv_f5_hero_title')}</h1>
-        <p>${getTranslation('adv_f5_hero_desc')}</p>
+        <h1>${stripAllEmojis(getTranslation('adv_f5_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f5_hero_desc'))}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1841,10 +1904,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     const goldenBanner = document.createElement('div');
     goldenBanner.className = 'golden-rule-banner';
     goldenBanner.innerHTML = `
-        <div class="rule-icon">💡</div>
+        <div class="rule-icon">${renderDsIcon('thought', '', { size: 28 })}</div>
         <div class="rule-content">
-            <h4>${getTranslation('adv_rule_title')}</h4>
-            <p>${getTranslation('adv_f5_rule_modal')}</p>
+            <h4>${stripAllEmojis(getTranslation('adv_rule_title'))}</h4>
+            <p>${stripAllEmojis(getTranslation('adv_f5_rule_modal'))}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);
@@ -1854,13 +1917,13 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Frokoststuen (vrimlebilledet)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. Aha-værkstedet ("Hvem ved hvad?")', icon: '🧠' },
-        { id: 'detektiv', label: '3. Dialog-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'hellere', label: '6. Heller, hellere, helst ⚖️', icon: '⚖️' },
-        { id: 'boosters', label: '7. Forstærkere (sgu, mon ikke, skam...) 💥', icon: '💥' }
+        { id: 'vrimmel', label: '1. Frokoststuen (vrimlebilledet)', icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'vaerksted', label: '2. Aha-værkstedet ("Hvem ved hvad?")', icon: renderDsIcon('thought', '', { size: 16 }) },
+        { id: 'detektiv', label: '3. Dialog-Detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: renderDsIcon('target', '', { size: 16 }) },
+        { id: 'hellere', label: '6. Heller, hellere, helst', icon: renderDsIcon('balance', '', { size: 16 }) },
+        { id: 'boosters', label: '7. Forstærkere (sgu, mon ikke, skam...)', icon: renderDsIcon('zap', '', { size: 16 }) }
     ];
 
     let currentTab = 'vrimmel';
@@ -1869,7 +1932,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === tab.id ? 'active' : ''}`;
         btn.id = `tab-btn-${tab.id}`;
-        btn.innerHTML = `<span>${tab.icon}</span> ${tab.label}`;
+        btn.innerHTML = `${tab.icon} <span>${stripAllEmojis(tab.label)}</span>`;
         btn.onclick = () => switchTab(tab.id);
         nav.appendChild(btn);
     });
@@ -1954,7 +2017,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         const pureBtn = document.createElement('button');
         pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureBtn.innerHTML = `<span>${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}</span>`;
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -2034,41 +2097,41 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <div class="inspector-left">
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: rgba(6, 182, 212, 0.25); border: 1.5px solid #22d3ee; color: #22d3ee; font-weight: 800;">📍 Målord: ${item.word}</span>
+                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border: 1.5px solid var(--adv-border-focus, #93C5FD); color: var(--adv-border-focus, #93C5FD); font-weight: 800;">Målord: ${item.word}</span>
                             <span class="inspector-badge">${catNames[item.category] || 'Samtalesmåord'}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>💬</span> ${item.word}
+                        ${item.word}
                     </h2>
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                            OVERSÆTTELSE (${langLabel})
                         </div>
                         <div class="trans-word-val">"${trans.word}"</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">📍 I frokoststuen</div>
+                        <div class="scene-heading">I frokoststuen</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: #22d3ee;">💬 Eksempelsætning</div>
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Eksempelsætning</div>
                         <p class="sentence-quote-text">"${item.contextSentence}"</p>
                         ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
                         <button class="inspector-speak-btn" id="inspector-action-speak">
-                            <span>🗣️</span> Hør sætning
+                            Hør sætning
                         </button>
                     </div>
 
-                    <div class="inspector-scene-box" style="border-left: 4px solid #06b6d4;">
-                        <div class="scene-heading" style="color: #22d3ee;">💡 Didaktisk samtale-regel</div>
+                    <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Didaktisk samtale-regel</div>
                         <p class="scene-text">${item.ruleHint}</p>
                     </div>
 
@@ -2076,8 +2139,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                         <button class="inspector-btn-action" id="inspector-action-prev">
                             ← Forrige ord
                         </button>
-                        <button class="inspector-btn-action" style="background: #0891b2;" id="inspector-action-next">
-                            Næste ord ➔
+                        <button class="inspector-btn-action" style="background: var(--adv-primary, #3B82F6);" id="inspector-action-next">
+                            Næste ord →
                         </button>
                     </div>
                 </div>
@@ -2169,7 +2232,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; color: #a5f3fc; margin-bottom: 0.5rem;">Aha-værkstedet: "Hvem ved hvad?"</h2>
+                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: "Hvem ved hvad?"</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 750px; margin: 0 auto;">
                     Få det fulde overblik over de 5 magiske småord, og se hvordan en enkelt stavelse forvandler en sætnings sociale betydning.
                 </p>
@@ -2177,10 +2240,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
             <div class="vaerksted-subtabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'matrix' ? 'active' : ''}" id="v-subtab-matrix">
-                    📊 1. "Hvem ved hvad?"-Matricen
+                    1. "Hvem ved hvad?"-Matricen
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'transformer' ? 'active' : ''}" id="v-subtab-trans">
-                    🔄 2. Sætnings-Transformeren
+                    2. Sætnings-Transformeren
                 </button>
             </div>
 
@@ -2216,45 +2279,45 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <thead>
                     <tr>
                         <th>Småord</th>
-                        <th>🗣️ Talerens viden</th>
-                        <th>👂 Lytterens viden</th>
-                        <th>🧭 Videnskilde</th>
-                        <th>💬 Typisk hverdags-eksempel</th>
+                        <th>Talerens viden</th>
+                        <th>Lytterens viden</th>
+                        <th>Videnskilde</th>
+                        <th>Typisk hverdags-eksempel</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">jo</span></td>
-                        <td>✅ Ved det</td>
-                        <td>✅ Forventes at vide det</td>
+                        <td>Ved det</td>
+                        <td>Forventes at vide det</td>
                         <td>Fælles viden / Erfaring</td>
                         <td>"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!"</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">da</span></td>
-                        <td>✅ 100% sikker</td>
-                        <td>❓ Tøver / tvivler</td>
+                        <td>100% sikker</td>
+                        <td>Tøver / tvivler</td>
                         <td>Selvindlysende / Opmuntring</td>
                         <td>"Du må <strong>da</strong> gerne smage et stykke kage!"</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">nok</span></td>
-                        <td>🧐 Eget logisk gæt</td>
-                        <td>❓ Ved det ikke</td>
+                        <td>Eget logisk gæt</td>
+                        <td>Ved det ikke</td>
                         <td>Egne observationer / Trøst</td>
                         <td>"Der er mange skyer, så det regner <strong>nok</strong> snart."</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">vel</span></td>
-                        <td>❓ Formoder det</td>
-                        <td>💡 Ved det bedst</td>
+                        <td>Formoder det</td>
+                        <td>Ved det bedst</td>
                         <td>Appel om bekræftelse</td>
                         <td>"Av, du slog foden! Det gør <strong>vel</strong> ondt?"</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">vist</span></td>
-                        <td>👂 Har hørt det</td>
-                        <td>❓ Ved det ikke</td>
+                        <td>Har hørt det</td>
+                        <td>Ved det ikke</td>
                         <td>Ekstern kilde / Rygte</td>
                         <td>"Jeg hørte i radioen, at toget <strong>vist</strong> er aflyst."</td>
                     </tr>
@@ -2287,7 +2350,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <div class="trans-quote">
                     "${curr.sentence}"
                 </div>
-                <div style="font-size: 0.9rem; color: #22d3ee; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
+                <div style="font-size: 0.9rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
                     Signalerer: ${curr.effect}
                 </div>
                 <div class="trans-explanation">
@@ -2296,7 +2359,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             </div>
 
             <button class="action-btn-primary" id="trans-listen-btn">
-                <span>🔊</span> Hør udtale i dialog
+                Hør udtale i dialog
             </button>
         `;
 
@@ -2352,14 +2415,14 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             dialog: 'A: "Skal vi tage bussen eller cykle i det fine vejr?"<br>B: "Solen skinner, så jeg cykler ______!"',
             options: ['heller', 'hellere', 'helst'],
             correct: 'hellere',
-            feedback: 'Korrekt! Valg af cyklen frem for bussen (to alternativer) ➔ "hellere".',
+            feedback: 'Korrekt! Valg af cyklen frem for bussen (to alternativer) → "hellere".',
             ruleHighlight: 'Komparativ præference'
         },
         {
             dialog: 'A: "Hvilken ret på frokostmenuen frister dig mest?"<br>B: "Jeg vil ______ have dagens laks, den ser fantastisk ud."',
             options: ['heller', 'hellere', 'helst'],
             correct: 'helst',
-            feedback: 'Korrekt! Din klare favorit blandt alle muligheder på menukortet ➔ "helst".',
+            feedback: 'Korrekt! Din klare favorit blandt alle muligheder på menukortet → "helst".',
             ruleHighlight: 'Superlativ / Førstevalg'
         },
         {
@@ -2373,14 +2436,14 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             dialog: 'A: "Skal vi gå i biografen eller blive hjemme og se en film?"<br>B: "Jeg vil ______ blive hjemme på sofaen i aften."',
             options: ['heller', 'hellere', 'helst'],
             correct: 'hellere',
-            feedback: 'Korrekt! Sammenligning mellem to forslag ("blive hjemme frem for biografen") ➔ "hellere".',
+            feedback: 'Korrekt! Sammenligning mellem to forslag ("blive hjemme frem for biografen") → "hellere".',
             ruleHighlight: 'Valg mellem 2 forslag'
         },
         {
             dialog: 'A: "Hvad tid på dagen arbejder du bedst?"<br>B: "Jeg arbejder ______ om formiddagen, hvor jeg er mest frisk."',
             options: ['heller', 'hellere', 'helst'],
             correct: 'helst',
-            feedback: 'Korrekt! Din generelle, optimale præference over alle andre tider ➔ "helst".',
+            feedback: 'Korrekt! Din generelle, optimale præference over alle andre tider → "helst".',
             ruleHighlight: 'Overordnet favorit / 1. valg'
         }
     ];
@@ -2398,7 +2461,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         // Introduktion og Regelkort
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Heller, hellere eller helst? ⚖️</h2>
+                <h2>Heller, hellere eller helst?</h2>
                 <p>
                     Tre ord der lyder næsten ens, men har vidt forskellige funktioner. Lær den gyldne forskel på <strong>negativ enighed</strong> og <strong>personlig præference</strong>:
                 </p>
@@ -2409,7 +2472,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <div class="special-rule-card" style="border-color: rgba(239, 68, 68, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #f87171;">
-                            <span>🔴</span> heller
+                            heller
                         </div>
                         <span class="special-rule-role" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444;">Negation</span>
                     </div>
@@ -2418,30 +2481,30 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #ef4444;">
                         <span>"Det ved jeg <strong>heller</strong> ikke."</span>
-                        <button class="rule-speak-btn" data-speak="Det ved jeg heller ikke.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Det ved jeg heller ikke."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
-                <div class="special-rule-card" style="border-color: rgba(34, 211, 238, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #22d3ee;">
-                            <span>🟡</span> hellere
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            hellere
                         </div>
-                        <span class="special-rule-role" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid #06b6d4;">Komparativ</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Komparativ</span>
                     </div>
                     <div class="special-rule-desc">
                         Bruges ved et <strong>valg mellem to alternativer</strong> ("A frem for B" / would rather / prefer).
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #06b6d4;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Jeg vil <strong>hellere</strong> have te end kaffe."</span>
-                        <button class="rule-speak-btn" data-speak="Jeg vil hellere have te end kaffe.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Jeg vil hellere have te end kaffe."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(34, 197, 94, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #4ade80;">
-                            <span>🟢</span> helst
+                            helst
                         </div>
                         <span class="special-rule-role" style="background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e;">Superlativ</span>
                     </div>
@@ -2450,7 +2513,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #22c55e;">
                         <span>"Jeg vil <strong>helst</strong> blive hjemme i dag."</span>
-                        <button class="rule-speak-btn" data-speak="Jeg vil helst blive hjemme i dag.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Jeg vil helst blive hjemme i dag."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -2477,19 +2540,19 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             const resultCard = document.createElement('div');
             resultCard.className = 'score-celebration-card';
             resultCard.innerHTML = `
-                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉</div>
-                <h3 style="font-size: 2rem; color: #a5f3fc; margin-bottom: 0.6rem;">Fremragende klaret!</h3>
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                <h3 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.6rem;">Fremragende klaret!</h3>
                 <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
                     Du fik <strong>${hellereScore}</strong> ud af <strong>${HELLERE_QUESTIONS.length}</strong> rigtige i præference-testen.
                 </p>
                 <div style="background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
-                    ✔️ <strong>Huskereglen:</strong><br>
-                    • <em>ikke</em> / <em>aldrig</em> ➔ altid <strong>heller</strong><br>
-                    • Valg mellem to ting ➔ <strong>hellere</strong><br>
-                    • Førstevalg / favorit ➔ <strong>helst</strong>
+                    <strong>Huskereglen:</strong><br>
+                    • <em>ikke</em> / <em>aldrig</em> → altid <strong>heller</strong><br>
+                    • Valg mellem to ting → <strong>hellere</strong><br>
+                    • Førstevalg / favorit → <strong>helst</strong>
                 </div>
                 <button class="action-btn-primary" id="hellere-restart-btn">
-                    <span>🔄</span> Start forfra
+                    Start forfra
                 </button>
             `;
             resultCard.querySelector('#hellere-restart-btn').onclick = () => {
@@ -2519,7 +2582,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             </div>
 
             <div class="detektiv-context-tag">
-                <span>⚖️</span> ${q.ruleHighlight}
+                ${q.ruleHighlight}
             </div>
 
             <div class="exercise-dialog-quote">
@@ -2537,7 +2600,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="hellere-next-btn">
-                    ${hellereIdx < HELLERE_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                    ${hellereIdx < HELLERE_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se samlet resultat'}
                 </button>
             </div>
         `;
@@ -2598,63 +2661,63 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             options: ['skam', 'sgu', 'mon ikke', 'vist'],
             correct: 'skam',
             feedback: 'Korrekt! "Skam" bruges som en høflig og venlig forsikring ("certainly / indeed"), der fjerner modpartens tøven eller beskedenhed.',
-            badge: '🤝 Høflig forsikring'
+            badge: 'Høflig forsikring'
         },
         {
             dialog: 'A: "Vejrudsigten truer med mørke skyer i eftermiddag."<br>B: "Bare rolig, ______ det holder tørvejr, indtil vi når frem?"',
             options: ['mon ikke', 'skam', 'sgu', 'sandelig'],
             correct: 'mon ikke',
             feedback: 'Korrekt! "Mon ikke" bruges til at tænke højt og udtrykke en formodning, man har stor tillid til ("surely / won\'t it...").',
-            badge: '🔮 Håbefuld formodning'
+            badge: 'Håbefuld formodning'
         },
         {
             dialog: 'Kollegaen smiler overvældet over nyheden:<br>"Hvad, fik du jobbet?! Det var ______ en fantastisk nyhed!"',
             options: ['sgu', 'skam', 'mon ikke', 'nok'],
             correct: 'sgu',
             feedback: 'Korrekt! "Sgu" giver sætningen saft og kraft i uformelt hverdagssprog blandt venner og kolleger ("damn well / truly").',
-            badge: '🌶️ Uformel emphase'
+            badge: 'Uformel emphase'
         },
         {
             dialog: 'Chefen roser teamet efter en stor indsats:<br>"I har ______ leveret et imponerende stykke arbejde i denne uge."',
             options: ['sandelig', 'sgu', 'mon ikke', 'ellers'],
             correct: 'sandelig',
             feedback: 'Korrekt! "Sandelig" bruges i en mere formel eller eftertrykkelig tone til at udtrykke oprigtig beundring og sandhed ("indeed / truly").',
-            badge: '✨ Højtidelig bekræftelse'
+            badge: 'Højtidelig bekræftelse'
         },
         {
             dialog: 'A: "Undskyld hvis jeg forstyrrer dig midt i frokostpausen!"<br>B: "Du forstyrrer ______ overhovedet ikke, sæt dig bare ned!"',
             options: ['skam', 'sgu', 'mon ikke', 'vel'],
             correct: 'skam',
             feedback: 'Korrekt! "Du forstyrrer skam overhovedet ikke" er den klassiske, venlige måde at fjerne en andens undskyldning på.',
-            badge: '🤝 Venlig beroligelse'
+            badge: 'Venlig beroligelse'
         },
         {
             dialog: 'A: "Klokken er 14:25, og toget kører 14:30!"<br>B: "Slap bare af, ______ vi når det inden afgang?"',
             options: ['mon ikke', 'skam', 'sgu', 'engang'],
             correct: 'mon ikke',
             feedback: 'Korrekt! "Mon ikke vi når det?" beroliger med en forventning om, at det nok skal lykkes.',
-            badge: '🔮 Tillidsfuld forventning'
+            badge: 'Tillidsfuld forventning'
         },
         {
             dialog: 'Kollegaen leder forvirret i tasken og på skrivebordet:<br>"Hvor er mine nøgler? De lå ______ lige her for to minutter siden!"',
             options: ['sgu', 'skam', 'mon ikke', 'vist'],
             correct: 'sgu',
             feedback: 'Korrekt! "De lå sgu lige her!" udtrykker ægte hverdags-forundring og tryk på udsagnet.',
-            badge: '🌶️ Hverdags-eftertryk'
+            badge: 'Hverdags-eftertryk'
         },
         {
             dialog: 'A: "Vinteren i år har været ualmindelig kold og lang."<br>B: "Ja, det må man ______ sige!"',
             options: ['sandelig', 'mon ikke', 'lige', 'ellers'],
             correct: 'sandelig',
             feedback: 'Korrekt! Den faste vending "Det må man sandelig sige!" understreger 100% oprigtig enighed.',
-            badge: '✨ Oprigtig enighed'
+            badge: 'Oprigtig enighed'
         },
         {
             dialog: 'A: "Huskede du at betale regningen til tiden?"<br>B: "Ja da, den har jeg ______ betalt for længe siden!"',
             options: ['skam', 'mon ikke', 'sgu', 'vel'],
             correct: 'skam',
             feedback: 'Korrekt! "Den har jeg skam betalt" forsikrer roligt og høfligt om, at sagen er i orden.',
-            badge: '🤝 Høflig forsikring'
+            badge: 'Høflig forsikring'
         }
     ];
 
@@ -2671,7 +2734,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         // Introduktion og Booster-oversigt
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Forstærkende ord & samtale-boostere 💥</h2>
+                <h2>Forstærkende ord & samtale-boostere</h2>
                 <p>
                     Danskere krydrer deres sprog med småord, der viser entusiasme, høflig forsikring eller overbevisning. Mestre de fire mest almindelige hverdags-boostere:
                 </p>
@@ -2682,7 +2745,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <div class="special-rule-card" style="border-color: rgba(249, 115, 22, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #fb923c;">
-                            <span>🌶️</span> sgu
+                            sgu
                         </div>
                         <span class="special-rule-role" style="background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid #f97316;">Uformel</span>
                     </div>
@@ -2691,30 +2754,30 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #f97316;">
                         <span>"Det passer <strong>sgu</strong>!"</span>
-                        <button class="rule-speak-btn" data-speak="Det passer sgu!">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Det passer sgu!"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
-                <div class="special-rule-card" style="border-color: rgba(168, 85, 247, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #c084fc;">
-                            <span>🔮</span> mon ikke
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            mon ikke
                         </div>
-                        <span class="special-rule-role" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border: 1px solid #a855f7;">Formodning</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Formodning</span>
                     </div>
                     <div class="special-rule-desc">
                         Udtrykker en <strong>håbefuld forventning med tillid</strong> ("surely / won't it..."). Tænker højt for at berolige.
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #a855f7;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"<strong>Mon ikke</strong> det går?"</span>
-                        <button class="rule-speak-btn" data-speak="Mon ikke det går?">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Mon ikke det går?"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(16, 185, 129, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #34d399;">
-                            <span>🤝</span> skam
+                            skam
                         </div>
                         <span class="special-rule-role" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid #10b981;">Høflig</span>
                     </div>
@@ -2723,14 +2786,14 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #10b981;">
                         <span>"Det kan du <strong>skam</strong> godt!"</span>
-                        <button class="rule-speak-btn" data-speak="Det kan du skam godt!">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Det kan du skam godt!"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(234, 179, 8, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #facc15;">
-                            <span>✨</span> sandelig
+                            sandelig
                         </div>
                         <span class="special-rule-role" style="background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308;">Eftertryk</span>
                     </div>
@@ -2739,7 +2802,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"Det var <strong>sandelig</strong> flot!"</span>
-                        <button class="rule-speak-btn" data-speak="Det var sandelig flot!">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Det var sandelig flot!"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -2766,20 +2829,20 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             const resultCard = document.createElement('div');
             resultCard.className = 'score-celebration-card';
             resultCard.innerHTML = `
-                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🌟</div>
-                <h3 style="font-size: 2rem; color: #a5f3fc; margin-bottom: 0.6rem;">Flot samtale-mesterskab!</h3>
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                <h3 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.6rem;">Flot samtale-mesterskab!</h3>
                 <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
                     Du fik <strong>${boostersScore}</strong> ud af <strong>${BOOSTER_QUESTIONS.length}</strong> rigtige i booster-testen.
                 </p>
                 <div style="background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
-                    ✔️ <strong>Hurtigt overblik over boosterne:</strong><br>
+                    <strong>Hurtigt overblik over boosterne:</strong><br>
                     • <strong>sgu:</strong> Uformel kraft og saft mellem venner<br>
                     • <strong>mon ikke:</strong> Håbefuld formodning med tillid<br>
                     • <strong>skam:</strong> Venlig og høflig forsikring<br>
                     • <strong>sandelig:</strong> Oprigtig anerkendelse og stærk enighed
                 </div>
                 <button class="action-btn-primary" id="boosters-restart-btn">
-                    <span>🔄</span> Start forfra
+                    Start forfra
                 </button>
             `;
             resultCard.querySelector('#boosters-restart-btn').onclick = () => {
@@ -2827,7 +2890,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="boosters-next-btn">
-                    ${boostersIdx < BOOSTER_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                    ${boostersIdx < BOOSTER_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se samlet resultat'}
                 </button>
             </div>
         `;
@@ -2884,7 +2947,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     // ==========================================
     const DETEKTIV_QUESTIONS = [
         {
-            context: '📻 Nyheder fra radioen',
+            context: 'Nyheder fra radioen',
             prompt: 'Du hørte i morges en vejrudsigt i radioen. Hvilket småord viser, at din viden kommer fra en ekstern kilde?',
             quote: 'Jeg hørte i radioen i morges, at det ______ bliver regnvejr i eftermiddag.',
             options: ['nok', 'vel', 'vist'],
@@ -2896,7 +2959,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '🩹 En kollega slår sig',
+            context: 'En kollega slår sig',
             prompt: 'En kollega skærer sig i fingeren i køkkenet. Du ser det ske og henvender dig direkte for at vise medfølelse:',
             quote: 'Av, du skar dig! Det gør ______ ondt?',
             options: ['nok', 'vel', 'vist'],
@@ -2908,7 +2971,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '☁️ Mørke tordenskyer på himlen',
+            context: 'Mørke tordenskyer på himlen',
             prompt: 'Du kigger ud ad vinduet og ser tykke, sorte skyer. Hvilket ord viser din egen logiske konklusion?',
             quote: 'Mørke skyer trækker op. Det bliver ______ regnvejr.',
             options: ['nok', 'vel', 'vist'],
@@ -2920,7 +2983,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '🗣️ Kollegaens rapport',
+            context: 'Kollegaens rapport',
             prompt: 'Peter kom ud fra chefen og så bekymret ud. Han sagde noget til dig, som du nu fortæller videre:',
             quote: 'Peter sagde til mig, at mødet ______ gik meget dårligt.',
             options: ['nok', 'vel', 'vist'],
@@ -2932,7 +2995,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '📊 Regnearket og tidsplanen',
+            context: 'Regnearket og tidsplanen',
             prompt: 'Du har siddet hele formiddagen og beregnet tallene for projektet. Nu konkluderer du:',
             quote: 'Jeg har kigget grundigt på tallene, og vi klarer den ______ inden deadline.',
             options: ['nok', 'vel', 'vist'],
@@ -2944,7 +3007,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '🇩🇰 Sprogkundskaber i hverdagen',
+            context: 'Sprogkundskaber i hverdagen',
             prompt: 'Du taler med en kollega, der har boet fem år i Danmark. Du forventer et bekræftende ja:',
             quote: 'Du har boet i Danmark i fem år, så du forstår ______ dansk nu?',
             options: ['nok', 'vel', 'vist'],
@@ -2956,7 +3019,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '✏️ Låne en blyant ved bordet',
+            context: 'Låne en blyant ved bordet',
             prompt: 'En kollega spørger: "Må jeg låne din blyant et øjeblik?" Hvad svarer du for at være imødekommende og fjerne al tvivl?',
             quote: 'Ja, det må du ______ gerne!',
             options: ['da', 'jo', 'vist'],
@@ -2968,7 +3031,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '☀️ Solskin og overtøj',
+            context: 'Solskin og overtøj',
             prompt: 'Din ven ser dig tage overtøj på og spørger hvorfor. I har aftalt at gå en tur lige om lidt:',
             quote: 'Hvorfor tager du jakke på? – Vi skal ______ ud at gå en tur lige om lidt!',
             options: ['jo', 'nok', 'vel'],
@@ -2980,7 +3043,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '🎂 Fødselsdagskagen på kontoret',
+            context: 'Fødselsdagskagen på kontoret',
             prompt: 'En kasse kage står på bordet, men ingen rører den. Du hørte nogen sige, at teamet lige har spist:',
             quote: 'De tager ikke kage, for de har ______ lige spist frokost.',
             options: ['vist', 'nok', 'vel'],
@@ -2992,7 +3055,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             }
         },
         {
-            context: '☔ Paraplyen i entreen',
+            context: 'Paraplyen i entreen',
             prompt: 'Din bofælle siger "Husk paraplyen!", men himlen er fuldstændig skyfri. Du kigger ud:',
             quote: 'Det behøver jeg ikke, solen skinner og det regner ______ ikke i dag!',
             options: ['jo', 'da', 'vist'],
@@ -3017,7 +3080,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         container.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.5rem; color: #a5f3fc; margin: 0;">Dialog-Detektiven (10 gåder)</h3>
+                <h3 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">Dialog-Detektiven (10 gåder)</h3>
                 <span style="color: #94a3b8; font-weight: 800;">Gåde ${detektivIdx + 1} af ${DETEKTIV_QUESTIONS.length}</span>
             </div>
 
@@ -3035,7 +3098,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     ← Forrige gåde
                 </button>
                 <button class="action-btn-primary" id="detektiv-next-btn">
-                    ${detektivIdx < DETEKTIV_QUESTIONS.length - 1 ? 'Næste gåde ➔' : 'Start forfra 🔄'}
+                    ${detektivIdx < DETEKTIV_QUESTIONS.length - 1 ? 'Næste gåde →' : 'Start forfra'}
                 </button>
             </div>
         `;
@@ -3203,7 +3266,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                         <div class="flow-step-title">Hvad sker der?</div>
                     </div>
                     <div class="flow-step flow-smaaord">
-                        <div class="flow-step-num">3. SMÅORD 💬</div>
+                        <div class="flow-step-num">3. SMÅORD</div>
                         <div class="flow-step-title">Hvem ved hvad?</div>
                     </div>
                     <div class="flow-step flow-rest">
@@ -3220,7 +3283,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     <span>${current.rest}</span>
                 </div>
 
-                <div style="font-weight: 800; color: #22d3ee; margin-bottom: 1rem; text-align: center;">
+                <div style="font-weight: 800; color: var(--adv-border-focus, #93C5FD); margin-bottom: 1rem; text-align: center;">
                     Hvilket småord passer bedst her?
                 </div>
 
@@ -3291,7 +3354,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                         <div style="font-size: 1.15rem; font-weight: 800;">${puzzlePlaced.verbum || 'Tom plads'}</div>
                     </div>
                     <div class="sb-puzzle-slot slot-smaaord ${puzzlePlaced.smaaord ? 'filled' : ''}" id="slot-smaaord">
-                        <span class="slot-badge-callout callout-smaaord">3. Småord 💬</span>
+                        <span class="slot-badge-callout callout-smaaord">3. Småord</span>
                         <div style="font-size: 1.15rem; font-weight: 800;">${puzzlePlaced.smaaord || 'Tom plads'}</div>
                     </div>
                     <div class="sb-puzzle-slot slot-rest ${puzzlePlaced.rest ? 'filled' : ''}" id="slot-rest">
@@ -3311,10 +3374,10 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
                     <button class="filter-btn" id="puzzle-reset-btn">
-                        🔄 Nulstil brikker
+                        Nulstil brikker
                     </button>
                     <button class="action-btn-primary" id="puzzle-next-btn" style="display: none;">
-                        Næste sætning ➔
+                        Næste sætning →
                     </button>
                 </div>
             `;
@@ -3352,7 +3415,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                         chipBtn.classList.add('used');
                     } else {
                         feedbackBox.className = 'detektiv-feedback-box show wrong';
-                        feedbackBox.innerHTML = `Husk rækkefølgen: 1. Subjekt ➔ 2. Verbum ➔ 3. Småord ➔ 4. Restled.`;
+                        feedbackBox.innerHTML = `Husk rækkefølgen: 1. Subjekt → 2. Verbum → 3. Småord → 4. Restled.`;
                         return;
                     }
 
@@ -3504,8 +3567,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">💬 Hverdagssamtale</div>
-                <div style="font-size: 1.45rem; color: white; line-height: 1.8; margin-bottom: 2rem; background: rgba(15, 23, 42, 0.7); padding: 1.4rem; border-radius: 14px; border-left: 5px solid #06b6d4;">
+                <div class="detektiv-context-tag">Hverdagssamtale</div>
+                <div style="font-size: 1.45rem; color: white; line-height: 1.8; margin-bottom: 2rem; background: rgba(15, 23, 42, 0.7); padding: 1.4rem; border-radius: 14px; border-left: 5px solid var(--adv-primary, #3B82F6);">
                     ${q.dialog}
                 </div>
 
@@ -3520,7 +3583,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="kontekst-next-btn">
-                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se resultat / Start forfra 🔄'}
+                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se resultat / Start forfra'}
                 </button>
             </div>
         `;

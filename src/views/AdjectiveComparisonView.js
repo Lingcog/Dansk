@@ -1,7 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { isLocalhost, ADJ_PALETTES, getActiveAdjNuance, applyAdjNuance } from '../components/DesignSystemToggle.js';
 
 export function renderAdjectiveComparisonView(container, navigateFn, extraData = {}) {
+    // Aktivér mørk orange nuance (standard: Mørk Rav)
+    applyAdjNuance(getActiveAdjNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adj-comparison-view';
 
@@ -34,14 +39,48 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
     const toHubBtn = document.createElement('button');
     toHubBtn.className = 'back-btn';
-    toHubBtn.style.background = 'rgba(168, 85, 247, 0.2)';
-    toHubBtn.style.borderColor = '#a855f7';
-    toHubBtn.style.color = '#c084fc';
+    toHubBtn.style.background = 'var(--adj-surface-input, #1C0B03)';
+    toHubBtn.style.borderColor = 'var(--adj-border-focus, #fb923c)';
+    toHubBtn.style.color = '#FFFFFF';
     toHubBtn.innerHTML = getTranslation('adj_hub_btn');
     toHubBtn.onclick = () => navigateFn('top100_adjektiver');
     topBar.appendChild(toHubBtn);
 
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdjNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adj-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adj-toggle-label">
+                <span class="adj-pulse-dot"></span>
+                <strong>Localhost Nuance-vælger:</strong>
+                <span class="adj-toggle-hint">Vælg mellem 4 mørke orange nuancer live:</span>
+            </div>
+            <div class="adj-toggle-buttons">
+                ${Object.values(ADJ_PALETTES).map(p => `
+                    <button class="adj-nuance-btn ${p.id === activeNuance ? 'active' : ''}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        ${p.name}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adj-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdjNuance(nuance);
+                testBar.querySelectorAll('.adj-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // Header Title
     const title = document.createElement('h1');
@@ -65,11 +104,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
     function updateToggleBtnState() {
         if (showGrammarTerms) {
             viewContainer.classList.remove('hide-grammar-terms');
-            grammarToggleBtn.innerHTML = `<span class="toggle-icon">🏷️</span> <span class="toggle-main">${getTranslation('adj_toggle_grammar_active')}</span> <span class="toggle-hint">${getTranslation('adj_toggle_grammar_hint_hide')}</span>`;
+            grammarToggleBtn.innerHTML = `<span class="toggle-icon">${renderDsIcon('tag', '', { size: 16 })}</span> <span class="toggle-main">${getTranslation('adj_toggle_grammar_active')}</span> <span class="toggle-hint">${getTranslation('adj_toggle_grammar_hint_hide')}</span>`;
             grammarToggleBtn.classList.remove('everyday-mode');
         } else {
             viewContainer.classList.add('hide-grammar-terms');
-            grammarToggleBtn.innerHTML = `<span class="toggle-icon">🗣️</span> <span class="toggle-main">${getTranslation('adj_toggle_everyday_active')}</span> <span class="toggle-hint">${getTranslation('adj_toggle_everyday_hint_show')}</span>`;
+            grammarToggleBtn.innerHTML = `<span class="toggle-icon">${renderDsIcon('messageSquare', '', { size: 16 })}</span> <span class="toggle-main">${getTranslation('adj_toggle_everyday_active')}</span> <span class="toggle-hint">${getTranslation('adj_toggle_everyday_hint_show')}</span>`;
             grammarToggleBtn.classList.add('everyday-mode');
         }
     }
@@ -194,7 +233,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         imgWrapper.innerHTML = `
             <img src="${baseUrl}adjektiver_comparison_guide.jpg" alt="${getTranslation('adj_p1_hero_title')}" class="hero-image">
             <div class="image-caption">
-                <span>💡 <strong>${getTranslation('adj_p1_rule_thumb_label')}</strong></span> 
+                <span>${renderDsIcon('lightbulb', '', { size: 16 })} <strong>${getTranslation('adj_p1_rule_thumb_label')}</strong></span> 
                 ${getTranslation('adj_p1_rule_thumb_text')}
             </div>
         `;
@@ -214,8 +253,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 example: 'Bilen er <strong style="color: #fbbf24;">stor</strong>.',
                 badgeFagterm: getTranslation('adj_p1_s1_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p1_s1_badge_everyday'),
-                colorClass: 'step-orange',
-                icon: '🚗'
+                colorClass: 'step-orange'
             },
             {
                 num: '2',
@@ -226,8 +264,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 example: 'Bilen er <strong style="color: #60a5fa;">større end</strong> cyklen.',
                 badgeFagterm: getTranslation('adj_p1_s2_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p1_s2_badge_everyday'),
-                colorClass: 'step-blue',
-                icon: '🚙'
+                colorClass: 'step-blue'
             },
             {
                 num: '3',
@@ -238,8 +275,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 example: 'Lastbilen er <strong style="color: #34d399;">størst</strong> af alle.',
                 badgeFagterm: getTranslation('adj_p1_s3_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p1_s3_badge_everyday'),
-                colorClass: 'step-green',
-                icon: '🚛'
+                colorClass: 'step-green'
             }
         ];
 
@@ -250,7 +286,6 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 <div class="step-badge">${item.num}</div>
                 <div class="step-card-content">
                     <div class="step-title-row">
-                        <span class="step-icon">${item.icon}</span>
                         <strong>
                             <span class="term-fagterm">${item.titleFagterm}</span>
                             <span class="term-everyday">${item.titleEveryday}</span>
@@ -260,10 +295,10 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     <div class="step-ans">${item.ans}</div>
                     <div class="step-example-box">
                         <div class="example-text">${item.example}</div>
-                        <button class="listen-btn-mini" title="${getTranslation('adj_listen_btn_short')}">🔊</button>
+                        <button class="listen-btn-mini" title="${getTranslation('adj_listen_btn_short')}">${renderDsIcon('volume', '', { size: 16 })}</button>
                     </div>
                     <div class="grammar-badge">
-                        🏷️ 
+                        ${renderDsIcon('tag', '', { size: 14 })} 
                         <span class="term-fagterm">${item.badgeFagterm}</span>
                         <span class="term-everyday">${item.badgeEveryday}</span>
                     </div>
@@ -287,7 +322,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 "Bilen er <span class="word-orange">stor</span>. Men varevognen er <span class="word-blue">større end</span> bilen. Og lastbilen er den <span class="word-green">største</span>!"
             </div>
             <button class="listen-btn" title="${getTranslation('adj_p1_flow_btn')}">
-                <span>🔊</span> ${getTranslation('adj_p1_flow_btn')}
+                ${renderDsIcon('volume', '', { size: 16 })} ${getTranslation('adj_p1_flow_btn')}
             </button>
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
@@ -308,14 +343,14 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         part1Container.appendChild(playgroundCard);
 
         const adjList = [
-            { id: 'stor', pos: 'stor', komp: 'større', sup: 'størst', exPos: 'Min bil er stor.', exKomp: 'Min bil er større end cyklen.', exSup: 'Denne lastbil er størst af alle.', icon: '📦' },
-            { id: 'hurtig', pos: 'hurtig', komp: 'hurtigere', sup: 'hurtigst', exPos: 'Cyklen er hurtig.', exKomp: 'Bilen er hurtigere end cyklen.', exSup: 'Flyet er hurtigst.', icon: '⚡' },
-            { id: 'hoej', pos: 'høj', komp: 'højere', sup: 'højest', exPos: 'Træet er højt.', exKomp: 'Rundetårn er højere end træet.', exSup: 'Mount Everest er højest i verden.', icon: '🏔️' },
-            { id: 'kold', pos: 'kold', komp: 'koldere', sup: 'koldest', exPos: 'Vinteren er kold.', exKomp: 'I dag er koldere end i går.', exSup: 'Nordpolen er koldest.', icon: '❄️' },
-            { id: 'god', pos: 'god', komp: 'bedre', sup: 'bedst', exPos: 'Kagen er god.', exKomp: 'Kagen her er bedre end den anden.', exSup: 'Mormors kage er absolut bedst!', icon: '⭐' },
-            { id: 'lille', pos: 'lille', komp: 'mindre', sup: 'mindst', exPos: 'Musen er lille.', exKomp: 'Musen er mindre end katten.', exSup: 'Myren er mindst.', icon: '🐜' },
-            { id: 'gammel', pos: 'gammel', komp: 'ældre', sup: 'ældst', exPos: 'Bogen er gammel.', exKomp: 'Peter er ældre end Mads.', exSup: 'Bedstefar er ældst i familien.', icon: '📜' },
-            { id: 'varm', pos: 'varm', komp: 'varmere', sup: 'varmest', exPos: 'Solen er varm.', exKomp: 'Sommeren er varmere end foråret.', exSup: 'Ørkenen er varmest.', icon: '☀️' }
+            { id: 'stor', pos: 'stor', komp: 'større', sup: 'størst', exPos: 'Min bil er stor.', exKomp: 'Min bil er større end cyklen.', exSup: 'Denne lastbil er størst af alle.' },
+            { id: 'hurtig', pos: 'hurtig', komp: 'hurtigere', sup: 'hurtigst', exPos: 'Cyklen er hurtig.', exKomp: 'Bilen er hurtigere end cyklen.', exSup: 'Flyet er hurtigst.' },
+            { id: 'hoej', pos: 'høj', komp: 'højere', sup: 'højest', exPos: 'Træet er højt.', exKomp: 'Rundetårn er højere end træet.', exSup: 'Mount Everest er højest i verden.' },
+            { id: 'kold', pos: 'kold', komp: 'koldere', sup: 'koldest', exPos: 'Vinteren er kold.', exKomp: 'I dag er koldere end i går.', exSup: 'Nordpolen er koldest.' },
+            { id: 'god', pos: 'god', komp: 'bedre', sup: 'bedst', exPos: 'Kagen er god.', exKomp: 'Kagen her er bedre end den anden.', exSup: 'Mormors kage er absolut bedst!' },
+            { id: 'lille', pos: 'lille', komp: 'mindre', sup: 'mindst', exPos: 'Musen er lille.', exKomp: 'Musen er mindre end katten.', exSup: 'Myren er mindst.' },
+            { id: 'gammel', pos: 'gammel', komp: 'ældre', sup: 'ældst', exPos: 'Bogen er gammel.', exKomp: 'Peter er ældre end Mads.', exSup: 'Bedstefar er ældst i familien.' },
+            { id: 'varm', pos: 'varm', komp: 'varmere', sup: 'varmest', exPos: 'Solen er varm.', exKomp: 'Sommeren er varmere end foråret.', exSup: 'Ørkenen er varmest.' }
         ];
 
         let selectedAdjId = 'stor';
@@ -327,7 +362,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
             pillsRow.innerHTML = adjList.map(a => `
                 <button class="adj-pill-btn ${a.id === selectedAdjId ? 'active' : ''}" data-id="${a.id}">
-                    <span>${a.icon}</span> ${a.pos}
+                    ${a.pos}
                 </button>
             `).join('');
 
@@ -349,7 +384,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         <div class="col-word">${current.pos}</div>
                         <div class="col-meter"><div class="meter-fill" style="width: 35%;"></div></div>
                         <div class="col-example">"${current.exPos}"</div>
-                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exPos}">🔊 ${getTranslation('adj_listen_btn_short')}</button>
+                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exPos}">${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_listen_btn_short')}</button>
                     </div>
 
                     <!-- Column 2: Komparativ -->
@@ -361,7 +396,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         <div class="col-word">${current.komp}</div>
                         <div class="col-meter"><div class="meter-fill" style="width: 65%;"></div></div>
                         <div class="col-example">"${current.exKomp}"</div>
-                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exKomp}">🔊 ${getTranslation('adj_listen_btn_short')}</button>
+                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exKomp}">${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_listen_btn_short')}</button>
                     </div>
 
                     <!-- Column 3: Superlativ -->
@@ -373,7 +408,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         <div class="col-word">${current.sup}</div>
                         <div class="col-meter"><div class="meter-fill" style="width: 100%;"></div></div>
                         <div class="col-example">"${current.exSup}"</div>
-                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exSup}">🔊 ${getTranslation('adj_listen_btn_short')}</button>
+                        <button class="listen-btn-mini col-audio-btn" data-text="${current.exSup}">${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_listen_btn_short')}</button>
                     </div>
                 </div>
             `;
@@ -455,7 +490,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 fullSentence: 'Hvor er den store bil? Vi bor i det store hus. Se de store træer.',
                 badgeFagterm: getTranslation('adj_p2_sc1_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p2_sc1_badge_everyday'),
-                icon: '🎯'
+                icon: renderDsIcon('tag', '', { size: 20 })
             },
             {
                 titleFagterm: getTranslation('adj_p2_sc2_title_fagterm'),
@@ -469,7 +504,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 fullSentence: 'Det er min store bil. Har du set hendes nye cykel? Vi elsker vores gamle have.',
                 badgeFagterm: getTranslation('adj_p2_sc2_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p2_sc2_badge_everyday'),
-                icon: '🔑'
+                icon: renderDsIcon('user', '', { size: 20 })
             },
             {
                 titleFagterm: getTranslation('adj_p2_sc3_title_fagterm'),
@@ -483,7 +518,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 fullSentence: 'Jeg vil købe denne flotte trøje. Kender du dette gamle sagn? Hvem ejer disse hurtige biler?',
                 badgeFagterm: getTranslation('adj_p2_sc3_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p2_sc3_badge_everyday'),
-                icon: '👉'
+                icon: renderDsIcon('mapPin', '', { size: 20 })
             },
             {
                 titleFagterm: getTranslation('adj_p2_sc4_title_fagterm'),
@@ -497,7 +532,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 fullSentence: 'Det er Peters store computer. Vi besøger Marias hyggelige lejlighed.',
                 badgeFagterm: getTranslation('adj_p2_sc4_badge_fagterm'),
                 badgeEveryday: getTranslation('adj_p2_sc4_badge_everyday'),
-                icon: '👤'
+                icon: renderDsIcon('users', '', { size: 20 })
             }
         ];
 
@@ -519,9 +554,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     ${sc.examples.map(ex => `<li>${ex}</li>`).join('')}
                 </ul>
                 <div class="sc-footer">
-                    <button class="listen-btn-mini sc-listen-btn" title="${getTranslation('adj_p2_sc_listen')}">🔊 ${getTranslation('adj_p2_sc_listen')}</button>
+                    <button class="listen-btn-mini sc-listen-btn" title="${getTranslation('adj_p2_sc_listen')}">${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_p2_sc_listen')}</button>
                     <div class="grammar-badge">
-                        🏷️ 
+                        ${renderDsIcon('tag', '', { size: 14 })} 
                         <span class="term-fagterm">${sc.badgeFagterm}</span>
                         <span class="term-everyday">${sc.badgeEveryday}</span>
                     </div>
@@ -544,7 +579,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                     ${getTranslation('adj_p2_super_def_text')}
                 </p>
                 <button class="listen-btn-mini super-def-listen" style="margin-top: 0.5rem;">
-                    🔊 ${getTranslation('adj_p2_super_def_listen')}
+                    ${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_p2_super_def_listen')}
                 </button>
             </div>
         `;
@@ -574,11 +609,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         ];
 
         const simModes = [
-            { id: 'ubestemt', labelFagterm: getTranslation('adj_p2_mode_ubestemt_fagterm'), labelEveryday: getTranslation('adj_p2_mode_ubestemt_everyday'), icon: '❓' },
-            { id: 'artikel', labelFagterm: getTranslation('adj_p2_mode_artikel_fagterm'), labelEveryday: getTranslation('adj_p2_mode_artikel_everyday'), icon: '🎯' },
-            { id: 'possessiv', labelFagterm: getTranslation('adj_p2_mode_possessiv_fagterm'), labelEveryday: getTranslation('adj_p2_mode_possessiv_everyday'), icon: '🔑' },
-            { id: 'demonstrativ', labelFagterm: getTranslation('adj_p2_mode_demonstrativ_fagterm'), labelEveryday: getTranslation('adj_p2_mode_demonstrativ_everyday'), icon: '👉' },
-            { id: 'superlativ', labelFagterm: getTranslation('adj_p2_mode_superlativ_fagterm'), labelEveryday: getTranslation('adj_p2_mode_superlativ_everyday'), icon: '🌟' }
+            { id: 'ubestemt', labelFagterm: getTranslation('adj_p2_mode_ubestemt_fagterm'), labelEveryday: getTranslation('adj_p2_mode_ubestemt_everyday') },
+            { id: 'artikel', labelFagterm: getTranslation('adj_p2_mode_artikel_fagterm'), labelEveryday: getTranslation('adj_p2_mode_artikel_everyday') },
+            { id: 'possessiv', labelFagterm: getTranslation('adj_p2_mode_possessiv_fagterm'), labelEveryday: getTranslation('adj_p2_mode_possessiv_everyday') },
+            { id: 'demonstrativ', labelFagterm: getTranslation('adj_p2_mode_demonstrativ_fagterm'), labelEveryday: getTranslation('adj_p2_mode_demonstrativ_everyday') },
+            { id: 'superlativ', labelFagterm: getTranslation('adj_p2_mode_superlativ_fagterm'), labelEveryday: getTranslation('adj_p2_mode_superlativ_everyday') }
         ];
 
         let currentSimNounId = 'bil';
@@ -605,7 +640,6 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
             modesRow.innerHTML = simModes.map(m => `
                 <button class="sim-mode-btn ${m.id === currentSimModeId ? 'active' : ''}" data-id="${m.id}">
-                    <span class="sim-m-icon">${m.icon}</span>
                     <span class="term-fagterm">${m.labelFagterm}</span>
                     <span class="term-everyday">${m.labelEveryday}</span>
                 </button>
@@ -658,7 +692,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 </div>
                 <div class="sim-explanation">${explanation}</div>
                 <button class="listen-btn-mini sim-listen-btn">
-                    <span>🔊</span> ${getTranslation('adj_p2_sim_listen_btn')}
+                    ${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_p2_sim_listen_btn')}
                 </button>
             `;
 
@@ -1008,7 +1042,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 } else if (correct === total) {
                     summaryBar.innerHTML = `
                         <div class="summary-success">
-                            🎉 <strong>${getTranslation('adj_p3_summary_success')}</strong>
+                            <strong>${getTranslation('adj_p3_summary_success')}</strong>
                         </div>
                     `;
                     nextBtn.style.display = 'inline-block';
@@ -1044,7 +1078,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         sel.classList.remove('correct');
                         fb.className = 'feedback-msg wrong';
                         const hint = getTranslation(`${baseQKey}_hint_${sel.value}`) || qData.hints[sel.value] || getTranslation('adj_p3_default_hint');
-                        fb.innerHTML = `⚠ ${hint}`;
+                        fb.innerHTML = `${renderDsIcon('alertTriangle', '', { size: 14 })} ${hint}`;
                         fb.style.display = 'block';
                     }
                     checkSummary();
@@ -1111,8 +1145,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         `).join('')}
                     </div>
                     <div class="puzzle-task-title">${task.title}</div>
-                    <div class="puzzle-meaning-hint">💡 <em>"${task.meaning}"</em></div>
-                    <div class="puzzle-rule-reminder">📌 ${task.hint}</div>
+                    <div class="puzzle-meaning-hint">${renderDsIcon('lightbulb', '', { size: 15 })} <em>"${task.meaning}"</em></div>
+                    <div class="puzzle-rule-reminder">${task.hint}</div>
                 </div>
 
                 <div class="puzzle-target-area">
@@ -1194,11 +1228,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         feedbackArea.style.display = 'block';
                         feedbackArea.innerHTML = `
                             <div class="feedback-msg success">
-                                🎉 <strong>${getTranslation('adj_p3_puz_success')}</strong>
+                                <strong>${getTranslation('adj_p3_puz_success')}</strong>
                             </div>
                             <div class="puzzle-action-row">
                                 <button class="listen-btn-small" id="puzzle-listen-btn">
-                                    🔊 ${getTranslation('adj_p3_puz_listen')}
+                                    ${renderDsIcon('volume', '', { size: 14 })} ${getTranslation('adj_p3_puz_listen')}
                                 </button>
                                 ${currentPuzzleIdx < puzzleTasks.length - 1 ? `
                                     <button class="next-task-btn" id="puzzle-next-task-btn">
@@ -1223,11 +1257,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                         feedbackArea.style.display = 'block';
                         feedbackArea.innerHTML = `
                             <div class="feedback-msg error">
-                                ⚠ <strong>${getTranslation('adj_p3_puz_error_title')}</strong> ${getTranslation('adj_p3_puz_error_hint')}
+                                ${renderDsIcon('alertTriangle', '', { size: 14 })} <strong>${getTranslation('adj_p3_puz_error_title')}</strong> ${getTranslation('adj_p3_puz_error_hint')}
                             </div>
                             <div class="puzzle-action-row">
                                 <button class="retry-task-btn" id="puzzle-retry-btn">
-                                    🔄 ${getTranslation('adj_p3_puz_retry_btn')}
+                                    ${renderDsIcon('refresh', '', { size: 14 })} ${getTranslation('adj_p3_puz_retry_btn')}
                                 </button>
                             </div>
                         `;
@@ -1269,11 +1303,39 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
         const style = document.createElement('style');
         style.id = 'adj-comp-v2-styles';
         style.textContent = `
+            :root {
+                --adj-bg: #4A040B;
+                --adj-bg-glow: #6B0F1A;
+                --adj-surface: #341808;
+                --adj-surface-hover: #48230D;
+                --adj-surface-input: #1C0B03;
+                --adj-border: #6E3311;
+                --adj-border-focus: #fb923c;
+                --adj-primary: #ea580c;
+                --adj-primary-hover: #f97316;
+                --adj-text: #FFFFFF;
+                --adj-text-muted: #fed7aa;
+                --adj-text-subtle: #fdba74;
+            }
+
             .adj-comparison-view {
                 max-width: 960px;
                 margin: 0 auto;
                 padding: 1.5rem 1rem 4rem;
-                color: #f8fafc;
+                color: var(--adj-text, #FFFFFF);
+            }
+
+            .adj-comparison-view h1 {
+                color: #FFFFFF !important;
+                font-weight: 700;
+                margin-top: 0.5rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .adj-comparison-view .subtitle {
+                color: var(--adj-text-muted, #fed7aa);
+                font-size: 1.05rem;
+                margin-bottom: 1.5rem;
             }
 
             /* Grammar Toggle Bar */
@@ -1284,9 +1346,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-grammar-toggle-btn {
-                background: rgba(30, 41, 59, 0.85);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: #e2e8f0;
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
+                color: var(--adj-text-muted, #fed7aa);
                 padding: 0.65rem 1.4rem;
                 border-radius: 30px;
                 font-size: 0.95rem;
@@ -1299,19 +1361,21 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-grammar-toggle-btn:hover {
-                background: rgba(51, 65, 85, 0.95);
-                border-color: rgba(255, 255, 255, 0.35);
+                background: var(--adj-surface-hover, #48230D);
+                border-color: var(--adj-border-focus, #fb923c);
                 transform: translateY(-1px);
             }
 
             .adj-grammar-toggle-btn.everyday-mode {
-                background: rgba(16, 185, 129, 0.2);
-                border-color: #10b981;
-                color: #6ee7b7;
+                background: rgba(234, 88, 12, 0.25);
+                border-color: var(--adj-primary, #ea580c);
+                color: #FFFFFF;
             }
 
             .adj-grammar-toggle-btn .toggle-icon {
                 font-size: 1.2rem;
+                display: inline-flex;
+                align-items: center;
             }
 
             .adj-grammar-toggle-btn .toggle-hint {
@@ -1339,12 +1403,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 flex-wrap: wrap;
                 gap: 1.2rem;
                 justify-content: center;
-                background: rgba(15, 23, 42, 0.65);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 14px;
                 padding: 0.8rem 1.4rem;
                 margin-bottom: 2rem;
                 font-size: 0.92rem;
+                color: var(--adj-text-muted, #fed7aa);
             }
 
             .grammar-system-item {
@@ -1375,11 +1440,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-tab-btn {
-                background: rgba(30, 41, 59, 0.6);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 12px;
                 padding: 1rem;
-                color: #94a3b8;
+                color: var(--adj-text-muted, #fed7aa);
                 cursor: pointer;
                 transition: all 0.2s ease;
                 display: flex;
@@ -1389,34 +1454,34 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-tab-btn strong {
-                color: #f1f5f9;
+                color: #FFFFFF;
                 font-size: 1.05rem;
             }
 
             .adj-tab-btn span {
                 font-size: 0.82rem;
-                opacity: 0.8;
+                opacity: 0.85;
             }
 
             .adj-tab-btn:hover {
-                background: rgba(51, 65, 85, 0.8);
-                border-color: rgba(255, 255, 255, 0.25);
+                background: var(--adj-surface-hover, #48230D);
+                border-color: var(--adj-border-focus, #fb923c);
             }
 
             .adj-tab-btn.active {
-                background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.35));
-                border-color: #10b981;
-                box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+                background: linear-gradient(135deg, rgba(234, 88, 12, 0.4), rgba(194, 65, 12, 0.5));
+                border-color: var(--adj-primary, #ea580c);
+                box-shadow: 0 4px 16px rgba(234, 88, 12, 0.3);
             }
 
             .adj-tab-btn.active strong {
-                color: #34d399;
+                color: #FFFFFF;
             }
 
             /* Hero Cards */
             .adj-hero-card {
-                background: rgba(15, 23, 42, 0.75);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 padding: 1.8rem;
                 margin-bottom: 2rem;
@@ -1424,7 +1489,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-hero-card h2 {
-                color: #38bdf8;
+                color: #FFFFFF;
                 margin-top: 0;
                 margin-bottom: 1rem;
                 font-size: 1.45rem;
@@ -1433,14 +1498,14 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             .hero-desc {
                 font-size: 1.08rem;
                 line-height: 1.65;
-                color: #e2e8f0;
+                color: var(--adj-text-muted, #fed7aa);
                 margin: 0;
             }
 
             /* Image Wrapper */
             .adj-image-wrapper {
-                background: rgba(15, 23, 42, 0.85);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 overflow: hidden;
                 margin-bottom: 2.2rem;
@@ -1457,8 +1522,11 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 padding: 1rem 1.4rem;
                 background: rgba(0, 0, 0, 0.3);
                 font-size: 1rem;
-                color: #cbd5e1;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                color: var(--adj-text-muted, #fed7aa);
+                border-top: 1px solid var(--adj-border, #6E3311);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
             }
 
             /* Step Grid 3 Columns */
@@ -1476,27 +1544,29 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .simple-step-card {
-                background: rgba(30, 41, 59, 0.7);
+                background: var(--adj-surface, #341808);
                 border-radius: 16px;
                 padding: 1.5rem;
                 display: flex;
                 flex-direction: column;
                 position: relative;
                 transition: transform 0.2s ease;
+                border: 1px solid var(--adj-border, #6E3311);
             }
 
             .simple-step-card:hover {
                 transform: translateY(-2px);
+                border-color: var(--adj-border-focus, #fb923c);
             }
 
             .simple-step-card.step-orange {
-                border: 1px solid rgba(245, 158, 11, 0.35);
+                border-top: 3px solid #fbbf24;
             }
             .simple-step-card.step-blue {
-                border: 1px solid rgba(59, 130, 246, 0.35);
+                border-top: 3px solid #60a5fa;
             }
             .simple-step-card.step-green {
-                border: 1px solid rgba(16, 185, 129, 0.35);
+                border-top: 3px solid #34d399;
             }
 
             .step-badge {
@@ -1507,7 +1577,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 height: 28px;
                 border-radius: 50%;
                 background: rgba(255, 255, 255, 0.1);
-                color: #cbd5e1;
+                color: var(--adj-text-muted, #fed7aa);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1530,7 +1600,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
             .step-q {
                 font-size: 0.95rem;
-                color: #cbd5e1;
+                color: var(--adj-text-muted, #fed7aa);
                 margin-bottom: 0.5rem;
                 font-style: italic;
             }
@@ -1538,53 +1608,60 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             .step-ans {
                 font-size: 0.95rem;
                 font-weight: 600;
-                color: #f1f5f9;
+                color: #FFFFFF;
                 margin-bottom: 1.2rem;
             }
 
             .step-example-box {
-                background: rgba(0, 0, 0, 0.35);
+                background: var(--adj-surface-input, #1C0B03);
                 border-radius: 10px;
                 padding: 0.9rem;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.08);
+                border: 1px solid var(--adj-border, #6E3311);
             }
 
             .step-example-box .example-text {
                 font-size: 1.12rem;
                 font-weight: 600;
+                color: #FFFFFF;
             }
 
             .listen-btn-mini {
                 background: rgba(255, 255, 255, 0.12);
-                border: 1px solid rgba(255, 255, 255, 0.2);
+                border: 1px solid var(--adj-border, #6E3311);
                 color: #fff;
                 border-radius: 8px;
                 padding: 0.35rem 0.7rem;
                 cursor: pointer;
                 font-size: 0.9rem;
                 transition: background 0.2s;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
             }
 
             .listen-btn-mini:hover {
-                background: rgba(255, 255, 255, 0.25);
+                background: rgba(255, 255, 255, 0.22);
             }
 
             .grammar-badge {
                 font-size: 0.82rem;
-                opacity: 0.8;
+                color: var(--adj-text-muted, #fed7aa);
                 margin-top: auto;
                 padding-top: 0.5rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-top: 1px solid var(--adj-border, #6E3311);
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
             }
 
             /* Finished Sentence Banner */
             .finished-sentence-banner {
-                background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-                border: 1px solid rgba(255, 255, 255, 0.18);
+                background: linear-gradient(135deg, #341808, #220d04);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 padding: 1.6rem;
                 text-align: center;
@@ -1596,7 +1673,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-size: 0.95rem;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #94a3b8;
+                color: var(--adj-text-muted, #fed7aa);
                 margin-bottom: 0.8rem;
             }
 
@@ -1605,7 +1682,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-weight: 600;
                 line-height: 1.5;
                 margin-bottom: 1.2rem;
-                color: #f8fafc;
+                color: #FFFFFF;
             }
 
             .word-orange { color: #fbbf24; font-weight: 700; text-decoration: underline; }
@@ -1613,7 +1690,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             .word-green { color: #34d399; font-weight: 700; text-decoration: underline; }
 
             .listen-btn {
-                background: #10b981;
+                background: var(--adj-primary, #ea580c);
                 border: none;
                 color: #fff;
                 padding: 0.75rem 1.6rem;
@@ -1624,26 +1701,26 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 display: inline-flex;
                 align-items: center;
                 gap: 0.6rem;
-                box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+                box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
                 transition: all 0.2s;
             }
 
             .listen-btn:hover {
-                background: #059669;
+                background: var(--adj-primary-hover, #f97316);
                 transform: translateY(-1px);
             }
 
             /* Adjective Playground Card */
             .adj-playground-card {
-                background: rgba(15, 23, 42, 0.75);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 padding: 1.8rem;
                 margin-bottom: 2rem;
             }
 
             .adj-playground-card h3 {
-                color: #38bdf8;
+                color: #FFFFFF;
                 margin-top: 0;
                 margin-bottom: 0.6rem;
                 font-size: 1.3rem;
@@ -1657,9 +1734,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-pill-btn {
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                color: #e2e8f0;
+                background: var(--adj-surface-input, #1C0B03);
+                border: 1px solid var(--adj-border, #6E3311);
+                color: var(--adj-text-muted, #fed7aa);
                 padding: 0.5rem 1rem;
                 border-radius: 20px;
                 cursor: pointer;
@@ -1672,14 +1749,15 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .adj-pill-btn:hover {
-                background: rgba(255, 255, 255, 0.15);
+                background: var(--adj-surface-hover, #48230D);
+                border-color: var(--adj-border-focus, #fb923c);
             }
 
             .adj-pill-btn.active {
-                background: #3b82f6;
+                background: var(--adj-primary, #ea580c);
                 color: #fff;
-                border-color: #3b82f6;
-                box-shadow: 0 2px 10px rgba(59, 130, 246, 0.35);
+                border-color: var(--adj-border-focus, #fb923c);
+                box-shadow: 0 2px 10px rgba(234, 88, 12, 0.35);
             }
 
             .display-columns {
@@ -1695,7 +1773,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .display-col {
-                background: rgba(30, 41, 59, 0.6);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 12px;
                 padding: 1.4rem;
                 display: flex;
@@ -1714,6 +1793,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 letter-spacing: 1px;
                 margin-bottom: 0.4rem;
                 opacity: 0.75;
+                color: var(--adj-text-muted, #fed7aa);
             }
 
             .col-word {
@@ -1743,14 +1823,14 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-size: 1rem;
                 font-style: italic;
                 margin-bottom: 1rem;
-                color: #e2e8f0;
+                color: var(--adj-text-muted, #fed7aa);
                 min-height: 44px;
             }
 
             /* Part 2: Formula Box */
             .adj-formula-box {
-                background: rgba(15, 23, 42, 0.85);
-                border: 1px solid rgba(236, 72, 153, 0.35);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 padding: 1.6rem;
                 margin-bottom: 2.2rem;
@@ -1759,7 +1839,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             .formula-title {
                 font-size: 1.15rem;
                 font-weight: 700;
-                color: #f472b6;
+                color: #FFFFFF;
                 margin-bottom: 1.2rem;
             }
 
@@ -1773,7 +1853,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .formula-chip {
-                background: rgba(30, 41, 59, 0.9);
+                background: var(--adj-surface-input, #1C0B03);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 12px;
                 padding: 0.8rem 1.2rem;
                 text-align: center;
@@ -1785,8 +1866,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-size: 0.8rem;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                opacity: 0.7;
+                opacity: 0.75;
                 margin-bottom: 0.3rem;
+                color: var(--adj-text-muted, #fed7aa);
             }
 
             .chip-val {
@@ -1795,22 +1877,22 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .chip-marker { border: 1px solid #38bdf8; color: #38bdf8; }
-            .chip-adj { border: 2px solid #ec4899; color: #f472b6; background: rgba(236, 72, 153, 0.15); }
+            .chip-adj { border: 2px solid var(--adj-primary, #ea580c); color: #fed7aa; background: rgba(234, 88, 12, 0.15); }
             .chip-noun { border: 1px solid #10b981; color: #34d399; }
 
             .formula-plus {
                 font-size: 1.5rem;
                 font-weight: 800;
-                color: #94a3b8;
+                color: var(--adj-text-muted, #fed7aa);
             }
 
             .formula-rule-note {
-                background: rgba(255, 255, 255, 0.05);
+                background: var(--adj-surface-input, #1C0B03);
                 border-radius: 8px;
                 padding: 0.8rem 1rem;
                 font-size: 0.95rem;
-                color: #f8fafc;
-                border-left: 3px solid #ec4899;
+                color: var(--adj-text-muted, #fed7aa);
+                border-left: 3px solid var(--adj-primary, #ea580c);
             }
 
             /* Scenarios Grid 4 */
@@ -1828,8 +1910,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .scenario-card {
-                background: rgba(30, 41, 59, 0.65);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 14px;
                 padding: 1.4rem;
                 display: flex;
@@ -1842,17 +1924,22 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 gap: 0.6rem;
                 font-size: 1.15rem;
                 font-weight: 700;
-                color: #f1f5f9;
+                color: #FFFFFF;
                 margin-bottom: 0.6rem;
             }
 
-            .sc-icon { font-size: 1.3rem; }
+            .sc-icon {
+                display: inline-flex;
+                align-items: center;
+                color: var(--adj-border-focus, #fb923c);
+            }
 
             .sc-determiners code {
-                background: rgba(0, 0, 0, 0.4);
+                background: var(--adj-surface-input, #1C0B03);
                 padding: 0.25rem 0.6rem;
                 border-radius: 6px;
-                color: #38bdf8;
+                color: var(--adj-border-focus, #fb923c);
+                border: 1px solid var(--adj-border, #6E3311);
                 font-size: 0.92rem;
                 display: inline-block;
                 margin-bottom: 0.9rem;
@@ -1863,7 +1950,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 padding: 0;
                 font-size: 1.05rem;
                 line-height: 1.6;
-                color: #e2e8f0;
+                color: var(--adj-text-muted, #fed7aa);
             }
 
             .sc-footer {
@@ -1872,13 +1959,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 align-items: center;
                 margin-top: auto;
                 padding-top: 0.6rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-top: 1px solid var(--adj-border, #6E3311);
             }
 
             /* Super Definite Card */
             .super-definite-card {
-                background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(15, 23, 42, 0.9));
-                border: 1px solid rgba(236, 72, 153, 0.4);
+                background: linear-gradient(135deg, rgba(234, 88, 12, 0.15), var(--adj-surface, #341808));
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 padding: 1.6rem;
                 margin-bottom: 2.2rem;
@@ -1888,7 +1975,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-size: 0.85rem;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #f472b6;
+                color: var(--adj-border-focus, #fb923c);
                 font-weight: 700;
                 margin-bottom: 0.4rem;
             }
@@ -1896,26 +1983,26 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             .super-def-content h3 {
                 margin-top: 0;
                 margin-bottom: 0.6rem;
-                color: #f472b6;
+                color: #FFFFFF;
             }
 
             .super-def-content p {
                 line-height: 1.6;
-                color: #e2e8f0;
+                color: var(--adj-text-muted, #fed7aa);
                 font-size: 1.02rem;
             }
 
             /* Simulator Card */
             .adj-simulator-card {
-                background: rgba(15, 23, 42, 0.75);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 16px;
                 padding: 1.8rem;
                 margin-bottom: 2rem;
             }
 
             .adj-simulator-card h3 {
-                color: #38bdf8;
+                color: #FFFFFF;
                 margin-top: 0;
                 margin-bottom: 0.5rem;
                 font-size: 1.3rem;
@@ -1929,9 +2016,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .sim-pill-btn, .sim-mode-btn {
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                color: #cbd5e1;
+                background: var(--adj-surface-input, #1C0B03);
+                border: 1px solid var(--adj-border, #6E3311);
+                color: var(--adj-text-muted, #fed7aa);
                 padding: 0.5rem 0.9rem;
                 border-radius: 10px;
                 cursor: pointer;
@@ -1941,15 +2028,15 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .sim-pill-btn.active, .sim-mode-btn.active {
-                background: #ec4899;
+                background: var(--adj-primary, #ea580c);
                 color: #fff;
-                border-color: #ec4899;
-                box-shadow: 0 2px 10px rgba(236, 72, 153, 0.35);
+                border-color: var(--adj-border-focus, #fb923c);
+                box-shadow: 0 2px 10px rgba(234, 88, 12, 0.35);
             }
 
             .sim-result-box {
-                background: rgba(0, 0, 0, 0.4);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: var(--adj-surface-input, #1C0B03);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 14px;
                 padding: 1.5rem;
                 text-align: center;
@@ -1963,12 +2050,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .sim-marker { color: #38bdf8; }
-            .sim-adj { color: #f472b6; border-bottom: 3px solid #ec4899; padding-bottom: 2px; }
+            .sim-adj { color: var(--adj-border-focus, #fb923c); border-bottom: 3px solid var(--adj-primary, #ea580c); padding-bottom: 2px; }
             .sim-noun { color: #34d399; }
 
             .sim-explanation {
                 font-size: 1.05rem;
-                color: #cbd5e1;
+                color: var(--adj-text-muted, #fed7aa);
                 margin-bottom: 1rem;
             }
 
@@ -1982,9 +2069,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .subtab-btn {
-                background: rgba(30, 41, 59, 0.8);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                color: #cbd5e1;
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
+                color: var(--adj-text-muted, #fed7aa);
                 padding: 0.8rem 1.6rem;
                 border-radius: 12px;
                 font-size: 1.05rem;
@@ -1994,15 +2081,15 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .subtab-btn.active {
-                background: #10b981;
+                background: var(--adj-primary, #ea580c);
                 color: #fff;
-                border-color: #10b981;
-                box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+                border-color: var(--adj-border-focus, #fb923c);
+                box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
             }
 
             .exercise-header-card, .puzzle-header-card {
-                background: rgba(15, 23, 42, 0.7);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 14px;
                 padding: 1.4rem;
                 margin-bottom: 1.8rem;
@@ -2011,13 +2098,13 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             .set-indicator, .puzzle-task-title {
                 font-size: 1.2rem;
                 font-weight: 700;
-                color: #38bdf8;
+                color: #FFFFFF;
             }
 
             /* Practice Row */
             .practice-row {
-                background: rgba(30, 41, 59, 0.6);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 border-radius: 14px;
                 padding: 1.3rem;
                 margin-bottom: 1.2rem;
@@ -2035,7 +2122,7 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 align-items: center;
                 justify-content: center;
                 font-weight: 700;
-                color: #94a3b8;
+                color: var(--adj-text-muted, #fed7aa);
                 flex-shrink: 0;
             }
 
@@ -2048,11 +2135,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-weight: 600;
                 line-height: 1.6;
                 margin-bottom: 0.6rem;
+                color: #FFFFFF;
             }
 
             .adj-select {
-                background: rgba(15, 23, 42, 0.95);
-                border: 2px solid rgba(255, 255, 255, 0.25);
+                background: var(--adj-surface-input, #1C0B03);
+                border: 2px solid var(--adj-border, #6E3311);
                 color: #fff;
                 padding: 0.4rem 0.8rem;
                 border-radius: 8px;
@@ -2081,6 +2169,9 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-size: 1.02rem;
                 line-height: 1.45;
                 margin-top: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
             }
 
             .feedback-msg.correct {
@@ -2107,12 +2198,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
 
             .summary-progress {
                 text-align: center;
-                color: #cbd5e1;
+                color: var(--adj-text-muted, #fed7aa);
                 font-size: 1.05rem;
             }
 
             .next-set-btn, .next-task-btn {
-                background: #3b82f6;
+                background: var(--adj-primary, #ea580c);
                 border: none;
                 color: #fff;
                 padding: 0.85rem 1.8rem;
@@ -2120,12 +2211,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 font-size: 1.1rem;
                 font-weight: 700;
                 cursor: pointer;
-                box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+                box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
                 transition: all 0.2s;
             }
 
             .next-set-btn:hover, .next-task-btn:hover {
-                background: #2563eb;
+                background: var(--adj-primary-hover, #f97316);
                 transform: translateY(-1px);
             }
 
@@ -2140,29 +2231,32 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 width: 34px;
                 height: 34px;
                 border-radius: 50%;
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.18);
-                color: #cbd5e1;
+                background: var(--adj-surface-input, #1C0B03);
+                border: 1px solid var(--adj-border, #6E3311);
+                color: var(--adj-text-muted, #fed7aa);
                 font-weight: 700;
                 cursor: pointer;
                 transition: all 0.2s;
             }
 
             .puzzle-pill.active {
-                background: #10b981;
+                background: var(--adj-primary, #ea580c);
                 color: #fff;
-                border-color: #10b981;
+                border-color: var(--adj-border-focus, #fb923c);
             }
 
             .puzzle-meaning-hint {
                 font-size: 1.1rem;
-                color: #f1f5f9;
+                color: #FFFFFF;
                 margin: 0.5rem 0;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
             }
 
             .puzzle-rule-reminder {
                 font-size: 0.95rem;
-                color: #f472b6;
+                color: var(--adj-text-muted, #fed7aa);
             }
 
             .puzzle-slots-container {
@@ -2171,21 +2265,22 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 gap: 0.6rem;
                 min-height: 64px;
                 padding: 1.1rem;
-                background: rgba(0, 0, 0, 0.4);
-                border: 2px dashed rgba(255, 255, 255, 0.25);
+                background: var(--adj-surface-input, #1C0B03);
+                border: 2px dashed var(--adj-border, #6E3311);
                 border-radius: 14px;
                 margin-bottom: 1.5rem;
                 align-items: center;
             }
 
             .puzzle-placeholder-text {
-                color: #64748b;
+                color: var(--adj-text-muted, #fed7aa);
+                opacity: 0.7;
                 font-style: italic;
                 font-size: 1.05rem;
             }
 
             .puzzle-slot.filled {
-                background: #10b981;
+                background: var(--adj-primary, #ea580c);
                 color: #fff;
                 padding: 0.55rem 1rem;
                 border-radius: 8px;
@@ -2195,12 +2290,12 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
                 display: inline-flex;
                 align-items: center;
                 gap: 0.4rem;
-                box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+                box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35);
                 transition: all 0.2s;
             }
 
             .puzzle-slot.filled:hover {
-                background: #059669;
+                background: var(--adj-primary-hover, #f97316);
             }
 
             .slot-remove {
@@ -2216,8 +2311,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .puzzle-word-btn {
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.22);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 color: #fff;
                 padding: 0.55rem 1.1rem;
                 border-radius: 8px;
@@ -2228,7 +2323,8 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .puzzle-word-btn:hover:not(:disabled) {
-                background: rgba(255, 255, 255, 0.22);
+                background: var(--adj-surface-hover, #48230D);
+                border-color: var(--adj-border-focus, #fb923c);
                 transform: translateY(-1px);
             }
 
@@ -2251,25 +2347,31 @@ export function renderAdjectiveComparisonView(container, navigateFn, extraData =
             }
 
             .listen-btn-small {
-                background: rgba(255, 255, 255, 0.15);
-                border: 1px solid rgba(255, 255, 255, 0.3);
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 color: #fff;
                 padding: 0.65rem 1.4rem;
                 border-radius: 8px;
                 font-size: 1.05rem;
                 cursor: pointer;
                 font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
             }
 
             .retry-task-btn {
-                background: #ef4444;
-                border: none;
+                background: var(--adj-surface, #341808);
+                border: 1px solid var(--adj-border, #6E3311);
                 color: #fff;
                 padding: 0.65rem 1.4rem;
                 border-radius: 8px;
                 font-size: 1.05rem;
                 cursor: pointer;
                 font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
             }
         `;
         document.head.appendChild(style);

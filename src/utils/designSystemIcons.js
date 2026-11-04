@@ -177,9 +177,38 @@ export const dsSvgIcons = {
     `,
     scale: (size = 18) => `
         <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="20" x2="18" y2="10"></line>
-            <line x1="12" y1="20" x2="12" y2="4"></line>
-            <line x1="6" y1="20" x2="6" y2="14"></line>
+            <path d="M12 3v18"></path>
+            <path d="M6 7h12"></path>
+            <path d="M6 7l-3 6h6l-3-6z"></path>
+            <path d="M18 7l-3 6h6l-3-6z"></path>
+            <path d="M8 21h8"></path>
+        </svg>
+    `,
+    balance: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v18"></path>
+            <path d="M6 7h12"></path>
+            <path d="M6 7l-3 6h6l-3-6z"></path>
+            <path d="M18 7l-3 6h6l-3-6z"></path>
+            <path d="M8 21h8"></path>
+        </svg>
+    `,
+    bricks: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="12" y1="3" x2="12" y2="9"></line>
+            <line x1="8" y1="9" x2="8" y2="15"></line>
+            <line x1="16" y1="9" x2="16" y2="15"></line>
+            <line x1="12" y1="15" x2="12" y2="21"></line>
+        </svg>
+    `,
+    target: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
         </svg>
     `,
     puzzle: (size = 18) => `

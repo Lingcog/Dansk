@@ -3,6 +3,12 @@ import { verberWordTranslations } from '../utils/top100_verber_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
+import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * VerberByrumView - Didaktisk vrimlebillede for Scene 1: Byrummet & Gaden
@@ -11,6 +17,9 @@ import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHt
  */
 export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Aktivér valgt verbum-nuance (standard: Brændt Briket)
+    applyVerbNuance(getActiveVerbNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container verber-vrimmel-view';
@@ -34,14 +43,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const targetTitle = cleanName ? `Du undersøger verbet: "at ${cleanName}"` : 'Velkommen til Verbumfladen';
         returnBanner.innerHTML = `
             <div class="vrn-left">
-                <span class="vrn-pill">🔴 Verbum-flade</span>
+                <span class="vrn-pill">Verbum-flade</span>
                 <div class="vrn-text">
                     <span class="vrn-title"><strong>${targetTitle}</strong></span>
                     <span class="vrn-sub">Se handlingen på billedet nedenfor med nutid og datid.</span>
                 </div>
             </div>
             <button class="vrn-back-btn" id="vrn-back-to-substantiv">
-                ⬅ Tilbage til ${extraData.returnLabel || 'Byrummet (Substantiver)'}
+                ← Tilbage til ${stripAllEmojis(extraData.returnLabel || 'Byrummet (Substantiver)')}
             </button>
         `;
         returnBanner.querySelector('#vrn-back-to-substantiv').onclick = () => {
@@ -68,25 +77,47 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --verb-bg: #45050C;
+            --verb-bg-glow: #660914;
+            --verb-surface: #280D10;
+            --verb-surface-hover: #381419;
+            --verb-surface-input: #150608;
+            --verb-border: #6B1F26;
+            --verb-border-focus: #F87171;
+            --verb-primary: #EF4444;
+            --verb-primary-hover: #DC2626;
+            --verb-glow: rgba(239, 68, 68, 0.45);
+            --verb-text: #FFFFFF;
+            --verb-text-muted: #FEE2E2;
+            --verb-text-subtle: #FECACA;
+        }
+
+        body[data-verb-nuance] {
+            background-color: var(--verb-bg, #45050C) !important;
+            background-image: radial-gradient(circle at top right, var(--verb-bg-glow, #660914), var(--verb-bg, #45050C)) !important;
+        }
+
         .verber-vrimmel-view {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
-            color: #f8fafc;
+            color: var(--verb-text, #f8fafc);
+            font-family: var(--vp-font-family, 'Outfit', sans-serif);
         }
 
         .verb-return-nav-banner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(15, 23, 42, 0.95));
-            border: 1.5px solid rgba(239, 68, 68, 0.55);
+            background: linear-gradient(135deg, rgba(255, 42, 85, 0.18), var(--verb-surface-input, #120205));
+            border: 1.5px solid var(--verb-border, #5C121B);
             border-radius: 16px;
             padding: 0.9rem 1.4rem;
             margin-bottom: 1.8rem;
             gap: 1rem;
             flex-wrap: wrap;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
             animation: fadeIn 0.3s ease;
         }
         .vrn-left {
@@ -95,7 +126,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 0.9rem;
         }
         .vrn-pill {
-            background: #ef4444;
+            background: var(--verb-primary, #FF2A55);
             color: white;
             font-size: 0.8rem;
             font-weight: 800;
@@ -103,7 +134,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             padding: 0.35rem 0.75rem;
             border-radius: 20px;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 2px 10px var(--verb-glow, rgba(255, 42, 85, 0.4));
         }
         .vrn-text {
             display: flex;
@@ -116,12 +147,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .vrn-sub {
             font-size: 0.88rem;
-            color: #cbd5e1;
+            color: var(--verb-text-muted, #cbd5e1);
         }
         .vrn-back-btn {
-            background: #0f172a;
-            border: 1.5px solid #ef4444;
-            color: #fca5a5;
+            background: var(--verb-surface-input, #120205);
+            border: 1.5px solid var(--verb-primary, #FF2A55);
+            color: var(--verb-text-muted, #fca5a5);
             padding: 0.65rem 1.25rem;
             border-radius: 12px;
             font-weight: 700;
@@ -133,12 +164,11 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .vrn-back-btn:hover {
-            background: #ef4444;
+            background: var(--verb-primary, #FF2A55);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 4px 14px var(--verb-glow);
         }
-
 
         .verber-hero-header {
             text-align: center;
@@ -148,12 +178,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #ef4444, #f97316, #fbbf24);
+            background: linear-gradient(135deg, var(--verb-primary, #FF2A55), #fb7185, #fbbf24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .verber-hero-header p {
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             font-size: 1.1rem;
             max-width: 780px;
             margin: 0 auto;
@@ -167,14 +197,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--verb-surface, #24070B);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--verb-border, #5C121B);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
         .verber-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             border: none;
             padding: 0.65rem 1.1rem;
             border-radius: 12px;
@@ -188,12 +219,13 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .verber-tab-btn:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
         }
         .verber-tab-btn.active {
-            background: #ef4444;
+            background: var(--verb-primary, #FF2A55);
             color: white;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 4px 14px var(--verb-glow);
+            font-weight: 700;
         }
 
         /* Panels */
@@ -211,25 +243,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
         /* Vrimmel Card & Hotspots */
         .vrimmel-card {
-            background: #1e293b;
+            background: var(--verb-surface, #24070B);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--verb-border, #5C121B);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         .radar-control-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0.9rem 1.4rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--verb-surface-input, #120205);
+            border-bottom: 1px solid var(--verb-border, #5C121B);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
         .pure-image-toggle-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--verb-border, #5C121B);
             color: #e2e8f0;
             padding: 0.5rem 1rem;
             border-radius: 10px;
@@ -242,13 +274,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 0.4rem;
         }
         .pure-image-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             color: white;
         }
         .pure-image-toggle-btn.active {
-            background: #ef4444;
-            border-color: #ef4444;
+            background: var(--verb-primary, #FF2A55);
+            border-color: var(--verb-primary, #FF2A55);
             color: white;
+            box-shadow: 0 0 12px var(--verb-glow);
         }
 
         .vrimmel-stage {
@@ -269,7 +302,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: rgba(239, 68, 68, 0.85);
+            background: var(--verb-primary, #FF2A55);
             border: 2px solid white;
             color: white;
             display: flex;
@@ -278,14 +311,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             font-weight: 800;
             font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
+            box-shadow: 0 0 16px var(--verb-glow);
             transition: all 0.25s ease;
             z-index: 10;
         }
         .vrimmel-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.25);
-            background: #ef4444;
-            box-shadow: 0 0 20px #ef4444;
+            background: var(--verb-primary-hover, #E11D48);
+            box-shadow: 0 0 22px var(--verb-primary, #FF2A55);
         }
         .vrimmel-hotspot.active {
             transform: translate(-50%, -50%) scale(1.3);
@@ -300,26 +333,29 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
         /* Detail card below vrimmel */
         .hotspot-detail-card {
-            background: #0f172a;
+            background: var(--verb-surface-input, #120205);
             border-radius: 16px;
             padding: 1.4rem;
             margin-top: 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--verb-border, #5C121B);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1.2rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
         .badge-verbum {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid #ef4444;
-            padding: 0.25rem 0.7rem;
+            background: rgba(255, 42, 85, 0.16);
+            color: #FFFFFF;
+            border: 1.5px solid var(--verb-primary, #FF2A55);
+            padding: 0.25rem 0.75rem;
             border-radius: 12px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             text-transform: uppercase;
+            box-shadow: 0 0 10px var(--verb-glow);
+            letter-spacing: 0.5px;
         }
         .detail-main-word {
             font-size: 1.8rem;
@@ -328,7 +364,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin: 0.4rem 0 0.2rem;
         }
         .detail-forms {
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             font-size: 1rem;
             margin-bottom: 0.4rem;
         }
@@ -341,7 +377,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             font-style: italic;
         }
         .listen-word-btn {
-            background: #ef4444;
+            background: var(--verb-primary, #FF2A55);
             color: white;
             border: none;
             padding: 0.7rem 1.4rem;
@@ -353,24 +389,29 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            box-shadow: 0 4px 14px var(--verb-glow);
         }
-        .listen-word-btn:hover { background: #dc2626; transform: scale(1.05); }
+        .listen-word-btn:hover { 
+            background: var(--verb-primary-hover, #E11D48); 
+            transform: scale(1.05); 
+        }
 
         /* Shared Card Layout for Exercises */
         .exercise-card {
             max-width: 820px;
             margin: 0 auto;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--verb-surface, #24070B);
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .mission-badge {
             display: inline-block;
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid #ef4444;
-            color: #f87171;
+            background: rgba(255, 42, 85, 0.16);
+            border: 1px solid var(--verb-primary, #FF2A55);
+            color: var(--verb-text-muted, #FECDD3);
             font-size: 0.85rem;
             font-weight: 800;
             padding: 0.35rem 0.9rem;
@@ -380,8 +421,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin-bottom: 0.8rem;
         }
         .mission-clue-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 1px solid var(--verb-border, #5C121B);
             padding: 1.2rem;
             border-radius: 14px;
             margin: 1.2rem 0 1.5rem;
@@ -397,8 +438,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin-top: 1.2rem;
         }
         .mission-opt-btn {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 2px solid var(--verb-border, #5C121B);
             color: white;
             padding: 1rem;
             border-radius: 14px;
@@ -408,13 +449,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             transition: all 0.2s ease;
         }
         .mission-opt-btn:hover {
-            border-color: #ef4444;
+            border-color: var(--verb-primary, #FF2A55);
+            box-shadow: 0 0 12px var(--verb-glow);
             transform: translateY(-2px);
         }
         .mission-opt-btn.correct {
             background: rgba(34, 197, 94, 0.25) !important;
             border-color: #22c55e !important;
             color: #4ade80 !important;
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.4) !important;
         }
         .mission-opt-btn.wrong {
             background: rgba(239, 68, 68, 0.25) !important;
@@ -422,7 +465,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             color: #f87171 !important;
         }
         .mission-next-btn {
-            background: #ef4444;
+            background: var(--verb-primary, #FF2A55);
             color: white;
             border: none;
             padding: 0.8rem 1.6rem;
@@ -432,9 +475,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             margin-top: 1.5rem;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 14px var(--verb-glow);
         }
         .mission-next-btn:hover {
-            background: #dc2626;
+            background: var(--verb-primary-hover, #E11D48);
         }
 
         /* 2. Visual Detective Viewfinder */
@@ -446,7 +490,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin: 0 auto 1.2rem;
             border-radius: 18px;
             overflow: hidden;
-            border: 2px solid #ef4444;
+            border: 2px solid var(--verb-primary, #FF2A55);
             background-repeat: no-repeat;
             background-size: 340%;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -455,9 +499,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             position: absolute;
             top: 12px;
             left: 12px;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid #ef4444;
-            color: #fca5a5;
+            background: rgba(18, 2, 5, 0.88);
+            border: 1px solid var(--verb-primary, #FF2A55);
+            color: var(--verb-text-muted, #FECDD3);
             font-size: 0.8rem;
             font-weight: 800;
             padding: 0.3rem 0.8rem;
@@ -473,8 +517,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin: 1.5rem 0;
         }
         .context-chip-btn {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 2px solid var(--verb-border, #5C121B);
             color: white;
             padding: 1.1rem 0.8rem;
             border-radius: 14px;
@@ -533,9 +577,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             flex-wrap: wrap;
         }
         .story-nav-btn {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
+            background: var(--verb-surface, #24070B);
+            border: 1px solid var(--verb-border, #5C121B);
+            color: var(--verb-text-muted, #cbd5e1);
             padding: 0.6rem 1.2rem;
             border-radius: 20px;
             font-weight: 600;
@@ -543,21 +587,22 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             transition: all 0.2s ease;
         }
         .story-nav-btn.active {
-            background: #ef4444;
+            background: var(--verb-primary, #FF2A55);
             color: white;
-            border-color: #ef4444;
+            border-color: var(--verb-primary, #FF2A55);
+            box-shadow: 0 0 12px var(--verb-glow);
         }
         .story-step-card {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--verb-surface-input, #120205);
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 16px;
             padding: 1.3rem;
             margin-bottom: 1rem;
             transition: all 0.3s ease;
         }
         .story-step-card.active-step {
-            border-color: #ef4444;
-            box-shadow: 0 4px 18px rgba(239, 68, 68, 0.15);
+            border-color: var(--verb-primary, #FF2A55);
+            box-shadow: 0 4px 18px var(--verb-glow);
         }
         .story-options-row {
             display: flex;
@@ -566,8 +611,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin-top: 0.8rem;
         }
         .story-opt-btn {
-            background: #0f172a;
-            border: 1px solid #475569;
+            background: var(--verb-surface, #24070B);
+            border: 1px solid var(--verb-border, #5C121B);
             color: white;
             padding: 0.7rem 1.2rem;
             border-radius: 10px;
@@ -575,12 +620,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .story-opt-btn:hover { border-color: #ef4444; }
+        .story-opt-btn:hover { 
+            border-color: var(--verb-primary, #FF2A55); 
+            box-shadow: 0 0 10px var(--verb-glow);
+        }
         .story-opt-btn.correct { background: rgba(34, 197, 94, 0.25); border-color: #22c55e; color: #4ade80; }
         .story-opt-btn.wrong { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #f87171; }
         .story-explanation-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
@@ -591,11 +639,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         .synonym-card {
             max-width: 800px;
             margin: 0 auto;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--verb-surface, #24070B);
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .synonym-type-badge {
             display: inline-block;
@@ -624,7 +673,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin: 0.5rem 0 1rem;
         }
         .synonym-target-word span {
-            color: #ef4444;
+            color: var(--verb-primary, #FF2A55);
+            text-shadow: 0 0 14px var(--verb-glow);
         }
 
         /* =========================================
@@ -633,11 +683,11 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         .sentence-builder-card {
             max-width: 960px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--verb-surface, #24070B);
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
 
         /* Sub-navigation for Tab 6 */
@@ -646,14 +696,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--verb-border, #5C121B);
             padding-bottom: 1rem;
             flex-wrap: wrap;
         }
         .sb-sub-btn {
-            background: rgba(15, 23, 42, 0.6);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--verb-surface-input, #120205);
+            color: var(--verb-text-muted, #94a3b8);
+            border: 1px solid var(--verb-border, #5C121B);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 1rem;
@@ -666,14 +716,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .sb-sub-btn:hover {
             color: white;
-            border-color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--verb-primary, #FF2A55);
+            background: rgba(255, 42, 85, 0.1);
         }
         .sb-sub-btn.active {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
+            background: var(--verb-primary, #FF2A55);
             color: white;
-            border-color: #f87171;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            border-color: var(--verb-border-focus, #FF3355);
+            box-shadow: 0 4px 15px var(--verb-glow);
         }
 
         /* Grammar Legend */
@@ -684,15 +734,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 1.2rem;
             margin-bottom: 1.5rem;
             padding: 0.6rem 1rem;
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--verb-surface-input, #120205);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--verb-border, #5C121B);
             font-size: 0.85rem;
         }
         .grammar-legend-item { display: flex; align-items: center; gap: 0.4rem; }
         .legend-chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
         .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
-        .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .chip-verbum { background: var(--verb-primary, #FF2A55); box-shadow: 0 0 8px var(--verb-glow); }
         .chip-adjektiv { background: #f97316; box-shadow: 0 0 6px rgba(249, 115, 22, 0.6); }
         .chip-sted { background: #0284c7; box-shadow: 0 0 6px rgba(2, 132, 199, 0.6); }
         .chip-tid { background: #8b5cf6; box-shadow: 0 0 6px rgba(139, 92, 246, 0.6); }
@@ -700,14 +750,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         /* Free Builder Styles */
         .sb-category-row {
             margin-bottom: 1.3rem;
-            background: rgba(15, 23, 42, 0.45);
+            background: var(--verb-surface-input, #120205);
             border-radius: 14px;
             padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--verb-border, #5C121B);
             border-left: 4px solid #64748b;
         }
         .sb-cat-subjekt { border-left-color: #22c55e; }
-        .sb-cat-verbum { border-left-color: #ef4444; }
+        .sb-cat-verbum { border-left-color: var(--verb-primary, #FF2A55); }
         .sb-cat-objekt { border-left-color: #22c55e; }
         .sb-cat-sted { border-left-color: #0284c7; }
 
@@ -735,7 +785,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             border-radius: 6px;
         }
         .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-cat-verbum { background: rgba(255, 42, 85, 0.18); color: #FFFFFF; border: 1.5px solid var(--verb-primary, #FF2A55); box-shadow: 0 0 10px var(--verb-glow); }
         .badge-cat-objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
         .badge-cat-sted { background: rgba(2, 132, 199, 0.15); color: #60a5fa; border: 1px solid rgba(2, 132, 199, 0.3); }
 
@@ -745,9 +795,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-chip-btn {
-            background: #1e293b;
+            background: var(--verb-surface, #24070B);
             color: #cbd5e1;
-            border: 1px solid #475569;
+            border: 1px solid var(--verb-border, #5C121B);
             padding: 0.55rem 1rem;
             border-radius: 10px;
             font-size: 0.95rem;
@@ -757,7 +807,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .sb-chip-btn:hover {
             color: white;
-            border-color: #94a3b8;
+            border-color: var(--verb-border-focus, #FF3355);
             transform: translateY(-2px);
         }
         .sb-chip-btn.selected {
@@ -771,10 +821,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
         }
         .sb-cat-verbum .sb-chip-btn.selected {
-            background: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, rgba(255, 42, 85, 0.35) 0%, var(--verb-surface-input, #120205) 100%);
+            color: #FFFFFF;
+            border-color: var(--verb-primary, #FF2A55);
+            box-shadow: 0 0 14px var(--verb-glow);
         }
         .sb-cat-objekt .sb-chip-btn.selected {
             background: rgba(34, 197, 94, 0.25);
@@ -791,16 +841,17 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
         /* Live Result Box */
         .sb-live-box {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 2px solid var(--verb-border, #5C121B);
             border-radius: 16px;
             padding: 1.4rem;
             margin-top: 1.5rem;
             text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
         }
         .sb-live-label {
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 0.6rem;
@@ -818,15 +869,18 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .grammar-word { font-weight: 800; }
         .word-substantiv { color: #4ade80; }
-        .word-verbum { color: #f87171; }
+        .word-verbum { 
+            color: var(--verb-primary, #FF2A55); 
+            text-shadow: 0 0 10px var(--verb-glow);
+        }
         .word-adjektiv { color: #fb923c; }
         .word-sted { color: #60a5fa; }
         .word-tid { color: #c084fc; }
 
         .sb-listen-btn {
-            background: #1e293b;
+            background: var(--verb-surface, #24070B);
             color: #f8fafc;
-            border: 1px solid #ef4444;
+            border: 1.5px solid var(--verb-primary, #FF2A55);
             padding: 0.65rem 1.4rem;
             border-radius: 25px;
             font-size: 1rem;
@@ -838,8 +892,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 0.5rem;
         }
         .sb-listen-btn:hover {
-            background: rgba(239, 68, 68, 0.15);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            background: rgba(255, 42, 85, 0.2);
+            box-shadow: 0 0 15px var(--verb-glow);
             transform: scale(1.03);
         }
 
@@ -864,9 +918,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #475569;
+            background: var(--verb-surface-input, #120205);
+            color: var(--verb-text-muted, #94a3b8);
+            border: 1px solid var(--verb-border, #5C121B);
             font-size: 0.8rem;
             font-weight: 700;
             display: flex;
@@ -876,9 +930,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             transition: all 0.2s;
         }
         .sb-task-pill.active {
-            border-color: #ef4444;
+            border-color: var(--verb-border-focus, #FF3355);
             color: white;
-            background: #dc2626;
+            background: var(--verb-primary, #FF2A55);
+            box-shadow: 0 0 10px var(--verb-glow);
         }
         .sb-task-pill.done {
             background: #22c55e;
@@ -888,15 +943,16 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
         /* Step 1: Semantic Match */
         .sb-context-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--verb-surface-input, #120205);
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 14px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
         .sb-context-title {
             font-size: 1.05rem;
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             margin-bottom: 0.8rem;
         }
         .sb-context-elements {
@@ -915,7 +971,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             gap: 0.2rem;
         }
         .sb-context-chip.subjekt, .sb-context-chip.objekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); }
-        .sb-context-chip.verbum { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.35); }
+        .sb-context-chip.verbum { 
+            background: rgba(255, 42, 85, 0.18); 
+            color: #FFFFFF; 
+            border: 1.5px solid var(--verb-primary, #FF2A55); 
+            box-shadow: 0 0 10px var(--verb-glow);
+        }
         .sb-context-chip.sted { background: rgba(2, 132, 199, 0.15); color: #93c5fd; border: 1px solid rgba(2, 132, 199, 0.35); }
         .sb-chip-role {
             font-size: 0.82rem;
@@ -937,8 +998,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
 
         .sb-question-box {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.25);
+            background: rgba(255, 42, 85, 0.08);
+            border: 1px solid rgba(255, 42, 85, 0.3);
             border-radius: 12px;
             padding: 1rem 1.3rem;
             margin-bottom: 1.5rem;
@@ -956,9 +1017,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-option-btn {
-            background: #1e293b;
+            background: var(--verb-surface-input, #120205);
             color: white;
-            border: 2px solid #475569;
+            border: 2px solid var(--verb-border, #5C121B);
             padding: 1rem 1.2rem;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -968,8 +1029,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             text-align: center;
         }
         .sb-option-btn:hover {
-            border-color: #ef4444;
-            background: #334155;
+            border-color: var(--verb-primary, #FF2A55);
+            box-shadow: 0 0 14px var(--verb-glow);
             transform: translateY(-2px);
         }
         .sb-option-btn.correct {
@@ -985,14 +1046,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             animation: shakeBin 0.4s ease;
         }
 
-        /* Step 2: Puzzle */
+        /* Step 2: Puzzle (ORPUSLESPILLET) - SKARPT LYSENDE VERBUM */
         .sb-puzzle-section {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--verb-surface-input, #120205);
+            border: 1.5px solid var(--verb-border, #5C121B);
             border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1.5rem;
             animation: fadeIn 0.35s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
         .sb-puzzle-title {
             font-size: 1.15rem;
@@ -1005,7 +1067,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .sb-puzzle-desc {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             margin-bottom: 1.2rem;
         }
         .sb-puzzle-slots {
@@ -1015,8 +1077,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin-bottom: 1.5rem;
         }
         .sb-puzzle-slot {
-            background: #0b1329;
-            border: 2px dashed #475569;
+            background: #0d0205;
+            border: 2px dashed #4E2028;
             border-radius: 14px;
             padding: 1rem 0.8rem;
             min-height: 104px;
@@ -1028,23 +1090,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             transition: all 0.25s ease;
             text-align: center;
             position: relative;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
         }
         .sb-puzzle-slot.slot-0 {
             border-color: rgba(34, 197, 94, 0.55);
-            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, #0d0205 100%);
         }
+        /* Verbum slot: Lyser markant op uden at mudre */
         .sb-puzzle-slot.slot-1 {
-            border-color: rgba(239, 68, 68, 0.55);
-            background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            border-color: var(--verb-primary, #FF2A55);
+            background: linear-gradient(180deg, rgba(255, 42, 85, 0.14) 0%, #0d0205 100%);
+            box-shadow: inset 0 0 16px rgba(255, 42, 85, 0.18), 0 0 12px var(--verb-glow);
         }
         .sb-puzzle-slot.slot-2 {
             border-color: rgba(34, 197, 94, 0.55);
-            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, #0d0205 100%);
         }
         .sb-puzzle-slot.slot-3 {
             border-color: rgba(56, 189, 248, 0.55);
-            background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(11, 19, 41, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #0d0205 100%);
         }
 
         .sb-puzzle-slot .slot-hint {
@@ -1063,7 +1127,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             letter-spacing: 0.2px;
         }
         .sb-puzzle-slot.slot-0 .slot-trans { color: #86efac; }
-        .sb-puzzle-slot.slot-1 .slot-trans { color: #fca5a5; }
+        .sb-puzzle-slot.slot-1 .slot-trans { color: var(--verb-text-muted, #FECDD3); }
         .sb-puzzle-slot.slot-2 .slot-trans { color: #86efac; }
         .sb-puzzle-slot.slot-3 .slot-trans { color: #7dd3fc; }
 
@@ -1073,20 +1137,29 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             letter-spacing: 0.8px;
             margin-top: 0.35rem;
             font-weight: 800;
-            opacity: 0.9;
+            opacity: 0.95;
         }
         .sb-puzzle-slot.slot-0 .slot-role { color: #4ade80; }
-        .sb-puzzle-slot.slot-1 .slot-role { color: #f87171; }
+        /* Verbum slot role: Neon-rød med glow */
+        .sb-puzzle-slot.slot-1 .slot-role { 
+            color: var(--verb-primary, #FF2A55); 
+            text-shadow: 0 0 8px var(--verb-glow);
+        }
         .sb-puzzle-slot.slot-2 .slot-role { color: #4ade80; }
         .sb-puzzle-slot.slot-3 .slot-role { color: #38bdf8; }
 
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: #1e293b;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            background: var(--verb-surface, #24070B);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
         }
         .sb-puzzle-slot.filled.slot-0 { border-color: #22c55e; }
-        .sb-puzzle-slot.filled.slot-1 { border-color: #ef4444; }
+        /* Udfyldt verbum slot: Lyser kraftigt rødt op med luksuriøs glød */
+        .sb-puzzle-slot.filled.slot-1 { 
+            border: 2px solid var(--verb-primary, #FF2A55); 
+            background: linear-gradient(135deg, rgba(255, 42, 85, 0.32) 0%, #0d0205 100%);
+            box-shadow: 0 0 20px var(--verb-glow);
+        }
         .sb-puzzle-slot.filled.slot-2 { border-color: #22c55e; }
         .sb-puzzle-slot.filled.slot-3 { border-color: #0284c7; }
         .sb-puzzle-slot.filled .slot-filled-word {
@@ -1095,17 +1168,21 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             line-height: 1.2;
             color: #ffffff;
             margin-bottom: 0.15rem;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        }
+        .sb-puzzle-slot.filled.slot-1 .slot-filled-word {
+            text-shadow: 0 0 10px var(--verb-glow);
         }
         .sb-puzzle-slot.filled .slot-remove {
             position: absolute;
             top: 6px;
             right: 8px;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             transition: color 0.2s;
         }
         .sb-puzzle-slot.filled:hover .slot-remove {
-            color: #f87171;
+            color: var(--verb-primary, #FF2A55);
         }
 
         @media (max-width: 640px) {
@@ -1135,14 +1212,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             justify-content: center;
             margin-bottom: 1.2rem;
             padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
+            background: #0d0205;
+            border: 1px solid var(--verb-border, #5C121B);
             border-radius: 12px;
             min-height: 60px;
         }
         .sb-puzzle-chip {
-            background: #1e293b;
+            background: var(--verb-surface, #24070B);
             color: white;
-            border: 2px solid #64748b;
+            border: 2px solid var(--verb-border, #5C121B);
             padding: 0.65rem 1.2rem;
             border-radius: 10px;
             font-size: 1rem;
@@ -1151,7 +1229,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             transition: all 0.2s ease;
         }
         .sb-puzzle-chip:hover {
-            border-color: #ef4444;
+            border-color: var(--verb-primary, #FF2A55);
+            box-shadow: 0 0 12px var(--verb-glow);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.placed {
@@ -1175,6 +1254,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             background: rgba(34, 197, 94, 0.2);
             color: #4ade80;
             border: 1px solid #22c55e;
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.3);
         }
         .sb-feedback-msg.error {
             background: rgba(239, 68, 68, 0.2);
@@ -1189,7 +1269,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin-top: 0.6rem;
         }
         .sb-action-btn {
-            background: #dc2626;
+            background: var(--verb-primary, #FF2A55);
             color: white;
             border: none;
             padding: 0.7rem 1.4rem;
@@ -1198,9 +1278,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 14px var(--verb-glow);
         }
         .sb-action-btn:hover {
-            background: #b91c1c;
+            background: var(--verb-primary-hover, #E11D48);
             transform: translateY(-2px);
         }
 
@@ -1220,14 +1301,15 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             letter-spacing: 0.5px;
         }
         .time-sentence-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 1px solid var(--verb-border, #5C121B);
             padding: 1.4rem;
             border-radius: 16px;
             margin: 1.2rem 0 1.5rem;
             font-size: 1.35rem;
             line-height: 1.6;
             color: #f8fafc;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .time-sentence-box mark {
             background: rgba(168, 85, 247, 0.25);
@@ -1244,8 +1326,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             margin: 1.5rem 0;
         }
         .time-opt-btn {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--verb-surface-input, #120205);
+            border: 2px solid var(--verb-border, #5C121B);
             color: white;
             padding: 1.2rem;
             border-radius: 14px;
@@ -1260,7 +1342,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         }
         .time-opt-btn span.form-label {
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: var(--verb-text-muted, #94a3b8);
             text-transform: uppercase;
             font-weight: 800;
         }
@@ -1285,7 +1367,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     const heroHeader = document.createElement('div');
     heroHeader.className = 'verber-hero-header';
     heroHeader.innerHTML = `
-        <h1>${getTranslation('top100_verber_scene1_title')}</h1>
+        <h1>${stripAllEmojis(getTranslation('top100_verber_scene1_title'))}</h1>
         <p>${getTranslation('top100_verber_scene1_desc')}</p>
     `;
     viewContainer.appendChild(heroHeader);
@@ -1294,13 +1376,13 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'verber-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('verber_tab_1'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('verber_tab_2'), icon: '🕵️' },
-        { id: 'tab_handlinger', label: getTranslation('verber_tab_3'), icon: '🎯' },
-        { id: 'tab_historie', label: getTranslation('verber_tab_4'), icon: '💭' },
-        { id: 'tab_synonym_antonym', label: getTranslation('verber_tab_5'), icon: '🔄' },
-        { id: 'tab_saetning', label: getTranslation('verber_tab_6'), icon: '✍️' },
-        { id: 'tab_tid_boejning', label: getTranslation('verber_tab_7'), icon: '⏱️' }
+        { id: 'tab_vrimmel', label: getTranslation('verber_tab_1') },
+        { id: 'tab_detektiv', label: getTranslation('verber_tab_2') },
+        { id: 'tab_handlinger', label: getTranslation('verber_tab_3') },
+        { id: 'tab_historie', label: getTranslation('verber_tab_4') },
+        { id: 'tab_synonym_antonym', label: getTranslation('verber_tab_5') },
+        { id: 'tab_saetning', label: getTranslation('verber_tab_6') },
+        { id: 'tab_tid_boejning', label: getTranslation('verber_tab_7') }
     ];
 
     currentTab = 'tab_vrimmel';
@@ -1309,7 +1391,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const btn = document.createElement('button');
         btn.className = `verber-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = stripAllEmojis(t.label);
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -1373,14 +1455,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-image-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('verber_pure_label')} <strong id="pure-mode-status-byrum-verb">${getTranslation('verber_status_off')}</strong>`;
+    pureBtn.innerHTML = `${stripAllEmojis(getTranslation('verber_pure_label'))} <strong id="pure-mode-status-byrum-verb">${stripAllEmojis(getTranslation('verber_status_off'))}</strong>`;
 
     let pureModeActive = false;
     pureBtn.onclick = () => {
         pureModeActive = !pureModeActive;
         stage.classList.toggle('pure-mode', pureModeActive);
         pureBtn.classList.toggle('active', pureModeActive);
-        pureBtn.querySelector('#pure-mode-status-byrum-verb').textContent = pureModeActive ? `${getTranslation('verber_status_on')} 🖼️` : getTranslation('verber_status_off');
+        pureBtn.querySelector('#pure-mode-status-byrum-verb').textContent = pureModeActive ? stripAllEmojis(getTranslation('verber_status_on')) : stripAllEmojis(getTranslation('verber_status_off'));
     };
 
     controlBar.appendChild(pureBtn);
@@ -1422,7 +1504,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             detailCard.style.display = 'flex';
             detailCard.innerHTML = `
                 <div>
-                    <span class="badge-verbum">${getTranslation('verber_badge_verbum')}</span>
+                    <span class="badge-verbum">${stripAllEmojis(getTranslation('verber_badge_verbum'))}</span>
                     <div class="detail-main-word">
                         ${item.word}
                         ${transMeaning ? `<span style="font-size: 1.1rem; color: #94a3b8; font-weight: 500; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
@@ -1433,7 +1515,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 </div>
                 <div>
                     <button class="listen-word-btn" id="listen-byrum-verb-btn">
-                        <span>🔊</span> ${getTranslation('verber_listen_word')}
+                        ${stripAllEmojis(getTranslation('verber_listen_word'))}
                     </button>
                 </div>
             `;
@@ -1470,9 +1552,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 68,
             question: "Kig på manden på cykelstien tæt ved vejen. Hvad gør han?",
             options: [
-                { text: "Cykler sikkert gennem byen 🚲", correct: true },
-                { text: "Sover på en bænk i parken 🛌", correct: false },
-                { text: "Spiser en sandwich i caféen 🥪", correct: false }
+                { text: "Cykler sikkert gennem byen", correct: true },
+                { text: "Sover på en bænk i parken", correct: false },
+                { text: "Spiser en sandwich i caféen", correct: false }
             ]
         },
         {
@@ -1481,9 +1563,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 46,
             question: "Kig på de to venner midt på vejen foran et hus. Hvad gør de?",
             options: [
-                { text: "Løber et maraton i skoven 🏃", correct: false },
-                { text: "Møder hinanden og giver hånd 🤝", correct: true },
-                { text: "Kaster med store sten 🪨", correct: false }
+                { text: "Løber et maraton i skoven", correct: false },
+                { text: "Møder hinanden og giver hånd", correct: true },
+                { text: "Kaster med store sten", correct: false }
             ]
         },
         {
@@ -1492,9 +1574,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 72,
             question: "Kig på kvinden der sidder på bænken foran skolen. Hvad gør hun?",
             options: [
-                { text: "Venter tålmodigt ved stoppestedet ⏳", correct: true },
-                { text: "Kører i en hurtig bil 🚗", correct: false },
-                { text: "Vasker tøj i floden 🧼", correct: false }
+                { text: "Venter tålmodigt ved stoppestedet", correct: true },
+                { text: "Kører i en hurtig bil", correct: false },
+                { text: "Vasker tøj i floden", correct: false }
             ]
         },
         {
@@ -1503,9 +1585,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 76,
             question: "Kig på kvinden der står ved døren til butikken med blomster. Hvad gør hun?",
             options: [
-                { text: "Lukker butiksdøren i regnen 🚪", correct: false },
-                { text: "Ser og dufter til de smukke blomster 🌸", correct: true },
-                { text: "Sover i sin seng 🛌", correct: false }
+                { text: "Lukker butiksdøren i regnen", correct: false },
+                { text: "Ser og dufter til de smukke blomster", correct: true },
+                { text: "Sover i sin seng", correct: false }
             ]
         },
         {
@@ -1514,9 +1596,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 48,
             question: "Kig på manden der går en tur på vejen med sin hund. Hvad gør han?",
             options: [
-                { text: "Går en tur gennem gaden 🚶", correct: true },
-                { text: "Svømmer i en sø 🏊", correct: false },
-                { text: "Klatrer i et højt træ 🌳", correct: false }
+                { text: "Går en tur gennem gaden", correct: true },
+                { text: "Svømmer i en sø", correct: false },
+                { text: "Klatrer i et højt træ", correct: false }
             ]
         },
         {
@@ -1525,9 +1607,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 28,
             question: "Kig på den store gule bybus der kører børnene hen til skolen. Hvad gør chaufføren?",
             options: [
-                { text: "Kører bussen frem til passagererne 🚌", correct: true },
-                { text: "Sover på bagsædet 🛌", correct: false },
-                { text: "Maler bussen med pensel 🎨", correct: false }
+                { text: "Kører bussen frem til passagererne", correct: true },
+                { text: "Sover på bagsædet", correct: false },
+                { text: "Maler bussen med pensel", correct: false }
             ]
         },
         {
@@ -1536,9 +1618,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 48,
             question: "Kig på manden foran et hus på vejen. Hvad gør han?",
             options: [
-                { text: "Kigger nysgerrigt på varerne i vinduet 👀", correct: true },
-                { text: "Flyver med en drage 🪁", correct: false },
-                { text: "Stryger sit tøj 👔", correct: false }
+                { text: "Kigger nysgerrigt på varerne i vinduet", correct: true },
+                { text: "Flyver med en drage", correct: false },
+                { text: "Stryger sit tøj", correct: false }
             ]
         },
         {
@@ -1547,9 +1629,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             cropY: 44,
             question: "Kig på bilen der holder stille foran huset. Hvad gør manden i bilen?",
             options: [
-                { text: "Stopper bilen ved lyskrydset 🛑", correct: true },
-                { text: "Drikker en kop varm suppe 🍲", correct: false },
-                { text: "Spiller guitar på taget 🎸", correct: false }
+                { text: "Stopper bilen ved lyskrydset", correct: true },
+                { text: "Drikker en kop varm suppe", correct: false },
+                { text: "Spiller guitar på taget", correct: false }
             ]
         }
     ];
@@ -1572,7 +1654,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         zoomFrame.className = 'detective-zoom-frame';
         zoomFrame.style.backgroundImage = "url('assets/verber_byrum_vrimmel.jpg')";
         zoomFrame.style.backgroundPosition = `${mission.cropX}% ${mission.cropY}%`;
-        zoomFrame.innerHTML = `<div class="zoom-crosshair-badge">🎯 Fokus på handlingen</div>`;
+        zoomFrame.innerHTML = `<div class="zoom-crosshair-badge">Fokus på handlingen</div>`;
         visualMissionCard.appendChild(zoomFrame);
 
         const clueBox = document.createElement('div');
@@ -1598,10 +1680,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                     grid.querySelectorAll('.mission-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
-                            ${getTranslation('verber_correct')}
+                            ${stripAllEmojis(getTranslation('verber_correct'))}
                         </div>
                         <button class="mission-next-btn" id="next-visual-byrum-btn">
-                            ${currByrumVisualIdx < byrumVisualMissions.length - 1 ? getTranslation('verber_next_mission') : getTranslation('verber_restart')}
+                            ${currByrumVisualIdx < byrumVisualMissions.length - 1 ? stripAllEmojis(getTranslation('verber_next_mission')) : stripAllEmojis(getTranslation('verber_restart'))}
                         </button>
                     `;
                     feedbackBox.querySelector('#next-visual-byrum-btn').onclick = () => {
@@ -1612,7 +1694,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                     btn.classList.add('wrong');
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
-                            ${getTranslation('verber_wrong')}
+                            ${stripAllEmojis(getTranslation('verber_wrong'))}
                         </div>
                     `;
                     setTimeout(() => btn.classList.remove('wrong'), 700);
@@ -1642,12 +1724,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, der handler om transport og bevægelse i byen:",
             targetCount: 3,
             options: [
-                { text: "at cykle 🚲", correct: true },
-                { text: "at sove 🛌", correct: false },
-                { text: "at gå 🚶", correct: true },
-                { text: "at spise 🍽️", correct: false },
-                { text: "at køre 🚌", correct: true },
-                { text: "at male 🎨", correct: false }
+                { text: "at cykle", correct: true },
+                { text: "at sove", correct: false },
+                { text: "at gå", correct: true },
+                { text: "at spise", correct: false },
+                { text: "at køre", correct: true },
+                { text: "at male", correct: false }
             ]
         },
         {
@@ -1655,12 +1737,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, man gør når man møder andre på gaden:",
             targetCount: 3,
             options: [
-                { text: "at svømme 🏊", correct: false },
-                { text: "at møde 🤝", correct: true },
-                { text: "at smile 😊", correct: true },
-                { text: "at bage 🥐", correct: false },
-                { text: "at se 👀", correct: true },
-                { text: "at vaske 🧼", correct: false }
+                { text: "at svømme", correct: false },
+                { text: "at møde", correct: true },
+                { text: "at smile", correct: true },
+                { text: "at bage", correct: false },
+                { text: "at se", correct: true },
+                { text: "at vaske", correct: false }
             ]
         },
         {
@@ -1668,12 +1750,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, man gør når man har ærinder i butikkerne:",
             targetCount: 3,
             options: [
-                { text: "at handle 🛒", correct: true },
-                { text: "at hente 🛍️", correct: true },
-                { text: "at flyve ✈️", correct: false },
-                { text: "at finde 🔍", correct: true },
-                { text: "at sove i seng 🛏️", correct: false },
-                { text: "at danse 💃", correct: false }
+                { text: "at handle", correct: true },
+                { text: "at hente", correct: true },
+                { text: "at flyve", correct: false },
+                { text: "at finde", correct: true },
+                { text: "at sove i seng", correct: false },
+                { text: "at danse", correct: false }
             ]
         },
         {
@@ -1681,12 +1763,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, der handler om sikkerhed i trafikken:",
             targetCount: 3,
             options: [
-                { text: "at stoppe 🛑", correct: true },
-                { text: "at passe på ⚠️", correct: true },
-                { text: "at sove 😴", correct: false },
-                { text: "at kigge sig for 👀", correct: true },
-                { text: "at spise kage 🍰", correct: false },
-                { text: "at synge højt 🎤", correct: false }
+                { text: "at stoppe", correct: true },
+                { text: "at passe på", correct: true },
+                { text: "at sove", correct: false },
+                { text: "at kigge sig for", correct: true },
+                { text: "at spise kage", correct: false },
+                { text: "at synge højt", correct: false }
             ]
         },
         {
@@ -1694,12 +1776,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, der viser hjælpsomhed og venlighed i byen:",
             targetCount: 3,
             options: [
-                { text: "at hjælpe 🤝", correct: true },
-                { text: "at råbe af folk 📢", correct: false },
-                { text: "at smile 😊", correct: true },
-                { text: "at tabe sine ting 💔", correct: false },
-                { text: "at følge nogen over vejen 🚶‍♂️", correct: true },
-                { text: "at glemme nøgler ❓", correct: false }
+                { text: "at hjælpe", correct: true },
+                { text: "at råbe af folk", correct: false },
+                { text: "at smile", correct: true },
+                { text: "at tabe sine ting", correct: false },
+                { text: "at følge nogen over vejen", correct: true },
+                { text: "at glemme nøgler", correct: false }
             ]
         },
         {
@@ -1707,12 +1789,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, man gør hvis man har tabt sine nøgler:",
             targetCount: 3,
             options: [
-                { text: "at miste 🔑", correct: true },
-                { text: "at danse 💃", correct: false },
-                { text: "at kigge grundigt efter 👀", correct: true },
-                { text: "at cykle hurtigt 🚲", correct: false },
-                { text: "at finde nøglerne 🔍", correct: true },
-                { text: "at sove på bænken 🛏️", correct: false }
+                { text: "at miste", correct: true },
+                { text: "at danse", correct: false },
+                { text: "at kigge grundigt efter", correct: true },
+                { text: "at cykle hurtigt", correct: false },
+                { text: "at finde nøglerne", correct: true },
+                { text: "at sove på bænken", correct: false }
             ]
         },
         {
@@ -1720,12 +1802,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, der handler om at leve og bo i byen:",
             targetCount: 3,
             options: [
-                { text: "at bo i lejlighed 🏠", correct: true },
-                { text: "at flyve i rummet 🚀", correct: false },
-                { text: "at komme hjem 🏡", correct: true },
-                { text: "at gå på trapper 🚶", correct: true },
-                { text: "at sejle i kano 🛶", correct: false },
-                { text: "at klatre på bjerge 🧗", correct: false }
+                { text: "at bo i lejlighed", correct: true },
+                { text: "at flyve i rummet", correct: false },
+                { text: "at komme hjem", correct: true },
+                { text: "at gå på trapper", correct: true },
+                { text: "at sejle i kano", correct: false },
+                { text: "at klatre på bjerge", correct: false }
             ]
         },
         {
@@ -1733,12 +1815,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, der handler om at modtage og bringe pakker:",
             targetCount: 3,
             options: [
-                { text: "at hente en pakke 📦", correct: true },
-                { text: "at svømme 🏊", correct: false },
-                { text: "at bringe pakker ud 📦", correct: true },
-                { text: "at stege kød 🍳", correct: false },
-                { text: "at vente ved pakkeboksen ⏳", correct: true },
-                { text: "at synge opera 🎵", correct: false }
+                { text: "at hente en pakke", correct: true },
+                { text: "at svømme", correct: false },
+                { text: "at bringe pakker ud", correct: true },
+                { text: "at stege kød", correct: false },
+                { text: "at vente ved pakkeboksen", correct: true },
+                { text: "at synge opera", correct: false }
             ]
         },
         {
@@ -1746,12 +1828,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, der handler om at bruge øjnene i byrummet:",
             targetCount: 3,
             options: [
-                { text: "at se 👀", correct: true },
-                { text: "at spise sandwich 🥪", correct: false },
-                { text: "at kigge i butiksruder 🔎", correct: true },
-                { text: "at sove til middag 🛌", correct: false },
-                { text: "at passe på lyssignalet 🚦", correct: true },
-                { text: "at vaske gulv 🧼", correct: false }
+                { text: "at se", correct: true },
+                { text: "at spise sandwich", correct: false },
+                { text: "at kigge i butiksruder", correct: true },
+                { text: "at sove til middag", correct: false },
+                { text: "at passe på lyssignalet", correct: true },
+                { text: "at vaske gulv", correct: false }
             ]
         },
         {
@@ -1759,12 +1841,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             prompt: "Find 3 handlinger, når man bevæger sig gennem byen:",
             targetCount: 3,
             options: [
-                { text: "at gå en tur 🚶", correct: true },
-                { text: "at cykle på cykelstien 🚲", correct: true },
-                { text: "at bage boller 🥐", correct: false },
-                { text: "at køre med bussen 🚌", correct: true },
-                { text: "at sidde i en sofa 🛋️", correct: false },
-                { text: "at tegne huse ✏️", correct: false }
+                { text: "at gå en tur", correct: true },
+                { text: "at cykle på cykelstien", correct: true },
+                { text: "at bage boller", correct: false },
+                { text: "at køre med bussen", correct: true },
+                { text: "at sidde i en sofa", correct: false },
+                { text: "at tegne huse", correct: false }
             ]
         }
     ];
@@ -1819,10 +1901,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                         });
                         feedbackBox.innerHTML = `
                             <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
-                                ${getTranslation('verber_correct')} Du fandt alle 3 handlinger!
+                                ${stripAllEmojis(getTranslation('verber_correct'))} Du fandt alle 3 handlinger!
                             </div>
                             <button class="mission-next-btn" id="next-context-byrum-btn">
-                                ${currContextTaskIdx < byrumContextTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
+                                ${currContextTaskIdx < byrumContextTasks.length - 1 ? stripAllEmojis(getTranslation('verber_next_task')) : stripAllEmojis(getTranslation('verber_restart'))}
                             </button>
                         `;
                         feedbackBox.querySelector('#next-context-byrum-btn').onclick = () => {
@@ -1866,25 +1948,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad gør Sofie på gågaden?",
                     options: [
-                        { text: "Hun går en tur i det fine vejr 🚶", correct: true },
-                        { text: "Hun sover på gaden 🛌", correct: false },
-                        { text: "Hun maler bilerne 🎨", correct: false }
+                        { text: "Hun går en tur i det fine vejr", correct: true },
+                        { text: "Hun sover på gaden", correct: false },
+                        { text: "Hun maler bilerne", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvem møder hun ved caféen?",
                     options: [
-                        { text: "Hun møder sin gode ven Peter 🤝", correct: true },
-                        { text: "Hun møder en løve 🦁", correct: false },
-                        { text: "Hun flyver op i skyerne ✈️", correct: false }
+                        { text: "Hun møder sin gode ven Peter", correct: true },
+                        { text: "Hun møder en løve", correct: false },
+                        { text: "Hun flyver op i skyerne", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør de da de ser hinanden?",
                     options: [
-                        { text: "De smiler og hilser pænt 😊", correct: true },
-                        { text: "De råber og skændes 😡", correct: false },
-                        { text: "De løber væk 🏃", correct: false }
+                        { text: "De smiler og hilser pænt", correct: true },
+                        { text: "De råber og skændes", correct: false },
+                        { text: "De løber væk", correct: false }
                     ]
                 }
             ]
@@ -1895,25 +1977,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvordan transporterer Lars sig?",
                     options: [
-                        { text: "Han cykler på sin grønne cykel 🚲", correct: true },
-                        { text: "Han svømmer i kanalen 🏊", correct: false },
-                        { text: "Han klatrer over taget 🧗", correct: false }
+                        { text: "Han cykler på sin grønne cykel", correct: true },
+                        { text: "Han svømmer i kanalen", correct: false },
+                        { text: "Han klatrer over taget", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør han ved fodgængerfeltet?",
                     options: [
-                        { text: "Han stopper pænt for de gående 🛑", correct: true },
-                        { text: "Han lukker øjnene 🙈", correct: false },
-                        { text: "Han kaster cyklen væk 🗑️", correct: false }
+                        { text: "Han stopper pænt for de gående", correct: true },
+                        { text: "Han lukker øjnene", correct: false },
+                        { text: "Han kaster cyklen væk", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør han bagefter?",
                     options: [
-                        { text: "Han kører videre mod sit arbejde 🏢", correct: true },
-                        { text: "Han lægger sig til at sove 😴", correct: false },
-                        { text: "Han synger i mikrofon 🎤", correct: false }
+                        { text: "Han kører videre mod sit arbejde", correct: true },
+                        { text: "Han lægger sig til at sove", correct: false },
+                        { text: "Han synger i mikrofon", correct: false }
                     ]
                 }
             ]
@@ -1924,25 +2006,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad kigger kvinden på i butikken?",
                     options: [
-                        { text: "Hun kigger på de friske madvarer 🥖", correct: true },
-                        { text: "Hun kigger på en raket 🚀", correct: false },
-                        { text: "Hun kaster en bold ⚽", correct: false }
+                        { text: "Hun kigger på de friske madvarer", correct: true },
+                        { text: "Hun kigger på en raket", correct: false },
+                        { text: "Hun kaster en bold", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad henter hun ved disken?",
                     options: [
-                        { text: "Hun henter sin pose med grøntsager 🛍️", correct: true },
-                        { text: "Hun henter en stor kuffert 🧳", correct: false },
-                        { text: "Hun taber sine sko 👟", correct: false }
+                        { text: "Hun henter sin pose med grøntsager", correct: true },
+                        { text: "Hun henter en stor kuffert", correct: false },
+                        { text: "Hun taber sine sko", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvor går hun hen bagefter?",
                     options: [
-                        { text: "Hun går hjem til sin lejlighed 🏠", correct: true },
-                        { text: "Hun svømmer over søen 🌊", correct: false },
-                        { text: "Hun bygger et telt ⛺", correct: false }
+                        { text: "Hun går hjem til sin lejlighed", correct: true },
+                        { text: "Hun svømmer over søen", correct: false },
+                        { text: "Hun bygger et telt", correct: false }
                     ]
                 }
             ]
@@ -1953,25 +2035,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad laver Anders på fortovet?",
                     options: [
-                        { text: "Han bringer pakker ud til beboerne 📦", correct: true },
-                        { text: "Han sover på asfalten 🛌", correct: false },
-                        { text: "Han spiser en stor kage 🎂", correct: false }
+                        { text: "Han bringer pakker ud til beboerne", correct: true },
+                        { text: "Han sover på asfalten", correct: false },
+                        { text: "Han spiser en stor kage", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad bærer han i armene?",
                     options: [
-                        { text: "Han bærer en stak papkasser 📦", correct: true },
-                        { text: "Han bærer en levende krokodille 🐊", correct: false },
-                        { text: "Han bærer en spand maling 🎨", correct: false }
+                        { text: "Han bærer en stak papkasser", correct: true },
+                        { text: "Han bærer en levende krokodille", correct: false },
+                        { text: "Han bærer en spand maling", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør kvinden på bænken lige ved siden af?",
                     options: [
-                        { text: "Hun kigger på sit ur og venter ⏱️", correct: true },
-                        { text: "Hun hopper i faldskærm 🪂", correct: false },
-                        { text: "Hun spiller trommer 🥁", correct: false }
+                        { text: "Hun kigger på sit ur og venter", correct: true },
+                        { text: "Hun hopper i faldskærm", correct: false },
+                        { text: "Hun spiller trommer", correct: false }
                     ]
                 }
             ]
@@ -1982,25 +2064,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad gør Sarah, da det pludselig begynder at regne?",
                     options: [
-                        { text: "Hun går hurtigt ind på den hyggelige café ☕", correct: true },
-                        { text: "Hun lægger sig til at sove på fortovet 🛌", correct: false },
-                        { text: "Hun klatrer op i en lygtepæl 💈", correct: false }
+                        { text: "Hun går hurtigt ind på den hyggelige café", correct: true },
+                        { text: "Hun lægger sig til at sove på fortovet", correct: false },
+                        { text: "Hun klatrer op i en lygtepæl", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør hun ved kassen, da hun bestiller kaffe?",
                     options: [
-                        { text: "Hun kigger i sin taske og finder pengene frem 🪙", correct: true },
-                        { text: "Hun smider kaffen på gulvet ☕", correct: false },
-                        { text: "Hun løber ud af bagdøren 🏃", correct: false }
+                        { text: "Hun kigger i sin taske og finder pengene frem", correct: true },
+                        { text: "Hun smider kaffen på gulvet", correct: false },
+                        { text: "Hun løber ud af bagdøren", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad opdager tjeneren, da Sarah forlader caféen?",
                     options: [
-                        { text: "Tjeneren ser hendes glemte paraply og bringer den til hende ☂️", correct: true },
-                        { text: "Tjeneren kaster med kopper 💥", correct: false },
-                        { text: "Tjeneren maler væggen rød 🎨", correct: false }
+                        { text: "Tjeneren ser hendes glemte paraply og bringer den til hende", correct: true },
+                        { text: "Tjeneren kaster med kopper", correct: false },
+                        { text: "Tjeneren maler væggen rød", correct: false }
                     ]
                 }
             ]
@@ -2011,25 +2093,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvad ser Mads løbe forvirret rundt på gågaden?",
                     options: [
-                        { text: "Han ser en lille hund, der leder efter sin ejer 🐶", correct: true },
-                        { text: "Han ser en vild tiger i fuld fart 🐯", correct: false },
-                        { text: "Han ser en flyvende tallerken 🛸", correct: false }
+                        { text: "Han ser en lille hund, der leder efter sin ejer", correct: true },
+                        { text: "Han ser en vild tiger i fuld fart", correct: false },
+                        { text: "Han ser en flyvende tallerken", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør han for at hjælpe hunden?",
                     options: [
-                        { text: "Han stopper op og kalder roligt på den 🐕", correct: true },
-                        { text: "Han sparker til en lygtepæl 🥾", correct: false },
-                        { text: "Han hopper i havnebassinet 🌊", correct: false }
+                        { text: "Han stopper op og kalder roligt på den", correct: true },
+                        { text: "Han sparker til en lygtepæl", correct: false },
+                        { text: "Han hopper i havnebassinet", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad sker der, da ejeren kommer løbende?",
                     options: [
-                        { text: "Ejeren smiler taknemmeligt og henter sin hund 🤝", correct: true },
-                        { text: "Ejeren bygger et sandslot 🏖️", correct: false },
-                        { text: "Ejeren kører væk i en traktor 🚜", correct: false }
+                        { text: "Ejeren smiler taknemmeligt og henter sin hund", correct: true },
+                        { text: "Ejeren bygger et sandslot", correct: false },
+                        { text: "Ejeren kører væk i en traktor", correct: false }
                     ]
                 }
             ]
@@ -2040,25 +2122,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvor cykler familien hen lørdag formiddag?",
                     options: [
-                        { text: "De cykler hen til supermarkedet på torvet 🛒", correct: true },
-                        { text: "De cykler direkte ud i havet 🌊", correct: false },
-                        { text: "De cykler op på taget af rådhuset 🏛️", correct: false }
+                        { text: "De cykler hen til supermarkedet på torvet", correct: true },
+                        { text: "De cykler direkte ud i havet", correct: false },
+                        { text: "De cykler op på taget af rådhuset", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør de inde i butikken?",
                     options: [
-                        { text: "De handler friske grøntsager og brød 🍞", correct: true },
-                        { text: "De leger gemmeleg i fryseren ❄️", correct: false },
-                        { text: "De synger i en megafon 📢", correct: false }
+                        { text: "De handler friske grøntsager og brød", correct: true },
+                        { text: "De leger gemmeleg i fryseren", correct: false },
+                        { text: "De synger i en megafon", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør de, da de kommer hjem med bæreposerne?",
                     options: [
-                        { text: "De sætter maden på plads i køleskabet 🥗", correct: true },
-                        { text: "De kaster poserne ud ad vinduet 🪟", correct: false },
-                        { text: "De klipper poserne i små stykker ✂️", correct: false }
+                        { text: "De sætter maden på plads i køleskabet", correct: true },
+                        { text: "De kaster poserne ud ad vinduet", correct: false },
+                        { text: "De klipper poserne i små stykker", correct: false }
                     ]
                 }
             ]
@@ -2069,25 +2151,25 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 {
                     q: "1. Hvem venter tålmodigt ved det røde lyssignal?",
                     options: [
-                        { text: "En ældre mand med en tung indkøbstaske 🛍️", correct: true },
-                        { text: "En pingvin i smoking 🐧", correct: false },
-                        { text: "En klovn på stylter 🎪", correct: false }
+                        { text: "En ældre mand med en tung indkøbstaske", correct: true },
+                        { text: "En pingvin i smoking", correct: false },
+                        { text: "En klovn på stylter", correct: false }
                     ]
                 },
                 {
                     q: "2. Hvad gør en ung kvinde, da lyset skifter til grønt?",
                     options: [
-                        { text: "Hun hjælper manden og følger ham sikkert over vejen 🚶‍♂️", correct: true },
-                        { text: "Hun løber væk i panik 🏃", correct: false },
-                        { text: "Hun lægger sig til at sove 😴", correct: false }
+                        { text: "Hun hjælper manden og følger ham sikkert over vejen", correct: true },
+                        { text: "Hun løber væk i panik", correct: false },
+                        { text: "Hun lægger sig til at sove", correct: false }
                     ]
                 },
                 {
                     q: "3. Hvad gør den ældre mand som tak?",
                     options: [
-                        { text: "Han smiler varmt og takker for hjælpen 😊", correct: true },
-                        { text: "Han kaster sin taske i kanalen 🌊", correct: false },
-                        { text: "Han råber ad en bus 🚌", correct: false }
+                        { text: "Han smiler varmt og takker for hjælpen", correct: true },
+                        { text: "Han kaster sin taske i kanalen", correct: false },
+                        { text: "Han råber ad en bus", correct: false }
                     ]
                 }
             ]
@@ -2194,10 +2276,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         completeBox.style.display = 'none';
         completeBox.innerHTML = `
             <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: #4ade80;">
-                ${getTranslation('verber_story_complete')}
+                ${stripAllEmojis(getTranslation('verber_story_complete'))}
             </div>
             <button class="mission-next-btn" id="next-byrum-story-btn">
-                ${currByrumStoryIdx < byrumStories.length - 1 ? getTranslation('verber_next_story') : getTranslation('verber_restart')}
+                ${currByrumStoryIdx < byrumStories.length - 1 ? stripAllEmojis(getTranslation('verber_next_story')) : stripAllEmojis(getTranslation('verber_restart'))}
             </button>
         `;
         storyContainer.appendChild(completeBox);
@@ -2225,9 +2307,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at kigge',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at se 👀', correct: true },
-                { text: 'at sove 🛌', correct: false },
-                { text: 'at spise 🍽️', correct: false }
+                { text: 'at se', correct: true },
+                { text: 'at sove', correct: false },
+                { text: 'at spise', correct: false }
             ]
         },
         {
@@ -2235,9 +2317,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at gå',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at stoppe 🛑', correct: true },
-                { text: 'at løbe 🏃', correct: false },
-                { text: 'at smile 😊', correct: false }
+                { text: 'at stoppe', correct: true },
+                { text: 'at løbe', correct: false },
+                { text: 'at smile', correct: false }
             ]
         },
         {
@@ -2245,9 +2327,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at finde',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at miste 🔍', correct: true },
-                { text: 'at hente 🛍️', correct: false },
-                { text: 'at kigge 👀', correct: false }
+                { text: 'at miste', correct: true },
+                { text: 'at hente', correct: false },
+                { text: 'at kigge', correct: false }
             ]
         },
         {
@@ -2255,9 +2337,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at handle',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at købe ind 🛒', correct: true },
-                { text: 'at danse 💃', correct: false },
-                { text: 'at råbe 📢', correct: false }
+                { text: 'at købe ind', correct: true },
+                { text: 'at danse', correct: false },
+                { text: 'at råbe', correct: false }
             ]
         },
         {
@@ -2265,9 +2347,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at smile',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at græde 😢', correct: true },
-                { text: 'at grine 😄', correct: false },
-                { text: 'at gå 🚶', correct: false }
+                { text: 'at græde', correct: true },
+                { text: 'at grine', correct: false },
+                { text: 'at gå', correct: false }
             ]
         },
         {
@@ -2275,9 +2357,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at køre',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at transportere sig 🚗', correct: true },
-                { text: 'at sove 🛌', correct: false },
-                { text: 'at spise 🍽️', correct: false }
+                { text: 'at transportere sig', correct: true },
+                { text: 'at sove', correct: false },
+                { text: 'at spise', correct: false }
             ]
         },
         {
@@ -2285,9 +2367,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at komme',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at gå væk / forlade 🚪', correct: true },
-                { text: 'at ankomme 🛬', correct: false },
-                { text: 'at smile 😊', correct: false }
+                { text: 'at gå væk / forlade', correct: true },
+                { text: 'at ankomme', correct: false },
+                { text: 'at smile', correct: false }
             ]
         },
         {
@@ -2295,9 +2377,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at hjælpe',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at assistere / støtte 🤝', correct: true },
-                { text: 'at drille 😜', correct: false },
-                { text: 'at sove 😴', correct: false }
+                { text: 'at assistere / støtte', correct: true },
+                { text: 'at drille', correct: false },
+                { text: 'at sove', correct: false }
             ]
         },
         {
@@ -2305,9 +2387,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at hente',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at aflevere 📦', correct: true },
-                { text: 'at tage 🤲', correct: false },
-                { text: 'at løbe 🏃', correct: false }
+                { text: 'at aflevere', correct: true },
+                { text: 'at tage', correct: false },
+                { text: 'at løbe', correct: false }
             ]
         },
         {
@@ -2315,9 +2397,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at bo',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at have hjemme 🏠', correct: true },
-                { text: 'at rejse ✈️', correct: false },
-                { text: 'at spise 🥪', correct: false }
+                { text: 'at have hjemme', correct: true },
+                { text: 'at rejse', correct: false },
+                { text: 'at spise', correct: false }
             ]
         },
         {
@@ -2325,9 +2407,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at starte',
             prompt: 'Hvilket verbum er et antonym (det modsatte af):',
             options: [
-                { text: 'at stoppe / standse 🛑', correct: true },
-                { text: 'at begynde 🏁', correct: false },
-                { text: 'at køre 🚙', correct: false }
+                { text: 'at stoppe / standse', correct: true },
+                { text: 'at begynde', correct: false },
+                { text: 'at køre', correct: false }
             ]
         },
         {
@@ -2335,9 +2417,9 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             word: 'at bringe',
             prompt: 'Hvilket verbum er et synonym (betyder næsten det samme som):',
             options: [
-                { text: 'at levere / aflevere 📬', correct: true },
-                { text: 'at miste ❌', correct: false },
-                { text: 'at synge 🎵', correct: false }
+                { text: 'at levere / aflevere', correct: true },
+                { text: 'at miste', correct: false },
+                { text: 'at synge', correct: false }
             ]
         }
     ];
@@ -2353,7 +2435,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const isSynonym = task.type === 'synonym';
         const typeBadge = document.createElement('div');
         typeBadge.className = `synonym-type-badge ${isSynonym ? 'badge-type-synonym' : 'badge-type-antonym'}`;
-        typeBadge.textContent = isSynonym ? '🔗 Find synonym (samme betydning)' : '⚡ Find antonym (modsætning)';
+        typeBadge.textContent = isSynonym ? 'Find synonym (samme betydning)' : 'Find antonym (modsætning)';
         synonymCard.appendChild(typeBadge);
 
         const promptText = document.createElement('p');
@@ -2384,10 +2466,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                     grid.querySelectorAll('.mission-opt-btn').forEach(b => b.style.pointerEvents = 'none');
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.8rem;">
-                            ${getTranslation('verber_correct')}
+                            ${stripAllEmojis(getTranslation('verber_correct'))}
                         </div>
                         <button class="mission-next-btn" id="next-byrum-synonym-btn">
-                            ${currByrumSynonymIdx < byrumSynonymTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
+                            ${currByrumSynonymIdx < byrumSynonymTasks.length - 1 ? stripAllEmojis(getTranslation('verber_next_task')) : stripAllEmojis(getTranslation('verber_restart'))}
                         </button>
                     `;
                     feedbackBox.querySelector('#next-byrum-synonym-btn').onclick = () => {
@@ -2398,7 +2480,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                     btn.classList.add('wrong');
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
-                            ${getTranslation('verber_wrong')}
+                            ${stripAllEmojis(getTranslation('verber_wrong'))}
                         </div>
                     `;
                     setTimeout(() => btn.classList.remove('wrong'), 700);
@@ -2431,11 +2513,11 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
     const subTab1Btn = document.createElement('button');
     subTab1Btn.className = 'sb-sub-btn active';
-    subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk og byg selv`;
+    subTab1Btn.innerHTML = `1. Udforsk og byg selv`;
 
     const subTab2Btn = document.createElement('button');
     subTab2Btn.className = 'sb-sub-btn';
-    subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave og puslespil`;
+    subTab2Btn.innerHTML = `2. Opgave og puslespil`;
 
     sbSubNav.appendChild(subTab1Btn);
     sbSubNav.appendChild(subTab2Btn);
@@ -2499,7 +2581,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 <div class="sb-live-label">Din samlede sætning</div>
                 <div class="sb-live-sentence" id="free-live-sentence-byrum-verb"></div>
                 <button class="sb-listen-btn" id="free-listen-btn-byrum-verb">
-                    <span>🔊</span> Hør udtale
+                    Hør udtale
                 </button>
             </div>
         `;
@@ -2511,7 +2593,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 role: `Subjekt (${h0.translation})`,
                 catClass: 'sb-cat-subjekt',
                 badgeClass: 'badge-cat-subjekt',
-                icon: '👤',
                 options: ['Manden', 'Kvinden', 'Børnene', 'Cyklisten', 'Chaufføren', 'Vennerne', 'Turisten', 'Naboen']
             },
             {
@@ -2520,7 +2601,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 role: `Verbum (${h1.translation})`,
                 catClass: 'sb-cat-verbum',
                 badgeClass: 'badge-cat-verbum',
-                icon: '⚡',
                 options: ['går på', 'cykler på', 'møder', 'venter på', 'kigger på', 'henter', 'hjælper med', 'kører i']
             },
             {
@@ -2529,7 +2609,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 role: `Objekt (${h2.translation})`,
                 catClass: 'sb-cat-objekt',
                 badgeClass: 'badge-cat-objekt',
-                icon: '📦',
                 options: ['en ven', 'en cykel', 'en rød bus', 'et butiksvindue', 'frisk brød', 'de tunge poser', 'en bil', 'en vej']
             },
             {
@@ -2538,7 +2617,6 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                 role: `Sted (${h3.translation})`,
                 catClass: 'sb-cat-sted',
                 badgeClass: 'badge-cat-sted',
-                icon: '📍',
                 options: ['på gaden', 'på cykelstien', 'ved lyskrydset', 'ved stoppestedet', 'på torvet', 'i byen', 'foran butikken', 'på fortovet']
             }
         ];
@@ -2569,7 +2647,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             row.innerHTML = `
                 <div class="sb-category-header">
                     <div class="sb-category-title">
-                        <span>${cat.icon}</span> ${cat.title}
+                        ${cat.title}
                     </div>
                     <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                 </div>
@@ -2731,7 +2809,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title">📍 <em>${formatNounLinks(task.context)}</em></div>
+            <div class="sb-context-title"><em>${formatNounLinks(task.context)}</em></div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
                     <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
@@ -2813,7 +2891,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
         container.innerHTML = `
             <div class="sb-puzzle-title">
-                <span>🧩</span> Trin 2: Puslespillet – saml hele sætningen!
+                Trin 2: Puslespillet – saml hele sætningen!
             </div>
             <div class="sb-puzzle-desc">
                 Klik på brikkerne i den rigtige danske ordstilling: <strong>1. Hvem ➔ 2. Handling (V2) ➔ 3. Hvilken ting ➔ 4. Hvor</strong>.
@@ -2917,17 +2995,17 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
 
                 feedbackEl.innerHTML = `
                     <div class="sb-feedback-msg success">
-                        ${getTranslation('verber_sb_success')} "<strong>${fullSentence}</strong>" ✓
+                        ${stripAllEmojis(getTranslation('verber_sb_success'))} "<strong>${fullSentence}</strong>" ✓
                     </div>
                     <div style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.8rem;">
-                        💡 ${task.pedagogyNote}
+                        ${task.pedagogyNote}
                     </div>
                     <div class="sb-action-row">
                         <button class="sb-listen-btn" id="byrum-listen-full-verb">
-                            <span>🔊</span> Hør sætningen igen
+                            Hør sætningen igen
                         </button>
                         <button class="sb-action-btn" id="byrum-next-btn-verb">
-                            ${currentByrumChallengeIdx < byrumChallengeTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
+                            ${currentByrumChallengeIdx < byrumChallengeTasks.length - 1 ? stripAllEmojis(getTranslation('verber_next_task')) : stripAllEmojis(getTranslation('verber_restart'))}
                         </button>
                     </div>
                 `;
@@ -3144,7 +3222,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             hintInfo.style.fontSize = '0.95rem';
             hintInfo.style.fontWeight = '600';
             hintInfo.style.marginBottom = '1rem';
-            hintInfo.textContent = `💡 Hint: "${task.marker}" ${task.hint}`;
+            hintInfo.textContent = `Hint: "${task.marker}" ${task.hint}`;
             tidCard.appendChild(hintInfo);
         }
 
@@ -3169,13 +3247,13 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                     sentenceBox.innerHTML = `<mark>${task.sentenceBefore}</mark> <strong style="color: #4ade80; text-decoration: underline;">${opt.text}</strong> ${task.sentenceAfter}`;
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
-                            ${getTranslation('verber_correct')}
+                            ${stripAllEmojis(getTranslation('verber_correct'))}
                         </div>
                         <div style="color: #94a3b8; font-size: 1rem; margin-bottom: 1rem;">
                             ${task.explanation}
                         </div>
                         <button class="mission-next-btn" id="next-tid-byrum-btn">
-                            ${currTidTaskIdx < byrumTidTasks.length - 1 ? getTranslation('verber_next_task') : getTranslation('verber_restart')}
+                            ${currTidTaskIdx < byrumTidTasks.length - 1 ? stripAllEmojis(getTranslation('verber_next_task')) : stripAllEmojis(getTranslation('verber_restart'))}
                         </button>
                     `;
                     feedbackBox.querySelector('#next-tid-byrum-btn').onclick = () => {
@@ -3186,7 +3264,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
                     btn.classList.add('wrong');
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-size: 1.1rem; font-weight: 700;">
-                            ${getTranslation('verber_wrong')}
+                            ${stripAllEmojis(getTranslation('verber_wrong'))}
                         </div>
                         <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
                             ${getTranslation('verber_tid_marker_hint', { marker: task.marker })}

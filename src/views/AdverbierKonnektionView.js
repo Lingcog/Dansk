@@ -1,5 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierKonnektionView - Felt 7: Konnektion & Tekstbindere (Konnektive Adverbier)
@@ -39,12 +46,15 @@ import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations
  * 3. Logik-Detektiven (10 gåder om logiske sammenhænge mellem sætninger)
  * 4. Sætningsbyggeren & Puslespillet (Træner både Inversion med adverbium i front og Centralplads)
  * 5. Kontekst-testen (14 autentiske hverdagsdialoger)
- * 6. Årsag & Følge: Derfor, nemlig, altså & dermed ⚡ (8 øvelser)
- * 7. Kontrast-Mesteren: Alligevel, derimod, til gengæld & tværtimod ⚖️ (8 øvelser)
- * 8. Alternativ & Forbehold: Ellers, i stedet, i hvert fald & i det mindste 🛡️ (10 øvelser)
+ * 6. Årsag & Følge: Derfor, nemlig, altså & dermed (8 øvelser)
+ * 7. Kontrast-Mesteren: Alligevel, derimod, til gengæld & tværtimod (8 øvelser)
+ * 8. Alternativ & Forbehold: Ellers, i stedet, i hvert fald & i det mindste (10 øvelser)
  */
 export function renderAdverbierKonnektionView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-konnektion-view';
@@ -69,11 +79,45 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     konjBtn.style.background = 'rgba(16, 185, 129, 0.18)';
     konjBtn.style.borderColor = '#10b981';
     konjBtn.style.color = '#6ee7b7';
-    konjBtn.innerHTML = `🌉 Gå til Konjunktioner-fladen (og, men, fordi, når/da & ordet "AT") ➔`;
+    konjBtn.innerHTML = `Gå til Konjunktioner-fladen (og, men, fordi, når/da & ordet "AT") →`;
     konjBtn.onclick = () => navigateFn('top_konjunktioner');
     topBar.appendChild(konjBtn);
 
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -531,9 +575,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(234, 179, 8, 0.15);
-            border: 1px solid #eab308;
-            color: #fde047;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1.2rem;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -546,9 +590,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             font-size: 2.6rem;
             font-weight: 900;
             margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, #fef08a, #eab308, #ca8a04);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .konnektion-hero p {
             color: #94a3b8;
@@ -560,13 +605,13 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         /* Golden Rule Banner */
         .golden-rule-banner-konnektion {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
-            border: 2px solid #eab308;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 1.4rem 2rem;
             max-width: 980px;
             margin: 0 auto 2.5rem;
-            box-shadow: 0 10px 30px rgba(234, 179, 8, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             gap: 1.5rem;
@@ -576,7 +621,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             flex-shrink: 0;
         }
         .rule-content-konnektion h4 {
-            color: #fde047;
+            color: var(--adv-border-focus, #93C5FD);
             font-size: 1.2rem;
             font-weight: 800;
             margin-bottom: 0.35rem;
@@ -598,9 +643,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 800;
-            background: rgba(234, 179, 8, 0.15);
-            border: 1px solid #eab308;
-            color: #fef08a;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
         }
 
         /* Tabs Navigation */
@@ -610,10 +655,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             gap: 0.75rem;
             justify-content: center;
             margin-bottom: 2.2rem;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface, #0A192F);
             padding: 0.6rem;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .adv-tab-btn {
             background: transparent;
@@ -631,12 +676,12 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
         .adv-tab-btn:hover {
             color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--adv-surface-hover, #112240);
         }
         .adv-tab-btn.active {
-            background: #ca8a04;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
 
         /* Tab 1: Vrimmel Layout */
@@ -645,10 +690,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 0 auto;
         }
         .vrimmel-stage-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .vrimmel-controls-bar {
@@ -656,8 +701,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: rgba(15, 23, 42, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adv-surface-input, #050E1A);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -667,9 +712,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.45rem 0.9rem;
             border-radius: 10px;
             font-size: 0.88rem;
@@ -678,19 +723,19 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             transition: all 0.2s;
         }
         .filter-btn:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
             color: white;
         }
         .filter-btn.active {
-            background: #ca8a04;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border-color: #eab308;
-            box-shadow: 0 2px 8px rgba(234, 179, 8, 0.35);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 2px 8px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .pure-toggle-btn {
-            background: rgba(234, 179, 8, 0.15);
-            border: 1px solid #eab308;
-            color: #fef08a;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.45rem 1rem;
             border-radius: 10px;
             font-weight: 700;
@@ -701,7 +746,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             gap: 0.5rem;
         }
         .pure-toggle-btn.active {
-            background: #a16207;
+            background: var(--adv-primary, #3B82F6);
             color: white;
         }
 
@@ -711,7 +756,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             line-height: 0;
             user-select: none;
             overflow: hidden;
-            background: #0f172a;
+            background: #050E1A;
         }
         .vrimmel-img {
             width: 100%;
@@ -719,13 +764,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             display: block;
         }
 
+        /* Hotspot Pins (Pegefelter i Safirblå) */
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #ca8a04;
+            background: #1D4ED8;
             border: 2.5px solid #ffffff;
             color: white;
             display: flex;
@@ -734,21 +780,21 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             font-weight: 900;
             font-size: 0.85rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 15px rgba(234, 179, 8, 0.6);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(59, 130, 246, 0.7);
             transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
         .hotspot-pin:hover {
             transform: translate(-50%, -50%) scale(1.3);
-            background: #eab308;
-            box-shadow: 0 0 25px #eab308;
+            background: #2563EB;
+            box-shadow: 0 6px 20px rgba(96, 165, 250, 0.9);
             z-index: 25;
         }
         .hotspot-pin.active {
             transform: translate(-50%, -50%) scale(1.35);
-            background: #06b6d4;
-            border-color: #ffffff;
-            box-shadow: 0 0 30px #06b6d4;
+            background: #3B82F6;
+            border-color: #BAE6FD;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.95), 0 0 45px rgba(59, 130, 246, 0.6);
             z-index: 30;
         }
         .hotspot-label {
@@ -756,9 +802,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            color: #fef08a;
-            border: 1px solid #eab308;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.2rem 0.55rem;
             border-radius: 6px;
             font-size: 0.75rem;
@@ -771,8 +817,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         /* Målords Præsentationsboks under vrimlebilledet */
         .vrimmel-inspector {
-            background: #1e293b;
-            border: 2px solid #eab308;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             margin-top: 1.5rem;
             padding: 1.8rem;
@@ -803,9 +849,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             flex-wrap: wrap;
         }
         .inspector-badge {
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid #eab308;
-            color: #fef08a;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.25rem 0.75rem;
             border-radius: 8px;
             font-size: 0.8rem;
@@ -813,7 +859,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             text-transform: uppercase;
         }
         .inspector-audio-btn {
-            background: #ca8a04;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             width: 44px;
@@ -825,10 +871,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             font-size: 1.25rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(234, 179, 8, 0.3);
+            box-shadow: 0 4px 10px var(--adv-glow, rgba(59, 130, 246, 0.3));
         }
         .inspector-audio-btn:hover {
-            background: #eab308;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: scale(1.1);
         }
         .inspector-word-title {
@@ -841,15 +887,15 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 0;
         }
         .inspector-trans-box {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 12px;
             padding: 1rem 1.2rem;
-            border-left: 4px solid #eab308;
+            border-left: 4px solid var(--adv-primary, #3B82F6);
         }
         .trans-badge-label {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #fef08a;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.25rem;
@@ -882,10 +928,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 0;
         }
         .inspector-sentence-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
             padding: 1.2rem;
-            border: 1.5px solid rgba(234, 179, 8, 0.35);
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .sentence-quote-text {
             font-size: 1.2rem;
@@ -901,9 +947,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin-bottom: 0.8rem;
         }
         .inspector-speak-btn {
-            background: rgba(234, 179, 8, 0.15);
-            border: 1px solid #eab308;
-            color: #fef08a;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-weight: 700;
@@ -915,8 +961,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             transition: all 0.2s;
         }
         .inspector-speak-btn:hover {
-            background: #eab308;
-            color: #0f172a;
+            background: var(--adv-primary, #3B82F6);
+            color: white;
         }
         .inspector-actions {
             display: flex;
@@ -925,9 +971,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
         .inspector-btn-action {
             flex: 1;
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: none;
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.75rem;
             border-radius: 10px;
             font-weight: 700;
@@ -936,7 +982,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             text-align: center;
         }
         .inspector-btn-action:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
         }
 
         /* Tab 2: Brobygger-Værkstedet */
@@ -952,9 +998,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             flex-wrap: wrap;
         }
         .vaerksted-subtab-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.75rem 1.4rem;
             border-radius: 12px;
             font-size: 0.95rem;
@@ -963,21 +1009,21 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             transition: all 0.2s;
         }
         .vaerksted-subtab-btn:hover {
-            border-color: #eab308;
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
         }
         .vaerksted-subtab-btn.active {
-            background: #ca8a04;
-            border-color: #fde047;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
 
         .vaerksted-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             margin-bottom: 2rem;
         }
@@ -989,9 +1035,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 1.5rem 0;
         }
         .word-sel-btn {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.85rem 1rem;
             border-radius: 12px;
             font-weight: 800;
@@ -1001,14 +1047,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             text-align: center;
         }
         .word-sel-btn:hover {
-            border-color: #eab308;
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
         }
         .word-sel-btn.active {
-            border-color: #fde047;
-            background: rgba(234, 179, 8, 0.2);
-            color: #fef08a;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3);
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: rgba(59, 130, 246, 0.2);
+            color: #93C5FD;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
         .pos-toggle-row {
@@ -1019,9 +1065,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             flex-wrap: wrap;
         }
         .pos-toggle-btn {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.9rem 1.5rem;
             border-radius: 14px;
             font-weight: 800;
@@ -1030,10 +1076,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             transition: all 0.2s;
         }
         .pos-toggle-btn.active {
-            background: rgba(6, 182, 212, 0.2);
-            border-color: #06b6d4;
-            color: #22d3ee;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            background: rgba(59, 130, 246, 0.25);
+            border-color: var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.3));
         }
 
         .syntax-boxes-row {
@@ -1045,8 +1091,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 1.5rem 0;
         }
         .syntax-token-box {
-            background: #0f172a;
-            border: 2.5px solid;
+            background: var(--adv-surface-input, #050E1A);
+            border: 2.5px solid var(--adv-border, #1E3A66);
             border-radius: 14px;
             padding: 0.9rem 1.3rem;
             min-width: 120px;
@@ -1070,27 +1116,27 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         /* Tab 3: Detektiven & Quizzer */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 880px;
             margin: 0 auto;
         }
         .detektiv-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .detektiv-context-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid #eab308;
-            color: #fef08a;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.35rem 0.9rem;
             border-radius: 10px;
             font-size: 0.85rem;
@@ -1112,7 +1158,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             background: rgba(15, 23, 42, 0.7);
             padding: 1.3rem;
             border-radius: 14px;
-            border-left: 5px solid #eab308;
+            border-left: 5px solid var(--adv-primary, #3B82F6);
             margin-bottom: 2rem;
             text-align: center;
             line-height: 1.6;
@@ -1124,9 +1170,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin-bottom: 1.5rem;
         }
         .detektiv-opt-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #f8fafc;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1.1rem 1.4rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1136,8 +1182,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             text-align: center;
         }
         .detektiv-opt-btn:hover {
-            border-color: #eab308;
-            background: #334155;
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: var(--adv-surface-hover, #112240);
             transform: translateY(-2px);
         }
         .detektiv-opt-btn.correct {
@@ -1177,19 +1223,19 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 0 auto;
         }
         .builder-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .builder-step-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid #eab308;
-            color: #fef08a;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1rem;
             border-radius: 12px;
             font-weight: 800;
@@ -1207,7 +1253,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             .flow-container { grid-template-columns: 1fr 1fr; }
         }
         .flow-step {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 12px;
             padding: 0.9rem;
             text-align: center;
@@ -1215,23 +1261,23 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
         .flow-step.flow-subjekt { border-color: #22c55e; }
         .flow-step.flow-verbum { border-color: #ef4444; }
-        .flow-step.flow-adverbium { border-color: #06b6d4; }
-        .flow-step.flow-rest { border-color: #0ea5e9; }
+        .flow-step.flow-adverbium { border-color: var(--adv-primary, #3B82F6); }
+        .flow-step.flow-rest { border-color: #64748b; }
         .flow-step-num { font-size: 0.75rem; font-weight: 800; margin-bottom: 0.2rem; }
         .flow-step.flow-subjekt .flow-step-num { color: #86efac; }
         .flow-step.flow-verbum .flow-step-num { color: #fca5a5; }
-        .flow-step.flow-adverbium .flow-step-num { color: #22d3ee; }
-        .flow-step.flow-rest .flow-step-num { color: #7dd3fc; }
+        .flow-step.flow-adverbium .flow-step-num { color: var(--adv-border-focus, #93C5FD); }
+        .flow-step.flow-rest .flow-step-num { color: #cbd5e1; }
         .flow-step-title { font-size: 0.95rem; font-weight: 800; color: white; }
 
         .sb-sentence-display {
             font-size: 1.4rem;
             font-weight: 800;
             color: white;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.4rem;
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             text-align: center;
             margin-bottom: 1.8rem;
             display: flex;
@@ -1246,19 +1292,19 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             justify-content: center;
             min-width: 120px;
             padding: 0.2rem 1rem;
-            border: 2.5px dashed #06b6d4;
-            background: rgba(6, 182, 212, 0.15);
+            border: 2.5px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.15);
             border-radius: 10px;
-            color: #22d3ee;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 900;
             letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
             transition: all 0.3s;
         }
         .sb-blank-slot.filled {
-            border: 2px solid #22c55e;
-            background: rgba(34, 197, 94, 0.22);
-            color: #4ade80;
+            border: 2px solid var(--adv-border-focus, #93C5FD);
+            background: rgba(59, 130, 246, 0.25);
+            color: #FFFFFF;
             letter-spacing: normal;
         }
 
@@ -1272,7 +1318,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
@@ -1286,11 +1332,11 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
         .sb-puzzle-slot.slot-subjekt { border-color: #22c55e; }
         .sb-puzzle-slot.slot-verbum { border-color: #ef4444; }
-        .sb-puzzle-slot.slot-adverbium { border-color: #06b6d4; }
-        .sb-puzzle-slot.slot-rest { border-color: #0ea5e9; }
+        .sb-puzzle-slot.slot-adverbium { border-color: var(--adv-primary, #3B82F6); }
+        .sb-puzzle-slot.slot-rest { border-color: #64748b; }
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: rgba(15, 23, 42, 0.9);
+            background: var(--adv-surface, #0A192F);
         }
         .slot-badge-callout {
             font-size: 0.75rem;
@@ -1300,8 +1346,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
         .callout-subjekt { color: #86efac; }
         .callout-verbum { color: #fca5a5; }
-        .callout-adverbium { color: #22d3ee; }
-        .callout-rest { color: #7dd3fc; }
+        .callout-adverbium { color: var(--adv-border-focus, #93C5FD); }
+        .callout-rest { color: #cbd5e1; }
 
         .sb-puzzle-chips {
             display: flex;
@@ -1311,9 +1357,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin-bottom: 2rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-size: 1.15rem;
@@ -1322,7 +1368,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             transition: all 0.2s;
         }
         .sb-puzzle-chip:hover {
-            border-color: #eab308;
+            border-color: var(--adv-border-focus, #93C5FD);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.used {
@@ -1336,16 +1382,16 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin: 0 auto;
         }
         .special-intro-box {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             margin-bottom: 2rem;
             text-align: center;
         }
         .special-intro-box h2 {
             font-size: 2.1rem;
-            color: #fde047;
+            color: #FFFFFF;
             margin-bottom: 0.6rem;
         }
         .special-intro-box p {
@@ -1362,10 +1408,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             margin-bottom: 2.5rem;
         }
         .special-rule-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.4rem;
-            border: 2px solid;
+            border: 2px solid var(--adv-border, #1E3A66);
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
@@ -1424,10 +1470,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
 
         .exercise-action-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
         }
         .progress-header {
             display: flex;
@@ -1439,29 +1485,29 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         }
         .progress-bar-wrap {
             height: 8px;
-            background: #334155;
+            background: #1E3A66;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 2rem;
         }
         .progress-bar-fill {
             height: 100%;
-            background: #eab308;
+            background: var(--adv-primary, #3B82F6);
             transition: width 0.3s ease;
         }
         .exercise-dialog-quote {
             font-size: 1.35rem;
             color: white;
             line-height: 1.75;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.5rem;
             border-radius: 14px;
-            border-left: 5px solid #eab308;
+            border-left: 5px solid var(--adv-primary, #3B82F6);
             margin-bottom: 1.8rem;
         }
 
         .action-btn-primary {
-            background: #ca8a04;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.85rem 1.6rem;
@@ -1473,21 +1519,21 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.35);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .action-btn-primary:hover {
-            background: #eab308;
-            color: #0f172a;
+            background: var(--adv-primary-hover, #1D4ED8);
+            color: white;
             transform: translateY(-2px);
         }
 
         .score-celebration-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-            border: 2px solid #eab308;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2.5rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(234, 179, 8, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes fadeIn {
@@ -1502,10 +1548,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     hero.className = 'konnektion-hero';
     hero.innerHTML = `
         <div class="konnektion-hero-tag">
-            ${getTranslation('top100_adv_f7_badge')}
+            ${stripAllEmojis(getTranslation('top100_adv_f7_badge'))}
         </div>
-        <h1>${getTranslation('adv_f7_hero_title')}</h1>
-        <p>${getTranslation('adv_f7_hero_desc')}</p>
+        <h1>${stripAllEmojis(getTranslation('adv_f7_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f7_hero_desc'))}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1513,10 +1559,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     const goldenBanner = document.createElement('div');
     goldenBanner.className = 'golden-rule-banner-konnektion';
     goldenBanner.innerHTML = `
-        <div class="rule-icon-konnektion">🌉</div>
+        <div class="rule-icon-konnektion">${renderDsIcon('bridge', '', { size: 28 })}</div>
         <div class="rule-content-konnektion">
-            <h4>${getTranslation('adv_rule_title')}</h4>
-            <p>${getTranslation('adv_f7_rule_broer')}</p>
+            <h4>${stripAllEmojis(getTranslation('adv_rule_title'))}</h4>
+            <p>${stripAllEmojis(getTranslation('adv_f7_rule_broer'))}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);
@@ -1526,14 +1572,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Byens knudepunkt (vrimlebilledet)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. Brobygger-værkstedet (ordstilling og logik)', icon: '🌉' },
-        { id: 'detektiv', label: '3. Logik-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'aarsag', label: '6. Derfor, nemlig, altså & dermed ⚡', icon: '⚡' },
-        { id: 'kontrast', label: '7. Alligevel, derimod, til gengæld & tværtimod ⚖️', icon: '⚖️' },
-        { id: 'alternativ', label: '8. Ellers, i stedet, i hvert fald & i det mindste 🛡️', icon: '🛡️' }
+        { id: 'vrimmel', label: '1. Byens knudepunkt (vrimlebilledet)', icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'vaerksted', label: '2. Brobygger-værkstedet (ordstilling og logik)', icon: renderDsIcon('bridge', '', { size: 16 }) },
+        { id: 'detektiv', label: '3. Logik-Detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: renderDsIcon('target', '', { size: 16 }) },
+        { id: 'aarsag', label: '6. Derfor, nemlig, altså & dermed', icon: renderDsIcon('zap', '', { size: 16 }) },
+        { id: 'kontrast', label: '7. Alligevel, derimod, til gengæld & tværtimod', icon: renderDsIcon('balance', '', { size: 16 }) },
+        { id: 'alternativ', label: '8. Ellers, i stedet, i hvert fald & i det mindste', icon: renderDsIcon('link', '', { size: 16 }) }
     ];
 
     let currentTab = 'vrimmel';
@@ -1542,7 +1588,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === tab.id ? 'active' : ''}`;
         btn.id = `tab-btn-${tab.id}`;
-        btn.innerHTML = `<span>${tab.icon}</span> ${tab.label}`;
+        btn.innerHTML = `${tab.icon} <span>${stripAllEmojis(tab.label)}</span>`;
         btn.onclick = () => switchTab(tab.id);
         nav.appendChild(btn);
     });
@@ -1610,10 +1656,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         const filters = [
             { id: 'alle', label: 'Alle (20)' },
-            { id: 'aarsag', label: '🟢 Årsag og følge (5)' },
-            { id: 'kontrast', label: '🔴 Modsætning og kontrast (5)' },
-            { id: 'tilfoejelse', label: '🔵 Tilføjelse og emneskift (5)' },
-            { id: 'alternativ', label: '🟣 Alternativ, forbehold og opsamling (5)' }
+            { id: 'aarsag', label: 'Årsag og følge (5)' },
+            { id: 'kontrast', label: 'Modsætning og kontrast (5)' },
+            { id: 'tilfoejelse', label: 'Tilføjelse og emneskift (5)' },
+            { id: 'alternativ', label: 'Alternativ, forbehold og opsamling (5)' }
         ];
 
         filters.forEach(f => {
@@ -1629,7 +1675,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         const pureBtn = document.createElement('button');
         pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureBtn.innerHTML = `<span>${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}</span>`;
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -1694,10 +1740,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             });
 
             const catNames = {
-                aarsag: '🟢 Årsag, Følge & Begrundelse',
-                kontrast: '🔴 Modsætning & Kontrast',
-                tilfoejelse: '🔵 Tilføjelse & Emneskift',
-                alternativ: '🟣 Alternativ, Forbehold & Opsamling'
+                aarsag: 'Årsag, Følge & Begrundelse',
+                kontrast: 'Modsætning & Kontrast',
+                tilfoejelse: 'Tilføjelse & Emneskift',
+                alternativ: 'Alternativ, Forbehold & Opsamling'
             };
 
             const trans = getKonnektionTranslation(item);
@@ -1705,7 +1751,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
             const highlightedSentence = item.sentence.replace(
                 new RegExp(`(${item.word})`, 'i'),
-                `<span style="color: #fde047; text-decoration: underline;">$1</span>`
+                `<span style="color: var(--adv-border-focus, #93C5FD); text-decoration: underline;">$1</span>`
             );
 
             inspector.innerHTML = `
@@ -1713,47 +1759,47 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
                             <span class="inspector-badge">${catNames[item.category] || 'Tekstbinder'}</span>
-                            <span class="inspector-badge" style="background: rgba(6, 182, 212, 0.2); border-color: #06b6d4; color: #22d3ee;">${item.meaning}</span>
+                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border-color: var(--adv-border, #1E3A66); color: var(--adv-border-focus, #93C5FD);">${item.meaning}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale">🔊</button>
+                        <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>🔗</span> ${item.word}
+                        ${item.word}
                     </h2>
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌍</span> MÅLORDSPRÆSENTATION & OVERSÆTTELSE (${currentLang})
+                            MÅLORDSPRÆSENTATION & OVERSÆTTELSE (${currentLang})
                         </div>
                         <div class="trans-word-val">${trans.word}</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">📍 I Vrimlebilledet</div>
+                        <div class="scene-heading">I Vrimlebilledet</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">💬 EKSEMPEL PÅ SAMMENHÆNG</div>
+                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">EKSEMPEL PÅ SAMMENHÆNG</div>
                         <div class="sentence-quote-text">"${highlightedSentence}"</div>
                         <div class="sentence-trans-text">"${item.contextSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:#fef08a;">🌍 "${trans.sentence}"</div>` : ''}
+                        ${trans.sentence ? `<div class="sentence-trans-text" style="color: var(--adv-text-muted, #BFDBFE);">"${trans.sentence}"</div>` : ''}
                         <button class="inspector-speak-btn" id="insp-speak-sent">
-                            <span>🔊</span> Lyt til helsætningen
+                            Lyt til helsætningen
                         </button>
                     </div>
 
-                    <div class="inspector-scene-box" style="border-left: 3px solid #06b6d4;">
-                        <div class="scene-heading" style="color: #22d3ee;">🧭 Ordstilling & Brug</div>
+                    <div class="inspector-scene-box" style="border-left: 3px solid var(--adv-primary, #3B82F6);">
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Ordstilling & Brug</div>
                         <p class="scene-text">${item.ruleHint}</p>
                     </div>
 
                     <div class="inspector-actions">
                         <button class="inspector-btn-action" id="insp-prev-btn">⬅ Forrige ord</button>
-                        <button class="inspector-btn-action" id="insp-next-btn" style="background:#ca8a04;">Næste ord ➔</button>
+                        <button class="inspector-btn-action" id="insp-next-btn" style="background: var(--adv-primary, #3B82F6);">Næste ord →</button>
                     </div>
                 </div>
             `;
@@ -1800,9 +1846,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         subtabs.className = 'vaerksted-subtabs';
 
         const subList = [
-            { id: 'ordstilling', label: '🔄 1. Inversions-motoren vs. midterpladsen' },
-            { id: 'brotyper', label: '🧭 2. De 4 logiske bro-typer' },
-            { id: 'tvilling', label: '⚠️ 3. Pas på tvillingen! (adverbium vs. konjunktion)' }
+            { id: 'ordstilling', label: '1. Inversions-motoren vs. midterpladsen' },
+            { id: 'brotyper', label: '2. De 4 logiske bro-typer' },
+            { id: 'tvilling', label: '3. Pas på tvillingen! (adverbium vs. konjunktion)' }
         ];
 
         subList.forEach(st => {
@@ -1872,7 +1918,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 word: 'nemlig (KUN i midten!)',
                 context: 'Jeg kan ikke komme til festen.',
                 canFront: false,
-                frontError: '🚫 STOP! "Nemlig" kan ALDRIG stå forrest i en dansk sætning! Man kan ikke sige: *"Nemlig er jeg syg."',
+                frontError: 'STOP! "Nemlig" kan ALDRIG stå forrest i en dansk sætning! Man kan ikke sige: *"Nemlig er jeg syg."',
                 midTokens: [
                     { role: '1. Subjekt', word: 'Jeg', color: '#22c55e' },
                     { role: '2. Verbum', word: 'er', color: '#ef4444' },
@@ -1885,7 +1931,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 word: 'dog (KUN i midten!)',
                 context: 'Filmen var meget lang.',
                 canFront: false,
-                frontError: '🚫 STOP! "Dog" bruges ikke forrest i moderne dansk! Det står altid inde i sætningen efter verbet.',
+                frontError: 'STOP! "Dog" bruges ikke forrest i moderne dansk! Det står altid inde i sætningen efter verbet.',
                 midTokens: [
                     { role: '1. Subjekt', word: 'Den', color: '#22c55e' },
                     { role: '2. Verbum', word: 'var', color: '#ef4444' },
@@ -1940,7 +1986,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde047; margin-bottom:0.5rem;">🔄 Inversions-Motoren vs. Midterpladsen</h2>
+            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Inversions-Motoren vs. Midterpladsen</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:750px; margin:0 auto 1.2rem;">
                 Klik på en tekstbinder herunder og prøv at flytte den mellem <strong>Plads 1 (Forfeltet)</strong> og <strong>Plads 3 (Centralpladsen efter verbet)</strong>. Læg mærke til, hvordan <span style="color:#ef4444; font-weight:800;">Verbum</span> og <span style="color:#22c55e; font-weight:800;">Subjekt</span> bytter plads!
             </p>
@@ -1967,16 +2013,16 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         posRow.className = 'pos-toggle-row';
         posRow.innerHTML = `
             <button class="pos-toggle-btn ${selectedPosMode === 'front' ? 'active' : ''}" id="pos-front-btn">
-                🚀 Plads 1: Forrest i sætningen (Udløser INVERSION!)
+                Plads 1: Forrest i sætningen (Udløser INVERSION!)
             </button>
             <button class="pos-toggle-btn ${selectedPosMode === 'mid' ? 'active' : ''}" id="pos-mid-btn">
-                🎯 Plads 3: Inde i sætningen (Lige efter Verbet)
+                Plads 3: Inde i sætningen (Lige efter Verbet)
             </button>
         `;
         card.appendChild(posRow);
 
         const demoBox = document.createElement('div');
-        demoBox.style.cssText = 'background:#0f172a; border-radius:16px; padding:1.8rem; border:2px solid rgba(234, 179, 8, 0.35); text-align:center;';
+        demoBox.style.cssText = 'background:var(--adv-surface-input, #050E1A); border-radius:16px; padding:1.8rem; border:2px solid var(--adv-border, #1E3A66); text-align:center;';
 
         if (selectedPosMode === 'front' && !current.canFront) {
             demoBox.innerHTML = `
@@ -1985,7 +2031,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                     ${current.frontError}
                 </div>
                 <button class="action-btn-primary" id="switch-to-mid-btn" style="margin-top:0.8rem;">
-                    Flyt ind efter verbet (Korrekt plads) ➔
+                    Flyt ind efter verbet (Korrekt plads) →
                 </button>
             `;
         } else {
@@ -2002,9 +2048,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         </div>
                     `).join('')}
                 </div>
-                <div style="color:#fef08a; font-weight:700; margin:1rem 0;">💡 ${current.note}</div>
+                <div style="color:var(--adv-border-focus, #93C5FD); font-weight:700; margin:1rem 0;">${current.note}</div>
                 <button class="inspector-speak-btn" id="speak-syntax-demo">
-                    <span>🔊</span> Lyt: "${fullSentence}"
+                    Lyt: "${fullSentence}"
                 </button>
             `;
         }
@@ -2038,7 +2084,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderSubBrotyper(container) {
         const bridges = {
             aarsag: {
-                title: '🟢 1. Årsag, følge og konklusion',
+                title: '1. Årsag, følge og konklusion',
                 subtitle: 'Når sætning 1 og sætning 2 hænger logisk sammen som årsag og resultat',
                 items: [
                     { word: 'derfor', role: 'Peger FREM på resultatet', ex: 'Det regner. Derfor tager jeg bussen.' },
@@ -2049,7 +2095,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 ]
             },
             kontrast: {
-                title: '🔴 2. Modsætning, kontrast og kompensation',
+                title: '2. Modsætning, kontrast og kompensation',
                 subtitle: 'Når sætning 2 overrasker, sammenligner modsætninger eller giver et lyspunkt',
                 items: [
                     { word: 'alligevel', role: 'På trods af forhindringen', ex: 'Det regner kraftigt. Alligevel cykler hun.' },
@@ -2060,7 +2106,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 ]
             },
             tilfoejelse: {
-                title: '🔵 3. Tilføjelse, bonus og emneskift',
+                title: '3. Tilføjelse, bonus og emneskift',
                 subtitle: 'Når du bygger ovenpå med flere argumenter eller skifter spor i samtalen',
                 items: [
                     { word: 'desuden', role: 'Ekstra sagligt argument oveni', ex: 'Bilen er gammel. Desuden er den dyr i benzin.' },
@@ -2071,7 +2117,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 ]
             },
             alternativ: {
-                title: '🟣 4. Alternativ, forbehold og opsamling',
+                title: '4. Alternativ, forbehold og opsamling',
                 subtitle: 'Når du advarer om konsekvensen, vælger Plan B eller sætter en bundgrænse',
                 items: [
                     { word: 'ellers', role: 'Konsekvens hvis man IKKE gør det', ex: 'Skynd dig! Ellers kommer vi for sent.' },
@@ -2087,26 +2133,26 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde047; margin-bottom:0.5rem;">🧭 De 4 Logiske Bro-typer (20 målord)</h2>
+            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">De 4 Logiske Bro-typer (20 målord)</h2>
             <p style="text-align:center; color:#cbd5e1; margin-bottom:1.5rem;">Vælg en logisk familie for at sammenligne de 5 tekstbindere og høre dem i kontekst:</p>
             <div class="word-selector-grid">
-                <button class="word-sel-btn ${selectedBridgeType === 'aarsag' ? 'active' : ''}" data-bt="aarsag">🟢 Årsag & Følge (5)</button>
-                <button class="word-sel-btn ${selectedBridgeType === 'kontrast' ? 'active' : ''}" data-bt="kontrast">🔴 Kontrast (5)</button>
-                <button class="word-sel-btn ${selectedBridgeType === 'tilfoejelse' ? 'active' : ''}" data-bt="tilfoejelse">🔵 Tilføjelse (5)</button>
-                <button class="word-sel-btn ${selectedBridgeType === 'alternativ' ? 'active' : ''}" data-bt="alternativ">🟣 Alternativ & Forbehold (5)</button>
+                <button class="word-sel-btn ${selectedBridgeType === 'aarsag' ? 'active' : ''}" data-bt="aarsag">Årsag & Følge (5)</button>
+                <button class="word-sel-btn ${selectedBridgeType === 'kontrast' ? 'active' : ''}" data-bt="kontrast">Kontrast (5)</button>
+                <button class="word-sel-btn ${selectedBridgeType === 'tilfoejelse' ? 'active' : ''}" data-bt="tilfoejelse">Tilføjelse (5)</button>
+                <button class="word-sel-btn ${selectedBridgeType === 'alternativ' ? 'active' : ''}" data-bt="alternativ">Alternativ & Forbehold (5)</button>
             </div>
             <div style="background:#0f172a; border-radius:16px; padding:1.6rem; border:1px solid rgba(255,255,255,0.1); margin-top:1rem;">
-                <h3 style="color:#fef08a; margin-bottom:0.3rem;">${cur.title}</h3>
+                <h3 style="color:var(--adv-border-focus, #93C5FD); margin-bottom:0.3rem;">${cur.title}</h3>
                 <p style="color:#94a3b8; margin-bottom:1.4rem;">${cur.subtitle}</p>
                 <div style="display:grid; gap:0.9rem;">
                     ${cur.items.map(it => `
-                        <div style="background:#1e293b; border-radius:12px; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; border-left:4px solid #eab308;">
+                        <div style="background:#1e293b; border-radius:12px; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; border-left:4px solid var(--adv-primary, #3B82F6);">
                             <div>
-                                <span style="font-size:1.25rem; font-weight:900; color:#fde047; margin-right:0.8rem;">${it.word}</span>
-                                <span style="font-size:0.85rem; background:rgba(234,179,8,0.15); color:#fef08a; padding:0.2rem 0.6rem; border-radius:6px; font-weight:700;">${it.role}</span>
+                                <span style="font-size:1.25rem; font-weight:900; color:var(--adv-border-focus, #93C5FD); margin-right:0.8rem;">${it.word}</span>
+                                <span style="font-size:0.85rem; background:rgba(59,130,246,0.15); color:var(--adv-border-focus, #93C5FD); padding:0.2rem 0.6rem; border-radius:6px; font-weight:700;">${it.role}</span>
                                 <div style="color:white; font-weight:600; margin-top:0.4rem; font-size:1.05rem;">"${it.ex}"</div>
                             </div>
-                            <button class="inspector-speak-btn" data-speak="${it.ex}">🔊 Lyt</button>
+                            <button class="inspector-speak-btn" data-speak="${it.ex}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg> Lyt</button>
                         </div>
                     `).join('')}
                 </div>
@@ -2131,16 +2177,16 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#fde047; margin-bottom:0.5rem;">⚠️ Pas på Tvillingen! (Konnektivt Adverbium vs. Konjunktion)</h2>
+            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Pas på Tvillingen! (Konnektivt Adverbium vs. Konjunktion)</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:800px; margin:0 auto 1.8rem;">
                 Mange ord i Felt 7 har en "betydnings-tvilling" blandt konjunktionerne (som du møder på konjunktionsfladen). De betyder næsten det samme, men deres <strong>ordstilling</strong> er vidt forskellig!
             </p>
             <div style="display:grid; gap:1.2rem;">
-                <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid #06b6d4;">
-                    <div style="color:#22d3ee; font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">1. Årsag & Følge</div>
+                <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
+                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">1. Årsag & Følge</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                        <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid rgba(6,182,212,0.4);">
-                            <strong style="color:#fde047;">Konnektivt Adverbium (Felt 7):</strong><br>
+                        <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid var(--adv-border, #1E3A66);">
+                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt Adverbium (Felt 7):</strong><br>
                             • "Det regner. <strong>Derfor</strong> <span style="color:#ef4444;">tager</span> <span style="color:#22c55e;">jeg</span> bussen." <em>(Inversion!)</em><br>
                             • "Jeg tager bussen. Det <span style="color:#ef4444;">regner</span> <strong>nemlig</strong>." <em>(Efter verbet!)</em>
                         </div>
@@ -2152,11 +2198,11 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                     </div>
                 </div>
 
-                <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid #eab308;">
-                    <div style="color:#fde047; font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">2. Modsætning & Indrømmelse</div>
+                <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
+                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">2. Modsætning & Indrømmelse</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                        <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid rgba(234,179,8,0.4);">
-                            <strong style="color:#fde047;">Konnektivt Adverbium (Felt 7):</strong><br>
+                        <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid var(--adv-border, #1E3A66);">
+                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt Adverbium (Felt 7):</strong><br>
                             • "Det regner. <strong>Alligevel</strong> <span style="color:#ef4444;">cykler</span> <span style="color:#22c55e;">hun</span>." <em>(Inversion!)</em><br>
                             • "Værelset er lille. <strong>Til gengæld</strong> <span style="color:#ef4444;">er</span> <span style="color:#22c55e;">det</span> billigt."
                         </div>
@@ -2168,11 +2214,11 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                     </div>
                 </div>
 
-                <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid #a855f7;">
-                    <div style="color:#c084fc; font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">3. Betingelse & Alternativ</div>
+                <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
+                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">3. Betingelse & Alternativ</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                        <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid rgba(168,85,247,0.4);">
-                            <strong style="color:#fde047;">Konnektivt Adverbium (Felt 7):</strong><br>
+                        <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid var(--adv-border, #1E3A66);">
+                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt Adverbium (Felt 7):</strong><br>
                             • "Skynd dig! <strong>Ellers</strong> <span style="color:#ef4444;">kommer</span> <span style="color:#22c55e;">vi</span> for sent." <em>(Inversion!)</em>
                         </div>
                         <div style="background:rgba(15,23,42,0.6); padding:1rem; border-radius:10px; border:1px dashed rgba(255,255,255,0.15); color:#94a3b8;">
@@ -2198,7 +2244,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['nemlig', 'derfor', 'ellers'],
             correct: 'nemlig',
             explanations: {
-                'nemlig': '🌟 Præcis! "Nemlig" giver årsagen/forklaringen på det, du lige har sagt, og det står altid inde i sætningen efter verbet.',
+                'nemlig': 'Præcis! "Nemlig" giver årsagen/forklaringen på det, du lige har sagt, og det står altid inde i sætningen efter verbet.',
                 'derfor': 'Ikke her! Hvis du brugte "derfor", ville feberen være resultatet af, at du ikke kom til mødet (den omvendte logik).',
                 'ellers': '"Ellers" udtrykker en advarsel ("hvis ikke"), ikke en årsag.'
             }
@@ -2210,7 +2256,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['Til gengæld', 'Tværtimod', 'Desuden'],
             correct: 'Til gengæld',
             explanations: {
-                'Til gengæld': '🌟 Lige i øjet! "Til gengæld" bruges, når en positiv ting kompenserer for en ulempe.',
+                'Til gengæld': 'Lige i øjet! "Til gengæld" bruges, når en positiv ting kompenserer for en ulempe.',
                 'Tværtimod': '"Tværtimod" afviser sætning 1 100% (det ville betyde, at lejligheden slet ikke lå langt fra centrum).',
                 'Desuden': '"Desuden" tilføjer endnu et argument i samme retning (ulempe + ulempe eller fordel + fordel), ikke en kontrast.'
             }
@@ -2222,7 +2268,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['Alligevel', 'Derfor', 'I stedet'],
             correct: 'Alligevel',
             explanations: {
-                'Alligevel': '🌟 Korrekt! "Alligevel" viser, at handlingen sker PÅ TRODS AF en forhindring eller forventning.',
+                'Alligevel': 'Korrekt! "Alligevel" viser, at handlingen sker PÅ TRODS AF en forhindring eller forventning.',
                 'Derfor': 'Man tager normalt ikke på café, *fordi* man er helt udkørt – det sker på trods af det.',
                 'I stedet': '"I stedet" kræver, at han opgav én plan til fordel for en anden.'
             }
@@ -2234,7 +2280,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['tværtimod', 'alligevel', 'desuden'],
             correct: 'tværtimod',
             explanations: {
-                'tværtimod': '🌟 Fuldstændig rigtigt! Efter et "Nej" bruger man "tværtimod" til at vende påstanden 180 grader rundt (sur ➔ glad).',
+                'tværtimod': 'Fuldstændig rigtigt! Efter et "Nej" bruger man "tværtimod" til at vende påstanden 180 grader rundt (sur → glad).',
                 'alligevel': '"Alligevel" betyder "på trods af det", ikke "det stik modsatte".',
                 'desuden': '"Desuden" tilføjer bare et ekstra punkt uden at afvise spørgsmålet.'
             }
@@ -2246,7 +2292,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['Ellers', 'I stedet', 'Derfor'],
             correct: 'Ellers',
             explanations: {
-                'Ellers': '🌟 Præcis! "Ellers" betyder "hvis du ikke gør det, så sker denne konsekvens".',
+                'Ellers': 'Præcis! "Ellers" betyder "hvis du ikke gør det, så sker denne konsekvens".',
                 'I stedet': '"I stedet" bruges om et bevidst alternativt valg (Plan B), ikke en uønsket konsekvens.',
                 'Derfor': '"Derfor" ville betyde, at paraplyen gør dig gennemblødt!'
             }
@@ -2258,7 +2304,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['derimod', 'alligevel', 'ellers'],
             correct: 'derimod',
             explanations: {
-                'derimod': '🌟 Nemlig! "Derimod" er det perfekte ord, når vi sammenligner to personer eller ting, der gør noget modsat (A gør X ↔ B gør derimod Y).',
+                'derimod': 'Nemlig! "Derimod" er det perfekte ord, når vi sammenligner to personer eller ting, der gør noget modsat (A gør X ↔ B gør derimod Y).',
                 'alligevel': 'Søsterens smag er ikke en forhindring for Emil, men en neutral kontrast mellem to personer.',
                 'ellers': '"Ellers" passer slet ikke til sammenligning af to personer.'
             }
@@ -2270,7 +2316,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['Desuden', 'Derimod', 'I stedet'],
             correct: 'Desuden',
             explanations: {
-                'Desuden': '🌟 Korrekt! "Desuden" bygger videre i samme positive retning med endnu et stærkt argument.',
+                'Desuden': 'Korrekt! "Desuden" bygger videre i samme positive retning med endnu et stærkt argument.',
                 'Derimod': '"Derimod" bruges kun ved modsætninger, ikke når man lægger to fordele sammen.',
                 'I stedet': 'Hun taler ikke sprog *i stedet for* sin erfaring, men *oveni* sin erfaring.'
             }
@@ -2282,7 +2328,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['endda', 'ellers', 'dog'],
             correct: 'endda',
             explanations: {
-                'endda': '🌟 Lige præcis! "Endda" fremhæver en overraskende og imponerende bonus, der overgår hvad man kunne forvente.',
+                'endda': 'Lige præcis! "Endda" fremhæver en overraskende og imponerende bonus, der overgår hvad man kunne forvente.',
                 'ellers': '"Ellers" betyder "hvis ikke".',
                 'dog': '"Dog" udtrykker en begrænsning eller modsætning, ikke en ekstra bonus.'
             }
@@ -2294,7 +2340,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['i det mindste', 'dermed', 'for resten'],
             correct: 'i det mindste',
             explanations: {
-                'i det mindste': '🌟 Rigtigt! "I det mindste" ("at least") bruges som et trøstende lyspunkt midt i et negativt resultat.',
+                'i det mindste': 'Rigtigt! "I det mindste" ("at least") bruges som et trøstende lyspunkt midt i et negativt resultat.',
                 'dermed': '"Dermed" udtrykker en direkte logisk følge.',
                 'for resten': '"For resten" bruges til pludseligt emneskift ("by the way").'
             }
@@ -2306,7 +2352,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             options: ['altså', 'alligevel', 'i stedet'],
             correct: 'altså',
             explanations: {
-                'altså': '🌟 Perfekt! "Altså" opsummerer fakta og drager den logiske konklusion ("med andre ord / så").',
+                'altså': 'Perfekt! "Altså" opsummerer fakta og drager den logiske konklusion ("med andre ord / så").',
                 'alligevel': '"Alligevel" ville betyde på trods af lukketiden.',
                 'i stedet': '"I stedet" kræver et alternativ.'
             }
@@ -2325,12 +2371,12 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         if (detektivIdx >= DETEKTIV_RIDDLES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:3.5rem; margin-bottom:1rem;">🕵️‍♂️🏆</div>
-                    <h2 style="color:#fde047; font-size:2rem; margin-bottom:0.5rem;">Logik-Detektiven Gennemført!</h2>
+                    <div style="font-size:2.5rem; margin-bottom:1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                    <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">Logik-Detektiven Gennemført!</h2>
                     <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du løste <strong>${detektivScore} ud af ${DETEKTIV_RIDDLES.length}</strong> logiske gåder!
                     </p>
-                    <button class="action-btn-primary" id="restart-detektiv">🔄 Prøv gåderne igen</button>
+                    <button class="action-btn-primary" id="restart-detektiv">Prøv gåderne igen</button>
                 </div>
             `;
             parent.appendChild(container);
@@ -2347,7 +2393,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         container.innerHTML = `
             <div class="progress-header">
-                <span>🔍 LOGIK-DETEKTIVEN: GÅDE ${detektivIdx + 1} AF ${DETEKTIV_RIDDLES.length}</span>
+                LOGIK-DETEKTIVEN: GÅDE ${detektivIdx + 1} AF ${DETEKTIV_RIDDLES.length}</span>
                 <span>Score: ${detektivScore} / ${detektivIdx}</span>
             </div>
             <div class="progress-bar-wrap">
@@ -2363,7 +2409,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <div class="detektiv-feedback-box" id="det-feedback"></div>
 
                 <div style="text-align:right; margin-top:1.5rem; display:none;" id="det-next-wrap">
-                    <button class="action-btn-primary" id="det-next-btn">Næste gåde ➔</button>
+                    <button class="action-btn-primary" id="det-next-btn">Næste gåde →</button>
                 </div>
             </div>
         `;
@@ -2413,7 +2459,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     const BUILDER_EXERCISES = [
         {
             mode: 'inversion', // Adverbium (1) + Verbum (2) + Subjekt (3) + Rest (4)
-            context: 'Første sætning: "Det regner kraftigt i dag." (Vælg følgen i Forfeltet ➔ udløser INVERSION!)',
+            context: 'Første sætning: "Det regner kraftigt i dag." (Vælg følgen i Forfeltet → udløser INVERSION!)',
             displayTemplate: 'Det regner kraftigt i dag. [BLANK] tager jeg bussen.',
             options: ['Derfor', 'Nemlig', 'Tværtimod'],
             correctWord: 'Derfor',
@@ -2441,7 +2487,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Det blæser og er koldt." (Vælg ordet for "på trods af det" i Forfeltet ➔ INVERSION!)',
+            context: 'Første sætning: "Det blæser og er koldt." (Vælg ordet for "på trods af det" i Forfeltet → INVERSION!)',
             displayTemplate: 'Det blæser og er koldt. [BLANK] cykler hun på arbejde.',
             options: ['Alligevel', 'Derimod', 'Nemlig'],
             correctWord: 'Alligevel',
@@ -2455,7 +2501,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Du må skynde dig nu!" (Vælg advarslen "hvis ikke" i Forfeltet ➔ INVERSION!)',
+            context: 'Første sætning: "Du må skynde dig nu!" (Vælg advarslen "hvis ikke" i Forfeltet → INVERSION!)',
             displayTemplate: 'Du må skynde dig nu! [BLANK] kommer vi for sent.',
             options: ['Ellers', 'Endda', 'Dog'],
             correctWord: 'Ellers',
@@ -2483,7 +2529,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Lejligheden er meget lille." (Vælg ordet for kompensation i Forfeltet ➔ INVERSION!)',
+            context: 'Første sætning: "Lejligheden er meget lille." (Vælg ordet for kompensation i Forfeltet → INVERSION!)',
             displayTemplate: 'Lejligheden er meget lille. [BLANK] er huslejen lav.',
             options: ['Til gengæld', 'Derfor', 'For resten'],
             correctWord: 'Til gengæld',
@@ -2497,7 +2543,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Bilen er alt for gammel." (Tilføj et ekstra argument i Forfeltet ➔ INVERSION!)',
+            context: 'Første sætning: "Bilen er alt for gammel." (Tilføj et ekstra argument i Forfeltet → INVERSION!)',
             displayTemplate: 'Bilen er alt for gammel. [BLANK] bruger den meget benzin.',
             options: ['Desuden', 'I stedet', 'Tværtimod'],
             correctWord: 'Desuden',
@@ -2525,7 +2571,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Maden var god og musikken spillede." (Opsummer i én konklusion i Forfeltet ➔ INVERSION!)',
+            context: 'Første sætning: "Maden var god og musikken spillede." (Opsummer i én konklusion i Forfeltet → INVERSION!)',
             displayTemplate: 'Maden var god og musikken spillede. [BLANK] havde vi en dejlig aften.',
             options: ['Kort sagt', 'Ellers', 'Derimod'],
             correctWord: 'Kort sagt',
@@ -2566,12 +2612,12 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         if (builderIdx >= BUILDER_EXERCISES.length) {
             container.innerHTML = `
                 <div class="score-celebration-card">
-                    <div style="font-size:3.5rem; margin-bottom:1rem;">🧩🏆</div>
-                    <h2 style="color:#fde047; font-size:2rem; margin-bottom:0.5rem;">Sætningsbyggeren Mester!</h2>
+                    <div style="font-size:2.5rem; margin-bottom:1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                    <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">Sætningsbyggeren Mester!</h2>
                     <p style="font-size:1.15rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du har mestret både <strong>Inversion i Forfeltet</strong> (Adverbium + Verbum + Subjekt) og <strong>Centralpladsen</strong> (Subjekt + Verbum + Adverbium)!
                     </p>
-                    <button class="action-btn-primary" id="restart-builder">🔄 Byg sætningerne igen</button>
+                    <button class="action-btn-primary" id="restart-builder">Byg sætningerne igen</button>
                 </div>
             `;
             parent.appendChild(container);
@@ -2607,8 +2653,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         card.innerHTML = `
             <div class="progress-header">
-                <span>🧩 SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
-                <span>${ex.mode === 'inversion' ? '⚡ Model A: Adverbium i Forfeltet (INVERSION)' : '🎯 Model B: Adverbium på Centralpladsen'}</span>
+                SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
+                <span>${ex.mode === 'inversion' ? 'Model A: Adverbium i Forfeltet (INVERSION)' : 'Model B: Adverbium på Centralpladsen'}</span>
             </div>
             <div class="progress-bar-wrap">
                 <div class="progress-bar-fill" style="width:${pct}%;"></div>
@@ -2616,7 +2662,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
             <div class="flow-container">${flowHtml}</div>
 
-            <div style="color:#fef08a; font-weight:700; margin-bottom:0.8rem; text-align:center;">
+            <div style="color:var(--adv-border-focus, #93C5FD); font-weight:700; margin-bottom:0.8rem; text-align:center;">
                 ${ex.context}
             </div>
 
@@ -2648,9 +2694,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         btn.classList.add('correct');
                         fbDiv.className = 'detektiv-feedback-box show correct';
                         fbDiv.innerHTML = `
-                            <strong>🌟 ${ex.step1Explain}</strong>
+                            <strong>${ex.step1Explain}</strong>
                             <div style="margin-top:1rem;">
-                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætnings-puslespillet 🧩 ➔</button>
+                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætnings-puslespillet →</button>
                             </div>
                         `;
                         fbDiv.querySelector('#go-step-2').onclick = () => {
@@ -2688,7 +2734,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 slotEl.innerHTML = `
                     <div class="slot-badge-callout callout-${slotDef.role}">${slotDef.label}</div>
                     <div style="font-size:1.25rem; font-weight:900; color:${filledVal ? 'white' : '#64748b'};">
-                        ${filledVal || (idx === currentSlotIdx ? 'Klik på brik 👇' : '...')}
+                        ${filledVal || (idx === currentSlotIdx ? 'Klik på brik' : '...')}
                     </div>
                 `;
                 slotsRow.appendChild(slotEl);
@@ -2723,9 +2769,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 speakDanish(fullBuilt);
                 fbDiv.className = 'detektiv-feedback-box show correct';
                 fbDiv.innerHTML = `
-                    <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">🎉 Perfekt ordstilling: "${fullBuilt}"</div>
+                    <div style="font-size:1.2rem; font-weight:900; margin-bottom:0.4rem;">Perfekt ordstilling: "${fullBuilt}"</div>
                     <p style="margin:0 0 1rem;">Du satte alle 4 farvekodede sætningsled i helt rigtig rækkefølge!</p>
-                    <button class="action-btn-primary" id="next-builder-btn">Næste sætning ➔</button>
+                    <button class="action-btn-primary" id="next-builder-btn">Næste sætning →</button>
                 `;
                 fbDiv.querySelector('#next-builder-btn').onclick = () => {
                     builderIdx++;
@@ -2762,12 +2808,12 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             const doneCard = document.createElement('div');
             doneCard.className = 'score-celebration-card';
             doneCard.innerHTML = `
-                <div style="font-size:3.5rem; margin-bottom:1rem;">🏆✨</div>
-                <h2 style="color:#fde047; font-size:2rem; margin-bottom:0.5rem;">${config.doneTitle}</h2>
+                <div style="font-size:2.5rem; margin-bottom:1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">${config.doneTitle}</h2>
                 <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                     Du fik <strong>${state.score} ud af ${questions.length}</strong> rigtige i første forsøg!
                 </p>
-                <button class="action-btn-primary" id="quiz-restart-btn">🔄 Tag opgaven igen</button>
+                <button class="action-btn-primary" id="quiz-restart-btn">Tag opgaven igen</button>
             `;
             wrap.appendChild(doneCard);
             parent.appendChild(wrap);
@@ -2800,7 +2846,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             <div class="detektiv-feedback-box" id="quiz-fb-box"></div>
 
             <div style="text-align:right; margin-top:1.5rem; display:none;" id="quiz-next-wrap">
-                <button class="action-btn-primary" id="quiz-next-btn">Næste opgave ➔</button>
+                <button class="action-btn-primary" id="quiz-next-btn">Næste opgave →</button>
             </div>
         `;
 
@@ -2825,7 +2871,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         `<span style="color:#4ade80; text-decoration:underline; font-weight:900;">${opt}</span>`
                     );
                     fbBox.className = 'detektiv-feedback-box show correct';
-                    fbBox.innerHTML = `<strong>🌟 Korrekt!</strong> ${q.explanation}`;
+                    fbBox.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
                     nextWrap.style.display = 'block';
                     const spoken = q.quote.replace('______', opt).replace(/<[^>]+>/g, '');
                     speakDanish(spoken);
@@ -2893,7 +2939,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '<strong>A:</strong> "Jeg hørte, at chefen var utilfreds med vores præsentation?"<br><strong>B:</strong> "Nej, ______! Hun roste os foran hele afdelingen!"',
             options: ['tværtimod', 'i det mindste', 'for resten'],
             correct: 'tværtimod',
-            explanation: 'Efter "Nej" vender "tværtimod" udsagnet 180 grader rundt (utilfreds ➔ roste os).'
+            explanation: 'Efter "Nej" vender "tværtimod" udsagnet 180 grader rundt (utilfreds → roste os).'
         },
         {
             context: '7/14 • Ekstra argument ved jobsamtale',
@@ -2957,7 +3003,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         renderQuizEngine(parent, {
             state: kontekstState,
             questions: KONTEKST_QUESTIONS,
-            progressLabel: '🎯 KONTEKST-TESTEN',
+            progressLabel: 'KONTEKST-TESTEN',
             doneTitle: 'Kontekst-testen gennemført!'
         });
     }
@@ -3028,16 +3074,16 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderTabAarsag(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⚡ Årsag, følge og konklusion</h2>
+                <h2>Årsag, følge og konklusion</h2>
                 <p>Lær den afgørende forskel på at pege <strong>frem mod resultatet</strong> (<em>derfor, dermed, således</em>), pege <strong>tilbage på årsagen</strong> (<em>nemlig</em>) og drage en <strong>logisk konklusion</strong> (<em>altså</em>).</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#4ade80;">➡️ derfor</span>
+                        <span class="special-rule-word" style="color:#4ade80;">derfor</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Peger FREM (Resultat)</span>
                     </div>
-                    <div class="special-rule-desc">Sætning 1 er årsagen ➔ <strong>Derfor</strong> + sætning 2 (resultatet). Udløser inversion i front!</div>
+                    <div class="special-rule-desc">Sætning 1 er årsagen → <strong>Derfor</strong> + sætning 2 (resultatet). Udløser inversion i front!</div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
                         <span>"Jeg er syg. <strong>Derfor</strong> bliver jeg hjemme."</span>
                     </div>
@@ -3052,23 +3098,23 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span>"Jeg bliver hjemme. Jeg er <strong>nemlig</strong> syg."</span>
                     </div>
                 </div>
-                <div class="special-rule-card" style="border-color:#eab308;">
+                <div class="special-rule-card" style="border-color:var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fde047;">🧮 altså</span>
-                        <span class="special-rule-role" style="background:rgba(234,179,8,0.2); color:#fef08a;">Logisk konklusion</span>
+                        <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">altså</span>
+                        <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Logisk konklusion</span>
                     </div>
                     <div class="special-rule-desc">Drager en konklusion ud fra spor eller tal ("med andre ord / så").</div>
-                    <div class="special-rule-example" style="border-color:#eab308;">
+                    <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">
                         <span>"Klokken er 8:10. Vi er <strong>altså</strong> for sent på den."</span>
                     </div>
                 </div>
-                <div class="special-rule-card" style="border-color:#a855f7;">
+                <div class="special-rule-card" style="border-color:var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#c084fc;">🔗 dermed / således</span>
-                        <span class="special-rule-role" style="background:rgba(168,85,247,0.2); color:#d8b4fe;">Direkte følge</span>
+                        <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">dermed / således</span>
+                        <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Direkte følge</span>
                     </div>
                     <div class="special-rule-desc"><strong>Dermed</strong> = gennem denne handling. <strong>Således</strong> = på denne måde (formelt).</div>
-                    <div class="special-rule-example" style="border-color:#a855f7;">
+                    <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">
                         <span>"Han skrev under og er <strong>dermed</strong> bundet."</span>
                     </div>
                 </div>
@@ -3079,7 +3125,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             introHtml,
             state: aarsagState,
             questions: AARSAG_QUESTIONS,
-            progressLabel: '⚡ ÅRSAG & FØLGE',
+            progressLabel: 'ÅRSAG & FØLGE',
             doneTitle: 'Årsag og følge mestret!'
         });
     }
@@ -3094,28 +3140,28 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '"Billetten til koncerten kostede 800 kroner. ______ købte han den uden at tøve."',
             options: ['Alligevel', 'Derimod', 'Tværtimod'],
             correct: 'Alligevel',
-            explanation: 'Den høje pris er en forhindring, men han køber billetten PÅ TRODS AF prisen ➔ "Alligevel".'
+            explanation: 'Den høje pris er en forhindring, men han køber billetten PÅ TRODS AF prisen → "Alligevel".'
         },
         {
             context: '2/8 • Sammenligning af to byer (A vs. B)',
             quote: '"København har mange gamle tårne og slotte. Aarhus er ______ kendt for sit unge universitetsmiljø."',
             options: ['derimod', 'alligevel', 'tværtimod'],
             correct: 'derimod',
-            explanation: 'Vi sammenligner to forskellige byer (A vs. B) ➔ "derimod".'
+            explanation: 'Vi sammenligner to forskellige byer (A vs. B) → "derimod".'
         },
         {
             context: '3/8 • Kompensation (Ulempe + Fordel)',
             quote: '"Hotelværelset havde ingen udsigt over havet. ______ var morgenmadsbuffeten helt fantastisk!"',
             options: ['Til gengæld', 'Tværtimod', 'Derimod'],
             correct: 'Til gengæld',
-            explanation: 'Den gode morgenmad kompenserer og vejer op for den manglende udsigt ➔ "Til gengæld".'
+            explanation: 'Den gode morgenmad kompenserer og vejer op for den manglende udsigt → "Til gengæld".'
         },
         {
             context: '4/8 • 180 Graders afvisning efter "Nej"',
             quote: '"Troede du, at kurset var kedeligt? Nej, ______ – det var det mest spændende kursus i år!"',
             options: ['tværtimod', 'til gengæld', 'alligevel'],
             correct: 'tværtimod',
-            explanation: 'Påstanden "kedeligt" afvises 100% og vendes til det stik modsatte ("mest spændende") ➔ "tværtimod".'
+            explanation: 'Påstanden "kedeligt" afvises 100% og vendes til det stik modsatte ("mest spændende") → "tværtimod".'
         },
         {
             context: '5/8 • Blød indrømmelse inde i sætningen',
@@ -3129,7 +3175,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '"Min storebror elsker at stå på ski i Norge. Jeg foretrækker ______ en varm solferie i Spanien."',
             options: ['derimod', 'alligevel', 'dog'],
             correct: 'derimod',
-            explanation: 'Storebror (Norge/ski) sættes op som kontrast mod "jeg" (Spanien/sol) ➔ "derimod".'
+            explanation: 'Storebror (Norge/ski) sættes op som kontrast mod "jeg" (Spanien/sol) → "derimod".'
         },
         {
             context: '7/8 • Fordel der opvejes af en ulempe',
@@ -3143,20 +3189,20 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '"Vi øvede os i flere uger op til turneringen. Vi tabte ______ den første kamp."',
             options: ['alligevel', 'derimod', 'tværtimod'],
             correct: 'alligevel',
-            explanation: 'Nederlaget skete på trods af flere ugers træning ➔ "alligevel".'
+            explanation: 'Nederlaget skete på trods af flere ugers træning → "alligevel".'
         }
     ];
 
     function renderTabKontrast(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>⚖️ Kontrast-Mesteren: 4 typer modsætning på dansk</h2>
+                <h2>Kontrast-Mesteren: 4 typer modsætning på dansk</h2>
                 <p>På dansk kan man ikke bare bruge ét ord for kontrast. Vælg præcis det ord, der passer til <strong>typen af modsætning</strong>:</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#f97316;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fb923c;">🌧️ alligevel / dog</span>
+                        <span class="special-rule-word" style="color:#fb923c;">alligevel / dog</span>
                         <span class="special-rule-role" style="background:rgba(249,115,22,0.2); color:#fdba74;">Trods forhindring</span>
                     </div>
                     <div class="special-rule-desc">Handlingen sker <strong>på trods af</strong> en forhindring eller forventning.</div>
@@ -3166,7 +3212,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#22d3ee;">👥 derimod</span>
+                        <span class="special-rule-word" style="color:#22d3ee;">derimod</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Person A vs. Person B</span>
                     </div>
                     <div class="special-rule-desc">Sammenligner to forskellige personer, byer eller ting, der er modsatte.</div>
@@ -3176,7 +3222,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#4ade80;">⚖️ til gengæld</span>
+                        <span class="special-rule-word" style="color:#4ade80;">til gengæld</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Kompensation</span>
                     </div>
                     <div class="special-rule-desc">En fordel i sætning 2 vejer op for en ulempe i sætning 1 (balance på vægten).</div>
@@ -3186,7 +3232,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
                 <div class="special-rule-card" style="border-color:#ef4444;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#f87171;">🔄 tværtimod</span>
+                        <span class="special-rule-word" style="color:#f87171;">tværtimod</span>
                         <span class="special-rule-role" style="background:rgba(239,68,68,0.2); color:#fca5a5;">180° Afvisning</span>
                     </div>
                     <div class="special-rule-desc">Afviser en påstand (ofte efter <em>Nej</em>) og siger, at det stik modsatte er sandt!</div>
@@ -3201,7 +3247,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             introHtml,
             state: kontrastState,
             questions: KONTRAST_QUESTIONS,
-            progressLabel: '⚖️ KONTRAST-MESTEREN',
+            progressLabel: 'KONTRAST-MESTEREN',
             doneTitle: 'Kontrast-mesteren gennemført!'
         });
     }
@@ -3223,7 +3269,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '"Biografen havde udsolgt til filmen klokken 20. Vi gik ud og spiste pizza ______."',
             options: ['i stedet', 'ellers', 'kort sagt'],
             correct: 'i stedet',
-            explanation: 'Pizzaen var jeres aktive valg af Plan B som erstatning for biografturen ➔ "i stedet".'
+            explanation: 'Pizzaen var jeres aktive valg af Plan B som erstatning for biografturen → "i stedet".'
         },
         {
             context: '3/10 • Sikker bundgrænse vs. Trøst',
@@ -3265,7 +3311,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '"Lægen sagde, at jeg skulle drikke mindre sodavand. ______ drikker jeg nu danskvand med citron."',
             options: ['I stedet', 'Ellers', 'Endda'],
             correct: 'I stedet',
-            explanation: 'Danskvand erstatter sodavand som et nyt, aktivt valg ➔ "I stedet" (med inversion i forfeltet!).'
+            explanation: 'Danskvand erstatter sodavand som et nyt, aktivt valg → "I stedet" (med inversion i forfeltet!).'
         },
         {
             context: '9/10 • Krav for at bestå',
@@ -3286,13 +3332,13 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderTabAlternativ(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>🛡️ Alternativ, forbehold og opsamling</h2>
+                <h2>Alternativ, forbehold og opsamling</h2>
                 <p>Træn de nuancerede tekstbindere, der advarer om konsekvenser (<em>ellers</em>), vælger Plan B (<em>i stedet</em>), sætter en sikker grænse (<em>i hvert fald</em>) eller giver trøst (<em>i det mindste</em>).</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#ef4444;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#f87171;">⚠️ ellers</span>
+                        <span class="special-rule-word" style="color:#f87171;">ellers</span>
                         <span class="special-rule-role" style="background:rgba(239,68,68,0.2); color:#fca5a5;">Hvis ikke...</span>
                     </div>
                     <div class="special-rule-desc">Advarer om den negative konsekvens, hvis man <strong>ikke</strong> handler.</div>
@@ -3302,7 +3348,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#22d3ee;">🔄 i stedet</span>
+                        <span class="special-rule-word" style="color:#22d3ee;">i stedet</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Plan B (Erstatning)</span>
                     </div>
                     <div class="special-rule-desc">Man opgiver Plan A og vælger aktivt et <strong>alternativ</strong> (Plan B).</div>
@@ -3312,7 +3358,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#4ade80;">🛡️ i hvert fald</span>
+                        <span class="special-rule-word" style="color:#4ade80;">i hvert fald</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">100% Bundgrænse</span>
                     </div>
                     <div class="special-rule-desc">Selvom vi er usikre på helheden, er <strong>denne ene ting</strong> helt sikker.</div>
@@ -3320,13 +3366,13 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span>"Vi prøver <strong>i hvert fald</strong> så godt vi kan!"</span>
                     </div>
                 </div>
-                <div class="special-rule-card" style="border-color:#eab308;">
+                <div class="special-rule-card" style="border-color:var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <span class="special-rule-word" style="color:#fde047;">🌤️ i det mindste</span>
-                        <span class="special-rule-role" style="background:rgba(234,179,8,0.2); color:#fef08a;">Trøst / Minimum</span>
+                        <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">i det mindste</span>
+                        <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Trøst / Minimum</span>
                     </div>
                     <div class="special-rule-desc">Et trøstende lyspunkt midt i noget uheldigt ("trods alt").</div>
-                    <div class="special-rule-example" style="border-color:#eab308;">
+                    <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">
                         <span>"Det regner, men her er <strong>i det mindste</strong> tørt."</span>
                     </div>
                 </div>
@@ -3337,7 +3383,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             introHtml,
             state: alternativState,
             questions: ALTERNATIV_QUESTIONS,
-            progressLabel: '🛡️ ALTERNATIV & FORBEHOLD',
+            progressLabel: 'ALTERNATIV & FORBEHOLD',
             doneTitle: 'Alternativ og forbehold mestret!'
         });
     }

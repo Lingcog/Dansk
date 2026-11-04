@@ -1,12 +1,14 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
+import { getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * KonjunktionerTekstflowView - Felt 8: Tekstens trafik og tekstflow
  * Super kompakt, skærmtilpasset og kognitiv tilgang til tekstflow.
  */
 export function renderKonjunktionerTekstflowView(container, navigateFn, extraData = {}) {
+    applyKonjNuance(getActiveKonjNuance());
     container.innerHTML = '';
 
     const viewContainer = document.createElement('div');
@@ -547,7 +549,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         { id: 'trafikprop', label: getTranslation('flow_tab_trafikprop') },
         { id: 'staccato', label: getTranslation('flow_tab_staccato') },
         { id: 'duel', label: getTranslation('flow_tab_duel') },
-        { id: 'opbygning', label: (getTranslation('flow_tab_opbygning') && getTranslation('flow_tab_opbygning') !== 'flow_tab_opbygning') ? getTranslation('flow_tab_opbygning') : '6. Tekstopbygning ✉️' }
+        { id: 'opbygning', label: (getTranslation('flow_tab_opbygning') && getTranslation('flow_tab_opbygning') !== 'flow_tab_opbygning') ? getTranslation('flow_tab_opbygning') : '6. Tekstopbygning' }
     ];
 
     const nav = document.createElement('div');
@@ -703,17 +705,17 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         "${sig.example}"
                     </div>
                     <div style="font-size: 0.88rem; color: #94a3b8; margin-top: 0.2rem;">
-                        🌍 "${translatedSentence}"
+                        "${translatedSentence}"
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 0.3rem; flex-wrap: wrap; font-size: 0.78rem; color: #94a3b8;">
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">🇬🇧 ${sig.translations.en}</span>
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">🇩🇪 ${sig.translations.de}</span>
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">🇪🇸 ${sig.translations.es}</span>
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">🇸🇦 ${sig.translations.ar}</span>
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">🇹🇷 ${sig.translations.tr}</span>
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">🇺🇦 ${sig.translations.uk}</span>
+                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">EN: ${sig.translations.en}</span>
+                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">DE: ${sig.translations.de}</span>
+                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">ES: ${sig.translations.es}</span>
+                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">AR: ${sig.translations.ar}</span>
+                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">TR: ${sig.translations.tr}</span>
+                    <span style="background: rgba(255, 255, 255, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;">UK: ${sig.translations.uk}</span>
                 </div>
             </div>
         `;
@@ -909,7 +911,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         nextBtn.style.fontSize = '0.82rem';
         nextBtn.innerText = currentStoryIdx < EXTENDED_STORIES.length - 1 
             ? `Næste historie ➔` 
-            : `Historie 1 🔄`;
+            : `Historie 1`;
         nextBtn.onclick = () => {
             currentStoryIdx = (currentStoryIdx + 1) % EXTENDED_STORIES.length;
             renderTabHistorier(parent);
@@ -1108,7 +1110,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
             <div style="display: flex; justify-content: flex-end;">
                 <button id="btn-next-puzzle" class="action-btn-primary" style="display: none; padding: 0.4rem 0.9rem; font-size: 0.85rem;">
-                    ${currentPuzzleIdx < TRAFIKPROP_PUZZLES.length - 1 ? 'Næste sætning ➔' : 'Se resultat 🏆'}
+                    ${currentPuzzleIdx < TRAFIKPROP_PUZZLES.length - 1 ? 'Næste sætning ➔' : 'Se resultat'}
                 </button>
             </div>
         `;
@@ -1160,7 +1162,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     <div style="text-align: center; padding: 1.2rem;">
                         <h2 style="font-size: 1.35rem; color: #4ade80; margin: 0 0 0.4rem;">Færdig!</h2>
                         <p style="font-size: 1rem; color: #cbd5e1; margin: 0 0 0.8rem;">Du fik <strong style="color:#38bdf8;">${puzzleScore}</strong> ud af ${TRAFIKPROP_PUZZLES.length} rigtige.</p>
-                        <button class="action-btn-primary" id="btn-restart-prop" style="padding: 0.45rem 1rem;">Prøv igen 🔄</button>
+                        <button class="action-btn-primary" id="btn-restart-prop" style="padding: 0.45rem 1rem;">Prøv igen</button>
                     </div>
                 `;
                 card.querySelector('#btn-restart-prop').onclick = () => {
@@ -1451,7 +1453,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
 
             <div style="display: flex; justify-content: center;">
                 <button id="btn-next-duel" class="action-btn-primary" style="display: none; padding: 0.4rem 1.1rem; font-size: 0.85rem;">
-                    ${duelIdx < DUEL_DATA.length - 1 ? 'Næste spørgsmål ➔' : 'Se resultat 🏆'}
+                    ${duelIdx < DUEL_DATA.length - 1 ? 'Næste spørgsmål ➔' : 'Se resultat'}
                 </button>
             </div>
         `;
@@ -1503,7 +1505,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     <div style="text-align: center; padding: 1.2rem;">
                         <h2 style="font-size: 1.35rem; color: #4ade80; margin: 0 0 0.4rem;">Duellen er fuldført!</h2>
                         <p style="font-size: 1rem; color: #cbd5e1; margin: 0 0 0.8rem;">Du fik <strong style="color:#38bdf8;">${duelScore}</strong> ud af ${DUEL_DATA.length} rigtige.</p>
-                        <button class="action-btn-primary" id="btn-restart-duel" style="padding: 0.45rem 1rem;">Prøv igen 🔄</button>
+                        <button class="action-btn-primary" id="btn-restart-duel" style="padding: 0.45rem 1rem;">Prøv igen</button>
                     </div>
                 `;
                 card.querySelector('#btn-restart-duel').onclick = () => {
@@ -1523,7 +1525,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
     const OPBYGNING_EXERCISES = [
         {
             id: 'spare_penge',
-            title: '1. Spare penge 💰',
+            title: '1. Spare penge',
             topic: 'Svar på din e-mail – om at spare penge',
             data: [
                 {
@@ -1618,15 +1620,15 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 }
             ],
             categories: [
-                { id: 'indledning', label: '🔵 Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2, 3] },
-                { id: 'handlinger', label: '🟢 Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Praktiske handlinger (discount, madspild)', strips: [4, 5] },
-                { id: 'argumenter', label: '🟠 Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Argumenter og begrundelser (frihed, tid)', strips: [6, 7, 8] },
-                { id: 'afslutning', label: '🟣 Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage og runder af', strips: [9] }
+                { id: 'indledning', label: 'Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2, 3] },
+                { id: 'handlinger', label: 'Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Praktiske handlinger (discount, madspild)', strips: [4, 5] },
+                { id: 'argumenter', label: 'Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Argumenter og begrundelser (frihed, tid)', strips: [6, 7, 8] },
+                { id: 'afslutning', label: 'Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage og runder af', strips: [9] }
             ]
         },
         {
             id: 'boernehave',
-            title: '2. Nyt job i børnehaven 👶',
+            title: '2. Nyt job i børnehaven',
             topic: 'Svar på din e-mail – om mit nye arbejde i en børnehave',
             data: [
                 {
@@ -1721,10 +1723,10 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 }
             ],
             categories: [
-                { id: 'indledning', label: '🔵 Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2] },
-                { id: 'handlinger', label: '🟢 Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Det positive ved jobbet: lege, lære navne', strips: [3, 4] },
-                { id: 'argumenter', label: '🟠 Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Udfordringer & begrundelser: larm, sygdom, alligevel glad', strips: [5, 6, 7, 8] },
-                { id: 'afslutning', label: '🟣 Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage: kaffe og hilsen', strips: [9] }
+                { id: 'indledning', label: 'Blå: Hilsen & Indledning', color: '#38bdf8', desc: 'Skaber kontakt og præsenterer emnet', strips: [1, 2] },
+                { id: 'handlinger', label: 'Grøn: Svar på "HVORDAN"', color: '#22c55e', desc: 'Det positive ved jobbet: lege, lære navne', strips: [3, 4] },
+                { id: 'argumenter', label: 'Orange: Svar på "HVORFOR"', color: '#f97316', desc: 'Udfordringer & begrundelser: larm, sygdom, alligevel glad', strips: [5, 6, 7, 8] },
+                { id: 'afslutning', label: 'Lilla: Afslutning & Modspørgsmål', color: '#a855f7', desc: 'Sender bolden tilbage: kaffe og hilsen', strips: [9] }
             ]
         }
     ];
@@ -1792,13 +1794,13 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
         subNav.className = 'opbygning-subnav no-print';
         subNav.innerHTML = `
             <button class="opbygning-subnav-btn ${opbygningSubTab === 'model_a' ? 'active' : ''}" data-sub="model_a">
-                🧩 Model A: Puslespil
+                Model A: Puslespil
             </button>
             <button class="opbygning-subnav-btn ${opbygningSubTab === 'model_b' ? 'active' : ''}" data-sub="model_b">
-                🧱 Model B: Byggeklodser
+                Model B: Byggeklodser
             </button>
             <button class="opbygning-subnav-btn ${opbygningSubTab === 'klippeark' ? 'active' : ''}" data-sub="klippeark">
-                ✂️ Klippeark (Print)
+                Klippeark (Print)
             </button>
         `;
 
@@ -1840,7 +1842,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         </p>
                     </div>
                     <button id="btn-toggle-compact" class="opbygning-subnav-btn" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
-                        ${opbygningCompact ? '📄 Fuld tekst' : '📑 Kompakt overblik'}
+                        ${opbygningCompact ? 'Fuld tekst' : 'Kompakt overblik'}
                     </button>
                 </div>
             </div>
@@ -1854,10 +1856,10 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     ✓ Tjek rækkefølge
                 </button>
                 <button id="btn-shuffle-order" class="opbygning-subnav-btn" style="padding: 0.5rem 0.9rem; font-size: 0.86rem;">
-                    🔀 Bland igen
+                    Bland igen
                 </button>
                 <button id="btn-show-solution" class="opbygning-subnav-btn" style="padding: 0.5rem 0.9rem; font-size: 0.86rem;">
-                    👁️ Se facit
+                    Se facit
                 </button>
             </div>
         `;
@@ -2004,7 +2006,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                 feedbackBox.style.border = '1.5px solid #22c55e';
                 feedbackBox.style.color = '#4ade80';
                 feedbackBox.innerHTML = `
-                    <div style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.3rem;">🎉 Perfekt klaret!</div>
+                    <div style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.3rem;">Perfekt klaret!</div>
                     <div style="font-size: 0.88rem; color: #f8fafc; margin-bottom: 0.6rem;">
                         Alle 9 strimler står i den logiske rækkefølge. Tekstflowet hænger nu fuldstændigt sammen.
                     </div>
@@ -2075,10 +2077,10 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     </div>
                     <div style="display: flex; gap: 0.3rem;">
                         <button id="btn-mode-anatomi" class="opbygning-subnav-btn ${byggeklodsMode === 'anatomi' ? 'active' : ''}">
-                            👁️ Tekstens anatomi
+                            Tekstens anatomi
                         </button>
                         <button id="btn-mode-traening" class="opbygning-subnav-btn ${byggeklodsMode === 'traening' ? 'active' : ''}">
-                            🎨 Farvelæg selv
+                            Farvelæg selv
                         </button>
                     </div>
                 </div>
@@ -2150,7 +2152,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         ✓ Tjek farvekoder
                     </button>
                     <button id="btn-reset-colors" class="opbygning-subnav-btn" style="padding: 0.45rem 0.85rem;">
-                        🔄 Nulstil
+                        Nulstil
                     </button>
                 </div>
             `;
@@ -2184,7 +2186,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                                         font-weight: 700;
                                         cursor: pointer;
                                     ">
-                                        ${cat.id === 'indledning' ? '🔵 Indledning' : cat.id === 'handlinger' ? '🟢 Handlinger' : cat.id === 'argumenter' ? '🟠 Argumenter' : '🟣 Afslutning'}
+                                        ${cat.id === 'indledning' ? 'Indledning' : cat.id === 'handlinger' ? 'Handlinger' : cat.id === 'argumenter' ? 'Argumenter' : 'Afslutning'}
                                     </button>
                                 `).join('')}
                             </div>
@@ -2251,7 +2253,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     </p>
                 </div>
                 <button id="btn-print-sheet" class="action-btn-primary" style="padding: 0.45rem 1rem;">
-                    🖨️ Udskriv klippeark
+                    Udskriv klippeark
                 </button>
             </div>
 
@@ -2269,7 +2271,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                     ${currentEx.data.map(strip => `
                         <div>
                             <div style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
-                                ✂️ ----------------------------------------------------------------------------------
+                                ----------------------------------------------------------------------------------
                             </div>
                             <div style="background: rgba(30, 41, 59, 0.7); border: 1px dashed rgba(255, 255, 255, 0.2); padding: 0.55rem 0.75rem; border-radius: 6px; margin: 0.2rem 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                                 <span style="font-weight: 800; color: #38bdf8; font-size: 0.85rem;">[ STRIMMEL ${strip.id} ]</span>
@@ -2278,7 +2280,7 @@ export function renderKonjunktionerTekstflowView(container, navigateFn, extraDat
                         </div>
                     `).join('')}
                     <div style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
-                        ✂️ ----------------------------------------------------------------------------------
+                        ----------------------------------------------------------------------------------
                     </div>
                 </div>
             </div>

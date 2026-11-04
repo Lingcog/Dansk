@@ -1260,7 +1260,7 @@ body[data-theme="vinroed-praecision"],
 }
 
 /* Gylden didaktisk regel-banner */
-[data-theme="vinroed-praecision"] .golden-rule-banner {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]) .golden-rule-banner {
   background: var(--vp-surface) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-md) !important; /* 10px */
@@ -1268,11 +1268,11 @@ body[data-theme="vinroed-praecision"],
   padding: 1.2rem 1.8rem !important;
 }
 
-[data-theme="vinroed-praecision"] .golden-rule-banner h4 {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]) .golden-rule-banner h4 {
   color: #FFFFFF !important;
 }
 
-[data-theme="vinroed-praecision"] .golden-rule-banner p {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]) .golden-rule-banner p {
   color: var(--vp-text-muted) !important;
 }
 
@@ -1280,8 +1280,8 @@ body[data-theme="vinroed-praecision"],
   border-radius: var(--vp-radius-sm) !important;
 }
 
-/* Faner i Konjunktioner AT & Adverbier */
-[data-theme="vinroed-praecision"] .adv-tabs-nav {
+/* Faner i Konjunktioner AT & Adverbier (Klassisk vinrød, når ikke adverbium-nuance er aktiv) */
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .adv-tabs-nav {
   background: var(--vp-surface-input) !important; /* #380207 - dyb kontrastbundflade */
   border: 1px solid var(--vp-border) !important;   /* #851825 - dæmpet kant */
   border-radius: var(--vp-radius-md) !important;   /* 10px */
@@ -1289,7 +1289,7 @@ body[data-theme="vinroed-praecision"],
   gap: 6px !important;
 }
 
-[data-theme="vinroed-praecision"] .adv-tab-btn {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .adv-tab-btn {
   background: transparent !important;
   border: 1px solid transparent !important;
   border-radius: var(--vp-radius-sm) !important;   /* 6px */
@@ -1300,13 +1300,13 @@ body[data-theme="vinroed-praecision"],
   cursor: pointer !important;
 }
 
-[data-theme="vinroed-praecision"] .adv-tab-btn:hover {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .adv-tab-btn:hover {
   background: var(--vp-surface-hover) !important;  /* #73101C - lettere vinrød glød */
   border-color: var(--vp-border) !important;       /* #851825 */
   color: #FFFFFF !important;
 }
 
-[data-theme="vinroed-praecision"] .adv-tab-btn.active {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .adv-tab-btn.active {
   background: var(--vp-surface) !important;        /* #5C0812 - mørk rubinrød overflade */
   border: 1px solid var(--vp-primary) !important;  /* #FF4D5E - koralrød accentkant */
   color: #FFFFFF !important;
@@ -1314,63 +1314,1015 @@ body[data-theme="vinroed-praecision"],
   box-shadow: 0 4px 14px rgba(255, 77, 94, 0.25) !important;
 }
 
+/* ==========================================================================
+   Adverbium-fladen (data-adv-nuance) - De 4 dynamiske dybblå alternativer
+   Standard: Dyb Safirblå mod vinrød bund (#4A040B)
+   Gælder for HELE hovedfladen Top 100 Adverbier og alle underflader:
+   1. Sted (adverbier_sted)
+   2. Tid (adverbier_tid)
+   3. Måde (adverbier_maade)
+   4. Grad (adverbier_grad)
+   5. Småord (adverbier_smaaord)
+   6. Holdning (adverbier_holdning)
+   7. Konnektion (adverbier_konnektion)
+   ========================================================================== */
+
+/* Hovedbaggrund og tekst for alle adverbiumflader */
+.top100-adverbier-hub,
+.adverbier-sted-view,
+.adverbier-tid-view,
+.adverbier-maade-view,
+.adverbier-grad-view,
+.adverbier-smaaord-view,
+.adverbier-holdning-view,
+.adverbier-konnektion-view,
+[data-adv-nuance] .top100-adverbier-hub,
+[data-adv-nuance] .adverbier-sted-view,
+[data-adv-nuance] .adverbier-tid-view,
+[data-adv-nuance] .adverbier-maade-view,
+[data-adv-nuance] .adverbier-grad-view,
+[data-adv-nuance] .adverbier-smaaord-view,
+[data-adv-nuance] .adverbier-holdning-view,
+[data-adv-nuance] .adverbier-konnektion-view {
+  background-color: var(--adv-bg, #4A040B) !important;
+  color: var(--adv-text, #FFFFFF) !important;
+}
+
+/* Hero Headers i ren hvid skrift (#FFFFFF) */
+.adv-hero h1,
+.grad-hero h1,
+.smaaord-hero h1,
+.holdning-hero h1,
+.konnektion-hero h1,
+.top100-adverbier-hub h1,
+[data-adv-nuance] .adv-hero h1,
+[data-adv-nuance] .grad-hero h1,
+[data-adv-nuance] .smaaord-hero h1,
+[data-adv-nuance] .holdning-hero h1,
+[data-adv-nuance] .konnektion-hero h1,
+[data-adv-nuance] .top100-adverbier-hub h1 {
+  color: #FFFFFF !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45) !important;
+}
+
+.adv-hero p,
+.grad-hero p,
+.smaaord-hero p,
+.holdning-hero p,
+.konnektion-hero p,
+.top100-adverbier-hub p,
+[data-adv-nuance] .adv-hero p,
+[data-adv-nuance] .grad-hero p,
+[data-adv-nuance] .smaaord-hero p,
+[data-adv-nuance] .holdning-hero p,
+[data-adv-nuance] .konnektion-hero p,
+[data-adv-nuance] .top100-adverbier-hub p {
+  color: var(--adv-text-muted, #BFDBFE) !important;
+  opacity: 0.95 !important;
+}
+
+/* 1. Tabs Navigationsramme i Dyb safirblå */
+[data-adv-nuance] .adv-tabs-nav,
+body[data-adv-nuance] .adv-tabs-nav,
+[data-theme="vinroed-praecision"][data-adv-nuance] .adv-tabs-nav,
+[data-theme="vinroed-praecision"] [data-adv-nuance] .adv-tabs-nav,
+.adverbier-sted-view .adv-tabs-nav,
+.adverbier-tid-view .adv-tabs-nav,
+.adverbier-maade-view .adv-tabs-nav,
+.adverbier-grad-view .adv-tabs-nav,
+.adverbier-smaaord-view .adv-tabs-nav,
+.adverbier-holdning-view .adv-tabs-nav,
+.adverbier-konnektion-view .adv-tabs-nav {
+  background: var(--adv-surface, #0A192F) !important;
+  border: 2px solid var(--adv-border, #1E3A66) !important;
+  border-radius: 16px !important;
+  padding: 8px !important;
+  gap: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-adv-nuance] .adv-tab-btn,
+body[data-adv-nuance] .adv-tab-btn,
+[data-theme="vinroed-praecision"][data-adv-nuance] .adv-tab-btn,
+[data-theme="vinroed-praecision"] [data-adv-nuance] .adv-tab-btn,
+.adverbier-sted-view .adv-tab-btn,
+.adverbier-tid-view .adv-tab-btn,
+.adverbier-maade-view .adv-tab-btn,
+.adverbier-grad-view .adv-tab-btn,
+.adverbier-smaaord-view .adv-tab-btn,
+.adverbier-holdning-view .adv-tab-btn,
+.adverbier-konnektion-view .adv-tab-btn {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 12px !important;
+  color: var(--adv-text-muted, #BFDBFE) !important;
+  font-weight: 700 !important;
+  padding: 0.65rem 1.15rem !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+}
+
+[data-adv-nuance] .adv-tab-btn:hover,
+body[data-adv-nuance] .adv-tab-btn:hover,
+[data-theme="vinroed-praecision"][data-adv-nuance] .adv-tab-btn:hover,
+[data-theme="vinroed-praecision"] [data-adv-nuance] .adv-tab-btn:hover,
+.adverbier-sted-view .adv-tab-btn:hover,
+.adverbier-tid-view .adv-tab-btn:hover,
+.adverbier-maade-view .adv-tab-btn:hover,
+.adverbier-grad-view .adv-tab-btn:hover,
+.adverbier-smaaord-view .adv-tab-btn:hover,
+.adverbier-holdning-view .adv-tab-btn:hover,
+.adverbier-konnektion-view .adv-tab-btn:hover {
+  background: var(--adv-surface-hover, #112240) !important;
+  border-color: var(--adv-border, #1E3A66) !important;
+  color: #FFFFFF !important;
+}
+
+[data-adv-nuance] .adv-tab-btn.active,
+body[data-adv-nuance] .adv-tab-btn.active,
+[data-theme="vinroed-praecision"][data-adv-nuance] .adv-tab-btn.active,
+[data-theme="vinroed-praecision"] [data-adv-nuance] .adv-tab-btn.active,
+.adverbier-sted-view .adv-tab-btn.active,
+.adverbier-tid-view .adv-tab-btn.active,
+.adverbier-maade-view .adv-tab-btn.active,
+.adverbier-grad-view .adv-tab-btn.active,
+.adverbier-smaaord-view .adv-tab-btn.active,
+.adverbier-holdning-view .adv-tab-btn.active,
+.adverbier-konnektion-view .adv-tab-btn.active {
+  background: var(--adv-primary, #3B82F6) !important;
+  border: 1.5px solid var(--adv-border-focus, #93C5FD) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5)) !important;
+}
+
+/* 2. Selve opgave-kortene og rammerne på alle flader i Adverbier */
+[data-adv-nuance] .vrimmel-stage-card,
+body[data-adv-nuance] .vrimmel-stage-card,
+[data-theme="vinroed-praecision"][data-adv-nuance] .vrimmel-stage-card,
+.adverbier-sted-view .vrimmel-stage-card,
+.adverbier-tid-view .vrimmel-stage-card,
+.adverbier-maade-view .vrimmel-stage-card,
+.adverbier-grad-view .vrimmel-stage-card,
+.adverbier-smaaord-view .vrimmel-stage-card,
+.adverbier-holdning-view .vrimmel-stage-card,
+.adverbier-konnektion-view .vrimmel-stage-card,
+[data-adv-nuance] .vrimmel-stage-container,
+[data-adv-nuance] .vrimmel-inspector,
+body[data-adv-nuance] .vrimmel-inspector,
+[data-theme="vinroed-praecision"][data-adv-nuance] .vrimmel-inspector,
+.adverbier-sted-view .vrimmel-inspector,
+.adverbier-tid-view .vrimmel-inspector,
+.adverbier-maade-view .vrimmel-inspector,
+.adverbier-grad-view .vrimmel-inspector,
+.adverbier-smaaord-view .vrimmel-inspector,
+.adverbier-holdning-view .vrimmel-inspector,
+.adverbier-konnektion-view .vrimmel-inspector,
+[data-adv-nuance] .vrimmel-inspector-card,
+.adverbier-maade-view .vrimmel-inspector-card,
+[data-adv-nuance] .inspector-card,
+.adverbier-sted-view .inspector-card,
+[data-adv-nuance] .detektiv-card,
+.adverbier-sted-view .detektiv-card,
+.adverbier-tid-view .detektiv-card,
+.adverbier-maade-view .detektiv-card,
+.adverbier-grad-view .detektiv-card,
+.adverbier-smaaord-view .detektiv-card,
+.adverbier-holdning-view .detektiv-card,
+.adverbier-konnektion-view .detektiv-card,
+[data-adv-nuance] .detektiv-container,
+[data-adv-nuance] .builder-card,
+[data-adv-nuance] .exercise-action-card,
+[data-adv-nuance] .golden-rule-banner,
+[data-adv-nuance] .golden-rule-banner-holdning,
+.adverbier-grad-view .golden-rule-banner,
+.adverbier-holdning-view .golden-rule-banner-holdning {
+  background: var(--adv-surface, #0A192F) !important;
+  border: 2px solid var(--adv-border, #1E3A66) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  color: #FFFFFF !important;
+}
+
+/* 3. Indre felter, eksempelsætninger, citater og didaktiske bokse (IKKE RØDE!) */
+[data-adv-nuance] .inspector-sentence-card,
+body[data-adv-nuance] .inspector-sentence-card,
+[data-theme="vinroed-praecision"][data-adv-nuance] .inspector-sentence-card,
+.adverbier-sted-view .inspector-sentence-card,
+.adverbier-tid-view .inspector-sentence-card,
+.adverbier-maade-view .inspector-sentence-card,
+.adverbier-grad-view .inspector-sentence-card,
+.adverbier-smaaord-view .inspector-sentence-card,
+.adverbier-holdning-view .inspector-sentence-card,
+.adverbier-konnektion-view .inspector-sentence-card,
+[data-adv-nuance] .inspector-sentence-box,
+[data-adv-nuance] .inspector-trans-box,
+[data-adv-nuance] .inspector-scene-box,
+[data-adv-nuance] .vrimmel-controls-bar,
+[data-adv-nuance] .vrimmel-toolbar,
+[data-adv-nuance] .detektiv-sentence-quote,
+[data-adv-nuance] .detektiv-sentence-box,
+[data-adv-nuance] .grad-meter-box,
+[data-adv-nuance] .rule-card-mini,
+.adverbier-grad-view .inspector-sentence-card,
+.adverbier-maade-view .inspector-sentence-card,
+.adverbier-smaaord-view .inspector-sentence-card,
+.adverbier-holdning-view .inspector-sentence-card {
+  background: var(--adv-surface-input, #050E1A) !important;
+  border: 1.5px solid var(--adv-border, #1E3A66) !important;
+  border-radius: 14px !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 4. Pegefelter (Hotspot Pins) i Dyb Safirblå på ALLE adverbiumflader */
+[data-adv-nuance] .hotspot-pin,
+body[data-adv-nuance] .hotspot-pin,
+[data-theme="vinroed-praecision"][data-adv-nuance] .hotspot-pin,
+.adverbier-sted-view .hotspot-pin,
+.adverbier-tid-view .hotspot-pin,
+.adverbier-maade-view .hotspot-pin,
+.adverbier-grad-view .hotspot-pin,
+.adverbier-smaaord-view .hotspot-pin,
+.adverbier-holdning-view .hotspot-pin,
+.adverbier-konnektion-view .hotspot-pin {
+  background: var(--adv-primary, #3B82F6) !important;
+  border: 2.5px solid #FFFFFF !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 14px var(--adv-glow, rgba(59, 130, 246, 0.6)) !important;
+}
+
+[data-adv-nuance] .hotspot-pin:hover,
+body[data-adv-nuance] .hotspot-pin:hover,
+.adverbier-sted-view .hotspot-pin:hover,
+.adverbier-tid-view .hotspot-pin:hover,
+.adverbier-maade-view .hotspot-pin:hover,
+.adverbier-grad-view .hotspot-pin:hover,
+.adverbier-smaaord-view .hotspot-pin:hover,
+.adverbier-holdning-view .hotspot-pin:hover,
+.adverbier-konnektion-view .hotspot-pin:hover {
+  background: var(--adv-primary-hover, #1D4ED8) !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 20px var(--adv-glow, rgba(59, 130, 246, 0.8)) !important;
+}
+
+[data-adv-nuance] .hotspot-pin.active,
+[data-adv-nuance] .hotspot-pin.selected,
+body[data-adv-nuance] .hotspot-pin.active,
+body[data-adv-nuance] .hotspot-pin.selected,
+.adverbier-sted-view .hotspot-pin.active,
+.adverbier-tid-view .hotspot-pin.active,
+.adverbier-maade-view .hotspot-pin.active,
+.adverbier-maade-view .hotspot-pin.selected,
+.adverbier-grad-view .hotspot-pin.active,
+.adverbier-smaaord-view .hotspot-pin.active,
+.adverbier-holdning-view .hotspot-pin.active,
+.adverbier-konnektion-view .hotspot-pin.active {
+  background: #2563EB !important;
+  border: 2.5px solid #BAE6FD !important;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.95), 0 0 40px rgba(59, 130, 246, 0.6) !important;
+}
+
+[data-adv-nuance] .hotspot-pin .pin-pill,
+.adverbier-maade-view .hotspot-pin .pin-pill {
+  background: var(--adv-primary, #3B82F6) !important;
+  border: 1.5px solid var(--adv-border-focus, #93C5FD) !important;
+  color: #FFFFFF !important;
+}
+
+[data-adv-nuance] .hotspot-label,
+.adverbier-sted-view .hotspot-label,
+.adverbier-tid-view .hotspot-label,
+.adverbier-maade-view .hotspot-label,
+.adverbier-grad-view .hotspot-label,
+.adverbier-smaaord-view .hotspot-label,
+.adverbier-holdning-view .hotspot-label,
+.adverbier-konnektion-view .hotspot-label {
+  background: var(--adv-surface-input, #050E1A) !important;
+  border: 1px solid var(--adv-border-focus, #93C5FD) !important;
+  color: var(--adv-text-muted, #BFDBFE) !important;
+}
+
+/* 5. Svarknapper, valgord, brikker og filterknapper */
+[data-adv-nuance] .filter-btn,
+body[data-adv-nuance] .filter-btn,
+.adverbier-sted-view .filter-btn,
+.adverbier-tid-view .filter-btn,
+.adverbier-maade-view .filter-btn,
+.adverbier-grad-view .filter-btn,
+.adverbier-smaaord-view .filter-btn,
+.adverbier-holdning-view .filter-btn,
+.adverbier-konnektion-view .filter-btn,
+[data-adv-nuance] .pure-toggle-btn,
+[data-adv-nuance] .toggle-pins-btn,
+[data-adv-nuance] .inspector-btn-action,
+[data-adv-nuance] .detektiv-opt-btn,
+[data-adv-nuance] .sb-puzzle-chip {
+  background: var(--adv-surface, #0A192F) !important;
+  border: 1.5px solid var(--adv-border, #1E3A66) !important;
+  border-radius: 12px !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-adv-nuance] .filter-btn:hover,
+[data-adv-nuance] .pure-toggle-btn:hover,
+[data-adv-nuance] .toggle-pins-btn:hover,
+[data-adv-nuance] .inspector-btn-action:hover,
+[data-adv-nuance] .detektiv-opt-btn:hover,
+[data-adv-nuance] .sb-puzzle-chip:hover {
+  background: var(--adv-surface-hover, #112240) !important;
+  border-color: var(--adv-primary, #3B82F6) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 16px var(--adv-glow, rgba(59, 130, 246, 0.6)) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 6. Aktive valgknapper (Filtre, Tabs og Næste/Handlingsknapper) */
+[data-adv-nuance] .filter-btn.active,
+.adverbier-sted-view .filter-btn.active,
+.adverbier-tid-view .filter-btn.active,
+.adverbier-maade-view .filter-btn.active,
+.adverbier-grad-view .filter-btn.active,
+.adverbier-smaaord-view .filter-btn.active,
+.adverbier-holdning-view .filter-btn.active,
+.adverbier-konnektion-view .filter-btn.active,
+[data-adv-nuance] .pure-toggle-btn.active,
+[data-adv-nuance] .action-btn-primary,
+body[data-adv-nuance] .action-btn-primary,
+[data-theme="vinroed-praecision"][data-adv-nuance] .action-btn-primary,
+.adverbier-sted-view .action-btn-primary,
+.adverbier-tid-view .action-btn-primary,
+.adverbier-maade-view .action-btn-primary,
+.adverbier-grad-view .action-btn-primary,
+.adverbier-smaaord-view .action-btn-primary,
+.adverbier-holdning-view .action-btn-primary,
+.adverbier-konnektion-view .action-btn-primary,
+[data-adv-nuance] .inspector-speak-btn,
+[data-adv-nuance] #inspector-action-next,
+[data-adv-nuance] .inspector-audio-btn:hover {
+  background: var(--adv-primary, #3B82F6) !important;
+  border: 1.5px solid var(--adv-border-focus, #93C5FD) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 16px var(--adv-glow, rgba(59, 130, 246, 0.6)) !important;
+}
+
+[data-adv-nuance] .action-btn-primary:hover,
+[data-adv-nuance] #inspector-action-next:hover,
+[data-adv-nuance] .inspector-speak-btn:hover {
+  background: var(--adv-primary-hover, #1D4ED8) !important;
+  border-color: var(--adv-border-focus, #93C5FD) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px var(--adv-glow, rgba(59, 130, 246, 0.8)) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 7. Badges og kontekst-mærkater */
+[data-adv-nuance] .inspector-badge,
+[data-adv-nuance] .inspector-cat-badge,
+[data-adv-nuance] .adv-type-badge,
+[data-adv-nuance] .detektiv-context-tag,
+[data-adv-nuance] .grad-hero-tag,
+[data-adv-nuance] .smaaord-hero-tag,
+[data-adv-nuance] .holdning-hero-tag {
+  background: var(--adv-surface-input, #050E1A) !important;
+  border: 1.5px solid var(--adv-border, #1E3A66) !important;
+  color: var(--adv-border-focus, #93C5FD) !important;
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+}
+
+/* 8. Progress-bar i adverbium-opgaverne */
+[data-adv-nuance] .progress-bar-wrap,
+body[data-adv-nuance] .progress-bar-wrap,
+[data-theme="vinroed-praecision"][data-adv-nuance] .progress-bar-wrap {
+  background: var(--adv-surface-input, #050E1A) !important;
+  border: 1px solid var(--adv-border, #1E3A66) !important;
+}
+
+[data-adv-nuance] .progress-bar-fill,
+body[data-adv-nuance] .progress-bar-fill,
+[data-theme="vinroed-praecision"][data-adv-nuance] .progress-bar-fill {
+  background: var(--adv-primary, #3B82F6) !important;
+  box-shadow: 0 0 12px var(--adv-glow, rgba(59, 130, 246, 0.6)) !important;
+}
+
+
+/* ==========================================================================
+   Konjunktioner-fladen (data-konj-nuance) - De 4 dynamiske dyblilla alternativer
+   Dyb Ametyst-Nat, Skifer-Violet Midnat, Mørk Brombær & Orkidé, Obsidian-Aubergine
+   Gælder for HELE hovedfladen Top 100 Konjunktioner og alle underflader
+   ========================================================================== */
+
+/* Hovedbaggrund og tekst for alle konjunktionsflader */
+.top100-konjunktioner-hub,
+.konjunktioner-view,
+.konjunktioner-at-view,
+.da-naar-view,
+.fordi-derfor-view,
+.selvom-alligevel-view,
+.tekstflow-view,
+[data-konj-nuance] .top100-konjunktioner-hub,
+[data-konj-nuance] .konjunktioner-view,
+[data-konj-nuance] .konjunktioner-at-view,
+[data-konj-nuance] .da-naar-view,
+[data-konj-nuance] .fordi-derfor-view,
+[data-konj-nuance] .selvom-alligevel-view,
+[data-konj-nuance] .tekstflow-view {
+  background-color: var(--konj-bg, #4A040B) !important;
+  color: var(--konj-text, #FFFFFF) !important;
+}
+
+/* Hero Headers i ren hvid skrift (#FFFFFF) */
+.at-hero h1,
+.dn-hero h1,
+.fd-hero h1,
+.sa-hero h1,
+.tf-hero h1,
+.konj-hero h1,
+.top100-konjunktioner-hub h1,
+[data-konj-nuance] .at-hero h1,
+[data-konj-nuance] .dn-hero h1,
+[data-konj-nuance] .fd-hero h1,
+[data-konj-nuance] .sa-hero h1,
+[data-konj-nuance] .tf-hero h1,
+[data-konj-nuance] .konj-hero h1,
+[data-konj-nuance] .top100-konjunktioner-hub h1 {
+  color: #FFFFFF !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45) !important;
+}
+
+.at-hero p,
+.dn-hero p,
+.fd-hero p,
+.sa-hero p,
+.tf-hero p,
+.konj-hero p,
+.top100-konjunktioner-hub p,
+[data-konj-nuance] .at-hero p,
+[data-konj-nuance] .dn-hero p,
+[data-konj-nuance] .fd-hero p,
+[data-konj-nuance] .sa-hero p,
+[data-konj-nuance] .tf-hero p,
+[data-konj-nuance] .konj-hero p,
+[data-konj-nuance] .top100-konjunktioner-hub p {
+  color: var(--konj-text-muted, #DDD6FE) !important;
+  opacity: 0.95 !important;
+}
+
+/* 1. Tabs Navigationsramme i valgt konjunktion-nuance (Skifer-Violet) */
+[data-konj-nuance] .adv-tabs-nav,
+body[data-konj-nuance] .adv-tabs-nav,
+[data-theme="vinroed-praecision"][data-konj-nuance] .adv-tabs-nav,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .adv-tabs-nav,
+.konjunktioner-view .adv-tabs-nav,
+.konjunktioner-at-view .adv-tabs-nav,
+.da-naar-view .adv-tabs-nav,
+.fordi-derfor-view .adv-tabs-nav,
+.selvom-alligevel-view .adv-tabs-nav,
+.tekstflow-view .tf-tabs-nav,
+[data-konj-nuance] .tf-tabs-nav {
+  background: var(--konj-surface, #160C28) !important;
+  border: 2px solid var(--konj-border, #3B1E6D) !important;
+  border-radius: 16px !important;
+  padding: 8px !important;
+  gap: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-konj-nuance] .adv-tab-btn,
+body[data-konj-nuance] .adv-tab-btn,
+[data-theme="vinroed-praecision"][data-konj-nuance] .adv-tab-btn,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .adv-tab-btn,
+.konjunktioner-view .adv-tab-btn,
+.konjunktioner-at-view .adv-tab-btn,
+.da-naar-view .adv-tab-btn,
+.fordi-derfor-view .adv-tab-btn,
+.selvom-alligevel-view .adv-tab-btn,
+.tekstflow-view .tf-tab-btn,
+[data-konj-nuance] .tf-tab-btn {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 12px !important;
+  color: var(--konj-text-muted, #DDD6FE) !important;
+  font-weight: 700 !important;
+  padding: 0.65rem 1.15rem !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+}
+
+[data-konj-nuance] .adv-tab-btn:hover,
+body[data-konj-nuance] .adv-tab-btn:hover,
+[data-theme="vinroed-praecision"][data-konj-nuance] .adv-tab-btn:hover,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .adv-tab-btn:hover,
+.konjunktioner-view .adv-tab-btn:hover,
+.konjunktioner-at-view .adv-tab-btn:hover,
+.da-naar-view .adv-tab-btn:hover,
+.fordi-derfor-view .adv-tab-btn:hover,
+.selvom-alligevel-view .adv-tab-btn:hover,
+.tekstflow-view .tf-tab-btn:hover,
+[data-konj-nuance] .tf-tab-btn:hover {
+  background: var(--konj-surface-hover, #22123D) !important;
+  border-color: var(--konj-border, #3B1E6D) !important;
+  color: #FFFFFF !important;
+}
+
+[data-konj-nuance] .adv-tab-btn.active,
+body[data-konj-nuance] .adv-tab-btn.active,
+[data-theme="vinroed-praecision"][data-konj-nuance] .adv-tab-btn.active,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .adv-tab-btn.active,
+.konjunktioner-view .adv-tab-btn.active,
+.konjunktioner-at-view .adv-tab-btn.active,
+.da-naar-view .adv-tab-btn.active,
+.fordi-derfor-view .adv-tab-btn.active,
+.selvom-alligevel-view .adv-tab-btn.active,
+.tekstflow-view .tf-tab-btn.active,
+[data-konj-nuance] .tf-tab-btn.active {
+  background: var(--konj-primary, #8B5CF6) !important;
+  border: 1.5px solid var(--konj-border-focus, #A78BFA) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+}
+
+/* 2. Selve opgave-kortene på alle flader i Konjunktioner */
+[data-konj-nuance] .builder-card,
+body[data-konj-nuance] .builder-card,
+[data-theme="vinroed-praecision"][data-konj-nuance] .builder-card,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .builder-card,
+.konjunktioner-view .builder-card,
+.konjunktioner-at-view .builder-card,
+[data-konj-nuance] .exercise-action-card,
+body[data-konj-nuance] .exercise-action-card,
+[data-theme="vinroed-praecision"][data-konj-nuance] .exercise-action-card,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .exercise-action-card,
+.konjunktioner-view .exercise-action-card,
+.konjunktioner-at-view .exercise-action-card,
+[data-konj-nuance] .detektiv-card,
+body[data-konj-nuance] .detektiv-card,
+[data-theme="vinroed-praecision"][data-konj-nuance] .detektiv-card,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .detektiv-card,
+.konjunktioner-view .detektiv-card,
+.konjunktioner-at-view .detektiv-card,
+.da-naar-view .detektiv-card,
+.fordi-derfor-view .detektiv-card,
+.selvom-alligevel-view .detektiv-card,
+[data-konj-nuance] .detektiv-container,
+.konjunktioner-view .detektiv-container,
+.da-naar-view .detektiv-container,
+.fordi-derfor-view .detektiv-container,
+.selvom-alligevel-view .detektiv-container,
+[data-konj-nuance] .vaerksted-card,
+.konjunktioner-view .vaerksted-card,
+.da-naar-view .vaerksted-card,
+.fordi-derfor-view .vaerksted-card,
+.selvom-alligevel-view .vaerksted-card,
+[data-konj-nuance] .vrimmel-stage-card,
+body[data-konj-nuance] .vrimmel-stage-card,
+[data-theme="vinroed-praecision"][data-konj-nuance] .vrimmel-stage-card,
+.konjunktioner-view .vrimmel-stage-card,
+.konjunktioner-at-view .vrimmel-stage-card,
+.da-naar-view .vrimmel-stage-card,
+.fordi-derfor-view .vrimmel-stage-card,
+.selvom-alligevel-view .vrimmel-stage-card,
+[data-konj-nuance] .vrimmel-inspector,
+body[data-konj-nuance] .vrimmel-inspector,
+[data-theme="vinroed-praecision"][data-konj-nuance] .vrimmel-inspector,
+.konjunktioner-view .vrimmel-inspector,
+.konjunktioner-at-view .vrimmel-inspector,
+.da-naar-view .vrimmel-inspector,
+.fordi-derfor-view .vrimmel-inspector,
+.selvom-alligevel-view .vrimmel-inspector,
+[data-konj-nuance] .special-intro-box,
+.konjunktioner-view .special-intro-box,
+.konjunktioner-at-view .special-intro-box,
+[data-konj-nuance] .score-celebration-card,
+.konjunktioner-view .score-celebration-card,
+.konjunktioner-at-view .score-celebration-card,
+[data-konj-nuance] .cognitive-guide-banner,
+.da-naar-view .cognitive-guide-banner,
+.fordi-derfor-view .cognitive-guide-banner,
+.selvom-alligevel-view .cognitive-guide-banner,
+[data-konj-nuance] .tf-stage-wrap,
+.tekstflow-view .tf-stage-wrap,
+[data-konj-nuance] .tf-inspector,
+.tekstflow-view .tf-inspector,
+[data-konj-nuance] .tf-story-card,
+.tekstflow-view .tf-story-card,
+[data-konj-nuance] .opbygning-card,
+.tekstflow-view .opbygning-card,
+[data-konj-nuance] .byggeklods-block,
+.tekstflow-view .byggeklods-block {
+  background: var(--konj-surface, #160C28) !important;
+  border: 2px solid var(--konj-border, #3B1E6D) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  color: #FFFFFF !important;
+}
+
+[data-konj-nuance] .guide-sym-card,
+.da-naar-view .guide-sym-card,
+.fordi-derfor-view .guide-sym-card,
+.selvom-alligevel-view .guide-sym-card,
+[data-konj-nuance] .tf-stage-header,
+.tekstflow-view .tf-stage-header {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 1.5px solid var(--konj-border, #3B1E6D) !important;
+  border-radius: 12px !important;
+}
+
+/* 3. Sætningsvisningsbokse, dialoger og citater */
+[data-konj-nuance] .sb-sentence-display,
+body[data-konj-nuance] .sb-sentence-display,
+[data-theme="vinroed-praecision"][data-konj-nuance] .sb-sentence-display,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .sb-sentence-display,
+.konjunktioner-view .sb-sentence-display,
+.konjunktioner-at-view .sb-sentence-display,
+[data-konj-nuance] .exercise-dialog-quote,
+body[data-konj-nuance] .exercise-dialog-quote,
+[data-theme="vinroed-praecision"][data-konj-nuance] .exercise-dialog-quote,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .exercise-dialog-quote,
+.konjunktioner-view .exercise-dialog-quote,
+.konjunktioner-at-view .exercise-dialog-quote,
+[data-konj-nuance] .detektiv-sentence-quote,
+body[data-konj-nuance] .detektiv-sentence-quote,
+[data-theme="vinroed-praecision"][data-konj-nuance] .detektiv-sentence-quote,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .detektiv-sentence-quote,
+.konjunktioner-view .detektiv-sentence-quote,
+.konjunktioner-at-view .detektiv-sentence-quote {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 1.5px solid var(--konj-border, #3B1E6D) !important;
+  border-left: 5px solid var(--konj-primary, #8B5CF6) !important;
+  border-radius: 14px !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-konj-nuance] .exercise-dialog-quote span,
+.konjunktioner-view .exercise-dialog-quote span,
+.konjunktioner-at-view .exercise-dialog-quote span,
+[data-konj-nuance] .detektiv-sentence-quote span,
+.konjunktioner-view .detektiv-sentence-quote span,
+.konjunktioner-at-view .detektiv-sentence-quote span {
+  color: var(--konj-border-focus, #A78BFA) !important;
+  font-weight: 900 !important;
+  text-decoration: underline !important;
+}
+
+/* 4. Svarknapper, valgord, brikker og filterknapper */
+[data-konj-nuance] .detektiv-opt-btn,
+body[data-konj-nuance] .detektiv-opt-btn,
+[data-theme="vinroed-praecision"][data-konj-nuance] .detektiv-opt-btn,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .detektiv-opt-btn,
+.konjunktioner-view .detektiv-opt-btn,
+.konjunktioner-at-view .detektiv-opt-btn,
+.da-naar-view .detektiv-opt-btn,
+.fordi-derfor-view .detektiv-opt-btn,
+.selvom-alligevel-view .detektiv-opt-btn,
+[data-konj-nuance] .sb-puzzle-chip,
+body[data-konj-nuance] .sb-puzzle-chip,
+[data-theme="vinroed-praecision"][data-konj-nuance] .sb-puzzle-chip,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .sb-puzzle-chip,
+.konjunktioner-view .sb-puzzle-chip,
+.konjunktioner-at-view .sb-puzzle-chip,
+.da-naar-view .sb-puzzle-chip,
+.fordi-derfor-view .sb-puzzle-chip,
+.selvom-alligevel-view .sb-puzzle-chip,
+[data-konj-nuance] .filter-btn,
+body[data-konj-nuance] .filter-btn,
+[data-theme="vinroed-praecision"][data-konj-nuance] .filter-btn,
+.konjunktioner-view .filter-btn,
+.da-naar-view .filter-btn,
+.fordi-derfor-view .filter-btn,
+.selvom-alligevel-view .filter-btn,
+[data-konj-nuance] .word-sel-btn,
+.konjunktioner-view .word-sel-btn,
+[data-konj-nuance] .vaerksted-subtab-btn,
+.konjunktioner-view .vaerksted-subtab-btn,
+[data-konj-nuance] .pure-toggle-btn,
+.konjunktioner-view .pure-toggle-btn,
+.da-naar-view .pure-toggle-btn,
+.fordi-derfor-view .pure-toggle-btn,
+.selvom-alligevel-view .pure-toggle-btn,
+[data-konj-nuance] .inspector-btn-action,
+.konjunktioner-view .inspector-btn-action,
+.da-naar-view .inspector-btn-action,
+.fordi-derfor-view .inspector-btn-action,
+.selvom-alligevel-view .inspector-btn-action,
+[data-konj-nuance] .opbygning-subnav-btn,
+.tekstflow-view .opbygning-subnav-btn,
+[data-konj-nuance] .opbygning-arrow-btn,
+.tekstflow-view .opbygning-arrow-btn {
+  background: var(--konj-surface, #160C28) !important;
+  border: 1.5px solid var(--konj-border, #3B1E6D) !important;
+  border-radius: 12px !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-konj-nuance] .detektiv-opt-btn:hover,
+body[data-konj-nuance] .detektiv-opt-btn:hover,
+[data-theme="vinroed-praecision"][data-konj-nuance] .detektiv-opt-btn:hover,
+.konjunktioner-view .detektiv-opt-btn:hover,
+.konjunktioner-at-view .detektiv-opt-btn:hover,
+.da-naar-view .detektiv-opt-btn:hover,
+.fordi-derfor-view .detektiv-opt-btn:hover,
+.selvom-alligevel-view .detektiv-opt-btn:hover,
+[data-konj-nuance] .sb-puzzle-chip:hover,
+body[data-konj-nuance] .sb-puzzle-chip:hover,
+[data-theme="vinroed-praecision"][data-konj-nuance] .sb-puzzle-chip:hover,
+.konjunktioner-view .sb-puzzle-chip:hover,
+.konjunktioner-at-view .sb-puzzle-chip:hover,
+[data-konj-nuance] .filter-btn:hover,
+.konjunktioner-view .filter-btn:hover,
+[data-konj-nuance] .word-sel-btn:hover,
+.konjunktioner-view .word-sel-btn:hover,
+[data-konj-nuance] .vaerksted-subtab-btn:hover,
+.konjunktioner-view .vaerksted-subtab-btn:hover,
+[data-konj-nuance] .pure-toggle-btn:hover,
+.konjunktioner-view .pure-toggle-btn:hover,
+[data-konj-nuance] .inspector-btn-action:hover,
+.konjunktioner-view .inspector-btn-action:hover,
+[data-konj-nuance] .opbygning-subnav-btn:hover,
+.tekstflow-view .opbygning-subnav-btn:hover {
+  background: var(--konj-surface-hover, #22123D) !important;
+  border-color: var(--konj-primary, #8B5CF6) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 16px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 5. Aktive valgknapper (Filtre, Tabs og Næste/Handlingsknapper) */
+[data-konj-nuance] .filter-btn.active,
+.konjunktioner-view .filter-btn.active,
+.da-naar-view .filter-btn.active,
+.fordi-derfor-view .filter-btn.active,
+.selvom-alligevel-view .filter-btn.active,
+[data-konj-nuance] .pure-toggle-btn.active,
+.konjunktioner-view .pure-toggle-btn.active,
+.da-naar-view .pure-toggle-btn.active,
+.fordi-derfor-view .pure-toggle-btn.active,
+.selvom-alligevel-view .pure-toggle-btn.active,
+[data-konj-nuance] .vaerksted-subtab-btn.active,
+.konjunktioner-view .vaerksted-subtab-btn.active,
+[data-konj-nuance] .word-sel-btn.active,
+.konjunktioner-view .word-sel-btn.active,
+[data-konj-nuance] .opbygning-subnav-btn.active,
+.tekstflow-view .opbygning-subnav-btn.active,
+[data-konj-nuance] .action-btn-primary,
+body[data-konj-nuance] .action-btn-primary,
+[data-theme="vinroed-praecision"][data-konj-nuance] .action-btn-primary,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .action-btn-primary,
+.konjunktioner-view .action-btn-primary,
+.konjunktioner-at-view .action-btn-primary,
+.da-naar-view .action-btn-primary,
+.fordi-derfor-view .action-btn-primary,
+.selvom-alligevel-view .action-btn-primary,
+.tekstflow-view .action-btn-primary,
+[data-konj-nuance] .inspector-audio-btn,
+.konjunktioner-view .inspector-audio-btn,
+[data-konj-nuance] .inspector-speak-btn,
+.konjunktioner-view .inspector-speak-btn {
+  background: var(--konj-primary, #8B5CF6) !important;
+  border: 1.5px solid var(--konj-border-focus, #A78BFA) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 16px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+}
+
+[data-konj-nuance] .action-btn-primary:hover,
+.konjunktioner-view .action-btn-primary:hover,
+.konjunktioner-at-view .action-btn-primary:hover,
+.da-naar-view .action-btn-primary:hover,
+.fordi-derfor-view .action-btn-primary:hover,
+.selvom-alligevel-view .action-btn-primary:hover,
+.tekstflow-view .action-btn-primary:hover {
+  background: var(--konj-primary-hover, #7C3AED) !important;
+  border-color: var(--konj-border-focus, #A78BFA) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px var(--konj-glow, rgba(139, 92, 246, 0.8)) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 6. Badges og kontekst-mærkater */
+[data-konj-nuance] .builder-step-badge,
+.konjunktioner-view .builder-step-badge,
+.konjunktioner-at-view .builder-step-badge,
+[data-konj-nuance] .detektiv-context-tag,
+body[data-konj-nuance] .detektiv-context-tag,
+[data-theme="vinroed-praecision"][data-konj-nuance] .detektiv-context-tag,
+[data-theme="vinroed-praecision"] [data-konj-nuance] .detektiv-context-tag,
+.konjunktioner-view .detektiv-context-tag,
+.konjunktioner-at-view .detektiv-context-tag,
+.da-naar-view .detektiv-context-tag,
+.fordi-derfor-view .detektiv-context-tag,
+.selvom-alligevel-view .detektiv-context-tag,
+[data-konj-nuance] .inspector-badge,
+.konjunktioner-view .inspector-badge,
+.da-naar-view .inspector-badge,
+.fordi-derfor-view .inspector-badge,
+.selvom-alligevel-view .inspector-badge {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 1.5px solid var(--konj-border, #3B1E6D) !important;
+  color: var(--konj-text-muted, #DDD6FE) !important;
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+}
+
+/* 7. Progress-bar i konjunktion-opgaverne */
+[data-konj-nuance] .progress-header,
+.konjunktioner-view .progress-header,
+.konjunktioner-at-view .progress-header {
+  color: var(--konj-text-muted, #DDD6FE) !important;
+}
+
+[data-konj-nuance] .progress-bar-wrap,
+body[data-konj-nuance] .progress-bar-wrap,
+[data-theme="vinroed-praecision"][data-konj-nuance] .progress-bar-wrap,
+.konjunktioner-view .progress-bar-wrap,
+.konjunktioner-at-view .progress-bar-wrap {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 1px solid var(--konj-border, #3B1E6D) !important;
+}
+
+[data-konj-nuance] .progress-bar-fill,
+body[data-konj-nuance] .progress-bar-fill,
+[data-theme="vinroed-praecision"][data-konj-nuance] .progress-bar-fill,
+.konjunktioner-view .progress-bar-fill,
+.konjunktioner-at-view .progress-bar-fill {
+  background: var(--konj-primary, #8B5CF6) !important;
+  box-shadow: 0 0 12px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+}
+
+/* 8. Puslespils-slots og blank-felter i Byggeren */
+[data-konj-nuance] .sb-blank-slot,
+.konjunktioner-view .sb-blank-slot,
+.konjunktioner-at-view .sb-blank-slot {
+  border: 2px dashed var(--konj-border-focus, #A78BFA) !important;
+  background: var(--konj-surface-input, #0D061A) !important;
+  color: var(--konj-border-focus, #A78BFA) !important;
+}
+
+[data-konj-nuance] .sb-blank-slot.filled,
+.konjunktioner-view .sb-blank-slot.filled,
+.konjunktioner-at-view .sb-blank-slot.filled {
+  border: 2px solid var(--konj-border-focus, #A78BFA) !important;
+  background: var(--konj-primary, #8B5CF6) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 16px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+}
+
+[data-konj-nuance] .sb-puzzle-slot,
+.konjunktioner-view .sb-puzzle-slot,
+.konjunktioner-at-view .sb-puzzle-slot {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 2px dashed var(--konj-border, #3B1E6D) !important;
+}
+
+[data-konj-nuance] .sb-puzzle-slot.filled,
+.konjunktioner-view .sb-puzzle-slot.filled,
+.konjunktioner-at-view .sb-puzzle-slot.filled {
+  background: var(--konj-surface, #160C28) !important;
+  border: 2px solid var(--konj-primary, #8B5CF6) !important;
+  box-shadow: 0 0 16px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+}
+
+[data-konj-nuance] .flow-step,
+.konjunktioner-view .flow-step,
+.konjunktioner-at-view .flow-step {
+  background: var(--konj-surface-input, #0D061A) !important;
+}
+
+/* 9. Vrimlebillede-specifikt: Kontrolbjælke, inspektorbokse og hotspots */
+[data-konj-nuance] .vrimmel-controls-bar,
+.konjunktioner-view .vrimmel-controls-bar,
+.da-naar-view .vrimmel-controls-bar,
+.fordi-derfor-view .vrimmel-controls-bar,
+.selvom-alligevel-view .vrimmel-controls-bar,
+[data-konj-nuance] .inspector-trans-box,
+.konjunktioner-view .inspector-trans-box,
+.da-naar-view .inspector-trans-box,
+.fordi-derfor-view .inspector-trans-box,
+.selvom-alligevel-view .inspector-trans-box,
+[data-konj-nuance] .inspector-sentence-card,
+.konjunktioner-view .inspector-sentence-card,
+.da-naar-view .inspector-sentence-card,
+.fordi-derfor-view .inspector-sentence-card,
+.selvom-alligevel-view .inspector-sentence-card,
+[data-konj-nuance] .inspector-scene-box,
+.konjunktioner-view .inspector-scene-box,
+.da-naar-view .inspector-scene-box,
+.fordi-derfor-view .inspector-scene-box,
+.selvom-alligevel-view .inspector-scene-box,
+[data-konj-nuance] .syntax-token-box,
+.konjunktioner-view .syntax-token-box,
+[data-konj-nuance] .special-rule-card,
+.konjunktioner-view .special-rule-card,
+.konjunktioner-at-view .special-rule-card,
+[data-konj-nuance] .special-rule-example,
+.konjunktioner-view .special-rule-example,
+.konjunktioner-at-view .special-rule-example {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 1.5px solid var(--konj-border, #3B1E6D) !important;
+}
+
+[data-konj-nuance] .hotspot-pin,
+.konjunktioner-view .hotspot-pin,
+.konjunktioner-at-view .hotspot-pin,
+.da-naar-view .hotspot-pin,
+.fordi-derfor-view .hotspot-pin,
+.selvom-alligevel-view .hotspot-pin {
+  background: var(--konj-primary, #8B5CF6) !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 14px var(--konj-glow, rgba(139, 92, 246, 0.6)) !important;
+}
+
+[data-konj-nuance] .hotspot-label,
+.konjunktioner-view .hotspot-label,
+.konjunktioner-at-view .hotspot-label,
+.da-naar-view .hotspot-label,
+.fordi-derfor-view .hotspot-label,
+.selvom-alligevel-view .hotspot-label {
+  background: var(--konj-surface-input, #0D061A) !important;
+  border: 1px solid var(--konj-border-focus, #A78BFA) !important;
+  color: var(--konj-text-muted, #DDD6FE) !important;
+}
+
+
 /* Vrimlebilled-scene kort */
-[data-theme="vinroed-praecision"] .vrimmel-stage-card {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .vrimmel-stage-card {
   background: var(--vp-surface) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-md) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
-[data-theme="vinroed-praecision"] .vrimmel-controls-bar {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .vrimmel-controls-bar {
   background: var(--vp-surface-input) !important;
   border-bottom: 1px solid var(--vp-border) !important;
 }
 
-[data-theme="vinroed-praecision"] .filter-btn {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .filter-btn {
   background: var(--vp-surface) !important;
   border: 1px solid var(--vp-border) !important;
   color: var(--vp-text-muted) !important;
   border-radius: var(--vp-radius-sm) !important;
 }
 
-[data-theme="vinroed-praecision"] .filter-btn.active {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .filter-btn.active {
   background: var(--vp-primary) !important;
   border-color: var(--vp-primary) !important;
   color: #FFFFFF !important;
   box-shadow: 0 2px 8px rgba(255, 77, 94, 0.3) !important;
 }
 
-[data-theme="vinroed-praecision"] .pure-toggle-btn {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .pure-toggle-btn {
   background: var(--vp-surface) !important;
   border: 1px solid var(--vp-border) !important;
   color: var(--vp-text-muted) !important;
   border-radius: var(--vp-radius-sm) !important;
 }
 
-[data-theme="vinroed-praecision"] .pure-toggle-btn.active {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .pure-toggle-btn.active {
   background: var(--vp-primary) !important;
   border-color: var(--vp-primary) !important;
   color: #FFFFFF !important;
 }
 
 /* Inspector modul for mål-ord */
-[data-theme="vinroed-praecision"] .vrimmel-inspector {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .vrimmel-inspector {
   background: var(--vp-surface) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-md) !important;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35) !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-badge,
-[data-theme="vinroed-praecision"] .inspector-cat-badge {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-badge,
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-cat-badge {
   background: var(--vp-surface-input) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-sm) !important;
   color: var(--vp-text-muted) !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-audio-btn {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-audio-btn {
   background: var(--vp-surface-input) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-sm) !important;
@@ -1378,30 +2330,30 @@ body[data-theme="vinroed-praecision"],
   transition: all 0.2s ease !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-audio-btn:hover {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-audio-btn:hover {
   background: var(--vp-surface-hover) !important;
   border-color: var(--vp-primary) !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-word-title {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-word-title {
   color: #FFFFFF !important;
   font-family: 'Outfit', sans-serif !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-trans-box,
-[data-theme="vinroed-praecision"] .inspector-scene-box {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-trans-box,
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-scene-box {
   background: var(--vp-surface-input) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-sm) !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-sentence-card {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-sentence-card {
   background: var(--vp-surface-input) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-md) !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-speak-btn {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-speak-btn {
   background: var(--vp-primary) !important;
   border-radius: var(--vp-radius-sm) !important;
   color: #FFFFFF !important;
@@ -1409,22 +2361,22 @@ body[data-theme="vinroed-praecision"],
   box-shadow: 0 2px 8px rgba(255, 77, 94, 0.35) !important;
 }
 
-[data-theme="vinroed-praecision"] .grad-meter-box {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .grad-meter-box {
   background: var(--vp-surface-input) !important;
   border: 1px solid var(--vp-border) !important;
   border-radius: var(--vp-radius-sm) !important;
 }
 
-[data-theme="vinroed-praecision"] .meter-track {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .meter-track {
   background: rgba(0, 0, 0, 0.4) !important;
   border: 1px solid var(--vp-border) !important;
 }
 
-[data-theme="vinroed-praecision"] .meter-fill {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .meter-fill {
   background: linear-gradient(90deg, #FBBF24, var(--vp-primary)) !important;
 }
 
-[data-theme="vinroed-praecision"] .inspector-btn-action {
+[data-theme="vinroed-praecision"]:not([data-adv-nuance]):not([data-konj-nuance]) .inspector-btn-action {
   border-radius: var(--vp-radius-sm) !important;
   background: var(--vp-surface-input) !important;
   border: 1px solid var(--vp-border) !important;
@@ -1696,15 +2648,15 @@ body[data-color-mode="groen-granit"] {
   box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45) !important;
 }
 
-/* Modulkort og flader i Dyb Skovgrøn (#073518) */
-[data-theme="vinroed-praecision"] .vrimmel-card,
-[data-theme="vinroed-praecision"] .mission-card,
-[data-theme="vinroed-praecision"] .story-container,
-[data-theme="vinroed-praecision"] .sorting-game-box,
-[data-theme="vinroed-praecision"] .hotspot-detail-card,
-[data-theme="vinroed-praecision"] .category-card,
-[data-theme="vinroed-praecision"] .sentence-builder-card,
-[data-theme="vinroed-praecision"] .scene-card {
+/* Modulkort og flader i Dyb Skovgrøn (#073518) KUN til Substantiver (ikke verber eller adjektiver) */
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .vrimmel-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .mission-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .story-container,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sorting-game-box,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .hotspot-detail-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .category-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sentence-builder-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .scene-card {
   background: #073518 !important;
   border: 1.5px solid #136832 !important;
   border-radius: 20px !important;
@@ -1713,31 +2665,31 @@ body[data-color-mode="groen-granit"] {
 }
 
 /* Dybeste bundfelter og inputrammer i Skovgrøn (#02220e) */
-[data-theme="vinroed-praecision"] .clue-btn,
-[data-theme="vinroed-praecision"] .story-step-card,
-[data-theme="vinroed-praecision"] .story-nav-btn,
-[data-theme="vinroed-praecision"] .sort-word-chip,
-[data-theme="vinroed-praecision"] .radar-toggle-btn,
-[data-theme="vinroed-praecision"] .pure-image-toggle-btn,
-[data-theme="vinroed-praecision"] .sb-context-card,
-[data-theme="vinroed-praecision"] .sb-question-box,
-[data-theme="vinroed-praecision"] .sb-live-box,
-[data-theme="vinroed-praecision"] .sb-puzzle-bank,
-[data-theme="vinroed-praecision"] .grammar-system-banner,
-[data-theme="vinroed-praecision"] .grammar-legend-bar,
-[data-theme="vinroed-praecision"] .vrimmel-stage,
-[data-theme="vinroed-praecision"] .sort-bin {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .clue-btn,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .story-step-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .story-nav-btn,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sort-word-chip,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .radar-toggle-btn,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .pure-image-toggle-btn,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-context-card,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-question-box,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-live-box,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-puzzle-bank,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .grammar-system-banner,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .grammar-legend-bar,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .vrimmel-stage,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sort-bin {
   background: #02220e !important;
   border: 1.5px solid #136832 !important;
   color: #FFFFFF !important;
   transition: all 0.2s ease !important;
 }
 
-[data-theme="vinroed-praecision"] .clue-btn:hover,
-[data-theme="vinroed-praecision"] .story-nav-btn:hover,
-[data-theme="vinroed-praecision"] .sort-word-chip:hover,
-[data-theme="vinroed-praecision"] .radar-toggle-btn:hover,
-[data-theme="vinroed-praecision"] .pure-image-toggle-btn:hover {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .clue-btn:hover,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .story-nav-btn:hover,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sort-word-chip:hover,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .radar-toggle-btn:hover,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .pure-image-toggle-btn:hover {
   background: #0c4f24 !important;
   border-color: #22c55e !important;
   color: #FFFFFF !important;
@@ -1772,51 +2724,50 @@ body[data-color-mode="groen-granit"] {
   color: #a7f3d0 !important;
 }
 
-[data-theme="vinroed-praecision"] .sb-action-btn,
-[data-theme="vinroed-praecision"] .mission-next-btn {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-action-btn,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .mission-next-btn {
   background: #22c55e !important;
   color: #02220e !important;
   font-weight: 800 !important;
   box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45) !important;
 }
 
-[data-theme="vinroed-praecision"] .sb-action-btn:hover,
-[data-theme="vinroed-praecision"] .mission-next-btn:hover {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-action-btn:hover,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .mission-next-btn:hover {
   background: #4ade80 !important;
   color: #02220e !important;
 }
 
 /* ==========================================================================
-   Sætningsbygger (tab_saetning) Knap- og Rækkekontraster
-   Løsning på "grøn-i-grøn" kollision: Solide brikker med hvid skrift og dybde
+   Sætningsbygger (tab_saetning) Knap- og Rækkekontraster for Substantiver
    ========================================================================== */
 
-[data-theme="vinroed-praecision"] .sb-category-row {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-category-row {
   background: #02220e !important;
   border: 1.5px solid #136832 !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
-[data-theme="vinroed-praecision"] .sb-category-title {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-category-title {
   color: #FFFFFF !important;
 }
 
 /* Uvalgte knapper */
-[data-theme="vinroed-praecision"] .sb-chip-btn {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-chip-btn {
   background: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   color: #e2e8f0 !important;
 }
 
-[data-theme="vinroed-praecision"] .sb-chip-btn:hover {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-chip-btn:hover {
   background: rgba(255, 255, 255, 0.16) !important;
   border-color: rgba(255, 255, 255, 0.4) !important;
   color: #FFFFFF !important;
 }
 
-/* Valgte knapper: Solide, lysstærke læringsbrikker (forsvinder ALDRIG i baggrunden) */
-[data-theme="vinroed-praecision"] .sb-cat-subjekt .sb-chip-btn.selected,
-[data-theme="vinroed-praecision"] .sb-cat-objekt .sb-chip-btn.selected {
+/* Valgte knapper: Solide, lysstærke læringsbrikker */
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-subjekt .sb-chip-btn.selected,
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-objekt .sb-chip-btn.selected {
   background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
   color: #FFFFFF !important;
   border: 1.5px solid #86efac !important;
@@ -1825,7 +2776,7 @@ body[data-color-mode="groen-granit"] {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
 
-[data-theme="vinroed-praecision"] .sb-cat-verbum .sb-chip-btn.selected {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-verbum .sb-chip-btn.selected {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
   color: #FFFFFF !important;
   border: 1.5px solid #fca5a5 !important;
@@ -1834,7 +2785,7 @@ body[data-color-mode="groen-granit"] {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
 
-[data-theme="vinroed-praecision"] .sb-cat-sted .sb-chip-btn.selected {
+body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-sted .sb-chip-btn.selected {
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
   color: #FFFFFF !important;
   border: 1.5px solid #93c5fd !important;
@@ -1842,6 +2793,186 @@ body[data-color-mode="groen-granit"] {
   font-weight: 800 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
+
+/* ==========================================================================
+   Verbum-fladen (data-verb-nuance) - De 4 dynamiske dybrøde alternativer
+   Tab 6: Sætningsbygger (1. Udforsk & 2. Opgave og puslespil)
+   ========================================================================== */
+
+[data-verb-nuance] .sentence-builder-card,
+[data-verb-nuance] .verber-vrimmel-view .sentence-builder-card,
+[data-verb-nuance] .vrimmel-card,
+[data-verb-nuance] .exercise-card,
+[data-verb-nuance] .synonym-card,
+[data-verb-nuance] .story-container {
+  background: var(--verb-surface) !important;
+  border: 1.5px solid var(--verb-border) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  color: #FFFFFF !important;
+}
+
+[data-verb-nuance] .sb-context-card,
+[data-verb-nuance] .sb-question-box,
+[data-verb-nuance] .sb-live-box,
+[data-verb-nuance] .sb-puzzle-bank,
+[data-verb-nuance] .sb-puzzle-section,
+[data-verb-nuance] .sb-category-row,
+[data-verb-nuance] .grammar-legend-bar,
+[data-verb-nuance] .radar-control-bar,
+[data-verb-nuance] .hotspot-detail-card,
+[data-verb-nuance] .story-step-card,
+[data-verb-nuance] .time-sentence-box,
+[data-verb-nuance] .mission-clue-box {
+  background: var(--verb-surface-input) !important;
+  border: 1.5px solid var(--verb-border) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-verb-nuance] .sb-sub-nav {
+  border-bottom: 1px solid var(--verb-border) !important;
+}
+
+[data-verb-nuance] .sb-sub-btn {
+  background: var(--verb-surface-input) !important;
+  border: 1.5px solid var(--verb-border) !important;
+  color: var(--verb-text-muted) !important;
+}
+
+[data-verb-nuance] .sb-sub-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--verb-border-focus) !important;
+  color: #FFFFFF !important;
+}
+
+[data-verb-nuance] .sb-sub-btn.active {
+  background: var(--verb-primary) !important;
+  border-color: var(--verb-border-focus) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 15px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-task-pill {
+  background: var(--verb-surface-input) !important;
+  border: 1.5px solid var(--verb-border) !important;
+  color: var(--verb-text-muted) !important;
+}
+
+[data-verb-nuance] .sb-task-pill.active {
+  background: var(--verb-primary) !important;
+  border-color: var(--verb-border-focus) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 10px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-task-pill.done {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
+  color: #0f172a !important;
+}
+
+[data-verb-nuance] .sb-option-btn {
+  background: var(--verb-surface-input) !important;
+  border: 2px solid var(--verb-border) !important;
+  color: #FFFFFF !important;
+}
+
+[data-verb-nuance] .sb-option-btn:hover {
+  border-color: var(--verb-primary) !important;
+  box-shadow: 0 0 14px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot {
+  background: #0d0205 !important;
+  border: 2px dashed #4E2028 !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.slot-0,
+[data-verb-nuance] .sb-puzzle-slot.slot-2 {
+  border-color: rgba(34, 197, 94, 0.55) !important;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, #0d0205 100%) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.slot-1 {
+  border-color: var(--verb-primary) !important;
+  background: linear-gradient(180deg, rgba(255, 42, 85, 0.14) 0%, #0d0205 100%) !important;
+  box-shadow: inset 0 0 16px rgba(255, 42, 85, 0.18), 0 0 12px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.slot-3 {
+  border-color: rgba(56, 189, 248, 0.55) !important;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #0d0205 100%) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.slot-1 .slot-role {
+  color: var(--verb-primary) !important;
+  text-shadow: 0 0 8px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.slot-1 .slot-trans {
+  color: var(--verb-text-muted) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.filled {
+  background: var(--verb-surface) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-slot.filled.slot-1 {
+  border: 2px solid var(--verb-primary) !important;
+  background: linear-gradient(135deg, rgba(255, 42, 85, 0.32) 0%, #0d0205 100%) !important;
+  box-shadow: 0 0 20px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-bank {
+  background: #0d0205 !important;
+  border: 1.5px solid var(--verb-border) !important;
+}
+
+[data-verb-nuance] .sb-puzzle-chip {
+  background: var(--verb-surface) !important;
+  border: 2px solid var(--verb-border) !important;
+  color: #FFFFFF !important;
+}
+
+[data-verb-nuance] .sb-puzzle-chip:hover {
+  border-color: var(--verb-primary) !important;
+  box-shadow: 0 0 12px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-action-btn,
+[data-verb-nuance] .mission-next-btn {
+  background: var(--verb-primary) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px var(--verb-glow) !important;
+}
+
+[data-verb-nuance] .sb-action-btn:hover,
+[data-verb-nuance] .mission-next-btn:hover {
+  background: var(--verb-primary-hover) !important;
+  color: #FFFFFF !important;
+}
+
+[data-verb-nuance] .sb-chip-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--verb-border) !important;
+  color: #FFFFFF !important;
+}
+
+[data-verb-nuance] .sb-chip-btn:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: var(--verb-primary) !important;
+}
+
+[data-verb-nuance] .sb-cat-verbum .sb-chip-btn.selected {
+  background: linear-gradient(135deg, var(--verb-primary) 0%, #800A18 100%) !important;
+  border: 1.5px solid var(--verb-border-focus) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px var(--verb-glow) !important;
+}
+
 
 
 

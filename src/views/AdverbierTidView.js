@@ -1,5 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierTidView - Felt 2: Tid & Frekvens (Hvornår, hvor længe, hvor tit)
@@ -12,6 +19,9 @@ import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations
  */
 export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-tid-view';
@@ -26,6 +36,41 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
+
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -335,11 +380,119 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     // View Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --adv-bg: #4A040B;
+            --adv-bg-glow: #6B0F1A;
+            --adv-surface: #0A192F;
+            --adv-surface-hover: #112240;
+            --adv-surface-input: #050E1A;
+            --adv-border: #1E3A66;
+            --adv-border-focus: #60A5FA;
+            --adv-primary: #3B82F6;
+            --adv-primary-hover: #2563EB;
+            --adv-glow: rgba(59, 130, 246, 0.45);
+            --adv-text: #FFFFFF;
+            --adv-text-muted: #BFDBFE;
+            --adv-text-subtle: #93C5FD;
+        }
+
+        body[data-adv-nuance] {
+            background-color: var(--adv-bg, #4A040B) !important;
+            background-image: radial-gradient(circle at top right, var(--adv-bg-glow, #6B0F1A), var(--adv-bg, #4A040B)) !important;
+        }
+
+        /* Localhost Nuance Toggle Bar */
+        .adv-localhost-toggle-bar {
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            border-radius: 16px;
+            padding: 0.85rem 1.2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .adv-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: #FFFFFF;
+        }
+        .adv-pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--adv-primary, #3B82F6);
+            box-shadow: 0 0 10px var(--adv-primary, #3B82F6);
+            display: inline-block;
+            animation: advPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes advPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .adv-toggle-hint {
+            color: var(--adv-text-muted, #BFDBFE);
+            font-size: 0.85rem;
+        }
+        .adv-toggle-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .adv-nuance-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--adv-border, #1E3A66);
+            color: var(--adv-text-muted, #BFDBFE);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .adv-nuance-btn:hover {
+            color: #FFFFFF;
+            background: var(--adv-surface-hover, #112240);
+            border-color: var(--adv-primary, #3B82F6);
+            transform: translateY(-1px);
+        }
+        .adv-nuance-btn.active {
+            background: var(--adv-primary, #3B82F6);
+            color: #FFFFFF;
+            border-color: var(--adv-border-focus, #60A5FA);
+            box-shadow: 0 0 14px var(--adv-glow, rgba(59, 130, 246, 0.5));
+        }
+
         .adverbier-tid-view {
             max-width: 1240px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
+        }
+
+        .adverbier-tid-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .adverbier-tid-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            vertical-align: -0.15em;
+            color: currentColor;
+        }
+        .adverbier-tid-view .ds-icon-svg svg {
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
         }
         .adv-hero {
             text-align: center;
@@ -349,16 +502,19 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             font-size: 2.3rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #f59e0b, #fbbf24, #f97316);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            letter-spacing: -0.01em;
         }
         .adv-hero p {
-            color: #94a3b8;
+            color: #FFFFFF !important;
             font-size: 1.1rem;
             max-width: 820px;
             margin: 0 auto 1.2rem;
             line-height: 1.5;
+            opacity: 0.95;
         }
         .adv-rule-banner {
             display: flex;
@@ -377,50 +533,61 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             font-weight: 600;
         }
         .rule-frekvens {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1.5px solid #f59e0b;
-            color: #fbbf24;
-        }
-        .rule-tidspunkt {
             background: rgba(14, 165, 233, 0.15);
             border: 1.5px solid #0ea5e9;
-            color: #38bdf8;
+            color: var(--adv-border-focus, #93C5FD);
+        }
+        .rule-tidspunkt {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1.5px solid #3b82f6;
+            color: #bfdbfe;
         }
 
-        /* Tabs Nav */
-        .adv-tabs-nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 0.5rem;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Tabs Nav - Oversigtsrammen med opgaver i Dyb safirblå */
+        html[data-theme] .adverbier-tid-view .adv-tabs-nav,
+        body[data-adv-nuance] .adv-tabs-nav,
+        .adverbier-tid-view .adv-tabs-nav {
+            display: flex !important;
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+            gap: 0.5rem !important;
+            margin-bottom: 2rem !important;
+            background: var(--adv-surface, #0A192F) !important;
+            padding: 0.6rem !important;
+            border-radius: 16px !important;
+            border: 2px solid var(--adv-border, #1E3A66) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
         }
-        .adv-tab-btn {
-            background: transparent;
-            color: #94a3b8;
-            border: none;
-            padding: 0.65rem 1.1rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.92rem;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
+        html[data-theme] .adverbier-tid-view .adv-tab-btn,
+        body[data-adv-nuance] .adv-tab-btn,
+        .adverbier-tid-view .adv-tab-btn {
+            background: transparent !important;
+            color: var(--adv-text-muted, #BFDBFE) !important;
+            border: 1px solid transparent !important;
+            padding: 0.65rem 1.15rem !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            font-size: 0.92rem !important;
+            cursor: pointer !important;
+            transition: all 0.25s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.45rem !important;
         }
-        .adv-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+        html[data-theme] .adverbier-tid-view .adv-tab-btn:hover,
+        body[data-adv-nuance] .adv-tab-btn:hover,
+        .adverbier-tid-view .adv-tab-btn:hover {
+            color: #FFFFFF !important;
+            background: var(--adv-surface-hover, #112240) !important;
+            border-color: var(--adv-border, #1E3A66) !important;
         }
-        .adv-tab-btn.active {
-            background: #f59e0b;
-            color: white;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        html[data-theme] .adverbier-tid-view .adv-tab-btn.active,
+        body[data-adv-nuance] .adv-tab-btn.active,
+        .adverbier-tid-view .adv-tab-btn.active {
+            background: var(--adv-primary, #3B82F6) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid var(--adv-border-focus, #93C5FD) !important;
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.5)) !important;
         }
 
         /* Tab 1: Vrimmel Styling */
@@ -530,18 +697,20 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
         }
         .hotspot-pin.active {
-            transform: translate(-50%, -50%) scale(1.15);
+            transform: translate(-50%, -50%) scale(1.18);
             z-index: 30;
-            box-shadow: 0 0 16px #fbbf24, 0 4px 12px rgba(0, 0, 0, 0.8);
-            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.95), 0 0 35px rgba(59, 130, 246, 0.55), 0 4px 14px rgba(0, 0, 0, 0.85);
+            border: 2px solid #BAE6FD !important;
         }
         .pin-frekvens {
-            background: rgba(217, 119, 6, 0.92);
+            background: linear-gradient(135deg, #1E40AF, #2563EB);
             color: white;
+            border-color: #93C5FD;
         }
         .pin-tidspunkt {
-            background: rgba(2, 132, 199, 0.92);
+            background: linear-gradient(135deg, #0284C7, #38BDF8);
             color: white;
+            border-color: #BAE6FD;
         }
 
         @media (max-width: 768px) {
@@ -1167,7 +1336,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         .chip-substantiv { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
         .chip-verbum { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
         .chip-tid { background: #f59e0b; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
-        .chip-rest { background: #a855f7; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6); }
+        .chip-rest { background: #64748b; box-shadow: 0 0 6px rgba(100, 116, 139, 0.6); }
 
         .sb-category-row {
             margin-bottom: 1.3rem;
@@ -1180,7 +1349,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         .sb-cat-subjekt { border-left-color: #22c55e; }
         .sb-cat-verbum { border-left-color: #ef4444; }
         .sb-cat-tid { border-left-color: #f59e0b; }
-        .sb-cat-rest { border-left-color: #a855f7; }
+        .sb-cat-rest { border-left-color: #64748b; }
 
         .sb-category-header {
             display: flex;
@@ -1208,7 +1377,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         .badge-cat-subjekt { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
         .badge-cat-verbum { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
         .badge-cat-tid { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .badge-cat-rest { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-cat-rest { background: rgba(100, 116, 139, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
 
         .sb-chips-grid {
             display: flex;
@@ -1254,10 +1423,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
         }
         .sb-cat-rest .sb-chip-btn.selected {
-            background: rgba(168, 85, 247, 0.25);
-            color: #d8b4fe;
-            border-color: #a855f7;
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+            background: rgba(100, 116, 139, 0.3);
+            color: #f1f5f9;
+            border-color: #94a3b8;
+            box-shadow: 0 0 12px rgba(100, 116, 139, 0.4);
         }
 
         .sb-live-box {
@@ -1290,7 +1459,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         .word-substantiv { color: #4ade80; }
         .word-verbum { color: #f87171; }
         .word-tid { color: #fbbf24; }
-        .word-rest { color: #c084fc; }
+        .word-rest { color: #cbd5e1; }
 
         .sb-listen-btn {
             background: #1e293b;
@@ -1848,16 +2017,14 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'adv-hero';
     hero.innerHTML = `
-        <h1>${getTranslation('adv_f2_hero_title')}</h1>
-        <p>${getTranslation('adv_f2_hero_desc')}</p>
+        <h1>${stripAllEmojis(getTranslation('adv_f2_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f2_hero_desc'))}</p>
         <div class="adv-rule-banner">
             <div class="rule-card-mini rule-frekvens">
-                <span>⏳</span>
-                <span><strong>${getTranslation('adv_filter_frequency')}:</strong> ${getTranslation('adv_f2_rule_frekvens')}</span>
+                <span><strong>${stripAllEmojis(getTranslation('adv_filter_frequency'))}:</strong> ${stripAllEmojis(getTranslation('adv_f2_rule_frekvens'))}</span>
             </div>
             <div class="rule-card-mini rule-tidspunkt">
-                <span>⏰</span>
-                <span><strong>${getTranslation('adv_filter_time')}:</strong> ${getTranslation('adv_f2_rule_nuance')}</span>
+                <span><strong>${stripAllEmojis(getTranslation('adv_filter_time'))}:</strong> ${stripAllEmojis(getTranslation('adv_f2_rule_nuance'))}</span>
             </div>
         </div>
     `;
@@ -1868,18 +2035,18 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'adv-tabs-nav';
 
     const tabsConfig = [
-        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (19)`, icon: '🖼️' },
-        { id: 'tab_detektiv', label: `2. ${getTranslation('adv_tab_detektiv')}`, icon: '🔍' },
-        { id: 'tab_barometer', label: `3. ${getTranslation('adv_tab_barometer')}`, icon: '📊' },
-        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: '🧱' },
-        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: '🎯' }
+        { id: 'tab_vrimmel', label: `1. ${getTranslation('adv_tab_vrimmel')} (19)`, icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'tab_detektiv', label: `2. ${getTranslation('adv_tab_detektiv')}`, icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'tab_barometer', label: `3. ${getTranslation('adv_tab_barometer')}`, icon: renderDsIcon('clock', '', { size: 16 }) },
+        { id: 'tab_saetning', label: `4. ${getTranslation('adv_tab_saetning')}`, icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'tab_kontekst', label: `5. ${getTranslation('adv_tab_kontekst')}`, icon: renderDsIcon('target', '', { size: 16 }) }
     ];
 
     const tabButtons = {};
     tabsConfig.forEach(t => {
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${t.id === currentTab ? 'active' : ''}`;
-        btn.innerHTML = `<span>${t.icon}</span> <span>${t.label}</span>`;
+        btn.innerHTML = `${t.icon} <span>${stripAllEmojis(t.label)}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabButtons[t.id] = btn;
         tabsNav.appendChild(btn);
@@ -1950,7 +2117,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const togglePinsBtn = document.createElement('button');
         togglePinsBtn.className = 'toggle-pins-btn';
-        togglePinsBtn.innerHTML = `<span>${showPins ? '👁️ Skjul markører' : '👁️ Vis markører'}</span>`;
+        togglePinsBtn.innerHTML = `<span>${showPins ? 'Skjul markører' : 'Vis markører'}</span>`;
         togglePinsBtn.onclick = () => {
             showPins = !showPins;
             renderTabVrimmel(parent);
@@ -2022,7 +2189,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const speakBtn = document.createElement('button');
         speakBtn.className = 'inspector-speak-btn';
         speakBtn.title = getTranslation('adv_listen_word');
-        speakBtn.innerHTML = '🔊';
+        speakBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
         speakBtn.onclick = () => speakDanish(currentWordData.word);
         wordHeader.appendChild(speakBtn);
         leftCol.appendChild(wordHeader);
@@ -2043,7 +2210,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const sentSpeakBtn = document.createElement('button');
         sentSpeakBtn.className = 'inspector-speak-btn';
         sentSpeakBtn.title = getTranslation('adv_listen_sentence');
-        sentSpeakBtn.innerHTML = '🗣️';
+        sentSpeakBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
         sentSpeakBtn.onclick = () => speakDanish(currentWordData.sentence);
         sentBox.appendChild(sentSpeakBtn);
         leftCol.appendChild(sentBox);
@@ -2058,13 +2225,13 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             const pairSwitch = document.createElement('div');
             pairSwitch.className = 'pair-switch-card';
             pairSwitch.innerHTML = `
-                <div class="pair-switch-header">🔄 Tids-modpol / Sammenlign med:</div>
+                <div class="pair-switch-header">Tids-modpol / Sammenlign med:</div>
             `;
             const pairBtn = document.createElement('button');
             pairBtn.className = 'pair-action-btn';
             pairBtn.innerHTML = `
                 <span>Se og sammenlign med: <strong>"${currentWordData.pairWord}"</strong></span>
-                <span>➔</span>
+                <span>&rarr;</span>
             `;
             pairBtn.onclick = () => {
                 selectedWordId = currentWordData.pairId;
@@ -2078,7 +2245,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const ruleBox = document.createElement('div');
         ruleBox.className = 'rule-explanation-box';
         ruleBox.innerHTML = `
-            <div style="font-weight: 800; margin-bottom: 0.4rem; color: #fbbf24;">💡 Betydning & Grammatik:</div>
+            <div style="font-weight: 800; margin-bottom: 0.4rem; color: #fbbf24;">Betydning & Grammatik:</div>
             <p style="margin-bottom: 0.5rem;">${currentWordData.meaning}.</p>
             <p>${currentWordData.ruleHint}</p>
         `;
@@ -2214,7 +2381,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const tag = document.createElement('div');
         tag.className = 'viewfinder-tag';
-        tag.textContent = `🎯 ${mission.tag}`;
+        tag.textContent = mission.tag;
         frame.appendChild(tag);
 
         container.appendChild(frame);
@@ -2223,7 +2390,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const promptBox = document.createElement('div');
         promptBox.className = 'detektiv-prompt-box';
         promptBox.innerHTML = `
-            <div class="detektiv-prompt-text">🔍 <strong>Situation:</strong> ${mission.prompt}</div>
+            <div class="detektiv-prompt-text"><strong>Situation:</strong> ${mission.prompt}</div>
         `;
         container.appendChild(promptBox);
 
@@ -2237,7 +2404,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'detektiv-next-btn';
-        nextBtn.textContent = detektivIdx < DETEKTIV_MISSIONS.length - 1 ? 'Næste mission ➔' : 'Se resultat 🎉';
+        nextBtn.textContent = detektivIdx < DETEKTIV_MISSIONS.length - 1 ? 'Næste mission →' : 'Se resultat';
         nextBtn.style.display = 'none';
 
         mission.options.forEach((opt) => {
@@ -2256,7 +2423,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                     btn.classList.add('correct');
                     detektivScore += 10;
                     feedbackBox.className = 'detektiv-feedback-box correct';
-                    feedbackBox.innerHTML = `<strong>✨ Rigtigt!</strong> ${opt.explain}`;
+                    feedbackBox.innerHTML = `<strong>Rigtigt!</strong> ${opt.explain}`;
                     speakDanish(opt.text.replace(/^[A-B]\)\s*/, ''));
                 } else {
                     btn.classList.add('wrong');
@@ -2264,7 +2431,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                         if (o.correct) allBtns[i].classList.add('correct');
                     });
                     feedbackBox.className = 'detektiv-feedback-box wrong';
-                    feedbackBox.innerHTML = `<strong>💡 Pædagogisk forklaring:</strong> ${opt.explain}`;
+                    feedbackBox.innerHTML = `<strong>Pædagogisk forklaring:</strong> ${opt.explain}`;
                 }
 
                 feedbackBox.style.display = 'block';
@@ -2295,7 +2462,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     function renderDetektivSummary(container, parent) {
         container.innerHTML = `
             <div style="text-align: center; padding: 2rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">🏆</div>
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
                 <h2 style="font-size: 2.2rem; margin-bottom: 0.8rem; color: white;">Fremragende tids-detektiv!</h2>
                 <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 1.5rem;">
                     Du gennemførte alle 8 missioner og opnåede <strong>${detektivScore} af ${DETEKTIV_MISSIONS.length * 10} point</strong>!
@@ -2308,7 +2475,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                     • <em>Før</em> ser bagud i tiden, mens <em>bagefter</em> ser fremad i rækkefølgen.
                 </div>
                 <button class="detektiv-next-btn" style="margin: 0 auto; display: inline-block;" id="restart-detektiv">
-                    🔄 Prøv igen
+                    Prøv igen
                 </button>
             </div>
         `;
@@ -2346,7 +2513,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const intro = document.createElement('div');
         intro.className = 'barometer-intro';
         intro.innerHTML = `
-            <h2>📊 Frekvens-Trappen & Tidslinjen</h2>
+            <h2>Frekvens-Trappen & Tidslinjen</h2>
             <p>Træn dine tidsadverbier med to interaktive øvelser: Frekvensskalaen fra 100% til 0% og den kronologiske tidslinje!</p>
         `;
         container.appendChild(intro);
@@ -2358,7 +2525,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         ladderCard.className = 'barometer-exercise-card';
         ladderCard.innerHTML = `
             <div class="barometer-card-title">
-                <span>🪜</span> Øvelse 1: Frekvens-Trappen (100% til 0%)
+                Øvelse 1: Frekvens-Trappen (100% til 0%)
             </div>
             <div class="barometer-card-desc">
                 Klik på et ord i puljen nedenfor, og klik derefter på det matchende trin på trappen:
@@ -2385,7 +2552,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
             const slotEl = document.createElement('div');
             slotEl.className = `ladder-target-slot ${isFilled ? 'filled' : 'empty'}`;
-            slotEl.innerHTML = isFilled ? `${ladderPlaced[step.percent]} 🔊` : 'Klik for at placere';
+            slotEl.innerHTML = isFilled ? `${ladderPlaced[step.percent]}` : 'Klik for at placere';
 
             slotEl.onclick = () => {
                 if (isFilled) {
@@ -2444,7 +2611,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         if (allLadderDone) {
             ladderFeedback.className = 'barometer-feedback-box correct';
             ladderFeedback.innerHTML = `
-                <span>🎉 Fantastisk! Du har placeret alle 5 frekvenstrin 100% korrekt!</span>
+                <span>Fantastisk! Du har placeret alle 5 frekvenstrin 100% korrekt!</span>
                 <button class="reset-slots-btn" id="reset-ladder-btn" style="color: white; border-color: white;">↺ Start forfra</button>
             `;
         } else if (selectedLadderWord) {
@@ -2477,13 +2644,13 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             } else {
                 feedbackEl.className = 'barometer-feedback-box wrong';
                 feedbackEl.innerHTML = `
-                    <span>💡 Prøv igen: <strong>"${selectedLadderWord}"</strong> passer ikke til ${targetStep.percent}. Læs beskrivelsen!</span>
+                    <span>Prøv igen: <strong>"${selectedLadderWord}"</strong> passer ikke til ${targetStep.percent}. Læs beskrivelsen!</span>
                 `;
             }
         }
 
         // ==========================================
-        // ØVELSE 2: TIDSLINJEN (FØR ➔ NU ➔ BAGEFTER)
+        // ØVELSE 2: TIDSLINJEN (FØR → NU → BAGEFTER)
         // ==========================================
         const timelineCard = document.createElement('div');
         timelineCard.className = 'barometer-exercise-card';
@@ -2514,7 +2681,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             slotBox.className = `timeline-slot-box ${val ? 'filled' : ''}`;
             slotBox.innerHTML = `
                 <div class="timeline-slot-role">${slotConf.label}</div>
-                <div class="timeline-slot-value">${val ? `${val} 🔊` : '<span style="color: #64748b; font-style: italic; font-size: 0.9rem;">Klik for at placere</span>'}</div>
+                <div class="timeline-slot-value">${val ? `${val}` : '<span style="color: #64748b; font-style: italic; font-size: 0.9rem;">Klik for at placere</span>'}</div>
             `;
 
             slotBox.onclick = () => {
@@ -2530,7 +2697,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                     } else {
                         timelineFeedback.className = 'barometer-feedback-box wrong';
                         timelineFeedback.innerHTML = `
-                            <span>💡 Prøv igen: <strong>"${selectedTimelineWord}"</strong> passer ikke til ${slotConf.label}.</span>
+                            <span>Prøv igen: <strong>"${selectedTimelineWord}"</strong> passer ikke til ${slotConf.label}.</span>
                         `;
                     }
                 }
@@ -2579,7 +2746,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         if (allTimelineDone) {
             timelineFeedback.className = 'barometer-feedback-box correct';
             timelineFeedback.innerHTML = `
-                <span>🎉 Rigtigt! "Før spiste vi morgenmad. Lige nu cykler vi, og bagefter skal vi arbejde."</span>
+                <span>Rigtigt! "Før spiste vi morgenmad. Lige nu cykler vi, og bagefter skal vi arbejde."</span>
                 <button class="reset-slots-btn" id="reset-timeline-btn" style="color: white; border-color: white;">↺ Start forfra</button>
             `;
             speakDanish("Før spiste vi morgenmad. Lige nu cykler vi, og bagefter skal vi arbejde.");
@@ -2622,7 +2789,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             role: 'Subjekt',
             catClass: 'sb-cat-subjekt',
             badgeClass: 'badge-cat-subjekt',
-            icon: '👤',
+            icon: renderDsIcon('user', '', { size: 16 }),
             options: ['Peter', 'Bussen', 'Toget', 'Vi', 'Manden', 'Hun', 'Bageren', 'Familien']
         },
         {
@@ -2631,7 +2798,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             role: 'Verbum (Handling)',
             catClass: 'sb-cat-verbum',
             badgeClass: 'badge-cat-verbum',
-            icon: '⚡',
+            icon: renderDsIcon('zap', '', { size: 16 }),
             options: ['spiser', 'ankommer', 'cykler', 'drikker kaffe', 'kører', 'arbejder', 'venter', 'smiler']
         },
         {
@@ -2649,7 +2816,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             role: 'Restled / Objekt',
             catClass: 'sb-cat-rest',
             badgeClass: 'badge-cat-rest',
-            icon: '📍',
+            icon: renderDsIcon('mapPin', '', { size: 16 }),
             options: ['frokost', 'til stationen', 'på arbejde', 'om morgenen', 'i byen', 'på bænken', 'i dag', 'med venner']
         }
     ];
@@ -2670,10 +2837,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureTitle: 'Normal ordstilling: Adverbiet står som centraladverbium',
             structureNote: 'I en almindelig sætning står tidsadverbiet "altid" som centraladverbium på plads 3 lige efter verbet.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
-                { num: '4. plads', title: 'Restled', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Restled', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit? ⭐', '4. Til hvem?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Restled]'],
@@ -2696,9 +2863,9 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureNote: 'Når tidsadverbiet "Nu" står på 1. plads, skal verbet stå på 2. pladsen før subjektet (V2-reglen)!',
             flowSteps: [
                 { num: '1. plads', title: 'Tidsadverbium (Fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
-                { num: '2. plads', title: 'Verbum (V2)', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '4. plads', title: 'Objekt', icon: '📍', type: 'rest', isTarget: false }
+                { num: '2. plads', title: 'Verbum (V2)', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '4. plads', title: 'Objekt', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvornår (Fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvad?'],
             roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Objekt]'],
@@ -2720,10 +2887,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureTitle: 'Normal ordstilling: "Aldrig" på centraladverbiets plads',
             structureNote: '"Aldrig" angiver 0% og har præcis samme faste plads som "ikke" (plads 3 lige efter verbet).',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
-                { num: '4. plads', title: 'Præposition', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Præposition', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvor tit? ⭐', '4. Hvordan?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
@@ -2745,10 +2912,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureTitle: 'Normal ordstilling: Tidsadverbiet "snart" på plads 3',
             structureNote: '"Snart" placeres som centraladverbium mellem verbet og præpositionsleddet.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
-                { num: '4. plads', title: 'Hvorhen?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvorhen?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvad?', '2. Handling?', '3. Hvornår? ⭐', '4. Hvorhen?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
@@ -2771,9 +2938,9 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureNote: 'Når tidsadverbiet "Bagefter" starter sætningen, rykker verbet "cykler" frem på 2. pladsen!',
             flowSteps: [
                 { num: '1. plads', title: 'Tidsadverbium (Fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
-                { num: '2. plads', title: 'Verbum (V2)', icon: '⚡', type: 'verbum', isTarget: false },
-                { num: '3. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '4. plads', title: 'Præposition', icon: '📍', type: 'rest', isTarget: false }
+                { num: '2. plads', title: 'Verbum (V2)', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
+                { num: '3. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '4. plads', title: 'Præposition', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvornår (Fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvorhen?'],
             roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Præposition]'],
@@ -2795,10 +2962,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureTitle: 'Normal ordstilling: Tidsadverbiet "stadig" på plads 3',
             structureNote: '"Stadig" udtrykker fortsat handling og placeres som centraladverbium lige efter verbet.',
             flowSteps: [
-                { num: '1. plads', title: 'Subjekt', icon: '👤', type: 'subjekt', isTarget: false },
-                { num: '2. plads', title: 'Verbum', icon: '⚡', type: 'verbum', isTarget: false },
+                { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
+                { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Tidsadverbium', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
-                { num: '4. plads', title: 'Hvad?', icon: '📍', type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvad?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Tidsnuance? ⭐', '4. Hvad?'],
             roles: ['[Subjekt]', '[Verbum]', '[Tidsadverbium]', '[Præposition]'],
@@ -2819,11 +2986,11 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${currentTidSubTab === 'free' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>🎨</span> 1. Udforsk & Byg selv`;
+        subTab1Btn.innerHTML = `<span>1. Udforsk & Byg selv</span>`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${currentTidSubTab === 'challenge' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>🧩</span> 2. Opgave & Puslespil`;
+        subTab2Btn.innerHTML = `<span>2. Opgave & Puslespil</span>`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -2880,7 +3047,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                     <div class="sb-live-label">Din samlede sætning</div>
                     <div class="sb-live-sentence" id="tid-free-live-sentence"></div>
                     <button class="sb-listen-btn" id="tid-free-listen-btn">
-                        <span>🔊</span> Hør udtale
+                        Hør udtale
                     </button>
                 </div>
             `;
@@ -3007,7 +3174,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title">📍 <em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em></div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -3070,7 +3237,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                         // 2. Fill adverb chip in context elements
                         const advChipVal = contextCard.querySelector('#sb-chip-adv-val');
                         if (advChipVal) {
-                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">✓</span>`;
+                            advChipVal.innerHTML = `${task.correctAdv} <span style="color: #4ade80;">&#10003;</span>`;
                         }
                         const advChip = contextCard.querySelector('#sb-context-chip-adv');
                         if (advChip) {
@@ -3081,11 +3248,11 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                         feedbackDiv.innerHTML = `
                             <div class="sb-pedagogy-alert" style="margin-bottom: 1.2rem; padding: 1rem 1.4rem; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; border-radius: 12px; color: #f8fafc; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
                                 <div>
-                                    <strong style="color: #4ade80; font-size: 1.15rem;">🎉 Rigtigt tidsadverbium!</strong>
+                                    <strong style="color: #60a5fa; font-size: 1.15rem;">Rigtigt tidsadverbium!</strong>
                                     <div style="margin-top: 0.25rem; color: #cbd5e1;">${task.pedagogyNote}</div>
                                 </div>
                                 <button class="sb-listen-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;" id="sb-speak-target-btn">
-                                    <span>🔊</span> Hør sætning
+                                    Hør sætning
                                 </button>
                             </div>
                         `;
@@ -3126,7 +3293,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
             puzContainer.innerHTML = `
                 <div class="sb-puzzle-title">
-                    <span>🧩</span> Trin 2: Puslespillet – Saml hele sætningen!
+                    Trin 2: Puslespillet – Saml hele sætningen!
                 </div>
                 <div class="sb-puzzle-desc">
                     Læg mærke til den fremhævede plads med <strong>⭐</strong> – der skal adverbiet placeres. Klik på brikkerne i den rigtige rækkefølge:
@@ -3136,7 +3303,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                 <div class="sb-structure-diagram">
                     <div class="structure-diagram-header">
                         <span class="structure-diagram-badge ${isInv ? 'badge-inversion' : 'badge-central'}">
-                            ${isInv ? '⚡ INVERSION (Tidsadverbium forrest på 1. plads)' : '📌 NORMAL ORDSTILLING (Centraladverbium på 3. plads)'}
+                            ${isInv ? 'INVERSION (Tidsadverbium forrest på 1. plads)' : 'NORMAL ORDSTILLING (Centraladverbium på 3. plads)'}
                         </span>
                         <span class="structure-diagram-hint">${task.structureNote}</span>
                     </div>
@@ -3148,7 +3315,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                                 <div class="flow-title">${step.title}</div>
                                 ${step.isTarget ? '<div class="flow-target-tag">HER STÅR ADVERBIET!</div>' : ''}
                             </div>
-                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">➔</div>' : ''}
+                            ${sIdx < task.flowSteps.length - 1 ? '<div class="flow-arrow">→</div>' : ''}
                         `).join('')}
                     </div>
                 </div>
@@ -3183,7 +3350,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                     if (isAdvSlot) {
                         const callout = document.createElement('div');
                         callout.className = 'slot-target-callout';
-                        callout.innerHTML = isFilled ? '✓ Adverbium' : '⭐ Adverbiets plads ⭐';
+                        callout.innerHTML = isFilled ? '&#10003; Adverbium' : 'Adverbiets plads';
                         slot.appendChild(callout);
                     }
 
@@ -3239,9 +3406,9 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                     if (isCorrect) {
                         completedTidChallenges.add(currentTidChallengeIdx);
                         statusEl.innerHTML = `
-                            <span style="color: #22c55e; margin-right: 1rem;">🎉 Perfekt samlet!</span>
+                            <span style="color: #60a5fa; margin-right: 1rem;">Perfekt samlet!</span>
                             <button class="detektiv-next-btn" style="display: inline-block; padding: 0.6rem 1.4rem;" id="tid-task-next-btn">
-                                ${currentTidChallengeIdx < TID_CHALLENGE_TASKS.length - 1 ? 'Næste opgave ➔' : 'Afslut puslespil 🏆'}
+                                ${currentTidChallengeIdx < TID_CHALLENGE_TASKS.length - 1 ? 'Næste opgave →' : 'Afslut puslespil'}
                             </button>
                         `;
                         speakDanish(placedWords.join(' '));
@@ -3251,7 +3418,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                                 currentTidChallengeIdx++;
                                 setupChallengeSection();
                             } else {
-                                statusEl.innerHTML = `<span style="color: #fbbf24;">Alle 6 tids-udfordringer gennemført flot! 🌟</span>`;
+                                statusEl.innerHTML = `<span style="color: #fbbf24;">Alle 6 tids-udfordringer gennemført flot!</span>`;
                             }
                         };
                     } else {
@@ -3406,7 +3573,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'detektiv-next-btn';
-        nextBtn.textContent = clozeIdx < CLOZE_QUESTIONS.length - 1 ? 'Næste sætning ➔' : 'Afslut opgaven 🎉';
+        nextBtn.textContent = clozeIdx < CLOZE_QUESTIONS.length - 1 ? 'Næste sætning →' : 'Afslut opgaven';
         nextBtn.style.display = 'none';
 
         q.options.forEach(opt => {
@@ -3427,14 +3594,14 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                 if (opt === q.correct) {
                     btn.classList.add('correct');
                     clozeScore += 10;
-                    feedbackBox.innerHTML = `<strong>✨ Rigtigt!</strong> ${q.feedback}`;
+                    feedbackBox.innerHTML = `<strong>Rigtigt!</strong> ${q.feedback}`;
                     speakDanish(`${q.sentenceBefore} ${opt} ${q.sentenceAfter}`);
                 } else {
                     btn.classList.add('wrong');
                     q.options.forEach((o, i) => {
                         if (o === q.correct) allBtns[i].classList.add('correct');
                     });
-                    feedbackBox.innerHTML = `<strong>💡 Pædagogisk forklaring:</strong> ${q.feedback}`;
+                    feedbackBox.innerHTML = `<strong>Pædagogisk forklaring:</strong> ${q.feedback}`;
                 }
 
                 feedbackBox.style.display = 'block';
@@ -3466,7 +3633,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
     function renderClozeSummary(container, parent) {
         container.innerHTML = `
             <div style="text-align: center; padding: 2.5rem;">
-                <div style="font-size: 4.5rem; margin-bottom: 1rem;">🌟</div>
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
                 <h2 style="font-size: 2.2rem; margin-bottom: 0.8rem; color: white;">Fantastisk klaret!</h2>
                 <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 1.5rem;">
                     Du gennemførte tids-nuancen med <strong>${clozeScore} af ${CLOZE_QUESTIONS.length * 10} point</strong>!
@@ -3479,10 +3646,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                 </div>
                 <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                     <button class="detektiv-next-btn" id="restart-cloze-btn">
-                        🔄 Tag testen igen
+                        Tag testen igen
                     </button>
                     <button class="detektiv-next-btn" style="background: #334155;" id="back-to-hub-btn">
-                        🧭 Tilbage til Adverbier-oversigten
+                        Tilbage til Adverbier-oversigten
                     </button>
                 </div>
             </div>

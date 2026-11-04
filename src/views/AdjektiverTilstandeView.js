@@ -2,6 +2,8 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { getActiveAdjNuance, applyAdjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * AdjektiverTilstandeView - Felt 5: Farver, mængder og tilstande
@@ -16,6 +18,9 @@ import { shuffleArray } from '../utils/shuffle.js';
 export function renderAdjektiverTilstandeView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér mørk orange nuance (standard: Mørk Rav)
+    applyAdjNuance(getActiveAdjNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adjektiver-fysik-view adjektiver-tilstande-view';
 
@@ -25,7 +30,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back')}`;
+    backBtn.innerHTML = `← ${getTranslation('adj_back')}`;
     backBtn.onclick = () => navigateFn('top100_adjektiver');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
@@ -43,12 +48,55 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --adj-bg: #4A040B;
+            --adj-bg-glow: #6B0F1A;
+            --adj-surface: #341808;
+            --adj-surface-hover: #48230D;
+            --adj-surface-input: #1C0B03;
+            --adj-border: #6E3311;
+            --adj-border-focus: #fb923c;
+            --adj-primary: #ea580c;
+            --adj-primary-hover: #f97316;
+            --adj-text: #FFFFFF;
+            --adj-text-muted: #fed7aa;
+            --adj-text-subtle: #fdba74;
+        }
+
+        body[data-adj-nuance] {
+            background-color: var(--adj-bg) !important;
+            background-image: radial-gradient(circle at top right, var(--adj-bg-glow), var(--adj-bg)) !important;
+        }
+
         .adjektiver-tilstande-view {
             max-width: 1240px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
-            color: #f8fafc;
+            color: var(--adj-text, #FFFFFF);
+            font-family: var(--vp-font-family, 'Outfit', sans-serif);
         }
+
+        /* Top Bar & Back Button */
+        .adjektiver-tilstande-view .top-bar {
+            margin-bottom: 1.2rem;
+        }
+        .adjektiver-tilstande-view .back-btn {
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .adjektiver-tilstande-view .back-btn:hover {
+            background: var(--adj-surface-hover, #48230D);
+            border-color: var(--adj-primary, #ea580c);
+        }
+
+        /* Hero Header */
         .adj-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -57,13 +105,13 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #eab308, #f97316, #ef4444);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
         .adj-hero-header p {
-            color: #94a3b8;
-            font-size: 1.1rem;
+            color: var(--adj-text-muted, #fed7aa);
+            font-size: 1.05rem;
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.5;
@@ -76,18 +124,19 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--adj-surface-input, #1C0B03);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
         .adj-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             border: none;
             padding: 0.65rem 1.1rem;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.92rem;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -96,14 +145,14 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             gap: 0.45rem;
         }
         .adj-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+            color: #FFFFFF;
+            background: var(--adj-surface-hover, #48230D);
         }
         .adj-tab-btn.active {
-            background: #f97316;
-            color: white;
-            font-weight: 700;
-            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.45);
         }
 
         /* Panels */
@@ -121,11 +170,11 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
         /* Canvas Stage */
         .contrast-canvas-card {
-            background: #1e293b;
+            background: var(--adj-surface, #341808);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid var(--adj-border, #6E3311);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             margin-bottom: 2rem;
         }
         .contrast-control-bar {
@@ -133,24 +182,27 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             justify-content: space-between;
             align-items: center;
             padding: 0.9rem 1.4rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adj-surface-input, #1C0B03);
+            border-bottom: 1.5px solid var(--adj-border, #6E3311);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
         .contrast-instruction {
-            color: #cbd5e1;
+            color: var(--adj-text-muted, #fed7aa);
             font-size: 0.95rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .pure-toggle-btn {
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e2e8f0;
+            border: 1px solid var(--adj-border, #6E3311);
+            color: var(--adj-text-muted, #fed7aa);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
@@ -158,20 +210,20 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             gap: 0.4rem;
         }
         .pure-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
+            background: var(--adj-surface-hover, #48230D);
+            color: #FFFFFF;
         }
         .pure-toggle-btn.active {
-            background: #f97316;
-            border-color: #f97316;
-            color: white;
+            background: var(--adj-primary, #ea580c);
+            border-color: var(--adj-border-focus, #fb923c);
+            color: #FFFFFF;
         }
 
         .contrast-split-stage {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2px;
-            background: #0f172a;
+            background: var(--adj-surface-input, #1C0B03);
             position: relative;
         }
         @media (max-width: 820px) {
@@ -182,24 +234,25 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         .stage-half {
             position: relative;
             overflow: hidden;
-            background: #0f172a;
+            background: var(--adj-surface-input, #1C0B03);
         }
         .stage-half-header {
             position: absolute;
             top: 12px;
             left: 12px;
             z-index: 10;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(28, 11, 3, 0.88);
             backdrop-filter: blur(8px);
             padding: 0.35rem 0.85rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1.5px solid var(--adj-border, #6E3311);
             pointer-events: none;
+            color: #FFFFFF;
         }
-        .stage-half-header.warm { color: #10b981; border-color: rgba(16, 185, 129, 0.4); }
-        .stage-half-header.cool { color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
+        .stage-half-header.warm { color: #fed7aa; border-color: var(--adj-border-focus, #fb923c); }
+        .stage-half-header.cool { color: #fed7aa; border-color: var(--adj-border, #6E3311); }
 
         .stage-half img {
             width: 100%;
@@ -215,7 +268,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: rgba(249, 115, 22, 0.9);
+            background: rgba(234, 88, 12, 0.9);
             border: 2px solid white;
             color: white;
             display: flex;
@@ -230,29 +283,29 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         }
         .adj-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.22);
-            background: #f97316;
-            box-shadow: 0 0 18px rgba(249, 115, 22, 0.8);
+            background: var(--adj-primary, #ea580c);
+            box-shadow: 0 0 18px rgba(234, 88, 12, 0.8);
         }
         .adj-hotspot.active {
-            background: #10b981 !important;
+            background: #16a34a !important;
             border-color: white !important;
             color: white !important;
             transform: translate(-50%, -50%) scale(1.3);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.9);
+            box-shadow: 0 0 25px rgba(22, 163, 74, 0.9);
             z-index: 8;
         }
         .adj-hotspot.partner-active {
-            background: #8b5cf6 !important;
+            background: var(--adj-border-focus, #fb923c) !important;
             border-color: white !important;
             color: white !important;
             transform: translate(-50%, -50%) scale(1.2);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
-            animation: pulseViolet 1.6s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.8);
+            animation: pulseAdjAmber 1.6s infinite ease-in-out;
             z-index: 7;
         }
-        @keyframes pulseViolet {
-            0%, 100% { box-shadow: 0 0 10px rgba(139, 92, 246, 0.6); }
-            50% { box-shadow: 0 0 24px rgba(139, 92, 246, 1); }
+        @keyframes pulseAdjAmber {
+            0%, 100% { box-shadow: 0 0 10px rgba(251, 146, 60, 0.6); }
+            50% { box-shadow: 0 0 24px rgba(251, 146, 60, 1); }
         }
         .pure-mode .adj-hotspot {
             display: none !important;
@@ -260,9 +313,9 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
         /* Detail Card */
         .adj-detail-card {
-            background: #1e293b;
+            background: var(--adj-surface, #341808);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.8rem;
             margin-top: 1.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
@@ -276,7 +329,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1.5px solid var(--adj-border, #6E3311);
             padding-bottom: 1rem;
         }
         .adj-title-group {
@@ -287,10 +340,10 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         .adj-main-word {
             font-size: 2rem;
             font-weight: 800;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .adj-tts-btn {
-            background: #f97316;
+            background: var(--adj-primary, #ea580c);
             border: none;
             color: white;
             padding: 0.5rem 0.9rem;
@@ -304,13 +357,13 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             transition: all 0.2s ease;
         }
         .adj-tts-btn:hover {
-            background: #fb923c;
+            background: var(--adj-primary-hover, #f97316);
             transform: scale(1.05);
         }
         .adj-modpol-pill {
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid #8b5cf6;
-            color: #a78bfa;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border-focus, #fb923c);
+            color: var(--adj-text-muted, #fed7aa);
             padding: 0.5rem 1.1rem;
             border-radius: 20px;
             font-size: 1rem;
@@ -322,8 +375,10 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             transition: all 0.2s ease;
         }
         .adj-modpol-pill:hover {
-            background: rgba(139, 92, 246, 0.25);
+            background: var(--adj-surface-hover, #48230D);
+            border-color: #FFFFFF;
             transform: translateY(-2px);
+            color: #FFFFFF;
         }
 
         .adj-congruence-grid {
@@ -332,8 +387,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             gap: 1rem;
         }
         .adj-congruence-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1rem;
             border-radius: 14px;
         }
@@ -341,27 +396,30 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             font-size: 0.8rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             letter-spacing: 0.5px;
             margin-bottom: 0.4rem;
         }
         .adj-congruence-val {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .adj-congruence-val mark {
             background: transparent;
-            color: #f97316;
+            color: var(--adj-primary, #ea580c);
             font-weight: 800;
         }
         .adj-example-box {
-            background: rgba(249, 115, 22, 0.1);
-            border-left: 4px solid #f97316;
+            background: var(--adj-surface-input, #1C0B03);
+            border-left: 4px solid var(--adj-primary, #ea580c);
+            border-top: 1px solid var(--adj-border, #6E3311);
+            border-right: 1px solid var(--adj-border, #6E3311);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding: 1.2rem;
             border-radius: 10px;
             font-size: 1.15rem;
-            color: #e2e8f0;
+            color: #FFFFFF;
             line-height: 1.5;
         }
 
@@ -369,8 +427,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         .task-card {
             max-width: 850px;
             margin: 0 auto;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--adj-surface, #341808);
+            border: 1.5px solid var(--adj-border, #6E3311);
             border-radius: 24px;
             padding: 2.2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -380,37 +438,37 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1.5px solid var(--adj-border, #6E3311);
             padding-bottom: 1rem;
         }
         .task-counter {
             font-size: 0.95rem;
             font-weight: 700;
-            color: #f97316;
+            color: var(--adj-text-muted, #fed7aa);
         }
         .task-score {
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             font-weight: 600;
         }
         .task-prompt-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.4rem;
             border-radius: 16px;
             margin-bottom: 1.6rem;
             font-size: 1.3rem;
             line-height: 1.5;
-            color: #f8fafc;
+            color: #FFFFFF;
             text-align: center;
         }
         .task-prompt-box strong {
-            color: #f97316;
+            color: var(--adj-primary, #ea580c);
             font-size: 1.4rem;
         }
         .task-subprompt {
             font-size: 1.1rem;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             margin-top: 0.6rem;
         }
         .task-options-grid {
@@ -420,8 +478,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             margin-bottom: 1.5rem;
         }
         .task-opt-btn {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px solid var(--adj-border, #6E3311);
             color: white;
             padding: 1.1rem;
             border-radius: 14px;
@@ -432,9 +490,9 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             text-align: center;
         }
         .task-opt-btn:hover:not(:disabled) {
-            border-color: #f97316;
+            border-color: var(--adj-primary, #ea580c);
             transform: translateY(-2px);
-            background: rgba(249, 115, 22, 0.1);
+            background: var(--adj-surface-hover, #48230D);
         }
         .task-opt-btn.correct {
             background: rgba(34, 197, 94, 0.25) !important;
@@ -447,8 +505,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             color: #f87171 !important;
         }
         .task-feedback-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.3rem;
             border-radius: 14px;
             margin-top: 1.2rem;
@@ -464,7 +522,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             color: #fca5a5;
         }
         .task-next-btn {
-            background: #f97316;
+            background: var(--adj-primary, #ea580c);
             color: white;
             border: none;
             padding: 0.85rem 1.8rem;
@@ -477,14 +535,14 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             transition: all 0.2s ease;
         }
         .task-next-btn:hover {
-            background: #fb923c;
-            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+            background: var(--adj-primary-hover, #f97316);
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
         }
 
         /* Grammar Guide Link Banner in Tab 5 */
         .adj-grammar-link-box {
-            background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(59, 130, 246, 0.15));
-            border: 1px solid rgba(249, 115, 22, 0.4);
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             border-radius: 16px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.8rem;
@@ -495,7 +553,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             gap: 1rem;
         }
         .adj-go-grammar-btn {
-            background: #f97316;
+            background: var(--adj-primary, #ea580c);
             color: white;
             border: none;
             padding: 0.65rem 1.2rem;
@@ -510,21 +568,21 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             gap: 0.4rem;
         }
         .adj-go-grammar-btn:hover {
-            background: #fb923c;
+            background: var(--adj-primary-hover, #f97316);
             transform: translateY(-2px);
         }
         .feedback-grammar-link {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            color: #f97316;
+            color: var(--adj-primary, #ea580c);
             font-weight: 700;
             margin-top: 0.6rem;
             text-decoration: underline;
             cursor: pointer;
         }
         .feedback-grammar-link:hover {
-            color: #fb923c;
+            color: var(--adj-primary-hover, #f97316);
         }
 
         /* Tab 4: Barometret Specific Styles */
@@ -532,8 +590,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #0f172a;
-            border: 2px dashed #475569;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px dashed var(--adj-border, #6E3311);
             padding: 1rem;
             border-radius: 16px;
             min-height: 80px;
@@ -544,22 +602,22 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             flex: 1;
             min-width: 120px;
             height: 60px;
-            border: 2px solid #334155;
+            border: 2px solid var(--adj-border, #6E3311);
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             font-size: 0.95rem;
             position: relative;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .barometer-slot.filled {
-            border-color: #f97316;
-            background: rgba(249, 115, 22, 0.15);
+            border-color: var(--adj-border-focus, #fb923c);
+            background: var(--adj-surface-hover, #48230D);
             color: white;
             font-size: 1.05rem;
         }
@@ -571,8 +629,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             margin: 1.2rem 0;
         }
         .barometer-chip {
-            background: #0f172a;
-            border: 2px solid #f97316;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px solid var(--adj-primary, #ea580c);
             color: white;
             padding: 0.75rem 1.3rem;
             border-radius: 20px;
@@ -583,20 +641,20 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         }
         .barometer-chip:hover {
             transform: scale(1.06);
-            background: #f97316;
+            background: var(--adj-primary, #ea580c);
             color: white;
         }
         .barometer-chip.used {
             opacity: 0.3;
             pointer-events: none;
-            border-color: #475569;
+            border-color: var(--adj-border, #6E3311);
         }
         .scale-indicators {
             display: flex;
             justify-content: space-between;
             font-size: 0.85rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             text-transform: uppercase;
             padding: 0 0.5rem;
         }
@@ -616,12 +674,12 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
-        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: '👁️' },
-        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: '⚔️' },
-        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: '🔄' },
-        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: '🎨' },
-        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: '🧩' },
-        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: '📖' }
+        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: renderDsIcon('eye', '', { size: 18 }) },
+        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: renderDsIcon('compare', '', { size: 18 }) },
+        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: renderDsIcon('refresh', '', { size: 18 }) },
+        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: renderDsIcon('thermometer', '', { size: 18 }) },
+        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: renderDsIcon('puzzle', '', { size: 18 }) },
+        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: renderDsIcon('bookOpen', '', { size: 18 }) }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -630,7 +688,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         const btn = document.createElement('button');
         btn.className = `adj-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `${t.icon} <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -661,7 +719,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'ren',
                 side: 'left',
                 x: 55, y: 62,
-                itemLabel: 'Rent træbord 🧽',
+                itemLabel: 'Rent træbord',
                 faelles: 'en ren skjorte',
                 intet: 'et rent gulv',
                 flertal: 'de rene tallerkener',
@@ -671,7 +729,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'beskidt',
                 side: 'right',
                 x: 56, y: 52,
-                itemLabel: 'Beskidt bordplade 👞',
+                itemLabel: 'Beskidt bordplade',
                 faelles: 'en beskidt jakke',
                 intet: 'et beskidt glas',
                 flertal: 'de beskidte sko',
@@ -684,7 +742,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'sund',
                 side: 'left',
                 x: 68, y: 56,
-                itemLabel: 'Sund frugt & grønt 🥗',
+                itemLabel: 'Sund frugt & grønt',
                 faelles: 'en sund krop',
                 intet: 'et sundt måltid',
                 flertal: 'de sunde vaner',
@@ -694,7 +752,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'syg',
                 side: 'right',
                 x: 88, y: 80,
-                itemLabel: 'Syg plante 🥀',
+                itemLabel: 'Syg plante',
                 faelles: 'en syg patient',
                 intet: 'et sygt barn',
                 flertal: 'de syge dage',
@@ -707,7 +765,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'hel',
                 side: 'left',
                 x: 55, y: 58,
-                itemLabel: 'Hel tærte 🥧',
+                itemLabel: 'Hel tærte',
                 faelles: 'en hel uge',
                 intet: 'et helt år',
                 flertal: 'de hele stykker',
@@ -717,7 +775,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'halv',
                 side: 'right',
                 x: 64, y: 43,
-                itemLabel: 'Halv mad 🥪',
+                itemLabel: 'Halv mad',
                 faelles: 'en halv time',
                 intet: 'et halvt æble',
                 flertal: 'de halve sandheder',
@@ -730,7 +788,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'mange',
                 side: 'left',
                 x: 16, y: 31,
-                itemLabel: 'Mange urtepotter 🪴',
+                itemLabel: 'Mange urtepotter',
                 faelles: 'mange stole (tællelig)',
                 intet: 'mange æbler (tællelig)',
                 flertal: 'de mange elever',
@@ -740,7 +798,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'få',
                 side: 'right',
                 x: 78, y: 48,
-                itemLabel: 'Få krummer 🪚',
+                itemLabel: 'Få krummer',
                 faelles: 'få stole (tællelig)',
                 intet: 'få æbler (tællelig)',
                 flertal: 'de få elever',
@@ -753,7 +811,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'sikker',
                 side: 'left',
                 x: 19, y: 64,
-                itemLabel: 'Sikker skammel 🪜',
+                itemLabel: 'Sikker skammel',
                 faelles: 'en sikker vej',
                 intet: 'et sikkert sted',
                 flertal: 'de sikre rammer (bemærk: sikre!)',
@@ -763,7 +821,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'usikker',
                 side: 'right',
                 x: 28, y: 42,
-                itemLabel: 'Usikker knækket stige 🪜',
+                itemLabel: 'Usikker knækket stige',
                 faelles: 'en usikker trappe',
                 intet: 'et usikkert svar',
                 flertal: 'de usikre tider',
@@ -776,7 +834,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'klar',
                 side: 'left',
                 x: 77, y: 58,
-                itemLabel: 'Klart vand 💧',
+                itemLabel: 'Klart vand',
                 faelles: 'en klar besked',
                 intet: 'et klart svar',
                 flertal: 'de klare regler',
@@ -786,7 +844,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'uklar',
                 side: 'right',
                 x: 90, y: 45,
-                itemLabel: 'Uklart vand 🌫️',
+                itemLabel: 'Uklart vand',
                 faelles: 'en uklar melding',
                 intet: 'et uklart billede',
                 flertal: 'de uklare regler',
@@ -799,7 +857,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'tør',
                 side: 'left',
                 x: 40, y: 61,
-                itemLabel: 'Tørt viskestykke 🧺',
+                itemLabel: 'Tørt viskestykke',
                 faelles: 'en tør trøje',
                 intet: 'et tørt håndklæde',
                 flertal: 'de tørre sko',
@@ -809,7 +867,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'våd',
                 side: 'right',
                 x: 22, y: 86,
-                itemLabel: 'Vådt kældergulv 💧',
+                itemLabel: 'Vådt kældergulv',
                 faelles: 'en våd paraply',
                 intet: 'et vådt gulv',
                 flertal: 'de våde frakker',
@@ -822,7 +880,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'lys',
                 side: 'left',
                 x: 86, y: 32,
-                itemLabel: 'Lyst vindue ☀️',
+                itemLabel: 'Lyst vindue',
                 faelles: 'en lys stue',
                 intet: 'et lyst værelse',
                 flertal: 'de lyse dage',
@@ -832,7 +890,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'mørk',
                 side: 'right',
                 x: 39, y: 31,
-                itemLabel: 'Mørk krog 🌑',
+                itemLabel: 'Mørk krog',
                 faelles: 'en mørk aften',
                 intet: 'et mørkt rum',
                 flertal: 'de mørke gader',
@@ -845,7 +903,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'grøn',
                 side: 'left',
                 x: 23, y: 44,
-                itemLabel: 'Grønne krydderurter 🌿',
+                itemLabel: 'Grønne krydderurter',
                 faelles: 'en grøn plante',
                 intet: 'et grønt lys',
                 flertal: 'de grønne træer',
@@ -855,7 +913,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'rød',
                 side: 'right',
                 x: 76, y: 79,
-                itemLabel: 'Rød spand 🪣',
+                itemLabel: 'Rød spand',
                 faelles: 'en rød mappe',
                 intet: 'et rødt æble',
                 flertal: 'de røde stole',
@@ -868,7 +926,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'levende',
                 side: 'left',
                 x: 82, y: 88,
-                itemLabel: 'Levende kat 🐈',
+                itemLabel: 'Levende kat',
                 faelles: 'en levende hund',
                 intet: 'et levende menneske',
                 flertal: 'de levende planter (aldrig -t / -e!)',
@@ -878,7 +936,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'død',
                 side: 'right',
                 x: 91, y: 68,
-                itemLabel: 'Død gren 🍂',
+                itemLabel: 'Død gren',
                 faelles: 'en død fugl',
                 intet: 'et dødt træ',
                 flertal: 'de døde blade',
@@ -891,7 +949,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'meget',
                 side: 'left',
                 x: 63, y: 74,
-                itemLabel: 'Meget kaffe i kanden ☕',
+                itemLabel: 'Meget kaffe i kanden',
                 faelles: 'meget kaffe (utællelig)',
                 intet: 'meget vand (utællelig)',
                 flertal: '— (bruges kun utælleligt)',
@@ -901,7 +959,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 word: 'lidt',
                 side: 'right',
                 x: 52, y: 70,
-                itemLabel: 'Lidt vand i glasset 💧',
+                itemLabel: 'Lidt vand i glasset',
                 faelles: 'lidt kaffe (utællelig)',
                 intet: 'lidt vand (utællelig)',
                 flertal: '— (bruges kun utælleligt)',
@@ -931,18 +989,18 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     const instructionText = document.createElement('div');
     instructionText.className = 'contrast-instruction';
-    instructionText.innerHTML = `💡 <em>${getTranslation('adj_click_hotspot_hint')}</em>`;
+    instructionText.innerHTML = `${renderDsIcon('lightbulb', '', { size: 18 })} <em>${getTranslation('adj_click_hotspot_hint')}</em>`;
     ctrlBar.appendChild(instructionText);
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('adj_pure_label')} <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
+    pureBtn.innerHTML = `${renderDsIcon('image', '', { size: 16 })} ${getTranslation('adj_pure_label')} <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
     let isPureMode = false;
     pureBtn.onclick = () => {
         isPureMode = !isPureMode;
         stage.classList.toggle('pure-mode', isPureMode);
         pureBtn.classList.toggle('active', isPureMode);
-        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? `${getTranslation('adj_status_on')} 🖼️` : getTranslation('adj_status_off');
+        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? getTranslation('adj_status_on') : getTranslation('adj_status_off');
     };
     ctrlBar.appendChild(pureBtn);
     contrastCard.appendChild(ctrlBar);
@@ -999,14 +1057,13 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${item.me.side === 'left' ? '🌿' : '🌑'}</span>
                     <span class="adj-main-word">${item.me.word}</span>
-                    ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
-                    <button class="adj-tts-btn" id="card-tts-btn">🔊 ${getTranslation('adj_listen_pronunciation')}</button>
-                    <span style="color: #94a3b8; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
+                    ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #fed7aa; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
+                    <button class="adj-tts-btn" id="card-tts-btn">${renderDsIcon('volume', '', { size: 16 })} ${getTranslation('adj_listen_pronunciation')}</button>
+                    <span style="color: #fed7aa; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at se modpolen">
-                    <span>⚔️ ${getTranslation('adj_modpol_label')}</span>
+                    <span>${getTranslation('adj_modpol_label')}</span>
                     <strong>${item.other.word}</strong>
                     <span>➔</span>
                 </div>
@@ -1028,9 +1085,9 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             </div>
 
             <div class="adj-example-box">
-                <strong>💬 ${getTranslation('adj_example_sentence')}</strong><br>
+                <strong>${getTranslation('adj_example_sentence')}</strong><br>
                 "${formatNounLinks(item.me.context)}"
-                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
+                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #fed7aa; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
         `;
 
@@ -1072,101 +1129,101 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     const antonymDuels = [
         {
-            stimulus: 'Tallerkenen blev vasket i opvaskemaskinen og er helt <strong>REN 🍽️</strong>.',
+            stimulus: 'Tallerkenen blev vasket i opvaskemaskinen og er helt <strong>REN</strong>.',
             question: 'Hvad er tallerkenen, før den bliver vasket?',
             targetWord: 'ren',
-            correct: 'beskidt 👞',
-            options: ['beskidt 👞', 'syg 🤒', 'usikker 🪜', 'våd ☔'],
+            correct: 'beskidt',
+            options: ['beskidt', 'syg', 'usikker', 'våd'],
             wrongExplanation: 'Modpolen til ren er beskidt.',
             congruenceBonus: 'En <strong>ren</strong> skjorte ↔ En <strong>beskidt</strong> jakke (et rent bord ↔ et beskidt glas).'
         },
         {
-            stimulus: 'Pigen spiser grøntsager og dyrker motion – hun er sund og <strong>RASK 🥗</strong>.',
+            stimulus: 'Pigen spiser grøntsager og dyrker motion – hun er sund og <strong>RASK</strong>.',
             question: 'Hvad er barnet, der ligger i sengen med 39 i feber?',
             targetWord: 'sund',
-            correct: 'syg 🤒',
-            options: ['syg 🤒', 'død 🍂', 'træt 🥱', 'uklar 🌫️'],
+            correct: 'syg',
+            options: ['syg', 'død', 'træt', 'uklar'],
             wrongExplanation: 'Når kroppen rammes af feber og virus, er man syg.',
             congruenceBonus: 'En <strong>sund</strong> krop ↔ En <strong>syg</strong> patient (et sundt æble ↔ et sygt barn).'
         },
         {
-            stimulus: 'Familien spiste en <strong>HEL</strong> pizza til aftensmad 🍕.',
+            stimulus: 'Familien spiste en <strong>HEL</strong> pizza til aftensmad.',
             question: 'Hvad kalder man den del, hvis man kun spiser 50% af pizzaen?',
             targetWord: 'hel',
-            correct: 'halv 🍎',
-            options: ['halv 🍎', 'få ✏️', 'lille 🏠', 'kort ⏱️'],
+            correct: 'halv',
+            options: ['halv', 'få', 'lille', 'kort'],
             wrongExplanation: 'Modpolen til en helhed (100%) i to lige dele er halv (50%).',
             congruenceBonus: 'En <strong>hel</strong> uge ↔ En <strong>halv</strong> time (et helt år ↔ et halvt æble).'
         },
         {
-            stimulus: 'Der var <strong>MANGE</strong> elever i skolegården i frikvarteret 📚.',
+            stimulus: 'Der var <strong>MANGE</strong> elever i skolegården i frikvarteret.',
             question: 'Hvad siger man, hvis der kun er to eller tre elever?',
             targetWord: 'mange',
-            correct: 'få ✏️',
-            options: ['få ✏️', 'små 🏡', 'halve 🍎', 'tomme 🥛'],
+            correct: 'få',
+            options: ['få', 'små', 'halve', 'tomme'],
             wrongExplanation: 'Om tællelige antal hedder modpolerne mange og få.',
             congruenceBonus: '<strong>Mange</strong> stole (tællelig flertal) ↔ <strong>Få</strong> stole. (Modsat væsker/masse: <strong>meget</strong> vand ↔ <strong>lidt</strong> vand).'
         },
         {
-            stimulus: 'Der er brygget <strong>MEGET</strong> kaffe til hele kontoret ☕.',
+            stimulus: 'Der er brygget <strong>MEGET</strong> kaffe til hele kontoret.',
             question: 'Hvad siger man, hvis der kun er en lille dråbe tilbage i bunden af kanden?',
             targetWord: 'meget',
-            correct: 'lidt 💧',
-            options: ['lidt 💧', 'få ✏️', 'halvt 🥪', 'tørt 👕'],
+            correct: 'lidt',
+            options: ['lidt', 'få', 'halvt', 'tørt'],
             wrongExplanation: 'Kaffe er en væske (utællelig masse). Modpolen til meget er lidt (ikke få).',
             congruenceBonus: '<strong>Meget</strong> kaffe (utællelig) ↔ <strong>Lidt</strong> kaffe. (Modsat tællelige ting: <strong>mange</strong> kopper ↔ <strong>få</strong> kopper).'
         },
         {
-            stimulus: 'Lås døren, så computeren står på et <strong>SIKKERT</strong> sted 🔐.',
+            stimulus: 'Lås døren, så computeren står på et <strong>SIKKERT</strong> sted.',
             question: 'Hvad kalder man en vakkelvorn stige, som nemt kan vælte?',
             targetWord: 'sikker',
-            correct: 'usikker 🪜',
-            options: ['usikker 🪜', 'uklar 🌫️', 'beskidt 👞', 'farlig ⚠️'],
+            correct: 'usikker',
+            options: ['usikker', 'uklar', 'beskidt', 'farlig'],
             wrongExplanation: 'Noget, der ikke står fast og trygt, er usikkert.',
             congruenceBonus: 'Et <strong>sikkert</strong> sted ↔ Et <strong>usikkert</strong> sted (de sikre rammer).'
         },
         {
-            stimulus: 'Læreren gav en helt <strong>KLAR</strong> besked til klassen 📢.',
+            stimulus: 'Læreren gav en helt <strong>KLAR</strong> besked til klassen.',
             question: 'Hvad kalder man en besked, der er forvirrende og svær at tyde?',
             targetWord: 'klar',
-            correct: 'uklar 🌫️',
-            options: ['uklar 🌫️', 'mørk 🌑', 'død 🍂', 'få ✏️'],
+            correct: 'uklar',
+            options: ['uklar', 'mørk', 'død', 'få'],
             wrongExplanation: 'Når noget er tåget, uforståeligt eller utydeligt, er det uklart.',
             congruenceBonus: 'En <strong>klar</strong> melding ↔ En <strong>uklar</strong> melding.'
         },
         {
-            stimulus: 'Tøjet hang i solen og blev helt <strong>TØRT 👕</strong>.',
+            stimulus: 'Tøjet hang i solen og blev helt <strong>TØRT</strong>.',
             question: 'Hvad bliver tøjet, hvis der pludselig falder et regnskyl?',
             targetWord: 'tør',
-            correct: 'vådt ☔',
-            options: ['vådt ☔', 'koldt 🧊', 'beskidt 👞', 'mørkt 🌑'],
+            correct: 'vådt',
+            options: ['vådt', 'koldt', 'beskidt', 'mørkt'],
             wrongExplanation: 'Når noget suger vand til sig, bliver det vådt!',
             congruenceBonus: 'En <strong>tør</strong> trøje ↔ En <strong>våd</strong> trøje (et tørt gulv ↔ et vådt gulv).'
         },
         {
-            stimulus: 'Stuen har store vinduer og er dejlig <strong>LYS 💡</strong>.',
+            stimulus: 'Stuen har store vinduer og er dejlig <strong>LYS</strong>.',
             question: 'Hvad er kælderen, hvor der slet ikke er nogen vinduer?',
             targetWord: 'lys',
-            correct: 'mørk 🌑',
-            options: ['mørk 🌑', 'uklar 🌫️', 'kold 🧊', 'lukket 🔒'],
+            correct: 'mørk',
+            options: ['mørk', 'uklar', 'kold', 'lukket'],
             wrongExplanation: 'Modpolen til lys i belysning er mørk.',
             congruenceBonus: 'Et <strong>lyst</strong> værelse ↔ Et <strong>mørkt</strong> værelse.'
         },
         {
-            stimulus: 'Bilen holder stille for det <strong>RØDE</strong> lyskryds 🛑.',
+            stimulus: 'Bilen holder stille for det <strong>RØDE</strong> lyskryds.',
             question: 'Hvilken farve bliver lyset, når man må køre frem?',
             targetWord: 'rød',
-            correct: 'grøn 🟢',
-            options: ['grøn 🟢', 'blå 🔵', 'hvid ⚪', 'gul 🟡'],
+            correct: 'grøn',
+            options: ['grøn', 'blå', 'hvid', 'gul'],
             wrongExplanation: 'I trafikken er rød (stop) og grøn (kør) det velkendte signalpar.',
             congruenceBonus: 'Et <strong>rødt</strong> lys ↔ Et <strong>grønt</strong> lys.'
         },
         {
-            stimulus: 'I haven svømmede der en <strong>LEVENDE</strong> guldfisk 🐠.',
+            stimulus: 'I haven svømmede der en <strong>LEVENDE</strong> guldfisk.',
             question: 'Hvad kalder man et blad, der er visnet og faldet af træet?',
             targetWord: 'levende',
-            correct: 'dødt 🍂',
-            options: ['dødt 🍂', 'tørt 👕', 'sygt 🤒', 'gammelt 👴'],
+            correct: 'dødt',
+            options: ['dødt', 'tørt', 'sygt', 'gammelt'],
             wrongExplanation: 'Når liv er ophørt, er det dødt.',
             congruenceBonus: 'En <strong>levende</strong> plante ↔ Et <strong>dødt</strong> blad.'
         }
@@ -1183,7 +1240,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         const item = antonymDuels[currentDuelIndex];
         antonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">⚔️ Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
+                <span class="task-counter">Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
                 <span class="task-score">Point: <strong>${duelScore}</strong></span>
             </div>
             <div class="task-prompt-box">
@@ -1218,8 +1275,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎉 Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
-                            <span style="display:inline-block; margin-top:0.5rem; color:#f8fafc;">✨ <strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
+                            <strong>Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
+                            <span style="display:inline-block; margin-top:0.5rem; color:#FFFFFF;"><strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
                         </div>
                     `;
                 } else {
@@ -1246,14 +1303,16 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                         renderDuel();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length}) 🏆`;
+                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length})`;
                     nextBtn.onclick = () => {
                         antonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Flot klaret i Tilstands-duellen!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${duelScore}</strong> ud af <strong>${antonymDuels.length}</strong> rigtige modpoler.</p>
-                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen 🔄</button>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                                    ${renderDsIcon('trophy', '', { size: 56 })}
+                                </div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Flot klaret i Tilstands-duellen!</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">Du fik <strong>${duelScore}</strong> ud af <strong>${antonymDuels.length}</strong> rigtige modpoler.</p>
+                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen</button>
                             </div>
                         `;
                         antonymCard.querySelector('#restart-duel-btn').onclick = () => {
@@ -1374,7 +1433,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         const item = synonymTasks[currentSynonymIndex];
         synonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">🔄 Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
+                <span class="task-counter">Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
                 <span class="task-score">Point: <strong>${synonymScore}</strong></span>
             </div>
             <div class="task-prompt-box">
@@ -1407,7 +1466,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     synonymCard.querySelector('.task-score strong').textContent = synonymScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎯 Rigtigt!</strong> ${item.explanation}
+                            <strong>Rigtigt!</strong> ${item.explanation}
                         </div>
                     `;
                 } else {
@@ -1431,14 +1490,16 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                         renderSynonymTask();
                     };
                 } else {
-                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length}) 🌟`;
+                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length})`;
                     nextBtn.onclick = () => {
                         synonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🌟</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Flot ordforråd i tilstande!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${synonymScore}</strong> ud af <strong>${synonymTasks.length}</strong> rigtige nuancer.</p>
-                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen 🔄</button>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                                    ${renderDsIcon('trophy', '', { size: 56 })}
+                                </div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Flot ordforråd i tilstande!</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">Du fik <strong>${synonymScore}</strong> ud af <strong>${synonymTasks.length}</strong> rigtige nuancer.</p>
+                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen</button>
                             </div>
                         `;
                         synonymCard.querySelector('#restart-syn-btn').onclick = () => {
@@ -1771,12 +1832,12 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         kongruensCard.innerHTML = `
             <div class="adj-grammar-link-box">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <span style="font-size: 1.8rem;">📖</span>
+                    ${renderDsIcon('bookOpen', '', { size: 28 })}
                     <div>
-                        <div style="font-weight: 700; color: #f8fafc; font-size: 1.05rem;">
+                        <div style="font-weight: 700; color: #FFFFFF; font-size: 1.05rem;">
                             ${getTranslation('adj_grammar_banner_title')}
                         </div>
-                        <div style="color: #94a3b8; font-size: 0.92rem; margin-top: 0.2rem;">
+                        <div style="color: #fed7aa; font-size: 0.92rem; margin-top: 0.2rem;">
                             ${getTranslation('adj_grammar_banner_desc')}
                         </div>
                     </div>
@@ -1786,17 +1847,17 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 </button>
             </div>
 
-            <div class="adj-quantity-guide-box" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.12), rgba(249, 115, 22, 0.16)); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 16px; padding: 1.1rem; margin: 1rem 0 1.5rem;">
-                <div style="font-weight: 700; color: #f97316; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
-                    <span>⚖️</span> ${getTranslation('adj_quantity_box_title')}
+            <div class="adj-quantity-guide-box" style="background: var(--adj-surface-input, #1C0B03); border: 1.5px solid var(--adj-border, #6E3311); border-radius: 16px; padding: 1.1rem; margin: 1rem 0 1.5rem;">
+                <div style="font-weight: 700; color: var(--adj-primary, #ea580c); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+                    ${renderDsIcon('scale', '', { size: 18 })} ${getTranslation('adj_quantity_box_title')}
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; font-size: 0.92rem; color: #cbd5e1;">
-                    <div style="background: rgba(15, 23, 42, 0.65); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #38bdf8;">
+                    <div style="background: rgba(0, 0, 0, 0.4); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #38bdf8;">
                         <strong style="color: #38bdf8;">${getTranslation('adj_quantity_countable_title')}</strong><br>
                         ${getTranslation('adj_quantity_countable_large')}<br>
                         ${getTranslation('adj_quantity_countable_small')}
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.65); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #f59e0b;">
+                    <div style="background: rgba(0, 0, 0, 0.4); padding: 0.75rem 0.9rem; border-radius: 12px; border-left: 3px solid #f59e0b;">
                         <strong style="color: #f59e0b;">${getTranslation('adj_quantity_uncountable_title')}</strong><br>
                         ${getTranslation('adj_quantity_uncountable_large')}<br>
                         ${getTranslation('adj_quantity_uncountable_small')}
@@ -1844,7 +1905,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 ${getTranslation('adj_grammar_banner_btn')}
+                                    ${renderDsIcon('bookOpen', '', { size: 16 })} ${getTranslation('adj_grammar_banner_btn')}
                                 </a>
                             </div>
                         </div>
@@ -1860,7 +1921,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 ${getTranslation('adj_grammar_banner_btn')}
+                                    ${renderDsIcon('bookOpen', '', { size: 16 })} ${getTranslation('adj_grammar_banner_btn')}
                                 </a>
                             </div>
                         </div>
@@ -1885,12 +1946,14 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     nextBtn.onclick = () => {
                         kongruensCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🧩</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">${getTranslation('adj_kong_modal_title')}</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 1.5rem;">${getTranslation('adj_kong_modal_score').replace('{score}', kongruensScore).replace('{total}', kongruensTasks.length)}</p>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                                    ${renderDsIcon('trophy', '', { size: 56 })}
+                                </div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">${getTranslation('adj_kong_modal_title')}</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 1.5rem;">${getTranslation('adj_kong_modal_score').replace('{score}', kongruensScore).replace('{total}', kongruensTasks.length)}</p>
                                 <div style="margin-bottom: 2rem;">
                                     <button class="adj-go-grammar-btn" id="finish-guide-link-btn" style="margin: 0 auto;">
-                                        📖 ${getTranslation('adj_grammar_banner_btn')}
+                                        ${renderDsIcon('bookOpen', '', { size: 16 })} ${getTranslation('adj_grammar_banner_btn')}
                                     </button>
                                 </div>
                                 <button class="task-next-btn" id="restart-kong-btn">${getTranslation('adj_retry_btn')}</button>
@@ -2026,7 +2089,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     storyCard.querySelector('.task-score strong').textContent = storyScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>👏 Helt rigtigt!</strong> ${item.explanation}
+                            <strong>Helt rigtigt!</strong> ${item.explanation}
                         </div>
                     `;
                 } else {
@@ -2050,14 +2113,16 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                         renderStoryTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length}) 🌟`;
+                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length})`;
                     nextBtn.onclick = () => {
                         storyCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎉</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Super flot forståelse af farver, mængder og tilstande!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${storyScore}</strong> ud af <strong>${historieTasks.length}</strong> rigtige svar.</p>
-                                <button class="task-next-btn" id="restart-story-btn">Prøv igen 🔄</button>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                                    ${renderDsIcon('trophy', '', { size: 56 })}
+                                </div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Super flot forståelse af farver, mængder og tilstande!</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">Du fik <strong>${storyScore}</strong> ud af <strong>${historieTasks.length}</strong> rigtige svar.</p>
+                                <button class="task-next-btn" id="restart-story-btn">Prøv igen</button>
                             </div>
                         `;
                         storyCard.querySelector('#restart-story-btn').onclick = () => {

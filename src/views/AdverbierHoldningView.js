@@ -1,5 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
+import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+
+function stripAllEmojis(text) {
+    if (!text) return '';
+    return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+}
 
 /**
  * AdverbierHoldningView - Felt 6: Sikkerhed, Tvivl & Holdning (Sandsynlighedsskalaen & Evaluative Adverbier)
@@ -32,12 +39,15 @@ import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations
  * 3. Holdnings-Detektiven (10 gåder bygget på sandsynlighed og sociale nuancer)
  * 4. Sætningsbyggeren & Puslespillet (To-trins model: Subjekt = Grøn, Verbum = Rød, Adverbium = Turkis, Rest = Blå)
  * 5. Kontekst-testen (14 autentiske hverdagsdialoger)
- * 6. Tvivlens Grader: Næppe, usandsynligt, umuligt 📉 (8 øvelser)
- * 7. Social Tone: Heldigvis, desværre & forhåbentlig 🎭 (8 øvelser)
- * 8. Bevis-Detektiven (sandsynligvis, formentlig, åbenbart, tilsyneladende) 🔬 (10 øvelser)
+ * 6. Tvivlens Grader: Næppe, usandsynligt, umuligt (8 øvelser)
+ * 7. Social Tone: Heldigvis, desværre & forhåbentlig (8 øvelser)
+ * 8. Bevis-Detektiven (sandsynligvis, formentlig, åbenbart, tilsyneladende) (10 øvelser)
  */
 export function renderAdverbierHoldningView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Aktivér valgt adverbium-nuance (standard: Dyb Safirblå)
+    applyAdvNuance(getActiveAdvNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adverbier-holdning-view';
@@ -52,6 +62,40 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     backBtn.onclick = () => navigateFn('top100_adverbier');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdvNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adv-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adv-toggle-label">
+                <span class="adv-pulse-dot"></span>
+                <strong>Localhost Adverbium-nuance:</strong>
+                <span class="adv-toggle-hint">Vælg mellem 4 dybblå nuancer live mod vinrød bund:</span>
+            </div>
+            <div class="adv-toggle-buttons">
+                ${Object.values(ADV_PALETTES).map(p => `
+                    <button class="adv-nuance-btn ${p.id === activeNuance ? "active" : ""}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        <span>${p.name}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adv-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdvNuance(nuance);
+                testBar.querySelectorAll('.adv-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -502,9 +546,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e;
-            color: #4ade80;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1.5px solid var(--adv-border-focus, #93C5FD);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1.2rem;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -517,9 +561,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             font-size: 2.6rem;
             font-weight: 900;
             margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, #86efac, #22c55e, #15803d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .holdning-hero p {
             color: #94a3b8;
@@ -531,13 +576,13 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         /* Golden Rule Banner */
         .golden-rule-banner-holdning {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
-            border: 2px solid #22c55e;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 1.4rem 2rem;
             max-width: 950px;
             margin: 0 auto 2.5rem;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             gap: 1.5rem;
@@ -547,7 +592,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             flex-shrink: 0;
         }
         .rule-content-holdning h4 {
-            color: #86efac;
+            color: var(--adv-border-focus, #93C5FD);
             font-size: 1.2rem;
             font-weight: 800;
             margin-bottom: 0.35rem;
@@ -569,9 +614,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 800;
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
         }
 
         /* Tabs Navigation */
@@ -581,10 +626,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             gap: 0.75rem;
             justify-content: center;
             margin-bottom: 2.2rem;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--adv-surface, #0A192F);
             padding: 0.6rem;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
         }
         .adv-tab-btn {
             background: transparent;
@@ -602,12 +647,12 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .adv-tab-btn:hover {
             color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--adv-surface-hover, #112240);
         }
         .adv-tab-btn.active {
-            background: #16a34a;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
 
         /* Tab 1: Vrimmel Layout */
@@ -616,10 +661,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin: 0 auto;
         }
         .vrimmel-stage-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .vrimmel-controls-bar {
@@ -627,8 +672,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: rgba(15, 23, 42, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adv-surface-input, #050E1A);
+            border-bottom: 1px solid var(--adv-border, #1E3A66);
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -638,9 +683,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.45rem 0.9rem;
             border-radius: 10px;
             font-size: 0.88rem;
@@ -649,19 +694,19 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             transition: all 0.2s;
         }
         .filter-btn:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
             color: white;
         }
         .filter-btn.active {
-            background: #16a34a;
+            background: var(--adv-primary, #3B82F6);
             color: white;
-            border-color: #22c55e;
-            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+            border-color: var(--adv-border-focus, #93C5FD);
+            box-shadow: 0 2px 8px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .pure-toggle-btn {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.45rem 1rem;
             border-radius: 10px;
             font-weight: 700;
@@ -672,7 +717,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             gap: 0.5rem;
         }
         .pure-toggle-btn.active {
-            background: #15803d;
+            background: var(--adv-primary, #3B82F6);
             color: white;
         }
 
@@ -682,7 +727,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             line-height: 0;
             user-select: none;
             overflow: hidden;
-            background: #0f172a;
+            background: #050E1A;
         }
         .vrimmel-img {
             width: 100%;
@@ -690,13 +735,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             display: block;
         }
 
+        /* Hotspot Pins (Pegefelter i Safirblå) */
         .hotspot-pin {
             position: absolute;
             transform: translate(-50%, -50%);
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #16a34a;
+            background: #1D4ED8;
             border: 2.5px solid #ffffff;
             color: white;
             display: flex;
@@ -705,21 +751,21 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             font-weight: 900;
             font-size: 0.85rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 15px rgba(34, 197, 94, 0.6);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(59, 130, 246, 0.7);
             transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
         .hotspot-pin:hover {
             transform: translate(-50%, -50%) scale(1.3);
-            background: #22c55e;
-            box-shadow: 0 0 25px #22c55e;
+            background: #2563EB;
+            box-shadow: 0 6px 20px rgba(96, 165, 250, 0.9);
             z-index: 25;
         }
         .hotspot-pin.active {
             transform: translate(-50%, -50%) scale(1.35);
-            background: #eab308;
-            border-color: #ffffff;
-            box-shadow: 0 0 30px #eab308;
+            background: #3B82F6;
+            border-color: #BAE6FD;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.95), 0 0 45px rgba(59, 130, 246, 0.6);
             z-index: 30;
         }
         .hotspot-label {
@@ -727,9 +773,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            color: #86efac;
-            border: 1px solid #22c55e;
+            background: var(--adv-surface-input, #050E1A);
+            color: var(--adv-text-muted, #BFDBFE);
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.2rem 0.55rem;
             border-radius: 6px;
             font-size: 0.75rem;
@@ -742,8 +788,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         /* Målords Præsentationsboks under vrimlebilledet */
         .vrimmel-inspector {
-            background: #1e293b;
-            border: 2px solid #22c55e;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             margin-top: 1.5rem;
             padding: 1.8rem;
@@ -774,9 +820,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             flex-wrap: wrap;
         }
         .inspector-badge {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.25rem 0.75rem;
             border-radius: 8px;
             font-size: 0.8rem;
@@ -784,7 +830,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             text-transform: uppercase;
         }
         .inspector-audio-btn {
-            background: #16a34a;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             width: 44px;
@@ -796,10 +842,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             font-size: 1.25rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 4px 10px var(--adv-glow, rgba(59, 130, 246, 0.3));
         }
         .inspector-audio-btn:hover {
-            background: #22c55e;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: scale(1.1);
         }
         .inspector-word-title {
@@ -812,15 +858,15 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin: 0;
         }
         .inspector-trans-box {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 12px;
             padding: 1rem 1.2rem;
-            border-left: 4px solid #22c55e;
+            border-left: 4px solid var(--adv-primary, #3B82F6);
         }
         .trans-badge-label {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #86efac;
+            color: var(--adv-border-focus, #93C5FD);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.25rem;
@@ -853,10 +899,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin: 0;
         }
         .inspector-sentence-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 14px;
             padding: 1.2rem;
-            border: 1.5px solid rgba(34, 197, 94, 0.3);
+            border: 1.5px solid var(--adv-border, #1E3A66);
         }
         .sentence-quote-text {
             font-size: 1.2rem;
@@ -872,9 +918,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin-bottom: 0.8rem;
         }
         .inspector-speak-btn {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-weight: 700;
@@ -886,8 +932,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             transition: all 0.2s;
         }
         .inspector-speak-btn:hover {
-            background: #22c55e;
-            color: #0f172a;
+            background: var(--adv-primary, #3B82F6);
+            color: white;
         }
         .inspector-actions {
             display: flex;
@@ -896,9 +942,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .inspector-btn-action {
             flex: 1;
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: none;
+            border: 1px solid var(--adv-border, #1E3A66);
             padding: 0.75rem;
             border-radius: 10px;
             font-weight: 700;
@@ -907,7 +953,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             text-align: center;
         }
         .inspector-btn-action:hover {
-            background: #475569;
+            background: var(--adv-surface-hover, #112240);
         }
 
         /* Tab 2: Aha-Værkstedet */
@@ -923,9 +969,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             flex-wrap: wrap;
         }
         .vaerksted-subtab-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.7rem 1.4rem;
             border-radius: 12px;
             font-size: 0.95rem;
@@ -934,29 +980,29 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             transition: all 0.2s;
         }
         .vaerksted-subtab-btn:hover {
-            border-color: #22c55e;
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
         }
         .vaerksted-subtab-btn.active {
-            background: #16a34a;
-            border-color: #4ade80;
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-border-focus, #93C5FD);
             color: white;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
         }
 
         /* Sandsynligheds-Lineal / Barometer */
         .barometer-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             margin-bottom: 2rem;
         }
         .barometer-scale-track {
             height: 14px;
             border-radius: 7px;
-            background: linear-gradient(to right, #ef4444 0%, #f97316 20%, #eab308 50%, #22c55e 80%, #10b981 100%);
+            background: linear-gradient(to right, #ef4444 0%, #f97316 20%, #eab308 50%, #22c55e 80%, #3B82F6 100%);
             margin: 2.5rem 1rem 1.5rem;
             position: relative;
         }
@@ -977,7 +1023,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #0f172a;
+            background: #050E1A;
             border: 3px solid #cbd5e1;
             display: flex;
             align-items: center;
@@ -990,9 +1036,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .barometer-node:hover .barometer-dot, .barometer-node.active .barometer-dot {
             transform: scale(1.3);
-            border-color: white;
-            background: #16a34a;
-            box-shadow: 0 0 18px #22c55e;
+            border-color: #BAE6FD;
+            background: var(--adv-primary, #3B82F6);
+            box-shadow: 0 0 18px var(--adv-glow, rgba(59, 130, 246, 0.8));
         }
         .barometer-label {
             margin-top: 0.6rem;
@@ -1002,7 +1048,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             text-align: center;
         }
         .barometer-node.active .barometer-label {
-            color: #86efac;
+            color: var(--adv-border-focus, #93C5FD);
         }
         .barometer-pct {
             font-size: 0.72rem;
@@ -1010,10 +1056,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
 
         .barometer-demo-box {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.8rem;
-            border: 2px solid #22c55e;
+            border: 2px solid var(--adv-border, #1E3A66);
             margin-top: 2rem;
             text-align: center;
         }
@@ -1025,9 +1071,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .barometer-demo-pct-badge {
             display: inline-block;
-            background: rgba(34, 197, 94, 0.2);
-            color: #86efac;
-            border: 1px solid #22c55e;
+            background: rgba(59, 130, 246, 0.2);
+            color: #93C5FD;
+            border: 1px solid var(--adv-primary, #3B82F6);
             padding: 0.3rem 0.9rem;
             border-radius: 20px;
             font-weight: 800;
@@ -1044,10 +1090,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         /* Holdnings-Transformeren */
         .transformer-holdning-box {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
         }
         .transformer-pill-grid {
             display: grid;
@@ -1056,9 +1102,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin: 1.5rem 0 2rem;
         }
         .trans-holdning-btn {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             color: #cbd5e1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1rem;
             border-radius: 14px;
             font-weight: 800;
@@ -1068,40 +1114,40 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             text-align: center;
         }
         .trans-holdning-btn:hover {
-            border-color: #22c55e;
-            background: #334155;
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: var(--adv-surface-hover, #112240);
             color: white;
         }
         .trans-holdning-btn.active {
-            border-color: #4ade80;
-            background: rgba(34, 197, 94, 0.2);
-            color: #86efac;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: rgba(59, 130, 246, 0.2);
+            color: #93C5FD;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
         /* Tab 3: Holdnings-Detektiven */
         .detektiv-container {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             max-width: 850px;
             margin: 0 auto;
         }
         .detektiv-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--adv-border, #1E3A66);
             margin-bottom: 1.5rem;
         }
         .detektiv-context-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.35rem 0.9rem;
             border-radius: 10px;
             font-size: 0.85rem;
@@ -1123,7 +1169,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             background: rgba(15, 23, 42, 0.7);
             padding: 1.2rem;
             border-radius: 14px;
-            border-left: 5px solid #22c55e;
+            border-left: 5px solid var(--adv-primary, #3B82F6);
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -1134,9 +1180,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin-bottom: 1.5rem;
         }
         .detektiv-opt-btn {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             color: #f8fafc;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 1.1rem 1.4rem;
             border-radius: 14px;
             font-size: 1.15rem;
@@ -1146,8 +1192,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             text-align: center;
         }
         .detektiv-opt-btn:hover {
-            border-color: #22c55e;
-            background: #334155;
+            border-color: var(--adv-border-focus, #93C5FD);
+            background: var(--adv-surface-hover, #112240);
             transform: translateY(-2px);
         }
         .detektiv-opt-btn.correct {
@@ -1187,19 +1233,19 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin: 0 auto;
         }
         .builder-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .builder-step-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
             padding: 0.4rem 1rem;
             border-radius: 12px;
             font-weight: 800;
@@ -1217,7 +1263,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             .flow-container { grid-template-columns: 1fr 1fr; }
         }
         .flow-step {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 12px;
             padding: 0.9rem;
             text-align: center;
@@ -1225,23 +1271,23 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .flow-step.flow-subjekt { border-color: #22c55e; }
         .flow-step.flow-verbum { border-color: #ef4444; }
-        .flow-step.flow-adverbium { border-color: #06b6d4; }
-        .flow-step.flow-rest { border-color: #0ea5e9; }
+        .flow-step.flow-adverbium { border-color: var(--adv-primary, #3B82F6); }
+        .flow-step.flow-rest { border-color: #64748b; }
         .flow-step-num { font-size: 0.75rem; font-weight: 800; margin-bottom: 0.2rem; }
         .flow-step.flow-subjekt .flow-step-num { color: #86efac; }
         .flow-step.flow-verbum .flow-step-num { color: #fca5a5; }
-        .flow-step.flow-adverbium .flow-step-num { color: #22d3ee; }
-        .flow-step.flow-rest .flow-step-num { color: #7dd3fc; }
+        .flow-step.flow-adverbium .flow-step-num { color: var(--adv-border-focus, #93C5FD); }
+        .flow-step.flow-rest .flow-step-num { color: #cbd5e1; }
         .flow-step-title { font-size: 0.95rem; font-weight: 800; color: white; }
 
         .sb-sentence-display {
             font-size: 1.45rem;
             font-weight: 800;
             color: white;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.4rem;
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             text-align: center;
             margin-bottom: 1.8rem;
             display: flex;
@@ -1256,19 +1302,19 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             justify-content: center;
             min-width: 120px;
             padding: 0.2rem 1rem;
-            border: 2.5px dashed #06b6d4;
-            background: rgba(6, 182, 212, 0.15);
+            border: 2.5px dashed var(--adv-primary, #3B82F6);
+            background: rgba(59, 130, 246, 0.15);
             border-radius: 10px;
-            color: #22d3ee;
+            color: var(--adv-border-focus, #93C5FD);
             font-weight: 900;
             letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
             transition: all 0.3s;
         }
         .sb-blank-slot.filled {
-            border: 2px solid #22c55e;
-            background: rgba(34, 197, 94, 0.22);
-            color: #4ade80;
+            border: 2px solid var(--adv-border-focus, #93C5FD);
+            background: rgba(59, 130, 246, 0.25);
+            color: #FFFFFF;
             letter-spacing: normal;
         }
 
@@ -1282,7 +1328,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             .sb-puzzle-slots { grid-template-columns: 1fr 1fr; }
         }
         .sb-puzzle-slot {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             padding: 1.2rem 0.8rem;
@@ -1296,11 +1342,11 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .sb-puzzle-slot.slot-subjekt { border-color: #22c55e; }
         .sb-puzzle-slot.slot-verbum { border-color: #ef4444; }
-        .sb-puzzle-slot.slot-adverbium { border-color: #06b6d4; }
-        .sb-puzzle-slot.slot-rest { border-color: #0ea5e9; }
+        .sb-puzzle-slot.slot-adverbium { border-color: var(--adv-primary, #3B82F6); }
+        .sb-puzzle-slot.slot-rest { border-color: #64748b; }
         .sb-puzzle-slot.filled {
             border-style: solid;
-            background: rgba(15, 23, 42, 0.9);
+            background: var(--adv-surface, #0A192F);
         }
         .slot-badge-callout {
             font-size: 0.75rem;
@@ -1310,8 +1356,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .callout-subjekt { color: #86efac; }
         .callout-verbum { color: #fca5a5; }
-        .callout-adverbium { color: #22d3ee; }
-        .callout-rest { color: #7dd3fc; }
+        .callout-adverbium { color: var(--adv-border-focus, #93C5FD); }
+        .callout-rest { color: #cbd5e1; }
 
         .sb-puzzle-chips {
             display: flex;
@@ -1321,9 +1367,9 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin-bottom: 2rem;
         }
         .sb-puzzle-chip {
-            background: #334155;
+            background: var(--adv-surface, #0A192F);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--adv-border, #1E3A66);
             padding: 0.8rem 1.4rem;
             border-radius: 12px;
             font-size: 1.15rem;
@@ -1332,7 +1378,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             transition: all 0.2s;
         }
         .sb-puzzle-chip:hover {
-            border-color: #22c55e;
+            border-color: var(--adv-border-focus, #93C5FD);
             transform: translateY(-2px);
         }
         .sb-puzzle-chip.used {
@@ -1346,16 +1392,16 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin: 0 auto;
         }
         .special-intro-box {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
             margin-bottom: 2rem;
             text-align: center;
         }
         .special-intro-box h2 {
             font-size: 2.2rem;
-            color: #86efac;
+            color: #FFFFFF;
             margin-bottom: 0.6rem;
         }
         .special-intro-box p {
@@ -1372,10 +1418,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             margin-bottom: 2.5rem;
         }
         .special-rule-card {
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             border-radius: 16px;
             padding: 1.4rem;
-            border: 2px solid;
+            border: 2px solid var(--adv-border, #1E3A66);
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
@@ -1431,10 +1477,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
 
         .exercise-action-card {
-            background: #1e293b;
+            background: var(--adv-surface, #0A192F);
             border-radius: 20px;
             padding: 2.2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--adv-border, #1E3A66);
         }
         .progress-header {
             display: flex;
@@ -1446,29 +1492,29 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .progress-bar-wrap {
             height: 8px;
-            background: #334155;
+            background: #1E3A66;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 2rem;
         }
         .progress-bar-fill {
             height: 100%;
-            background: #22c55e;
+            background: var(--adv-primary, #3B82F6);
             transition: width 0.3s ease;
         }
         .exercise-dialog-quote {
             font-size: 1.4rem;
             color: white;
             line-height: 1.8;
-            background: #0f172a;
+            background: var(--adv-surface-input, #050E1A);
             padding: 1.5rem;
             border-radius: 14px;
-            border-left: 5px solid #22c55e;
+            border-left: 5px solid var(--adv-primary, #3B82F6);
             margin-bottom: 1.8rem;
         }
 
         .action-btn-primary {
-            background: #16a34a;
+            background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
             padding: 0.85rem 1.6rem;
@@ -1480,20 +1526,20 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.35);
+            box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
         .action-btn-primary:hover {
-            background: #22c55e;
+            background: var(--adv-primary-hover, #1D4ED8);
             transform: translateY(-2px);
         }
 
         .score-celebration-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-            border: 2px solid #22c55e;
+            background: var(--adv-surface, #0A192F);
+            border: 2px solid var(--adv-border, #1E3A66);
             border-radius: 20px;
             padding: 2.5rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes fadeIn {
@@ -1508,10 +1554,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     hero.className = 'holdning-hero';
     hero.innerHTML = `
         <div class="holdning-hero-tag">
-            ${getTranslation('top100_adv_f6_badge')}
+            ${stripAllEmojis(getTranslation('top100_adv_f6_badge'))}
         </div>
-        <h1>${getTranslation('adv_f6_hero_title')}</h1>
-        <p>${getTranslation('adv_f6_hero_desc')}</p>
+        <h1>${stripAllEmojis(getTranslation('adv_f6_hero_title'))}</h1>
+        <p>${stripAllEmojis(getTranslation('adv_f6_hero_desc'))}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1519,10 +1565,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     const goldenBanner = document.createElement('div');
     goldenBanner.className = 'golden-rule-banner-holdning';
     goldenBanner.innerHTML = `
-        <div class="rule-icon-holdning">💡</div>
+        <div class="rule-icon-holdning">${renderDsIcon('scale', '', { size: 28 })}</div>
         <div class="rule-content-holdning">
-            <h4>${getTranslation('adv_rule_title')}</h4>
-            <p>${getTranslation('adv_f6_rule_sandsyn')}</p>
+            <h4>${stripAllEmojis(getTranslation('adv_rule_title'))}</h4>
+            <p>${stripAllEmojis(getTranslation('adv_f6_rule_sandsyn'))}</p>
         </div>
     `;
     viewContainer.appendChild(goldenBanner);
@@ -1532,14 +1578,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: '1. Planlægningsrummet (vrimlebilledet)', icon: '🖼️' },
-        { id: 'vaerksted', label: '2. Sandsynligheds- og holdningsbarometret', icon: '📊' },
-        { id: 'detektiv', label: '3. Holdnings-Detektiven (10 gåder)', icon: '🔍' },
-        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: '🧩' },
-        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: '🎯' },
-        { id: 'tvivl', label: '6. Tvivlens grader: næppe, umuligt... 📉', icon: '📉' },
-        { id: 'tone', label: '7. Heldigvis og desværre (social tone) 🎭', icon: '🎭' },
-        { id: 'beviser', label: '8. Bevis-Detektiven (70-90%) 🔬', icon: '🔬' }
+        { id: 'vrimmel', label: '1. Planlægningsrummet (vrimlebilledet)', icon: renderDsIcon('image', '', { size: 16 }) },
+        { id: 'vaerksted', label: '2. Sandsynligheds- og holdningsbarometret', icon: renderDsIcon('thermometer', '', { size: 16 }) },
+        { id: 'detektiv', label: '3. Holdnings-Detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: renderDsIcon('bricks', '', { size: 16 }) },
+        { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: renderDsIcon('target', '', { size: 16 }) },
+        { id: 'tvivl', label: '6. Tvivlens grader: næppe, umuligt...', icon: renderDsIcon('scale', '', { size: 16 }) },
+        { id: 'tone', label: '7. Heldigvis og desværre (social tone)', icon: renderDsIcon('messageSquare', '', { size: 16 }) },
+        { id: 'beviser', label: '8. Bevis-Detektiven (70-90%)', icon: renderDsIcon('xray', '', { size: 16 }) }
     ];
 
     let currentTab = 'vrimmel';
@@ -1548,7 +1594,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         const btn = document.createElement('button');
         btn.className = `adv-tab-btn ${currentTab === tab.id ? 'active' : ''}`;
         btn.id = `tab-btn-${tab.id}`;
-        btn.innerHTML = `<span>${tab.icon}</span> ${tab.label}`;
+        btn.innerHTML = `${tab.icon} <span>${stripAllEmojis(tab.label)}</span>`;
         btn.onclick = () => switchTab(tab.id);
         nav.appendChild(btn);
     });
@@ -1635,7 +1681,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         const pureBtn = document.createElement('button');
         pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? '👁️' : '🏷️'}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
+        pureBtn.innerHTML = `<span>${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}</span>`;
         pureBtn.onclick = () => {
             isPureMode = !isPureMode;
             renderTabVrimmel(parent);
@@ -1715,41 +1761,41 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <div class="inspector-left">
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: rgba(34, 197, 94, 0.25); border: 1.5px solid #22c55e; color: #86efac; font-weight: 800;">📍 Målord: ${item.word}</span>
+                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border: 1.5px solid var(--adv-border-focus, #93C5FD); color: var(--adv-border-focus, #93C5FD); font-weight: 800;">Målord: ${item.word}</span>
                             <span class="inspector-badge">${catNames[item.category] || 'Holdning'}</span>
                         </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">🔊</button>
+                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
 
                     <h2 class="inspector-word-title">
-                        <span>🎲</span> ${item.word}
+                        ${item.word}
                     </h2>
 
                     <div class="inspector-trans-box">
                         <div class="trans-badge-label">
-                            <span>🌐</span> OVERSÆTTELSE (${langLabel})
+                            OVERSÆTTELSE (${langLabel})
                         </div>
                         <div class="trans-word-val">"${trans.word}"</div>
                     </div>
 
                     <div class="inspector-scene-box">
-                        <div class="scene-heading">📍 I planlægningsrummet</div>
+                        <div class="scene-heading">I planlægningsrummet</div>
                         <p class="scene-text">${item.sceneDesc}</p>
                     </div>
                 </div>
 
                 <div class="inspector-right">
                     <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: #86efac;">💬 Eksempelsætning</div>
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Eksempelsætning</div>
                         <p class="sentence-quote-text">"${item.contextSentence}"</p>
                         ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
                         <button class="inspector-speak-btn" id="inspector-action-speak">
-                            <span>🗣️</span> Hør sætning
+                            Hør sætning
                         </button>
                     </div>
 
-                    <div class="inspector-scene-box" style="border-left: 4px solid #22c55e;">
-                        <div class="scene-heading" style="color: #86efac;">💡 Didaktisk holdnings-regel</div>
+                    <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
+                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Didaktisk holdnings-regel</div>
                         <p class="scene-text">${item.ruleHint}</p>
                     </div>
 
@@ -1757,8 +1803,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                         <button class="inspector-btn-action" id="inspector-action-prev">
                             ← Forrige ord
                         </button>
-                        <button class="inspector-btn-action" style="background: #16a34a;" id="inspector-action-next">
-                            Næste ord ➔
+                        <button class="inspector-btn-action" style="background: var(--adv-primary, #3B82F6);" id="inspector-action-next">
+                            Næste ord →
                         </button>
                     </div>
                 </div>
@@ -1888,7 +1934,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; color: #86efac; margin-bottom: 0.5rem;">Aha-værkstedet: Sandsynlighed & Holdning</h2>
+                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: Sandsynlighed & Holdning</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 750px; margin: 0 auto;">
                     Udforsk sandsynlighedsskalaen fra 100% til 0%, og se hvordan talerens holdning forvandler en objektiv kendsgerning til lettelse, beklagelse eller håb.
                 </p>
@@ -1896,13 +1942,13 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div class="vaerksted-subtabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'barometer' ? 'active' : ''}" id="v-subtab-baro">
-                    📊 1. Sandsynligheds-Barometret (0% - 100%)
+                    1. Sandsynligheds-Barometret (0% - 100%)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'polarity' ? 'active' : ''}" id="v-subtab-polar">
-                    ⚖️ 2. Holdnings-Polariteten (Heldigvis vs. Desværre)
+                    2. Holdnings-Polariteten (Heldigvis vs. Desværre)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'tilsyneladende' ? 'active' : ''}" id="v-subtab-til">
-                    🔍 3. Tilsyneladende vs. Åbenbart
+                    3. Tilsyneladende vs. Åbenbart
                 </button>
             </div>
 
@@ -1943,7 +1989,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         const curr = SCALE_DATA[selectedScaleWord];
 
         card.innerHTML = `
-            <h3 style="font-size: 1.5rem; color: #86efac; text-align: center; margin-bottom: 0.5rem;">
+            <h3 style="font-size: 1.5rem; color: #FFFFFF; text-align: center; margin-bottom: 0.5rem;">
                 Den Gyldne Sandsynlighedsskala
             </h3>
             <p style="color: #94a3b8; text-align: center; font-size: 0.95rem; margin-bottom: 2rem;">
@@ -1965,7 +2011,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ${curr.desc}
                 </div>
                 <button class="action-btn-primary" id="baro-listen-btn">
-                    <span>🔊</span> Hør udtale
+                    Hør udtale
                 </button>
             </div>
         `;
@@ -2002,7 +2048,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         const curr = POLARITY_DATA[selectedPolarityWord];
 
         card.innerHTML = `
-            <h3 style="font-size: 1.5rem; color: #86efac; text-align: center; margin-bottom: 0.5rem;">
+            <h3 style="font-size: 1.5rem; color: #FFFFFF; text-align: center; margin-bottom: 0.5rem;">
                 Holdnings-Polariteten: Heldigvis vs. Desværre
             </h3>
             <p style="color: #cbd5e1; text-align: center; font-size: 1rem; max-width: 700px; margin: 0 auto;">
@@ -2011,24 +2057,24 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div class="transformer-pill-grid">
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'neutral' ? 'active' : ''}" data-word="neutral">
-                    ⚪ Neutral (Fakta)
+                    Neutral (Fakta)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'heldigvis' ? 'active' : ''}" data-word="heldigvis">
-                    🟢 Heldigvis (Lettelse)
+                    Heldigvis (Lettelse)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'desvaerre' ? 'active' : ''}" data-word="desvaerre">
-                    🔴 Desværre (Beklagelse)
+                    Desværre (Beklagelse)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'forhaabentlig' ? 'active' : ''}" data-word="forhaabentlig">
-                    🟡 Forhåbentlig (Ønske)
+                    Forhåbentlig (Ønske)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'aerlig_talt' ? 'active' : ''}" data-word="aerlig_talt">
-                    💬 Ærlig talt (Oprigtighed)
+                    Ærlig talt (Oprigtighed)
                 </button>
             </div>
 
             <div class="barometer-demo-box">
-                <div style="font-size: 0.9rem; color: #86efac; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
+                <div style="font-size: 0.9rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
                     Signalerer: ${curr.label}
                 </div>
                 <div class="barometer-demo-sentence">
@@ -2038,7 +2084,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ${curr.desc}
                 </div>
                 <button class="action-btn-primary" id="polarity-listen-btn">
-                    <span>🔊</span> Hør sætning
+                    Hør sætning
                 </button>
             </div>
         `;
@@ -2064,7 +2110,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         card.className = 'transformer-holdning-box';
 
         card.innerHTML = `
-            <h3 style="font-size: 1.5rem; color: #86efac; text-align: center; margin-bottom: 0.5rem;">
+            <h3 style="font-size: 1.5rem; color: #FFFFFF; text-align: center; margin-bottom: 0.5rem;">
                 Tilsyneladende vs. Åbenbart: Hvad er forskellen?
             </h3>
             <p style="color: #cbd5e1; text-align: center; font-size: 1rem; max-width: 750px; margin: 0 auto 2rem;">
@@ -2072,41 +2118,41 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             </p>
 
             <div class="special-rule-cards-grid" style="grid-template-columns: 1fr 1fr;">
-                <div class="special-rule-card" style="border-color: rgba(34, 197, 94, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #86efac;">
-                            <span>👀</span> tilsyneladende
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            tilsyneladende
                         </div>
-                        <span class="special-rule-role" style="background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e;">Overflade / Forbehold</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Overflade / Forbehold</span>
                     </div>
                     <div class="special-rule-desc">
                         Det <strong>ser sådan ud på overfladen</strong> ("apparently / seemingly"), men du er ikke 100% sikker, og virkeligheden kan vise sig at være en anden.
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #22c55e;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Han har <strong>tilsyneladende</strong> glemt mødet."</span>
-                        <button class="rule-speak-btn" data-speak="Han har tilsyneladende glemt mødet.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Han har tilsyneladende glemt mødet."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
-                <div class="special-rule-card" style="border-color: rgba(6, 182, 212, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #22d3ee;">
-                            <span>💡</span> åbenbart
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            åbenbart
                         </div>
-                        <span class="special-rule-role" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid #06b6d4;">Afsløret bevis</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Afsløret bevis</span>
                     </div>
                     <div class="special-rule-desc">
                         Noget er <strong>blevet bevist eller tydeligt</strong> ("evidently / clearly"). Kendsgerningen er nu kommet frem i lyset, og sagen er klar.
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #06b6d4;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Toget er <strong>åbenbart</strong> blevet aflyst."</span>
-                        <button class="rule-speak-btn" data-speak="Toget er åbenbart blevet aflyst.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Toget er åbenbart blevet aflyst."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
             </div>
 
-            <div style="background: rgba(15, 23, 42, 0.8); padding: 1.4rem; border-radius: 14px; border-left: 4px solid #22c55e; line-height: 1.6; color: #cbd5e1;">
-                ✔️ <strong>Huskereglen:</strong><br>
+            <div style="background: rgba(15, 23, 42, 0.8); padding: 1.4rem; border-radius: 14px; border-left: 4px solid var(--adv-primary, #3B82F6); line-height: 1.6; color: #cbd5e1;">
+                <strong>Huskereglen:</strong><br>
                 • <strong>Tilsyneladende</strong> = "Sådan ser det ud, men hvem ved?" (Usikker overflade)<br>
                 • <strong>Åbenbart</strong> = "Nu ser vi det alle sammen sort på hvidt!" (Klart bevis)
             </div>
@@ -2124,7 +2170,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     // ==========================================
     const DETEKTIV_QUESTIONS = [
         {
-            context: '🌦️ Vejrudsigten på skærmen',
+            context: 'Vejrudsigten på skærmen',
             prompt: 'Meteorologen melder 85% risiko for regn i eftermiddag. Hvilket adverbium passer præcist til denne høje sandsynlighed?',
             quote: 'Det begynder ______ at regne senere på dagen.',
             options: ['sandsynligvis', 'sikkert', 'umuligt'],
@@ -2136,7 +2182,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '☕ Kaffemaskinen i pauserummet',
+            context: 'Kaffemaskinen i pauserummet',
             prompt: 'Kaffemaskinen på kontoret er gået i stykker, og du overbringer den ærgerlige nyhed til dine tørstige kolleger:',
             quote: 'Der er ______ ingen frisk kaffe i dag.',
             options: ['desværre', 'heldigvis', 'selvfølgelig'],
@@ -2148,7 +2194,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '🔑 Nøglerne der blev væk',
+            context: 'Nøglerne der blev væk',
             prompt: 'Du har ledt overalt efter dine husnøgler i en halv time. Pludselig finder du dem i jakkelommen og ånder lettet op:',
             quote: '______ lå nøglerne nede i min lomme!',
             options: ['Heldigvis', 'Desværre', 'Næppe'],
@@ -2172,7 +2218,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '☀️ Skyfri himmel over byen',
+            context: 'Skyfri himmel over byen',
             prompt: 'Himlen er fuldstændig blå og skyfri. Din kollega spørger, om det regner i dag. Hvad svarer du med 100% vished?',
             quote: 'Nej, solen skinner og det regner ______ ikke i dag!',
             options: ['afgjort', 'måske', 'formentlig'],
@@ -2184,7 +2230,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '💼 Peters tomme stol',
+            context: 'Peters tomme stol',
             prompt: 'Peters computer er tændt og hans jakke hænger på stolen, men han er ikke ved sit bord. Hvad konkluderer du logisk?',
             quote: 'Han er ______ lige gået til frokost.',
             options: ['formentlig', 'umuligt', 'desværre'],
@@ -2196,7 +2242,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '🗓️ Mødekalenderen i næste uge',
+            context: 'Mødekalenderen i næste uge',
             prompt: 'Chefen har en meget tætpakket kalender, men der er et lille hul torsdag eftermiddag. Hvilket ord udtrykker muligheden?',
             quote: 'Vi kan ______ nå et kort møde torsdag kl. 14.',
             options: ['muligvis', 'umuligt', 'afgjort'],
@@ -2208,7 +2254,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '💳 Regningen på restauranten',
+            context: 'Regningen på restauranten',
             prompt: 'Tjeneren kommer med en regning på ti tusind kroner for to kopper te. Hvad siger du om denne absurde fejl?',
             quote: 'Den pris kan ______ være rigtig!',
             options: ['umuligt', 'sandsynligvis', 'forhåbentlig'],
@@ -2220,7 +2266,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '💍 Havefesten i weekenden',
+            context: 'Havefesten i weekenden',
             prompt: 'I skal holde udendørs bryllup i haven i weekenden. Hvilket adverbium udtrykker jeres inderlige ønske for fremtiden?',
             quote: '______ holder vejret tørt på lørdag!',
             options: ['Forhåbentlig', 'Faktisk', 'Tilsyneladende'],
@@ -2232,7 +2278,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             }
         },
         {
-            context: '🗣️ Oprigtig feedback blandt venner',
+            context: 'Oprigtig feedback blandt venner',
             prompt: 'En kollega beder om din 100% uforbeholdne, ærlige mening om et nyt design. Hvad siger du for at signalere oprigtighed?',
             quote: '______, så synes jeg farverne er for mørke.',
             options: ['Ærlig talt', 'Selvfølgelig', 'Rimeligvis'],
@@ -2257,7 +2303,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.5rem; color: #86efac; margin: 0;">Holdnings-Detektiven (10 gåder)</h3>
+                <h3 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">Holdnings-Detektiven (10 gåder)</h3>
                 <span style="color: #94a3b8; font-weight: 800;">Gåde ${detektivIdx + 1} af ${DETEKTIV_QUESTIONS.length}</span>
             </div>
 
@@ -2275,7 +2321,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ← Forrige gåde
                 </button>
                 <button class="action-btn-primary" id="detektiv-next-btn">
-                    ${detektivIdx < DETEKTIV_QUESTIONS.length - 1 ? 'Næste gåde ➔' : 'Start forfra 🔄'}
+                    ${detektivIdx < DETEKTIV_QUESTIONS.length - 1 ? 'Næste gåde →' : 'Start forfra'}
                 </button>
             </div>
         `;
@@ -2442,7 +2488,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                         <div class="flow-step-title">Hvad sker der?</div>
                     </div>
                     <div class="flow-step flow-adverbium">
-                        <div class="flow-step-num">3. ADVERBIUM 🎲</div>
+                        <div class="flow-step-num">3. ADVERBIUM</div>
                         <div class="flow-step-title">Hvor sikker/holdning?</div>
                     </div>
                     <div class="flow-step flow-rest">
@@ -2458,7 +2504,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     <span>${current.rest}</span>
                 </div>
 
-                <div style="font-weight: 800; color: #86efac; margin-bottom: 1rem; text-align: center;">
+                <div style="font-weight: 800; color: var(--adv-border-focus, #93C5FD); margin-bottom: 1rem; text-align: center;">
                     Hvilket holdningsadverbium passer bedst her?
                 </div>
 
@@ -2528,7 +2574,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                         <div style="font-size: 1.15rem; font-weight: 800;">${puzzlePlaced.verbum || 'Tom plads'}</div>
                     </div>
                     <div class="sb-puzzle-slot slot-adverbium ${puzzlePlaced.adverbium ? 'filled' : ''}" id="slot-adverbium">
-                        <span class="slot-badge-callout callout-adverbium">3. Adverbium 🎲</span>
+                        <span class="slot-badge-callout callout-adverbium">3. Adverbium</span>
                         <div style="font-size: 1.15rem; font-weight: 800;">${puzzlePlaced.adverbium || 'Tom plads'}</div>
                     </div>
                     <div class="sb-puzzle-slot slot-rest ${puzzlePlaced.rest ? 'filled' : ''}" id="slot-rest">
@@ -2547,10 +2593,10 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
                     <button class="filter-btn" id="puzzle-reset-btn">
-                        🔄 Nulstil brikker
+                        Nulstil brikker
                     </button>
                     <button class="action-btn-primary" id="puzzle-next-btn" style="display: none;">
-                        Næste sætning ➔
+                        Næste sætning →
                     </button>
                 </div>
             `;
@@ -2586,7 +2632,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                         chipBtn.classList.add('used');
                     } else {
                         feedbackBox.className = 'detektiv-feedback-box show wrong';
-                        feedbackBox.innerHTML = `Husk rækkefølgen: 1. Subjekt ➔ 2. Verbum ➔ 3. Centraladverbium ➔ 4. Restled.`;
+                        feedbackBox.innerHTML = `Husk rækkefølgen: 1. Subjekt → 2. Verbum → 3. Centraladverbium → 4. Restled.`;
                         return;
                     }
 
@@ -2738,8 +2784,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">💬 Hverdagssamtale</div>
-                <div style="font-size: 1.45rem; color: white; line-height: 1.8; margin-bottom: 2rem; background: rgba(15, 23, 42, 0.7); padding: 1.4rem; border-radius: 14px; border-left: 5px solid #22c55e;">
+                <div class="detektiv-context-tag">Hverdagssamtale</div>
+                <div style="font-size: 1.45rem; color: white; line-height: 1.8; margin-bottom: 2rem; background: rgba(15, 23, 42, 0.7); padding: 1.4rem; border-radius: 14px; border-left: 5px solid var(--adv-primary, #3B82F6);">
                     ${q.dialog}
                 </div>
 
@@ -2754,7 +2800,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="kontekst-next-btn">
-                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se resultat / Start forfra 🔄'}
+                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se resultat / Start forfra'}
                 </button>
             </div>
         `;
@@ -2818,56 +2864,56 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             options: ['næppe', 'umuligt', 'sikkert'],
             correct: 'næppe',
             feedback: 'Korrekt! "Der er næppe nogen chance" er den klassiske, elegante måde at sige "næsten ingen chance".',
-            badge: '📉 Stærk tvivl'
+            badge: 'Stærk tvivl'
         },
         {
             dialog: 'A: "Kan vi køre 500 kilometer på en tom tank benzin?"<br>B: "Nej, det er fysisk ______!"',
             options: ['umuligt', 'næppe', 'måske'],
             correct: 'umuligt',
             feedback: 'Korrekt! 0% chance – en fysisk umulighed hedder altid "umuligt".',
-            badge: '🚫 0% sandsynlighed'
+            badge: '0% sandsynlighed'
         },
         {
             dialog: 'A: "Vinder vi den store gevinst i lotto i aften?"<br>B: "Chancen er mikroskopisk, så det er stærkt ______."',
             options: ['usandsynligt', 'sikkert', 'formentlig'],
             correct: 'usandsynligt',
             feedback: 'Korrekt! Matematisk mikroskopiske chancer kaldes "usandsynlige".',
-            badge: '🎲 Ekstremt lille chance'
+            badge: 'Ekstremt lille chance'
         },
         {
             dialog: 'A: "Skal vi tage en paraply med på gåturen?"<br>B: "Himlen er lidt grå, så ______ begynder det at dryppe."',
             options: ['måske', 'umuligt', 'afgjort'],
             correct: 'måske',
             feedback: 'Korrekt! En ægte 50/50 mulighed for regn kaldes "måske".',
-            badge: '⚖️ 50/50 Mulighed'
+            badge: '50/50 Mulighed'
         },
         {
             dialog: 'A: "Når Peter frem til mødet inden det slutter?"<br>B: "Han sidder fast i køen 50 km væk, så han når det ______."',
             options: ['næppe', 'forhåbentlig', 'sikkert'],
             correct: 'næppe',
             feedback: 'Korrekt! "Han når det næppe" signalerer, at chancen er forsvindende lille.',
-            badge: '📉 Realistisk skepsis'
+            badge: 'Realistisk skepsis'
         },
         {
             dialog: 'A: "Kan man lære flydende dansk på én uge?"<br>B: "Nej, det er fuldstændig ______!"',
             options: ['umuligt', 'måske', 'næppe'],
             correct: 'umuligt',
             feedback: 'Korrekt! Helt udelukket – kræver måneder og år, så det er "umuligt".',
-            badge: '🚫 Fuldstændig udelukket'
+            badge: 'Fuldstændig udelukket'
         },
         {
             dialog: 'A: "Kommer statsministeren forbi vores lille lokale vejfest?"<br>B: "Det ville være hyggeligt, men det er nok meget ______."',
             options: ['usandsynligt', 'sikkert', 'selvfølgelig'],
             correct: 'usandsynligt',
             feedback: 'Korrekt! En usandsynlig hændelse, selvom det i teorien kunne ske.',
-            badge: '🎲 Usandsynlighed'
+            badge: 'Usandsynlighed'
         },
         {
             dialog: 'A: "Skal vi bestille bord på restauranten nu?"<br>B: "Ja, for der er ______ ledige borde, hvis vi venter til i aften."',
             options: ['næppe', 'umuligt', 'faktisk'],
             correct: 'næppe',
             feedback: 'Korrekt! "Der er næppe ledige borde" udtrykker, at man stærkt forventer fuldt hus.',
-            badge: '📉 Forventet mangel'
+            badge: 'Forventet mangel'
         }
     ];
 
@@ -2883,7 +2929,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Tvivlens Grader: Næppe, usandsynligt & umuligt 📉</h2>
+                <h2>Tvivlens Grader: Næppe, usandsynligt & umuligt</h2>
                 <p>
                     Lær at graduere din skepsis og udelukkelse på dansk uden at lyde afvisende eller uhøflig.
                 </p>
@@ -2893,7 +2939,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <div class="special-rule-card" style="border-color: rgba(239, 68, 68, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #f87171;">
-                            <span>🚫</span> umuligt
+                            umuligt
                         </div>
                         <span class="special-rule-role" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444;">0% chance</span>
                     </div>
@@ -2902,14 +2948,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #ef4444;">
                         <span>"Det er <strong>umuligt</strong> at nå."</span>
-                        <button class="rule-speak-btn" data-speak="Det er umuligt at nå.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Det er umuligt at nå."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(249, 115, 22, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #fb923c;">
-                            <span>📉</span> næppe
+                            næppe
                         </div>
                         <span class="special-rule-role" style="background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid #f97316;">~10-15%</span>
                     </div>
@@ -2918,14 +2964,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #f97316;">
                         <span>"Vi når det <strong>næppe</strong> i dag."</span>
-                        <button class="rule-speak-btn" data-speak="Vi når det næppe i dag.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Vi når det næppe i dag."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(234, 179, 8, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #facc15;">
-                            <span>⚖️</span> måske
+                            måske
                         </div>
                         <span class="special-rule-role" style="background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308;">50% chance</span>
                     </div>
@@ -2934,7 +2980,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"Det hjælper <strong>måske</strong>."</span>
-                        <button class="rule-speak-btn" data-speak="Det hjælper måske.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Det hjælper måske."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -2959,13 +3005,13 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             const resultCard = document.createElement('div');
             resultCard.className = 'score-celebration-card';
             resultCard.innerHTML = `
-                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉</div>
-                <h3 style="font-size: 2rem; color: #86efac; margin-bottom: 0.6rem;">Flot klaret!</h3>
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                <h3 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.6rem;">Flot klaret!</h3>
                 <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
                     Du fik <strong>${tvivlScore}</strong> ud af <strong>${TVIVL_QUESTIONS.length}</strong> rigtige i tvivlens nuancer.
                 </p>
                 <button class="action-btn-primary" id="tvivl-restart-btn">
-                    <span>🔄</span> Start forfra
+                    Start forfra
                 </button>
             `;
             resultCard.querySelector('#tvivl-restart-btn').onclick = () => {
@@ -3011,7 +3057,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="tvivl-next-btn">
-                    ${tvivlIdx < TVIVL_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                    ${tvivlIdx < TVIVL_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se samlet resultat'}
                 </button>
             </div>
         `;
@@ -3071,56 +3117,56 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             options: ['heldigvis', 'desværre', 'forhåbentlig'],
             correct: 'heldigvis',
             feedback: 'Korrekt! "Heldigvis" udtrykker lettelse over en hændelse, der allerede er gået godt.',
-            badge: '🟢 Lettelse (fortid/nutid)'
+            badge: 'Lettelse (fortid/nutid)'
         },
         {
             dialog: 'A: "Kommer du til min fødselsdag på lørdag?"<br>B: "Jeg er bortrejst i weekenden, så jeg kan ______ ikke være med."',
             options: ['desværre', 'heldigvis', 'faktisk'],
             correct: 'desværre',
             feedback: 'Korrekt! Den høflige måde at melde afbud og beklage på.',
-            badge: '🔴 Beklagelse & afbud'
+            badge: 'Beklagelse & afbud'
         },
         {
             dialog: 'A: "Skal vi tage regntøj med på lejrskolen i næste uge?"<br>B: "Ja, for en sikkerheds skyld, men ______ holder det tørvejr!"',
             options: ['forhåbentlig', 'heldigvis', 'desværre'],
             correct: 'forhåbentlig',
             feedback: 'Korrekt! "Forhåbentlig" bruges altid om fremtiden, når man håber på noget positivt.',
-            badge: '🟡 Fremtidsønske'
+            badge: 'Fremtidsønske'
         },
         {
             dialog: 'A: "Glemte du din computer i toget?"<br>B: "Ja, men ______ blev den indleveret til hittegodskontoret!"',
             options: ['heldigvis', 'desværre', 'ærlig talt'],
             correct: 'heldigvis',
             feedback: 'Korrekt! Det gode udfald på en farlig situation bringer stor lettelse.',
-            badge: '🟢 Godt sammentræf'
+            badge: 'Godt sammentræf'
         },
         {
             dialog: 'A: "Er lægens venteværelse tomt?"<br>B: "Nej, der sidder ______ fem patienter foran mig."',
             options: ['desværre', 'heldigvis', 'forhåbentlig'],
             correct: 'desværre',
             feedback: 'Korrekt! En ubehagelig ventetid omtales med "desværre".',
-            badge: '🔴 Uheldig ventetid'
+            badge: 'Uheldig ventetid'
         },
         {
             dialog: 'A: "Hvad synes du om chefen nye spareplan?"<br>B: "______, så tror jeg det skaber flere problemer end det løser."',
             options: ['Ærlig talt', 'Heldigvis', 'Desværre'],
             correct: 'Ærlig talt',
             feedback: 'Korrekt! "Ærlig talt" signalerer ufiltreret, personlig og oprigtig vurdering.',
-            badge: '💬 Oprigtig holdning'
+            badge: 'Oprigtig holdning'
         },
         {
             dialog: 'A: "Tror du bussen når frem inden færgen sejler?"<br>B: "Trafikken flyder pænt nu, så det gør den ______."',
             options: ['forhåbentlig', 'desværre', 'umuligt'],
             correct: 'forhåbentlig',
             feedback: 'Korrekt! Håbefuld forventning for en fremtidig deadline.',
-            badge: '🟡 Håbefuld forventning'
+            badge: 'Håbefuld forventning'
         },
         {
             dialog: 'A: "Slog du dig, da du faldt på cyklen?"<br>B: "Nej, ______ havde jeg cykelhjelm på, så der skete ikke noget."',
             options: ['heldigvis', 'desværre', 'forhåbentlig'],
             correct: 'heldigvis',
             feedback: 'Korrekt! "Heldigvis" redder situationen og viser taknemmelighed for hjelmen.',
-            badge: '🟢 Beskyttelse & lettelse'
+            badge: 'Beskyttelse & lettelse'
         }
     ];
 
@@ -3136,33 +3182,33 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Heldigvis, desværre & forhåbentlig 🎭</h2>
+                <h2>Heldigvis, desværre & forhåbentlig</h2>
                 <p>
                     Lær at mestre den sociale tone på dansk. Hvornår udtrykker du lettelse, høfligt afbud eller et inderligt fremtidsønske?
                 </p>
             </div>
 
             <div class="special-rule-cards-grid">
-                <div class="special-rule-card" style="border-color: rgba(34, 197, 94, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #86efac;">
-                            <span>🟢</span> heldigvis
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            heldigvis
                         </div>
-                        <span class="special-rule-role" style="background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e;">Lettelse</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Lettelse</span>
                     </div>
                     <div class="special-rule-desc">
                         Bruges om <strong>noget der allerede er sket</strong> (eller sker nu), og som er til stor glæde eller lettelse.
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #22c55e;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"<strong>Heldigvis</strong> nåede vi toget."</span>
-                        <button class="rule-speak-btn" data-speak="Heldigvis nåede vi toget.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Heldigvis nåede vi toget."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(239, 68, 68, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #f87171;">
-                            <span>🔴</span> desværre
+                            desværre
                         </div>
                         <span class="special-rule-role" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444;">Beklagelse</span>
                     </div>
@@ -3171,14 +3217,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #ef4444;">
                         <span>"Jeg kan <strong>desværre</strong> ikke komme."</span>
-                        <button class="rule-speak-btn" data-speak="Jeg kan desværre ikke komme.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Jeg kan desværre ikke komme."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(234, 179, 8, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #facc15;">
-                            <span>🟡</span> forhåbentlig
+                            forhåbentlig
                         </div>
                         <span class="special-rule-role" style="background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308;">Fremtidsønske</span>
                     </div>
@@ -3187,7 +3233,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"<strong>Forhåbentlig</strong> skinner solen."</span>
-                        <button class="rule-speak-btn" data-speak="Forhåbentlig skinner solen.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Forhåbentlig skinner solen."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -3212,13 +3258,13 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             const resultCard = document.createElement('div');
             resultCard.className = 'score-celebration-card';
             resultCard.innerHTML = `
-                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🌟</div>
-                <h3 style="font-size: 2rem; color: #86efac; margin-bottom: 0.6rem;">Fremragende mestring!</h3>
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                <h3 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.6rem;">Fremragende mestring!</h3>
                 <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
                     Du fik <strong>${toneScore}</strong> ud af <strong>${TONE_QUESTIONS.length}</strong> rigtige i den sociale holdningstone.
                 </p>
                 <button class="action-btn-primary" id="tone-restart-btn">
-                    <span>🔄</span> Start forfra
+                    Start forfra
                 </button>
             `;
             resultCard.querySelector('#tone-restart-btn').onclick = () => {
@@ -3264,7 +3310,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="tone-next-btn">
-                    ${toneIdx < TONE_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                    ${toneIdx < TONE_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se samlet resultat'}
                 </button>
             </div>
         `;
@@ -3324,70 +3370,70 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             options: ['sandsynligvis', 'tilsyneladende', 'åbenbart'],
             correct: 'sandsynligvis',
             feedback: 'Korrekt! Du bygger på målinger, radardata og statistik – den klassiske kilde for "sandsynligvis".',
-            badge: '📊 Data & Målinger'
+            badge: 'Data & Målinger'
         },
         {
             dialog: 'A: "Hvor blev Peter af? Vi skal holde statusmøde nu."<br>B: "Computeren er tændt og kaffen er stadig varm, så han er ______ lige gået på toilettet."',
             options: ['formentlig', 'tilsyneladende', 'sandsynligvis'],
             correct: 'formentlig',
             feedback: 'Korrekt! Du finder fysiske spor (varm kaffe, tændt skærm) og drager en logisk slutning – kernen i "formentlig".',
-            badge: '🧠 Logiske indicier'
+            badge: 'Logiske indicier'
         },
         {
             dialog: 'A: "Skal vi hente frisk brød hos bageren?"<br>B: "Nej, døren er låst og lyset er slukket, så butikken har ______ lukket tidligt i dag."',
             options: ['åbenbart', 'tilsyneladende', 'formentlig'],
             correct: 'åbenbart',
             feedback: 'Korrekt! Låsen på døren og det slukkede lys er et uomtvisteligt, synligt bevis foran jer.',
-            badge: '💡 Synligt bevis'
+            badge: 'Synligt bevis'
         },
         {
             dialog: 'A: "Ved du hvordan det gik Sofie til hendes mundtlige eksamen?"<br>B: "Hun smiler over hele hovedet, så det gik ______ rigtig godt."',
             options: ['tilsyneladende', 'åbenbart', 'sandsynligvis'],
             correct: 'tilsyneladende',
             feedback: 'Korrekt! Det ser sådan ud på overfladen (smilet), men du kender ikke karakteren endnu og tager et lille forbehold.',
-            badge: '👀 Ydre overflade'
+            badge: 'Ydre overflade'
         },
         {
             dialog: 'A: "Når vi frem til middagen klokken 18?"<br>B: "Trafikradioen melder om 15 km kø på motorvejen, så vi bliver ______ forsinket."',
             options: ['sandsynligvis', 'tilsyneladende', 'åbenbart'],
             correct: 'sandsynligvis',
             feedback: 'Korrekt! Meldingen bygger på konkrete trafiktal og rejsetidsberegninger (høj sandsynlighed).',
-            badge: '📊 Trafiktal & data'
+            badge: 'Trafiktal & data'
         },
         {
             dialog: 'A: "Er Mikkel hjemme på sit værelse?"<br>B: "Nej, hans jakke er væk og cyklen mangler i skuret, så han er ______ cyklet til træning."',
             options: ['formentlig', 'tilsyneladende', 'sandsynligvis'],
             correct: 'formentlig',
             feedback: 'Korrekt! Du observerer de manglende genstande og forbinder de logiske spor.',
-            badge: '🧠 Logisk deduktion'
+            badge: 'Logisk deduktion'
         },
         {
             dialog: 'A: "Hvorfor kommer toget ikke til perron 2?"<br>B: "Se på den røde tekst på skærmen! Toget er ______ blevet aflyst af DSB."',
             options: ['åbenbart', 'tilsyneladende', 'sandsynligvis'],
             correct: 'åbenbart',
             feedback: 'Korrekt! Den røde tekst bekræfter kendsgerningen for alle – et klart afsløret bevis.',
-            badge: '💡 Konkret bevis'
+            badge: 'Konkret bevis'
         },
         {
             dialog: 'A: "Hvad synes du om den brugte bil hos forhandleren?"<br>B: "Lakken skinner pænt og den ser ______ ud til at være i flot stand."',
             options: ['tilsyneladende', 'åbenbart', 'formentlig'],
             correct: 'tilsyneladende',
             feedback: 'Korrekt! Overfladen er flot, men mekanikken er ikke testet – "tilsyneladende" tager netop dette forbehold.',
-            badge: '👀 Overflade (kan bedrage)'
+            badge: 'Overflade (kan bedrage)'
         },
         {
             dialog: 'A: "Tør vi tænde for fabrikkens store maskine igen?"<br>B: "Mekanikeren har udskiftet alle defekte dele, så den bør ______ køre uden problemer nu."',
             options: ['rimeligvis', 'tilsyneladende', 'åbenbart'],
             correct: 'rimeligvis',
             feedback: 'Korrekt! "Rimeligvis" udtrykker en berettiget, fornuftig forventning baseret på grundigt forarbejde.',
-            badge: '⚖️ Sund fornuft'
+            badge: 'Sund fornuft'
         },
         {
             dialog: 'A: "Fandt du noget ekstra printerpapir ude på lageret?"<br>B: "Kassen står helt tom på hylden, så vi er ______ løbet helt tør."',
             options: ['åbenbart', 'tilsyneladende', 'sandsynligvis'],
             correct: 'åbenbart',
             feedback: 'Korrekt! Den tomme kasse beviser det direkte med dine egne øjne.',
-            badge: '💡 Synlig kendsgerning'
+            badge: 'Synlig kendsgerning'
         }
     ];
 
@@ -3403,7 +3449,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Bevis-Detektiven: Hvor har du det fra? 🔬</h2>
+                <h2>Bevis-Detektiven: Hvor har du det fra?</h2>
                 <p>
                     I 70–90% spændet handler det ikke om 5% fra eller til. Det handler om dit <strong>bevisgrundlag</strong>! Hvilket ord matcher situationens videnskilde?
                 </p>
@@ -3413,7 +3459,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <div class="special-rule-card" style="border-color: rgba(56, 189, 248, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #38bdf8;">
-                            <span>📊</span> sandsynligvis
+                            sandsynligvis
                         </div>
                         <span class="special-rule-role" style="background: rgba(14, 165, 233, 0.2); color: #7dd3fc; border: 1px solid #0284c7;">Data</span>
                     </div>
@@ -3422,46 +3468,46 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #0284c7;">
                         <span>"Ifølge radaren regner det <strong>sandsynligvis</strong>."</span>
-                        <button class="rule-speak-btn" data-speak="Ifølge radaren regner det sandsynligvis.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Ifølge radaren regner det sandsynligvis."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
-                <div class="special-rule-card" style="border-color: rgba(168, 85, 247, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #c084fc;">
-                            <span>🧠</span> formentlig
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            formentlig
                         </div>
-                        <span class="special-rule-role" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border: 1px solid #a855f7;">Logik</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Logik</span>
                     </div>
                     <div class="special-rule-desc">
                         Bygger på <strong>fysiske spor og logisk deduktion</strong> (varm kaffe, jakke på knagen).
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #a855f7;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Kaffen er varm, så han er <strong>formentlig</strong> her."</span>
-                        <button class="rule-speak-btn" data-speak="Kaffen er varm, så han er formentlig her.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Kaffen er varm, så han er formentlig her."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
-                <div class="special-rule-card" style="border-color: rgba(34, 197, 94, 0.4);">
+                <div class="special-rule-card" style="border-color: var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
-                        <div class="special-rule-word" style="color: #86efac;">
-                            <span>💡</span> åbenbart
+                        <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
+                            åbenbart
                         </div>
-                        <span class="special-rule-role" style="background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e;">Bevis</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Bevis</span>
                     </div>
                     <div class="special-rule-desc">
                         Bygger på <strong>konkrete, synlige beviser og afslørede fakta</strong> (låst dør, rød tekst).
                     </div>
-                    <div class="special-rule-example" style="border-left-color: #22c55e;">
+                    <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Døren er låst, så de har <strong>åbenbart</strong> lukket."</span>
-                        <button class="rule-speak-btn" data-speak="Døren er låst, så de har åbenbart lukket.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Døren er låst, så de har åbenbart lukket."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
 
                 <div class="special-rule-card" style="border-color: rgba(234, 179, 8, 0.4);">
                     <div class="special-rule-header">
                         <div class="special-rule-word" style="color: #facc15;">
-                            <span>👀</span> tilsyneladende
+                            tilsyneladende
                         </div>
                         <span class="special-rule-role" style="background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308;">Overflade</span>
                     </div>
@@ -3470,7 +3516,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"Han smiler, så det gik <strong>tilsyneladende</strong> godt."</span>
-                        <button class="rule-speak-btn" data-speak="Han smiler, så det gik tilsyneladende godt.">🔊</button>
+                        <button class="rule-speak-btn" title="Hør udtale" data-speak="Han smiler, så det gik tilsyneladende godt."><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -3495,20 +3541,20 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             const resultCard = document.createElement('div');
             resultCard.className = 'score-celebration-card';
             resultCard.innerHTML = `
-                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🔬</div>
-                <h3 style="font-size: 2rem; color: #86efac; margin-bottom: 0.6rem;">Formidabelt efterforsket!</h3>
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
+                <h3 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.6rem;">Formidabelt efterforsket!</h3>
                 <p style="font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem;">
                     Du fik <strong>${bevisScore}</strong> ud af <strong>${BEVIS_QUESTIONS.length}</strong> rigtige i bevis-testen.
                 </p>
                 <div style="background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
-                    ✔️ <strong>De 4 videnskilder:</strong><br>
+                    <strong>De 4 videnskilder:</strong><br>
                     • <strong>sandsynligvis</strong> = Radardata, målinger & prognoser<br>
                     • <strong>formentlig</strong> = Logiske indicier (varm kaffekop)<br>
                     • <strong>åbenbart</strong> = Konkret bevis (låst dør, rød aflysning)<br>
                     • <strong>tilsyneladende</strong> = Ydre overflade (et smil, nypoleret lak)
                 </div>
                 <button class="action-btn-primary" id="bevis-restart-btn">
-                    <span>🔄</span> Start forfra
+                    Start forfra
                 </button>
             `;
             resultCard.querySelector('#bevis-restart-btn').onclick = () => {
@@ -3554,7 +3600,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="bevis-next-btn">
-                    ${bevisIdx < BEVIS_QUESTIONS.length - 1 ? 'Næste spørgsmål ➔' : 'Se samlet resultat 🏆'}
+                    ${bevisIdx < BEVIS_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se samlet resultat'}
                 </button>
             </div>
         `;

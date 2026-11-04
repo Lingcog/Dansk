@@ -2,6 +2,8 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { isLocalhost, ADJ_PALETTES, getActiveAdjNuance, applyAdjNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * AdjektiverKvalitetView - Felt 3: Kvalitet, sværhedsgrad og økonomi
@@ -16,6 +18,9 @@ import { shuffleArray } from '../utils/shuffle.js';
 export function renderAdjektiverKvalitetView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Aktivér mørk orange nuance (standard: Mørk Rav)
+    applyAdjNuance(getActiveAdjNuance());
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container adjektiver-fysik-view adjektiver-kvalitet-view';
 
@@ -25,10 +30,44 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back')}`;
+    backBtn.innerHTML = `← ${getTranslation('adj_back')}`;
     backBtn.onclick = () => navigateFn('top100_adjektiver');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
+
+    // Localhost Nuance Vælger Toolbar
+    if (isLocalhost()) {
+        const activeNuance = getActiveAdjNuance();
+        const testBar = document.createElement('div');
+        testBar.className = 'adj-localhost-toggle-bar';
+        testBar.innerHTML = `
+            <div class="adj-toggle-label">
+                <span class="adj-pulse-dot"></span>
+                <strong>Localhost Nuance-vælger:</strong>
+                <span class="adj-toggle-hint">Vælg mellem 4 mørke orange nuancer live:</span>
+            </div>
+            <div class="adj-toggle-buttons">
+                ${Object.values(ADJ_PALETTES).map(p => `
+                    <button class="adj-nuance-btn ${p.id === activeNuance ? 'active' : ''}" 
+                            data-nuance="${p.id}" 
+                            title="${p.desc}">
+                        ${p.name}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+
+        testBar.querySelectorAll('.adj-nuance-btn').forEach(btn => {
+            btn.onclick = () => {
+                const nuance = btn.dataset.nuance;
+                applyAdjNuance(nuance);
+                testBar.querySelectorAll('.adj-nuance-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.nuance === nuance);
+                });
+            };
+        });
+        viewContainer.appendChild(testBar);
+    }
 
     // TTS Audio Helper
     function speakDanish(text) {
@@ -43,12 +82,127 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        :root {
+            --adj-bg: #4A040B;
+            --adj-bg-glow: #6B0F1A;
+            --adj-surface: #341808;
+            --adj-surface-hover: #48230D;
+            --adj-surface-input: #1C0B03;
+            --adj-border: #6E3311;
+            --adj-border-focus: #fb923c;
+            --adj-primary: #ea580c;
+            --adj-primary-hover: #f97316;
+            --adj-text: #FFFFFF;
+            --adj-text-muted: #fed7aa;
+            --adj-text-subtle: #fdba74;
+        }
+
+        body[data-adj-nuance] {
+            background-color: var(--adj-bg) !important;
+            background-image: radial-gradient(circle at top right, var(--adj-bg-glow), var(--adj-bg)) !important;
+        }
+
         .adjektiver-kvalitet-view {
             max-width: 1240px;
             margin: 0 auto;
             padding: 1rem 1.5rem 4rem;
-            color: #f8fafc;
+            color: var(--adj-text, #FFFFFF);
+            font-family: var(--vp-font-family, 'Outfit', sans-serif);
         }
+
+        /* Localhost Nuance Toggle Bar */
+        .adj-localhost-toggle-bar {
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            border-radius: 16px;
+            padding: 0.85rem 1.2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .adj-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: #FFFFFF;
+        }
+        .adj-pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--adj-primary, #ea580c);
+            box-shadow: 0 0 10px var(--adj-primary, #ea580c);
+            display: inline-block;
+            animation: adjPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes adjPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .adj-toggle-hint {
+            color: var(--adj-text-muted, #fed7aa);
+            font-size: 0.85rem;
+        }
+        .adj-toggle-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .adj-nuance-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: var(--adj-text-muted, #fed7aa);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .adj-nuance-btn:hover {
+            color: #FFFFFF;
+            background: var(--adj-surface-hover, #48230D);
+            border-color: var(--adj-primary, #ea580c);
+            transform: translateY(-1px);
+        }
+        .adj-nuance-btn.active {
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            border-color: var(--adj-border-focus, #fb923c);
+            box-shadow: 0 0 12px rgba(234, 88, 12, 0.5);
+            font-weight: 800;
+        }
+
+        /* Top Bar & Back Button */
+        .adjektiver-kvalitet-view .top-bar {
+            margin-bottom: 1.2rem;
+        }
+        .adjektiver-kvalitet-view .back-btn {
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .adjektiver-kvalitet-view .back-btn:hover {
+            background: var(--adj-surface-hover, #48230D);
+            border-color: var(--adj-primary, #ea580c);
+        }
+
+        /* Hero Header */
         .adj-hero-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -57,13 +211,13 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
         .adj-hero-header p {
-            color: #94a3b8;
-            font-size: 1.1rem;
+            color: var(--adj-text-muted, #fed7aa);
+            font-size: 1.05rem;
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.5;
@@ -76,18 +230,19 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--adj-surface-input, #1C0B03);
             padding: 0.5rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
         .adj-tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             border: none;
             padding: 0.65rem 1.1rem;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.92rem;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -96,14 +251,14 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             gap: 0.45rem;
         }
         .adj-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+            color: #FFFFFF;
+            background: var(--adj-surface-hover, #48230D);
         }
         .adj-tab-btn.active {
-            background: #10b981;
-            color: #064e3b;
-            font-weight: 700;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.45);
         }
 
         /* Panels */
@@ -121,11 +276,11 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
 
         /* Canvas Stage */
         .contrast-canvas-card {
-            background: #1e293b;
+            background: var(--adj-surface, #341808);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid var(--adj-border, #6E3311);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             margin-bottom: 2rem;
         }
         .contrast-control-bar {
@@ -133,24 +288,27 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             justify-content: space-between;
             align-items: center;
             padding: 0.9rem 1.4rem;
-            background: #0f172a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--adj-surface-input, #1C0B03);
+            border-bottom: 1.5px solid var(--adj-border, #6E3311);
             flex-wrap: wrap;
             gap: 0.8rem;
         }
         .contrast-instruction {
-            color: #cbd5e1;
+            color: var(--adj-text-muted, #fed7aa);
             font-size: 0.95rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .pure-toggle-btn {
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e2e8f0;
+            border: 1px solid var(--adj-border, #6E3311);
+            color: var(--adj-text-muted, #fed7aa);
             padding: 0.5rem 1rem;
             border-radius: 10px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
@@ -158,20 +316,20 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             gap: 0.4rem;
         }
         .pure-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
+            background: var(--adj-surface-hover, #48230D);
+            color: #FFFFFF;
         }
         .pure-toggle-btn.active {
-            background: #10b981;
-            border-color: #10b981;
-            color: #064e3b;
+            background: var(--adj-primary, #ea580c);
+            border-color: var(--adj-border-focus, #fb923c);
+            color: #FFFFFF;
         }
 
         .contrast-split-stage {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2px;
-            background: #0f172a;
+            background: var(--adj-surface-input, #1C0B03);
             position: relative;
         }
         @media (max-width: 820px) {
@@ -182,24 +340,25 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         .stage-half {
             position: relative;
             overflow: hidden;
-            background: #0f172a;
+            background: var(--adj-surface-input, #1C0B03);
         }
         .stage-half-header {
             position: absolute;
             top: 12px;
             left: 12px;
             z-index: 10;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(20, 8, 3, 0.88);
             backdrop-filter: blur(8px);
             padding: 0.35rem 0.85rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--adj-border, #6E3311);
             pointer-events: none;
+            color: var(--adj-text-muted, #fed7aa);
         }
-        .stage-half-header.warm { color: #10b981; border-color: rgba(16, 185, 129, 0.4); }
-        .stage-half-header.cool { color: #f43f5e; border-color: rgba(244, 63, 94, 0.4); }
+        .stage-half-header.warm { color: #f59e0b; border-color: rgba(245, 158, 11, 0.4); }
+        .stage-half-header.cool { color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); }
 
         .stage-half img {
             width: 100%;
@@ -215,9 +374,9 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: rgba(16, 185, 129, 0.9);
+            background: var(--adj-primary, #ea580c);
             border: 2px solid white;
-            color: #064e3b;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -230,29 +389,29 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         }
         .adj-hotspot:hover {
             transform: translate(-50%, -50%) scale(1.22);
-            background: #10b981;
-            box-shadow: 0 0 18px rgba(16, 185, 129, 0.8);
+            background: var(--adj-primary-hover, #f97316);
+            box-shadow: 0 0 18px rgba(234, 88, 12, 0.8);
         }
         .adj-hotspot.active {
-            background: #3b82f6 !important;
+            background: #22c55e !important;
             border-color: white !important;
             color: white !important;
             transform: translate(-50%, -50%) scale(1.3);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.9);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.9);
             z-index: 8;
         }
         .adj-hotspot.partner-active {
-            background: #ec4899 !important;
+            background: #38bdf8 !important;
             border-color: white !important;
             color: white !important;
             transform: translate(-50%, -50%) scale(1.2);
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.8);
-            animation: pulsePink 1.6s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+            animation: pulseBlue 1.6s infinite ease-in-out;
             z-index: 7;
         }
-        @keyframes pulsePink {
-            0%, 100% { box-shadow: 0 0 10px rgba(236, 72, 153, 0.6); }
-            50% { box-shadow: 0 0 24px rgba(236, 72, 153, 1); }
+        @keyframes pulseBlue {
+            0%, 100% { box-shadow: 0 0 10px rgba(56, 189, 248, 0.6); }
+            50% { box-shadow: 0 0 24px rgba(56, 189, 248, 1); }
         }
         .pure-mode .adj-hotspot {
             display: none !important;
@@ -260,12 +419,12 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
 
         /* Detail Card */
         .adj-detail-card {
-            background: #1e293b;
+            background: var(--adj-surface, #341808);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.8rem;
             margin-top: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
@@ -276,7 +435,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding-bottom: 1rem;
         }
         .adj-title-group {
@@ -287,12 +446,12 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         .adj-main-word {
             font-size: 2rem;
             font-weight: 800;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .adj-tts-btn {
-            background: #10b981;
+            background: var(--adj-primary, #ea580c);
             border: none;
-            color: #064e3b;
+            color: white;
             padding: 0.5rem 0.9rem;
             border-radius: 12px;
             font-size: 0.95rem;
@@ -304,13 +463,13 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             transition: all 0.2s ease;
         }
         .adj-tts-btn:hover {
-            background: #34d399;
+            background: var(--adj-primary-hover, #f97316);
             transform: scale(1.05);
         }
         .adj-modpol-pill {
-            background: rgba(236, 72, 153, 0.15);
-            border: 1px solid #ec4899;
-            color: #f472b6;
+            background: rgba(234, 88, 12, 0.15);
+            border: 1px solid var(--adj-primary, #ea580c);
+            color: var(--adj-border-focus, #fb923c);
             padding: 0.5rem 1.1rem;
             border-radius: 20px;
             font-size: 1rem;
@@ -322,7 +481,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             transition: all 0.2s ease;
         }
         .adj-modpol-pill:hover {
-            background: rgba(236, 72, 153, 0.25);
+            background: rgba(234, 88, 12, 0.25);
             transform: translateY(-2px);
         }
 
@@ -332,8 +491,8 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             gap: 1rem;
         }
         .adj-congruence-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1px solid var(--adj-border, #6E3311);
             padding: 1rem;
             border-radius: 14px;
         }
@@ -341,27 +500,30 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             font-size: 0.8rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             letter-spacing: 0.5px;
             margin-bottom: 0.4rem;
         }
         .adj-congruence-val {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #f8fafc;
+            color: #FFFFFF;
         }
         .adj-congruence-val mark {
             background: transparent;
-            color: #10b981;
+            color: var(--adj-border-focus, #fb923c);
             font-weight: 800;
         }
         .adj-example-box {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid #10b981;
+            background: var(--adj-surface-input, #1C0B03);
+            border-left: 4px solid var(--adj-primary, #ea580c);
+            border-top: 1px solid var(--adj-border, #6E3311);
+            border-right: 1px solid var(--adj-border, #6E3311);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding: 1.2rem;
             border-radius: 10px;
             font-size: 1.15rem;
-            color: #e2e8f0;
+            color: #FFFFFF;
             line-height: 1.5;
         }
 
@@ -369,48 +531,49 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         .task-card {
             max-width: 850px;
             margin: 0 auto;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--adj-surface, #341808);
+            border: 1.5px solid var(--adj-border, #6E3311);
             border-radius: 24px;
             padding: 2.2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            color: #FFFFFF;
         }
         .task-top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--adj-border, #6E3311);
             padding-bottom: 1rem;
         }
         .task-counter {
             font-size: 0.95rem;
-            font-weight: 700;
-            color: #10b981;
+            font-weight: 800;
+            color: var(--adj-border-focus, #fb923c);
         }
         .task-score {
             font-size: 0.95rem;
-            color: #94a3b8;
-            font-weight: 600;
+            color: var(--adj-text-muted, #fed7aa);
+            font-weight: 700;
         }
         .task-prompt-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.4rem;
             border-radius: 16px;
             margin-bottom: 1.6rem;
             font-size: 1.3rem;
             line-height: 1.5;
-            color: #f8fafc;
+            color: #FFFFFF;
             text-align: center;
         }
         .task-prompt-box strong {
-            color: #10b981;
+            color: var(--adj-border-focus, #fb923c);
             font-size: 1.4rem;
         }
         .task-subprompt {
             font-size: 1.1rem;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             margin-top: 0.6rem;
         }
         .task-options-grid {
@@ -420,8 +583,8 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             margin-bottom: 1.5rem;
         }
         .task-opt-btn {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px solid var(--adj-border, #6E3311);
             color: white;
             padding: 1.1rem;
             border-radius: 14px;
@@ -432,9 +595,9 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             text-align: center;
         }
         .task-opt-btn:hover:not(:disabled) {
-            border-color: #10b981;
+            border-color: var(--adj-primary, #ea580c);
             transform: translateY(-2px);
-            background: rgba(16, 185, 129, 0.1);
+            background: var(--adj-surface-hover, #48230D);
         }
         .task-opt-btn.correct {
             background: rgba(34, 197, 94, 0.25) !important;
@@ -447,8 +610,8 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             color: #f87171 !important;
         }
         .task-feedback-box {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             padding: 1.3rem;
             border-radius: 14px;
             margin-top: 1.2rem;
@@ -464,9 +627,28 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             color: #fca5a5;
         }
         .task-next-btn {
-            background: #10b981;
-            color: #064e3b;
+            background: var(--adj-primary, #ea580c);
+            color: white;
             border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: inline-block;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+        }
+        .task-next-btn:hover {
+            background: var(--adj-primary-hover, #f97316);
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.55);
+            transform: translateY(-2px);
+        }
+        .task-secondary-btn {
+            background: var(--adj-surface-hover, #48230D);
+            border: 1.5px solid var(--adj-border, #6E3311);
+            color: #FFFFFF;
             padding: 0.85rem 1.8rem;
             border-radius: 12px;
             font-weight: 700;
@@ -476,15 +658,15 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             display: inline-block;
             transition: all 0.2s ease;
         }
-        .task-next-btn:hover {
-            background: #34d399;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+        .task-secondary-btn:hover {
+            background: var(--adj-border, #6E3311);
+            transform: translateY(-2px);
         }
 
         /* Grammar Guide Link Banner in Tab 5 */
         .adj-grammar-link-box {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(56, 189, 248, 0.15));
-            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: var(--adj-surface-input, #1C0B03);
+            border: 1.5px solid var(--adj-border, #6E3311);
             border-radius: 16px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.8rem;
@@ -495,8 +677,8 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             gap: 1rem;
         }
         .adj-go-grammar-btn {
-            background: #10b981;
-            color: #064e3b;
+            background: var(--adj-primary, #ea580c);
+            color: white;
             border: none;
             padding: 0.65rem 1.2rem;
             border-radius: 10px;
@@ -510,95 +692,132 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             gap: 0.4rem;
         }
         .adj-go-grammar-btn:hover {
-            background: #34d399;
+            background: var(--adj-primary-hover, #f97316);
             transform: translateY(-2px);
         }
         .feedback-grammar-link {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            color: #10b981;
+            color: var(--adj-border-focus, #fb923c);
             font-weight: 700;
             margin-top: 0.6rem;
             text-decoration: underline;
             cursor: pointer;
         }
         .feedback-grammar-link:hover {
-            color: #34d399;
+            color: #fed7aa;
         }
 
         /* Tab 4: Barometret Specific Styles */
+        .barometer-container {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
         .barometer-track {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #0f172a;
-            border: 2px dashed #475569;
-            padding: 1rem;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px dashed var(--adj-border, #6E3311);
+            padding: 1.2rem;
             border-radius: 16px;
-            min-height: 80px;
+            min-height: 85px;
             gap: 0.8rem;
             overflow-x: auto;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
         }
         .barometer-slot {
             flex: 1;
-            min-width: 120px;
-            height: 60px;
-            border: 2px solid #334155;
-            background: rgba(255, 255, 255, 0.03);
+            min-width: 125px;
+            height: 64px;
+            border: 2px solid var(--adj-border, #6E3311);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             font-size: 0.95rem;
             position: relative;
             cursor: pointer;
             transition: all 0.2s ease;
+            user-select: none;
+        }
+        .barometer-slot:hover {
+            border-color: var(--adj-primary, #ea580c);
+            background: var(--adj-surface-hover, #48230D);
         }
         .barometer-slot.filled {
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.15);
-            color: white;
+            border-color: var(--adj-border-focus, #fb923c);
+            background: linear-gradient(135deg, var(--adj-primary, #ea580c) 0%, #c2410c 100%);
+            color: #FFFFFF;
+            font-weight: 800;
             font-size: 1.05rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
         }
         .barometer-pool {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
             justify-content: center;
-            margin: 1.2rem 0;
+            margin: 1.4rem 0;
         }
         .barometer-chip {
-            background: #0f172a;
-            border: 2px solid #10b981;
-            color: white;
-            padding: 0.75rem 1.3rem;
+            background: var(--adj-surface-input, #1C0B03);
+            border: 2px solid var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            padding: 0.75rem 1.4rem;
             border-radius: 20px;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        .barometer-chip:hover {
-            transform: scale(1.06);
-            background: #10b981;
-            color: #064e3b;
+        .barometer-chip:hover:not(.used) {
+            transform: scale(1.06) translateY(-2px);
+            background: var(--adj-primary, #ea580c);
+            color: #FFFFFF;
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
         }
         .barometer-chip.used {
-            opacity: 0.3;
+            opacity: 0.25;
             pointer-events: none;
-            border-color: #475569;
+            border-color: var(--adj-border, #6E3311);
+            transform: none;
         }
         .scale-indicators {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: var(--adj-text-muted, #fed7aa);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             padding: 0 0.5rem;
+        }
+        #check-scale-btn {
+            background: var(--adj-primary, #ea580c) !important;
+            border: none !important;
+            color: #FFFFFF !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
+        }
+        #check-scale-btn:hover:not(:disabled) {
+            background: var(--adj-primary-hover, #f97316) !important;
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.55) !important;
+            transform: translateY(-2px);
+        }
+        #check-scale-btn:disabled {
+            opacity: 0.4 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
         }
     `;
     viewContainer.appendChild(style);
@@ -616,12 +835,12 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'adj-tabs-nav';
     const tabs = [
-        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: '👁️' },
-        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: '⚔️' },
-        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: '🔄' },
-        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: '💎' },
-        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: '🧩' },
-        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: '📖' }
+        { id: 'tab_kontrast', label: getTranslation('adj_tab_1'), icon: renderDsIcon('eye', '', { size: 18 }) },
+        { id: 'tab_antonym', label: getTranslation('adj_tab_2'), icon: renderDsIcon('compare', '', { size: 18 }) },
+        { id: 'tab_synonym', label: getTranslation('adj_tab_3'), icon: renderDsIcon('refresh', '', { size: 18 }) },
+        { id: 'tab_barometer', label: getTranslation('adj_tab_4'), icon: renderDsIcon('thermometer', '', { size: 18 }) },
+        { id: 'tab_kongruens', label: getTranslation('adj_tab_5'), icon: renderDsIcon('puzzle', '', { size: 18 }) },
+        { id: 'tab_historie', label: getTranslation('adj_tab_6'), icon: renderDsIcon('bookOpen', '', { size: 18 }) }
     ];
 
     let currentTab = 'tab_kontrast';
@@ -630,7 +849,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         const btn = document.createElement('button');
         btn.className = `adj-tab-btn ${t.id === currentTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.innerHTML = `<span>${t.icon}</span> ${t.label}`;
+        btn.innerHTML = `<span class="adj-tab-icon">${t.icon}</span> <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -661,7 +880,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'god',
                 side: 'left',
                 x: 58, y: 73,
-                itemLabel: 'God kaffe ☕',
+                itemLabel: 'God kaffe',
                 faelles: 'en god kaffe',
                 intet: 'et godt måltid',
                 flertal: 'de gode croissanter',
@@ -671,7 +890,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'dårlig',
                 side: 'right',
                 x: 32, y: 72,
-                itemLabel: 'Dårlig kaffe ☕',
+                itemLabel: 'Dårlig kaffe',
                 faelles: 'en dårlig kaffe',
                 intet: 'et dårligt måltid',
                 flertal: 'de dårlige kopper',
@@ -684,7 +903,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'let',
                 side: 'left',
                 x: 70, y: 42,
-                itemLabel: 'Let adgang 🚪',
+                itemLabel: 'Let adgang',
                 faelles: 'en let lektie',
                 intet: 'et let spil',
                 flertal: 'de lette opgaver',
@@ -694,7 +913,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'svær',
                 side: 'right',
                 x: 36, y: 32,
-                itemLabel: 'Svær reparation 📻',
+                itemLabel: 'Svær reparation',
                 faelles: 'en svær opgave',
                 intet: 'et svært spørgsmål',
                 flertal: 'de svære værktøjer',
@@ -707,7 +926,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'dyr',
                 side: 'left',
                 x: 32, y: 48,
-                itemLabel: 'Dyrt guldur ⌚',
+                itemLabel: 'Dyrt guldur',
                 faelles: 'en dyr jakke',
                 intet: 'et dyrt ur',
                 flertal: 'de dyre butikker',
@@ -717,7 +936,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'billig',
                 side: 'right',
                 x: 23, y: 53,
-                itemLabel: 'Billigt legetøj 🧸',
+                itemLabel: 'Billigt legetøj',
                 faelles: 'en billig kasse',
                 intet: 'et billigt stykke legetøj',
                 flertal: 'de billige varer',
@@ -730,7 +949,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'vigtig',
                 side: 'left',
                 x: 21, y: 38,
-                itemLabel: 'Vigtig aftale 📜',
+                itemLabel: 'Vigtig aftale',
                 faelles: 'en vigtig besked',
                 intet: 'et vigtigt brev',
                 flertal: 'de vigtige papirer',
@@ -740,7 +959,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'ligegyldig',
                 side: 'right',
                 x: 58, y: 45,
-                itemLabel: 'Ligegyldigt skab 🗄️',
+                itemLabel: 'Ligegyldigt skab',
                 faelles: 'en ligegyldig snak',
                 intet: 'et ligegyldigt rygte',
                 flertal: 'de ligegyldige ting',
@@ -753,7 +972,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'nødvendig',
                 side: 'left',
                 x: 50, y: 8,
-                itemLabel: 'Nødvendig markise ⛱️',
+                itemLabel: 'Nødvendig markise',
                 faelles: 'en nødvendig pause',
                 intet: 'et nødvendigt tag',
                 flertal: 'de nødvendige ting',
@@ -763,7 +982,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'unødvendig',
                 side: 'right',
                 x: 8, y: 35,
-                itemLabel: 'Unødvendigt ragelse 📦',
+                itemLabel: 'Unødvendigt ragelse',
                 faelles: 'en unødvendig udgift',
                 intet: 'et unødvendigt køb',
                 flertal: 'de unødvendige ting',
@@ -776,7 +995,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'rigtig',
                 side: 'left',
                 x: 92, y: 46,
-                itemLabel: 'Rigtig vej 🧭',
+                itemLabel: 'Rigtig vej',
                 faelles: 'en rigtig vej',
                 intet: 'et rigtigt svar',
                 flertal: 'de rigtige adresser',
@@ -786,7 +1005,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'forkert',
                 side: 'right',
                 x: 12, y: 74,
-                itemLabel: 'Forkert vej 🕳️',
+                itemLabel: 'Forkert vej',
                 faelles: 'en forkert vej',
                 intet: 'et forkert svar',
                 flertal: 'de forkerte veje',
@@ -799,7 +1018,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'perfekt',
                 side: 'left',
                 x: 72, y: 71,
-                itemLabel: 'Perfekt croissant 🥐',
+                itemLabel: 'Perfekt croissant',
                 faelles: 'en perfekt dag',
                 intet: 'et perfekt bagværk',
                 flertal: 'de perfekte rammer',
@@ -809,7 +1028,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'mangelfuld',
                 side: 'right',
                 x: 76, y: 48,
-                itemLabel: 'Mangelfuld cykel 🚲',
+                itemLabel: 'Mangelfuld cykel',
                 faelles: 'en mangelfuld cykel',
                 intet: 'et mangelfuldt hjul',
                 flertal: 'de mangelfulde dele',
@@ -822,7 +1041,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'nyttig',
                 side: 'left',
                 x: 66, y: 84,
-                itemLabel: 'Nyttig app 📱',
+                itemLabel: 'Nyttig app',
                 faelles: 'en nyttig app',
                 intet: 'et nyttigt råd',
                 flertal: 'de nyttige apps',
@@ -832,7 +1051,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'ubrugelig',
                 side: 'right',
                 x: 42, y: 83,
-                itemLabel: 'Ubrugelig nøgle 🗝️',
+                itemLabel: 'Ubrugelig nøgle',
                 faelles: 'en ubrugelig nøgle',
                 intet: 'et ubrugeligt værktøj',
                 flertal: 'de ubrugelige nøgler',
@@ -845,7 +1064,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'gratis',
                 side: 'left',
                 x: 84, y: 74,
-                itemLabel: 'Gratis gave 🎁',
+                itemLabel: 'Gratis gave',
                 faelles: 'en gratis gave',
                 intet: 'et gratis måltid (aldrig -t!)',
                 flertal: 'de gratis gaver (aldrig -e!)',
@@ -855,7 +1074,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'betalt',
                 side: 'right',
                 x: 88, y: 78,
-                itemLabel: 'Betalte penge 💵',
+                itemLabel: 'Betalte penge',
                 faelles: 'en betalt regning',
                 intet: 'et betalt arbejde',
                 flertal: 'de betalte sedler',
@@ -868,7 +1087,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'simpel',
                 side: 'left',
                 x: 3, y: 72,
-                itemLabel: 'Simpel krukke 🪴',
+                itemLabel: 'Simpel krukke',
                 faelles: 'en simpel krukke',
                 intet: 'et simpelt design',
                 flertal: 'de simple krukker',
@@ -878,7 +1097,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                 word: 'kompliceret',
                 side: 'right',
                 x: 67, y: 73,
-                itemLabel: 'Kompliceret kabelrod 🔌',
+                itemLabel: 'Kompliceret kabelrod',
                 faelles: 'en kompliceret sag',
                 intet: 'et kompliceret kabelnet',
                 flertal: 'de komplicerede ledninger',
@@ -908,18 +1127,18 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
 
     const instructionText = document.createElement('div');
     instructionText.className = 'contrast-instruction';
-    instructionText.innerHTML = `💡 <em>${getTranslation('adj_click_hotspot_hint')}</em>`;
+    instructionText.innerHTML = `${renderDsIcon('lightbulb', '', { size: 18 })} <em>${getTranslation('adj_click_hotspot_hint')}</em>`;
     ctrlBar.appendChild(instructionText);
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-toggle-btn';
-    pureBtn.innerHTML = `<span>🖼️</span> ${getTranslation('adj_pure_label')} <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
+    pureBtn.innerHTML = `${renderDsIcon('image', '', { size: 16 })} ${getTranslation('adj_pure_label')} <strong id="pure-status-label">${getTranslation('adj_status_off')}</strong>`;
     let isPureMode = false;
     pureBtn.onclick = () => {
         isPureMode = !isPureMode;
         stage.classList.toggle('pure-mode', isPureMode);
         pureBtn.classList.toggle('active', isPureMode);
-        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? `${getTranslation('adj_status_on')} 🖼️` : getTranslation('adj_status_off');
+        pureBtn.querySelector('#pure-status-label').textContent = isPureMode ? getTranslation('adj_status_on') : getTranslation('adj_status_off');
     };
     ctrlBar.appendChild(pureBtn);
     contrastCard.appendChild(ctrlBar);
@@ -977,14 +1196,13 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${item.me.side === 'left' ? '💎' : '⚙️'}</span>
                     <span class="adj-main-word">${item.me.word}</span>
-                    ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
-                    <button class="adj-tts-btn" id="card-tts-btn">🔊 ${getTranslation('adj_listen_pronunciation')}</button>
-                    <span style="color: #94a3b8; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
+                    ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #fed7aa; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
+                    <button class="adj-tts-btn" id="card-tts-btn">${renderDsIcon('volume', '', { size: 16 })} ${getTranslation('adj_listen_pronunciation')}</button>
+                    <span style="color: #fed7aa; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at se modpolen">
-                    <span>⚔️ ${getTranslation('adj_modpol_label')}</span>
+                    <span>${getTranslation('adj_modpol_label')}</span>
                     <strong>${item.other.word}</strong>
                     <span>➔</span>
                 </div>
@@ -1006,9 +1224,9 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
             </div>
 
             <div class="adj-example-box">
-                <strong>💬 ${getTranslation('adj_example_sentence')}</strong><br>
+                <strong>${getTranslation('adj_example_sentence')}</strong><br>
                 "${formatNounLinks(item.me.context)}"
-                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
+                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #fed7aa; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
             </div>
         `;
 
@@ -1050,92 +1268,92 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
 
     const antonymDuels = [
         {
-            stimulus: 'Maden på restauranten var rigtig <strong>GOD 🍽️</strong>.',
+            stimulus: 'Maden på restauranten var rigtig <strong>GOD</strong>.',
             question: 'Hvad var maden, hvis den smagte brændt og uspiseligt?',
             targetWord: 'god',
-            correct: 'dårlig 🤢',
-            options: ['dårlig 🤢', 'svær 📚', 'dyr 🏬', 'forkert 🚌'],
+            correct: 'dårlig',
+            options: ['dårlig', 'svær', 'dyr', 'forkert'],
             wrongExplanation: 'Modpolen til god kvalitet er dårlig.',
             congruenceBonus: 'En <strong>god</strong> ven ↔ En <strong>dårlig</strong> ven (et godt måltid ↔ et dårligt måltid).'
         },
         {
-            stimulus: 'Opgaven i skolen var meget <strong>SVÆR 📚</strong>.',
+            stimulus: 'Opgaven i skolen var meget <strong>SVÆR</strong>.',
             question: 'Hvad er opgaven, som eleven kan løse på to minutter?',
             targetWord: 'svær',
-            correct: 'let ✏️',
-            options: ['let ✏️', 'billig 🍎', 'gratis 📰', 'simpel 📌'],
+            correct: 'let',
+            options: ['let', 'billig', 'gratis', 'simpel'],
             wrongExplanation: 'Når vi taler om sværhedsgrad, er modpolen til svær let!',
             congruenceBonus: 'En <strong>svær</strong> opgave ↔ En <strong>let</strong> opgave (et svært spørgsmål ↔ et let spørgsmål).'
         },
         {
-            stimulus: 'Jakken i butikken koster 3.000 kroner – den er <strong>DYR 🏬</strong>.',
+            stimulus: 'Jakken i butikken koster 3.000 kroner – den er <strong>DYR</strong>.',
             question: 'Hvad er jakken, der kun koster 100 kroner?',
             targetWord: 'dyr',
-            correct: 'billig 🏷️',
-            options: ['billig 🏷️', 'let ✏️', 'gratis 📰', 'dårlig 🌧️'],
+            correct: 'billig',
+            options: ['billig', 'let', 'gratis', 'dårlig'],
             wrongExplanation: 'Om priser og økonomi hedder modpolerne dyr og billig.',
             congruenceBonus: 'En <strong>dyr</strong> jakke ↔ En <strong>billig</strong> jakke (et dyrt ur ↔ et billigt ur).'
         },
         {
-            stimulus: 'Det var en meget <strong>VIGTIG</strong> besked fra lægen ✉️.',
+            stimulus: 'Det var en meget <strong>VIGTIG</strong> besked fra lægen.',
             question: 'Hvad er et rygte, som ingen behøver at bekymre sig om?',
             targetWord: 'vigtig',
-            correct: 'ligegyldig 💬',
-            options: ['ligegyldig 💬', 'forkert 🚌', 'mangelfuld 📝', 'ubrugelig 🗝️'],
+            correct: 'ligegyldig',
+            options: ['ligegyldig', 'forkert', 'mangelfuld', 'ubrugelig'],
             wrongExplanation: 'Noget, der har stor betydning, er vigtigt. Det modsatte er ligegyldigt.',
             congruenceBonus: 'En <strong>vigtig</strong> aftale ↔ En <strong>ligegyldig</strong> detalje.'
         },
         {
-            stimulus: 'Et pas er <strong>NØDVENDIGT</strong> for at rejse til udlandet 🛂.',
+            stimulus: 'Et pas er <strong>NØDVENDIGT</strong> for at rejse til udlandet.',
             question: 'Hvad er en ekstra udgift, man sagtens kan undvære?',
             targetWord: 'nødvendig',
-            correct: 'unødvendig 🛍️',
-            options: ['unødvendig 🛍️', 'billig 🏷️', 'forkert 🚌', 'simpel 📌'],
+            correct: 'unødvendig',
+            options: ['unødvendig', 'billig', 'forkert', 'simpel'],
             wrongExplanation: 'Det man ikke behøver, er unødvendigt.',
             congruenceBonus: 'En <strong>nødvendig</strong> ting ↔ En <strong>unødvendig</strong> ting.'
         },
         {
-            stimulus: 'Eleven gav det helt <strong>RIGTIGE</strong> svar til læreren ✔️.',
+            stimulus: 'Eleven gav det helt <strong>RIGTIGE</strong> svar til læreren.',
             question: 'Hvad kalder man et svar, der indeholder en fejl?',
             targetWord: 'rigtig',
-            correct: 'forkert ❌',
-            options: ['forkert ❌', 'dårlig 🌧️', 'ubrugelig 🗝️', 'svær 📚'],
+            correct: 'forkert',
+            options: ['forkert', 'dårlig', 'ubrugelig', 'svær'],
             wrongExplanation: 'Korrekt hedder rigtig på dansk, og med fejl hedder forkert.',
             congruenceBonus: 'Et <strong>rigtigt</strong> svar ↔ Et <strong>forkert</strong> svar.'
         },
         {
-            stimulus: 'Kagen var bagt med et <strong>PERFEKT</strong> resultat 🎂.',
+            stimulus: 'Kagen var bagt med et <strong>PERFEKT</strong> resultat.',
             question: 'Hvad kalder man et resultat, hvor halvdelen af ingredienserne mangler?',
             targetWord: 'perfekt',
-            correct: 'mangelfuld 📝',
-            options: ['mangelfuld 📝', 'svær 📚', 'kompliceret ⚖️', 'dyr 🏬'],
+            correct: 'mangelfuld',
+            options: ['mangelfuld', 'svær', 'kompliceret', 'dyr'],
             wrongExplanation: 'Når noget mangler vigtige dele, er det mangelfuldt.',
             congruenceBonus: 'En <strong>perfekt</strong> dag ↔ En <strong>mangelfuld</strong> rapport.'
         },
         {
-            stimulus: 'Kortet på telefonen var yderst <strong>NYTTIGT</strong> i den fremmede by 📱.',
+            stimulus: 'Kortet på telefonen var yderst <strong>NYTTIGT</strong> i den fremmede by.',
             question: 'Hvad er nøglen, der er knækket og ikke kan åbne døren?',
             targetWord: 'nyttig',
-            correct: 'ubrugelig 🗝️',
-            options: ['ubrugelig 🗝️', 'billig 🏷️', 'forkert ❌', 'unødvendig 🛍️'],
+            correct: 'ubrugelig',
+            options: ['ubrugelig', 'billig', 'forkert', 'unødvendig'],
             wrongExplanation: 'Når noget ikke kan bruges til sit formål, er det ubrugeligt.',
             congruenceBonus: 'Et <strong>nyttigt</strong> råd ↔ En <strong>ubrugelig</strong> nøgle.'
         },
         {
-            stimulus: 'Avisen koster 0 kroner – den er helt <strong>GRATIS 📰</strong>.',
+            stimulus: 'Avisen koster 0 kroner – den er helt <strong>GRATIS</strong>.',
             question: 'Hvad kalder man en vare eller ydelse, man skal betale for?',
             targetWord: 'gratis',
-            correct: 'betalt 💳',
-            options: ['betalt 💳', 'dyr 🏬', 'nødvendig 🛂', 'svær 📚'],
+            correct: 'betalt',
+            options: ['betalt', 'dyr', 'nødvendig', 'svær'],
             wrongExplanation: 'Modpolen til gratis er betalt.',
             congruenceBonus: 'En <strong>gratis</strong> avis ↔ En <strong>betalt</strong> regning.'
         },
         {
-            stimulus: 'Opskriften var helt <strong>SIMPEL</strong> med kun tre ingredienser 📌.',
+            stimulus: 'Opskriften var helt <strong>SIMPEL</strong> med kun tre ingredienser.',
             question: 'Hvad kalder man en lovtekst, der er svær at forstå med 50 paragraffer?',
             targetWord: 'simpel',
-            correct: 'kompliceret ⚖️',
-            options: ['kompliceret ⚖️', 'mangelfuld 📝', 'ubrugelig 🗝️', 'dårlig 🌧️'],
+            correct: 'kompliceret',
+            options: ['kompliceret', 'mangelfuld', 'ubrugelig', 'dårlig'],
             wrongExplanation: 'Noget med mange indviklede dele er kompliceret.',
             congruenceBonus: 'En <strong>simpel</strong> regel ↔ En <strong>kompliceret</strong> regel.'
         }
@@ -1152,7 +1370,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         const item = antonymDuels[currentDuelIndex];
         antonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">⚔️ Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
+                <span class="task-counter">Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
                 <span class="task-score">Point: <strong>${duelScore}</strong></span>
             </div>
             <div class="task-prompt-box">
@@ -1187,8 +1405,8 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
 
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎉 Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
-                            <span style="display:inline-block; margin-top:0.5rem; color:#f8fafc;">✨ <strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
+                            <strong>Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
+                            <span style="display:inline-block; margin-top:0.5rem; color:#fed7aa;"><strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
                         </div>
                     `;
                 } else {
@@ -1215,14 +1433,14 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                         renderDuel();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length}) 🏆`;
+                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length})`;
                     nextBtn.onclick = () => {
                         antonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Flot klaret i Antonym-duellen!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${duelScore}</strong> ud af <strong>${antonymDuels.length}</strong> rigtige modpoler.</p>
-                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen 🔄</button>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">${renderDsIcon('trophy', '', { size: 56 })}</div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Flot klaret i Antonym-duellen!</h2>
+                                <p style="font-size: 1.15rem; color: #fed7aa; margin-bottom: 2rem;">Du fik <strong>${duelScore}</strong> ud af <strong>${antonymDuels.length}</strong> rigtige modpoler.</p>
+                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen</button>
                             </div>
                         `;
                         antonymCard.querySelector('#restart-duel-btn').onclick = () => {
@@ -1343,7 +1561,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         const item = synonymTasks[currentSynonymIndex];
         synonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">🔄 Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
+                <span class="task-counter">Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
                 <span class="task-score">Point: <strong>${synonymScore}</strong></span>
             </div>
             <div class="task-prompt-box">
@@ -1376,7 +1594,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                     synonymCard.querySelector('.task-score strong').textContent = synonymScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎯 Rigtigt!</strong> ${item.explanation}
+                            <strong>Rigtigt!</strong> ${item.explanation}
                         </div>
                     `;
                 } else {
@@ -1400,14 +1618,14 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                         renderSynonymTask();
                     };
                 } else {
-                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length}) 🌟`;
+                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length})`;
                     nextBtn.onclick = () => {
                         synonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🌟</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Flot ordforråd i vurdering!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${synonymScore}</strong> ud af <strong>${synonymTasks.length}</strong> rigtige nuancer.</p>
-                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen 🔄</button>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">${renderDsIcon('trophy', '', { size: 56 })}</div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Flot ordforråd i vurdering!</h2>
+                                <p style="font-size: 1.15rem; color: #fed7aa; margin-bottom: 2rem;">Du fik <strong>${synonymScore}</strong> ud af <strong>${synonymTasks.length}</strong> rigtige nuancer.</p>
+                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen</button>
                             </div>
                         `;
                         synonymCard.querySelector('#restart-syn-btn').onclick = () => {
@@ -1696,12 +1914,12 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
         kongruensCard.innerHTML = `
             <div class="adj-grammar-link-box">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <span style="font-size: 1.8rem;">📖</span>
+                    ${renderDsIcon('bookOpen', '', { size: 28 })}
                     <div>
-                        <div style="font-weight: 700; color: #f8fafc; font-size: 1.05rem;">
+                        <div style="font-weight: 700; color: #FFFFFF; font-size: 1.05rem;">
                             ${getTranslation('adj_grammar_banner_title')}
                         </div>
-                        <div style="color: #94a3b8; font-size: 0.92rem; margin-top: 0.2rem;">
+                        <div style="color: #fed7aa; font-size: 0.92rem; margin-top: 0.2rem;">
                             ${getTranslation('adj_grammar_banner_desc')}
                         </div>
                     </div>
@@ -1747,11 +1965,11 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                     kongruensCard.querySelector('.task-score strong').textContent = kongruensScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>🎉 Helt rigtigt!</strong><br>
+                            <strong>Helt rigtigt!</strong><br>
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 Læs hele bøjningsreglen her ➔
+                                    ${renderDsIcon('bookOpen', '', { size: 16 })} Læs hele bøjningsreglen her ➔
                                 </a>
                             </div>
                         </div>
@@ -1767,7 +1985,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                             ${item.rule}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
-                                    📖 Se bøjningsguiden for hjælp til reglerne ➔
+                                    ${renderDsIcon('bookOpen', '', { size: 16 })} Se bøjningsguiden for hjælp til reglerne ➔
                                 </a>
                             </div>
                         </div>
@@ -1788,19 +2006,19 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                         renderKongruensTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se bøjningsresultat (${kongruensScore}/${kongruensTasks.length}) 🏆`;
+                    nextBtn.textContent = `Se bøjningsresultat (${kongruensScore}/${kongruensTasks.length})`;
                     nextBtn.onclick = () => {
                         kongruensCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🧩</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Stærk bøjningsindsigt!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 1.5rem;">Du fik <strong>${kongruensScore}</strong> ud af <strong>${kongruensTasks.length}</strong> rigtige endelser.</p>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">${renderDsIcon('trophy', '', { size: 56 })}</div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Stærk bøjningsindsigt!</h2>
+                                <p style="font-size: 1.15rem; color: #fed7aa; margin-bottom: 1.5rem;">Du fik <strong>${kongruensScore}</strong> ud af <strong>${kongruensTasks.length}</strong> rigtige endelser.</p>
                                 <div style="margin-bottom: 2rem;">
                                     <button class="adj-go-grammar-btn" id="finish-guide-link-btn" style="margin: 0 auto;">
-                                        📖 Gå til den store bøjningsguide ➔
+                                        ${renderDsIcon('bookOpen', '', { size: 16 })} Gå til den store bøjningsguide ➔
                                     </button>
                                 </div>
-                                <button class="task-next-btn" id="restart-kong-btn">Prøv igen 🔄</button>
+                                <button class="task-next-btn" id="restart-kong-btn">Prøv igen</button>
                             </div>
                         `;
                         kongruensCard.querySelector('#finish-guide-link-btn').onclick = () => navigateFn('adjective_comparison');
@@ -1921,7 +2139,7 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                     storyCard.querySelector('.task-score strong').textContent = storyScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>👏 Helt rigtigt!</strong> ${item.explanation}
+                            <strong>Helt rigtigt!</strong> ${item.explanation}
                         </div>
                     `;
                 } else {
@@ -1945,14 +2163,14 @@ export function renderAdjektiverKvalitetView(container, navigateFn, extraData = 
                         renderStoryTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length}) 🌟`;
+                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length})`;
                     nextBtn.onclick = () => {
                         storyCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
-                                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎉</div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #f8fafc;">Super flot forståelse af kvalitet og økonomi!</h2>
-                                <p style="font-size: 1.15rem; color: #94a3b8; margin-bottom: 2rem;">Du fik <strong>${storyScore}</strong> ud af <strong>${historieTasks.length}</strong> rigtige svar.</p>
-                                <button class="task-next-btn" id="restart-story-btn">Prøv igen 🔄</button>
+                                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">${renderDsIcon('trophy', '', { size: 56 })}</div>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Super flot forståelse af kvalitet og økonomi!</h2>
+                                <p style="font-size: 1.15rem; color: #fed7aa; margin-bottom: 2rem;">Du fik <strong>${storyScore}</strong> ud af <strong>${historieTasks.length}</strong> rigtige svar.</p>
+                                <button class="task-next-btn" id="restart-story-btn">Prøv igen</button>
                             </div>
                         `;
                         storyCard.querySelector('#restart-story-btn').onclick = () => {

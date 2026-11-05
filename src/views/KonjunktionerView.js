@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { conjunctionData } from '../utils/conjunctionData.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 import { isLocalhost, KONJ_PALETTES, getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
+import { konjTransBlock, konjTransSpan, tKonj } from '../utils/konjunktioner_extra_translations.js';
 
 /**
  * KonjunktionerView - Selvstændig flade om Helsætnings- og Ledsætningskonjunktioner
@@ -1629,6 +1630,31 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     `;
     viewContainer.appendChild(hero);
 
+    // Didaktisk Grammatik-Banner med inline oversættelse
+    const bannerBox = document.createElement('div');
+    bannerBox.className = 'konj-didactic-banner';
+    bannerBox.style.background = 'rgba(234, 179, 8, 0.08)';
+    bannerBox.style.border = '1.5px solid rgba(234, 179, 8, 0.35)';
+    bannerBox.style.borderRadius = '12px';
+    bannerBox.style.padding = '0.9rem 1.25rem';
+    bannerBox.style.margin = '0 0 1.2rem 0';
+    bannerBox.style.color = '#fde047';
+    bannerBox.style.fontSize = '0.98rem';
+    bannerBox.style.lineHeight = '1.5';
+    bannerBox.style.fontWeight = '600';
+
+    const bannerTextDa = activeFelt === 2
+        ? "Ledsætningskonjunktioner (fordi, hvis, selvom, at, om...) indleder en ledsætning, hvor ordet 'ikke' ALTID tvinges foran verbet ('ikke-magneten')!"
+        : activeFelt === 3
+        ? "Når en tids-ledsætning står forrest i 'Forfeltet' ('Da jeg kom hjem, ...'), udløser det INVERSION i hovedsætningen (Verbum før Subjekt: '... drak jeg en kop te')."
+        : "Helsætningskonjunktioner (og, men, eller, for, så) forbinder to selvstændige helsætninger i 'Forbinderfeltet (F0)' – ordet 'ikke' står altid EFTER verbet.";
+
+    bannerBox.innerHTML = `
+        <div>${bannerTextDa}</div>
+        ${konjTransBlock('konj_banner_f' + activeFelt, '', 'color: #cbd5e1;')}
+    `;
+    viewContainer.appendChild(bannerBox);
+
     // Tabs Navigation tailored to Felt 1, Felt 2, or Felt 3
     const nav = document.createElement('div');
     nav.className = 'adv-tabs-nav';
@@ -1832,7 +1858,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
                             <span class="inspector-badge">${item.clauseType}</span>
-                            <span class="inspector-badge" style="background: rgba(234, 179, 8, 0.2); border-color: #eab308; color: #fde047;">${item.meaning}</span>
+                            <span class="inspector-badge" style="background: rgba(234, 179, 8, 0.2); border-color: #eab308; color: #fde047;">${item.meaning}${konjTransSpan(item.meaning)}</span>
                         </div>
                     </div>
 
@@ -1849,8 +1875,15 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
                     <div class="inspector-scene-box">
                         <div class="scene-heading">${getTranslation('konj_inspector_in_scene')}</div>
-                        <p class="scene-text">${item.sceneDesc}</p>
+                        <p class="scene-text">${item.sceneDesc}${konjTransBlock(item.sceneDesc)}</p>
                     </div>
+
+                    ${item.ruleHint ? `
+                    <div class="inspector-rule-box" style="margin-top: 0.9rem; background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7; padding: 0.75rem 1rem; border-radius: 6px;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #d8b4fe; text-transform: uppercase; margin-bottom: 0.25rem;">Grammatisk regel</div>
+                        <div style="font-size: 0.92rem; color: #e2e8f0; line-height: 1.45;">${item.ruleHint}</div>
+                        ${konjTransBlock(item.ruleHint)}
+                    </div>` : ''}
                 </div>
 
                 <div class="inspector-right">
@@ -2159,7 +2192,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
             <div class="detektiv-card">
                 <div class="detektiv-context-tag">${r.tag}</div>
-                <div class="detektiv-prompt-text">${r.prompt}</div>
+                <div class="detektiv-prompt-text">${r.prompt}${konjTransBlock(r.prompt)}</div>
                 <div class="detektiv-sentence-quote" id="det-quote">${r.quote}</div>
 
                 <div class="detektiv-options-grid" id="det-opts"></div>
@@ -2190,12 +2223,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                     const filledQuote = r.quote.replace('______', `<span style="color:var(--konj-border-focus); text-decoration:underline;">${opt}</span>`);
                     container.querySelector('#det-quote').innerHTML = filledQuote;
                     fbBox.className = 'detektiv-feedback-box show correct';
-                    fbBox.innerHTML = `<strong>${r.explanations[opt]}</strong>`;
+                    fbBox.innerHTML = `<strong>${r.explanations[opt]}</strong>${konjTransBlock(r.explanations[opt])}`;
                     nextWrap.style.display = 'block';
                 } else {
                     btn.classList.add('wrong');
                     fbBox.className = 'detektiv-feedback-box show wrong';
-                    fbBox.innerHTML = `<strong>Prøv igen:</strong> ${r.explanations[opt]}`;
+                    fbBox.innerHTML = `<strong>Prøv igen:</strong> ${r.explanations[opt]}${konjTransBlock(r.explanations[opt])}`;
                 }
             };
             optsGrid.appendChild(btn);
@@ -2487,7 +2520,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         card.innerHTML = `
             <div class="progress-header">
                 <span>SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
-                <span>${ex.modeLabel}</span>
+                <span>${ex.modeLabel}${konjTransSpan(ex.modeLabel)}</span>
             </div>
             <div class="progress-bar-wrap">
                 <div class="progress-bar-fill" style="width:${pct}%;"></div>
@@ -2497,6 +2530,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
             <div style="color:var(--konj-text-muted); font-weight:700; margin-bottom:0.8rem; text-align:center;">
                 ${ex.context}
+                ${konjTransBlock(ex.context)}
             </div>
 
             <div class="sb-sentence-display">${displaySentenceHtml}</div>
@@ -2528,6 +2562,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         fbDiv.className = 'detektiv-feedback-box show correct';
                         fbDiv.innerHTML = `
                             <strong>${ex.step1Explain}</strong>
+                            ${konjTransBlock(ex.step1Explain)}
                             <div style="margin-top:1rem;">
                                 <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætningsleddene</button>
                             </div>
@@ -2701,13 +2736,13 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         `<span style="color:var(--konj-border-focus); text-decoration:underline; font-weight:900;">${opt}</span>`
                     );
                     fbBox.className = 'detektiv-feedback-box show correct';
-                    fbBox.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}`;
+                    fbBox.innerHTML = `<strong>Korrekt!</strong> ${q.explanation}${konjTransBlock(q.explanation)}`;
                     nextWrap.style.display = 'block';
                 } else {
                     firstAttempt = false;
                     btn.classList.add('wrong');
                     fbBox.className = 'detektiv-feedback-box show wrong';
-                    fbBox.innerHTML = `<strong>Prøv igen:</strong> ${q.wrongHint || q.explanation}`;
+                    fbBox.innerHTML = `<strong>Prøv igen:</strong> ${q.wrongHint || q.explanation}${konjTransBlock(q.wrongHint || q.explanation)}`;
                 }
             };
             optsGrid.appendChild(btn);
@@ -2981,6 +3016,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             <div class="special-intro-box">
                 <h2>Da eller når? og tidskonjunktioner</h2>
                 <p>Lær den berømte danske forskel på <strong>da</strong> (én gang i fortiden) og <strong>når</strong> (nutid, fremtid og "hver gang"-vaner) samt tidsrækkefølge med <em>mens, inden, efter at, siden, indtil</em>.</p>
+                ${konjTransBlock('konj_tid_intro_desc')}
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#f59e0b;">
@@ -2988,7 +3024,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#fbbf24;">da</span>
                         <span class="special-rule-role" style="background:rgba(245,158,11,0.2); color:#fde68a;">Én gang i fortiden</span>
                     </div>
-                    <div class="special-rule-desc">Bruges KUN om en enkeltstående begivenhed eller én afsluttet periode i fortiden.</div>
+                    <div class="special-rule-desc">
+                        Bruges KUN om en enkeltstående begivenhed eller én afsluttet periode i fortiden.
+                        ${konjTransBlock('konj_tid_r1_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#f59e0b;">
                         "<strong>Da</strong> jeg var barn..." / "<strong>Da</strong> jeg kom hjem i går..."
                     </div>
@@ -2996,9 +3035,12 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                 <div class="special-rule-card" style="border-color:#10b981;">
                     <div class="special-rule-header">
                         <span class="special-rule-word" style="color:#34d399;">når</span>
-                        <span class="special-rule-role" style="background:rgba(16,185,129,0.2); color:#a7f3d0;">Fremtid & Hver gang</span>
+                        <span class="special-rule-role" style="background:rgba(168,185,129,0.2); color:#a7f3d0;">Fremtid & Hver gang</span>
                     </div>
-                    <div class="special-rule-desc">Bruges om 1) <strong>Fremtid</strong> og 2) <strong>Gentagelse/vane</strong> ("hver gang" – både i nutid og fortid!).</div>
+                    <div class="special-rule-desc">
+                        Bruges om 1) <strong>Fremtid</strong> og 2) <strong>Gentagelse/vane</strong> ("hver gang" – både i nutid og fortid!).
+                        ${konjTransBlock('konj_tid_r2_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#10b981;">
                         "<strong>Når</strong> det bliver sommer..." / "Altid <strong>når</strong> det regner..."
                     </div>
@@ -3008,7 +3050,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#22d3ee;">mens</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Samtidighed</span>
                     </div>
-                    <div class="special-rule-desc">To handlinger foregår sideløbende på samme tid.</div>
+                    <div class="special-rule-desc">
+                        To handlinger foregår sideløbende på samme tid.
+                        ${konjTransBlock('konj_tid_r3_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         "Han hører musik, <strong>mens</strong> han laver mad."
                     </div>
@@ -3018,7 +3063,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#c084fc;">inden / efter at / indtil</span>
                         <span class="special-rule-role" style="background:rgba(168,85,247,0.2); color:#d8b4fe;">Rækkefølge</span>
                     </div>
-                    <div class="special-rule-desc"><strong>Inden</strong> = før. <strong>Efter at</strong> = bagefter. <strong>Indtil</strong> = frem til slutpunktet.</div>
+                    <div class="special-rule-desc">
+                        <strong>Inden</strong> = før. <strong>Efter at</strong> = bagefter. <strong>Indtil</strong> = frem til slutpunktet.
+                        ${konjTransBlock('konj_tid_r4_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#a855f7;">
                         "Lås døren, <strong>inden</strong> du går."
                     </div>
@@ -3103,6 +3151,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             <div class="special-intro-box">
                 <h2>Fordi, for, så eller derfor?</h2>
                 <p>Løs den klassiske udfordring ved at tjekke to ting: 1) Er sætning 2 en <strong>årsag</strong> eller et <strong>resultat</strong>? 2) Hvordan er <strong>ordstillingen</strong>?</p>
+                ${konjTransBlock('konj_aarsag_intro_desc')}
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#06b6d4;">
@@ -3110,7 +3159,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#22d3ee;">fordi</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Årsag + IKKE før V</span>
                     </div>
-                    <div class="special-rule-desc">Ledsætning: Subjekt + <strong>ikke/aldrig</strong> + Verbum.</div>
+                    <div class="special-rule-desc">
+                        Ledsætning: Subjekt + <strong>ikke/aldrig</strong> + Verbum.
+                        ${konjTransBlock('konj_aarsag_r1_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         "... <strong>fordi</strong> jeg <span style="color:#22d3ee;">ikke</span> <span style="color:#fca5a5;">har</span> tid."
                     </div>
@@ -3120,7 +3172,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#4ade80;">for</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Årsag + V før IKKE</span>
                     </div>
-                    <div class="special-rule-desc">Helsætning: Subjekt + Verbum + <strong>ikke/aldrig</strong>.</div>
+                    <div class="special-rule-desc">
+                        Helsætning: Subjekt + Verbum + <strong>ikke/aldrig</strong>.
+                        ${konjTransBlock('konj_aarsag_r2_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
                         "... <strong>for</strong> jeg <span style="color:#fca5a5;">har</span> <span style="color:#22d3ee;">ikke</span> tid."
                     </div>
@@ -3130,7 +3185,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#c084fc;">så</span>
                         <span class="special-rule-role" style="background:rgba(168,85,247,0.2); color:#d8b4fe;">Resultat UDEN inv.</span>
                     </div>
-                    <div class="special-rule-desc">Helsætningskonjunktion: <strong>Subjekt + Verbum</strong>.</div>
+                    <div class="special-rule-desc">
+                        Helsætningskonjunktion: <strong>Subjekt + Verbum</strong>.
+                        ${konjTransBlock('konj_aarsag_r3_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#a855f7;">
                         "... <strong>så</strong> <span style="color:#86efac;">jeg</span> <span style="color:#fca5a5;">tager</span> bussen."
                     </div>
@@ -3140,7 +3198,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#fde047;">derfor</span>
                         <span class="special-rule-role" style="background:rgba(234,179,8,0.2); color:#fef08a;">Resultat MED inv.</span>
                     </div>
-                    <div class="special-rule-desc">Konnektivt adverbium (Felt 7): <strong>Verbum + Subjekt</strong>!</div>
+                    <div class="special-rule-desc">
+                        Konnektivt adverbium (Felt 7): <strong>Verbum + Subjekt</strong>!
+                        ${konjTransBlock('konj_aarsag_r4_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#eab308;">
                         "<strong>Derfor</strong> <span style="color:#fca5a5;">tager</span> <span style="color:#86efac;">jeg</span> bussen."
                     </div>
@@ -3239,6 +3300,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             <div class="special-intro-box">
                 <h2>At eller om? og hvis eller selvom?</h2>
                 <p>Undgå de klassiske fælder mellem fakta (<em>at</em>), spørgende tvivl (<em>om</em>), betingelse (<em>hvis</em>) og modstand (<em>selvom</em>).</p>
+                ${konjTransBlock('konj_atom_intro_desc')}
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#22c55e;">
@@ -3246,7 +3308,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#4ade80;">at</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Fakta & Udsagn</span>
                     </div>
-                    <div class="special-rule-desc">Bruges når noget præsenteres som viden, udsagn eller mening (<em>sige, vide, tro, se at...</em>).</div>
+                    <div class="special-rule-desc">
+                        Bruges når noget præsenteres som viden, udsagn eller mening (<em>sige, vide, tro, se at...</em>).
+                        ${konjTransBlock('konj_atom_r1_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
                         "Jeg ved, <strong>at</strong> han kommer."
                     </div>
@@ -3256,7 +3321,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#22d3ee;">om</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Tvivl & Ja/Nej-spørgsmål</span>
                     </div>
-                    <div class="special-rule-desc">Bruges ved usikkerhed og indirekte spørgsmål (<em>spørge, ikke vide, tjekke om...</em>).</div>
+                    <div class="special-rule-desc">
+                        Bruges ved usikkerhed og indirekte spørgsmål (<em>spørge, ikke vide, tjekke om...</em>).
+                        ${konjTransBlock('konj_atom_r2_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         "Jeg ved ikke, <strong>om</strong> han kommer."
                     </div>
@@ -3266,7 +3334,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#fde047;">hvis</span>
                         <span class="special-rule-role" style="background:rgba(234,179,8,0.2); color:#fef08a;">Betingelse</span>
                     </div>
-                    <div class="special-rule-desc">Opstiller et krav eller en betingelse for, at noget andet sker.</div>
+                    <div class="special-rule-desc">
+                        Opstiller et krav eller en betingelse for, at noget andet sker.
+                        ${konjTransBlock('konj_atom_r3_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#eab308;">
                         "Vi bader, <strong>hvis</strong> solen skinner."
                     </div>
@@ -3276,7 +3347,10 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
                         <span class="special-rule-word" style="color:#fb923c;">selvom</span>
                         <span class="special-rule-role" style="background:rgba(249,115,22,0.2); color:#fdba74;">Trods modstand</span>
                     </div>
-                    <div class="special-rule-desc">Handlingen gennemføres <strong>på trods af</strong> en forhindring.</div>
+                    <div class="special-rule-desc">
+                        Handlingen gennemføres <strong>på trods af</strong> en forhindring.
+                        ${konjTransBlock('konj_atom_r4_desc')}
+                    </div>
                     <div class="special-rule-example" style="border-color:#f97316;">
                         "Vi bader, <strong>selvom</strong> det regner."
                     </div>
@@ -3448,6 +3522,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             </div>
             <div style="font-size: 0.92rem; color: #cbd5e1; line-height: 1.5;">
                 Her ser du vekselvirkningen: <strong>Når</strong> sætter vanen, <strong>Derfor</strong> skyder konsekvensen afsted som en pil, <strong>Fordi</strong> peger bagud mod årsagen, <strong>Selvom</strong> bygger muren op, og <strong>Alligevel</strong> bryder igennem muren. Til sidst sætter <strong>Da</strong> tegnestiften ved det præcise tidspunkt i fortiden!
+                ${konjTransBlock('konj_flow_analysis_text')}
             </div>
         `;
         storyCard.appendChild(analysisBox);

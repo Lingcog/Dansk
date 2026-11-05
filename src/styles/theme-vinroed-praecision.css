@@ -2766,8 +2766,12 @@ body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecis
 }
 
 /* Valgte knapper: Solide, lysstærke læringsbrikker */
-body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-subjekt .sb-chip-btn.selected,
-body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-objekt .sb-chip-btn.selected {
+.sb-cat-subjekt .sb-chip-btn.selected,
+.sb-cat-objekt .sb-chip-btn.selected,
+[data-theme="vinroed-praecision"] .sb-cat-subjekt .sb-chip-btn.selected,
+[data-theme="vinroed-praecision"] .sb-cat-objekt .sb-chip-btn.selected,
+[data-verb-nuance] .sb-cat-subjekt .sb-chip-btn.selected,
+[data-verb-nuance] .sb-cat-objekt .sb-chip-btn.selected {
   background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
   color: #FFFFFF !important;
   border: 1.5px solid #86efac !important;
@@ -2776,16 +2780,20 @@ body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecis
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
 
-body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-verbum .sb-chip-btn.selected {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+.sb-cat-verbum .sb-chip-btn.selected,
+[data-theme="vinroed-praecision"] .sb-cat-verbum .sb-chip-btn.selected,
+[data-verb-nuance] .sb-cat-verbum .sb-chip-btn.selected {
+  background: linear-gradient(135deg, var(--verb-primary, #dc2626) 0%, #800A18 100%) !important;
   color: #FFFFFF !important;
-  border: 1.5px solid #fca5a5 !important;
-  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+  border: 1.5px solid var(--verb-border-focus, #fca5a5) !important;
+  box-shadow: 0 4px 16px var(--verb-glow, rgba(239, 68, 68, 0.6)) !important;
   font-weight: 800 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
 
-body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecision"] .sb-cat-sted .sb-chip-btn.selected {
+.sb-cat-sted .sb-chip-btn.selected,
+[data-theme="vinroed-praecision"] .sb-cat-sted .sb-chip-btn.selected,
+[data-verb-nuance] .sb-cat-sted .sb-chip-btn.selected {
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
   color: #FFFFFF !important;
   border: 1.5px solid #93c5fd !important;
@@ -2966,12 +2974,45 @@ body:not([data-verb-nuance]):not([data-adj-nuance]) [data-theme="vinroed-praecis
   border-color: var(--verb-primary) !important;
 }
 
-[data-verb-nuance] .sb-cat-verbum .sb-chip-btn.selected {
-  background: linear-gradient(135deg, var(--verb-primary) 0%, #800A18 100%) !important;
-  border: 1.5px solid var(--verb-border-focus) !important;
+[data-verb-nuance] .sb-cat-subjekt .sb-chip-btn.selected,
+[data-verb-nuance] .sb-cat-objekt .sb-chip-btn.selected {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+  border: 1.5px solid #86efac !important;
   color: #FFFFFF !important;
-  box-shadow: 0 4px 16px var(--verb-glow) !important;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
+
+[data-verb-nuance] .sb-cat-verbum .sb-chip-btn.selected {
+  background: linear-gradient(135deg, var(--verb-primary, #dc2626) 0%, #800A18 100%) !important;
+  border: 1.5px solid var(--verb-border-focus, #fca5a5) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px var(--verb-glow, rgba(239, 68, 68, 0.6)) !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-verb-nuance] .sb-cat-sted .sb-chip-btn.selected {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  border: 1.5px solid #93c5fd !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Rækkernes venstre farvekodning i Verbum-sætningsbyggeren */
+[data-verb-nuance] .sb-cat-subjekt { border-left: 4px solid #22c55e !important; }
+[data-verb-nuance] .sb-cat-verbum { border-left: 4px solid var(--verb-primary, #dc2626) !important; }
+[data-verb-nuance] .sb-cat-objekt { border-left: 4px solid #22c55e !important; }
+[data-verb-nuance] .sb-cat-sted { border-left: 4px solid #0284c7 !important; }
+
+/* Badges i rækkeoverskrifterne */
+[data-verb-nuance] .badge-cat-subjekt { background: rgba(34, 197, 94, 0.2) !important; color: #86efac !important; border: 1.5px solid #22c55e !important; }
+[data-verb-nuance] .badge-cat-verbum { background: rgba(220, 38, 38, 0.2) !important; color: #fca5a5 !important; border: 1.5px solid var(--verb-primary, #dc2626) !important; }
+[data-verb-nuance] .badge-cat-objekt { background: rgba(34, 197, 94, 0.2) !important; color: #86efac !important; border: 1.5px solid #22c55e !important; }
+[data-verb-nuance] .badge-cat-sted { background: rgba(2, 132, 199, 0.2) !important; color: #93c5fd !important; border: 1.5px solid #0284c7 !important; }
 
 
 

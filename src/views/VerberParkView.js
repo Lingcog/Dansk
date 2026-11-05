@@ -806,32 +806,36 @@ export function renderVerberParkView(container, navigateFn, extraData = {}) {
             transform: translateY(-2px);
         }
         .sb-chip-btn.selected {
-            font-weight: 800;
+            font-weight: 800 !important;
             transform: translateY(-2px);
         }
         .sb-cat-subjekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #86efac !important;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-verbum .sb-chip-btn.selected {
-            background: linear-gradient(135deg, rgba(255, 42, 85, 0.35) 0%, var(--verb-surface-input, #120205) 100%);
-            color: #FFFFFF;
-            border-color: var(--verb-primary, #FF2A55);
-            box-shadow: 0 0 14px var(--verb-glow);
+            background: linear-gradient(135deg, var(--verb-primary, #dc2626) 0%, #800A18 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid var(--verb-border-focus, #fca5a5) !important;
+            box-shadow: 0 4px 16px var(--verb-glow, rgba(239, 68, 68, 0.6)) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-objekt .sb-chip-btn.selected {
-            background: rgba(34, 197, 94, 0.25);
-            color: #4ade80;
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #86efac !important;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
         .sb-cat-sted .sb-chip-btn.selected {
-            background: rgba(2, 132, 199, 0.25);
-            color: #93c5fd;
-            border-color: #0284c7;
-            box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #93c5fd !important;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
         }
 
         /* Live Result Box */

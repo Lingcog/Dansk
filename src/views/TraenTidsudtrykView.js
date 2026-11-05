@@ -941,296 +941,333 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         @media (max-width: 768px) {
             .tidsudtryk-view {
-                padding: 0.25rem 0.65rem 3rem;
+                padding: 0.25rem 0.5rem 2.5rem;
             }
             .tids-hero {
-                margin-bottom: 1.2rem;
+                margin-bottom: 0.8rem;
             }
             .tids-hero h1 {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
+                margin-bottom: 0.25rem;
             }
             .tids-hero p {
-                font-size: 0.88rem;
-                line-height: 1.45;
+                font-size: 0.82rem;
+                line-height: 1.4;
             }
             .byggeplads-pills {
-                font-size: 0.75rem;
-                padding: 0.25rem 0.6rem;
-                gap: 0.35rem;
+                font-size: 0.72rem;
+                padding: 0.2rem 0.55rem;
+                gap: 0.3rem;
                 flex-wrap: wrap;
                 justify-content: center;
+                margin-bottom: 0.5rem;
             }
             .golden-rule-banner {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.6rem;
-                padding: 0.9rem 1rem;
-                margin-bottom: 1.2rem;
+                flex-direction: row;
+                text-align: left;
+                gap: 0.65rem;
+                padding: 0.65rem 0.85rem;
+                margin-bottom: 0.85rem;
+                border-radius: 12px;
             }
             .golden-rule-icon {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
             }
             .golden-rule-content h3 {
-                font-size: 0.98rem;
+                font-size: 0.88rem;
+                margin-bottom: 0.15rem;
             }
             .golden-rule-content p {
-                font-size: 0.84rem;
+                font-size: 0.78rem;
+                line-height: 1.35;
             }
             .tids-tabs-nav {
-                margin-bottom: 1.2rem;
-                gap: 0.25rem;
-                padding: 0.25rem;
+                margin-bottom: 0.85rem;
+                gap: 0.2rem;
+                padding: 0.2rem;
             }
             .tids-tab-btn {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.82rem;
+                padding: 0.45rem 0.65rem;
+                font-size: 0.78rem;
+                white-space: nowrap;
             }
             .vrimmel-stage-card {
                 border-radius: 14px;
-                margin-bottom: 1.2rem;
+                margin-bottom: 0.9rem;
             }
             .vrimmel-stage-header {
-                padding: 0.8rem 1rem;
+                padding: 0.65rem 0.85rem;
             }
             .vrimmel-stage-title {
-                font-size: 1rem;
+                font-size: 0.95rem;
+            }
+            .vrimmel-stage-subtitle {
+                font-size: 0.75rem;
             }
             .vrimmel-time-filter-bar {
-                padding: 0.5rem 0.75rem;
-                gap: 0.35rem;
+                padding: 0.4rem 0.6rem;
+                gap: 0.3rem;
             }
             .time-filter-btn {
-                padding: 0.35rem 0.65rem;
-                font-size: 0.78rem;
+                padding: 0.3rem 0.55rem;
+                font-size: 0.75rem;
+            }
+            .tids-pin {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            .tids-pin:not(.active) .tids-pin-pill {
+                display: none;
+            }
+            .tids-pin.active .tids-pin-pill {
+                display: flex;
+                padding: 0.2rem 0.5rem;
+                font-size: 0.7rem;
             }
             .hotspot-inspector {
-                padding: 1rem 0.85rem;
+                padding: 0.85rem 0.75rem;
             }
             .inspector-top {
-                gap: 0.5rem;
-                margin-bottom: 0.75rem;
+                gap: 0.4rem;
+                margin-bottom: 0.6rem;
             }
             .inspector-icon {
-                font-size: 1.4rem;
+                font-size: 1.25rem;
             }
             .inspector-time-heading {
-                font-size: 1.05rem;
+                font-size: 0.98rem;
             }
             .inspector-badge {
-                font-size: 0.72rem;
-                padding: 0.15rem 0.5rem;
+                font-size: 0.7rem;
+                padding: 0.12rem 0.45rem;
             }
             .sentence-display-box {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 0.85rem 1rem;
-                gap: 0.75rem;
+                padding: 0.75rem 0.85rem;
+                gap: 0.6rem;
+                border-radius: 10px;
+                margin-bottom: 0.85rem;
             }
             .sentence-text-lead {
-                font-size: 1.05rem;
-                line-height: 1.45;
+                font-size: 0.98rem;
+                line-height: 1.4;
             }
             .sentence-actions {
                 width: 100%;
                 justify-content: flex-start;
-                gap: 0.4rem;
+                gap: 0.35rem;
             }
             .btn-action-listen, .btn-action-invert {
-                font-size: 0.8rem;
-                padding: 0.45rem 0.75rem;
+                font-size: 0.78rem;
+                padding: 0.4rem 0.65rem;
             }
             .inspector-analysis-grid {
                 grid-template-columns: 1fr;
-                gap: 0.6rem;
+                gap: 0.5rem;
             }
             .analysis-card {
-                padding: 0.75rem 0.85rem;
+                padding: 0.65rem 0.75rem;
+                border-radius: 10px;
             }
             .analysis-card-title {
-                font-size: 0.72rem;
+                font-size: 0.7rem;
             }
             .analysis-card-val {
-                font-size: 0.98rem;
+                font-size: 0.92rem;
             }
             .analysis-card-desc {
-                font-size: 0.82rem;
+                font-size: 0.78rem;
+                line-height: 1.35;
             }
             .future-lab-grid {
                 grid-template-columns: 1fr;
-                gap: 0.85rem;
-                margin-bottom: 1.2rem;
+                gap: 0.75rem;
+                margin-bottom: 0.9rem;
             }
             .future-model-card {
-                padding: 1rem;
-                border-radius: 14px;
+                padding: 0.85rem;
+                border-radius: 12px;
             }
             .future-model-title {
-                font-size: 1.08rem;
+                font-size: 0.98rem;
             }
             .future-model-desc {
-                font-size: 0.84rem;
-                margin-bottom: 0.75rem;
+                font-size: 0.8rem;
+                margin-bottom: 0.6rem;
+                line-height: 1.35;
             }
             .example-item {
-                font-size: 0.84rem;
-                padding: 0.55rem 0.75rem;
+                font-size: 0.8rem;
+                padding: 0.45rem 0.65rem;
             }
             .mini-quiz-card {
-                padding: 1rem;
-                border-radius: 14px;
-                margin-bottom: 1.2rem;
+                padding: 0.85rem;
+                border-radius: 12px;
+                margin-bottom: 0.9rem;
             }
             .mini-quiz-header h3 {
-                font-size: 1.05rem;
+                font-size: 0.98rem;
             }
             .quiz-sentence-row {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
             .quiz-opt-btn {
-                padding: 0.45rem 0.8rem;
-                font-size: 0.82rem;
+                padding: 0.4rem 0.7rem;
+                font-size: 0.8rem;
             }
             .vaerksted-card {
-                padding: 1rem;
+                padding: 0.85rem 0.75rem;
                 border-radius: 14px;
             }
             .vaerksted-sentence-box {
-                padding: 1rem 0.75rem;
-                font-size: 1.05rem;
-                margin-bottom: 1rem;
-                line-height: 1.45;
+                padding: 0.85rem 0.65rem;
+                font-size: 1rem;
+                margin-bottom: 0.85rem;
+                line-height: 1.4;
+                border-radius: 12px;
             }
             .blank-placeholder {
-                min-width: 80px;
-                padding: 0.1rem 0.4rem;
+                min-width: 60px;
+                padding: 0.05rem 0.35rem;
+                font-size: 0.92rem;
             }
             .vaerksted-choices-grid {
                 grid-template-columns: 1fr;
-                gap: 0.6rem;
-                margin-bottom: 1rem;
+                gap: 0.5rem;
+                margin-bottom: 0.85rem;
             }
             .vaerksted-choice-btn {
-                padding: 0.75rem 0.85rem;
-                font-size: 0.92rem;
+                padding: 0.65rem 0.75rem;
+                font-size: 0.88rem;
+                border-radius: 10px;
             }
             .vaerksted-feedback-banner {
-                padding: 0.8rem 0.9rem;
-                font-size: 0.88rem;
+                padding: 0.75rem 0.85rem;
+                font-size: 0.84rem;
             }
             .btn-next-question {
                 width: 100%;
                 text-align: center;
-                padding: 0.7rem 1.2rem;
-                font-size: 0.9rem;
+                padding: 0.65rem 1rem;
+                font-size: 0.88rem;
             }
             .timeline-section-card {
-                padding: 1rem;
-                border-radius: 14px;
-                margin-bottom: 1.2rem;
+                padding: 0.85rem;
+                border-radius: 12px;
+                margin-bottom: 0.9rem;
             }
             .timeline-track {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
-                margin-bottom: 1.2rem;
+                gap: 0.6rem;
+                margin-bottom: 0.9rem;
             }
             .timeline-column {
-                padding: 0.85rem;
+                padding: 0.75rem;
+                border-radius: 10px;
             }
             .timeline-col-header {
-                font-size: 0.95rem;
-                margin-bottom: 0.6rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
             }
             .tidsord-chip {
-                padding: 0.45rem 0.65rem;
-                font-size: 0.82rem;
+                padding: 0.4rem 0.55rem;
+                font-size: 0.78rem;
             }
             .frekvens-barometer {
-                padding: 0.85rem;
+                padding: 0.75rem;
+                border-radius: 12px;
             }
             .frekvens-scale {
-                gap: 0.4rem;
+                gap: 0.3rem;
+                margin-top: 0.6rem;
             }
             .frekvens-step {
-                min-width: 65px;
-                padding: 0.5rem 0.3rem;
+                min-width: 48px;
+                padding: 0.4rem 0.2rem;
+                border-radius: 6px;
             }
             .frekvens-pct {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
             .frekvens-word {
-                font-size: 0.82rem;
+                font-size: 0.72rem;
             }
             .tids-exercise-card {
-                padding: 1rem;
-                border-radius: 14px;
-                margin-top: 1.2rem;
+                padding: 0.85rem;
+                border-radius: 12px;
+                margin-top: 0.9rem;
             }
             .tids-exercise-title {
-                font-size: 1.08rem;
+                font-size: 1rem;
             }
             .tids-exercise-desc {
-                font-size: 0.84rem;
+                font-size: 0.8rem;
             }
             .tids-sorter-active {
-                padding: 1rem 0.75rem;
-                margin-bottom: 1rem;
+                padding: 0.85rem 0.65rem;
+                margin-bottom: 0.85rem;
+                border-radius: 10px;
             }
             .tids-sorter-word {
-                font-size: 1.25rem;
-                margin-bottom: 0.8rem;
+                font-size: 1.15rem;
+                margin-bottom: 0.6rem;
             }
             .tids-sorter-buttons {
                 grid-template-columns: 1fr;
-                gap: 0.5rem;
+                gap: 0.45rem;
             }
             .tids-pick-btn {
-                padding: 0.7rem 0.85rem;
-                font-size: 0.88rem;
+                padding: 0.65rem 0.8rem;
+                font-size: 0.84rem;
             }
             .tids-sorter-buckets {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 0.65rem;
             }
             .tids-bucket {
-                min-height: auto;
-                padding: 0.85rem;
+                min-height: 50px;
+                padding: 0.65rem;
+                border-radius: 10px;
             }
             .frekvens-quiz-box {
-                padding: 0.95rem;
+                padding: 0.85rem;
+                border-radius: 12px;
             }
             .frekvens-q-text {
-                font-size: 0.98rem;
-                margin-bottom: 0.8rem;
+                font-size: 0.92rem;
+                margin-bottom: 0.65rem;
             }
             .frekvens-options-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 0.5rem;
+                gap: 0.45rem;
             }
             .frekvens-opt-btn {
-                padding: 0.65rem 0.5rem;
-                font-size: 0.9rem;
+                padding: 0.6rem 0.5rem;
+                font-size: 0.86rem;
             }
         }
 
         @media (max-width: 480px) {
             .tidsudtryk-view {
-                padding: 0.2rem 0.4rem 2.5rem;
+                padding: 0.2rem 0.4rem 2.2rem;
             }
             .tids-hero h1 {
-                font-size: 1.25rem;
+                font-size: 1.2rem;
             }
             .tids-hero p {
-                font-size: 0.82rem;
+                font-size: 0.78rem;
             }
             .golden-rule-banner {
-                padding: 0.75rem 0.8rem;
+                padding: 0.6rem 0.75rem;
             }
             .frekvens-options-grid {
                 grid-template-columns: 1fr;
             }
             .tids-tab-btn {
-                padding: 0.45rem 0.65rem;
-                font-size: 0.78rem;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
             }
         }
     `;

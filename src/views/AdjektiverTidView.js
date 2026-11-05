@@ -789,6 +789,101 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             box-shadow: none !important;
             transform: none !important;
         }
+
+        @media (max-width: 680px) {
+            .view-container.adjektiver-tid-view {
+                padding: 0.5rem 0.65rem 3rem;
+            }
+            .adj-hero-header {
+                margin-bottom: 1.2rem;
+            }
+            .adj-hero-header h1 {
+                font-size: 1.35rem;
+            }
+            .adj-hero-header p {
+                font-size: 0.88rem;
+                line-height: 1.45;
+            }
+            .adj-tabs-nav {
+                overflow-x: auto;
+                padding: 0.25rem;
+                gap: 0.25rem;
+                margin-bottom: 1.2rem;
+            }
+            .adj-tab-btn {
+                padding: 0.45rem 0.75rem;
+                font-size: 0.82rem;
+                white-space: nowrap;
+            }
+            .task-card {
+                padding: 1.1rem 0.85rem;
+                border-radius: 16px;
+                margin: 0 auto;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .task-top-bar {
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+            }
+            .task-prompt-box {
+                padding: 0.85rem 1rem;
+                margin-bottom: 1rem;
+                border-radius: 12px;
+            }
+            .task-prompt-box div:first-child {
+                font-size: 1.1rem !important;
+            }
+            .task-subprompt {
+                font-size: 0.88rem !important;
+            }
+            .barometer-container {
+                margin: 0.85rem 0;
+                gap: 0.75rem;
+            }
+            .barometer-track {
+                flex-direction: column;
+                padding: 0.65rem;
+                gap: 0.45rem;
+                min-height: auto;
+                overflow-x: visible;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .barometer-slot {
+                min-width: 0;
+                width: 100%;
+                height: 48px;
+                font-size: 0.95rem;
+                border-radius: 10px;
+                box-sizing: border-box;
+            }
+            .barometer-slot.filled {
+                font-size: 1rem;
+            }
+            .scale-indicators {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.82rem;
+                padding: 0 0.3rem;
+                margin-bottom: 0.4rem;
+                font-weight: 700;
+            }
+            .barometer-pool {
+                gap: 0.45rem;
+                margin: 0.9rem 0;
+            }
+            .barometer-chip {
+                padding: 0.55rem 0.95rem;
+                font-size: 0.92rem;
+                border-radius: 14px;
+            }
+            .task-secondary-btn, .task-next-btn {
+                padding: 0.65rem 1.2rem;
+                font-size: 0.92rem;
+                border-radius: 10px;
+            }
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -1665,8 +1760,8 @@ export function renderAdjektiverTidView(container, navigateFn, extraData = {}) {
             </div>
 
             <div class="scale-indicators">
-                <span>${bLow}</span>
-                <span>${bHigh}</span>
+                <span>1. ${bLow}</span>
+                <span>${totalSlots}. ${bHigh}</span>
             </div>
 
             <div class="barometer-track" id="barometer-slots"></div>

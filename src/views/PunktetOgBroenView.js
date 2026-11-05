@@ -578,228 +578,287 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
+        .pob-svg-desktop {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 260px;
+        }
+        .pob-timeline-mobile {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .punktet-broen-view {
-                padding: 0.25rem 0.65rem 3rem;
+                padding: 0.25rem 0.5rem 2.5rem;
             }
             .pob-hero {
-                margin-bottom: 1.2rem;
-            }
-            .pob-hero h1 {
-                font-size: 1.4rem;
-            }
-            .pob-hero p {
-                font-size: 0.88rem;
-                line-height: 1.45;
                 margin-bottom: 0.8rem;
             }
+            .pob-hero h1 {
+                font-size: 1.3rem;
+                margin-bottom: 0.25rem;
+            }
+            .pob-hero p {
+                font-size: 0.82rem;
+                line-height: 1.4;
+                margin-bottom: 0.5rem;
+            }
             .pob-hero-badges {
-                gap: 0.4rem;
+                gap: 0.35rem;
             }
             .pob-tag {
-                font-size: 0.75rem;
-                padding: 0.25rem 0.65rem;
+                font-size: 0.72rem;
+                padding: 0.2rem 0.55rem;
             }
             .pob-timeline-card {
-                padding: 0.85rem 0.65rem;
-                border-radius: 14px;
-                margin-bottom: 1.2rem;
+                padding: 0.75rem 0.65rem;
+                border-radius: 12px;
+                margin-bottom: 0.85rem;
+            }
+            .pob-svg-desktop {
+                display: none;
+            }
+            .pob-timeline-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 0.65rem;
+                margin-bottom: 0.65rem;
+            }
+            .pob-mobile-card {
+                background: #1e293b;
+                border-radius: 10px;
+                padding: 0.65rem 0.85rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .pob-mobile-card.punkt {
+                border-left: 4px solid #ef4444;
+            }
+            .pob-mobile-card.bro {
+                border-left: 4px solid #f59e0b;
+            }
+            .pob-mobile-badge {
+                font-size: 0.88rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                margin-bottom: 0.25rem;
+            }
+            .pob-mobile-card.punkt .pob-mobile-badge { color: #fca5a5; }
+            .pob-mobile-card.bro .pob-mobile-badge { color: #fde68a; }
+            .pob-mobile-desc {
+                font-size: 0.82rem;
+                color: #e2e8f0;
+                line-height: 1.35;
+                margin-bottom: 0.2rem;
+            }
+            .pob-mobile-markers {
+                font-size: 0.75rem;
+                color: #94a3b8;
+                font-style: italic;
             }
             .pob-timeline-caption {
                 font-size: 0.75rem;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.3rem;
+                gap: 0.25rem;
+                line-height: 1.35;
             }
             .pob-nav-tabs {
-                margin-bottom: 1.2rem;
-                gap: 0.25rem;
-                padding: 0.25rem;
+                margin-bottom: 0.85rem;
+                gap: 0.2rem;
+                padding: 0.2rem;
             }
             .pob-nav-btn {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.82rem;
+                padding: 0.45rem 0.65rem;
+                font-size: 0.78rem;
+                white-space: nowrap;
             }
             .pob-rules-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-                margin-bottom: 1.2rem;
+                gap: 0.75rem;
+                margin-bottom: 0.9rem;
             }
             .rule-card {
-                padding: 1rem;
-                border-radius: 14px;
+                padding: 0.85rem;
+                border-radius: 12px;
             }
             .rule-card-header {
-                gap: 0.5rem;
-                margin-bottom: 0.75rem;
+                gap: 0.4rem;
+                margin-bottom: 0.6rem;
             }
             .rule-icon {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
             }
             .rule-title h3 {
-                font-size: 1.15rem;
+                font-size: 1.05rem;
             }
             .rule-title span {
-                font-size: 0.78rem;
+                font-size: 0.75rem;
             }
             .rule-formula {
-                padding: 0.55rem 0.75rem;
-                font-size: 0.82rem;
-                margin-bottom: 0.75rem;
+                padding: 0.45rem 0.65rem;
+                font-size: 0.78rem;
+                margin-bottom: 0.6rem;
             }
             .rule-body {
-                font-size: 0.88rem;
-                line-height: 1.45;
-                margin-bottom: 0.85rem;
+                font-size: 0.82rem;
+                line-height: 1.4;
+                margin-bottom: 0.65rem;
             }
             .rule-points {
-                gap: 0.45rem;
-                margin-bottom: 0.85rem;
+                gap: 0.35rem;
+                margin-bottom: 0.65rem;
             }
             .rule-points li {
-                font-size: 0.82rem;
-                gap: 0.4rem;
+                font-size: 0.78rem;
+                gap: 0.35rem;
             }
             .rule-chip {
-                font-size: 0.75rem;
-                padding: 0.15rem 0.45rem;
+                font-size: 0.72rem;
+                padding: 0.12rem 0.4rem;
             }
             .pob-examples-list {
-                gap: 0.85rem;
-                margin-bottom: 1.2rem;
+                gap: 0.75rem;
+                margin-bottom: 0.9rem;
             }
             .example-card {
-                padding: 1rem;
-                border-radius: 14px;
+                padding: 0.85rem;
+                border-radius: 12px;
             }
             .example-title {
-                font-size: 0.98rem;
-                margin-bottom: 0.75rem;
+                font-size: 0.92rem;
+                margin-bottom: 0.6rem;
             }
             .example-columns {
                 grid-template-columns: 1fr;
-                gap: 0.65rem;
+                gap: 0.5rem;
             }
             .example-box {
-                padding: 0.75rem 0.85rem;
+                padding: 0.65rem 0.75rem;
+                border-radius: 10px;
             }
             .example-label {
-                font-size: 0.72rem;
+                font-size: 0.7rem;
             }
             .example-sentence {
-                font-size: 0.95rem;
+                font-size: 0.88rem;
             }
             .example-explanation {
-                font-size: 0.82rem;
+                font-size: 0.78rem;
+                line-height: 1.35;
             }
             .pob-task-container {
-                padding: 1rem;
+                padding: 0.85rem 0.75rem;
                 border-radius: 14px;
             }
             .task-sentence-box {
-                padding: 0.9rem 0.85rem;
-                font-size: 1.05rem;
+                padding: 0.85rem 0.75rem;
+                font-size: 1.02rem;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.6rem;
+                gap: 0.5rem;
+                border-radius: 12px;
+                margin-bottom: 0.85rem;
             }
             .task-audio-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 0.95rem;
+                width: 30px;
+                height: 30px;
+                font-size: 0.85rem;
             }
             .task-hint {
-                font-size: 0.82rem;
-                margin-bottom: 0.85rem;
+                font-size: 0.78rem;
+                margin-bottom: 0.65rem;
             }
             .task-choices-grid {
                 grid-template-columns: 1fr;
-                gap: 0.6rem;
-                margin-bottom: 1rem;
+                gap: 0.5rem;
+                margin-bottom: 0.85rem;
             }
             .choice-btn {
-                padding: 0.75rem 0.85rem;
-                border-radius: 12px;
+                padding: 0.65rem 0.85rem;
+                border-radius: 10px;
             }
             .choice-text {
-                font-size: 1.05rem;
+                font-size: 0.98rem;
             }
             .choice-type {
-                font-size: 0.75rem;
+                font-size: 0.72rem;
             }
             .task-feedback {
-                padding: 0.85rem 0.95rem;
-                font-size: 0.88rem;
+                padding: 0.75rem 0.85rem;
+                font-size: 0.82rem;
             }
             .task-next-btn {
                 width: 100%;
                 text-align: center;
-                padding: 0.7rem 1.2rem;
-                font-size: 0.9rem;
+                padding: 0.65rem 1rem;
+                font-size: 0.88rem;
             }
             .sorter-container {
-                padding: 1rem;
+                padding: 0.85rem 0.75rem;
                 border-radius: 14px;
             }
             .sorter-instruction {
-                margin-bottom: 1rem;
+                margin-bottom: 0.85rem;
             }
             .sorter-instruction h3 {
-                font-size: 1.08rem;
+                font-size: 1rem;
             }
             .sorter-instruction p {
-                font-size: 0.84rem;
+                font-size: 0.78rem;
             }
             .sorter-active-area {
-                padding: 0.9rem 0.75rem;
+                padding: 0.85rem 0.65rem;
                 border-radius: 12px;
-                margin-bottom: 1rem;
+                margin-bottom: 0.85rem;
             }
             .sorter-current-word {
-                font-size: 1.25rem;
-                margin-bottom: 0.8rem;
+                font-size: 1.15rem;
+                margin-bottom: 0.65rem;
             }
             .sorter-direct-actions {
-                gap: 0.6rem;
+                gap: 0.5rem;
                 flex-direction: column;
             }
             .sorter-pick-btn {
                 width: 100%;
                 justify-content: center;
-                padding: 0.7rem 1rem;
-                font-size: 0.88rem;
+                padding: 0.65rem 0.85rem;
+                font-size: 0.84rem;
             }
             .sorter-buckets-grid {
                 grid-template-columns: 1fr;
-                gap: 0.85rem;
+                gap: 0.65rem;
             }
             .sorter-bucket {
-                min-height: auto;
-                padding: 0.9rem;
-                border-radius: 12px;
+                min-height: 50px;
+                padding: 0.75rem;
+                border-radius: 10px;
             }
             .bucket-title {
-                font-size: 0.95rem;
+                font-size: 0.88rem;
             }
             .placed-badge {
-                font-size: 0.78rem;
-                padding: 0.25rem 0.55rem;
+                font-size: 0.75rem;
+                padding: 0.2rem 0.5rem;
             }
         }
 
         @media (max-width: 480px) {
             .punktet-broen-view {
-                padding: 0.2rem 0.4rem 2.5rem;
+                padding: 0.2rem 0.4rem 2.2rem;
             }
             .pob-hero h1 {
-                font-size: 1.25rem;
+                font-size: 1.2rem;
             }
             .pob-hero p {
-                font-size: 0.82rem;
+                font-size: 0.78rem;
             }
             .pob-nav-btn {
-                padding: 0.45rem 0.65rem;
-                font-size: 0.78rem;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
             }
         }
     `;
@@ -824,7 +883,20 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
     const timelineCard = document.createElement('div');
     timelineCard.className = 'pob-timeline-card';
     timelineCard.innerHTML = `
-        <svg viewBox="0 0 900 240" width="100%" height="auto" style="display: block; max-height: 260px;" xmlns="http://www.w3.org/2000/svg">
+        <div class="pob-timeline-mobile">
+            <div class="pob-mobile-card punkt">
+                <div class="pob-mobile-badge">${renderDsIcon('pointInTime', '📍', { size: 14 })} Punktet (datid)</div>
+                <div class="pob-mobile-desc">Afsluttet tid: <strong>"jeg boede", "jeg gik"</strong></div>
+                <div class="pob-mobile-markers">i går • for et år siden • i 2018 (lukket tidspunkt)</div>
+            </div>
+            <div class="pob-mobile-card bro">
+                <div class="pob-mobile-badge">${renderDsIcon('bridge', '🌉', { size: 14 })} Broen (førnutid)</div>
+                <div class="pob-mobile-desc">Forbindelse til nu: <strong>har/er + kort tillægsform</strong></div>
+                <div class="pob-mobile-markers">lige • allerede • aldrig • indtil nu ➔ <strong>Nu</strong></div>
+            </div>
+        </div>
+
+        <svg class="pob-svg-desktop" viewBox="0 0 900 240" width="100%" height="auto" style="display: block; max-height: 260px;" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="axisGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#475569" />

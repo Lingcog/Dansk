@@ -1,5 +1,6 @@
 import { getTranslation } from '../utils/i18n.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * PunktetOgBroenView - Didaktisk flade til:
@@ -14,6 +15,9 @@ import { renderDsIcon } from '../utils/designSystemIcons.js';
  */
 export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Aktivér verbum nuance (fjerner adjektiv/adv nuance)
+    applyVerbNuance(getActiveVerbNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container punktet-broen-view';
@@ -168,97 +172,239 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
         /* Hovedreglen: 2 søjler */
         .pob-rules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
+            align-items: stretch;
         }
         .rule-card {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
+            background: linear-gradient(180deg, #1e293b 0%, #151f32 100%);
+            border-radius: 20px;
             padding: 1.6rem;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .rule-card.rule-punkt {
-            border-top: 4px solid #ef4444;
+            border: 1.5px solid rgba(239, 68, 68, 0.35);
+            border-top: 5px solid #ef4444;
         }
         .rule-card.rule-bro {
-            border-top: 4px solid #f59e0b;
+            border: 1.5px solid rgba(245, 158, 11, 0.35);
+            border-top: 5px solid #f59e0b;
         }
         .rule-card-header {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
+            gap: 0.9rem;
+            margin-bottom: 1.1rem;
         }
-        .rule-icon {
-            font-size: 1.6rem;
+        .rule-icon-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .rule-icon-badge.badge-punkt {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
+        .rule-icon-badge.badge-bro {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1.5px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
         }
         .rule-title h3 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0 0 0.25rem;
             color: #ffffff;
+            letter-spacing: -0.01em;
         }
-        .rule-title span {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            font-weight: 500;
+        .rule-subtitle-tag {
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: inline-block;
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            letter-spacing: 0.02em;
+        }
+        .rule-subtitle-tag.tag-punkt {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+        .rule-subtitle-tag.tag-bro {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fde68a;
         }
         .rule-formula {
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 0.65rem 0.9rem;
-            font-size: 0.9rem;
-            color: #38bdf8;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .rule-body {
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            line-height: 1.55;
-            margin-bottom: 1.25rem;
-            flex-grow: 1;
-        }
-        .rule-points {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 1.25rem;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.2rem;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.1rem;
         }
-        .rule-points li {
-            font-size: 0.9rem;
+        .rule-formula.formula-punkt {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+        .rule-formula.formula-bro {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+        .formula-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+        }
+        .formula-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .rule-formula.formula-punkt .formula-text { color: #fca5a5; }
+        .rule-formula.formula-bro .formula-text { color: #fde68a; }
+
+        .rule-core-desc {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            padding: 0.75rem 0.95rem;
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+        }
+        .rule-core-desc.desc-punkt {
+            background: rgba(15, 23, 42, 0.65);
+            border-left: 3.5px solid #ef4444;
             color: #cbd5e1;
+        }
+        .rule-core-desc.desc-bro {
+            background: rgba(15, 23, 42, 0.65);
+            border-left: 3.5px solid #f59e0b;
+            color: #cbd5e1;
+        }
+
+        .rule-situations-list {
             display: flex;
-            align-items: flex-start;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.4rem;
+            flex-grow: 1;
+        }
+        .situation-item {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 0.75rem 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        .situation-item:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        .situation-header {
+            display: flex;
+            align-items: center;
             gap: 0.5rem;
-            line-height: 1.45;
+        }
+        .situation-num {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .situation-num.num-punkt {
+            background: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        .situation-num.num-bro {
+            background: rgba(245, 158, 11, 0.25);
+            color: #fde68a;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+        .situation-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .situation-desc {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            line-height: 1.4;
+            padding-left: 1.75rem;
+        }
+        .situation-example {
+            font-size: 0.86rem;
+            color: #e2e8f0;
+            padding-left: 1.75rem;
+            font-style: italic;
+        }
+        .situation-example strong {
+            font-style: normal;
+        }
+        .rule-card.rule-punkt .situation-example strong {
+            color: #fca5a5;
+        }
+        .rule-card.rule-bro .situation-example strong {
+            color: #fde68a;
+        }
+
+        .rule-footer-box {
+            background: rgba(15, 23, 42, 0.55);
+            border-radius: 12px;
+            padding: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: auto;
+        }
+        .rule-footer-box.footer-punkt {
+            border-top: 2px solid rgba(239, 68, 68, 0.4);
+        }
+        .rule-footer-box.footer-bro {
+            border-top: 2px solid rgba(245, 158, 11, 0.4);
         }
         .rule-footer-title {
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 800;
             color: #94a3b8;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
         }
         .rule-chips {
             display: flex;
-            gap: 0.4rem;
+            gap: 0.45rem;
             flex-wrap: wrap;
         }
         .rule-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 0.2rem 0.55rem;
-            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 8px;
             font-size: 0.8rem;
-            color: #e2e8f0;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .rule-chip.chip-punkt {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+        .rule-chip.chip-bro {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fde68a;
         }
 
         /* Eksempler (Dueller) */
@@ -960,7 +1106,7 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
     const tabsData = [
         { id: 'tab_concept', label: 'Hovedreglen' },
         { id: 'tab_duels', label: 'Sammenlign eksempler' },
-        { id: 'tab_quiz', label: 'Vælg den rigtige tid (10 opgaver)' },
+        { id: 'tab_quiz', label: 'Vælg den rigtige tid (20 opgaver)' },
         { id: 'tab_sorter', label: 'Sortér tidsudtryk' }
     ];
 
@@ -989,32 +1135,60 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
             <!-- 1. Punktet (Datid) -->
             <div class="rule-card rule-punkt">
                 <div class="rule-card-header">
-                    <span class="rule-icon">${renderDsIcon('pointInTime', '📍', { size: 24 })}</span>
+                    <div class="rule-icon-badge badge-punkt">
+                        ${renderDsIcon('pointInTime', '📍', { size: 24 })}
+                    </div>
                     <div class="rule-title">
                         <h3>Punktet</h3>
-                        <span>Datid (præteritum)</span>
+                        <div class="rule-subtitle-tag tag-punkt">Datid (præteritum) • Afsluttet fortid</div>
                     </div>
                 </div>
-                <div class="rule-formula">
-                    Form: datidsform (boede, gik, drak, kom, mødte)
+
+                <div class="rule-formula formula-punkt">
+                    <span class="formula-label">FORMEL:</span>
+                    <span class="formula-text">Datidsform alene (boede, gik, drak, kom, mødte)</span>
                 </div>
-                <div class="rule-body">
-                    Datid bruges, når handlingen skete på et <strong>afsluttet tidspunkt</strong> i fortiden. Tidsrummet er overstået, og handlingen har sluppet nuet.
+
+                <div class="rule-core-desc desc-punkt">
+                    Datid bruges, når handlingen skete på et <strong>afsluttet tidspunkt</strong> i fortiden. Tidsrummet er helt forbi, og handlingen har sluppet nuet.
                 </div>
-                <ul class="rule-points">
-                    <li>• <strong>Afsluttet tid:</strong> Dagen eller perioden er forbi (i går, sidste år).</li>
-                    <li>• <strong>Præcist tidspunkt:</strong> Svarer på "hvornår?" (kl. 8, i 2018, for to timer siden).</li>
-                    <li>• <strong>Fortælling:</strong> Handlinger i en historie, der skete efter hinanden.</li>
-                </ul>
-                <div style="margin-top: auto;">
+
+                <div class="rule-situations-list">
+                    <div class="situation-item">
+                        <div class="situation-header">
+                            <span class="situation-num num-punkt">1</span>
+                            <span class="situation-title">Afsluttet tidsrum</span>
+                        </div>
+                        <div class="situation-desc">Dagen eller perioden er helt forbi og lukket i fortiden.</div>
+                        <div class="situation-example">fx "I går <strong>regnede</strong> det hele dagen."</div>
+                    </div>
+                    <div class="situation-item">
+                        <div class="situation-header">
+                            <span class="situation-num num-punkt">2</span>
+                            <span class="situation-title">Præcist tidspunkt</span>
+                        </div>
+                        <div class="situation-desc">Svarer på det konkrete spørgsmål "Hvornår skete det?".</div>
+                        <div class="situation-example">fx "Toget <strong>kørte</strong> kl. 14.15." / "Vi flyttede <strong>i 2018</strong>."</div>
+                    </div>
+                    <div class="situation-item">
+                        <div class="situation-header">
+                            <span class="situation-num num-punkt">3</span>
+                            <span class="situation-title">Fortælling & rækkefølge</span>
+                        </div>
+                        <div class="situation-desc">Handlinger i en historie, der skete efter hinanden.</div>
+                        <div class="situation-example">fx "Han <strong>spiste</strong> morgenmad og <strong>gik</strong> på arbejde."</div>
+                    </div>
+                </div>
+
+                <div class="rule-footer-box footer-punkt">
                     <div class="rule-footer-title">Typiske tidsudtryk med datid:</div>
                     <div class="rule-chips">
-                        <span class="rule-chip">i går</span>
-                        <span class="rule-chip">i 2018</span>
-                        <span class="rule-chip">sidste uge</span>
-                        <span class="rule-chip">for ... siden</span>
-                        <span class="rule-chip">dengang</span>
-                        <span class="rule-chip">da jeg var barn</span>
+                        <span class="rule-chip chip-punkt">i går</span>
+                        <span class="rule-chip chip-punkt">i 2018</span>
+                        <span class="rule-chip chip-punkt">sidste uge</span>
+                        <span class="rule-chip chip-punkt">for to dage siden</span>
+                        <span class="rule-chip chip-punkt">dengang</span>
+                        <span class="rule-chip chip-punkt">da jeg var barn</span>
                     </div>
                 </div>
             </div>
@@ -1022,32 +1196,61 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
             <!-- 2. Broen (Førnutid) -->
             <div class="rule-card rule-bro">
                 <div class="rule-card-header">
-                    <span class="rule-icon">${renderDsIcon('bridge', '🌉', { size: 24 })}</span>
+                    <div class="rule-icon-badge badge-bro">
+                        ${renderDsIcon('bridge', '🌉', { size: 24 })}
+                    </div>
                     <div class="rule-title">
                         <h3>Broen</h3>
-                        <span>Førnutid (perfektum)</span>
+                        <div class="rule-subtitle-tag tag-bro">Førnutid (perfektum) • Forbindelse til nu</div>
                     </div>
                 </div>
-                <div class="rule-formula" style="color: #fcd34d;">
-                    Form: har/er + kort tillægsform (har boet, er kommet)
+
+                <div class="rule-formula formula-bro">
+                    <span class="formula-label">FORMEL:</span>
+                    <span class="formula-text">har / er + kort tillægsform (har boet, er kommet)</span>
                 </div>
-                <div class="rule-body">
-                    Førnutid bygger en bro fra fortiden til nutiden. Vi bruger den, når handlingen har <strong>betydning eller resultat lige nu</strong>.
+
+                <div class="rule-core-desc desc-bro">
+                    Førnutid bygger en <strong>bro fra fortiden til nutiden</strong>. Vi bruger den, når handlingen har betydning, varighed eller frisk resultat <strong>lige nu</strong>.
                 </div>
-                <ul class="rule-points">
-                    <li>• <strong>Erfaring indtil nu:</strong> "Jeg har set den film tre gange."</li>
-                    <li>• <strong>Stadig i gang:</strong> "Jeg har boet her i fem år (og bor her stadig)."</li>
-                    <li>• <strong>Friskt resultat i nuet:</strong> "Han er lige kommet (han står her nu)."</li>
-                </ul>
-                <div style="margin-top: auto;">
+
+                <div class="rule-situations-list">
+                    <div class="situation-item">
+                        <div class="situation-header">
+                            <span class="situation-num num-bro">1</span>
+                            <span class="situation-title">Erfaring i livet</span>
+                        </div>
+                        <div class="situation-desc">Noget man har prøvet eller oplevet frem til dette øjeblik.</div>
+                        <div class="situation-example">fx "Jeg <strong>har set</strong> den film tre gange."</div>
+                    </div>
+                    <div class="situation-item">
+                        <div class="situation-header">
+                            <span class="situation-num num-bro">2</span>
+                            <span class="situation-title">Varighed ind i nutiden</span>
+                        </div>
+                        <div class="situation-desc">Begyndte i fortiden og gælder uafbrudt stadig i dag.</div>
+                        <div class="situation-example">fx "Vi <strong>har boet</strong> her i fem år (og bor her stadig)."</div>
+                    </div>
+                    <div class="situation-item">
+                        <div class="situation-header">
+                            <span class="situation-num num-bro">3</span>
+                            <span class="situation-title">Friskt resultat i nuet</span>
+                        </div>
+                        <div class="situation-desc">Handlingen er lige sket, og konsekvensen mærkes her og nu.</div>
+                        <div class="situation-example">fx "Han <strong>er lige kommet</strong> (han står foran mig)."</div>
+                    </div>
+                </div>
+
+                <div class="rule-footer-box footer-bro">
                     <div class="rule-footer-title">Typiske tidsudtryk med førnutid:</div>
                     <div class="rule-chips">
-                        <span class="rule-chip">indtil nu</span>
-                        <span class="rule-chip">allerede</span>
-                        <span class="rule-chip">endnu ikke</span>
-                        <span class="rule-chip">nogensinde</span>
-                        <span class="rule-chip">aldrig</span>
-                        <span class="rule-chip">i dag</span>
+                        <span class="rule-chip chip-bro">indtil nu</span>
+                        <span class="rule-chip chip-bro">allerede</span>
+                        <span class="rule-chip chip-bro">lige</span>
+                        <span class="rule-chip chip-bro">endnu ikke</span>
+                        <span class="rule-chip chip-bro">nogensinde</span>
+                        <span class="rule-chip chip-bro">aldrig</span>
+                        <span class="rule-chip chip-bro">i dag</span>
                     </div>
                 </div>
             </div>
@@ -1252,6 +1455,116 @@ export function renderPunktetOgBroenView(container, navigateFn, extraData = {}) 
             correct: "ringede",
             hint: null,
             explanation: 'Et præcist klokkeslæt i fortiden låser handlingen fast = datid (ringede).'
+        },
+        {
+            sentenceBefore: "I søndags",
+            sentenceAfter: "vi en lang tur i Dyrehaven.",
+            options: [
+                { text: "gik", type: "punkt", label: "datid" },
+                { text: "er gået", type: "bro", label: "førnutid" }
+            ],
+            correct: "gik",
+            hint: null,
+            explanation: '"I søndags" er en afsluttet ugedag i fortiden → datid (gik).'
+        },
+        {
+            sentenceBefore: "Pas på, gulvet er vådt! Peter",
+            sentenceAfter: "lige gulvet.",
+            options: [
+                { text: "har vasket", type: "bro", label: "førnutid" },
+                { text: "vaskede", type: "punkt", label: "datid" }
+            ],
+            correct: "har vasket",
+            hint: null,
+            explanation: '"Lige" og det våde gulv viser et frisk resultat i nuet → førnutid (har vasket).'
+        },
+        {
+            sentenceBefore: "For to år siden",
+            sentenceAfter: "hun sit første job i Danmark.",
+            options: [
+                { text: "fik", type: "punkt", label: "datid" },
+                { text: "har fået", type: "bro", label: "førnutid" }
+            ],
+            correct: "fik",
+            hint: null,
+            explanation: '"For to år siden" låser tidspunktet fast til en afsluttet fortid → datid (fik).'
+        },
+        {
+            sentenceBefore: "Vi er helt mætte, for vi",
+            sentenceAfter: "allerede aftensmad.",
+            options: [
+                { text: "har spist", type: "bro", label: "førnutid" },
+                { text: "spiste", type: "punkt", label: "datid" }
+            ],
+            correct: "har spist",
+            hint: null,
+            explanation: '"Allerede" kobler måltidet til vores tilstand lige nu (mætte) → førnutid (har spist).'
+        },
+        {
+            sentenceBefore: "Lars",
+            sentenceAfter: "i Paris i 2015, men i dag bor han i Aarhus.",
+            options: [
+                { text: "boede", type: "punkt", label: "datid" },
+                { text: "har boet", type: "bro", label: "førnutid" }
+            ],
+            correct: "boede",
+            hint: null,
+            explanation: 'Årstallet 2015 er afsluttet, og han bor der ikke længere → datid (boede).'
+        },
+        {
+            sentenceBefore: "",
+            sentenceAfter: "du nogensinde spist traditionelt dansk smørrebrød?",
+            options: [
+                { text: "Har", type: "bro", label: "førnutid" },
+                { text: "Prøvede", type: "punkt", label: "datid" }
+            ],
+            correct: "Har",
+            hint: null,
+            explanation: '"Nogensinde" spørger til hele livserfaringen frem til nu → førnutid (Har du nogensinde spist).'
+        },
+        {
+            sentenceBefore: "Klokken 15.30 i går",
+            sentenceAfter: "toget til Odense.",
+            options: [
+                { text: "kørte", type: "punkt", label: "datid" },
+                { text: "er kørt", type: "bro", label: "førnutid" }
+            ],
+            correct: "kørte",
+            hint: null,
+            explanation: 'Et præcist klokkeslæt ("kl. 15.30") kombineret med "i går" er et låst punkt i fortiden → datid (kørte).'
+        },
+        {
+            sentenceBefore: "Mille kan ikke finde sine nøgler. Hun",
+            sentenceAfter: "dem et sted.",
+            options: [
+                { text: "har glemt", type: "bro", label: "førnutid" },
+                { text: "glemte", type: "punkt", label: "datid" }
+            ],
+            correct: "har glemt",
+            hint: null,
+            explanation: 'Resultatet har direkte konsekvens lige nu: Hun mangler sine nøgler → førnutid (har glemt).'
+        },
+        {
+            sentenceBefore: "Sidste sommer",
+            sentenceAfter: "vi to uger i et sommerhus på Bornholm.",
+            options: [
+                { text: "tilbragte", type: "punkt", label: "datid" },
+                { text: "har tilbragt", type: "bro", label: "førnutid" }
+            ],
+            correct: "tilbragte",
+            hint: null,
+            explanation: '"Sidste sommer" er en helt afsluttet tidsperiode → datid (tilbragte).'
+        },
+        {
+            sentenceBefore: "Jeg kan ikke komme ind, for jeg",
+            sentenceAfter: "min nøgle på arbejdet.",
+            options: [
+                { text: "efterlod", type: "punkt", label: "datid" },
+                { text: "har efterladt", type: "bro", label: "førnutid" }
+            ],
+            correct: "har efterladt",
+            hint: null,
+            explanation: 'Konsekvensen mærkes i dette øjeblik (jeg er låst ude) → førnutid (har efterladt).'
         }
     ];
 

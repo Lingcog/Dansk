@@ -318,16 +318,21 @@ function buildSearchIndex() {
     if (konjunktionerWordTranslations) {
         Object.entries(konjunktionerWordTranslations).forEach(([key, konjEntry]) => {
             const baseWord = konjEntry.baseWord || konjEntry.id || key.replace(/^flow_/, '');
-            let viewTarget = 'konjunktioner_all';
-            let categoryName = 'Sideordnende & Bindeord';
+            let viewTarget = 'konjunktioner_helsaetning';
+            let categoryName = '1. De 5 grundlæggende bindeord';
 
-            if (baseWord === 'at') { viewTarget = 'konjunktioner_at'; categoryName = 'Ledsætning: "at"'; }
-            else if (baseWord === 'da' || baseWord === 'når') { viewTarget = 'konjunktioner_da_naar'; categoryName = 'Tid: "da" vs. "når"'; }
-            else if (baseWord === 'fordi' || baseWord === 'derfor') { viewTarget = 'konjunktioner_fordi_derfor'; categoryName = 'Årsag & Virkning'; }
-            else if (baseWord === 'selvom' || baseWord === 'alligevel') { viewTarget = 'konjunktioner_selvom_alligevel'; categoryName = 'Modsætning: "selvom"'; }
+            if (baseWord === 'at') { viewTarget = 'konjunktioner_at'; categoryName = '4. Tankeboblen og ordet "at"'; }
+            else if (baseWord === 'da' || baseWord === 'når') { viewTarget = 'konjunktioner_da_naar'; categoryName = '5. "Da" og "når"'; }
+            else if (baseWord === 'fordi' || baseWord === 'derfor') { viewTarget = 'konjunktioner_fordi_derfor'; categoryName = '7. "Fordi" og "derfor"'; }
+            else if (baseWord === 'selvom' || baseWord === 'alligevel') { viewTarget = 'konjunktioner_selvom_alligevel'; categoryName = '6. "Selvom" og "alligevel"'; }
+            else if (['hvis', 'om'].includes(baseWord)) { viewTarget = 'konjunktioner_logik'; categoryName = '2. Årsag, betingelse og kontrast'; }
+            else if (['mens', 'inden', 'efter at', 'efter_at', 'siden', 'indtil', 'så snart', 'saa_snart'].includes(baseWord) || ['mens', 'inden', 'efter_at', 'siden', 'indtil', 'saa_snart'].includes(key)) {
+                viewTarget = 'konjunktioner_tid';
+                categoryName = '3. Tid og rækkefølge';
+            }
             else if (key.startsWith('flow_') || ['for det første', 'for det andet', 'desuden'].includes(baseWord)) {
                 viewTarget = 'konjunktioner_tekstflow';
-                categoryName = 'Tekstflow & Opbygning';
+                categoryName = '8. Tekstens trafik og tekstflow';
             }
 
             const transMap = {};

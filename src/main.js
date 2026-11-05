@@ -144,7 +144,7 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       const params = new URLSearchParams(otherParams);
       hash += '?' + params.toString();
     }
-    window.location.hash = hash;
+    history.pushState(null, '', hash);
   }
 
   // Define components that need extraData or segments
@@ -199,9 +199,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'top_konjunktioner') {
     appState.currentView = 'top_konjunktioner';
     renderTopKonjunktionerMenuView(appDiv, navigate, extraData);
-  } else if (viewTarget === 'konjunktioner_all') {
-    appState.currentView = 'konjunktioner_all';
-    renderKonjunktionerView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_all' || viewTarget === 'konjunktioner_helsaetning') {
+    appState.currentView = viewTarget;
+    renderKonjunktionerView(appDiv, navigate, { ...extraData, routeName: viewTarget, felt: extraData.felt || (extraData.filter === 'ledsaetning_logik' ? 2 : extraData.filter === 'ledsaetning_tid' ? 3 : 1), filter: extraData.filter || 'helsaetning' });
+  } else if (viewTarget === 'konjunktioner_logik') {
+    appState.currentView = 'konjunktioner_logik';
+    renderKonjunktionerView(appDiv, navigate, { ...extraData, routeName: 'konjunktioner_logik', felt: 2, filter: 'ledsaetning_logik' });
+  } else if (viewTarget === 'konjunktioner_tid') {
+    appState.currentView = 'konjunktioner_tid';
+    renderKonjunktionerView(appDiv, navigate, { ...extraData, routeName: 'konjunktioner_tid', felt: 3, filter: 'ledsaetning_tid' });
   } else if (viewTarget === 'konjunktioner_at') {
     appState.currentView = 'konjunktioner_at';
     renderKonjunktionerAtView(appDiv, navigate, extraData);

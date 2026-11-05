@@ -291,7 +291,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: getTranslation('top_konj_f1_title'),
             desc: getTranslation('top_konj_f1_desc'),
             btnText: getTranslation('top_konj_f1_btn'),
-            action: () => navigateFn('konjunktioner_all', { filter: 'helsaetning', tab: 'vrimmel', from: 'top_konjunktioner' })
+            action: () => navigateFn('konjunktioner_helsaetning', { felt: 1, filter: 'helsaetning', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_2',
@@ -302,7 +302,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: getTranslation('top_konj_f2_title'),
             desc: getTranslation('top_konj_f2_desc'),
             btnText: getTranslation('top_konj_f2_btn'),
-            action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_logik', tab: 'vrimmel', from: 'top_konjunktioner' })
+            action: () => navigateFn('konjunktioner_logik', { felt: 2, filter: 'ledsaetning_logik', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_3',
@@ -313,7 +313,7 @@ export function renderTopKonjunktionerMenuView(container, navigateFn) {
             title: getTranslation('top_konj_f3_title'),
             desc: getTranslation('top_konj_f3_desc'),
             btnText: getTranslation('top_konj_f3_btn'),
-            action: () => navigateFn('konjunktioner_all', { filter: 'ledsaetning_tid', tab: 'tid', from: 'top_konjunktioner' })
+            action: () => navigateFn('konjunktioner_tid', { felt: 3, filter: 'ledsaetning_tid', tab: 'vrimmel', from: 'top_konjunktioner' })
         },
         {
             id: 'konj_felt_4_at',

@@ -1607,29 +1607,59 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     `;
     viewContainer.appendChild(style);
 
-    // Hero Section
+    // Determine which of the 3 surfaces (Felt 1, Felt 2, or Felt 3) is active
+    const activeFelt = Number(extraData.felt) || (
+        extraData.filter === 'ledsaetning_logik' || extraData.routeName === 'konjunktioner_logik' ? 2 :
+        extraData.filter === 'ledsaetning_tid' || extraData.routeName === 'konjunktioner_tid' ? 3 : 1
+    );
+    const defaultFilter = activeFelt === 2 ? 'ledsaetning_logik' : activeFelt === 3 ? 'ledsaetning_tid' : 'helsaetning';
+    const routeName = extraData.routeName || (
+        activeFelt === 2 ? 'konjunktioner_logik' :
+        activeFelt === 3 ? 'konjunktioner_tid' : 'konjunktioner_helsaetning'
+    );
+
+    // Hero Section (Specific to Felt 1, Felt 2, or Felt 3)
     const hero = document.createElement('div');
     hero.className = 'konj-hero';
+    const heroTitleKey = activeFelt === 2 ? 'top_konj_f2_title' : activeFelt === 3 ? 'top_konj_f3_title' : 'top_konj_f1_title';
+    const heroDescKey = activeFelt === 2 ? 'top_konj_f2_desc' : activeFelt === 3 ? 'top_konj_f3_desc' : 'top_konj_f1_desc';
     hero.innerHTML = `
-        <h1>${getTranslation('konj_main_hero_title')}</h1>
-        <p>${getTranslation('konj_main_hero_desc')}</p>
+        <h1>${getTranslation(heroTitleKey)}</h1>
+        <p>${getTranslation(heroDescKey)}</p>
     `;
     viewContainer.appendChild(hero);
 
-    // Tabs Navigation
+    // Tabs Navigation tailored to Felt 1, Felt 2, or Felt 3
     const nav = document.createElement('div');
     nav.className = 'adv-tabs-nav';
 
-    const tabs = [
-        { id: 'vrimmel', label: getTranslation('konj_tab_vrimmel') },
-        { id: 'detektiv', label: getTranslation('konj_tab_detektiv') },
-        { id: 'builder', label: getTranslation('konj_tab_builder') },
-        { id: 'kontekst', label: getTranslation('konj_tab_kontekst') },
-        { id: 'tid', label: getTranslation('konj_tab_tid') },
-        { id: 'aarsag', label: getTranslation('konj_tab_aarsag') },
-        { id: 'atom', label: getTranslation('konj_tab_atom') },
-        { id: 'tekstflow', label: getTranslation('konj_tab_tekstflow') }
-    ];
+    const tabsByFelt = {
+        1: [
+            { id: 'vrimmel', label: '1. Vrimlebilledet: De 5 grundlæggende bindeord' },
+            { id: 'detektiv', label: '2. Konjunktions-detektiven (6 gåder)' },
+            { id: 'builder', label: '3. Sætningsbyggeren og puslespillet' },
+            { id: 'kontekst', label: '4. Kontekst-testen (8 opgaver)' },
+            { id: 'aarsag', label: '5. "Fordi", "for", "så" eller "derfor"?' },
+            { id: 'tekstflow', label: '6. Tekstflow og historier' }
+        ],
+        2: [
+            { id: 'vrimmel', label: '1. Vrimlebilledet: Årsag, betingelse og kontrast' },
+            { id: 'detektiv', label: '2. Konjunktions-detektiven (6 gåder)' },
+            { id: 'builder', label: '3. Sætningsbyggeren og puslespillet' },
+            { id: 'kontekst', label: '4. Kontekst-testen (8 opgaver)' },
+            { id: 'atom', label: '5. "At" eller "om"? og "hvis" eller "selvom"?' },
+            { id: 'aarsag', label: '6. "Fordi", "for", "så" eller "derfor"?' }
+        ],
+        3: [
+            { id: 'vrimmel', label: '1. Vrimlebilledet: Tid og rækkefølge (8 scener)' },
+            { id: 'tid', label: '2. "Da" eller "når"? og tidskonjunktioner' },
+            { id: 'detektiv', label: '3. Tids-detektiven (6 gåder)' },
+            { id: 'builder', label: '4. Sætningsbyggeren: Tid og ordstilling' },
+            { id: 'kontekst', label: '5. Kontekst-testen: Tid og rækkefølge (8 opgaver)' }
+        ]
+    };
+
+    const tabs = tabsByFelt[activeFelt] || tabsByFelt[1];
 
     let currentTab = (extraData && (extraData.subPath || extraData.tab)) || 'vrimmel';
     if (!tabs.some(t => t.id === currentTab)) currentTab = 'vrimmel';
@@ -1651,7 +1681,7 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     function switchTab(tabId) {
         currentTab = tabId;
         const lang = getLang();
-        history.pushState(null, '', '#/' + lang + '/konjunktioner_all/' + tabId);
+        history.pushState(null, '', '#/' + lang + '/' + routeName + '/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#tab-btn-${tabId}`);
         if (activeBtn) activeBtn.classList.add('active');
@@ -1679,9 +1709,17 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     // ==========================================
     // TAB 1: VRIMLEBILLEDET
     // ==========================================
-    let activeFilter = (extraData && extraData.filter) ? extraData.filter : 'alle';
+    let activeFilter = (extraData && extraData.filter) ? extraData.filter : defaultFilter;
     let isPureMode = false;
     let selectedWord = null;
+    if (extraData && extraData.targetWord) {
+        const targetLower = String(extraData.targetWord).toLowerCase().trim();
+        const foundTarget = KONJUNKTIONER_DATA.find(w => w.word.toLowerCase() === targetLower || w.id.toLowerCase() === targetLower);
+        if (foundTarget) {
+            selectedWord = foundTarget;
+            activeFilter = foundTarget.category;
+        }
+    }
 
     function renderTabVrimmel(parent) {
         parent.innerHTML = '';
@@ -1849,130 +1887,234 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 2: KONJUNKTIONS-DETEKTIVEN (10 GÅDER)
+    // TAB 2: KONJUNKTIONS-DETEKTIVEN (OPDELT PR. FLADE 1, 2 & 3)
     // ==========================================
-    const DETEKTIV_RIDDLES = [
-        {
-            tag: 'Gåde 1 • Kig på placeringen af "ikke"!',
-            prompt: 'Se nøje på ordstillingen i sætning 2: Ordet "ikke" står FØR verbet ("ikke kan"). Hvilken årsags-konjunktion SKAL vi så vælge?',
-            quote: '"Jeg må desværre melde afbud til festen, ______ jeg ikke kan finde en barnepige."',
-            options: ['fordi', 'for', 'så'],
-            correct: 'fordi',
-            explanations: {
-                'fordi': 'Skarpt set! Da "ikke" står FØR verbet ("jeg ikke kan"), er det en ledsætning – og derfor skal vi bruge "fordi"!',
-                'for': '"For" indleder en helsætning, så det ville kræve "..., for jeg kan ikke finde...".',
-                'så': '"Så" udtrykker resultat, ikke årsag.'
+    const DETEKTIV_BY_FELT = {
+        1: [
+            {
+                tag: 'Gåde 1 • Sideordning og tilføjelse (+)',
+                prompt: 'To ligeværdige helsætninger bindes sammen i samme retning:',
+                quote: '"Solen skinner over parken, ______ fuglene synger i de grønne træer."',
+                options: ['og', 'men', 'eller'],
+                correct: 'og',
+                explanations: {
+                    'og': 'Lige i øjet! "Og" binder to ligeværdige helsætninger sammen som en tilføjelse (+).',
+                    'men': '"Men" bruges ved modsætning eller kontrast.',
+                    'eller': '"Eller" bruges når man skal vælge mellem to muligheder.'
+                }
+            },
+            {
+                tag: 'Gåde 2 • Modsætning i helsætning',
+                prompt: 'Der er en kontrast mellem regnvejret og det, at vi bliver ude ("går ikke hjem"):',
+                quote: '"Det regner lidt i parken, ______ vi går ikke hjem endnu."',
+                options: ['men', 'og', 'for'],
+                correct: 'men',
+                explanations: {
+                    'men': 'Korrekt! "Men" skaber kontrast mellem to helsætninger, og "ikke" bliver stående EFTER verbet ("går ikke").',
+                    'og': '"Og" viser ikke kontrasten mellem regnvejr og at blive ude.',
+                    'for': '"For" udtrykker en årsag/forklaring, ikke en modsætning.'
+                }
+            },
+            {
+                tag: 'Gåde 3 • Valg mellem to alternativer',
+                prompt: 'Baristaen giver kunden et valg mellem to varme drikke:',
+                quote: '"Vil du gerne have en friskbrygget kop kaffe, ______ foretrækker du grøn te?"',
+                options: ['eller', 'men', 'så'],
+                correct: 'eller',
+                explanations: {
+                    'eller': 'Rigtigt! "Eller" opstiller et valg mellem mulighed A og mulighed B.',
+                    'men': '"Men" udtrykker kontrast, ikke et spørgende valg.',
+                    'så': '"Så" udtrykker en konsekvens eller et resultat.'
+                }
+            },
+            {
+                tag: 'Gåde 4 • Årsag i helsætning ("kan ikke" = V før ikke!)',
+                prompt: 'Nu står "ikke" EFTER verbet ("kan ikke")! Hvilken årsags-konjunktion passer til en helsætning?',
+                quote: '"Jeg må desværre melde afbud til festen, ______ jeg kan ikke finde en barnepige."',
+                options: ['for', 'fordi', 'så'],
+                correct: 'for',
+                explanations: {
+                    'for': 'Fuldstændig rigtigt! Når "ikke" står EFTER verbet ("jeg kan ikke"), er det en helsætning – og så bruger vi "for"!',
+                    'fordi': '"Fordi" kræver ledsætningsordstilling ("... fordi jeg ikke kan").',
+                    'så': '"Så" udtrykker resultat, ikke årsag.'
+                }
+            },
+            {
+                tag: 'Gåde 5 • Resultat i helsætning (Ingen inversion!)',
+                prompt: 'Se på ordstillingen efter kommaet: Subjektet ("vi") står FØR verbet ("bestilte"). Hvilket ord for resultat passer?',
+                quote: '"Køleskabet var helt tomt i aftes, ______ vi bestilte pizza."',
+                options: ['så', 'for', 'derfor'],
+                correct: 'så',
+                explanations: {
+                    'så': 'Rigtigt! Konjunktionen "så" giver resultatet i en helsætning uden inversion ("..., så vi bestilte pizza").',
+                    'for': '"For" angiver årsagen, men pizzaen er resultatet af det tomme køleskab.',
+                    'derfor': '"Derfor" kræver inversion (verbum før subjekt: "... og derfor bestilte vi pizza").'
+                }
+            },
+            {
+                tag: 'Gåde 6 • Årsag (for) vs. Resultat (så)',
+                prompt: 'Han tager en varm vinterjakke på som en direkte konsekvens af frosten udenfor:',
+                quote: '"Der er hård frost udenfor til morgen, ______ han tager sin tykke vinterjakke på."',
+                options: ['så', 'for', 'eller'],
+                correct: 'så',
+                explanations: {
+                    'så': 'Skarpt set! Frosten er årsagen, og jakken er konsekvensen/resultatet ("..., så han tager...").',
+                    'for': '"For" står foran årsagen ("Han tager jakke på, for der er frost udenfor").',
+                    'eller': '"Eller" bruges kun ved alternativer.'
+                }
             }
-        },
-        {
-            tag: 'Gåde 2 • Kig på placeringen af "ikke"!',
-            prompt: 'Nu står "ikke" EFTER verbet ("kan ikke")! Hvilken årsags-konjunktion passer til en helsætning?',
-            quote: '"Jeg må desværre melde afbud til festen, ______ jeg kan ikke finde en barnepige."',
-            options: ['for', 'fordi', 'selvom'],
-            correct: 'for',
-            explanations: {
-                'for': 'Fuldstændig rigtigt! Når "ikke" står EFTER verbet ("jeg kan ikke"), er det en helsætning – og så bruger vi "for"!',
-                'fordi': '"Fordi" kræver ledsætningsordstilling ("... fordi jeg ikke kan").',
-                'selvom': '"Selvom" kræver også ledsætningsordstilling og udtrykker kontrast.'
+        ],
+        2: [
+            {
+                tag: 'Gåde 1 • Kig på placeringen af "ikke" ved årsag!',
+                prompt: 'Se nøje på ordstillingen i sætning 2: Ordet "ikke" står FØR verbet ("ikke kan"). Hvilken årsags-konjunktion SKAL vi så vælge?',
+                quote: '"Jeg må desværre melde afbud til festen, ______ jeg ikke kan finde en barnepige."',
+                options: ['fordi', 'for', 'så'],
+                correct: 'fordi',
+                explanations: {
+                    'fordi': 'Skarpt set! Da "ikke" står FØR verbet ("jeg ikke kan"), er det en ledsætning – og derfor skal vi bruge "fordi"!',
+                    'for': '"For" indleder en helsætning, så det ville kræve "..., for jeg kan ikke finde...".',
+                    'så': '"Så" udtrykker resultat, ikke årsag.'
+                }
+            },
+            {
+                tag: 'Gåde 2 • Kontrast i ledsætning ("ikke" før verbet)',
+                prompt: 'Se på ordstillingen: "ikke" står FØR verbet ("ikke havde"). Hvilket kontrast-ord skal vi vælge?',
+                quote: '"Han bestod køreprøven i første forsøg, ______ han ikke havde øvet sig særlig meget."',
+                options: ['selvom', 'men', 'hvis'],
+                correct: 'selvom',
+                explanations: {
+                    'selvom': 'Perfekt! Både betydningen (på trods af) og ledsætningsordstillingen ("ikke havde") peger direkte på "selvom"!',
+                    'men': '"Men" er en helsætningskonjunktion og ville kræve "..., men han havde ikke øvet sig".',
+                    'hvis': '"Hvis" udtrykker en betingelse, ikke "på trods af".'
+                }
+            },
+            {
+                tag: 'Gåde 3 • Betingelse i forfeltet',
+                prompt: 'Sætningen opstiller en betingelse for at få rabat:',
+                quote: '"______ du bestiller billetterne på nettet, sparer du 20 procent."',
+                options: ['Hvis', 'Om', 'Selvom'],
+                correct: 'Hvis',
+                explanations: {
+                    'Hvis': 'Lige i skabet! "Hvis" udtrykker en betingelse ("på den betingelse at...").',
+                    'Om': '"Om" bruges kun til spørgende ledsætninger ("Jeg spurgte, om...").',
+                    'Selvom': '"Selvom" betyder "på trods af".'
+                }
+            },
+            {
+                tag: 'Gåde 4 • Fakta vs. Spørgsmål/Tvivl',
+                prompt: 'Mette er i tvivl og stiller et indirekte ja/nej-spørgsmål:',
+                quote: '"Jeg har glemt mit ur. Ved du, ______ bussen allerede er kørt?"',
+                options: ['om', 'at', 'hvis'],
+                correct: 'om',
+                explanations: {
+                    'om': 'Korrekt! Efter "Ved du..." eller "Jeg ved ikke..." bruger man altid "om" ("whether/if") ved spørgsmål og usikkerhed.',
+                    'at': '"At" bruges kun, når man konstaterer et sikkert faktum ("Jeg ved, at bussen er kørt").',
+                    'hvis': 'På dansk kan man IKKE bruge "hvis" efter "ved ikke" (modsat engelsk "if"). Her skal man bruge "om"!'
+                }
+            },
+            {
+                tag: 'Gåde 5 • Sikker viden / udsagn i ledsætning',
+                prompt: 'Cyklisten giver en sikker besked om, at han kommer til tiden:',
+                quote: '"Han har lige skrevet en sms om, ______ han ikke bliver forsinket i dag."',
+                options: ['at', 'om', 'hvis'],
+                correct: 'at',
+                explanations: {
+                    'at': 'Fuldstændig rigtigt! Når man gengiver et udsagn eller sikker viden, bruger man "at" (+ subjekt + "ikke" + verbum).',
+                    'om': '"Om" bruges ved tvivl og spørgsmål.',
+                    'hvis': '"Hvis" bruges ved en betingelse.'
+                }
+            },
+            {
+                tag: 'Gåde 6 • Betingelse (hvis) vs. Trods (selvom)',
+                prompt: 'Udflugten til stranden afhænger af tørvejr som forudsætning:',
+                quote: '"Vi tager på stranden på søndag, ______ det ikke regner."',
+                options: ['hvis', 'selvom', 'om'],
+                correct: 'hvis',
+                explanations: {
+                    'hvis': 'Præcis! Tørvejr er betingelsen for strandturen, og "ikke" står før verbet ("ikke regner").',
+                    'selvom': '"Selvom" ville betyde, at vi tager på stranden midt i regnvejret!',
+                    'om': '"Om" bruges ved indirekte spørgsmål.'
+                }
             }
-        },
-        {
-            tag: 'Gåde 3 • Én gang i fortiden',
-            prompt: 'Vi taler om en bestemt begivenhed i fortiden (sidste år, da jeg fyldte 30 år):',
-            quote: '"______ jeg fyldte 30 år sidste sommer, holdt vi en stor fest i haven."',
-            options: ['Da', 'Når', 'Mens'],
-            correct: 'Da',
-            explanations: {
-                'Da': 'Præcis! Man fylder kun 30 år én gang i fortiden – derfor bruger vi "Da"!',
-                'Når': '"Når" bruges kun om nutid, fremtid eller gentagne vaner ("hver gang").',
-                'Mens': '"Mens" bruges om to handlinger, der varer ved samtidig.'
+        ],
+        3: [
+            {
+                tag: 'Gåde 1 • Én gang i fortiden',
+                prompt: 'Vi taler om en bestemt begivenhed i fortiden (sidste år, da jeg fyldte 30 år):',
+                quote: '"______ jeg fyldte 30 år sidste sommer, holdt vi en stor fest i haven."',
+                options: ['Da', 'Når', 'Mens'],
+                correct: 'Da',
+                explanations: {
+                    'Da': 'Præcis! Man fylder kun 30 år én gang i fortiden – derfor bruger vi "Da"!',
+                    'Når': '"Når" bruges kun om nutid, fremtid eller gentagne vaner ("hver gang").',
+                    'Mens': '"Mens" bruges om to handlinger, der varer ved samtidig.'
+                }
+            },
+            {
+                tag: 'Gåde 2 • Vane / Hver gang',
+                prompt: 'Her beskriver vi en fast vane, der gentager sig hver eneste morgen:',
+                quote: '"______ jeg vågner om morgenen, starter jeg altid med en kop varm kaffe."',
+                options: ['Når', 'Da', 'Indtil'],
+                correct: 'Når',
+                explanations: {
+                    'Når': 'Lige i øjet! Når noget sker "hver gang" (en vane), bruger vi altid "Når"!',
+                    'Da': '"Da" bruges kun om én enkeltstående gang i fortiden.',
+                    'Indtil': '"Indtil" betyder "frem til det tidspunkt hvor".'
+                }
+            },
+            {
+                tag: 'Gåde 3 • Samtidighed i køkkenet',
+                prompt: 'To handlinger foregår på nøjagtig samme tidspunkt:',
+                quote: '"Kan du dække bordet i stuen, ______ jeg steger frikadellerne færdige?"',
+                options: ['mens', 'inden', 'siden'],
+                correct: 'mens',
+                explanations: {
+                    'mens': 'Korrekt! "Mens" ("while") binder to samtidige handlinger sammen.',
+                    'inden': '"Inden" betyder "før".',
+                    'siden': '"Siden" peger tilbage til et startpunkt i fortiden.'
+                }
+            },
+            {
+                tag: 'Gåde 4 • Handling A før handling B',
+                prompt: 'Hoveddøren skal låses, før man forlader huset:',
+                quote: '"Husk altid at låse hoveddøren, ______ du går hjemmefra om morgenen."',
+                options: ['inden', 'efter at', 'mens'],
+                correct: 'inden',
+                explanations: {
+                    'inden': 'Rigtigt! "Inden" ("before") viser, at du skal låse døren FØR du går.',
+                    'efter at': '"Efter at" betyder bagefter.',
+                    'mens': '"Mens" betyder samtidig med.'
+                }
+            },
+            {
+                tag: 'Gåde 5 • Slutpunkt i tid',
+                prompt: 'Vi bliver indenfor, lige frem til det tidspunkt hvor stormen lægger sig:',
+                quote: '"Vi bliver herinde i sommerhuset, ______ stormen er drevet over."',
+                options: ['indtil', 'så snart', 'mens'],
+                correct: 'indtil',
+                explanations: {
+                    'indtil': 'Rigtigt! "Indtil" ("until") markerer slutpunktet for, hvor længe vi venter.',
+                    'så snart': '"Så snart" betyder "i samme sekund som".',
+                    'mens': '"Mens" fokuserer på sideløbende varighed uden slutgrænse.'
+                }
+            },
+            {
+                tag: 'Gåde 6 • Straks uden ventetid',
+                prompt: 'Den rejsende ringer hjem i samme sekund, flyet rører jorden:',
+                quote: '"Jeg ringer til dig, ______ flyet er landet i lufthavnen!"',
+                options: ['så snart', 'indtil', 'siden'],
+                correct: 'så snart',
+                explanations: {
+                    'så snart': 'Perfekt! "Så snart" ("as soon as") viser, at opkaldet sker øjeblikkeligt ved landing.',
+                    'indtil': '"Indtil" ville betyde, at man ringer uafbrudt under hele flyveturen.',
+                    'siden': '"Siden" peger tilbage til et startpunkt i fortiden.'
+                }
             }
-        },
-        {
-            tag: 'Gåde 4 • Vane / Hver gang',
-            prompt: 'Her beskriver vi en fast vane, der gentager sig hver eneste morgen:',
-            quote: '"______ jeg vågner om morgenen, starter jeg altid med en kop varm kaffe."',
-            options: ['Når', 'Da', 'Indtil'],
-            correct: 'Når',
-            explanations: {
-                'Når': 'Lige i øjet! Når noget sker "hver gang" (en vane), bruger vi altid "Når"!',
-                'Da': '"Da" bruges kun om én enkeltstående gang i fortiden.',
-                'Indtil': '"Indtil" betyder "frem til det tidspunkt hvor".'
-            }
-        },
-        {
-            tag: 'Gåde 5 • Fakta vs. Spørgsmål/Tvivl',
-            prompt: 'Mette er i tvivl og stiller et indirekte ja/nej-spørgsmål:',
-            quote: '"Jeg har glemt mit ur. Ved du, ______ bussen allerede er kørt?"',
-            options: ['om', 'at', 'hvis'],
-            correct: 'om',
-            explanations: {
-                'om': 'Korrekt! Efter "Ved du..." eller "Jeg ved ikke..." bruger man altid "om" ("whether/if") ved spørgsmål og usikkerhed.',
-                'at': '"At" bruges kun, når man konstaterer et sikkert faktum ("Jeg ved, at bussen er kørt").',
-                'hvis': 'På dansk kan man IKKE bruge "hvis" efter "ved ikke" (modsat engelsk "if"). Her skal man bruge "om"!'
-            }
-        },
-        {
-            tag: 'Gåde 6 • Ingen inversion ved resultat!',
-            prompt: 'Se på ordstillingen efter kommaet: Subjektet ("vi") står FØR verbet ("bestilte"). Hvilket ord for resultat passer?',
-            quote: '"Køleskabet var helt tomt i aftes, ______ vi bestilte pizza."',
-            options: ['så', 'fordi', 'selvom'],
-            correct: 'så',
-            explanations: {
-                'så': 'Rigtigt! Konjunktionen "så" giver resultatet i en helsætning uden inversion ("..., så vi bestilte pizza").',
-                'fordi': 'Pizzaen var resultatet, ikke årsagen til at køleskabet var tomt.',
-                'selvom': 'Der er ingen modsætning mellem tomt køleskab og at bestille mad.'
-            }
-        },
-        {
-            tag: 'Gåde 7 • Kontrast i ledsætning ("ikke" før verbet)',
-            prompt: 'Se på ordstillingen: "ikke" står FØR verbet ("ikke havde"). Hvilket kontrast-ord skal vi vælge?',
-            quote: '"Han bestod køreprøven i første forsøg, ______ han ikke havde øvet sig særlig meget."',
-            options: ['selvom', 'men', 'hvis'],
-            correct: 'selvom',
-            explanations: {
-                'selvom': 'Perfekt! Både betydningen (på trods af) og ledsætningsordstillingen ("ikke havde") peger direkte på "selvom"!',
-                'men': '"Men" er en helsætningskonjunktion og ville kræve "..., men han havde ikke øvet sig".',
-                'hvis': '"Hvis" udtrykker en betingelse, ikke "på trods af".'
-            }
-        },
-        {
-            tag: 'Gåde 8 • Samtidighed i køkkenet',
-            prompt: 'To handlinger foregår på nøjagtig samme tidspunkt:',
-            quote: '"Kan du dække bordet i stuen, ______ jeg steger frikadellerne færdige?"',
-            options: ['mens', 'inden', 'siden'],
-            correct: 'mens',
-            explanations: {
-                'mens': 'Korrekt! "Mens" ("while") binder to samtidige handlinger sammen.',
-                'inden': '"Inden" betyder "før".',
-                'siden': '"Siden" peger tilbage til et startpunkt i fortiden.'
-            }
-        },
-        {
-            tag: 'Gåde 9 • Slutpunkt i tid',
-            prompt: 'Vi bliver indenfor, lige frem til det tidspunkt hvor stormen lægger sig:',
-            quote: '"Vi bliver herinde i sommerhuset, ______ stormen er drevet over."',
-            options: ['indtil', 'så snart', 'mens'],
-            correct: 'indtil',
-            explanations: {
-                'indtil': 'Rigtigt! "Indtil" ("until") markerer slutpunktet for, hvor længe vi venter.',
-                'så snart': '"Så snart" betyder "i samme sekund som".',
-                'mens': '"Mens" fokuserer på sideløbende varighed uden slutgrænse.'
-            }
-        },
-        {
-            tag: 'Gåde 10 • Betingelse i forfeltet',
-            prompt: 'Sætningen opstiller en betingelse for at få rabat:',
-            quote: '"______ du bestiller billetterne på nettet, sparer du 20 procent."',
-            options: ['Hvis', 'Om', 'Selvom'],
-            correct: 'Hvis',
-            explanations: {
-                'Hvis': 'Lige i skabet! "Hvis" udtrykker en betingelse ("på den betingelse at...").',
-                'Om': '"Om" bruges kun til spørgende ledsætninger ("Jeg spurgte, om...").',
-                'Selvom': '"Selvom" betyder "på trods af".'
-            }
-        }
-    ];
+        ]
+    };
+
+    const DETEKTIV_RIDDLES = DETEKTIV_BY_FELT[activeFelt] || DETEKTIV_BY_FELT[1];
 
     let detektivIdx = 0;
     let detektivScore = 0;
@@ -2068,122 +2210,228 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 3: SÆTNINGSBYGGEREN & PUSLESPILLET
+    // TAB 3: SÆTNINGSBYGGEREN & PUSLESPILLET (OPDELT PR. FLADE 1, 2 & 3)
     // ==========================================
-    const BUILDER_EXERCISES = [
-        {
-            modeLabel: 'Model A: Ledsætning med "fordi" (IKKE før Verbet!)',
-            context: 'Byg ledsætningen efter "Han bliver hjemme," (Husk: i en ledsætning står "ikke" FØR verbet!)',
-            displayTemplate: 'Han bliver hjemme, [BLANK] han ikke er rask.',
-            options: ['fordi', 'for', 'men'],
-            correctWord: 'fordi',
-            step1Explain: 'Rigtigt! "Fordi" indleder en ledsætning, så i Trin 2 skal "ikke" stå FØR verbet ("er")!',
-            slots: [
-                { role: 'konj', label: '1. Ledsætningskonj.', expected: 'fordi' },
-                { role: 'subjekt', label: '2. Subjekt', expected: 'han' },
-                { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
-                { role: 'verbum', label: '4. Verbum + Rest', expected: 'er rask.' }
-            ]
-        },
-        {
-            modeLabel: 'Model B: Helsætning med "for" (IKKE efter Verbet!)',
-            context: 'Byg helsætningen efter "Han bliver hjemme," med "for" (Husk: i en helsætning står verbet FØR "ikke"!)',
-            displayTemplate: 'Han bliver hjemme, [BLANK] han er ikke rask.',
-            options: ['for', 'fordi', 'selvom'],
-            correctWord: 'for',
-            step1Explain: 'Flot! "For" er en helsætningskonjunktion, så verbet ("er") kommer FØR "ikke"!',
-            slots: [
-                { role: 'konj', label: '1. Helsætningskonj.', expected: 'for' },
-                { role: 'subjekt', label: '2. Subjekt', expected: 'han' },
-                { role: 'verbum', label: '3. Verbum (FØR ikke!)', expected: 'er' },
-                { role: 'adverbium', label: '4. Ikke + Rest', expected: 'ikke rask.' }
-            ]
-        },
-        {
-            modeLabel: 'Model A: Ledsætning med "selvom" (IKKE før Verbet!)',
-            context: 'Byg ledsætningen efter "De går en tur," (På trods af at solen ikke skinner)',
-            displayTemplate: 'De går en tur, [BLANK] solen ikke skinner.',
-            options: ['selvom', 'men', 'så'],
-            correctWord: 'selvom',
-            step1Explain: 'Præcis! Efter "selvom" kommer en ledsætning, hvor "ikke" står før verbet ("skinner").',
-            slots: [
-                { role: 'konj', label: '1. Ledsætningskonj.', expected: 'selvom' },
-                { role: 'subjekt', label: '2. Subjekt', expected: 'solen' },
-                { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
-                { role: 'verbum', label: '4. Verbum', expected: 'skinner.' }
-            ]
-        },
-        {
-            modeLabel: 'Model B: Helsætning med "så" (INGEN inversion!)',
-            context: 'Byg resultat-helsætningen efter "Det regner kraftigt," (Efter "så" står subjektet før verbet!)',
-            displayTemplate: 'Det regner kraftigt, [BLANK] jeg tager bussen.',
-            options: ['så', 'fordi', 'om'],
-            correctWord: 'så',
-            step1Explain: 'Korrekt! Efter helsætningskonjunktionen "så" er der INGEN inversion: Subjekt ("jeg") før Verbum ("tager")!',
-            slots: [
-                { role: 'konj', label: '1. Helsætningskonj.', expected: 'så' },
-                { role: 'subjekt', label: '2. Subjekt (Ingen inv.!)', expected: 'jeg' },
-                { role: 'verbum', label: '3. Verbum', expected: 'tager' },
-                { role: 'rest', label: '4. Objekt', expected: 'bussen.' }
-            ]
-        },
-        {
-            modeLabel: 'Model C: Ledsætning i Forfeltet (Inversion i hovedsætningen)',
-            context: 'Når ledsætningen står forrest ("Når det regner,"), skal hovedsætningens VERBUM komme før SUBJEKTET!',
-            displayTemplate: '[BLANK] det regner, tager jeg bussen.',
-            options: ['Når', 'For', 'Men'],
-            correctWord: 'Når',
-            step1Explain: 'Super! Hele ledsætningen ("Når det regner,") fylder Plads 1 (Forfeltet) – så på Plads 2 kommer verbet ("tager") før subjektet ("jeg")!',
-            slots: [
-                { role: 'konj', label: '1. Forfelt (Ledsætning)', expected: 'Når det regner,' },
-                { role: 'verbum', label: '2. Verbum (INVERSION!)', expected: 'tager' },
-                { role: 'subjekt', label: '3. Subjekt', expected: 'jeg' },
-                { role: 'rest', label: '4. Objekt', expected: 'bussen.' }
-            ]
-        },
-        {
-            modeLabel: 'Model A: Ledsætning med "hvis" (IKKE før Verbet!)',
-            context: 'Byg betingelsen efter "Vi tager på stranden,"',
-            displayTemplate: 'Vi tager på stranden, [BLANK] det ikke regner.',
-            options: ['hvis', 'eller', 'for'],
-            correctWord: 'hvis',
-            step1Explain: 'Rigtigt! Efter "hvis" er vi i en ledsætning, så "ikke" står før verbet ("regner").',
-            slots: [
-                { role: 'konj', label: '1. Ledsætningskonj.', expected: 'hvis' },
-                { role: 'subjekt', label: '2. Subjekt', expected: 'det' },
-                { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
-                { role: 'verbum', label: '4. Verbum', expected: 'regner.' }
-            ]
-        },
-        {
-            modeLabel: 'Model A: Spørgende ledsætning med "om" (IKKE før Verbet!)',
-            context: 'Byg ledsætningen efter "Hun ved ikke," (Tvivl/spørgsmål)',
-            displayTemplate: 'Hun ved ikke, [BLANK] bussen allerede er kørt.',
-            options: ['om', 'at', 'så'],
-            correctWord: 'om',
-            step1Explain: 'Lige i øjet! Ved tvivl bruger vi "om", og tidsadverbiet ("allerede") står FØR hjælpeverbet ("er") i ledsætningen!',
-            slots: [
-                { role: 'konj', label: '1. Ledsætningskonj.', expected: 'om' },
-                { role: 'subjekt', label: '2. Subjekt', expected: 'bussen' },
-                { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'allerede' },
-                { role: 'verbum', label: '4. Verbum', expected: 'er kørt.' }
-            ]
-        },
-        {
-            modeLabel: 'Model C: Fortids-ledsætning med "Da" i Forfeltet (Inversion)',
-            context: 'Én periode i fortiden ("Da jeg var barn,") står forrest i Forfeltet:',
-            displayTemplate: '[BLANK] jeg var barn, boede vi i Odense.',
-            options: ['Da', 'Når', 'Så'],
-            correctWord: 'Da',
-            step1Explain: 'Korrekt! Barndommen er én afsluttet periode i fortiden ("Da"), og efter kommaet kommer verbet ("boede") før subjektet ("vi")!',
-            slots: [
-                { role: 'konj', label: '1. Forfelt (Ledsætning)', expected: 'Da jeg var barn,' },
-                { role: 'verbum', label: '2. Verbum (INVERSION!)', expected: 'boede' },
-                { role: 'subjekt', label: '3. Subjekt', expected: 'vi' },
-                { role: 'rest', label: '4. Sted', expected: 'i Odense.' }
-            ]
-        }
-    ];
+    const BUILDER_BY_FELT = {
+        1: [
+            {
+                modeLabel: 'Helsætning med "og" (Sideordning uden ændret ordstilling)',
+                context: 'Byg helsætningen efter "Solen skinner,"',
+                displayTemplate: 'Solen skinner, [BLANK] fuglene synger i træerne.',
+                options: ['og', 'men', 'for'],
+                correctWord: 'og',
+                step1Explain: 'Rigtigt! "Og" binder to helsætninger sammen med helt normal ordstilling (Subjekt + Verbum).',
+                slots: [
+                    { role: 'konj', label: '1. Helsætningskonj.', expected: 'og' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'fuglene' },
+                    { role: 'verbum', label: '3. Verbum', expected: 'synger' },
+                    { role: 'rest', label: '4. Sted', expected: 'i træerne.' }
+                ]
+            },
+            {
+                modeLabel: 'Helsætning med "men" (IKKE står EFTER verbet!)',
+                context: 'Byg kontrast-helsætningen efter "Det regner lidt," (Husk: i en helsætning står verbet FØR "ikke"!)',
+                displayTemplate: 'Det regner lidt, [BLANK] vi går ikke hjem.',
+                options: ['men', 'selvom', 'fordi'],
+                correctWord: 'men',
+                step1Explain: 'Flot! "Men" er en helsætningskonjunktion, så verbet ("går") står FØR "ikke"!',
+                slots: [
+                    { role: 'konj', label: '1. Helsætningskonj.', expected: 'men' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'vi' },
+                    { role: 'verbum', label: '3. Verbum (FØR ikke!)', expected: 'går' },
+                    { role: 'adverbium', label: '4. Ikke + Rest', expected: 'ikke hjem.' }
+                ]
+            },
+            {
+                modeLabel: 'Helsætning med "eller" (Alternativ / valg)',
+                context: 'Byg valget efter "Vil du have kaffe,"',
+                displayTemplate: 'Vil du have kaffe, [BLANK] foretrækker du te?',
+                options: ['eller', 'men', 'så'],
+                correctWord: 'eller',
+                step1Explain: 'Præcis! "Eller" giver et valg mellem to spørgende helsætninger.',
+                slots: [
+                    { role: 'konj', label: '1. Helsætningskonj.', expected: 'eller' },
+                    { role: 'verbum', label: '2. Verbum (Spørgsmål)', expected: 'foretrækker' },
+                    { role: 'subjekt', label: '3. Subjekt', expected: 'du' },
+                    { role: 'rest', label: '4. Objekt', expected: 'te?' }
+                ]
+            },
+            {
+                modeLabel: 'Helsætning med "for" (IKKE efter Verbet!)',
+                context: 'Byg helsætningen efter "Han bliver hjemme," med "for" (Husk: i en helsætning står verbet FØR "ikke"!)',
+                displayTemplate: 'Han bliver hjemme, [BLANK] han er ikke rask.',
+                options: ['for', 'fordi', 'selvom'],
+                correctWord: 'for',
+                step1Explain: 'Flot! "For" er en helsætningskonjunktion, så verbet ("er") kommer FØR "ikke"!',
+                slots: [
+                    { role: 'konj', label: '1. Helsætningskonj.', expected: 'for' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'han' },
+                    { role: 'verbum', label: '3. Verbum (FØR ikke!)', expected: 'er' },
+                    { role: 'adverbium', label: '4. Ikke + Rest', expected: 'ikke rask.' }
+                ]
+            },
+            {
+                modeLabel: 'Helsætning med "så" (INGEN inversion!)',
+                context: 'Byg resultat-helsætningen efter "Det regner kraftigt," (Efter "så" står subjektet før verbet!)',
+                displayTemplate: 'Det regner kraftigt, [BLANK] jeg tager bussen.',
+                options: ['så', 'fordi', 'for'],
+                correctWord: 'så',
+                step1Explain: 'Korrekt! Efter helsætningskonjunktionen "så" er der INGEN inversion: Subjekt ("jeg") før Verbum ("tager")!',
+                slots: [
+                    { role: 'konj', label: '1. Helsætningskonj.', expected: 'så' },
+                    { role: 'subjekt', label: '2. Subjekt (Ingen inv.!)', expected: 'jeg' },
+                    { role: 'verbum', label: '3. Verbum', expected: 'tager' },
+                    { role: 'rest', label: '4. Objekt', expected: 'bussen.' }
+                ]
+            }
+        ],
+        2: [
+            {
+                modeLabel: 'Ledsætning med "fordi" (IKKE før Verbet!)',
+                context: 'Byg ledsætningen efter "Han bliver hjemme," (Husk: i en ledsætning står "ikke" FØR verbet!)',
+                displayTemplate: 'Han bliver hjemme, [BLANK] han ikke er rask.',
+                options: ['fordi', 'for', 'men'],
+                correctWord: 'fordi',
+                step1Explain: 'Rigtigt! "Fordi" indleder en ledsætning, så i Trin 2 skal "ikke" stå FØR verbet ("er")!',
+                slots: [
+                    { role: 'konj', label: '1. Ledsætningskonj.', expected: 'fordi' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'han' },
+                    { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
+                    { role: 'verbum', label: '4. Verbum + Rest', expected: 'er rask.' }
+                ]
+            },
+            {
+                modeLabel: 'Ledsætning med "selvom" (IKKE før Verbet!)',
+                context: 'Byg ledsætningen efter "De går en tur," (På trods af at solen ikke skinner)',
+                displayTemplate: 'De går en tur, [BLANK] solen ikke skinner.',
+                options: ['selvom', 'men', 'så'],
+                correctWord: 'selvom',
+                step1Explain: 'Præcis! Efter "selvom" kommer en ledsætning, hvor "ikke" står før verbet ("skinner").',
+                slots: [
+                    { role: 'konj', label: '1. Ledsætningskonj.', expected: 'selvom' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'solen' },
+                    { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
+                    { role: 'verbum', label: '4. Verbum', expected: 'skinner.' }
+                ]
+            },
+            {
+                modeLabel: 'Ledsætning med "hvis" (IKKE før Verbet!)',
+                context: 'Byg betingelsen efter "Vi tager på stranden,"',
+                displayTemplate: 'Vi tager på stranden, [BLANK] det ikke regner.',
+                options: ['hvis', 'eller', 'for'],
+                correctWord: 'hvis',
+                step1Explain: 'Rigtigt! Efter "hvis" er vi i en ledsætning, så "ikke" står før verbet ("regner").',
+                slots: [
+                    { role: 'konj', label: '1. Ledsætningskonj.', expected: 'hvis' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'det' },
+                    { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
+                    { role: 'verbum', label: '4. Verbum', expected: 'regner.' }
+                ]
+            },
+            {
+                modeLabel: 'Udsagns-ledsætning med "at" (IKKE før Verbet!)',
+                context: 'Byg udsagnet efter "Han siger," (Husk: "ikke" står FØR verbet i ledsætningen!)',
+                displayTemplate: 'Han siger, [BLANK] han ikke kommer for sent.',
+                options: ['at', 'om', 'for'],
+                correctWord: 'at',
+                step1Explain: 'Flot! Efter "Han siger," følger en ledsætning med "at", hvor "ikke" står før verbet ("kommer").',
+                slots: [
+                    { role: 'konj', label: '1. Ledsætningskonj.', expected: 'at' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'han' },
+                    { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'ikke' },
+                    { role: 'verbum', label: '4. Verbum + Rest', expected: 'kommer for sent.' }
+                ]
+            },
+            {
+                modeLabel: 'Spørgende ledsætning med "om" (Adverbium før Verbet!)',
+                context: 'Byg ledsætningen efter "Hun ved ikke," (Tvivl/spørgsmål)',
+                displayTemplate: 'Hun ved ikke, [BLANK] bussen allerede er kørt.',
+                options: ['om', 'at', 'så'],
+                correctWord: 'om',
+                step1Explain: 'Lige i øjet! Ved tvivl bruger vi "om", og tidsadverbiet ("allerede") står FØR hjælpeverbet ("er") i ledsætningen!',
+                slots: [
+                    { role: 'konj', label: '1. Ledsætningskonj.', expected: 'om' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'bussen' },
+                    { role: 'adverbium', label: '3. Adverbium (FØR!)', expected: 'allerede' },
+                    { role: 'verbum', label: '4. Verbum', expected: 'er kørt.' }
+                ]
+            }
+        ],
+        3: [
+            {
+                modeLabel: 'Model A: Ledsætning med "Når" i Forfeltet (Inversion i hovedsætningen)',
+                context: 'Når tids-ledsætningen står forrest ("Når det regner,"), skal hovedsætningens VERBUM komme før SUBJEKTET!',
+                displayTemplate: '[BLANK] det regner, tager jeg bussen.',
+                options: ['Når', 'Da', 'For'],
+                correctWord: 'Når',
+                step1Explain: 'Super! Hele ledsætningen ("Når det regner,") fylder Plads 1 (Forfeltet) – så på Plads 2 kommer verbet ("tager") før subjektet ("jeg")!',
+                slots: [
+                    { role: 'konj', label: '1. Forfelt (Ledsætning)', expected: 'Når det regner,' },
+                    { role: 'verbum', label: '2. Verbum (INVERSION!)', expected: 'tager' },
+                    { role: 'subjekt', label: '3. Subjekt', expected: 'jeg' },
+                    { role: 'rest', label: '4. Objekt', expected: 'bussen.' }
+                ]
+            },
+            {
+                modeLabel: 'Model B: Fortids-ledsætning med "Da" i Forfeltet (Inversion)',
+                context: 'Én periode i fortiden ("Da jeg var barn,") står forrest i Forfeltet:',
+                displayTemplate: '[BLANK] jeg var barn, boede vi i Odense.',
+                options: ['Da', 'Når', 'Så'],
+                correctWord: 'Da',
+                step1Explain: 'Korrekt! Barndommen er én afsluttet periode i fortiden ("Da"), og efter kommaet kommer verbet ("boede") før subjektet ("vi")!',
+                slots: [
+                    { role: 'konj', label: '1. Forfelt (Ledsætning)', expected: 'Da jeg var barn,' },
+                    { role: 'verbum', label: '2. Verbum (INVERSION!)', expected: 'boede' },
+                    { role: 'subjekt', label: '3. Subjekt', expected: 'vi' },
+                    { role: 'rest', label: '4. Sted', expected: 'i Odense.' }
+                ]
+            },
+            {
+                modeLabel: 'Model C: Samtidighed med "mens"',
+                context: 'Byg tids-ledsætningen efter "Han hører musik,"',
+                displayTemplate: 'Han hører musik, [BLANK] han laver mad i køkkenet.',
+                options: ['mens', 'inden', 'indtil'],
+                correctWord: 'mens',
+                step1Explain: 'Rigtigt! "Mens" binder to handlinger sammen, der foregår på samme tid.',
+                slots: [
+                    { role: 'konj', label: '1. Tidskonjunktion', expected: 'mens' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'han' },
+                    { role: 'verbum', label: '3. Verbum + Objekt', expected: 'laver mad' },
+                    { role: 'rest', label: '4. Sted', expected: 'i køkkenet.' }
+                ]
+            },
+            {
+                modeLabel: 'Model D: Rækkefølge med "inden" (Før)',
+                context: 'Byg tids-ledsætningen efter "Husk at låse døren,"',
+                displayTemplate: 'Husk at låse døren, [BLANK] du går hjemmefra.',
+                options: ['inden', 'efter at', 'siden'],
+                correctWord: 'inden',
+                step1Explain: 'Flot! "Inden" viser, at døren skal låses, før du går hjemmefra.',
+                slots: [
+                    { role: 'konj', label: '1. Tidskonjunktion', expected: 'inden' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'du' },
+                    { role: 'verbum', label: '3. Verbum', expected: 'går' },
+                    { role: 'rest', label: '4. Retning', expected: 'hjemmefra.' }
+                ]
+            },
+            {
+                modeLabel: 'Model E: Slutpunkt i tid med "indtil"',
+                context: 'Byg tids-ledsætningen efter "Vi venter under taget,"',
+                displayTemplate: 'Vi venter under taget, [BLANK] regnen stopper.',
+                options: ['indtil', 'mens', 'siden'],
+                correctWord: 'indtil',
+                step1Explain: 'Præcis! "Indtil" markerer slutpunktet for ventetiden.',
+                slots: [
+                    { role: 'konj', label: '1. Tidskonjunktion', expected: 'indtil' },
+                    { role: 'subjekt', label: '2. Subjekt', expected: 'regnen' },
+                    { role: 'verbum', label: '3. Verbum', expected: 'stopper' },
+                    { role: 'rest', label: '4. Tid', expected: 'helt.' }
+                ]
+            }
+        ]
+    };
+
+    const BUILDER_EXERCISES = BUILDER_BY_FELT[activeFelt] || BUILDER_BY_FELT[1];
 
     let builderIdx = 0;
     let builderPhase = 1;
@@ -2475,109 +2723,186 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 4: KONTEKST-TESTEN (14 DIALOGER)
+    // TAB 4: KONTEKST-TESTEN (OPDELT PR. FLADE 1, 2 & 3)
     // ==========================================
     const kontekstState = { idx: 0, score: 0 };
-    const KONTEKST_QUESTIONS = [
-        {
-            context: '1/14 • Café-valg',
-            quote: '<strong>Barista:</strong> "Hvad kan jeg byde på? Vil du have en kop sort kaffe, ______ foretrækker du en caffe latte?"',
-            options: ['eller', 'men', 'for'],
-            correct: 'eller',
-            explanation: '"Eller" giver et valg mellem to alternativer.'
-        },
-        {
-            context: '2/14 • Årsag i helsætning ("har ikke")',
-            quote: '<strong>A:</strong> "Går du med i kantinen?"<br><strong>B:</strong> "Nej tak, ______ jeg har ikke spist min madpakke endnu."',
-            options: ['for', 'fordi', 'selvom'],
-            correct: 'for',
-            explanation: 'Ordstillingen er "jeg har ikke" (ikke står EFTER verbet) → derfor er det helsætningskonjunktionen "for"!'
-        },
-        {
-            context: '3/14 • Årsag i ledsætning ("ikke har")',
-            quote: '<strong>A:</strong> "Hvorfor tager du en jakke på?"<br><strong>B:</strong> "Jeg tager jakke på, ______ radiatoren ikke virker på kontoret."',
-            options: ['fordi', 'for', 'så'],
-            correct: 'fordi',
-            explanation: 'Ordstillingen er "radiatoren ikke virker" (ikke står FØR verbet) → derfor er det ledsætningskonjunktionen "fordi"!'
-        },
-        {
-            context: '4/14 • Resultat uden inversion',
-            quote: '<strong>A:</strong> "Nåede du morgentoget?"<br><strong>B:</strong> "Nej, mit vækkeur ringede ikke, ______ jeg kom tyve minutter for sent."',
-            options: ['så', 'fordi', 'selvom'],
-            correct: 'så',
-            explanation: '"Så" viser resultatet i en helsætning uden inversion ("..., så jeg kom...").'
-        },
-        {
-            context: '5/14 • På trods af regnvejr',
-            quote: '<strong>A:</strong> "Spillede I fodbold i går?"<br><strong>B:</strong> "Ja, vi spillede hele kampen færdig, ______ det øsregnede!"',
-            options: ['selvom', 'hvis', 'fordi'],
-            correct: 'selvom',
-            explanation: '"Selvom" udtrykker, at kampen blev spillet på trods af regnvejret.'
-        },
-        {
-            context: '6/14 • Betingelse for picnic',
-            quote: '<strong>A:</strong> "Skal vi spise frokost i parken i morgen?"<br><strong>B:</strong> "Ja, vi tager tæppe med, ______ det ikke blæser for meget."',
-            options: ['hvis', 'om', 'da'],
-            correct: 'hvis',
-            explanation: '"Hvis" opstiller betingelsen for udflugten (og har "ikke" før verbet: "hvis det ikke blæser").'
-        },
-        {
-            context: '7/14 • Indirekte spørgsmål / tvivl',
-            quote: '<strong>A:</strong> "Er pakken kommet?"<br><strong>B:</strong> "Jeg ved endnu ikke, ______ postbuddet har været her i dag."',
-            options: ['om', 'at', 'hvis'],
-            correct: 'om',
-            explanation: 'Efter "Jeg ved ikke..." bruger man altid "om" for at udtrykke tvivl/spørgsmål.'
-        },
-        {
-            context: '8/14 • Sikker viden / fakta',
-            quote: '<strong>A:</strong> "Kommer chefen til mødet?"<br><strong>B:</strong> "Ja, hun skrev lige i morges, ______ hun kommer klokken 10."',
-            options: ['at', 'om', 'hvis'],
-            correct: 'at',
-            explanation: 'Her gengiver vi en sikker besked ("skrev, at...").'
-        },
-        {
-            context: '9/14 • Én gang i fortiden',
-            quote: '<strong>A:</strong> "Hvor lærte du at tale så godt spansk?"<br><strong>B:</strong> "Det lærte jeg, ______ jeg boede i Madrid i 2019."',
-            options: ['da', 'når', 'så snart'],
-            correct: 'da',
-            explanation: 'Opholdet i Madrid i 2019 er en afsluttet periode i fortiden → "da".'
-        },
-        {
-            context: '10/14 • Fremtid eller fast vane',
-            quote: '<strong>A:</strong> "Hvornår holder du ferie?"<br><strong>B:</strong> "Jeg tager på ferie, ______ vi har afsluttet det store projekt i næste måned."',
-            options: ['når', 'da', 'siden'],
-            correct: 'når',
-            explanation: 'Om fremtiden ("i næste måned") bruger man altid "når" – aldrig "da"!'
-        },
-        {
-            context: '11/14 • To ting samtidig',
-            quote: '<strong>A:</strong> "Hvornår hører du lydbøger?"<br><strong>B:</strong> "Jeg plejer at høre lydbog, ______ jeg cykler til og fra arbejde."',
-            options: ['mens', 'inden', 'indtil'],
-            correct: 'mens',
-            explanation: '"Mens" viser, at lydbogen og cykelturen foregår samtidig.'
-        },
-        {
-            context: '12/14 • Husk før afgang',
-            quote: '<strong>A:</strong> "Er vi klar til at køre i sommerhus?"<br><strong>B:</strong> "Ja, men vi skal lige lukke alle vinduer, ______ vi låser døren."',
-            options: ['inden', 'mens', 'siden'],
-            correct: 'inden',
-            explanation: 'Vinduerne skal lukkes FØR vi låser døren → "inden".'
-        },
-        {
-            context: '13/14 • Fra fortid til nu',
-            quote: '<strong>A:</strong> "Taler I ofte sammen?"<br><strong>B:</strong> "Ja, vi har været bedste venner, ______ vi gik i folkeskole sammen."',
-            options: ['siden', 'indtil', 'når'],
-            correct: 'siden',
-            explanation: '"Siden" forbinder startpunktet i fortiden ("gik i folkeskole") med nutiden ("har været venner").'
-        },
-        {
-            context: '14/14 • Straks ved ankomst',
-            quote: '<strong>A:</strong> "Hvornår giver du besked?"<br><strong>B:</strong> "Jeg sender dig en sms, ______ jeg har fået svar fra lægen!"',
-            options: ['så snart', 'indtil', 'mens'],
-            correct: 'så snart',
-            explanation: '"Så snart" ("as soon as") betyder i samme øjeblik, som svaret kommer.'
-        }
-    ];
+    const KONTEKST_BY_FELT = {
+        1: [
+            {
+                context: '1/8 • Sideordning i parken',
+                quote: '<strong>A:</strong> "Hvordan er vejret udenfor?"<br><strong>B:</strong> "Solen skinner fra en skyfri himmel, ______ fuglene synger i træerne."',
+                options: ['og', 'men', 'eller'],
+                correct: 'og',
+                explanation: '"Og" tilføjer information og binder to ligeværdige helsætninger sammen.'
+            },
+            {
+                context: '2/8 • Kontrast i helsætning',
+                quote: '<strong>A:</strong> "Skal vi gå hjem nu?"<br><strong>B:</strong> "Det regner lidt, ______ vi har da paraply med!"',
+                options: ['men', 'og', 'for'],
+                correct: 'men',
+                explanation: '"Men" skaber en kontrast mellem regnen og det, at vi har paraply med.'
+            },
+            {
+                context: '3/8 • Café-valg',
+                quote: '<strong>Barista:</strong> "Hvad kan jeg byde på? Vil du have en kop sort kaffe, ______ foretrækker du en caffe latte?"',
+                options: ['eller', 'men', 'for'],
+                correct: 'eller',
+                explanation: '"Eller" giver et valg mellem to alternativer.'
+            },
+            {
+                context: '4/8 • Årsag i helsætning ("har ikke")',
+                quote: '<strong>A:</strong> "Går du med i kantinen?"<br><strong>B:</strong> "Nej tak, ______ jeg har ikke spist min madpakke endnu."',
+                options: ['for', 'fordi', 'så'],
+                correct: 'for',
+                explanation: 'Ordstillingen er "jeg har ikke" (ikke står EFTER verbet) → derfor er det helsætningskonjunktionen "for"!'
+            },
+            {
+                context: '5/8 • Resultat uden inversion',
+                quote: '<strong>A:</strong> "Nåede du morgentoget?"<br><strong>B:</strong> "Nej, mit vækkeur ringede ikke, ______ jeg kom tyve minutter for sent."',
+                options: ['så', 'for', 'men'],
+                correct: 'så',
+                explanation: '"Så" viser resultatet i en helsætning uden inversion ("..., så jeg kom...").'
+            },
+            {
+                context: '6/8 • Sygemelding i helsætning',
+                quote: '<strong>A:</strong> "Kommer Peter på arbejde i dag?"<br><strong>B:</strong> "Nej, han bliver i sengen, ______ han er slet ikke rask."',
+                options: ['for', 'så', 'eller'],
+                correct: 'for',
+                explanation: '"For" giver forklaringen/årsagen i en helsætning ("han er slet ikke rask").'
+            },
+            {
+                context: '7/8 • Regnvejr og bus',
+                quote: '<strong>A:</strong> "Cykler du på arbejde i dag?"<br><strong>B:</strong> "Nej, det øsregner udenfor, ______ jeg tager bussen."',
+                options: ['så', 'for', 'eller'],
+                correct: 'så',
+                explanation: '"Så" introducerer konsekvensen ("jeg tager bussen") uden inversion.'
+            },
+            {
+                context: '8/8 • Kontrast på trods af træthed',
+                quote: '<strong>A:</strong> "Var løbeturen hård?"<br><strong>B:</strong> "Ja, jeg var træt i benene, ______ jeg løb hele vejen rundt om søen."',
+                options: ['men', 'eller', 'for'],
+                correct: 'men',
+                explanation: '"Men" markerer kontrasten mellem de trætte ben og at gennemføre løbeturen.'
+            }
+        ],
+        2: [
+            {
+                context: '1/8 • Årsag i ledsætning ("ikke virker")',
+                quote: '<strong>A:</strong> "Hvorfor tager du en jakke på?"<br><strong>B:</strong> "Jeg tager jakke på, ______ radiatoren ikke virker på kontoret."',
+                options: ['fordi', 'for', 'så'],
+                correct: 'fordi',
+                explanation: 'Ordstillingen er "radiatoren ikke virker" (ikke står FØR verbet) → derfor er det ledsætningskonjunktionen "fordi"!'
+            },
+            {
+                context: '2/8 • På trods af regnvejr',
+                quote: '<strong>A:</strong> "Spillede I fodbold i går?"<br><strong>B:</strong> "Ja, vi spillede hele kampen færdig, ______ det øsregnede!"',
+                options: ['selvom', 'hvis', 'fordi'],
+                correct: 'selvom',
+                explanation: '"Selvom" udtrykker, at kampen blev spillet på trods af regnvejret.'
+            },
+            {
+                context: '3/8 • Betingelse for picnic',
+                quote: '<strong>A:</strong> "Skal vi spise frokost i parken i morgen?"<br><strong>B:</strong> "Ja, vi tager tæppe med, ______ det ikke blæser for meget."',
+                options: ['hvis', 'om', 'at'],
+                correct: 'hvis',
+                explanation: '"Hvis" opstiller betingelsen for udflugten (og har "ikke" før verbet: "hvis det ikke blæser").'
+            },
+            {
+                context: '4/8 • Indirekte spørgsmål / tvivl',
+                quote: '<strong>A:</strong> "Er pakken kommet?"<br><strong>B:</strong> "Jeg ved endnu ikke, ______ postbuddet har været her i dag."',
+                options: ['om', 'at', 'hvis'],
+                correct: 'om',
+                explanation: 'Efter "Jeg ved ikke..." bruger man altid "om" for at udtrykke tvivl/spørgsmål.'
+            },
+            {
+                context: '5/8 • Sikker viden / fakta',
+                quote: '<strong>A:</strong> "Kommer chefen til mødet?"<br><strong>B:</strong> "Ja, hun skrev lige i morges, ______ hun kommer klokken 10."',
+                options: ['at', 'om', 'hvis'],
+                correct: 'at',
+                explanation: 'Her gengiver vi en sikker besked ("skrev, at...").'
+            },
+            {
+                context: '6/8 • Kontrast med "ikke" før verbet',
+                quote: '<strong>A:</strong> "Gik I tur med hundene?"<br><strong>B:</strong> "Ja, vi gik en lang tur i parken, ______ vejret ikke var særlig godt."',
+                options: ['selvom', 'men', 'hvis'],
+                correct: 'selvom',
+                explanation: '"Ikke" står før verbet ("ikke var"), og meningen er "på trods af" → "selvom"!'
+            },
+            {
+                context: '7/8 • Spørgsmål i caféen',
+                quote: '<strong>A:</strong> "Hvorfor kigger du på din telefon?"<br><strong>B:</strong> "Jeg tjekker lige, ______ min veninde har sendt en besked."',
+                options: ['om', 'at', 'fordi'],
+                correct: 'om',
+                explanation: 'Efter "tjekke / undersøge / se" (når man er i tvivl om ja eller nej) bruger man "om".'
+            },
+            {
+                context: '8/8 • Betingelse i forfeltet med inversion',
+                quote: '<strong>A:</strong> "Tager du bilen eller cyklen i morgen?"<br><strong>B:</strong> "______ det ikke regner i morgen tidlig, tager jeg cyklen."',
+                options: ['Hvis', 'Om', 'Fordi'],
+                correct: 'Hvis',
+                explanation: '"Hvis" opstiller betingelsen i forfeltet, efterfulgt af inversion i hovedsætningen ("tager jeg").'
+            }
+        ],
+        3: [
+            {
+                context: '1/8 • Én gang i fortiden',
+                quote: '<strong>A:</strong> "Hvor lærte du at tale så godt spansk?"<br><strong>B:</strong> "Det lærte jeg, ______ jeg boede i Madrid i 2019."',
+                options: ['da', 'når', 'så snart'],
+                correct: 'da',
+                explanation: 'Opholdet i Madrid i 2019 er en afsluttet periode i fortiden → "da".'
+            },
+            {
+                context: '2/8 • Fremtid eller fast vane',
+                quote: '<strong>A:</strong> "Hvornår holder du ferie?"<br><strong>B:</strong> "Jeg tager på ferie, ______ vi har afsluttet det store projekt i næste måned."',
+                options: ['når', 'da', 'siden'],
+                correct: 'når',
+                explanation: 'Om fremtiden ("i næste måned") bruger man altid "når" – aldrig "da"!'
+            },
+            {
+                context: '3/8 • To ting samtidig',
+                quote: '<strong>A:</strong> "Hvornår hører du lydbøger?"<br><strong>B:</strong> "Jeg plejer at høre lydbog, ______ jeg cykler til og fra arbejde."',
+                options: ['mens', 'inden', 'indtil'],
+                correct: 'mens',
+                explanation: '"Mens" viser, at lydbogen og cykelturen foregår samtidig.'
+            },
+            {
+                context: '4/8 • Husk før afgang',
+                quote: '<strong>A:</strong> "Er vi klar til at køre i sommerhus?"<br><strong>B:</strong> "Ja, men vi skal lige lukke alle vinduer, ______ vi låser døren."',
+                options: ['inden', 'mens', 'siden'],
+                correct: 'inden',
+                explanation: 'Vinduerne skal lukkes FØR vi låser døren → "inden".'
+            },
+            {
+                context: '5/8 • Efter en afsluttet handling',
+                quote: '<strong>A:</strong> "Hvornår drak I kaffe?"<br><strong>B:</strong> "Vi drak kaffe i stuen, ______ vi havde spist aftensmad sammen."',
+                options: ['efter at', 'inden', 'indtil'],
+                correct: 'efter at',
+                explanation: 'Først spiste vi aftensmad, og bagefter drak vi kaffe → "efter at".'
+            },
+            {
+                context: '6/8 • Fra fortid til nu',
+                quote: '<strong>A:</strong> "Taler I ofte sammen?"<br><strong>B:</strong> "Ja, vi har været bedste venner, ______ vi gik i folkeskole sammen."',
+                options: ['siden', 'indtil', 'når'],
+                correct: 'siden',
+                explanation: '"Siden" forbinder startpunktet i fortiden ("gik i folkeskole") med nutiden ("har været venner").'
+            },
+            {
+                context: '7/8 • Slutpunkt for ventetid',
+                quote: '<strong>A:</strong> "Går vi ud til bussen nu?"<br><strong>B:</strong> "Nej, lad os vente her under glastaget, ______ regnen stopper."',
+                options: ['indtil', 'siden', 'mens'],
+                correct: 'indtil',
+                explanation: '"Indtil" markerer slutpunktet for, hvor længe vi venter under taget.'
+            },
+            {
+                context: '8/8 • Straks ved ankomst',
+                quote: '<strong>A:</strong> "Hvornår giver du besked?"<br><strong>B:</strong> "Jeg sender dig en sms, ______ jeg har fået svar fra lægen!"',
+                options: ['så snart', 'indtil', 'mens'],
+                correct: 'så snart',
+                explanation: '"Så snart" ("as soon as") betyder i samme øjeblik, som svaret kommer.'
+            }
+        ]
+    };
+    const KONTEKST_QUESTIONS = KONTEKST_BY_FELT[activeFelt] || KONTEKST_BY_FELT[1];
 
     function renderTabKontekst(parent) {
         renderQuizEngine(parent, {

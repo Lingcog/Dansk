@@ -98,6 +98,7 @@ import { renderHistorierSygdomJobView } from './views/HistorierSygdomJobView.js'
 import { renderHCAndersenView } from './views/HCAndersenView.js';
 import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
 import { renderPronomenView } from './views/PronomenView.js';
+import { renderPronomenFladeView } from './views/PronomenFladeView.js';
 import { renderGroundingView } from './views/GroundingView.js';
 import { VerbumLearningView } from './views/VerbumLearningView.js';
 import { renderBestemthedView } from './views/BestemthedView.js';
@@ -440,22 +441,27 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     renderBranchingStoryView(appDiv, navigate, extraData);
   } else if (viewTarget === 'pronomen') {
     appState.currentView = 'pronomen';
-    renderPronomenView(appDiv, navigate, extraData);
+    const pSub = String(extraData.subPath || '');
+    if (pSub === 'p' || pSub.startsWith('p/')) {
+      renderPronomenFladeView(appDiv, navigate, extraData);
+    } else {
+      renderPronomenView(appDiv, navigate, extraData);
+    }
   } else if (viewTarget === 'verbum') {
     appState.currentView = 'top100_verber';
     renderTop100VerberMenuView(appDiv, navigate);
   } else if (viewTarget === 'pronominer_subjekt') {
     appState.currentView = 'pronominer_subjekt';
-    renderPronomenView(appDiv, navigate, { viewMode: 'subjekt', ...extraData });
+    renderPronomenFladeView(appDiv, navigate, { viewMode: 'subjekt', ...extraData });
   } else if (viewTarget === 'pronominer_objekt') {
     appState.currentView = 'pronominer_objekt';
-    renderPronomenView(appDiv, navigate, { viewMode: 'objekt', ...extraData });
+    renderPronomenFladeView(appDiv, navigate, { viewMode: 'objekt', ...extraData });
   } else if (viewTarget === 'pronominer_possessiv') {
     appState.currentView = 'pronominer_possessiv';
-    renderPronomenView(appDiv, navigate, { viewMode: 'possessiv', ...extraData });
+    renderPronomenFladeView(appDiv, navigate, { viewMode: 'possessiv', ...extraData });
   } else if (viewTarget === 'pronominer_refleksiv') {
     appState.currentView = 'pronominer_refleksiv';
-    renderPronomenView(appDiv, navigate, { viewMode: 'refleksiv', ...extraData });
+    renderPronomenFladeView(appDiv, navigate, { viewMode: 'refleksiv', ...extraData });
   } else if (viewTarget === 'der_er_det_er') {
     appState.currentView = 'der_er_det_er';
     renderPronomenView(appDiv, navigate, { viewMode: 'der_er_det_er', ...extraData });

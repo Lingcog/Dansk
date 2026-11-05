@@ -401,6 +401,194 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             line-height: 1.45;
         }
 
+        /* Ugedage & Præpositioner: Didaktisk Signallampe */
+        .weekday-signal-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.35);
+            border-radius: 18px;
+            padding: 1.4rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+        .signal-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .signal-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .signal-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.2rem;
+        }
+        .signal-subtitle {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .signal-columns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+        .signal-col {
+            background: rgba(15, 23, 42, 0.75);
+            border-radius: 14px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .signal-col:hover {
+            transform: translateY(-2px);
+        }
+        .signal-col-past {
+            border-top: 4px solid #ef4444;
+            border-color: rgba(239, 68, 68, 0.35);
+        }
+        .signal-col-future {
+            border-top: 4px solid #38bdf8;
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+        .signal-col-prep {
+            border-top: 4px solid #4ade80;
+            border-color: rgba(74, 222, 128, 0.35);
+        }
+        .signal-badge-top {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .badge-past { color: #f87171; }
+        .badge-future { color: #38bdf8; }
+        .badge-prep { color: #4ade80; }
+        .signal-formula {
+            background: #0b1120;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .prep-pill {
+            background: #0284c7;
+            color: white;
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+        .prep-pill.prep-paa {
+            background: #2563eb;
+        }
+        .s-pill {
+            background: #ef4444;
+            color: #ffffff;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 900;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.65);
+            animation: pulse-s-pill 2s infinite ease-in-out;
+        }
+        @keyframes pulse-s-pill {
+            0%, 100% { box-shadow: 0 0 6px rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 14px rgba(239, 68, 68, 0.9); }
+        }
+        .signal-rule-desc {
+            font-size: 0.87rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+            margin-bottom: 0.9rem;
+        }
+        .signal-examples-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 0.65rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+        .signal-example-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.4rem;
+        }
+        .arrow-sign {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        .s-highlight {
+            color: #ffffff;
+            background: #ef4444;
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-weight: 900;
+            box-shadow: 0 0 6px rgba(239, 68, 68, 0.7);
+        }
+        .pin-s-signal {
+            color: #fca5a5;
+            font-weight: 900;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .verb-highlight {
+            color: #f87171;
+            font-weight: 700;
+        }
+        .verb-highlight.verb-future {
+            color: #38bdf8;
+        }
+        .inspector-signal-banner {
+            margin-top: 1rem;
+            padding: 0.9rem 1.1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+        .inspector-signal-banner.banner-past-s {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid rgba(239, 68, 68, 0.45);
+            color: #fecaca;
+        }
+        .inspector-signal-banner.banner-future-paa {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
+            color: #bae6fd;
+        }
+        .inspector-signal-banner.banner-prep-i {
+            background: rgba(74, 222, 128, 0.15);
+            border: 1.5px solid rgba(74, 222, 128, 0.45);
+            color: #bbf7d0;
+        }
+        .signal-banner-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
         /* TAB 2: Nutid som Fremtid */
         .future-lab-grid {
             display: grid;
@@ -1081,6 +1269,44 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 font-size: 0.78rem;
                 line-height: 1.35;
             }
+            .weekday-signal-card {
+                padding: 0.85rem;
+                margin: 0.85rem 0;
+                border-radius: 14px;
+            }
+            .signal-card-header {
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.5rem;
+            }
+            .signal-icon {
+                font-size: 1.4rem;
+            }
+            .signal-title {
+                font-size: 0.95rem;
+            }
+            .signal-subtitle {
+                font-size: 0.75rem;
+            }
+            .signal-columns-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .signal-col {
+                padding: 0.85rem;
+            }
+            .signal-formula {
+                font-size: 0.85rem;
+                padding: 0.45rem 0.6rem;
+            }
+            .inspector-signal-banner {
+                padding: 0.65rem 0.75rem;
+                font-size: 0.78rem;
+                gap: 0.5rem;
+            }
+            .signal-banner-icon {
+                font-size: 1.2rem;
+            }
             .future-lab-grid {
                 grid-template-columns: 1fr;
                 gap: 0.75rem;
@@ -1305,10 +1531,10 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     tabsNav.className = 'tids-tabs-nav';
 
     const tabsData = [
-        { id: 'vrimmel', label: getTranslation('tids_tab_vrimmel') },
-        { id: 'nutid_fremtid', label: getTranslation('tids_tab_nutid_fremtid') },
-        { id: 'vaerksted', label: getTranslation('tids_tab_vaerksted') },
-        { id: 'tidslinje', label: getTranslation('tids_tab_tidslinje') }
+        { id: 'vrimmel', label: getTranslation('tids_tab_vrimmel', 'Vrimlebillede: tid og handling') },
+        { id: 'nutid_fremtid', label: getTranslation('tids_tab_nutid_fremtid', 'Nutid som fremtid') },
+        { id: 'vaerksted', label: getTranslation('tids_tab_vaerksted', 'Træn tidsudtryk (15 opgaver)') },
+        { id: 'tidslinje', label: getTranslation('tids_tab_tidslinje', 'Tidslinje og frekvens') }
     ];
 
     let currentTab = extraData.subPath || 'vrimmel';
@@ -1338,14 +1564,14 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     viewContainer.appendChild(contentArea);
 
     // -------------------------------------------------------------
-    // DATA: 6 Tidsudtryk i Vrimlebilledet (Fokus på TIDSANKERET)
+    // DATA: 11 Tidsudtryk i Vrimlebilledet (Fokus på TIDSANKERET & PRÆPOSITIONER)
     // -------------------------------------------------------------
     function getVrimmelHotspots() {
         return [
             {
                 id: 'rejser_imorgen',
-                timeTitle: getTranslation('tids_spot_1_title'),
-                timeCategory: getTranslation('tids_spot_1_cat'),
+                timeTitle: getTranslation('tids_spot_1_title', 'I morgen'),
+                timeCategory: getTranslation('tids_spot_1_cat', 'Fremtid (planlagt)'),
                 icon: '🔵',
                 color: '#38bdf8',
                 badgeBg: 'rgba(56, 189, 248, 0.15)',
@@ -1357,12 +1583,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 verb: 'rejser',
                 verbTense: 'Nutid (præsens)',
                 timeWord: 'i morgen',
-                pedagogicalTip: getTranslation('tids_spot_1_tip')
+                signalType: null,
+                pedagogicalTip: getTranslation('tids_spot_1_tip', 'Selvom rejsen sker i morgen, står verbet i almindelig nutid: "Jeg rejser i morgen".')
             },
             {
                 id: 'drikker_kaffe_nu',
-                timeTitle: getTranslation('tids_spot_2_title'),
-                timeCategory: getTranslation('tids_spot_2_cat'),
+                timeTitle: getTranslation('tids_spot_2_title', 'Lige nu'),
+                timeCategory: getTranslation('tids_spot_2_cat', 'Nutid (aktuel handling)'),
                 icon: '🟢',
                 color: '#4ade80',
                 badgeBg: 'rgba(34, 197, 94, 0.15)',
@@ -1374,12 +1601,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 verb: 'drikker',
                 verbTense: 'Nutid (præsens)',
                 timeWord: 'nu / lige nu',
-                pedagogicalTip: getTranslation('tids_spot_2_tip')
+                signalType: null,
+                pedagogicalTip: getTranslation('tids_spot_2_tip', 'Handlingen foregår i dette øjeblik sammen med tidsudtrykket nu.')
             },
             {
                 id: 'drak_kaffe_imorges',
-                timeTitle: getTranslation('tids_spot_3_title'),
-                timeCategory: getTranslation('tids_spot_3_cat'),
+                timeTitle: getTranslation('tids_spot_3_title', 'I morges'),
+                timeCategory: getTranslation('tids_spot_3_cat', 'Datid (afsluttet tidspunkt)'),
                 icon: '🔴',
                 color: '#f87171',
                 badgeBg: 'rgba(239, 68, 68, 0.15)',
@@ -1391,12 +1619,103 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 verb: 'drak',
                 verbTense: 'Datid (præteritum)',
                 timeWord: 'i morges',
-                pedagogicalTip: getTranslation('tids_spot_3_tip')
+                signalType: null,
+                pedagogicalTip: getTranslation('tids_spot_3_tip', 'Tidspunktet "i morges" er afsluttet, og verbet skal derfor stå i datid (drak).')
+            },
+            {
+                id: 'spiste_iloerdags',
+                timeTitle: getTranslation('tids_spot_7_title', 'I lørdags'),
+                timeCategory: getTranslation('tids_spot_7_cat', 'Datid (-s signal)'),
+                icon: '🍽️',
+                color: '#ef4444',
+                badgeBg: 'rgba(239, 68, 68, 0.18)',
+                badgeBorder: '#ef4444',
+                x: 26,
+                y: 78,
+                straightSentence: 'Vi spiste en dejlig frokost på caféen i lørdags.',
+                inversionSentence: 'I lørdags spiste vi en dejlig frokost på caféen.',
+                verb: 'spiste',
+                verbTense: 'Datid (præteritum)',
+                timeWord: 'i lørdags',
+                signalType: 'datid_s',
+                pedagogicalTip: getTranslation('tids_spot_7_tip', 'Endelsen -s på ugedagen er det sikre signal om datid: "i lørdags" skete i fortiden, og verbet skal hedde spiste.')
+            },
+            {
+                id: 'startede_imandags',
+                timeTitle: getTranslation('tids_spot_8_title', 'I mandags'),
+                timeCategory: getTranslation('tids_spot_8_cat', 'Datid (-s signal)'),
+                icon: '💼',
+                color: '#ef4444',
+                badgeBg: 'rgba(239, 68, 68, 0.18)',
+                badgeBorder: '#ef4444',
+                x: 44,
+                y: 48,
+                straightSentence: 'Han startede på sit nye arbejde i mandags.',
+                inversionSentence: 'I mandags startede han på sit nye arbejde.',
+                verb: 'startede',
+                verbTense: 'Datid (præteritum)',
+                timeWord: 'i mandags',
+                signalType: 'datid_s',
+                pedagogicalTip: getTranslation('tids_spot_8_tip', 'Præpositionen "i" + ugedag med "-s" (i mandags) viser, at mandagen er overstået. Verbet står i datid: startede.')
+            },
+            {
+                id: 'slappedeaf_iweekenden',
+                timeTitle: getTranslation('tids_spot_9_title', 'I weekenden'),
+                timeCategory: getTranslation('tids_spot_9_cat', 'Datid (forgangen weekend)'),
+                icon: '🌳',
+                color: '#f87171',
+                badgeBg: 'rgba(239, 68, 68, 0.15)',
+                badgeBorder: '#ef4444',
+                x: 34,
+                y: 32,
+                straightSentence: 'Vi slappede helt af i haven i weekenden.',
+                inversionSentence: 'I weekenden slappede vi helt af i haven.',
+                verb: 'slappede',
+                verbTense: 'Datid (præteritum)',
+                timeWord: 'i weekenden',
+                signalType: 'prep_i',
+                pedagogicalTip: getTranslation('tids_spot_9_tip', 'Husk præpositionen: På dansk hedder det altid "i weekenden" (med præpositionen i, aldrig "på weekenden").')
+            },
+            {
+                id: 'moedes_paaonsdag',
+                timeTitle: getTranslation('tids_spot_10_title', 'På onsdag'),
+                timeCategory: getTranslation('tids_spot_10_cat', 'Fremtid (på uden -s)'),
+                icon: '🗓️',
+                color: '#38bdf8',
+                badgeBg: 'rgba(56, 189, 248, 0.15)',
+                badgeBorder: '#38bdf8',
+                x: 74,
+                y: 48,
+                straightSentence: 'Vi mødes til eksamenslæsning på onsdag.',
+                inversionSentence: 'På onsdag mødes vi til eksamenslæsning.',
+                verb: 'mødes',
+                verbTense: 'Nutid om fremtid',
+                timeWord: 'på onsdag',
+                signalType: 'fremtid_paa',
+                pedagogicalTip: getTranslation('tids_spot_10_tip', 'Præpositionen "på" foran en ugedag uden -s peger frem mod den kommende dag. Verbet står i almindelig nutid: mødes.')
+            },
+            {
+                id: 'flytter_inaesteuge',
+                timeTitle: getTranslation('tids_spot_11_title', 'I næste uge'),
+                timeCategory: getTranslation('tids_spot_11_cat', 'Fremtid (planlagt handling)'),
+                icon: '📦',
+                color: '#38bdf8',
+                badgeBg: 'rgba(56, 189, 248, 0.15)',
+                badgeBorder: '#38bdf8',
+                x: 15,
+                y: 28,
+                straightSentence: 'De flytter ind i den nye lejlighed i næste uge.',
+                inversionSentence: 'I næste uge flytter de ind i den nye lejlighed.',
+                verb: 'flytter',
+                verbTense: 'Nutid om fremtid',
+                timeWord: 'i næste uge',
+                signalType: 'prep_i',
+                pedagogicalTip: getTranslation('tids_spot_11_tip', 'Præpositionen er "i": i næste uge. Verbet står i nutid (flytter) brugt om planlagt fremtid.')
             },
             {
                 id: 'ses_iaften',
-                timeTitle: getTranslation('tids_spot_4_title'),
-                timeCategory: getTranslation('tids_spot_4_cat'),
+                timeTitle: getTranslation('tids_spot_4_title', 'I aften'),
+                timeCategory: getTranslation('tids_spot_4_cat', 'Nær fremtid (aftale)'),
                 icon: '🟣',
                 color: '#c084fc',
                 badgeBg: 'rgba(168, 85, 247, 0.15)',
@@ -1408,12 +1727,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 verb: 'ses',
                 verbTense: 'Nutid (reciprok form)',
                 timeWord: 'i aften',
-                pedagogicalTip: getTranslation('tids_spot_4_tip')
+                signalType: null,
+                pedagogicalTip: getTranslation('tids_spot_4_tip', 'Vendingen "Vi ses i aften" er en fast hverdagsaftale, der udtrykkes i nutid med fremtidig betydning.')
             },
             {
                 id: 'toget_afgaar',
-                timeTitle: getTranslation('tids_spot_5_title'),
-                timeCategory: getTranslation('tids_spot_5_cat'),
+                timeTitle: getTranslation('tids_spot_5_title', 'Klokken 11.15'),
+                timeCategory: getTranslation('tids_spot_5_cat', 'Køreplan og tidsplan'),
                 icon: '⏱️',
                 color: '#38bdf8',
                 badgeBg: 'rgba(56, 189, 248, 0.15)',
@@ -1425,12 +1745,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 verb: 'afgår',
                 verbTense: 'Nutid (præsens)',
                 timeWord: 'klokken 11.15',
-                pedagogicalTip: getTranslation('tids_spot_5_tip')
+                signalType: null,
+                pedagogicalTip: getTranslation('tids_spot_5_tip', 'I køreplaner og faste programmer bruges altid nutid: "Toget afgår kl. 11.15".')
             },
             {
                 id: 'cykler_altid',
-                timeTitle: getTranslation('tids_spot_6_title'),
-                timeCategory: getTranslation('tids_spot_6_cat'),
+                timeTitle: getTranslation('tids_spot_6_title', 'Altid / hver dag'),
+                timeCategory: getTranslation('tids_spot_6_cat', 'Vane og gentagelse'),
                 icon: '🔄',
                 color: '#fbbf24',
                 badgeBg: 'rgba(245, 158, 11, 0.15)',
@@ -1442,7 +1763,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 verb: 'cykler',
                 verbTense: 'Nutid (vane/gentagelse)',
                 timeWord: 'altid / hver dag',
-                pedagogicalTip: getTranslation('tids_spot_6_tip')
+                signalType: null,
+                pedagogicalTip: getTranslation('tids_spot_6_tip', 'Frekvensord som altid, tit og aldrig fortæller, hvor ofte handlingen gentager sig.')
             }
         ];
     }
@@ -1473,19 +1795,25 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         stageCard.innerHTML = `
             <div class="vrimmel-stage-header">
-                <div class="vrimmel-stage-title">${getTranslation('tids_vrimmel_title')}</div>
-                <div class="vrimmel-stage-subtitle">${getTranslation('tids_vrimmel_subtitle')}</div>
+                <div class="vrimmel-stage-title">${getTranslation('tids_vrimmel_title', 'Tidsudtrykkene i byens hverdag')}</div>
+                <div class="vrimmel-stage-subtitle">${getTranslation('tids_vrimmel_subtitle', 'Vælg et tidsanker på knapperne herunder eller tryk direkte på tidsmærkerne i billedet:')}</div>
             </div>
 
             <!-- Tids-knaprække: Intuitiv styring af tiderne -->
             <div class="vrimmel-time-filter-bar" id="time-filter-bar">
-                <span class="vrimmel-time-label">${getTranslation('tids_vrimmel_time_anchors')}</span>
-                ${VRIMMEL_HOTSPOTS.map(spot => `
-                    <button type="button" class="time-filter-btn ${spot.id === selectedHotspot.id ? 'active' : ''}" data-id="${spot.id}">
-                        <span>${spot.icon}</span>
-                        <span>${spot.timeTitle}</span>
-                    </button>
-                `).join('')}
+                <span class="vrimmel-time-label">${getTranslation('tids_vrimmel_time_anchors', 'Tidsankre:')}</span>
+                ${VRIMMEL_HOTSPOTS.map(spot => {
+                    let btnLabel = spot.timeTitle;
+                    if (spot.signalType === 'datid_s') {
+                        btnLabel = btnLabel.replace(/(s)$/i, '<span class="s-highlight">$1</span>');
+                    }
+                    return `
+                        <button type="button" class="time-filter-btn ${spot.id === selectedHotspot.id ? 'active' : ''}" data-id="${spot.id}">
+                            <span>${spot.icon}</span>
+                            <span>${btnLabel}</span>
+                        </button>
+                    `;
+                }).join('')}
             </div>
 
             <div class="vrimmel-img-container" id="vrimmel-container">
@@ -1508,9 +1836,15 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             pin.style.top = `${spot.y}%`;
             pin.style.background = spot.color;
             pin.title = `${spot.timeTitle} (${spot.timeCategory})`;
+
+            let pillLabel = spot.timeTitle;
+            if (spot.signalType === 'datid_s') {
+                pillLabel = pillLabel.replace(/(s)$/i, '<span class="pin-s-signal">$1</span>');
+            }
+
             pin.innerHTML = `
                 <span>${spot.icon}</span>
-                <div class="tids-pin-pill">${spot.icon} ${spot.timeTitle}</div>
+                <div class="tids-pin-pill">${spot.icon} ${pillLabel}</div>
             `;
 
             pin.onclick = (e) => {
@@ -1555,6 +1889,43 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 highlighted = highlighted.replace(reg, `<span class="hl-time" title="Tidsudtryk">$1</span>`);
             });
 
+            // Signal banner if relevant
+            let signalBannerHtml = '';
+            if (selectedHotspot.signalType === 'datid_s') {
+                signalBannerHtml = `
+                    <div class="inspector-signal-banner banner-past-s">
+                        <span class="signal-banner-icon">⚡</span>
+                        <div>
+                            <strong style="color: #f87171; letter-spacing: 0.03em;">DIDAKTISK SIGNAL: -S PÅ UGEDAGE = DATID!</strong><br>
+                            Læg mærke til <strong>${selectedHotspot.timeWord.replace(/(s)$/i, '<span class="s-highlight">$1</span>')}</strong>.
+                            Endelsen <strong>-s</strong> er det afgørende grammatiske signal om, at ugedagen er overstået.
+                            Verbet SKAL derfor stå i <strong>datid</strong> (<em>${selectedHotspot.verb}</em>).
+                        </div>
+                    </div>
+                `;
+            } else if (selectedHotspot.signalType === 'fremtid_paa') {
+                signalBannerHtml = `
+                    <div class="inspector-signal-banner banner-future-paa">
+                        <span class="signal-banner-icon">📅</span>
+                        <div>
+                            <strong style="color: #38bdf8; letter-spacing: 0.03em;">DIDAKTISK SIGNAL: PÅ (UDEN -S) = FREMTID!</strong><br>
+                            <strong>${selectedHotspot.timeWord}</strong> har præpositionen <strong>på</strong> og <em>intet -s</em>.
+                            Det peger fremad mod den kommende dag ➔ Verbet står i <strong>nutid</strong> (<em>${selectedHotspot.verb}</em>).
+                        </div>
+                    </div>
+                `;
+            } else if (selectedHotspot.signalType === 'prep_i') {
+                signalBannerHtml = `
+                    <div class="inspector-signal-banner banner-prep-i">
+                        <span class="signal-banner-icon">💡</span>
+                        <div>
+                            <strong style="color: #4ade80; letter-spacing: 0.03em;">PRÆPOSITIONEN "I" MED WEEKEND & UGE:</strong><br>
+                            På dansk hedder det altid <strong>${selectedHotspot.timeWord}</strong> med præpositionen <strong>i</strong> (aldrig "på weekenden" eller "på ugen").
+                        </div>
+                    </div>
+                `;
+            }
+
             targetEl.innerHTML = `
                 <div class="inspector-top">
                     <div class="inspector-title-area">
@@ -1573,28 +1944,30 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     <div class="sentence-actions">
                         <button type="button" class="btn-action-listen" id="btn-listen">
                             <span>🔊</span>
-                            <span>${getTranslation('tids_listen_sentence')}</span>
+                            <span>${getTranslation('tids_listen_sentence', 'Hør sætning')}</span>
                         </button>
                         <button type="button" class="btn-action-invert" id="btn-invert" title="Skift mellem ligefrem ordstilling og inversion">
                             <span>🔄</span>
-                            <span>${isInverted ? getTranslation('tids_show_straight') : getTranslation('tids_show_inversion')}</span>
+                            <span>${isInverted ? getTranslation('tids_show_straight', 'Vis ligefrem ordstilling') : getTranslation('tids_show_inversion', 'Vend: sæt tiden forrest (inversion)')}</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="inspector-analysis-grid">
+                ${signalBannerHtml}
+
+                <div class="inspector-analysis-grid" style="margin-top: 1rem;">
                     <div class="analysis-card">
-                        <div class="analysis-card-title">${getTranslation('tids_card_verb_title')}</div>
+                        <div class="analysis-card-title">${getTranslation('tids_card_verb_title', '🔴 Verbum (handlingen)')}</div>
                         <div class="analysis-card-val" style="color: #f87171;">${selectedHotspot.verb}</div>
                         <div class="analysis-card-desc">${getTranslation('tids_card_verb_desc', { tense: selectedHotspot.verbTense })}</div>
                     </div>
                     <div class="analysis-card">
-                        <div class="analysis-card-title">${getTranslation('tids_card_time_title')}</div>
+                        <div class="analysis-card-title">${getTranslation('tids_card_time_title', '🔵 Tidsudtryk (tidsankeret)')}</div>
                         <div class="analysis-card-val" style="color: #38bdf8;">${selectedHotspot.timeWord}</div>
                         <div class="analysis-card-desc">${getTranslation('tids_card_time_desc', { cat: selectedHotspot.timeCategory })}</div>
                     </div>
                     <div class="analysis-card">
-                        <div class="analysis-card-title">${getTranslation('tids_card_point_title')}</div>
+                        <div class="analysis-card-title">${getTranslation('tids_card_point_title', '💡 Grammatisk pointe')}</div>
                         <div class="analysis-card-desc">${selectedHotspot.pedagogicalTip}</div>
                     </div>
                 </div>
@@ -1612,6 +1985,105 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         updateInspector(inspectorEl);
         parent.appendChild(stageCard);
+
+        // Didaktisk signallampe infografik
+        const signalCard = document.createElement('div');
+        signalCard.className = 'weekday-signal-card';
+        signalCard.innerHTML = `
+            <div class="signal-card-header">
+                <span class="signal-icon">⚡</span>
+                <div>
+                    <div class="signal-title">Didaktisk signallampe: Ugedage og tidspræpositioner</div>
+                    <div class="signal-subtitle">Læg især mærke til endelsen <strong>-s</strong> – den afslører, om tiden er datid eller fremtid!</div>
+                </div>
+            </div>
+            <div class="signal-columns-grid">
+                <!-- Kolonne 1: Datid (-s) -->
+                <div class="signal-col signal-col-past">
+                    <div class="signal-badge-top badge-past">🔴 FORTID (DATID)</div>
+                    <div class="signal-formula">
+                        <span class="prep-pill">i</span> + ugedag + <span class="s-pill">-S</span>
+                    </div>
+                    <div class="signal-rule-desc">
+                        Endelsen <strong>-s</strong> betyder, at dagen er <strong>afsluttet</strong> i fortiden. Verbet skal altid stå i <strong>datid</strong>!
+                    </div>
+                    <div class="signal-examples-box">
+                        <div class="signal-example-row">
+                            <span><strong>i mandag<span class="s-highlight">s</span></strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight">startede</span> (datid)
+                        </div>
+                        <div class="signal-example-row">
+                            <span><strong>i lørdag<span class="s-highlight">s</span></strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight">spiste</span> (datid)
+                        </div>
+                        <div class="signal-example-row">
+                            <span><strong>i fredag<span class="s-highlight">s</span></strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight">drak</span> (datid)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolonne 2: Fremtid (på uden -s) -->
+                <div class="signal-col signal-col-future">
+                    <div class="signal-badge-top badge-future">🔵 FREMTID (PLANLAGT)</div>
+                    <div class="signal-formula">
+                        <span class="prep-pill prep-paa">på</span> + ugedag (UDEN -S)
+                    </div>
+                    <div class="signal-rule-desc">
+                        Præpositionen <strong>på</strong> (uden -s) peger fremad mod den <strong>kommende</strong> dag. Verbet står i <strong>nutid</strong>!
+                    </div>
+                    <div class="signal-examples-box">
+                        <div class="signal-example-row">
+                            <span><strong>på onsdag</strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight verb-future">mødes</span> (nutid)
+                        </div>
+                        <div class="signal-example-row">
+                            <span><strong>på fredag</strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight verb-future">rejser</span> (nutid)
+                        </div>
+                        <div class="signal-example-row">
+                            <span><strong>på mandag</strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight verb-future">ses</span> (nutid)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolonne 3: Præpositionen 'I' (weekend & uge) -->
+                <div class="signal-col signal-col-prep">
+                    <div class="signal-badge-top badge-prep">🟢 PRÆPOSITIONEN "I"</div>
+                    <div class="signal-formula">
+                        <span class="prep-pill">i</span> + weekenden / uge
+                    </div>
+                    <div class="signal-rule-desc">
+                        På dansk bruger vi altid <strong>i</strong> for weekender og uger (aldrig "på weekenden" eller "på ugen"):
+                    </div>
+                    <div class="signal-examples-box">
+                        <div class="signal-example-row">
+                            <span><strong>i weekenden</strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span><em>slappede af</em> (datid)</span>
+                        </div>
+                        <div class="signal-example-row">
+                            <span><strong>i næste uge</strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight verb-future">flytter</span> (nutid)
+                        </div>
+                        <div class="signal-example-row">
+                            <span><strong>i sidste uge</strong></span>
+                            <span class="arrow-sign">➔</span>
+                            <span class="verb-highlight">købte</span> (datid)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        parent.appendChild(signalCard);
     }
 
     // --- TAB 2: NUTID SOM FREMTID ---
@@ -1802,94 +2274,143 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     textAfter: ".",
                     correct: "i morgen",
                     options: ["i morgen", "i går", "for to dage siden"],
-                    tip: getTranslation('tids_v_tip_1'),
-                    verbContext: getTranslation('tids_v_ctx_1'),
+                    tip: getTranslation('tids_v_tip_1', 'I moderne dansk bruger vi nutid ("rejser") sammen med "i morgen" om fremtidige rejser.'),
+                    verbContext: getTranslation('tids_v_ctx_1', 'nutid om fremtid'),
                     hasHint: true,
-                    hintText: getTranslation('tids_v_hint_1')
+                    hintText: getTranslation('tids_v_hint_1', 'Handlingen er en planlagt rejse i fremtiden.')
                 },
                 {
                     textBefore: "Jeg drak en dejlig kop kaffe ",
                     textAfter: ".",
                     correct: "i morges",
                     options: ["i morges", "i morgen", "nu"],
-                    tip: getTranslation('tids_v_tip_2'),
-                    verbContext: getTranslation('tids_v_ctx_2'),
+                    tip: getTranslation('tids_v_tip_2', 'Verbet "drak" er datid (i fortiden). Derfor passer "i morges".'),
+                    verbContext: getTranslation('tids_v_ctx_2', 'datid (afsluttet tid)'),
                     hasHint: true,
-                    hintText: getTranslation('tids_v_hint_2')
+                    hintText: getTranslation('tids_v_hint_2', 'Læg mærke til datidsformen "drak".')
                 },
                 {
                     textBefore: "",
                     textAfter: " rejser vi til Italien.",
                     correct: "I morgen",
                     options: ["I morgen", "I går", "Forleden"],
-                    tip: getTranslation('tids_v_tip_3'),
-                    verbContext: getTranslation('tids_v_ctx_3'),
+                    tip: getTranslation('tids_v_tip_3', 'Her har vi inversion: Tidsudtrykket "I morgen" står på 1. plads, og verbet "rejser" følger på 2. plads.'),
+                    verbContext: getTranslation('tids_v_ctx_3', 'tiden forrest (inversion)'),
                     hasHint: true,
-                    hintText: getTranslation('tids_v_hint_3')
+                    hintText: getTranslation('tids_v_hint_3', 'Handlingen sker i fremtiden, og tiden står forrest.')
                 },
                 {
                     textBefore: "Toget mod Århus afgår ",
                     textAfter: ".",
                     correct: "om fem minutter",
                     options: ["om fem minutter", "i går aftes", "sidste uge"],
-                    tip: getTranslation('tids_v_tip_4'),
-                    verbContext: getTranslation('tids_v_ctx_4'),
+                    tip: getTranslation('tids_v_tip_4', 'Køreplaner omtales altid i nutid: "Toget afgår om fem minutter".'),
+                    verbContext: getTranslation('tids_v_ctx_4', 'køreplan i nutid'),
                     hasHint: true,
-                    hintText: getTranslation('tids_v_hint_4')
+                    hintText: getTranslation('tids_v_hint_4', 'Køreplaner angives med nutidsform.')
                 },
                 {
                     textBefore: "Vi ses til middag ",
                     textAfter: "!",
                     correct: "i aften",
                     options: ["i aften", "i forgårs", "for en uge siden"],
-                    tip: getTranslation('tids_v_tip_5'),
-                    verbContext: getTranslation('tids_v_ctx_5'),
+                    tip: getTranslation('tids_v_tip_5', '"Vi ses i aften" er en klassisk hverdagsaftale i nær fremtid.'),
+                    verbContext: getTranslation('tids_v_ctx_5', 'aftale i nær fremtid'),
                     hasHint: true,
-                    hintText: getTranslation('tids_v_hint_5')
+                    hintText: getTranslation('tids_v_hint_5', 'Aftalen gælder senere i dag.')
+                },
+                {
+                    textBefore: "Vi spiste en dejlig frokost på caféen ",
+                    textAfter: ".",
+                    correct: "i lørdags",
+                    options: ["i lørdags", "på lørdag", "i morgen"],
+                    tip: getTranslation('tids_v_tip_6', 'Verbet "spiste" er datid! Endelsen -s på "i lørdags" er det sikre signal om, at ugedagen er overstået (datid). "På lørdag" uden -s ville være fremtid.'),
+                    verbContext: getTranslation('tids_v_ctx_11', 'datid (-s signal)'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_6', 'Verbet er i datid ("spiste") – kig efter ugedagen med -s!')
+                },
+                {
+                    textBefore: "Peter startede på sit nye arbejde ",
+                    textAfter: ".",
+                    correct: "i mandags",
+                    options: ["i mandags", "på mandag", "i overmorgen"],
+                    tip: getTranslation('tids_v_tip_11', 'Verbet "startede" er datid. Præpositionen "i" + ugedag med "-s" (i mandags) markerer en afsluttet ugedag i fortiden.'),
+                    verbContext: getTranslation('tids_v_ctx_11', 'datid (-s signal)'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_7', '"Startede" er datid. Vælg ugedagen med endelsen -s!')
+                },
+                {
+                    textBefore: "Vi mødes til eksamenslæsning ",
+                    textAfter: ".",
+                    correct: "på onsdag",
+                    options: ["på onsdag", "i onsdags", "for to uger siden"],
+                    tip: getTranslation('tids_v_tip_12', '"Mødes" er nutid brugt om fremtiden. Præpositionen "på" foran ugedagen (uden -s!) peger fremad mod den kommende onsdag.'),
+                    verbContext: getTranslation('tids_v_ctx_12', 'fremtid (på uden -s)'),
+                    hasHint: true,
+                    hintText: getTranslation('tids_v_hint_8', '"Mødes" er en fremtidig aftale. Vælg udtrykket med "på" uden -s.')
+                },
+                {
+                    textBefore: "Vi slappede helt af i sommerhuset ",
+                    textAfter: ".",
+                    correct: "i weekenden",
+                    options: ["i weekenden", "på weekenden", "ved weekenden"],
+                    tip: getTranslation('tids_v_tip_13', 'På dansk bruger vi altid præpositionen "i": "i weekenden" (aldrig "på weekenden"). "Slappede af" er datid.'),
+                    verbContext: getTranslation('tids_v_ctx_13', 'præpositionen "i"'),
+                    hasHint: false
+                },
+                {
+                    textBefore: "De flytter ind i deres nye lejlighed ",
+                    textAfter: ".",
+                    correct: "i næste uge",
+                    options: ["i næste uge", "på næste uge", "i mandags"],
+                    tip: getTranslation('tids_v_tip_10', 'På dansk hedder det altid "i næste uge" med præpositionen "i". Verbet "flytter" er nutid brugt om planlagt fremtid.'),
+                    verbContext: getTranslation('tids_v_ctx_10', 'planlagt fremtid'),
+                    hasHint: false
+                },
+                {
+                    textBefore: "I mandags ",
+                    textAfter: " han en ny cykel i butikken.",
+                    correct: "købte",
+                    options: ["købte", "køber", "vil købe"],
+                    tip: getTranslation('tids_v_tip_11', 'Endelsen -s i "i mandags" er et signal om datid! Derfor skal verbet også stå i datid ("købte").'),
+                    verbContext: getTranslation('tids_v_ctx_14', 'datid (-s signal)'),
+                    hasHint: true,
+                    hintText: 'Husk signalet: -s på ugedagen betyder, at handlingen er i fortiden (datid).'
+                },
+                {
+                    textBefore: "På onsdag ",
+                    textAfter: " vi til eksamen på skolen.",
+                    correct: "skal",
+                    options: ["skal", "skulle", "har skullet"],
+                    tip: getTranslation('tids_v_tip_12', '"På onsdag" (uden -s) peger fremad mod den næste onsdag. Derfor bruges nutid ("skal").'),
+                    verbContext: getTranslation('tids_v_ctx_15', 'på + ugedag = fremtid'),
+                    hasHint: false
                 },
                 {
                     textBefore: "Hun cykler ",
                     textAfter: " på arbejde gennem byen.",
                     correct: "altid",
                     options: ["altid", "i går morges", "i forgårs"],
-                    tip: getTranslation('tids_v_tip_6'),
-                    verbContext: getTranslation('tids_v_ctx_6'),
+                    tip: getTranslation('tids_v_tip_6', '"Altid" er et frekvensadverbium, som beskriver en fast hverdagsrutine.'),
+                    verbContext: getTranslation('tids_v_ctx_6', 'gentagelse og vane'),
                     hasHint: false
                 },
                 {
-                    textBefore: "",
-                    textAfter: " drak jeg en kold øl ved kanalen.",
-                    correct: "I fredags",
-                    options: ["I fredags", "I aften", "I morgen"],
-                    tip: getTranslation('tids_v_tip_7'),
-                    verbContext: getTranslation('tids_v_ctx_7'),
+                    textBefore: "I lørdags ",
+                    textAfter: " vi til en stor fødselsdagsfest.",
+                    correct: "var",
+                    options: ["var", "er", "bliver"],
+                    tip: getTranslation('tids_v_tip_14', '"I lørdags" har det afgørende -s signal, der låser sætningen til fortiden. Verbet skal derfor være datid ("var").'),
+                    verbContext: getTranslation('tids_v_ctx_14', 'datid (-s signal)'),
                     hasHint: false
                 },
                 {
-                    textBefore: "I aften ",
-                    textAfter: " vi en god film i biografen.",
-                    correct: "ser",
-                    options: ["ser", "så", "have set"],
-                    tip: getTranslation('tids_v_tip_8'),
-                    verbContext: getTranslation('tids_v_ctx_8'),
-                    hasHint: false
-                },
-                {
-                    textBefore: "Han ",
-                    textAfter: " til tandlægen i morgen tidlig.",
-                    correct: "skal",
-                    options: ["skal", "var", "blev"],
-                    tip: getTranslation('tids_v_tip_9'),
-                    verbContext: getTranslation('tids_v_ctx_9'),
-                    hasHint: false
-                },
-                {
-                    textBefore: "Vi flytter ind i den nye lejlighed ",
-                    textAfter: ".",
-                    correct: "i næste uge",
-                    options: ["i næste uge", "i morges", "for to år siden"],
-                    tip: getTranslation('tids_v_tip_10'),
-                    verbContext: getTranslation('tids_v_ctx_10'),
+                    textBefore: "Vi holder afslutningsfest ",
+                    textAfter: " inden ferien.",
+                    correct: "på onsdag",
+                    options: ["på onsdag", "i onsdags", "i går"],
+                    tip: getTranslation('tids_v_tip_15', '"Holder" er nutid om en planlagt fremtidig begivenhed: "på onsdag" (med "på" og uden -s).'),
+                    verbContext: getTranslation('tids_v_ctx_15', 'på + ugedag = fremtid'),
                     hasHint: false
                 }
             ];
@@ -2057,7 +2578,15 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="I lørdags var vi til fest.">
-                            <span><strong>i lørdags</strong></span>
+                            <span><strong>i lørdag<span class="s-highlight">s</span></strong> <span style="font-size:0.75rem; background:rgba(239,68,68,0.25); color:#fca5a5; padding:1px 5px; border-radius:4px; margin-left:4px;">(-s = datid)</span></span>
+                            <span>🔊</span>
+                        </div>
+                        <div class="tidsord-chip" data-sentence="I mandags startede han på arbejde.">
+                            <span><strong>i mandag<span class="s-highlight">s</span></strong> <span style="font-size:0.75rem; background:rgba(239,68,68,0.25); color:#fca5a5; padding:1px 5px; border-radius:4px; margin-left:4px;">(-s = datid)</span></span>
+                            <span>🔊</span>
+                        </div>
+                        <div class="tidsord-chip" data-sentence="I weekenden slappede vi af i haven.">
+                            <span><strong>i weekenden</strong></span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Sidste uge købte vi en ny cykel.">
@@ -2070,7 +2599,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <!-- Nutid -->
                 <div class="timeline-column">
                     <div class="timeline-col-header col-now">
-                        <span>${getTranslation('tids_col_now')}</span>
+                        <span>${getTranslation('tids_col_now', 'Nutid (lige nu)')}</span>
                     </div>
                     <div class="tidsord-chip-list">
                         <div class="tidsord-chip" data-sentence="Nu drikker vi kaffe.">
@@ -2095,27 +2624,31 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 <!-- Fremtid -->
                 <div class="timeline-column">
                     <div class="timeline-col-header col-future">
-                        <span>${getTranslation('tids_col_future')}</span>
+                        <span>${getTranslation('tids_col_future', 'Fremtid (planlagt handling)')}</span>
                     </div>
                     <div class="tidsord-chip-list">
                         <div class="tidsord-chip" data-sentence="Jeg rejser til Italien i morgen.">
-                            <span><strong>i morgen</strong> ${getTranslation('tids_chip_present_suffix')}</span>
+                            <span><strong>i morgen</strong> ${getTranslation('tids_chip_present_suffix', '(nutid)')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Vi ses til middag i aften.">
-                            <span><strong>i aften</strong> ${getTranslation('tids_chip_present_suffix')}</span>
+                            <span><strong>i aften</strong> ${getTranslation('tids_chip_present_suffix', '(nutid)')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Toget kører om lidt.">
-                            <span><strong>om lidt</strong> ${getTranslation('tids_chip_present_suffix')}</span>
+                            <span><strong>om lidt</strong> ${getTranslation('tids_chip_present_suffix', '(nutid)')}</span>
+                            <span>🔊</span>
+                        </div>
+                        <div class="tidsord-chip" data-sentence="På onsdag mødes vi til undervisning.">
+                            <span><strong>på onsdag</strong> <span style="font-size:0.75rem; background:rgba(56,189,248,0.25); color:#7dd3fc; padding:1px 5px; border-radius:4px; margin-left:4px;">(uden -s)</span></span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="På fredag holder vi fest.">
-                            <span><strong>på fredag</strong> ${getTranslation('tids_chip_present_suffix')}</span>
+                            <span><strong>på fredag</strong> ${getTranslation('tids_chip_present_suffix', '(nutid)')}</span>
                             <span>🔊</span>
                         </div>
                         <div class="tidsord-chip" data-sentence="Vi starter i næste uge.">
-                            <span><strong>i næste uge</strong> ${getTranslation('tids_chip_present_suffix')}</span>
+                            <span><strong>i næste uge</strong> ${getTranslation('tids_chip_present_suffix', '(nutid)')}</span>
                             <span>🔊</span>
                         </div>
                     </div>
@@ -2140,22 +2673,25 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         const TIMELINE_MARKERS = [
             // Fortid (datid)
-            { word: 'i morges', target: 'past', label: getTranslation('tids_col_past') },
-            { word: 'i går', target: 'past', label: getTranslation('tids_col_past') },
-            { word: 'i forgårs', target: 'past', label: getTranslation('tids_col_past') },
-            { word: 'i lørdags', target: 'past', label: getTranslation('tids_col_past') },
-            { word: 'sidste uge', target: 'past', label: getTranslation('tids_col_past') },
+            { word: 'i morges', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
+            { word: 'i går', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
+            { word: 'i forgårs', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
+            { word: 'i lørdags', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
+            { word: 'i mandags', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
+            { word: 'i weekenden', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
+            { word: 'sidste uge', target: 'past', label: getTranslation('tids_col_past', 'Fortid (datid)') },
             // Nutid (lige nu)
-            { word: 'nu', target: 'now', label: getTranslation('tids_col_now') },
-            { word: 'lige nu', target: 'now', label: getTranslation('tids_col_now') },
-            { word: 'i dag', target: 'now', label: getTranslation('tids_col_now') },
-            { word: 'i dette øjeblik', target: 'now', label: getTranslation('tids_col_now') },
+            { word: 'nu', target: 'now', label: getTranslation('tids_col_now', 'Nutid (lige nu)') },
+            { word: 'lige nu', target: 'now', label: getTranslation('tids_col_now', 'Nutid (lige nu)') },
+            { word: 'i dag', target: 'now', label: getTranslation('tids_col_now', 'Nutid (lige nu)') },
+            { word: 'i dette øjeblik', target: 'now', label: getTranslation('tids_col_now', 'Nutid (lige nu)') },
             // Fremtid (planlagt)
-            { word: 'i morgen', target: 'future', label: getTranslation('tids_col_future') },
-            { word: 'i aften', target: 'future', label: getTranslation('tids_col_future') },
-            { word: 'om lidt', target: 'future', label: getTranslation('tids_col_future') },
-            { word: 'på fredag', target: 'future', label: getTranslation('tids_col_future') },
-            { word: 'i næste uge', target: 'future', label: getTranslation('tids_col_future') }
+            { word: 'i morgen', target: 'future', label: getTranslation('tids_col_future', 'Fremtid (planlagt)') },
+            { word: 'i aften', target: 'future', label: getTranslation('tids_col_future', 'Fremtid (planlagt)') },
+            { word: 'om lidt', target: 'future', label: getTranslation('tids_col_future', 'Fremtid (planlagt)') },
+            { word: 'på onsdag', target: 'future', label: getTranslation('tids_col_future', 'Fremtid (planlagt)') },
+            { word: 'på fredag', target: 'future', label: getTranslation('tids_col_future', 'Fremtid (planlagt)') },
+            { word: 'i næste uge', target: 'future', label: getTranslation('tids_col_future', 'Fremtid (planlagt)') }
         ];
 
         let remainingMarkers = [...TIMELINE_MARKERS].sort(() => Math.random() - 0.5);
@@ -2303,8 +2839,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     options: ["lige nu", "i forgårs", "i morges"],
                     correct: "lige nu",
                     tenseCategory: "nutid",
-                    tenseCategoryLabel: getTranslation('tids_ex2_tense_nutid'),
-                    explanation: getTranslation('tids_ex2_exp_1'),
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_nutid', 'nutid'),
+                    explanation: getTranslation('tids_ex2_exp_1', 'Verbet "laver" står i nutid og beskriver den igangværende handling: "lige nu".'),
                     fullSentence: "Hvad laver du lige nu? – Jeg vasker op."
                 },
                 {
@@ -2313,8 +2849,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     options: ["i lørdags", "om lidt", "nu"],
                     correct: "i lørdags",
                     tenseCategory: "fortid",
-                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid'),
-                    explanation: getTranslation('tids_ex2_exp_2'),
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid', 'datid'),
+                    explanation: getTranslation('tids_ex2_exp_2', '"Spiste" er datid. Endelsen -s på "i lørdags" er signalet om afsluttet fortid.'),
                     fullSentence: "Vi spiste en dejlig middag hos mormor i lørdags."
                 },
                 {
@@ -2323,9 +2859,19 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     options: ["om lidt", "i går", "i forgårs"],
                     correct: "om lidt",
                     tenseCategory: "fremtid",
-                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid'),
-                    explanation: getTranslation('tids_ex2_exp_3'),
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid', 'fremtid'),
+                    explanation: getTranslation('tids_ex2_exp_3', '"Afgår" er nutid brugt om en nær handling i fremtiden: "om lidt".'),
                     fullSentence: "Flyet afgår om lidt, så vi skal skynde os."
+                },
+                {
+                    sentenceBefore: "Peter startede på sit nye arbejde ",
+                    sentenceAfter: " med stor glæde.",
+                    options: ["i mandags", "på mandag", "i morgen"],
+                    correct: "i mandags",
+                    tenseCategory: "fortid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid', 'datid'),
+                    explanation: 'Verbet "startede" er datid. Endelsen -s i "i mandags" er det afgørende signal om, at mandagen er overstået.',
+                    fullSentence: "Peter startede på sit nye arbejde i mandags med stor glæde."
                 },
                 {
                     sentenceBefore: "Børnene cyklede i skole ",
@@ -2333,9 +2879,19 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     options: ["i morges", "i aften", "i næste uge"],
                     correct: "i morges",
                     tenseCategory: "fortid",
-                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid'),
-                    explanation: getTranslation('tids_ex2_exp_4'),
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid', 'datid'),
+                    explanation: getTranslation('tids_ex2_exp_4', '"Cyklede" er datid og refererer til et overstået tidspunkt tidligere på dagen: "i morges".'),
                     fullSentence: "Børnene cyklede i skole i morges klokken 8.00."
+                },
+                {
+                    sentenceBefore: "Vi skal til tandlægen ",
+                    sentenceAfter: " klokken 14.30.",
+                    options: ["på onsdag", "i onsdags", "i går"],
+                    correct: "på onsdag",
+                    tenseCategory: "fremtid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid', 'fremtid'),
+                    explanation: '"Skal" er nutid om en planlagt fremtidig aftale. "På onsdag" (med "på" og uden -s) peger fremad mod den kommende onsdag.',
+                    fullSentence: "Vi skal til tandlægen på onsdag klokken 14.30."
                 },
                 {
                     sentenceBefore: "Solen skinner dejligt ",
@@ -2343,9 +2899,19 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     options: ["i dag", "sidste uge", "i forgårs"],
                     correct: "i dag",
                     tenseCategory: "nutid",
-                    tenseCategoryLabel: getTranslation('tids_ex2_tense_nutid'),
-                    explanation: getTranslation('tids_ex2_exp_5'),
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_nutid', 'nutid'),
+                    explanation: getTranslation('tids_ex2_exp_5', '"Skinner" er nutid og beskriver vejret på selve dagen: "i dag".'),
                     fullSentence: "Solen skinner dejligt i dag over hele byen."
+                },
+                {
+                    sentenceBefore: "Familien slappede helt af i sommerhuset ",
+                    sentenceAfter: ".",
+                    options: ["i weekenden", "på weekenden", "ved weekenden"],
+                    correct: "i weekenden",
+                    tenseCategory: "fortid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fortid', 'datid'),
+                    explanation: 'På dansk bruger vi altid præpositionen "i": "i weekenden" (aldrig "på weekenden"). "Slappede af" er datid.',
+                    fullSentence: "Familien slappede helt af i sommerhuset i weekenden."
                 },
                 {
                     sentenceBefore: "Vi holder stor havefest ",
@@ -2353,9 +2919,19 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                     options: ["på fredag", "i forgårs", "i går"],
                     correct: "på fredag",
                     tenseCategory: "fremtid",
-                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid'),
-                    explanation: getTranslation('tids_ex2_exp_6'),
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid', 'fremtid'),
+                    explanation: getTranslation('tids_ex2_exp_6', '"Holder" er nutid brugt om en planlagt handling i fremtiden: "på fredag".'),
                     fullSentence: "Vi holder stor havefest på fredag, hvis det bliver godt vejr."
+                },
+                {
+                    sentenceBefore: "De flytter ind i deres nye lejlighed ",
+                    sentenceAfter: ".",
+                    options: ["i næste uge", "i går", "i morges"],
+                    correct: "i næste uge",
+                    tenseCategory: "fremtid",
+                    tenseCategoryLabel: getTranslation('tids_ex2_tense_fremtid', 'fremtid'),
+                    explanation: '"Flytter" er nutid om en planlagt handling i fremtiden. Præpositionen er "i": "i næste uge".',
+                    fullSentence: "De flytter ind i deres nye lejlighed i næste uge."
                 }
             ];
         }

@@ -13,7 +13,7 @@ export const daTidsudtryk = {
   // Tabs
   tids_tab_vrimmel: "Vrimlebillede: tid og handling",
   tids_tab_nutid_fremtid: "Nutid som fremtid",
-  tids_tab_vaerksted: "Træn tidsudtryk (10 opgaver)",
+  tids_tab_vaerksted: "Træn tidsudtryk (15 opgaver)",
   tids_tab_tidslinje: "Tidslinje og frekvens",
 
   // Tab 1: Vrimlebillede
@@ -38,6 +38,21 @@ export const daTidsudtryk = {
   tids_spot_6_title: "Altid / hver dag",
   tids_spot_6_cat: "Vane og gentagelse",
   tids_spot_6_tip: "Frekvensord som <em>altid, tit</em> og <em>aldrig</em> fortæller, hvor ofte handlingen gentager sig.",
+  tids_spot_7_title: "I lørdags",
+  tids_spot_7_cat: "Datid (-s signal)",
+  tids_spot_7_tip: "Endelsen <strong>-s</strong> på en ugedag (<em>i lørdags</em>) er et sikkert signal om <strong>datid</strong>. Verbet skal derfor være i datid (<em>spiste</em>).",
+  tids_spot_8_title: "I mandags",
+  tids_spot_8_cat: "Datid (-s signal)",
+  tids_spot_8_tip: "Præpositionen <strong>i</strong> + ugedag med <strong>-s</strong> (<em>i mandags</em>) viser, at ugedagen er overstået. Verbet står i datid: <em>startede</em>.",
+  tids_spot_9_title: "I weekenden",
+  tids_spot_9_cat: "Datid (forgangen weekend)",
+  tids_spot_9_tip: "På dansk hedder det altid <strong>i weekenden</strong> (med præpositionen <em>i</em>, aldrig 'på weekenden').",
+  tids_spot_10_title: "På onsdag",
+  tids_spot_10_cat: "Fremtid (på uden -s)",
+  tids_spot_10_tip: "Præpositionen <strong>på</strong> foran en ugedag <strong>uden -s</strong> peger frem mod den kommende dag. Verbet står i almindelig nutid: <em>mødes</em>.",
+  tids_spot_11_title: "I næste uge",
+  tids_spot_11_cat: "Fremtid (planlagt handling)",
+  tids_spot_11_tip: "Præpositionen er <strong>i</strong>: <em>i næste uge</em>. Verbet står i nutid (<em>flytter</em>) brugt om planlagt fremtid.",
 
   // Inspector
   tids_inspector_heading: "Tidsanker: {title}",
@@ -101,12 +116,20 @@ export const daTidsudtryk = {
   tids_v_ctx_8: "nutid om fremtid",
   tids_v_ctx_9: "aftale og nødvendighed",
   tids_v_ctx_10: "planlagt fremtid",
+  tids_v_ctx_11: "datid (-s signal)",
+  tids_v_ctx_12: "fremtid (på uden -s)",
+  tids_v_ctx_13: "præpositionen 'i'",
+  tids_v_ctx_14: "datid (-s signal)",
+  tids_v_ctx_15: "på + ugedag = fremtid",
 
   tids_v_hint_1: "Handlingen er en planlagt rejse i fremtiden.",
   tids_v_hint_2: "Læg mærke til datidsformen 'drak'.",
   tids_v_hint_3: "Handlingen sker i fremtiden, og tiden står forrest.",
   tids_v_hint_4: "Køreplaner angives med nutidsform.",
   tids_v_hint_5: "Aftalen gælder senere i dag.",
+  tids_v_hint_6: "Verbet er i datid ('spiste') – kig efter ugedagen med -s!",
+  tids_v_hint_7: "'Startede' er datid. Vælg ugedagen med endelsen -s!",
+  tids_v_hint_8: "'Mødes' er en fremtidig aftale. Vælg udtrykket med 'på' uden -s.",
 
   tids_v_tip_1: "I moderne dansk bruger vi nutid ('rejser') sammen med 'i morgen' om fremtidige rejser.",
   tids_v_tip_2: "Verbet 'drak' er datid (i fortiden). Derfor passer 'i morges'.",
@@ -118,6 +141,11 @@ export const daTidsudtryk = {
   tids_v_tip_8: "I aften + nutidsformen 'ser' danner den naturlige hverdagsdanske fremtid.",
   tids_v_tip_9: "Modalverbet 'skal' bruges ved faste aftaler og forpligtelser: 'skal til tandlægen'.",
   tids_v_tip_10: "'Flytter' er nutid, og 'i næste uge' gør det til en planlagt flytning.",
+  tids_v_tip_11: "Verbet 'købte' er datid, fordi '-s' i 'i mandags' fastlåser handlingen til fortiden.",
+  tids_v_tip_12: "'På onsdag' (uden -s) peger fremad. Derfor bruges nutidsformen 'skal'.",
+  tids_v_tip_13: "På dansk bruger vi altid præpositionen 'i': 'i weekenden' (aldrig 'på weekenden').",
+  tids_v_tip_14: "'I lørdags' har det afgørende -s signal for datid. Derfor hedder verbet 'var'.",
+  tids_v_tip_15: "'Holder' er nutid brugt om fremtid. 'På onsdag' (på uden -s) peger mod næste onsdag.",
 
   // Tab 4: Tidslinje og frekvens
   tids_axis_heading: "Tidsaksen: fortid, nutid og fremtid",

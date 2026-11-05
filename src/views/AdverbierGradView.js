@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { advTransBlock, advTransSpan, tAdv } from '../utils/adverbier_extra_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -2698,7 +2699,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
                     <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
                         <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">${renderDsIcon('lightbulb', '', { size: 15 })} Grammatisk tip</div>
-                        <p class="scene-text">${item.ruleHint}</p>
+                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `grad_r_${ADVERBIER_GRAD_DATA.indexOf(item) + 1}`)}</p>
                     </div>
 
                     <div class="inspector-actions">
@@ -2777,6 +2778,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: Skala & Kontraster</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
                     Få 100% styr på hvordan ordene skruer op og ned for styrken, og forstå den afgørende forskel på <em>meget</em> og <em>for</em>.
+                    ${advTransBlock('grad_vk_intro')}
                 </p>
             </div>
 
@@ -2821,9 +2823,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         card.innerHTML = `
             <h3 style="font-size: 1.45rem; color: var(--adv-border-focus, #93C5FD); margin-bottom: 0.6rem;">
                 Klik på et niveau på termometret:
+                ${advTransBlock('grad_therm_click')}
             </h3>
             <p style="color: #94a3b8; font-size: 1rem; margin-bottom: 1.5rem;">
                 Se hvordan den samme sætning forandrer styrke og betydning:
+                ${advTransBlock('grad_therm_sub')}
             </p>
 
             <div class="termometer-ladder" id="ladder-container"></div>
@@ -2837,6 +2841,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 </div>
                 <div style="font-size: 1.05rem; color: #cbd5e1; margin-bottom: 1.2rem;">
                     ${step.note}
+                    ${advTransBlock(step.note, `grad_lad_${selectedLadderIdx + 1}`)}
                 </div>
                 <button class="live-audio-btn" style="margin: 0 auto;" id="step-speak-btn">
                     Hør udtale
@@ -2872,9 +2877,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.6rem; color: white; margin-bottom: 0.4rem;">Lær den store forskel, som mange tager fejl af</h3>
+                <h3 style="font-size: 1.6rem; color: white; margin-bottom: 0.4rem;">Lær den store forskel, som mange tager fejl af ${advTransBlock('grad_contrast_title')}</h3>
                 <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                     På mange sprog bruger man samme ord, men på dansk skelner vi skarpt mellem positiv overflod og et ubehageligt problem!
+                    ${advTransBlock('grad_contrast_intro')}
                 </p>
             </div>
 
@@ -2885,6 +2891,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="contrast-sentence">"Kaffen er meget varm, og jeg nyder den!"</div>
                     <div class="contrast-desc">
                         Det er en <strong>positiv eller neutral</strong> konstatering. Kaffen er varm som kaffe skal være, og man glæder sig til at drikke den.
+                        ${advTransBlock('grad_contrast_1')}
                     </div>
                 </div>
                 <div class="contrast-box for">
@@ -2892,6 +2899,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="contrast-sentence">"Kaffen er for varm, så jeg brænder tungen!"</div>
                     <div class="contrast-desc">
                         En grænse er overskredet! Der er opstået et <strong>problem</strong>, og handlingen kan ikke gennemføres uden ubehag.
+                        ${advTransBlock('grad_contrast_2')}
                     </div>
                 </div>
 
@@ -2901,6 +2909,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="contrast-sentence">"Kufferten er meget tung, men jeg kan godt bære den."</div>
                     <div class="contrast-desc">
                         Høj vægt, men manden er stærk nok til at klare opgaven.
+                        ${advTransBlock('grad_contrast_3')}
                     </div>
                 </div>
                 <div class="contrast-box for">
@@ -2908,6 +2917,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="contrast-sentence">"Kufferten er alt for tung – hjulene knækker!"</div>
                     <div class="contrast-desc">
                         Vægten er uacceptabel og skaber en umulig situation.
+                        ${advTransBlock('grad_contrast_4')}
                     </div>
                 </div>
             </div>
@@ -2920,6 +2930,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     Spørg dig selv: <em>"Er det et problem, eller kan det ikke lade sig gøre?"</em><br>
                     → Hvis <strong>JA</strong>: Brug <strong>for</strong> eller <strong>alt for</strong>.<br>
                     → Hvis <strong>NEJ</strong> (det er bare kraftigt eller dejligt): Brug <strong>meget</strong> eller <strong>virkelig</strong>.
+                    ${advTransBlock('grad_thumb_1')}
+                    ${advTransBlock('grad_thumb_2')}
                 </div>
             </div>
         `;
@@ -3085,8 +3097,8 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">${task.scene}</div>
-                <div class="detektiv-prompt-text">${task.context}</div>
+                <div class="detektiv-context-tag">${task.scene} ${advTransSpan(task.scene, `grad_det_s_${detektivIndex + 1}`)}</div>
+                <div class="detektiv-prompt-text">${task.context} ${advTransBlock(task.context, `grad_det_c_${detektivIndex + 1}`)}</div>
                 <div class="detektiv-sentence-quote">${task.sentence.replace('_____', '<span style="color: var(--adv-border-focus, #93C5FD); text-decoration: underline;">_____</span>')}</div>
 
                 <div class="detektiv-options-grid" id="detektiv-options"></div>
@@ -3454,6 +3466,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med gradsadverbier</h3>
                     <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                         Vælg ét element fra hver række herunder. Læg mærke til hjælpespørgsmålene, og lyt til hvordan styrken ændrer sig!
+                        ${advTransBlock('grad_free_instr')}
                     </p>
                 </div>
 
@@ -3469,7 +3482,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-subjekt">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-subjekt">
-                                1. Hvem eller hvad taler vi om?
+                                1. Hvem eller hvad taler vi om? ${advTransSpan('1. Hvem eller hvad taler vi om?')}
                             </div>
                             <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
                         </div>
@@ -3480,7 +3493,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-verbum">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-verbum">
-                                2. Hvad laver eller er personen eller tingen?
+                                2. Hvad laver eller er personen eller tingen? ${advTransSpan('2. Hvad laver eller er personen eller tingen?')}
                             </div>
                             <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
                         </div>
@@ -3491,7 +3504,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-grad">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-grad">
-                                3. Hvor meget eller i hvor høj grad? (Gradsadverbium)
+                                3. Hvor meget eller i hvor høj grad? (Gradsadverbium) ${advTransSpan('3. Hvor meget eller i hvor høj grad? (Gradsadverbium)')}
                             </div>
                             <span class="cat-grammar-role badge-grad">[Gradsadverbium]</span>
                         </div>
@@ -3502,7 +3515,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-rest">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-rest">
-                                4. Hvad, hvordan eller hvor ellers?
+                                4. Hvad, hvordan eller hvor ellers? ${advTransSpan('4. Hvad, hvordan eller hvor ellers?')}
                             </div>
                             <span class="cat-grammar-role badge-rest">[Adjektivled / Restled]</span>
                         </div>
@@ -3631,7 +3644,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title"><em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em> ${advTransBlock(task.context, `grad_sb_c_${currentGradChallengeIdx + 1}`)}</div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -3651,7 +3664,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
                     Trin 1: Vælg det rigtige gradsadverbium
                 </div>
-                <div class="sb-question-text">${task.questionPrompt}</div>
+                <div class="sb-question-text">${task.questionPrompt} ${advTransBlock(task.questionPrompt, `grad_sb_q_${currentGradChallengeIdx + 1}`)}</div>
             `;
             challengeContainer.appendChild(qBox);
 
@@ -4030,7 +4043,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             </div>
 
             <div class="cloze-card">
-                <div class="detektiv-context-tag">Situation: ${task.scene}</div>
+                <div class="detektiv-context-tag">Situation: ${task.scene} ${advTransSpan(task.scene, `grad_k_s_${kontekstIndex + 1}`)}</div>
                 <div class="cloze-sentence-display" id="cloze-display">
                     ${task.sentence.replace('_____', '<span class="cloze-blank" id="cloze-blank-slot">_____</span>')}
                 </div>

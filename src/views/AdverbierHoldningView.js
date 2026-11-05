@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { advTransBlock, advTransSpan, tAdv } from '../utils/adverbier_extra_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -1796,7 +1797,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
                     <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
                         <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Didaktisk holdnings-regel</div>
-                        <p class="scene-text">${item.ruleHint}</p>
+                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `hold_r_${ADVERBIER_HOLDNING_DATA.indexOf(item) + 1}`)}</p>
                     </div>
 
                     <div class="inspector-actions">
@@ -1937,6 +1938,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: Sandsynlighed & Holdning</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 750px; margin: 0 auto;">
                     Udforsk sandsynlighedsskalaen fra 100% til 0%, og se hvordan talerens holdning forvandler en objektiv kendsgerning til lettelse, beklagelse eller håb.
+                    ${advTransBlock('hold_vk_intro')}
                 </p>
             </div>
 
@@ -1987,6 +1989,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         const keys = Object.keys(SCALE_DATA);
         const curr = SCALE_DATA[selectedScaleWord];
+        const scaleIdx = keys.indexOf(selectedScaleWord) + 1;
 
         card.innerHTML = `
             <h3 style="font-size: 1.5rem; color: #FFFFFF; text-align: center; margin-bottom: 0.5rem;">
@@ -1994,6 +1997,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             </h3>
             <p style="color: #94a3b8; text-align: center; font-size: 0.95rem; margin-bottom: 2rem;">
                 Klik på et adverbium langs barometeret for at se, hvordan sandsynligheden ændrer sætningens betydning:
+                ${advTransBlock('hold_baro_instr')}
             </p>
 
             <div class="barometer-scale-track"></div>
@@ -2002,13 +2006,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div class="barometer-demo-box">
                 <span class="barometer-demo-pct-badge" style="background: ${curr.color}22; border-color: ${curr.color}; color: ${curr.color};">
-                    Sandsynlighed: ${curr.pct} (${curr.name})
+                    Sandsynlighed: ${curr.pct} (${curr.name}) ${advTransSpan(curr.name, `hold_sc_n_${scaleIdx}`)}
                 </span>
                 <div class="barometer-demo-sentence">
                     "${curr.sentence}"
                 </div>
                 <div class="barometer-demo-desc">
                     ${curr.desc}
+                    ${advTransBlock(curr.desc, `hold_sc_d_${scaleIdx}`)}
                 </div>
                 <button class="action-btn-primary" id="baro-listen-btn">
                     Hør udtale
@@ -2045,6 +2050,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         const card = document.createElement('div');
         card.className = 'transformer-holdning-box';
 
+        const polKeys = Object.keys(POLARITY_DATA);
+        const polIdx = polKeys.indexOf(selectedPolarityWord) + 1;
         const curr = POLARITY_DATA[selectedPolarityWord];
 
         card.innerHTML = `
@@ -2053,6 +2060,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             </h3>
             <p style="color: #cbd5e1; text-align: center; font-size: 1rem; max-width: 700px; margin: 0 auto;">
                 Selve kendsgerningen er uændret (<em>"Det regner"</em>), men dit valg af adverbium afslører, om hændelsen er god, dårlig eller ønskværdig for dig:
+                ${advTransBlock('hold_pol_intro')}
             </p>
 
             <div class="transformer-pill-grid">
@@ -2075,13 +2083,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div class="barometer-demo-box">
                 <div style="font-size: 0.9rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
-                    Signalerer: ${curr.label}
+                    Signalerer: ${curr.label} ${advTransSpan(curr.label, `hold_pol_l_${polIdx}`)}
                 </div>
                 <div class="barometer-demo-sentence">
                     "${curr.sentence}"
                 </div>
                 <div class="barometer-demo-desc">
                     ${curr.desc}
+                    ${advTransBlock(curr.desc, `hold_pol_d_${polIdx}`)}
                 </div>
                 <button class="action-btn-primary" id="polarity-listen-btn">
                     Hør sætning
@@ -2115,6 +2124,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             </h3>
             <p style="color: #cbd5e1; text-align: center; font-size: 1rem; max-width: 750px; margin: 0 auto 2rem;">
                 Disse to ord forveksles ofte af udlændinge, men har en afgørende epistemisk forskel:
+                ${advTransBlock('hold_til_intro')}
             </p>
 
             <div class="special-rule-cards-grid" style="grid-template-columns: 1fr 1fr;">
@@ -2127,6 +2137,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Det <strong>ser sådan ud på overfladen</strong> ("apparently / seemingly"), men du er ikke 100% sikker, og virkeligheden kan vise sig at være en anden.
+                        ${advTransBlock('hold_til_d_1')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Han har <strong>tilsyneladende</strong> glemt mødet."</span>
@@ -2143,6 +2154,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Noget er <strong>blevet bevist eller tydeligt</strong> ("evidently / clearly"). Kendsgerningen er nu kommet frem i lyset, og sagen er klar.
+                        ${advTransBlock('hold_til_d_2')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Toget er <strong>åbenbart</strong> blevet aflyst."</span>
@@ -2155,6 +2167,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <strong>Huskereglen:</strong><br>
                 • <strong>Tilsyneladende</strong> = "Sådan ser det ud, men hvem ved?" (Usikker overflade)<br>
                 • <strong>Åbenbart</strong> = "Nu ser vi det alle sammen sort på hvidt!" (Klart bevis)
+                ${advTransBlock('hold_til_rule')}
             </div>
         `;
 
@@ -2308,8 +2321,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">${q.context}</div>
-                <div class="detektiv-prompt-text">${q.prompt}</div>
+                <div class="detektiv-context-tag">${q.context} ${advTransSpan(q.context, `hold_det_c_${detektivIdx + 1}`)}</div>
+                <div class="detektiv-prompt-text">${q.prompt} ${advTransBlock(q.prompt, `hold_det_p_${detektivIdx + 1}`)}</div>
                 <div class="detektiv-sentence-quote">"${q.quote}"</div>
 
                 <div class="detektiv-options-grid" id="detektiv-opts"></div>
@@ -2475,6 +2488,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 </h3>
                 <p style="color: #94a3b8; font-size: 1rem; margin-bottom: 1.5rem;">
                     Kontekst: <em>${current.hint}</em>
+                    ${advTransBlock(current.hint, `hold_bld_h_${builderSentenceIdx + 1}`)}
                 </p>
 
                 <!-- Architecture flow diagram -->
@@ -2506,6 +2520,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
                 <div style="font-weight: 800; color: var(--adv-border-focus, #93C5FD); margin-bottom: 1rem; text-align: center;">
                     Hvilket holdningsadverbium passer bedst her?
+                    ${advTransBlock('hold_bld_q')}
                 </div>
 
                 <div class="detektiv-options-grid" id="step1-opts"></div>
@@ -2932,6 +2947,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <h2>Tvivlens Grader: Næppe, usandsynligt & umuligt</h2>
                 <p>
                     Lær at graduere din skepsis og udelukkelse på dansk uden at lyde afvisende eller uhøflig.
+                    ${advTransBlock('hold_tv_intro')}
                 </p>
             </div>
 
@@ -2945,6 +2961,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Fuldstændig udelukket. Kan under ingen omstændigheder lade sig gøre fysisk eller logisk.
+                        ${advTransBlock('hold_tv_d_3')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #ef4444;">
                         <span>"Det er <strong>umuligt</strong> at nå."</span>
@@ -2961,6 +2978,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Betyder <strong>"næsten sikkert IKKE"</strong>. Den foretrukne danske måde at udtrykke stærk skepsis på.
+                        ${advTransBlock('hold_tv_d_1')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #f97316;">
                         <span>"Vi når det <strong>næppe</strong> i dag."</span>
@@ -2977,6 +2995,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Lige midt imellem. Muligheden er fuldt til stede, men udfaldet er helt åbent.
+                        ${advTransBlock('hold_sc_d_4')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"Det hjælper <strong>måske</strong>."</span>
@@ -3185,6 +3204,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <h2>Heldigvis, desværre & forhåbentlig</h2>
                 <p>
                     Lær at mestre den sociale tone på dansk. Hvornår udtrykker du lettelse, høfligt afbud eller et inderligt fremtidsønske?
+                    ${advTransBlock('hold_tn_intro')}
                 </p>
             </div>
 
@@ -3198,6 +3218,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Bruges om <strong>noget der allerede er sket</strong> (eller sker nu), og som er til stor glæde eller lettelse.
+                        ${advTransBlock('hold_tn_d_1')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"<strong>Heldigvis</strong> nåede vi toget."</span>
@@ -3214,6 +3235,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Høflig måde at <strong>melde afbud</strong>, overbringe dårlige nyheder eller udtrykke ærgrelse på.
+                        ${advTransBlock('hold_tn_d_2')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #ef4444;">
                         <span>"Jeg kan <strong>desværre</strong> ikke komme."</span>
@@ -3230,6 +3252,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Bruges altid om <strong>fremtiden</strong>, når du håber og krydser fingre for, at det går godt.
+                        ${advTransBlock('hold_tn_d_3')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"<strong>Forhåbentlig</strong> skinner solen."</span>
@@ -3452,6 +3475,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                 <h2>Bevis-Detektiven: Hvor har du det fra?</h2>
                 <p>
                     I 70–90% spændet handler det ikke om 5% fra eller til. Det handler om dit <strong>bevisgrundlag</strong>! Hvilket ord matcher situationens videnskilde?
+                    ${advTransBlock('hold_bev_intro')}
                 </p>
             </div>
 
@@ -3465,6 +3489,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Bygger på <strong>prognoser, målinger, statistik og trafiktal</strong>.
+                        ${advTransBlock('hold_bev_d_4')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #0284c7;">
                         <span>"Ifølge radaren regner det <strong>sandsynligvis</strong>."</span>
@@ -3481,6 +3506,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Bygger på <strong>fysiske spor og logisk deduktion</strong> (varm kaffe, jakke på knagen).
+                        ${advTransBlock('hold_r_4')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Kaffen er varm, så han er <strong>formentlig</strong> her."</span>
@@ -3497,6 +3523,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Bygger på <strong>konkrete, synlige beviser og afslørede fakta</strong> (låst dør, rød tekst).
+                        ${advTransBlock('hold_bev_d_2')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Døren er låst, så de har <strong>åbenbart</strong> lukket."</span>
@@ -3513,6 +3540,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     </div>
                     <div class="special-rule-desc">
                         Bygger på <strong>det umiddelbare ydre indtryk</strong>, som dog godt kan bedrage.
+                        ${advTransBlock('hold_bev_d_1')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"Han smiler, så det gik <strong>tilsyneladende</strong> godt."</span>

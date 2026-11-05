@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { advTransBlock, advTransSpan, tAdv } from '../utils/adverbier_extra_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -33,7 +34,7 @@ function stripAllEmojis(text) {
  * 
  * 7 didaktiske tabs:
  * 1. Det Interaktive Samtalerum & Vrimlebillede (18 hotspots, filter, ren illustration uden forstyrrende sideboks)
- * 2. Aha-værkstedet ("Hvem ved hvad?" Matrix & Sætnings-Transformeren)
+ * 2. Aha-værkstedet ("Hvem ved hvad?" Matrix & Sætnings-transformeren)
  * 3. Dialog-Detektiven (10 nuancerede gåder bygget på AdverbDialogExerciseView.js)
  * 4. Sætningsbyggeren & Puslespillet (To-trins model: Subjekt = Grøn, Verbum = Rød, Småord = Turkis, Rest = Blå)
  * 5. Kontekst-testen (14 autentiske hverdagsdialoger)
@@ -2132,7 +2133,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
                     <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
                         <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Didaktisk samtale-regel</div>
-                        <p class="scene-text">${item.ruleHint}</p>
+                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `smaa_r_${ADVERBIER_SMAAORD_DATA.indexOf(item) + 1}`)}</p>
                     </div>
 
                     <div class="inspector-actions">
@@ -2235,6 +2236,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: "Hvem ved hvad?"</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 750px; margin: 0 auto;">
                     Få det fulde overblik over de 5 magiske småord, og se hvordan en enkelt stavelse forvandler en sætnings sociale betydning.
+                    ${advTransBlock('smaa_vk_intro')}
                 </p>
             </div>
 
@@ -2243,7 +2245,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     1. "Hvem ved hvad?"-Matricen
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'transformer' ? 'active' : ''}" id="v-subtab-trans">
-                    2. Sætnings-Transformeren
+                    2. Sætnings-transformeren
                 </button>
             </div>
 
@@ -2278,48 +2280,48 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             <table class="matrix-table">
                 <thead>
                     <tr>
-                        <th>Småord</th>
-                        <th>Talerens viden</th>
-                        <th>Lytterens viden</th>
-                        <th>Videnskilde</th>
-                        <th>Typisk hverdags-eksempel</th>
+                        <th>Småord ${advTransBlock('smaa_mx_h_1')}</th>
+                        <th>Talerens viden ${advTransBlock('smaa_mx_h_2')}</th>
+                        <th>Lytterens viden ${advTransBlock('smaa_mx_h_3')}</th>
+                        <th>Videnskilde ${advTransBlock('smaa_mx_h_4')}</th>
+                        <th>Typisk hverdags-eksempel ${advTransBlock('smaa_mx_h_5')}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">jo</span></td>
-                        <td>Ved det</td>
-                        <td>Forventes at vide det</td>
-                        <td>Fælles viden / Erfaring</td>
-                        <td>"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!"</td>
+                        <td>Ved det ${advTransBlock('smaa_mx_1_t')}</td>
+                        <td>Forventes at vide det ${advTransBlock('smaa_mx_1_l')}</td>
+                        <td>Fælles viden / Erfaring ${advTransBlock('smaa_mx_1_k')}</td>
+                        <td>"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!" ${advTransBlock('smaa_mx_1_e')}</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">da</span></td>
-                        <td>100% sikker</td>
-                        <td>Tøver / tvivler</td>
-                        <td>Selvindlysende / Opmuntring</td>
-                        <td>"Du må <strong>da</strong> gerne smage et stykke kage!"</td>
+                        <td>100% sikker ${advTransBlock('smaa_mx_2_t')}</td>
+                        <td>Tøver / tvivler ${advTransBlock('smaa_mx_2_l')}</td>
+                        <td>Selvindlysende / Opmuntring ${advTransBlock('smaa_mx_2_k')}</td>
+                        <td>"Du må <strong>da</strong> gerne smage et stykke kage!" ${advTransBlock('smaa_mx_2_e')}</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">nok</span></td>
-                        <td>Eget logisk gæt</td>
-                        <td>Ved det ikke</td>
-                        <td>Egne observationer / Trøst</td>
-                        <td>"Der er mange skyer, så det regner <strong>nok</strong> snart."</td>
+                        <td>Eget logisk gæt ${advTransBlock('smaa_mx_3_t')}</td>
+                        <td>Ved det ikke ${advTransBlock('smaa_mx_3_l')}</td>
+                        <td>Egne observationer / Trøst ${advTransBlock('smaa_mx_3_k')}</td>
+                        <td>"Der er mange skyer, så det regner <strong>nok</strong> snart." ${advTransBlock('smaa_mx_3_e')}</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">vel</span></td>
-                        <td>Formoder det</td>
-                        <td>Ved det bedst</td>
-                        <td>Appel om bekræftelse</td>
-                        <td>"Av, du slog foden! Det gør <strong>vel</strong> ondt?"</td>
+                        <td>Formoder det ${advTransBlock('smaa_mx_4_t')}</td>
+                        <td>Ved det bedst ${advTransBlock('smaa_mx_4_l')}</td>
+                        <td>Appel om bekræftelse ${advTransBlock('smaa_mx_4_k')}</td>
+                        <td>"Av, du slog foden! Det gør <strong>vel</strong> ondt?" ${advTransBlock('smaa_mx_4_e')}</td>
                     </tr>
                     <tr class="matrix-row">
                         <td><span class="matrix-word-badge">vist</span></td>
-                        <td>Har hørt det</td>
-                        <td>Ved det ikke</td>
-                        <td>Ekstern kilde / Rygte</td>
-                        <td>"Jeg hørte i radioen, at toget <strong>vist</strong> er aflyst."</td>
+                        <td>Har hørt det ${advTransBlock('smaa_mx_5_t')}</td>
+                        <td>Ved det ikke ${advTransBlock('smaa_mx_5_l')}</td>
+                        <td>Ekstern kilde / Rygte ${advTransBlock('smaa_mx_5_k')}</td>
+                        <td>"Jeg hørte i radioen, at toget <strong>vist</strong> er aflyst." ${advTransBlock('smaa_mx_5_e')}</td>
                     </tr>
                 </tbody>
             </table>
@@ -2333,9 +2335,12 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         const curr = TRANSFORM_EXAMPLES[selectedTransformWord];
 
+        const trWordOrder = ['jo', 'da', 'nok', 'vel', 'vist'];
+        const trIdx = trWordOrder.indexOf(selectedTransformWord) + 1;
         card.innerHTML = `
             <div class="transformer-base">
                 Grundlæggende information: <strong>"Toget ankommer klokken 14:00."</strong>
+                ${advTransBlock('smaa_tr_base')}
             </div>
 
             <div class="transformer-buttons-grid">
@@ -2351,10 +2356,11 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     "${curr.sentence}"
                 </div>
                 <div style="font-size: 0.9rem; color: var(--adv-border-focus, #93C5FD); font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">
-                    Signalerer: ${curr.effect}
+                    Signalerer: ${curr.effect} ${advTransSpan(curr.effect, `smaa_tr_eff_${trIdx}`)}
                 </div>
                 <div class="trans-explanation">
                     ${curr.desc}
+                    ${advTransBlock(curr.desc, `smaa_tr_dsc_${trIdx}`)}
                 </div>
             </div>
 
@@ -2464,6 +2470,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <h2>Heller, hellere eller helst?</h2>
                 <p>
                     Tre ord der lyder næsten ens, men har vidt forskellige funktioner. Lær den gyldne forskel på <strong>negativ enighed</strong> og <strong>personlig præference</strong>:
+                    ${advTransBlock('smaa_hel_intro')}
                 </p>
             </div>
 
@@ -2478,6 +2485,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         Bruges <strong>altid</strong> sammen med nægtelse (<em>ikke</em>, <em>aldrig</em>) for at udtrykke negativ enighed ("heller ikke" = neither / nor).
+                        ${advTransBlock('smaa_hel_d_1')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #ef4444;">
                         <span>"Det ved jeg <strong>heller</strong> ikke."</span>
@@ -2494,6 +2502,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         Bruges ved et <strong>valg mellem to alternativer</strong> ("A frem for B" / would rather / prefer).
+                        ${advTransBlock('smaa_hel_d_2')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"Jeg vil <strong>hellere</strong> have te end kaffe."</span>
@@ -2510,6 +2519,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         Bruges om den <strong>absolut bedste løsning</strong> / 1. prioritet blandt alle muligheder (most prefer / ideally).
+                        ${advTransBlock('smaa_hel_d_3')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #22c55e;">
                         <span>"Jeg vil <strong>helst</strong> blive hjemme i dag."</span>
@@ -2737,6 +2747,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 <h2>Forstærkende ord & samtale-boostere</h2>
                 <p>
                     Danskere krydrer deres sprog med småord, der viser entusiasme, høflig forsikring eller overbevisning. Mestre de fire mest almindelige hverdags-boostere:
+                    ${advTransBlock('smaa_bst_intro')}
                 </p>
             </div>
 
@@ -2751,6 +2762,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         Giver sætningen <strong>kraft og saft</strong> blandt venner og kolleger. Ikke et grimt bandeord, men et folkeligt eftertryk.
+                        ${advTransBlock('smaa_bst_d_1')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #f97316;">
                         <span>"Det passer <strong>sgu</strong>!"</span>
@@ -2767,6 +2779,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         Udtrykker en <strong>håbefuld forventning med tillid</strong> ("surely / won't it..."). Tænker højt for at berolige.
+                        ${advTransBlock('smaa_bst_d_2')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #3B82F6;">
                         <span>"<strong>Mon ikke</strong> det går?"</span>
@@ -2783,6 +2796,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         En <strong>venlig og beroligende forsikring</strong> ("certainly / indeed"), der fjerner tvivl eller undskyldninger.
+                        ${advTransBlock('smaa_bst_d_3')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #10b981;">
                         <span>"Det kan du <strong>skam</strong> godt!"</span>
@@ -2799,6 +2813,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </div>
                     <div class="special-rule-desc">
                         En <strong>højtidelig eller oprigtig bekræftelse</strong> ("truly / indeed"), der viser stærk anerkendelse eller enighed.
+                        ${advTransBlock('smaa_bst_d_4')}
                     </div>
                     <div class="special-rule-example" style="border-left-color: #eab308;">
                         <span>"Det var <strong>sandelig</strong> flot!"</span>
@@ -3085,8 +3100,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">${q.context}</div>
-                <div class="detektiv-prompt-text">${q.prompt}</div>
+                <div class="detektiv-context-tag">${q.context} ${advTransSpan(q.context, `smaa_det_c_${detektivIdx + 1}`)}</div>
+                <div class="detektiv-prompt-text">${q.prompt} ${advTransBlock(q.prompt, `smaa_det_p_${detektivIdx + 1}`)}</div>
                 <div class="detektiv-sentence-quote">"${q.quote}"</div>
 
                 <div class="detektiv-options-grid" id="detektiv-opts"></div>
@@ -3253,6 +3268,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 </h3>
                 <p style="color: #94a3b8; font-size: 1rem; margin-bottom: 1.5rem;">
                     Kontekst: <em>${current.hint}</em>
+                    ${advTransBlock(current.hint, `smaa_bld_h_${builderSentenceIdx + 1}`)}
                 </p>
 
                 <!-- Architecture flow diagram -->
@@ -3285,6 +3301,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
                 <div style="font-weight: 800; color: var(--adv-border-focus, #93C5FD); margin-bottom: 1rem; text-align: center;">
                     Hvilket småord passer bedst her?
+                    ${advTransBlock('smaa_bld_q')}
                 </div>
 
                 <div class="detektiv-options-grid" id="step1-opts"></div>

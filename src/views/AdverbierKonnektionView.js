@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { advTransBlock, advTransSpan, tAdv } from '../utils/adverbier_extra_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -1759,7 +1760,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                     <div class="inspector-header">
                         <div class="inspector-badge-row">
                             <span class="inspector-badge">${catNames[item.category] || 'Tekstbinder'}</span>
-                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border-color: var(--adv-border, #1E3A66); color: var(--adv-border-focus, #93C5FD);">${item.meaning}</span>
+                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border-color: var(--adv-border, #1E3A66); color: var(--adv-border-focus, #93C5FD);">${item.meaning} ${advTransSpan(item.meaning, `kon_m_${ADVERBIER_KONNEKTION_DATA.indexOf(item) + 1}`)}</span>
                         </div>
                         <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                     </div>
@@ -1794,7 +1795,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
                     <div class="inspector-scene-box" style="border-left: 3px solid var(--adv-primary, #3B82F6);">
                         <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Ordstilling & Brug</div>
-                        <p class="scene-text">${item.ruleHint}</p>
+                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `kon_r_${ADVERBIER_KONNEKTION_DATA.indexOf(item) + 1}`)}</p>
                     </div>
 
                     <div class="inspector-actions">
@@ -1983,12 +1984,15 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             // Keep selectedPosMode so user can see the warning or switch
         }
 
+        const synKeys = Object.keys(syntaxExamples);
+        const synIdx = synKeys.indexOf(selectedSyntaxWordId) + 1;
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
             <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Inversions-Motoren vs. Midterpladsen</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:750px; margin:0 auto 1.2rem;">
                 Klik på en tekstbinder herunder og prøv at flytte den mellem <strong>Plads 1 (Forfeltet)</strong> og <strong>Plads 3 (Centralpladsen efter verbet)</strong>. Læg mærke til, hvordan <span style="color:#ef4444; font-weight:800;">Verbum</span> og <span style="color:#22c55e; font-weight:800;">Subjekt</span> bytter plads!
+                ${advTransBlock('kon_ord_intro')}
             </p>
         `;
 
@@ -2025,10 +2029,12 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         demoBox.style.cssText = 'background:var(--adv-surface-input, #050E1A); border-radius:16px; padding:1.8rem; border:2px solid var(--adv-border, #1E3A66); text-align:center;';
 
         if (selectedPosMode === 'front' && !current.canFront) {
+            const errKey = selectedSyntaxWordId === 'nemlig' ? 'kon_syn_err_3' : 'kon_syn_err_4';
             demoBox.innerHTML = `
                 <div style="font-size:1.1rem; color:#94a3b8; margin-bottom:0.8rem;">Første sætning: <em>"${current.context}"</em></div>
                 <div style="background:rgba(239,68,68,0.15); border:2px solid #ef4444; color:#fca5a5; padding:1.5rem; border-radius:14px; font-size:1.2rem; font-weight:800; margin:1rem 0;">
                     ${current.frontError}
+                    ${advTransBlock(current.frontError, errKey)}
                 </div>
                 <button class="action-btn-primary" id="switch-to-mid-btn" style="margin-top:0.8rem;">
                     Flyt ind efter verbet (Korrekt plads) →
@@ -2048,7 +2054,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         </div>
                     `).join('')}
                 </div>
-                <div style="color:var(--adv-border-focus, #93C5FD); font-weight:700; margin:1rem 0;">${current.note}</div>
+                <div style="color:var(--adv-border-focus, #93C5FD); font-weight:700; margin:1rem 0;">${current.note} ${advTransBlock(current.note, `kon_syn_n_${synIdx}`)}</div>
                 <button class="inspector-speak-btn" id="speak-syntax-demo">
                     Lyt: "${fullSentence}"
                 </button>
@@ -2129,12 +2135,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             }
         };
 
+        const bridgeTypesOrder = ['aarsag', 'kontrast', 'tilfoejelse', 'alternativ'];
+        const btIdx = bridgeTypesOrder.indexOf(selectedBridgeType) + 1;
         const cur = bridges[selectedBridgeType];
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
             <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">De 4 Logiske Bro-typer (20 målord)</h2>
-            <p style="text-align:center; color:#cbd5e1; margin-bottom:1.5rem;">Vælg en logisk familie for at sammenligne de 5 tekstbindere og høre dem i kontekst:</p>
+            <p style="text-align:center; color:#cbd5e1; margin-bottom:1.5rem;">Vælg en logisk familie for at sammenligne de 5 tekstbindere og høre dem i kontekst: ${advTransBlock('kon_bro_intro')}</p>
             <div class="word-selector-grid">
                 <button class="word-sel-btn ${selectedBridgeType === 'aarsag' ? 'active' : ''}" data-bt="aarsag">Årsag & Følge (5)</button>
                 <button class="word-sel-btn ${selectedBridgeType === 'kontrast' ? 'active' : ''}" data-bt="kontrast">Kontrast (5)</button>
@@ -2142,14 +2150,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <button class="word-sel-btn ${selectedBridgeType === 'alternativ' ? 'active' : ''}" data-bt="alternativ">Alternativ & Forbehold (5)</button>
             </div>
             <div style="background:#0f172a; border-radius:16px; padding:1.6rem; border:1px solid rgba(255,255,255,0.1); margin-top:1rem;">
-                <h3 style="color:var(--adv-border-focus, #93C5FD); margin-bottom:0.3rem;">${cur.title}</h3>
-                <p style="color:#94a3b8; margin-bottom:1.4rem;">${cur.subtitle}</p>
+                <h3 style="color:var(--adv-border-focus, #93C5FD); margin-bottom:0.3rem;">${cur.title} ${advTransSpan(cur.title, `kon_bro_${btIdx}_t`)}</h3>
+                <p style="color:#94a3b8; margin-bottom:1.4rem;">${cur.subtitle} ${advTransBlock(cur.subtitle, `kon_bro_${btIdx}_s`)}</p>
                 <div style="display:grid; gap:0.9rem;">
-                    ${cur.items.map(it => `
+                    ${cur.items.map((it, itIdx) => `
                         <div style="background:#1e293b; border-radius:12px; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; border-left:4px solid var(--adv-primary, #3B82F6);">
                             <div>
                                 <span style="font-size:1.25rem; font-weight:900; color:var(--adv-border-focus, #93C5FD); margin-right:0.8rem;">${it.word}</span>
-                                <span style="font-size:0.85rem; background:rgba(59,130,246,0.15); color:var(--adv-border-focus, #93C5FD); padding:0.2rem 0.6rem; border-radius:6px; font-weight:700;">${it.role}</span>
+                                <span style="font-size:0.85rem; background:rgba(59,130,246,0.15); color:var(--adv-border-focus, #93C5FD); padding:0.2rem 0.6rem; border-radius:6px; font-weight:700;">${it.role} ${advTransSpan(it.role, `kon_bro_${btIdx}_r_${itIdx + 1}`)}</span>
                                 <div style="color:white; font-weight:600; margin-top:0.4rem; font-size:1.05rem;">"${it.ex}"</div>
                             </div>
                             <button class="inspector-speak-btn" data-speak="${it.ex}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg> Lyt</button>
@@ -2180,6 +2188,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Pas på Tvillingen! (Konnektivt Adverbium vs. Konjunktion)</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:800px; margin:0 auto 1.8rem;">
                 Mange ord i Felt 7 har en "betydnings-tvilling" blandt konjunktionerne (som du møder på konjunktionsfladen). De betyder næsten det samme, men deres <strong>ordstilling</strong> er vidt forskellig!
+                ${advTransBlock('kon_tvil_intro')}
             </p>
             <div style="display:grid; gap:1.2rem;">
                 <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
@@ -2401,8 +2410,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">${r.tag}</div>
-                <div class="detektiv-prompt-text">${r.prompt}</div>
+                <div class="detektiv-context-tag">${r.tag} ${advTransSpan(r.tag, `kon_det_t_${detektivIdx + 1}`)}</div>
+                <div class="detektiv-prompt-text">${r.prompt} ${advTransBlock(r.prompt, `kon_det_p_${detektivIdx + 1}`)}</div>
                 <div class="detektiv-sentence-quote" id="det-quote">${r.quote}</div>
 
                 <div class="detektiv-options-grid" id="det-opts"></div>
@@ -2664,6 +2673,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
             <div style="color:var(--adv-border-focus, #93C5FD); font-weight:700; margin-bottom:0.8rem; text-align:center;">
                 ${ex.context}
+                ${advTransBlock(ex.context, `kon_bld_c_${builderIdx + 1}`)}
             </div>
 
             <div class="sb-sentence-display">${displaySentenceHtml}</div>
@@ -3075,7 +3085,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const introHtml = `
             <div class="special-intro-box">
                 <h2>Årsag, følge og konklusion</h2>
-                <p>Lær den afgørende forskel på at pege <strong>frem mod resultatet</strong> (<em>derfor, dermed, således</em>), pege <strong>tilbage på årsagen</strong> (<em>nemlig</em>) og drage en <strong>logisk konklusion</strong> (<em>altså</em>).</p>
+                <p>Lær den afgørende forskel på at pege <strong>frem mod resultatet</strong> (<em>derfor, dermed, således</em>), pege <strong>tilbage på årsagen</strong> (<em>nemlig</em>) og drage en <strong>logisk konklusion</strong> (<em>altså</em>). ${advTransBlock('kon_aar_intro')}</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#22c55e;">
@@ -3083,7 +3093,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#4ade80;">derfor</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Peger FREM (Resultat)</span>
                     </div>
-                    <div class="special-rule-desc">Sætning 1 er årsagen → <strong>Derfor</strong> + sætning 2 (resultatet). Udløser inversion i front!</div>
+                    <div class="special-rule-desc">Sætning 1 er årsagen → <strong>Derfor</strong> + sætning 2 (resultatet). Udløser inversion i front! ${advTransBlock('kon_aar_d_1')}</div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
                         <span>"Jeg er syg. <strong>Derfor</strong> bliver jeg hjemme."</span>
                     </div>
@@ -3093,7 +3103,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#22d3ee;">⬅️ nemlig</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Peger TILBAGE (Årsag)</span>
                     </div>
-                    <div class="special-rule-desc">Sætning 1 er resultatet ⬅ Sætning 2 med <strong>nemlig</strong> giver årsagen. Står ALTID efter verbet!</div>
+                    <div class="special-rule-desc">Sætning 1 er resultatet ⬅ Sætning 2 med <strong>nemlig</strong> giver årsagen. Står ALTID efter verbet! ${advTransBlock('kon_aar_d_2')}</div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         <span>"Jeg bliver hjemme. Jeg er <strong>nemlig</strong> syg."</span>
                     </div>
@@ -3103,7 +3113,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">altså</span>
                         <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Logisk konklusion</span>
                     </div>
-                    <div class="special-rule-desc">Drager en konklusion ud fra spor eller tal ("med andre ord / så").</div>
+                    <div class="special-rule-desc">Drager en konklusion ud fra spor eller tal ("med andre ord / så"). ${advTransBlock('kon_aar_d_3')}</div>
                     <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">
                         <span>"Klokken er 8:10. Vi er <strong>altså</strong> for sent på den."</span>
                     </div>
@@ -3113,7 +3123,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">dermed / således</span>
                         <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Direkte følge</span>
                     </div>
-                    <div class="special-rule-desc"><strong>Dermed</strong> = gennem denne handling. <strong>Således</strong> = på denne måde (formelt).</div>
+                    <div class="special-rule-desc"><strong>Dermed</strong> = gennem denne handling. <strong>Således</strong> = på denne måde (formelt). ${advTransBlock('kon_aar_d_4')}</div>
                     <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">
                         <span>"Han skrev under og er <strong>dermed</strong> bundet."</span>
                     </div>
@@ -3197,7 +3207,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const introHtml = `
             <div class="special-intro-box">
                 <h2>Kontrast-Mesteren: 4 typer modsætning på dansk</h2>
-                <p>På dansk kan man ikke bare bruge ét ord for kontrast. Vælg præcis det ord, der passer til <strong>typen af modsætning</strong>:</p>
+                <p>På dansk kan man ikke bare bruge ét ord for kontrast. Vælg præcis det ord, der passer til <strong>typen af modsætning</strong>: ${advTransBlock('kon_kon_intro')}</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#f97316;">
@@ -3205,7 +3215,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#fb923c;">alligevel / dog</span>
                         <span class="special-rule-role" style="background:rgba(249,115,22,0.2); color:#fdba74;">Trods forhindring</span>
                     </div>
-                    <div class="special-rule-desc">Handlingen sker <strong>på trods af</strong> en forhindring eller forventning.</div>
+                    <div class="special-rule-desc">Handlingen sker <strong>på trods af</strong> en forhindring eller forventning. ${advTransBlock('kon_kon_d_1')}</div>
                     <div class="special-rule-example" style="border-color:#f97316;">
                         <span>"Det regner. <strong>Alligevel</strong> cykler hun."</span>
                     </div>
@@ -3215,7 +3225,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#22d3ee;">derimod</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Person A vs. Person B</span>
                     </div>
-                    <div class="special-rule-desc">Sammenligner to forskellige personer, byer eller ting, der er modsatte.</div>
+                    <div class="special-rule-desc">Sammenligner to forskellige personer, byer eller ting, der er modsatte. ${advTransBlock('kon_kon_d_2')}</div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         <span>"Han drikker kaffe. Hun drikker <strong>derimod</strong> te."</span>
                     </div>
@@ -3225,7 +3235,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#4ade80;">til gengæld</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Kompensation</span>
                     </div>
-                    <div class="special-rule-desc">En fordel i sætning 2 vejer op for en ulempe i sætning 1 (balance på vægten).</div>
+                    <div class="special-rule-desc">En fordel i sætning 2 vejer op for en ulempe i sætning 1 (balance på vægten). ${advTransBlock('kon_kon_d_3')}</div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
                         <span>"Værelset er lille. <strong>Til gengæld</strong> er det billigt."</span>
                     </div>
@@ -3235,7 +3245,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#f87171;">tværtimod</span>
                         <span class="special-rule-role" style="background:rgba(239,68,68,0.2); color:#fca5a5;">180° Afvisning</span>
                     </div>
-                    <div class="special-rule-desc">Afviser en påstand (ofte efter <em>Nej</em>) og siger, at det stik modsatte er sandt!</div>
+                    <div class="special-rule-desc">Afviser en påstand (ofte efter <em>Nej</em>) og siger, at det stik modsatte er sandt! ${advTransBlock('kon_kon_d_4')}</div>
                     <div class="special-rule-example" style="border-color:#ef4444;">
                         <span>"Er du sur? Nej, <strong>tværtimod</strong>!"</span>
                     </div>
@@ -3333,7 +3343,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const introHtml = `
             <div class="special-intro-box">
                 <h2>Alternativ, forbehold og opsamling</h2>
-                <p>Træn de nuancerede tekstbindere, der advarer om konsekvenser (<em>ellers</em>), vælger Plan B (<em>i stedet</em>), sætter en sikker grænse (<em>i hvert fald</em>) eller giver trøst (<em>i det mindste</em>).</p>
+                <p>Træn de nuancerede tekstbindere, der advarer om konsekvenser (<em>ellers</em>), vælger Plan B (<em>i stedet</em>), sætter en sikker grænse (<em>i hvert fald</em>) eller giver trøst (<em>i det mindste</em>). ${advTransBlock('kon_alt_intro')}</p>
             </div>
             <div class="special-rule-cards-grid">
                 <div class="special-rule-card" style="border-color:#ef4444;">
@@ -3341,7 +3351,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#f87171;">ellers</span>
                         <span class="special-rule-role" style="background:rgba(239,68,68,0.2); color:#fca5a5;">Hvis ikke...</span>
                     </div>
-                    <div class="special-rule-desc">Advarer om den negative konsekvens, hvis man <strong>ikke</strong> handler.</div>
+                    <div class="special-rule-desc">Advarer om den negative konsekvens, hvis man <strong>ikke</strong> handler. ${advTransBlock('kon_alt_d_1')}</div>
                     <div class="special-rule-example" style="border-color:#ef4444;">
                         <span>"Skynd dig! <strong>Ellers</strong> kører toget."</span>
                     </div>
@@ -3351,7 +3361,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#22d3ee;">i stedet</span>
                         <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Plan B (Erstatning)</span>
                     </div>
-                    <div class="special-rule-desc">Man opgiver Plan A og vælger aktivt et <strong>alternativ</strong> (Plan B).</div>
+                    <div class="special-rule-desc">Man opgiver Plan A og vælger aktivt et <strong>alternativ</strong> (Plan B). ${advTransBlock('kon_alt_d_2')}</div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         <span>"Cyklen er flad. Jeg tager bussen <strong>i stedet</strong>."</span>
                     </div>
@@ -3361,7 +3371,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:#4ade80;">i hvert fald</span>
                         <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">100% Bundgrænse</span>
                     </div>
-                    <div class="special-rule-desc">Selvom vi er usikre på helheden, er <strong>denne ene ting</strong> helt sikker.</div>
+                    <div class="special-rule-desc">Selvom vi er usikre på helheden, er <strong>denne ene ting</strong> helt sikker. ${advTransBlock('kon_alt_d_3')}</div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
                         <span>"Vi prøver <strong>i hvert fald</strong> så godt vi kan!"</span>
                     </div>
@@ -3371,7 +3381,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">i det mindste</span>
                         <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Trøst / Minimum</span>
                     </div>
-                    <div class="special-rule-desc">Et trøstende lyspunkt midt i noget uheldigt ("trods alt").</div>
+                    <div class="special-rule-desc">Et trøstende lyspunkt midt i noget uheldigt ("trods alt"). ${advTransBlock('kon_alt_d_4')}</div>
                     <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">
                         <span>"Det regner, men her er <strong>i det mindste</strong> tørt."</span>
                     </div>

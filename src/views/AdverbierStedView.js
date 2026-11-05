@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { advTransBlock, advTransSpan, tAdv } from '../utils/adverbier_extra_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -2110,12 +2111,13 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             rightCol.appendChild(pairSwitch);
         }
 
+        const wordIdx = ADVERBIER_STED_DATA.indexOf(currentWordData) + 1;
         const ruleBox = document.createElement('div');
         ruleBox.className = 'rule-explanation-box';
         ruleBox.innerHTML = `
             <div style="font-weight: 800; margin-bottom: 0.4rem; color: var(--adv-border-focus, #93C5FD);">Betydning & Regel:</div>
-            <p style="margin-bottom: 0.5rem;">${currentWordData.meaning}.</p>
-            <p>${currentWordData.ruleHint}</p>
+            <p style="margin-bottom: 0.5rem;">${currentWordData.meaning}. ${advTransBlock(currentWordData.meaning, `sted_m_${wordIdx}`)}</p>
+            <p>${currentWordData.ruleHint} ${advTransBlock(currentWordData.ruleHint, `sted_r_${wordIdx}`)}</p>
         `;
         rightCol.appendChild(ruleBox);
 
@@ -2261,7 +2263,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const promptBox = document.createElement('div');
         promptBox.className = 'detektiv-prompt-box';
         promptBox.innerHTML = `
-            <div class="detektiv-prompt-text"><strong>Situation:</strong> ${mission.prompt}</div>
+            <div class="detektiv-prompt-text"><strong>Situation:</strong> ${mission.prompt} ${advTransBlock(mission.prompt, `sted_det_${detektivIdx + 1}`)}</div>
         `;
         container.appendChild(promptBox);
 
@@ -2395,7 +2397,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         intro.className = 'vippe-intro';
         intro.innerHTML = `
             <h2>Retnings-Vippen</h2>
-            <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>Retning</strong> eller <strong>Hvile</strong>?</p>
+            <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>Retning</strong> eller <strong>Hvile</strong>? ${advTransBlock('sted_vippe_instr')}</p>
         `;
         container.appendChild(intro);
 
@@ -2727,6 +2729,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                     <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med stedsadverbier</h3>
                     <p style="color: var(--adv-text-muted, #BFDBFE); font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                         Vælg ét element fra hver række herunder. Læg mærke til spørgsmålene, og lyt til hvordan sætningen lyder!
+                        ${advTransBlock('free_builder_instr')}
                     </p>
                 </div>
 
@@ -2770,7 +2773,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                 row.className = `sb-category-row ${cat.catClass}`;
                 row.innerHTML = `
                     <div class="sb-category-header">
-                        <div class="sb-category-title">${cat.title}</div>
+                        <div class="sb-category-title">${cat.title} ${advTransSpan(cat.title)}</div>
                         <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                     </div>
                     <div class="sb-chips-grid"></div>
@@ -2869,7 +2872,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title"><em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em> ${advTransBlock(task.context, `sted_sb_c_${currentStedChallengeIdx + 1}`)}</div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -2889,7 +2892,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                 <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
                     Trin 1: Vælg det rigtige stedsadverbium
                 </div>
-                <div class="sb-question-text">${task.questionPrompt}</div>
+                <div class="sb-question-text">${task.questionPrompt} ${advTransBlock(task.questionPrompt, `sted_sb_q_${currentStedChallengeIdx + 1}`)}</div>
             `;
             challengeContainer.appendChild(qBox);
 

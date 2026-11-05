@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { getAdverbWordTranslation } from '../utils/top100_adverbier_translations.js';
 import { isLocalhost, ADV_PALETTES, getActiveAdvNuance, applyAdvNuance } from '../components/DesignSystemToggle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { advTransBlock, advTransSpan, tAdv } from '../utils/adverbier_extra_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -2004,6 +2005,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         function updateInspector() {
             const word = ADVERBIER_MAADE_DATA.find(w => w.id === selectedWordId) || ADVERBIER_MAADE_DATA[0];
+            const wordIdx = ADVERBIER_MAADE_DATA.indexOf(word) + 1;
             const trans = getAdverbWordTranslation(word.id, 3);
             const transMeaning = trans?.meaning;
             const transSentence = trans?.sentence;
@@ -2016,7 +2018,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                             ${transMeaning ? `<span class="inspector-trans-meaning" style="font-size: 1.15rem; color: #cbd5e1; font-weight: 600; margin-left: 0.5rem;">(${transMeaning})</span>` : ''}
                             <span class="inspector-badge">${word.hasTRule ? '-t regel' : 'Særord'}</span>
                         </h2>
-                        <div style="color: #94a3b8; font-size: 0.95rem;">${word.meaning}</div>
+                        <div style="color: #94a3b8; font-size: 0.95rem;">${word.meaning} ${advTransBlock(word.meaning, `maade_m_${wordIdx}`)}</div>
                     </div>
                     <button class="inspector-audio-btn" id="inspector-play-btn" title="${getTranslation('adv_listen_word')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
                 </div>
@@ -2038,6 +2040,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     </div>
                     <div style="font-size: 0.88rem; color: #fce7f3; line-height: 1.45;">
                         ${word.ruleHint}
+                        ${advTransBlock(word.ruleHint, `maade_r_${wordIdx}`)}
                     </div>
                 </div>
 
@@ -2156,7 +2159,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
                 <h2 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet</h2>
-                <p style="color: #94a3b8; margin: 0;">Mærk forvandlingen for dine egne øjne og træn mådernes modsætninger.</p>
+                <p style="color: #94a3b8; margin: 0;">Mærk forvandlingen for dine egne øjne og træn mådernes modsætninger. ${advTransBlock('maade_vk_intro')}</p>
             </div>
 
             <div class="vaerksted-tabs">
@@ -2228,6 +2231,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
                 <div style="margin-top: 1.5rem; background: rgba(30, 41, 59, 0.7); padding: 1.2rem; border-radius: 14px; color: #e2e8f0; font-size: 1.05rem; line-height: 1.5;">
                     <strong>Aha!</strong> ${cur.explanation}
+                    ${advTransBlock(cur.explanation, `maade_tr_${selectedTransformerIndex + 1}`)}
                 </div>
             </div>
         `;
@@ -2261,6 +2265,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             <div style="background: #0f172a; border-radius: 18px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.08);">
                 <div style="text-align: center; margin-bottom: 1.5rem; color: #94a3b8; font-size: 1rem;">
                     Forbind måderne med deres direkte modsætninger. Klik på et ord til venstre og derefter på dets modstykke til højre:
+                    ${advTransBlock('maade_pairs_instr')}
                 </div>
 
                 <div class="match-pairs-grid">
@@ -2441,7 +2446,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         detektivWrap.innerHTML = `
             <div class="detektiv-header">
                 <h2>-t Detektiven: Ting eller Handling?</h2>
-                <p style="color: #94a3b8; margin: 0;">Træn den gyldne regel: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>?</p>
+                <p style="color: #94a3b8; margin: 0;">Træn den gyldne regel: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>? ${advTransBlock('maade_det_intro')}</p>
             </div>
 
             <div class="detektiv-progress">
@@ -2450,12 +2455,13 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             </div>
 
             <div class="detektiv-card">
-                <div class="detektiv-context-tag">Kontekst: ${task.sceneContext}</div>
+                <div class="detektiv-context-tag">Kontekst: ${task.sceneContext} ${advTransSpan(task.sceneContext, `maade_det_s_${detektivIndex + 1}`)}</div>
                 <div class="detektiv-prompt-sentence">
                     ${task.sentenceParts[0]}<span class="detektiv-blank" id="detektiv-blank">_____</span>${task.sentenceParts[1]}
                 </div>
                 <div class="detektiv-question-hint">
                     <strong>Detektivens ledetråd:</strong> ${task.hint}
+                    ${advTransBlock(task.hint, `maade_det_h_${detektivIndex + 1}`)}
                 </div>
 
                 <div class="detektiv-options" id="detektiv-options-grid"></div>
@@ -2835,6 +2841,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger med mådesadverbier</h3>
                     <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
                         Vælg ét element fra hver række herunder. Læg mærke til hjælpespørgsmålene, og lyt til hvordan sætningen lyder!
+                        ${advTransBlock('tid_free_instr')}
                     </p>
                 </div>
 
@@ -2850,7 +2857,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-subjekt">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-subjekt">
-                                1. Hvem eller hvad taler vi om?
+                                1. Hvem eller hvad taler vi om? ${advTransSpan('1. Hvem eller hvad taler vi om?')}
                             </div>
                             <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
                         </div>
@@ -2861,7 +2868,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-verbum">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-verbum">
-                                2. Hvad laver personen eller tingen?
+                                2. Hvad laver personen eller tingen? ${advTransSpan('2. Hvad laver personen eller tingen?')}
                             </div>
                             <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
                         </div>
@@ -2872,7 +2879,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-maade">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-maade">
-                                <span>⭐</span> 3. Hvordan foregår handlingen? (Mådesadverbium)
+                                <span>⭐</span> 3. Hvordan foregår handlingen? (Mådesadverbium) ${advTransSpan('3. Hvordan foregår handlingen? (Mådesadverbium)')}
                             </div>
                             <span class="cat-grammar-role badge-maade">[Mådesadverbium med -t]</span>
                         </div>
@@ -2883,7 +2890,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-rest">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-rest">
-                                4. Hvor, hvad eller hvordan ellers?
+                                4. Hvor, hvad eller hvordan ellers? ${advTransSpan('4. Hvor, hvad eller hvordan ellers?')}
                             </div>
                             <span class="cat-grammar-role badge-rest">[Restled / Præpositionsled / Objekt]</span>
                         </div>
@@ -3012,7 +3019,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             }).join('');
 
             contextCard.innerHTML = `
-                <div class="sb-context-title"><em>${task.context}</em></div>
+                <div class="sb-context-title"><em>${task.context}</em> ${advTransBlock(task.context, `maade_sb_c_${currentMaadeChallengeIdx + 1}`)}</div>
                 <div class="sb-context-elements" style="margin-bottom: 1rem;">
                     ${chipsHtml}
                 </div>
@@ -3032,7 +3039,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 <div style="font-size: 0.85rem; color: var(--adv-border-focus, #93C5FD); font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">
                     Trin 1: Vælg det rigtige mådesadverbium
                 </div>
-                <div class="sb-question-text">${task.questionPrompt}</div>
+                <div class="sb-question-text">${task.questionPrompt} ${advTransBlock(task.questionPrompt, `maade_sb_q_${currentMaadeChallengeIdx + 1}`)}</div>
             `;
             challengeContainer.appendChild(qBox);
 
@@ -3424,7 +3431,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
                 <h2 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Kontekst-testen</h2>
-                <p style="color: #94a3b8; margin: 0;">Vælg det rigtige mådesadverbium ud fra sætningens mening og logik.</p>
+                <p style="color: #94a3b8; margin: 0;">Vælg det rigtige mådesadverbium ud fra sætningens mening og logik. ${advTransBlock('maade_k_intro')}</p>
             </div>
 
             <div class="detektiv-progress">
@@ -3433,7 +3440,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             </div>
 
             <div class="cloze-card">
-                <div class="detektiv-context-tag">Situation: ${task.scene}</div>
+                <div class="detektiv-context-tag">Situation: ${task.scene} ${advTransSpan(task.scene, `maade_k_s_${kontekstIndex + 1}`)}</div>
                 <div class="cloze-sentence-display" id="cloze-display">
                     ${task.sentence.replace('_____', '<span class="cloze-blank" id="cloze-blank-slot">_____</span>')}
                 </div>

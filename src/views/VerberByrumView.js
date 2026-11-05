@@ -4,6 +4,13 @@ import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeek
 import { shuffleArray } from '../utils/shuffle.js';
 import { getGrammarSlotHint, renderPuzzleSlotInnerHtml, renderPuzzleSlotFilledHtml } from '../utils/puzzle_slot_hints.js';
 import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
+import {
+    getVerberInstruction,
+    getVerberCategoryQuestion,
+    getVerberContextTranslation,
+    getVerberQuestionPromptTranslation,
+    getVerberSynonymPromptTranslation
+} from '../utils/verber_saetningsbygger_translations.js';
 
 function stripAllEmojis(text) {
     if (!text) return '';
@@ -2435,6 +2442,8 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     function renderByrumSynonymTask() {
         synonymCard.innerHTML = '';
         const task = byrumSynonymTasks[currByrumSynonymIdx];
+        const lang = getLang();
+        const promptTrans = lang !== 'da' ? getVerberSynonymPromptTranslation(task.prompt, lang) : '';
 
         const isSynonym = task.type === 'synonym';
         const typeBadge = document.createElement('div');
@@ -2442,10 +2451,14 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         typeBadge.textContent = isSynonym ? 'Find synonym (samme betydning)' : 'Find antonym (modsætning)';
         synonymCard.appendChild(typeBadge);
 
-        const promptText = document.createElement('p');
+        const promptText = document.createElement('div');
         promptText.style.color = '#cbd5e1';
         promptText.style.fontSize = '1.1rem';
-        promptText.textContent = task.prompt;
+        promptText.style.marginBottom = '0.5rem';
+        promptText.innerHTML = `
+            <div>${task.prompt}</div>
+            ${promptTrans ? `<div style="font-size: 0.95rem; color: #fca5a5; font-style: italic; margin-top: 0.25rem;">(${promptTrans})</div>` : ''}
+        `;
         synonymCard.appendChild(promptText);
 
         const wordEl = document.createElement('div');
@@ -2557,6 +2570,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
     // ========================================================
     function setupFreeBuilder() {
         const lang = getLang();
+        const instructionTrans = getVerberInstruction(lang);
         const h0 = getGrammarSlotHint(0, lang);
         const h1 = getGrammarSlotHint(1, lang);
         const h2 = getGrammarSlotHint(2, lang);
@@ -2566,8 +2580,12 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h3 style="font-size: 1.7rem; color: white; margin-bottom: 0.4rem;">Byg dine egne sætninger i byrummet</h3>
                 <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
-                    Vælg et element fra hver række herunder. Prøv forskellige verber og lyt til hvordan sætningen lyder på dansk!
+                    Vælg et element fra hver række herunder. Prøv forskellige kombinationer og lyt til hvordan sætningen lyder på dansk!
                 </p>
+                ${lang !== 'da' && instructionTrans ? `
+                <p style="color: #e2e8f0; font-size: 0.95rem; opacity: 0.88; max-width: 650px; margin: 0.35rem auto 0; font-style: italic;">
+                    ${instructionTrans}
+                </p>` : ''}
             </div>
 
             <!-- Grammatisk farveforklaring -->
@@ -2593,6 +2611,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const freeCategories = [
             {
                 id: 'subjekt',
+                rawQuestion: 'Hvem taler vi om?',
                 title: `${h0.danish} <span class="sb-cat-trans">(${h0.translation})</span> – Hvem taler vi om?`,
                 role: `Subjekt (${h0.translation})`,
                 catClass: 'sb-cat-subjekt',
@@ -2601,6 +2620,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             },
             {
                 id: 'verbum',
+                rawQuestion: 'Hvad laver personen / dyret?',
                 title: `${h1.danish} <span class="sb-cat-trans">(${h1.translation})</span> – Hvad laver personen / dyret?`,
                 role: `Verbum (${h1.translation})`,
                 catClass: 'sb-cat-verbum',
@@ -2609,6 +2629,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             },
             {
                 id: 'objekt',
+                rawQuestion: 'Hvilken genstand eller person?',
                 title: `${h2.danish} <span class="sb-cat-trans">(${h2.translation})</span> – Hvilken genstand eller person?`,
                 role: `Objekt (${h2.translation})`,
                 catClass: 'sb-cat-objekt',
@@ -2617,6 +2638,7 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             },
             {
                 id: 'sted',
+                rawQuestion: 'Hvor i byrummet sker det?',
                 title: `${h3.danish} <span class="sb-cat-trans">(${h3.translation})</span> – Hvor i byrummet sker det?`,
                 role: `Sted (${h3.translation})`,
                 catClass: 'sb-cat-sted',
@@ -2647,11 +2669,13 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         freeCategories.forEach((cat, catIdx) => {
             const row = document.createElement('div');
             row.className = `sb-category-row ${cat.catClass}`;
+            const catTrans = lang !== 'da' ? getVerberCategoryQuestion(cat.rawQuestion, lang) : '';
 
             row.innerHTML = `
                 <div class="sb-category-header">
-                    <div class="sb-category-title">
-                        ${cat.title}
+                    <div class="sb-category-title" style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                        <span>${cat.title}</span>
+                        ${catTrans ? `<span class="sb-cat-trans" style="font-size: 0.88rem; opacity: 0.85; font-weight: normal; color: #fca5a5;">(${catTrans})</span>` : ''}
                     </div>
                     <span class="sb-category-badge ${cat.badgeClass}">${cat.role}</span>
                 </div>
@@ -2809,11 +2833,16 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
         const h1 = getGrammarSlotHint(1, lang);
         const h2 = getGrammarSlotHint(2, lang);
         const h3 = getGrammarSlotHint(3, lang);
+        const contextTrans = lang !== 'da' ? getVerberContextTranslation(task.context, lang) : '';
+        const qTrans = lang !== 'da' ? getVerberQuestionPromptTranslation(task.questionPrompt, lang) : '';
 
         const contextCard = document.createElement('div');
         contextCard.className = 'sb-context-card';
         contextCard.innerHTML = `
-            <div class="sb-context-title"><em>${formatNounLinks(task.context)}</em></div>
+            <div class="sb-context-title" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; text-align: center;">
+                <div><em>${formatNounLinks(task.context)}</em></div>
+                ${contextTrans ? `<div class="sb-context-trans" style="font-size: 0.92rem; opacity: 0.9; color: #fca5a5; font-style: italic;">(${contextTrans})</div>` : ''}
+            </div>
             <div class="sb-context-elements">
                 <div class="sb-context-chip subjekt">
                     <span class="sb-chip-role">${h0.danish} <span class="chip-trans">(${h0.translation})</span></span>
@@ -2839,7 +2868,10 @@ export function renderVerberByrumView(container, navigateFn, extraData = {}) {
             <div style="font-size: 0.92rem; color: #f87171; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.5px;">
                 Spørgsmål 2: ${h1.danish} <span style="opacity: 0.85; font-weight: 600; text-transform: none;">(${h1.translation})</span> – Handlingen
             </div>
-            <div class="sb-question-text">${formatNounLinks(task.questionPrompt)}</div>
+            <div class="sb-question-text">
+                ${formatNounLinks(task.questionPrompt)}
+                ${qTrans ? `<div style="font-size: 0.92rem; opacity: 0.88; font-weight: normal; margin-top: 0.25rem; color: #fca5a5; font-style: italic;">(${qTrans})</div>` : ''}
+            </div>
         `;
         attachNounLinkListeners(qBox);
         challengeContainer.appendChild(qBox);

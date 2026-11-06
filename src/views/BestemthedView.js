@@ -1,11 +1,11 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { renderDsIcon, dsSvgIcons } from '../utils/designSystemIcons.js';
+import { tBh, bhTransBlock, bhTransSpan } from '../utils/bestemthed_translations.js';
 
 export function renderBestemthedView(container, navigateFn, extraData = {}) {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container bestemthed-view';
-
-    const isEn = getLang() === 'en';
 
     // Helper: TTS speech
     function speakDanish(text) {
@@ -22,23 +22,19 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${getTranslation('back') || (isEn ? 'Back' : 'Tilbage')}`;
+    backBtn.innerHTML = `← ${getTranslation('back') || 'Tilbage'}`;
     backBtn.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
     // Header Title
     const title = document.createElement('h1');
-    title.textContent = isEn 
-        ? '🏷️ A cat or the cat? (Indefinite vs. Definite)' 
-        : '🏷️ En kat eller katten? (bestemt og ubestemt)';
+    title.innerHTML = `En kat eller katten? (bestemt og ubestemt)${bhTransBlock('bh_title')}`;
     viewContainer.appendChild(title);
 
-    const subtitle = document.createElement('p');
+    const subtitle = document.createElement('div');
     subtitle.className = 'subtitle';
-    subtitle.textContent = isEn
-        ? 'Text flow and introducing new topics: From unknown (indefinite) to known (definite)'
-        : 'Tekstflow og introduktion af nye emner: Fra ukendt (ubestemt) til kendt (bestemt)';
+    subtitle.innerHTML = `Tekstflow og introduktion af nye emner: Fra ukendt (ubestemt) til kendt (bestemt)${bhTransBlock('bh_subtitle')}`;
     viewContainer.appendChild(subtitle);
 
     // Grammar System Banner (Color-coded legend)
@@ -47,13 +43,19 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
     grammarBanner.innerHTML = `
         <div class="grammar-system-item">
             <span class="grammar-dot" style="background: #f59e0b;"></span>
-            <strong style="color: #fbbf24;">${isEn ? '1. time: Unknown topic' : '1. gang: Ukendt emne'}</strong>
-            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${isEn ? 'Indefinite form (en/et...)' : 'Ubestemt form (en/et...)'}</span>
+            <div>
+                <strong style="color: #fbbf24;">1. gang: Ukendt emne</strong>
+                <span style="opacity: 0.85; margin-left: 0.3rem;">→ Ubestemt form (en/et...)</span>
+                ${bhTransBlock('bh_banner_item1_sub')}
+            </div>
         </div>
         <div class="grammar-system-item">
             <span class="grammar-dot" style="background: #10b981;"></span>
-            <strong style="color: #34d399;">${isEn ? '2. time: Known topic' : '2. gang: Kendt emne'}</strong>
-            <span style="opacity: 0.85; margin-left: 0.3rem;">➔ ${isEn ? 'Definite form (-en/-et/-ene)' : 'Bestemt form (-en/-et/-ene)'}</span>
+            <div>
+                <strong style="color: #34d399;">2. gang: Kendt emne</strong>
+                <span style="opacity: 0.85; margin-left: 0.3rem;">→ Bestemt form (-en/-et/-ene)</span>
+                ${bhTransBlock('bh_banner_item2_sub')}
+            </div>
         </div>
     `;
     viewContainer.appendChild(grammarBanner);
@@ -64,15 +66,15 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
     const tab1Btn = document.createElement('button');
     tab1Btn.className = 'bestemthed-tab-btn active';
-    tab1Btn.innerHTML = `<strong>${isEn ? 'Part 1: The Model & Rule' : '1. del: Reglen & Modellen'}</strong> <span>${isEn ? 'From unknown to known' : 'Fra ukendt til kendt'}</span>`;
+    tab1Btn.innerHTML = `<strong>1. del: Reglen & Modellen</strong> <span>Fra ukendt til kendt</span> ${bhTransBlock('bh_tab1_sub')}`;
 
     const tab2Btn = document.createElement('button');
     tab2Btn.className = 'bestemthed-tab-btn';
-    tab2Btn.innerHTML = `<strong>${isEn ? 'Part 2: Short Stories' : '2. del: Korte historier'}</strong> <span>${isEn ? 'Text flow in practice' : 'Tekstflow i praksis'}</span>`;
+    tab2Btn.innerHTML = `<strong>2. del: Korte historier</strong> <span>Tekstflow i praksis</span> ${bhTransBlock('bh_tab2_sub')}`;
 
     const tab3Btn = document.createElement('button');
     tab3Btn.className = 'bestemthed-tab-btn';
-    tab3Btn.innerHTML = `<strong>${isEn ? 'Part 3: Practice Yourself' : '3. del: Prøv selv'}</strong> <span>${isEn ? 'Builder & Puzzle' : 'Bygger & Puslespil'}</span>`;
+    tab3Btn.innerHTML = `<strong>3. del: Prøv selv</strong> <span>Bygger & Puslespil</span> ${bhTransBlock('bh_tab3_sub')}`;
 
     tabsContainer.appendChild(tab1Btn);
     tabsContainer.appendChild(tab2Btn);
@@ -118,12 +120,12 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const introCard = document.createElement('div');
         introCard.className = 'bestemthed-hero-card';
         introCard.innerHTML = `
-            <h2>${isEn ? 'Why do we say "en kat" first and then "katten"?' : 'Hvorfor hedder det først "en kat" og bagefter "katten"?'}</h2>
+            <h2>Hvorfor hedder det først "en kat" og bagefter "katten"?</h2>
             <p class="hero-desc">
-                ${isEn 
-                    ? 'In Danish, definiteness is not just grammar – it is how we guide attention in a conversation!<br>When we mention a person, animal, or object for the <strong>first time</strong>, the listener does not know it yet. It is <strong>unknown</strong> – therefore we use <strong>indefinite form</strong> (<em>en kat / et hus</em>).<br>Next time we mention the same entity, we both know what we are talking about. It is now <strong>known</strong> – therefore we use <strong>definite form</strong> (<em>katten / huset</em>).'
-                    : 'På dansk er bestemthed ikke bare grammatik – det er en måde at styre opmærksomheden på i en samtale!<br>Når vi nævner en person, et dyr eller en ting for <strong>første gang</strong>, ved lytteren ikke hvem eller hvad det er. Det er <strong>ukendt</strong> – derfor bruger vi <strong>ubestemt form</strong> (<em>en kat / et hus</em>).<br>Næste gang vi nævner det samme emne, ved vi begge to hvad vi taler om. Det er nu <strong>kendt</strong> – derfor bruger vi <strong>bestemt form</strong> (<em>katten / huset</em>).'
-                }
+                På dansk er bestemthed ikke bare grammatik – det er en måde at styre opmærksomheden på i en samtale!<br>
+                Når vi nævner en person, et dyr eller en ting for <strong>første gang</strong>, ved lytteren ikke hvem eller hvad det er. Det er <strong>ukendt</strong> – derfor bruger vi <strong>ubestemt form</strong> (<em>en kat / et hus</em>).<br>
+                Næste gang vi nævner det samme emne, ved vi begge to hvad vi taler om. Det er nu <strong>kendt</strong> – derfor bruger vi <strong>bestemt form</strong> (<em>katten / huset</em>).
+                ${bhTransBlock('bh_hero_desc')}
             </p>
         `;
         part1Container.appendChild(introCard);
@@ -132,13 +134,13 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'bestemthed-image-wrapper';
         imgWrapper.innerHTML = `
-            <img src="${baseUrl}kat_bestemthed_guide.jpg" alt="${isEn ? 'Danish definiteness text flow: from unknown (en kat) to known (katten)' : 'Dansk bestemthed tekstflow: fra ukendt (en kat) til kendt (katten)'}" class="hero-image">
+            <img src="${baseUrl}kat_bestemthed_guide.jpg" alt="Dansk bestemthed tekstflow: fra ukendt (en kat) til kendt (katten)" class="hero-image">
             <div class="image-caption">
-                <span>💡 <strong>${isEn ? 'Rule of thumb:' : 'Huskeregel:'}</strong></span> 
-                ${isEn 
-                    ? '1st time (Unknown) ➔ <strong>en kat</strong> | 2nd time (Known) ➔ <strong>katten</strong>' 
-                    : '1. gang (Ukendt) ➔ <strong>en kat</strong> | 2. gang (Kendt) ➔ <strong>katten</strong>'
-                }
+                <span style="display: inline-flex; align-items: center; gap: 0.35rem; color: #fbbf24; font-weight: 700;">
+                    ${renderDsIcon('lightbulb', '', { size: 18 })} Huskeregel:
+                </span> 
+                1. gang (Ukendt) → <strong>en kat</strong> | 2. gang (Kendt) → <strong>katten</strong>
+                ${bhTransBlock('bh_rule_thumb_text')}
             </div>
         `;
         part1Container.appendChild(imgWrapper);
@@ -150,25 +152,31 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const stepItems = [
             {
                 num: '1',
-                title: isEn ? '1. time: Introduction (Unknown)' : '1. gang: Introduktion (Ukendt)',
-                q: isEn ? 'Is the topic new to the listener?' : 'Er emnet nyt for lytteren?',
-                ans: isEn ? 'Yes ➔ Use indefinite form ("en / et")' : 'Ja ➔ Brug ubestemt form ("en / et")',
-                example: isEn ? 'Der sidder <strong style="color: #fbbf24;">en kat</strong> i haven.' : 'Der sidder <strong style="color: #fbbf24;">en kat</strong> i haven.',
-                exampleEn: isEn ? 'There is a cat sitting in the garden.' : 'Der sidder en kat i haven.',
-                grammar: isEn ? 'Substantiv (ubestemt singularis)' : 'Substantiv (ubestemt singularis)',
+                title: '1. gang: Introduktion (Ukendt)',
+                titleKey: 'bh_step1_title',
+                q: 'Er emnet nyt for lytteren?',
+                qKey: 'bh_step1_q',
+                ans: 'Ja → Brug ubestemt form ("en / et")',
+                ansKey: 'bh_step1_ans',
+                example: 'Der sidder <strong style="color: #fbbf24;">en kat</strong> i haven.',
+                grammar: 'Substantiv (ubestemt singularis)',
+                grammarKey: 'bh_step1_grammar',
                 colorClass: 'step-orange',
-                icon: '❓'
+                dsIcon: 'search'
             },
             {
                 num: '2',
-                title: isEn ? '2. time: Referring back (Known)' : '2. gang: Genoptagelse (Kendt)',
-                q: isEn ? 'Has the topic already been introduced?' : 'Er emnet allerede introduceret?',
-                ans: isEn ? 'Yes ➔ Use definite form ("-en / -et")' : 'Ja ➔ Brug bestemt form ("-en / -et")',
-                example: isEn ? '<strong style="color: #34d399;">Katten</strong> kigger på en fugl.' : '<strong style="color: #34d399;">Katten</strong> kigger på en fugl.',
-                exampleEn: isEn ? 'The cat looks at a bird.' : 'Katten kigger på en fugl.',
-                grammar: isEn ? 'Substantiv (bestemt singularis)' : 'Substantiv (bestemt singularis)',
+                title: '2. gang: Genoptagelse (Kendt)',
+                titleKey: 'bh_step2_title',
+                q: 'Er emnet allerede introduceret?',
+                qKey: 'bh_step2_q',
+                ans: 'Ja → Brug bestemt form ("-en / -et")',
+                ansKey: 'bh_step2_ans',
+                example: '<strong style="color: #34d399;">Katten</strong> kigger på en fugl.',
+                grammar: 'Substantiv (bestemt singularis)',
+                grammarKey: 'bh_step2_grammar',
                 colorClass: 'step-green',
-                icon: '🎯'
+                dsIcon: 'target'
             }
         ];
 
@@ -179,16 +187,28 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 <div class="step-badge">${item.num}</div>
                 <div class="step-card-content">
                     <div class="step-title-row">
-                        <span class="step-icon">${item.icon}</span>
+                        <span class="step-icon">${renderDsIcon(item.dsIcon, '', { size: 18 })}</span>
                         <strong>${item.title}</strong>
                     </div>
-                    <div class="step-q">${item.q}</div>
-                    <div class="step-ans">${item.ans}</div>
+                    ${bhTransBlock(item.titleKey)}
+                    <div class="step-q">
+                        ${item.q}
+                        ${bhTransBlock(item.qKey)}
+                    </div>
+                    <div class="step-ans">
+                        ${item.ans}
+                        ${bhTransBlock(item.ansKey)}
+                    </div>
                     <div class="step-example-box">
                         <div class="example-text">${item.example}</div>
-                        <button class="listen-btn-mini" title="${isEn ? 'Listen to sentence' : 'Hør sætning'}">🔊</button>
+                        <button class="listen-btn-mini" title="${tBh('bh_listen_sent') || 'Hør sætning'}">
+                            ${renderDsIcon('volume', '', { size: 16 })}
+                        </button>
                     </div>
-                    <div class="grammar-badge">🏷️ ${item.grammar}</div>
+                    <div class="grammar-badge">
+                        ${renderDsIcon('tag', '', { size: 14 })} ${item.grammar}
+                        ${bhTransSpan(item.grammarKey)}
+                    </div>
                 </div>
             `;
             const miniBtn = card.querySelector('.listen-btn-mini');
@@ -204,12 +224,14 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const resultBox = document.createElement('div');
         resultBox.className = 'finished-sentence-banner';
         resultBox.innerHTML = `
-            <div class="banner-label">${isEn ? 'The complete text flow together:' : 'Det samlede tekstflow sammen:'}</div>
+            <div class="banner-label">
+                Det samlede tekstflow sammen:${bhTransSpan('bh_flow_banner_label')}
+            </div>
             <div class="banner-sentence">
                 "Der sidder <span class="word-orange">en kat</span> i haven. <span class="word-green">Katten</span> kigger nysgerrigt på mig."
             </div>
-            <button class="listen-btn" title="${isEn ? 'Listen to complete flow' : 'Hør hele sætningsforløbet'}">
-                <span>🔊</span> ${isEn ? 'Listen to pronunciation' : 'Hør tekstflowet'}
+            <button class="listen-btn" title="${tBh('bh_listen_flow') || 'Hør hele sætningsforløbet'}">
+                <span>${renderDsIcon('volume', '', { size: 18 })}</span> Hør tekstflowet ${bhTransSpan('bh_listen_flow')}
             </button>
         `;
         const listenBtn = resultBox.querySelector('.listen-btn');
@@ -220,37 +242,42 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const tableCard = document.createElement('div');
         tableCard.className = 'bestemthed-table-card';
         tableCard.innerHTML = `
-            <h3>${isEn ? '📋 Overview of typical noun pairs' : '📋 Oversigt over typiske substantivpar'}</h3>
+            <h3>
+                <span style="display: inline-flex; align-items: center; gap: 0.45rem;">
+                    ${renderDsIcon('fileText', '', { size: 20 })} <span>Oversigt over typiske substantivpar</span>
+                </span>
+            </h3>
+            ${bhTransBlock('bh_table_title')}
             <div class="pairs-grid">
                 <div class="pair-item">
-                    <div class="pair-ubestemt"><span class="badge-tag">1. gang</span> en kat</div>
-                    <div class="pair-arrow">➔</div>
-                    <div class="pair-bestemt"><span class="badge-tag">2. gang</span> katten</div>
+                    <div class="pair-ubestemt"><span class="badge-tag">1. gang${bhTransSpan('bh_tag_first')}</span> en kat</div>
+                    <div class="pair-arrow">→</div>
+                    <div class="pair-bestemt"><span class="badge-tag">2. gang${bhTransSpan('bh_tag_next')}</span> katten</div>
                 </div>
                 <div class="pair-item">
-                    <div class="pair-ubestemt"><span class="badge-tag">1. gang</span> et hus</div>
-                    <div class="pair-arrow">➔</div>
-                    <div class="pair-bestemt"><span class="badge-tag">2. gang</span> huset</div>
+                    <div class="pair-ubestemt"><span class="badge-tag">1. gang${bhTransSpan('bh_tag_first')}</span> et hus</div>
+                    <div class="pair-arrow">→</div>
+                    <div class="pair-bestemt"><span class="badge-tag">2. gang${bhTransSpan('bh_tag_next')}</span> huset</div>
                 </div>
                 <div class="pair-item">
-                    <div class="pair-ubestemt"><span class="badge-tag">1. gang</span> en bil</div>
-                    <div class="pair-arrow">➔</div>
-                    <div class="pair-bestemt"><span class="badge-tag">2. gang</span> bilen</div>
+                    <div class="pair-ubestemt"><span class="badge-tag">1. gang${bhTransSpan('bh_tag_first')}</span> en bil</div>
+                    <div class="pair-arrow">→</div>
+                    <div class="pair-bestemt"><span class="badge-tag">2. gang${bhTransSpan('bh_tag_next')}</span> bilen</div>
                 </div>
                 <div class="pair-item">
-                    <div class="pair-ubestemt"><span class="badge-tag">1. gang</span> et æble</div>
-                    <div class="pair-arrow">➔</div>
-                    <div class="pair-bestemt"><span class="badge-tag">2. gang</span> æblet</div>
+                    <div class="pair-ubestemt"><span class="badge-tag">1. gang${bhTransSpan('bh_tag_first')}</span> et æble</div>
+                    <div class="pair-arrow">→</div>
+                    <div class="pair-bestemt"><span class="badge-tag">2. gang${bhTransSpan('bh_tag_next')}</span> æblet</div>
                 </div>
                 <div class="pair-item">
-                    <div class="pair-ubestemt"><span class="badge-tag">1. gang</span> en cykel</div>
-                    <div class="pair-arrow">➔</div>
-                    <div class="pair-bestemt"><span class="badge-tag">2. gang</span> cyklen</div>
+                    <div class="pair-ubestemt"><span class="badge-tag">1. gang${bhTransSpan('bh_tag_first')}</span> en cykel</div>
+                    <div class="pair-arrow">→</div>
+                    <div class="pair-bestemt"><span class="badge-tag">2. gang${bhTransSpan('bh_tag_next')}</span> cyklen</div>
                 </div>
                 <div class="pair-item">
-                    <div class="pair-ubestemt"><span class="badge-tag">1. gang</span> nogle børn</div>
-                    <div class="pair-arrow">➔</div>
-                    <div class="pair-bestemt"><span class="badge-tag">2. gang</span> børnene</div>
+                    <div class="pair-ubestemt"><span class="badge-tag">1. gang${bhTransSpan('bh_tag_first')}</span> nogle børn</div>
+                    <div class="pair-arrow">→</div>
+                    <div class="pair-bestemt"><span class="badge-tag">2. gang${bhTransSpan('bh_tag_next')}</span> børnene</div>
                 </div>
             </div>
         `;
@@ -265,29 +292,32 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             {
                 id: 'kat_have',
                 title: 'Historie 1: Katten i haven',
-                titleEn: 'Story 1: The Cat in the Garden',
-                icon: '🐱',
+                titleKey: 'bh_s1_title',
+                dsIcon: 'cat',
                 lines: [
                     {
                         pre: 'I morges kiggede Peter ud af vinduet og så ',
                         options: ['en kat', 'katten'],
                         correct: 'en kat',
                         post: ' i haven.',
-                        rule: isEn ? 'First time introduced ➔ Unknown to listener ➔ Indefinite ("en kat")' : 'Første gang emnet introduceres ➔ Ukendt for lytteren ➔ Ubestemt form ("en kat")'
+                        rule: 'Første gang emnet introduceres → Ukendt for lytteren → Ubestemt form ("en kat")',
+                        ruleKey: 'bh_s1_r1'
                     },
                     {
                         pre: '',
                         options: ['En kat', 'Katten'],
                         correct: 'Katten',
                         post: ' listede forsigtigt rundt mellem buskene.',
-                        rule: isEn ? 'Mentioned again ➔ Now known to both ➔ Definite ("Katten")' : 'Nævnt igen ➔ Nu er den kendt for os begge ➔ Bestemt form ("Katten")'
+                        rule: 'Nævnt igen → Nu er den kendt for os begge → Bestemt form ("Katten")',
+                        ruleKey: 'bh_s1_r2'
                     },
                     {
                         pre: 'Pludselig stoppede ',
                         options: ['en kat', 'katten'],
                         correct: 'katten',
                         post: ' op og fik øje på en mus.',
-                        rule: isEn ? 'Still the same known cat ➔ Definite form ("katten")' : 'Stadig den samme kendte kat ➔ Bestemt form ("katten")'
+                        rule: 'Stadig den samme kendte kat → Bestemt form ("katten")',
+                        ruleKey: 'bh_s1_r3'
                     }
                 ],
                 fullSentence: 'I morges kiggede Peter ud af vinduet og så en kat i haven. Katten listede forsigtigt rundt mellem buskene. Pludselig stoppede katten op og fik øje på en mus.'
@@ -295,29 +325,32 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             {
                 id: 'ny_cykel',
                 title: 'Historie 2: Den nye cykel',
-                titleEn: 'Story 2: The New Bicycle',
-                icon: '🚲',
+                titleKey: 'bh_s2_title',
+                dsIcon: 'bicycle',
                 lines: [
                     {
                         pre: 'Sofie har lige købt ',
                         options: ['en cykel', 'cyklen'],
                         correct: 'en cykel',
                         post: ' for at cykle i skole.',
-                        rule: isEn ? 'New item introduced ➔ Indefinite ("en cykel")' : 'Nyt emne introduceres ➔ Ubestemt form ("en cykel")'
+                        rule: 'Nyt emne introduceres → Ubestemt form ("en cykel")',
+                        ruleKey: 'bh_s2_r1'
                     },
                     {
                         pre: '',
                         options: ['En cykel', 'Cyklen'],
                         correct: 'Cyklen',
                         post: ' er lysegrøn og har syv gear.',
-                        rule: isEn ? 'Referred back to ➔ Known item ➔ Definite ("Cyklen")' : 'Genoptaget ➔ Kendt emne ➔ Bestemt form ("Cyklen")'
+                        rule: 'Genoptaget → Kendt emne → Bestemt form ("Cyklen")',
+                        ruleKey: 'bh_s2_r2'
                     },
                     {
                         pre: 'Hver morgen låser hun ',
                         options: ['en cykel', 'cyklen'],
                         correct: 'cyklen',
                         post: ' op med sin nøgle.',
-                        rule: isEn ? 'Known bike ➔ Definite form ("cyklen")' : 'Kendt cykel ➔ Bestemt form ("cyklen")'
+                        rule: 'Kendt cykel → Bestemt form ("cyklen")',
+                        ruleKey: 'bh_s2_r3'
                     }
                 ],
                 fullSentence: 'Sofie har lige købt en cykel for at cykle i skole. Cyklen er lysegrøn og har syv gear. Hver morgen låser hun cyklen op med sin nøgle.'
@@ -325,29 +358,32 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             {
                 id: 'kaffe_cafe',
                 title: 'Historie 3: En kop kaffe på caféen',
-                titleEn: 'Story 3: A Cup of Coffee at the Café',
-                icon: '☕',
+                titleKey: 'bh_s3_title',
+                dsIcon: 'coffee',
                 lines: [
                     {
                         pre: 'Morten sætter sig ved bordet og bestiller ',
                         options: ['en kop', 'koppen'],
                         correct: 'en kop',
                         post: ' kaffe.',
-                        rule: isEn ? 'First order ➔ Unknown cup ➔ Indefinite ("en kop")' : 'Første bestilling ➔ Ukendt kop ➔ Ubestemt form ("en kop")'
+                        rule: 'Første bestilling → Ukendt kop → Ubestemt form ("en kop")',
+                        ruleKey: 'bh_s3_r1'
                     },
                     {
                         pre: '',
                         options: ['En kop', 'Koppen'],
                         correct: 'Koppen',
                         post: ' er helt varm, og kaffen dufter dejligt.',
-                        rule: isEn ? 'Referred to again ➔ Known cup ➔ Definite ("Koppen")' : 'Omtales igen ➔ Kendt kop ➔ Bestemt form ("Koppen")'
+                        rule: 'Omtales igen → Kendt kop → Bestemt form ("Koppen")',
+                        ruleKey: 'bh_s3_r2'
                     },
                     {
                         pre: 'Han drikker ',
                         options: ['en kaffe', 'kaffen'],
                         correct: 'kaffen',
                         post: ' langsomt, mens han læser avis.',
-                        rule: isEn ? 'Known coffee ➔ Definite form ("kaffen")' : 'Den kendte kaffe ➔ Bestemt form ("kaffen")'
+                        rule: 'Den kendte kaffe → Bestemt form ("kaffen")',
+                        ruleKey: 'bh_s3_r3'
                     }
                 ],
                 fullSentence: 'Morten sætter sig ved bordet og bestiller en kop kaffe. Koppen er helt varm, og kaffen dufter dejligt. Han drikker kaffen langsomt, mens han læser avis.'
@@ -355,29 +391,32 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             {
                 id: 'hus_skov',
                 title: 'Historie 4: Huset ved skoven',
-                titleEn: 'Story 4: The House by the Forest',
-                icon: '🏡',
+                titleKey: 'bh_s4_title',
+                dsIcon: 'home',
                 lines: [
                     {
                         pre: 'På vores gåtur kom vi forbi ',
                         options: ['et hus', 'huset'],
                         correct: 'et hus',
                         post: ' ude i skoven.',
-                        rule: isEn ? 'New object spotted ➔ Indefinite ("et hus")' : 'Nyt syn for første gang ➔ Ubestemt form ("et hus")'
+                        rule: 'Nyt syn for første gang → Ubestemt form ("et hus")',
+                        ruleKey: 'bh_s4_r1'
                     },
                     {
                         pre: '',
                         options: ['Et hus', 'Huset'],
                         correct: 'Huset',
                         post: ' havde en rød dør og hvide vinduer.',
-                        rule: isEn ? 'Known house ➔ Definite ("Huset")' : 'Kendt hus ➔ Bestemt form ("Huset")'
+                        rule: 'Kendt hus → Bestemt form ("Huset")',
+                        ruleKey: 'bh_s4_r2'
                     },
                     {
                         pre: 'Rundt om ',
                         options: ['et hus', 'huset'],
                         correct: 'huset',
                         post: ' voksede der vilde blomster.',
-                        rule: isEn ? 'Known house ➔ Definite ("huset")' : 'Stadig det samme kendte hus ➔ Bestemt form ("huset")'
+                        rule: 'Stadig det samme kendte hus → Bestemt form ("huset")',
+                        ruleKey: 'bh_s4_r3'
                     }
                 ],
                 fullSentence: 'På vores gåtur kom vi forbi et hus ude i skoven. Huset havde en rød dør og hvide vinduer. Rundt om huset voksede der vilde blomster.'
@@ -385,29 +424,32 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             {
                 id: 'brev_postkasse',
                 title: 'Historie 5: Brevet i postkassen',
-                titleEn: 'Story 5: The Letter in the Mailbox',
-                icon: '✉️',
+                titleKey: 'bh_s5_title',
+                dsIcon: 'mail',
                 lines: [
                     {
                         pre: 'I eftermiddags fandt Lars ',
                         options: ['et brev', 'brevet'],
                         correct: 'et brev',
                         post: ' i postkassen.',
-                        rule: isEn ? 'New item found ➔ Indefinite ("et brev")' : 'Nyt brev fundet ➔ Ubestemt form ("et brev")'
+                        rule: 'Nyt brev fundet → Ubestemt form ("et brev")',
+                        ruleKey: 'bh_s5_r1'
                     },
                     {
                         pre: 'Han åbnede forsigtigt ',
                         options: ['et brev', 'brevet'],
                         correct: 'brevet',
                         post: ' med en lille kniv.',
-                        rule: isEn ? 'Now known item ➔ Definite ("brevet")' : 'Kendt brev ➔ Bestemt form ("brevet")'
+                        rule: 'Kendt brev → Bestemt form ("brevet")',
+                        ruleKey: 'bh_s5_r2'
                     },
                     {
                         pre: '',
                         options: ['Et brev', 'Brevet'],
                         correct: 'Brevet',
                         post: ' indeholdt en fin hilsen fra hans ven.',
-                        rule: isEn ? 'Known letter ➔ Definite ("Brevet")' : 'Kendt brev ➔ Bestemt form ("Brevet")'
+                        rule: 'Kendt brev → Bestemt form ("Brevet")',
+                        ruleKey: 'bh_s5_r3'
                     }
                 ],
                 fullSentence: 'I eftermiddags fandt Lars et brev i postkassen. Han åbnede forsigtigt brevet med en lille kniv. Brevet indeholdt en fin hilsen fra hans ven.'
@@ -420,12 +462,10 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const storyHeader = document.createElement('div');
         storyHeader.className = 'bestemthed-hero-card';
         storyHeader.innerHTML = `
-            <h2>${isEn ? 'Short stories: Experience how the text flows' : 'Korte historier: Oplev hvordan teksten flyder'}</h2>
+            <h2>Korte historier: Oplev hvordan teksten flyder</h2>
             <p class="hero-desc">
-                ${isEn
-                    ? 'In real Danish speech and writing, we constantly connect sentences. Choose the right form for each sentence depending on whether the entity is introduced (unknown) or continued (known).'
-                    : 'I rigtige danske tekster og samtaler bygger vi bro mellem sætningerne. Vælg den rigtige form i hver linje alt efter om emnet introduceres (ukendt) eller fortsætter (kendt).'
-                }
+                I rigtige danske tekster og samtaler bygger vi bro mellem sætningerne. Vælg den rigtige form i hver linje alt efter om emnet introduceres (ukendt) eller fortsætter (kendt).
+                ${bhTransBlock('bh_p2_hero_desc')}
             </p>
         `;
         part2Container.appendChild(storyHeader);
@@ -446,7 +486,7 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 pill.className = `story-pill-btn ${idx === currentStoryIdx ? 'active' : ''}`;
                 const isFinished = userSelections[idx] && userSelections[idx].every(val => val.isCorrect);
                 if (isFinished) pill.classList.add('completed');
-                pill.innerHTML = `<span>${st.icon}</span> <span>${idx + 1}</span>`;
+                pill.innerHTML = `<span>${renderDsIcon(st.dsIcon, '', { size: 16 })}</span> <span>${idx + 1}</span>`;
                 pill.onclick = () => {
                     currentStoryIdx = idx;
                     renderStoryNavigator();
@@ -464,8 +504,14 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
             storyCard.innerHTML = `
                 <div class="story-title-row">
-                    <h3>${isEn ? st.titleEn : st.title}</h3>
-                    <span class="story-counter">${isEn ? `Story ${currentStoryIdx + 1} of ${storiesData.length}` : `Historie ${currentStoryIdx + 1} af ${storiesData.length}`}</span>
+                    <div>
+                        <h3>${st.title}</h3>
+                        ${bhTransBlock(st.titleKey)}
+                    </div>
+                    <span class="story-counter">
+                        Historie ${currentStoryIdx + 1} af ${storiesData.length}
+                        ${bhTransSpan('bh_story_counter', { curr: currentStoryIdx + 1, total: storiesData.length })}
+                    </span>
                 </div>
                 <div class="story-lines-container"></div>
                 <div class="story-feedback-area"></div>
@@ -516,8 +562,20 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                     const ruleBadge = document.createElement('div');
                     ruleBadge.className = `rule-explanation ${state.isCorrect ? 'rule-correct' : 'rule-wrong'}`;
                     ruleBadge.innerHTML = state.isCorrect 
-                        ? `✅ <strong>${isEn ? 'Correct!' : 'Rigtigt!'}</strong> ${line.rule}`
-                        : `❌ <strong>${isEn ? 'Try again:' : 'Prøv igen:'}</strong> ${isEn ? 'Think about whether the item is new (unknown) or already mentioned (known).' : 'Tænk over om emnet er nyt (ukendt) eller allerede nævnt (kendt).'}`;
+                        ? `
+                            <div style="display: flex; align-items: center; gap: 0.35rem; color: #4ade80; font-weight: 700; margin-bottom: 0.2rem;">
+                                ${renderDsIcon('check', '', { size: 16 })} Rigtigt!
+                            </div>
+                            <div class="rule-da">${line.rule}</div>
+                            ${bhTransBlock(line.ruleKey)}
+                          `
+                        : `
+                            <div style="display: flex; align-items: center; gap: 0.35rem; color: #f87171; font-weight: 700; margin-bottom: 0.2rem;">
+                                ${renderDsIcon('alertTriangle', '', { size: 16 })} Prøv igen:
+                            </div>
+                            <div class="rule-da">Tænk over om emnet er nyt (ukendt) eller allerede nævnt (kendt).</div>
+                            ${bhTransBlock('bh_feedback_retry')}
+                          `;
                     lineDiv.appendChild(ruleBadge);
                 }
 
@@ -530,21 +588,25 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             if (allCorrect) {
                 feedbackArea.innerHTML = `
                     <div class="story-success-banner">
-                        🎉 <strong>${isEn ? 'Well done!' : 'Flot klaret!'}</strong> ${isEn ? 'You correctly built the text flow from introduction to recognition.' : 'Du forstod tekstflowet fra introduktion til genkendelse.'}
+                        <div style="display: flex; align-items: center; gap: 0.45rem; color: #4ade80; font-weight: 700; font-size: 1.05rem;">
+                            ${renderDsIcon('check', '', { size: 20 })} Flot klaret!
+                        </div>
+                        <div style="margin-top: 0.25rem;">Du forstod tekstflowet fra introduktion til genkendelse.</div>
+                        ${bhTransBlock('bh_story_success')}
                     </div>
                 `;
 
                 actionsRow.innerHTML = `
                     <button class="listen-btn" id="listen-story-btn">
-                        <span>🔊</span> ${isEn ? 'Listen to full story' : 'Hør hele historien'}
+                        <span>${renderDsIcon('volume', '', { size: 18 })}</span> Hør hele historien ${bhTransSpan('bh_listen_story')}
                     </button>
                     ${currentStoryIdx < storiesData.length - 1 ? `
                         <button class="next-task-btn" id="next-story-btn">
-                            ${isEn ? 'Next story ➔' : 'Næste historie ➔'}
+                            Næste historie → ${bhTransSpan('bh_next_story')}
                         </button>
                     ` : `
                         <button class="next-task-btn" id="finish-stories-btn">
-                            ${isEn ? 'Try Practice Exercises ➔' : 'Gå til Prøv selv ➔'}
+                            Gå til Prøv selv → ${bhTransSpan('bh_goto_practice')}
                         </button>
                     `}
                 `;
@@ -578,12 +640,10 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         const tryHeader = document.createElement('div');
         tryHeader.className = 'bestemthed-hero-card';
         tryHeader.innerHTML = `
-            <h2>${isEn ? 'Practice yourself: Sentence Builder & Word Puzzle' : 'Prøv selv: Sætningsbygger & Puslespil'}</h2>
+            <h2>Prøv selv: Sætningsbygger & Puslespil</h2>
             <p class="hero-desc">
-                ${isEn
-                    ? 'Create your own sentence pairs or assemble puzzle tiles in the correct discourse order.'
-                    : 'Skab dine egne sætningspar eller saml puslespilsbrikker i den rigtige rækkefølge.'
-                }
+                Skab dine egne sætningspar eller saml puslespilsbrikker i den rigtige rækkefølge.
+                ${bhTransBlock('bh_p3_hero_desc')}
             </p>
         `;
         part3Container.appendChild(tryHeader);
@@ -594,11 +654,11 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
         const ex1TabBtn = document.createElement('button');
         ex1TabBtn.className = 'ex-sub-tab active';
-        ex1TabBtn.textContent = isEn ? 'Step-by-step Builder' : 'Trin-for-trin bygger';
+        ex1TabBtn.innerHTML = `Trin-for-trin bygger ${bhTransSpan('bh_tab_builder')}`;
 
         const ex2TabBtn = document.createElement('button');
         ex2TabBtn.className = 'ex-sub-tab';
-        ex2TabBtn.textContent = isEn ? 'Puzzle: Correct Order' : 'Puslespil: Rigtig rækkefølge';
+        ex2TabBtn.innerHTML = `Puslespil: Rigtig rækkefølge ${bhTransSpan('bh_tab_puzzle')}`;
 
         exerciseTabs.appendChild(ex1TabBtn);
         exerciseTabs.appendChild(ex2TabBtn);
@@ -638,12 +698,12 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
     // Step-by-Step Discourse Builder
     function setupStepBuilder(container) {
         const nounPresets = [
-            { ubestemt: 'en kat', bestemt: 'Katten', icon: '🐱', follow: 'er meget legesyg' },
-            { ubestemt: 'en hund', bestemt: 'Hunden', icon: '🐶', follow: 'logrer med halen' },
-            { ubestemt: 'en bil', bestemt: 'Bilen', icon: '🚗', follow: 'kører lynhurtigt' },
-            { ubestemt: 'et hus', bestemt: 'Huset', icon: '🏡', follow: 'har en kæmpe have' },
-            { ubestemt: 'et æble', bestemt: 'Æblet', icon: '🍎', follow: 'smager utrolig sødt' },
-            { ubestemt: 'en cykel', bestemt: 'Cyklen', icon: '🚲', follow: 'står låst foran døren' }
+            { ubestemt: 'en kat', bestemt: 'Katten', dsIcon: 'cat', follow: 'er meget legesyg' },
+            { ubestemt: 'en hund', bestemt: 'Hunden', dsIcon: 'dog', follow: 'logrer med halen' },
+            { ubestemt: 'en bil', bestemt: 'Bilen', dsIcon: 'car', follow: 'kører lynhurtigt' },
+            { ubestemt: 'et hus', bestemt: 'Huset', dsIcon: 'home', follow: 'har en kæmpe have' },
+            { ubestemt: 'et æble', bestemt: 'Æblet', dsIcon: 'apple', follow: 'smager utrolig sødt' },
+            { ubestemt: 'en cykel', bestemt: 'Cyklen', dsIcon: 'bicycle', follow: 'står låst foran døren' }
         ];
 
         const intros = [
@@ -662,27 +722,31 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
         function updateBuilderUI() {
             builderWrapper.innerHTML = `
                 <div class="builder-section">
-                    <h4>1. ${isEn ? 'Choose an introduction sentence (1st time ➔ Indefinite):' : 'Vælg en introduktion (1. gang ➔ Ubestemt form):'}</h4>
+                    <h4>1. Vælg en introduktion (1. gang → Ubestemt form):</h4>
+                    ${bhTransBlock('bh_builder_s1')}
                     <div class="builder-chips-row" id="intro-chips"></div>
                 </div>
 
                 <div class="builder-section">
-                    <h4>2. ${isEn ? 'Choose a noun to introduce:' : 'Vælg et emne der skal introduceres:'}</h4>
+                    <h4>2. Vælg et emne der skal introduceres:</h4>
+                    ${bhTransBlock('bh_builder_s2')}
                     <div class="builder-chips-row" id="noun-chips"></div>
                 </div>
 
                 <div class="builder-live-display">
-                    <div class="display-label">${isEn ? 'Your constructed text flow:' : 'Dit samlede tekstflow i praksis:'}</div>
+                    <div class="display-label">
+                        Dit samlede tekstflow i praksis:${bhTransSpan('bh_builder_live_label')}
+                    </div>
                     <div class="display-sentence">
                         "${selectedIntro} <span class="word-orange">${selectedNoun.ubestemt}</span>. <span class="word-green">${selectedNoun.bestemt}</span> ${selectedNoun.follow}."
                     </div>
                     <div class="display-flow-notes">
                         <span class="note-pill orange">1. gang: <strong>${selectedNoun.ubestemt}</strong> (ukendt)</span>
-                        <span class="note-arrow">➔</span>
+                        <span class="note-arrow">→</span>
                         <span class="note-pill green">2. gang: <strong>${selectedNoun.bestemt}</strong> (kendt)</span>
                     </div>
                     <button class="listen-btn" id="builder-listen-btn">
-                        <span>🔊</span> ${isEn ? 'Listen to sentence pair' : 'Hør sætningsparret'}
+                        <span>${renderDsIcon('volume', '', { size: 18 })}</span> Hør sætningsparret ${bhTransSpan('bh_builder_listen')}
                     </button>
                 </div>
             `;
@@ -703,7 +767,11 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             nounPresets.forEach(item => {
                 const btn = document.createElement('button');
                 btn.className = `choice-chip ${item.ubestemt === selectedNoun.ubestemt ? 'selected' : ''}`;
-                btn.innerHTML = `${item.icon} ${item.ubestemt}`;
+                btn.innerHTML = `
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem;">
+                        ${renderDsIcon(item.dsIcon, '', { size: 18 })} <span>${item.ubestemt}</span>
+                    </span>
+                `;
                 btn.onclick = () => {
                     selectedNoun = item;
                     updateBuilderUI();
@@ -725,22 +793,26 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
     function setupPuzzleExercise(container) {
         const puzzleTasks = [
             {
-                prompt: isEn ? 'Assemble the text flow: From unknown to known' : 'Saml tekstflowet: Fra ukendt til kendt',
+                prompt: 'Saml tekstflowet: Fra ukendt til kendt',
+                promptKey: 'bh_puz1_prompt',
                 scrambled: ['i haven.', 'Katten', 'en kat', 'Der sidder', 'er', 'meget sød.'],
                 correct: ['Der sidder', 'en kat', 'i haven.', 'Katten', 'er', 'meget sød.']
             },
             {
-                prompt: isEn ? 'Assemble the text flow: The red car' : 'Saml tekstflowet: Den røde bil',
+                prompt: 'Saml tekstflowet: Den røde bil',
+                promptKey: 'bh_puz2_prompt',
                 scrambled: ['Bilen', 'en bil.', 'Vi så', 'er', 'helt rød.'],
                 correct: ['Vi så', 'en bil.', 'Bilen', 'er', 'helt rød.']
             },
             {
-                prompt: isEn ? 'Assemble the text flow: The delicious apple' : 'Saml tekstflowet: Det lækre æble',
+                prompt: 'Saml tekstflowet: Det lækre æble',
+                promptKey: 'bh_puz3_prompt',
                 scrambled: ['Æblet', 'spiser', 'Han', 'et æble.', 'smager godt.'],
                 correct: ['Han', 'spiser', 'et æble.', 'Æblet', 'smager godt.']
             },
             {
-                prompt: isEn ? 'Assemble the text flow: The fast bicycle' : 'Saml tekstflowet: Den hurtige cykel',
+                prompt: 'Saml tekstflowet: Den hurtige cykel',
+                promptKey: 'bh_puz4_prompt',
                 scrambled: ['Cyklen', 'har lånt', 'Mette', 'kører hurtigt.', 'en cykel.'],
                 correct: ['Mette', 'har lånt', 'en cykel.', 'Cyklen', 'kører hurtigt.']
             }
@@ -759,8 +831,14 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
             puzzleWrapper.innerHTML = `
                 <div class="puzzle-header">
-                    <h4>${task.prompt}</h4>
-                    <span class="puzzle-counter">${isEn ? `Task ${currentPuzzleIdx + 1} of ${puzzleTasks.length}` : `Opgave ${currentPuzzleIdx + 1} af ${puzzleTasks.length}`}</span>
+                    <div>
+                        <h4>${task.prompt}</h4>
+                        ${bhTransBlock(task.promptKey)}
+                    </div>
+                    <span class="puzzle-counter">
+                        Opgave ${currentPuzzleIdx + 1} af ${puzzleTasks.length}
+                        ${bhTransSpan('bh_puzzle_counter', { curr: currentPuzzleIdx + 1, total: puzzleTasks.length })}
+                    </span>
                 </div>
                 <div class="puzzle-pills-row" id="puzzle-pills"></div>
                 <div class="puzzle-slots-container" id="puzzle-slots"></div>
@@ -796,7 +874,7 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 slot.textContent = word || `${slotIdx + 1}`;
 
                 if (word) {
-                    slot.title = isEn ? 'Click to remove' : 'Klik for at fjerne';
+                    slot.title = tBh('bh_slot_remove_tip') || 'Klik for at fjerne';
                     slot.onclick = () => {
                         userSlots[slotIdx] = null;
                         feedbackBox.innerHTML = '';
@@ -845,12 +923,18 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg success">
-                        🎉 <strong>${isEn ? 'Correct!' : 'Rigtigt!'}</strong> "${sentence}"
+                        <div style="display: flex; align-items: center; gap: 0.35rem; color: #4ade80; font-weight: 700;">
+                            ${renderDsIcon('check', '', { size: 18 })} Rigtigt!
+                        </div>
+                        <div style="font-size: 1.05rem; font-weight: 600; margin-top: 0.25rem;">"${sentence}"</div>
+                        ${bhTransBlock('bh_puz_success')}
                     </div>
                     <div class="puzzle-action-row">
-                        <button class="listen-btn-small" id="puzzle-listen-btn">🔊 ${isEn ? 'Listen' : 'Hør udtale'}</button>
+                        <button class="listen-btn-small" id="puzzle-listen-btn">
+                            ${renderDsIcon('volume', '', { size: 16 })} Hør udtale ${bhTransSpan('bh_listen_pronun')}
+                        </button>
                         <button class="next-task-btn" id="puzzle-next-btn">
-                            ${currentPuzzleIdx < puzzleTasks.length - 1 ? (isEn ? 'Next task ➔' : 'Næste opgave ➔') : (isEn ? 'Start over 🔄' : 'Start forfra 🔄')}
+                            ${currentPuzzleIdx < puzzleTasks.length - 1 ? `Næste opgave → ${bhTransSpan('bh_next_task')}` : `Start forfra ${bhTransSpan('bh_start_over')}`}
                         </button>
                     </div>
                 `;
@@ -863,9 +947,17 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             } else {
                 feedbackBox.innerHTML = `
                     <div class="feedback-msg error">
-                        Ikke helt rigtigt endnu. Husk rækkefølgen: Først introduceres emnet (ubestemt) ➔ derefter omtales det kendte emne (bestemt)!
+                        <div style="display: flex; align-items: center; gap: 0.35rem; color: #f87171; font-weight: 700;">
+                            ${renderDsIcon('alertTriangle', '', { size: 18 })} Ikke helt rigtigt endnu.
+                        </div>
+                        <div style="margin-top: 0.25rem;">
+                            Husk rækkefølgen: Først introduceres emnet (ubestemt) → derefter omtales det kendte emne (bestemt)!
+                        </div>
+                        ${bhTransBlock('bh_puz_error')}
                     </div>
-                    <button class="retry-task-btn" id="puzzle-retry-btn">${isEn ? 'Try again 🔄' : 'Prøv igen 🔄'}</button>
+                    <button class="retry-task-btn" id="puzzle-retry-btn">
+                        ${renderDsIcon('refresh', '', { size: 16 })} Prøv igen ${bhTransSpan('bh_try_again')}
+                    </button>
                 `;
                 feedbackBox.querySelector('#puzzle-retry-btn').onclick = () => {
                     userSlots = new Array(task.correct.length).fill(null);
@@ -905,6 +997,33 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 padding: 1.5rem 1rem 3rem 1rem;
             }
 
+            .bestemthed-view .ds-icon-emoji {
+                display: none !important;
+            }
+            .bestemthed-view .ds-icon-svg {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                vertical-align: middle;
+            }
+
+            .bh-trans-block {
+                font-size: 0.90em;
+                color: #94a3b8;
+                font-style: italic;
+                margin-top: 0.25rem;
+                font-weight: 500;
+                line-height: 1.45;
+            }
+
+            .bh-trans-span {
+                font-size: 0.88em;
+                color: #94a3b8;
+                font-style: italic;
+                margin-left: 0.4rem;
+                font-weight: 500;
+            }
+
             .bestemthed-grammar-banner {
                 display: flex;
                 flex-wrap: wrap;
@@ -919,7 +1038,7 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
             .grammar-system-item {
                 display: inline-flex;
-                align-items: center;
+                align-items: flex-start;
                 font-size: 0.95rem;
                 color: #e2e8f0;
             }
@@ -930,6 +1049,8 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 border-radius: 50%;
                 display: inline-block;
                 margin-right: 0.5rem;
+                margin-top: 0.35rem;
+                flex-shrink: 0;
             }
 
             /* Tabs Nav */
@@ -956,10 +1077,11 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 align-items: center;
                 gap: 0.25rem;
                 transition: all 0.25s ease;
+                text-align: center;
             }
 
             .bestemthed-tab-btn strong {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
                 color: #e2e8f0;
             }
 
@@ -996,12 +1118,12 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             .bestemthed-hero-card h2 {
                 margin: 0 0 0.8rem 0;
                 color: #fbbf24;
-                font-size: 1.6rem;
+                font-size: 1.5rem;
                 font-weight: 700;
             }
 
             .bestemthed-hero-card .hero-desc {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
                 line-height: 1.65;
                 color: #cbd5e1;
                 margin: 0;
@@ -1092,7 +1214,7 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 align-items: center;
                 gap: 0.5rem;
                 font-size: 1.15rem;
-                margin-bottom: 0.6rem;
+                margin-bottom: 0.4rem;
             }
 
             .step-orange .step-title-row strong {
@@ -1104,109 +1226,121 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             }
 
             .step-q {
-                font-size: 1rem;
-                color: #94a3b8;
+                color: #cbd5e1;
+                font-size: 0.96rem;
                 margin-bottom: 0.4rem;
             }
 
             .step-ans {
-                font-size: 1.1rem;
-                font-weight: 600;
                 color: #e2e8f0;
-                margin-bottom: 1rem;
+                font-weight: 600;
+                font-size: 1rem;
+                margin-bottom: 0.8rem;
             }
 
             .step-example-box {
                 background: rgba(0, 0, 0, 0.3);
                 border: 1px solid rgba(255, 255, 255, 0.08);
                 border-radius: 10px;
-                padding: 0.8rem 1rem;
+                padding: 0.75rem 1rem;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 margin-bottom: 0.8rem;
             }
 
-            .step-example-box .example-text {
-                font-size: 1.15rem;
-                color: #fff;
+            .example-text {
+                font-size: 1.05rem;
+                color: #f8fafc;
             }
 
             .listen-btn-mini {
                 background: rgba(255, 255, 255, 0.1);
-                border: none;
-                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
                 color: #fff;
-                padding: 0.4rem 0.6rem;
+                border-radius: 8px;
+                width: 32px;
+                height: 32px;
                 cursor: pointer;
-                font-size: 1rem;
-                transition: background 0.2s;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s;
             }
 
             .listen-btn-mini:hover {
-                background: rgba(255, 255, 255, 0.2);
+                background: #10b981;
+                border-color: #10b981;
             }
 
             .grammar-badge {
-                font-size: 0.85rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                font-size: 0.82rem;
                 color: #94a3b8;
+                background: rgba(255, 255, 255, 0.05);
+                padding: 0.3rem 0.65rem;
+                border-radius: 8px;
             }
 
             /* Finished Sentence Banner */
             .finished-sentence-banner {
-                background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(0, 0, 0, 0.45);
+                border: 1px solid rgba(16, 185, 129, 0.4);
                 border-radius: 16px;
-                padding: 1.6rem 2rem;
+                padding: 1.4rem;
                 text-align: center;
                 margin-bottom: 2rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             }
 
             .banner-label {
-                font-size: 1rem;
-                color: #cbd5e1;
-                margin-bottom: 0.6rem;
+                font-size: 0.88rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #94a3b8;
+                margin-bottom: 0.5rem;
             }
 
             .banner-sentence {
-                font-size: 1.4rem;
+                font-size: 1.35rem;
                 font-weight: 700;
-                color: #fff;
-                margin-bottom: 1.2rem;
-                line-height: 1.5;
+                color: #f8fafc;
+                margin-bottom: 1rem;
             }
 
             .word-orange {
                 color: #fbbf24;
                 text-decoration: underline;
-                text-underline-offset: 4px;
+                text-decoration-color: rgba(245, 158, 11, 0.6);
             }
 
             .word-green {
                 color: #34d399;
                 text-decoration: underline;
-                text-underline-offset: 4px;
+                text-decoration-color: rgba(16, 185, 129, 0.6);
             }
 
             .listen-btn {
-                background: #10b981;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.2);
                 color: #fff;
-                border: none;
-                padding: 0.75rem 1.6rem;
-                border-radius: 10px;
-                font-size: 1.1rem;
+                padding: 0.65rem 1.4rem;
+                border-radius: 12px;
+                font-size: 0.96rem;
                 font-weight: 600;
                 cursor: pointer;
                 display: inline-flex;
                 align-items: center;
                 gap: 0.5rem;
-                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
                 transition: all 0.2s;
             }
 
             .listen-btn:hover {
-                background: #059669;
-                transform: translateY(-1px);
+                background: #10b981;
+                border-color: #10b981;
+                box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
             }
 
             /* Table Card */
@@ -1214,147 +1348,143 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
                 background: rgba(255, 255, 255, 0.03);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 16px;
-                padding: 1.5rem;
+                padding: 1.6rem;
                 margin-bottom: 2rem;
             }
 
             .bestemthed-table-card h3 {
-                margin: 0 0 1rem 0;
+                margin: 0 0 1.2rem 0;
+                font-size: 1.3rem;
                 color: #e2e8f0;
-                font-size: 1.25rem;
             }
 
             .pairs-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-                gap: 0.8rem;
+                gap: 1rem;
             }
 
             .pair-item {
                 background: rgba(0, 0, 0, 0.25);
                 border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 10px;
-                padding: 0.8rem 1rem;
+                border-radius: 12px;
+                padding: 0.85rem 1rem;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
             }
 
-            .pair-ubestemt {
-                color: #fbbf24;
+            .pair-ubestemt, .pair-bestemt {
+                font-size: 1.05rem;
                 font-weight: 600;
-            }
-
-            .pair-bestemt {
-                color: #34d399;
-                font-weight: 600;
+                color: #f8fafc;
             }
 
             .pair-arrow {
-                color: #94a3b8;
-                font-size: 1rem;
+                color: #64748b;
+                font-weight: 700;
             }
 
             .badge-tag {
-                font-size: 0.7rem;
-                padding: 2px 6px;
-                border-radius: 4px;
-                background: rgba(255, 255, 255, 0.1);
-                color: #cbd5e1;
-                margin-right: 0.3rem;
+                display: block;
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #94a3b8;
+                margin-bottom: 0.2rem;
             }
 
-            /* Stories (Part 2) */
+            /* Story Section */
             .story-pill-nav {
                 display: flex;
-                gap: 0.6rem;
+                gap: 0.5rem;
                 justify-content: center;
                 margin-bottom: 1.5rem;
                 flex-wrap: wrap;
             }
 
             .story-pill-btn {
-                background: rgba(255, 255, 255, 0.06);
+                background: rgba(255, 255, 255, 0.05);
                 border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 20px;
+                color: #94a3b8;
                 padding: 0.5rem 1rem;
-                color: #cbd5e1;
+                border-radius: 9999px;
                 cursor: pointer;
                 display: inline-flex;
                 align-items: center;
                 gap: 0.4rem;
                 font-size: 0.95rem;
-                font-weight: 600;
                 transition: all 0.2s;
             }
 
             .story-pill-btn:hover {
-                background: rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.1);
                 color: #fff;
             }
 
             .story-pill-btn.active {
                 background: #10b981;
-                color: #fff;
                 border-color: #10b981;
-                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+                color: #fff;
+                font-weight: 700;
+                box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
             }
 
-            .story-pill-btn.completed:not(.active) {
-                background: rgba(16, 185, 129, 0.2);
+            .story-pill-btn.completed {
                 border-color: #10b981;
-                color: #34d399;
             }
 
             .story-interactive-card {
-                background: rgba(255, 255, 255, 0.04);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 16px;
-                padding: 2rem;
+                padding: 1.6rem 2rem;
                 margin-bottom: 2rem;
             }
 
             .story-title-row {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items: flex-start;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding-bottom: 1rem;
                 margin-bottom: 1.5rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                padding-bottom: 0.8rem;
+                gap: 1rem;
             }
 
             .story-title-row h3 {
                 margin: 0;
-                color: #fbbf24;
-                font-size: 1.3rem;
+                color: #38bdf8;
+                font-size: 1.35rem;
             }
 
             .story-counter {
-                font-size: 0.9rem;
                 color: #94a3b8;
+                font-size: 0.88rem;
+                white-space: nowrap;
             }
 
             .story-line-row {
                 font-size: 1.25rem;
-                line-height: 2.1;
-                color: #e2e8f0;
+                line-height: 1.8;
                 margin-bottom: 1.4rem;
+                color: #f8fafc;
             }
 
             .inline-choice-group {
                 display: inline-flex;
                 gap: 0.4rem;
+                margin: 0 0.4rem;
                 vertical-align: middle;
-                margin: 0 0.3rem;
             }
 
             .choice-chip {
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.08);
+                border: 1.5px solid rgba(255, 255, 255, 0.2);
                 color: #fff;
-                padding: 0.3rem 0.8rem;
-                border-radius: 8px;
-                font-size: 1.15rem;
+                padding: 0.35rem 0.85rem;
+                border-radius: 10px;
+                font-size: 1.05rem;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s;
@@ -1365,125 +1495,125 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             }
 
             .choice-chip.correct {
-                background: #10b981;
-                border-color: #34d399;
-                color: #fff;
-                box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+                background: #10b981 !important;
+                border-color: #10b981 !important;
+                color: #fff !important;
             }
 
             .choice-chip.wrong {
-                background: #ef4444;
-                border-color: #f87171;
-                color: #fff;
+                background: #ef4444 !important;
+                border-color: #ef4444 !important;
+                color: #fff !important;
             }
 
             .choice-chip.selected {
-                background: #10b981;
-                border-color: #34d399;
-                color: #fff;
+                background: #38bdf8 !important;
+                border-color: #38bdf8 !important;
+                color: #0f172a !important;
+                font-weight: 700;
             }
 
             .rule-explanation {
+                margin-top: 0.5rem;
+                padding: 0.75rem 1rem;
+                border-radius: 10px;
                 font-size: 0.95rem;
-                line-height: 1.4;
-                padding: 0.5rem 0.9rem;
-                border-radius: 8px;
-                margin-top: 0.4rem;
-                display: block;
+                line-height: 1.45;
             }
 
-            .rule-correct {
-                background: rgba(16, 185, 129, 0.15);
+            .rule-explanation.rule-correct {
+                background: rgba(16, 185, 129, 0.12);
                 border: 1px solid rgba(16, 185, 129, 0.3);
-                color: #34d399;
+                color: #e2e8f0;
             }
 
-            .rule-wrong {
-                background: rgba(239, 68, 68, 0.15);
+            .rule-explanation.rule-wrong {
+                background: rgba(239, 68, 68, 0.12);
                 border: 1px solid rgba(239, 68, 68, 0.3);
                 color: #fca5a5;
             }
 
+            .rule-da {
+                color: #f8fafc;
+                font-weight: 600;
+            }
+
             .story-success-banner {
-                background: rgba(16, 185, 129, 0.2);
-                border: 1px solid #10b981;
-                color: #34d399;
-                padding: 1rem 1.4rem;
+                background: rgba(16, 185, 129, 0.15);
+                border: 1px solid rgba(16, 185, 129, 0.4);
                 border-radius: 12px;
-                font-size: 1.15rem;
-                text-align: center;
+                padding: 1.2rem;
+                color: #f8fafc;
                 margin-top: 1.5rem;
             }
 
             .story-actions-row {
                 display: flex;
                 gap: 1rem;
-                justify-content: center;
                 margin-top: 1.5rem;
                 flex-wrap: wrap;
             }
 
             .next-task-btn {
-                background: #f59e0b;
+                background: #10b981;
+                border: 1px solid #10b981;
                 color: #fff;
-                border: none;
-                padding: 0.75rem 1.6rem;
-                border-radius: 10px;
-                font-size: 1.1rem;
-                font-weight: 600;
+                padding: 0.65rem 1.4rem;
+                border-radius: 12px;
+                font-size: 0.96rem;
+                font-weight: 700;
                 cursor: pointer;
-                box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
                 transition: all 0.2s;
             }
 
             .next-task-btn:hover {
-                background: #d97706;
-                transform: translateY(-1px);
+                background: #059669;
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
             }
 
-            /* Exercise Sub-Tabs (Part 3) */
+            /* Part 3: Builder & Puzzle */
             .exercise-sub-tabs {
                 display: flex;
-                gap: 0.5rem;
+                gap: 0.6rem;
                 justify-content: center;
                 margin-bottom: 1.5rem;
             }
 
             .ex-sub-tab {
-                background: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 10px;
-                padding: 0.6rem 1.2rem;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.15);
                 color: #cbd5e1;
-                cursor: pointer;
-                font-size: 1.05rem;
+                padding: 0.65rem 1.4rem;
+                border-radius: 12px;
+                font-size: 0.95rem;
                 font-weight: 600;
+                cursor: pointer;
                 transition: all 0.2s;
             }
 
             .ex-sub-tab.active {
-                background: #10b981;
-                color: #fff;
-                border-color: #10b981;
+                background: #38bdf8;
+                border-color: #38bdf8;
+                color: #0f172a;
+                font-weight: 700;
             }
 
-            /* Builder (Part 3 Sub-tab 1) */
             .builder-card {
-                background: rgba(255, 255, 255, 0.04);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 16px;
-                padding: 1.8rem;
+                padding: 1.6rem 2rem;
                 margin-bottom: 2rem;
             }
 
             .builder-section {
-                margin-bottom: 1.4rem;
+                margin-bottom: 1.5rem;
             }
 
             .builder-section h4 {
-                margin: 0 0 0.6rem 0;
-                color: #fbbf24;
-                font-size: 1.15rem;
+                color: #cbd5e1;
+                margin: 0 0 0.75rem 0;
+                font-size: 1.1rem;
             }
 
             .builder-chips-row {
@@ -1494,79 +1624,90 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
             .builder-live-display {
                 background: rgba(0, 0, 0, 0.35);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(56, 189, 248, 0.3);
                 border-radius: 14px;
-                padding: 1.6rem;
+                padding: 1.5rem;
                 text-align: center;
-                margin-top: 1.8rem;
+                margin-top: 1.5rem;
             }
 
             .display-label {
-                font-size: 0.95rem;
                 color: #94a3b8;
-                margin-bottom: 0.6rem;
+                font-size: 0.88rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                margin-bottom: 0.5rem;
             }
 
             .display-sentence {
-                font-size: 1.4rem;
+                font-size: 1.35rem;
                 font-weight: 700;
                 color: #fff;
                 margin-bottom: 1rem;
-                line-height: 1.6;
             }
 
             .display-flow-notes {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0.8rem;
+                gap: 0.6rem;
                 margin-bottom: 1.2rem;
                 flex-wrap: wrap;
             }
 
             .note-pill {
-                padding: 0.3rem 0.8rem;
-                border-radius: 20px;
-                font-size: 0.9rem;
+                padding: 0.3rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.88rem;
+                font-weight: 600;
             }
 
             .note-pill.orange {
-                background: rgba(245, 158, 11, 0.2);
-                color: #fbbf24;
+                background: rgba(245, 158, 11, 0.15);
                 border: 1px solid rgba(245, 158, 11, 0.4);
+                color: #fbbf24;
             }
 
             .note-pill.green {
-                background: rgba(16, 185, 129, 0.2);
-                color: #34d399;
+                background: rgba(16, 185, 129, 0.15);
                 border: 1px solid rgba(16, 185, 129, 0.4);
+                color: #34d399;
             }
 
             .note-arrow {
-                color: #94a3b8;
-                font-size: 1.2rem;
+                color: #64748b;
+                font-weight: 700;
             }
 
-            /* Puzzle (Part 3 Sub-tab 2) */
+            /* Puzzle Wrapper */
             .puzzle-exercise-wrapper {
-                background: rgba(255, 255, 255, 0.04);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 16px;
-                padding: 1.8rem;
+                padding: 1.6rem 2rem;
                 margin-bottom: 2rem;
             }
 
             .puzzle-header {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items: flex-start;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding-bottom: 1rem;
                 margin-bottom: 1.2rem;
+                gap: 1rem;
             }
 
             .puzzle-header h4 {
                 margin: 0;
-                color: #fbbf24;
-                font-size: 1.2rem;
+                color: #38bdf8;
+                font-size: 1.25rem;
+            }
+
+            .puzzle-counter {
+                color: #94a3b8;
+                font-size: 0.88rem;
+                white-space: nowrap;
             }
 
             .puzzle-pills-row {
@@ -1576,62 +1717,74 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             }
 
             .puzzle-pill {
-                width: 32px;
-                height: 32px;
+                width: 34px;
+                height: 34px;
                 border-radius: 50%;
-                background: rgba(255, 255, 255, 0.08);
+                background: rgba(255, 255, 255, 0.06);
                 border: 1px solid rgba(255, 255, 255, 0.15);
                 color: #cbd5e1;
+                font-weight: 700;
                 cursor: pointer;
-                font-weight: 600;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 transition: all 0.2s;
             }
 
             .puzzle-pill.active {
-                background: #10b981;
-                color: #fff;
-                border-color: #10b981;
+                background: #38bdf8;
+                border-color: #38bdf8;
+                color: #0f172a;
             }
 
-            .puzzle-pill.completed:not(.active) {
-                background: rgba(16, 185, 129, 0.25);
-                color: #34d399;
+            .puzzle-pill.completed {
                 border-color: #10b981;
+                color: #10b981;
             }
 
             .puzzle-slots-container {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.6rem;
-                min-height: 60px;
-                padding: 1rem;
+                min-height: 52px;
                 background: rgba(0, 0, 0, 0.35);
-                border: 2px dashed rgba(255, 255, 255, 0.2);
-                border-radius: 12px;
+                border: 2px dashed rgba(255, 255, 255, 0.18);
+                border-radius: 14px;
+                padding: 0.85rem;
                 margin-bottom: 1.5rem;
                 align-items: center;
             }
 
             .puzzle-slot {
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                font-size: 1.15rem;
+                padding: 0.55rem 1rem;
+                border-radius: 10px;
+                font-size: 1.05rem;
                 font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 60px;
                 transition: all 0.2s;
             }
 
             .puzzle-slot.empty {
-                border: 1px dashed rgba(255, 255, 255, 0.25);
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px dashed rgba(255, 255, 255, 0.2);
                 color: #64748b;
-                min-width: 40px;
-                text-align: center;
+                font-size: 0.85rem;
             }
 
             .puzzle-slot.filled {
-                background: #10b981;
-                color: #fff;
-                box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+                background: #1e293b;
+                border: 1px solid #38bdf8;
+                color: #f8fafc;
                 cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            .puzzle-slot.filled:hover {
+                background: #ef4444;
+                border-color: #ef4444;
             }
 
             .puzzle-words-bank {
@@ -1642,12 +1795,12 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
             }
 
             .puzzle-word-btn {
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: #fff;
-                padding: 0.55rem 1.1rem;
-                border-radius: 8px;
-                font-size: 1.15rem;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                color: #f8fafc;
+                padding: 0.55rem 1rem;
+                border-radius: 10px;
+                font-size: 1.05rem;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s;
@@ -1655,69 +1808,107 @@ export function renderBestemthedView(container, navigateFn, extraData = {}) {
 
             .puzzle-word-btn:hover:not(:disabled) {
                 background: rgba(255, 255, 255, 0.2);
-                transform: translateY(-1px);
+                transform: translateY(-2px);
             }
 
             .puzzle-word-btn.placed {
-                opacity: 0.3;
-                cursor: not-allowed;
-            }
-
-            .puzzle-feedback-area {
-                margin-top: 1rem;
-                text-align: center;
+                opacity: 0.35;
+                cursor: default;
+                transform: none;
             }
 
             .feedback-msg {
-                padding: 1rem 1.5rem;
-                border-radius: 10px;
-                font-size: 1.2rem;
+                padding: 1rem 1.4rem;
+                border-radius: 12px;
                 margin-bottom: 1rem;
+                font-size: 1.05rem;
+                line-height: 1.45;
             }
 
             .feedback-msg.success {
-                background: rgba(16, 185, 129, 0.2);
-                border: 1px solid #10b981;
-                color: #34d399;
+                background: rgba(16, 185, 129, 0.15);
+                border: 1px solid rgba(16, 185, 129, 0.4);
+                color: #f8fafc;
             }
 
             .feedback-msg.error {
-                background: rgba(239, 68, 68, 0.2);
-                border: 1px solid #ef4444;
+                background: rgba(239, 68, 68, 0.15);
+                border: 1px solid rgba(239, 68, 68, 0.4);
                 color: #fca5a5;
             }
 
             .puzzle-action-row {
                 display: flex;
-                gap: 1rem;
-                justify-content: center;
+                gap: 0.8rem;
                 align-items: center;
+                flex-wrap: wrap;
             }
 
             .listen-btn-small {
-                background: rgba(255, 255, 255, 0.15);
-                border: 1px solid rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.2);
                 color: #fff;
-                padding: 0.6rem 1.2rem;
-                border-radius: 8px;
-                font-size: 1rem;
-                cursor: pointer;
+                padding: 0.55rem 1.1rem;
+                border-radius: 10px;
+                font-size: 0.92rem;
                 font-weight: 600;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                transition: all 0.2s;
             }
 
             .listen-btn-small:hover {
-                background: rgba(255, 255, 255, 0.25);
+                background: #10b981;
+                border-color: #10b981;
             }
 
             .retry-task-btn {
-                background: #ef4444;
+                background: rgba(239, 68, 68, 0.2);
+                border: 1px solid #ef4444;
                 color: #fff;
-                border: none;
-                padding: 0.6rem 1.4rem;
-                border-radius: 8px;
-                font-size: 1rem;
+                padding: 0.55rem 1.2rem;
+                border-radius: 10px;
+                font-size: 0.95rem;
+                font-weight: 700;
                 cursor: pointer;
-                font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                transition: all 0.2s;
+            }
+
+            .retry-task-btn:hover {
+                background: #ef4444;
+            }
+
+            @media (max-width: 600px) {
+                .bestemthed-view {
+                    padding: 1rem 0.5rem 3rem 0.5rem;
+                }
+                .bestemthed-hero-card {
+                    padding: 1.2rem 1rem;
+                }
+                .bestemthed-tabs-nav {
+                    flex-direction: column;
+                    gap: 0.4rem;
+                }
+                .bestemthed-tab-btn {
+                    padding: 0.6rem 0.8rem;
+                }
+                .step-grid-2col {
+                    grid-template-columns: 1fr;
+                }
+                .story-interactive-card, .builder-card, .puzzle-exercise-wrapper {
+                    padding: 1.2rem 1rem;
+                }
+                .story-line-row {
+                    font-size: 1.1rem;
+                }
+                .banner-sentence, .display-sentence {
+                    font-size: 1.15rem;
+                }
             }
         `;
         document.head.appendChild(styles);

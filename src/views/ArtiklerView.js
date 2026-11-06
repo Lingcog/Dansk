@@ -1,6 +1,8 @@
 import { getTranslation } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
+import { renderDsIcon, dsSvgIcons } from '../utils/designSystemIcons.js';
+import { tBh, bhTransBlock, bhTransSpan } from '../utils/bestemthed_translations.js';
 
 export function renderArtiklerView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -20,10 +22,10 @@ export function renderArtiklerView(container, navigateFn) {
 
     // Header
     const title = document.createElement('h1');
-    title.textContent = 'En/et? (Artikler)';
-    const subtitle = document.createElement('p');
+    title.innerHTML = `En/et? (Artikler)${bhTransBlock('artikler_title')}`;
+    const subtitle = document.createElement('div');
     subtitle.className = 'subtitle';
-    subtitle.textContent = 'Lær at vælge det rigtige kendeord (artikel) til navneord.';
+    subtitle.innerHTML = `Lær at vælge det rigtige kendeord (artikel) til navneord.${bhTransBlock('artikler_subtitle')}`;
     viewContainer.appendChild(title);
     viewContainer.appendChild(subtitle);
 
@@ -32,12 +34,12 @@ export function renderArtiklerView(container, navigateFn) {
     viewContainer.appendChild(exerciseArea);
 
     const data = [
-        { word: 'bil', correct: 'en', icon: '🚗' },
-        { word: 'hus', correct: 'et', icon: '🏠' },
-        { word: 'barn', correct: 'et', icon: '👶' },
-        { word: 'kop', correct: 'en', icon: '☕' },
-        { word: 'æble', correct: 'et', icon: '🍎' },
-        { word: 'stol', correct: 'en', icon: '🪑' }
+        { word: 'bil', correct: 'en', dsIcon: 'car' },
+        { word: 'hus', correct: 'et', dsIcon: 'home' },
+        { word: 'barn', correct: 'et', dsIcon: 'baby' },
+        { word: 'kop', correct: 'en', dsIcon: 'coffee' },
+        { word: 'æble', correct: 'et', dsIcon: 'apple' },
+        { word: 'stol', correct: 'en', dsIcon: 'chair' }
     ];
 
     let currentIdx = 0;
@@ -64,10 +66,14 @@ export function renderArtiklerView(container, navigateFn) {
                         <line x1="50" y1="70" x2="40" y2="90" stroke="white" stroke-width="2"/>
                         <line x1="50" y1="70" x2="60" y2="90" stroke="white" stroke-width="2"/>
                     </svg>
-                    <div class="object-bubble">${item.icon}</div>
+                    <div class="object-bubble">
+                        <span style="color: #0f172a; display: flex; align-items: center; justify-content: center;">
+                            ${renderDsIcon(item.dsIcon, '', { size: 30 })}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <h3>Hvad hedder det?</h3>
+            <h3>Hvad hedder det?${bhTransBlock('artikler_question')}</h3>
             <div class="word-display">____ ${item.word}</div>
             <div class="options-grid">
                 <button class="option-btn" data-val="en">En</button>
@@ -82,16 +88,30 @@ export function renderArtiklerView(container, navigateFn) {
                 const val = btn.dataset.val;
                 const feedback = stepDiv.querySelector('#feedback');
                 if (val === item.correct) {
-                    feedback.textContent = 'Korrekt! ✅';
+                    feedback.innerHTML = `
+                        <div class="feedback-correct-row" style="display: flex; flex-direction: column; align-items: center;">
+                            <span style="display: inline-flex; align-items: center; gap: 0.35rem; color: #4ade80; font-weight: 700;">
+                                ${renderDsIcon('check', '', { size: 18 })} Korrekt!
+                            </span>
+                            ${bhTransBlock('artikler_correct')}
+                        </div>
+                    `;
                     feedback.className = 'feedback-area success';
                     score++;
                     btn.classList.add('correct');
                     setTimeout(() => {
                         currentIdx++;
                         renderExercise();
-                    }, 1000);
+                    }, 1100);
                 } else {
-                    feedback.textContent = 'Prøv igen! ❌';
+                    feedback.innerHTML = `
+                        <div class="feedback-wrong-row" style="display: flex; flex-direction: column; align-items: center;">
+                            <span style="display: inline-flex; align-items: center; gap: 0.35rem; color: #f87171; font-weight: 700;">
+                                ${renderDsIcon('alertTriangle', '', { size: 18 })} Prøv igen!
+                            </span>
+                            ${bhTransBlock('artikler_wrong')}
+                        </div>
+                    `;
                     feedback.className = 'feedback-area error';
                     btn.classList.add('wrong');
                 }
@@ -102,10 +122,12 @@ export function renderArtiklerView(container, navigateFn) {
     function renderResult() {
         exerciseArea.innerHTML = `
             <div class="step-content final-step animate-in">
-                <div class="success-icon">🎉</div>
-                <h2>Flot gået!</h2>
-                <p>Du fik ${score} ud af ${data.length} rigtige.</p>
-                <button class="gemini-btn" id="finish-btn">Afslut</button>
+                <div class="success-icon" style="color: #4ade80; display: flex; justify-content: center; margin-bottom: 0.75rem;">
+                    ${renderDsIcon('check', '', { size: 48 })}
+                </div>
+                <h2>Flot gået!${bhTransBlock('artikler_done_title')}</h2>
+                <p>Du fik ${score} ud af ${data.length} rigtige.${bhTransBlock('artikler_done_desc', { score, total: data.length })}</p>
+                <button class="gemini-btn" id="finish-btn">Afslut ${bhTransSpan('artikler_finish_btn')}</button>
             </div>
         `;
         exerciseArea.querySelector('#finish-btn').onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
@@ -122,6 +144,15 @@ export function renderArtiklerView(container, navigateFn) {
                 flex-direction: column;
                 align-items: center;
                 margin-bottom: 2rem;
+            }
+            .artikler-view .ds-icon-emoji {
+                display: none !important;
+            }
+            .artikler-view .ds-icon-svg {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                vertical-align: middle;
             }
             .stickman-container {
                 position: relative;
@@ -146,12 +177,11 @@ export function renderArtiklerView(container, navigateFn) {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 2.5rem;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                 animation: float 3s ease-in-out infinite;
             }
             @media (max-width: 600px) {
-                .object-bubble { width: 50px; height: 50px; font-size: 2rem; right: -5px; }
+                .object-bubble { width: 50px; height: 50px; right: -5px; }
             }
             @keyframes float {
                 0%, 100% { transform: translateY(0); }
@@ -195,13 +225,13 @@ export function renderArtiklerView(container, navigateFn) {
             .option-btn.wrong { background: #F44336; border-color: #F44336; }
             
             .feedback-area {
-                height: 30px;
-                font-size: 1.2rem;
+                min-height: 48px;
+                font-size: 1.15rem;
                 font-weight: 600;
                 margin-top: 1rem;
             }
             @media (max-width: 600px) {
-                .feedback-area { font-size: 1rem; height: 25px; }
+                .feedback-area { font-size: 1rem; min-height: 40px; }
             }
             .feedback-area.success { color: #4CAF50; }
             .feedback-area.error { color: #F44336; }

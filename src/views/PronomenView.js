@@ -2,6 +2,7 @@ import { baseUrl } from '../utils/config.js';
 import { getTranslation, appState } from '../utils/i18n.js';
 import { pronomenData } from '../utils/pronomenData.js';
 import { renderDsIcon, dsSvgIcons } from '../utils/designSystemIcons.js';
+import { bhTransBlock } from '../utils/bestemthed_translations.js';
 
 import { initAdverbChoiceExerciseView } from './AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './AdverbDialogExerciseView.js';
@@ -84,10 +85,9 @@ export function renderPronomenView(container, navigateFn, extraData) {
     bestemthedCard.className = 'card';
     bestemthedCard.innerHTML = `
         <div class="card-icon">
-            <span class="card-icon-emoji">🏷️</span>
             <span class="card-icon-svg" aria-hidden="true">${dsSvgIcons.tag(22)}</span>
         </div>
-        <div class="card-title">En kat / katten? (Artikler & Bestemthed)</div>
+        <div class="card-title">En kat / katten? (Artikler & Bestemthed)${bhTransBlock('artikler_menu_title')}</div>
     `;
     bestemthedCard.onclick = () => navigateFn('pronomen', { subPath: 'artikler_menu' });
 
@@ -145,7 +145,7 @@ export function renderPronomenView(container, navigateFn, extraData) {
         if (category === 'pronomen') {
             title.textContent = 'Han / ham / hans (Pronominer)';
         } else if (category === 'artikler_menu') {
-            title.textContent = 'En kat / katten? (Artikler & Bestemthed)';
+            title.innerHTML = `En kat / katten? (Artikler & Bestemthed)${bhTransBlock('artikler_menu_title')}`;
         } else if (category === 'adverbier_menu') {
             title.textContent = getTranslation('advChoiceTitle');
         }
@@ -159,8 +159,8 @@ export function renderPronomenView(container, navigateFn, extraData) {
             ];
         } else if (category === 'artikler_menu') {
             items = [
-                { title: 'En/et? (artikler)', type: 'artikler', icon: '🏷️', svgIcon: dsSvgIcons.tag(22) },
-                { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', icon: '🏷️', svgIcon: dsSvgIcons.tag(22) }
+                { title: 'En/et? (artikler)', type: 'artikler', transKey: 'artikler_card_en_et', svgIcon: dsSvgIcons.tag(22) },
+                { title: 'En kat / katten? (bestemt og ubestemt)', type: 'bestemthed', transKey: 'artikler_card_bestemthed', svgIcon: dsSvgIcons.tag(22) }
             ];
         } else if (category === 'adverbier_menu') {
             items = [
@@ -208,13 +208,17 @@ export function renderPronomenView(container, navigateFn, extraData) {
             const icon = document.createElement('div');
             icon.className = 'card-icon';
             icon.innerHTML = `
-                <span class="card-icon-emoji">${item.icon}</span>
+                ${item.icon ? `<span class="card-icon-emoji">${item.icon}</span>` : ''}
                 <span class="card-icon-svg" aria-hidden="true">${item.svgIcon || dsSvgIcons.tag(22)}</span>
             `;
 
             const cardTitle = document.createElement('div');
             cardTitle.className = 'card-title';
-            cardTitle.textContent = item.title ? item.title : getTranslation(item.key);
+            if (item.transKey) {
+                cardTitle.innerHTML = `${item.title}${bhTransBlock(item.transKey)}`;
+            } else {
+                cardTitle.textContent = item.title ? item.title : getTranslation(item.key);
+            }
 
             card.appendChild(icon);
             card.appendChild(cardTitle);

@@ -379,6 +379,59 @@ export const dsSvgIcons = {
             <circle cx="12" cy="12" r="10"></circle>
             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor"></polygon>
         </svg>
+    `,
+    mail: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M22 6l-10 7L2 6"></path>
+        </svg>
+    `,
+    cat: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5c-4.4 0-8 3.6-8 8 0 4 2.8 7.3 6.6 8 0-1.2.4-2.2 1.4-2.2s1.4 1 1.4 2.2c3.8-.7 6.6-4 6.6-8 0-4.4-3.6-8-8-8z"></path>
+            <path d="M5 9L3 3l6 2M19 9l2-6-6 2"></path>
+            <circle cx="9" cy="13" r="1" fill="currentColor"></circle>
+            <circle cx="15" cy="13" r="1" fill="currentColor"></circle>
+        </svg>
+    `,
+    car: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.4-1.7-1.1-2.2l-2.4-1.8H5.5L3.1 10.8C2.4 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2"></path>
+            <circle cx="7" cy="17" r="2"></circle>
+            <circle cx="17" cy="17" r="2"></circle>
+            <path d="M5 10l1.5-4h11L19 10"></path>
+        </svg>
+    `,
+    apple: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20.5c-2.4 0-3.6-1.5-5.2-1.5-2 0-3.8 2-3.8-3.5 0-4.4 3-7.5 6-7.5 1.6 0 2.4.9 3 1 .6-.1 1.4-1 3-1 3 0 6 3.1 6 7.5 0 5.5-1.8 3.5-3.8 3.5-1.6 0-2.8 1.5-5.2 1.5z"></path>
+            <path d="M12 8c.5-2 2-3.5 3.5-4"></path>
+        </svg>
+    `,
+    dog: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="15" r="4"></circle>
+            <circle cx="6.5" cy="10.5" r="2.5"></circle>
+            <circle cx="17.5" cy="10.5" r="2.5"></circle>
+            <circle cx="9" cy="6" r="2"></circle>
+            <circle cx="15" cy="6" r="2"></circle>
+        </svg>
+    `,
+    chair: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3v10h12V3"></path>
+            <path d="M6 13v8"></path>
+            <path d="M18 13v8"></path>
+            <path d="M4 13h16"></path>
+        </svg>
+    `,
+    baby: (size = 18) => `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="M9 11h.01"></path>
+            <path d="M15 11h.01"></path>
+            <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
+        </svg>
     `
 };
 

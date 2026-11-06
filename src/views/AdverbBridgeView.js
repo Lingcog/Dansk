@@ -1,5 +1,6 @@
 import { getTranslation, getLang, appState } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
     // -------------------------------------------------------------
@@ -42,7 +43,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'maade',
             categoryTitle: 'Mådesadverbium (Hvordan?)',
             tag: 'Måde (tempo)',
-            icon: '🐢',
+            dsIcon: 'clock',
             color: '#38bdf8',
             colorGlow: 'rgba(56, 189, 248, 0.45)',
             badge: 'Roligt tempo (langsomt)',
@@ -56,7 +57,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'maade',
             categoryTitle: 'Mådesadverbium (Hvordan?)',
             tag: 'Måde (høj fart)',
-            icon: '⚡',
+            dsIcon: 'zap',
             color: '#22c55e',
             colorGlow: 'rgba(34, 197, 94, 0.5)',
             badge: 'Høj fart & energi (hurtigt)',
@@ -70,7 +71,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'maade',
             categoryTitle: 'Mådesadverbium (Hvordan?)',
             tag: 'Måde (adfærd)',
-            icon: '✨',
+            dsIcon: 'check',
             color: '#ec4899',
             colorGlow: 'rgba(236, 72, 153, 0.45)',
             badge: 'Gode manerer & orden (pænt)',
@@ -84,7 +85,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'grad',
             categoryTitle: 'Gradsadverbium (Hvor meget?)',
             tag: 'Grad (høj styrke)',
-            icon: '🔥',
+            dsIcon: 'activity',
             color: '#f59e0b',
             colorGlow: 'rgba(245, 158, 11, 0.5)',
             badge: 'Høj intensitet & mængde (meget)',
@@ -98,7 +99,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'grad',
             categoryTitle: 'Gradsadverbium (Hvor meget?)',
             tag: 'Grad (dæmpet)',
-            icon: '💧',
+            dsIcon: 'scale',
             color: '#a855f7',
             colorGlow: 'rgba(168, 85, 247, 0.45)',
             badge: 'Lille mængde & forsigtighed (lidt)',
@@ -112,7 +113,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'central',
             categoryTitle: 'Centraladverbium (Nægtelse)',
             tag: 'Centraladverbium',
-            icon: '🛑',
+            dsIcon: 'prohibited',
             color: '#ef4444',
             colorGlow: 'rgba(239, 68, 68, 0.55)',
             badge: 'Nægtelse / Afvisning (ikke)',
@@ -126,7 +127,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'central',
             categoryTitle: 'Centraladverbium (Holdning & Lyst)',
             tag: 'Central (vilje)',
-            icon: '💖',
+            dsIcon: 'thought',
             color: '#fb7185',
             colorGlow: 'rgba(251, 113, 133, 0.5)',
             badge: 'Lyst & personlig vilje (gerne)',
@@ -140,7 +141,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             category: 'tid',
             categoryTitle: 'Tidsadverbium (Hvornår?)',
             tag: 'Tid (i dette nu)',
-            icon: '⏰',
+            dsIcon: 'pointInTime',
             color: '#10b981',
             colorGlow: 'rgba(16, 185, 129, 0.45)',
             badge: 'Tidsanker i øjeblikket (nu)',
@@ -370,7 +371,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                         <circle cx="0" cy="0" r="7" fill="#f43f5e">
                             <animate attributeName="r" values="6; 9; 6" dur="1.1s" repeatCount="infinite"/>
                         </circle>
-                        <text x="0" y="4" font-size="10" text-anchor="middle">❤️</text>
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ffffff" transform="translate(-4, -4) scale(0.35)"/>
                     </g>
                 </g>
             `;
@@ -503,7 +504,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                                 <animate attributeName="stroke-opacity" values="0.6; 1; 0.6" dur="2s" repeatCount="infinite"/>
                             </rect>
                             <text x="0" y="4" fill="${activeColor}" font-size="8.8" font-weight="900" text-anchor="middle">
-                                ${adv.icon} ${adv.word.toUpperCase()} · ${adv.tag}
+                                ${adv.word.toUpperCase()} · ${adv.tag}
                             </text>
                         </g>
                     </svg>
@@ -511,7 +512,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label', 'Sætning:')}</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
@@ -538,7 +539,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             <div class="adverb-categories-grid">
                 <!-- 1. MÅDESADVERBIER -->
                 <div class="category-group-header">
-                    <span>🚀 ${getTranslation('adv_section1_label')}</span>
+                    <span>${getTranslation('adv_section1_label')}</span>
                 </div>
                 <div class="adverb-cards-row">
                     ${['langsomt', 'hurtigt', 'pænt'].map(key => {
@@ -549,7 +550,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                         return `
                             <button type="button" class="adverb-card-btn ${isActive ? 'active-card' : ''}" data-adv="${key}" style="--adv-accent: ${a.color};">
                                 <div class="card-head">
-                                    <span class="card-icon">${a.icon}</span>
+                                    <span class="card-icon">${renderDsIcon(a.dsIcon, '', { size: 18 })}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
                                 <div class="card-badge" style="color: ${a.color};">${badgeText}</div>
@@ -561,7 +562,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
 
                 <!-- 2. GRADSADVERBIER & CENTRALADVERBIER -->
                 <div class="category-group-header" style="margin-top: 0.6rem;">
-                    <span>🛑 ${getTranslation('adv_section2_label')}</span>
+                    <span>${getTranslation('adv_section2_label')}</span>
                 </div>
                 <div class="adverb-cards-row">
                     ${['ikke', 'gerne', 'nu'].map(key => {
@@ -572,7 +573,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                         return `
                             <button type="button" class="adverb-card-btn ${isActive ? 'active-card' : ''}" data-adv="${key}" style="--adv-accent: ${a.color};">
                                 <div class="card-head">
-                                    <span class="card-icon">${a.icon}</span>
+                                    <span class="card-icon">${renderDsIcon(a.dsIcon, '', { size: 18 })}</span>
                                     <span class="card-word">${a.word}</span>
                                 </div>
                                 <div class="card-badge" style="color: ${a.color};">${badgeText}</div>
@@ -586,7 +587,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             <!-- DIDAKTISK KOGNITIV FORKLARINGS-KORT -->
             <div class="adverb-deep-expl-card">
                 <div class="expl-header-row">
-                    <span class="expl-icon-bulb">💡</span>
+                    <span class="expl-icon-bulb">${renderDsIcon('lightbulb', '', { size: 18 })}</span>
                     <h3 class="expl-title">${getTranslation('adv_diff_title')}</h3>
                 </div>
                 <div class="expl-body-content">
@@ -606,7 +607,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
                         </div>
                     </div>
                     <div class="rule-callout-banner">
-                        <span class="rule-icon">📌</span>
+                        <span class="rule-icon">${renderDsIcon('keyRule', '', { size: 16 })}</span>
                         <div class="rule-text">
                             <strong>${getTranslation('adv_rule_chosen')}</strong> ${getTranslation('adv_card_' + adv.id + '_desc') || adv.ruleNote}
                         </div>
@@ -618,7 +619,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <!-- ========================================================= -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now', 'Din sætning nu:')}</span>
                 <div class="cs-sentence-row">
                     ${adv.isCentral 
                         ? `<span class="cs-word tag-subjekt">${state.nounAnchor}</span> <span class="cs-word tag-adjektiv">${state.selectedAdjective}</span> <span class="cs-word tag-subjekt">${state.selectedNoun}</span> <span class="cs-word tag-verbum">${state.selectedModal || state.verbAnchor}</span> <span class="cs-word tag-adverbium">${adv.word}</span> <span class="cs-word tag-verbum">${state.selectedVerb}.</span>`
@@ -649,7 +650,7 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 2 (CENTRALADVERBIER) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
-                    <span class="obl-icon">📐</span>
+                    <span class="obl-icon">${renderDsIcon('ruler', '', { size: 20 })}</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
                         <div class="obl-title">${getTranslation('adv_ordstilling_title')}</div>
@@ -731,6 +732,21 @@ export function renderAdverbBridgeView(container, navigateFn, extraData = {}) {
             padding: 0 0.2rem 3rem !important;
             box-sizing: border-box;
             color: #f8fafc;
+        }
+
+        .adverb-mobile-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .adverb-mobile-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            color: currentColor !important;
+        }
+        .adverb-mobile-view .ds-icon-svg svg {
+            display: inline-block !important;
+            vertical-align: middle !important;
         }
 
         .adverb-mobile-view .top-bar {

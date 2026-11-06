@@ -1,6 +1,7 @@
 import { getTranslation, getLang, appState } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * AdjectiveBridgeView 2.0 - Kognitiv Projektør & Magnetisk Kongruens.
@@ -46,7 +47,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
     const ADJECTIVES = {
         'sulten': {
             id: 'sulten',
-            icon: '🍏',
+            dsIcon: 'coffee',
             labelEn: 'hungry',
             type: 'Tilstand',
             color: '#f59e0b',
@@ -62,7 +63,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         },
         'lille': {
             id: 'lille',
-            icon: '🐣',
+            dsIcon: 'scale',
             labelEn: 'little / small',
             type: 'Størrelse',
             color: '#38bdf8',
@@ -77,7 +78,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         },
         'glad': {
             id: 'glad',
-            icon: '😊',
+            dsIcon: 'thought',
             labelEn: 'happy',
             type: 'Humør',
             color: '#22c55e',
@@ -92,7 +93,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         },
         'træt': {
             id: 'træt',
-            icon: '💤',
+            dsIcon: 'clock',
             labelEn: 'tired',
             type: 'Energi',
             color: '#a855f7',
@@ -152,7 +153,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
         let fullAdj = '';
         let phrase = '';
         let subRole = '';
-        const nounIcon = word === 'barn' ? '👶' : '🚗';
+        const nounIcon = word === 'barn' ? renderDsIcon('user', '', { size: 18 }) : renderDsIcon('bicycle', '', { size: 18 });
         const nounDisplay = word === 'barn' ? 'Barn' : 'Bil';
         const nounGender = word === 'barn' ? 'et-ord (intetkøn)' : 'en-ord (fælleskøn)';
 
@@ -172,7 +173,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 fullAdj = 'hurtige';
             }
             phrase = word === 'barn' ? `Det ${fullAdj} barn` : `Den ${fullAdj} bil`;
-            subRole = '⚡ Fastlåst: -e';
+            subRole = 'Fastlåst: -e';
         } else {
             // SVAG BINDING: KØN AFGØR
             if (word === 'barn') {
@@ -190,13 +191,13 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                     fullAdj = 'hurtigt';
                 }
                 phrase = `Et ${fullAdj} barn`;
-                subRole = '⚪ Intetkøn: -t';
+                subRole = 'Intetkøn: -t';
             } else {
                 stemDisplay = stem;
                 suffixDisplay = '-ø';
                 fullAdj = stem;
                 phrase = `En ${fullAdj} bil`;
-                subRole = '⚪ Fælleskøn: -ø';
+                subRole = 'Fælleskøn: -ø';
             }
         }
 
@@ -413,10 +414,10 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                             <line x1="-4" y1="42" x2="-4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
                             <line x1="4" y1="42" x2="4" y2="58" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
 
-                            <!-- Egenskab / Ikon over hovedet -->
+                            <!-- Egenskab over hovedet -->
                             <g transform="translate(0, -6)">
-                                <circle cx="0" cy="0" r="10" fill="rgba(15, 23, 42, 0.9)" stroke="${beamColor}" stroke-width="1.5"/>
-                                <text x="0" y="3.5" font-size="10.5" text-anchor="middle">${adj.icon}</text>
+                                <circle cx="0" cy="0" r="8" fill="rgba(15, 23, 42, 0.9)" stroke="${beamColor}" stroke-width="1.5"/>
+                                <circle cx="0" cy="0" r="3.5" fill="${beamColor}"/>
                             </g>
 
                             <!-- STOR, TYDELIG TEKST PÅ JORDEN -->
@@ -424,7 +425,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                                 ${state.nounAnchor} <tspan fill="${beamColor}">${adjWord}</tspan> ${state.selectedNoun}
                             </text>
                             <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
-                                (${getTranslation('grounding_step1_badge_subject') || 'beskrevet med adjektiv'})
+                                (${getTranslation('grounding_step1_badge_subject', 'subjekt')})
                             </text>
                         </g>
 
@@ -432,7 +433,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                         <g class="stage-top-badge" transform="translate(180, 15)">
                             <rect x="-105" y="-10" width="210" height="21" rx="10.5" fill="rgba(15, 23, 42, 0.94)" stroke="${beamColor}" stroke-width="1.3"/>
                             <text x="0" y="4" fill="${beamColor}" font-size="10" font-weight="900" text-anchor="middle">
-                                💡 ${getTranslation('adj_box_adj_label') || 'Projektør'}: "${adjWord}"
+                                ${getTranslation('adj_box_adj_label', 'Projektør')}: "${adjWord}"
                             </text>
                         </g>
                     </svg>
@@ -440,7 +441,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label', 'Sætning:')}</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
@@ -473,13 +474,13 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                 ${Object.values(ADJECTIVES).map(item => {
                     const word = isDef ? item.forms.definite : item.forms.indefEt;
                     const isSelected = state.selectedAdjectiveId === item.id;
-                    const typeText = getTranslation('adj_card_' + item.id + '_type') || item.type;
-                    const descText = getTranslation('adj_card_' + item.id + '_desc') || item.desc;
+                    const typeText = getTranslation('adj_card_' + item.id + '_type', item.type);
+                    const descText = getTranslation('adj_card_' + item.id + '_desc', item.desc);
                     return `
                         <button type="button" class="adj-card-btn ${isSelected ? 'active-card' : ''}" 
                                 data-id="${item.id}" style="--card-accent: ${item.color};">
                             <div class="card-head">
-                                <span class="card-icon">${item.icon}</span>
+                                <span class="card-icon">${renderDsIcon(item.dsIcon, '', { size: 20 })}</span>
                                 <span class="card-word" style="color: ${item.color};">${word}</span>
                             </div>
                             <div class="card-badge" style="color: ${item.color};">${typeText}</div>
@@ -491,10 +492,10 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
 
             <!-- KOGNITIV FORKLARINGSBOKS -->
             <div class="adj-explanation-box">
-                <div class="expl-icon">💡</div>
+                <div class="expl-icon">${renderDsIcon('lightbulb', '', { size: 20 })}</div>
                 <div class="expl-body">
                     <strong>${state.nounAnchor} ${state.selectedAdjective} ${state.selectedNoun}:</strong><br>
-                    ${getTranslation('adj_expl_box').replace('{modalWord}', getModalWord())}
+                    ${(getTranslation('adj_expl_box') || 'Med adjektivet kan vi beskrive noget eller nogen på en bestemt måde. Vi kan fremhæve et særligt træk, men handlingen <em>({modalWord} spise)</em> forbliver den samme.').replace('{modalWord}', getModalWord())}
                 </div>
             </div>
 
@@ -505,7 +506,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             <!-- ========================================================= -->
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now', 'Din sætning nu:')}</span>
                 <div class="cs-sentence-row">
                     <span class="cs-word tag-subjekt">${state.nounAnchor}</span>
                     <span class="cs-word tag-adjektiv">${adjWord}</span>
@@ -536,7 +537,7 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 4 (UDVIDET MODEL) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
-                    <span class="obl-icon">📐</span>
+                    <span class="obl-icon">${renderDsIcon('ruler', '', { size: 20 })}</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
                         <div class="obl-title">${getTranslation('adj_ordstilling_title')}</div>
@@ -683,14 +684,14 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
                         <span class="syntese-phrase">${details.phrase}</span>
                     </div>
                     <button type="button" class="btn-tts-listen-mini" id="btn-listen-agreement">
-                        <span>🔊</span>
+                        <span>${renderDsIcon('volume', '', { size: 16 })}</span>
                         <span>Lyt</span>
                     </button>
                 </div>
 
                 <!-- KOGNITIV GRAMMATIK FORKLARING -->
                 <div class="agreement-pedagogical-box ${isDef ? 'box-strong' : 'box-weak'}">
-                    <div class="ped-icon">${isDef ? '⚡' : '🧲'}</div>
+                    <div class="ped-icon">${isDef ? renderDsIcon('zap', '', { size: 20 }) : renderDsIcon('link', '', { size: 20 })}</div>
                     <div class="ped-text">
                         ${isDef ? getTranslation('adj_rule_strong') : getTranslation('adj_rule_weak')}
                     </div>
@@ -812,6 +813,21 @@ export function renderAdjectiveBridgeView(container, navigateFn, inheritedState 
             padding: 0 0.2rem 3rem !important;
             box-sizing: border-box;
             color: #f8fafc;
+        }
+
+        .adjective-mobile-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .adjective-mobile-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            color: currentColor !important;
+        }
+        .adjective-mobile-view .ds-icon-svg svg {
+            display: inline-block !important;
+            vertical-align: middle !important;
         }
 
         .adjective-mobile-view .top-bar {

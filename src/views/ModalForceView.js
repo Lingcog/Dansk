@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * ModalForceView 2.0 - Kognitiv Force Dynamics (Leonard Talmy).
@@ -43,10 +44,10 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
     // Modal bøjnings-ordbog
     const MODAL_FORMS = {
-        'skal': { present: 'skal', past: 'skulle', en: 'must / shall', icon: '⚡', color: '#f97316' },
-        'må': { present: 'må', past: 'måtte', en: 'may / allowed to', icon: '🚪', color: '#22c55e' },
-        'vil': { present: 'vil', past: 'ville', en: 'wants to / will', icon: '❤️', color: '#f43f5e' },
-        'kan': { present: 'kan', past: 'kunne', en: 'can / able to', icon: '🌐', color: '#38bdf8' }
+        'skal': { present: 'skal', past: 'skulle', en: 'must / shall', icon: 'zap', color: '#f97316' },
+        'må': { present: 'må', past: 'måtte', en: 'may / allowed to', icon: 'door', color: '#22c55e' },
+        'vil': { present: 'vil', past: 'ville', en: 'wants to / will', icon: 'activity', color: '#f43f5e' },
+        'kan': { present: 'kan', past: 'kunne', en: 'can / able to', icon: 'globe', color: '#38bdf8' }
     };
 
     function getBaseModal(m) {
@@ -342,7 +343,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                                 ${state.nounAnchor} ${state.selectedNoun}
                             </text>
                             <text x="0" y="86" fill="#cbd5e1" font-size="8.5" font-weight="700" text-anchor="middle">
-                                (${getTranslation('grounding_step1_badge_subject') || 'subjekt'})
+                                (${getTranslation('grounding_step1_badge_subject', 'subjekt')})
                             </text>
                         </g>
 
@@ -390,7 +391,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
                 <!-- INTEGRERET LIVE SÆTNING I DEN KLÆBENDE BAR -->
                 <div class="sticky-sentence-summary">
-                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label') || 'Sætning'}:</span>
+                    <span class="summary-prefix">${getTranslation('grounding_step3_full_sentence_label', 'Sætning:')}</span>
                     <span class="summary-phrase">"${getFullSentence()}"</span>
                 </div>
             </div>
@@ -426,7 +427,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <!-- SKAL -->
                 <button type="button" class="modal-card-btn ${base === 'skal' ? 'active-card' : ''}" data-modal="skal" style="--card-accent: #f97316;">
                     <div class="card-head">
-                        <span class="card-icon">⚡</span>
+                        <span class="card-icon">${renderDsIcon('zap', '', { size: 20 })}</span>
                         <span class="card-word">${state.isPast ? 'skulle' : 'skal'}</span>
                     </div>
                     <div class="card-badge" style="color: #f97316;">${getTranslation('modal_card_skal_badge')}</div>
@@ -436,7 +437,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <!-- MÅ -->
                 <button type="button" class="modal-card-btn ${base === 'må' ? 'active-card' : ''}" data-modal="må" style="--card-accent: #22c55e;">
                     <div class="card-head">
-                        <span class="card-icon">🚪</span>
+                        <span class="card-icon">${renderDsIcon('door', '', { size: 20 })}</span>
                         <span class="card-word">${state.isPast ? 'måtte' : 'må'}</span>
                     </div>
                     <div class="card-badge" style="color: #22c55e;">${getTranslation('modal_card_maa_badge')}</div>
@@ -446,7 +447,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <!-- VIL -->
                 <button type="button" class="modal-card-btn ${base === 'vil' ? 'active-card' : ''}" data-modal="vil" style="--card-accent: #f43f5e;">
                     <div class="card-head">
-                        <span class="card-icon">❤️</span>
+                        <span class="card-icon">${renderDsIcon('activity', '', { size: 20 })}</span>
                         <span class="card-word">${state.isPast ? 'ville' : 'vil'}</span>
                     </div>
                     <div class="card-badge" style="color: #f43f5e;">${getTranslation('modal_card_vil_badge')}</div>
@@ -456,7 +457,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <!-- KAN -->
                 <button type="button" class="modal-card-btn ${base === 'kan' ? 'active-card' : ''}" data-modal="kan" style="--card-accent: #38bdf8;">
                     <div class="card-head">
-                        <span class="card-icon">🌐</span>
+                        <span class="card-icon">${renderDsIcon('globe', '', { size: 20 })}</span>
                         <span class="card-word">${state.isPast ? 'kunne' : 'kan'}</span>
                     </div>
                     <div class="card-badge" style="color: #38bdf8;">${getTranslation('modal_card_kan_badge')}</div>
@@ -466,7 +467,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
             <!-- KOGNITIV FORKLARINGS-BANNER -->
             <div class="force-explanation-box">
-                <div class="expl-icon">💡</div>
+                <div class="expl-icon">${renderDsIcon('lightbulb', '', { size: 20 })}</div>
                 <div class="expl-body">${explanationText}</div>
             </div>
 
@@ -475,11 +476,11 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
                 <span class="time-toggle-label">${getTranslation('modal_time_toggle_label')}</span>
                 <div class="time-toggle-pill">
                     <button type="button" class="time-btn ${!state.isPast ? 'active' : ''}" id="btn-toggle-present">
-                        <span>🟢</span>
+                        <span class="time-dot" style="background:#22c55e; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
                         <span>${getTranslation('modal_time_present')}</span>
                     </button>
                     <button type="button" class="time-btn ${state.isPast ? 'active' : ''}" id="btn-toggle-past">
-                        <span>🟠</span>
+                        <span class="time-dot" style="background:#f59e0b; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
                         <span>${getTranslation('modal_time_past')}</span>
                     </button>
                 </div>
@@ -487,7 +488,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
 
             <!-- NUVÆRENDE SÆTNING PÅ DETTE TRIN -->
             <div class="current-sentence-badge-box">
-                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now')}</span>
+                <span class="cs-label">${getTranslation('grounding_step3_your_sentence_now', 'Din sætning nu:')}</span>
                 <div class="cs-sentence-row">
                     <span class="cs-word tag-subjekt">${state.nounAnchor} ${state.selectedNoun}</span>
                     <span class="cs-word tag-verbum">${getCurrentModalWord()}</span>
@@ -515,7 +516,7 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 3 (MODALVERBER) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
-                    <span class="obl-icon">📐</span>
+                    <span class="obl-icon">${renderDsIcon('ruler', '', { size: 20 })}</span>
                     <div class="obl-text">
                         <span class="obl-badge">Ordstilling</span>
                         <div class="obl-title">${getTranslation('modal_ordstilling_title')}</div>
@@ -615,6 +616,21 @@ export function renderModalForceView(container, navigateFn, inheritedState = {})
             padding: 0 0.2rem 3rem !important;
             box-sizing: border-box;
             color: #f8fafc;
+        }
+
+        .modal-force-mobile-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .modal-force-mobile-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            color: currentColor !important;
+        }
+        .modal-force-mobile-view .ds-icon-svg svg {
+            display: inline-block !important;
+            vertical-align: middle !important;
         }
 
         .modal-force-mobile-view .top-bar {

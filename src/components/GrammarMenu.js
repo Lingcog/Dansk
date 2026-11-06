@@ -71,10 +71,11 @@ export function renderGrammarMenu(currentView, navigateFn) {
             color: white;
         }
         .grammar-nav-btn.active {
-            background: var(--accent-light, #ffeb3b);
-            color: black;
-            border-color: var(--accent-light, #ffeb3b);
+            background: rgba(2, 132, 199, 0.25);
+            color: #38bdf8;
+            border-color: #38bdf8;
             font-weight: 700;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
     `;
     document.head.appendChild(style);

@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { renderGrammarMenu } from '../components/GrammarMenu.js';
 import { baseUrl } from '../utils/config.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 
 /**
  * GroundingView 2.0 - 100% Mobiloptimeret & Responsiv.
@@ -198,7 +199,7 @@ export function renderGroundingView(container, navigateFn) {
                             <g id="balloon-badge" transform="translate(0, -23)">
                                 <rect x="-50" y="-8" width="100" height="16" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="1"/>
                                 <text id="balloon-badge-text" x="0" y="3.5" fill="#38bdf8" font-size="8.5" font-weight="800" text-anchor="middle">
-                                    ${getTranslation('grounding_stage_abstract') || '🎈 Abstrakt (svæver)'}
+                                    ${getTranslation('grounding_stage_abstract') || 'Abstrakt (svæver)'}
                                 </text>
                             </g>
                         </g>
@@ -257,7 +258,7 @@ export function renderGroundingView(container, navigateFn) {
             groundAnchor.style.transform = 'translate(75px, 74px) scale(0)';
             groundAnchor.style.opacity = '0';
             if (tetherRopeFlux) tetherRopeFlux.style.opacity = '0';
-            balloonBadgeText.textContent = getTranslation('grounding_stage_abstract') || '🎈 Abstrakt (svæver)';
+            balloonBadgeText.textContent = getTranslation('grounding_stage_abstract') || 'Abstrakt (svæver)';
             balloonBadgeText.style.fill = '#38bdf8';
             liveSlotNoun.className = 'slot-item slot-empty';
             liveSlotNoun.textContent = getTranslation('grounding_slot_noun_empty') || '1. Anker ?';
@@ -274,7 +275,7 @@ export function renderGroundingView(container, navigateFn) {
                 tetherRopeFlux.style.transition = 'opacity 0.6s ease 0.5s';
             }
 
-            balloonBadgeText.textContent = `${getTranslation('grounding_stage_anchored') || '⚓ Forankret:'} "${state.nounAnchor}"`;
+            balloonBadgeText.textContent = `${getTranslation('grounding_stage_anchored') || 'Forankret:'} "${state.nounAnchor}"`;
             balloonBadgeText.style.fill = '#fcd34d';
 
             liveSlotNoun.className = 'slot-item slot-active-noun';
@@ -292,7 +293,7 @@ export function renderGroundingView(container, navigateFn) {
             liveSlotVerb.className = 'slot-item slot-active-verb';
             liveSlotVerb.textContent = state.verbAnchor;
 
-            balloonBadgeText.textContent = `${getTranslation('grounding_stage_timed') || '⏰ I tid:'} "${state.verbAnchor}"`;
+            balloonBadgeText.textContent = `${getTranslation('grounding_stage_timed') || 'I tid:'} "${state.verbAnchor}"`;
             balloonBadgeText.style.fill = '#4ade80';
         }
 
@@ -304,7 +305,7 @@ export function renderGroundingView(container, navigateFn) {
                 landingRipple.style.opacity = '1';
                 landingRipple.style.transition = 'opacity 0.6s ease 0.8s';
             }
-            balloonBadgeText.textContent = getTranslation('grounding_stage_landed') || '🌱 Landet på jorden!';
+            balloonBadgeText.textContent = getTranslation('grounding_stage_landed') || 'Landet på jorden!';
             balloonBadgeText.style.fill = '#4ade80';
         } else {
             balloonCraft.classList.add('balloon-floating-anim');
@@ -353,7 +354,6 @@ export function renderGroundingView(container, navigateFn) {
             <div class="cards-layout-2x2">
                 <button type="button" class="mobile-anchor-btn" data-anchor="Mit">
                     <div class="btn-top">
-                        <span class="btn-emoji">🏷️</span>
                         <span class="btn-word">Mit</span>
                     </div>
                     <div class="btn-role">${getTranslation('grounding_anchor_mit_role')}</div>
@@ -362,7 +362,6 @@ export function renderGroundingView(container, navigateFn) {
 
                 <button type="button" class="mobile-anchor-btn" data-anchor="Et">
                     <div class="btn-top">
-                        <span class="btn-emoji">🔦</span>
                         <span class="btn-word">Et</span>
                     </div>
                     <div class="btn-role">${getTranslation('grounding_anchor_et_role')}</div>
@@ -371,7 +370,6 @@ export function renderGroundingView(container, navigateFn) {
 
                 <button type="button" class="mobile-anchor-btn" data-anchor="Det">
                     <div class="btn-top">
-                        <span class="btn-emoji">👉</span>
                         <span class="btn-word">Det</span>
                     </div>
                     <div class="btn-role">${getTranslation('grounding_anchor_det_role')}</div>
@@ -380,7 +378,6 @@ export function renderGroundingView(container, navigateFn) {
 
                 <button type="button" class="mobile-anchor-btn" data-anchor="Dette">
                     <div class="btn-top">
-                        <span class="btn-emoji">📍</span>
                         <span class="btn-word">Dette</span>
                     </div>
                     <div class="btn-role">${getTranslation('grounding_anchor_dette_role')}</div>
@@ -425,7 +422,6 @@ export function renderGroundingView(container, navigateFn) {
             <div class="cards-layout-stack">
                 <button type="button" class="mobile-anchor-btn" data-verb="spiser">
                     <div class="btn-top">
-                        <span class="btn-emoji">🟢</span>
                         <span class="btn-word">spiser</span>
                     </div>
                     <div class="btn-role" style="color: #4ade80;">${getTranslation('grounding_verb_spiser_role')}</div>
@@ -434,7 +430,6 @@ export function renderGroundingView(container, navigateFn) {
 
                 <button type="button" class="mobile-anchor-btn" data-verb="spiste">
                     <div class="btn-top">
-                        <span class="btn-emoji">📍</span>
                         <span class="btn-word">spiste</span>
                     </div>
                     <div class="btn-role" style="color: #f87171;">${getTranslation('grounding_verb_spiste_role')}</div>
@@ -443,7 +438,6 @@ export function renderGroundingView(container, navigateFn) {
 
                 <button type="button" class="mobile-anchor-btn" data-verb="skal spise">
                     <div class="btn-top">
-                        <span class="btn-emoji">🔵</span>
                         <span class="btn-word">skal spise</span>
                     </div>
                     <div class="btn-role" style="color: #38bdf8;">${getTranslation('grounding_verb_skal_spise_role')}</div>
@@ -503,11 +497,11 @@ export function renderGroundingView(container, navigateFn) {
 
             <div class="assembly-actions-row">
                 <button type="button" class="btn-confirm-ground" id="btn-check-assembly">
-                    <span>⚓</span>
+                    ${renderDsIcon('check', '', { size: 18 })}
                     <span>${getTranslation('grounding_btn_check') || getTranslation('checkResult')}</span>
                 </button>
                 <button type="button" class="btn-reset-ground" id="btn-reset-slots">
-                    ${getTranslation('grounding_btn_reset') || 'Nulstil 🔄'}
+                    ${getTranslation('grounding_btn_reset') || 'Nulstil'}
                 </button>
             </div>
 
@@ -558,8 +552,9 @@ export function renderGroundingView(container, navigateFn) {
                 feedbackBox.style.display = 'block';
                 feedbackBox.className = 'assembly-feedback-banner success';
                 feedbackBox.innerHTML = `
-                    <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.2rem;">
-                        🎉 ${getTranslation('grounding_success_title') || getTranslation('groundingSuccess')}
+                    <div style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.45rem;">
+                        ${renderDsIcon('check', '', { size: 18 })}
+                        <span>${getTranslation('grounding_success_title') || getTranslation('groundingSuccess')}</span>
                     </div>
                     <div style="font-size: 1.15rem; color: #f8fafc; font-weight: 800; margin-bottom: 0.3rem;">
                         "${fullSentence}"
@@ -617,11 +612,12 @@ export function renderGroundingView(container, navigateFn) {
                             <animate attributeName="stroke-dashoffset" from="20" to="0" dur="0.9s" repeatCount="infinite"/>
                         </path>
                         
-                        <!-- Pulserende hjerte-ikon -->
-                        <text x="145" y="55" font-size="16" text-anchor="middle">
-                            ❤️
-                            <animate attributeName="font-size" values="14; 18; 14" dur="1.2s" repeatCount="infinite"/>
-                        </text>
+                        <!-- Pulserende hjerte-ikon (vektor) -->
+                        <g transform="translate(138, 45)">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#f43f5e" transform="scale(0.65)">
+                                <animateTransform attributeName="transform" type="scale" values="0.65; 0.78; 0.65" dur="1.2s" repeatCount="infinite"/>
+                            </path>
+                        </g>
                         <text x="100" y="115" font-size="11" fill="#cbd5e1" font-weight="700" text-anchor="middle">Mig (taleren)</text>
                         <text x="180" y="115" font-size="11" fill="#cbd5e1" font-weight="700" text-anchor="middle">Mit barn</text>
                     </svg>
@@ -768,7 +764,6 @@ export function renderGroundingView(container, navigateFn) {
 
         stepDiv.innerHTML = `
             <div class="celebration-hero-card">
-                <div class="celebration-icon">🏆</div>
                 <h2 style="font-size: 1.6rem; color: white; margin-bottom: 0.6rem; font-weight: 800;">
                     ${getTranslation('grounding_final_hero_title')}
                 </h2>
@@ -783,12 +778,12 @@ export function renderGroundingView(container, navigateFn) {
                         <span class="legend-pill tag-verbum-pill"><span class="legend-dot" style="background:#ef4444;"></span> ${getTranslation('legend_verbum')}</span>
                     </div>
                     <button type="button" class="btn-hear-sentence" id="btn-speak-final" style="margin-top: 0.75rem;">
-                        <span>🔊</span>
+                        <span>${renderDsIcon('volume', '', { size: 18 })}</span>
                         <span>${getTranslation('btn_listen_sentence')}</span>
                     </button>
                 </div>
                 <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 540px; margin: 1rem auto 0; line-height: 1.5;">
-                    ${getTranslation('grounding_final_msg') || getTranslation('groundingFinalMsg')}
+                    ${getTranslation('grounding_final_msg') || 'Din grundsætning danner nu kernen i resten af vores grammatiske rejse.'}
                 </p>
             </div>
 
@@ -814,7 +809,7 @@ export function renderGroundingView(container, navigateFn) {
             <!-- RELEVANT LINK TIL ORDSTILLINGSFLADEN: DEL 1 (GRUNDSÆTNINGENS 4 LED) -->
             <div class="ordstilling-bridge-link-card">
                 <div class="obl-left">
-                    <span class="obl-icon">📐</span>
+                    <span class="obl-icon">${renderDsIcon('ruler', '', { size: 20 })}</span>
                     <div class="obl-text">
                         <span class="obl-badge">${getTranslation('grounding_ordstilling_badge')}</span>
                         <div class="obl-title">${getTranslation('grounding_ordstilling_title')}</div>
@@ -879,6 +874,21 @@ export function renderGroundingView(container, navigateFn) {
             padding: 0 0.2rem 2.5rem !important;
             box-sizing: border-box;
             color: #f8fafc;
+        }
+
+        .grounding-mobile-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .grounding-mobile-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            color: currentColor !important;
+        }
+        .grounding-mobile-view .ds-icon-svg svg {
+            display: inline-block !important;
+            vertical-align: middle !important;
         }
 
         .grounding-mobile-view .top-bar {

@@ -1,17 +1,22 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
+import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
 
 /**
  * TrorSynesMenerView - Målrettet grammatikflade til de fire menings- og holdningsverber:
  * "Tror, synes, mener eller ved?"
  * 
  * 4 zoner:
- *  1. 🧭 Det Store Regel-Kompas (Regler, spørgsmål & kursist-fælder)
- *  2. 🔍 Situation-Spotlight (Sammenlign i samme kontekst)
- *  3. 🎯 Interaktiv Quiz (10 hverdagsdilemmaer med forklaringer og TTS)
- *  4. 🚨 Spot Fejlen! (Er sætningen rigtig eller forkert på dansk?)
+ *  1. Det Store Regel-Kompas (Regler, spørgsmål & sprogregler)
+ *  2. Situation-Spotlight (Sammenlign i samme kontekst)
+ *  3. Interaktiv Quiz (10 hverdagsdilemmaer med forklaringer og TTS)
+ *  4. Spot Fejlen! (Er sætningen rigtig eller forkert på dansk?)
  */
 export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
+
+    // Sikr ren verbum-nuance
+    applyVerbNuance(getActiveVerbNuance());
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container tror-synes-mener-view';
@@ -34,10 +39,10 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
 
     const verbHubBtn = document.createElement('button');
     verbHubBtn.className = 'back-btn';
-    verbHubBtn.style.background = 'rgba(239, 68, 68, 0.15)';
-    verbHubBtn.style.borderColor = '#ef4444';
-    verbHubBtn.style.color = '#f87171';
-    verbHubBtn.innerHTML = getTranslation('tsm_top_verb_hub');
+    verbHubBtn.style.background = 'rgba(56, 189, 248, 0.1)';
+    verbHubBtn.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+    verbHubBtn.style.color = '#38bdf8';
+    verbHubBtn.innerHTML = getTranslation('tsm_top_verb_hub', 'Se Top 100 Verber →');
     verbHubBtn.onclick = () => navigateFn('top100_verber');
     topBar.appendChild(verbHubBtn);
 
@@ -53,7 +58,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         window.speechSynthesis.speak(utterance);
     }
 
-    // Styles
+    // Styles: Kølig skandinavisk æstetik
     const style = document.createElement('style');
     style.textContent = `
         .tror-synes-mener-view {
@@ -62,22 +67,37 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             padding: 1rem 1.5rem 4rem;
             color: #f8fafc;
         }
+        .tror-synes-mener-view .ds-icon-emoji {
+            display: none !important;
+        }
+        .tror-synes-mener-view .ds-icon-svg {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            color: currentColor !important;
+        }
+        .tror-synes-mener-view .ds-icon-svg svg {
+            display: inline-block !important;
+            vertical-align: middle !important;
+        }
         .tsm-hero {
             text-align: center;
             margin-bottom: 2.2rem;
         }
         .tsm-hero h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444, #a855f7);
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .tsm-hero p {
-            color: #cbd5e1;
-            font-size: 1.15rem;
-            max-width: 800px;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 760px;
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
@@ -90,157 +110,190 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         .tsm-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.45rem 1rem;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            border-width: 1.5px;
+            gap: 0.45rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-width: 1px;
             border-style: solid;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
         }
-        .pill-synes { background: rgba(234, 179, 8, 0.15); border-color: #eab308; color: #fde047; }
-        .pill-tror { background: rgba(168, 85, 247, 0.15); border-color: #a855f7; color: #d8b4fe; }
-        .pill-mener { background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #7dd3fc; }
-        .pill-ved { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #86efac; }
+        .pill-synes { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.35); color: #fbbf24; }
+        .pill-tror { background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.35); color: #7dd3fc; }
+        .pill-mener { background: rgba(129, 140, 248, 0.1); border-color: rgba(129, 140, 248, 0.35); color: #a5b4fc; }
+        .pill-ved { background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.35); color: #6ee7b7; }
 
-        /* Tabs Navigation */
+        /* Tabs Navigation - Kølig skandinavisk */
         .tsm-tabs-menu {
             display: flex;
-            gap: 0.6rem;
+            gap: 0.5rem;
             margin: 2rem 0;
             flex-wrap: wrap;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 0.5rem;
-            border-radius: 16px;
+            background: #0f172a;
+            padding: 0.45rem;
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .tsm-tab-btn {
             background: transparent;
             color: #94a3b8;
-            border: none;
-            padding: 0.75rem 1.3rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
+            border: 1px solid transparent;
+            padding: 0.65rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.92rem;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.55rem;
+        }
+        .tsm-tab-btn svg {
+            color: #64748b;
+            transition: color 0.2s ease;
         }
         .tsm-tab-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.06);
+            color: #f1f5f9;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .tsm-tab-btn:hover svg {
+            color: #94a3b8;
         }
         .tsm-tab-btn.active {
-            background: #ef4444;
-            color: white;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #38bdf8;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+        .tsm-tab-btn.active svg {
+            color: #ffffff;
         }
 
         /* Compass Cards Grid */
         .tsm-compass-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            gap: 1.4rem;
             margin-bottom: 2.5rem;
+            align-items: stretch;
         }
         .compass-card {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            background: linear-gradient(180deg, #1e293b 0%, #131d2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
         }
         .compass-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
-        .card-synes { border-color: rgba(234, 179, 8, 0.5); }
-        .card-synes:hover { border-color: #eab308; box-shadow: 0 10px 30px rgba(234, 179, 8, 0.25); }
-        .card-tror { border-color: rgba(168, 85, 247, 0.5); }
-        .card-tror:hover { border-color: #a855f7; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.25); }
-        .card-mener { border-color: rgba(56, 189, 248, 0.5); }
-        .card-mener:hover { border-color: #38bdf8; box-shadow: 0 10px 30px rgba(56, 189, 248, 0.25); }
-        .card-ved { border-color: rgba(34, 197, 94, 0.5); }
-        .card-ved:hover { border-color: #22c55e; box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25); }
+        .card-synes { border-top: 3.5px solid #f59e0b; }
+        .card-tror { border-top: 3.5px solid #38bdf8; }
+        .card-mener { border-top: 3.5px solid #818cf8; }
+        .card-ved { border-top: 3.5px solid #34d399; }
 
         .compass-header {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 0.85rem;
+            margin-bottom: 1.1rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
         .compass-icon {
-            font-size: 2rem;
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
         }
+        .card-synes .compass-icon { color: #fbbf24; }
+        .card-tror .compass-icon { color: #38bdf8; }
+        .card-mener .compass-icon { color: #a5b4fc; }
+        .card-ved .compass-icon { color: #34d399; }
+
         .compass-title-box h3 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 800;
+            letter-spacing: 0.02em;
             margin: 0;
         }
         .compass-title-box span {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
         }
         .compass-rule {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             line-height: 1.5;
-            color: #f1f5f9;
+            color: #cbd5e1;
             margin-bottom: 1rem;
             background: rgba(15, 23, 42, 0.6);
-            padding: 0.8rem;
+            padding: 0.85rem 1rem;
             border-radius: 12px;
+            border-left: 3px solid rgba(255, 255, 255, 0.15);
         }
+        .card-synes .compass-rule { border-left-color: #f59e0b; }
+        .card-tror .compass-rule { border-left-color: #38bdf8; }
+        .card-mener .compass-rule { border-left-color: #818cf8; }
+        .card-ved .compass-rule { border-left-color: #34d399; }
+
         .compass-examples {
             list-style: none;
             padding: 0;
             margin: 0 0 1.2rem 0;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.65rem;
             flex-grow: 1;
         }
         .compass-examples li {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: #cbd5e1;
             display: flex;
             align-items: baseline;
-            gap: 0.6rem;
-            line-height: 1.5;
+            gap: 0.65rem;
+            line-height: 1.45;
         }
-        .compass-examples .ex-icon {
+        .ex-bullet {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 7px;
             flex-shrink: 0;
-            font-size: 1.15rem;
-            line-height: 1;
-            transform: translateY(2px);
+            background: #64748b;
         }
+        .card-synes .ex-bullet { background: #f59e0b; }
+        .card-tror .ex-bullet { background: #38bdf8; }
+        .card-mener .ex-bullet { background: #818cf8; }
+        .card-ved .ex-bullet { background: #34d399; }
+
         .compass-examples .ex-text {
             flex: 1;
             min-width: 0;
         }
-        .card-synes .compass-examples strong { color: #fde047; font-weight: 800; }
-        .card-tror .compass-examples strong { color: #d8b4fe; font-weight: 800; }
-        .card-mener .compass-examples strong { color: #7dd3fc; font-weight: 800; }
-        .card-ved .compass-examples strong { color: #86efac; font-weight: 800; }
+        .card-synes .compass-examples strong { color: #fbbf24; font-weight: 700; }
+        .card-tror .compass-examples strong { color: #7dd3fc; font-weight: 700; }
+        .card-mener .compass-examples strong { color: #a5b4fc; font-weight: 700; }
+        .card-ved .compass-examples strong { color: #6ee7b7; font-weight: 700; }
+
         .compass-trap {
-            background: rgba(239, 68, 68, 0.12);
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             border-left: 3px solid #ef4444;
-            padding: 0.65rem 0.8rem;
-            border-radius: 0 8px 8px 0;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
             font-size: 0.82rem;
             color: #fca5a5;
             line-height: 1.4;
@@ -249,31 +302,32 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             color: #f87171;
             display: block;
             margin-bottom: 0.2rem;
+            font-weight: 700;
         }
 
         /* Case Spotlight Section */
         .spotlight-box {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            background: linear-gradient(180deg, #1e293b 0%, #131d2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             margin-bottom: 2.5rem;
         }
         .spotlight-selector {
             display: flex;
-            gap: 0.8rem;
-            margin-bottom: 1.8rem;
+            gap: 0.75rem;
+            margin-bottom: 1.6rem;
             flex-wrap: wrap;
         }
         .spotlight-btn {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #cbd5e1;
             padding: 0.6rem 1.2rem;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -282,20 +336,20 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             color: white;
         }
         .spotlight-btn.active {
-            background: rgba(56, 189, 248, 0.2);
+            background: rgba(2, 132, 199, 0.15);
             border-color: #38bdf8;
             color: #38bdf8;
-            box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
         }
         .spotlight-rows {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.9rem;
         }
         .spotlight-row {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
             padding: 1.1rem 1.4rem;
             display: flex;
             align-items: center;
@@ -305,7 +359,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             transition: all 0.2s ease;
         }
         .spotlight-row:hover {
-            border-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.18);
             background: rgba(15, 23, 42, 0.9);
         }
         .spotlight-left {
@@ -315,51 +369,61 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             flex-wrap: wrap;
         }
         .spotlight-tag {
-            font-weight: 800;
-            padding: 0.35rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            min-width: 90px;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            min-width: 85px;
             text-align: center;
+            letter-spacing: 0.03em;
         }
         .spotlight-sentence {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: #f8fafc;
             font-weight: 600;
         }
         .spotlight-explanation {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: #94a3b8;
-            max-width: 400px;
-            text-align: right;
-            line-height: 1.4;
+            max-width: 440px;
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            line-height: 1.45;
+            text-align: left;
+        }
+        .spotlight-expl-icon {
+            color: #38bdf8;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: inline-flex;
         }
 
         /* Quiz Section */
         .tsm-quiz-card {
-            background: var(--card-bg, #1e293b);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 2.2rem;
+            background: linear-gradient(180deg, #1e293b 0%, #131d2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
         }
         .quiz-counter-badge {
             display: inline-block;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid #ef4444;
-            color: #f87171;
-            padding: 0.35rem 0.9rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            padding: 0.3rem 0.85rem;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
+            font-size: 0.82rem;
+            font-weight: 700;
             margin-bottom: 1.2rem;
         }
         .quiz-sentence-box {
             background: #0f172a;
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 1.6rem 1.8rem;
-            font-size: 1.35rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem 1.8rem;
+            font-size: 1.28rem;
             font-weight: 600;
             line-height: 1.6;
             margin-bottom: 1.5rem;
@@ -371,22 +435,22 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             flex-wrap: wrap;
         }
         .quiz-audio-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #38bdf8;
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
             transition: all 0.2s ease;
         }
         .quiz-audio-btn:hover {
-            background: rgba(56, 189, 248, 0.25);
-            transform: scale(1.1);
+            background: rgba(56, 189, 248, 0.2);
+            border-color: #38bdf8;
+            transform: scale(1.08);
         }
         .quiz-options-grid {
             display: grid;
@@ -396,23 +460,23 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         }
         .quiz-opt-btn {
             background: rgba(15, 23, 42, 0.85);
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 1.1rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 1rem;
             color: white;
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.25rem;
         }
         .quiz-opt-btn:hover {
             border-color: #38bdf8;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.2);
         }
         .quiz-opt-btn .opt-sub {
             font-size: 0.78rem;
@@ -421,55 +485,55 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             text-transform: uppercase;
         }
         .quiz-opt-btn.correct {
-            background: rgba(34, 197, 94, 0.25) !important;
+            background: rgba(34, 197, 94, 0.2) !important;
             border-color: #22c55e !important;
             color: #4ade80 !important;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5) !important;
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.4) !important;
         }
         .quiz-opt-btn.wrong {
-            background: rgba(239, 68, 68, 0.2) !important;
+            background: rgba(239, 68, 68, 0.15) !important;
             border-color: #ef4444 !important;
             color: #f87171 !important;
-            opacity: 0.6;
+            opacity: 0.65;
         }
         .quiz-feedback-box {
             margin-top: 1.2rem;
             padding: 1.2rem 1.5rem;
-            border-radius: 16px;
+            border-radius: 14px;
             animation: fadeIn 0.3s ease;
         }
         .quiz-next-btn {
-            background: linear-gradient(135deg, #ef4444, #f97316);
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
             color: white;
             border: none;
-            padding: 0.9rem 2rem;
-            border-radius: 14px;
-            font-size: 1.1rem;
-            font-weight: 800;
+            padding: 0.85rem 1.8rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
             margin-top: 1.2rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
         .quiz-next-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
         }
 
         /* Spot Fejlen Section */
         .trap-item {
-            background: var(--card-bg, #1e293b);
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 1.4rem;
-            margin-bottom: 1.2rem;
+            background: linear-gradient(180deg, #1e293b 0%, #131d2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.3rem 1.5rem;
+            margin-bottom: 1.1rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.9rem;
         }
         .trap-sentence {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.15rem;
+            font-weight: 600;
             color: #f8fafc;
         }
         .trap-buttons {
@@ -477,28 +541,39 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             gap: 0.8rem;
         }
         .trap-vote-btn {
-            padding: 0.6rem 1.4rem;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.95rem;
+            padding: 0.55rem 1.3rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 1px solid transparent;
             transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
         }
         .trap-btn-right {
-            background: rgba(34, 197, 94, 0.15);
-            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.35);
             color: #4ade80;
         }
+        .trap-btn-right:hover {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+        }
         .trap-btn-wrong {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.35);
             color: #f87171;
         }
+        .trap-btn-wrong:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
         .trap-result {
-            padding: 1rem;
+            padding: 1rem 1.2rem;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             line-height: 1.5;
             animation: fadeIn 0.3s ease;
         }
@@ -506,6 +581,37 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .tror-synes-mener-view {
+                padding: 0.75rem 0.75rem 3rem;
+            }
+            .tsm-hero h1 {
+                font-size: 1.8rem;
+            }
+            .tsm-compass-grid {
+                grid-template-columns: 1fr;
+            }
+            .spotlight-box, .tsm-quiz-card {
+                padding: 1.2rem 1rem;
+            }
+            .spotlight-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            .spotlight-explanation {
+                text-align: left;
+                max-width: 100%;
+            }
+            .quiz-sentence-box {
+                padding: 1.1rem 1.2rem;
+                font-size: 1.1rem;
+            }
+            .quiz-options-grid {
+                grid-template-columns: 1fr;
+            }
         }
     `;
     viewContainer.appendChild(style);
@@ -529,10 +635,10 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'tsm-tabs-menu';
     const tabs = [
-        { id: 'tab_compass', label: getTranslation('tsm_tab_compass'), icon: '' },
-        { id: 'tab_spotlight', label: getTranslation('tsm_tab_spotlight'), icon: '' },
-        { id: 'tab_quiz', label: getTranslation('tsm_tab_quiz'), icon: '' },
-        { id: 'tab_fejlen', label: getTranslation('tsm_tab_fejlen'), icon: '' }
+        { id: 'tab_compass', label: getTranslation('tsm_tab_compass', 'Regel-kompasset'), iconName: 'compass' },
+        { id: 'tab_spotlight', label: getTranslation('tsm_tab_spotlight', 'Situation-spotlight'), iconName: 'search' },
+        { id: 'tab_quiz', label: getTranslation('tsm_tab_quiz', 'Interaktiv quiz (10 opgaver)'), iconName: 'target' },
+        { id: 'tab_fejlen', label: getTranslation('tsm_tab_fejlen', 'Spot fejlen! (Rigtig eller forkert?)'), iconName: 'alertTriangle' }
     ];
 
     let activeTab = 'tab_compass';
@@ -541,7 +647,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         const btn = document.createElement('button');
         btn.className = `tsm-tab-btn ${t.id === activeTab ? 'active' : ''}`;
         btn.dataset.tab = t.id;
-        btn.textContent = t.label;
+        btn.innerHTML = `${renderDsIcon(t.iconName, '', { size: 17 })} <span>${t.label}</span>`;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -551,7 +657,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     viewContainer.appendChild(panelsHolder);
 
     // ==========================================================
-    // --- FANE 1: 🧭 DET STORE REGEL-KOMPAS ---
+    // --- FANE 1: DET STORE REGEL-KOMPAS ---
     // ==========================================================
     const compassPanel = document.createElement('div');
     compassPanel.id = 'panel_compass';
@@ -560,22 +666,22 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             <!-- 1. SYNES -->
             <div class="compass-card card-synes">
                 <div class="compass-header">
-                    <div class="compass-icon">👅</div>
+                    <div class="compass-icon">${renderDsIcon('eye', '', { size: 24 })}</div>
                     <div class="compass-title-box">
-                        <h3 style="color: #fde047;">SYNES</h3>
-                        <span style="color: #eab308;">${getTranslation('tsm_synes_tag')}</span>
+                        <h3 style="color: #fbbf24;">SYNES</h3>
+                        <span style="color: #f59e0b;">${getTranslation('tsm_synes_tag', 'Egen smag & sansning')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
                     ${getTranslation('tsm_synes_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li><span class="ex-icon">☕</span><span class="ex-text">"Jeg <strong>synes</strong>, kaffen smager godt."</span></li>
-                    <li><span class="ex-icon">🎬</span><span class="ex-text">"Hvad <strong>synes</strong> du om filmen?" (efter du har set den)</span></li>
-                    <li><span class="ex-icon">🥶</span><span class="ex-text">"Jeg <strong>synes</strong>, her er koldt i dag."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>synes</strong>, kaffen smager godt."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Hvad <strong>synes</strong> du om filmen?" (efter du har set den)</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>synes</strong>, her er koldt i dag."</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>${getTranslation('tsm_synes_trap_title')}</strong>
+                    <strong>${getTranslation('tsm_synes_trap_title', 'Vigtig sprogregel:')}</strong>
                     ${getTranslation('tsm_synes_trap_desc')}
                 </div>
             </div>
@@ -583,22 +689,22 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             <!-- 2. TROR -->
             <div class="compass-card card-tror">
                 <div class="compass-header">
-                    <div class="compass-icon">🔮</div>
+                    <div class="compass-icon">${renderDsIcon('thought', '', { size: 24 })}</div>
                     <div class="compass-title-box">
-                        <h3 style="color: #d8b4fe;">TROR</h3>
-                        <span style="color: #a855f7;">${getTranslation('tsm_tror_tag')}</span>
+                        <h3 style="color: #7dd3fc;">TROR</h3>
+                        <span style="color: #38bdf8;">${getTranslation('tsm_tror_tag', 'Gæt, vejr & fremtid')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
                     ${getTranslation('tsm_tror_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li><span class="ex-icon">🌧️</span><span class="ex-text">"Jeg <strong>tror</strong>, det regner i morgen."</span></li>
-                    <li><span class="ex-icon">🚌</span><span class="ex-text">"Jeg <strong>tror</strong>, bussen kommer lige om lidt."</span></li>
-                    <li><span class="ex-icon">🎂</span><span class="ex-text">"Hvor gammel er han? – Jeg <strong>tror</strong>, han er 30."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>tror</strong>, det regner i morgen."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>tror</strong>, bussen kommer lige om lidt."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Hvor gammel er han? – Jeg <strong>tror</strong>, han er 30."</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>${getTranslation('tsm_tror_trap_title')}</strong>
+                    <strong>${getTranslation('tsm_tror_trap_title', 'Vigtig sprogregel:')}</strong>
                     ${getTranslation('tsm_tror_trap_desc')}
                 </div>
             </div>
@@ -606,22 +712,22 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             <!-- 3. MENER -->
             <div class="compass-card card-mener">
                 <div class="compass-header">
-                    <div class="compass-icon">⚖️</div>
+                    <div class="compass-icon">${renderDsIcon('scale', '', { size: 24 })}</div>
                     <div class="compass-title-box">
-                        <h3 style="color: #7dd3fc;">MENER</h3>
-                        <span style="color: #38bdf8;">${getTranslation('tsm_mener_tag')}</span>
+                        <h3 style="color: #a5b4fc;">MENER</h3>
+                        <span style="color: #818cf8;">${getTranslation('tsm_mener_tag', 'Holdning, etik & princip')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
                     ${getTranslation('tsm_mener_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li><span class="ex-icon">🌱</span><span class="ex-text">"Jeg <strong>mener</strong>, vi bør passe bedre på klimaet."</span></li>
-                    <li><span class="ex-icon">💼</span><span class="ex-text">"Hvad <strong>mener</strong> du om den nye regel på arbejdet?"</span></li>
-                    <li><span class="ex-icon">🩺</span><span class="ex-text">"Lægen <strong>mener</strong>, at patienten skal hvile sig."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>mener</strong>, vi bør passe bedre på klimaet."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Hvad <strong>mener</strong> du om den nye regel på arbejdet?"</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Lægen <strong>mener</strong>, at patienten skal hvile sig."</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>${getTranslation('tsm_mener_trap_title')}</strong>
+                    <strong>${getTranslation('tsm_mener_trap_title', 'Husk:')}</strong>
                     ${getTranslation('tsm_mener_trap_desc')}
                 </div>
             </div>
@@ -629,22 +735,22 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
             <!-- 4. VED -->
             <div class="compass-card card-ved">
                 <div class="compass-header">
-                    <div class="compass-icon">🔒</div>
+                    <div class="compass-icon">${renderDsIcon('keyRule', '', { size: 24 })}</div>
                     <div class="compass-title-box">
-                        <h3 style="color: #86efac;">VED</h3>
-                        <span style="color: #22c55e;">${getTranslation('tsm_ved_tag')}</span>
+                        <h3 style="color: #6ee7b7;">VED</h3>
+                        <span style="color: #34d399;">${getTranslation('tsm_ved_tag', '100 % fakta & data')}</span>
                     </div>
                 </div>
                 <div class="compass-rule">
                     ${getTranslation('tsm_ved_rule')}
                 </div>
                 <ul class="compass-examples">
-                    <li><span class="ex-icon">⏰</span><span class="ex-text">"Jeg <strong>ved</strong>, at butikken lukker kl. 18."</span></li>
-                    <li><span class="ex-icon">👑</span><span class="ex-text">"Jeg <strong>ved</strong>, at Danmarks hovedstad er København."</span></li>
-                    <li><span class="ex-icon">❓</span><span class="ex-text">"<strong>Ved</strong> du, hvor stationen ligger?"</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>ved</strong>, at butikken lukker kl. 18."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"Jeg <strong>ved</strong>, at Danmarks hovedstad er København."</span></li>
+                    <li><span class="ex-bullet"></span><span class="ex-text">"<strong>Ved</strong> du, hvor stationen ligger?"</span></li>
                 </ul>
                 <div class="compass-trap">
-                    <strong>${getTranslation('tsm_ved_trap_title')}</strong>
+                    <strong>${getTranslation('tsm_ved_trap_title', 'Benægtelse:')}</strong>
                     ${getTranslation('tsm_ved_trap_desc')}
                 </div>
             </div>
@@ -652,7 +758,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     `;
 
     // ==========================================================
-    // --- FANE 2: 🔍 SITUATION-SPOTLIGHT ---
+    // --- FANE 2: SITUATION-SPOTLIGHT ---
     // ==========================================================
     const spotlightPanel = document.createElement('div');
     spotlightPanel.id = 'panel_spotlight';
@@ -711,7 +817,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                                 <span class="spotlight-tag ${item.tagClass}">${item.verb.toUpperCase()}</span>
                                 <span class="spotlight-sentence">"${item.text}"</span>
                             </div>
-                            <div class="spotlight-explanation">💡 ${item.expl}</div>
+                            <div class="spotlight-explanation"><span class="spotlight-expl-icon">${renderDsIcon('lightbulb', '', { size: 15 })}</span><span>${item.expl}</span></div>
                         </div>
                     `).join('')}
                 </div>
@@ -734,7 +840,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     renderSpotlightContent();
 
     // ==========================================================
-    // --- FANE 3: 🎯 INTERAKTIV QUIZ ---
+    // --- FANE 3: INTERAKTIV QUIZ ---
     // ==========================================================
     const quizPanel = document.createElement('div');
     quizPanel.id = 'panel_quiz';
@@ -823,7 +929,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         sentenceBox.className = 'quiz-sentence-box';
         sentenceBox.innerHTML = `
             <span>${fullSentence}</span>
-            <button class="quiz-audio-btn" title="${getTranslation('tsm_q_listen_title')}" id="btn-audio-quiz">🔊</button>
+            <button class="quiz-audio-btn" title="${getTranslation('tsm_q_listen_title')}" id="btn-audio-quiz">${renderDsIcon('volume', '', { size: 18 })}</button>
         `;
         quizCard.appendChild(sentenceBox);
 
@@ -864,8 +970,9 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     feedbackBox.style.background = 'rgba(34, 197, 94, 0.15)';
                     feedbackBox.style.border = '1px solid #22c55e';
                     feedbackBox.innerHTML = `
-                        <div style="color: #4ade80; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.4rem;">
-                            ${getTranslation('tsm_q_correct_title')}
+                        <div style="color: #4ade80; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.45rem;">
+                            ${renderDsIcon('check', '', { size: 18 })}
+                            <span>${getTranslation('tsm_q_correct_title')}</span>
                         </div>
                         <div style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">
                             ${q.explanation}
@@ -884,8 +991,9 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                     feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
                     feedbackBox.style.border = '1px solid #ef4444';
                     feedbackBox.innerHTML = `
-                        <div style="color: #f87171; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.4rem;">
-                            ${getTranslation('tsm_q_wrong_title', { correct: q.correct })}
+                        <div style="color: #f87171; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.45rem;">
+                            ${renderDsIcon('prohibited', '', { size: 18 })}
+                            <span>${getTranslation('tsm_q_wrong_title', { correct: q.correct })}</span>
                         </div>
                         <div style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">
                             ${q.explanation}
@@ -914,7 +1022,7 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     quizPanel.appendChild(quizCard);
 
     // ==========================================================
-    // --- FANE 4: 🚨 SPOT FEJLEN! ---
+    // --- FANE 4: SPOT FEJLEN! ---
     // ==========================================================
     const fejlenPanel = document.createElement('div');
     fejlenPanel.id = 'panel_fejlen';
@@ -922,37 +1030,37 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
     function getTrapSentences() {
         return [
             {
-                sentence: '❌ "Jeg synes, det bliver solskin på lørdag."',
+                sentence: '"Jeg synes, det bliver solskin på lørdag."',
                 isRight: false,
                 correction: getTranslation('tsm_corr_label', { sentence: 'Jeg tror, det bliver solskin på lørdag.' }),
                 expl: getTranslation('tsm_trap_1_expl')
             },
             {
-                sentence: '✅ "Jeg synes, filmen var fantastisk, da jeg så den i biografen."',
+                sentence: '"Jeg synes, filmen var fantastisk, da jeg så den i biografen."',
                 isRight: true,
                 correction: getTranslation('tsm_corr_perfect'),
                 expl: getTranslation('tsm_trap_2_expl')
             },
             {
-                sentence: '❌ "Jeg tror, kagen smager for sødt (sagt mens du spiser den)."',
+                sentence: '"Jeg tror, kagen smager for sødt (sagt mens du spiser den)."',
                 isRight: false,
                 correction: getTranslation('tsm_corr_label', { sentence: 'Jeg synes, kagen smager for sødt.' }),
                 expl: getTranslation('tsm_trap_3_expl')
             },
             {
-                sentence: '✅ "Lægen mener, at daglig motion nedsætter risikoen for sygdom."',
+                sentence: '"Lægen mener, at daglig motion nedsætter risikoen for sygdom."',
                 isRight: true,
                 correction: getTranslation('tsm_corr_perfect'),
                 expl: getTranslation('tsm_trap_4_expl')
             },
             {
-                sentence: '❌ "Jeg synes ikke, hvor rådhuset ligger."',
+                sentence: '"Jeg synes ikke, hvor rådhuset ligger."',
                 isRight: false,
                 correction: getTranslation('tsm_corr_label', { sentence: 'Jeg ved ikke, hvor rådhuset ligger.' }),
                 expl: getTranslation('tsm_trap_5_expl')
             },
             {
-                sentence: '✅ "Hvad mener du om Danmarks nye klimaaftale?"',
+                sentence: '"Hvad mener du om Danmarks nye klimaaftale?"',
                 isRight: true,
                 correction: getTranslation('tsm_corr_perfect'),
                 expl: getTranslation('tsm_trap_6_expl')
@@ -974,10 +1082,10 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
         const item = document.createElement('div');
         item.className = 'trap-item';
         item.innerHTML = `
-            <div class="trap-sentence">${t.sentence.replace(/^[❌✅]\s*/, '')}</div>
+            <div class="trap-sentence">${t.sentence}</div>
             <div class="trap-buttons" id="trap-btns-${i}">
-                <button class="trap-vote-btn trap-btn-right" id="vote-right-${i}">${getTranslation('tsm_btn_vote_right')}</button>
-                <button class="trap-vote-btn trap-btn-wrong" id="vote-wrong-${i}">${getTranslation('tsm_btn_vote_wrong')}</button>
+                <button class="trap-vote-btn trap-btn-right" id="vote-right-${i}">${renderDsIcon('check', '', { size: 16 })} <span>${getTranslation('tsm_btn_vote_right')}</span></button>
+                <button class="trap-vote-btn trap-btn-wrong" id="vote-wrong-${i}">${renderDsIcon('prohibited', '', { size: 16 })} <span>${getTranslation('tsm_btn_vote_wrong')}</span></button>
             </div>
             <div class="trap-result" id="trap-res-${i}" style="display: none;"></div>
         `;
@@ -997,8 +1105,9 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                 resBox.style.background = 'rgba(34, 197, 94, 0.15)';
                 resBox.style.border = '1px solid #22c55e';
                 resBox.innerHTML = `
-                    <div style="color: #4ade80; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem;">
-                        ${getTranslation('tsm_trap_res_correct')}
+                    <div style="color: #4ade80; font-weight: 800; font-size: 1.05rem; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.45rem;">
+                        ${renderDsIcon('check', '', { size: 18 })}
+                        <span>${getTranslation('tsm_trap_res_correct')}</span>
                     </div>
                     <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 0.3rem;">${t.correction}</div>
                     <div style="color: #cbd5e1;">${t.expl}</div>
@@ -1007,8 +1116,9 @@ export function renderTrorSynesMenerView(container, navigateFn, extraData = {}) 
                 resBox.style.background = 'rgba(239, 68, 68, 0.15)';
                 resBox.style.border = '1px solid #ef4444';
                 resBox.innerHTML = `
-                    <div style="color: #f87171; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem;">
-                        ${getTranslation('tsm_trap_res_wrong')}
+                    <div style="color: #f87171; font-weight: 800; font-size: 1.05rem; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.45rem;">
+                        ${renderDsIcon('prohibited', '', { size: 18 })}
+                        <span>${getTranslation('tsm_trap_res_wrong')}</span>
                     </div>
                     <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 0.3rem;">${t.correction}</div>
                     <div style="color: #cbd5e1;">${t.expl}</div>

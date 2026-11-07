@@ -114,7 +114,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 "x": 19,
                 "y": 46,
                 "meaning": "Fælles viden / selvfølge",
-                "sceneDesc": "Kollegaen ler og minder bordet om, at de jo alle kender den sjove historie.",
+                "sceneDesc": "Kollegaen ler ved frokostbordet: \"Det ved vi jo alle sammen!\"",
                 "sentence": "Det ved vi jo alle.",
                 "contextSentence": "Du behøver ikke forklare det, for det ved vi jo alle.",
                 "ruleHint": "Bruges når både taler og lytter kender svaret i forvejen (\"vi er enige\").",
@@ -1073,6 +1073,232 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
 
+        .hotspot-toggle-btn {
+            background: var(--adv-surface, #0A192F);
+            color: #cbd5e1;
+            border: 1px solid var(--adv-border, #1E3A66);
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .hotspot-toggle-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: var(--adv-primary, #3B82F6);
+            color: #93c5fd;
+        }
+        .hotspot-toggle-btn:hover {
+            background: #112240;
+            color: #ffffff;
+        }
+
+        /* Streamlined Inspector Mode (Model A) */
+        .vrimmel-inspector.is-streamlined {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.15rem;
+            background: linear-gradient(145deg, #0d1e38 0%, #071326 100%);
+            border: 1.5px solid #254a7f;
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            margin-top: 1.5rem;
+        }
+        .streamlined-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+        }
+        .streamlined-hero-left {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-word-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .streamlined-audio-btn {
+            background: var(--adv-primary, #3B82F6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .streamlined-audio-btn:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
+            transform: scale(1.08);
+        }
+        .streamlined-scale-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .streamlined-scale-chip.magiske {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+        .streamlined-scale-chip.stemning {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+        .streamlined-scale-chip.talesprog {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+        }
+        .streamlined-scale-chip.valg {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #c4b5fd;
+        }
+        .streamlined-trans-pill {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .streamlined-trans-pill strong {
+            color: #cbd5e1;
+            font-style: normal;
+        }
+        .streamlined-speech-box {
+            background: rgba(15, 23, 42, 0.75);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
+            border-radius: 0 14px 14px 0;
+            padding: 1.1rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .streamlined-quote-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-quote-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
+            margin: 0;
+        }
+        .streamlined-quote-text mark {
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+        .streamlined-speak-btn {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .streamlined-speak-btn:hover {
+            background: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+        }
+        .streamlined-scene-context {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .streamlined-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 0.9rem;
+            margin-top: 0.2rem;
+        }
+        .streamlined-rule-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            flex: 1;
+            min-width: 250px;
+        }
+        .streamlined-rule-hint svg {
+            color: #fbbf24;
+            flex-shrink: 0;
+        }
+        .streamlined-rule-hint strong {
+            color: #ffffff;
+        }
+        .streamlined-nav-btns {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .streamlined-nav-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #1E3A66;
+            color: #cbd5e1;
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .streamlined-nav-btn:hover {
+            background: #1e293b;
+            color: #ffffff;
+            border-color: #3b82f6;
+        }
+        .streamlined-nav-btn.next-primary {
+            background: var(--adv-primary, #3B82F6);
+            border-color: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+        }
+        .streamlined-nav-btn.next-primary:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
+        }
+
         /* Inspector Card */
         .vrimmel-inspector {
             background: var(--adv-surface, #0A192F);
@@ -1304,6 +1530,173 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             border-color: var(--adv-border-focus, #93C5FD);
             color: white;
             box-shadow: 0 4px 15px var(--adv-glow, rgba(59, 130, 246, 0.4));
+        }
+
+        /* Bud 2: Videns-Radaren (Aha-værkstedet) */
+        .radar-card {
+            background: linear-gradient(145deg, #0d1e38 0%, #071326 100%);
+            border: 2px solid #254a7f;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.3rem;
+        }
+        .radar-top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1rem;
+        }
+        .radar-title-group h3 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0 0 0.25rem 0;
+        }
+        .radar-title-group p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+        .radar-pills-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .radar-pill-btn {
+            background: #0f172a;
+            border: 1.5px solid #1E3A66;
+            color: #cbd5e1;
+            padding: 0.45rem 1rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radar-pill-btn:hover {
+            border-color: #3b82f6;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .radar-pill-btn.active {
+            color: #ffffff;
+            border-color: var(--pill-color, #3B82F6);
+            background: var(--pill-bg, rgba(59, 130, 246, 0.25));
+            box-shadow: 0 0 15px var(--pill-glow, rgba(59, 130, 246, 0.4));
+        }
+        .radar-stage-box {
+            position: relative;
+            background: #040a14;
+            border: 1.5px solid #1E3A66;
+            border-radius: 16px;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+        .radar-node-circle {
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .radar-node-circle:hover {
+            filter: brightness(1.25);
+        }
+        .radar-pulse-ring {
+            animation: radarPulseAnim 2.2s infinite ease-in-out;
+            transform-origin: center;
+        }
+        @keyframes radarPulseAnim {
+            0%, 100% {
+                r: 32px;
+                opacity: 0.35;
+            }
+            50% {
+                r: 44px;
+                opacity: 0.85;
+            }
+        }
+        .radar-dialogue-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid #1E3A66;
+            border-left: 4px solid var(--dialogue-accent, #3B82F6);
+            border-radius: 0 14px 14px 0;
+            padding: 1.2rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .radar-quote-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .radar-quote-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .radar-quote-text mark {
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 0.1rem 0.45rem;
+            border-radius: 6px;
+            font-weight: 900;
+        }
+        .radar-listen-btn {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1.5px solid var(--adv-primary, #3B82F6);
+            color: #93c5fd;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .radar-listen-btn:hover {
+            background: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .radar-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 0.85rem;
+        }
+        @media (max-width: 700px) {
+            .radar-meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .radar-meta-item strong {
+            color: #93c5fd;
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        .matrix-row.radar-active-row {
+            background: rgba(59, 130, 246, 0.18) !important;
+            border-left: 4px solid var(--adv-border-focus, #93C5FD);
         }
 
         /* Matrix Card */
@@ -1974,7 +2367,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     // TAB 1: VRIMLEBILLEDET (Frokoststuen)
     // ==========================================
     let activeFilter = 'alle';
-    let isPureMode = false;
+    let showHotspots = true;
     let selectedWord = null;
 
     function renderTabVrimmel(parent) {
@@ -2016,16 +2409,20 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             filtersDiv.appendChild(fBtn);
         });
 
-        const pureBtn = document.createElement('button');
-        pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}</span>`;
-        pureBtn.onclick = () => {
-            isPureMode = !isPureMode;
-            renderTabVrimmel(parent);
+        const hotspotToggleBtn = document.createElement('button');
+        hotspotToggleBtn.className = `hotspot-toggle-btn ${showHotspots ? 'active' : ''}`;
+        hotspotToggleBtn.innerHTML = `<span>Pegefelter: ${showHotspots ? 'TIL' : 'FRA'}</span>`;
+        hotspotToggleBtn.onclick = () => {
+            showHotspots = !showHotspots;
+            hotspotToggleBtn.className = `hotspot-toggle-btn ${showHotspots ? 'active' : ''}`;
+            hotspotToggleBtn.innerHTML = `<span>Pegefelter: ${showHotspots ? 'TIL' : 'FRA'}</span>`;
+            stage.querySelectorAll('.hotspot-pin').forEach(pin => {
+                pin.style.display = showHotspots ? 'flex' : 'none';
+            });
         };
 
         controls.appendChild(filtersDiv);
-        controls.appendChild(pureBtn);
+        controls.appendChild(hotspotToggleBtn);
         stageCard.appendChild(controls);
 
         // Stage with Wimmelbild image
@@ -2050,16 +2447,17 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             pin.className = `hotspot-pin ${selectedWord && selectedWord.id === item.id ? 'active' : ''}`;
             pin.style.left = `${item.x}%`;
             pin.style.top = `${item.y}%`;
+            pin.style.display = showHotspots ? 'flex' : 'none';
             pin.dataset.id = item.id;
             pin.innerHTML = `
                 <span>${idx + 1}</span>
-                ${!isPureMode ? `<span class="hotspot-label">${item.word}</span>` : ''}
+                <span class="hotspot-label">${item.word}</span>
             `;
 
             pin.onclick = (e) => {
                 e.stopPropagation();
                 updateInspector(item, true);
-                speakDanish(item.sentence);
+                speakDanish(item.sentence || item.word);
             };
 
             stage.appendChild(pin);
@@ -2070,7 +2468,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         // Målords præsentation boks under vrimlebilledet
         const inspector = document.createElement('div');
-        inspector.className = 'vrimmel-inspector';
+        inspector.className = 'vrimmel-inspector is-streamlined';
         inspector.id = 'smaaord-inspector-box';
         layout.appendChild(inspector);
         parent.appendChild(layout);
@@ -2085,92 +2483,109 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
             const trans = getSmaaordTranslation(item);
             const currentLang = getLang();
-            const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
 
-            const catNames = {
-                'magiske': 'De 5 Magiske Småord ⭐',
-                'stemning': 'Høflighed & Opmuntring',
-                'talesprog': 'Talesprog & Emphase',
-                'valg': 'Enighed & Præference'
+            const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === item.id);
+            const prevIdx = (currentIdx - 1 + ADVERBIER_SMAAORD_DATA.length) % ADVERBIER_SMAAORD_DATA.length;
+            const nextIdx = (currentIdx + 1) % ADVERBIER_SMAAORD_DATA.length;
+            const prevItem = ADVERBIER_SMAAORD_DATA[prevIdx];
+            const nextItem = ADVERBIER_SMAAORD_DATA[nextIdx];
+
+            inspector.className = 'vrimmel-inspector is-streamlined';
+
+            // Støtteoversættelse
+            const supportWord = currentLang === 'da'
+                ? (item.translations?.en?.word || trans.word || 'translation')
+                : (item.translations?.[currentLang]?.word || trans.word || item.translations?.en?.word || '');
+            const supportLabel = currentLang === 'da' ? 'Engelsk støtte:' : `${currentLang.toUpperCase()}:`;
+
+            // Ekstraher kontekst og replik fra sceneDesc
+            let sceneContext = '';
+            let sceneQuote = '';
+            const match = (item.sceneDesc || '').match(/^(.*?):\s*"(.*)"\s*$/);
+            if (match) {
+                sceneContext = match[1].trim();
+                sceneQuote = match[2].trim();
+            } else {
+                sceneContext = item.sceneDesc || 'I frokoststuen';
+                sceneQuote = item.sentence || item.contextSentence || '';
+            }
+
+            // Fremhæv målordet i replikken
+            const wordRegex = new RegExp(`\\b(${item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi');
+            let highlightedQuote = sceneQuote.replace(wordRegex, '<mark>$1</mark>');
+            if (!highlightedQuote.includes('<mark>')) {
+                const fallbackRegex = new RegExp(`(${item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                highlightedQuote = sceneQuote.replace(fallbackRegex, '<mark>$1</mark>');
+            }
+
+            // Kategori- og nuancechip
+            const catConfig = {
+                'magiske': { icon: 'zap', class: 'magiske' },
+                'stemning': { icon: 'handshake', class: 'stemning' },
+                'talesprog': { icon: 'thought', class: 'talesprog' },
+                'valg': { icon: 'scale', class: 'valg' }
             };
+            const chipCfg = catConfig[item.category] || { icon: 'tag', class: 'magiske' };
+
+            // Didaktisk samtale-regel
+            const ruleText = item.ruleHint || item.meaning || '';
+            const ruleTrans = advTransSpan(ruleText, `smaa_r_${currentIdx + 1}`);
 
             inspector.innerHTML = `
-                <div class="inspector-left">
-                    <div class="inspector-header">
-                        <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border: 1.5px solid var(--adv-border-focus, #93C5FD); color: var(--adv-border-focus, #93C5FD); font-weight: 800;">Målord: ${item.word}</span>
-                            <span class="inspector-badge">${catNames[item.category] || 'Samtalesmåord'}</span>
-                        </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+                <div class="streamlined-header-row">
+                    <div class="streamlined-hero-left">
+                        <h2 class="streamlined-word-title">${item.word}</h2>
+                        <button class="streamlined-audio-btn" id="streamlined-word-audio" title="Hør udtale">
+                            ${renderDsIcon('volume', '', { size: 18 })}
+                        </button>
+                        <span class="streamlined-scale-chip ${chipCfg.class}">
+                            ${renderDsIcon(chipCfg.icon, '', { size: 14 })} ${item.meaning}
+                        </span>
                     </div>
-
-                    <h2 class="inspector-word-title">
-                        ${item.word}
-                    </h2>
-
-                    <div class="inspector-trans-box">
-                        <div class="trans-badge-label">
-                            OVERSÆTTELSE (${langLabel})
-                        </div>
-                        <div class="trans-word-val">"${trans.word}"</div>
-                    </div>
-
-                    <div class="inspector-scene-box">
-                        <div class="scene-heading">I frokoststuen</div>
-                        <p class="scene-text">${item.sceneDesc}</p>
+                    <div class="streamlined-trans-pill">
+                        ${supportLabel} <strong>${supportWord}</strong>
                     </div>
                 </div>
 
-                <div class="inspector-right">
-                    <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Eksempelsætning</div>
-                        <p class="sentence-quote-text">"${item.contextSentence}"</p>
-                        ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
-                        <button class="inspector-speak-btn" id="inspector-action-speak">
-                            Hør sætning
+                <div class="streamlined-speech-box">
+                    <div class="streamlined-scene-context">
+                        ${renderDsIcon('user', '', { size: 14 })} ${sceneContext}:
+                    </div>
+                    <div class="streamlined-quote-row">
+                        <p class="streamlined-quote-text">
+                            "${highlightedQuote}"
+                        </p>
+                        <button class="streamlined-speak-btn" id="streamlined-speech-audio" title="Hør replik">
+                            ${renderDsIcon('volume', '', { size: 15 })} <span>Hør replik</span>
                         </button>
                     </div>
+                </div>
 
-                    <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Didaktisk samtale-regel</div>
-                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `smaa_r_${ADVERBIER_SMAAORD_DATA.indexOf(item) + 1}`)}</p>
+                <div class="streamlined-footer-row">
+                    <div class="streamlined-rule-hint">
+                        ${renderDsIcon('lightbulb', '', { size: 16 })}
+                        <span><strong>Hvornår bruger vi det?</strong> ${ruleText}${ruleTrans}</span>
                     </div>
-
-                    <div class="inspector-actions">
-                        <button class="inspector-btn-action" id="inspector-action-prev">
-                            ← Forrige ord
-                        </button>
-                        <button class="inspector-btn-action" style="background: var(--adv-primary, #3B82F6);" id="inspector-action-next">
-                            Næste ord →
-                        </button>
+                    <div class="streamlined-nav-btns">
+                        <button class="streamlined-nav-btn" id="streamlined-btn-prev">← Forrige (${prevIdx + 1})</button>
+                        <button class="streamlined-nav-btn next-primary" id="streamlined-btn-next">Næste (${nextIdx + 1}) →</button>
                     </div>
                 </div>
             `;
 
             // Bind events
-            inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(item.word);
-            inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#streamlined-word-audio').onclick = () => speakDanish(item.word);
+            inspector.querySelector('#streamlined-speech-audio').onclick = () => speakDanish(sceneQuote);
 
-            inspector.querySelector('#inspector-action-prev').onclick = () => {
-                const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === item.id);
-                const prevIdx = (currentIdx - 1 + ADVERBIER_SMAAORD_DATA.length) % ADVERBIER_SMAAORD_DATA.length;
-                const prevItem = ADVERBIER_SMAAORD_DATA[prevIdx];
+            inspector.querySelector('#streamlined-btn-prev').onclick = () => {
                 updateInspector(prevItem, true);
-                speakDanish(prevItem.sentence);
+                speakDanish(prevItem.sentence || prevItem.word);
             };
 
-            inspector.querySelector('#inspector-action-next').onclick = () => {
-                const currentIdx = ADVERBIER_SMAAORD_DATA.findIndex(w => w.id === item.id);
-                const nextIdx = (currentIdx + 1) % ADVERBIER_SMAAORD_DATA.length;
-                const nextItem = ADVERBIER_SMAAORD_DATA[nextIdx];
+            inspector.querySelector('#streamlined-btn-next').onclick = () => {
                 updateInspector(nextItem, true);
-                speakDanish(nextItem.sentence);
+                speakDanish(nextItem.sentence || nextItem.word);
             };
-
-            // Trigger animation pulse så brugeren tydeligt ser den dukker frem
-            inspector.classList.remove('updated');
-            void inspector.offsetWidth;
-            inspector.classList.add('updated');
 
             if (shouldScroll) {
                 inspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -2186,6 +2601,95 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     // ==========================================
     let vaerkstedSubTab = 'matrix'; // 'matrix' or 'transformer'
     let selectedTransformWord = 'jo';
+    let selectedRadarWord = 'jo';
+
+    const RADAR_DATA = {
+        'jo': {
+            word: 'jo',
+            name: 'Fælles viden & selvfølge',
+            badge: 'Fælles viden (100% sikkerhed)',
+            sentence: 'Vi har jo fri i morgen, for det er helligdag!',
+            speakerRole: 'Ved det (100% sikker)',
+            listenerRole: 'Forventes at vide det i forvejen',
+            source: 'Fælles viden / Erfaring',
+            color: '#10B981',
+            pillBg: 'rgba(16, 185, 129, 0.22)',
+            pillGlow: 'rgba(16, 185, 129, 0.45)',
+            x: 450,
+            y: 95,
+            desc: 'Taleren appellerer til en viden, som begge parter i virkeligheden allerede kender ("vi er enige – kig på kalenderen").',
+            radarHint: 'Fælles viden & 100% vished (begge parter ved det)',
+            arrowSummary: 'Fælles viden forbinder Taler & Lytter'
+        },
+        'da': {
+            word: 'da',
+            name: 'Selvfølgelighed & opmuntring',
+            badge: 'Opmuntring (fjerner tvivl)',
+            sentence: 'Du må da gerne smage et stykke kage!',
+            speakerRole: '100% sikker (selvfølge)',
+            listenerRole: 'Tøver / tvivler / genert',
+            source: 'Selvindlysende / Opmuntring',
+            color: '#06B6D4',
+            pillBg: 'rgba(6, 182, 212, 0.22)',
+            pillGlow: 'rgba(6, 182, 212, 0.45)',
+            x: 290,
+            y: 95,
+            desc: 'Lytteren tøver eller er usikker. Taleren har 100% overskud og skubber tvivlen væk: "Selvfølgelig må/kan du!"',
+            radarHint: 'Taler har 100% vished (skubber lytterens tøven væk)',
+            arrowSummary: 'Kraftig pil fra Taler bryder lytterens tøve-sky'
+        },
+        'nok': {
+            word: 'nok',
+            name: 'Eget logisk gæt & trøst',
+            badge: 'Eget logisk gæt (~75%)',
+            sentence: 'Der er mange skyer, så det regner nok snart.',
+            speakerRole: 'Eget logisk gæt (~70-80%)',
+            listenerRole: 'Ved det ikke',
+            source: 'Egne observationer / Trøst',
+            color: '#3B82F6',
+            pillBg: 'rgba(59, 130, 246, 0.22)',
+            pillGlow: 'rgba(59, 130, 246, 0.45)',
+            x: 320,
+            y: 205,
+            desc: 'Taleren har gjort en observation (f.eks. kigget på vejret eller skærmen) og drager en personlig, beroligende konklusion.',
+            radarHint: 'Talerens eget logiske gæt baseret på observation',
+            arrowSummary: 'Observation ➔ Taler ➔ blød bølgepil til Lytter'
+        },
+        'vel': {
+            word: 'vel',
+            name: 'Appel om bekræftelse',
+            badge: 'Appel om bekræftelse ("Ikke sandt?")',
+            sentence: 'Av, du slog foden! Det gør vel ondt?',
+            speakerRole: 'Formoder det (spørgende)',
+            listenerRole: 'Ved det bedst (ejer facit)',
+            source: 'Appel om bekræftelse',
+            color: '#A855F7',
+            pillBg: 'rgba(168, 85, 247, 0.22)',
+            pillGlow: 'rgba(168, 85, 247, 0.45)',
+            x: 610,
+            y: 190,
+            desc: 'Taleren regner situationen ud, men anerkender, at lytteren er den sande autoritet og skal bekræfte: "Det er rigtigt, ikke?"',
+            radarHint: 'Lytteren ejer facit / Taler appellerer til bekræftelse',
+            arrowSummary: 'Spørgepil til Lytter, stor bekræftelsespil retur'
+        },
+        'vist': {
+            word: 'vist',
+            name: 'Ekstern kilde / forbehold',
+            badge: 'Eksternt rygte (forbehold)',
+            sentence: 'Jeg hørte i radioen, at toget vist er aflyst.',
+            speakerRole: 'Har hørt det (fralægger sig ansvar)',
+            listenerRole: 'Ved det ikke',
+            source: 'Ekstern kilde / Rygte',
+            color: '#F59E0B',
+            pillBg: 'rgba(245, 158, 11, 0.22)',
+            pillGlow: 'rgba(245, 158, 11, 0.45)',
+            x: 300,
+            y: 285,
+            desc: 'Taleren har oplysningen udefra (radio, opslag, rygtebørs) og lægger ikke hovedet på blokken for sandhedsværdien.',
+            radarHint: 'Ekstern kilde / rygte (taler fralægger sig ansvaret)',
+            arrowSummary: 'Stiplet pil fra ekstern kilde ➔ Taler ➔ Lytter'
+        }
+    };
 
     const TRANSFORM_EXAMPLES = {
         'jo': {
@@ -2242,7 +2746,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
             <div class="vaerksted-subtabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'matrix' ? 'active' : ''}" id="v-subtab-matrix">
-                    1. "Hvem ved hvad?"-Matricen
+                    1. Videns-Radaren & Matricen
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'transformer' ? 'active' : ''}" id="v-subtab-trans">
                     2. Sætnings-transformeren
@@ -2273,10 +2777,217 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     }
 
     function renderMatrixSubtab(slot) {
-        const card = document.createElement('div');
-        card.className = 'matrix-table-wrap';
+        slot.innerHTML = '';
 
-        card.innerHTML = `
+        const curr = RADAR_DATA[selectedRadarWord] || RADAR_DATA['jo'];
+
+        // Vector overlay logic depending on selectedRadarWord
+        let vectorOverlay = '';
+        if (selectedRadarWord === 'jo') {
+            vectorOverlay = `
+                <line x1="105" y1="175" x2="415" y2="98" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
+                <line x1="795" y1="175" x2="485" y2="98" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
+                <text x="450" y="58" text-anchor="middle" fill="#10B981" font-size="12" font-weight="800">🤝 Begge parter ved det (Fælles viden)</text>
+            `;
+        } else if (selectedRadarWord === 'da') {
+            vectorOverlay = `
+                <line x1="105" y1="175" x2="255" y2="105" stroke="#06B6D4" stroke-width="4" marker-end="url(#radar-arrow-da)" />
+                <line x1="325" y1="95" x2="525" y2="95" stroke="#06B6D4" stroke-width="4.5" marker-end="url(#radar-arrow-da)" />
+                <text x="425" y="80" text-anchor="middle" fill="#06B6D4" font-size="11" font-weight="bold">➡️ Opmuntrer / fjerner lytterens tøven</text>
+            `;
+        } else if (selectedRadarWord === 'nok') {
+            vectorOverlay = `
+                <line x1="105" y1="175" x2="285" y2="202" stroke="#3B82F6" stroke-width="3.5" marker-end="url(#radar-arrow-nok)" />
+                <path d="M 355 205 Q 405 190 455 205" fill="none" stroke="#3B82F6" stroke-width="3.5" stroke-dasharray="4,4" marker-end="url(#radar-arrow-nok)" />
+                <text x="405" y="225" text-anchor="middle" fill="#60A5FA" font-size="11" font-weight="bold">Talerens personlige gæt (~75%)</text>
+            `;
+        } else if (selectedRadarWord === 'vel') {
+            vectorOverlay = `
+                <line x1="105" y1="175" x2="575" y2="190" stroke="#C084FC" stroke-width="2.5" stroke-dasharray="4,4" marker-end="url(#radar-arrow-vel)" />
+                <line x1="795" y1="175" x2="645" y2="190" stroke="#A855F7" stroke-width="5" marker-end="url(#radar-arrow-vel)" />
+                <text x="720" y="165" text-anchor="middle" fill="#C084FC" font-size="11" font-weight="bold">⬅️ Lytteren ejer facit!</text>
+            `;
+        } else if (selectedRadarWord === 'vist') {
+            vectorOverlay = `
+                <line x1="240" y1="276" x2="265" y2="283" stroke="#F59E0B" stroke-width="3" stroke-dasharray="3,3" marker-end="url(#radar-arrow-vist)" />
+                <line x1="105" y1="175" x2="270" y2="275" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,4" />
+                <line x1="335" y1="285" x2="485" y2="285" stroke="#F59E0B" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#radar-arrow-vist)" />
+                <text x="410" y="305" text-anchor="middle" fill="#F59E0B" font-size="11" font-weight="bold">Stærkt forbehold: Har kun hørt det</text>
+            `;
+        }
+
+        // Render all 5 nodes
+        const nodesSvg = ['jo', 'da', 'nok', 'vel', 'vist'].map(key => {
+            const n = RADAR_DATA[key];
+            const isActive = key === selectedRadarWord;
+            if (isActive) {
+                return `
+                    <g class="radar-node-circle" data-word="${n.word}" style="cursor: pointer;">
+                        <circle class="radar-pulse-ring" cx="${n.x}" cy="${n.y}" r="38" fill="${n.color}" fill-opacity="0.25" stroke="${n.color}" stroke-width="2" />
+                        <circle cx="${n.x}" cy="${n.y}" r="30" fill="${n.color}" stroke="#FFFFFF" stroke-width="3.5" />
+                        <text x="${n.x}" y="${n.y + 7}" text-anchor="middle" fill="#FFFFFF" font-weight="900" font-size="20">${n.word}</text>
+                    </g>
+                `;
+            } else {
+                return `
+                    <g class="radar-node-circle" data-word="${n.word}" style="cursor: pointer;">
+                        <circle cx="${n.x}" cy="${n.y}" r="22" fill="#0F172A" stroke="${n.color}" stroke-width="2" stroke-opacity="0.75" />
+                        <text x="${n.x}" y="${n.y + 5}" text-anchor="middle" fill="${n.color}" font-weight="800" font-size="15">${n.word}</text>
+                    </g>
+                `;
+            }
+        }).join('');
+
+        // Container wrapper
+        const container = document.createElement('div');
+        container.className = 'radar-subtab-container';
+
+        // 1. Interactive Radar Card
+        const radarCard = document.createElement('div');
+        radarCard.className = 'radar-card';
+        radarCard.style.setProperty('--dialogue-accent', curr.color);
+
+        const wordRegex = new RegExp(`\\b(${curr.word})\\b`, 'gi');
+        const highlightedQuote = curr.sentence.replace(wordRegex, '<mark>$1</mark>');
+
+        radarCard.innerHTML = `
+            <div class="radar-top-controls">
+                <div class="radar-title-group">
+                    <h3>Videns-Radaren (Epistemisk Koordinatkort)</h3>
+                    <p>Hvem ejer viden, og hvor udspringer sikkerheden eller tvivlen?</p>
+                </div>
+                <div class="radar-pills-row">
+                    ${['jo', 'da', 'nok', 'vel', 'vist'].map(w => {
+                        const d = RADAR_DATA[w];
+                        const active = w === selectedRadarWord;
+                        return `
+                            <button class="radar-pill-btn ${active ? 'active' : ''}" 
+                                    data-word="${w}"
+                                    style="--pill-color: ${d.color}; --pill-bg: ${d.pillBg}; --pill-glow: ${d.pillGlow};">
+                                ${w} ⭐
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+
+            <!-- SVG Vector Radar Area -->
+            <div class="radar-stage-box">
+                <svg viewBox="0 0 900 370" class="radar-svg-canvas" style="width: 100%; height: auto; max-width: 900px; display: block; margin: 0 auto; user-select: none;">
+                    <defs>
+                        <marker id="radar-arrow-jo" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L7,3 z" fill="#10B981" />
+                        </marker>
+                        <marker id="radar-arrow-da" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L7,3 z" fill="#06B6D4" />
+                        </marker>
+                        <marker id="radar-arrow-nok" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L7,3 z" fill="#3B82F6" />
+                        </marker>
+                        <marker id="radar-arrow-vel" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L7,3 z" fill="#A855F7" />
+                        </marker>
+                        <marker id="radar-arrow-vist" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L7,3 z" fill="#F59E0B" />
+                        </marker>
+                    </defs>
+
+                    <!-- Radar Grid Frame -->
+                    <rect x="140" y="40" width="620" height="290" rx="20" fill="#071326" stroke="#1E3A66" stroke-width="2" />
+
+                    <!-- Coordinates Lines -->
+                    <line x1="450" y1="40" x2="450" y2="330" stroke="#1E3A66" stroke-width="2" stroke-dasharray="4,4" />
+                    <line x1="140" y1="185" x2="760" y2="185" stroke="#1E3A66" stroke-width="2" stroke-dasharray="4,4" />
+
+                    <!-- Axis Labels -->
+                    <text x="160" y="66" fill="#10B981" font-size="11" font-weight="800" letter-spacing="0.05em">⬆️ 100% SIKKERHED</text>
+                    <text x="160" y="315" fill="#EF4444" font-size="11" font-weight="800" letter-spacing="0.05em">⬇️ USIKKERHED / RYGTE</text>
+
+                    <text x="210" y="198" fill="#93C5FD" font-size="11" font-weight="800">TALERENS DOMÆNE</text>
+                    <text x="450" y="65" text-anchor="middle" fill="#FCD34D" font-size="11" font-weight="800">🤝 FÆLLES VIDEN</text>
+                    <text x="690" y="198" text-anchor="end" fill="#C4B5FD" font-size="11" font-weight="800">LYTTERENS DOMÆNE</text>
+
+                    <!-- TALER Silhouette Left -->
+                    <g transform="translate(60, 135)">
+                        <circle cx="35" cy="35" r="28" fill="#1E3A8A" stroke="#3B82F6" stroke-width="2.5" />
+                        <path d="M 12 85 C 12 55 58 55 58 85 Z" fill="#1E293B" stroke="#3B82F6" stroke-width="2" />
+                        <rect x="-5" y="92" width="80" height="24" rx="6" fill="#0F172A" stroke="#3B82F6" stroke-width="1.5" />
+                        <text x="35" y="108" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="800">🗣️ TALER</text>
+                    </g>
+
+                    <!-- LYTTER Silhouette Right -->
+                    <g transform="translate(775, 135)">
+                        <circle cx="35" cy="35" r="28" fill="#312E81" stroke="#818CF8" stroke-width="2.5" />
+                        <path d="M 12 85 C 12 55 58 55 58 85 Z" fill="#1E293B" stroke="#818CF8" stroke-width="2" />
+                        <rect x="-5" y="92" width="80" height="24" rx="6" fill="#0F172A" stroke="#818CF8" stroke-width="1.5" />
+                        <text x="35" y="108" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="800">👂 LYTTER</text>
+                    </g>
+
+                    <!-- External Source Tag for vist -->
+                    <g transform="translate(155, 260)">
+                        <rect x="0" y="0" width="85" height="30" rx="6" fill="#1C1917" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <text x="42" y="19" text-anchor="middle" fill="#FCD34D" font-size="9" font-weight="bold">📻 Kilde udefra</text>
+                    </g>
+
+                    <!-- Active Vector Beams -->
+                    ${vectorOverlay}
+
+                    <!-- All 5 Nodes -->
+                    ${nodesSvg}
+
+                    <!-- Active Node Location Pill -->
+                    <rect x="${curr.x - 140}" y="${curr.y + 42}" width="280" height="26" rx="6" fill="#0F172A" stroke="${curr.color}" stroke-width="1.5" />
+                    <text x="${curr.x}" y="${curr.y + 59}" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="800">${curr.radarHint}</text>
+                </svg>
+            </div>
+
+            <!-- Dialogue & Didactic Context Card -->
+            <div class="radar-dialogue-box">
+                <div class="radar-quote-row">
+                    <p class="radar-quote-text">
+                        "${highlightedQuote}"
+                    </p>
+                    <button class="radar-listen-btn" id="radar-audio-btn" title="Hør sætning i autentisk dialog">
+                        ${renderDsIcon('volume', '', { size: 16 })} <span>Hør eksempel</span>
+                    </button>
+                </div>
+
+                <div style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.5;">
+                    <strong style="color: var(--dialogue-accent, #3B82F6);">Hvorfor bruger vi "${curr.word}" her?</strong> ${curr.desc}
+                </div>
+
+                <div class="radar-meta-grid">
+                    <div class="radar-meta-item">
+                        <strong>Talerens viden:</strong>
+                        <span>${curr.speakerRole}</span>
+                    </div>
+                    <div class="radar-meta-item">
+                        <strong>Lytterens viden:</strong>
+                        <span>${curr.listenerRole}</span>
+                    </div>
+                    <div class="radar-meta-item">
+                        <strong>Videnskilde:</strong>
+                        <span>${curr.source}</span>
+                    </div>
+                    <div class="radar-meta-item">
+                        <strong>Pilenes dynamik:</strong>
+                        <span style="color: var(--dialogue-accent, #3B82F6); font-weight: 700;">${curr.arrowSummary}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // 2. Synchronized Epistemic Matrix Table
+        const tableCard = document.createElement('div');
+        tableCard.className = 'matrix-table-wrap';
+
+        tableCard.innerHTML = `
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <h4 style="margin: 0; color: #ffffff; font-size: 1.15rem; font-weight: 800;">
+                    ${renderDsIcon('lightbulb', '', { size: 16 })} Hvem ved hvad? – Den didaktiske matrix
+                </h4>
+                <span style="font-size: 0.82rem; color: #94a3b8;">Klik på en række for at fremhæve den på radaren</span>
+            </div>
             <table class="matrix-table">
                 <thead>
                     <tr>
@@ -2288,36 +2999,36 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="matrix-row">
-                        <td><span class="matrix-word-badge">jo</span></td>
+                    <tr class="matrix-row ${selectedRadarWord === 'jo' ? 'radar-active-row' : ''}" data-word="jo" style="cursor: pointer;">
+                        <td><span class="matrix-word-badge" style="border-color: #10B981; color: #10B981; background: rgba(16, 185, 129, 0.15);">jo</span></td>
                         <td>Ved det ${advTransBlock('smaa_mx_1_t')}</td>
                         <td>Forventes at vide det ${advTransBlock('smaa_mx_1_l')}</td>
                         <td>Fælles viden / Erfaring ${advTransBlock('smaa_mx_1_k')}</td>
                         <td>"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!" ${advTransBlock('smaa_mx_1_e')}</td>
                     </tr>
-                    <tr class="matrix-row">
-                        <td><span class="matrix-word-badge">da</span></td>
+                    <tr class="matrix-row ${selectedRadarWord === 'da' ? 'radar-active-row' : ''}" data-word="da" style="cursor: pointer;">
+                        <td><span class="matrix-word-badge" style="border-color: #06B6D4; color: #06B6D4; background: rgba(6, 182, 212, 0.15);">da</span></td>
                         <td>100% sikker ${advTransBlock('smaa_mx_2_t')}</td>
                         <td>Tøver / tvivler ${advTransBlock('smaa_mx_2_l')}</td>
                         <td>Selvindlysende / Opmuntring ${advTransBlock('smaa_mx_2_k')}</td>
                         <td>"Du må <strong>da</strong> gerne smage et stykke kage!" ${advTransBlock('smaa_mx_2_e')}</td>
                     </tr>
-                    <tr class="matrix-row">
-                        <td><span class="matrix-word-badge">nok</span></td>
+                    <tr class="matrix-row ${selectedRadarWord === 'nok' ? 'radar-active-row' : ''}" data-word="nok" style="cursor: pointer;">
+                        <td><span class="matrix-word-badge" style="border-color: #3B82F6; color: #3B82F6; background: rgba(59, 130, 246, 0.15);">nok</span></td>
                         <td>Eget logisk gæt ${advTransBlock('smaa_mx_3_t')}</td>
                         <td>Ved det ikke ${advTransBlock('smaa_mx_3_l')}</td>
                         <td>Egne observationer / Trøst ${advTransBlock('smaa_mx_3_k')}</td>
                         <td>"Der er mange skyer, så det regner <strong>nok</strong> snart." ${advTransBlock('smaa_mx_3_e')}</td>
                     </tr>
-                    <tr class="matrix-row">
-                        <td><span class="matrix-word-badge">vel</span></td>
+                    <tr class="matrix-row ${selectedRadarWord === 'vel' ? 'radar-active-row' : ''}" data-word="vel" style="cursor: pointer;">
+                        <td><span class="matrix-word-badge" style="border-color: #A855F7; color: #A855F7; background: rgba(168, 85, 247, 0.15);">vel</span></td>
                         <td>Formoder det ${advTransBlock('smaa_mx_4_t')}</td>
                         <td>Ved det bedst ${advTransBlock('smaa_mx_4_l')}</td>
                         <td>Appel om bekræftelse ${advTransBlock('smaa_mx_4_k')}</td>
                         <td>"Av, du slog foden! Det gør <strong>vel</strong> ondt?" ${advTransBlock('smaa_mx_4_e')}</td>
                     </tr>
-                    <tr class="matrix-row">
-                        <td><span class="matrix-word-badge">vist</span></td>
+                    <tr class="matrix-row ${selectedRadarWord === 'vist' ? 'radar-active-row' : ''}" data-word="vist" style="cursor: pointer;">
+                        <td><span class="matrix-word-badge" style="border-color: #F59E0B; color: #F59E0B; background: rgba(245, 158, 11, 0.15);">vist</span></td>
                         <td>Har hørt det ${advTransBlock('smaa_mx_5_t')}</td>
                         <td>Ved det ikke ${advTransBlock('smaa_mx_5_l')}</td>
                         <td>Ekstern kilde / Rygte ${advTransBlock('smaa_mx_5_k')}</td>
@@ -2326,7 +3037,33 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 </tbody>
             </table>
         `;
-        slot.appendChild(card);
+
+        // Event bindings
+        function switchWord(w) {
+            selectedRadarWord = w;
+            renderMatrixSubtab(slot);
+            speakDanish(RADAR_DATA[w].sentence);
+        }
+
+        radarCard.querySelectorAll('.radar-pill-btn').forEach(btn => {
+            btn.onclick = () => switchWord(btn.dataset.word);
+        });
+
+        radarCard.querySelectorAll('.radar-node-circle').forEach(node => {
+            node.onclick = () => switchWord(node.dataset.word);
+        });
+
+        tableCard.querySelectorAll('.matrix-row').forEach(row => {
+            row.onclick = () => switchWord(row.dataset.word);
+        });
+
+        radarCard.querySelector('#radar-audio-btn').onclick = () => {
+            speakDanish(curr.sentence);
+        };
+
+        container.appendChild(radarCard);
+        container.appendChild(tableCard);
+        slot.appendChild(container);
     }
 
     function renderTransformerSubtab(slot) {

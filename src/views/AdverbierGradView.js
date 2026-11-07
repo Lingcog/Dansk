@@ -1130,6 +1130,15 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             font-weight: 800;
             box-shadow: 0 2px 10px var(--adv-glow, rgba(59, 130, 246, 0.5));
         }
+        .vrimmel-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .vrimmel-stage.hide-pins .hotspot-pin {
+            display: none !important;
+        }
 
         .vrimmel-stage {
             position: relative;
@@ -1431,6 +1440,258 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         .inspector-btn-action:hover {
             background: var(--adv-surface-hover, #112240);
             border-color: var(--adv-primary, #3B82F6);
+        }
+
+        /* Streamlined Inspector Mode (Grad & Intensitet) */
+        .vrimmel-inspector.is-streamlined {
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+            background: linear-gradient(145deg, #0d1e38 0%, #071326 100%);
+            border: 1.5px solid #254a7f;
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            margin-top: 1.5rem;
+        }
+        .streamlined-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+        }
+        .streamlined-hero-left {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-word-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .streamlined-audio-btn {
+            background: var(--adv-primary, #3B82F6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .streamlined-audio-btn:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
+            transform: scale(1.08);
+        }
+        .streamlined-scale-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .streamlined-scale-chip.nul {
+            background: rgba(148, 163, 184, 0.15);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: #cbd5e1;
+        }
+        .streamlined-scale-chip.lav {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #7dd3fc;
+        }
+        .streamlined-scale-chip.mellem {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+        }
+        .streamlined-scale-chip.hoej {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #d8b4fe;
+        }
+        .streamlined-scale-chip.fuld {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+        .streamlined-scale-chip.overskud {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1.5px solid rgba(239, 68, 68, 0.6);
+            color: #fca5a5;
+            font-weight: 800;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+        }
+        .streamlined-trans-pill {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .streamlined-trans-pill strong {
+            color: #cbd5e1;
+            font-style: normal;
+        }
+
+        /* Grad Meter Box inside Streamlined Card */
+        .is-streamlined .grad-meter-box {
+            background: rgba(5, 14, 26, 0.85);
+            border: 1.5px solid #1E3A66;
+            border-radius: 14px;
+            padding: 0.95rem 1.25rem;
+            margin: 0;
+        }
+        .is-streamlined .meter-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .meter-status-tag {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #93c5fd;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .meter-status-tag.exceeded {
+            color: #f87171;
+            font-weight: 800;
+        }
+        .meter-fill.fill-exceeded {
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Scene Speech Box */
+        .streamlined-speech-box {
+            background: rgba(15, 23, 42, 0.75);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
+            border-radius: 0 14px 14px 0;
+            padding: 1.1rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .streamlined-speech-box.speech-exceeded {
+            border-left-color: #ef4444;
+        }
+        .streamlined-scene-context {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .streamlined-quote-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-quote-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
+            margin: 0;
+        }
+        .streamlined-quote-text mark {
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+        .streamlined-quote-text mark.mark-exceeded {
+            background: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+        }
+        .streamlined-speak-btn {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .streamlined-speak-btn:hover {
+            background: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+        }
+
+        /* Footer Row */
+        .streamlined-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding-top: 0.4rem;
+        }
+        .streamlined-rule-hint {
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 260px;
+        }
+        .streamlined-rule-hint strong {
+            color: #93c5fd;
+        }
+        .streamlined-nav-btns {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .streamlined-nav-btn {
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
+            padding: 0.45rem 0.95rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .streamlined-nav-btn:hover {
+            background: var(--adv-surface-hover, #112240);
+        }
+        .streamlined-nav-btn.next-primary {
+            background: var(--adv-primary, #3B82F6);
+            color: white;
+            border-color: var(--adv-primary, #3B82F6);
+        }
+        .streamlined-nav-btn.next-primary:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
         }
 
         /* Tab 2: Aha-værkstedet (Intensitetsskalaen & Meget vs. For) */
@@ -2530,7 +2791,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
     // TAB 1: VRIMLEBILLEDET & DET INTERAKTIVE TORV
     // ==========================================
     let activeFilter = 'alle';
-    let isPureMode = false;
+    let showPins = true;
     let selectedWord = ADVERBIER_GRAD_DATA[18]; // Default 'for'
 
     function renderTabVrimmel(parent) {
@@ -2569,21 +2830,35 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             filtersDiv.appendChild(btn);
         });
 
-        const pureToggleBtn = document.createElement('button');
-        pureToggleBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureToggleBtn.innerHTML = `<span>${isPureMode ? renderDsIcon('eyeOff', '') : renderDsIcon('tag', '')}</span> ${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}`;
-        pureToggleBtn.onclick = () => {
-            isPureMode = !isPureMode;
-            renderTabVrimmel(parent);
+        const actionBtns = document.createElement('div');
+        actionBtns.className = 'vrimmel-actions';
+
+        const pinsToggleBtn = document.createElement('button');
+        pinsToggleBtn.className = `pure-toggle-btn ${!showPins ? 'active' : ''}`;
+        pinsToggleBtn.title = 'Slå alle pegefelter til eller fra på illustrationen';
+        pinsToggleBtn.innerHTML = `
+            ${renderDsIcon(showPins ? 'eye' : 'eyeOff', '', { size: 16 })}
+            <span>Pegefelter:</span> <strong>${showPins ? 'TIL' : 'FRA'}</strong>
+        `;
+
+        pinsToggleBtn.onclick = () => {
+            showPins = !showPins;
+            stage.classList.toggle('hide-pins', !showPins);
+            pinsToggleBtn.classList.toggle('active', !showPins);
+            pinsToggleBtn.innerHTML = `
+                ${renderDsIcon(showPins ? 'eye' : 'eyeOff', '', { size: 16 })}
+                <span>Pegefelter:</span> <strong>${showPins ? 'TIL' : 'FRA'}</strong>
+            `;
         };
 
+        actionBtns.appendChild(pinsToggleBtn);
         controlsBar.appendChild(filtersDiv);
-        controlsBar.appendChild(pureToggleBtn);
+        controlsBar.appendChild(actionBtns);
         stageCard.appendChild(controlsBar);
 
         // Stage with wimmelbild image
         const stage = document.createElement('div');
-        stage.className = 'vrimmel-stage';
+        stage.className = `vrimmel-stage ${!showPins ? 'hide-pins' : ''}`;
 
         const img = document.createElement('img');
         img.src = 'assets/adverbier_grad_vrimmel.jpg';
@@ -2591,37 +2866,35 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         img.className = 'vrimmel-img';
         stage.appendChild(img);
 
-        // Hotspots
-        if (!isPureMode) {
-            ADVERBIER_GRAD_DATA.forEach((item, idx) => {
-                if (activeFilter !== 'alle' && item.category !== activeFilter) return;
+        // Hotspots (permanente ordmærker)
+        ADVERBIER_GRAD_DATA.forEach((item, idx) => {
+            if (activeFilter !== 'alle' && item.category !== activeFilter) return;
 
-                const pin = document.createElement('div');
-                pin.className = `hotspot-pin ${selectedWord.id === item.id ? 'active' : ''}`;
-                pin.style.left = `${item.x}%`;
-                pin.style.top = `${item.y}%`;
-                pin.dataset.id = item.id;
-                pin.innerHTML = `
-                    <span>${idx + 1}</span>
-                    <span class="hotspot-label">${item.word}</span>
-                `;
+            const pin = document.createElement('div');
+            pin.className = `hotspot-pin ${selectedWord && selectedWord.id === item.id ? 'active' : ''}`;
+            pin.style.left = `${item.x}%`;
+            pin.style.top = `${item.y}%`;
+            pin.dataset.id = item.id;
+            pin.innerHTML = `
+                <span>${idx + 1}</span>
+                <span class="hotspot-label">${item.word}</span>
+            `;
 
-                pin.onclick = (e) => {
-                    e.stopPropagation();
-                    updateInspector(item, true);
-                    speakDanish(item.word);
-                };
+            pin.onclick = (e) => {
+                e.stopPropagation();
+                updateInspector(item, true);
+                speakDanish(item.word);
+            };
 
-                stage.appendChild(pin);
-            });
-        }
+            stage.appendChild(pin);
+        });
 
         stageCard.appendChild(stage);
         layout.appendChild(stageCard);
 
         // Målords præsentationsboks placeret smukt under vrimlebilledet
         const inspector = document.createElement('div');
-        inspector.className = 'vrimmel-inspector';
+        inspector.className = 'vrimmel-inspector is-streamlined';
         inspector.id = 'grad-inspector-box';
         layout.appendChild(inspector);
         parent.appendChild(layout);
@@ -2636,104 +2909,147 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
             const trans = getGradTranslation(item);
             const currentLang = getLang();
-            const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
             const pctWidth = Math.min(100, (item.levelPercent / 120) * 100);
 
-            const categoryLabels = {
-                'nul': '0% (slet ikke)',
-                'lav': 'Lav styrke (5-25%)',
-                'mellem': 'Mellem styrke (40-75%)',
-                'hoej': 'Høj styrke (85-95%)',
-                'fuld': 'Fuld styrke (100%)',
-                'overskud': `${renderDsIcon('alertTriangle', '', { size: 14 })} Over grænsen (>100%)`
+            const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === item.id);
+            const prevIdx = (currentIdx - 1 + ADVERBIER_GRAD_DATA.length) % ADVERBIER_GRAD_DATA.length;
+            const nextIdx = (currentIdx + 1) % ADVERBIER_GRAD_DATA.length;
+            const prevItem = ADVERBIER_GRAD_DATA[prevIdx];
+            const nextItem = ADVERBIER_GRAD_DATA[nextIdx];
+
+            inspector.className = 'vrimmel-inspector is-streamlined';
+
+            // Støtteoversættelse
+            const supportWord = currentLang === 'da'
+                ? (item.translations?.en?.word || 'translation')
+                : (item.translations?.[currentLang]?.word || trans.word || item.translations?.en?.word || '');
+            const supportLabel = currentLang === 'da' ? 'Engelsk støtte:' : `${currentLang.toUpperCase()}:`;
+
+            // Kategori og chip
+            const catConfig = {
+                'nul': { icon: 'eyeOff', class: 'nul', label: '0% intet' },
+                'lav': { icon: 'activity', class: 'lav', label: 'Lav styrke (5-25%)' },
+                'mellem': { icon: 'scale', class: 'mellem', label: 'Mellem styrke (40-75%)' },
+                'hoej': { icon: 'zap', class: 'hoej', label: 'Høj styrke (85-95%)' },
+                'fuld': { icon: 'check', class: 'fuld', label: 'Fuld styrke (100%)' },
+                'overskud': { icon: 'alertTriangle', class: 'overskud', label: 'Over grænsen (>100%)' }
             };
-            const catText = categoryLabels[item.category] || item.tier;
+            const chipCfg = catConfig[item.category] || { icon: 'thermometer', class: 'mellem', label: item.tier };
+
+            // Kontekst og replik fra torvet
+            const GRAD_SCENE_MAP = {
+                slet_ikke: { ctx: "Drengen i den tynde trøje smiler", quote: "Jeg fryser slet ikke i dette milde vejr!" },
+                naesten_ikke: { ctx: "Tallerkenen er tømt efter kagen", quote: "Der er næsten ikke flere jordbær tilbage." },
+                en_smule: { ctx: "Cafégæsten venter ved bordet", quote: "Kaffen er kun en smule varm, så den skal drikkes nu." },
+                noget: { ctx: "Cyklisten træder hårdt i pedalerne", quote: "Cyklen med de store flyttekasser er noget tung at styre." },
+                nogenlunde: { ctx: "Drengen i den lette jakke mærker vinden", quote: "Jeg har det nogenlunde trods den kølige blæst." },
+                ret: { ctx: "Musikeren med harmonikaen underholder torvet", quote: "Han er dygtig og spiller ret godt." },
+                naesten: { ctx: "Den øverste iskugle hælder til siden i solen", quote: "Skynd dig at spise, den er næsten smeltet!" },
+                helt: { ctx: "Ved bagerens store vindue", quote: "Kagen er helt dækket af friske, røde jordbær." }
+            };
+
+            let sceneContext = '';
+            let sceneQuote = '';
+            if (GRAD_SCENE_MAP[item.id]) {
+                sceneContext = GRAD_SCENE_MAP[item.id].ctx;
+                sceneQuote = GRAD_SCENE_MAP[item.id].quote;
+            } else if (item.sceneDesc && item.sceneDesc.includes(' – ')) {
+                const parts = item.sceneDesc.split(' – ');
+                sceneContext = parts[0].trim();
+                sceneQuote = parts[1].trim();
+            } else {
+                sceneContext = 'Karakteren på torvet';
+                sceneQuote = item.sentence || item.sceneDesc || '';
+            }
+            sceneQuote = sceneQuote.charAt(0).toUpperCase() + sceneQuote.slice(1);
+
+            // Fremhæv målord i replikken
+            const wordRegex = new RegExp(`(${item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            const isExceeded = item.levelPercent > 100;
+            const markClass = isExceeded ? 'mark-exceeded' : '';
+            const highlightedQuote = sceneQuote.replace(wordRegex, `<mark class="${markClass}">$1</mark>`);
+
+            // Didaktisk huskeregel
+            const ruleText = item.ruleHint || item.meaning || '';
+            const ruleTrans = advTransSpan(ruleText, `grad_r_${currentIdx + 1}`);
+
+            // Visuelt hjælpemiddel (Skala og termometer/meter boks)
+            const meterTag = isExceeded
+                ? `${renderDsIcon('alertTriangle', '', { size: 14 })} Grænsen overskredet!`
+                : (item.levelPercent === 0 ? '0% intet' : `Styrke: ${item.tier}`);
 
             inspector.innerHTML = `
-                <div class="inspector-left">
-                    <div class="inspector-header">
-                        <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border: 1.5px solid var(--adv-border-focus, #93C5FD); color: var(--adv-border-focus, #93C5FD); font-weight: 800;">${renderDsIcon('mapPin', '', { size: 14 })} Målord: ${item.word}</span>
-                            <span class="inspector-badge">Intensitet: ${item.tier}</span>
-                            <span class="inspector-cat-badge">${catText}</span>
-                        </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale">${renderDsIcon('volume', '', { size: 18 })}</button>
+                <div class="streamlined-header-row">
+                    <div class="streamlined-hero-left">
+                        <h2 class="streamlined-word-title">${item.word}</h2>
+                        <button class="streamlined-audio-btn" id="streamlined-word-audio" title="Hør udtale">
+                            ${renderDsIcon('volume', '', { size: 18 })}
+                        </button>
+                        <span class="streamlined-scale-chip ${chipCfg.class}">
+                            ${renderDsIcon(chipCfg.icon, '', { size: 14 })} ${chipCfg.label}
+                        </span>
                     </div>
-
-                    <h2 class="inspector-word-title">
-                        <span>${renderDsIcon('thermometer', '', { size: 24 })}</span> ${item.word}
-                    </h2>
-
-                    <div class="inspector-trans-box">
-                        <div class="trans-badge-label">
-                            <span>${renderDsIcon('globe', '', { size: 14 })}</span> OVERSÆTTELSE (${langLabel})
-                        </div>
-                        <div class="trans-word-val">"${trans.word}"</div>
-                    </div>
-
-                    <div class="inspector-scene-box">
-                        <div class="scene-heading">${renderDsIcon('mapPin', '', { size: 15 })} Situation på torvet</div>
-                        <p class="scene-text">${item.sceneDesc}</p>
+                    <div class="streamlined-trans-pill">
+                        ${supportLabel} <strong>${supportWord}</strong>
                     </div>
                 </div>
 
-                <div class="inspector-right">
-                    <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">${renderDsIcon('messageSquare', '', { size: 16 })} Eksempelsætning</div>
-                        <p class="sentence-quote-text">"${item.contextSentence}"</p>
-                        ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
-                        <button class="inspector-speak-btn" id="inspector-action-speak">
-                            <span>${renderDsIcon('volume', '', { size: 16 })}</span> Hør sætning
+                <!-- Visuelt hjælpemiddel: Skala & Måleramme -->
+                <div class="grad-meter-box">
+                    <div class="meter-label-row">
+                        <span><strong>Skala:</strong> ${item.levelPercent}% (${item.meaning})</span>
+                        <span class="meter-status-tag ${isExceeded ? 'exceeded' : ''}">
+                            ${meterTag}
+                        </span>
+                    </div>
+                    <div class="meter-track">
+                        <div class="meter-fill ${isExceeded ? 'fill-exceeded' : ''}" style="width: ${pctWidth}%;"></div>
+                    </div>
+                </div>
+
+                <!-- Scene og Replik fra torvet -->
+                <div class="streamlined-speech-box ${isExceeded ? 'speech-exceeded' : ''}">
+                    <div class="streamlined-scene-context">
+                        ${renderDsIcon('user', '', { size: 14 })} ${sceneContext}:
+                    </div>
+                    <div class="streamlined-quote-row">
+                        <p class="streamlined-quote-text">
+                            "${highlightedQuote}"
+                        </p>
+                        <button class="streamlined-speak-btn" id="streamlined-speech-audio" title="Hør replik">
+                            ${renderDsIcon('volume', '', { size: 15 })} <span>Hør sætning</span>
                         </button>
                     </div>
+                </div>
 
-                    <div class="grad-meter-box">
-                        <div class="meter-label-row">
-                            <span>Skala: ${item.levelPercent}%</span>
-                            <span>${item.levelPercent > 100 ? `${renderDsIcon('alertTriangle', '', { size: 14 })} Grænsen overskredet!` : item.levelPercent === 0 ? '0% intet' : 'Styrke'}</span>
-                        </div>
-                        <div class="meter-track">
-                            <div class="meter-fill" style="width: ${pctWidth}%;"></div>
-                        </div>
+                <!-- Bundrække: Huskeregel & Navigation -->
+                <div class="streamlined-footer-row">
+                    <div class="streamlined-rule-hint">
+                        ${renderDsIcon('lightbulb', '', { size: 16 })}
+                        <span><strong>Hvornår bruger vi det?</strong> ${ruleText}${ruleTrans}</span>
                     </div>
-
-                    <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">${renderDsIcon('lightbulb', '', { size: 15 })} Grammatisk tip</div>
-                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `grad_r_${ADVERBIER_GRAD_DATA.indexOf(item) + 1}`)}</p>
-                    </div>
-
-                    <div class="inspector-actions">
-                        <button class="inspector-btn-action" id="inspector-action-prev">
-                            ← Forrige ord
-                        </button>
-                        <button class="inspector-btn-action" style="background: var(--adv-primary, #3B82F6);" id="inspector-action-next">
-                            Næste ord →
-                        </button>
+                    <div class="streamlined-nav-btns">
+                        <button class="streamlined-nav-btn" id="streamlined-btn-prev">← Forrige (${prevIdx + 1})</button>
+                        <button class="streamlined-nav-btn next-primary" id="streamlined-btn-next">Næste (${nextIdx + 1}) →</button>
                     </div>
                 </div>
             `;
 
             // Bind events
-            inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(item.word);
-            inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#streamlined-word-audio').onclick = () => speakDanish(item.word);
+            inspector.querySelector('#streamlined-speech-audio').onclick = () => speakDanish(sceneQuote);
 
-            inspector.querySelector('#inspector-action-prev').onclick = () => {
-                const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === item.id);
-                const prevIdx = (currentIdx - 1 + ADVERBIER_GRAD_DATA.length) % ADVERBIER_GRAD_DATA.length;
-                const prevItem = ADVERBIER_GRAD_DATA[prevIdx];
+            inspector.querySelector('#streamlined-btn-prev').onclick = () => {
                 updateInspector(prevItem, true);
                 speakDanish(prevItem.word);
             };
 
-            inspector.querySelector('#inspector-action-next').onclick = () => {
-                const currentIdx = ADVERBIER_GRAD_DATA.findIndex(w => w.id === item.id);
-                const nextIdx = (currentIdx + 1) % ADVERBIER_GRAD_DATA.length;
-                const nextItem = ADVERBIER_GRAD_DATA[nextIdx];
+            inspector.querySelector('#streamlined-btn-next').onclick = () => {
                 updateInspector(nextItem, true);
                 speakDanish(nextItem.word);
             };
 
-            // Trigger animation pulse så brugeren tydeligt ser den dukker frem
+            // Trigger animation pulse
             inspector.classList.remove('updated');
             void inspector.offsetWidth;
             inspector.classList.add('updated');

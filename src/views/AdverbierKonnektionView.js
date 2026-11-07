@@ -140,7 +140,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 10,
             y: 36,
             meaning: 'Af den grund / som følge heraf (Resultat)',
-            sceneDesc: 'Det styrter ned fra de mørke skyer. Derfor slår manden sin gule paraply op og går ind i busskuret.',
+            sceneDesc: 'Manden i det pludselige uvejr ved busskuret: "Det styrter ned fra mørke skyer. Derfor slår jeg paraplyen op!"',
             sentence: 'Det regner. Derfor tager jeg bussen.',
             contextSentence: 'Det begyndte pludselig at øsregne over torvet. Derfor slog han paraplyen op og søgte læ.',
             ruleHint: 'Peger frem på RESULTATET. Står ofte forrest i sætningen og udløser INVERSION (Derfor + Verbum + Subjekt), eller inde efter verbet ("Jeg tager derfor bussen").',
@@ -180,7 +180,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 25,
             y: 58,
             meaning: 'Logisk konklusion / med andre ord',
-            sceneDesc: 'Stationsuret viser over otte, og toget ruller ud. Vi er altså kommet for sent!',
+            sceneDesc: 'Passageren kigger forfærdet på stationsuret: "Toget kører klokken otte, og uret viser over. Vi er altså kommet for sent!"',
             sentence: 'Klokken er otte. Vi er altså for sent på den.',
             contextSentence: 'Toget kører klokken otte, og uret viser ti minutter over. Vi er altså kommet for sent.',
             ruleHint: 'Drager en logisk konklusion ud fra de fakta, vi lige har set eller hørt.',
@@ -200,7 +200,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 89,
             y: 53,
             meaning: 'På denne måde / som følge heraf (Formelt)',
-            sceneDesc: 'Kontrakten ligger underskrevet på skrivebordet, og således er aftalen nu juridisk gældende.',
+            sceneDesc: 'Direktøren på kontoret lægger pennen: "Begge parter har underskrevet dokumentet, og således er aftalen nu juridisk gældende."',
             sentence: 'Begge skrev under, og således blev aftalen indgået.',
             contextSentence: 'Begge parter underskrev dokumentet på kontoret, og således faldt alle detaljer på plads.',
             ruleHint: 'Betyder "på den måde" eller "derfor". Bruges især i skriftsprog, nyheder og formelle præsentationer.',
@@ -220,7 +220,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 88,
             y: 42,
             meaning: 'Med det / som direkte konsekvens',
-            sceneDesc: 'De to kolleger giver håndslag efter underskriften, og projektet er dermed officielt godkendt.',
+            sceneDesc: 'Projektlederne giver hinanden et fast håndslag: "Vi har underskrevet kontrakten, og projektet er dermed officielt godkendt."',
             sentence: 'Han skrev under og er dermed bundet af aftalen.',
             contextSentence: 'Direktøren gav håndslag på mødet, og projektet er dermed endeligt godkendt.',
             ruleHint: 'Viser at handling A automatisk udløser resultat B ("med denne handling sker følgende").',
@@ -242,7 +242,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 26,
             y: 38,
             meaning: 'På trods af det / trods forhindringen',
-            sceneDesc: 'Regnen siler ned, men kvinden i den røde regnjakke cykler glad afsted alligevel!',
+            sceneDesc: 'Kvinden i den røde regnjakke smiler på cykelstien: "Det øsregner og blæser kraftigt, men jeg cykler alligevel på arbejde!"',
             sentence: 'Det regner. Alligevel tager hun cyklen.',
             contextSentence: 'Det øsregner og blæser kraftigt, men hun cykler alligevel på arbejde med et smil.',
             ruleHint: 'Bruges når man gør noget PÅ TRODS AF en forhindring. Kan stå forrest med inversion ("Alligevel cykler hun") eller efter verbet ("Hun cykler alligevel").',
@@ -262,7 +262,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 48,
             y: 20,
             meaning: 'Alligevel / men (Blød kontrast inde i sætningen)',
-            sceneDesc: 'Til venstre hænger regnskyerne, men over torvet bryder solen dog igennem skyerne.',
+            sceneDesc: 'Vejr-iagttageren på torvet kigger op mod lyset: "Morgenen startede med mørke skyer, men nu bryder solen dog frem over torvet."',
             sentence: 'Vejret var koldt. Solen skinnede dog.',
             contextSentence: 'Morgenen startede med mørke regnskyer, men op ad formiddagen kom solen dog frem over torvet.',
             ruleHint: 'Et elegant kontrast-adverbium ("however/though"). Står næsten altid INDE i sætningen efter verbet – aldrig forrest som tekstbinder.',
@@ -282,7 +282,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 66,
             y: 54,
             meaning: 'I modsætning hertil (Sammenligning A vs. B)',
-            sceneDesc: 'Manden til venstre drikker sort kaffe ved sin laptop. Kvinden til højre drikker derimod grøn te med en bog.',
+            sceneDesc: 'Cafégæsten betragter nabobordene: "Manden til venstre drikker kaffe. Kvinden til højre drikker derimod grøn te."',
             sentence: 'Peter drikker kaffe. Maria drikker derimod te.',
             contextSentence: 'I caféens venstre side arbejder folk med sort kaffe. I højre side nyder gæsterne derimod rolig te og bøger.',
             ruleHint: 'Stiller to forskellige ting eller personer op mod hinanden (A gør X ↔ B gør derimod Y).',
@@ -302,7 +302,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 81,
             y: 16,
             meaning: 'Som kompensation / som positiv modvægt',
-            sceneDesc: 'På ejendomsmæglerens skilt er værelset til venstre meget lille. Til gengæld er prisen helt i bund!',
+            sceneDesc: 'Ejendomsmægleren peger på plantegningen: "Studielejligheden er ganske vist lille. Til gengæld er huslejen virkelig lav!"',
             sentence: 'Lejligheden er lille. Til gengæld er den billig.',
             contextSentence: 'Studielejligheden har kun ét lille værelse. Til gengæld er huslejen virkelig lav, så du sparer mange penge.',
             ruleHint: 'Bruges når en fordel (et lyspunkt) kompenserer og vejer op for en ulempe (eller omvendt).',
@@ -322,7 +322,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 58,
             y: 78,
             meaning: 'Lige det modsatte! (180 graders afvisning)',
-            sceneDesc: 'Er gæsterne ved bordet kede af regnvejret? Nej, tværtimod – de fejrer fødselsdag med stor lagkage!',
+            sceneDesc: 'Fødselaren ved det festlige cafébord ler højt: "Mange troede regnen ville ødelægge festen. Tværtimod blev det endnu mere hyggeligt!"',
             sentence: 'Er du træt? Nej, tværtimod!',
             contextSentence: 'Mange troede at regnvejret ville ødelægge festen. Tværtimod blev stemningen i caféen endnu mere hyggelig!',
             ruleHint: 'Bruges til at afvise en (ofte negativ) påstand og sige, at det stik modsatte (180 grader modsat) er sandt.',
@@ -344,7 +344,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 67,
             y: 26,
             meaning: 'Derudover / ovenikøbet (Ekstra argument)',
-            sceneDesc: 'Torvet har gode transportforbindelser. Desuden er der en bod med frisk frugt og grønt.',
+            sceneDesc: 'Beboeren viser kvarteret frem til sin ven: "Lejligheden ligger lige ved stationen. Desuden er der et dejligt grøntmarked nede på torvet."',
             sentence: 'Kvarteret er roligt. Desuden ligger det tæt på stationen.',
             contextSentence: 'Den nye lejlighed er lys og moderne. Desuden ligger der et hyggeligt grøntmarked lige nede på torvet.',
             ruleHint: 'Tilføjer ekstra stærke argumenter på en saglig måde ("furthermore / besides"). Giver inversion i forfeltet!',
@@ -364,7 +364,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 41,
             y: 32,
             meaning: 'Tillige / med i gruppen ("also / too")',
-            sceneDesc: 'Bussen kører, sporvognen kører, og cyklisterne kører også gennem byen.',
+            sceneDesc: 'Pendlere guider en turist ved stoppestedet: "Du kan tage den blå bybus, men du kan også tage den hurtige letbane over torvet."',
             sentence: 'Jeg drikker kaffe, og jeg vil også gerne have vand.',
             contextSentence: 'Man kan tage bussen til centrum, men man kan også tage den hurtige letbane over torvet.',
             ruleHint: 'Det mest almindelige ord for tilføjelse i hverdagsdansk. Står typisk inde i sætningen lige efter verbet.',
@@ -384,7 +384,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 51,
             y: 63,
             meaning: 'Ovenikøbet / helt op til (Overraskende bonus)',
-            sceneDesc: 'Kokken serverer ikke bare en lækker fiskeret – han har endda bagt en kæmpe lagkage med lys!',
+            sceneDesc: 'Den imponerede cafégæst kigger mod køkkenet: "Kokken serverede en fantastisk fiskeret, og han kom endda ind med en gratis fødselsdagskage!"',
             sentence: 'Han lavede middag og bagte endda en kage!',
             contextSentence: 'Kokken i Café Station lavede en fantastisk hovedret, og han kom endda ind med en gratis fødselsdagslagkage!',
             ruleHint: 'Fremhæver noget overraskende eller ekstraordinært, der overgår forventningerne ("even").',
@@ -466,7 +466,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 11,
             y: 74,
             meaning: 'Som erstatning / Plan B ("instead")',
-            sceneDesc: 'Den unge mands cykeldæk er fladt. Han trækker cyklen og tager den blå bybus i stedet.',
+            sceneDesc: 'Den unge mand med det punkterede forhjul sukker: "Mit cykeldæk er helt fladt. I stedet må jeg gå hen og tage bussen."',
             sentence: 'Cyklen er flad. Jeg tager bussen i stedet.',
             contextSentence: 'Mit baghjul punkterede på vej hjem. I stedet måtte jeg gå hen til stoppestedet og tage bussen.',
             ruleHint: 'Viser at Plan A blev opgivet og erstattet af Plan B. Kan stå forrest med inversion eller til sidst i sætningen.',
@@ -506,7 +506,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             x: 16,
             y: 35,
             meaning: 'Som trøst / et positivt minimum',
-            sceneDesc: 'Passagererne venter i regnvejret, men inde i busskuret sidder de i det mindste i tørvejr.',
+            sceneDesc: 'Passageren kigger ud på regnen fra busskuret: "Bussen er desværre forsinket, men vi sidder da i det mindste i tørvejr under taget."',
             sentence: 'Det regner, men her er i det mindste tørt.',
             contextSentence: 'Bussen er desværre forsinket på grund af uvejr, men vi sidder i det mindste i læ under taget.',
             ruleHint: 'Bruges som trøst i en dårlig situation: "Alt er ikke perfekt, men vi har da dette lille lyspunkt."',
@@ -733,22 +733,28 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             border-color: var(--adv-border-focus, #93C5FD);
             box-shadow: 0 2px 8px var(--adv-glow, rgba(59, 130, 246, 0.35));
         }
-        .pure-toggle-btn {
-            background: var(--adv-surface-input, #050E1A);
+        .hotspot-toggle-btn {
+            background: var(--adv-surface, #0A192F);
+            color: #cbd5e1;
             border: 1px solid var(--adv-border, #1E3A66);
-            color: var(--adv-border-focus, #93C5FD);
-            padding: 0.45rem 1rem;
-            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            display: flex;
+            transition: all 0.2s;
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
-        .pure-toggle-btn.active {
-            background: var(--adv-primary, #3B82F6);
-            color: white;
+        .hotspot-toggle-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: var(--adv-primary, #3B82F6);
+            color: #93c5fd;
+        }
+        .hotspot-toggle-btn:hover {
+            background: #112240;
+            color: #ffffff;
         }
 
         .vrimmel-stage {
@@ -803,187 +809,218 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--adv-surface-input, #050E1A);
-            color: var(--adv-text-muted, #BFDBFE);
-            border: 1px solid var(--adv-border, #1E3A66);
-            padding: 0.2rem 0.55rem;
+            background: rgba(5, 14, 26, 0.92);
+            color: #ffffff;
+            border: 1px solid var(--adv-border-focus, #93C5FD);
+            padding: 0.15rem 0.45rem;
             border-radius: 6px;
             font-size: 0.75rem;
-            font-weight: 800;
+            font-weight: 700;
             white-space: nowrap;
             margin-top: 4px;
             pointer-events: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* Målords Præsentationsboks under vrimlebilledet */
-        .vrimmel-inspector {
-            background: var(--adv-surface, #0A192F);
-            border: 2px solid var(--adv-border, #1E3A66);
-            border-radius: 20px;
+        /* Streamlined Inspector Mode (Model A) */
+        .vrimmel-inspector.is-streamlined {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.15rem;
+            background: linear-gradient(145deg, #0d1e38 0%, #071326 100%);
+            border: 1.5px solid #254a7f;
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             margin-top: 1.5rem;
-            padding: 1.8rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 2rem;
-            align-items: start;
-            animation: fadeIn 0.3s ease;
         }
-        @media (max-width: 850px) {
-            .vrimmel-inspector { grid-template-columns: 1fr; gap: 1.5rem; }
-        }
-        .inspector-left, .inspector-right {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .inspector-header {
+        .streamlined-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
         }
-        .inspector-badge-row {
+        .streamlined-hero-left {
             display: flex;
-            gap: 0.6rem;
             align-items: center;
+            gap: 0.9rem;
             flex-wrap: wrap;
         }
-        .inspector-badge {
-            background: var(--adv-surface-input, #050E1A);
-            border: 1px solid var(--adv-border, #1E3A66);
-            color: var(--adv-border-focus, #93C5FD);
-            padding: 0.25rem 0.75rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
+        .streamlined-word-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.02em;
         }
-        .inspector-audio-btn {
+        .streamlined-audio-btn {
             background: var(--adv-primary, #3B82F6);
             color: white;
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px var(--adv-glow, rgba(59, 130, 246, 0.3));
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
         }
-        .inspector-audio-btn:hover {
+        .streamlined-audio-btn:hover {
             background: var(--adv-primary-hover, #1D4ED8);
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
-        .inspector-word-title {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: white;
-            display: flex;
+        .streamlined-scale-chip {
+            display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.45rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .streamlined-scale-chip.aarsag {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+        .streamlined-scale-chip.kontrast {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            color: #fda4af;
+        }
+        .streamlined-scale-chip.tilfoejelse {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+        .streamlined-scale-chip.alternativ {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #c4b5fd;
+        }
+        .streamlined-trans-pill {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .streamlined-trans-pill strong {
+            color: #cbd5e1;
+            font-style: normal;
+        }
+        .streamlined-speech-box {
+            background: rgba(15, 23, 42, 0.75);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
+            border-radius: 0 14px 14px 0;
+            padding: 1.1rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .streamlined-quote-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-quote-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
             margin: 0;
         }
-        .inspector-trans-box {
-            background: var(--adv-surface-input, #050E1A);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
-            border-left: 4px solid var(--adv-primary, #3B82F6);
-        }
-        .trans-badge-label {
-            font-size: 0.75rem;
+        .streamlined-quote-text mark {
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
             font-weight: 800;
+        }
+        .streamlined-speak-btn {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid var(--adv-primary, #3B82F6);
             color: var(--adv-border-focus, #93C5FD);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .streamlined-speak-btn:hover {
+            background: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+        }
+        .streamlined-scene-context {
+            font-size: 0.9rem;
+            color: #94a3b8;
             display: flex;
             align-items: center;
             gap: 0.4rem;
         }
-        .trans-word-val {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: #f8fafc;
+        .streamlined-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 0.9rem;
+            margin-top: 0.2rem;
         }
-        .inspector-scene-box {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .scene-heading {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #94a3b8;
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
-        }
-        .scene-text {
-            color: #cbd5e1;
-            font-size: 0.98rem;
-            line-height: 1.5;
-            margin: 0;
-        }
-        .inspector-sentence-card {
-            background: var(--adv-surface-input, #050E1A);
-            border-radius: 14px;
-            padding: 1.2rem;
-            border: 1.5px solid var(--adv-border, #1E3A66);
-        }
-        .sentence-quote-text {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: white;
-            line-height: 1.5;
-            margin-bottom: 0.5rem;
-        }
-        .sentence-trans-text {
-            font-size: 0.95rem;
-            color: #94a3b8;
-            font-style: italic;
-            margin-bottom: 0.8rem;
-        }
-        .inspector-speak-btn {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid var(--adv-primary, #3B82F6);
-            color: var(--adv-border-focus, #93C5FD);
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: inline-flex;
+        .streamlined-rule-hint {
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.2s;
-        }
-        .inspector-speak-btn:hover {
-            background: var(--adv-primary, #3B82F6);
-            color: white;
-        }
-        .inspector-actions {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 0.5rem;
-        }
-        .inspector-btn-action {
+            font-size: 0.92rem;
+            color: #cbd5e1;
             flex: 1;
-            background: var(--adv-surface, #0A192F);
-            color: white;
-            border: 1px solid var(--adv-border, #1E3A66);
-            padding: 0.75rem;
-            border-radius: 10px;
-            font-weight: 700;
+            min-width: 250px;
+        }
+        .streamlined-rule-hint svg {
+            color: #fbbf24;
+            flex-shrink: 0;
+        }
+        .streamlined-rule-hint strong {
+            color: #ffffff;
+        }
+        .streamlined-nav-btns {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .streamlined-nav-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #1E3A66;
+            color: #cbd5e1;
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
-            text-align: center;
         }
-        .inspector-btn-action:hover {
-            background: var(--adv-surface-hover, #112240);
+        .streamlined-nav-btn:hover {
+            background: #1e293b;
+            color: #ffffff;
+        }
+        .streamlined-nav-btn.next-primary {
+            background: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+            border-color: var(--adv-primary, #3B82F6);
+        }
+        .streamlined-nav-btn.next-primary:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
         }
 
         /* Tab 2: Brobygger-Værkstedet */
@@ -1632,7 +1669,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     // TAB 1: VRIMLEBILLEDET (Byens Knudepunkt)
     // ==========================================
     let activeFilter = 'alle';
-    let isPureMode = false;
+    let showHotspots = true;
     let selectedWord = null;
 
     function renderTabVrimmel(parent) {
@@ -1674,16 +1711,20 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             filtersDiv.appendChild(fBtn);
         });
 
-        const pureBtn = document.createElement('button');
-        pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}</span>`;
-        pureBtn.onclick = () => {
-            isPureMode = !isPureMode;
-            renderTabVrimmel(parent);
+        const hotspotToggleBtn = document.createElement('button');
+        hotspotToggleBtn.className = `hotspot-toggle-btn ${showHotspots ? 'active' : ''}`;
+        hotspotToggleBtn.innerHTML = `<span>Pegefelter: ${showHotspots ? 'TIL' : 'FRA'}</span>`;
+        hotspotToggleBtn.onclick = () => {
+            showHotspots = !showHotspots;
+            hotspotToggleBtn.className = `hotspot-toggle-btn ${showHotspots ? 'active' : ''}`;
+            hotspotToggleBtn.innerHTML = `<span>Pegefelter: ${showHotspots ? 'TIL' : 'FRA'}</span>`;
+            stage.querySelectorAll('.hotspot-pin').forEach(pin => {
+                pin.style.display = showHotspots ? 'flex' : 'none';
+            });
         };
 
         controls.appendChild(filtersDiv);
-        controls.appendChild(pureBtn);
+        controls.appendChild(hotspotToggleBtn);
         stageCard.appendChild(controls);
 
         // Stage with Wimmelbild image
@@ -1702,22 +1743,29 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             return item.category === activeFilter;
         });
 
+        if (!visibleWords.some(w => w.id === selectedWord.id)) {
+            selectedWord = visibleWords[0] || ADVERBIER_KONNEKTION_DATA[0];
+        }
+
         // Place Hotspot Pins
         visibleWords.forEach((item, idx) => {
             const pin = document.createElement('div');
             pin.className = `hotspot-pin ${selectedWord && selectedWord.id === item.id ? 'active' : ''}`;
             pin.style.left = `${item.x}%`;
             pin.style.top = `${item.y}%`;
+            pin.style.display = showHotspots ? 'flex' : 'none';
             pin.dataset.id = item.id;
             pin.innerHTML = `
                 <span>${idx + 1}</span>
-                ${!isPureMode ? `<span class="hotspot-label">${item.word}</span>` : ''}
+                <span class="hotspot-label">${item.word}</span>
             `;
 
             pin.onclick = (e) => {
                 e.stopPropagation();
                 updateInspector(item, true);
-                speakDanish(item.sentence);
+                const match = (item.sceneDesc || '').match(/^(.*?):\s*"(.*)"\s*$/);
+                const quoteText = match ? match[2].trim() : (item.sentence || item.word);
+                speakDanish(quoteText);
             };
 
             stage.appendChild(pin);
@@ -1728,7 +1776,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         // Målords præsentationsboks under vrimlebilledet
         const inspector = document.createElement('div');
-        inspector.className = 'vrimmel-inspector';
+        inspector.className = 'vrimmel-inspector is-streamlined';
         inspector.id = 'konnektion-inspector-box';
         layout.appendChild(inspector);
         parent.appendChild(layout);
@@ -1740,85 +1788,111 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 p.classList.toggle('active', p.dataset.id === item.id);
             });
 
-            const catNames = {
-                aarsag: 'Årsag, Følge & Begrundelse',
-                kontrast: 'Modsætning & Kontrast',
-                tilfoejelse: 'Tilføjelse & Emneskift',
-                alternativ: 'Alternativ, Forbehold & Opsamling'
-            };
-
+            const currentLang = getLang();
             const trans = getKonnektionTranslation(item);
-            const currentLang = getLang().toUpperCase();
 
-            const highlightedSentence = item.sentence.replace(
-                new RegExp(`(${item.word})`, 'i'),
-                `<span style="color: var(--adv-border-focus, #93C5FD); text-decoration: underline;">$1</span>`
-            );
+            const currentIdx = visibleWords.findIndex(w => w.id === item.id);
+            const prevIdx = (currentIdx - 1 + visibleWords.length) % visibleWords.length;
+            const nextIdx = (currentIdx + 1) % visibleWords.length;
+            const prevItem = visibleWords[prevIdx];
+            const nextItem = visibleWords[nextIdx];
+
+            inspector.className = 'vrimmel-inspector is-streamlined';
+
+            // Støtteoversættelse
+            const supportWord = currentLang === 'da'
+                ? (item.translations?.en?.word || trans?.word || 'translation')
+                : (item.translations?.[currentLang]?.word || trans?.word || item.translations?.en?.word || '');
+            const supportLabel = currentLang === 'da' ? 'Engelsk støtte:' : `${currentLang.toUpperCase()}:`;
+
+            // Ekstraher kontekst og replik fra sceneDesc
+            let sceneContext = '';
+            let sceneQuote = '';
+            const match = (item.sceneDesc || '').match(/^(.*?):\s*"(.*)"\s*$/);
+            if (match) {
+                sceneContext = match[1].trim();
+                sceneQuote = match[2].trim();
+            } else {
+                sceneContext = item.sceneDesc || 'I Byens Knudepunkt';
+                sceneQuote = item.sentence || item.contextSentence || '';
+            }
+
+            // Fremhæv målordet i replikken
+            const escapedWord = item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const wordRegex = new RegExp(`(${escapedWord})`, 'gi');
+            let highlightedQuote = sceneQuote.replace(wordRegex, '<mark>$1</mark>');
+
+            // Kategori- og nuancechip
+            const catConfig = {
+                'aarsag': { icon: 'zap', class: 'aarsag' },
+                'kontrast': { icon: 'compare', class: 'kontrast' },
+                'tilfoejelse': { icon: 'bricks', class: 'tilfoejelse' },
+                'alternativ': { icon: 'refresh', class: 'alternativ' }
+            };
+            const chipCfg = catConfig[item.category] || { icon: 'tag', class: 'aarsag' };
+
+            // Didaktisk samtale-regel
+            const ruleText = item.ruleHint || item.meaning || '';
+            const ruleTrans = advTransSpan(ruleText, `kon_r_${ADVERBIER_KONNEKTION_DATA.indexOf(item) + 1}`);
 
             inspector.innerHTML = `
-                <div class="inspector-left">
-                    <div class="inspector-header">
-                        <div class="inspector-badge-row">
-                            <span class="inspector-badge">${catNames[item.category] || 'Tekstbinder'}</span>
-                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border-color: var(--adv-border, #1E3A66); color: var(--adv-border-focus, #93C5FD);">${item.meaning} ${advTransSpan(item.meaning, `kon_m_${ADVERBIER_KONNEKTION_DATA.indexOf(item) + 1}`)}</span>
-                        </div>
-                        <button class="inspector-audio-btn" id="insp-speak-word" title="Lyt til udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+                <div class="streamlined-header-row">
+                    <div class="streamlined-hero-left">
+                        <h2 class="streamlined-word-title">${item.word}</h2>
+                        <button class="streamlined-audio-btn" id="streamlined-word-audio" title="Hør udtale">
+                            ${renderDsIcon('volume', '', { size: 18 })}
+                        </button>
+                        <span class="streamlined-scale-chip ${chipCfg.class}">
+                            ${renderDsIcon(chipCfg.icon, '', { size: 14 })} ${item.meaning}
+                        </span>
                     </div>
-
-                    <h2 class="inspector-word-title">
-                        ${item.word}
-                    </h2>
-
-                    <div class="inspector-trans-box">
-                        <div class="trans-badge-label">
-                            MÅLORDSPRÆSENTATION & OVERSÆTTELSE (${currentLang})
-                        </div>
-                        <div class="trans-word-val">${trans.word}</div>
-                    </div>
-
-                    <div class="inspector-scene-box">
-                        <div class="scene-heading">I Vrimlebilledet</div>
-                        <p class="scene-text">${item.sceneDesc}</p>
+                    <div class="streamlined-trans-pill">
+                        ${supportLabel} <strong>${supportWord}</strong>
                     </div>
                 </div>
 
-                <div class="inspector-right">
-                    <div class="inspector-sentence-card">
-                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">EKSEMPEL PÅ SAMMENHÆNG</div>
-                        <div class="sentence-quote-text">"${highlightedSentence}"</div>
-                        <div class="sentence-trans-text">"${item.contextSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color: var(--adv-text-muted, #BFDBFE);">"${trans.sentence}"</div>` : ''}
-                        <button class="inspector-speak-btn" id="insp-speak-sent">
-                            Lyt til helsætningen
+                <div class="streamlined-speech-box">
+                    <div class="streamlined-scene-context">
+                        ${renderDsIcon('user', '', { size: 14 })} ${sceneContext}:
+                    </div>
+                    <div class="streamlined-quote-row">
+                        <p class="streamlined-quote-text">
+                            "${highlightedQuote}"
+                        </p>
+                        <button class="streamlined-speak-btn" id="streamlined-speech-audio" title="Hør replik">
+                            ${renderDsIcon('volume', '', { size: 15 })} <span>Hør replik</span>
                         </button>
                     </div>
+                </div>
 
-                    <div class="inspector-scene-box" style="border-left: 3px solid var(--adv-primary, #3B82F6);">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Ordstilling & Brug</div>
-                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `kon_r_${ADVERBIER_KONNEKTION_DATA.indexOf(item) + 1}`)}</p>
+                <div class="streamlined-footer-row">
+                    <div class="streamlined-rule-hint">
+                        ${renderDsIcon('lightbulb', '', { size: 16 })}
+                        <span><strong>Hvornår bruger vi det?</strong> ${ruleText}${ruleTrans}</span>
                     </div>
-
-                    <div class="inspector-actions">
-                        <button class="inspector-btn-action" id="insp-prev-btn">⬅ Forrige ord</button>
-                        <button class="inspector-btn-action" id="insp-next-btn" style="background: var(--adv-primary, #3B82F6);">Næste ord →</button>
+                    <div class="streamlined-nav-btns">
+                        <button class="streamlined-nav-btn" id="streamlined-btn-prev">← Forrige (${prevIdx + 1})</button>
+                        <button class="streamlined-nav-btn next-primary" id="streamlined-btn-next">Næste (${nextIdx + 1}) →</button>
                     </div>
                 </div>
             `;
 
-            inspector.querySelector('#insp-speak-word').onclick = () => speakDanish(item.word);
-            inspector.querySelector('#insp-speak-sent').onclick = () => speakDanish(item.contextSentence);
+            // Bind events
+            inspector.querySelector('#streamlined-word-audio').onclick = () => speakDanish(item.word);
+            inspector.querySelector('#streamlined-speech-audio').onclick = () => speakDanish(sceneQuote);
 
-            inspector.querySelector('#insp-prev-btn').onclick = () => {
-                const idx = visibleWords.findIndex(w => w.id === item.id);
-                const prevItem = visibleWords[(idx - 1 + visibleWords.length) % visibleWords.length];
-                updateInspector(prevItem, false);
-                speakDanish(prevItem.word);
+            inspector.querySelector('#streamlined-btn-prev').onclick = () => {
+                updateInspector(prevItem, true);
+                const prevMatch = (prevItem.sceneDesc || '').match(/^(.*?):\s*"(.*)"\s*$/);
+                const prevQuote = prevMatch ? prevMatch[2].trim() : (prevItem.sentence || prevItem.word);
+                speakDanish(prevQuote);
             };
-            inspector.querySelector('#insp-next-btn').onclick = () => {
-                const idx = visibleWords.findIndex(w => w.id === item.id);
-                const nextItem = visibleWords[(idx + 1) % visibleWords.length];
-                updateInspector(nextItem, false);
-                speakDanish(nextItem.word);
+
+            inspector.querySelector('#streamlined-btn-next').onclick = () => {
+                updateInspector(nextItem, true);
+                const nextMatch = (nextItem.sceneDesc || '').match(/^(.*?):\s*"(.*)"\s*$/);
+                const nextQuote = nextMatch ? nextMatch[2].trim() : (nextItem.sentence || nextItem.word);
+                speakDanish(nextQuote);
             };
 
             if (shouldScroll) {

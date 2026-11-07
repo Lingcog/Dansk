@@ -721,6 +721,15 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             background: var(--adv-primary, #3B82F6);
             color: white;
         }
+        .vrimmel-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .vrimmel-stage.hide-pins .hotspot-pin {
+            display: none !important;
+        }
 
         .vrimmel-stage {
             position: relative;
@@ -955,6 +964,297 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         }
         .inspector-btn-action:hover {
             background: var(--adv-surface-hover, #112240);
+        }
+
+        /* Streamlined Inspector Mode (Model A - afprøvet på 'måske') */
+        .vrimmel-inspector.is-streamlined {
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+            background: linear-gradient(145deg, #0d1e38 0%, #071326 100%);
+            border: 1.5px solid #254a7f;
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            margin-top: 1.5rem;
+        }
+        .streamlined-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+        }
+        .streamlined-hero-left {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-word-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .streamlined-audio-btn {
+            background: var(--adv-primary, #3B82F6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .streamlined-audio-btn:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
+            transform: scale(1.08);
+        }
+        .streamlined-scale-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .streamlined-scale-chip.sikkerhed {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+        .streamlined-scale-chip.sandsynlighed {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+        }
+        .streamlined-scale-chip.tvivl {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+        .streamlined-scale-chip.vurdering {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #c4b5fd;
+        }
+        .streamlined-trans-pill {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .streamlined-trans-pill strong {
+            color: #cbd5e1;
+            font-style: normal;
+        }
+
+        /* Sandsynligheds- & Sikkerhedsskala måleramme */
+        .holdning-meter-box {
+            background: rgba(5, 14, 26, 0.85);
+            border: 1.5px solid #1E3A66;
+            border-radius: 14px;
+            padding: 0.95rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+        .holdning-meter-box .meter-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .holdning-meter-box .meter-label-row strong {
+            color: #ffffff;
+        }
+        .holdning-meter-box .meter-sub-label {
+            color: #94a3b8;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+        .holdning-meter-box .meter-status-tag {
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: 6px;
+        }
+        .holdning-meter-box .meter-status-tag.tag-sikkerhed {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+        .holdning-meter-box .meter-status-tag.tag-sandsynlighed {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+        }
+        .holdning-meter-box .meter-status-tag.tag-tvivl {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+        .holdning-meter-box .meter-status-tag.tag-lav {
+            background: rgba(249, 115, 22, 0.15);
+            border: 1px solid rgba(249, 115, 22, 0.4);
+            color: #fdba74;
+        }
+        .holdning-meter-box .meter-status-tag.tag-nul {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+        .holdning-meter-box .meter-status-tag.tag-tone {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #c4b5fd;
+        }
+        .holdning-meter-box .meter-track {
+            width: 100%;
+            height: 12px;
+            background: #0b1526;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .holdning-meter-box .meter-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.4s ease;
+        }
+        .holdning-meter-box .meter-desc-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        .holdning-meter-box .meter-desc-row svg {
+            color: var(--adv-border-focus, #93C5FD);
+            flex-shrink: 0;
+        }
+        .holdning-meter-box .meter-desc-text {
+            color: #cbd5e1;
+        }
+
+        .streamlined-speech-box {
+            background: rgba(15, 23, 42, 0.75);
+            border-left: 4px solid var(--adv-primary, #3B82F6);
+            border-radius: 0 14px 14px 0;
+            padding: 1.1rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .streamlined-quote-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .streamlined-quote-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
+            margin: 0;
+        }
+        .streamlined-quote-text mark {
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+        .streamlined-speak-btn {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid var(--adv-primary, #3B82F6);
+            color: var(--adv-border-focus, #93C5FD);
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .streamlined-speak-btn:hover {
+            background: var(--adv-primary, #3B82F6);
+            color: #ffffff;
+        }
+        .streamlined-scene-context {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .streamlined-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding-top: 0.4rem;
+        }
+        .streamlined-rule-hint {
+            font-size: 0.92rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 260px;
+        }
+        .streamlined-rule-hint strong {
+            color: #93c5fd;
+        }
+        .streamlined-nav-btns {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .streamlined-nav-btn {
+            background: var(--adv-surface-input, #050E1A);
+            border: 1px solid var(--adv-border, #1E3A66);
+            color: var(--adv-border-focus, #93C5FD);
+            padding: 0.45rem 0.95rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .streamlined-nav-btn:hover {
+            background: var(--adv-surface-hover, #112240);
+        }
+        .streamlined-nav-btn.next-primary {
+            background: var(--adv-primary, #3B82F6);
+            color: white;
+            border-color: var(--adv-primary, #3B82F6);
+        }
+        .streamlined-nav-btn.next-primary:hover {
+            background: var(--adv-primary-hover, #1D4ED8);
         }
 
         /* Tab 2: Aha-Værkstedet */
@@ -1638,8 +1938,262 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     // TAB 1: VRIMLEBILLEDET (Planlægningsrummet)
     // ==========================================
     let activeFilter = 'alle';
-    let isPureMode = false;
+    let showPins = true;
     let selectedWord = null;
+
+    // Skala og sandsynligheds-data for Målordspræsentationen i Felt 6
+    const HOLDNING_SCALE_MAP = {
+        'sikkert': {
+            pct: 100,
+            name: 'Helt sikkert',
+            tag: '100% vished',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Fuldstændig overbevisning – taleren er ikke i tvivl om udfaldet.'
+        },
+        'selvfoelgelig': {
+            pct: 100,
+            name: 'Åbenlys selvfølge',
+            tag: '100% selvfølge',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Fuldstændig naturligt og uden den mindste tvivl.'
+        },
+        'selvfølgelig': {
+            pct: 100,
+            name: 'Åbenlys selvfølge',
+            tag: '100% selvfølge',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Fuldstændig naturligt og uden den mindste tvivl.'
+        },
+        'naturligvis': {
+            pct: 100,
+            name: 'Formel selvfølgelighed',
+            tag: '100% formel vished',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Faglig og formel selvfølge – enhver tvivl er udelukket.'
+        },
+        'afgjort': {
+            pct: 100,
+            name: 'Fastslået faktum',
+            tag: '100% utvivlsomt',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Sagen er afgjort – diskussionen er slut og tvivlen er væk.'
+        },
+        'faktisk': {
+            pct: 100,
+            name: 'Bekræftet virkelighed',
+            tag: '100% kendsgerning',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Korrigerer en misforståelse med den reelle sandhed.'
+        },
+        'virkelig': {
+            pct: 100,
+            name: 'Sandt & ægte',
+            tag: '100% oprigtigt',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Forstærker sandhedsværdien med tryk og oprigtighed.'
+        },
+        'sandsynligvis': {
+            pct: 85,
+            name: 'Meget sandsynligt',
+            tag: '~85% sandsynlighed',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #22c55e 0%, #16a34a 100%)',
+            desc: 'Høj sandsynlighed baseret på data, tegn og prognoser.'
+        },
+        'formentlig': {
+            pct: 75,
+            name: 'Logisk formodning',
+            tag: '~75% formodning',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #84cc16 0%, #65a30d 100%)',
+            desc: 'En kvalificeret antagelse baseret på logiske indicier og erfaring.'
+        },
+        'tilsyneladende': {
+            pct: 70,
+            name: 'Ydre overfladeindtryk',
+            tag: '~70% observation',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #a3e635 0%, #84cc16 100%)',
+            desc: 'Sådan ser det ud udefra, men taleren tager et forbehold.'
+        },
+        'aabenbart': {
+            pct: 85,
+            name: 'Bevist kendsgerning',
+            tag: '~85% synligt bevis',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #22c55e 0%, #16a34a 100%)',
+            desc: 'Noget har afsløret sig tydeligt som en kendsgerning.'
+        },
+        'åbenbart': {
+            pct: 85,
+            name: 'Bevist kendsgerning',
+            tag: '~85% synligt bevis',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #22c55e 0%, #16a34a 100%)',
+            desc: 'Noget har afsløret sig tydeligt som en kendsgerning.'
+        },
+        'rimeligvis': {
+            pct: 75,
+            name: 'Rimelig forventning',
+            tag: '~75% sund fornuft',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #84cc16 0%, #65a30d 100%)',
+            desc: 'Forventning baseret på sund fornuft og teknisk rimelighed.'
+        },
+        'maaske': {
+            pct: 50,
+            name: '50/50 Mulighed & tvivl',
+            tag: '50% balance',
+            tagClass: 'tag-tvivl',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #eab308 0%, #ca8a04 100%)',
+            desc: 'Vægtskålen står lige på midten – 50% chance for begge udfald.'
+        },
+        'måske': {
+            pct: 50,
+            name: '50/50 Mulighed & tvivl',
+            tag: '50% balance',
+            tagClass: 'tag-tvivl',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #eab308 0%, #ca8a04 100%)',
+            desc: 'Vægtskålen står lige på midten – 50% chance for begge udfald.'
+        },
+        'muligvis': {
+            pct: 35,
+            name: 'Teoretisk mulighed',
+            tag: '~35% hypotese',
+            tagClass: 'tag-tvivl',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #f59e0b 0%, #d97706 100%)',
+            desc: 'Åbner for en konkret hypotese eller teoretisk mulighed.'
+        },
+        'naeppe': {
+            pct: 15,
+            name: 'Stærk tvivl',
+            tag: '~15% skepsis',
+            tagClass: 'tag-lav',
+            icon: 'alertTriangle',
+            color: 'linear-gradient(90deg, #f97316 0%, #ea580c 100%)',
+            desc: 'Betyder "næsten sikkert IKKE" – signalerer stærk tvivl.'
+        },
+        'næppe': {
+            pct: 15,
+            name: 'Stærk tvivl',
+            tag: '~15% skepsis',
+            tagClass: 'tag-lav',
+            icon: 'alertTriangle',
+            color: 'linear-gradient(90deg, #f97316 0%, #ea580c 100%)',
+            desc: 'Betyder "næsten sikkert IKKE" – signalerer stærk tvivl.'
+        },
+        'usandsynligt': {
+            pct: 5,
+            name: 'Ekstremt usandsynligt',
+            tag: '~5% minimal chance',
+            tagClass: 'tag-lav',
+            icon: 'alertTriangle',
+            color: 'linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)',
+            desc: 'Mikroskopisk chance – oddsene er ekstremt små for at det sker.'
+        },
+        'umuligt': {
+            pct: 0,
+            name: 'Fuldstændig udelukket',
+            tag: '0% udelukket',
+            tagClass: 'tag-nul',
+            icon: 'alertTriangle',
+            color: 'linear-gradient(90deg, #ef4444 0%, #b91c1c 100%)',
+            desc: 'Det absolutte nulpunkt – kan under ingen omstændigheder lade sig gøre.'
+        },
+        'heldigvis': {
+            pct: 100,
+            isTone: true,
+            name: 'Positiv lettelse',
+            tag: 'Talerens lettelse',
+            tagClass: 'tag-sikkerhed',
+            icon: 'check',
+            color: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+            desc: 'Talerens personlige glæde og lettelse over et godt og heldigt udfald.'
+        },
+        'desvaerre': {
+            pct: 10,
+            isTone: true,
+            name: 'Beklagelse & ærgerligt udfald',
+            tag: 'Høfligt afbud',
+            tagClass: 'tag-nul',
+            icon: 'alertTriangle',
+            color: 'linear-gradient(90deg, #ef4444 0%, #b91c1c 100%)',
+            desc: 'Høflig overbringelse af en ærgerlig nyhed eller et uundgåeligt afbud.'
+        },
+        'desværre': {
+            pct: 10,
+            isTone: true,
+            name: 'Beklagelse & ærgerligt udfald',
+            tag: 'Høfligt afbud',
+            tagClass: 'tag-nul',
+            icon: 'alertTriangle',
+            color: 'linear-gradient(90deg, #ef4444 0%, #b91c1c 100%)',
+            desc: 'Høflig overbringelse af en ærgerlig nyhed eller et uundgåeligt afbud.'
+        },
+        'forhaabentlig': {
+            pct: 75,
+            isTone: true,
+            name: 'Fremtidsønske & håb',
+            tag: 'Personligt håb',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #38bdf8 0%, #0284c7 100%)',
+            desc: 'Et stærkt personligt ønske om, at noget positivt vil ske i fremtiden.'
+        },
+        'forhåbentlig': {
+            pct: 75,
+            isTone: true,
+            name: 'Fremtidsønske & håb',
+            tag: 'Personligt håb',
+            tagClass: 'tag-sandsynlighed',
+            icon: 'scale',
+            color: 'linear-gradient(90deg, #38bdf8 0%, #0284c7 100%)',
+            desc: 'Et stærkt personligt ønske om, at noget positivt vil ske i fremtiden.'
+        },
+        'aerlig_talt': {
+            pct: 100,
+            isTone: true,
+            name: 'Ufiltreret holdning',
+            tag: '100% ufiltreret',
+            tagClass: 'tag-tone',
+            icon: 'thought',
+            color: 'linear-gradient(90deg, #a855f7 0%, #7e22ce 100%)',
+            desc: 'Oprigtig og 100% ærlig personlig mening uden filter.'
+        },
+        'ærlig talt': {
+            pct: 100,
+            isTone: true,
+            name: 'Ufiltreret holdning',
+            tag: '100% ufiltreret',
+            tagClass: 'tag-tone',
+            icon: 'thought',
+            color: 'linear-gradient(90deg, #a855f7 0%, #7e22ce 100%)',
+            desc: 'Oprigtig og 100% ærlig personlig mening uden filter.'
+        }
+    };
 
     function renderTabVrimmel(parent) {
         parent.innerHTML = '';
@@ -1680,21 +2234,36 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             filtersDiv.appendChild(fBtn);
         });
 
-        const pureBtn = document.createElement('button');
-        pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.innerHTML = `<span>${isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker'}</span>`;
-        pureBtn.onclick = () => {
-            isPureMode = !isPureMode;
-            renderTabVrimmel(parent);
+        const actionBtns = document.createElement('div');
+        actionBtns.className = 'vrimmel-actions';
+
+        const pinsToggleBtn = document.createElement('button');
+        pinsToggleBtn.className = `pure-toggle-btn ${!showPins ? 'active' : ''}`;
+        pinsToggleBtn.title = 'Slå alle pegefelter til eller fra på illustrationen';
+        pinsToggleBtn.innerHTML = `
+            ${renderDsIcon(showPins ? 'eye' : 'eyeOff', '', { size: 16 })}
+            <span>Pegefelter:</span> <strong>${showPins ? 'TIL' : 'FRA'}</strong>
+        `;
+
+        pinsToggleBtn.onclick = () => {
+            showPins = !showPins;
+            stage.classList.toggle('hide-pins', !showPins);
+            pinsToggleBtn.classList.toggle('active', !showPins);
+            pinsToggleBtn.innerHTML = `
+                ${renderDsIcon(showPins ? 'eye' : 'eyeOff', '', { size: 16 })}
+                <span>Pegefelter:</span> <strong>${showPins ? 'TIL' : 'FRA'}</strong>
+            `;
         };
 
+        actionBtns.appendChild(pinsToggleBtn);
+
         controls.appendChild(filtersDiv);
-        controls.appendChild(pureBtn);
+        controls.appendChild(actionBtns);
         stageCard.appendChild(controls);
 
         // Stage with Wimmelbild image
         const stage = document.createElement('div');
-        stage.className = 'vrimmel-stage';
+        stage.className = `vrimmel-stage ${!showPins ? 'hide-pins' : ''}`;
 
         const img = document.createElement('img');
         img.src = 'assets/adverbier_holdning_vrimmel.jpg';
@@ -1717,7 +2286,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             pin.dataset.id = item.id;
             pin.innerHTML = `
                 <span>${idx + 1}</span>
-                ${!isPureMode ? `<span class="hotspot-label">${item.word}</span>` : ''}
+                <span class="hotspot-label">${item.word}</span>
             `;
 
             pin.onclick = (e) => {
@@ -1749,86 +2318,136 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             const trans = getHoldningTranslation(item);
             const currentLang = getLang();
-            const langLabel = currentLang === 'da' ? 'Engelsk (støtte)' : currentLang.toUpperCase();
 
-            const catNames = {
-                'sikkerhed': 'Sikkerhed & Vished (100%)',
-                'sandsynlighed': 'Sandsynlighed (~70-90%)',
-                'tvivl': 'Tvivl & Udelukkelse (0-50%)',
-                'vurdering': 'Holdning & Følelser'
+            const currentIdx = ADVERBIER_HOLDNING_DATA.findIndex(w => w.id === item.id);
+            const prevIdx = (currentIdx - 1 + ADVERBIER_HOLDNING_DATA.length) % ADVERBIER_HOLDNING_DATA.length;
+            const nextIdx = (currentIdx + 1) % ADVERBIER_HOLDNING_DATA.length;
+            const prevItem = ADVERBIER_HOLDNING_DATA[prevIdx];
+            const nextItem = ADVERBIER_HOLDNING_DATA[nextIdx];
+
+            inspector.className = 'vrimmel-inspector is-streamlined';
+
+            // Støtteoversættelse
+            const supportWord = currentLang === 'da'
+                ? (item.translations?.en?.word || 'translation')
+                : (item.translations?.[currentLang]?.word || trans.word || item.translations?.en?.word || '');
+            const supportLabel = currentLang === 'da' ? 'Engelsk støtte:' : `${currentLang.toUpperCase()}:`;
+
+            // Ekstraher kontekst og replik fra sceneDesc
+            let sceneContext = '';
+            let sceneQuote = '';
+            const match = (item.sceneDesc || '').match(/^(.*?):\s*"(.*)"\s*$/);
+            if (match) {
+                sceneContext = match[1].trim();
+                sceneQuote = match[2].trim();
+            } else {
+                sceneContext = item.sceneDesc || '';
+                sceneQuote = item.sentence || item.contextSentence || '';
+            }
+
+            // Fremhæv målordet i replikken
+            const wordRegex = new RegExp(`(${item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            const highlightedQuote = sceneQuote.replace(wordRegex, '<mark>$1</mark>');
+
+            // Kategori- og nuancechip
+            const catConfig = {
+                'sikkerhed': { icon: 'check', class: 'sikkerhed' },
+                'sandsynlighed': { icon: 'scale', class: 'sandsynlighed' },
+                'tvivl': { icon: 'scale', class: 'tvivl' },
+                'vurdering': { icon: 'thought', class: 'vurdering' }
             };
+            const chipCfg = catConfig[item.category] || { icon: 'tag', class: 'sandsynlighed' };
+
+            // Skala- og sandsynlighedsmåler
+            const scaleInfo = HOLDNING_SCALE_MAP[item.id] || HOLDNING_SCALE_MAP[item.word] || {
+                pct: 50,
+                name: item.meaning,
+                tag: 'Sandsynlighed',
+                tagClass: 'tag-sandsynlighed',
+                icon: 'scale',
+                color: 'linear-gradient(90deg, #3B82F6 0%, #10B981 100%)',
+                desc: item.meaning
+            };
+            const scaleDescTrans = advTransSpan(scaleInfo.desc, `hold_sc_d_${item.id}`);
+
+            // Didaktisk huskeregel
+            const ruleText = item.ruleHint || item.meaning || '';
+            const ruleTrans = advTransSpan(ruleText, `hold_r_${currentIdx + 1}`);
 
             inspector.innerHTML = `
-                <div class="inspector-left">
-                    <div class="inspector-header">
-                        <div class="inspector-badge-row">
-                            <span class="inspector-badge" style="background: var(--adv-surface-input, #050E1A); border: 1.5px solid var(--adv-border-focus, #93C5FD); color: var(--adv-border-focus, #93C5FD); font-weight: 800;">Målord: ${item.word}</span>
-                            <span class="inspector-badge">${catNames[item.category] || 'Holdning'}</span>
-                        </div>
-                        <button class="inspector-audio-btn" id="inspector-audio-btn" title="Hør udtale"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+                <div class="streamlined-header-row">
+                    <div class="streamlined-hero-left">
+                        <h2 class="streamlined-word-title">${item.word}</h2>
+                        <button class="streamlined-audio-btn" id="streamlined-word-audio" title="Hør udtale">
+                            ${renderDsIcon('volume', '', { size: 18 })}
+                        </button>
+                        <span class="streamlined-scale-chip ${chipCfg.class}">
+                            ${renderDsIcon(chipCfg.icon, '', { size: 14 })} ${item.meaning}
+                        </span>
                     </div>
-
-                    <h2 class="inspector-word-title">
-                        ${item.word}
-                    </h2>
-
-                    <div class="inspector-trans-box">
-                        <div class="trans-badge-label">
-                            OVERSÆTTELSE (${langLabel})
-                        </div>
-                        <div class="trans-word-val">"${trans.word}"</div>
-                    </div>
-
-                    <div class="inspector-scene-box">
-                        <div class="scene-heading">I planlægningsrummet</div>
-                        <p class="scene-text">${item.sceneDesc}</p>
+                    <div class="streamlined-trans-pill">
+                        ${supportLabel} <strong>${supportWord}</strong>
                     </div>
                 </div>
 
-                <div class="inspector-right">
-                    <div class="inspector-sentence-card">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Eksempelsætning</div>
-                        <p class="sentence-quote-text">"${item.contextSentence}"</p>
-                        ${trans.sentence ? `<p class="sentence-trans-text">"${trans.sentence}"</p>` : ''}
-                        <button class="inspector-speak-btn" id="inspector-action-speak">
-                            Hør sætning
+                <!-- Visuelt hjælpemiddel: Skala & Måleramme -->
+                <div class="holdning-meter-box">
+                    <div class="meter-label-row">
+                        <span>
+                            <strong>${scaleInfo.isTone ? 'Holdningsskala:' : 'Skala:'}</strong> ${scaleInfo.isTone ? scaleInfo.name : `${scaleInfo.pct}%`}
+                            <span class="meter-sub-label">(${scaleInfo.isTone ? scaleInfo.tag : scaleInfo.name})</span>
+                        </span>
+                        <span class="meter-status-tag ${scaleInfo.tagClass}">
+                            ${renderDsIcon(scaleInfo.icon, '', { size: 13 })} ${scaleInfo.tag}
+                        </span>
+                    </div>
+                    <div class="meter-track">
+                        <div class="meter-fill" style="width: ${scaleInfo.pct}%; background: ${scaleInfo.color};"></div>
+                    </div>
+                    <div class="meter-desc-row">
+                        ${renderDsIcon('lightbulb', '', { size: 14 })}
+                        <span class="meter-desc-text">${scaleInfo.desc}${scaleDescTrans}</span>
+                    </div>
+                </div>
+
+                <div class="streamlined-speech-box">
+                    <div class="streamlined-scene-context">
+                        ${renderDsIcon('user', '', { size: 14 })} ${sceneContext}:
+                    </div>
+                    <div class="streamlined-quote-row">
+                        <p class="streamlined-quote-text">
+                            "${highlightedQuote}"
+                        </p>
+                        <button class="streamlined-speak-btn" id="streamlined-speech-audio" title="Hør replik">
+                            ${renderDsIcon('volume', '', { size: 15 })} <span>Hør sætning</span>
                         </button>
                     </div>
+                </div>
 
-                    <div class="inspector-scene-box" style="border-left: 4px solid var(--adv-primary, #3B82F6);">
-                        <div class="scene-heading" style="color: var(--adv-border-focus, #93C5FD);">Didaktisk holdnings-regel</div>
-                        <p class="scene-text">${item.ruleHint} ${advTransBlock(item.ruleHint, `hold_r_${ADVERBIER_HOLDNING_DATA.indexOf(item) + 1}`)}</p>
+                <div class="streamlined-footer-row">
+                    <div class="streamlined-rule-hint">
+                        ${renderDsIcon('lightbulb', '', { size: 16 })}
+                        <span><strong>Hvornår bruger vi det?</strong> ${ruleText}${ruleTrans}</span>
                     </div>
-
-                    <div class="inspector-actions">
-                        <button class="inspector-btn-action" id="inspector-action-prev">
-                            ← Forrige ord
-                        </button>
-                        <button class="inspector-btn-action" style="background: var(--adv-primary, #3B82F6);" id="inspector-action-next">
-                            Næste ord →
-                        </button>
+                    <div class="streamlined-nav-btns">
+                        <button class="streamlined-nav-btn" id="streamlined-btn-prev">← Forrige (${prevIdx + 1})</button>
+                        <button class="streamlined-nav-btn next-primary" id="streamlined-btn-next">Næste (${nextIdx + 1}) →</button>
                     </div>
                 </div>
             `;
 
             // Bind events
-            inspector.querySelector('#inspector-audio-btn').onclick = () => speakDanish(item.word);
-            inspector.querySelector('#inspector-action-speak').onclick = () => speakDanish(item.contextSentence);
+            inspector.querySelector('#streamlined-word-audio').onclick = () => speakDanish(item.word);
+            inspector.querySelector('#streamlined-speech-audio').onclick = () => speakDanish(sceneQuote);
 
-            inspector.querySelector('#inspector-action-prev').onclick = () => {
-                const currentIdx = ADVERBIER_HOLDNING_DATA.findIndex(w => w.id === item.id);
-                const prevIdx = (currentIdx - 1 + ADVERBIER_HOLDNING_DATA.length) % ADVERBIER_HOLDNING_DATA.length;
-                const prevItem = ADVERBIER_HOLDNING_DATA[prevIdx];
+            inspector.querySelector('#streamlined-btn-prev').onclick = () => {
                 updateInspector(prevItem, true);
-                speakDanish(prevItem.sentence);
+                speakDanish(prevItem.sentence || prevItem.word);
             };
 
-            inspector.querySelector('#inspector-action-next').onclick = () => {
-                const currentIdx = ADVERBIER_HOLDNING_DATA.findIndex(w => w.id === item.id);
-                const nextIdx = (currentIdx + 1) % ADVERBIER_HOLDNING_DATA.length;
-                const nextItem = ADVERBIER_HOLDNING_DATA[nextIdx];
+            inspector.querySelector('#streamlined-btn-next').onclick = () => {
                 updateInspector(nextItem, true);
-                speakDanish(nextItem.sentence);
+                speakDanish(nextItem.sentence || nextItem.word);
             };
 
             if (shouldScroll) {

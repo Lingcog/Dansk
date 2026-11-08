@@ -9,7 +9,7 @@ export const hcAndersenStories = [
         "id": "klods_hans",
         "title": "Klods-Hans",
         "titleEn": "Clumsy Hans",
-        "icon": "🐐",
+        "icon": "",
         "level": "Let (A2)",
         "readingTime": "3 min",
         "quote": "»Hov! Se hvad jeg har fundet: en død krage og en gammel træsko!«",
@@ -89,7 +89,7 @@ export const hcAndersenStories = [
                 "dialogue": [
                     {
                         "speaker": "Fortæller",
-                        "speakerIcon": "📖",
+                        "speakerIcon": "",
                         "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.",
                         "tokens": [
                             {
@@ -294,7 +294,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Far",
-                        "speakerIcon": "👨‍🌾",
+                        "speakerIcon": "",
                         "audioText": "Kongen har sagt, at hans datter skal finde en mand.",
                         "tokens": [
                             {
@@ -364,7 +364,7 @@ export const hcAndersenStories = [
                         "challenge": {
                             "type": "ordstilling",
                             "title": "Mesterens replik: Ordstilling",
-                            "badge": "👑 Mesterens replik",
+                            "badge": "Mesterens replik",
                             "prompt": "Hvad siger faren om kongens betingelse? Saml sætningsdelen i rigtig ordstilling:",
                             "targetSentence": "Den, som taler bedst, vinder hende.",
                             "tiles": [
@@ -436,7 +436,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Storebror",
-                        "speakerIcon": "🎩",
+                        "speakerIcon": "",
                         "audioText": "Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!",
                         "tokens": [
                             {
@@ -560,7 +560,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Mellembror",
-                        "speakerIcon": "📜",
+                        "speakerIcon": "",
                         "audioText": "Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!",
                         "tokens": [
                             {
@@ -711,7 +711,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Jeg prøver også! Jeg har ingen hest, men jeg tager min ged!",
                         "tokens": [
                             {
@@ -799,7 +799,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Far",
-                        "speakerIcon": "👨‍🌾",
+                        "speakerIcon": "",
                         "audioText": "Tag du bare geden, Klods-Hans.",
                         "tokens": [
                             {
@@ -835,14 +835,14 @@ export const hcAndersenStories = [
                 "tasks": {
                     "detektiv": {
                         "title": "Visuel detektiv",
-                        "badge": "🔍 Visuel detektiv",
-                        "icon": "🔍",
+                        "badge": "Visuel detektiv",
+                        "icon": "",
                         "desc": "Kig grundigt på vrimlebilledet af bondegården og svar på spørgsmålene om de centrale detaljer:",
                         "questions": [
                             {
                                 "id": "s1_d2",
                                 "line": 1,
-                                "badge": "🔍 Detaljespot",
+                                "badge": "Detaljespot",
                                 "prompt": "Hvilket redskab af træ og jern står ved siden af stalddøren på jorden på den gamle gård?",
                                 "options": [
                                     "En trillebør",
@@ -856,7 +856,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_d4",
                                 "line": 2,
-                                "badge": "🔍 Personspot",
+                                "badge": "Personspot",
                                 "prompt": "Hvem står til højre foran stalddøren og ser sønnerne forberede sig på at vinde kongedatteren?",
                                 "options": [
                                     "Faren / den gamle bonde",
@@ -870,7 +870,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_d3",
                                 "line": 3,
-                                "badge": "🔍 Rideheste",
+                                "badge": "Rideheste",
                                 "prompt": "Hvad rider de to ældre brødre på, da de skal afsted mod slottet?",
                                 "options": [
                                     "Fine, stolte rideheste",
@@ -884,7 +884,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_d5",
                                 "line": 4,
-                                "badge": "🔍 Musik & Sang",
+                                "badge": "Musik & Sang",
                                 "prompt": "Hvad kigger mellembror stolt på, mens han forbereder sine sange til prinsessen?",
                                 "options": [
                                     "En nodepapir-rulle / visebog",
@@ -898,7 +898,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_d1",
                                 "line": 5,
-                                "badge": "🔍 Dyrespot",
+                                "badge": "Dyrespot",
                                 "prompt": "Kig på Klods-Hans i midten. Hvilket dyr rider han stolt på i stedet for en hest?",
                                 "options": [
                                     "En ged / gedebuk med store horn",
@@ -912,7 +912,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_d6",
                                 "line": 6,
-                                "badge": "🔍 Afsked",
+                                "badge": "Afsked",
                                 "prompt": "Hvordan reagerer faren, da Klods-Hans vil ride afsted på geden?",
                                 "options": [
                                     "Han smiler overbærende og giver ham lov",
@@ -1033,14 +1033,14 @@ export const hcAndersenStories = [
                     },
                     "verber": {
                         "title": "Verber: Bøjning, modsætninger og synonymer",
-                        "badge": "🔴 Modsætninger & synonymer",
-                        "icon": "🔴",
+                        "badge": "Modsætninger & synonymer",
+                        "icon": "",
                         "desc": "Træn handlingernes tider, modpoler og synonymer for scenens udsagnsord:",
                         "questions": [
                             {
                                 "id": "s1_v0",
                                 "line": 1,
-                                "badge": "🔴 Verbetid (Datid)",
+                                "badge": "Verbetid (Datid)",
                                 "prompt": "Fortælleren beretter: '... som **havde** tre sønner'. Hvilken tid står verbet 'havde' i?",
                                 "options": [
                                     "Datid (præteritum) af at have",
@@ -1054,7 +1054,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_v1",
                                 "line": 2,
-                                "badge": "🔴 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Faren siger: 'Den, som taler bedst, vinder hende.' Hvad er det modsatte af **at vinde**?",
                                 "options": [
                                     "at tabe",
@@ -1068,7 +1068,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_v2",
                                 "line": 3,
-                                "badge": "🔴 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Storebror vil tale om komplicerede ting. Hvilket verbum er et synonym til **at tale**?",
                                 "options": [
                                     "at snakke / samtale",
@@ -1082,7 +1082,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_v3",
                                 "line": 4,
-                                "badge": "🔴 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Mellembror siger: 'Jeg kender mange sange.' Hvad er det modsatte af **at kende** eller huske noget?",
                                 "options": [
                                     "at glemme / ikke ane",
@@ -1096,7 +1096,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_v4",
                                 "line": 5,
-                                "badge": "🔴 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Klods-Hans råber: 'Jeg **prøver** også!' Hvilket verbum er et synonym til at prøve her?",
                                 "options": [
                                     "at forsøge",
@@ -1110,7 +1110,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_v5",
                                 "line": 6,
-                                "badge": "🔴 Bydeform (Imperativ)",
+                                "badge": "Bydeform (Imperativ)",
                                 "prompt": "Faren siger til sønnen: '**Tag** du bare geden, Klods-Hans.' Hvilken form af verbet er 'Tag'?",
                                 "options": [
                                     "Bydeform (imperativ - opfordring)",
@@ -1217,14 +1217,14 @@ export const hcAndersenStories = [
                     },
                     "adverbier": {
                         "title": "Adverbier: Gradbøjning og synonymer",
-                        "badge": "🔵 Gradbøjning & synonymer",
-                        "icon": "🔵",
+                        "badge": "Gradbøjning & synonymer",
+                        "icon": "",
                         "desc": "Træn de centrale biord der justerer grad, tid, sted og frekvens:",
                         "questions": [
                             {
                                 "id": "s1_adv0",
                                 "line": 1,
-                                "badge": "🔵 Stedsadverbium",
+                                "badge": "Stedsadverbium",
                                 "prompt": "Fortælleren åbner scenen: '**Ude** på landet var **der** en gammel gård'. Hvilken type ord er 'ude' og 'der'?",
                                 "options": [
                                     "Stedsadverbier (angiver placering i rummet)",
@@ -1238,7 +1238,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_adv4",
                                 "line": 2,
-                                "badge": "🔵 Gradsadverbium",
+                                "badge": "Gradsadverbium",
                                 "prompt": "Faren siger: 'Den, som taler **bedst**, vinder hende.' Hvilken form er 'bedst' af mådesadverbiet **godt**?",
                                 "options": [
                                     "Superlativ (højeste grad: godt – bedre – bedst)",
@@ -1252,7 +1252,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_adv1",
                                 "line": 3,
-                                "badge": "🔵 Gradbøjning",
+                                "badge": "Gradbøjning",
                                 "prompt": "Hvordan gradbøjes gradsadverbiet **meget** ('Jeg er meget klog')?",
                                 "options": [
                                     "meget – mere – mest",
@@ -1266,7 +1266,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_adv2",
                                 "line": 4,
-                                "badge": "🔵 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Mellembror siger: 'Jeg er altid glad.' Hvad er det modsatte af tidsadverbiet **altid**?",
                                 "options": [
                                     "aldrig",
@@ -1280,7 +1280,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_adv3",
                                 "line": 5,
-                                "badge": "🔵 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Klods-Hans råber: 'Jeg prøver også!' Hvilket adverbium kan betyde det samme som **også**?",
                                 "options": [
                                     "ligeledes / tillige",
@@ -1294,7 +1294,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_adv5",
                                 "line": 6,
-                                "badge": "🔵 Talesprogsadverbium",
+                                "badge": "Talesprogsadverbium",
                                 "prompt": "Faren siger: 'Tag du **bare** geden, Klods-Hans.' Hvilken funktion har det lille talesprogsord 'bare' her?",
                                 "options": [
                                     "Opmuntring / tilladelse ('gør det roligt uden betænkning')",
@@ -1400,7 +1400,7 @@ export const hcAndersenStories = [
                 "dialogue": [
                     {
                         "speaker": "Fortæller",
-                        "speakerIcon": "📖",
+                        "speakerIcon": "",
                         "audioText": "De to brødre red foran på deres heste. De talte ikke, for de tænkte over alt det kloge de ville sige.",
                         "tokens": [
                             { "text": "De", "type": "pro", "key": "de" },
@@ -1445,7 +1445,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Her kommer jeg! Se, hvad jeg har fundet på landevejen: Det er en død krage!",
                         "tokens": [
                             { "text": "Her", "type": "adv", "key": "her" },
@@ -1476,7 +1476,7 @@ export const hcAndersenStories = [
                         "challenge": {
                             "type": "cloze_speech",
                             "title": "Mesterens replik: Udfyld & Udtale",
-                            "badge": "👑 Mesterens replik",
+                            "badge": "Mesterens replik",
                             "prompt": "Hvilket tillægsord (adjektiv) råber Klods-Hans om kragen?",
                             "sentenceTemplate": "Her kommer jeg! Se, hvad jeg har fundet: Det er en [ ___ ] krage!",
                             "options": [
@@ -1493,7 +1493,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Brødrene",
-                        "speakerIcon": "🎩",
+                        "speakerIcon": "",
                         "audioText": "Klods! Hvad vil du med en død krage?",
                         "tokens": [
                             { "text": "Klods! ", "type": "plain" },
@@ -1513,7 +1513,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Den vil jeg give til kongedatteren!",
                         "tokens": [
                             { "text": "Den", "type": "pro", "key": "den" },
@@ -1532,7 +1532,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Brødrene",
-                        "speakerIcon": "🎩",
+                        "speakerIcon": "",
                         "audioText": "Haha! Gør du bare det!",
                         "tokens": [
                             { "text": "Haha! ", "type": "plain" },
@@ -1548,7 +1548,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Her er jeg igen! Nu skal I se, hvad jeg har fundet: En gammel træsko!",
                         "tokens": [
                             { "text": "Her", "type": "adv", "key": "her" },
@@ -1563,7 +1563,7 @@ export const hcAndersenStories = [
                         "challenge": {
                             "type": "ordstilling",
                             "title": "Mesterens replik: Inversion efter 'Nu'",
-                            "badge": "👑 Mesterens replik",
+                            "badge": "Mesterens replik",
                             "prompt": "Saml Klods-Hans' udråb med inversion efter tidsadverbiet 'Nu':",
                             "targetSentence": "Nu skal I se, hvad jeg har fundet!",
                             "tiles": [
@@ -1599,7 +1599,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Brødrene",
-                        "speakerIcon": "🎩",
+                        "speakerIcon": "",
                         "audioText": "En gammel træsko? Skal kongedatteren også have den?",
                         "tokens": [
                             { "text": "En ", "type": "plain" },
@@ -1621,7 +1621,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Ja, det skal hun da!",
                         "tokens": [
                             { "text": "Ja, ", "type": "plain" },
@@ -1637,7 +1637,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Halehoj! Nu bliver det endnu bedre! Se, hvad jeg har gravet op af grøften!",
                         "tokens": [
                             { "text": "Halehoj! ", "type": "plain" },
@@ -1667,7 +1667,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Brødrene",
-                        "speakerIcon": "🎩",
+                        "speakerIcon": "",
                         "audioText": "Adr, hvor ulækkert, Klods-Hans! Det er jo mudder fra grøften!",
                         "tokens": [
                             { "text": "Adr, hvor ", "type": "plain" },
@@ -1689,7 +1689,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Ja, og det er den fineste slags! Hvor vil hun blive glad!",
                         "tokens": [
                             { "text": "Ja, ", "type": "plain" },
@@ -1719,14 +1719,14 @@ export const hcAndersenStories = [
                 "tasks": {
                     "detektiv": {
                         "title": "Visuel detektiv",
-                        "badge": "🔍 Visuel detektiv",
-                        "icon": "🔍",
+                        "badge": "Visuel detektiv",
+                        "icon": "",
                         "desc": "Kig grundigt på vrimlebilledet af landevejen og find de centrale spor:",
                         "questions": [
                             {
                                 "id": "s2_d1",
                                 "line": 1,
-                                "badge": "🔍 Personspot",
+                                "badge": "Personspot",
                                 "prompt": "Hvem rider forrest på landevejen mod slottet?",
                                 "options": [
                                     "Klods-Hans' to kloge brødre på fine heste",
@@ -1740,7 +1740,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_d2",
                                 "line": 2,
-                                "badge": "🔍 Fart & Fremdrift",
+                                "badge": "Fart & Fremdrift",
                                 "prompt": "Hvor befinder Klods-Hans sig på billedet?",
                                 "options": [
                                     "Han rider bagefter brødrene på sin hvide ged",
@@ -1754,7 +1754,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_d3",
                                 "line": 2,
-                                "badge": "🔍 Fund 1",
+                                "badge": "Fund 1",
                                 "prompt": "Hvad løfter Klods-Hans stolt op i hånden, mens han råber 'Halehoj!'?",
                                 "options": [
                                     "En død sort krage",
@@ -1768,7 +1768,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_d5",
                                 "line": 4,
-                                "badge": "🔍 Målet forude",
+                                "badge": "Målet forude",
                                 "prompt": "Hvor peger landevejen hen forude i det fjerne landskab?",
                                 "options": [
                                     "Mod det store kongeslot med tårne i horisonten",
@@ -1782,7 +1782,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_d4",
                                 "line": 6,
-                                "badge": "🔍 Fund 2",
+                                "badge": "Fund 2",
                                 "prompt": "Hvad ligger der nede i vejkanten i det våde mudder / pludder?",
                                 "options": [
                                     "En gammel træsko",
@@ -1796,7 +1796,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_d6",
                                 "line": 9,
-                                "badge": "🔍 Fund 3",
+                                "badge": "Fund 3",
                                 "prompt": "Hvor graver Klods-Hans sit tredje store fund op fra?",
                                 "options": [
                                     "Fra den våde grøft langs landevejen (mudder)",
@@ -1945,14 +1945,14 @@ export const hcAndersenStories = [
                     },
                     "verber": {
                         "title": "Verber: Tider, modsætninger og synonymer",
-                        "badge": "🔴 Modsætninger & synonymer",
-                        "icon": "🔴",
+                        "badge": "Modsætninger & synonymer",
+                        "icon": "",
                         "desc": "Træn verbernes tider, modpoler og synonymer under rejsen:",
                         "questions": [
                             {
                                 "id": "s2_v2",
                                 "line": 1,
-                                "badge": "🔴 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Brødrene rider stille og tænker over kloge ord. Hvilket verbum er et synonym til **at tænke**?",
                                 "options": [
                                     "at overveje / spekulere",
@@ -1966,7 +1966,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v1",
                                 "line": 2,
-                                "badge": "🔴 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Klods-Hans råber: 'Se hvad jeg har fundet!' Hvad er det modsatte af **at finde**?",
                                 "options": [
                                     "at tabe / miste",
@@ -1980,7 +1980,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v4",
                                 "line": 3,
-                                "badge": "🔴 Modalverbum",
+                                "badge": "Modalverbum",
                                 "prompt": "Brødrene spørger: 'Hvad **vil** du med en død krage?' Hvilken form er 'vil' af verbet **at ville**?",
                                 "options": [
                                     "Nutid (præsens - udtrykker ønske / hensigt)",
@@ -1994,7 +1994,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v5",
                                 "line": 4,
-                                "badge": "🔴 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Klods-Hans siger: 'Den vil jeg **give** til kongedatteren!' Hvad er det modsatte af **at give**?",
                                 "options": [
                                     "at tage / modtage",
@@ -2008,7 +2008,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v3",
                                 "line": 5,
-                                "badge": "🔴 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Brødrene griner og ler af Klods-Hans. Hvilket verbum er et synonym til **at le**?",
                                 "options": [
                                     "at grine",
@@ -2022,7 +2022,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v6",
                                 "line": 6,
-                                "badge": "🔴 Verbetid (Datid)",
+                                "badge": "Verbetid (Datid)",
                                 "prompt": "Klods-Hans råber: 'Nu skal I **se**!' Hvad hedder det uregelmæssige verbum 'at se' i datid?",
                                 "options": [
                                     "så (i går så jeg)",
@@ -2036,7 +2036,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v7",
                                 "line": 7,
-                                "badge": "🔴 Bydeform (Imperativ)",
+                                "badge": "Bydeform (Imperativ)",
                                 "prompt": "Brødrene spørger: 'Skal hun også have den?' Hvad er bydeformen af verbet **at have**?",
                                 "options": [
                                     "Hav! (f.eks. 'Hav en god dag!')",
@@ -2050,7 +2050,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v8",
                                 "line": 8,
-                                "badge": "🔴 Hjælpeverbum",
+                                "badge": "Hjælpeverbum",
                                 "prompt": "Klods-Hans svarer frisk: 'Ja, det **skal** hun da!' Hvad udtrykker hjælpeverbet **skal** her?",
                                 "options": [
                                     "En fast beslutning / sikker fremtid",
@@ -2064,7 +2064,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v9",
                                 "line": 9,
-                                "badge": "🔴 Navneform (Infinitiv)",
+                                "badge": "Navneform (Infinitiv)",
                                 "prompt": "Klods-Hans har **gravet** mudder op. Hvad er infinitiv (at-formen) af verbet?",
                                 "options": [
                                     "at grave",
@@ -2078,7 +2078,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v10",
                                 "line": 10,
-                                "badge": "🔴 Verbetid (Datid)",
+                                "badge": "Verbetid (Datid)",
                                 "prompt": "Brødrene udbryder: 'Det **er** jo mudder!' Hvad hedder verbet 'er' (at være) i datid?",
                                 "options": [
                                     "var (i går var det)",
@@ -2092,7 +2092,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_v11",
                                 "line": 11,
-                                "badge": "🔴 Betydning & Tilstand",
+                                "badge": "Betydning & Tilstand",
                                 "prompt": "Klods-Hans jubler: 'Hvor vil hun **blive** glad!' Hvilken betydning har 'blive' foran et adjektiv?",
                                 "options": [
                                     "At skifte tilstand (komme i en glad stemning)",
@@ -2241,14 +2241,14 @@ export const hcAndersenStories = [
                     },
                     "adverbier": {
                         "title": "Adverbier: Position, tid og udråb",
-                        "badge": "🔵 Position & bevægelse",
-                        "icon": "🔵",
+                        "badge": "Position & bevægelse",
+                        "icon": "",
                         "desc": "Træn steds-, tids- og samtaleadverbier undervejs på landevejen:",
                         "questions": [
                             {
                                 "id": "s2_adv1",
                                 "line": 1,
-                                "badge": "🔵 Stedsadverbium & Position",
+                                "badge": "Stedsadverbium & Position",
                                 "prompt": "Brødrene rider **foran**, og Klods-Hans rider **bagefter**. Hvad angiver disse to ord?",
                                 "options": [
                                     "Position i rummet i forhold til hinanden (stedsadverbier)",
@@ -2262,7 +2262,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv4",
                                 "line": 2,
-                                "badge": "🔵 Stedsadverbium",
+                                "badge": "Stedsadverbium",
                                 "prompt": "Klods-Hans råber: '**Her** kommer jeg!' Hvilken type adverbium er ordet 'Her'?",
                                 "options": [
                                     "Stedsadverbium (viser placering hos den der taler)",
@@ -2276,7 +2276,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv3",
                                 "line": 5,
-                                "badge": "🔵 Bevægelsesadverbium",
+                                "badge": "Bevægelsesadverbium",
                                 "prompt": "Brødrene ler og rider **videre**. Hvad angiver adverbiet **videre** her?",
                                 "options": [
                                     "Fortsættelse af bevægelsen fremad",
@@ -2290,7 +2290,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv2",
                                 "line": 6,
-                                "badge": "🔵 Tidsadverbium",
+                                "badge": "Tidsadverbium",
                                 "prompt": "Klods-Hans råber: '**Nu** skal I se!' Hvilket udtryk er et synonym til tidsadverbiet **nu**?",
                                 "options": [
                                     "i dette øjeblik / straks",
@@ -2304,7 +2304,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv5",
                                 "line": 7,
-                                "badge": "🔵 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Brødrene spørger: 'Skal kongedatteren **også** have den?' Hvilket ord er synonym med 'også'?",
                                 "options": [
                                     "ligeledes / tillige",
@@ -2318,7 +2318,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv6",
                                 "line": 8,
-                                "badge": "🔵 Samtaleadverbium",
+                                "badge": "Samtaleadverbium",
                                 "prompt": "Klods-Hans svarer: 'Ja, det skal hun **da**!' Hvad udtrykker det lille ord 'da' her?",
                                 "options": [
                                     "En stærk overbevisning / selvfølgelighed ('selvfølgelig!')",
@@ -2332,7 +2332,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv7",
                                 "line": 9,
-                                "badge": "🔵 Gradsadverbium",
+                                "badge": "Gradsadverbium",
                                 "prompt": "Klods-Hans råber: '**endnu** bedre!' Hvilken rolle spiller ordet 'endnu' foran 'bedre'?",
                                 "options": [
                                     "Det forstærker graden ('yderligere')",
@@ -2346,7 +2346,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv8",
                                 "line": 10,
-                                "badge": "🔵 Samtaleord (Diskurspartikel)",
+                                "badge": "Samtaleord (Diskurspartikel)",
                                 "prompt": "Brødrene siger: 'Det er **jo** mudder fra grøften!' Hvad signalerer det lille ord 'jo' i samtalen?",
                                 "options": [
                                     "At noget er indlysende / kendt viden for tilhøreren",
@@ -2360,7 +2360,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s2_adv9",
                                 "line": 11,
-                                "badge": "🔵 Udråbsadverbium",
+                                "badge": "Udråbsadverbium",
                                 "prompt": "Klods-Hans udråber: '**Hvor** vil hun blive glad!' Hvilken funktion har ordet 'Hvor' i dette udråb?",
                                 "options": [
                                     "Udråbsord der udtrykker ekstremt høj grad ('hvor meget!')",
@@ -2458,7 +2458,7 @@ export const hcAndersenStories = [
                 "dialogue": [
                     {
                         "speaker": "Kongen",
-                        "speakerIcon": "👑",
+                        "speakerIcon": "",
                         "audioText": "Vis hvad I kan!",
                         "tokens": [
                             {
@@ -2492,7 +2492,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Storebror",
-                        "speakerIcon": "🎩",
+                        "speakerIcon": "",
                         "audioText": "Det er så varmt. Jeg kan ikke huske.",
                         "tokens": [
                             {
@@ -2575,7 +2575,7 @@ export const hcAndersenStories = [
                         "challenge": {
                             "type": "cloze_speech",
                             "title": "Mesterens replik: Centraladverbiets plads",
-                            "badge": "👑 Mesterens replik",
+                            "badge": "Mesterens replik",
                             "prompt": "Indsæt det vigtige centraladverbium der benægter handlingen:",
                             "sentenceTemplate": "Jeg kan [ ___ ] huske.",
                             "options": [
@@ -2592,7 +2592,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Mellembror",
-                        "speakerIcon": "📜",
+                        "speakerIcon": "",
                         "audioText": "Jeg har glemt hvad jeg vil sige. Det er alt for varmt!",
                         "tokens": [
                             {
@@ -2684,7 +2684,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Hej! Jeg kom på en ged. Jeg har en død krage og en træsko med mudder.",
                         "tokens": [
                             {
@@ -2803,7 +2803,7 @@ export const hcAndersenStories = [
                         "challenge": {
                             "type": "ordstilling",
                             "title": "Mesterens replik: Klods-Hans' kvikke svar",
-                            "badge": "👑 Mesterens replik",
+                            "badge": "Mesterens replik",
                             "prompt": "Saml Klods-Hans' kække replik til prinsessen:",
                             "targetSentence": "Det kan vi koge i træskoen!",
                             "tiles": [
@@ -2821,7 +2821,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Prinsessen",
-                        "speakerIcon": "👸",
+                        "speakerIcon": "",
                         "audioText": "Fortæl mere, Klods-Hans! Hvordan vil du bruge kragen?",
                         "tokens": [
                             {
@@ -2877,7 +2877,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Jeg tænkte på at stege den og lave god mad!",
                         "tokens": [
                             {
@@ -2965,7 +2965,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Prinsessen",
-                        "speakerIcon": "👸",
+                        "speakerIcon": "",
                         "audioText": "Og hvad vil du stege den i?",
                         "tokens": [
                             {
@@ -3017,7 +3017,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "I træskoen, selvfølgelig!",
                         "tokens": [
                             {
@@ -3051,7 +3051,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Prinsessen",
-                        "speakerIcon": "👸",
+                        "speakerIcon": "",
                         "audioText": "Og sovsen? Hvad med den?",
                         "tokens": [
                             {
@@ -3085,7 +3085,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Klods-Hans",
-                        "speakerIcon": "🐐",
+                        "speakerIcon": "",
                         "audioText": "Den er her!",
                         "tokens": [
                             {
@@ -3119,7 +3119,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Prinsessen",
-                        "speakerIcon": "👸",
+                        "speakerIcon": "",
                         "audioText": "Du er virkelig anderledes, Klods-Hans! Du har en sjov måde at se tingene på.",
                         "tokens": [
                             {
@@ -3202,7 +3202,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Kongen",
-                        "speakerIcon": "👑",
+                        "speakerIcon": "",
                         "audioText": "Det ser ud til, at prinsessen har valgt. Klods-Hans, du har vundet hendes hjerte!",
                         "tokens": [
                             {
@@ -3299,7 +3299,7 @@ export const hcAndersenStories = [
                     },
                     {
                         "speaker": "Alle",
-                        "speakerIcon": "🎉",
+                        "speakerIcon": "",
                         "audioText": "Hurra for Klods-Hans og prinsessen!",
                         "tokens": [
                             {
@@ -3330,14 +3330,14 @@ export const hcAndersenStories = [
                 "tasks": {
                     "detektiv": {
                         "title": "Visuel detektiv",
-                        "badge": "🔍 Visuel detektiv",
-                        "icon": "🔍",
+                        "badge": "Visuel detektiv",
+                        "icon": "",
                         "desc": "Kig grundigt på vrimlebilledet af riddersalen og find de afgørende detaljer:",
                         "questions": [
                             {
                                 "id": "s3_d1",
                                 "line": 1,
-                                "badge": "🔍 Kamin & Ild",
+                                "badge": "Kamin & Ild",
                                 "prompt": "Hvad står midt i riddersalen og gløder, så brødrene begynder at svede?",
                                 "options": [
                                     "En stor brændeovn / kamin med rød ild",
@@ -3351,7 +3351,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_d4",
                                 "line": 2,
-                                "badge": "🔍 Brødrenes panik",
+                                "badge": "Brødrenes panik",
                                 "prompt": "Hvordan reagerer de to kloge brødre i baggrunden foran ovnen?",
                                 "options": [
                                     "De sveder, måber og har glemt alle deres ord",
@@ -3365,7 +3365,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_d3",
                                 "line": 4,
-                                "badge": "🔍 Klods-Hans' kække entré",
+                                "badge": "Klods-Hans' kække entré",
                                 "prompt": "Hvad holder Klods-Hans frem foran ovnen i sin gamle træsko?",
                                 "options": [
                                     "Den døde krage med muddersauce",
@@ -3379,7 +3379,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_d2",
                                 "line": 5,
-                                "badge": "🔍 Prinsessens latter",
+                                "badge": "Prinsessens latter",
                                 "prompt": "Hvad gør prinsessen på tronen, da Klods-Hans svarer hende så frisk?",
                                 "options": [
                                     "Hun ler højt og morer sig hjerteligt",
@@ -3393,7 +3393,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_d5",
                                 "line": 10,
-                                "badge": "🔍 Sovsen",
+                                "badge": "Sovsen",
                                 "prompt": "Hvad tager Klods-Hans op af sin lomme og fremviser som den fineste sovs?",
                                 "options": [
                                     "En klump fedtet mudder fra vejkanten",
@@ -3407,7 +3407,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_d6",
                                 "line": 12,
-                                "badge": "🔍 Kongens kåring",
+                                "badge": "Kongens kåring",
                                 "prompt": "Hvem rejser sig fra tronen og kårer Klods-Hans som prinsessens udkårne?",
                                 "options": [
                                     "Kongen med sin gyldne krone",
@@ -3421,7 +3421,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_d7",
                                 "line": 13,
-                                "badge": "🔍 Jubel i salen",
+                                "badge": "Jubel i salen",
                                 "prompt": "Hvem står hele vejen rundt i riddersalen og råber hurra for brudeparret?",
                                 "options": [
                                     "Hoffolkene, skriverne og alle slottets gæster",
@@ -3626,14 +3626,14 @@ export const hcAndersenStories = [
                     },
                     "verber": {
                         "title": "Verber: Bøjning, tider og synonymer",
-                        "badge": "🔴 Modsætninger & synonymer",
-                        "icon": "🔴",
+                        "badge": "Modsætninger & synonymer",
+                        "icon": "",
                         "desc": "Træn udsagnsord i den afgørende samtale hos prinsessen:",
                         "questions": [
                             {
                                 "id": "s3_v4",
                                 "line": 1,
-                                "badge": "🔴 Bydeform (Imperativ)",
+                                "badge": "Bydeform (Imperativ)",
                                 "prompt": "Kongen råber: '**Vis**, hvad I kan!' Hvilken bøjningsform er verbet 'Vis'?",
                                 "options": [
                                     "Bydeform (imperativ - ordre)",
@@ -3647,7 +3647,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v1",
                                 "line": 2,
-                                "badge": "🔴 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Storebror siger: 'Jeg kan ikke huske.' Hvad er det modsatte af **at huske**?",
                                 "options": [
                                     "at glemme",
@@ -3661,7 +3661,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v5",
                                 "line": 3,
-                                "badge": "🔴 Førnutid (Perfektum)",
+                                "badge": "Førnutid (Perfektum)",
                                 "prompt": "Mellembror siger: 'Jeg **har glemt**, hvad jeg vil sige.' Hvilken tid er 'har glemt'?",
                                 "options": [
                                     "Førnutid (perfektum: har + kort tillægsform)",
@@ -3675,7 +3675,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v6",
                                 "line": 4,
-                                "badge": "🔴 Verbetid (Datid)",
+                                "badge": "Verbetid (Datid)",
                                 "prompt": "Klods-Hans hilser: 'Jeg **kom** på en ged.' Hvilken tid er verbet 'kom'?",
                                 "options": [
                                     "Datid (præteritum) af at komme",
@@ -3689,7 +3689,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v7",
                                 "line": 5,
-                                "badge": "🔴 Bydeform (Imperativ)",
+                                "badge": "Bydeform (Imperativ)",
                                 "prompt": "Prinsessen ler og siger: '**Fortæl** mere, Klods-Hans!' Hvilken form af verbet er 'Fortæl'?",
                                 "options": [
                                     "Bydeform (imperativ - opfordring)",
@@ -3703,7 +3703,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v2",
                                 "line": 6,
-                                "badge": "🔴 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Klods-Hans vil **stege** kragen. Hvilket begreb er et synonym til at stege mad i fedtstof eller varme?",
                                 "options": [
                                     "at tilberede ved stærk varme på pande/ild",
@@ -3717,7 +3717,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v8",
                                 "line": 7,
-                                "badge": "🔴 Navneform (Infinitiv)",
+                                "badge": "Navneform (Infinitiv)",
                                 "prompt": "Prinsessen spørger: 'hvad **vil** du stege den i?' Hvad er navneformen (infinitiv) af hjælpeverbet 'vil'?",
                                 "options": [
                                     "at ville",
@@ -3731,7 +3731,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v9",
                                 "line": 8,
-                                "badge": "🔴 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Klods-Hans vil koge og stege i træskoen. Hvad er det modsatte af **at koge** eller varme op?",
                                 "options": [
                                     "at fryse / nedkøle",
@@ -3745,7 +3745,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v3",
                                 "line": 9,
-                                "badge": "🔴 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Prinsessen spørger, og Klods-Hans **svarer** kvikt. Hvilket verbum er et synonym til **at svare**?",
                                 "options": [
                                     "at replikere / give gensvar",
@@ -3759,7 +3759,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v10",
                                 "line": 10,
-                                "badge": "🔴 Partikelverbum",
+                                "badge": "Partikelverbum",
                                 "prompt": "Klods-Hans **viser** mudderet **frem**. Hvad kaldes et verbum, der er kombineret med en retningspartikel?",
                                 "options": [
                                     "Et partikelverbum (f.eks. vise frem, holde op, gå ud)",
@@ -3773,7 +3773,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v11",
                                 "line": 11,
-                                "badge": "🔴 Verbetid (Datid)",
+                                "badge": "Verbetid (Datid)",
                                 "prompt": "Prinsessen taler om 'at **se** tingene på en sjov måde'. Hvad er datidsformen af 'at se'?",
                                 "options": [
                                     "så (i går så hun)",
@@ -3787,7 +3787,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v12",
                                 "line": 12,
-                                "badge": "🔴 Navneform (Infinitiv)",
+                                "badge": "Navneform (Infinitiv)",
                                 "prompt": "Kongen udråber: 'du har **vundet** hendes hjerte!' Hvad er navneformen (infinitiv) af verbet?",
                                 "options": [
                                     "at vinde",
@@ -3801,7 +3801,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_v13",
                                 "line": 13,
-                                "badge": "🔴 Verbetid (Datid)",
+                                "badge": "Verbetid (Datid)",
                                 "prompt": "Alle hoffolkene **råbte**: 'Hurra!'. Hvilken tid er verbet 'råbte'?",
                                 "options": [
                                     "Datid (præteritum) af at råbe",
@@ -4006,14 +4006,14 @@ export const hcAndersenStories = [
                     },
                     "adverbier": {
                         "title": "Adverbier: Gradbøjning, samtale og udråb",
-                        "badge": "🔵 Gradbøjning & synonymer",
-                        "icon": "🔵",
+                        "badge": "Gradbøjning & synonymer",
+                        "icon": "",
                         "desc": "Træn centraladverbier, gradsadverbier og udråb i riddersalens replikker:",
                         "questions": [
                             {
                                 "id": "s3_adv4",
                                 "line": 1,
-                                "badge": "🔵 Spørgende bindeord",
+                                "badge": "Spørgende bindeord",
                                 "prompt": "Kongen råber: 'Vis, **hvad** I kan!' Hvilken rolle spiller ordet 'hvad' her?",
                                 "options": [
                                     "Spørgende / relativt bindeord (indleder ledsætningen)",
@@ -4027,7 +4027,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv1",
                                 "line": 2,
-                                "badge": "🔵 Centraladverbium",
+                                "badge": "Centraladverbium",
                                 "prompt": "Storebror siger: 'Jeg kan **ikke** huske.' Hvilken grammatisk funktion har ordet 'ikke'?",
                                 "options": [
                                     "Centraladverbium der benægter handlingen",
@@ -4041,7 +4041,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv2",
                                 "line": 2,
-                                "badge": "🔵 Gradsadverbium",
+                                "badge": "Gradsadverbium",
                                 "prompt": "Storebror klager: 'Det er **så** varmt!' Hvilket ord er et synonym til gradsadverbiet **så** her?",
                                 "options": [
                                     "virkelig / meget",
@@ -4055,7 +4055,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv3",
                                 "line": 3,
-                                "badge": "🔵 Gradsadverbium & Grænse",
+                                "badge": "Gradsadverbium & Grænse",
                                 "prompt": "Mellembror siger: 'Det er **alt for** varmt herinde.' Hvad betyder 'alt for' foran et adjektiv?",
                                 "options": [
                                     "Graden overskrider grænsen for det acceptable (for meget)",
@@ -4069,7 +4069,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv5",
                                 "line": 4,
-                                "badge": "🔵 Udråbsord (Interjektion)",
+                                "badge": "Udråbsord (Interjektion)",
                                 "prompt": "Klods-Hans hilser muntert: '**Hej**! Jeg kom på en ged.' Hvilken type ord er 'Hej!'?",
                                 "options": [
                                     "En interjektion / et udråbsord (bruges som hilsen)",
@@ -4083,7 +4083,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv6",
                                 "line": 5,
-                                "badge": "🔵 Mængdeadverbium",
+                                "badge": "Mængdeadverbium",
                                 "prompt": "Prinsessen opfordrer: 'Fortæl **mere**!' Hvad er grundformen (positiv) af ordet 'mere'?",
                                 "options": [
                                     "meget (meget – mere – mest)",
@@ -4097,7 +4097,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv7",
                                 "line": 6,
-                                "badge": "🔵 Ordstilling & Centraladverbium",
+                                "badge": "Ordstilling & Centraladverbium",
                                 "prompt": "Klods-Hans vil lave mad. Hvor skal centraladverbiet '**ikke**' stå i en dansk hovedsætning?",
                                 "options": [
                                     "Lige efter det bøjede verbum ('Han kan ikke stege den')",
@@ -4111,7 +4111,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv8",
                                 "line": 8,
-                                "badge": "🔵 Synonym",
+                                "badge": "Synonym",
                                 "prompt": "Klods-Hans udbryder: 'I træskoen, **selvfølgelig**!' Hvilket ord er et synonym til 'selvfølgelig'?",
                                 "options": [
                                     "naturligvis / givetvis",
@@ -4125,7 +4125,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv9",
                                 "line": 10,
-                                "badge": "🔵 Stedsadverbium",
+                                "badge": "Stedsadverbium",
                                 "prompt": "Klods-Hans siger: 'Den er **her**!' Hvilken type ord er 'her'?",
                                 "options": [
                                     "Stedsadverbium der viser placering hos taleren",
@@ -4139,7 +4139,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv10",
                                 "line": 11,
-                                "badge": "🔵 Gradsadverbium",
+                                "badge": "Gradsadverbium",
                                 "prompt": "Prinsessen udbryder: 'Du er **virkelig** anderledes!' Hvad udtrykker ordet 'virkelig' her?",
                                 "options": [
                                     "Høj grad og ægte sandhed ('faktisk / sandelig')",
@@ -4153,7 +4153,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv11",
                                 "line": 12,
-                                "badge": "🔵 Tidsadverbium",
+                                "badge": "Tidsadverbium",
                                 "prompt": "Kongen siger: 'Klods-Hans, du har **nu** vundet hendes hjerte.' Hvad angiver tidsadverbiet **nu**?",
                                 "options": [
                                     "I dette øjeblik / fra dette sekund",
@@ -4167,7 +4167,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s3_adv12",
                                 "line": 13,
-                                "badge": "🔵 Udråbsord (Interjektion)",
+                                "badge": "Udråbsord (Interjektion)",
                                 "prompt": "Alle i salen råber: '**Hurra** for Klods-Hans og prinsessen!' Hvad udtrykker udråbet 'Hurra'?",
                                 "options": [
                                     "En festlig hyldest og glæde",
@@ -4275,7 +4275,7 @@ export const hcAndersenStories = [
                     "sceneContextEn": "The father and brothers laugh at Clumsy Hans and say: 'You can't do anything! You can't speak with fine people!' Yet Hans ends up winning the princess.",
                     "idiom": "En blind høne kan også finde et korn",
                     "idiomEn": "Even a blind hen finds a grain",
-                    "idiomIcon": "🐔",
+                    "idiomIcon": "",
                     "question": "Denne scene passer med talemåden: »En blind høne kan også finde et korn«. Hvad betyder talemåden?",
                     "questionEn": "This scene fits the idiom: 'En blind høne kan også finde et korn'. What does it mean?",
                     "correct": "At man kan være heldig at lykkes med noget, selvom man egentlig ikke er særligt dygtig eller har forberedt sig.",
@@ -4298,7 +4298,7 @@ export const hcAndersenStories = [
                     "sceneContextEn": "The two learned brothers practiced for three years. But standing before the princess and councilors, they are overwhelmed by nervousness, unable to speak a single word!",
                     "idiom": "At gå i baglås",
                     "idiomEn": "To seize up / freeze completely",
-                    "idiomIcon": "🔒",
+                    "idiomIcon": "",
                     "question": "Denne scene passer med talemåden: »At gå i baglås«. Hvad betyder talemåden?",
                     "questionEn": "This scene fits the idiom: 'At gå i baglås'. What does it mean?",
                     "correct": "At man fuldstændig mister evnen til at tænke klart eller handle, ofte fordi man er stresset eller presset.",
@@ -4321,7 +4321,7 @@ export const hcAndersenStories = [
                     "sceneContextEn": "When the brothers can only stammer 'It's no good!', they have to give up their dream of the princess and leave the castle in defeat.",
                     "idiom": "At kaste håndklædet i ringen",
                     "idiomEn": "To throw in the towel",
-                    "idiomIcon": "🥊",
+                    "idiomIcon": "",
                     "question": "Denne scene passer med talemåden: »At kaste håndklædet i ringen«. Hvad betyder talemåden?",
                     "questionEn": "This scene fits the idiom: 'At kaste håndklædet i ringen'. What does it mean?",
                     "correct": "At man giver helt op og erkender sit nederlag, fordi situationen er blevet for svær at klare.",
@@ -4344,7 +4344,7 @@ export const hcAndersenStories = [
                     "sceneContextEn": "The princess teases: 'It is so hot here! I am roasting cockerels!' Hans replies immediately: 'Then I can roast my crow!' showing the crow, shoe, and mud. Every reply is spot on!",
                     "idiom": "At ramme plet",
                     "idiomEn": "To hit the bullseye / nail it",
-                    "idiomIcon": "🎯",
+                    "idiomIcon": "",
                     "question": "Denne scene passer med talemåden: »At ramme plet«. Hvad betyder talemåden?",
                     "questionEn": "This scene fits the idiom: 'At ramme plet'. What does it mean?",
                     "correct": "At man siger eller gør noget, der er fuldstændig rigtigt og præcist i den givne situation.",
@@ -4367,7 +4367,7 @@ export const hcAndersenStories = [
                     "sceneContextEn": "Clumsy Hans won the king's daughter as his wife, received half the kingdom, and was crowned king!",
                     "idiom": "At skyde papegøjen",
                     "idiomEn": "To hit the jackpot / win big",
-                    "idiomIcon": "🦜",
+                    "idiomIcon": "",
                     "question": "Denne scene passer med talemåden: »At skyde papegøjen«. Hvad betyder talemåden?",
                     "questionEn": "This scene fits the idiom: 'At skyde papegøjen'. What does it mean?",
                     "correct": "At man er usædvanligt heldig og vinder den helt store gevinst (oftest et godt ægteskab eller drømmejobbet).",
@@ -4389,7 +4389,7 @@ export const hcAndersenStories = [
         "id": "den_grimme_aelling",
         "title": "Den grimme ælling",
         "titleEn": "The Ugly Duckling",
-        "icon": "🦢",
+        "icon": "",
         "level": "Let (A2)",
         "readingTime": "3 min",
         "quote": "Det gør ikke noget at være født i en andegård, når man kun har ligget i et svaneæg!",
@@ -4507,7 +4507,7 @@ export const hcAndersenStories = [
         "id": "kejserens_nye_klaeder",
         "title": "Kejserens nye klæder",
         "titleEn": "The Emperor's New Clothes",
-        "icon": "👑",
+        "icon": "",
         "level": "Let (A2)",
         "readingTime": "3 min",
         "quote": "»Men han har jo ikke noget tøj på!« sagde et lille barn.",
@@ -4725,7 +4725,7 @@ export const hcAndersenStories = [
         "id": "fyrtoejet",
         "title": "Fyrtøjet",
         "titleEn": "The Tinderbox",
-        "icon": "🐕",
+        "icon": "",
         "level": "Let-mellem (A2-B1)",
         "readingTime": "4 min",
         "quote": "»Hund med øjne så store som tekopper, møllehjul og Rundetårn!«",

@@ -16,6 +16,22 @@ import { isHCDevMode, setHCDevMode } from '../utils/devMode.js';
  * Funktioner: Vrimlebilleder, grammatiske farvekoder på ordniveau, interaktive
  * målordspræsentationer for alle ordklasser (inkl. pink pronominer), oplæsning (TTS) og quiz.
  */
+// Clean monochrome SVG icons
+const SVG_AUDIO = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+const SVG_STOP = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -2px; display: inline-block;"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>`;
+const SVG_CHECK = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+const SVG_CROSS = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+const SVG_RESET = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>`;
+const SVG_SEARCH = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
+const SVG_MIC = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>`;
+const SVG_INFO = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+const SVG_BOOK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; display: inline-block;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`;
+
+function stripEmojis(str) {
+    if (!str || typeof str !== 'string') return '';
+    return str.replace(/[\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{1F191}-\u{1F251}\u{1F004}\u{1F0CF}\u{1F170}-\u{1F171}\u{1F17E}-\u{1F17F}\u{1F18E}\u{3030}\u{2B50}\u{2B55}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{3297}\u{3299}\u{FE0F}]/gu, '').trim();
+}
+
 export function renderHCAndersenView(container, navigateFn, extraData = {}) {
     injectStyles();
 
@@ -79,10 +95,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         if (globalBtn) {
             if (playing) {
                 globalBtn.classList.add('playing');
-                globalBtn.innerHTML = `<span>⏹️</span> <span>${isEn ? 'Stop listening' : 'Stop oplæsning'}</span>`;
+                globalBtn.innerHTML = `<span>${SVG_STOP}</span> <span>${isEn ? 'Stop listening' : 'Stop oplæsning'}</span>`;
             } else {
                 globalBtn.classList.remove('playing');
-                globalBtn.innerHTML = `<span>🔊</span> <span>${isEn ? 'Listen to story' : 'Lyt til historien'}</span>`;
+                globalBtn.innerHTML = `<span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen to story' : 'Lyt til historien'}</span>`;
             }
         }
     }
@@ -157,7 +173,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const hero = document.createElement('div');
         hero.className = 'hc-hero-card';
         hero.innerHTML = `
-            <div class="hc-hero-badge">🏰 ${isEn ? 'Danish Cultural Heritage & Graded Reading' : 'Dansk kulturarv & Letlæst'}</div>
+            <div class="hc-hero-badge">${isEn ? 'Danish Cultural Heritage & Graded Reading' : 'Dansk kulturarv & Letlæst'}</div>
             <h1 class="hc-hero-title">${isEn ? "H.C. Andersen's Fairy Tales" : 'H.C. Andersens eventyr'}</h1>
             <p class="hc-hero-desc">
                 ${isEn 
@@ -166,11 +182,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 }
             </p>
             <div class="hc-features-pills">
-                <span class="hc-pill">✨ ${isEn ? 'Wimmelbuch scenes' : 'Interaktive vrimlebilleder'}</span>
-                <span class="hc-pill">🎨 ${isEn ? 'Grammar color codes' : 'Grammatiske farvekoder'}</span>
-                <span class="hc-pill">💗 ${isEn ? 'Pronoun quick peeks' : 'Pink pronominer & opslag'}</span>
-                <span class="hc-pill">🎯 ${isEn ? 'Level: Easy (A2 - B1)' : 'Niveau: Let (A2 - B1)'}</span>
-                <span class="hc-pill">🔊 ${isEn ? 'Built-in audio' : 'Indbygget oplæsning'}</span>
+                <span class="hc-pill">${isEn ? 'Wimmelbuch scenes' : 'Interaktive vrimlebilleder'}</span>
+                <span class="hc-pill">${isEn ? 'Grammar color codes' : 'Grammatiske farvekoder'}</span>
+                <span class="hc-pill">${isEn ? 'Pronoun quick peeks' : 'Pink pronominer & opslag'}</span>
+                <span class="hc-pill">${isEn ? 'Level: Easy (A2 - B1)' : 'Niveau: Let (A2 - B1)'}</span>
+                <span class="hc-pill"><span>${SVG_AUDIO}</span> <span>${isEn ? 'Built-in audio' : 'Indbygget oplæsning'}</span></span>
             </div>
         `;
         mainContent.appendChild(hero);
@@ -194,11 +210,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
             card.innerHTML = `
                 <div class="hc-card-header">
-                    <span class="hc-card-icon">${story.icon}</span>
+                    <span class="hc-card-icon">${SVG_BOOK}</span>
                     <div class="hc-card-badges">
-                        ${story.hasWimmelbilder ? `<span class="hc-wimmel-tag">✨ 3 Vrimlebilleder</span>` : ''}
+                        ${story.hasWimmelbilder ? `<span class="hc-wimmel-tag">${isEn ? '3 Wimmelbuch scenes' : '3 Vrimlebilleder'}</span>` : ''}
                         <span class="hc-level-tag">${story.level}</span>
-                        <span class="hc-time-tag">⏱️ ${story.readingTime}</span>
+                        <span class="hc-time-tag">${story.readingTime}</span>
                     </div>
                 </div>
                 <h3 class="hc-card-title">${story.title}</h3>
@@ -208,7 +224,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 <div class="hc-card-footer">
                     <button class="hc-read-btn">
                         <span>${isEn ? 'Read Tale' : 'Læs eventyr'}</span>
-                        <span>➔</span>
+                        <span>→</span>
                     </button>
                 </div>
             `;
@@ -228,10 +244,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         headerCard.className = 'hc-reader-header';
         headerCard.innerHTML = `
             <div class="hc-reader-meta">
-                <span class="hc-reader-icon">${story.icon}</span>
+                <span class="hc-reader-icon">${SVG_BOOK}</span>
                 <div>
                     <h1 class="hc-reader-title">${story.title}</h1>
-                    <div class="hc-reader-sub">${story.titleEn} &bull; <span class="hc-level-tag-inline">${story.level}</span> &bull; ⏱️ ${story.readingTime}</div>
+                    <div class="hc-reader-sub">${story.titleEn} &bull; <span class="hc-level-tag-inline">${story.level}</span> &bull; ${story.readingTime}</div>
                 </div>
             </div>
             <div class="hc-reader-quote-banner">
@@ -247,7 +263,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         // Listen main button
         const fullAudioBtn = document.createElement('button');
         fullAudioBtn.className = 'main-listen-btn';
-        fullAudioBtn.innerHTML = `<span>🔊</span> <span>${isEn ? 'Listen to story' : 'Lyt til historien'}</span>`;
+        fullAudioBtn.innerHTML = `<span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen to story' : 'Lyt til historien'}</span>`;
         fullAudioBtn.onclick = () => {
             if (isPlaying) {
                 stopSpeech();
@@ -268,10 +284,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         modeToggle.className = 'hc-mode-toggle';
         modeToggle.innerHTML = `
             <button class="mode-tab-btn ${readingMode === 'steps' ? 'active' : ''}" data-mode="steps">
-                📖 ${isEn ? 'Step-by-step' : 'Afsnit for afsnit'}
+                ${isEn ? 'Step-by-step' : 'Afsnit for afsnit'}
             </button>
             <button class="mode-tab-btn ${readingMode === 'full' ? 'active' : ''}" data-mode="full">
-                📜 ${isEn ? 'Full text' : 'Hele teksten'}
+                ${isEn ? 'Full text' : 'Hele teksten'}
             </button>
         `;
         modeToggle.querySelectorAll('.mode-tab-btn').forEach(btn => {
@@ -306,7 +322,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         if (story.talemaaderChallenge) {
             const talemaaderTabBtn = document.createElement('button');
             talemaaderTabBtn.className = 'hc-talemaader-nav-btn';
-            talemaaderTabBtn.innerHTML = `<span>🎭</span> <span>${isEn ? 'Fairy Tale Idioms (B1/B2)' : 'Eventyrets talemåder (B1/B2)'}</span>`;
+            talemaaderTabBtn.innerHTML = `<span>${isEn ? 'Fairy Tale Idioms (B1/B2)' : 'Eventyrets talemåder (B1/B2)'}</span>`;
             talemaaderTabBtn.onclick = () => {
                 stopSpeech();
                 activeStorySubView = 'talemaader';
@@ -377,7 +393,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             } else {
                 const quizJumpBtn = document.createElement('button');
                 quizJumpBtn.className = 'step-action-btn quiz-jump';
-                quizJumpBtn.innerHTML = `🎯 ${isEn ? 'Take Comprehension Quiz' : 'Tag forståelsesquizzen'} ↓`;
+                quizJumpBtn.innerHTML = `${isEn ? 'Take Comprehension Quiz' : 'Tag forståelsesquizzen'} ↓`;
                 quizJumpBtn.onclick = () => {
                     const quizEl = readerWrapper.querySelector('.hc-quiz-card');
                     if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
@@ -402,7 +418,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             grammarSpot.className = 'hc-grammar-spot';
             grammarSpot.innerHTML = `
                 <div class="grammar-spot-header">
-                    <span style="font-size: 1.3rem;">💡</span>
+                    <span style="font-size: 1.1rem; display: inline-flex; align-items: center;">${SVG_INFO}</span>
                     <h4>${story.grammarFocus.title}</h4>
                 </div>
                 <p class="grammar-spot-text">${story.grammarFocus.desc}</p>
@@ -416,7 +432,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             vocabCard.className = 'hc-vocab-card';
             vocabCard.innerHTML = `
                 <div class="vocab-header">
-                    <span style="font-size: 1.4rem;">📚</span>
+                    
                     <h3>${isEn ? 'Vocabulary & Explanations' : 'Gloser & ordforklaringer i dette eventyr'}</h3>
                 </div>
                 <p class="vocab-hint">${isEn ? 'Get to know the words – click the speaker to listen to pronunciation:' : 'Lær ordene at kende – klik på højttaleren for at høre udtalen:'}</p>
@@ -426,10 +442,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                             <div class="vocab-item-top">
                                 <strong class="vocab-word">${v.word}</strong>
                                 <span class="vocab-type">${v.type}</span>
-                                <button class="vocab-speak-btn" data-word="${v.word}" title="Lyt">🔊</button>
+                                <button class="vocab-speak-btn" data-word="${v.word}" title="Lyt">${SVG_AUDIO}</button>
                             </div>
                             <div class="vocab-meaning-da">${v.meaningDa}</div>
-                            <div class="vocab-meaning-en">🇬🇧 ${v.meaningEn}</div>
+                            <div class="vocab-meaning-en">EN: ${v.meaningEn}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -456,15 +472,15 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             const talemaaderBanner = document.createElement('div');
             talemaaderBanner.className = 'hc-talemaader-invitation-card';
             talemaaderBanner.innerHTML = `
-                <div class="invitation-icon">🎭</div>
+                
                 <div class="invitation-body">
-                    <div class="invitation-badge">🌟 ${isEn ? 'Optional Challenge • Advanced (B1/B2)' : 'Valgfri udfordring • For avancerede kursister (B1/B2)'}</div>
+                    <div class="invitation-badge">${isEn ? 'Optional Challenge • Advanced (B1/B2)' : 'Valgfri udfordring • For avancerede kursister (B1/B2)'}</div>
                     <h3 class="invitation-title">${isEn ? story.talemaaderChallenge.titleEn || story.talemaaderChallenge.title : story.talemaaderChallenge.title}</h3>
                     <p class="invitation-desc">${isEn ? story.talemaaderChallenge.descEn || story.talemaaderChallenge.desc : story.talemaaderChallenge.desc}</p>
                 </div>
                 <button type="button" class="invitation-start-btn">
                     <span>${isEn ? 'Explore Idioms' : 'Start talemåderne'}</span>
-                    <span>➔</span>
+                    <span>→</span>
                 </button>
             `;
             talemaaderBanner.querySelector('.invitation-start-btn').onclick = () => {
@@ -498,7 +514,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             const nextStory = hcAndersenStories[currentIdx + 1];
             const nextStoryBtn = document.createElement('button');
             nextStoryBtn.className = 'next-story-btn';
-            nextStoryBtn.innerHTML = `${isEn ? 'Next Fairy Tale' : 'Næste eventyr'}: ${nextStory.title} ➔`;
+            nextStoryBtn.innerHTML = `${isEn ? 'Next Fairy Tale' : 'Næste eventyr'}: ${nextStory.title} →`;
             nextStoryBtn.onclick = () => {
                 stopSpeech();
                 activeStoryId = nextStory.id;
@@ -518,11 +534,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         if (!section.tasks) return null;
 
         const categories = [
-            { key: 'detektiv', label: isEn ? 'Visual Detective' : 'Visuel detektiv', icon: '🔍', color: '#38bdf8' },
-            { key: 'substantiver', label: isEn ? 'Nouns' : 'Substantiver', subLabel: 'Over- & underbegreber', icon: '🟢', color: '#22c55e' },
-            { key: 'verber', label: isEn ? 'Verbs' : 'Verber', subLabel: 'Modsætninger & synonymer', icon: '🔴', color: '#ef4444' },
-            { key: 'adjektiver', label: isEn ? 'Adjectives' : 'Adjektiver', subLabel: 'Modsætninger & grader', icon: '🟠', color: '#f97316' },
-            { key: 'adverbier', label: isEn ? 'Adverbs' : 'Adverbier', subLabel: 'Grader & synonymer', icon: '🔵', color: '#38bdf8' }
+            { key: 'detektiv', label: isEn ? 'Visual Detective' : 'Visuel detektiv', iconSvg: SVG_SEARCH, color: '#38bdf8' },
+            { key: 'substantiver', label: isEn ? 'Nouns' : 'Substantiver', subLabel: 'Over- & underbegreber', dotColor: '#22c55e' },
+            { key: 'verber', label: isEn ? 'Verbs' : 'Verber', subLabel: 'Modsætninger & synonymer', dotColor: '#ef4444' },
+            { key: 'adjektiver', label: isEn ? 'Adjectives' : 'Adjektiver', subLabel: 'Modsætninger & grader', dotColor: '#f97316' },
+            { key: 'adverbier', label: isEn ? 'Adverbs' : 'Adverbier', subLabel: 'Grader & synonymer', dotColor: '#38bdf8' }
         ].filter(cat => section.tasks[cat.key] && section.tasks[cat.key].questions && section.tasks[cat.key].questions.length > 0);
 
         if (categories.length === 0) return null;
@@ -563,13 +579,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             tasksHeader.innerHTML = `
                 <div>
                     <div class="hc-tasks-title">
-                        <span>🎯</span>
                         <span>${isEn ? 'Scene Exercises & Detective' : 'Opgaver til scenen'}</span>
                     </div>
                     <div class="hc-tasks-subtitle">${isEn ? 'Practice observation and grammar step-by-step as you read:' : 'Træn visuel opmærksomhed og ordklasser trin for trin i takt med læsningen:'}</div>
                 </div>
                 <div class="hc-tasks-flow-badge">
-                    <span>${isAllUnlocked ? '🎉' : '📜'}</span>
+                    
                     <span>${isAllUnlocked 
                         ? (isEn ? `All ${totalLines} sentences read – All tasks unlocked!` : `Alle ${totalLines} sætninger læst – Alle opgaver er åbne!`) 
                         : (isEn ? `Unlocked for sentence 1-${currentRevealedCount} of ${totalLines}` : `Låst op til og med sætning ${currentRevealedCount} af ${totalLines}`)}</span>
@@ -590,8 +605,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 if (!btn) return;
                 const unlocked = getUnlockedQuestions(cat.key);
                 const total = section.tasks[cat.key].questions.length;
+                const iconHtml = cat.iconSvg || `<span class="hc-tab-dot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${cat.dotColor};"></span>`;
                 btn.innerHTML = `
-                    <span>${cat.icon}</span>
+                    <span>${iconHtml}</span>
                     <span>${cat.label}</span>
                     <span class="hc-task-tab-count">(${unlocked.length}/${total})</span>
                 `;
@@ -604,8 +620,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             btn.className = `hc-task-tab-btn tab-${cat.key} ${cat.key === activeCatKey ? 'active' : ''}`;
             const unlocked = getUnlockedQuestions(cat.key);
             const total = section.tasks[cat.key].questions.length;
+            const iconHtml = cat.iconSvg || `<span class="hc-tab-dot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${cat.dotColor};"></span>`;
             btn.innerHTML = `
-                <span>${cat.icon}</span>
+                <span>${iconHtml}</span>
                 <span>${cat.label}</span>
                 <span class="hc-task-tab-count">(${unlocked.length}/${total})</span>
             `;
@@ -653,11 +670,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 const pct = Math.round((score / totalQ) * 100);
                 panel.innerHTML = `
                     <div class="hc-task-summary">
-                        <div class="summary-icon">${pct >= 75 ? '🏆' : '👏'}</div>
+                        <div class="summary-icon">${pct >= 75 ? SVG_CHECK : SVG_INFO}</div>
                         <h4>${catData.title} – ${isEn ? 'Completed!' : 'Gennemført!'}</h4>
                         <p class="summary-score-text">${isEn ? `You got <strong>${score}</strong> out of <strong>${totalQ}</strong> correct (${pct}%).` : `Du fik <strong>${score}</strong> ud af <strong>${totalQ}</strong> rigtige (${pct}%).`}</p>
                         <button type="button" class="hc-task-restart-btn">
-                            <span>🔄</span> <span>${isEn ? 'Try this category again' : 'Prøv denne kategori igen'}</span>
+                            <span>${SVG_RESET}</span> <span>${isEn ? 'Try this category again' : 'Prøv denne kategori igen'}</span>
                         </button>
                     </div>
                 `;
@@ -675,12 +692,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             if (qIdx >= unlocked.length && unlocked.length < totalQ) {
                 panel.innerHTML = `
                     <div class="hc-task-sentence-milestone">
-                        <div class="milestone-icon">✨</div>
+                        
                         <h4>${isEn ? `Tasks up to sentence ${currentRevealedCount} completed!` : `Opgaver til sætning ${currentRevealedCount} er løst!`}</h4>
                         <p>${isEn ? `Confirm that you understand the sentence above to unlock the next task (${unlocked.length + 1} of ${totalQ}) in this category.` : `Gå op til teksten og bekræft, at du forstår sætningen, for at låse op for de næste opgaver i rækken.`}</p>
                         <button type="button" class="hc-task-read-next-btn">
                             <span>${isEn ? `Go to sentence above (confirm)` : `Gå op og bekræft sætningen`}</span>
-                            <span>➔</span>
+                            <span>→</span>
                         </button>
                     </div>
                 `;
@@ -705,12 +722,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         ${currentQ.badge || catData.badge || 'Opgave'}
                     </span>
                     <span class="hc-task-line-badge">
-                        📜 ${isEn ? `Sentence ${currentQ.line || 1} of ${totalLines}` : `Sætning ${currentQ.line || 1} af ${totalLines}`}
+                        ${isEn ? `Sentence ${currentQ.line || 1} of ${totalLines}` : `Sætning ${currentQ.line || 1} af ${totalLines}`}
                     </span>
                     <span class="hc-task-progress-text">${isEn ? `Question ${qIdx + 1} of ${unlocked.length}` : `Opgave ${qIdx + 1} af ${unlocked.length}`} <span style="opacity:0.65;">(${unlocked.length}/${totalQ})</span></span>
                 </div>
                 <div class="hc-task-score-pill">
-                    ⭐ ${catScores[activeCatKey]} / ${unlocked.length}
+                    ${catScores[activeCatKey]} / ${unlocked.length}
                 </div>
             `;
             panel.appendChild(headerRow);
@@ -723,7 +740,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 const catColor = catInfo ? catInfo.color : '#4ade80';
                 hintPill.innerHTML = `
                     <span class="hint-bullet" style="background:${catColor};"></span>
-                    <span>${isEn ? `All <strong>${catLabel.toLowerCase()}</strong> are highlighted in the text above` : `Alle <strong>${catLabel.toLowerCase()}</strong> toner nu frem i teksten ovenfor 👆`}</span>
+                    <span>${isEn ? `All <strong>${catLabel.toLowerCase()}</strong> are highlighted in the text above` : `Alle <strong>${catLabel.toLowerCase()}</strong> toner nu frem i teksten ovenfor`}</span>
                 `;
                 panel.appendChild(hintPill);
             }
@@ -740,7 +757,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             promptBox.className = 'hc-task-prompt-box';
             promptBox.innerHTML = `
                 <div class="hc-task-prompt">${currentQ.prompt.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
-                <button type="button" class="hc-task-speak-btn" title="${isEn ? 'Listen to question' : 'Lyt til spørgsmålet'}">🔊</button>
+                <button type="button" class="hc-task-speak-btn" title="${isEn ? 'Listen to question' : 'Lyt til spørgsmålet'}">${SVG_AUDIO}</button>
             `;
             promptBox.querySelector('.hc-task-speak-btn').onclick = () => {
                 const plainText = currentQ.prompt.replace(/\*\*/g, '');
@@ -805,12 +822,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 const isLastUnlocked = qIdx === unlocked.length - 1;
                 const hasMoreInCat = unlocked.length < totalQ;
 
-                let nextBtnLabel = isEn ? 'Next question ➔' : 'Næste opgave ➔';
+                let nextBtnLabel = isEn ? 'Next question →' : 'Næste opgave →';
                 let nextPromptNoteHtml = '';
 
                 if (isLastUnlocked) {
                     if (hasMoreInCat) {
-                        nextBtnLabel = isEn ? 'Next (confirm sentence above) ➔' : 'Næste opgave (bekræft sætning ovenfor) ➔';
+                        nextBtnLabel = isEn ? 'Next (confirm sentence above) →' : 'Næste opgave (bekræft sætning ovenfor) →';
                         nextPromptNoteHtml = `
                             <div class="hc-next-sentence-prompt-note">
                                 <span>↑</span>
@@ -818,14 +835,14 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                             </div>
                         `;
                     } else {
-                        nextBtnLabel = isEn ? 'See result 🏆' : 'Se resultat 🏆';
+                        nextBtnLabel = isEn ? 'See result →' : 'Se resultat →';
                     }
                 }
 
                 feedbackWrap.innerHTML = `
                     <div class="hc-task-feedback ${isCorrect ? 'correct' : 'incorrect'}">
                         <div style="display: flex; align-items: flex-start; gap: 0.6rem;">
-                            <span style="font-size: 1.3rem;">${isCorrect ? '✅' : '💡'}</span>
+                            <span style="font-size: 1.2rem; display: inline-flex; align-items: center;">${isCorrect ? SVG_CHECK : SVG_INFO}</span>
                             <div class="hc-task-feedback-text">
                                 <strong>${isCorrect ? (isEn ? 'Correct!' : 'Rigtigt!') : (isEn ? 'Note:' : 'Bemærk:')}</strong>
                                 <span>${currentQ.explanation}</span>
@@ -875,7 +892,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const header = document.createElement('div');
         header.className = 'hc-challenge-header';
         header.innerHTML = `
-            <span class="hc-challenge-badge">${challenge.badge || '👑 Mesterens replik'}</span>
+            <span class="hc-challenge-badge">${stripEmojis(challenge.badge || 'Mesterens replik')}</span>
             <h4 class="hc-challenge-title">${challenge.title}</h4>
         `;
         card.appendChild(header);
@@ -948,10 +965,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             actionsRow.className = 'hc-challenge-actions';
             actionsRow.innerHTML = `
                 <button type="button" class="hc-check-sentence-btn">
-                    <span>${isEn ? 'Check word order' : 'Tjek ordstilling'}</span> <span>✅</span>
+                    <span>${isEn ? 'Check word order' : 'Tjek ordstilling'}</span>
                 </button>
                 <button type="button" class="hc-reset-tiles-btn" title="Nulstil brikker">
-                    <span>🔄</span> <span>${isEn ? 'Reset' : 'Nulstil'}</span>
+                    <span>${SVG_RESET}</span> <span>${isEn ? 'Reset' : 'Nulstil'}</span>
                 </button>
             `;
 
@@ -976,14 +993,14 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     feedbackEl.style.display = 'flex';
                     feedbackEl.innerHTML = `
                         <div class="feedback-msg">
-                            <span style="font-size: 1.4rem;">🎉</span>
+                            <span style="display:inline-flex; align-items:center;">${SVG_CHECK}</span>
                             <div>
                                 <strong>${isEn ? 'Perfect word order!' : 'Helt rigtigt!'}</strong>
                                 <p>${challenge.explanation}</p>
                             </div>
                         </div>
                         <button type="button" class="hc-challenge-continue-btn">
-                            <span>${isEn ? 'Continue reading ➔' : 'Fortsæt læsningen ➔'}</span>
+                            <span>${isEn ? 'Continue reading →' : 'Fortsæt læsningen →'}</span>
                         </button>
                     `;
                     speakDanish(targetStr);
@@ -997,7 +1014,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     feedbackEl.style.display = 'flex';
                     feedbackEl.innerHTML = `
                         <div class="feedback-msg">
-                            <span style="font-size: 1.3rem;">💡</span>
+                            <span style="display:inline-flex; align-items:center;">${SVG_INFO}</span>
                             <div>
                                 <strong>${isEn ? 'Not quite right yet:' : 'Ikke helt den rigtige rækkefølge endnu:'}</strong>
                                 <p>${isEn ? 'Try changing the order of the words. Pay attention to verb and subject order!' : 'Prøv at bytte om på brikkerne. Husk V2-reglen for udsagnsord og grundled!'}</p>
@@ -1051,25 +1068,25 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         feedbackEl.style.display = 'flex';
                         feedbackEl.innerHTML = `
                             <div class="feedback-msg">
-                                <span style="font-size: 1.4rem;">👏</span>
+                                <span style="display:inline-flex; align-items:center;">${SVG_CHECK}</span>
                                 <div>
                                     <strong>${isEn ? 'Correct word!' : 'Rigtigt ord!'}</strong>
                                     <p>${challenge.explanation}</p>
                                 </div>
                             </div>
                             <div class="hc-speech-practice-box">
-                                <div class="speech-prompt-title">🎙️ ${challenge.speechPrompt || (isEn ? 'Practice pronouncing the line aloud:' : 'Udtaletræning: Sig replikken højt:')}</div>
+                                <div class="speech-prompt-title"><span>${SVG_MIC}</span> <span>${stripEmojis(challenge.speechPrompt) || (isEn ? 'Practice pronouncing the line aloud:' : 'Udtaletræning: Sig replikken højt:')}</span></div>
                                 <div class="speech-audio-btns">
                                     <button type="button" class="speech-btn normal" id="speech-play-normal">
-                                        <span>🔊</span> <span>${isEn ? 'Normal speed' : 'Normal udtale'}</span>
+                                        <span>${SVG_AUDIO}</span> <span>${isEn ? 'Normal speed' : 'Normal udtale'}</span>
                                     </button>
                                     <button type="button" class="speech-btn slow" id="speech-play-slow">
-                                        <span>🐢</span> <span>${isEn ? 'Slowly (0.75x)' : 'Langsomt (0.75x)'}</span>
+                                        <span>${isEn ? 'Slowly (0.75x)' : 'Langsomt (0.75x)'}</span>
                                     </button>
                                 </div>
                             </div>
                             <button type="button" class="hc-challenge-continue-btn" id="cloze-continue-btn">
-                                <span>🗣️ ${isEn ? 'I said it aloud – Continue ➔' : 'Jeg har udtalt replikken – Fortsæt ➔'}</span>
+                                <span>${isEn ? 'I said it aloud – Continue →' : 'Jeg har udtalt replikken – Fortsæt →'}</span>
                             </button>
                         `;
 
@@ -1133,13 +1150,13 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             headerEl.className = 'hc-flow-header-row';
             headerEl.innerHTML = `
                 <div class="hc-flow-progress-info">
-                    <span class="hc-flow-step-badge">📜 ${isEn ? `Sentence ${currentProgress} of ${totalLines}` : `Sætning ${currentProgress} af ${totalLines}`}</span>
+                    <span class="hc-flow-step-badge">${isEn ? `Sentence ${currentProgress} of ${totalLines}` : `Sætning ${currentProgress} af ${totalLines}`}</span>
                     <div class="hc-flow-bar-track">
                         <div class="hc-flow-bar-fill" style="width: ${pct}%;"></div>
                     </div>
                 </div>
                 <button type="button" class="hc-flow-toggle-btn" title="${isAllViewMode ? (isEn ? 'Switch to step-by-step reading' : 'Skift til sætningsvis visning') : (isEn ? 'Show all sentences at once' : 'Vis hele scenens tekst samlet')}">
-                    <span>${isAllViewMode ? '➡️ Sætningsvis' : '📜 Vis samlet tekst'}</span>
+                    <span>${isAllViewMode ? 'Sætningsvis' : 'Vis samlet tekst'}</span>
                 </button>
             `;
             headerEl.querySelector('.hc-flow-toggle-btn').onclick = () => {
@@ -1163,11 +1180,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 speakerHeader.className = 'hc-speaker-header';
                 speakerHeader.innerHTML = `
                     <span class="hc-speaker-badge">
-                        <span>${line.speakerIcon || '💬'}</span>
                         <span>${line.speaker}:</span>
                     </span>
                     <button type="button" class="hc-speaker-audio-btn" title="${isEn ? 'Listen to line' : 'Lyt til replik'}">
-                        <span>🔊</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                        <span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
                     </button>
                 `;
                 const isChallengeSolved = solvedChallenges[i] === true;
@@ -1277,8 +1293,8 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         const solvedPill = document.createElement('div');
                         solvedPill.className = 'hc-challenge-solved-badge';
                         solvedPill.innerHTML = `
-                            <span>👑</span>
-                            <span>${line.challenge.title} – Gennemført! ✅</span>
+                            <span>${SVG_CHECK}</span>
+                            <span>${stripEmojis(line.challenge.title)} – Gennemført!</span>
                         `;
                         lineEl.appendChild(solvedPill);
                     }
@@ -1304,7 +1320,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     nextBtn.disabled = hasUnsolvedChallenge;
                     nextBtn.innerHTML = `
                         <span>${isEn ? 'I understand this sentence – Next' : 'Jeg forstår sætningen – Næste sætning'}</span>
-                        <span>➔</span>
+                        <span>→</span>
                     `;
                     nextBtn.onclick = () => {
                         nextBtn.classList.remove('glow-yellow');
@@ -1325,12 +1341,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     const compCard = document.createElement('div');
                     compCard.className = 'hc-flow-completion-card';
                     compCard.innerHTML = `
-                        <div class="completion-icon">🎉</div>
+                        <div class="completion-icon">${SVG_CHECK}</div>
                         <h4>${isEn ? 'Scene completed!' : 'Hele scenen er læst og forstået!'}</h4>
                         <p>${isEn ? 'Great job! You have read all sentences in this scene. All exercises are now 100% unlocked below ↓' : 'Flot klaret! Du har læst alle sætninger i denne scene. Alle opgaver er nu 100% åbne nedenfor ↓'}</p>
                         <div class="completion-actions">
                             <button type="button" class="hc-restart-flow-btn">
-                                <span>🔄</span> <span>${isEn ? 'Read scene again' : 'Læs scenen forfra'}</span>
+                                <span>${SVG_RESET}</span> <span>${isEn ? 'Read scene again' : 'Læs scenen forfra'}</span>
                             </button>
                         </div>
                     `;
@@ -1389,7 +1405,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         header.innerHTML = `
             <h3>${section.chapter}</h3>
             <button class="section-audio-btn" title="${isEn ? 'Listen to this section' : 'Lyt til dette afsnit'}">
-                <span>🔊</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                <span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
             </button>
         `;
         header.querySelector('.section-audio-btn').onclick = () => {
@@ -1443,41 +1459,14 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             }
             card.appendChild(vrimmelStage);
 
-            // Grammar Legend
-            legendBar = document.createElement('div');
-            legendBar.className = 'hc-grammar-legend';
-            legendBar.innerHTML = `
-                <span class="hc-legend-item" data-cat="substantiver" style="color: #4ade80;"><span class="hc-legend-dot" style="background:#22c55e;"></span> 🟢 Substantiv</span>
-                <span class="hc-legend-item" data-cat="verber" style="color: #f87171;"><span class="hc-legend-dot" style="background:#ef4444;"></span> 🔴 Verbum</span>
-                <span class="hc-legend-item" data-cat="adjektiver" style="color: #fb923c;"><span class="hc-legend-dot" style="background:#f97316;"></span> 🟠 Adjektiv</span>
-                <span class="hc-legend-item" data-cat="adverbier" style="color: #38bdf8;"><span class="hc-legend-dot" style="background:#38bdf8;"></span> 🔵 Adverbium</span>
-                <span class="hc-legend-item" data-cat="konjunktioner" style="color: #c084fc;"><span class="hc-legend-dot" style="background:#a855f7;"></span> 🟣 Konjunktion</span>
-                <span class="hc-legend-item" data-cat="praepositioner" style="color: #fde047;"><span class="hc-legend-dot" style="background:#eab308;"></span> 🟡 Præposition</span>
-                <span class="hc-legend-item" data-cat="pronominer" style="color: #f472b6;"><span class="hc-legend-dot" style="background:#ec4899;"></span> 💗 Pronomen</span>
-                <div class="hc-legend-hint">👆 ${isEn ? 'Tap a word class to highlight it in the text, or tap words for grammar and audio.' : 'Tryk på en ordklasse for at tone den frem i teksten, eller tryk på et ord for ordbog og udtale.'}</div>
-            `;
-            legendBar.querySelectorAll('.hc-legend-item').forEach(it => {
-                it.onclick = () => {
-                    const catKey = it.dataset.cat;
-                    if (card.dataset.activeHighlight === catKey) {
-                        setHighlight('none');
-                    } else {
-                        setHighlight(catKey);
-                        if (tasksEl && tasksEl.switchCategory) {
-                            tasksEl.switchCategory(catKey);
-                        }
-                    }
-                };
-            });
-            card.appendChild(legendBar);
-        }
+            }
 
         // 2. Render "Teksten" heading & text body (lige under vrimlebilledet)
         const textHeading = document.createElement('div');
         textHeading.className = 'hc-text-heading';
         textHeading.innerHTML = `
             <div class="hc-text-badge-row">
-                <span class="hc-text-badge">📖 Teksten</span>
+                <span class="hc-text-badge">Teksten</span>
                 <h4 class="hc-text-title">${section.chapter}</h4>
             </div>
             <p class="hc-text-hint">${isEn ? 'Read the dialogue sentence by sentence, master the key lines, and tap any word to inspect its grammar:' : 'Læs replikkerne sætning for sætning, løs Mesterens replik undervejs og tryk på ordene for bøjning og ordbogsopslag:'}</p>
@@ -1487,7 +1476,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
-        // 3. Render Interactive Tasks for Scene (Opgaver til scenen 🎯 - under teksten)
+        // 3. Render Interactive Tasks for Scene (Opgaver til scenen - under teksten)
         let flowEl = null;
         let tasksEl = null;
 
@@ -1619,7 +1608,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     type: 'verb',
                     badge: 'Udsagnsord',
                     badgeColor: '#ef4444',
-                    icon: '🔴',
+                    icon: '',
                     forms: `Nutid: ${vEntry.nutid || ''} | Datid: ${vEntry.datid || ''}`,
                     meaning: vEntry.da?.meaning || `Udsagnsord: Angiver en handling eller tilstand.`,
                     sentence: sentenceContext || vEntry.da?.sentence || '',
@@ -1636,7 +1625,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 type: 'verb',
                 badge: 'Udsagnsord',
                 badgeColor: '#ef4444',
-                icon: '🔴',
+                icon: '',
                 meaning: `Udsagnsord: Sætningens handling eller drivkraft.`,
                 sentence: sentenceContext,
                 translations: { en: verbKey }
@@ -1664,7 +1653,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     type: 'adjective',
                     badge: 'Tillægsord',
                     badgeColor: '#f97316',
-                    icon: '🟠',
+                    icon: '',
                     forms: `Fælleskøn: en ${adjKey} | Intetkøn: et ${adjKey}t | Flertal: ${adjKey}e`,
                     meaning: aEntry.da?.meaning || `Adjektiv: Beskriver en egenskab eller tilstand.`,
                     sentence: sentenceContext || aEntry.da?.sentence || '',
@@ -1681,7 +1670,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 type: 'adjective',
                 badge: 'Tillægsord',
                 badgeColor: '#f97316',
-                icon: '🟠',
+                icon: '',
                 meaning: `Tillægsord: Beskriver substantivet i sætningen.`,
                 sentence: sentenceContext,
                 translations: { en: adjKey }
@@ -1714,7 +1703,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     type: 'adverb',
                     badge: 'Biord',
                     badgeColor: '#38bdf8',
-                    icon: '🔵',
+                    icon: '',
                     meaning: matchedEntry.da?.meaning || `Adverbium: Angiver tid, sted, måde, grad eller holdning.`,
                     sentence: sentenceContext || matchedEntry.da?.sentence || '',
                     translations: transMap
@@ -1730,7 +1719,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 type: 'adverb',
                 badge: 'Biord',
                 badgeColor: '#38bdf8',
-                icon: '🔵',
+                icon: '',
                 meaning: `Adverbium (biord): Justerer verbet, adjektivet eller hele sætningen.`,
                 sentence: sentenceContext,
                 translations: { en: advKey }
@@ -1763,7 +1752,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     type: 'conjunction',
                     badge: 'Bindeord',
                     badgeColor: '#a855f7',
-                    icon: '🟣',
+                    icon: '',
                     meaning: matchedEntry.da?.meaning || `Konjunktion: Binder ord eller sætninger sammen.`,
                     sentence: sentenceContext || matchedEntry.da?.sentence || '',
                     translations: transMap
@@ -1779,7 +1768,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 type: 'conjunction',
                 badge: 'Bindeord',
                 badgeColor: '#a855f7',
-                icon: '🟣',
+                icon: '',
                 meaning: `Konjunktion: Forbinder sætningsled eller sætninger.`,
                 sentence: sentenceContext,
                 translations: { en: konjKey }
@@ -1844,21 +1833,21 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         overlay.innerHTML = `
             <div class="hc-prep-modal">
                 <div class="hc-prep-header">
-                    <span class="hc-prep-badge">🟡 Præposition (Forholdsord)</span>
+                    <span class="hc-prep-badge">Præposition (Forholdsord)</span>
                     <button class="hc-prep-close" id="hc-prep-close-btn">✕</button>
                 </div>
                 <div class="hc-prep-body">
                     <div class="hc-prep-title-row">
                         <h2 class="hc-prep-word">${cleanWord}</h2>
                         <button class="hc-prep-tts-btn" id="hc-prep-tts">
-                            <span>🔊</span> Lyt
+                            <span>${SVG_AUDIO}</span> Lyt
                         </button>
                     </div>
                     <p class="hc-prep-desc">${isEn ? info.descEn : info.desc}</p>
                     <div class="hc-prep-sentence">
-                        💬 "${sentenceContext || info.example}"
+                        "${sentenceContext || info.example}"
                     </div>
-                    <button class="hc-prep-ok-btn" id="hc-prep-ok">Forstået ➔</button>
+                    <button class="hc-prep-ok-btn" id="hc-prep-ok">Forstået →</button>
                 </div>
             </div>
         `;
@@ -1899,7 +1888,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 <button class="tooltip-close">✕</button>
             </div>
             <div class="tooltip-da">${match.meaningDa}</div>
-            <div class="tooltip-en">🇬🇧 ${match.meaningEn}</div>
+            <div class="tooltip-en">EN: ${match.meaningEn}</div>
         `;
 
         tip.querySelector('.tooltip-close').onclick = (e) => {
@@ -1923,7 +1912,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         quizCard.className = 'hc-quiz-card';
         quizCard.innerHTML = `
             <div class="quiz-header">
-                <span class="quiz-icon">🎯</span>
+                
                 <div>
                     <h3>${isEn ? 'Comprehension Quiz' : 'Forståelsestjek: Forstod du eventyret?'}</h3>
                     <p class="quiz-sub">${isEn ? 'Answer the questions to test your reading comprehension:' : 'Svar på de 3 spørgsmål og se, hvor meget du forstod:'}</p>
@@ -1979,10 +1968,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     if (isCorrect) {
                         score++;
                         feedbackRow.className = 'quiz-feedback-row success';
-                        feedbackRow.innerHTML = `✅ <strong>${isEn ? 'Correct!' : 'Rigtigt!'}</strong> ${qItem.explanation}`;
+                        feedbackRow.innerHTML = `<span style="margin-right:0.35rem;">${SVG_CHECK}</span> <strong>${isEn ? 'Correct!' : 'Rigtigt!'}</strong> ${qItem.explanation}`;
                     } else {
                         feedbackRow.className = 'quiz-feedback-row error';
-                        feedbackRow.innerHTML = `❌ <strong>${isEn ? 'Not quite right.' : 'Ikke helt.'}</strong> ${qItem.explanation}`;
+                        feedbackRow.innerHTML = `<span style="margin-right:0.35rem;">${SVG_CROSS}</span> <strong>${isEn ? 'Not quite right.' : 'Ikke helt.'}</strong> ${qItem.explanation}`;
                     }
 
                     if (answeredQuestions.size === quizItems.length) {
@@ -2006,14 +1995,14 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             if (score === quizItems.length) {
                 scoreBanner.className = 'quiz-score-banner perfect';
                 scoreBanner.innerHTML = `
-                    <div class="score-icon">🌟🎉</div>
+                    <div class="score-icon">${SVG_CHECK}</div>
                     <div class="score-title">${isEn ? 'Outstanding!' : 'Perfekt klaret!'}</div>
                     <div class="score-desc">${isEn ? `You got all ${quizItems.length} questions right!` : `Du svarede rigtigt på alle ${quizItems.length} spørgsmål!`}</div>
                 `;
             } else {
                 scoreBanner.className = 'quiz-score-banner good';
                 scoreBanner.innerHTML = `
-                    <div class="score-icon">👏</div>
+                    <div class="score-icon">${SVG_CHECK}</div>
                     <div class="score-title">${isEn ? 'Good job!' : 'Godt læst!'}</div>
                     <div class="score-desc">${isEn ? `You scored ${score} out of ${quizItems.length}.` : `Du fik ${score} ud af ${quizItems.length} rigtige.`}</div>
                 `;
@@ -2039,7 +2028,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         heroCard.className = 'hc-talemaader-hero-card';
         heroCard.innerHTML = `
             <div class="hero-top-row">
-                <span class="hero-badge">🎭 ${isEn ? 'Optional Challenge • Advanced (B1/B2)' : 'Valgfri udfordring • For avancerede kursister (B1/B2)'}</span>
+                <span class="hero-badge">${isEn ? 'Optional Challenge • Advanced (B1/B2)' : 'Valgfri udfordring • For avancerede kursister (B1/B2)'}</span>
                 <button type="button" class="hero-back-story-btn">
                     ← ${isEn ? 'Back to Story' : 'Tilbage til eventyret'}
                 </button>
@@ -2048,11 +2037,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             <p class="hero-desc">${isEn ? challenge.descEn || challenge.desc : challenge.desc}</p>
             <div class="hero-stats-row">
                 <div class="hero-stat-pill">
-                    <span>💡</span>
-                    <span>${isEn ? `${challenge.items.length} Idioms from the scenes` : `${challenge.items.length} talemåder fra scenerne`}</span>
+                    <span>${SVG_INFO}</span> <span>${isEn ? `${challenge.items.length} Idioms from the scenes` : `${challenge.items.length} talemåder fra scenerne`}</span>
                 </div>
                 <div class="hero-stat-pill">
-                    <span>📚</span>
                     <span>${isEn ? 'Linked to »Everyday Life Idioms«' : 'Koblet til »Livets omveje«'}</span>
                 </div>
             </div>
@@ -2115,18 +2102,15 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             card.innerHTML = `
                 <div class="item-header">
                     <div class="item-scene-pill">
-                        <span>🎬</span>
                         <span>${isEn ? item.sceneTitleEn || item.sceneTitle : item.sceneTitle}</span>
                     </div>
                     <div class="item-idiom-badge">
-                        <span>${item.idiomIcon || '🎭'}</span>
                         <strong>»${item.idiom}«</strong>
                     </div>
                 </div>
 
                 <div class="item-context-box">
                     <div class="context-label">
-                        <span>📖</span>
                         <span>${isEn ? 'Situation in the fairy tale:' : 'Situationen i eventyret:'}</span>
                     </div>
                     <p class="context-quote">»${isEn ? item.sceneContextEn || item.sceneContext : item.sceneContext}«</p>
@@ -2134,12 +2118,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
                 <div class="item-prompt-row">
                     <div class="item-prompt-question">
-                        <span>❓</span>
                         <strong>${isEn ? item.questionEn || item.question : item.question}</strong>
                     </div>
                     <button type="button" class="item-listen-btn" title="Hør talemåden">
-                        <span>🔊</span>
-                        <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                        <span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
                     </button>
                 </div>
 
@@ -2190,11 +2172,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         feedbackBox.style.display = 'block';
                         feedbackBox.className = 'item-feedback-box correct';
                         feedbackBox.innerHTML = `
-                            <div class="feedback-badge">✅ ${isEn ? 'Correct!' : 'Helt rigtigt!'}</div>
+                            <div class="feedback-badge"><span style="margin-right:0.35rem;">${SVG_CHECK}</span> ${isEn ? 'Correct!' : 'Helt rigtigt!'}</div>
                             <p class="feedback-explanation">${item.explanation}</p>
                             <div class="feedback-package-card">
                                 <div class="pkg-card-left">
-                                    <div class="pkg-card-icon">💡</div>
+                                    <div class="pkg-card-icon">${SVG_INFO}</div>
                                     <div>
                                         <div class="pkg-card-title">${isEn ? 'Want to practice this idiom and see the illustration?' : 'Vil du træne denne talemåde og se illustrationen?'}</div>
                                         <div class="pkg-card-sub">${isEn ? `Module: »${item.moduleName}« in ${item.packageName}` : `Modul: »${item.moduleName}« i ${item.packageName}`}</div>
@@ -2202,7 +2184,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                                 </div>
                                 <button type="button" class="pkg-card-action-btn">
                                     <span>${isEn ? `Open »${item.packageName}«` : `Gå til »${item.packageName}«`}</span>
-                                    <span>➔</span>
+                                    <span>→</span>
                                 </button>
                             </div>
                         `;
@@ -2220,7 +2202,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         feedbackBox.style.display = 'block';
                         feedbackBox.className = 'item-feedback-box wrong';
                         feedbackBox.innerHTML = `
-                            <div class="feedback-badge">❌ ${isEn ? 'Not quite right.' : 'Ikke helt rigtigt.'}</div>
+                            <div class="feedback-badge"><span style="margin-right:0.35rem;">${SVG_CROSS}</span> ${isEn ? 'Not quite right.' : 'Ikke helt rigtigt.'}</div>
                             <p class="feedback-explanation">${isEn ? 'That is a literal misunderstanding or another meaning. Try again!' : 'Det er den bogstavelige forståelse eller en anden betydning. Prøv en af de andre muligheder!'}</p>
                         `;
                     }
@@ -2237,7 +2219,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         celebrationBanner.className = 'hc-talemaader-celebration-banner';
         celebrationBanner.style.display = 'none';
         celebrationBanner.innerHTML = `
-            <div class="celebration-icon">🎉 🏆 🌟</div>
+            <div class="celebration-icon">${SVG_CHECK}</div>
             <h2 class="celebration-title">${isEn ? 'Outstanding! You mastered the fairy tale idioms!' : 'Fantastisk! Du har mestret eventyrets talemåder!'}</h2>
             <p class="celebration-desc">
                 ${isEn 
@@ -2251,7 +2233,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 </button>
                 <button type="button" class="celebration-btn primary" id="celebration-talemaader-btn">
                     <span>${isEn ? 'Explore all idioms in »Livets omveje«' : 'Udforsk alle talemåder i »Livets omveje«'}</span>
-                    <span>➔</span>
+                    <span>→</span>
                 </button>
             </div>
         `;
@@ -2297,9 +2279,9 @@ function renderComingSoonView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'hc-hero-card';
     hero.innerHTML = `
-        <div id="hc-coming-soon-castle" style="font-size: 4rem; margin-bottom: 0.8rem; cursor: pointer; user-select: none;">🏰</div>
+        <div id="hc-coming-soon-castle" style="font-size: 3rem; margin-bottom: 0.8rem; cursor: pointer; user-select: none;">${SVG_BOOK}</div>
         <div class="hc-hero-badge" style="margin-bottom: 1.2rem;">
-            🚧 ${isEn ? 'Under Development · Coming Soon' : 'Under udvikling · Kommer snart'}
+            ${isEn ? 'Under Development · Coming Soon' : 'Under udvikling · Kommer snart'}
         </div>
         <h1 style="font-size: 2.3rem; font-weight: 800; margin: 0 0 1rem; color: #f8fafc;">
             H.C. Andersens Eventyr
@@ -2334,7 +2316,7 @@ function renderComingSoonView(container, navigateFn, extraData = {}) {
         tapTimer = setTimeout(() => { tapCount = 0; }, 2000);
         if (tapCount >= 5) {
             setHCDevMode(true);
-            alert(isEn ? '🔓 Developer mode activated!' : '🔓 Udviklertilstand aktiveret!');
+            alert(isEn ? 'Developer mode activated!' : 'Udviklertilstand aktiveret!');
             renderHCAndersenView(container, navigateFn, { ...extraData, dev: 'true' });
         }
     };

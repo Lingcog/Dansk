@@ -615,7 +615,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             id: 'l_vs_n',
             titleDa: 'L vs. N',
             titleZh: '边音 /l/ 与鼻音 /n/',
-            badge: 'Sydøstlig kerneudfordring',
+            badge: '重点攻关模块',
             status: 'active',
             descDa: 'I mange sydkinesiske dialekter forveksles eller sammenfalder /l/ og /n/. På dansk er forskellen afgørende: "læse" vs. "næse", "lys" vs. "nys".',
             descZh: '在许多南方汉语方言（粤语、西南官话、闽南语、吴语等）中，/l/ 与 /n/ 常常混淆甚至合并（蓝/男不分）。丹麦语中两者是绝对区别意义的音位。'
@@ -624,7 +624,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             id: 'bloedt_d',
             titleDa: 'Blødt d [ð]',
             titleZh: '软 d [ð] 发音',
-            badge: 'Kommer snart',
+            badge: '即将推出',
             status: 'upcoming',
             descDa: 'Det bløde danske d som i "brød" og "mad" findes ikke i kinesisk og forveksles ofte med [l] eller [j].',
             descZh: '丹麦语软 d [ð]（如 brød, mad）在汉语中完全缺失，常被误读为 l 或 y。'
@@ -633,7 +633,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             id: 'dansk_r',
             titleDa: 'Dansk r [ʁ]',
             titleZh: '小舌擦音 r [ʁ]',
-            badge: 'Kommer snart',
+            badge: '即将推出',
             status: 'upcoming',
             descDa: 'Det danske r udtales dybt nede i svælget (drøblen), modsat det kinesiske r (rén) som er retrofleks forrest i munden.',
             descZh: '丹麦语 r 发音部位在咽腔深处的小舌，而汉语拼音 r 则是舌尖卷舌音。'
@@ -642,7 +642,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             id: 'udlyd',
             titleDa: 'Udlyd (-st, -lt)',
             titleZh: '词尾辅音群',
-            badge: 'Kommer snart',
+            badge: '即将推出',
             status: 'upcoming',
             descDa: 'Kinesiske stavelser slutter kun på vokaler, -n eller -ng. Danske konsonantsammenstød i slutningen af ord (kold, koldt, fast) kræver særskilt træning.',
             descZh: '汉语仅有 -n 和 -ng 词尾，丹麦语丰富的词尾辅音群（-lt, -st, -kt）易被吞音或多加元音。'
@@ -799,7 +799,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 
                 <!-- Alveolar Ridge Touch Target Highlight -->
                 <circle cx="236" cy="100" r="6" fill="#facc15" stroke="#fef08a" stroke-width="1.5"/>
-                <text x="236" y="85" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">Tandkødsrand</text>
+                <text x="236" y="85" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">上齿龈 (Tandkødsrand)</text>
 
                 <!-- Upper Incisors (Overfortænder) -->
                 <rect x="250" y="112" width="6" height="15" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
@@ -815,7 +815,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                 <!-- Nasal Cavity (Næsehulen) -->
                 <path d="M 205 70 C 240 60, 260 70, 285 115" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="3,3"/>
-                <text x="235" y="55" fill="#64748b" font-size="10" text-anchor="middle">Næsehule (鼻腔)</text>
+                <text x="235" y="55" fill="#64748b" font-size="10" text-anchor="middle">鼻腔通路 (Næsehule)</text>
 
                 <!-- Velum / Soft Palate (Ganesejlet) -->
                 <path d="${velumPath}" fill="${isL ? '#38bdf8' : '#f472b6'}" stroke="#f8fafc" stroke-width="1.5"/>
@@ -830,31 +830,31 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <circle cx="206" cy="143" r="5" fill="#ef4444"/>
                     <line x1="202" y1="139" x2="210" y2="147" stroke="#ffffff" stroke-width="1.8"/>
                     <line x1="210" y1="139" x2="202" y2="147" stroke="#ffffff" stroke-width="1.8"/>
-                    <text x="170" y="148" fill="#f87171" font-size="9" font-weight="bold" text-anchor="end">Lukket til næsen!</text>
+                    <text x="170" y="148" fill="#f87171" font-size="9" font-weight="bold" text-anchor="end">软腭封闭鼻腔通道!</text>
 
                     <!-- Blue Oral Airflow Path -->
                     <path d="M 175 250 C 180 200, 195 180, 220 165 C 240 155, 275 165, 305 168" 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowL)"/>
-                    <text x="280" y="195" fill="#38bdf8" font-size="11" font-weight="bold">Oral luftstrøm ➔</text>
-                    <text x="280" y="208" fill="#94a3b8" font-size="9">100% ud af munden</text>
+                    <text x="280" y="195" fill="#38bdf8" font-size="11" font-weight="bold">口腔侧向气流 ➔</text>
+                    <text x="280" y="208" fill="#94a3b8" font-size="9">100% 经口腔两侧流出</text>
                 ` : `
                     <!-- N-AIRFLOW: Mouth is sealed, air diverted through the nose! -->
                     <!-- Oral Closure Barrier -->
                     <path d="M 226 102 C 235 98, 250 98, 256 108" fill="none" stroke="#ef4444" stroke-width="4"/>
-                    <text x="285" y="145" fill="#f87171" font-size="9.5" font-weight="bold" text-anchor="middle">Mundspærring! ⛔</text>
+                    <text x="285" y="145" fill="#f87171" font-size="9.5" font-weight="bold" text-anchor="middle">口腔前方封闭 ⛔</text>
 
                     <!-- Pink Nasal Airflow Path -->
                     <path d="M 175 250 C 180 190, 185 140, 195 110 C 205 75, 245 70, 290 120" 
                           fill="none" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowN)"/>
-                    <text x="270" y="45" fill="#f472b6" font-size="11" font-weight="bold">Nasal luftstrøm ➔</text>
-                    <text x="270" y="58" fill="#94a3b8" font-size="9">Al luft ud af næsen</text>
+                    <text x="270" y="45" fill="#f472b6" font-size="11" font-weight="bold">鼻腔共鸣气流 ➔</text>
+                    <text x="270" y="58" fill="#94a3b8" font-size="9">全部气流进入鼻腔共鸣</text>
                 `}
 
                 <!-- Footnote / Mode Pill in SVG -->
                 <rect x="15" y="15" width="105" height="24" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${primaryColor}" stroke-width="1.2"/>
-                <text x="67" y="31" fill="${primaryColor}" font-size="11" font-weight="900" text-anchor="middle">${isL ? '🌊 Lyden [l]' : '🌸 Lyden [n]'}</text>
+                <text x="67" y="31" fill="${primaryColor}" font-size="11" font-weight="900" text-anchor="middle">${isL ? '🌊 边音 [l]' : '🌸 鼻音 [n]'}</text>
             </svg>
         `;
     }
@@ -921,7 +921,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                     <!-- Single Center Contact Point (Kun berøring i midten!) -->
                     <circle cx="180" cy="56" r="6" fill="#facc15" stroke="#ffffff" stroke-width="2"/>
-                    <text x="180" y="44" fill="#facc15" font-size="10" font-weight="900" text-anchor="middle">1 Berøringspunkt i midten</text>
+                    <text x="180" y="44" fill="#facc15" font-size="10" font-weight="900" text-anchor="middle">中央接触点 (舌尖轻触齿龈)</text>
 
                     <!-- Lateral Gap Highlight: Siderne er nede! -->
                     <!-- Left Lateral Channel (Venstre luftkanal) -->
@@ -934,13 +934,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="6,3" 
                           filter="url(#glowLateral)" marker-end="url(#arrowLat)"/>
 
-                    <text x="80" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="end">Venstre slip ➔</text>
-                    <text x="280" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="start">➔ Højre slip</text>
+                    <text x="80" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="end">左侧通气 ➔</text>
+                    <text x="280" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="start">➔ 右侧通气</text>
 
                     <!-- Bottom explanation -->
                     <rect x="25" y="245" width="310" height="42" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
                     <text x="180" y="262" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">LATERALT LUFTSLIP (边音 / 侧向气流)</text>
-                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">Tungens sider trækkes ned fra kindtænderne. Luften suser ud i siderne.</text>
+                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">舌头两侧主动下沉，离开大牙。气流顺畅从两侧流出。</text>
                 ` : `
                     <!-- TONGUE FOR /n/: Wide tongue forming an airtight U-seal along the entire alveolar front! -->
                     <path d="M 125 240 C 130 180, 138 90, 180 56 C 222 90, 230 180, 235 240 Z" 
@@ -954,16 +954,16 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <circle cx="152" cy="68" r="5" fill="#ef4444"/>
                     <circle cx="208" cy="68" r="5" fill="#ef4444"/>
 
-                    <text x="180" y="38" fill="#f87171" font-size="10" font-weight="900" text-anchor="middle">KOMPLET FORSEGLET TANDBUE ⛔</text>
+                    <text x="180" y="38" fill="#f87171" font-size="10" font-weight="900" text-anchor="middle">牙弓马蹄形气密闭锁 ⛔</text>
 
                     <!-- Red Blocked Signs at sides -->
-                    <text x="80" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="end">Lukket tæt ⛔</text>
-                    <text x="280" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="start">⛔ Lukket tæt</text>
+                    <text x="80" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="end">完全密封 ⛔</text>
+                    <text x="280" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="start">⛔ 完全密封</text>
 
                     <!-- Bottom explanation -->
                     <rect x="25" y="245" width="310" height="42" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
                     <text x="180" y="262" fill="#f472b6" font-size="11" font-weight="bold" text-anchor="middle">KOMPLET MUNDLUKKE (鼻音 / 口腔完全封闭)</text>
-                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">Ingen luft kan slippe ud i munden. 100% af luften presses op i næsehulen.</text>
+                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">口腔毫无漏气空间。100% 气流被逼入鼻腔震颤发声。</text>
                 `}
             </svg>
         `;
@@ -979,10 +979,10 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         topBar.className = 'vlk-top-bar';
         topBar.innerHTML = `
             <button type="button" class="vlk-back-btn" id="vlk-back">
-                ← ${isEn ? 'Back to Language Comparison' : 'Tilbage til Mit sprog sammenlignet'}
+                ← 返回母语对比 (Tilbage til Mit sprog)
             </button>
             <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 700;">
-                🇨🇳 Kinesisk fonetik • Lydcenter
+                🇨🇳 中文语音中心 · 难点发音专项
             </div>
         `;
         topBar.querySelector('#vlk-back').onclick = () => {
@@ -994,14 +994,11 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         const hero = document.createElement('div');
         hero.className = 'vlk-hero';
         hero.innerHTML = `
-            <div class="vlk-hero-badge">Fonetisk Specialistmodul • Trin 2 (Fon)</div>
-            <h1 class="vlk-hero-title">Vanskelige lyde for kinesere: L vs. N</h1>
-            <div class="vlk-hero-subtitle">侧音 /l/ 与鼻音 /n/ 发音对比与辨音训练 (Lateral vs. Nasal)</div>
+            <div class="vlk-hero-badge">语音专项模块 • 第2级：音素 (Fon)</div>
+            <h1 class="vlk-hero-title">中国学习者难点发音：边音 /l/ vs. 鼻音 /n/</h1>
+            <div class="vlk-hero-subtitle">侧音 /l/ 与鼻音 /n/ 发音对比、辨音与跟读口语训练 (Lateral vs. Nasal)</div>
             <p class="vlk-hero-desc">
-                ${isEn 
-                    ? 'In many Southern Chinese dialects, /l/ and /n/ are merged or allophonic. In Danish, they distinguish crucial minimal pairs like "læse" vs. "næse" and "lys" vs. "nys". Explore the mouth anatomy, lateral airflow diagrams, listening quiz, and speech recognition practice below.'
-                    : 'I mange syd- og sydøstkinesiske dialekter forveksles eller sammenfalder L og N. På dansk adskiller de helt afgørende ordpar som <em>læse</em> over for <em>næse</em> og <em>lys</em> over for <em>nys</em>. Her lærer du den præcise tungestilling, ser luftstrømmen fra to vinkler og træner direkte med mikrofonen.'
-                }
+                在许多南方方言（西南官话、粤语、吴语、闽南语等）中，/l/ 与 /n/ 常常混淆甚至合为一音（蓝/男不分）。但在丹麦语中，这两者是严格区分词义的核心音位，例如“阅读 (læse)”与“鼻子 (næse)”，“光 (lys)”与“喷嚏 (nys)”。本页面提供器官剖面矢量图解、侧向气流俯视图、捏鼻自检法、最小对立体听音测试以及高精度三词口语训练。
             </p>
         `;
         viewContainer.appendChild(hero);
@@ -1033,13 +1030,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         mainTabs.className = 'vlk-main-tabs';
         mainTabs.innerHTML = `
             <button type="button" class="vlk-tab-btn ${activeTab === 'diagram' ? 'active' : ''}" data-tab="diagram">
-                🔬 1. Anatomi & munddiagrammer
+                🔬 1. 发音器官与气流图解 (解剖图)
             </button>
             <button type="button" class="vlk-tab-btn ${activeTab === 'listening' ? 'active' : ''}" data-tab="listening">
-                🎧 2. Lytte-test (Hør forskellen)
+                🎧 2. 听音辨析测试 (对立体辨音)
             </button>
             <button type="button" class="vlk-tab-btn ${activeTab === 'speech' ? 'active' : ''}" data-tab="speech">
-                🎙️ 3. Udtaletræning (Mikrofon)
+                🎙️ 3. 麦克风口语练习 (三词跟读)
             </button>
         `;
         mainTabs.querySelectorAll('.vlk-tab-btn').forEach(btn => {
@@ -1071,14 +1068,14 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         controls.className = 'vlk-diag-controls';
         controls.innerHTML = `
             <div style="font-weight: 800; font-size: 0.9rem; color: #f8fafc;">
-                Vælg lyd at undersøge:
+                选择要探索的发音：
             </div>
             <div class="vlk-sound-toggle-group">
                 <button type="button" class="vlk-toggle-btn ${activeSoundTarget === 'l' ? 'active-l' : ''}" id="toggle-l">
-                    🌊 Lyden L /l/ (Lateral • 边音)
+                    🌊 边音 L /l/ (侧音 • Lateral)
                 </button>
                 <button type="button" class="vlk-toggle-btn ${activeSoundTarget === 'n' ? 'active-n' : ''}" id="toggle-n">
-                    🌸 Lyden N /n/ (Nasal • 鼻音)
+                    🌸 鼻音 N /n/ (鼻音 • Nasal)
                 </button>
             </div>
         `;
@@ -1101,9 +1098,9 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         card1.className = 'vlk-diagram-card';
         card1.innerHTML = `
             <div class="vlk-diag-header">
-                <div class="vlk-diag-title">Vinkel 1: Profil (Sagittal-snit)</div>
+                <div class="vlk-diag-title">视角 1: 侧面剖面图 (矢状面)</div>
                 <div class="vlk-diag-tag" style="background:${activeSoundTarget === 'l' ? 'rgba(56,189,248,0.2)' : 'rgba(244,114,182,0.2)'}; color:${activeSoundTarget === 'l' ? '#38bdf8' : '#f472b6'};">
-                    ${activeSoundTarget === 'l' ? 'Lukket til næsen' : 'Åbent til næsen'}
+                    ${activeSoundTarget === 'l' ? '软腭升起 • 封闭鼻腔' : '软腭下垂 • 开放鼻腔'}
                 </div>
             </div>
             <div class="vlk-diag-svg-wrap">
@@ -1111,11 +1108,11 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             </div>
             <div class="vlk-diag-notes">
                 ${activeSoundTarget === 'l' ? `
-                    <strong>Hvorfor lyder det sådan?</strong><br>
-                    Tungespidsen rører tandkødsranden i midten, men <strong>ganesejlet er hævet</strong> og spærrer for næsen. Luften må derfor ud gennem munden.
+                    <strong>发音原理 (Why):</strong><br>
+                    舌尖轻触上齿龈中央，但<strong>软腭升起</strong>并紧贴咽后壁，彻底阻断鼻腔通路。所有声波与气流必须100%从口腔两侧流出。
                 ` : `
-                    <strong>Hvorfor lyder det sådan?</strong><br>
-                    Tungen danner en fast barriere i forreste mund. <strong>Ganesejlet er sænket</strong>, så 100% af luften presses op i næsehulen.
+                    <strong>发音原理 (Why):</strong><br>
+                    舌尖与上齿龈前部紧贴形成闭锁屏障。<strong>软腭下垂</strong>，口腔完全受阻，所有声波与气流全部冲向鼻腔引起共鸣。
                 `}
             </div>
         `;
@@ -1126,9 +1123,9 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         card2.className = 'vlk-diagram-card';
         card2.innerHTML = `
             <div class="vlk-diag-header">
-                <div class="vlk-diag-title">Vinkel 2: Tandbue & tunge (Set oppefra)</div>
+                <div class="vlk-diag-title">视角 2: 上齿弓与舌面 (俯视气流通道)</div>
                 <div class="vlk-diag-tag" style="background:${activeSoundTarget === 'l' ? 'rgba(56,189,248,0.2)' : 'rgba(244,114,182,0.2)'}; color:${activeSoundTarget === 'l' ? '#38bdf8' : '#f472b6'};">
-                    ${activeSoundTarget === 'l' ? 'Laterale luftrender' : 'Hermetisk forsegling'}
+                    ${activeSoundTarget === 'l' ? '舌侧双通道敞开' : '马蹄形严密闭锁'}
                 </div>
             </div>
             <div class="vlk-diag-svg-wrap">
@@ -1136,11 +1133,11 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             </div>
             <div class="vlk-diag-notes">
                 ${activeSoundTarget === 'l' ? `
-                    <strong>Det laterale hemmelighed:</strong><br>
-                    Tungens sider trækkes <em>væk</em> fra kindtænderne. De to blå pile viser, hvordan luften slipper frit ud i siderne af munden som to floder!
+                    <strong>侧音的核心奥秘 (Lateral):</strong><br>
+                    舌身两侧自然下垂，<strong>远离上磨牙</strong>。蓝色虚线箭头展示气流如同两条小溪般从舌身两侧与两腮之间顺畅流出！
                 ` : `
-                    <strong>Den nasale prop:</strong><br>
-                    Tungen presses tæt mod hele den forreste tandbue. Ingen luft kan slippe ud i siderne, hvilket tvinger lyden op i næsen.
+                    <strong>鼻音的完全封闭 (Nasal):</strong><br>
+                    舌面紧贴整个上齿弓前沿，严禁气流从嘴角侧面漏出，强行迫使气流全部通过鼻腔振动流出。
                 `}
             </div>
         `;
@@ -1153,22 +1150,22 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         pinchCard.innerHTML = `
             <div class="vlk-pinch-title">
                 <span>👃</span>
-                <span>Det praktiske trick: Næse-klemmetricket (捏鼻快速检验法)</span>
+                <span>实用自检绝招：捏鼻快速测试法 (一秒自检发音部位)</span>
             </div>
             <div class="vlk-pinch-body">
-                Klem let om dine næsebor med pegefinger og tommelfinger, mens du holder en lang tone:
+                用食指和拇指捏紧鼻孔，同时发出持续的长音：
             </div>
             <div class="vlk-pinch-grid">
                 <div class="vlk-pinch-item item-l">
-                    <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">Når du siger "Lllll...":</div>
+                    <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">当你发 "Lllll..." 时：</div>
                     <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                        Lyden <strong>fortsætter fuldstændig uforstyrret</strong>! Fordi luften suser ud i siderne af munden, er det ligegyldigt, at næsen er blokeret.
+                        声音<strong>完全不受任何影响，顺畅持续发出</strong>！因为气流完全从舌头两侧的口腔溜走，鼻孔闭塞对它毫无影响。
                     </div>
                 </div>
                 <div class="vlk-pinch-item item-n">
-                    <div style="font-weight: 800; color: #f472b6; margin-bottom: 0.25rem;">Når du siger "Nnnnn...":</div>
+                    <div style="font-weight: 800; color: #f472b6; margin-bottom: 0.25rem;">当你发 "Nnnnn..." 时：</div>
                     <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                        Lyden <strong>stopper øjeblikkeligt med et smæld</strong>! Fordi munden er spærret, og du nu også lukker næsen, kan luften ikke komme ud.
+                        声音<strong>会瞬间憋闷甚至被迫中断</strong>！因为口腔本来就被舌头封死了，此时再堵住鼻子，空气无路可走，发音立刻停止。
                     </div>
                 </div>
             </div>
@@ -1179,13 +1176,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         const biBox = document.createElement('div');
         biBox.className = 'vlk-bilingual-box';
         biBox.innerHTML = `
-            <div class="vlk-bilingual-title">Fonetisk forklaring på kinesisk (中文发音要领)</div>
+            <div class="vlk-bilingual-title">中文发音核心要诀 (Fonetisk vejledning)</div>
             <div class="vlk-zh-block">
                 <strong>边音 /l/ (丹麦语 L):</strong> 舌尖轻触上齿龈中央，<strong>舌身两侧必须自然下垂，离开上磨牙</strong>。气流由舌头两侧顺畅流出（侧向气流）。软腭升起切断鼻腔通路，发音清脆、无鼻音。<br>
                 <strong>鼻音 /n/ (丹麦语 N):</strong> 舌尖及舌边与整个上齿龈形成<strong>完整闭锁</strong>，口腔通路被完全阻断。软腭下垂，气流必须完全经由鼻腔震动流出，具有明显鼻音。
             </div>
             <div class="vlk-da-block">
-                💡 <em>Huskeregel for danskkursister:</em> Hvis din tunge rører kindtænderne, når du siger "lys" eller "læse", laver du automatisk et /n/! Sørg for luft i kinderne.
+                💡 <em>中国学生自检要点：</em> 说“lys（光）”或“læse（读）”时，如果你的舌侧碰到了大牙（磨牙），就会不由自主发成鼻音 /n/！请务必放松两腮，让风从嘴角两侧吹出来。
             </div>
         `;
         wrap.appendChild(biBox);
@@ -1210,20 +1207,20 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
         quizCard.innerHTML = `
             <div class="vlk-quiz-status-bar">
-                <span>Par ${currentPairIdx + 1} af ${MINIMAL_PAIRS.length}</span>
-                <span>Score: <strong style="color:#fde68a;">${quizScore}</strong> rigtige af ${quizAnswered}</span>
+                <span>第 ${currentPairIdx + 1} 组，共 ${MINIMAL_PAIRS.length} 组</span>
+                <span>得分：<strong style="color:#fde68a;">${quizScore}</strong> / ${quizAnswered} 题正确</span>
             </div>
 
             <div style="font-size: 1.15rem; font-weight: 800; color: #ffffff; margin-bottom: 0.4rem;">
                 Hvilket ord hører du? (你听到的是哪个词？)
             </div>
             <div style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.4rem;">
-                Lyt grundigt til sproglyden: Er det den åbne side-lyd <strong>/l/</strong> eller næselyden <strong>/n/</strong>?
+                仔细倾听：这是舌侧通气的侧音 <strong>/l/</strong> 还是带有鼻腔共鸣的 <strong>/n/</strong>？
             </div>
 
             <button type="button" class="vlk-play-sound-btn" id="vlk-play-quiz">
                 ${SVG_SPEAKER}
-                <span>Lyt til ordet</span>
+                <span>🎧 播放发音</span>
             </button>
 
             <div class="vlk-quiz-options">
@@ -1241,10 +1238,10 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
             <div class="vlk-nav-row">
                 <button type="button" class="vlk-nav-btn" id="prev-quiz" ${currentPairIdx === 0 ? 'disabled' : ''}>
-                    ← Forrige par
+                    ← 上一组单词
                 </button>
                 <button type="button" class="vlk-nav-btn" id="next-quiz" style="background:#0284c7; border-color:#38bdf8;">
-                    Næste par →
+                    下一组单词 →
                 </button>
             </div>
         `;
@@ -1271,8 +1268,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     btn.classList.add('correct');
                     fbEl.className = 'vlk-quiz-feedback show success';
                     fbEl.innerHTML = `
-                        <strong>Flot hørt! ✅</strong> Du hørte rigtigt ordet <strong>"${currentTargetWord}"</strong>.<br>
-                        <span style="font-size:0.85rem; color:#cbd5e1;">${currentTargetWord === pair.l ? 'Dette ord har den åbne /l/-lyd (uden næseklang).' : 'Dette ord har den klangfulde /n/-lyd (med nasal vibration).'}</span>
+                        <strong>听力极佳！✅</strong> 你正确识别了单词 <strong>"${currentTargetWord}"</strong>。<br>
+                        <span style="font-size:0.85rem; color:#cbd5e1;">${currentTargetWord === pair.l ? '该词发清脆的侧音 /l/（气流从两腮流出，无鼻音）。' : '该词发饱满的鼻音 /n/（带有明显鼻腔共鸣振动）。'}</span>
                     `;
                 } else {
                     btn.classList.add('wrong');
@@ -1281,8 +1278,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     });
                     fbEl.className = 'vlk-quiz-feedback show error';
                     fbEl.innerHTML = `
-                        <strong>Ikke helt!</strong> Det korrekte ord var <strong>"${currentTargetWord}"</strong>.<br>
-                        <span style="font-size:0.85rem; color:#cbd5e1;">Lyt igen, og bemærk om luften kommer ud i kinderne (/l/) eller i næsen (/n/).</span>
+                        <strong>再仔细听听！</strong> 正确的词其实是 <strong>"${currentTargetWord}"</strong>。<br>
+                        <span style="font-size:0.85rem; color:#cbd5e1;">再次点击播放，体会气流是从两腮溜出 (/l/)，还是冲向了鼻腔 (/n/)。</span>
                     `;
                 }
             };
@@ -1339,18 +1336,18 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         }
 
         let targetBadge = '';
-        if (isL) targetBadge = 'Mållyd: /l/ (3 × L · 边音 L)';
-        else if (isN) targetBadge = 'Mållyd: /n/ (3 × N · 鼻音 N)';
-        else targetBadge = 'Mållyd: /l/ ↔ /n/ (Pendul · 边鼻切换)';
+        if (isL) targetBadge = '目标音：/l/ (连续 3 次边音 · 侧音)';
+        else if (isN) targetBadge = '目标音：/n/ (连续 3 次鼻音 · 鼻腔振动)';
+        else targetBadge = '目标音：/l/ ↔ /n/ (边鼻音钟摆切换)';
 
         let subDesc = '';
-        if (isL) subDesc = 'Fokus på L: Åbn tungens sider, ingen luft i næsen!';
-        else if (isN) subDesc = 'Fokus på N: Tæt lukke foran, al klang og luft op i næsen!';
-        else subDesc = 'Fokus på skiftet: Mærk kontrasten mellem åbne sider (L) og lukket næseklang (N)!';
+        if (isL) subDesc = '侧音发音焦点：舌侧保持完全通气，切勿漏气到鼻腔！';
+        else if (isN) subDesc = '鼻音发音焦点：舌前部紧密封闭口腔，全部声波冲向鼻腔！';
+        else subDesc = '切换发音焦点：感受从侧边气流到鼻音封闭的快速弹舌切换！';
 
         speechCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; font-size:0.88rem; color:#94a3b8;">
-                <span>Øvelse ${speechExerciseIdx + 1} af ${SPEECH_EXERCISES.length}</span>
+                <span>第 ${speechExerciseIdx + 1} 题，共 ${SPEECH_EXERCISES.length} 题</span>
                 <span class="vlk-target-word ${isL ? 'word-l' : (isN ? 'word-n' : 'word-l')}" style="font-weight:bold; font-size:0.82rem;">
                     ${targetBadge}
                 </span>
@@ -1362,14 +1359,14 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             ${consecutiveSpeechStreak > 0 ? `
                 <div class="vlk-streak-pill">
                     <span>🔥</span>
-                    <span>${consecutiveSpeechStreak} udtalt korrekt i træk!</span>
+                    <span>连续 ${consecutiveSpeechStreak} 题发音纯正！</span>
                 </div>
             ` : ''}
 
             <div class="vlk-mic-row">
                 <button type="button" class="vlk-listen-model-btn" id="vlk-speech-listen">
                     ${SVG_SPEAKER}
-                    <span>Lyt til udtalen</span>
+                    <span>🔊 听示范发音</span>
                 </button>
                 <button type="button" class="vlk-mic-btn" id="vlk-speech-mic" title="Tryk for at sige sætningen">
                     ${SVG_MIC}
@@ -1377,22 +1374,22 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             </div>
 
             <div class="vlk-speech-status" id="vlk-mic-status">
-                Tryk på mikrofonen og sig sætningen højt på dansk
+                点击红色麦克风，大声朗读上方三个单词
             </div>
 
             <div class="vlk-speech-feedback-box" id="vlk-speech-fb"></div>
 
             <div style="background:rgba(30,41,59,0.7); border-radius:12px; padding:0.85rem 1rem; margin-top:1.2rem; font-size:0.86rem; color:#cbd5e1; text-align:left;">
-                <strong style="color:#fde68a;">Tekniktip:</strong> ${ex.hintDa}<br>
+                <strong style="color:#fde68a;">发音要领指导：</strong> ${ex.hintDa}<br>
                 <span style="color:#94a3b8; font-size:0.82rem;">${ex.hintZh}</span>
             </div>
 
             <div class="vlk-nav-row">
                 <button type="button" class="vlk-nav-btn" id="prev-speech" ${speechExerciseIdx === 0 ? 'disabled' : ''}>
-                    ← Forrige øvelse
+                    ← 上一题
                 </button>
                 <button type="button" class="vlk-nav-btn" id="next-speech" style="background:#0284c7; border-color:#38bdf8;">
-                    Næste øvelse →
+                    下一题 →
                 </button>
             </div>
         `;
@@ -1410,7 +1407,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
         if (!SpeechRecognition) {
-            statusEl.innerHTML = `⚠️ Din browser understøtter ikke Web Speech API. Benyt venligst Chrome eller Edge for mikrofontræning.`;
+            statusEl.innerHTML = `⚠️ 当前浏览器不支持 Web Speech API，建议使用 Chrome 或 Edge 浏览器进行麦克风口语练习。`;
             micBtn.style.opacity = '0.5';
             micBtn.style.cursor = 'not-allowed';
         } else {
@@ -1429,7 +1426,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     recognition.start();
                     isSpeechRecording = true;
                     micBtn.classList.add('listening');
-                    statusEl.textContent = 'Lytter... Sig sætningen nu!';
+                    statusEl.textContent = '正在聆听中... 请大声清晰朗读！';
                     statusEl.style.color = '#38bdf8';
                 } catch (err) {
                     console.error('Speech recognition start error:', err);
@@ -1439,7 +1436,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             recognition.onresult = (event) => {
                 isSpeechRecording = false;
                 micBtn.classList.remove('listening');
-                statusEl.textContent = 'Behandler udtale...';
+                statusEl.textContent = '正在分析发音特征...';
 
                 const transcriptRaw = event.results[0][0].transcript || '';
                 const transcript = transcriptRaw.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
@@ -1501,51 +1498,51 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                 if (isMatch) {
                     consecutiveSpeechStreak++;
-                    statusEl.textContent = 'Godt gået! Rigtig udtale.';
+                    statusEl.textContent = '发音完全正确！';
                     statusEl.style.color = '#86efac';
                     fbBox.style.borderColor = '#22c55e';
                     fbBox.innerHTML = `
                         <div class="vlk-feedback-heard" style="color:#86efac;">
-                            ✅ Rigtigt! Vi hørte: "${transcriptRaw}"
+                            ✅ 发音完全正确！我们听到了："${transcriptRaw}"
                         </div>
                         <div class="vlk-feedback-tip">
-                            ${isL ? 'Perfekt kontrol over <strong>/l/</strong>! Du lod luften glide frit ud af mundens sider uden nasal resonans.' : 
-                              (isN ? 'Flot <strong>/n/</strong>! Du forseglede mundhulen og sendte klangen rent op i næsen.' : 
-                              'Super flot styring af skiftet mellem lateral /l/ og nasal /n/!')}
+                            ${isL ? '完美掌握 <strong>/l/</strong>！你让气流自由地从舌侧滑出，毫无鼻音共鸣。' : 
+                              (isN ? '很棒的 <strong>/n/</strong>！你紧密封闭了口腔，声波纯净地从鼻腔共鸣而出。' : 
+                              '非常出色的边音 /l/ 与鼻音 /n/ 快速切换控制力！')}
                         </div>
                     `;
                 } else if (confusionDetected) {
                     consecutiveSpeechStreak = 0;
-                    statusEl.textContent = 'Fonetisk forveksling opdaget.';
+                    statusEl.textContent = '检测到边鼻音混淆。';
                     statusEl.style.color = '#f87171';
                     fbBox.style.borderColor = '#ef4444';
                     fbBox.innerHTML = `
                         <div class="vlk-feedback-heard" style="color:#fca5a5;">
-                            ⚠️ Vi opfangede: ${confusedWord}
+                            ⚠️ 检测到边鼻音混淆：${confusedWord}
                         </div>
                         <div class="vlk-feedback-tip">
                             ${isL ? `
-                                <strong>Du kom til at bruge N-lyd!</strong><br>
-                                Tungen lukkede tæt for hele munden, så klangen slap op i næsen.<br>
-                                <em>Tip:</em> Sænk tungens sider fra kindtænderne, så du mærker luften passere ud i kinderne!
+                                <strong>你无意中发成了鼻音 N！</strong><br>
+                                舌头两侧碰到了上磨牙，把嘴巴完全封死了，气流被迫从鼻腔漏出。<br>
+                                <em>发音诀窍：</em> 舌侧一定要与大牙保持距离，感受风从腮帮子两边吹出！
                             ` : `
-                                <strong>Du kom til at bruge L-lyd!</strong><br>
-                                Luften slap ud i munden i stedet for i næsen.<br>
-                                <em>Tip:</em> Forsegl tungen helt tæt til tandkødsranden foran, så luften tvinges op i næsen!
+                                <strong>你无意中发成了侧音 L！</strong><br>
+                                舌头没有把口腔前部完全封死，气流从嘴角溜了出来。<br>
+                                <em>发音诀窍：</em> 舌头必须像盖子一样紧紧密封住上齿龈，让声音完全从鼻子里嗡嗡共鸣！
                             `}
                         </div>
                     `;
                 } else {
                     consecutiveSpeechStreak = 0;
-                    statusEl.textContent = 'Prøv igen.';
+                    statusEl.textContent = '再试一次。';
                     statusEl.style.color = '#e2e8f0';
                     fbBox.style.borderColor = '#eab308';
                     fbBox.innerHTML = `
                         <div class="vlk-feedback-heard" style="color:#fde68a;">
-                            Vi hørte: "${transcriptRaw}" (Mål: "${ex.text}")
+                            我们听到了："${transcriptRaw}"（目标示范："${ex.text}"）
                         </div>
                         <div class="vlk-feedback-tip">
-                            Lyt til modeludtalen foroven og gentag i et roligt, distinkt tempo.
+                            点击上方“听示范发音”，模仿纯正语调后再试一次。
                         </div>
                     `;
                 }
@@ -1554,7 +1551,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             recognition.onerror = () => {
                 isSpeechRecording = false;
                 micBtn.classList.remove('listening');
-                statusEl.textContent = 'Kunne ikke opfange lyd. Prøv igen.';
+                statusEl.textContent = '未检测到有效声音，请调整麦克风后重试。';
                 statusEl.style.color = '#94a3b8';
             };
 

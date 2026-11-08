@@ -454,6 +454,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '区别特征 (Distinktivt træk)',
             subtitle: 'Lille forskel i lyden, der ændrer betydningen (læberunding / stød)',
             subtitle_zh: '改变词义的微小语音差异（圆唇度 / 喉塞音 stød）',
+            daLine_zh: 'brøʼd（圆唇+喉塞音，面包）vs. bred（展唇无喉塞音，宽阔）',
             color: '#38bdf8',
             widthPct: 38,
             daLine: `Læberunding + stød i <span class="mss-hl-da">brøʼd</span> vs. <span class="mss-hl-da">bred</span> (flade læber)`,
@@ -475,8 +476,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'måler (uden stød) vs. målʼer (med stød)', note: 'Stødet kan skelne mellem ord og bøjningsformer.', note_zh: '喉塞音（stød）是丹麦语区分单复数和词性的秘密武器。' }
             ],
             links: [
-                { label: '🎵 Leg med vokaler', route: 'leg_med_vokaler' },
-                { label: '⚡ Det danske stød', route: 'det_danske_stoed' }
+                { label: '🎵 Leg med vokaler', label_zh: '🎵 趣味元音辨析 (Leg med vokaler)', route: 'leg_med_vokaler' },
+                { label: '⚡ Det danske stød', label_zh: '⚡ 丹麦语喉塞音 (Det danske stød)', route: 'det_danske_stoed' }
             ]
         },
         {
@@ -485,6 +486,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '音素与发音 (Fon)',
             subtitle: 'Den enkelte sproglyd (f.eks. det bløde d i "brød")',
             subtitle_zh: '单个语流中的具体发音（如 brød 中的软 d [ð]，以及 l 与 n 的区分）',
+            daLine_zh: 'brød [ð]（舌尖轻抵下门牙背部的软 d 音）',
             color: '#60a5fa',
             widthPct: 44,
             daLine: `brø<span class="mss-hl-da">d [ð]</span> — Tungespidsen bag undermundens tænder (blødt d)`,
@@ -506,9 +508,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'køkken [k] ↔ kage [g/j]', note: 'Konsonanter svækkes ofte efter vokalen på dansk.', note_zh: '辅音在元音后常被弱化（弱读化）。' }
             ],
             links: [
-                { label: '🔤 Træn bogstaver & lyde', route: 'traen_bogstaver' },
-                { label: '🎙️ Leg med udtale', route: 'leg_med_udtale' },
-                { label: '🇨🇳 Vanskelige lyde for kinesere (L vs. N)', route: 'vanskelige_lyde_kinesisk' }
+                { label: '🔤 Træn bogstaver & lyde', label_zh: '🔤 字母与发音训练 (Træn bogstaver)', route: 'traen_bogstaver' },
+                { label: '🎙️ Leg med udtale', label_zh: '🎙️ 趣味口语发音 (Leg med udtale)', route: 'leg_med_udtale' },
+                { label: '🇨🇳 Vanskelige lyde for kinesere (L vs. N)', label_zh: '🇨🇳 华人难点发音：L vs. N 专项训练', route: 'vanskelige_lyde_kinesisk' }
             ]
         },
         {
@@ -517,6 +519,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '音节与节律 (Stavelse)',
             subtitle: 'Rytme, tryk og "slugte" endelser (schwa)',
             subtitle_zh: '重音、节律与丹麦语典型的“弱读吞音”（schwa [ə]）',
+            daLine_zh: 'køkkenet（日常快速口语吞音为 2 个音拍：[ˈkøgnəd]）',
             color: '#818cf8',
             widthPct: 51,
             daLine: `<span class="mss-hl-da">køk</span>-ke-net ➔ Udtales i 2 hurtige slag: <span class="mss-hl-da">[ˈkøgnəd]</span>`,
@@ -538,8 +541,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'køk-ke-net → 3 skrevne stavelser, men 2 talte stavelser', note: 'Midterste -e- forsvinder i naturlig tale.', note_zh: '中间的弱读 -e- 在自然语流中几乎被吞掉。' }
             ],
             links: [
-                { label: '📖 Læsetræning & rytme', route: 'laesetraening' },
-                { label: '🎙️ Træn udtale', route: 'traen_udtale' }
+                { label: '📖 Læsetræning & rytme', label_zh: '📖 语流节奏与朗读训练 (Læsetræning)', route: 'laesetraening' },
+                { label: '🎙️ Træn udtale', label_zh: '🎙️ 口语发音训练 (Træn udtale)', route: 'traen_udtale' }
             ]
         },
         {
@@ -548,6 +551,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '语素与后缀构词 (Morf)',
             subtitle: 'Ordets mindste betydnings-byggesten (stamme + endelse)',
             subtitle_zh: '词义的最小构成部分（词根 + 后缀定冠词 -en/-et）',
+            daLine_zh: 'køkken + -et（名词定冠词 -et 像尾巴一样粘在词后：厨房 ➔ 这个厨房）',
             color: '#a78bfa',
             widthPct: 58,
             daLine: `køkken + <span class="mss-hl-da">-et</span> (bestemt endelse limes bag på ordet)`,
@@ -569,8 +573,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'køkken (rod) + -et (bestemt) / -er (flertal)', note: 'Bestemthed og tal sidder som klodser bag på ordet.', note_zh: '定指与单复数就像积木一样依次粘在名词末尾。' }
             ],
             links: [
-                { label: '🏷️ Bestemthed (-en / -et)', route: 'bestemthed' },
-                { label: '🧱 Artikler (en / et)', route: 'artikler' }
+                { label: '🏷️ Bestemthed (-en / -et)', label_zh: '🏷️ 定冠词后缀 (-en / -et)', route: 'bestemthed' },
+                { label: '🧱 Artikler (en / et)', label_zh: '🧱 不定冠词 (en / et)', route: 'artikler' }
             ]
         },
         {
@@ -579,6 +583,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '词类与变位 (Ordet)',
             subtitle: 'Ordklasse, sammensætning og bøjning',
             subtitle_zh: '词性、复合词与丹麦语极简的人称变位',
+            daLine_zh: 'jeg / du / han / vi spiser（所有人称，动词现在时形态完全一致！）',
             color: '#c084fc',
             widthPct: 65,
             daLine: `jeg / du / han / vi <span class="mss-hl-da">spiser</span> (Samme form til ALLE personer!)`,
@@ -600,9 +605,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'spiser (nutid) ↔ spiste (datid) ↔ har spist (førnutid)', note: 'Kun tiden ændrer verbets form — aldrig personen.', note_zh: '只有时间变化会改变动词后缀，人称绝不改变动词形态。' }
             ],
             links: [
-                { label: '⚡ Verbernes tider', route: 'verber_grammatik' },
-                { label: '🏃 Top 100 Verber', route: 'top100_verber' },
-                { label: '📦 Top 100 Substantiver', route: 'top100_substantiver' }
+                { label: '⚡ Verbernes tider', label_zh: '⚡ 动词时态法则 (Verbernes tider)', route: 'verber_grammatik' },
+                { label: '🏃 Top 100 Verber', label_zh: '🏃 常用前100个动词 (Top 100 Verber)', route: 'top100_verber' },
+                { label: '📦 Top 100 Substantiver', label_zh: '📦 常用前100个名词 (Top 100 Substantiver)', route: 'top100_substantiver' }
             ]
         },
         {
@@ -611,6 +616,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '短语与定语结构 (Frasen)',
             subtitle: 'En gruppe ord, der hører sammen som én blok',
             subtitle_zh: '作为一个整体语法块的词组（介词短语 / 形容词前置规则）',
+            daLine_zh: 'i det store køkken（介词 + 前置定冠词 det + 形容词变尾 -e + 名词）',
             color: '#f472b6',
             widthPct: 72,
             daLine: `<span class="mss-hl-da">i det store køkken</span> (Præposition + det + adjektiv-e + substantiv)`,
@@ -632,8 +638,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: '[i køkkenet] = én samlet steds-frase', note: 'Hele frasen flytter samlet rundt i sætningen.', note_zh: '整个短语在句子中必须作为一个整体模块共同移动。' }
             ],
             links: [
-                { label: '🎨 Adjektiver & bøjning', route: 'top100_adjektiver' },
-                { label: '🏷️ Bestemthed i fraser', route: 'bestemthed' }
+                { label: '🎨 Adjektiver & bøjning', label_zh: '🎨 形容词变尾规则 (Adjektiver)', route: 'top100_adjektiver' },
+                { label: '🏷️ Bestemthed i fraser', label_zh: '🏷️ 短语中的定指跃变 (Bestemthed)', route: 'bestemthed' }
             ]
         },
         {
@@ -642,6 +648,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '句子与V2语序核心规则 (Sætningen)',
             subtitle: 'Ordenes rækkefølge (SVO + V2-reglen ved tid/sted forrest)',
             subtitle_zh: '词序法则（主谓宾 SVO + 时间/地点置前必倒装的 V2 动词第二位规则）',
+            daLine_zh: '1) Jeg spiser brød i dag（主谓正常语序）• 2) I dag spiser jeg brød（状语置前，V2 动词必居第2位倒装）',
             color: '#fb923c',
             widthPct: 79,
             daLine: `1) <span class="mss-hl-da">Jeg spiser</span> brød i køkkenet i dag • 2) I dag <span class="mss-hl-da">spiser jeg</span> brød i køkkenet`,
@@ -663,9 +670,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'Inversion: [I dag] [spiser] [jeg] brød i køkkenet', note: 'Verbet skal altid blive på Plads 2 i en hovedsætning.', note_zh: '状语放句首，动词牢牢占据第2位，主语退至第3位。' }
             ],
             links: [
-                { label: '🏗️ Sådan bygger du en sætning', route: 'grounding' },
-                { label: '🧩 Ordstilling & Inversion', route: 'ordstilling' },
-                { label: '⏰ Træn tidsudtryk', route: 'traen_tidsudtryk' }
+                { label: '🏗️ Sådan bygger du en sætning', label_zh: '🏗️ 丹麦语句子骨架搭建 (Sådan bygger du en sætning)', route: 'grounding' },
+                { label: '🧩 Ordstilling & Inversion', label_zh: '🧩 语序与V2倒装律 (Ordstilling)', route: 'ordstilling' },
+                { label: '⏰ Træn tidsudtryk', label_zh: '⏰ 时间短语表达 (Træn tidsudtryk)', route: 'traen_tidsudtryk' }
             ]
         },
         {
@@ -674,6 +681,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '话语功能与句式 (Ytringen)',
             subtitle: 'Hv-spørgsmål, Ja/nej-spørgsmål og Imperativ (bydemåde)',
             subtitle_zh: '特殊疑问句（Hv-）、一般疑问句（Ja/nej）与祈使句（Imperativ）',
+            daLine_zh: '特殊问句："Hvad spiser du?" • 是非问句："Spiser du brød?" • 祈使句："Spis brødet!"',
             color: '#facc15',
             widthPct: 86,
             daLine: `Hv: "<span class="mss-hl-da">Hvad spiser du?</span>" • Ja/nej: "<span class="mss-hl-da">Spiser du</span> brød?" • Imperativ: "<span class="mss-hl-da">Spis</span> brødet!"`,
@@ -693,10 +701,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             utteranceCards: [
                 {
                     badge: '1. HV-SPØRGSMÅL (Åbent spørgsmål med spørgeord)',
+                    badge_zh: '1. 特殊疑问句（HV-SPØRGSMÅL • 疑问词置句首）',
                     accent: '#38bdf8',
                     daFormula: 'Hv-ord (Plads 1) + Verbum (Plads 2) + Subjekt (Plads 3)',
+                    daFormula_zh: '疑问词 (第1位) + 动词 (第2位) + 主语 (第3位)',
                     daExample: '"<strong>Hvad</strong> <u>spiser</u> du i køkkenet i dag?" • "<strong>Hvornår</strong> <u>spiser</u> vi?"',
                     daSubNote: 'De vigtigste hv-ord: <strong>hvad, hvem, hvor, hvornår, hvorfor, hvordan, hvilken/hvilket/hvilke</strong>.',
+                    daSubNote_zh: '核心疑问词：hvad (什么), hvem (谁), hvor (哪里), hvornår (何时), hvorfor (为什么), hvordan (如何)。',
                     myByLang: {
                         en: '"<strong>What do</strong> you eat in the kitchen today?" — Engelsk indsætter hjælpeverbet <em>do/does/did</em> mellem spørgeordet og "you". Dansk sætter hovedverbet direkte på Plads 2!',
                         ar: '"<strong>ماذا</strong> تأكل في المطبخ اليوم؟ (Mādhā ta\'kulu...)" — Spørgeordet står forrest efterfulgt af det personbøjede verbum.',
@@ -711,10 +722,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 },
                 {
                     badge: '2. JA/NEJ-SPØRGSMÅL (Lukket spørgsmål uden spørgeord)',
+                    badge_zh: '2. 一般是非问句（JA/NEJ-SPØRGSMÅL • 动词居首）',
                     accent: '#facc15',
                     daFormula: 'Verbum allerforrest (Plads 1) + Subjekt (Plads 2)',
+                    daFormula_zh: '动词直接提至句首 (第1位) + 主语 (第2位)',
                     daExample: '"<strong>Spiser</strong> <u>du</u> brød i køkkenet i dag?"',
                     daSubNote: 'Dansk bytter bare plads på verbum og person — uden ekstra spørgeord.',
+                    daSubNote_zh: '丹麦语直接颠倒动词与主语位置形成问句，无需添加辅助疑问助词。',
                     myByLang: {
                         en: '"<strong>Do</strong> you eat bread...?" — Engelsk skal bruge hjælpeordet <em>Do/Are</em> forrest. På dansk rykker selve verbet (<em>Spiser</em>) frem forrest!',
                         ar: '"<strong>هل (Hal)</strong> تأكل الخبز...؟" — Arabisk sætter spørgepartiklen <em>hal</em> foran sætningen.',
@@ -728,10 +742,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 },
                 {
                     badge: '3. IMPERATIV / BYDEMÅDE (Opfordring, instruktion eller råd)',
+                    badge_zh: '3. 祈使句 / 命令式（IMPERATIV • 指令与号召）',
                     accent: '#4ade80',
                     daFormula: 'Kun verbets stamme (fjern -er fra nutid) — uden "du"!',
+                    daFormula_zh: '仅使用动词词根（去掉现在时 -er）— 无需“du/你”！',
                     daExample: '"<strong>Spis</strong> brødet i køkkenet!" • "<strong>Kom</strong> ind og <strong>sæt</strong> dig!"',
                     daSubNote: 'Sådan laves imperativ: <em>spiser → <strong>spis!</strong> • læser → <strong>læs!</strong> • venter → <strong>vent!</strong></em>',
+                    daSubNote_zh: '祈使句构成：spiser → spis! (吃吧!) • læser → læs! (读吧!) • venter → vent! (等一下!)',
                     myByLang: {
                         en: '"<strong>Eat</strong> the bread in the kitchen!" — Bruger grundformen uden "you", meget ligesom dansk.',
                         ar: '"<strong>كُلْ (Kul)</strong> الخبز في المطبخ!" — Imperativ bøjes efter om man taler til en mand (<em>kul</em>), en kvinde (<em>kulī</em>) eller flere (<em>kulū</em>). På dansk er formen <strong>spis!</strong> ens for alle!',
@@ -749,9 +766,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'Høflig ytring i datid: "Ville du have et stykke brød?" / "Kunne du lukke døren?"', note: 'På dansk bløder man ofte en opfordring op ved at spørge med "Kan/Kunne du...?" fremfor ren imperativ.' }
             ],
             links: [
-                { label: '💬 Lav spørgsmål (Hv- & Ja/nej)', route: 'lav_sporgsmal' },
-                { label: '⚡ Verbernes tider & former', route: 'verber_grammatik' },
-                { label: '🏃 Top 100 Verber', route: 'top100_verber' }
+                { label: '💬 Lav spørgsmål (Hv- & Ja/nej)', label_zh: '💬 疑问句构造实战 (Lav spørgsmål)', route: 'lav_sporgsmal' },
+                { label: '⚡ Verbernes tider & former', label_zh: '⚡ 动词形态总览 (Verber)', route: 'verber_grammatik' },
+                { label: '🏃 Top 100 Verber', label_zh: '🏃 常用前100个动词 (Top 100 Verber)', route: 'top100_verber' }
             ]
         },
         {
@@ -760,6 +777,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '相邻对话对 (Turparet)',
             subtitle: 'Spørgsmål og svar mellem to personer (Ja/Jo + "det gør jeg")',
             subtitle_zh: '问答呼应与丹麦语特有的“Jo”与回声式回答（det gør jeg）',
+            daLine_zh: 'A: "难道你不吃面包吗？" ➔ B: "Jo, det gør jeg!"（否定问句用 Jo 肯定回答，并加回声动词）',
             color: '#4ade80',
             widthPct: 93,
             daLine: `A: "Spiser du <u>ikke</u> brød?" ➔ B: "<span class="mss-hl-da">Jo, det gør jeg!</span>" (Ikke kun "ja")`,
@@ -781,8 +799,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: 'A: "Er du ikke sulten?" → B: "Jo, det er jeg!" (Negativt spørgsmål → Jo)', note: 'Ved "er/har/kan/vil" gentages hjælpeverbet i stedet for "gør".', note_zh: '对方问“难道你不饿吗？”，肯定回答必须用 Jo，绝不可用 Ja！' }
             ],
             links: [
-                { label: '🗣️ Samtaletræning', route: 'samtale_traening' },
-                { label: '💬 Lav spørgsmål & svar', route: 'lav_sporgsmal' }
+                { label: '🗣️ Samtaletræning', label_zh: '🗣️ 实用情景会话训练 (Samtaletræning)', route: 'samtale_traening' },
+                { label: '💬 Lav spørgsmål & svar', label_zh: '💬 问答应答轮次练习 (Spørgsmål & svar)', route: 'lav_sporgsmal' }
             ]
         },
         {
@@ -791,6 +809,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title_zh: '对话语篇与小词润色 (Samtalen / Teksten)',
             subtitle: 'Flere turpar og sætninger bundet sammen med småord og bindeord',
             subtitle_zh: '通过连接词与丹麦语“神奇小词”（nå, jo, lige, vel）串联自然对话',
+            daLine_zh: '"Nå, jeg er sulten, så jeg spiser lige noget brød, ikke?"（运用 nå, lige, ikke 等语气小词与连词串联自然会话）',
             color: '#2dd4bf',
             widthPct: 100,
             daLine: `"<span class="mss-hl-da">Nå</span>, jeg er sulten, <span class="mss-hl-da">så</span> jeg spiser lige noget brød i køkkenet, <span class="mss-hl-da">ikke?</span>"`,
@@ -812,9 +831,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 { da: '"Nå!" (Overraskelse/ny info) • "Jeg spiser LIGE..." (Gør handlingen uformel og kort)', note: 'Småordene gør dansk levende i hverdagen.', note_zh: '善用 lige 和 nå，能瞬间让你的丹麦语脱离书本腔，变得生动自然。' }
             ],
             links: [
-                { label: '🔗 Konjunktioner & Bindeord', route: 'traen_grammatik' },
-                { label: '✨ De små magiske ord (jo, nok, lige)', route: 'adverbier_smaaord' },
-                { label: '🕹️ Interaktive historier', route: 'historier_menu' }
+                { label: '🔗 Konjunktioner & Bindeord', label_zh: '🔗 连词与复合句 (Konjunktioner)', route: 'traen_grammatik' },
+                { label: '✨ De små magiske ord (jo, nok, lige)', label_zh: '✨ 丹麦语高频语气小词 (jo, nok, lige)', route: 'adverbier_smaaord' },
+                { label: '🕹️ Interaktive historier', label_zh: '🕹️ 沉浸式互动故事 (Interaktive historier)', route: 'historier_menu' }
             ]
         }
     ];
@@ -868,22 +887,26 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
         function buildUtteranceCardsHtml(st) {
             if (!st.utteranceCards || !st.utteranceCards.length) return '';
+            const isZh = selectedLang === 'zh';
             return `
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:0.85rem; margin-bottom:1.05rem;">
                     ${st.utteranceCards.map(uc => {
                         const myTxt = uc.myByLang[selectedLang] || uc.myByLang.en;
+                        const badgeText = isZh ? (uc.badge_zh || uc.badge) : uc.badge;
+                        const formulaText = isZh ? (uc.daFormula_zh || uc.daFormula) : uc.daFormula;
+                        const subNoteText = isZh ? (uc.daSubNote_zh || uc.daSubNote) : uc.daSubNote;
                         return `
                             <div style="background:rgba(15,23,42,0.92); border:1.5px solid ${uc.accent}; border-radius:14px; padding:0.9rem 1rem; display:flex; flex-direction:column; gap:0.5rem;">
                                 <div style="font-size:0.74rem; font-weight:900; color:${uc.accent}; text-transform:uppercase; letter-spacing:0.03em;">
-                                    ${uc.badge}
+                                    ${badgeText}
                                 </div>
                                 <div style="background:rgba(239,68,68,0.12); border-left:3.5px solid #ef4444; border-radius:8px; padding:0.55rem 0.7rem;">
-                                    <div style="font-size:0.7rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.15rem;">🇩🇰 Dansk (${uc.daFormula})</div>
+                                    <div style="font-size:0.7rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.15rem;">🇩🇰 ${isZh ? '丹麦语结构公式' : 'Dansk'} (${formulaText})</div>
                                     <div style="font-size:0.93rem; color:#ffffff; font-weight:800;">${uc.daExample}</div>
-                                    <div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.25rem;">${uc.daSubNote}</div>
+                                    <div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.25rem;">${subNoteText}</div>
                                 </div>
                                 <div style="background:rgba(56,189,248,0.1); border-left:3.5px solid #38bdf8; border-radius:8px; padding:0.55rem 0.7rem;">
-                                    <div style="font-size:0.7rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.15rem;">${langObj.flag} ${langObj.name}</div>
+                                    <div style="font-size:0.7rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.15rem;">${langObj.flag} ${isZh ? '中文对比解析' : langObj.name}</div>
                                     <div style="font-size:0.86rem; color:#e0f2fe; line-height:1.4;">${myTxt}</div>
                                 </div>
                             </div>
@@ -915,11 +938,16 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
                     <div class="mss-two-lines" style="margin-bottom:0.85rem;">
                         <div class="mss-line-da">
-                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语 (Dansk)' : 'Dansk'}:</span>
+                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语例句' : 'Dansk'}:</span>
                             <span>${st.daLine}</span>
                         </div>
+                        ${isZh && st.daLine_zh ? `
+                            <div style="font-size:0.82rem; color:#fca5a5; opacity:0.85; padding-left:5.2rem; margin-top:-0.25rem;">
+                                💡 释义: ${st.daLine_zh}
+                            </div>
+                        ` : ''}
                         <div class="mss-line-my">
-                            <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isZh ? '我的母语 (Kinesisk)' : 'Mit sprog'}:</span>
+                            <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isZh ? '中文对比解析' : 'Mit sprog'}:</span>
                             <span>${myText}</span>
                         </div>
                     </div>
@@ -965,7 +993,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                             ${isZh ? '在应用中训练此层级 (Træn dette niveau):' : 'Træn dette niveau i appen:'}
                         </span>
                         <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
-                            ${st.links.map(lk => `<button class="mss-link-chip" data-nav="${lk.route}">${lk.label} ➔</button>`).join('')}
+                            ${st.links.map(lk => `<button class="mss-link-chip" data-nav="${lk.route}">${isZh ? (lk.label_zh || lk.label) : lk.label} ➔</button>`).join('')}
                         </div>
                     </div>
                 </div>

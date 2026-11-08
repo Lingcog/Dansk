@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { conjunctionData } from '../utils/conjunctionData.js';
 import { getConjunctionWordTranslation } from '../utils/top100_konjunktioner_translations.js';
 import { isLocalhost, KONJ_PALETTES, getActiveKonjNuance, applyKonjNuance } from '../components/DesignSystemToggle.js';
+import { renderDsIcon } from '../utils/designSystemIcons.js';
 import { konjTransBlock, konjTransSpan, tKonj } from '../utils/konjunktioner_extra_translations.js';
 
 /**
@@ -1661,27 +1662,22 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
     const tabsByFelt = {
         1: [
-            { id: 'vrimmel', label: '1. Vrimlebilledet: De 5 grundlæggende bindeord' },
+            { id: 'vrimmel', label: '1. Vrimlebilledet: De 5 helsætningskonjunktioner' },
             { id: 'detektiv', label: '2. Konjunktions-detektiven (6 gåder)' },
             { id: 'builder', label: '3. Sætningsbyggeren og puslespillet' },
-            { id: 'kontekst', label: '4. Kontekst-testen (8 opgaver)' },
-            { id: 'aarsag', label: '5. "Fordi", "for", "så" eller "derfor"?' },
-            { id: 'tekstflow', label: '6. Tekstflow og historier' }
+            { id: 'kontekst', label: '4. Kontekst-testen (8 opgaver)' }
         ],
         2: [
-            { id: 'vrimmel', label: '1. Vrimlebilledet: Årsag, betingelse og kontrast' },
+            { id: 'vrimmel', label: '1. Vrimlebilledet: Årsag, betingelse og kontrast (fordi, selvom, hvis)' },
             { id: 'detektiv', label: '2. Konjunktions-detektiven (6 gåder)' },
             { id: 'builder', label: '3. Sætningsbyggeren og puslespillet' },
-            { id: 'kontekst', label: '4. Kontekst-testen (8 opgaver)' },
-            { id: 'atom', label: '5. "At" eller "om"? og "hvis" eller "selvom"?' },
-            { id: 'aarsag', label: '6. "Fordi", "for", "så" eller "derfor"?' }
+            { id: 'kontekst', label: '4. Kontekst-testen (8 opgaver)' }
         ],
         3: [
             { id: 'vrimmel', label: '1. Vrimlebilledet: Tid og rækkefølge (8 scener)' },
-            { id: 'tid', label: '2. "Da" eller "når"? og tidskonjunktioner' },
-            { id: 'detektiv', label: '3. Tids-detektiven (6 gåder)' },
-            { id: 'builder', label: '4. Sætningsbyggeren: Tid og ordstilling' },
-            { id: 'kontekst', label: '5. Kontekst-testen: Tid og rækkefølge (8 opgaver)' }
+            { id: 'detektiv', label: '2. Tids-detektiven (6 gåder)' },
+            { id: 'builder', label: '3. Sætningsbyggeren: Tid og ordstilling' },
+            { id: 'kontekst', label: '4. Kontekst-testen: Tid og rækkefølge (8 opgaver)' }
         ]
     };
 
@@ -1733,26 +1729,36 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
     }
 
     // ==========================================
-    // TAB 1: VRIMLEBILLEDET
+    // TAB 1: VRIMLEBILLEDET (Stringent familieopdeling + Model A)
     // ==========================================
-    let activeFilter = (extraData && extraData.filter) ? extraData.filter : defaultFilter;
-    let isPureMode = false;
+    let activeFilter = defaultFilter;
+    let showHotspots = true;
     let selectedWord = null;
+
+    function getFeltWords() {
+        if (activeFelt === 1) {
+            return KONJUNKTIONER_DATA.filter(item => item.category === 'helsaetning');
+        } else if (activeFelt === 2) {
+            return KONJUNKTIONER_DATA.filter(item => ['fordi', 'selvom', 'hvis'].includes(item.id));
+        } else {
+            return KONJUNKTIONER_DATA.filter(item => item.category === 'ledsaetning_tid');
+        }
+    }
+
     if (extraData && extraData.targetWord) {
         const targetLower = String(extraData.targetWord).toLowerCase().trim();
         const foundTarget = KONJUNKTIONER_DATA.find(w => w.word.toLowerCase() === targetLower || w.id.toLowerCase() === targetLower);
         if (foundTarget) {
             selectedWord = foundTarget;
-            activeFilter = foundTarget.category;
         }
     }
 
     function renderTabVrimmel(parent) {
         parent.innerHTML = '';
 
-        const matchingWords = KONJUNKTIONER_DATA.filter(item => activeFilter === 'alle' || item.category === activeFilter);
-        if (!selectedWord || !matchingWords.some(w => w.id === selectedWord.id)) {
-            selectedWord = matchingWords[0] || KONJUNKTIONER_DATA[0];
+        const visibleWords = getFeltWords();
+        if (!selectedWord || !visibleWords.some(w => w.id === selectedWord.id)) {
+            selectedWord = visibleWords[0] || KONJUNKTIONER_DATA[0];
         }
 
         const layout = document.createElement('div');
@@ -1764,37 +1770,30 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         const controls = document.createElement('div');
         controls.className = 'vrimmel-controls-bar';
 
-        const filtersDiv = document.createElement('div');
-        filtersDiv.className = 'vrimmel-filters';
+        const familyLabel = document.createElement('div');
+        familyLabel.style.fontWeight = '800';
+        familyLabel.style.color = 'var(--konj-text-muted)';
+        familyLabel.style.fontSize = '0.92rem';
+        familyLabel.textContent = activeFelt === 1
+            ? `Sideordnende helsætningskonjunktioner (${visibleWords.length} ord)`
+            : activeFelt === 2
+            ? `Underordnende logik-konjunktioner (${visibleWords.length} ord)`
+            : `Underordnende tidskonjunktioner (${visibleWords.length} ord)`;
 
-        const filters = [
-            { id: 'alle', label: 'Alle (18)' },
-            { id: 'helsaetning', label: 'Helsætning (5)' },
-            { id: 'ledsaetning_logik', label: 'Ledsætning: logik (5)' },
-            { id: 'ledsaetning_tid', label: 'Ledsætning: tid (8)' }
-        ];
-
-        filters.forEach(f => {
-            const fBtn = document.createElement('button');
-            fBtn.className = `filter-btn ${activeFilter === f.id ? 'active' : ''}`;
-            fBtn.textContent = f.label;
-            fBtn.onclick = () => {
-                activeFilter = f.id;
-                renderTabVrimmel(parent);
-            };
-            filtersDiv.appendChild(fBtn);
-        });
-
-        const pureBtn = document.createElement('button');
-        pureBtn.className = `pure-toggle-btn ${isPureMode ? 'active' : ''}`;
-        pureBtn.textContent = isPureMode ? 'Skjul ordmærker' : 'Vis ordmærker';
-        pureBtn.onclick = () => {
-            isPureMode = !isPureMode;
-            renderTabVrimmel(parent);
+        const hotspotToggleBtn = document.createElement('button');
+        hotspotToggleBtn.className = `pure-toggle-btn ${showHotspots ? 'active' : ''}`;
+        hotspotToggleBtn.textContent = `Pegefelter: ${showHotspots ? 'TIL' : 'FRA'}`;
+        hotspotToggleBtn.onclick = () => {
+            showHotspots = !showHotspots;
+            hotspotToggleBtn.className = `pure-toggle-btn ${showHotspots ? 'active' : ''}`;
+            hotspotToggleBtn.textContent = `Pegefelter: ${showHotspots ? 'TIL' : 'FRA'}`;
+            stage.querySelectorAll('.hotspot-pin').forEach(pin => {
+                pin.style.display = showHotspots ? 'flex' : 'none';
+            });
         };
 
-        controls.appendChild(filtersDiv);
-        controls.appendChild(pureBtn);
+        controls.appendChild(familyLabel);
+        controls.appendChild(hotspotToggleBtn);
         stageCard.appendChild(controls);
 
         const stage = document.createElement('div');
@@ -1806,20 +1805,16 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
         img.className = 'vrimmel-img';
         stage.appendChild(img);
 
-        const visibleWords = KONJUNKTIONER_DATA.filter(item => {
-            if (activeFilter === 'alle') return true;
-            return item.category === activeFilter;
-        });
-
         visibleWords.forEach((item, idx) => {
             const pin = document.createElement('div');
             pin.className = `hotspot-pin ${selectedWord && selectedWord.id === item.id ? 'active' : ''}`;
             pin.style.left = `${item.x}%`;
             pin.style.top = `${item.y}%`;
+            pin.style.display = showHotspots ? 'flex' : 'none';
             pin.dataset.id = item.id;
             pin.innerHTML = `
                 <span>${idx + 1}</span>
-                ${!isPureMode ? `<span class="hotspot-label">${item.word}</span>` : ''}
+                <span class="hotspot-label">${item.word}</span>
             `;
 
             pin.onclick = (e) => {
@@ -1835,6 +1830,9 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
 
         const inspector = document.createElement('div');
         inspector.className = 'vrimmel-inspector';
+        inspector.style.display = 'flex';
+        inspector.style.flexDirection = 'column';
+        inspector.style.gap = '1.1rem';
         layout.appendChild(inspector);
         parent.appendChild(layout);
 
@@ -1846,68 +1844,61 @@ export function renderKonjunktionerView(container, navigateFn, extraData = {}) {
             });
 
             const trans = getKonjTranslation(item);
-            const currentLang = getLang().toUpperCase();
+            const currentLang = getLang();
+            const supportLabel = currentLang === 'da' ? 'Engelsk støtte:' : `${currentLang.toUpperCase()}:`;
+            const supportWord = currentLang === 'da'
+                ? (item.translations?.en?.word || trans.word || '')
+                : (trans.word || item.translations?.en?.word || '');
 
-            const highlightedSentence = item.sentence.replace(
-                new RegExp(`\\b(${item.word})\\b`, 'i'),
-                `<span style="color: var(--konj-border-focus); text-decoration: underline;">$1</span>`
+            const idx = visibleWords.findIndex(w => w.id === item.id);
+            const prevIdx = (idx - 1 + visibleWords.length) % visibleWords.length;
+            const nextIdx = (idx + 1) % visibleWords.length;
+            const prevItem = visibleWords[prevIdx];
+            const nextItem = visibleWords[nextIdx];
+
+            const escapedWord = item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const highlightedSentence = (item.contextSentence || item.sentence).replace(
+                new RegExp(`(${escapedWord})`, 'gi'),
+                `<mark style="background:rgba(139,92,246,0.28); color:#DDD6FE; padding:0.1rem 0.4rem; border-radius:6px; font-weight:800;">$1</mark>`
             );
 
             inspector.innerHTML = `
-                <div class="inspector-left">
-                    <div class="inspector-header">
-                        <div class="inspector-badge-row">
-                            <span class="inspector-badge">${item.clauseType}</span>
-                            <span class="inspector-badge" style="background: rgba(234, 179, 8, 0.2); border-color: #eab308; color: #fde047;">${item.meaning}${konjTransSpan(item.meaning)}</span>
-                        </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.8rem;">
+                    <div style="display:flex; align-items:center; gap:0.85rem; flex-wrap:wrap;">
+                        <h2 style="font-size:2.1rem; font-weight:900; color:#FFFFFF; margin:0;">${item.word}</h2>
+                        <span class="inspector-badge">${item.clauseType}</span>
+                        <span class="inspector-badge" style="background:rgba(234,179,8,0.18); border-color:#eab308; color:#fde047;">${item.meaning}</span>
                     </div>
-
-                    <h2 class="inspector-word-title">
-                        ${item.word}
-                    </h2>
-
-                    <div class="inspector-trans-box">
-                        <div class="trans-badge-label">
-                            ${getTranslation('konj_inspector_target_word').replace('{lang}', currentLang)}
-                        </div>
-                        <div class="trans-word-val">${trans.word}</div>
+                    <div style="font-size:0.9rem; color:var(--konj-text-muted); font-style:italic;">
+                        ${supportLabel} <strong style="color:#FFFFFF; font-style:normal;">${supportWord}</strong>
                     </div>
-
-                    <div class="inspector-scene-box">
-                        <div class="scene-heading">${getTranslation('konj_inspector_in_scene')}</div>
-                        <p class="scene-text">${item.sceneDesc}${konjTransBlock(item.sceneDesc)}</p>
-                    </div>
-
-                    ${item.ruleHint ? `
-                    <div class="inspector-rule-box" style="margin-top: 0.9rem; background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7; padding: 0.75rem 1rem; border-radius: 6px;">
-                        <div style="font-size: 0.8rem; font-weight: 700; color: #d8b4fe; text-transform: uppercase; margin-bottom: 0.25rem;">Grammatisk regel</div>
-                        <div style="font-size: 0.92rem; color: #e2e8f0; line-height: 1.45;">${item.ruleHint}</div>
-                        ${konjTransBlock(item.ruleHint)}
-                    </div>` : ''}
                 </div>
 
-                <div class="inspector-right">
-                    <div class="inspector-sentence-card">
-                        <div class="trans-badge-label" style="margin-bottom:0.4rem;">${getTranslation('konj_inspector_example_bridge')}</div>
-                        <div class="sentence-quote-text">"${highlightedSentence}"</div>
-                        ${trans.sentence ? `<div class="sentence-trans-text" style="color:var(--konj-text-muted); margin-top:0.4rem;">"${trans.sentence}"</div>` : ''}
+                <div style="background:rgba(13,6,26,0.75); border-left:4px solid var(--konj-primary); border-radius:0 14px 14px 0; padding:1.1rem 1.3rem;">
+                    <div style="font-size:0.9rem; color:var(--konj-text-muted); margin-bottom:0.4rem;">
+                        ${renderDsIcon('user', '', { size: 14 })} ${item.sceneDesc}
                     </div>
+                    <div style="font-size:1.25rem; font-weight:800; color:#FFFFFF; line-height:1.45;">
+                        "${highlightedSentence}"
+                    </div>
+                </div>
 
-                    <div class="inspector-actions" style="margin-top: 1rem;">
-                        <button class="inspector-btn-action" id="insp-prev-btn">${getTranslation('konj_btn_prev_word')}</button>
-                        <button class="inspector-btn-action" id="insp-next-btn" style="background:var(--konj-primary); border-color:var(--konj-border-focus);">${getTranslation('konj_btn_next_word')}</button>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.85rem;">
+                    <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.92rem; color:var(--konj-text-muted); flex:1; min-width:250px;">
+                        ${renderDsIcon('lightbulb', '', { size: 16 })}
+                        <span><strong style="color:#FFFFFF;">Grammatisk regel:</strong> ${item.ruleHint}${konjTransSpan(item.ruleHint)}</span>
+                    </div>
+                    <div style="display:flex; gap:0.6rem;">
+                        <button class="inspector-btn-action" id="insp-prev-btn" style="padding:0.45rem 0.95rem;">← Forrige (${prevIdx + 1})</button>
+                        <button class="inspector-btn-action" id="insp-next-btn" style="padding:0.45rem 0.95rem; background:var(--konj-primary); border-color:var(--konj-border-focus);">Næste (${nextIdx + 1}) →</button>
                     </div>
                 </div>
             `;
 
             inspector.querySelector('#insp-prev-btn').onclick = () => {
-                const idx = visibleWords.findIndex(w => w.id === item.id);
-                const prevItem = visibleWords[(idx - 1 + visibleWords.length) % visibleWords.length];
                 updateInspector(prevItem, false);
             };
             inspector.querySelector('#insp-next-btn').onclick = () => {
-                const idx = visibleWords.findIndex(w => w.id === item.id);
-                const nextItem = visibleWords[(idx + 1) % visibleWords.length];
                 updateInspector(nextItem, false);
             };
 

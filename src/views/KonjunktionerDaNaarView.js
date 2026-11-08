@@ -702,15 +702,15 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: getTranslation('danaar_tab_vrimmel') },
-        { id: 'kognitiv', label: getTranslation('danaar_tab_kognitiv') },
-        { id: 'traening2', label: getTranslation('danaar_tab_traening') },
-        { id: 'detektiv', label: getTranslation('danaar_tab_detektiv') },
-        { id: 'fortidsduel', label: getTranslation('danaar_tab_duel') },
-        { id: 'builder', label: getTranslation('danaar_tab_builder') }
+        { id: 'kognitiv', label: '1. Kognitiv model (1 gang vs. mange gange)' },
+        { id: 'fortidsduel', label: '2. Fortids-Duellen (Enkeltpunkt vs. Vane)' },
+        { id: 'traening2', label: '3. Træning i kontekst' },
+        { id: 'detektiv', label: '4. Da/Når-Detektiven' },
+        { id: 'builder', label: '5. Sætningsbyggeren og puslespillet' }
     ];
 
-    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
+    let rawTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'kognitiv';
+    let currentTab = (rawTab === 'vrimmel' || !tabs.some(t => t.id === rawTab)) ? 'kognitiv' : rawTab;
 
     tabs.forEach(t => {
         const btn = document.createElement('button');
@@ -726,6 +726,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
     viewContainer.appendChild(tabContent);
 
     function switchTab(tabId) {
+        if (tabId === 'vrimmel' || !tabs.some(t => t.id === tabId)) tabId = 'kognitiv';
         currentTab = tabId;
         const lang = getLang();
         history.pushState(null, '', '#/' + lang + '/konjunktioner_da_naar/' + tabId);
@@ -734,8 +735,7 @@ export function renderKonjunktionerDaNaarView(container, navigateFn, extraData =
         if (activeBtn) activeBtn.classList.add('active');
 
         tabContent.innerHTML = '';
-        if (tabId === 'vrimmel') renderTabVrimmel(tabContent);
-        else if (tabId === 'kognitiv') renderTabKognitiv(tabContent);
+        if (tabId === 'kognitiv') renderTabKognitiv(tabContent);
         else if (tabId === 'traening2') renderTabTraening2(tabContent);
         else if (tabId === 'detektiv') renderTabDetektiv(tabContent);
         else if (tabId === 'fortidsduel') renderTabFortidsDuel(tabContent);

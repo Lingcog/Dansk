@@ -69,6 +69,14 @@ export function renderHistorierMenuView(container, navigateFn) {
                 ? 'Sing along to the classic song and master days of the week, word order with "når", and modern Danish vocabulary for household care.'
                 : 'Syng med på den klassiske sangleg og lær ugens dage, ledsætninger med "når" og moderne ordforråd til hjemmets opgaver og tøjpleje.',
             action: () => navigateFn('sang_enebaerbusk')
+        },
+        {
+            icon: '🗺️',
+            title: isEn ? 'Danish Songs: Godmorgen, lille land' : 'Sange: Godmorgen, lille land',
+            desc: isEn 
+                ? 'Explore Denmark\'s geography, coastlines, islands, and bridges through key expressions from the beloved song.'
+                : 'Gå på opdagelse i Danmarks geografi, kyster, øer, broer og landsdele gennem sangens nøgleudtryk og samtalespørgsmål.',
+            action: () => navigateFn('sang_godmorgen_lille_land')
         }
     ];
 

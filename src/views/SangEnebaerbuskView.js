@@ -90,6 +90,48 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
             line-height: 1.5;
         }
 
+        /* Song Switcher Bar */
+        .song-switcher-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.75rem 0 1.25rem;
+            padding: 0.65rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            align-items: center;
+        }
+        .song-switcher-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            padding: 0 0.5rem;
+        }
+        .song-switch-pill {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .song-switch-pill:hover {
+            background: #334155;
+            color: #ffffff;
+        }
+        .song-switch-pill.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff;
+            border-color: #fbbf24;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+        }
+
         /* Tabs Navigation (Vertical Overview Table) */
         .song-tabs-nav {
             display: flex;
@@ -2101,6 +2143,21 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         }
     `;
     viewContainer.appendChild(style);
+
+    // Song Switcher Bar
+    const switcherBar = document.createElement('div');
+    switcherBar.className = 'song-switcher-bar';
+    switcherBar.innerHTML = `
+        <span class="song-switcher-label">Vælg sang:</span>
+        <button type="button" class="song-switch-pill active" id="btn-switch-enebaer">
+            1. Så går vi rundt om en enebærbusk (Husarbejde)
+        </button>
+        <button type="button" class="song-switch-pill" id="btn-switch-godmorgen">
+            2. Godmorgen, lille land (Danmarks geografi)
+        </button>
+    `;
+    switcherBar.querySelector('#btn-switch-godmorgen').onclick = () => navigateFn('sang_godmorgen_lille_land');
+    viewContainer.appendChild(switcherBar);
 
     // Hero Header
     const hero = document.createElement('div');

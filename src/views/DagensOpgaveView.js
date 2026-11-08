@@ -62,6 +62,17 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('tror_synes_mener')
         },
         {
+            icon: '⚡',
+            svgIcon: dsSvgIcons.activity(22),
+            titleKey: 'verberGrammatikTitle',
+            descKey: 'verberGrammatikDesc',
+            fallbackTitle: 'Verbernes tider',
+            fallbackDesc: 'Lær på en interaktiv måde forskellen på for eksempel datid og nutid.',
+            comingSoon: true,
+            comingSoonLabel: 'Kommer senere',
+            action: () => navigateFn('verber_grammatik')
+        },
+        {
             icon: '🌉',
             svgIcon: dsSvgIcons.bridge(22),
             titleKey: 'verberTider',
@@ -79,13 +90,25 @@ export function renderDagensOpgaveView(container, navigateFn) {
         }
     ];
 
+    const isLocalhost = typeof window !== 'undefined' && (
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1'
+    );
+
     const grid = document.createElement('div');
     grid.className = 'grid';
 
     cardsData.forEach(data => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.onclick = data.action;
+        const isLocked = Boolean(data.comingSoon) && !isLocalhost;
+
+        if (isLocked) {
+            card.style.opacity = '0.6';
+            card.style.cursor = 'not-allowed';
+        } else {
+            card.onclick = data.action;
+        }
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
@@ -98,6 +121,22 @@ export function renderDagensOpgaveView(container, navigateFn) {
         cardTitle.className = 'card-title';
         const transTitle = getTranslation(data.titleKey);
         cardTitle.textContent = (transTitle && transTitle !== data.titleKey) ? transTitle : (data.fallbackTitle || transTitle);
+
+        if (data.comingSoon) {
+            const badge = document.createElement('span');
+            badge.style.display = 'inline-block';
+            badge.style.fontSize = '0.75rem';
+            badge.style.fontWeight = '700';
+            badge.style.background = 'rgba(255, 255, 255, 0.14)';
+            badge.style.border = '1px solid rgba(255, 255, 255, 0.25)';
+            badge.style.padding = '0.18rem 0.55rem';
+            badge.style.borderRadius = '8px';
+            badge.style.marginLeft = '0.5rem';
+            badge.style.verticalAlign = 'middle';
+            badge.textContent = `🔒 ${data.comingSoonLabel || 'Kommer senere'}`;
+            cardTitle.appendChild(badge);
+        }
+
         card.appendChild(icon);
         card.appendChild(cardTitle);
 

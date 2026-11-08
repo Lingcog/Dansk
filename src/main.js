@@ -28,6 +28,7 @@ import { renderKonjunktionerAtView } from './views/KonjunktionerAtView.js';
 import { renderKonjunktionerDaNaarView } from './views/KonjunktionerDaNaarView.js';
 import { renderKonjunktionerSelvomAlligevelView } from './views/KonjunktionerSelvomAlligevelView.js';
 import { renderKonjunktionerFordiDerforView } from './views/KonjunktionerFordiDerforView.js';
+import { renderKonjunktionerSaaDuelView } from './views/KonjunktionerSaaDuelView.js';
 import { renderKonjunktionerTekstflowView } from './views/KonjunktionerTekstflowView.js';
 import { renderAdjektiverFysikView } from './views/AdjektiverFysikView.js';
 import { renderAdjektiverTidView } from './views/AdjektiverTidView.js';
@@ -94,6 +95,7 @@ import { renderDialogerSygdomJobView } from './views/DialogerSygdomJobView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
 import { renderSangEnebaerbuskView } from './views/SangEnebaerbuskView.js';
+import { renderSangGodmorgenLilleLandView } from './views/SangGodmorgenLilleLandView.js';
 import { renderHistorierSygdomJobView } from './views/HistorierSygdomJobView.js';
 import { renderHCAndersenView } from './views/HCAndersenView.js';
 import { renderSporgsmalInteractiveView } from './views/SporgsmalInteractiveView.js';
@@ -111,6 +113,12 @@ import { renderAdjectiveComparisonView } from './views/AdjectiveComparisonView.j
 import { renderVerbumMenuView } from './views/VerbumMenuView.js';
 import { renderTrorSynesMenerView } from './views/TrorSynesMenerView.js';
 import { renderPunktetOgBroenView } from './views/PunktetOgBroenView.js';
+import { renderVerberGrammatikHubView } from './views/VerberGrammatikHubView.js';
+import { renderVerberTider4View } from './views/VerberTider4View.js';
+import { renderVerberHarErView } from './views/VerberHarErView.js';
+import { renderVerberKraftHvileView } from './views/VerberKraftHvileView.js';
+import { renderVerberLiggerLaeserView } from './views/VerberLiggerLaeserView.js';
+import { renderMitSprogSammenlignetView } from './views/MitSprogSammenlignetView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
@@ -221,6 +229,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'konjunktioner_fordi_derfor') {
     appState.currentView = 'konjunktioner_fordi_derfor';
     renderKonjunktionerFordiDerforView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'konjunktioner_saa_duel') {
+    appState.currentView = 'konjunktioner_saa_duel';
+    renderKonjunktionerSaaDuelView(appDiv, navigate, extraData);
   } else if (viewTarget === 'konjunktioner_tekstflow') {
     appState.currentView = 'konjunktioner_tekstflow';
     renderKonjunktionerTekstflowView(appDiv, navigate, extraData);
@@ -400,6 +411,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'sang_enebaerbusk') {
     appState.currentView = 'sang_enebaerbusk';
     renderSangEnebaerbuskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sang_godmorgen_lille_land' || viewTarget === 'sang_godmorgen') {
+    appState.currentView = 'sang_godmorgen_lille_land';
+    renderSangGodmorgenLilleLandView(appDiv, navigate, extraData);
   } else if (viewTarget === 'hc_andersen_eventyr' || viewTarget === 'hc_andersen_menu' || viewTarget === 'hc_andersen') {
     appState.currentView = 'hc_andersen_eventyr';
     renderHCAndersenView(appDiv, navigate, extraData);
@@ -496,6 +510,38 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'punktet_og_broen') {
     appState.currentView = 'punktet_og_broen';
     renderPunktetOgBroenView(appDiv, navigate, extraData);
+  } else if (
+    viewTarget === 'verber_grammatik' ||
+    viewTarget === 'verber_tider_4' ||
+    viewTarget === 'verber_har_er' ||
+    viewTarget === 'verber_kraft_hvile' ||
+    viewTarget === 'verber_ligger_og_laeser'
+  ) {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1'
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = viewTarget;
+    if (viewTarget === 'verber_grammatik') renderVerberGrammatikHubView(appDiv, navigate, extraData);
+    else if (viewTarget === 'verber_tider_4') renderVerberTider4View(appDiv, navigate, extraData);
+    else if (viewTarget === 'verber_har_er') renderVerberHarErView(appDiv, navigate, extraData);
+    else if (viewTarget === 'verber_kraft_hvile') renderVerberKraftHvileView(appDiv, navigate, extraData);
+    else if (viewTarget === 'verber_ligger_og_laeser') renderVerberLiggerLaeserView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_sprog_sammenlignet') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1'
+    );
+    if (!isLocalhost) {
+      navigate('main', {}, true);
+      return;
+    }
+    appState.currentView = 'mit_sprog_sammenlignet';
+    renderMitSprogSammenlignetView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

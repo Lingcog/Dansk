@@ -593,15 +593,15 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     nav.className = 'adv-tabs-nav';
 
     const tabs = [
-        { id: 'vrimmel', label: getTranslation('fordiderf_tab_vrimmel') },
-        { id: 'kognitiv', label: getTranslation('fordiderf_tab_kognitiv') },
-        { id: 'traening2', label: getTranslation('fordiderf_tab_traening') },
-        { id: 'detektiv', label: getTranslation('fordiderf_tab_detektiv') },
-        { id: 'vendemaskine', label: '5. Sætnings-vendemaskinen (fordi ↔ derfor)' },
-        { id: 'builder', label: '6. Sætningsbyggeren og puslespillet' }
+        { id: 'kognitiv', label: '1. Kognitiv model & ordstilling' },
+        { id: 'vendemaskine', label: '2. Sætnings-vendemaskinen (fordi ↔ derfor)' },
+        { id: 'traening2', label: '3. Træning i kontekst' },
+        { id: 'detektiv', label: '4. Fordi/Derfor-Detektiven' },
+        { id: 'builder', label: '5. Sætningsbyggeren og puslespillet' }
     ];
 
-    let currentTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'vrimmel';
+    let rawTab = (extraData && (extraData.subPath || extraData.tab)) ? (extraData.subPath || extraData.tab) : 'kognitiv';
+    let currentTab = (rawTab === 'vrimmel' || !tabs.some(t => t.id === rawTab)) ? 'kognitiv' : rawTab;
 
     tabs.forEach(t => {
         const btn = document.createElement('button');
@@ -617,6 +617,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
     viewContainer.appendChild(tabContent);
 
     function switchTab(tabId) {
+        if (tabId === 'vrimmel' || !tabs.some(t => t.id === tabId)) tabId = 'kognitiv';
         currentTab = tabId;
         const lang = getLang();
         history.pushState(null, '', '#/' + lang + '/konjunktioner_fordi_derfor/' + tabId);
@@ -625,8 +626,7 @@ export function renderKonjunktionerFordiDerforView(container, navigateFn, extraD
         if (activeBtn) activeBtn.classList.add('active');
 
         tabContent.innerHTML = '';
-        if (tabId === 'vrimmel') renderTabVrimmel(tabContent);
-        else if (tabId === 'kognitiv') renderTabKognitiv(tabContent);
+        if (tabId === 'kognitiv') renderTabKognitiv(tabContent);
         else if (tabId === 'traening2') renderTabTraening2(tabContent);
         else if (tabId === 'detektiv') renderTabDetektiv(tabContent);
         else if (tabId === 'vendemaskine') renderTabVendemaskine(tabContent);

@@ -21,6 +21,17 @@ export function renderMainView(container, navigateFn) {
             action: () => navigateFn('dagens_opgave') // Navigates to DagensOpgaveView
         },
         {
+            icon: '🌍',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+            titleKey: 'mitSprogSammenlignetTitle',
+            descKey: 'mitSprogSammenlignetDesc',
+            fallbackTitle: 'Mit sprog sammenlignet med dansk',
+            fallbackDesc: 'Fra mindste lydtræk til hel samtale — se forskellen mellem dansk og dit eget sprog trin for trin.',
+            comingSoon: true,
+            comingSoonLabel: 'Kommer senere',
+            action: () => navigateFn('mit_sprog_sammenlignet')
+        },
+        {
             icon: '🧠',
             svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="10" y1="7" x2="16" y2="7"></line><line x1="10" y1="11" x2="14" y2="11"></line></svg>`,
             titleKey: 'laerNyeOrd',
@@ -74,13 +85,25 @@ export function renderMainView(container, navigateFn) {
         }
     ];
 
+    const isLocalhost = typeof window !== 'undefined' && (
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1'
+    );
+
     const grid = document.createElement('div');
     grid.className = 'grid';
 
     cardsData.forEach(data => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.onclick = data.action;
+        const isLocked = Boolean(data.comingSoon) && !isLocalhost;
+
+        if (isLocked) {
+            card.style.opacity = '0.6';
+            card.style.cursor = 'not-allowed';
+        } else {
+            card.onclick = data.action;
+        }
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
@@ -91,11 +114,28 @@ export function renderMainView(container, navigateFn) {
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
-        cardTitle.textContent = getTranslation(data.titleKey);
+        const transTitle = getTranslation(data.titleKey);
+        cardTitle.textContent = (transTitle && transTitle !== data.titleKey) ? transTitle : (data.fallbackTitle || transTitle);
+
+        if (data.comingSoon) {
+            const badge = document.createElement('span');
+            badge.style.display = 'inline-block';
+            badge.style.fontSize = '0.75rem';
+            badge.style.fontWeight = '700';
+            badge.style.background = 'rgba(255, 255, 255, 0.14)';
+            badge.style.border = '1px solid rgba(255, 255, 255, 0.25)';
+            badge.style.padding = '0.18rem 0.55rem';
+            badge.style.borderRadius = '8px';
+            badge.style.marginLeft = '0.5rem';
+            badge.style.verticalAlign = 'middle';
+            badge.textContent = `🔒 ${data.comingSoonLabel || 'Kommer senere'}`;
+            cardTitle.appendChild(badge);
+        }
 
         const cardDesc = document.createElement('div');
         cardDesc.className = 'card-desc';
-        cardDesc.textContent = getTranslation(data.descKey);
+        const transDesc = getTranslation(data.descKey);
+        cardDesc.textContent = (transDesc && transDesc !== data.descKey) ? transDesc : (data.fallbackDesc || transDesc);
 
         card.appendChild(icon);
         card.appendChild(cardTitle);

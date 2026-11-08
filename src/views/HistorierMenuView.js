@@ -102,7 +102,7 @@ export function renderHistorierMenuView(container, navigateFn) {
 
                     if (tapCount >= 5) {
                         setHCDevMode(true);
-                        alert(isEn ? '🔓 Developer mode activated!' : '🔓 Udviklertilstand aktiveret!');
+                        alert(isEn ? 'Developer mode activated!' : 'Udviklertilstand aktiveret!');
                         navigateFn('hc_andersen_eventyr');
                         return;
                     }
@@ -118,7 +118,11 @@ export function renderHistorierMenuView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        if (data.comingSoon && !isDev) {
+            icon.innerHTML = `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+        } else {
+            icon.textContent = data.icon;
+        }
 
         card.appendChild(icon);
 
@@ -127,12 +131,24 @@ export function renderHistorierMenuView(container, navigateFn) {
             if (!isDev) {
                 const badge = document.createElement('div');
                 badge.className = 'card-coming-soon-badge';
-                badge.innerHTML = `<span>🚧</span> <span>${isEn ? 'Coming soon' : 'Kommer snart'}</span>`;
+                badge.innerHTML = `
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 3px;">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>${isEn ? 'Locked · Coming soon' : 'Låst · Kommer snart'}</span>
+                `;
                 card.appendChild(badge);
             } else {
                 const badge = document.createElement('div');
                 badge.className = 'card-dev-badge';
-                badge.innerHTML = `<span>🔓</span> <span>${isEn ? 'Dev Mode (Active)' : 'Udviklertilstand (Aktiv)'}</span>`;
+                badge.innerHTML = `
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 3px;">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                    <span>${isEn ? 'Dev Mode (Active)' : 'Udviklertilstand (Aktiv)'}</span>
+                `;
                 card.appendChild(badge);
             }
         }
@@ -187,17 +203,22 @@ export function renderHistorierMenuView(container, navigateFn) {
         `;
 
         modal.innerHTML = `
-            <div style="font-size: 3.2rem; margin-bottom: 0.8rem;">🏰</div>
-            <div style="display: inline-block; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.5); color: #fde047; padding: 0.25rem 0.8rem; border-radius: 20px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
-                🚧 ${isEn ? 'Under Development' : 'Under udvikling'}
+            <div style="display:flex; justify-content:center; margin-bottom: 0.8rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.5); color: #fde047; padding: 0.25rem 0.8rem; border-radius: 20px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
+                <span>${isEn ? 'Under Development · Locked' : 'Under udvikling · Låst'}</span>
             </div>
             <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.8rem; color: #f8fafc;">
-                ${isEn ? "H.C. Andersen's Fairy Tales are coming soon!" : 'H.C. Andersens eventyr åbner snart!'}
+                ${isEn ? "H.C. Andersen's Fairy Tales are coming soon!" : 'H.C. Andersens eventyr er låst'}
             </h2>
             <p style="font-size: 0.98rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.8rem;">
                 ${isEn 
                     ? 'We are busy crafting an interactive fairy tale experience with search-and-find illustrations, sentence flow practice, vocabulary notes, and audio. It will be available very soon!' 
-                    : 'Vi lægger i øjeblikket sidste hånd på en eventyrlig læringsflade med interaktive vrimlebilleder, sætningstræning, gloser og oplæsning for danskkursister. Siden åbner inden længe!'}
+                    : 'Vi lægger i øjeblikket sidste hånd på en eventyrlig læringsflade med interaktive vrimlebilleder, sætningstræning, gloser og oplæsning for danskkursister. Siden er under udvikling og åbner snart!'}
             </p>
             <button id="hc-close-modal-btn" style="
                 background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);

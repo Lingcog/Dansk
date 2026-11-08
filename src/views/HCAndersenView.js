@@ -2279,17 +2279,22 @@ function renderComingSoonView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'hc-hero-card';
     hero.innerHTML = `
-        <div id="hc-coming-soon-castle" style="font-size: 3rem; margin-bottom: 0.8rem; cursor: pointer; user-select: none;">${SVG_BOOK}</div>
+        <div id="hc-coming-soon-castle" style="display:flex; justify-content:center; margin-bottom: 0.8rem; cursor: pointer; user-select: none;">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </div>
         <div class="hc-hero-badge" style="margin-bottom: 1.2rem;">
-            ${isEn ? 'Under Development · Coming Soon' : 'Under udvikling · Kommer snart'}
+            ${isEn ? 'Locked · Coming Soon' : 'Låst · Kommer snart'}
         </div>
         <h1 style="font-size: 2.3rem; font-weight: 800; margin: 0 0 1rem; color: #f8fafc;">
             H.C. Andersens Eventyr
         </h1>
         <p style="font-size: 1.08rem; color: #cbd5e1; max-width: 650px; margin: 0 auto 1.8rem; line-height: 1.65;">
             ${isEn
-                ? 'We are building an interactive Danish fairy tale universe with simplified classics, search-and-find scenes, line-by-line grammar coaching, and native audio. This section will open very soon!'
-                : 'Vi er i fuld gang med at skabe en eventyrlig læringsflade med H.C. Andersens udødelige eventyr, tilpasset danskkursister med detaljerede vrimlebilleder, sætningstræning, gloser og professionel oplæsning. Siden åbner snart!'}
+                ? 'We are building an interactive Danish fairy tale universe with simplified classics, search-and-find scenes, line-by-line grammar coaching, and native audio. This section is currently locked and will open soon!'
+                : 'Vi er i fuld gang med at skabe en eventyrlig læringsflade med H.C. Andersens udødelige eventyr tilpasset danskkursister med interaktive vrimlebilleder, sætningstræning, gloser og professionel oplæsning. Siden er under udvikling og åbner snart!'}
         </p>
         <button id="hc-teaser-back-btn" style="
             background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);

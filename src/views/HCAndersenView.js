@@ -1261,15 +1261,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             card.appendChild(legendBar);
         }
 
-        // 2. Render Interactive Tasks for Scene (Visuel detektiv + Grammatiske opgaver)
-        if (section.tasks) {
-            const tasksEl = createSectionTasks(section, index);
-            if (tasksEl) {
-                card.appendChild(tasksEl);
-            }
-        }
-
-        // 3. Render "Teksten" heading (Teksten flyttet til sidst)
+        // 2. Render "Teksten" heading & text body (lige under vrimlebilledet)
         const textHeading = document.createElement('div');
         textHeading.className = 'hc-text-heading';
         textHeading.innerHTML = `
@@ -1281,7 +1273,6 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         `;
         card.appendChild(textHeading);
 
-        // 4. Render Text Body or Sentence Flow
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
@@ -1321,6 +1312,15 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         }
 
         card.appendChild(textBody);
+
+        // 3. Render Interactive Tasks for Scene (Opgaver til scenen 🎯 - under teksten)
+        if (section.tasks) {
+            const tasksEl = createSectionTasks(section, index);
+            if (tasksEl) {
+                card.appendChild(tasksEl);
+            }
+        }
+
         return card;
     }
 

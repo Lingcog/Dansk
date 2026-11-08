@@ -514,7 +514,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         mainContent.appendChild(readerWrapper);
     }
 
-    function createSectionTasks(section, index, onCategoryChange) {
+    function createSectionTasks(section, index, onCategoryChange, onReadNextSentence) {
         if (!section.tasks) return null;
 
         const categories = [
@@ -541,18 +541,42 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             userAnswers[c.key] = {};
         });
 
+        let currentRevealedCount = 1;
+        let isAllLinesMode = false;
+        const totalLines = (section.dialogue && section.dialogue.length > 0) ? section.dialogue.length : 1;
+
+        function getUnlockedQuestions(catKey) {
+            const cat = section.tasks[catKey];
+            if (!cat || !cat.questions) return [];
+            if (isAllLinesMode || currentRevealedCount >= totalLines) {
+                return cat.questions;
+            }
+            return cat.questions.filter(q => !q.line || q.line <= currentRevealedCount);
+        }
+
         // Top Header
         const tasksHeader = document.createElement('div');
         tasksHeader.className = 'hc-tasks-header';
-        tasksHeader.innerHTML = `
-            <div>
-                <div class="hc-tasks-title">
-                    <span>🎯</span>
-                    <span>${isEn ? 'Scene Exercises & Detective' : 'Opgaver til scenen'}</span>
+
+        function renderHeader() {
+            const isAllUnlocked = isAllLinesMode || currentRevealedCount >= totalLines;
+            tasksHeader.innerHTML = `
+                <div>
+                    <div class="hc-tasks-title">
+                        <span>🎯</span>
+                        <span>${isEn ? 'Scene Exercises & Detective' : 'Opgaver til scenen'}</span>
+                    </div>
+                    <div class="hc-tasks-subtitle">${isEn ? 'Practice observation and grammar step-by-step as you read:' : 'Træn visuel opmærksomhed og ordklasser trin for trin i takt med læsningen:'}</div>
                 </div>
-                <div class="hc-tasks-subtitle">${isEn ? 'Practice visual observation and central word classes from the wimmelbild:' : 'Træn visuel opmærksomhed og centrale ordklasser fra vrimlebilledet:'}</div>
-            </div>
-        `;
+                <div class="hc-tasks-flow-badge">
+                    <span>${isAllUnlocked ? '🎉' : '📜'}</span>
+                    <span>${isAllUnlocked 
+                        ? (isEn ? `All ${totalLines} sentences read – All tasks unlocked!` : `Alle ${totalLines} sætninger læst – Alle opgaver er åbne!`) 
+                        : (isEn ? `Unlocked for sentence 1-${currentRevealedCount} of ${totalLines}` : `Låst op til og med sætning ${currentRevealedCount} af ${totalLines}`)}</span>
+                </div>
+            `;
+        }
+        renderHeader();
         tasksWrap.appendChild(tasksHeader);
 
         // Tab buttons container
@@ -560,15 +584,30 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         tabsRow.className = 'hc-task-tabs';
 
         const tabButtons = {};
+        function updateTabButtons() {
+            categories.forEach(cat => {
+                const btn = tabButtons[cat.key];
+                if (!btn) return;
+                const unlocked = getUnlockedQuestions(cat.key);
+                const total = section.tasks[cat.key].questions.length;
+                btn.innerHTML = `
+                    <span>${cat.icon}</span>
+                    <span>${cat.label}</span>
+                    <span class="hc-task-tab-count">(${unlocked.length}/${total})</span>
+                `;
+            });
+        }
+
         categories.forEach(cat => {
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.className = `hc-task-tab-btn tab-${cat.key} ${cat.key === activeCatKey ? 'active' : ''}`;
-            const count = section.tasks[cat.key].questions.length;
+            const unlocked = getUnlockedQuestions(cat.key);
+            const total = section.tasks[cat.key].questions.length;
             btn.innerHTML = `
                 <span>${cat.icon}</span>
                 <span>${cat.label}</span>
-                <span class="hc-task-tab-count">(${count})</span>
+                <span class="hc-task-tab-count">(${unlocked.length}/${total})</span>
             `;
             btn.onclick = () => {
                 activeCatKey = cat.key;
@@ -601,16 +640,15 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             const catData = section.tasks[activeCatKey];
             if (!catData || !catData.questions || catData.questions.length === 0) return;
 
-            const qIdx = currentQuestionIdx[activeCatKey];
+            const unlocked = getUnlockedQuestions(activeCatKey);
             const totalQ = catData.questions.length;
-            const currentQ = catData.questions[qIdx];
-            const isCompleted = qIdx >= totalQ;
+            const qIdx = currentQuestionIdx[activeCatKey];
 
             const panel = document.createElement('div');
             panel.className = 'hc-task-panel';
 
-            if (isCompleted) {
-                // Show celebration summary for this category
+            // Case A: All questions in this category completed
+            if (qIdx >= totalQ) {
                 const score = catScores[activeCatKey];
                 const pct = Math.round((score / totalQ) * 100);
                 panel.innerHTML = `
@@ -633,6 +671,31 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 return;
             }
 
+            // Case B: Answered all currently unlocked questions, more await next sentence
+            if (qIdx >= unlocked.length && unlocked.length < totalQ) {
+                panel.innerHTML = `
+                    <div class="hc-task-sentence-milestone">
+                        <div class="milestone-icon">✨</div>
+                        <h4>${isEn ? `Tasks up to sentence ${currentRevealedCount} completed!` : `Opgaver op til sætning ${currentRevealedCount} er løst!`}</h4>
+                        <p>${isEn ? `Read sentence ${currentRevealedCount + 1} above to unlock the next task (${unlocked.length + 1} of ${totalQ}) in this category.` : `Læs næste sætning ovenfor (Sætning ${currentRevealedCount + 1} af ${totalLines}) for at låse op for næste opgave (${unlocked.length + 1} af ${totalQ}) i denne kategori.`}</p>
+                        <button type="button" class="hc-task-read-next-btn">
+                            <span>${isEn ? `Read next sentence (Sentence ${currentRevealedCount + 1})` : `Læs næste sætning ovenfor (Sætning ${currentRevealedCount + 1})`}</span>
+                            <span>➔</span>
+                        </button>
+                    </div>
+                `;
+                panel.querySelector('.hc-task-read-next-btn').onclick = () => {
+                    if (onReadNextSentence) {
+                        onReadNextSentence();
+                    }
+                };
+                panelHolder.appendChild(panel);
+                return;
+            }
+
+            const currentQ = unlocked[qIdx];
+            if (!currentQ) return;
+
             // Render current question
             const headerRow = document.createElement('div');
             headerRow.className = 'hc-task-panel-header';
@@ -641,10 +704,13 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     <span class="hc-task-badge ${activeCatKey}">
                         ${currentQ.badge || catData.badge || 'Opgave'}
                     </span>
-                    <span class="hc-task-progress-text">${isEn ? `Question ${qIdx + 1} of ${totalQ}` : `Spørgsmål ${qIdx + 1} af ${totalQ}`}</span>
+                    <span class="hc-task-line-badge">
+                        📜 ${isEn ? `Sentence ${currentQ.line || 1} of ${totalLines}` : `Sætning ${currentQ.line || 1} af ${totalLines}`}
+                    </span>
+                    <span class="hc-task-progress-text">${isEn ? `Question ${qIdx + 1} of ${unlocked.length}` : `Opgave ${qIdx + 1} af ${unlocked.length}`} <span style="opacity:0.65;">(${unlocked.length}/${totalQ})</span></span>
                 </div>
                 <div class="hc-task-score-pill">
-                    ⭐ ${catScores[activeCatKey]} / ${totalQ}
+                    ⭐ ${catScores[activeCatKey]} / ${unlocked.length}
                 </div>
             `;
             panel.appendChild(headerRow);
@@ -736,6 +802,18 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             panel.appendChild(optionsGrid);
 
             function showFeedback(isCorrect) {
+                const isLastUnlocked = qIdx === unlocked.length - 1;
+                const hasMoreInCat = unlocked.length < totalQ;
+
+                let nextBtnLabel = isEn ? 'Next question ➔' : 'Næste spørgsmål ➔';
+                if (isLastUnlocked) {
+                    if (hasMoreInCat) {
+                        nextBtnLabel = isEn ? `Continue to sentence ${currentRevealedCount + 1} ➔` : `Fortsæt til næste sætning ➔`;
+                    } else {
+                        nextBtnLabel = isEn ? 'See result 🏆' : 'Se resultat 🏆';
+                    }
+                }
+
                 feedbackWrap.innerHTML = `
                     <div class="hc-task-feedback ${isCorrect ? 'correct' : 'incorrect'}">
                         <div style="display: flex; align-items: flex-start; gap: 0.6rem;">
@@ -746,12 +824,15 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                             </div>
                         </div>
                         <button type="button" class="hc-task-next-btn">
-                            ${qIdx < totalQ - 1 ? (isEn ? 'Next question ➔' : 'Næste spørgsmål ➔') : (isEn ? 'See result 🏆' : 'Se resultat 🏆')}
+                            ${nextBtnLabel}
                         </button>
                     </div>
                 `;
                 feedbackWrap.querySelector('.hc-task-next-btn').onclick = () => {
                     currentQuestionIdx[activeCatKey]++;
+                    if (isLastUnlocked && hasMoreInCat && onReadNextSentence) {
+                        onReadNextSentence();
+                    }
                     renderActivePanel();
                 };
             }
@@ -763,6 +844,14 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             panel.appendChild(feedbackWrap);
             panelHolder.appendChild(panel);
         }
+
+        tasksWrap.updateFlowProgress = (progress) => {
+            currentRevealedCount = progress.revealedCount;
+            isAllLinesMode = progress.isAllViewMode;
+            renderHeader();
+            updateTabButtons();
+            renderActivePanel();
+        };
 
         renderActivePanel();
         return tasksWrap;
@@ -1207,12 +1296,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         <span>➔</span>
                     `;
                     nextBtn.onclick = () => {
-                        revealedCount++;
-                        renderFlow();
-                        setTimeout(() => {
-                            const latest = flowContainer.querySelector('.latest-revealed');
-                            if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }, 60);
+                        flowContainer.advanceSentence();
                     };
 
                     const hintText = document.createElement('div');
@@ -1229,7 +1313,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     compCard.innerHTML = `
                         <div class="completion-icon">🎉</div>
                         <h4>${isEn ? 'Scene completed!' : 'Hele scenen er læst og forstået!'}</h4>
-                        <p>${isEn ? 'Great job! You have read all sentences in this scene. The exercises have now unlocked below ↓' : 'Flot klaret! Du har læst alle sætninger i denne scene. Opgaverne til scenen er nu låst op nedenfor ↓'}</p>
+                        <p>${isEn ? 'Great job! You have read all sentences in this scene. All exercises are now 100% unlocked below ↓' : 'Flot klaret! Du har læst alle sætninger i denne scene. Alle opgaver er nu 100% åbne nedenfor ↓'}</p>
                         <div class="completion-actions">
                             <button type="button" class="hc-restart-flow-btn">
                                 <span>🔄</span> <span>${isEn ? 'Read scene again' : 'Læs scenen forfra'}</span>
@@ -1246,6 +1330,17 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 flowContainer.appendChild(navBar);
             }
         }
+
+        flowContainer.advanceSentence = () => {
+            if (revealedCount < totalLines) {
+                revealedCount++;
+                renderFlow();
+                setTimeout(() => {
+                    const latest = flowContainer.querySelector('.latest-revealed');
+                    if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 60);
+            }
+        };
 
         renderFlow();
         return flowContainer;
@@ -1359,61 +1454,32 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         textBody.className = 'section-text-body';
 
         // 3. Render Interactive Tasks for Scene (Opgaver til scenen 🎯 - under teksten)
+        let flowEl = null;
         let tasksEl = null;
+
         if (section.tasks) {
             tasksEl = createSectionTasks(section, index, (newCatKey) => {
                 setHighlight(newCatKey);
+            }, () => {
+                if (flowEl && flowEl.advanceSentence) {
+                    flowEl.advanceSentence();
+                }
             });
         }
 
         const hasDialogue = section.dialogue && section.dialogue.length > 0;
         const sceneKey = `hc_scene_${story?.id || 'story'}_${index}`;
-        let isSceneUnlocked = !hasDialogue || (completedScenes[sceneKey] === true);
-
-        const lockedTeaser = document.createElement('div');
-        lockedTeaser.className = 'hc-tasks-locked-teaser';
-        const totalLines = hasDialogue ? section.dialogue.length : 1;
-        lockedTeaser.innerHTML = `
-            <div class="hc-locked-badge">🎯</div>
-            <div class="hc-locked-info">
-                <div class="hc-locked-title">${isEn ? 'Scene Exercises & Visual Detective' : 'Opgaver til scenen & Visuel detektiv'}</div>
-                <div class="hc-locked-hint">${isEn ? `Read all ${totalLines} sentences in this scene above to unlock the exercises.` : `Læs alle ${totalLines} sætninger i denne scene ovenfor for at låse op for opgaverne.`}</div>
-            </div>
-            <div class="hc-locked-status-pill">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                <span class="locked-count-text">1 / ${totalLines} ${isEn ? 'read' : 'læst'}</span>
-            </div>
-        `;
-
-        if (isSceneUnlocked) {
-            lockedTeaser.style.display = 'none';
-            if (tasksEl) {
-                tasksEl.style.display = 'block';
-            }
-        } else {
-            lockedTeaser.style.display = 'flex';
-            if (tasksEl) {
-                tasksEl.style.display = 'none';
-            }
-        }
 
         if (hasDialogue) {
-            textBody.appendChild(createSentenceFlow(section, index, (progress) => {
-                const countEl = lockedTeaser.querySelector('.locked-count-text');
-                if (countEl) {
-                    countEl.textContent = `${progress.revealedCount} / ${progress.totalLines} ${isEn ? 'read' : 'læst'}`;
+            flowEl = createSentenceFlow(section, index, (progress) => {
+                if (tasksEl && tasksEl.updateFlowProgress) {
+                    tasksEl.updateFlowProgress(progress);
                 }
-
                 if (progress.isCompleted) {
                     completedScenes[sceneKey] = true;
-                    isSceneUnlocked = true;
-                    lockedTeaser.style.display = 'none';
-                    if (tasksEl && tasksEl.style.display === 'none') {
-                        tasksEl.style.display = 'block';
-                        tasksEl.classList.add('tasks-slide-in');
-                    }
                 }
-            }));
+            });
+            textBody.appendChild(flowEl);
         } else {
             // Standard fairy tale prose paragraphs
             const paragraphs = section.text.split('\n\n');
@@ -1450,7 +1516,6 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         card.appendChild(textBody);
 
         if (tasksEl) {
-            card.appendChild(lockedTeaser);
             card.appendChild(tasksEl);
         }
 
@@ -3593,6 +3658,77 @@ function injectStyles() {
             font-size: 0.88rem;
             color: #94a3b8;
             margin-top: 0.2rem;
+        }
+        .hc-tasks-flow-badge {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .hc-task-line-badge {
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: #fde047;
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            border-radius: 8px;
+            padding: 0.2rem 0.55rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .hc-task-sentence-milestone {
+            text-align: center;
+            padding: 1.8rem 1.2rem;
+            background: rgba(15, 23, 42, 0.65);
+            border: 1.5px dashed rgba(56, 189, 248, 0.35);
+            border-radius: 14px;
+            animation: fadeIn 0.3s ease;
+        }
+        .hc-task-sentence-milestone .milestone-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .hc-task-sentence-milestone h4 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 0.4rem;
+        }
+        .hc-task-sentence-milestone p {
+            font-size: 0.92rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.45;
+        }
+        .hc-task-read-next-btn {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.65rem 1.4rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hc-task-read-next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+            background: linear-gradient(135deg, #0369a1, #1d4ed8);
         }
         .hc-task-tabs {
             display: flex;

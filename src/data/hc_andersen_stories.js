@@ -840,20 +840,10 @@ export const hcAndersenStories = [
                         "desc": "Kig grundigt på vrimlebilledet af bondegården og svar på spørgsmålene om de centrale detaljer:",
                         "questions": [
                             {
-                                "id": "s1_d1",
-                                "prompt": "Kig på Klods-Hans i midten. Hvilket dyr rider han på i stedet for en hest?",
-                                "options": [
-                                    "En ged / gedebuk",
-                                    "En gris",
-                                    "En ko",
-                                    "En stor hund"
-                                ],
-                                "correct": 0,
-                                "explanation": "Rigtigt spottet! Klods-Hans rider stolt på gårdens gedebuk med store horn i stedet for en hest!"
-                            },
-                            {
                                 "id": "s1_d2",
-                                "prompt": "Hvilket redskab af træ og jern står ved siden af stalddøren på jorden?",
+                                "line": 1,
+                                "badge": "🔍 Detaljespot",
+                                "prompt": "Hvilket redskab af træ og jern står ved siden af stalddøren på jorden på den gamle gård?",
                                 "options": [
                                     "En trillebør",
                                     "En stige",
@@ -864,20 +854,10 @@ export const hcAndersenStories = [
                                 "explanation": "Rigtigt observeret! En gammel trillebør af træ står på gårdspladsen ved stalden."
                             },
                             {
-                                "id": "s1_d3",
-                                "prompt": "Hvad rider de to ældre brødre til venstre på, da de skal til slottet?",
-                                "options": [
-                                    "Fine, stolte rideheste",
-                                    "Trækvogne",
-                                    "Små æsler",
-                                    "Cykler"
-                                ],
-                                "correct": 0,
-                                "explanation": "Flot observeret! Brødrene har fået fine hvide og brune heste af faderen."
-                            },
-                            {
                                 "id": "s1_d4",
-                                "prompt": "Hvem står til højre foran stalddøren og ser sønnerne ride afsted?",
+                                "line": 2,
+                                "badge": "🔍 Personspot",
+                                "prompt": "Hvem står til højre foran stalddøren og ser sønnerne forberede sig på at vinde kongedatteren?",
                                 "options": [
                                     "Faren / den gamle bonde",
                                     "Kongen",
@@ -885,7 +865,63 @@ export const hcAndersenStories = [
                                     "En soldat"
                                 ],
                                 "correct": 0,
-                                "explanation": "Korrekt! Faren står ved stalddøren og giver Klods-Hans lov til at tage geden."
+                                "explanation": "Korrekt! Faren står ved stalddøren og taler med sønnerne om kongens datter."
+                            },
+                            {
+                                "id": "s1_d3",
+                                "line": 3,
+                                "badge": "🔍 Rideheste",
+                                "prompt": "Hvad rider de to ældre brødre på, da de skal afsted mod slottet?",
+                                "options": [
+                                    "Fine, stolte rideheste",
+                                    "Trækvogne",
+                                    "Små æsler",
+                                    "Cykler"
+                                ],
+                                "correct": 0,
+                                "explanation": "Flot observeret! Brødrene har fået fine hvide og brune rideheste af faderen."
+                            },
+                            {
+                                "id": "s1_d5",
+                                "line": 4,
+                                "badge": "🔍 Musik & Sang",
+                                "prompt": "Hvad kigger mellembror stolt på, mens han forbereder sine sange til prinsessen?",
+                                "options": [
+                                    "En nodepapir-rulle / visebog",
+                                    "Et spejl",
+                                    "En hestesko",
+                                    "Et sværd"
+                                ],
+                                "correct": 0,
+                                "explanation": "Rigtigt spottet! Mellembror øver sig flittigt på sine sange og viser sin musikalitet."
+                            },
+                            {
+                                "id": "s1_d1",
+                                "line": 5,
+                                "badge": "🔍 Dyrespot",
+                                "prompt": "Kig på Klods-Hans i midten. Hvilket dyr rider han stolt på i stedet for en hest?",
+                                "options": [
+                                    "En ged / gedebuk med store horn",
+                                    "En gris",
+                                    "En ko",
+                                    "En stor hund"
+                                ],
+                                "correct": 0,
+                                "explanation": "Rigtigt spottet! Klods-Hans rider stolt på gårdens gedebuk med store horn i stedet for en hest!"
+                            },
+                            {
+                                "id": "s1_d6",
+                                "line": 6,
+                                "badge": "🔍 Afsked",
+                                "prompt": "Hvordan reagerer faren, da Klods-Hans vil ride afsted på geden?",
+                                "options": [
+                                    "Han smiler overbærende og giver ham lov",
+                                    "Han bliver rasende og råber",
+                                    "Han græder af sorg",
+                                    "Han låser stalden"
+                                ],
+                                "correct": 0,
+                                "explanation": "Præcis! Faren ryster lidt på hovedet og siger smilende: 'Tag du bare geden, Klods-Hans!'"
                             }
                         ]
                     },
@@ -896,22 +932,24 @@ export const hcAndersenStories = [
                         "desc": "Træn kategorisering og semantiske relationer for scenens centrale navneord:",
                         "questions": [
                             {
-                                "id": "s1_s1",
+                                "id": "s1_s3",
+                                "line": 1,
                                 "badge": "🟢 Overbegreb",
-                                "prompt": "Hvad er overbegrebet for **en hest** og **en ged** på bondegården?",
+                                "prompt": "Fortælleren nævner **en gammel gård**. Hvad er overbegrebet for en gård?",
                                 "options": [
-                                    "Et husdyr (eller pattedyr)",
-                                    "Et køretøj",
-                                    "En bygning",
-                                    "Et møbel"
+                                    "Et landbrug (eller en landejendom)",
+                                    "En forlystelsespark",
+                                    "Et transportmiddel",
+                                    "Et musikinstrument"
                                 ],
                                 "correct": 0,
-                                "explanation": "Både en hest og en ged er *husdyr* – dyr som mennesker holder på en gård."
+                                "explanation": "En bondegård er et *landbrug*, hvor man dyrker jorden og holder husdyr."
                             },
                             {
                                 "id": "s1_s2",
+                                "line": 1,
                                 "badge": "🟢 Underbegreb",
-                                "prompt": "Hvad er et underbegreb til overbegrebet **et familiemedlem**?",
+                                "prompt": "Fortælleren fortæller om en far og tre sønner. Hvad er et underbegreb til overbegrebet **et familiemedlem**?",
                                 "options": [
                                     "En søn (eller en far)",
                                     "En ged",
@@ -922,28 +960,100 @@ export const hcAndersenStories = [
                                 "explanation": "*Familiemedlem* er overbegrebet, og *en søn* eller *en far* er underbegreber (familiemedlemmer)."
                             },
                             {
-                                "id": "s1_s3",
+                                "id": "s1_s4",
+                                "line": 2,
                                 "badge": "🟢 Overbegreb",
-                                "prompt": "Hvad er overbegrebet for **en bondegård**?",
+                                "prompt": "Faren taler om **kongen** og **hans datter**. Hvilket overbegreb dækker disse personer?",
                                 "options": [
-                                    "Et landbrug (eller en landejendom)",
-                                    "En forlystelsespark",
-                                    "Et transportmiddel",
-                                    "Et musikinstrument"
+                                    "Kongelige personer / kongelige titler",
+                                    "Håndværkere",
+                                    "Husdyr",
+                                    "Køretøjer"
                                 ],
                                 "correct": 0,
-                                "explanation": "En bondegård er et *landbrug*, hvor man dyrker jorden og holder husdyr."
+                                "explanation": "Både en konge, en dronning og en prinsesse tilhører overbegrebet *kongelige personer*."
+                            },
+                            {
+                                "id": "s1_s5",
+                                "line": 3,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Storebror vil ride til **slottet**. Hvad er overbegrebet for et slot og en gård?",
+                                "options": [
+                                    "En bygning / beboelse",
+                                    "Et fartøj",
+                                    "Et haveværktøj",
+                                    "Et stykke legetøj"
+                                ],
+                                "correct": 0,
+                                "explanation": "Både et slot, en gård og et hus er *bygninger* og *beboelser*."
+                            },
+                            {
+                                "id": "s1_s6",
+                                "line": 4,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Mellembror kan mange **sange**. Hvilket overbegreb tilhører en sang?",
+                                "options": [
+                                    "Musik (eller et musikværk)",
+                                    "Et køkkenredskab",
+                                    "En beklædningsgenstand",
+                                    "Et husdyr"
+                                ],
+                                "correct": 0,
+                                "explanation": "En sang, en melodi og en symfoni er underbegreber til overbegrebet *musik*."
+                            },
+                            {
+                                "id": "s1_s1",
+                                "line": 5,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Klods-Hans har ingen hest, men tager en ged. Hvad er overbegrebet for **en hest** og **en ged** på en bondegård?",
+                                "options": [
+                                    "Et husdyr (eller pattedyr)",
+                                    "Et køretøj",
+                                    "En bygning",
+                                    "Et møbel"
+                                ],
+                                "correct": 0,
+                                "explanation": "Både en hest og en ged er *husdyr* – dyr som mennesker holder på en gård."
+                            },
+                            {
+                                "id": "s1_s7",
+                                "line": 6,
+                                "badge": "🟢 Bestemthed",
+                                "prompt": "Faren siger: 'Tag du bare **geden**, Klods-Hans.' Hvilken form har substantivet 'geden' her?",
+                                "options": [
+                                    "Bestemt form ental (-en)",
+                                    "Ubestemt form ental (en ged)",
+                                    "Bestemt form flertal (gederne)",
+                                    "Ubestemt form flertal (geder)"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Geden' er bestemt form ental (den konkrete ged på gårdspladsen)."
                             }
                         ]
                     },
                     "verber": {
-                        "title": "Verber: Modsætninger og synonymer",
+                        "title": "Verber: Bøjning, modsætninger og synonymer",
                         "badge": "🔴 Modsætninger & synonymer",
                         "icon": "🔴",
-                        "desc": "Træn handlingernes modpoler og synonymer for udsagnsordene i scenen:",
+                        "desc": "Træn handlingernes tider, modpoler og synonymer for scenens udsagnsord:",
                         "questions": [
                             {
+                                "id": "s1_v0",
+                                "line": 1,
+                                "badge": "🔴 Verbetid (Datid)",
+                                "prompt": "Fortælleren beretter: '... som **havde** tre sønner'. Hvilken tid står verbet 'havde' i?",
+                                "options": [
+                                    "Datid (præteritum) af at have",
+                                    "Nutid (præsens)",
+                                    "Fremtid (futurum)",
+                                    "Bydeform (imperativ)"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Havde' er datid (præteritum) af det uregelmæssige verbum *at have* (*har* i nutid, *havde* i datid)."
+                            },
+                            {
                                 "id": "s1_v1",
+                                "line": 2,
                                 "badge": "🔴 Modsætning (Antonym)",
                                 "prompt": "Faren siger: 'Den, som taler bedst, vinder hende.' Hvad er det modsatte af **at vinde**?",
                                 "options": [
@@ -957,6 +1067,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_v2",
+                                "line": 3,
                                 "badge": "🔴 Synonym",
                                 "prompt": "Storebror vil tale om komplicerede ting. Hvilket verbum er et synonym til **at tale**?",
                                 "options": [
@@ -970,6 +1081,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_v3",
+                                "line": 4,
                                 "badge": "🔴 Modsætning (Antonym)",
                                 "prompt": "Mellembror siger: 'Jeg kender mange sange.' Hvad er det modsatte af **at kende** eller huske noget?",
                                 "options": [
@@ -980,6 +1092,34 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "Hvis du ikke *kender* eller husker sangen, har du *glemt* den eller er uvidende om den."
+                            },
+                            {
+                                "id": "s1_v4",
+                                "line": 5,
+                                "badge": "🔴 Synonym",
+                                "prompt": "Klods-Hans råber: 'Jeg **prøver** også!' Hvilket verbum er et synonym til at prøve her?",
+                                "options": [
+                                    "at forsøge",
+                                    "at opgive",
+                                    "at vente",
+                                    "at sove"
+                                ],
+                                "correct": 0,
+                                "explanation": "*At prøve* og *at forsøge* er synonymer for at gøre et forsøg på noget nyt."
+                            },
+                            {
+                                "id": "s1_v5",
+                                "line": 6,
+                                "badge": "🔴 Bydeform (Imperativ)",
+                                "prompt": "Faren siger til sønnen: '**Tag** du bare geden, Klods-Hans.' Hvilken form af verbet er 'Tag'?",
+                                "options": [
+                                    "Bydeform (imperativ - opfordring)",
+                                    "Datid (præteritum)",
+                                    "Førnutid (perfektum)",
+                                    "Navneform (infinitiv)"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Tag' er bydeformen (imperativ) af verbet *at tage*. Det udtrykker en direkte tilladelse eller opfordring."
                             }
                         ]
                     },
@@ -990,7 +1130,36 @@ export const hcAndersenStories = [
                         "desc": "Træn tillægsord der beskriver personernes egenskaber og genstande i scenen:",
                         "questions": [
                             {
+                                "id": "s1_a0",
+                                "line": 1,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Fortælleren beretter om en **gammel** far. Hvad er det modsatte af 'gammel' om et menneske?",
+                                "options": [
+                                    "ung",
+                                    "klog",
+                                    "rig",
+                                    "høj"
+                                ],
+                                "correct": 0,
+                                "explanation": "Om mennesker er modpolen til *gammel* ordet *ung* (om ting bruges modpolen *ny*)."
+                            },
+                            {
+                                "id": "s1_a3",
+                                "line": 2,
+                                "badge": "🟠 Gradbøjning",
+                                "prompt": "Hvordan gradbøjes det uregelmæssige adjektiv **god** ('Den der taler bedst...')?",
+                                "options": [
+                                    "god – bedre – bedst",
+                                    "god – godere – godest",
+                                    "god – mere god – mest god",
+                                    "klog – klogere – klogest"
+                                ],
+                                "correct": 0,
+                                "explanation": "*God* er uregelmæssigt: positiv: *god*, komparativ: *bedre*, superlativ: *bedst*!"
+                            },
+                            {
                                 "id": "s1_a1",
+                                "line": 3,
                                 "badge": "🟠 Modsætning (Antonym)",
                                 "prompt": "Storebror siger: 'Jeg er meget klog.' Hvad er det modsatte af **klog**?",
                                 "options": [
@@ -1004,6 +1173,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_a2",
+                                "line": 4,
                                 "badge": "🟠 Modsætning (Antonym)",
                                 "prompt": "Mellembror siger: 'Ja, jeg er altid glad.' Hvad er det modsatte af **glad**?",
                                 "options": [
@@ -1016,17 +1186,32 @@ export const hcAndersenStories = [
                                 "explanation": "Det modsatte af at være *glad* er at være *trist* eller *ked af det*."
                             },
                             {
-                                "id": "s1_a3",
-                                "badge": "🟠 Gradbøjning",
-                                "prompt": "Hvordan gradbøjes det uregelmæssige adjektiv **god** ('Den der taler bedst...')?",
+                                "id": "s1_a4",
+                                "line": 5,
+                                "badge": "🟠 Betydning",
+                                "prompt": "Klods-Hans udbryder: 'Jeg har **ingen** hest'. Hvilken betydning har ordet 'ingen' her?",
                                 "options": [
-                                    "god – bedre – bedst",
-                                    "god – godere – godest",
-                                    "god – mere god – mest god",
-                                    "klog – klogere – klogest"
+                                    "Nul / ikke én eneste hest (benægtelse)",
+                                    "Mange heste",
+                                    "En meget hurtig hest",
+                                    "En lånt hest"
                                 ],
                                 "correct": 0,
-                                "explanation": "*God* er uregelmæssigt: positiv: *god*, komparativ: *bedre*, superlativ: *bedst*!"
+                                "explanation": "'Ingen' angiver 0 stk. Klods-Hans ejer ikke en hest, så han må tage til takke med geden."
+                            },
+                            {
+                                "id": "s1_a5",
+                                "line": 6,
+                                "badge": "🟠 Gradbøjning",
+                                "prompt": "Hvordan gradbøjes det regelmæssige adjektiv **klog** ('brødrene der var så kloge')?",
+                                "options": [
+                                    "klog – klogere – klogest",
+                                    "klog – mere klog – mest klog",
+                                    "klog – klogt – kloge",
+                                    "god – bedre – bedst"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Klog* gradbøjes regelmæssigt med *-ere* og *-est*: *klog – klogere – klogest*."
                             }
                         ]
                     },
@@ -1034,10 +1219,39 @@ export const hcAndersenStories = [
                         "title": "Adverbier: Gradbøjning og synonymer",
                         "badge": "🔵 Gradbøjning & synonymer",
                         "icon": "🔵",
-                        "desc": "Træn de centrale biord der justerer grad, tid og frekvens:",
+                        "desc": "Træn de centrale biord der justerer grad, tid, sted og frekvens:",
                         "questions": [
                             {
+                                "id": "s1_adv0",
+                                "line": 1,
+                                "badge": "🔵 Stedsadverbium",
+                                "prompt": "Fortælleren åbner scenen: '**Ude** på landet var **der** en gammel gård'. Hvilken type ord er 'ude' og 'der'?",
+                                "options": [
+                                    "Stedsadverbier (angiver placering i rummet)",
+                                    "Tidsadverbier (angiver klokkeslæt)",
+                                    "Gradsadverbier (angiver styrke)",
+                                    "Mådesadverbier (angiver facon)"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Ude' og 'der' er stedsadverbier, der etablerer historiens fysiske ramme ude på landet."
+                            },
+                            {
+                                "id": "s1_adv4",
+                                "line": 2,
+                                "badge": "🔵 Gradsadverbium",
+                                "prompt": "Faren siger: 'Den, som taler **bedst**, vinder hende.' Hvilken form er 'bedst' af mådesadverbiet **godt**?",
+                                "options": [
+                                    "Superlativ (højeste grad: godt – bedre – bedst)",
+                                    "Positiv (grundform)",
+                                    "Komparativ (højere grad)",
+                                    "Nutidsform"
+                                ],
+                                "correct": 0,
+                                "explanation": "Når man taler *godt*, er rækkefølgen: *godt – bedre – bedst* (superlativ)."
+                            },
+                            {
                                 "id": "s1_adv1",
+                                "line": 3,
                                 "badge": "🔵 Gradbøjning",
                                 "prompt": "Hvordan gradbøjes gradsadverbiet **meget** ('Jeg er meget klog')?",
                                 "options": [
@@ -1051,6 +1265,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_adv2",
+                                "line": 4,
                                 "badge": "🔵 Modsætning (Antonym)",
                                 "prompt": "Mellembror siger: 'Jeg er altid glad.' Hvad er det modsatte af tidsadverbiet **altid**?",
                                 "options": [
@@ -1064,6 +1279,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_adv3",
+                                "line": 5,
                                 "badge": "🔵 Synonym",
                                 "prompt": "Klods-Hans råber: 'Jeg prøver også!' Hvilket adverbium kan betyde det samme som **også**?",
                                 "options": [
@@ -1074,6 +1290,20 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*Også* og *ligeledes* betyder, at der tilføjes endnu en person eller handling."
+                            },
+                            {
+                                "id": "s1_adv5",
+                                "line": 6,
+                                "badge": "🔵 Talesprogsadverbium",
+                                "prompt": "Faren siger: 'Tag du **bare** geden, Klods-Hans.' Hvilken funktion har det lille talesprogsord 'bare' her?",
+                                "options": [
+                                    "Opmuntring / tilladelse ('gør det roligt uden betænkning')",
+                                    "En benægtelse ('gør det endelig ikke')",
+                                    "En tidsangivelse i går",
+                                    "En advarsel mod fare"
+                                ],
+                                "correct": 0,
+                                "explanation": "I dansk talesprog bruges *bare* ofte til at give en venlig tilladelse eller opmuntring ('gør du roligt det')."
                             }
                         ]
                     }
@@ -1495,6 +1725,8 @@ export const hcAndersenStories = [
                         "questions": [
                             {
                                 "id": "s2_d1",
+                                "line": 1,
+                                "badge": "🔍 Personspot",
                                 "prompt": "Hvem rider forrest på landevejen mod slottet?",
                                 "options": [
                                     "Klods-Hans' to kloge brødre på fine heste",
@@ -1507,6 +1739,8 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s2_d2",
+                                "line": 2,
+                                "badge": "🔍 Fart & Fremdrift",
                                 "prompt": "Hvor befinder Klods-Hans sig på billedet?",
                                 "options": [
                                     "Han rider bagefter brødrene på sin hvide ged",
@@ -1519,6 +1753,8 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s2_d3",
+                                "line": 2,
+                                "badge": "🔍 Fund 1",
                                 "prompt": "Hvad løfter Klods-Hans stolt op i hånden, mens han råber 'Halehoj!'?",
                                 "options": [
                                     "En død sort krage",
@@ -1530,7 +1766,23 @@ export const hcAndersenStories = [
                                 "explanation": "Flot spottet! Klods-Hans vifter med den døde krage, som han fandt på landevejen."
                             },
                             {
+                                "id": "s2_d5",
+                                "line": 4,
+                                "badge": "🔍 Målet forude",
+                                "prompt": "Hvor peger landevejen hen forude i det fjerne landskab?",
+                                "options": [
+                                    "Mod det store kongeslot med tårne i horisonten",
+                                    "Tilbage mod faderens bondegård",
+                                    "Ud i det dybe hav",
+                                    "Ind i en mørk hule"
+                                ],
+                                "correct": 0,
+                                "explanation": "Lige forude knejser kongeslottet på bakken, hvor prinsessen venter på sine bejlere."
+                            },
+                            {
                                 "id": "s2_d4",
+                                "line": 6,
+                                "badge": "🔍 Fund 2",
                                 "prompt": "Hvad ligger der nede i vejkanten i det våde mudder / pludder?",
                                 "options": [
                                     "En gammel træsko",
@@ -1540,6 +1792,20 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "Korrekt! I grøftens mudder ligger en gammel træsko uden overstykke."
+                            },
+                            {
+                                "id": "s2_d6",
+                                "line": 9,
+                                "badge": "🔍 Fund 3",
+                                "prompt": "Hvor graver Klods-Hans sit tredje store fund op fra?",
+                                "options": [
+                                    "Fra den våde grøft langs landevejen (mudder)",
+                                    "Oppe fra et fuglerede i et træ",
+                                    "Fra en bagerbutik",
+                                    "Fra en kiste på en vogn"
+                                ],
+                                "correct": 0,
+                                "explanation": "Klods-Hans hopper lige ned i grøften og fylder lommerne med det fedeste pludder!"
                             }
                         ]
                     },
@@ -1550,7 +1816,22 @@ export const hcAndersenStories = [
                         "desc": "Træn overbegreber og underbegreber for tingene langs landevejen:",
                         "questions": [
                             {
+                                "id": "s2_s4",
+                                "line": 1,
+                                "badge": "🟢 Ental & Flertal",
+                                "prompt": "Fortælleren beretter, at brødrene red på **heste**. Hvad er ubestemt ental af 'heste'?",
+                                "options": [
+                                    "en hest",
+                                    "et hest",
+                                    "hesten",
+                                    "heste"
+                                ],
+                                "correct": 0,
+                                "explanation": "'En hest' er fælleskøn ubestemt ental (en hest, hesten, heste, hestene)."
+                            },
+                            {
                                 "id": "s2_s1",
+                                "line": 2,
                                 "badge": "🟢 Overbegreb",
                                 "prompt": "Klods-Hans finder en krage på vejen. Hvilket overbegreb tilhører **en krage**?",
                                 "options": [
@@ -1563,7 +1844,36 @@ export const hcAndersenStories = [
                                 "explanation": "*Fugl* er overbegrebet, og *en krage* er et specifikt underbegreb."
                             },
                             {
+                                "id": "s2_s5",
+                                "line": 3,
+                                "badge": "🟢 Sprogbrug",
+                                "prompt": "Brødrene råber ad ham: '**Klods**! Hvad vil du med den?' Hvilken funktion har ordet 'Klods' her?",
+                                "options": [
+                                    "Et øgenavn / skældsord brugt som udråb",
+                                    "Et møbel i stuen",
+                                    "Et kompliment",
+                                    "Et verbum i bydeform"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Klods' er her et nedsættende øgenavn, som brødrene bruger om ham fordi de synes han er klodset."
+                            },
+                            {
+                                "id": "s2_s6",
+                                "line": 4,
+                                "badge": "🟢 Sammensat ord",
+                                "prompt": "Klods-Hans vil forære kragen til **kongedatteren**. Hvilke to navneord er ordet sammensat af?",
+                                "options": [
+                                    "Konge + datter (en konges datter)",
+                                    "Kone + datter",
+                                    "Konge + slot",
+                                    "Krone + datter"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Kongedatteren' er en sammensætning af *konge* og *datter* (en prinsesse)."
+                            },
+                            {
                                 "id": "s2_s2",
+                                "line": 6,
                                 "badge": "🟢 Overbegreb",
                                 "prompt": "Klods-Hans finder en gammel træsko. Hvad er overbegrebet for **en træsko**?",
                                 "options": [
@@ -1576,7 +1886,36 @@ export const hcAndersenStories = [
                                 "explanation": "*Fodtøj* er overbegrebet. Underbegreber er f.eks. *træsko*, *støvler*, *sneakers* og *sandaler*."
                             },
                             {
+                                "id": "s2_s7",
+                                "line": 7,
+                                "badge": "🟢 Materiale & Navneord",
+                                "prompt": "Brødrene spørger til træskoen. Hvilket naturmateriale er en traditionel træsko fremstillet af?",
+                                "options": [
+                                    "Træ (udskåret af træblokke)",
+                                    "Læder og gummi",
+                                    "Jern og stål",
+                                    "Uld og silke"
+                                ],
+                                "correct": 0,
+                                "explanation": "En klassisk dansk træsko blev snittet og hulet ud af massivt bøgetræ eller elletræ."
+                            },
+                            {
+                                "id": "s2_s8",
+                                "line": 9,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Klods-Hans graver op af **grøften**. Hvad er overbegrebet for en grøft langs en vej?",
+                                "options": [
+                                    "En vandrende / afvandingskanal i vejkanten",
+                                    "En bjergtop",
+                                    "En bro over et sund",
+                                    "En markedsplads"
+                                ],
+                                "correct": 0,
+                                "explanation": "En grøft er en udgravet fordybning langs landeveje til at lede regnvand væk."
+                            },
+                            {
                                 "id": "s2_s3",
+                                "line": 10,
                                 "badge": "🟢 Synonym & Begreb",
                                 "prompt": "Brødrene råber: 'Det er jo mudder fra grøften!' Hvilket ord er et synonym for **mudder**?",
                                 "options": [
@@ -1587,30 +1926,32 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*Mudder* og *pludder* (eller *pløre*) er synonymer for våd, fedtet jord i en grøft."
+                            },
+                            {
+                                "id": "s2_s9",
+                                "line": 11,
+                                "badge": "🟢 Betydning",
+                                "prompt": "Klods-Hans påstår, at mudderet er af den 'fineste **slags**'. Hvad betyder 'slags' her?",
+                                "options": [
+                                    "Type / kvalitet / variant",
+                                    "Et slag med en pind",
+                                    "Et skænderi",
+                                    "En retning"
+                                ],
+                                "correct": 0,
+                                "explanation": "En 'slags' betyder en bestemt type eller kvalitet af noget (f.eks. 'den fineste slags kaffe eller mudder')."
                             }
                         ]
                     },
                     "verber": {
-                        "title": "Verber: Modsætninger og synonymer",
+                        "title": "Verber: Tider, modsætninger og synonymer",
                         "badge": "🔴 Modsætninger & synonymer",
                         "icon": "🔴",
-                        "desc": "Træn verbernes modsætninger og synonymer under rejsen:",
+                        "desc": "Træn verbernes tider, modpoler og synonymer under rejsen:",
                         "questions": [
                             {
-                                "id": "s2_v1",
-                                "badge": "🔴 Modsætning (Antonym)",
-                                "prompt": "Klods-Hans råber: 'Se hvad jeg har fundet!' Hvad er det modsatte af **at finde**?",
-                                "options": [
-                                    "at tabe / miste",
-                                    "at lede",
-                                    "at beholde",
-                                    "at købe"
-                                ],
-                                "correct": 0,
-                                "explanation": "Når du *finder* noget, opdager du det. Hvis du *mister* eller *taber* det, har du det ikke længere."
-                            },
-                            {
                                 "id": "s2_v2",
+                                "line": 1,
                                 "badge": "🔴 Synonym",
                                 "prompt": "Brødrene rider stille og tænker over kloge ord. Hvilket verbum er et synonym til **at tænke**?",
                                 "options": [
@@ -1623,7 +1964,50 @@ export const hcAndersenStories = [
                                 "explanation": "*At tænke*, *at spekulere* og *at overveje* betyder næsten det samme (synonymer)."
                             },
                             {
+                                "id": "s2_v1",
+                                "line": 2,
+                                "badge": "🔴 Modsætning (Antonym)",
+                                "prompt": "Klods-Hans råber: 'Se hvad jeg har fundet!' Hvad er det modsatte af **at finde**?",
+                                "options": [
+                                    "at tabe / miste",
+                                    "at lede",
+                                    "at beholde",
+                                    "at købe"
+                                ],
+                                "correct": 0,
+                                "explanation": "Når du *finder* noget, opdager du det. Hvis du *mister* eller *taber* det, har du det ikke længere."
+                            },
+                            {
+                                "id": "s2_v4",
+                                "line": 3,
+                                "badge": "🔴 Modalverbum",
+                                "prompt": "Brødrene spørger: 'Hvad **vil** du med en død krage?' Hvilken form er 'vil' af verbet **at ville**?",
+                                "options": [
+                                    "Nutid (præsens - udtrykker ønske / hensigt)",
+                                    "Datid (ville)",
+                                    "Førnutid (har villet)",
+                                    "Bydeform"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Vil' er nutid af modalverbet *at ville* (*jeg vil, du vil, han vil*)."
+                            },
+                            {
+                                "id": "s2_v5",
+                                "line": 4,
+                                "badge": "🔴 Modsætning (Antonym)",
+                                "prompt": "Klods-Hans siger: 'Den vil jeg **give** til kongedatteren!' Hvad er det modsatte af **at give**?",
+                                "options": [
+                                    "at tage / modtage",
+                                    "at forære",
+                                    "at vise",
+                                    "at tabe"
+                                ],
+                                "correct": 0,
+                                "explanation": "Det modsatte af *at give* (at overdrage til andre) er *at tage* eller *at modtage*."
+                            },
+                            {
                                 "id": "s2_v3",
+                                "line": 5,
                                 "badge": "🔴 Synonym",
                                 "prompt": "Brødrene griner og ler af Klods-Hans. Hvilket verbum er et synonym til **at le**?",
                                 "options": [
@@ -1634,6 +2018,90 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*At le* og *at grine* er synonymer. Det modsatte er *at græde*."
+                            },
+                            {
+                                "id": "s2_v6",
+                                "line": 6,
+                                "badge": "🔴 Verbetid (Datid)",
+                                "prompt": "Klods-Hans råber: 'Nu skal I **se**!' Hvad hedder det uregelmæssige verbum 'at se' i datid?",
+                                "options": [
+                                    "så (i går så jeg)",
+                                    "sede",
+                                    "set",
+                                    "ser"
+                                ],
+                                "correct": 0,
+                                "explanation": "*At se* er uregelmæssigt: nutid: *ser*, datid: *så*, førnutid: *har set*."
+                            },
+                            {
+                                "id": "s2_v7",
+                                "line": 7,
+                                "badge": "🔴 Bydeform (Imperativ)",
+                                "prompt": "Brødrene spørger: 'Skal hun også have den?' Hvad er bydeformen af verbet **at have**?",
+                                "options": [
+                                    "Hav! (f.eks. 'Hav en god dag!')",
+                                    "Har!",
+                                    "Havde!",
+                                    "Havert!"
+                                ],
+                                "correct": 0,
+                                "explanation": "Bydeformen af *at have* er *Hav!* (stammen uden -e)."
+                            },
+                            {
+                                "id": "s2_v8",
+                                "line": 8,
+                                "badge": "🔴 Hjælpeverbum",
+                                "prompt": "Klods-Hans svarer frisk: 'Ja, det **skal** hun da!' Hvad udtrykker hjælpeverbet **skal** her?",
+                                "options": [
+                                    "En fast beslutning / sikker fremtid",
+                                    "En usikker mulighed",
+                                    "En handling i fortiden",
+                                    "Et forbud"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Skal' bruges her til at understrege, at handlingen helt uomtvisteligt kommer til at ske."
+                            },
+                            {
+                                "id": "s2_v9",
+                                "line": 9,
+                                "badge": "🔴 Navneform (Infinitiv)",
+                                "prompt": "Klods-Hans har **gravet** mudder op. Hvad er infinitiv (at-formen) af verbet?",
+                                "options": [
+                                    "at grave",
+                                    "at graver",
+                                    "at gravet",
+                                    "at grav"
+                                ],
+                                "correct": 0,
+                                "explanation": "Infinitiv (navneformen) er *at grave* (nutid: *graver*, datid: *gravede*, førnutid: *har gravet*)."
+                            },
+                            {
+                                "id": "s2_v10",
+                                "line": 10,
+                                "badge": "🔴 Verbetid (Datid)",
+                                "prompt": "Brødrene udbryder: 'Det **er** jo mudder!' Hvad hedder verbet 'er' (at være) i datid?",
+                                "options": [
+                                    "var (i går var det)",
+                                    "været",
+                                    "være",
+                                    "blev"
+                                ],
+                                "correct": 0,
+                                "explanation": "*At være* er uregelmæssigt: nutid: *er*, datid: *var*, førnutid: *har været*."
+                            },
+                            {
+                                "id": "s2_v11",
+                                "line": 11,
+                                "badge": "🔴 Betydning & Tilstand",
+                                "prompt": "Klods-Hans jubler: 'Hvor vil hun **blive** glad!' Hvilken betydning har 'blive' foran et adjektiv?",
+                                "options": [
+                                    "At skifte tilstand (komme i en glad stemning)",
+                                    "At forblive på samme sted",
+                                    "At standse helt op",
+                                    "At glemme alt"
+                                ],
+                                "correct": 0,
+                                "explanation": "Når *blive* kobles med et adjektiv ('blive glad', 'blive syg'), angiver det en forandring og overgang til en ny tilstand."
                             }
                         ]
                     },
@@ -1641,10 +2109,25 @@ export const hcAndersenStories = [
                         "title": "Adjektiver: Modsætninger og gradbøjning",
                         "badge": "🟠 Modsætninger & gradbøjning",
                         "icon": "🟠",
-                        "desc": "Træn tillægsord der beskriver fundene og personerne:",
+                        "desc": "Træn tillægsord der beskriver fundene og personerne langs landevejen:",
                         "questions": [
                             {
+                                "id": "s2_a4",
+                                "line": 1,
+                                "badge": "🟠 Gradbøjning",
+                                "prompt": "Brødrene tænker over alt det **kloge**. Hvordan gradbøjes tillægsordet klog?",
+                                "options": [
+                                    "klog – klogere – klogest",
+                                    "klog – mere klog – mest klog",
+                                    "klog – klogt – kloge",
+                                    "god – bedre – bedst"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Klog* gradbøjes regelmæssigt: *klog – klogere – klogest*."
+                            },
+                            {
                                 "id": "s2_a1",
+                                "line": 2,
                                 "badge": "🟠 Modsætning (Antonym)",
                                 "prompt": "Klods-Hans finder en død krage. Hvad er det modsatte af **død**?",
                                 "options": [
@@ -1657,7 +2140,22 @@ export const hcAndersenStories = [
                                 "explanation": "Det modsatte af *død* er *levende*."
                             },
                             {
+                                "id": "s2_a5",
+                                "line": 3,
+                                "badge": "🟠 Grammatisk egenskab",
+                                "prompt": "Brødrene undrer sig over kragen. Kan adjektivet **død** normalt gradbøjes?",
+                                "options": [
+                                    "Nej, man er enten død eller levende (absolut adjektiv)",
+                                    "Ja, død – dødere – dødest",
+                                    "Ja, mere død – mest død",
+                                    "Kun i datid"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Død' er et absolut begreb; man kan ikke være 'mere død' end en anden død krage."
+                            },
+                            {
                                 "id": "s2_a2",
+                                "line": 6,
                                 "badge": "🟠 Modsætning (Antonym)",
                                 "prompt": "Træskoen er gammel. Hvad er det modsatte af **gammel** (om ting)?",
                                 "options": [
@@ -1670,7 +2168,50 @@ export const hcAndersenStories = [
                                 "explanation": "En ting er enten *gammel* eller *ny* (om personer bruges modpolen *ung*)."
                             },
                             {
+                                "id": "s2_a6",
+                                "line": 8,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Klods-Hans er **sikker** i sin sag: 'det skal hun da!' Hvad er det modsatte af 'sikker'?",
+                                "options": [
+                                    "usikker / tvivlende",
+                                    "glad",
+                                    "hurtig",
+                                    "varm"
+                                ],
+                                "correct": 0,
+                                "explanation": "Når man ikke er *sikker*, er man *usikker* eller tvivlende."
+                            },
+                            {
+                                "id": "s2_a7",
+                                "line": 9,
+                                "badge": "🟠 Uregelmæssig gradbøjning",
+                                "prompt": "Klods-Hans råber: 'Nu bliver det endnu **bedre**!' Hvad er grundformen (positiv) af 'bedre'?",
+                                "options": [
+                                    "god",
+                                    "bedst",
+                                    "mere",
+                                    "fin"
+                                ],
+                                "correct": 0,
+                                "explanation": "Grundformen er *god* (*god – bedre – bedst*)."
+                            },
+                            {
+                                "id": "s2_a8",
+                                "line": 10,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Brødrene udbryder: 'Adr, hvor **ulækkert**!' Hvad er det modsatte af tillægsordet 'ulækker'?",
+                                "options": [
+                                    "lækker / indbydende",
+                                    "våd",
+                                    "kold",
+                                    "sort"
+                                ],
+                                "correct": 0,
+                                "explanation": "Det modsatte af *ulækker* er *lækker* (eller tiltalende og ren)."
+                            },
+                            {
                                 "id": "s2_a3",
+                                "line": 11,
                                 "badge": "🟠 Gradbøjning",
                                 "prompt": "Klods-Hans siger at mudderet er af den 'fineste slags'. Hvordan gradbøjes **fin**?",
                                 "options": [
@@ -1681,17 +2222,32 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*Fin* gradbøjes regelmæssigt med -ere og -est: *fin – finere – finest*."
+                            },
+                            {
+                                "id": "s2_a9",
+                                "line": 11,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Klods-Hans siger: 'Hvor vil hun blive **glad**!' Hvad er det modsatte af glad?",
+                                "options": [
+                                    "trist / ked af det",
+                                    "fin",
+                                    "klog",
+                                    "hurtig"
+                                ],
+                                "correct": 0,
+                                "explanation": "Modpolen til at være *glad* er at være *trist* eller *ked af det*."
                             }
                         ]
                     },
                     "adverbier": {
-                        "title": "Adverbier: Position og bevægelse",
+                        "title": "Adverbier: Position, tid og udråb",
                         "badge": "🔵 Position & bevægelse",
                         "icon": "🔵",
-                        "desc": "Træn steds- og tidsadverbier der beskriver brødrenes og Klods-Hans' ridt:",
+                        "desc": "Træn steds-, tids- og samtaleadverbier undervejs på landevejen:",
                         "questions": [
                             {
                                 "id": "s2_adv1",
+                                "line": 1,
                                 "badge": "🔵 Stedsadverbium & Position",
                                 "prompt": "Brødrene rider **foran**, og Klods-Hans rider **bagefter**. Hvad angiver disse to ord?",
                                 "options": [
@@ -1704,20 +2260,22 @@ export const hcAndersenStories = [
                                 "explanation": "*Foran* og *bagefter* er stedsadverbier, der angiver den indbyrdes placering."
                             },
                             {
-                                "id": "s2_adv2",
-                                "badge": "🔵 Tidsadverbium",
-                                "prompt": "Klods-Hans råber: 'Nu skal I se!' Hvilket udtryk er et synonym til tidsadverbiet **nu**?",
+                                "id": "s2_adv4",
+                                "line": 2,
+                                "badge": "🔵 Stedsadverbium",
+                                "prompt": "Klods-Hans råber: '**Her** kommer jeg!' Hvilken type adverbium er ordet 'Her'?",
                                 "options": [
-                                    "i dette øjeblik / straks",
-                                    "i går",
-                                    "aldrig",
-                                    "senere"
+                                    "Stedsadverbium (viser placering hos den der taler)",
+                                    "Tidsadverbium",
+                                    "Gradsadverbium",
+                                    "Mådesadverbium"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Nu* henviser til det præcise nutidige øjeblik (i dette sekund)."
+                                "explanation": "'Her' er et stedsadverbium, der udpeger talerens nuværende placering."
                             },
                             {
                                 "id": "s2_adv3",
+                                "line": 5,
                                 "badge": "🔵 Bevægelsesadverbium",
                                 "prompt": "Brødrene ler og rider **videre**. Hvad angiver adverbiet **videre** her?",
                                 "options": [
@@ -1728,6 +2286,90 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*Videre* angiver en fortsættelse af en handling eller bevægelse ('at ride videre mod slottet')."
+                            },
+                            {
+                                "id": "s2_adv2",
+                                "line": 6,
+                                "badge": "🔵 Tidsadverbium",
+                                "prompt": "Klods-Hans råber: '**Nu** skal I se!' Hvilket udtryk er et synonym til tidsadverbiet **nu**?",
+                                "options": [
+                                    "i dette øjeblik / straks",
+                                    "i går",
+                                    "aldrig",
+                                    "senere"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Nu* henviser til det præcise nutidige øjeblik (i dette sekund)."
+                            },
+                            {
+                                "id": "s2_adv5",
+                                "line": 7,
+                                "badge": "🔵 Synonym",
+                                "prompt": "Brødrene spørger: 'Skal kongedatteren **også** have den?' Hvilket ord er synonym med 'også'?",
+                                "options": [
+                                    "ligeledes / tillige",
+                                    "aldrig",
+                                    "ikke",
+                                    "snart"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Også' og 'ligeledes' tilføjer endnu en modtager eller begivenhed."
+                            },
+                            {
+                                "id": "s2_adv6",
+                                "line": 8,
+                                "badge": "🔵 Samtaleadverbium",
+                                "prompt": "Klods-Hans svarer: 'Ja, det skal hun **da**!' Hvad udtrykker det lille ord 'da' her?",
+                                "options": [
+                                    "En stærk overbevisning / selvfølgelighed ('selvfølgelig!')",
+                                    "En benægtelse ('nej')",
+                                    "Et klokkeslæt",
+                                    "En tvivl"
+                                ],
+                                "correct": 0,
+                                "explanation": "I dansk talesprog bruges *da* som holdningsadverbium til at signalere, at svaret er en ren selvfølgelighed."
+                            },
+                            {
+                                "id": "s2_adv7",
+                                "line": 9,
+                                "badge": "🔵 Gradsadverbium",
+                                "prompt": "Klods-Hans råber: '**endnu** bedre!' Hvilken rolle spiller ordet 'endnu' foran 'bedre'?",
+                                "options": [
+                                    "Det forstærker graden ('yderligere')",
+                                    "Det vender betydningen om til det negative",
+                                    "Det angiver et sted",
+                                    "Det viser retning"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Endnu' fungerer her som et gradsadverbium, der lægger ekstra vægt på forbedringen."
+                            },
+                            {
+                                "id": "s2_adv8",
+                                "line": 10,
+                                "badge": "🔵 Samtaleord (Diskurspartikel)",
+                                "prompt": "Brødrene siger: 'Det er **jo** mudder fra grøften!' Hvad signalerer det lille ord 'jo' i samtalen?",
+                                "options": [
+                                    "At noget er indlysende / kendt viden for tilhøreren",
+                                    "At de stiller et nyt spørgsmål",
+                                    "At de er i tvivl",
+                                    "At handlingen sker i morgen"
+                                ],
+                                "correct": 0,
+                                "explanation": "På dansk bruger vi *jo* for at markere, at noget burde være åbenlyst for begge parter."
+                            },
+                            {
+                                "id": "s2_adv9",
+                                "line": 11,
+                                "badge": "🔵 Udråbsadverbium",
+                                "prompt": "Klods-Hans udråber: '**Hvor** vil hun blive glad!' Hvilken funktion har ordet 'Hvor' i dette udråb?",
+                                "options": [
+                                    "Udråbsord der udtrykker ekstremt høj grad ('hvor meget!')",
+                                    "Stedsadverbium der spørger efter en by",
+                                    "Tidsadverbium",
+                                    "Benægtelse"
+                                ],
+                                "correct": 0,
+                                "explanation": "I udråb som 'Hvor er det flot!' og 'Hvor vil hun blive glad!' angiver *hvor* en overvældende høj grad."
                             }
                         ]
                     }
@@ -2694,6 +3336,8 @@ export const hcAndersenStories = [
                         "questions": [
                             {
                                 "id": "s3_d1",
+                                "line": 1,
+                                "badge": "🔍 Kamin & Ild",
                                 "prompt": "Hvad står midt i riddersalen og gløder, så brødrene begynder at svede?",
                                 "options": [
                                     "En stor brændeovn / kamin med rød ild",
@@ -2705,19 +3349,23 @@ export const hcAndersenStories = [
                                 "explanation": "Rigtigt! Kaminen er fyret helt op med glødende kul, så temperaturen stiger voldsomt!"
                             },
                             {
-                                "id": "s3_d2",
-                                "prompt": "Hvad gør prinsessen på tronen, da Klods-Hans svarer hende så frisk?",
+                                "id": "s3_d4",
+                                "line": 2,
+                                "badge": "🔍 Brødrenes panik",
+                                "prompt": "Hvordan reagerer de to kloge brødre i baggrunden foran ovnen?",
                                 "options": [
-                                    "Hun ler højt og morer sig",
-                                    "Hun græder af frygt",
-                                    "Hun sover",
-                                    "Hun forlader salen"
+                                    "De sveder, måber og har glemt alle deres ord",
+                                    "De synger en glad sang",
+                                    "De danser med hoffolkene",
+                                    "De hepper stolt på Klods-Hans"
                                 ],
                                 "correct": 0,
-                                "explanation": "Præcis! Prinsessen synes Klods-Hans er herlig og fuld af sjovt, kvikt modspil!"
+                                "explanation": "Korrekt! Brødrene blev så overvældede af varmen og nervøsiteten, at de mistede mælet helt."
                             },
                             {
                                 "id": "s3_d3",
+                                "line": 4,
+                                "badge": "🔍 Klods-Hans' kække entré",
                                 "prompt": "Hvad holder Klods-Hans frem foran ovnen i sin gamle træsko?",
                                 "options": [
                                     "Den døde krage med muddersauce",
@@ -2729,16 +3377,60 @@ export const hcAndersenStories = [
                                 "explanation": "Lige i øjet! Klods-Hans vil stege kragen i træskoen og overhælder den med muddersovs!"
                             },
                             {
-                                "id": "s3_d4",
-                                "prompt": "Hvordan reagerer de to kloge brødre i baggrunden?",
+                                "id": "s3_d2",
+                                "line": 5,
+                                "badge": "🔍 Prinsessens latter",
+                                "prompt": "Hvad gør prinsessen på tronen, da Klods-Hans svarer hende så frisk?",
                                 "options": [
-                                    "De sveder, måber og har glemt alle ord",
-                                    "De synger en sang",
-                                    "De danser",
-                                    "De hepper på Klods-Hans"
+                                    "Hun ler højt og morer sig hjerteligt",
+                                    "Hun græder af frygt",
+                                    "Hun sover",
+                                    "Hun forlader salen i vrede"
                                 ],
                                 "correct": 0,
-                                "explanation": "Korrekt! Brødrene blev så overvældede af varmen og nervøsiteten, at de mistede mælet helt."
+                                "explanation": "Præcis! Prinsessen synes Klods-Hans er herlig og fuld af sjovt, kvikt modspil!"
+                            },
+                            {
+                                "id": "s3_d5",
+                                "line": 10,
+                                "badge": "🔍 Sovsen",
+                                "prompt": "Hvad tager Klods-Hans op af sin lomme og fremviser som den fineste sovs?",
+                                "options": [
+                                    "En klump fedtet mudder fra vejkanten",
+                                    "En flaske rødvin",
+                                    "En guldskat",
+                                    "Et æble"
+                                ],
+                                "correct": 0,
+                                "explanation": "Klods-Hans stikker hånden i lommen og hiver en klat pludder frem: 'Den er her!'"
+                            },
+                            {
+                                "id": "s3_d6",
+                                "line": 12,
+                                "badge": "🔍 Kongens kåring",
+                                "prompt": "Hvem rejser sig fra tronen og kårer Klods-Hans som prinsessens udkårne?",
+                                "options": [
+                                    "Kongen med sin gyldne krone",
+                                    "Storebror",
+                                    "En skrivekarl",
+                                    "Geden"
+                                ],
+                                "correct": 0,
+                                "explanation": "Kongen rejser sig imponeret og udråber Klods-Hans som prinsessens vinder!"
+                            },
+                            {
+                                "id": "s3_d7",
+                                "line": 13,
+                                "badge": "🔍 Jubel i salen",
+                                "prompt": "Hvem står hele vejen rundt i riddersalen og råber hurra for brudeparret?",
+                                "options": [
+                                    "Hoffolkene, skriverne og alle slottets gæster",
+                                    "Fjendtlige riddere",
+                                    "Geder på marken",
+                                    "Kragens unger"
+                                ],
+                                "correct": 0,
+                                "explanation": "Hele hoffet bryder ud i jubel og hylder Klods-Hans og kongedatteren!"
                             }
                         ]
                     },
@@ -2749,7 +3441,50 @@ export const hcAndersenStories = [
                         "desc": "Træn over- og underbegreber for slottets genstande og roller:",
                         "questions": [
                             {
+                                "id": "s3_s4",
+                                "line": 1,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Kongen bærer et gyldent symbol på hovedet. Hvad er overbegrebet for **en krone** og **et scepter**?",
+                                "options": [
+                                    "Kongelige regalier / magtsymboler",
+                                    "Almindeligt køkkengrej",
+                                    "Husdyr",
+                                    "Køretøjer"
+                                ],
+                                "correct": 0,
+                                "explanation": "Krone, scepter og rigsæble er *kongelige regalier* (herskerens værdighedstegn)."
+                            },
+                            {
+                                "id": "s3_s5",
+                                "line": 2,
+                                "badge": "🟢 Abstrakt substantiv",
+                                "prompt": "Storebror mærker den ulidelige **varme**. Hvilken type navneord er ordet 'varme'?",
+                                "options": [
+                                    "Et abstrakt substantiv (en tilstand/følelse man ikke kan røre fysisk)",
+                                    "Et konkret substantiv (en genstand)",
+                                    "Et egenavn",
+                                    "Et verbum"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Varme' er et abstrakt substantiv, der beskriver en fysisk temperaturtilstand."
+                            },
+                            {
+                                "id": "s3_s6",
+                                "line": 3,
+                                "badge": "🟢 Teater & Tale",
+                                "prompt": "Mellembror har glemt hvad han vil sige. Hvad hedder det substantiv, der betegner ordene en taler eller skuespiller fremfører?",
+                                "options": [
+                                    "En replik (eller en tale)",
+                                    "En træsko",
+                                    "En grøft",
+                                    "En hest"
+                                ],
+                                "correct": 0,
+                                "explanation": "*En replik* er den udtalte sætning i en dialog eller samtale."
+                            },
+                            {
                                 "id": "s3_s1",
+                                "line": 4,
                                 "badge": "🟢 Overbegreb",
                                 "prompt": "I riddersalen står en glødende kamin/ovn. Hvad er overbegrebet for **en ovn / kamin**?",
                                 "options": [
@@ -2762,7 +3497,106 @@ export const hcAndersenStories = [
                                 "explanation": "Både en ovn, et bål og en kamin er *varmekilder*, der bruges til varme og madlavning."
                             },
                             {
+                                "id": "s3_s7",
+                                "line": 5,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Prinsessen sidder oppe på sin gyldne **trone**. Hvad er overbegrebet for en trone?",
+                                "options": [
+                                    "Et møbel (en kongestol)",
+                                    "Et fartøj",
+                                    "En beklædningsdel",
+                                    "En madret"
+                                ],
+                                "correct": 0,
+                                "explanation": "En trone er et *møbel* – en særlig pragtfysiognomi for en konge eller dronning."
+                            },
+                            {
+                                "id": "s3_s8",
+                                "line": 6,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Klods-Hans vil lave 'god **mad**'. Hvad er overbegrebet for brød, kød, fisk og grøntsager?",
+                                "options": [
+                                    "Fødevarer / madvarer",
+                                    "Møbler",
+                                    "Værktøj",
+                                    "Byggematerialer"
+                                ],
+                                "correct": 0,
+                                "explanation": "Alle spiselige produkter tilhører overbegrebet *fødevarer* eller *madvarer*."
+                            },
+                            {
+                                "id": "s3_s9",
+                                "line": 7,
+                                "badge": "🟢 Overbegreb",
+                                "prompt": "Prinsessen spørger hvad han vil stege den i. Hvad er det traditionelle overbegreb for gryder, pander og kasseroller?",
+                                "options": [
+                                    "Kogegrej / køkkenudstyr",
+                                    "Fodtøj",
+                                    "Havemøbler",
+                                    "Smykker"
+                                ],
+                                "correct": 0,
+                                "explanation": "Pander og gryder er *kogegrej* (køkkenredskaber til madlavning)."
+                            },
+                            {
+                                "id": "s3_s10",
+                                "line": 8,
+                                "badge": "🟢 Bestemthed",
+                                "prompt": "Klods-Hans svarer: 'I **træskoen**, selvfølgelig!' Hvilken form har navneordet 'træskoen' her?",
+                                "options": [
+                                    "Bestemt form ental (-en)",
+                                    "Ubestemt form ental (en træsko)",
+                                    "Bestemt form flertal (træskoene)",
+                                    "Ubestemt form flertal (træsko)"
+                                ],
+                                "correct": 0,
+                                "explanation": "Endelsen *-en* markerer, at der tales om den specifikke, bestemte træsko fra grøften."
+                            },
+                            {
+                                "id": "s3_s3",
+                                "line": 9,
+                                "badge": "🟢 Underbegreb",
+                                "prompt": "Klods-Hans har mudder med i lommen. Hvilket madlavnings-begreb vil han bruge mudderet som?",
+                                "options": [
+                                    "En sauce / sovs (tilbehør til maden)",
+                                    "En dessert",
+                                    "En suppe",
+                                    "En salat"
+                                ],
+                                "correct": 0,
+                                "explanation": "Klods-Hans kalder kækt mudderet for den fineste sauce/sovs til den stegte krage!"
+                            },
+                            {
+                                "id": "s3_s11",
+                                "line": 10,
+                                "badge": "🟢 Tøjdel",
+                                "prompt": "Klods-Hans trækker mudderet op af sin **lomme**. Hvilken del af tøjet er en lomme et underbegreb til?",
+                                "options": [
+                                    "En tøjdetalje / opbevaringsrum i bukser eller jakke",
+                                    "En type sko",
+                                    "En hat",
+                                    "Et bælte"
+                                ],
+                                "correct": 0,
+                                "explanation": "En lomme er en indsyet pose i bukser eller jakker til opbevaring."
+                            },
+                            {
+                                "id": "s3_s12",
+                                "line": 11,
+                                "badge": "🟢 Synonym",
+                                "prompt": "Prinsessen roser Klods-Hans' **måde** at se tingene på. Hvilket ord er et synonym for en 'måde'?",
+                                "options": [
+                                    "en facon / en stil / en vinkel",
+                                    "en hest",
+                                    "en gryde",
+                                    "en bro"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Måde*, *facon* og *vinkel* er synonymer for den måde man griber tilværelsen an på."
+                            },
+                            {
                                 "id": "s3_s2",
+                                "line": 12,
                                 "badge": "🟢 Overbegreb",
                                 "prompt": "Kongen og hans datter er til stede. Hvad er overbegrebet for **en konge** og **en prinsesse**?",
                                 "options": [
@@ -2775,28 +3609,44 @@ export const hcAndersenStories = [
                                 "explanation": "Konge, dronning, prins og prinsesse er *kongelige titler og personer*."
                             },
                             {
-                                "id": "s3_s3",
-                                "badge": "🟢 Underbegreb",
-                                "prompt": "Klods-Hans har mudder med i lommen. Hvilket madlavnings-begreb vil han bruge mudderet som?",
+                                "id": "s3_s13",
+                                "line": 13,
+                                "badge": "🟢 Begivenhed",
+                                "prompt": "Alle fejrer Klods-Hans og prinsessen. Hvad er overbegrebet for en fest, hvor to personer bliver gift?",
                                 "options": [
-                                    "En sauce / sovs (tilbehør til maden)",
-                                    "En dessert",
-                                    "En suppe",
-                                    "En salat"
+                                    "Et bryllup (eller en vielse)",
+                                    "En begravelse",
+                                    "En eksamen",
+                                    "En markedsdag"
                                 ],
                                 "correct": 0,
-                                "explanation": "Klods-Hans kalder kækt mudderet for den fineste sauce/sovs til den stegte krage!"
+                                "explanation": "Når to mennesker indgår ægteskab, fejres det med *et bryllup*."
                             }
                         ]
                     },
                     "verber": {
-                        "title": "Verber: Modsætninger og synonymer",
+                        "title": "Verber: Bøjning, tider og synonymer",
                         "badge": "🔴 Modsætninger & synonymer",
                         "icon": "🔴",
                         "desc": "Træn udsagnsord i den afgørende samtale hos prinsessen:",
                         "questions": [
                             {
+                                "id": "s3_v4",
+                                "line": 1,
+                                "badge": "🔴 Bydeform (Imperativ)",
+                                "prompt": "Kongen råber: '**Vis**, hvad I kan!' Hvilken bøjningsform er verbet 'Vis'?",
+                                "options": [
+                                    "Bydeform (imperativ - ordre)",
+                                    "Nutid (præsens)",
+                                    "Datid (præteritum)",
+                                    "Førnutid"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Vis' er bydeform af *at vise* (stammen). Kongen beordrer bejlerne til at demonstrere deres evner."
+                            },
+                            {
                                 "id": "s3_v1",
+                                "line": 2,
                                 "badge": "🔴 Modsætning (Antonym)",
                                 "prompt": "Storebror siger: 'Jeg kan ikke huske.' Hvad er det modsatte af **at huske**?",
                                 "options": [
@@ -2809,22 +3659,94 @@ export const hcAndersenStories = [
                                 "explanation": "Når du kan genkalde en viden, *husker* du. Hvis det forsvinder, har du *glemt* det."
                             },
                             {
-                                "id": "s3_v2",
-                                "badge": "🔴 Synonym",
-                                "prompt": "Prinsessen siger: 'Det kan vi koge!' Hvilket begreb er et synonym til **at koge** mad i væske?",
+                                "id": "s3_v5",
+                                "line": 3,
+                                "badge": "🔴 Førnutid (Perfektum)",
+                                "prompt": "Mellembror siger: 'Jeg **har glemt**, hvad jeg vil sige.' Hvilken tid er 'har glemt'?",
                                 "options": [
-                                    "at tilberede ved 100 grader",
-                                    "at fryse ned",
-                                    "at spise koldt",
-                                    "at kaste væk"
+                                    "Førnutid (perfektum: har + kort tillægsform)",
+                                    "Nutid (præsens)",
+                                    "Datid (præteritum)",
+                                    "Bydeform"
                                 ],
                                 "correct": 0,
-                                "explanation": "*At koge* vil sige at tilberede madvarer i kogende væske."
+                                "explanation": "'Har glemt' dannes med hjælpeverbet *har* plus kort tillægsform *glemt* (perfektum)."
+                            },
+                            {
+                                "id": "s3_v6",
+                                "line": 4,
+                                "badge": "🔴 Verbetid (Datid)",
+                                "prompt": "Klods-Hans hilser: 'Jeg **kom** på en ged.' Hvilken tid er verbet 'kom'?",
+                                "options": [
+                                    "Datid (præteritum) af at komme",
+                                    "Nutid (kommer)",
+                                    "Navneform (at komme)",
+                                    "Førdatid"
+                                ],
+                                "correct": 0,
+                                "explanation": "*At komme* er uregelmæssigt: nutid: *kommer*, datid: *kom*, førnutid: *er kommet*."
+                            },
+                            {
+                                "id": "s3_v7",
+                                "line": 5,
+                                "badge": "🔴 Bydeform (Imperativ)",
+                                "prompt": "Prinsessen ler og siger: '**Fortæl** mere, Klods-Hans!' Hvilken form af verbet er 'Fortæl'?",
+                                "options": [
+                                    "Bydeform (imperativ - opfordring)",
+                                    "Datid (fortalte)",
+                                    "Nutid (fortæller)",
+                                    "Navneform"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Fortæl' er bydeformen af verbet *at fortælle*."
+                            },
+                            {
+                                "id": "s3_v2",
+                                "line": 6,
+                                "badge": "🔴 Synonym",
+                                "prompt": "Klods-Hans vil **stege** kragen. Hvilket begreb er et synonym til at stege mad i fedtstof eller varme?",
+                                "options": [
+                                    "at tilberede ved stærk varme på pande/ild",
+                                    "at fryse ned i is",
+                                    "at spise råt",
+                                    "at skylle under koldt vand"
+                                ],
+                                "correct": 0,
+                                "explanation": "*At stege* vil sige at tilberede mad over høj varme."
+                            },
+                            {
+                                "id": "s3_v8",
+                                "line": 7,
+                                "badge": "🔴 Navneform (Infinitiv)",
+                                "prompt": "Prinsessen spørger: 'hvad **vil** du stege den i?' Hvad er navneformen (infinitiv) af hjælpeverbet 'vil'?",
+                                "options": [
+                                    "at ville",
+                                    "at vide",
+                                    "at vil",
+                                    "at vinde"
+                                ],
+                                "correct": 0,
+                                "explanation": "Infinitiv er *at ville* (nutid: *vil*, datid: *ville*, førnutid: *har villet*)."
+                            },
+                            {
+                                "id": "s3_v9",
+                                "line": 8,
+                                "badge": "🔴 Modsætning (Antonym)",
+                                "prompt": "Klods-Hans vil koge og stege i træskoen. Hvad er det modsatte af **at koge** eller varme op?",
+                                "options": [
+                                    "at fryse / nedkøle",
+                                    "at bage",
+                                    "at grille",
+                                    "at spise"
+                                ],
+                                "correct": 0,
+                                "explanation": "Det modsatte af at tilføre varme (koge/stege) er at *nedkøle* eller *fryse* maden."
                             },
                             {
                                 "id": "s3_v3",
+                                "line": 9,
                                 "badge": "🔴 Synonym",
-                                "prompt": "Prinsessen siger: 'Du har svar på alting!' Hvilket verbum er et synonym til **at svare**?",
+                                "prompt": "Prinsessen spørger, og Klods-Hans **svarer** kvikt. Hvilket verbum er et synonym til **at svare**?",
                                 "options": [
                                     "at replikere / give gensvar",
                                     "at spørge",
@@ -2833,6 +3755,62 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*At svare* og *at replikere* vil sige at give et svar tilbage."
+                            },
+                            {
+                                "id": "s3_v10",
+                                "line": 10,
+                                "badge": "🔴 Partikelverbum",
+                                "prompt": "Klods-Hans **viser** mudderet **frem**. Hvad kaldes et verbum, der er kombineret med en retningspartikel?",
+                                "options": [
+                                    "Et partikelverbum (f.eks. vise frem, holde op, gå ud)",
+                                    "Et navneord",
+                                    "Et tillægsord",
+                                    "Et personligt pronomen"
+                                ],
+                                "correct": 0,
+                                "explanation": "Når et verbum kobles tæt med et retningsord ('vise frem'), kaldes det et *partikelverbum*."
+                            },
+                            {
+                                "id": "s3_v11",
+                                "line": 11,
+                                "badge": "🔴 Verbetid (Datid)",
+                                "prompt": "Prinsessen taler om 'at **se** tingene på en sjov måde'. Hvad er datidsformen af 'at se'?",
+                                "options": [
+                                    "så (i går så hun)",
+                                    "set",
+                                    "ser",
+                                    "sede"
+                                ],
+                                "correct": 0,
+                                "explanation": "*At se* er uregelmæssigt: nutid: *ser*, datid: *så*, førnutid: *har set*."
+                            },
+                            {
+                                "id": "s3_v12",
+                                "line": 12,
+                                "badge": "🔴 Navneform (Infinitiv)",
+                                "prompt": "Kongen udråber: 'du har **vundet** hendes hjerte!' Hvad er navneformen (infinitiv) af verbet?",
+                                "options": [
+                                    "at vinde",
+                                    "at vinder",
+                                    "at vundede",
+                                    "at vinde op"
+                                ],
+                                "correct": 0,
+                                "explanation": "Infinitiv er *at vinde* (nutid: *vinder*, datid: *vandt*, førnutid: *har vundet*)."
+                            },
+                            {
+                                "id": "s3_v13",
+                                "line": 13,
+                                "badge": "🔴 Verbetid (Datid)",
+                                "prompt": "Alle hoffolkene **råbte**: 'Hurra!'. Hvilken tid er verbet 'råbte'?",
+                                "options": [
+                                    "Datid (præteritum) af at råbe",
+                                    "Nutid (råber)",
+                                    "Førnutid",
+                                    "Bydeform"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Råbte' er datidsformen (præteritum) af det regelmæssige verbum *at råbe*."
                             }
                         ]
                     },
@@ -2843,7 +3821,22 @@ export const hcAndersenStories = [
                         "desc": "Træn egenskaber og temperatur i den hede riddersal:",
                         "questions": [
                             {
+                                "id": "s3_a4",
+                                "line": 1,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Kongen søger en **dygtig** og veltalende svigersøn. Hvad er det modsatte af 'dygtig'?",
+                                "options": [
+                                    "udygtig / klodset",
+                                    "klog",
+                                    "rig",
+                                    "stærk"
+                                ],
+                                "correct": 0,
+                                "explanation": "Det modsatte af at være *dygtig* er at være *udygtig* eller klodset."
+                            },
+                            {
                                 "id": "s3_a1",
+                                "line": 2,
                                 "badge": "🟠 Modsætning (Antonym)",
                                 "prompt": "I riddersalen er der meget varmt. Hvad er det modsatte af **varm**?",
                                 "options": [
@@ -2857,6 +3850,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s3_a2",
+                                "line": 3,
                                 "badge": "🟠 Gradbøjning",
                                 "prompt": "Hvordan gradbøjes det regelmæssige adjektiv **varm**?",
                                 "options": [
@@ -2869,9 +3863,108 @@ export const hcAndersenStories = [
                                 "explanation": "*Varm* gradbøjes regelmæssigt med *-ere* og *-est*: *varm – varmere – varmest*."
                             },
                             {
-                                "id": "s3_a3",
+                                "id": "s3_a5",
+                                "line": 4,
                                 "badge": "🟠 Modsætning (Antonym)",
-                                "prompt": "Prinsessen udbryder: 'Hvor er du sjov!' Hvad er det modsatte af **sjov**?",
+                                "prompt": "Klods-Hans har en gammel træsko. Hvad er det modsatte af **gammel** om en sko?",
+                                "options": [
+                                    "ny",
+                                    "ung",
+                                    "varm",
+                                    "høj"
+                                ],
+                                "correct": 0,
+                                "explanation": "Om genstande er modpolen til *gammel* ordet *ny* (en ny træsko)."
+                            },
+                            {
+                                "id": "s3_a6",
+                                "line": 5,
+                                "badge": "🟠 Synonym",
+                                "prompt": "Prinsessen er **munter** og nysgerrig. Hvilket tillægsord er et synonym for 'munter'?",
+                                "options": [
+                                    "glad / opstemt / livlig",
+                                    "trist",
+                                    "vred",
+                                    "bange"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Munter*, *glad* og *livlig* betyder alle at være i lystigt og godt humør."
+                            },
+                            {
+                                "id": "s3_a7",
+                                "line": 6,
+                                "badge": "🟠 Gradbøjning",
+                                "prompt": "Klods-Hans vil lave **god** mad. Hvordan gradbøjes tillægsordet 'god'?",
+                                "options": [
+                                    "god – bedre – bedst",
+                                    "god – godere – godest",
+                                    "god – mere god – mest god",
+                                    "god – godt – gode"
+                                ],
+                                "correct": 0,
+                                "explanation": "*God* er uregelmæssigt: *god – bedre – bedst*."
+                            },
+                            {
+                                "id": "s3_a8",
+                                "line": 7,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Træskoen er **tom**, indtil Klods-Hans lægger kragen i den. Hvad er det modsatte af 'tom'?",
+                                "options": [
+                                    "fuld",
+                                    "flad",
+                                    "gammel",
+                                    "ren"
+                                ],
+                                "correct": 0,
+                                "explanation": "Modpolen til *tom* er *fuld* (*en tom træsko* ↔ *en fuld træsko*)."
+                            },
+                            {
+                                "id": "s3_a9",
+                                "line": 8,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Klods-Hans er **sikker** og mister ikke mælet. Hvad er det modsatte af 'sikker'?",
+                                "options": [
+                                    "usikker",
+                                    "klog",
+                                    "stærk",
+                                    "rolig"
+                                ],
+                                "correct": 0,
+                                "explanation": "Modpolen til at være *sikker* på sig selv er at være *usikker*."
+                            },
+                            {
+                                "id": "s3_a10",
+                                "line": 9,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Sovsen er **våd** og flydende. Hvad er det modsatte af 'våd'?",
+                                "options": [
+                                    "tør",
+                                    "varm",
+                                    "sød",
+                                    "tyk"
+                                ],
+                                "correct": 0,
+                                "explanation": "Modpolen til *våd* er *tør* (*en våd klump* ↔ *et tørt stykke*)."
+                            },
+                            {
+                                "id": "s3_a11",
+                                "line": 10,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Mudderet er **blødt**. Hvad er det modsatte af tillægsordet 'blød'?",
+                                "options": [
+                                    "hård",
+                                    "kold",
+                                    "lys",
+                                    "tung"
+                                ],
+                                "correct": 0,
+                                "explanation": "Det modsatte af *blød* er *hård* (*blødt mudder* ↔ *hård sten*)."
+                            },
+                            {
+                                "id": "s3_a3",
+                                "line": 11,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Prinsessen udbryder: 'Du har en **sjov** måde at se tingene på!' Hvad er det modsatte af **sjov**?",
                                 "options": [
                                     "kedelig (eller trist)",
                                     "glad",
@@ -2880,19 +3973,62 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "En person eller ting, der ikke er *sjov*, opfattes ofte som *kedelig*."
+                            },
+                            {
+                                "id": "s3_a12",
+                                "line": 11,
+                                "badge": "🟠 Modsætning (Antonym)",
+                                "prompt": "Prinsessen siger: 'Du er virkelig **anderledes**!' Hvad er det modsatte af 'anderledes'?",
+                                "options": [
+                                    "ens / almindelig / normal",
+                                    "skør",
+                                    "fin",
+                                    "rig"
+                                ],
+                                "correct": 0,
+                                "explanation": "Hvis man ikke skiller sig ud som *anderledes*, er man *almindelig* eller *ens* med de andre."
+                            },
+                            {
+                                "id": "s3_a13",
+                                "line": 12,
+                                "badge": "🟠 Gradbøjning",
+                                "prompt": "Klods-Hans og prinsessen bliver gift og er **lykkelige**. Hvordan gradbøjes 'lykkelig'?",
+                                "options": [
+                                    "lykkelig – lykkeligere – lykkeligst",
+                                    "lykkelig – mere lykkelig – mest lykkelig",
+                                    "lykkelig – lykkeligt – lykkelige",
+                                    "god – bedre – bedst"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Lykkelig* gradbøjes regelmæssigt med *-ere* og *-est*: *lykkelig – lykkeligere – lykkeligst*."
                             }
                         ]
                     },
                     "adverbier": {
-                        "title": "Adverbier: Gradbøjning og synonymer",
+                        "title": "Adverbier: Gradbøjning, samtale og udråb",
                         "badge": "🔵 Gradbøjning & synonymer",
                         "icon": "🔵",
-                        "desc": "Træn centraladverbier og gradsadverbier i replikkerne:",
+                        "desc": "Træn centraladverbier, gradsadverbier og udråb i riddersalens replikker:",
                         "questions": [
                             {
+                                "id": "s3_adv4",
+                                "line": 1,
+                                "badge": "🔵 Spørgende bindeord",
+                                "prompt": "Kongen råber: 'Vis, **hvad** I kan!' Hvilken rolle spiller ordet 'hvad' her?",
+                                "options": [
+                                    "Spørgende / relativt bindeord (indleder ledsætningen)",
+                                    "Tidsadverbium",
+                                    "Mådesadverbium",
+                                    "Benægtelse"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Hvad' forbinder her hovedsætningen 'Vis' med ledsætningen 'hvad I kan'."
+                            },
+                            {
                                 "id": "s3_adv1",
+                                "line": 2,
                                 "badge": "🔵 Centraladverbium",
-                                "prompt": "Storebror siger: 'Jeg kan ikke huske.' Hvilken grammatisk funktion har ordet **ikke**?",
+                                "prompt": "Storebror siger: 'Jeg kan **ikke** huske.' Hvilken grammatisk funktion har ordet 'ikke'?",
                                 "options": [
                                     "Centraladverbium der benægter handlingen",
                                     "Tidsadverbium der viser klokken",
@@ -2904,8 +4040,9 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s3_adv2",
+                                "line": 2,
                                 "badge": "🔵 Gradsadverbium",
-                                "prompt": "Storebror klager: 'Det er så varmt!' Hvilket ord er et synonym til gradsadverbiet **så** her?",
+                                "prompt": "Storebror klager: 'Det er **så** varmt!' Hvilket ord er et synonym til gradsadverbiet **så** her?",
                                 "options": [
                                     "virkelig / meget",
                                     "aldrig",
@@ -2917,16 +4054,129 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s3_adv3",
-                                "badge": "🔵 Stedsadverbium",
-                                "prompt": "Mellembror siger: 'Det er alt for varmt herinde.' Hvad betyder **herinde**?",
+                                "line": 3,
+                                "badge": "🔵 Gradsadverbium & Grænse",
+                                "prompt": "Mellembror siger: 'Det er **alt for** varmt herinde.' Hvad betyder 'alt for' foran et adjektiv?",
                                 "options": [
-                                    "Inde i dette rum / slottet",
-                                    "Ude i haven",
-                                    "Oppe på taget",
-                                    "Nede i grøften"
+                                    "Graden overskrider grænsen for det acceptable (for meget)",
+                                    "Det er behageligt",
+                                    "Det sker i morgen",
+                                    "Det sker aldrig"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Herinde* angiver, at taleren befinder sig inde i rummet eller bygningen."
+                                "explanation": "'Alt for' signalerer en overdreven grad, der overskrider det tålelige."
+                            },
+                            {
+                                "id": "s3_adv5",
+                                "line": 4,
+                                "badge": "🔵 Udråbsord (Interjektion)",
+                                "prompt": "Klods-Hans hilser muntert: '**Hej**! Jeg kom på en ged.' Hvilken type ord er 'Hej!'?",
+                                "options": [
+                                    "En interjektion / et udråbsord (bruges som hilsen)",
+                                    "Et verbum i bydeform",
+                                    "Et substantiv i bestemt form",
+                                    "Et forholdsord"
+                                ],
+                                "correct": 0,
+                                "explanation": "Ord som *Hej!*, *Av!*, *Hurra!* og *Halehoj!* er interjektioner (udråbsord)."
+                            },
+                            {
+                                "id": "s3_adv6",
+                                "line": 5,
+                                "badge": "🔵 Mængdeadverbium",
+                                "prompt": "Prinsessen opfordrer: 'Fortæl **mere**!' Hvad er grundformen (positiv) af ordet 'mere'?",
+                                "options": [
+                                    "meget (meget – mere – mest)",
+                                    "god",
+                                    "mange",
+                                    "fin"
+                                ],
+                                "correct": 0,
+                                "explanation": "Gradbøjningen er: *meget – mere – mest*."
+                            },
+                            {
+                                "id": "s3_adv7",
+                                "line": 6,
+                                "badge": "🔵 Ordstilling & Centraladverbium",
+                                "prompt": "Klods-Hans vil lave mad. Hvor skal centraladverbiet '**ikke**' stå i en dansk hovedsætning?",
+                                "options": [
+                                    "Lige efter det bøjede verbum ('Han kan ikke stege den')",
+                                    "Forrest i sætningen",
+                                    "Allersidst i sætningen",
+                                    "Mellem substantivet og adjektivet"
+                                ],
+                                "correct": 0,
+                                "explanation": "I en almindelig dansk hovedsætning placeres centraladverbiet altid lige efter det bøjede verbum: *Han kan [ikke] stege den*."
+                            },
+                            {
+                                "id": "s3_adv8",
+                                "line": 8,
+                                "badge": "🔵 Synonym",
+                                "prompt": "Klods-Hans udbryder: 'I træskoen, **selvfølgelig**!' Hvilket ord er et synonym til 'selvfølgelig'?",
+                                "options": [
+                                    "naturligvis / givetvis",
+                                    "aldrig",
+                                    "måske",
+                                    "sjældent"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Selvfølgelig* og *naturligvis* betyder begge, at noget er givet og uden tvivl."
+                            },
+                            {
+                                "id": "s3_adv9",
+                                "line": 10,
+                                "badge": "🔵 Stedsadverbium",
+                                "prompt": "Klods-Hans siger: 'Den er **her**!' Hvilken type ord er 'her'?",
+                                "options": [
+                                    "Stedsadverbium der viser placering hos taleren",
+                                    "Tidsadverbium",
+                                    "Gradsadverbium",
+                                    "Forholdsord"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Her' angiver placering på stedet hos den der taler (*her* ↔ *der*)."
+                            },
+                            {
+                                "id": "s3_adv10",
+                                "line": 11,
+                                "badge": "🔵 Gradsadverbium",
+                                "prompt": "Prinsessen udbryder: 'Du er **virkelig** anderledes!' Hvad udtrykker ordet 'virkelig' her?",
+                                "options": [
+                                    "Høj grad og ægte sandhed ('faktisk / sandelig')",
+                                    "En tvivl",
+                                    "En tidsangivelse i går",
+                                    "En benægtelse"
+                                ],
+                                "correct": 0,
+                                "explanation": "*Virkelig* understreger, at udsagnet er 100% oprigtigt og i høj grad."
+                            },
+                            {
+                                "id": "s3_adv11",
+                                "line": 12,
+                                "badge": "🔵 Tidsadverbium",
+                                "prompt": "Kongen siger: 'Klods-Hans, du har **nu** vundet hendes hjerte.' Hvad angiver tidsadverbiet **nu**?",
+                                "options": [
+                                    "I dette øjeblik / fra dette sekund",
+                                    "For længe siden",
+                                    "Aldrig i livet",
+                                    "Måske i morgen"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Nu' markerer det aktuelle nutidige øjeblik."
+                            },
+                            {
+                                "id": "s3_adv12",
+                                "line": 13,
+                                "badge": "🔵 Udråbsord (Interjektion)",
+                                "prompt": "Alle i salen råber: '**Hurra** for Klods-Hans og prinsessen!' Hvad udtrykker udråbet 'Hurra'?",
+                                "options": [
+                                    "En festlig hyldest og glæde",
+                                    "Sorg og klage",
+                                    "En advarsel",
+                                    "Et spørgsmål"
+                                ],
+                                "correct": 0,
+                                "explanation": "'Hurra!' er det klassiske danske hyldestudråb til festlige begivenheder."
                             }
                         ]
                     }

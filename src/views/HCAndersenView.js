@@ -37,6 +37,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
     let fontSizeLevel = 1; // 0 = standard, 1 = medium (default), 2 = stor
     let readingMode = 'steps'; // 'steps' | 'full'
     let currentStepIdx = 0;
+    let completedScenes = {};
 
     // TTS Helper
     function stopSpeech() {
@@ -513,7 +514,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         mainContent.appendChild(readerWrapper);
     }
 
-    function createSectionTasks(section, index) {
+    function createSectionTasks(section, index, onCategoryChange) {
         if (!section.tasks) return null;
 
         const categories = [
@@ -574,12 +575,21 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 Object.keys(tabButtons).forEach(k => {
                     tabButtons[k].classList.toggle('active', k === activeCatKey);
                 });
+                if (onCategoryChange) {
+                    onCategoryChange(activeCatKey);
+                }
                 renderActivePanel();
             };
             tabButtons[cat.key] = btn;
             tabsRow.appendChild(btn);
         });
         tasksWrap.appendChild(tabsRow);
+
+        tasksWrap.switchCategory = (key) => {
+            if (tabButtons[key]) {
+                tabButtons[key].click();
+            }
+        };
 
         // Panel holder
         const panelHolder = document.createElement('div');
@@ -638,6 +648,19 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 </div>
             `;
             panel.appendChild(headerRow);
+
+            if (['substantiver', 'verber', 'adjektiver', 'adverbier'].includes(activeCatKey)) {
+                const hintPill = document.createElement('div');
+                hintPill.className = 'hc-task-highlight-hint';
+                const catInfo = categories.find(c => c.key === activeCatKey);
+                const catLabel = catInfo ? catInfo.label : activeCatKey;
+                const catColor = catInfo ? catInfo.color : '#4ade80';
+                hintPill.innerHTML = `
+                    <span class="hint-bullet" style="background:${catColor};"></span>
+                    <span>${isEn ? `All <strong>${catLabel.toLowerCase()}</strong> are highlighted in the text above` : `Alle <strong>${catLabel.toLowerCase()}</strong> toner nu frem i teksten ovenfor 👆`}</span>
+                `;
+                panel.appendChild(hintPill);
+            }
 
             if (catData.desc && qIdx === 0) {
                 const descP = document.createElement('div');
@@ -980,7 +1003,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         return card;
     }
 
-    function createSentenceFlow(section, sectionIndex) {
+    function createSentenceFlow(section, sectionIndex, onProgressChange) {
         const flowContainer = document.createElement('div');
         flowContainer.className = 'hc-sentence-flow-wrapper';
 
@@ -994,6 +1017,16 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
             const currentProgress = isAllViewMode ? totalLines : revealedCount;
             const pct = Math.round((currentProgress / totalLines) * 100);
+
+            const isCompleted = isAllViewMode || (revealedCount >= totalLines);
+            if (onProgressChange) {
+                onProgressChange({
+                    isCompleted,
+                    revealedCount,
+                    totalLines,
+                    isAllViewMode
+                });
+            }
 
             // Progress header bar
             const headerEl = document.createElement('div');
@@ -1060,8 +1093,18 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                             span.textContent = token.text;
                             speechEl.appendChild(span);
                         } else {
+                            let normalizedType = token.type;
+                            if (['sub', 'substantiv', 'egenavn'].includes(token.type)) normalizedType = 'sub';
+                            else if (['vrb', 'verbum'].includes(token.type)) normalizedType = 'vrb';
+                            else if (['adj', 'adjektiv'].includes(token.type)) normalizedType = 'adj';
+                            else if (['adv', 'adverbium'].includes(token.type)) normalizedType = 'adv';
+                            else if (['konj'].includes(token.type)) normalizedType = 'konj';
+                            else if (['prep'].includes(token.type)) normalizedType = 'prep';
+                            else if (['pro'].includes(token.type)) normalizedType = 'pro';
+
                             const tokenBtn = document.createElement('span');
-                            tokenBtn.className = `hc-word-token token-${token.type}`;
+                            tokenBtn.className = `hc-word-token token-${token.type} token-class-${normalizedType}`;
+                            tokenBtn.dataset.wordType = normalizedType;
                             tokenBtn.textContent = token.text;
                             tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
                             tokenBtn.onclick = (e) => {
@@ -1089,8 +1132,18 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                                 span.textContent = token.text;
                                 speechEl.appendChild(span);
                             } else {
+                                let normalizedType = token.type;
+                                if (['sub', 'substantiv', 'egenavn'].includes(token.type)) normalizedType = 'sub';
+                                else if (['vrb', 'verbum'].includes(token.type)) normalizedType = 'vrb';
+                                else if (['adj', 'adjektiv'].includes(token.type)) normalizedType = 'adj';
+                                else if (['adv', 'adverbium'].includes(token.type)) normalizedType = 'adv';
+                                else if (['konj'].includes(token.type)) normalizedType = 'konj';
+                                else if (['prep'].includes(token.type)) normalizedType = 'prep';
+                                else if (['pro'].includes(token.type)) normalizedType = 'pro';
+
                                 const tokenBtn = document.createElement('span');
-                                tokenBtn.className = `hc-word-token token-${token.type}`;
+                                tokenBtn.className = `hc-word-token token-${token.type} token-class-${normalizedType}`;
+                                tokenBtn.dataset.wordType = normalizedType;
                                 tokenBtn.textContent = token.text;
                                 tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
                                 tokenBtn.onclick = (e) => {
@@ -1176,7 +1229,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     compCard.innerHTML = `
                         <div class="completion-icon">🎉</div>
                         <h4>${isEn ? 'Scene completed!' : 'Hele scenen er læst og forstået!'}</h4>
-                        <p>${isEn ? 'Great job! You have read and mastered the sentences in this scene.' : 'Flot klaret! Du har læst alle sætninger og mestret replikkerne i denne scene.'}</p>
+                        <p>${isEn ? 'Great job! You have read all sentences in this scene. The exercises have now unlocked below ↓' : 'Flot klaret! Du har læst alle sætninger i denne scene. Opgaverne til scenen er nu låst op nedenfor ↓'}</p>
                         <div class="completion-actions">
                             <button type="button" class="hc-restart-flow-btn">
                                 <span>🔄</span> <span>${isEn ? 'Read scene again' : 'Læs scenen forfra'}</span>
@@ -1215,7 +1268,23 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         };
         card.appendChild(header);
 
+        function setHighlight(catKey) {
+            let mapped = catKey;
+            if (catKey === 'sub' || catKey === 'substantiv') mapped = 'substantiver';
+            else if (catKey === 'vrb' || catKey === 'verbum') mapped = 'verber';
+            else if (catKey === 'adj' || catKey === 'adjektiv') mapped = 'adjektiver';
+            else if (catKey === 'adv' || catKey === 'adverbium') mapped = 'adverbier';
+
+            card.dataset.activeHighlight = mapped;
+            if (legendBar) {
+                legendBar.querySelectorAll('.hc-legend-item').forEach(it => {
+                    it.classList.toggle('active-legend', it.dataset.cat === mapped);
+                });
+            }
+        }
+
         // 1. Render Vrimlebillede Stage if present
+        let legendBar = null;
         if (section.vrimmelImage) {
             const vrimmelStage = document.createElement('div');
             vrimmelStage.className = 'hc-vrimmel-stage';
@@ -1246,18 +1315,31 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             card.appendChild(vrimmelStage);
 
             // Grammar Legend
-            const legendBar = document.createElement('div');
+            legendBar = document.createElement('div');
             legendBar.className = 'hc-grammar-legend';
             legendBar.innerHTML = `
-                <span class="hc-legend-item" style="color: #4ade80;"><span class="hc-legend-dot" style="background:#22c55e;"></span> 🟢 Substantiv</span>
-                <span class="hc-legend-item" style="color: #f87171;"><span class="hc-legend-dot" style="background:#ef4444;"></span> 🔴 Verbum</span>
-                <span class="hc-legend-item" style="color: #fb923c;"><span class="hc-legend-dot" style="background:#f97316;"></span> 🟠 Adjektiv</span>
-                <span class="hc-legend-item" style="color: #38bdf8;"><span class="hc-legend-dot" style="background:#38bdf8;"></span> 🔵 Adverbium</span>
-                <span class="hc-legend-item" style="color: #c084fc;"><span class="hc-legend-dot" style="background:#a855f7;"></span> 🟣 Konjunktion</span>
-                <span class="hc-legend-item" style="color: #fde047;"><span class="hc-legend-dot" style="background:#eab308;"></span> 🟡 Præposition</span>
-                <span class="hc-legend-item" style="color: #f472b6;"><span class="hc-legend-dot" style="background:#ec4899;"></span> 💗 Pronomen</span>
-                <div class="hc-legend-hint">👆 ${isEn ? 'Click on any colored word to see inflections, explanation, and pronunciation.' : 'Tryk på et hvilket som helst farvet ord for at se bøjning, forklaring og udtale.'}</div>
+                <span class="hc-legend-item" data-cat="substantiver" style="color: #4ade80;"><span class="hc-legend-dot" style="background:#22c55e;"></span> 🟢 Substantiv</span>
+                <span class="hc-legend-item" data-cat="verber" style="color: #f87171;"><span class="hc-legend-dot" style="background:#ef4444;"></span> 🔴 Verbum</span>
+                <span class="hc-legend-item" data-cat="adjektiver" style="color: #fb923c;"><span class="hc-legend-dot" style="background:#f97316;"></span> 🟠 Adjektiv</span>
+                <span class="hc-legend-item" data-cat="adverbier" style="color: #38bdf8;"><span class="hc-legend-dot" style="background:#38bdf8;"></span> 🔵 Adverbium</span>
+                <span class="hc-legend-item" data-cat="konjunktioner" style="color: #c084fc;"><span class="hc-legend-dot" style="background:#a855f7;"></span> 🟣 Konjunktion</span>
+                <span class="hc-legend-item" data-cat="praepositioner" style="color: #fde047;"><span class="hc-legend-dot" style="background:#eab308;"></span> 🟡 Præposition</span>
+                <span class="hc-legend-item" data-cat="pronominer" style="color: #f472b6;"><span class="hc-legend-dot" style="background:#ec4899;"></span> 💗 Pronomen</span>
+                <div class="hc-legend-hint">👆 ${isEn ? 'Tap a word class to highlight it in the text, or tap words for grammar and audio.' : 'Tryk på en ordklasse for at tone den frem i teksten, eller tryk på et ord for ordbog og udtale.'}</div>
             `;
+            legendBar.querySelectorAll('.hc-legend-item').forEach(it => {
+                it.onclick = () => {
+                    const catKey = it.dataset.cat;
+                    if (card.dataset.activeHighlight === catKey) {
+                        setHighlight('none');
+                    } else {
+                        setHighlight(catKey);
+                        if (tasksEl && tasksEl.switchCategory) {
+                            tasksEl.switchCategory(catKey);
+                        }
+                    }
+                };
+            });
             card.appendChild(legendBar);
         }
 
@@ -1269,15 +1351,69 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 <span class="hc-text-badge">📖 Teksten</span>
                 <h4 class="hc-text-title">${section.chapter}</h4>
             </div>
-            <p class="hc-text-hint">${isEn ? 'Read the dialogue sentence by sentence, master the key lines, and tap any colored word to inspect its grammar:' : 'Læs replikkerne sætning for sætning, løs Mesterens replik undervejs og tryk på de farvede ord for bøjning og ordbogsopslag:'}</p>
+            <p class="hc-text-hint">${isEn ? 'Read the dialogue sentence by sentence, master the key lines, and tap any word to inspect its grammar:' : 'Læs replikkerne sætning for sætning, løs Mesterens replik undervejs og tryk på ordene for bøjning og ordbogsopslag:'}</p>
         `;
         card.appendChild(textHeading);
 
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
-        if (section.dialogue && section.dialogue.length > 0) {
-            textBody.appendChild(createSentenceFlow(section, index));
+        // 3. Render Interactive Tasks for Scene (Opgaver til scenen 🎯 - under teksten)
+        let tasksEl = null;
+        if (section.tasks) {
+            tasksEl = createSectionTasks(section, index, (newCatKey) => {
+                setHighlight(newCatKey);
+            });
+        }
+
+        const hasDialogue = section.dialogue && section.dialogue.length > 0;
+        const sceneKey = `hc_scene_${story?.id || 'story'}_${index}`;
+        let isSceneUnlocked = !hasDialogue || (completedScenes[sceneKey] === true);
+
+        const lockedTeaser = document.createElement('div');
+        lockedTeaser.className = 'hc-tasks-locked-teaser';
+        const totalLines = hasDialogue ? section.dialogue.length : 1;
+        lockedTeaser.innerHTML = `
+            <div class="hc-locked-badge">🎯</div>
+            <div class="hc-locked-info">
+                <div class="hc-locked-title">${isEn ? 'Scene Exercises & Visual Detective' : 'Opgaver til scenen & Visuel detektiv'}</div>
+                <div class="hc-locked-hint">${isEn ? `Read all ${totalLines} sentences in this scene above to unlock the exercises.` : `Læs alle ${totalLines} sætninger i denne scene ovenfor for at låse op for opgaverne.`}</div>
+            </div>
+            <div class="hc-locked-status-pill">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span class="locked-count-text">1 / ${totalLines} ${isEn ? 'read' : 'læst'}</span>
+            </div>
+        `;
+
+        if (isSceneUnlocked) {
+            lockedTeaser.style.display = 'none';
+            if (tasksEl) {
+                tasksEl.style.display = 'block';
+            }
+        } else {
+            lockedTeaser.style.display = 'flex';
+            if (tasksEl) {
+                tasksEl.style.display = 'none';
+            }
+        }
+
+        if (hasDialogue) {
+            textBody.appendChild(createSentenceFlow(section, index, (progress) => {
+                const countEl = lockedTeaser.querySelector('.locked-count-text');
+                if (countEl) {
+                    countEl.textContent = `${progress.revealedCount} / ${progress.totalLines} ${isEn ? 'read' : 'læst'}`;
+                }
+
+                if (progress.isCompleted) {
+                    completedScenes[sceneKey] = true;
+                    isSceneUnlocked = true;
+                    lockedTeaser.style.display = 'none';
+                    if (tasksEl && tasksEl.style.display === 'none') {
+                        tasksEl.style.display = 'block';
+                        tasksEl.classList.add('tasks-slide-in');
+                    }
+                }
+            }));
         } else {
             // Standard fairy tale prose paragraphs
             const paragraphs = section.text.split('\n\n');
@@ -1313,12 +1449,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
         card.appendChild(textBody);
 
-        // 3. Render Interactive Tasks for Scene (Opgaver til scenen 🎯 - under teksten)
-        if (section.tasks) {
-            const tasksEl = createSectionTasks(section, index);
-            if (tasksEl) {
-                card.appendChild(tasksEl);
-            }
+        if (tasksEl) {
+            card.appendChild(lockedTeaser);
+            card.appendChild(tasksEl);
         }
 
         return card;
@@ -2622,6 +2755,21 @@ function injectStyles() {
             gap: 0.35rem;
             font-size: 0.82rem;
             font-weight: 700;
+            padding: 0.25rem 0.55rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            border: 1px solid transparent;
+        }
+        .hc-legend-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+        .hc-legend-item.active-legend {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: currentColor;
+            box-shadow: 0 0 10px currentColor;
         }
         .hc-legend-dot {
             width: 10px;
@@ -2693,55 +2841,193 @@ function injectStyles() {
         .font-size-1 .hc-line-speech { font-size: 1.2rem; }
         .font-size-2 .hc-line-speech { font-size: 1.38rem; }
 
-        /* Word Tokens with Grammar Color Coding */
+        /* Word Tokens: Neutral by default, highlighting only when activated in tasks or legend */
         .hc-word-token {
             cursor: pointer;
-            padding: 0.12rem 0.3rem;
+            padding: 0.12rem 0.35rem;
             border-radius: 6px;
-            font-weight: 700;
-            transition: all 0.18s ease;
+            font-weight: 600;
+            color: #f1f5f9;
+            background: transparent;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.2s ease;
             display: inline-block;
             position: relative;
         }
         .hc-word-token:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.25);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+            transform: translateY(-1.5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         }
-        .hc-word-token.token-sub {
-            color: #4ade80;
-            background: rgba(34, 197, 94, 0.15);
-            border-bottom: 2px solid #22c55e;
+
+        /* Grammar Highlights: Fader frem når den pågældende kategori aktiveres */
+        .hc-section-card[data-active-highlight="substantiver"] .hc-word-token.token-class-sub,
+        .hc-section-card[data-active-highlight="substantiver"] .hc-word-token.token-sub,
+        .hc-section-card[data-active-highlight="substantiver"] .hc-word-token.token-substantiv,
+        .hc-section-card[data-active-highlight="substantiver"] .hc-word-token.token-egenavn {
+            color: #4ade80 !important;
+            background: rgba(34, 197, 94, 0.22) !important;
+            border-bottom: 2px solid #22c55e !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hc-word-token.token-vrb {
-            color: #f87171;
-            background: rgba(239, 68, 68, 0.15);
-            border-bottom: 2px solid #ef4444;
+        .hc-section-card[data-active-highlight="verber"] .hc-word-token.token-class-vrb,
+        .hc-section-card[data-active-highlight="verber"] .hc-word-token.token-vrb,
+        .hc-section-card[data-active-highlight="verber"] .hc-word-token.token-verbum {
+            color: #f87171 !important;
+            background: rgba(239, 68, 68, 0.22) !important;
+            border-bottom: 2px solid #ef4444 !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(239, 68, 68, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hc-word-token.token-adj {
-            color: #fb923c;
-            background: rgba(249, 115, 22, 0.15);
-            border-bottom: 2px solid #f97316;
+        .hc-section-card[data-active-highlight="adjektiver"] .hc-word-token.token-class-adj,
+        .hc-section-card[data-active-highlight="adjektiver"] .hc-word-token.token-adj,
+        .hc-section-card[data-active-highlight="adjektiver"] .hc-word-token.token-adjektiv {
+            color: #fb923c !important;
+            background: rgba(249, 115, 22, 0.22) !important;
+            border-bottom: 2px solid #f97316 !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(249, 115, 22, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hc-word-token.token-adv {
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.15);
-            border-bottom: 2px solid #38bdf8;
+        .hc-section-card[data-active-highlight="adverbier"] .hc-word-token.token-class-adv,
+        .hc-section-card[data-active-highlight="adverbier"] .hc-word-token.token-adv,
+        .hc-section-card[data-active-highlight="adverbier"] .hc-word-token.token-adverbium {
+            color: #38bdf8 !important;
+            background: rgba(56, 189, 248, 0.22) !important;
+            border-bottom: 2px solid #38bdf8 !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hc-word-token.token-konj {
-            color: #c084fc;
-            background: rgba(168, 85, 247, 0.15);
-            border-bottom: 2px solid #a855f7;
+        .hc-section-card[data-active-highlight="konjunktioner"] .hc-word-token.token-class-konj,
+        .hc-section-card[data-active-highlight="konjunktioner"] .hc-word-token.token-konj {
+            color: #c084fc !important;
+            background: rgba(168, 85, 247, 0.22) !important;
+            border-bottom: 2px solid #a855f7 !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(168, 85, 247, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hc-word-token.token-prep {
-            color: #fde047;
-            background: rgba(234, 179, 8, 0.15);
-            border-bottom: 2px solid #eab308;
+        .hc-section-card[data-active-highlight="praepositioner"] .hc-word-token.token-class-prep,
+        .hc-section-card[data-active-highlight="praepositioner"] .hc-word-token.token-prep {
+            color: #fde047 !important;
+            background: rgba(234, 179, 8, 0.22) !important;
+            border-bottom: 2px solid #eab308 !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(234, 179, 8, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hc-word-token.token-pro {
-            color: #f472b6;
-            background: rgba(236, 72, 153, 0.18);
-            border-bottom: 2px solid #ec4899;
+        .hc-section-card[data-active-highlight="pronominer"] .hc-word-token.token-class-pro,
+        .hc-section-card[data-active-highlight="pronominer"] .hc-word-token.token-pro {
+            color: #f472b6 !important;
+            background: rgba(236, 72, 153, 0.22) !important;
+            border-bottom: 2px solid #ec4899 !important;
+            border-radius: 6px;
+            box-shadow: 0 0 14px rgba(236, 72, 153, 0.45);
+            animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes grammarToneFrem {
+            0% { transform: scale(1); filter: brightness(1); }
+            45% { transform: scale(1.08); filter: brightness(1.4); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+
+        /* Locked Teaser for Scene Tasks */
+        .hc-tasks-locked-teaser {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin: 2rem 0 1.5rem;
+            padding: 1.1rem 1.4rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1.5px dashed rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            color: #94a3b8;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .hc-locked-badge {
+            font-size: 1.4rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .hc-locked-info {
+            flex: 1;
+        }
+        .hc-locked-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #e2e8f0;
+            margin-bottom: 0.2rem;
+        }
+        .hc-locked-hint {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+        .hc-locked-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #f1f5f9;
+            font-size: 0.84rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .hc-task-highlight-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.9rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            font-size: 0.84rem;
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+        }
+        .hc-task-highlight-hint .hint-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .tasks-slide-in {
+            animation: tasksSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes tasksSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Typography sizing */

@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang, setLanguage } from '../utils/i18n.js';
 
 export function renderMainView(container, navigateFn) {
     const viewContainer = document.createElement('div');
@@ -27,7 +27,7 @@ export function renderMainView(container, navigateFn) {
             descKey: 'mitSprogSammenlignetDesc',
             fallbackTitle: 'Mit sprog sammenlignet med dansk',
             fallbackDesc: 'Fra mindste lydtræk til hel samtale — se forskellen mellem dansk og dit eget sprog trin for trin.',
-            badgeText: '🇨🇳 Kun på kinesisk · Andre sprog følger',
+            requiresLang: 'zh',
             action: () => navigateFn('mit_sprog_sammenlignet')
         },
         {
@@ -95,11 +95,20 @@ export function renderMainView(container, navigateFn) {
     cardsData.forEach(data => {
         const card = document.createElement('div');
         card.className = 'card';
-        const isLocked = Boolean(data.comingSoon) && !isLocalhost;
+        const currentLang = getLang();
+        const isChineseOnly = data.requiresLang === 'zh';
+        const isChineseActive = currentLang === 'zh';
 
-        if (isLocked) {
+        if (data.comingSoon && !isLocalhost) {
             card.style.opacity = '0.6';
             card.style.cursor = 'not-allowed';
+        } else if (isChineseOnly && !isChineseActive) {
+            // Locked unless Chinese is selected as app language
+            card.style.opacity = '0.75';
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                showChineseRequiredModal();
+            };
         } else {
             card.onclick = data.action;
         }
@@ -116,7 +125,28 @@ export function renderMainView(container, navigateFn) {
         const transTitle = getTranslation(data.titleKey);
         cardTitle.textContent = (transTitle && transTitle !== data.titleKey) ? transTitle : (data.fallbackTitle || transTitle);
 
-        if (data.badgeText) {
+        if (isChineseOnly) {
+            const badge = document.createElement('span');
+            badge.style.display = 'inline-block';
+            badge.style.fontSize = '0.72rem';
+            badge.style.fontWeight = '800';
+            badge.style.padding = '0.18rem 0.55rem';
+            badge.style.borderRadius = '8px';
+            badge.style.marginLeft = '0.5rem';
+            badge.style.verticalAlign = 'middle';
+            if (isChineseActive) {
+                badge.style.background = 'rgba(56, 189, 248, 0.2)';
+                badge.style.border = '1px solid rgba(56, 189, 248, 0.5)';
+                badge.style.color = '#38bdf8';
+                badge.textContent = '🇨🇳 中文版 (Aktiv)';
+            } else {
+                badge.style.background = 'rgba(239, 68, 68, 0.16)';
+                badge.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+                badge.style.color = '#fca5a5';
+                badge.textContent = '🔒 Kun ved valg af kinesisk (中文)';
+            }
+            cardTitle.appendChild(badge);
+        } else if (data.badgeText) {
             const badge = document.createElement('span');
             badge.style.display = 'inline-block';
             badge.style.fontSize = '0.72rem';
@@ -155,6 +185,69 @@ export function renderMainView(container, navigateFn) {
         card.appendChild(cardDesc);
         grid.appendChild(card);
     });
+
+    function showChineseRequiredModal() {
+        const existing = document.getElementById('chinese-required-modal');
+        if (existing) existing.remove();
+
+        const modalOverlay = document.createElement('div');
+        modalOverlay.id = 'chinese-required-modal';
+        modalOverlay.style.position = 'fixed';
+        modalOverlay.style.inset = '0';
+        modalOverlay.style.background = 'rgba(0, 0, 0, 0.78)';
+        modalOverlay.style.backdropFilter = 'blur(6px)';
+        modalOverlay.style.display = 'flex';
+        modalOverlay.style.alignItems = 'center';
+        modalOverlay.style.justifyContent = 'center';
+        modalOverlay.style.zIndex = '9999';
+        modalOverlay.style.padding = '1rem';
+
+        const modalBox = document.createElement('div');
+        modalBox.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
+        modalBox.style.border = '2px solid rgba(56, 189, 248, 0.5)';
+        modalBox.style.borderRadius = '20px';
+        modalBox.style.maxWidth = '490px';
+        modalBox.style.width = '100%';
+        modalBox.style.padding = '1.8rem 1.6rem';
+        modalBox.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.6)';
+        modalBox.style.textAlign = 'center';
+        modalBox.style.color = '#ffffff';
+
+        modalBox.innerHTML = `
+            <div style="font-size: 2.4rem; margin-bottom: 0.5rem;">🇨🇳</div>
+            <h2 style="margin: 0 0 0.4rem; font-size: 1.35rem; font-weight: 900; color: #ffffff;">
+                Kun adgang med valg af kinesisk sprog
+            </h2>
+            <div style="font-size: 0.92rem; font-weight: 800; color: #38bdf8; margin-bottom: 1rem;">
+                仅限选择中文语言后开放访问
+            </div>
+            <p style="font-size: 0.91rem; color: #cbd5e1; line-height: 1.55; margin: 0 0 1.5rem;">
+                Denne flade sammenligner dansk med kinesisk og er på nuværende tidspunkt <strong>kun tilgængelig, når appens sprog er sat til kinesisk (中文)</strong>. Andre sprogversioner følger senere.<br><br>
+                Vil du skifte sprog til kinesisk nu for at få adgang?
+            </p>
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                <button id="crm-cancel-btn" type="button" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(148, 163, 184, 0.35); color: #cbd5e1; padding: 0.65rem 1.2rem; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer;">
+                    Annuller
+                </button>
+                <button id="crm-switch-btn" type="button" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: 1.5px solid #38bdf8; color: #ffffff; padding: 0.65rem 1.4rem; border-radius: 12px; font-weight: 900; font-size: 0.92rem; cursor: pointer; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);">
+                    Skift til kinesisk (切换到中文) ➔
+                </button>
+            </div>
+        `;
+
+        modalOverlay.appendChild(modalBox);
+        document.body.appendChild(modalOverlay);
+
+        modalOverlay.onclick = (e) => {
+            if (e.target === modalOverlay) modalOverlay.remove();
+        };
+        modalBox.querySelector('#crm-cancel-btn').onclick = () => modalOverlay.remove();
+        modalBox.querySelector('#crm-switch-btn').onclick = () => {
+            modalOverlay.remove();
+            setLanguage('zh');
+            window.location.hash = '#/zh/mit_sprog_sammenlignet';
+        };
+    }
 
     const footer = document.createElement('footer');
     footer.innerHTML = `© 2026 Træning i dansk. Udviklet af <a href="https://dk.linkedin.com/in/mikael-fabrin-2805b28b" target="_blank">Mikael Fabrin</a>.`;

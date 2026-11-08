@@ -533,19 +533,35 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     else if (viewTarget === 'verber_kraft_hvile') renderVerberKraftHvileView(appDiv, navigate, extraData);
     else if (viewTarget === 'verber_ligger_og_laeser') renderVerberLiggerLaeserView(appDiv, navigate, extraData);
   } else if (viewTarget === 'mit_sprog_sammenlignet') {
-    const isLocalhost = typeof window !== 'undefined' && (
+    const currentLang = appState.lang || getLang();
+    const isChinese = currentLang === 'zh';
+    const isDev = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1' ||
       window.location.href.includes('dev=true') ||
       window.location.href.includes('dev=1')
     );
-    if (!isLocalhost) {
+    // Kun adgang med valg af kinesisk sprog (eller dev-mode)
+    if (!isChinese && !isDev) {
       navigate('main', {}, true);
       return;
     }
     appState.currentView = 'mit_sprog_sammenlignet';
     renderMitSprogSammenlignetView(appDiv, navigate, extraData);
   } else if (viewTarget === 'vanskelige_lyde_kinesisk' || viewTarget === 'kinesiske_lyde') {
+    const currentLang = appState.lang || getLang();
+    const isChinese = currentLang === 'zh';
+    const isDev = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.href.includes('dev=true') ||
+      window.location.href.includes('dev=1')
+    );
+    // Kun adgang med valg af kinesisk sprog (eller dev-mode)
+    if (!isChinese && !isDev) {
+      navigate('main', {}, true);
+      return;
+    }
     appState.currentView = 'vanskelige_lyde_kinesisk';
     renderVanskeligeLydeKinesiskView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {

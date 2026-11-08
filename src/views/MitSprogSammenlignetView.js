@@ -978,12 +978,16 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     <span style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-right:0.25rem;">
                         ${isZh ? '选择对比语言 (Vælg sprog):' : 'Vælg dit sprog til sammenligningen:'}
                     </span>
-                    ${LANGUAGES.map(l => `
-                        <button class="mss-lang-pill ${selectedLang === l.code ? 'active' : ''}" data-lang="${l.code}">
-                            ${l.flag} ${l.name}
-                        </button>
-                    `).join('')}
+                    ${LANGUAGES.map(l => {
+                        const isLChinese = l.code === 'zh';
+                        return `
+                            <button class="mss-lang-pill ${selectedLang === l.code ? 'active' : ''}" data-lang="${l.code}" style="${!isLChinese ? 'opacity:0.65;' : 'font-weight:900;'}">
+                                ${l.flag} ${l.name} ${!isLChinese ? '<span style="font-size:0.7rem; opacity:0.8;">(Kommer senere)</span>' : ''}
+                            </button>
+                        `;
+                    }).join('')}
                 </div>
+                <div id="mss-lang-note" style="display:none; font-size:0.82rem; font-weight:800; color:#fca5a5; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.35); border-radius:8px; padding:0.4rem 0.75rem;"></div>
             </div>
 
             <div class="mss-ladder-wrap">
@@ -1028,9 +1032,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             </div>
         `;
 
+        const langNoteEl = stage.querySelector('#mss-lang-note');
         stage.querySelectorAll('[data-lang]').forEach(btn => {
             btn.onclick = () => {
-                selectedLang = btn.dataset.lang;
+                const targetLang = btn.dataset.lang;
+                if (targetLang !== 'zh') {
+                    if (langNoteEl) {
+                        langNoteEl.textContent = '⚠️ Kun på kinesisk. Andre sprog følger senere (目前仅开放中文版本对比与训练).';
+                        langNoteEl.style.display = 'block';
+                        setTimeout(() => { if (langNoteEl) langNoteEl.style.display = 'none'; }, 3500);
+                    }
+                    return;
+                }
+                selectedLang = 'zh';
                 renderStage();
             };
         });

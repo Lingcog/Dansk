@@ -405,7 +405,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         { code: 'de', name: 'Tysk (Deutsch)', flag: '🇩🇪' },
         { code: 'es', name: 'Spansk (Español)', flag: '🇪🇸' },
         { code: 'vi', name: 'Vietnamesisk (Tiếng Việt)', flag: '🇻🇳' },
-        { code: 'fa', name: 'Persisk / Farsi (فارسی)', flag: '🇮🇷' }
+        { code: 'fa', name: 'Persisk / Farsi (فارسی)', flag: '🇮🇷' },
+        { code: 'zh', name: 'Kinesisk (中文)', flag: '🇨🇳' }
     ];
 
     const appLang = getLang();
@@ -432,7 +433,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `<span class="mss-hl-my">Brot (ø findes: ö/ü)</span> — Tysk har <span class="mss-hl-my">ö/ü</span> ligesom dansk ø/y, men ikke dansk stød.`,
                 es: `<span class="mss-hl-my">pan</span> — Spansk har 5 faste vokaler (a, e, i, o, u) uden læberundede e/i-lyde (ø/y).`,
                 vi: `<span class="mss-hl-my">bánh mì</span> — Vietnamesisk bruger toner til at skelne ord, hvilket minder om det danske stød.`,
-                fa: `<span class="mss-hl-my">نان (nân)</span> — Persisk har 6 vokaler uden ø/y og uden stød.`
+                fa: `<span class="mss-hl-my">نان (nân)</span> — Persisk har 6 vokaler uden ø/y og uden stød.`,
+                zh: `<span class="mss-hl-my">面包 (miànbāo)</span> — Kinesisk skelner betydning med <strong>toner</strong> (声调) frem for stød, og mangler rundede fortungevokaler som <strong>ø og y</strong>.`
             },
             detailExplain: `Et <strong>distinktivt træk</strong> er den allermindste byggeklods i udtalen: f.eks. om læberne er runde eller flade (<em>bred</em> → <em>brød</em>), om vokalen er kort eller lang, eller om der er <strong>stød</strong> (<em>hun</em> vs. <em>hundʼ</em>).`,
             morePairs: [
@@ -459,7 +461,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `Bro<span class="mss-hl-my">t [t]</span> — Tysk gør d hårdt i slutningen af ord (<em>Brot/Hund → [t]</em>) i stedet for blødt.`,
                 es: `pare<span class="mss-hl-my">d [ð]</span> — Spansk har faktisk et blødt d i slutningen af ord og mellem vokaler (<em>nada</em>)!`,
                 vi: `bánh mì — Vietnamesisk udtaler ikke åbne konsonanter som dansk blødt d i udlyd.`,
-                fa: `نان — Persisk har altid <span class="mss-hl-my">fast [d]</span>; det bløde danske d findes ikke.`
+                fa: `نان — Persisk har altid <span class="mss-hl-my">fast [d]</span>; det bløde danske d findes ikke.`,
+                zh: `面包 (miànbāo) — Kinesisk mangler blødt d [ð], og har en stor udfordring med at skelne <strong>L [l]</strong> og <strong>N [n]</strong> (边音/鼻音).`
             },
             detailExplain: `En <strong>fon</strong> er selve sproglyden. På dansk ændrer bogstaver som <strong>d, g og r</strong> ofte lyd alt efter, om de står først eller sidst i ordet (f.eks. hårdt <em>d</em> i <strong>d</strong>ag, men blødt <em>d</em> i brø<strong>d</strong>).`,
             morePairs: [
@@ -468,7 +471,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             ],
             links: [
                 { label: '🔤 Træn bogstaver & lyde', route: 'traen_bogstaver' },
-                { label: '🎙️ Leg med udtale', route: 'leg_med_udtale' }
+                { label: '🎙️ Leg med udtale', route: 'leg_med_udtale' },
+                { label: '🇨🇳 Vanskelige lyde for kinesere (L vs. N)', route: 'vanskelige_lyde_kinesisk' }
             ]
         },
         {
@@ -486,7 +490,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `<span class="mss-hl-my">Kü-che</span> — Tysk svækker også -e til [ə], men sluger færre konsonanter end dansk.`,
                 es: `<span class="mss-hl-my">co-ci-na</span> — Spansk er stavelsestællende: hver stavelse og vokal høres helt tydeligt.`,
                 vi: `<span class="mss-hl-my">nhà bếp</span> — Hvert ord er én fast stavelse uden tryksvage endelser.`,
-                fa: `<span class="mss-hl-my">آشـپـزخـانـه (âsh-paz-khâ-neh)</span> — Hver stavelse udtales tydeligt med tryk til sidst.`
+                fa: `<span class="mss-hl-my">آشـپـزخـانـه (âsh-paz-khâ-neh)</span> — Hver stavelse udtales tydeligt med tryk til sidst.`,
+                zh: `<span class="mss-hl-my">厨-房 (chú-fáng)</span> — Hvert kinesisk tegn er én fast stavelse med egen tone; dansk sluger tryksvage endelser til schwa [ə].`
             },
             detailExplain: `I en dansk <strong>stavelse</strong> ligger al energien på den trykstærke stavelse (oftest den første: <strong>køk</strong>-). De efterfølgende stavelser med <em>-e-</em> svækkes til den slappe [ə]-lyd eller smelter helt sammen med nabokonsonanten.`,
             morePairs: [
@@ -513,7 +518,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `<span class="mss-hl-my">der/die/das (in der)</span> + Küche — Bestemthed og køn står <em>foran</em> navneordet.`,
                 es: `<span class="mss-hl-my">la</span> + cocina — Bestemthed står <em>foran</em> navneordet.`,
                 vi: `<span class="mss-hl-my">nhà bếp (ingen bøjnings-morfemer)</span> — Ord ændrer aldrig form med endelser.`,
-                fa: `آشپزخانه — I talesprog kan <span class="mss-hl-my">-e (-ه)</span> sættes bagpå for bestemthed, men ellers ingen fast artikel.`
+                fa: `آشپزخانه — I talesprog kan <span class="mss-hl-my">-e (-ه)</span> sættes bagpå for bestemthed, men ellers ingen fast artikel.`,
+                zh: `<span class="mss-hl-my">厨房 (ingen bøjnings-morfemer)</span> — Kinesisk tilføjer ikke bøjningsendelser for bestemthed eller flertal bag på ordet.`
             },
             detailExplain: `En <strong>morf</strong> (morfem) er den mindste del, der bærer en betydning. Dansk er berømt for at sætte bestemthed (<strong>-en / -et / -ne</strong>) bag på substantivet som en hale: <em>et køkken → køkken<strong>et</strong></em>.`,
             morePairs: [
@@ -540,7 +546,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `ich <span class="mss-hl-my">esse</span> / du <span class="mss-hl-my">isst</span> / wir <span class="mss-hl-my">essen</span> — Verbet bøjes efter personen.`,
                 es: `<span class="mss-hl-my">como / comes / come / comemos</span> — Personbøjningen er så tydelig, at "jeg" ofte udelades.`,
                 vi: `tôi / bạn / anh ấy <span class="mss-hl-my">ăn</span> — Verbet ændrer slet ikke form (hverken efter person eller tid!).`,
-                fa: `<span class="mss-hl-my">می‌خورم (-am) / می‌خوری (-i) / می‌خورد (-ad)</span> — Verbet bøjes altid efter personen.`
+                fa: `<span class="mss-hl-my">می‌خورم (-am) / می‌خوری (-i) / می‌خورد (-ad)</span> — Verbet bøjes altid efter personen.`,
+                zh: `我 / 你 / 他 / 我们 <span class="mss-hl-my">吃 (chī)</span> — Ligesom på dansk ændrer kinesiske verber sig aldrig efter personen!`
             },
             detailExplain: `På <strong>ord-niveau</strong> er dansk meget enkelt ved verber: <em>spiser</em> hedder præcis det samme uanset om det er <em>jeg, du, han, hun, vi, I eller de</em>! Til gengæld skal man derfor altid huske pronomenet (<em>jeg/han</em>) foran verbet.`,
             morePairs: [
@@ -568,7 +575,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `<span class="mss-hl-my">in der großen Küche</span> — Adjektivet står foran navneordet med kasus-bøjning.`,
                 es: `<span class="mss-hl-my">en la cocina grande</span> — Adjektivet står normalt <em>efter</em> navneordet ("i køkkenet store").`,
                 vi: `<span class="mss-hl-my">trong nhà bếp lớn</span> — Adjektivet <em>lớn</em> (stor) står <em>efter</em> navneordet <em>nhà bếp</em>.`,
-                fa: `<span class="mss-hl-my">در آشپزخانهٔ بزرگ (dar âshpazkhâneh-ye bozorg)</span> — Adjektivet står <em>efter</em> navneordet bundet med -e (ezâfe).`
+                fa: `<span class="mss-hl-my">در آشپزخانهٔ بزرگ (dar âshpazkhâneh-ye bozorg)</span> — Adjektivet står <em>efter</em> navneordet bundet med -e (ezâfe).`,
+                zh: `<span class="mss-hl-my">在大厨房里</span> — Kinesisk sætter sted- og tidsfraser foran handlingen, og adjektivet foran navneordet.`
             },
             detailExplain: `En <strong>frase</strong> er en lille ordgruppe, der fungerer som én samlet byggeklods i sætningen: f.eks. <em>frisk brød</em>, <em>i køkkenet</em> eller <em>i det store køkken</em>. Bemærk, at på dansk hopper bestemthed frem som <strong>det/den/de</strong>, så snart der kommer et adjektiv ind foran navneordet!`,
             morePairs: [
@@ -595,7 +603,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `1) <span class="mss-hl-my">Ich esse</span> heute... • 2) Heute <span class="mss-hl-my">esse ich</span>... — Tysk har også V2-reglen ligesom dansk!`,
                 es: `Hoy <span class="mss-hl-my">(yo) como</span> pan en la cocina — Ingen fast V2-inversion efter "Hoy".`,
                 vi: `Hôm nay <span class="mss-hl-my">tôi ăn</span> bánh mì trong nhà bếp — "I dag jeg spiser..." (aldrig inversion).`,
-                fa: `امروز در آشپزخانه نان <span class="mss-hl-my">می‌خورم</span> — Verbet står altid til allersidst i sætningen (SOV).`
+                fa: `امروز در آشپzخانه نان <span class="mss-hl-my">می‌خورم</span> — Verbet står altid til allersidst i sætningen (SOV).`,
+                zh: `今天我吃面包 (I dag jeg spiser...) — Kinesisk beholder fast SVO-ordstilling, mens dansk kræver <strong>inversion (V2-reglen)</strong>.`
             },
             detailExplain: `I en dansk <strong>sætning</strong> står der i almindelig ordstilling: <strong>Subjekt + Verbum + Objekt + Sted + Tid</strong> (<em>Jeg spiser brød i køkkenet i dag</em>). Men verbet er låst til <strong>Plads 2 (V2-reglen)</strong>: Hvis du starter med <em>"I dag"</em> eller <em>"I køkkenet"</em> på Plads 1, skal verbet stå lige bagefter: <em>"I dag <strong>spiser jeg</strong>..."</em>.`,
             morePairs: [
@@ -623,7 +632,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `Hv: "<span class="mss-hl-my">Was isst du?</span>" • Ja/nej: "<span class="mss-hl-my">Isst du</span> Brot?" • Imp.: "<span class="mss-hl-my">Iss</span> das Brot!"`,
                 es: `Hv: "<span class="mss-hl-my">¿Qué comes?</span>" • Ja/nej: "<span class="mss-hl-my">¿Comes</span> pan?" • Imp.: "¡<span class="mss-hl-my">Come</span> el pan!"`,
                 vi: `Hv: "Bạn ăn <span class="mss-hl-my">gì?</span>" (til sidst) • Ja/nej: "Bạn ăn bánh mì <span class="mss-hl-my">không?</span>" • Imp.: "<span class="mss-hl-my">Hãy ăn</span> bánh mì đi!"`,
-                fa: `Hv: "<span class="mss-hl-my">چه می‌خوری؟</span>" • Ja/nej: "<span class="mss-hl-my">آیا</span> نان می‌خوری؟" • Imp.: "نان را <span class="mss-hl-my">بخور (bokhor)!</span>"`
+                fa: `Hv: "<span class="mss-hl-my">چه می‌خوری؟</span>" • Ja/nej: "<span class="mss-hl-my">آیا</span> نان می‌خوری؟" • Imp.: "نان را <span class="mss-hl-my">بخور (bokhor)!</span>"`,
+                zh: `Hv: "你吃<span class="mss-hl-my">什么 (shénme)?</span>" • Ja/nej: "你吃面包<span class="mss-hl-my">吗 (ma)?</span>" • Imp.: "快<span class="mss-hl-my">吃</span>面包!"`
             },
             detailExplain: `En <strong>ytring</strong> er sætningen brugt som en konkret talehandling i en situation. Her er de <strong>3 vigtigste ytringstyper</strong> på dansk sammenlignet med dit sprog:`,
             utteranceCards: [
@@ -641,7 +651,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         de: '"<strong>Was</strong> isst du heute in der Küche?" — Præcis samme opbygning som dansk: Spørgeord + Verbum + Subjekt!',
                         es: '"¿<strong>Qué</strong> comes (tú) en la cocina hoy?" — Spørgeord + Verbum (+ evt. subjekt).',
                         vi: '"Hôm nay bạn ăn <strong>gì</strong> trong nhà bếp?" — Spørgeordet <em>gì</em> (hvad) står <em>efter</em> verbet på den plads, hvor svaret hører hjemme!',
-                        fa: '"امروز در آشپزخانه <strong>چه</strong> می‌خوری؟" — Spørgeordet står inde i sætningen lige foran verbet til sidst.'
+                        fa: '"امروز در آشپزخانه <strong>چه</strong> می‌خوری؟" — Spørgeordet står inde i sætningen lige foran verbet til sidst.',
+                        zh: '"今天你在厨房吃<strong>什么</strong>？" — Kinesisk lader spørgeordet stå på objektets plads ("Hvad") i stedet for at rykke det forrest med V2-inversion.'
                     }
                 },
                 {
@@ -704,7 +715,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `B: "<span class="mss-hl-my">Doch!</span>" — Tysk har <em>Doch</em> ligesom dansk <em>Jo</em>, men bruger ikke "det gør jeg"-ekko.`,
                 es: `B: "<span class="mss-hl-my">Sí, claro</span>" — Spansk bruger <em>Sí</em> til både positive og negative spørgsmål.`,
                 vi: `B: "<span class="mss-hl-my">Có, tôi có ăn</span>" — Bruger <em>Có</em> til at bekræfte handlingen.`,
-                fa: `B: "<span class="mss-hl-my">چرا (Cherâ), می‌خورم</span>" — Persisk bruger <em>cherâ</em> som dansk <em>Jo!</em> efter et negativt spørgsmål.`
+                fa: `B: "<span class="mss-hl-my">چرا (Cherâ), می‌خورm</span>" — Persisk bruger <em>cherâ</em> som dansk <em>Jo!</em> efter et negativt spørgsmål.`,
+                zh: `B: "<span class="mss-hl-my">会啊 / 吃啊</span>" — Kinesisk svarer med bekræftelse af verbet (会/吃), og har ikke en direkte modpart til "Jo".`
             },
             detailExplain: `Et <strong>turpar</strong> er to replikker, der hænger uløseligt sammen: f.eks. <em>Spørgsmål → Svar</em> eller <em>Tilbud → Tak</em>. På dansk gælder to vigtige vaner i turpar: 1) Hvis spørgsmålet indeholder <em>"ikke"</em>, skal et positivt svar starte med <strong>"Jo"</strong> (ikke "Ja"). 2) Man runder næsten altid svaret af med et lille ekko-svar: <strong>"Ja, det gør jeg"</strong> / <strong>"Nej, det gør jeg ikke"</strong>.`,
             morePairs: [
@@ -731,7 +743,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `"<span class="mss-hl-my">Na ja</span>, ich bin hungrig, <span class="mss-hl-my">also</span> esse ich mal Brot in der Küche, <span class="mss-hl-my">oder?</span>"`,
                 es: `"<span class="mss-hl-my">Bueno</span>, tengo hambre, <span class="mss-hl-my">así que</span> como pan en la cocina, <span class="mss-hl-my">¿vale?</span>"`,
                 vi: `"<span class="mss-hl-my">À</span>, tôi đói rồi, <span class="mss-hl-my">nên</span> tôi ăn chút bánh mì trong bếp <span class="mss-hl-my">nhé!</span>"`,
-                fa: `"<span class="mss-hl-my">خب (Khob)</span>، گرسنه‌ام، <span class="mss-hl-my">پس</span> توی آشپزخانه کمی نان می‌خورم، <span class="mss-hl-my">باشه؟</span>"`
+                fa: `"<span class="mss-hl-my">خب (Khob)</span>، گرسنه‌ام، <span class="mss-hl-my">پس</span> توی آشپزخانه کمی نان می‌خورم، <span class="mss-hl-my">باشه؟</span>"`,
+                zh: `"<span class="mss-hl-my">哎 (Āi)</span>，我饿了，<span class="mss-hl-my">所以</span>去厨房吃点面包，<span class="mss-hl-my">对吧？</span>" — Kinesisk bruger语气词 (partikler som 呢/吧/啊) til kontakt og stemning.`
             },
             detailExplain: `Øverst i sproget samles ytringer og turpar til en hel <strong>samtale eller tekst</strong>. Her bruger dansk små dialog-ord som <strong>nå, jo, lige, altså, vel, ikke?</strong> til at vise følelse og kontakt — og bindeord som <strong>så, fordi, derfor, når/da</strong> til at kæde sætningerne sammen.`,
             morePairs: [
@@ -832,6 +845,25 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     </div>
 
                     ${buildUtteranceCardsHtml(st)}
+
+                    ${st.num === 2 ? `
+                        <div style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, rgba(15, 23, 42, 0.92) 100%); border: 2px solid #38bdf8; border-radius: 16px; padding: 1.15rem 1.35rem; margin-bottom: 1.15rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
+                            <div style="max-width: 720px;">
+                                <div style="display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.74rem; font-weight: 900; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; background:rgba(56,189,248,0.15); padding:0.2rem 0.6rem; border-radius:6px; margin-bottom:0.35rem;">
+                                    <span>🇨🇳</span> <span>Fonetisk Specialistmodul</span>
+                                </div>
+                                <div style="font-size: 1.15rem; font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;">
+                                    Vanskelige lyde for kinesere: L vs. N (侧音与鼻音对比)
+                                </div>
+                                <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;">
+                                    Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.
+                                </div>
+                            </div>
+                            <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
+                                Åbn specialistfladen ➔
+                            </button>
+                        </div>
+                    ` : ''}
 
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem; margin-bottom:1rem;">
                         ${st.morePairs.map(mp => `

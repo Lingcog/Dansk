@@ -119,6 +119,7 @@ import { renderVerberHarErView } from './views/VerberHarErView.js';
 import { renderVerberKraftHvileView } from './views/VerberKraftHvileView.js';
 import { renderVerberLiggerLaeserView } from './views/VerberLiggerLaeserView.js';
 import { renderMitSprogSammenlignetView } from './views/MitSprogSammenlignetView.js';
+import { renderVanskeligeLydeKinesiskView } from './views/VanskeligeLydeKinesiskView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
@@ -534,7 +535,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'mit_sprog_sammenlignet') {
     const isLocalhost = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1'
+      window.location.hostname === '127.0.0.1' ||
+      window.location.href.includes('dev=true') ||
+      window.location.href.includes('dev=1')
     );
     if (!isLocalhost) {
       navigate('main', {}, true);
@@ -542,6 +545,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     }
     appState.currentView = 'mit_sprog_sammenlignet';
     renderMitSprogSammenlignetView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_kinesisk' || viewTarget === 'kinesiske_lyde') {
+    appState.currentView = 'vanskelige_lyde_kinesisk';
+    renderVanskeligeLydeKinesiskView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

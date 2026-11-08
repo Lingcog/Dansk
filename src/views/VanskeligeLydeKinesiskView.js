@@ -661,16 +661,80 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         { l: 'kold', n: 'kone', contextL: 'Vinteren er kold', contextN: 'Hans søde kone', meanL_zh: '冷的 (kold [l])', meanN_zh: '妻子 (kone [n])' }
     ];
 
-    // Speech exercises
+    // Speech exercises (3-ords sætninger: 3xL, 3xN og pendul)
     const SPEECH_EXERCISES = [
-        { text: 'Tænd et lys', targetSound: 'l', targetWord: 'lys', hintDa: 'Tungespids på midten af tandkødsranden, åbne sider.', hintZh: '发 /l/ 时舌身两侧下垂，气流必须从两侧流出，绝无鼻音。' },
-        { text: 'Puds din næse', targetSound: 'n', targetWord: 'næse', hintDa: 'Tæt forsegling i hele forreste mund. Al luft gennem næsen.', hintZh: '发 /n/ 时舌头紧贴上齿龈，封闭口腔，所有气流走鼻腔。' },
-        { text: 'Jeg vil læse en bog', targetSound: 'l', targetWord: 'læse', hintDa: 'Hæv ganesejlet: luk helt for næsehulen.', hintZh: '软腭升起封闭鼻腔，发出清脆的侧边气流。' },
-        { text: 'Hun fik et nys', targetSound: 'n', targetWord: 'nys', hintDa: 'Mærk vibrationen i næsen, når du siger N.', hintZh: '触摸鼻梁可感受到明显共鸣震动。' },
-        { text: 'En lille pige', targetSound: 'l', targetWord: 'lille', hintDa: 'Dobbelt-L: Hold tungens sider åbne hele vejen.', hintZh: '双 /l/ 发音：舌侧保持漏风，不可转为鼻音。' },
-        { text: 'Vi skal lave mad', targetSound: 'l', targetWord: 'lave', hintDa: 'Lave starter med rent lateralt luftslip.', hintZh: '起始音绝对没有鼻腔共鸣。' },
-        { text: 'Døren har en lås', targetSound: 'l', targetWord: 'lås', hintDa: 'Rene læber, tungen i midten, luft i kinderne.', hintZh: '舌尖抵中间齿龈，气流穿过两腮。' },
-        { text: 'Kan bussen nås', targetSound: 'n', targetWord: 'nås', hintDa: 'Nasalstart: Luftstrømmen går opad mod næsen.', hintZh: '起始音气流冲向鼻腔。' }
+        { 
+            text: 'Lise laver linsesuppe', 
+            targetSound: 'l', 
+            type: 'alliteration',
+            targetWords: ['lise', 'laver', 'linsesuppe'],
+            hintDa: '3 × L! Hold tungens sider åbne hele vejen: Lise - laver - linsesuppe.', 
+            hintZh: '连续3个 /l/ 边音（Lise - laver - linsesuppe）：舌侧保持完全通气，切勿漏气到鼻腔。' 
+        },
+        { 
+            text: 'Nissens næse nyser', 
+            targetSound: 'n', 
+            type: 'alliteration',
+            targetWords: ['nissens', 'næse', 'nyser'],
+            hintDa: '3 × N! Forsegl munden helt foran ved hvert ord, så al luft passerer næsen.', 
+            hintZh: '连续3个 /n/ 鼻音（Nissens - næse - nyser）：舌尖紧贴上齿龈，全部气流通过鼻腔振动发出。' 
+        },
+        { 
+            text: 'Lasse læser lektier', 
+            targetSound: 'l', 
+            type: 'alliteration',
+            targetWords: ['lasse', 'læser', 'lektier'],
+            hintDa: '3 × L: Åbne mundvige og lateralt luftslip i kinderne.', 
+            hintZh: '连续3个 /l/ 边音（Lasse - læser - lektier）：气流从两腮冲出。' 
+        },
+        { 
+            text: 'Nanna napper nødder', 
+            targetSound: 'n', 
+            type: 'alliteration',
+            targetWords: ['nanna', 'napper', 'nødder'],
+            hintDa: '3 × N: Mærk den kraftige nasale vibration i næseryggen ved hvert ord.', 
+            hintZh: '连续3个 /n/ 鼻音（Nanna - napper - nødder）：按住鼻翼感受每次发音的鼻腔震颤。' 
+        },
+        { 
+            text: 'Lene låner lygten', 
+            targetSound: 'l', 
+            type: 'alliteration',
+            targetWords: ['lene', 'låner', 'lygten'],
+            hintDa: '3 × L: Hæv ganesejlet og luk helt af for næsehulen.', 
+            hintZh: '连续3个 /l/ 边音（Lene - låner - lygten）：软腭完全闭锁鼻咽通路。' 
+        },
+        { 
+            text: 'Ni nisser nynner', 
+            targetSound: 'n', 
+            type: 'alliteration',
+            targetWords: ['ni', 'nisser', 'nynner'],
+            hintDa: '3 × N: Rolig, klangfuld næselyd hele vejen igennem.', 
+            hintZh: '连续3个 /n/ 鼻音（Ni - nisser - nynner）：发出饱满集中的鼻音共鸣。' 
+        },
+        { 
+            text: 'Niels tænder lyset', 
+            targetSound: 'contrast', 
+            type: 'contrast',
+            targetWords: ['niels', 'lyset'],
+            hintDa: 'Kontrast (N ➔ L): Start med nasal N i "Niels", og skift til rent lateralt luftslip i "lyset"!', 
+            hintZh: '边音/鼻音钟摆挑战（N ➔ L）：从 Niels 的紧贴鼻音，瞬间切换为 lyset 的侧边流气！' 
+        },
+        { 
+            text: 'Lise pudser næsen', 
+            targetSound: 'contrast', 
+            type: 'contrast',
+            targetWords: ['lise', 'næsen'],
+            hintDa: 'Kontrast (L ➔ N): Start med lateral L i "Lise", og luk tæt for munden i "næsen"!', 
+            hintZh: '边音/鼻音钟摆挑战（L ➔ N）：从 Lise 的侧流气，转换为 næsen 的封闭鼻音！' 
+        },
+        { 
+            text: 'Lille nisse nyser', 
+            targetSound: 'contrast', 
+            type: 'contrast',
+            targetWords: ['lille', 'nisse', 'nyser'],
+            hintDa: 'L ➔ N ➔ N: "Lille" (åbne sider) efterfølges af to nasale N-ord ("nisse nyser").', 
+            hintZh: '三词终极切换（L ➔ N ➔ N）：Lille（舌侧通气）接着快速进入 nisse nyser（紧密封闭鼻腔）。' 
+        }
     ];
 
     // --- PURE VECTOR SVG GENERATORS ---
@@ -1253,23 +1317,47 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
     function renderSpeechSection(wrap) {
         const ex = SPEECH_EXERCISES[speechExerciseIdx];
         const isL = ex.targetSound === 'l';
+        const isN = ex.targetSound === 'n';
+        const isContrast = ex.targetSound === 'contrast';
 
         const speechCard = document.createElement('div');
         speechCard.className = 'vlk-speech-card';
 
-        // Highlight target word in prompt
-        const promptHtml = ex.text.replace(new RegExp(`(${ex.targetWord})`, 'gi'), `<span class="vlk-target-word ${isL ? 'word-l' : 'word-n'}">$1</span>`);
+        // Highlight target words in prompt
+        let promptHtml = '';
+        if (isL) {
+            promptHtml = ex.text.split(' ').map(w => `<span class="vlk-target-word word-l">${w}</span>`).join(' ');
+        } else if (isN) {
+            promptHtml = ex.text.split(' ').map(w => `<span class="vlk-target-word word-n">${w}</span>`).join(' ');
+        } else {
+            promptHtml = ex.text.split(' ').map(w => {
+                const lower = w.toLowerCase();
+                if (lower.startsWith('l')) return `<span class="vlk-target-word word-l">${w}</span>`;
+                if (lower.startsWith('n')) return `<span class="vlk-target-word word-n">${w}</span>`;
+                return w;
+            }).join(' ');
+        }
+
+        let targetBadge = '';
+        if (isL) targetBadge = 'Mållyd: /l/ (3 × L · 边音 L)';
+        else if (isN) targetBadge = 'Mållyd: /n/ (3 × N · 鼻音 N)';
+        else targetBadge = 'Mållyd: /l/ ↔ /n/ (Pendul · 边鼻切换)';
+
+        let subDesc = '';
+        if (isL) subDesc = 'Fokus på L: Åbn tungens sider, ingen luft i næsen!';
+        else if (isN) subDesc = 'Fokus på N: Tæt lukke foran, al klang og luft op i næsen!';
+        else subDesc = 'Fokus på skiftet: Mærk kontrasten mellem åbne sider (L) og lukket næseklang (N)!';
 
         speechCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; font-size:0.88rem; color:#94a3b8;">
                 <span>Øvelse ${speechExerciseIdx + 1} af ${SPEECH_EXERCISES.length}</span>
-                <span class="vlk-target-word ${isL ? 'word-l' : 'word-n'}" style="font-weight:bold; font-size:0.82rem;">
-                    Mållyd: /${ex.targetSound}/ (${isL ? '边音 L' : '鼻音 N'})
+                <span class="vlk-target-word ${isL ? 'word-l' : (isN ? 'word-n' : 'word-l')}" style="font-weight:bold; font-size:0.82rem;">
+                    ${targetBadge}
                 </span>
             </div>
 
             <div class="vlk-speech-prompt">${promptHtml}</div>
-            <div class="vlk-speech-sub">${isL ? 'Fokus på L: Åbn tungens sider, ingen næselyd!' : 'Fokus på N: Tæt lukke foran, send luften op i næsen!'}</div>
+            <div class="vlk-speech-sub">${subDesc}</div>
 
             ${consecutiveSpeechStreak > 0 ? `
                 <div class="vlk-streak-pill">
@@ -1353,28 +1441,60 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 micBtn.classList.remove('listening');
                 statusEl.textContent = 'Behandler udtale...';
 
-                const transcript = event.results[0][0].transcript.toLowerCase().trim();
-                const targetText = ex.text.toLowerCase().trim();
-                const targetWord = ex.targetWord.toLowerCase().trim();
+                const transcriptRaw = event.results[0][0].transcript || '';
+                const transcript = transcriptRaw.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
+                const targetClean = ex.text.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
+                const targetWordList = ex.targetWords || targetClean.split(' ');
 
-                // Check accuracy
-                const isMatch = transcript.includes(targetWord) || transcript === targetText;
+                // Check how many target words were heard
+                const matchedWords = targetWordList.filter(w => transcript.includes(w.toLowerCase()));
+                const matchRatio = matchedWords.length / targetWordList.length;
+
+                // Match if exact match, or at least 2 of 3 words matched
+                const isMatch = transcript === targetClean || matchRatio >= 0.65;
                 
                 // Specific diagnostic for L vs N confusion
                 let confusionDetected = false;
                 let confusedWord = '';
                 if (isL) {
-                    // Check if user said N instead of L (e.g. nys instead of lys)
-                    if (targetWord === 'lys' && transcript.includes('nys')) { confusionDetected = true; confusedWord = 'nys'; }
-                    else if (targetWord === 'læse' && transcript.includes('næse')) { confusionDetected = true; confusedWord = 'næse'; }
-                    else if (targetWord === 'lave' && transcript.includes('nave')) { confusionDetected = true; confusedWord = 'nave'; }
-                    else if (targetWord === 'lille' && transcript.includes('nille')) { confusionDetected = true; confusedWord = 'nille'; }
-                    else if (targetWord === 'lås' && transcript.includes('nås')) { confusionDetected = true; confusedWord = 'nås'; }
-                } else {
-                    // Target is N, check if user said L instead of N
-                    if (targetWord === 'næse' && transcript.includes('læse')) { confusionDetected = true; confusedWord = 'læse'; }
-                    else if (targetWord === 'nys' && transcript.includes('lys')) { confusionDetected = true; confusedWord = 'lys'; }
-                    else if (targetWord === 'nås' && transcript.includes('lås')) { confusionDetected = true; confusedWord = 'lås'; }
+                    const nReplacements = [
+                        { wrong: 'nise', orig: 'lise' },
+                        { wrong: 'nisser', orig: 'lise' },
+                        { wrong: 'naver', orig: 'laver' },
+                        { wrong: 'nasser', orig: 'lasse' },
+                        { wrong: 'næser', orig: 'læser' },
+                        { wrong: 'nektier', orig: 'lektier' },
+                        { wrong: 'nene', orig: 'lene' },
+                        { wrong: 'nåner', orig: 'låner' },
+                        { wrong: 'nygten', orig: 'lygten' },
+                        { wrong: 'ninsesuppe', orig: 'linsesuppe' }
+                    ];
+                    for (const r of nReplacements) {
+                        if (transcript.includes(r.wrong)) {
+                            confusionDetected = true;
+                            confusedWord = `"${r.wrong}" i stedet for "${r.orig}"`;
+                            break;
+                        }
+                    }
+                } else if (isN) {
+                    const lReplacements = [
+                        { wrong: 'lisse', orig: 'nisse' },
+                        { wrong: 'lissens', orig: 'nissens' },
+                        { wrong: 'læse', orig: 'næse' },
+                        { wrong: 'lyser', orig: 'nyser' },
+                        { wrong: 'lanna', orig: 'nanna' },
+                        { wrong: 'lapper', orig: 'napper' },
+                        { wrong: 'lødder', orig: 'nødder' },
+                        { wrong: 'li', orig: 'ni' },
+                        { wrong: 'lynner', orig: 'nynner' }
+                    ];
+                    for (const r of lReplacements) {
+                        if (transcript.includes(r.wrong)) {
+                            confusionDetected = true;
+                            confusedWord = `"${r.wrong}" i stedet for "${r.orig}"`;
+                            break;
+                        }
+                    }
                 }
 
                 fbBox.className = 'vlk-speech-feedback-box show';
@@ -1386,11 +1506,12 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     fbBox.style.borderColor = '#22c55e';
                     fbBox.innerHTML = `
                         <div class="vlk-feedback-heard" style="color:#86efac;">
-                            ✅ Rigtigt! Vi hørte: "${transcript}"
+                            ✅ Rigtigt! Vi hørte: "${transcriptRaw}"
                         </div>
                         <div class="vlk-feedback-tip">
-                            Flot kontrol over ${isL ? 'den laterale /l/-lyd' : 'den nasale /n/-lyd'}! 
-                            ${isL ? 'Du holdt ganesejlet lukket og lod luften glide ud i munden.' : 'Du sendte luften rent op i næsehulen.'}
+                            ${isL ? 'Perfekt kontrol over <strong>/l/</strong>! Du lod luften glide frit ud af mundens sider uden nasal resonans.' : 
+                              (isN ? 'Flot <strong>/n/</strong>! Du forseglede mundhulen og sendte klangen rent op i næsen.' : 
+                              'Super flot styring af skiftet mellem lateral /l/ og nasal /n/!')}
                         </div>
                     `;
                 } else if (confusionDetected) {
@@ -1400,17 +1521,17 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     fbBox.style.borderColor = '#ef4444';
                     fbBox.innerHTML = `
                         <div class="vlk-feedback-heard" style="color:#fca5a5;">
-                            ⚠️ Vi opfangede: "${confusedWord}" i stedet for "${targetWord}"
+                            ⚠️ Vi opfangede: ${confusedWord}
                         </div>
                         <div class="vlk-feedback-tip">
                             ${isL ? `
                                 <strong>Du kom til at bruge N-lyd!</strong><br>
-                                Tungen lukkede for munden, så luften slap op i næsen. 
-                                <em>Tip:</em> Træk tungens sider ned fra kindtænderne, så du mærker luften i kinderne!
+                                Tungen lukkede tæt for hele munden, så klangen slap op i næsen.<br>
+                                <em>Tip:</em> Sænk tungens sider fra kindtænderne, så du mærker luften passere ud i kinderne!
                             ` : `
                                 <strong>Du kom til at bruge L-lyd!</strong><br>
-                                Du slap luften ud i munden. 
-                                <em>Tip:</em> Luk tungen helt tæt til tandbue foran og lad klangen gå direkte op i næsen!
+                                Luften slap ud i munden i stedet for i næsen.<br>
+                                <em>Tip:</em> Forsegl tungen helt tæt til tandkødsranden foran, så luften tvinges op i næsen!
                             `}
                         </div>
                     `;
@@ -1421,10 +1542,10 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     fbBox.style.borderColor = '#eab308';
                     fbBox.innerHTML = `
                         <div class="vlk-feedback-heard" style="color:#fde68a;">
-                            Vi hørte: "${transcript}" (Mål: "${ex.text}")
+                            Vi hørte: "${transcriptRaw}" (Mål: "${ex.text}")
                         </div>
                         <div class="vlk-feedback-tip">
-                            Lyt til modeludtalen foroven og gentag i et roligt, klart tempo.
+                            Lyt til modeludtalen foroven og gentag i et roligt, distinkt tempo.
                         </div>
                     `;
                 }

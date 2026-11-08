@@ -27,8 +27,7 @@ export function renderMainView(container, navigateFn) {
             descKey: 'mitSprogSammenlignetDesc',
             fallbackTitle: 'Mit sprog sammenlignet med dansk',
             fallbackDesc: 'Fra mindste lydtræk til hel samtale — se forskellen mellem dansk og dit eget sprog trin for trin.',
-            comingSoon: true,
-            comingSoonLabel: 'Kommer senere',
+            badgeText: '🇨🇳 Kun på kinesisk · Andre sprog følger',
             action: () => navigateFn('mit_sprog_sammenlignet')
         },
         {
@@ -117,7 +116,21 @@ export function renderMainView(container, navigateFn) {
         const transTitle = getTranslation(data.titleKey);
         cardTitle.textContent = (transTitle && transTitle !== data.titleKey) ? transTitle : (data.fallbackTitle || transTitle);
 
-        if (data.comingSoon) {
+        if (data.badgeText) {
+            const badge = document.createElement('span');
+            badge.style.display = 'inline-block';
+            badge.style.fontSize = '0.72rem';
+            badge.style.fontWeight = '800';
+            badge.style.background = 'rgba(56, 189, 248, 0.16)';
+            badge.style.border = '1px solid rgba(56, 189, 248, 0.45)';
+            badge.style.color = '#38bdf8';
+            badge.style.padding = '0.18rem 0.55rem';
+            badge.style.borderRadius = '8px';
+            badge.style.marginLeft = '0.5rem';
+            badge.style.verticalAlign = 'middle';
+            badge.textContent = data.badgeText;
+            cardTitle.appendChild(badge);
+        } else if (data.comingSoon) {
             const badge = document.createElement('span');
             badge.style.display = 'inline-block';
             badge.style.fontSize = '0.75rem';

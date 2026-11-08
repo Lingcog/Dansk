@@ -46,6 +46,15 @@ export function renderMainView(container, navigateFn) {
             action: () => navigateFn('historier_menu')
         },
         {
+            icon: '🎵',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`,
+            titleKey: 'danskeSange',
+            fallbackTitle: 'Danske sange',
+            descKey: 'danskeSangeDesc',
+            fallbackDesc: 'Syng med på elskede danske sange og gå på opdagelse i interaktive vrimlebilleder.',
+            action: () => navigateFn('sange')
+        },
+        {
             icon: '💬',
             svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
             titleKey: 'lavSporgsmal',

@@ -7,6 +7,8 @@
 
 export const sangeTranslations = {
   "da": {
+    "danskeSange": "Danske sange",
+    "danskeSangeDesc": "Syng med på elskede danske sange og gå på opdagelse i interaktive vrimlebilleder.",
     "sange_hero_badge": "Danske sange & Hverdagsliv (DU1, modul 4)",
     "sange_hero_title": "Så går vi rundt om en enebærbusk",
     "sange_hero_desc": "Dansk sang om husarbejde på ugens dage.",
@@ -185,6 +187,8 @@ export const sangeTranslations = {
     "sange_saf_hide_embed": "Skjul afspiller"
   },
   "en": {
+    "danskeSange": "Danish Songs",
+    "danskeSangeDesc": "Sing along to beloved Danish songs and explore interactive wimmelbilder.",
     "sange_hero_badge": "🎵 Danish Songs & Everyday Life",
     "sange_hero_title": "Here We Go Round the Mulberry / Juniper Bush",
     "sange_hero_desc": "Classic Danish singing game about weekly chores – then and now.",
@@ -2154,6 +2158,8 @@ export const sangeTranslations = {
     "sange_saf_hide_embed": "Сховати плеєр"
   },
   "zh": {
+    "danskeSange": "丹麦经典歌曲 (Danske sange)",
+    "danskeSangeDesc": "跟唱丹麦经典名曲并探索大型互动全景图（Wimmelbilder）。",
     "sange_hero_badge": "🎵 丹麦歌曲与日常生活",
     "sange_hero_title": "我们绕着杜松灌木走 (Så går vi rundt om en enebærbusk)",
     "sange_hero_desc": "关于一周日常家务的经典丹麦歌唱游戏——过去与现在。",

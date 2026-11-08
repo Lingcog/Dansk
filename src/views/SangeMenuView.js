@@ -20,8 +20,14 @@ export function renderSangeMenuView(container, navigateFn) {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${isEn ? 'Back to Stories' : (isZh ? '返回故事与文化 (Tilbage)' : 'Tilbage til Historier')}`;
-    backBtn.onclick = () => navigateFn('historier_menu');
+    backBtn.innerHTML = `← ${isEn ? 'Back' : (isZh ? '返回 (Tilbage)' : 'Tilbage')}`;
+    backBtn.onclick = () => {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            navigateFn('main');
+        }
+    };
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
@@ -129,7 +135,8 @@ export function renderSangeMenuView(container, navigateFn) {
         .scene-card-img-wrap {
             position: relative;
             width: 100%;
-            height: 220px;
+            aspect-ratio: 16 / 9;
+            height: auto;
             overflow: hidden;
             background: var(--song-surface-input, #081124);
         }
@@ -138,7 +145,7 @@ export function renderSangeMenuView(container, navigateFn) {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             display: block;
         }
 
@@ -255,7 +262,8 @@ export function renderSangeMenuView(container, navigateFn) {
                 gap: 1.2rem;
             }
             .scene-card-img-wrap {
-                height: 180px;
+                aspect-ratio: 16 / 9;
+                height: auto;
             }
             .scene-card-content {
                 padding: 1.1rem 1rem;
@@ -279,7 +287,7 @@ export function renderSangeMenuView(container, navigateFn) {
     const hero = document.createElement('div');
     hero.className = 'hub-hero';
     hero.innerHTML = `
-        <h1>${isEn ? 'Danish Songs & Wimmelbilder' : (isZh ? '丹麦经典歌曲与全景寻宝 (Danske sange)' : 'Danske sange & vrimlebilleder')}</h1>
+        <h1>${isEn ? 'Danish Songs' : (isZh ? '丹麦经典歌曲 (Danske sange)' : 'Danske sange')}</h1>
         <p>${
             isEn 
                 ? 'Learn Danish through beloved songs with rich, interactive wimmelbilder, pronunciation rhythm, word hunting, and vocabulary training.'
@@ -289,7 +297,7 @@ export function renderSangeMenuView(container, navigateFn) {
         }</p>
         <div class="hub-facts-badge">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-            <span>${isEn ? '2 Interactive Song Scenes · Visual Word Hunt · Word Order & Rhythm' : '2 sange med hver sit vrimlebillede · Billedjagt · Udtale & Sætningsbygger'}</span>
+            <span>${isEn ? '2 interactive song scenes with wimmelbilder' : '2 sange med hver sit vrimlebillede · Billedjagt · Udtale & Grammatik'}</span>
         </div>
     `;
     viewContainer.appendChild(hero);
@@ -305,7 +313,7 @@ export function renderSangeMenuView(container, navigateFn) {
         <div class="scene-card-img-wrap">
             <img src="assets/sang_enebaerbusk_vrimmel.jpg" alt="Så går vi rundt om en enebærbusk vrimlebillede" class="scene-card-img">
             <div class="scene-pill-badge badge-scene-enebaer">
-                🧺 ${isEn ? 'DU1 · Module 4 · Household care' : (isZh ? 'DU1 第4级 · 家务劳动与星期' : 'DU1 · Modul 4 · Husarbejde & Ugens dage')}
+                ${renderDsIcon('volume', '', { size: 14 })} ${isEn ? 'DU1 · Module 4 · Household care' : (isZh ? 'DU1 第4级 · 家务劳动与星期' : 'DU1 · Modul 4 · Husarbejde & Ugens dage')}
             </div>
         </div>
         <div class="scene-card-content">
@@ -346,7 +354,7 @@ export function renderSangeMenuView(container, navigateFn) {
         <div class="scene-card-img-wrap">
             <img src="assets/sang_godmorgen_lille_land_vrimmel.jpg" alt="Godmorgen, lille land vrimlebillede" class="scene-card-img">
             <div class="scene-pill-badge badge-scene-godmorgen">
-                🗺️ ${isEn ? 'Folk High School Songbook · Geography' : (isZh ? '民众歌集 #24 · 丹麦地理名胜' : 'Højskolesangbogen · Danmarks geografi')}
+                ${renderDsIcon('compass', '', { size: 14 })} ${isEn ? 'Folk High School Songbook · Geography' : (isZh ? '民众歌集 #24 · 丹麦地理名胜' : 'Højskolesangbogen · Danmarks geografi')}
             </div>
         </div>
         <div class="scene-card-content">

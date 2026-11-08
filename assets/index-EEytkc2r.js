@@ -73489,12 +73489,24 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                     `}).join("")}
             </div>
         `;const ae=R.querySelector("#mss-lang-note");R.querySelectorAll("[data-lang]").forEach(H=>{H.onclick=()=>{if(H.dataset.lang!=="zh"){ae&&(ae.textContent="⚠️ Kun på kinesisk. Andre sprog følger senere (目前仅开放中文版本对比与训练).",ae.style.display="block",setTimeout(()=>{ae&&(ae.style.display="none")},3500));return}s="zh",ie()}}),R.querySelectorAll("[data-open-sub]").forEach(H=>{H.onclick=z=>{z.stopPropagation();const w=Number(H.dataset.openSub);y=y===w?null:w,ie()}}),R.querySelectorAll("[data-close-sub]").forEach(H=>{H.onclick=z=>{z.stopPropagation(),y=null,ie()}}),R.querySelectorAll("[data-nav]").forEach(H=>{H.onclick=z=>{z.stopPropagation(),g(H.dataset.nav)}})}ie(),i.appendChild(t)}function sl(i,g,r={}){Ae();const t=document.createElement("div");t.className="view-container vanskelige-lyde-kinesisk-view";let a=r.module||"l_vs_n",n="diagram",s="l";const y=document.createElement("style");y.textContent=`
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         .vanskelige-lyde-kinesisk-view {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 1rem 1.2rem 4rem;
+            padding: 0.75rem 0.65rem 3.5rem;
             color: #f8fafc;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .vanskelige-lyde-kinesisk-view {
+                padding: 1rem 1.25rem 4rem;
+            }
         }
 
         /* Top Bar */
@@ -73502,240 +73514,477 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.2rem;
-            gap: 1rem;
-            flex-wrap: wrap;
+            margin-bottom: 0.85rem;
+            gap: 0.5rem;
         }
+
         .vlk-back-btn {
             background: rgba(30, 41, 59, 0.85);
             border: 1px solid rgba(148, 163, 184, 0.35);
             color: #f8fafc;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
+            padding: 0.45rem 0.75rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
         }
+
         .vlk-back-btn:hover {
             background: rgba(51, 65, 85, 0.95);
             border-color: #fde68a;
             transform: translateX(-2px);
         }
 
+        .vlk-top-badge {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            font-weight: 700;
+            text-align: right;
+            line-height: 1.2;
+        }
+
+        .vlk-back-short, .vlk-badge-short {
+            display: inline;
+        }
+        .vlk-back-full, .vlk-badge-full {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .vlk-top-bar {
+                margin-bottom: 1.2rem;
+                gap: 1rem;
+            }
+            .vlk-back-btn {
+                padding: 0.5rem 1rem;
+                border-radius: 12px;
+                font-size: 0.88rem;
+            }
+            .vlk-top-badge {
+                font-size: 0.85rem;
+            }
+            .vlk-back-short, .vlk-badge-short {
+                display: none;
+            }
+            .vlk-back-full, .vlk-badge-full {
+                display: inline;
+            }
+        }
+
         /* Hero */
         .vlk-hero {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
             border: 2px solid rgba(56, 189, 248, 0.35);
-            border-radius: 20px;
-            padding: 1.4rem 1.6rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            padding: 1rem 0.85rem;
+            margin-bottom: 1.1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
+
         .vlk-hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.45rem;
+            gap: 0.35rem;
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid rgba(56, 189, 248, 0.45);
             color: #38bdf8;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.25rem 0.75rem;
+            letter-spacing: 0.04em;
+            padding: 0.2rem 0.6rem;
             border-radius: 999px;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.45rem;
         }
+
         .vlk-hero-title {
-            margin: 0 0 0.4rem;
-            font-size: clamp(1.4rem, 2.8vw, 2rem);
+            margin: 0 0 0.35rem;
+            font-size: clamp(1.22rem, 5.2vw, 1.85rem);
             font-weight: 900;
             color: #ffffff;
+            line-height: 1.25;
         }
+
         .vlk-hero-subtitle {
-            margin: 0 0 0.8rem;
-            font-size: 1.02rem;
+            margin: 0 0 0.65rem;
+            font-size: 0.88rem;
             color: #38bdf8;
             font-weight: 700;
+            line-height: 1.35;
         }
+
         .vlk-hero-desc {
             margin: 0;
             color: #cbd5e1;
-            font-size: 0.94rem;
-            line-height: 1.55;
-            max-width: 850px;
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 640px) {
+            .vlk-hero {
+                border-radius: 20px;
+                padding: 1.4rem 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-hero-badge {
+                font-size: 0.78rem;
+                padding: 0.25rem 0.75rem;
+                margin-bottom: 0.6rem;
+            }
+            .vlk-hero-subtitle {
+                font-size: 1.02rem;
+                margin-bottom: 0.8rem;
+            }
+            .vlk-hero-desc {
+                font-size: 0.94rem;
+                line-height: 1.55;
+            }
         }
 
         /* Modular Sound Selector (Prepared for Extension) */
         .vlk-module-selector {
             display: flex;
-            gap: 0.6rem;
-            margin-bottom: 1.3rem;
+            gap: 0.5rem;
+            margin-bottom: 1.1rem;
             overflow-x: auto;
-            padding-bottom: 0.4rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 0.25rem;
         }
+        .vlk-module-selector::-webkit-scrollbar {
+            display: none;
+        }
+
         .vlk-mod-btn {
             background: rgba(15, 23, 42, 0.75);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
             color: #94a3b8;
-            padding: 0.6rem 1.1rem;
-            border-radius: 14px;
+            padding: 0.45rem 0.8rem;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 0.86rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 0.45rem;
+            gap: 0.35rem;
+            flex-shrink: 0;
         }
+
         .vlk-mod-btn:hover {
             border-color: #38bdf8;
             color: #f8fafc;
         }
+
         .vlk-mod-btn.active {
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(30, 58, 138, 0.35) 100%);
             border-color: #38bdf8;
             color: #38bdf8;
             box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
         }
+
         .vlk-mod-btn.disabled {
             opacity: 0.55;
             cursor: not-allowed;
         }
 
+        @media (min-width: 640px) {
+            .vlk-module-selector {
+                gap: 0.6rem;
+                margin-bottom: 1.3rem;
+                padding-bottom: 0.4rem;
+            }
+            .vlk-mod-btn {
+                padding: 0.6rem 1.1rem;
+                border-radius: 14px;
+                font-size: 0.86rem;
+                gap: 0.45rem;
+            }
+        }
+
         /* Main Tabs: Diagram, Listening, Speech */
         .vlk-main-tabs {
-            display: flex;
-            gap: 0.6rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.35rem;
             background: rgba(15, 23, 42, 0.9);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
-            border-radius: 16px;
-            padding: 0.4rem;
-            margin-bottom: 1.5rem;
+            border-radius: 14px;
+            padding: 0.3rem;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-tab-btn {
-            flex: 1;
             background: transparent;
             border: none;
             color: #94a3b8;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
+            padding: 0.55rem 0.25rem;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.78rem;
             cursor: pointer;
             transition: all 0.18s ease;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            line-height: 1.2;
+            width: 100%;
         }
+
+        .vlk-tab-icon {
+            font-size: 1.05rem;
+        }
+
+        .vlk-tab-short {
+            display: block;
+        }
+        .vlk-tab-full {
+            display: none;
+        }
+
         .vlk-tab-btn:hover:not(.active) {
             color: #f8fafc;
             background: rgba(255, 255, 255, 0.04);
         }
+
         .vlk-tab-btn.active {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             color: #ffffff;
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
 
+        @media (min-width: 640px) {
+            .vlk-main-tabs {
+                display: flex;
+                gap: 0.6rem;
+                border-radius: 16px;
+                padding: 0.4rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-tab-btn {
+                flex: 1;
+                flex-direction: row;
+                padding: 0.75rem 1rem;
+                border-radius: 12px;
+                font-size: 0.92rem;
+                gap: 0.45rem;
+            }
+            .vlk-tab-icon {
+                font-size: 1.15rem;
+            }
+            .vlk-tab-short {
+                display: none;
+            }
+            .vlk-tab-full {
+                display: inline;
+            }
+        }
+
         /* Sub-controls within diagram tab */
         .vlk-diag-controls {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
-            padding: 0.8rem 1rem;
+            flex-direction: column;
+            gap: 0.55rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem 0.85rem;
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 14px;
         }
+
+        .vlk-diag-controls-label {
+            font-weight: 800;
+            font-size: 0.84rem;
+            color: #f8fafc;
+        }
+
         .vlk-sound-toggle-group {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.45rem;
+            width: 100%;
         }
+
         .vlk-toggle-btn {
+            flex: 1;
             background: rgba(30, 41, 59, 0.8);
             border: 1.5px solid rgba(148, 163, 184, 0.3);
             color: #cbd5e1;
-            padding: 0.45rem 1rem;
+            padding: 0.55rem 0.4rem;
             border-radius: 10px;
             font-weight: 800;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.16s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            line-height: 1.25;
         }
+
         .vlk-toggle-btn.active-l {
             background: rgba(56, 189, 248, 0.25);
             border-color: #38bdf8;
             color: #38bdf8;
         }
+
         .vlk-toggle-btn.active-n {
             background: rgba(244, 114, 182, 0.25);
             border-color: #f472b6;
             color: #f472b6;
         }
 
+        @media (min-width: 640px) {
+            .vlk-diag-controls {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.2rem;
+                padding: 0.8rem 1rem;
+            }
+            .vlk-diag-controls-label {
+                font-size: 0.9rem;
+            }
+            .vlk-sound-toggle-group {
+                width: auto;
+                gap: 0.5rem;
+            }
+            .vlk-toggle-btn {
+                flex: initial;
+                flex-direction: row;
+                padding: 0.45rem 1rem;
+                font-size: 0.86rem;
+                gap: 0.35rem;
+            }
+        }
+
         /* Diagram Grid (Sagittal + Top-down) */
         .vlk-diagrams-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.4rem;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
         }
+
+        @media (min-width: 768px) {
+            .vlk-diagrams-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+                margin-bottom: 1.4rem;
+            }
+        }
+
         .vlk-diagram-card {
             background: rgba(15, 23, 42, 0.85);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
-            border-radius: 18px;
-            padding: 1.2rem;
+            border-radius: 16px;
+            padding: 0.9rem 0.85rem;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
             display: flex;
             flex-direction: column;
+            width: 100%;
+            overflow: hidden;
         }
+
         .vlk-diag-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.5rem;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 0.65rem;
+            padding-bottom: 0.45rem;
             border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+            gap: 0.35rem;
         }
+
         .vlk-diag-title {
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #ffffff;
+            line-height: 1.3;
         }
+
         .vlk-diag-tag {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            padding: 0.2rem 0.55rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 6px;
             text-transform: uppercase;
         }
+
         .vlk-diag-svg-wrap {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 280px;
+            min-height: auto;
             background: rgba(9, 14, 26, 0.7);
-            border-radius: 14px;
-            padding: 0.8rem;
-            margin-bottom: 0.9rem;
+            border-radius: 12px;
+            padding: 0.4rem;
+            margin-bottom: 0.75rem;
+            width: 100%;
+            overflow: hidden;
         }
+
         .vlk-diag-svg {
             width: 100%;
-            max-width: 380px;
+            max-width: 100%;
             height: auto;
             display: block;
         }
+
         .vlk-diag-notes {
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             line-height: 1.5;
             color: #cbd5e1;
         }
+
         .vlk-diag-notes strong {
             color: #fde68a;
+        }
+
+        @media (min-width: 640px) {
+            .vlk-diagram-card {
+                border-radius: 18px;
+                padding: 1.2rem;
+            }
+            .vlk-diag-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.8rem;
+                padding-bottom: 0.5rem;
+                gap: 0.5rem;
+            }
+            .vlk-diag-title {
+                font-size: 0.95rem;
+            }
+            .vlk-diag-tag {
+                font-size: 0.74rem;
+                padding: 0.2rem 0.55rem;
+            }
+            .vlk-diag-svg-wrap {
+                padding: 0.8rem;
+                margin-bottom: 0.9rem;
+                border-radius: 14px;
+            }
+            .vlk-diag-svg {
+                max-width: 380px;
+            }
+            .vlk-diag-notes {
+                font-size: 0.86rem;
+            }
         }
 
         /* Nose Pinch Practical Card */
@@ -73743,319 +73992,534 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
             background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
             border: 1.5px solid rgba(234, 179, 8, 0.4);
             border-radius: 16px;
-            padding: 1.15rem 1.3rem;
-            margin-bottom: 1.4rem;
+            padding: 1rem 0.85rem;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-pinch-title {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            align-items: flex-start;
+            gap: 0.4rem;
             color: #fde047;
             font-weight: 900;
-            font-size: 1.05rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            margin-bottom: 0.35rem;
         }
+
         .vlk-pinch-body {
-            font-size: 0.92rem;
+            font-size: 0.84rem;
             color: #e2e8f0;
-            line-height: 1.55;
+            line-height: 1.5;
         }
+
         .vlk-pinch-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 0.8rem;
-            margin-top: 0.8rem;
+            grid-template-columns: 1fr;
+            gap: 0.65rem;
+            margin-top: 0.75rem;
         }
+
         .vlk-pinch-item {
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 12px;
-            padding: 0.8rem 1rem;
+            padding: 0.75rem 0.85rem;
         }
+
         .vlk-pinch-item.item-l { border-color: rgba(56, 189, 248, 0.5); }
         .vlk-pinch-item.item-n { border-color: rgba(244, 114, 182, 0.5); }
+
+        @media (min-width: 600px) {
+            .vlk-pinch-card {
+                padding: 1.15rem 1.3rem;
+                margin-bottom: 1.4rem;
+            }
+            .vlk-pinch-title {
+                font-size: 1.05rem;
+                margin-bottom: 0.4rem;
+                align-items: center;
+            }
+            .vlk-pinch-body {
+                font-size: 0.92rem;
+                line-height: 1.55;
+            }
+            .vlk-pinch-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+                margin-top: 0.8rem;
+            }
+            .vlk-pinch-item {
+                padding: 0.8rem 1rem;
+            }
+        }
 
         /* Bilingual Comparison Box */
         .vlk-bilingual-box {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid rgba(148, 163, 184, 0.25);
-            border-radius: 16px;
-            padding: 1.1rem 1.3rem;
-            margin-bottom: 1.4rem;
+            border-radius: 14px;
+            padding: 0.9rem 0.85rem;
+            margin-bottom: 1.2rem;
         }
+
         .vlk-bilingual-title {
             color: #38bdf8;
             font-weight: 800;
-            font-size: 0.92rem;
-            margin-bottom: 0.6rem;
+            font-size: 0.86rem;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
+
         .vlk-zh-block {
             background: rgba(30, 41, 59, 0.65);
             border-left: 3px solid #eab308;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.8rem;
             border-radius: 0 10px 10px 0;
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            margin-bottom: 0.55rem;
+            font-size: 0.84rem;
+            line-height: 1.55;
             color: #f1f5f9;
         }
+
         .vlk-da-block {
-            padding: 0.2rem 0.5rem;
-            font-size: 0.88rem;
+            padding: 0.2rem 0.4rem;
+            font-size: 0.82rem;
             color: #cbd5e1;
-            line-height: 1.5;
+            line-height: 1.45;
+        }
+
+        @media (min-width: 600px) {
+            .vlk-bilingual-box {
+                border-radius: 16px;
+                padding: 1.1rem 1.3rem;
+                margin-bottom: 1.4rem;
+            }
+            .vlk-bilingual-title {
+                font-size: 0.92rem;
+                margin-bottom: 0.6rem;
+            }
+            .vlk-zh-block {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 0.6rem;
+            }
+            .vlk-da-block {
+                padding: 0.2rem 0.5rem;
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
         }
 
         /* --- LISTENING QUIZ TAB --- */
         .vlk-quiz-card {
             background: rgba(15, 23, 42, 0.9);
             border: 1.5px solid rgba(56, 189, 248, 0.35);
-            border-radius: 20px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.1rem 0.85rem;
             text-align: center;
         }
+
         .vlk-quiz-status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.88rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
             color: #94a3b8;
         }
+
         .vlk-play-sound-btn {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             border: none;
             color: #ffffff;
-            font-size: 1.15rem;
+            font-size: 1.02rem;
             font-weight: 800;
-            padding: 1rem 2.2rem;
+            padding: 0.85rem 1.8rem;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 1.6rem;
+            gap: 0.5rem;
+            margin-bottom: 1.3rem;
+            max-width: 100%;
         }
+
         .vlk-play-sound-btn:hover {
             transform: scale(1.04);
             box-shadow: 0 8px 26px rgba(2, 132, 199, 0.55);
         }
+
         .vlk-play-sound-btn:active {
             transform: scale(0.98);
         }
+
         .vlk-quiz-options {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
         }
+
         .vlk-quiz-opt {
             background: rgba(30, 41, 59, 0.85);
             border: 2px solid rgba(148, 163, 184, 0.3);
             color: #ffffff;
-            font-size: 1.35rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            padding: 1.1rem 2.5rem;
-            border-radius: 16px;
+            padding: 0.9rem 0.4rem;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.18s ease;
-            min-width: 170px;
+            min-width: 0;
+            width: 100%;
         }
+
         .vlk-quiz-opt:hover:not(:disabled) {
             border-color: #38bdf8;
             background: rgba(56, 189, 248, 0.15);
             transform: translateY(-2px);
         }
+
         .vlk-quiz-opt.correct {
             background: rgba(34, 197, 94, 0.25) !important;
             border-color: #22c55e !important;
             color: #86efac !important;
         }
+
         .vlk-quiz-opt.wrong {
             background: rgba(239, 68, 68, 0.25) !important;
             border-color: #ef4444 !important;
             color: #fca5a5 !important;
         }
+
         .vlk-quiz-feedback {
-            min-height: 65px;
-            padding: 0.85rem 1.2rem;
+            min-height: 50px;
+            padding: 0.75rem 0.9rem;
             border-radius: 12px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 1.3rem;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            margin-bottom: 1.1rem;
+            text-align: left;
             display: none;
         }
+
         .vlk-quiz-feedback.show {
             display: block;
         }
+
         .vlk-quiz-feedback.success {
             background: rgba(34, 197, 94, 0.15);
             border: 1px solid rgba(34, 197, 94, 0.4);
             color: #86efac;
         }
+
         .vlk-quiz-feedback.error {
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid rgba(239, 68, 68, 0.4);
             color: #fca5a5;
         }
 
+        @media (min-width: 600px) {
+            .vlk-quiz-card {
+                border-radius: 20px;
+                padding: 1.5rem;
+            }
+            .vlk-quiz-status-bar {
+                margin-bottom: 1.5rem;
+                font-size: 0.88rem;
+            }
+            .vlk-play-sound-btn {
+                font-size: 1.15rem;
+                padding: 1rem 2.2rem;
+                gap: 0.6rem;
+                margin-bottom: 1.6rem;
+            }
+            .vlk-quiz-options {
+                display: flex;
+                justify-content: center;
+                gap: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-quiz-opt {
+                min-width: 170px;
+                width: auto;
+                font-size: 1.35rem;
+                padding: 1.1rem 2.5rem;
+                border-radius: 16px;
+            }
+            .vlk-quiz-feedback {
+                min-height: 65px;
+                padding: 0.85rem 1.2rem;
+                font-size: 0.95rem;
+                line-height: 1.5;
+                margin-bottom: 1.3rem;
+                text-align: center;
+            }
+        }
+
         /* --- SPEECH EXERCISE TAB (Udtaletræning) --- */
         .vlk-speech-card {
             background: rgba(15, 23, 42, 0.92);
             border: 2px solid rgba(56, 189, 248, 0.35);
-            border-radius: 20px;
-            padding: 1.8rem;
+            border-radius: 16px;
+            padding: 1.1rem 0.85rem;
             text-align: center;
         }
+
+        .vlk-speech-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
         .vlk-speech-prompt {
-            font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+            font-size: clamp(1.35rem, 6.2vw, 2.1rem);
             font-weight: 900;
             color: #ffffff;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
+            line-height: 1.25;
+            word-break: break-word;
         }
+
         .vlk-speech-sub {
-            font-size: 0.95rem;
+            font-size: 0.84rem;
             color: #94a3b8;
-            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-target-word {
             display: inline-block;
             padding: 0.1rem 0.4rem;
             border-radius: 6px;
         }
+
         .vlk-target-word.word-l {
             color: #38bdf8;
             background: rgba(56, 189, 248, 0.15);
         }
+
         .vlk-target-word.word-n {
             color: #f472b6;
             background: rgba(244, 114, 182, 0.15);
         }
+
         .vlk-mic-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
             flex-wrap: wrap;
         }
+
         .vlk-mic-btn {
-            width: 74px;
-            height: 74px;
+            width: 68px;
+            height: 68px;
             border-radius: 50%;
             background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
             border: 3px solid rgba(254, 202, 202, 0.5);
             color: #ffffff;
             cursor: pointer;
-            box-shadow: 0 6px 22px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
+
         .vlk-mic-btn:hover {
             transform: scale(1.08);
             box-shadow: 0 8px 30px rgba(239, 68, 68, 0.6);
         }
+
         .vlk-mic-btn.listening {
             animation: pulseListening 1.1s infinite alternate;
             background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
         }
+
         @keyframes pulseListening {
             0% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
             100% { transform: scale(1.15); box-shadow: 0 0 35px rgba(239, 68, 68, 0.95); }
         }
+
         .vlk-listen-model-btn {
             background: rgba(30, 41, 59, 0.85);
             border: 1.5px solid rgba(148, 163, 184, 0.35);
             color: #f8fafc;
-            padding: 0.75rem 1.3rem;
-            border-radius: 14px;
+            padding: 0.65rem 1rem;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.84rem;
             cursor: pointer;
             transition: all 0.18s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
+
         .vlk-listen-model-btn:hover {
             background: rgba(51, 65, 85, 0.95);
             border-color: #38bdf8;
         }
+
         .vlk-speech-status {
-            font-size: 0.92rem;
+            font-size: 0.84rem;
             color: #94a3b8;
-            margin-bottom: 1.2rem;
-            min-height: 24px;
+            margin-bottom: 1rem;
+            min-height: 20px;
+            line-height: 1.4;
         }
+
         .vlk-speech-feedback-box {
             background: rgba(15, 23, 42, 0.8);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
-            border-radius: 14px;
-            padding: 1rem 1.3rem;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            padding: 0.85rem 0.95rem;
+            margin-bottom: 1.2rem;
             text-align: left;
             display: none;
         }
+
         .vlk-speech-feedback-box.show {
             display: block;
         }
+
         .vlk-feedback-heard {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 800;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.3rem;
         }
+
         .vlk-feedback-tip {
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             color: #cbd5e1;
-            line-height: 1.5;
+            line-height: 1.45;
         }
+
         .vlk-streak-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
             background: rgba(251, 191, 36, 0.15);
             border: 1px solid rgba(251, 191, 36, 0.4);
             color: #fde68a;
             font-weight: 800;
-            font-size: 0.85rem;
-            padding: 0.35rem 0.85rem;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 20px;
-            margin-bottom: 1.3rem;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-nav-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1.2rem;
-            gap: 0.8rem;
+            margin-top: 1.1rem;
+            gap: 0.55rem;
+            width: 100%;
         }
+
         .vlk-nav-btn {
+            flex: 1;
             background: rgba(30, 41, 59, 0.85);
             border: 1.5px solid rgba(148, 163, 184, 0.3);
             color: #ffffff;
-            padding: 0.55rem 1.15rem;
-            border-radius: 11px;
+            padding: 0.65rem 0.65rem;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.16s ease;
+            text-align: center;
+            white-space: nowrap;
         }
+
         .vlk-nav-btn:hover:not(:disabled) {
             background: rgba(51, 65, 85, 0.95);
             border-color: #38bdf8;
         }
+
         .vlk-nav-btn:disabled {
             opacity: 0.35;
             cursor: not-allowed;
         }
-    `,t.appendChild(y);const D='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>',A='<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>';function M(b,_=.85){if(!("speechSynthesis"in window)||!b)return;window.speechSynthesis.cancel();const S=new SpeechSynthesisUtterance(b);S.lang="da-DK",S.rate=_,window.speechSynthesis.speak(S)}const x=[{id:"l_vs_n",titleDa:"L vs. N",titleZh:"边音 /l/ 与鼻音 /n/",badge:"重点攻关模块",status:"active",descDa:'I mange sydkinesiske dialekter forveksles eller sammenfalder /l/ og /n/. På dansk er forskellen afgørende: "læse" vs. "næse", "lys" vs. "nys".',descZh:"在许多南方汉语方言（粤语、西南官话、闽南语、吴语等）中，/l/ 与 /n/ 常常混淆甚至合并（蓝/男不分）。丹麦语中两者是绝对区别意义的音位。"},{id:"bloedt_d",titleDa:"Blødt d [ð]",titleZh:"软 d [ð] 发音",badge:"即将推出",status:"upcoming",descDa:'Det bløde danske d som i "brød" og "mad" findes ikke i kinesisk og forveksles ofte med [l] eller [j].',descZh:"丹麦语软 d [ð]（如 brød, mad）在汉语中完全缺失，常被误读为 l 或 y。"},{id:"dansk_r",titleDa:"Dansk r [ʁ]",titleZh:"小舌擦音 r [ʁ]",badge:"即将推出",status:"upcoming",descDa:"Det danske r udtales dybt nede i svælget (drøblen), modsat det kinesiske r (rén) som er retrofleks forrest i munden.",descZh:"丹麦语 r 发音部位在咽腔深处的小舌，而汉语拼音 r 则是舌尖卷舌音。"},{id:"udlyd",titleDa:"Udlyd (-st, -lt)",titleZh:"词尾辅音群",badge:"即将推出",status:"upcoming",descDa:"Kinesiske stavelser slutter kun på vokaler, -n eller -ng. Danske konsonantsammenstød i slutningen af ord (kold, koldt, fast) kræver særskilt træning.",descZh:"汉语仅有 -n 和 -ng 词尾，丹麦语丰富的词尾辅音群（-lt, -st, -kt）易被吞音或多加元音。"}],E=[{l:"læse",n:"næse",contextL:"Hun vil læse en bog",contextN:"Puds din næse",meanL_zh:"阅读 (læse)",meanN_zh:"鼻子 (næse)"},{l:"lys",n:"nys",contextL:"Tænd et lys",contextN:"Han slog et nys",meanL_zh:"光 / 蜡烛 (lys)",meanN_zh:"喷嚏 (nys)"},{l:"lave",n:"nave",contextL:"Vi vil lave mad",contextN:"Hjulets nave",meanL_zh:"做 / 制作 (lave)",meanN_zh:"轮毂 (nave)"},{l:"lille",n:"Nille",contextL:"En lille kat",contextN:"Pigen hedder Nille",meanL_zh:"小的 (lille)",meanN_zh:"人名 (Nille)"},{l:"lås",n:"nås",contextL:"En stærk lås",contextN:"Bussen kan nås",meanL_zh:"锁 (lås)",meanN_zh:"能赶上 (nås)"},{l:"male",n:"mane",contextL:"Male et hus",contextN:"Mane til ro",meanL_zh:"画画/刷漆 (male)",meanN_zh:"告诫/唤醒 (mane)"},{l:"lam",n:"nam",contextL:"Et lille lam",contextN:"Mums nam nam",meanL_zh:"羊羔 (lam)",meanN_zh:"拟声词 (nam)"},{l:"kold",n:"kone",contextL:"Vinteren er kold",contextN:"Hans søde kone",meanL_zh:"冷的 (kold [l])",meanN_zh:"妻子 (kone [n])"}],R=[{text:"Lise laver linsesuppe",targetSound:"l",type:"alliteration",targetWords:["lise","laver","linsesuppe"],hintDa:"3 × L! Hold tungens sider åbne hele vejen: Lise - laver - linsesuppe.",hintZh:"连续3个 /l/ 边音（Lise - laver - linsesuppe）：舌侧保持完全通气，切勿漏气到鼻腔。"},{text:"Nissens næse nyser",targetSound:"n",type:"alliteration",targetWords:["nissens","næse","nyser"],hintDa:"3 × N! Forsegl munden helt foran ved hvert ord, så al luft passerer næsen.",hintZh:"连续3个 /n/ 鼻音（Nissens - næse - nyser）：舌尖紧贴上齿龈，全部气流通过鼻腔振动发出。"},{text:"Lasse læser lektier",targetSound:"l",type:"alliteration",targetWords:["lasse","læser","lektier"],hintDa:"3 × L: Åbne mundvige og lateralt luftslip i kinderne.",hintZh:"连续3个 /l/ 边音（Lasse - læser - lektier）：气流从两腮冲出。"},{text:"Nanna napper nødder",targetSound:"n",type:"alliteration",targetWords:["nanna","napper","nødder"],hintDa:"3 × N: Mærk den kraftige nasale vibration i næseryggen ved hvert ord.",hintZh:"连续3个 /n/ 鼻音（Nanna - napper - nødder）：按住鼻翼感受每次发音的鼻腔震颤。"},{text:"Lene låner lygten",targetSound:"l",type:"alliteration",targetWords:["lene","låner","lygten"],hintDa:"3 × L: Hæv ganesejlet og luk helt af for næsehulen.",hintZh:"连续3个 /l/ 边音（Lene - låner - lygten）：软腭完全闭锁鼻咽通路。"},{text:"Ni nisser nynner",targetSound:"n",type:"alliteration",targetWords:["ni","nisser","nynner"],hintDa:"3 × N: Rolig, klangfuld næselyd hele vejen igennem.",hintZh:"连续3个 /n/ 鼻音（Ni - nisser - nynner）：发出饱满集中的鼻音共鸣。"},{text:"Niels tænder lyset",targetSound:"contrast",type:"contrast",targetWords:["niels","lyset"],hintDa:'Kontrast (N ➔ L): Start med nasal N i "Niels", og skift til rent lateralt luftslip i "lyset"!',hintZh:"边音/鼻音钟摆挑战（N ➔ L）：从 Niels 的紧贴鼻音，瞬间切换为 lyset 的侧边流气！"},{text:"Lise pudser næsen",targetSound:"contrast",type:"contrast",targetWords:["lise","næsen"],hintDa:'Kontrast (L ➔ N): Start med lateral L i "Lise", og luk tæt for munden i "næsen"!',hintZh:"边音/鼻音钟摆挑战（L ➔ N）：从 Lise 的侧流气，转换为 næsen 的封闭鼻音！"},{text:"Lille nisse nyser",targetSound:"contrast",type:"contrast",targetWords:["lille","nisse","nyser"],hintDa:'L ➔ N ➔ N: "Lille" (åbne sider) efterfølges af to nasale N-ord ("nisse nyser").',hintZh:"三词终极切换（L ➔ N ➔ N）：Lille（舌侧通气）接着快速进入 nisse nyser（紧密封闭鼻腔）。"}];function ie(b){const _=b==="l",S=_?"#38bdf8":"#f472b6";return`
+
+        @media (min-width: 600px) {
+            .vlk-speech-card {
+                border-radius: 20px;
+                padding: 1.8rem;
+            }
+            .vlk-speech-meta-bar {
+                margin-bottom: 1.2rem;
+                font-size: 0.88rem;
+            }
+            .vlk-speech-sub {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-mic-row {
+                gap: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-mic-btn {
+                width: 74px;
+                height: 74px;
+            }
+            .vlk-listen-model-btn {
+                padding: 0.75rem 1.3rem;
+                border-radius: 14px;
+                font-size: 0.9rem;
+                gap: 0.5rem;
+            }
+            .vlk-speech-status {
+                font-size: 0.92rem;
+                margin-bottom: 1.2rem;
+                min-height: 24px;
+            }
+            .vlk-speech-feedback-box {
+                border-radius: 14px;
+                padding: 1rem 1.3rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-feedback-heard {
+                font-size: 1.15rem;
+                margin-bottom: 0.35rem;
+            }
+            .vlk-feedback-tip {
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
+            .vlk-streak-pill {
+                gap: 0.4rem;
+                font-size: 0.85rem;
+                padding: 0.35rem 0.85rem;
+                margin-bottom: 1.3rem;
+            }
+            .vlk-nav-row {
+                margin-top: 1.2rem;
+                gap: 0.8rem;
+            }
+            .vlk-nav-btn {
+                flex: initial;
+                padding: 0.55rem 1.15rem;
+                border-radius: 11px;
+                font-size: 0.86rem;
+            }
+        }
+`,t.appendChild(y);const D='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>',A='<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>';function M(b,_=.85){if(!("speechSynthesis"in window)||!b)return;window.speechSynthesis.cancel();const S=new SpeechSynthesisUtterance(b);S.lang="da-DK",S.rate=_,window.speechSynthesis.speak(S)}const x=[{id:"l_vs_n",titleDa:"L vs. N",titleZh:"边音 /l/ 与鼻音 /n/",badge:"重点攻关模块",status:"active",descDa:'I mange sydkinesiske dialekter forveksles eller sammenfalder /l/ og /n/. På dansk er forskellen afgørende: "læse" vs. "næse", "lys" vs. "nys".',descZh:"在许多南方汉语方言（粤语、西南官话、闽南语、吴语等）中，/l/ 与 /n/ 常常混淆甚至合并（蓝/男不分）。丹麦语中两者是绝对区别意义的音位。"},{id:"bloedt_d",titleDa:"Blødt d [ð]",titleZh:"软 d [ð] 发音",badge:"即将推出",status:"upcoming",descDa:'Det bløde danske d som i "brød" og "mad" findes ikke i kinesisk og forveksles ofte med [l] eller [j].',descZh:"丹麦语软 d [ð]（如 brød, mad）在汉语中完全缺失，常被误读为 l 或 y。"},{id:"dansk_r",titleDa:"Dansk r [ʁ]",titleZh:"小舌擦音 r [ʁ]",badge:"即将推出",status:"upcoming",descDa:"Det danske r udtales dybt nede i svælget (drøblen), modsat det kinesiske r (rén) som er retrofleks forrest i munden.",descZh:"丹麦语 r 发音部位在咽腔深处的小舌，而汉语拼音 r 则是舌尖卷舌音。"},{id:"udlyd",titleDa:"Udlyd (-st, -lt)",titleZh:"词尾辅音群",badge:"即将推出",status:"upcoming",descDa:"Kinesiske stavelser slutter kun på vokaler, -n eller -ng. Danske konsonantsammenstød i slutningen af ord (kold, koldt, fast) kræver særskilt træning.",descZh:"汉语仅有 -n 和 -ng 词尾，丹麦语丰富的词尾辅音群（-lt, -st, -kt）易被吞音或多加元音。"}],E=[{l:"læse",n:"næse",contextL:"Hun vil læse en bog",contextN:"Puds din næse",meanL_zh:"阅读 (læse)",meanN_zh:"鼻子 (næse)"},{l:"lys",n:"nys",contextL:"Tænd et lys",contextN:"Han slog et nys",meanL_zh:"光 / 蜡烛 (lys)",meanN_zh:"喷嚏 (nys)"},{l:"lave",n:"nave",contextL:"Vi vil lave mad",contextN:"Hjulets nave",meanL_zh:"做 / 制作 (lave)",meanN_zh:"轮毂 (nave)"},{l:"lille",n:"Nille",contextL:"En lille kat",contextN:"Pigen hedder Nille",meanL_zh:"小的 (lille)",meanN_zh:"人名 (Nille)"},{l:"lås",n:"nås",contextL:"En stærk lås",contextN:"Bussen kan nås",meanL_zh:"锁 (lås)",meanN_zh:"能赶上 (nås)"},{l:"male",n:"mane",contextL:"Male et hus",contextN:"Mane til ro",meanL_zh:"画画/刷漆 (male)",meanN_zh:"告诫/唤醒 (mane)"},{l:"lam",n:"nam",contextL:"Et lille lam",contextN:"Mums nam nam",meanL_zh:"羊羔 (lam)",meanN_zh:"拟声词 (nam)"},{l:"kold",n:"kone",contextL:"Vinteren er kold",contextN:"Hans søde kone",meanL_zh:"冷的 (kold [l])",meanN_zh:"妻子 (kone [n])"}],R=[{text:"Lise laver linsesuppe",targetSound:"l",type:"alliteration",targetWords:["lise","laver","linsesuppe"],hintDa:"3 × L! Hold tungens sider åbne hele vejen: Lise - laver - linsesuppe.",hintZh:"连续3个 /l/ 边音（Lise - laver - linsesuppe）：舌侧保持完全通气，切勿漏气到鼻腔。"},{text:"Nissens næse nyser",targetSound:"n",type:"alliteration",targetWords:["nissens","næse","nyser"],hintDa:"3 × N! Forsegl munden helt foran ved hvert ord, så al luft passerer næsen.",hintZh:"连续3个 /n/ 鼻音（Nissens - næse - nyser）：舌尖紧贴上齿龈，全部气流通过鼻腔振动发出。"},{text:"Lasse læser lektier",targetSound:"l",type:"alliteration",targetWords:["lasse","læser","lektier"],hintDa:"3 × L: Åbne mundvige og lateralt luftslip i kinderne.",hintZh:"连续3个 /l/ 边音（Lasse - læser - lektier）：气流从两腮冲出。"},{text:"Nanna napper nødder",targetSound:"n",type:"alliteration",targetWords:["nanna","napper","nødder"],hintDa:"3 × N: Mærk den kraftige nasale vibration i næseryggen ved hvert ord.",hintZh:"连续3个 /n/ 鼻音（Nanna - napper - nødder）：按住鼻翼感受每次发音的鼻腔震颤。"},{text:"Lene låner lygten",targetSound:"l",type:"alliteration",targetWords:["lene","låner","lygten"],hintDa:"3 × L: Hæv ganesejlet og luk helt af for næsehulen.",hintZh:"连续3个 /l/ 边音（Lene - låner - lygten）：软腭完全闭锁鼻咽通路。"},{text:"Ni nisser nynner",targetSound:"n",type:"alliteration",targetWords:["ni","nisser","nynner"],hintDa:"3 × N: Rolig, klangfuld næselyd hele vejen igennem.",hintZh:"连续3个 /n/ 鼻音（Ni - nisser - nynner）：发出饱满集中的鼻音共鸣。"},{text:"Niels tænder lyset",targetSound:"contrast",type:"contrast",targetWords:["niels","lyset"],hintDa:'Kontrast (N ➔ L): Start med nasal N i "Niels", og skift til rent lateralt luftslip i "lyset"!',hintZh:"边音/鼻音钟摆挑战（N ➔ L）：从 Niels 的紧贴鼻音，瞬间切换为 lyset 的侧边流气！"},{text:"Lise pudser næsen",targetSound:"contrast",type:"contrast",targetWords:["lise","næsen"],hintDa:'Kontrast (L ➔ N): Start med lateral L i "Lise", og luk tæt for munden i "næsen"!',hintZh:"边音/鼻音钟摆挑战（L ➔ N）：从 Lise 的侧流气，转换为 næsen 的封闭鼻音！"},{text:"Lille nisse nyser",targetSound:"contrast",type:"contrast",targetWords:["lille","nisse","nyser"],hintDa:'L ➔ N ➔ N: "Lille" (åbne sider) efterfølges af to nasale N-ord ("nisse nyser").',hintZh:"三词终极切换（L ➔ N ➔ N）：Lille（舌侧通气）接着快速进入 nisse nyser（紧密封闭鼻腔）。"}];function ie(b){const _=b==="l",S=_?"#38bdf8":"#f472b6";return`
             <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lAirflowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -74092,7 +74556,7 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                 
                 <!-- Alveolar Ridge Touch Target Highlight -->
                 <circle cx="236" cy="100" r="6" fill="#facc15" stroke="#fef08a" stroke-width="1.5"/>
-                <text x="236" y="85" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">上齿龈 (Tandkødsrand)</text>
+                <text x="236" y="85" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">上齿龈 (Tandkødsrand)</text>
 
                 <!-- Upper Incisors (Overfortænder) -->
                 <rect x="250" y="112" width="6" height="15" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
@@ -74108,7 +74572,7 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
 
                 <!-- Nasal Cavity (Næsehulen) -->
                 <path d="M 205 70 C 240 60, 260 70, 285 115" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="3,3"/>
-                <text x="235" y="55" fill="#64748b" font-size="10" text-anchor="middle">鼻腔通路 (Næsehule)</text>
+                <text x="235" y="55" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">鼻腔通路 (Næsehule)</text>
 
                 <!-- Velum / Soft Palate (Ganesejlet) -->
                 <path d="${_?"M 175 110 C 190 125, 198 138, 208 145 C 205 148, 195 135, 170 118 Z":"M 175 110 C 182 135, 186 160, 188 175 C 182 173, 178 150, 170 118 Z"}" fill="${_?"#38bdf8":"#f472b6"}" stroke="#f8fafc" stroke-width="1.5"/>
@@ -74123,31 +74587,31 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                     <circle cx="206" cy="143" r="5" fill="#ef4444"/>
                     <line x1="202" y1="139" x2="210" y2="147" stroke="#ffffff" stroke-width="1.8"/>
                     <line x1="210" y1="139" x2="202" y2="147" stroke="#ffffff" stroke-width="1.8"/>
-                    <text x="170" y="148" fill="#f87171" font-size="9" font-weight="bold" text-anchor="end">软腭封闭鼻腔通道!</text>
+                    <text x="170" y="148" fill="#f87171" font-size="10" font-weight="bold" text-anchor="end">软腭封闭鼻腔通道!</text>
 
                     <!-- Blue Oral Airflow Path -->
                     <path d="M 175 250 C 180 200, 195 180, 220 165 C 240 155, 275 165, 305 168" 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowL)"/>
-                    <text x="280" y="195" fill="#38bdf8" font-size="11" font-weight="bold">口腔侧向气流 ➔</text>
-                    <text x="280" y="208" fill="#94a3b8" font-size="9">100% 经口腔两侧流出</text>
+                    <text x="280" y="195" fill="#38bdf8" font-size="12" font-weight="bold">口腔侧向气流 ➔</text>
+                    <text x="280" y="210" fill="#cbd5e1" font-size="10">100% 经口腔两侧流出</text>
                 `:`
                     <!-- N-AIRFLOW: Mouth is sealed, air diverted through the nose! -->
                     <!-- Oral Closure Barrier -->
                     <path d="M 226 102 C 235 98, 250 98, 256 108" fill="none" stroke="#ef4444" stroke-width="4"/>
-                    <text x="285" y="145" fill="#f87171" font-size="9.5" font-weight="bold" text-anchor="middle">口腔前方封闭 ⛔</text>
+                    <text x="285" y="145" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">口腔前方封闭 ⛔</text>
 
                     <!-- Pink Nasal Airflow Path -->
                     <path d="M 175 250 C 180 190, 185 140, 195 110 C 205 75, 245 70, 290 120" 
                           fill="none" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowN)"/>
-                    <text x="270" y="45" fill="#f472b6" font-size="11" font-weight="bold">鼻腔共鸣气流 ➔</text>
-                    <text x="270" y="58" fill="#94a3b8" font-size="9">全部气流进入鼻腔共鸣</text>
+                    <text x="270" y="45" fill="#f472b6" font-size="12" font-weight="bold">鼻腔共鸣气流 ➔</text>
+                    <text x="270" y="60" fill="#cbd5e1" font-size="10">全部气流进入鼻腔共鸣</text>
                 `}
 
                 <!-- Footnote / Mode Pill in SVG -->
                 <rect x="15" y="15" width="105" height="24" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${S}" stroke-width="1.2"/>
-                <text x="67" y="31" fill="${S}" font-size="11" font-weight="900" text-anchor="middle">${_?"🌊 边音 [l]":"🌸 鼻音 [n]"}</text>
+                <text x="67" y="31" fill="${S}" font-size="12" font-weight="900" text-anchor="middle">${_?"🌊 边音 [l]":"🌸 鼻音 [n]"}</text>
             </svg>
         `}function ce(b){return`
             <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
@@ -74165,7 +74629,7 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                 <rect width="360" height="300" rx="14" fill="#0b1329" stroke="rgba(148, 163, 184, 0.2)" stroke-width="1.5"/>
 
                 <!-- Perspective Title -->
-                <text x="180" y="24" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle" letter-spacing="0.05em">TANDBUEN OG TUNGEN SET OPPEFRA (俯视牙弓与舌面)</text>
+                <text x="180" y="24" fill="#94a3b8" font-size="10.5" font-weight="bold" text-anchor="middle" letter-spacing="0.05em">TANDBUEN OG TUNGEN SET OPPEFRA (俯视牙弓与舌面)</text>
 
                 <!-- Dental Arch (Overkæbens hesteskoformede tandrække) -->
                 <!-- Front Incisors (Fortænder foroven) -->
@@ -74203,7 +74667,7 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
 
                     <!-- Single Center Contact Point (Kun berøring i midten!) -->
                     <circle cx="180" cy="56" r="6" fill="#facc15" stroke="#ffffff" stroke-width="2"/>
-                    <text x="180" y="44" fill="#facc15" font-size="10" font-weight="900" text-anchor="middle">中央接触点 (舌尖轻触齿龈)</text>
+                    <text x="180" y="44" fill="#facc15" font-size="11" font-weight="900" text-anchor="middle">中央接触点 (舌尖轻触齿龈)</text>
 
                     <!-- Lateral Gap Highlight: Siderne er nede! -->
                     <!-- Left Lateral Channel (Venstre luftkanal) -->
@@ -74216,13 +74680,13 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="6,3" 
                           filter="url(#glowLateral)" marker-end="url(#arrowLat)"/>
 
-                    <text x="80" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="end">左侧通气 ➔</text>
-                    <text x="280" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="start">➔ 右侧通气</text>
+                    <text x="80" y="115" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="end">左侧通气 ➔</text>
+                    <text x="280" y="115" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="start">➔ 右侧通气</text>
 
                     <!-- Bottom explanation -->
-                    <rect x="25" y="245" width="310" height="42" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
-                    <text x="180" y="262" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">LATERALT LUFTSLIP (边音 / 侧向气流)</text>
-                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">舌头两侧主动下沉，离开大牙。气流顺畅从两侧流出。</text>
+                    <rect x="20" y="244" width="320" height="44" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
+                    <text x="180" y="261" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="middle">LATERALT LUFTSLIP (边音 / 侧向气流)</text>
+                    <text x="180" y="278" fill="#cbd5e1" font-size="10" text-anchor="middle">舌头两侧主动下沉，离开大牙。气流顺畅从两侧流出。</text>
                 `:`
                     <!-- TONGUE FOR /n/: Wide tongue forming an airtight U-seal along the entire alveolar front! -->
                     <path d="M 125 240 C 130 180, 138 90, 180 56 C 222 90, 230 180, 235 240 Z" 
@@ -74236,24 +74700,24 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                     <circle cx="152" cy="68" r="5" fill="#ef4444"/>
                     <circle cx="208" cy="68" r="5" fill="#ef4444"/>
 
-                    <text x="180" y="38" fill="#f87171" font-size="10" font-weight="900" text-anchor="middle">牙弓马蹄形气密闭锁 ⛔</text>
+                    <text x="180" y="38" fill="#f87171" font-size="11" font-weight="900" text-anchor="middle">牙弓马蹄形气密闭锁 ⛔</text>
 
                     <!-- Red Blocked Signs at sides -->
-                    <text x="80" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="end">完全密封 ⛔</text>
-                    <text x="280" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="start">⛔ 完全密封</text>
+                    <text x="80" y="115" fill="#f87171" font-size="11.5" font-weight="bold" text-anchor="end">完全密封 ⛔</text>
+                    <text x="280" y="115" fill="#f87171" font-size="11.5" font-weight="bold" text-anchor="start">⛔ 完全密封</text>
 
                     <!-- Bottom explanation -->
-                    <rect x="25" y="245" width="310" height="42" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
-                    <text x="180" y="262" fill="#f472b6" font-size="11" font-weight="bold" text-anchor="middle">KOMPLET MUNDLUKKE (鼻音 / 口腔完全封闭)</text>
-                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">口腔毫无漏气空间。100% 气流被逼入鼻腔震颤发声。</text>
+                    <rect x="20" y="244" width="320" height="44" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
+                    <text x="180" y="261" fill="#f472b6" font-size="11.5" font-weight="bold" text-anchor="middle">KOMPLET MUNDLUKKE (鼻音 / 口腔完全封闭)</text>
+                    <text x="180" y="278" fill="#cbd5e1" font-size="10" text-anchor="middle">口腔毫无漏气空间。100% 气流被逼入鼻腔震颤发声。</text>
                 `}
             </svg>
         `}function te(){t.innerHTML="",t.appendChild(y);const b=document.createElement("div");b.className="vlk-top-bar",b.innerHTML=`
             <button type="button" class="vlk-back-btn" id="vlk-back">
-                ← 返回母语对比 (Tilbage til Mit sprog)
+                ← <span class="vlk-back-full">返回母语对比 (Tilbage)</span><span class="vlk-back-short">返回</span>
             </button>
-            <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 700;">
-                🇨🇳 中文语音中心 · 难点发音专项
+            <div class="vlk-top-badge">
+                🇨🇳 <span class="vlk-badge-full">中文语音中心 · 难点发音专项</span><span class="vlk-badge-short">难点发音专项</span>
             </div>
         `,b.querySelector("#vlk-back").onclick=()=>{g("mit_sprog_sammenlignet")},t.appendChild(b);const _=document.createElement("div");_.className="vlk-hero",_.innerHTML=`
             <div class="vlk-hero-badge">语音专项模块 • 第2级：音素 (Fon)</div>
@@ -74268,24 +74732,32 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                 ${$.status!=="active"?`<span style="font-size:0.7rem; background:rgba(255,255,255,0.1); padding:0.15rem 0.4rem; border-radius:6px;">${$.badge}</span>`:""}
             `,$.status==="active"&&(o.onclick=()=>{a=$.id,te()}),S.appendChild(o)}),t.appendChild(S);const u=document.createElement("div");u.className="vlk-main-tabs",u.innerHTML=`
             <button type="button" class="vlk-tab-btn ${n==="diagram"?"active":""}" data-tab="diagram">
-                🔬 1. 发音器官与气流图解 (解剖图)
+                <span class="vlk-tab-icon">🔬</span>
+                <span class="vlk-tab-short">1. 器官图解</span>
+                <span class="vlk-tab-full">1. 发音器官与气流图解</span>
             </button>
             <button type="button" class="vlk-tab-btn ${n==="listening"?"active":""}" data-tab="listening">
-                🎧 2. 听音辨析测试 (对立体辨音)
+                <span class="vlk-tab-icon">🎧</span>
+                <span class="vlk-tab-short">2. 听音辨析</span>
+                <span class="vlk-tab-full">2. 听音辨析测试</span>
             </button>
             <button type="button" class="vlk-tab-btn ${n==="speech"?"active":""}" data-tab="speech">
-                🎙️ 3. 麦克风口语练习 (三词跟读)
+                <span class="vlk-tab-icon">🎙️</span>
+                <span class="vlk-tab-short">3. 口语跟读</span>
+                <span class="vlk-tab-full">3. 麦克风口语练习</span>
             </button>
         `,u.querySelectorAll(".vlk-tab-btn").forEach($=>{$.onclick=()=>{n=$.dataset.tab,te()}}),t.appendChild(u);const c=document.createElement("div");n==="diagram"?ke(c):n==="listening"?w(c):n==="speech"&&j(c),t.appendChild(c)}function ke(b){const _=document.createElement("div");_.className="vlk-diag-controls",_.innerHTML=`
-            <div style="font-weight: 800; font-size: 0.9rem; color: #f8fafc;">
+            <div class="vlk-diag-controls-label">
                 选择要探索的发音：
             </div>
             <div class="vlk-sound-toggle-group">
                 <button type="button" class="vlk-toggle-btn ${s==="l"?"active-l":""}" id="toggle-l">
-                    🌊 边音 L /l/ (侧音 • Lateral)
+                    <span>🌊 边音 L /l/</span>
+                    <span style="font-size:0.72rem; opacity:0.85;">(侧音 Lateral)</span>
                 </button>
                 <button type="button" class="vlk-toggle-btn ${s==="n"?"active-n":""}" id="toggle-n">
-                    🌸 鼻音 N /n/ (鼻音 • Nasal)
+                    <span>🌸 鼻音 N /n/</span>
+                    <span style="font-size:0.72rem; opacity:0.85;">(鼻音 Nasal)</span>
                 </button>
             </div>
         `,_.querySelector("#toggle-l").onclick=()=>{s="l",te()},_.querySelector("#toggle-n").onclick=()=>{s="n",te()},b.appendChild(_);const S=document.createElement("div");S.className="vlk-diagrams-grid";const u=document.createElement("div");u.className="vlk-diagram-card",u.innerHTML=`
@@ -74403,9 +74875,9 @@ import{g as e,a as Ae,b as Ga,s as Dn,c as na,n as aa,k as oa,d as sa,e as ia,v 
                         <strong>再仔细听听！</strong> 正确的词其实是 <strong>"${z}"</strong>。<br>
                         <span style="font-size:0.85rem; color:#cbd5e1;">再次点击播放，体会气流是从两腮溜出 (/l/)，还是冲向了鼻腔 (/n/)。</span>
                     `)}}),S.querySelector("#prev-quiz").onclick=()=>{me>0&&(me--,z=null,te())},S.querySelector("#next-quiz").onclick=()=>{me<E.length-1?me++:me=0,z=null,te()},b.appendChild(S)}let h=0,d=0,p=!1;function j(b){const _=R[h],S=_.targetSound==="l",u=_.targetSound==="n";_.targetSound;const c=document.createElement("div");c.className="vlk-speech-card";let $="";S?$=_.text.split(" ").map(Y=>`<span class="vlk-target-word word-l">${Y}</span>`).join(" "):u?$=_.text.split(" ").map(Y=>`<span class="vlk-target-word word-n">${Y}</span>`).join(" "):$=_.text.split(" ").map(Y=>{const ge=Y.toLowerCase();return ge.startsWith("l")?`<span class="vlk-target-word word-l">${Y}</span>`:ge.startsWith("n")?`<span class="vlk-target-word word-n">${Y}</span>`:Y}).join(" ");let o="";S?o="目标音：/l/ (连续 3 次边音 · 侧音)":u?o="目标音：/n/ (连续 3 次鼻音 · 鼻腔振动)":o="目标音：/l/ ↔ /n/ (边鼻音钟摆切换)";let f="";S?f="侧音发音焦点：舌侧保持完全通气，切勿漏气到鼻腔！":u?f="鼻音发音焦点：舌前部紧密封闭口腔，全部声波冲向鼻腔！":f="切换发音焦点：感受从侧边气流到鼻音封闭的快速弹舌切换！",c.innerHTML=`
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; font-size:0.88rem; color:#94a3b8;">
+            <div class="vlk-speech-meta-bar">
                 <span>第 ${h+1} 题，共 ${R.length} 题</span>
-                <span class="vlk-target-word ${S?"word-l":u?"word-n":"word-l"}" style="font-weight:bold; font-size:0.82rem;">
+                <span class="vlk-target-word ${S?"word-l":u?"word-n":"word-l"}" style="font-weight:bold; font-size:0.78rem;">
                     ${o}
                 </span>
             </div>

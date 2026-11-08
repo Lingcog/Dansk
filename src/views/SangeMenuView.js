@@ -20,14 +20,8 @@ export function renderSangeMenuView(container, navigateFn) {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${isEn ? 'Back' : (isZh ? '返回 (Tilbage)' : 'Tilbage')}`;
-    backBtn.onclick = () => {
-        if (window.history.length > 1) {
-            window.history.back();
-        } else {
-            navigateFn('main');
-        }
-    };
+    backBtn.innerHTML = `← ${isEn ? 'Back to Stories' : (isZh ? '返回故事 (Tilbage)' : 'Tilbage til Historier')}`;
+    backBtn.onclick = () => navigateFn('historier_menu');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 

@@ -66,8 +66,8 @@ export function renderHistorierMenuView(container, navigateFn) {
             icon: '🎵',
             title: isEn ? 'Danish Songs' : 'Danske sange',
             desc: isEn 
-                ? 'Sing along and explore Denmark through beloved songs with rich wimmelbilder. "Så går vi rundt om en enebærbusk" (household care & days of the week) and "Godmorgen, lille land" (Denmark\'s geography & coasts).'
-                : 'Syng med og lær dansk gennem elskede sange med store, interaktive vrimlebilleder: "Så går vi rundt om en enebærbusk" (ugens dage & husarbejde) og "Godmorgen, lille land" (Danmarks geografi & kyster).',
+                ? 'Learn Danish through beloved songs with interactive wimmelbilder, pronunciation, rhythm, and language practice. There are now two song scenes.'
+                : 'Lær dansk gennem elskede sange med interaktive vrimlebilleder, udtale, rytme og sprogtræning. Der er nu to sangflader.',
             action: () => navigateFn('sange')
         }
     ];

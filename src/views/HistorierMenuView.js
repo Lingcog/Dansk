@@ -64,19 +64,11 @@ export function renderHistorierMenuView(container, navigateFn) {
         },
         {
             icon: '🎵',
-            title: isEn ? 'Danish Songs: The Juniper Bush' : 'Sange: Så går vi rundt om en enebærbusk',
+            title: isEn ? 'Danish Songs & Wimmelbilder' : 'Danske sange & vrimlebilleder',
             desc: isEn 
-                ? 'Sing along to the classic song and master days of the week, word order with "når", and modern Danish vocabulary for household care.'
-                : 'Syng med på den klassiske sangleg og lær ugens dage, ledsætninger med "når" og moderne ordforråd til hjemmets opgaver og tøjpleje.',
-            action: () => navigateFn('sang_enebaerbusk')
-        },
-        {
-            icon: '🗺️',
-            title: isEn ? 'Danish Songs: Godmorgen, lille land' : 'Sange: Godmorgen, lille land',
-            desc: isEn 
-                ? 'Explore Denmark\'s geography, coastlines, islands, and bridges through key expressions from the beloved song.'
-                : 'Gå på opdagelse i Danmarks geografi, kyster, øer, broer og landsdele gennem sangens nøgleudtryk og samtalespørgsmål.',
-            action: () => navigateFn('sang_godmorgen_lille_land')
+                ? 'Sing along and explore Denmark through beloved songs with rich wimmelbilder. "Så går vi rundt om en enebærbusk" (household care & days of the week) and "Godmorgen, lille land" (Denmark\'s geography & coasts).'
+                : 'Syng med og lær dansk gennem elskede sange med store, interaktive vrimlebilleder: "Så går vi rundt om en enebærbusk" (ugens dage & husarbejde) og "Godmorgen, lille land" (Danmarks geografi & kyster).',
+            action: () => navigateFn('sange')
         }
     ];
 

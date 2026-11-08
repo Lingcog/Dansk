@@ -94,6 +94,7 @@ import { renderDialogerUdtaleMenuView } from './views/DialogerUdtaleMenuView.js'
 import { renderDialogerSygdomJobView } from './views/DialogerSygdomJobView.js';
 import { renderBranchingStoryView } from './views/BranchingStoryView.js';
 import { renderHistorierMenuView } from './views/HistorierMenuView.js';
+import { renderSangeMenuView } from './views/SangeMenuView.js';
 import { renderSangEnebaerbuskView } from './views/SangEnebaerbuskView.js';
 import { renderSangGodmorgenLilleLandView } from './views/SangGodmorgenLilleLandView.js';
 import { renderHistorierSygdomJobView } from './views/HistorierSygdomJobView.js';
@@ -409,6 +410,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'historier_menu') {
     appState.currentView = 'historier_menu';
     renderHistorierMenuView(appDiv, navigate);
+  } else if (viewTarget === 'sange' || viewTarget === 'sang_menu' || viewTarget === 'danske_sange') {
+    appState.currentView = 'sange';
+    renderSangeMenuView(appDiv, navigate);
   } else if (viewTarget === 'sang_enebaerbusk') {
     appState.currentView = 'sang_enebaerbusk';
     renderSangEnebaerbuskView(appDiv, navigate, extraData);

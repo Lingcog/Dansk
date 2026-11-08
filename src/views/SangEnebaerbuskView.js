@@ -23,8 +23,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.innerHTML = `← ${t('back', isEn ? 'Back to Stories' : 'Tilbage til Historier')}`;
-    backBtn.onclick = () => navigateFn('historier_menu');
+    backBtn.innerHTML = `← ${isEn ? 'Back to Songs' : 'Tilbage til Danske sange'}`;
+    backBtn.onclick = () => navigateFn('sange');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
@@ -2143,21 +2143,6 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         }
     `;
     viewContainer.appendChild(style);
-
-    // Song Switcher Bar
-    const switcherBar = document.createElement('div');
-    switcherBar.className = 'song-switcher-bar';
-    switcherBar.innerHTML = `
-        <span class="song-switcher-label">Vælg sang:</span>
-        <button type="button" class="song-switch-pill active" id="btn-switch-enebaer">
-            1. Så går vi rundt om en enebærbusk (Husarbejde)
-        </button>
-        <button type="button" class="song-switch-pill" id="btn-switch-godmorgen">
-            2. Godmorgen, lille land (Danmarks geografi)
-        </button>
-    `;
-    switcherBar.querySelector('#btn-switch-godmorgen').onclick = () => navigateFn('sang_godmorgen_lille_land');
-    viewContainer.appendChild(switcherBar);
 
     // Hero Header
     const hero = document.createElement('div');

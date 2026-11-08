@@ -179,54 +179,23 @@ export function renderSangeMenuView(container, navigateFn) {
         }
 
         .scene-card-content {
-            padding: 1.5rem;
+            padding: 1.4rem 1.5rem 1.6rem;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            gap: 1.2rem;
             flex-grow: 1;
         }
 
         .scene-card-content h3 {
             font-size: 1.35rem;
             font-weight: 800;
-            margin: 0 0 0.6rem;
+            margin: 0;
             color: #FFFFFF;
             display: flex;
             align-items: center;
             gap: 0.55rem;
-        }
-
-        .scene-card-content p {
-            color: var(--song-text-muted, #cbd5e1);
-            font-size: 0.95rem;
-            line-height: 1.55;
-            margin: 0 0 1.2rem;
-            flex-grow: 1;
-        }
-
-        .scene-card-content p em {
-            color: #FFFFFF;
-            font-style: normal;
-            font-weight: 700;
-        }
-
-        .scene-features-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin-bottom: 1.3rem;
-        }
-
-        .feature-tag {
-            background: var(--song-surface-input, #081124);
-            border: 1px solid var(--song-border, #1e3a6a);
-            color: var(--song-text-subtle, #93c5fd);
-            padding: 0.25rem 0.6rem;
-            border-radius: 8px;
-            font-size: 0.76rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
+            line-height: 1.35;
         }
 
         .scene-action-btn {
@@ -321,24 +290,6 @@ export function renderSangeMenuView(container, navigateFn) {
                 ${renderDsIcon('volume', '', { size: 24 })}
                 <span>Så går vi rundt om en enebærbusk</span>
             </h3>
-            <p>
-                ${
-                    isEn 
-                        ? 'Sing along to the traditional Danish singing game. Learn the <em>7 days of the week</em>, subordinate clauses with <em>"når"</em>, and 20 modern verbs and tools for household care, washing, and cleaning.'
-                        : (isZh
-                            ? '跟唱丹麦经典儿歌与传统转圈游戏。学习<em>一周七天</em>、<em>“当……时 (når)”</em>引导的从句语序，以及20个现代居家清洁与洗衣做家务的核心表达。'
-                            : 'Syng med på den klassiske sangleg og lær <em>ugens syv dage</em>, ledsætninger med <em>"når"</em> og 20 hverdagsopgaver til hjemmets tøjpleje, vask og rengøring.')
-                }
-            </p>
-            <div class="scene-features-tags">
-                <span class="feature-tag">🖼️ ${isEn ? '14 Wimmel Scenes' : '14 Vrimlescener'}</span>
-                <span class="feature-tag">🗓️ ${isEn ? 'Days of the week' : 'Ugens dage'}</span>
-                <span class="feature-tag">⚡ ${isEn ? 'Clauses with "når"' : 'Ledsætninger ("når")'}</span>
-                <span class="feature-tag">🎶 ${isEn ? 'Sing-along & Melody' : 'Syng med & Melodi'}</span>
-                <span class="feature-tag">🔍 ${isEn ? 'Word Detective' : 'Ord-detektiv'}</span>
-                <span class="feature-tag">🧩 ${isEn ? 'Sentence Puzzle' : 'Sætningspuslespil'}</span>
-                <span class="feature-tag">🧺 ${isEn ? '20 Activities' : '20 Hverdagsopgaver'}</span>
-            </div>
             <button type="button" class="scene-action-btn">
                 ${isEn ? 'Explore song scene' : (isZh ? '开启歌曲与寻宝练习' : 'Udforsk sangen')} →
             </button>
@@ -362,24 +313,6 @@ export function renderSangeMenuView(container, navigateFn) {
                 ${renderDsIcon('compass', '', { size: 24 })}
                 <span>Godmorgen, lille land</span>
             </h3>
-            <p>
-                ${
-                    isEn 
-                        ? 'Explore Denmark\'s coastlines, islands, sounds, and bridges. Master the song\'s <em>poetic key expressions</em>, <em>rhythm and stress</em>, and discover famous landmarks across the large panorama wimmelbild.'
-                        : (isZh
-                            ? '漫步丹麦的海岸线、岛屿、海峡与跨海大桥。掌握歌词中的<em>诗意地名与关键意象</em>、体会优美的<em>重音节律</em>，并在全景寻宝图中探寻大贝尔特桥与秀美风光。'
-                            : 'Gå på opdagelse i Danmarks kyster, øer, fjorde og broer. Lær sangens <em>poetiske nøgleudtryk</em>, <em>udtalerytme og tryk</em> samt vigtige geografiske steder i det store panorama-vrimlebillede.')
-                }
-            </p>
-            <div class="scene-features-tags">
-                <span class="feature-tag">🗺️ ${isEn ? 'Denmark Panorama' : 'Danmarks panorama'}</span>
-                <span class="feature-tag">🌊 ${isEn ? 'Coasts, Islands & Fjords' : 'Kyster, øer & fjorde'}</span>
-                <span class="feature-tag">🎙️ ${isEn ? 'Pronunciation Rhythm' : 'Udtalerytme & Tryk'}</span>
-                <span class="feature-tag">🔍 ${isEn ? 'Map Detective' : 'Kortdetektiv'}</span>
-                <span class="feature-tag">🌉 ${isEn ? 'Great Belt Bridge' : 'Storebæltsbroen'}</span>
-                <span class="feature-tag">📖 ${isEn ? 'Højskolesangbogen #24' : 'Højskolesangen #24'}</span>
-                <span class="feature-tag">💬 ${isEn ? 'Conversation questions' : 'Samtalespørgsmål'}</span>
-            </div>
             <button type="button" class="scene-action-btn">
                 ${isEn ? 'Explore song scene' : (isZh ? '开启歌曲与全景探索' : 'Udforsk sangen')} →
             </button>

@@ -26,12 +26,24 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         .vanskelige-lyde-kinesisk-view {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 1rem 1.2rem 4rem;
+            padding: 0.75rem 0.65rem 3.5rem;
             color: #f8fafc;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .vanskelige-lyde-kinesisk-view {
+                padding: 1rem 1.25rem 4rem;
+            }
         }
 
         /* Top Bar */
@@ -39,240 +51,477 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.2rem;
-            gap: 1rem;
-            flex-wrap: wrap;
+            margin-bottom: 0.85rem;
+            gap: 0.5rem;
         }
+
         .vlk-back-btn {
             background: rgba(30, 41, 59, 0.85);
             border: 1px solid rgba(148, 163, 184, 0.35);
             color: #f8fafc;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
+            padding: 0.45rem 0.75rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
         }
+
         .vlk-back-btn:hover {
             background: rgba(51, 65, 85, 0.95);
             border-color: #fde68a;
             transform: translateX(-2px);
         }
 
+        .vlk-top-badge {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            font-weight: 700;
+            text-align: right;
+            line-height: 1.2;
+        }
+
+        .vlk-back-short, .vlk-badge-short {
+            display: inline;
+        }
+        .vlk-back-full, .vlk-badge-full {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .vlk-top-bar {
+                margin-bottom: 1.2rem;
+                gap: 1rem;
+            }
+            .vlk-back-btn {
+                padding: 0.5rem 1rem;
+                border-radius: 12px;
+                font-size: 0.88rem;
+            }
+            .vlk-top-badge {
+                font-size: 0.85rem;
+            }
+            .vlk-back-short, .vlk-badge-short {
+                display: none;
+            }
+            .vlk-back-full, .vlk-badge-full {
+                display: inline;
+            }
+        }
+
         /* Hero */
         .vlk-hero {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
             border: 2px solid rgba(56, 189, 248, 0.35);
-            border-radius: 20px;
-            padding: 1.4rem 1.6rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            padding: 1rem 0.85rem;
+            margin-bottom: 1.1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
+
         .vlk-hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.45rem;
+            gap: 0.35rem;
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid rgba(56, 189, 248, 0.45);
             color: #38bdf8;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.25rem 0.75rem;
+            letter-spacing: 0.04em;
+            padding: 0.2rem 0.6rem;
             border-radius: 999px;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.45rem;
         }
+
         .vlk-hero-title {
-            margin: 0 0 0.4rem;
-            font-size: clamp(1.4rem, 2.8vw, 2rem);
+            margin: 0 0 0.35rem;
+            font-size: clamp(1.22rem, 5.2vw, 1.85rem);
             font-weight: 900;
             color: #ffffff;
+            line-height: 1.25;
         }
+
         .vlk-hero-subtitle {
-            margin: 0 0 0.8rem;
-            font-size: 1.02rem;
+            margin: 0 0 0.65rem;
+            font-size: 0.88rem;
             color: #38bdf8;
             font-weight: 700;
+            line-height: 1.35;
         }
+
         .vlk-hero-desc {
             margin: 0;
             color: #cbd5e1;
-            font-size: 0.94rem;
-            line-height: 1.55;
-            max-width: 850px;
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 640px) {
+            .vlk-hero {
+                border-radius: 20px;
+                padding: 1.4rem 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-hero-badge {
+                font-size: 0.78rem;
+                padding: 0.25rem 0.75rem;
+                margin-bottom: 0.6rem;
+            }
+            .vlk-hero-subtitle {
+                font-size: 1.02rem;
+                margin-bottom: 0.8rem;
+            }
+            .vlk-hero-desc {
+                font-size: 0.94rem;
+                line-height: 1.55;
+            }
         }
 
         /* Modular Sound Selector (Prepared for Extension) */
         .vlk-module-selector {
             display: flex;
-            gap: 0.6rem;
-            margin-bottom: 1.3rem;
+            gap: 0.5rem;
+            margin-bottom: 1.1rem;
             overflow-x: auto;
-            padding-bottom: 0.4rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 0.25rem;
         }
+        .vlk-module-selector::-webkit-scrollbar {
+            display: none;
+        }
+
         .vlk-mod-btn {
             background: rgba(15, 23, 42, 0.75);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
             color: #94a3b8;
-            padding: 0.6rem 1.1rem;
-            border-radius: 14px;
+            padding: 0.45rem 0.8rem;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 0.86rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 0.45rem;
+            gap: 0.35rem;
+            flex-shrink: 0;
         }
+
         .vlk-mod-btn:hover {
             border-color: #38bdf8;
             color: #f8fafc;
         }
+
         .vlk-mod-btn.active {
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(30, 58, 138, 0.35) 100%);
             border-color: #38bdf8;
             color: #38bdf8;
             box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
         }
+
         .vlk-mod-btn.disabled {
             opacity: 0.55;
             cursor: not-allowed;
         }
 
+        @media (min-width: 640px) {
+            .vlk-module-selector {
+                gap: 0.6rem;
+                margin-bottom: 1.3rem;
+                padding-bottom: 0.4rem;
+            }
+            .vlk-mod-btn {
+                padding: 0.6rem 1.1rem;
+                border-radius: 14px;
+                font-size: 0.86rem;
+                gap: 0.45rem;
+            }
+        }
+
         /* Main Tabs: Diagram, Listening, Speech */
         .vlk-main-tabs {
-            display: flex;
-            gap: 0.6rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.35rem;
             background: rgba(15, 23, 42, 0.9);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
-            border-radius: 16px;
-            padding: 0.4rem;
-            margin-bottom: 1.5rem;
+            border-radius: 14px;
+            padding: 0.3rem;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-tab-btn {
-            flex: 1;
             background: transparent;
             border: none;
             color: #94a3b8;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
+            padding: 0.55rem 0.25rem;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.78rem;
             cursor: pointer;
             transition: all 0.18s ease;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            line-height: 1.2;
+            width: 100%;
         }
+
+        .vlk-tab-icon {
+            font-size: 1.05rem;
+        }
+
+        .vlk-tab-short {
+            display: block;
+        }
+        .vlk-tab-full {
+            display: none;
+        }
+
         .vlk-tab-btn:hover:not(.active) {
             color: #f8fafc;
             background: rgba(255, 255, 255, 0.04);
         }
+
         .vlk-tab-btn.active {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             color: #ffffff;
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
 
+        @media (min-width: 640px) {
+            .vlk-main-tabs {
+                display: flex;
+                gap: 0.6rem;
+                border-radius: 16px;
+                padding: 0.4rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-tab-btn {
+                flex: 1;
+                flex-direction: row;
+                padding: 0.75rem 1rem;
+                border-radius: 12px;
+                font-size: 0.92rem;
+                gap: 0.45rem;
+            }
+            .vlk-tab-icon {
+                font-size: 1.15rem;
+            }
+            .vlk-tab-short {
+                display: none;
+            }
+            .vlk-tab-full {
+                display: inline;
+            }
+        }
+
         /* Sub-controls within diagram tab */
         .vlk-diag-controls {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
-            padding: 0.8rem 1rem;
+            flex-direction: column;
+            gap: 0.55rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem 0.85rem;
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 14px;
         }
+
+        .vlk-diag-controls-label {
+            font-weight: 800;
+            font-size: 0.84rem;
+            color: #f8fafc;
+        }
+
         .vlk-sound-toggle-group {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.45rem;
+            width: 100%;
         }
+
         .vlk-toggle-btn {
+            flex: 1;
             background: rgba(30, 41, 59, 0.8);
             border: 1.5px solid rgba(148, 163, 184, 0.3);
             color: #cbd5e1;
-            padding: 0.45rem 1rem;
+            padding: 0.55rem 0.4rem;
             border-radius: 10px;
             font-weight: 800;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.16s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            line-height: 1.25;
         }
+
         .vlk-toggle-btn.active-l {
             background: rgba(56, 189, 248, 0.25);
             border-color: #38bdf8;
             color: #38bdf8;
         }
+
         .vlk-toggle-btn.active-n {
             background: rgba(244, 114, 182, 0.25);
             border-color: #f472b6;
             color: #f472b6;
         }
 
+        @media (min-width: 640px) {
+            .vlk-diag-controls {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.2rem;
+                padding: 0.8rem 1rem;
+            }
+            .vlk-diag-controls-label {
+                font-size: 0.9rem;
+            }
+            .vlk-sound-toggle-group {
+                width: auto;
+                gap: 0.5rem;
+            }
+            .vlk-toggle-btn {
+                flex: initial;
+                flex-direction: row;
+                padding: 0.45rem 1rem;
+                font-size: 0.86rem;
+                gap: 0.35rem;
+            }
+        }
+
         /* Diagram Grid (Sagittal + Top-down) */
         .vlk-diagrams-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.4rem;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
         }
+
+        @media (min-width: 768px) {
+            .vlk-diagrams-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+                margin-bottom: 1.4rem;
+            }
+        }
+
         .vlk-diagram-card {
             background: rgba(15, 23, 42, 0.85);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
-            border-radius: 18px;
-            padding: 1.2rem;
+            border-radius: 16px;
+            padding: 0.9rem 0.85rem;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
             display: flex;
             flex-direction: column;
+            width: 100%;
+            overflow: hidden;
         }
+
         .vlk-diag-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.5rem;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 0.65rem;
+            padding-bottom: 0.45rem;
             border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+            gap: 0.35rem;
         }
+
         .vlk-diag-title {
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #ffffff;
+            line-height: 1.3;
         }
+
         .vlk-diag-tag {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            padding: 0.2rem 0.55rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 6px;
             text-transform: uppercase;
         }
+
         .vlk-diag-svg-wrap {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 280px;
+            min-height: auto;
             background: rgba(9, 14, 26, 0.7);
-            border-radius: 14px;
-            padding: 0.8rem;
-            margin-bottom: 0.9rem;
+            border-radius: 12px;
+            padding: 0.4rem;
+            margin-bottom: 0.75rem;
+            width: 100%;
+            overflow: hidden;
         }
+
         .vlk-diag-svg {
             width: 100%;
-            max-width: 380px;
+            max-width: 100%;
             height: auto;
             display: block;
         }
+
         .vlk-diag-notes {
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             line-height: 1.5;
             color: #cbd5e1;
         }
+
         .vlk-diag-notes strong {
             color: #fde68a;
+        }
+
+        @media (min-width: 640px) {
+            .vlk-diagram-card {
+                border-radius: 18px;
+                padding: 1.2rem;
+            }
+            .vlk-diag-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.8rem;
+                padding-bottom: 0.5rem;
+                gap: 0.5rem;
+            }
+            .vlk-diag-title {
+                font-size: 0.95rem;
+            }
+            .vlk-diag-tag {
+                font-size: 0.74rem;
+                padding: 0.2rem 0.55rem;
+            }
+            .vlk-diag-svg-wrap {
+                padding: 0.8rem;
+                margin-bottom: 0.9rem;
+                border-radius: 14px;
+            }
+            .vlk-diag-svg {
+                max-width: 380px;
+            }
+            .vlk-diag-notes {
+                font-size: 0.86rem;
+            }
         }
 
         /* Nose Pinch Practical Card */
@@ -280,319 +529,534 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
             border: 1.5px solid rgba(234, 179, 8, 0.4);
             border-radius: 16px;
-            padding: 1.15rem 1.3rem;
-            margin-bottom: 1.4rem;
+            padding: 1rem 0.85rem;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-pinch-title {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            align-items: flex-start;
+            gap: 0.4rem;
             color: #fde047;
             font-weight: 900;
-            font-size: 1.05rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            margin-bottom: 0.35rem;
         }
+
         .vlk-pinch-body {
-            font-size: 0.92rem;
+            font-size: 0.84rem;
             color: #e2e8f0;
-            line-height: 1.55;
+            line-height: 1.5;
         }
+
         .vlk-pinch-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 0.8rem;
-            margin-top: 0.8rem;
+            grid-template-columns: 1fr;
+            gap: 0.65rem;
+            margin-top: 0.75rem;
         }
+
         .vlk-pinch-item {
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 12px;
-            padding: 0.8rem 1rem;
+            padding: 0.75rem 0.85rem;
         }
+
         .vlk-pinch-item.item-l { border-color: rgba(56, 189, 248, 0.5); }
         .vlk-pinch-item.item-n { border-color: rgba(244, 114, 182, 0.5); }
+
+        @media (min-width: 600px) {
+            .vlk-pinch-card {
+                padding: 1.15rem 1.3rem;
+                margin-bottom: 1.4rem;
+            }
+            .vlk-pinch-title {
+                font-size: 1.05rem;
+                margin-bottom: 0.4rem;
+                align-items: center;
+            }
+            .vlk-pinch-body {
+                font-size: 0.92rem;
+                line-height: 1.55;
+            }
+            .vlk-pinch-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+                margin-top: 0.8rem;
+            }
+            .vlk-pinch-item {
+                padding: 0.8rem 1rem;
+            }
+        }
 
         /* Bilingual Comparison Box */
         .vlk-bilingual-box {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid rgba(148, 163, 184, 0.25);
-            border-radius: 16px;
-            padding: 1.1rem 1.3rem;
-            margin-bottom: 1.4rem;
+            border-radius: 14px;
+            padding: 0.9rem 0.85rem;
+            margin-bottom: 1.2rem;
         }
+
         .vlk-bilingual-title {
             color: #38bdf8;
             font-weight: 800;
-            font-size: 0.92rem;
-            margin-bottom: 0.6rem;
+            font-size: 0.86rem;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
+
         .vlk-zh-block {
             background: rgba(30, 41, 59, 0.65);
             border-left: 3px solid #eab308;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.8rem;
             border-radius: 0 10px 10px 0;
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            margin-bottom: 0.55rem;
+            font-size: 0.84rem;
+            line-height: 1.55;
             color: #f1f5f9;
         }
+
         .vlk-da-block {
-            padding: 0.2rem 0.5rem;
-            font-size: 0.88rem;
+            padding: 0.2rem 0.4rem;
+            font-size: 0.82rem;
             color: #cbd5e1;
-            line-height: 1.5;
+            line-height: 1.45;
+        }
+
+        @media (min-width: 600px) {
+            .vlk-bilingual-box {
+                border-radius: 16px;
+                padding: 1.1rem 1.3rem;
+                margin-bottom: 1.4rem;
+            }
+            .vlk-bilingual-title {
+                font-size: 0.92rem;
+                margin-bottom: 0.6rem;
+            }
+            .vlk-zh-block {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 0.6rem;
+            }
+            .vlk-da-block {
+                padding: 0.2rem 0.5rem;
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
         }
 
         /* --- LISTENING QUIZ TAB --- */
         .vlk-quiz-card {
             background: rgba(15, 23, 42, 0.9);
             border: 1.5px solid rgba(56, 189, 248, 0.35);
-            border-radius: 20px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.1rem 0.85rem;
             text-align: center;
         }
+
         .vlk-quiz-status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.88rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
             color: #94a3b8;
         }
+
         .vlk-play-sound-btn {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             border: none;
             color: #ffffff;
-            font-size: 1.15rem;
+            font-size: 1.02rem;
             font-weight: 800;
-            padding: 1rem 2.2rem;
+            padding: 0.85rem 1.8rem;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 1.6rem;
+            gap: 0.5rem;
+            margin-bottom: 1.3rem;
+            max-width: 100%;
         }
+
         .vlk-play-sound-btn:hover {
             transform: scale(1.04);
             box-shadow: 0 8px 26px rgba(2, 132, 199, 0.55);
         }
+
         .vlk-play-sound-btn:active {
             transform: scale(0.98);
         }
+
         .vlk-quiz-options {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
         }
+
         .vlk-quiz-opt {
             background: rgba(30, 41, 59, 0.85);
             border: 2px solid rgba(148, 163, 184, 0.3);
             color: #ffffff;
-            font-size: 1.35rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            padding: 1.1rem 2.5rem;
-            border-radius: 16px;
+            padding: 0.9rem 0.4rem;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.18s ease;
-            min-width: 170px;
+            min-width: 0;
+            width: 100%;
         }
+
         .vlk-quiz-opt:hover:not(:disabled) {
             border-color: #38bdf8;
             background: rgba(56, 189, 248, 0.15);
             transform: translateY(-2px);
         }
+
         .vlk-quiz-opt.correct {
             background: rgba(34, 197, 94, 0.25) !important;
             border-color: #22c55e !important;
             color: #86efac !important;
         }
+
         .vlk-quiz-opt.wrong {
             background: rgba(239, 68, 68, 0.25) !important;
             border-color: #ef4444 !important;
             color: #fca5a5 !important;
         }
+
         .vlk-quiz-feedback {
-            min-height: 65px;
-            padding: 0.85rem 1.2rem;
+            min-height: 50px;
+            padding: 0.75rem 0.9rem;
             border-radius: 12px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 1.3rem;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            margin-bottom: 1.1rem;
+            text-align: left;
             display: none;
         }
+
         .vlk-quiz-feedback.show {
             display: block;
         }
+
         .vlk-quiz-feedback.success {
             background: rgba(34, 197, 94, 0.15);
             border: 1px solid rgba(34, 197, 94, 0.4);
             color: #86efac;
         }
+
         .vlk-quiz-feedback.error {
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid rgba(239, 68, 68, 0.4);
             color: #fca5a5;
         }
 
+        @media (min-width: 600px) {
+            .vlk-quiz-card {
+                border-radius: 20px;
+                padding: 1.5rem;
+            }
+            .vlk-quiz-status-bar {
+                margin-bottom: 1.5rem;
+                font-size: 0.88rem;
+            }
+            .vlk-play-sound-btn {
+                font-size: 1.15rem;
+                padding: 1rem 2.2rem;
+                gap: 0.6rem;
+                margin-bottom: 1.6rem;
+            }
+            .vlk-quiz-options {
+                display: flex;
+                justify-content: center;
+                gap: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-quiz-opt {
+                min-width: 170px;
+                width: auto;
+                font-size: 1.35rem;
+                padding: 1.1rem 2.5rem;
+                border-radius: 16px;
+            }
+            .vlk-quiz-feedback {
+                min-height: 65px;
+                padding: 0.85rem 1.2rem;
+                font-size: 0.95rem;
+                line-height: 1.5;
+                margin-bottom: 1.3rem;
+                text-align: center;
+            }
+        }
+
         /* --- SPEECH EXERCISE TAB (Udtaletræning) --- */
         .vlk-speech-card {
             background: rgba(15, 23, 42, 0.92);
             border: 2px solid rgba(56, 189, 248, 0.35);
-            border-radius: 20px;
-            padding: 1.8rem;
+            border-radius: 16px;
+            padding: 1.1rem 0.85rem;
             text-align: center;
         }
+
+        .vlk-speech-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
         .vlk-speech-prompt {
-            font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+            font-size: clamp(1.35rem, 6.2vw, 2.1rem);
             font-weight: 900;
             color: #ffffff;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
+            line-height: 1.25;
+            word-break: break-word;
         }
+
         .vlk-speech-sub {
-            font-size: 0.95rem;
+            font-size: 0.84rem;
             color: #94a3b8;
-            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-target-word {
             display: inline-block;
             padding: 0.1rem 0.4rem;
             border-radius: 6px;
         }
+
         .vlk-target-word.word-l {
             color: #38bdf8;
             background: rgba(56, 189, 248, 0.15);
         }
+
         .vlk-target-word.word-n {
             color: #f472b6;
             background: rgba(244, 114, 182, 0.15);
         }
+
         .vlk-mic-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
             flex-wrap: wrap;
         }
+
         .vlk-mic-btn {
-            width: 74px;
-            height: 74px;
+            width: 68px;
+            height: 68px;
             border-radius: 50%;
             background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
             border: 3px solid rgba(254, 202, 202, 0.5);
             color: #ffffff;
             cursor: pointer;
-            box-shadow: 0 6px 22px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
+
         .vlk-mic-btn:hover {
             transform: scale(1.08);
             box-shadow: 0 8px 30px rgba(239, 68, 68, 0.6);
         }
+
         .vlk-mic-btn.listening {
             animation: pulseListening 1.1s infinite alternate;
             background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
         }
+
         @keyframes pulseListening {
             0% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
             100% { transform: scale(1.15); box-shadow: 0 0 35px rgba(239, 68, 68, 0.95); }
         }
+
         .vlk-listen-model-btn {
             background: rgba(30, 41, 59, 0.85);
             border: 1.5px solid rgba(148, 163, 184, 0.35);
             color: #f8fafc;
-            padding: 0.75rem 1.3rem;
-            border-radius: 14px;
+            padding: 0.65rem 1rem;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.84rem;
             cursor: pointer;
             transition: all 0.18s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
+
         .vlk-listen-model-btn:hover {
             background: rgba(51, 65, 85, 0.95);
             border-color: #38bdf8;
         }
+
         .vlk-speech-status {
-            font-size: 0.92rem;
+            font-size: 0.84rem;
             color: #94a3b8;
-            margin-bottom: 1.2rem;
-            min-height: 24px;
+            margin-bottom: 1rem;
+            min-height: 20px;
+            line-height: 1.4;
         }
+
         .vlk-speech-feedback-box {
             background: rgba(15, 23, 42, 0.8);
             border: 1.5px solid rgba(148, 163, 184, 0.25);
-            border-radius: 14px;
-            padding: 1rem 1.3rem;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            padding: 0.85rem 0.95rem;
+            margin-bottom: 1.2rem;
             text-align: left;
             display: none;
         }
+
         .vlk-speech-feedback-box.show {
             display: block;
         }
+
         .vlk-feedback-heard {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 800;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.3rem;
         }
+
         .vlk-feedback-tip {
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             color: #cbd5e1;
-            line-height: 1.5;
+            line-height: 1.45;
         }
+
         .vlk-streak-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
             background: rgba(251, 191, 36, 0.15);
             border: 1px solid rgba(251, 191, 36, 0.4);
             color: #fde68a;
             font-weight: 800;
-            font-size: 0.85rem;
-            padding: 0.35rem 0.85rem;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 20px;
-            margin-bottom: 1.3rem;
+            margin-bottom: 1.1rem;
         }
+
         .vlk-nav-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1.2rem;
-            gap: 0.8rem;
+            margin-top: 1.1rem;
+            gap: 0.55rem;
+            width: 100%;
         }
+
         .vlk-nav-btn {
+            flex: 1;
             background: rgba(30, 41, 59, 0.85);
             border: 1.5px solid rgba(148, 163, 184, 0.3);
             color: #ffffff;
-            padding: 0.55rem 1.15rem;
-            border-radius: 11px;
+            padding: 0.65rem 0.65rem;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.16s ease;
+            text-align: center;
+            white-space: nowrap;
         }
+
         .vlk-nav-btn:hover:not(:disabled) {
             background: rgba(51, 65, 85, 0.95);
             border-color: #38bdf8;
         }
+
         .vlk-nav-btn:disabled {
             opacity: 0.35;
             cursor: not-allowed;
         }
-    `;
+
+        @media (min-width: 600px) {
+            .vlk-speech-card {
+                border-radius: 20px;
+                padding: 1.8rem;
+            }
+            .vlk-speech-meta-bar {
+                margin-bottom: 1.2rem;
+                font-size: 0.88rem;
+            }
+            .vlk-speech-sub {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-mic-row {
+                gap: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-mic-btn {
+                width: 74px;
+                height: 74px;
+            }
+            .vlk-listen-model-btn {
+                padding: 0.75rem 1.3rem;
+                border-radius: 14px;
+                font-size: 0.9rem;
+                gap: 0.5rem;
+            }
+            .vlk-speech-status {
+                font-size: 0.92rem;
+                margin-bottom: 1.2rem;
+                min-height: 24px;
+            }
+            .vlk-speech-feedback-box {
+                border-radius: 14px;
+                padding: 1rem 1.3rem;
+                margin-bottom: 1.5rem;
+            }
+            .vlk-feedback-heard {
+                font-size: 1.15rem;
+                margin-bottom: 0.35rem;
+            }
+            .vlk-feedback-tip {
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
+            .vlk-streak-pill {
+                gap: 0.4rem;
+                font-size: 0.85rem;
+                padding: 0.35rem 0.85rem;
+                margin-bottom: 1.3rem;
+            }
+            .vlk-nav-row {
+                margin-top: 1.2rem;
+                gap: 0.8rem;
+            }
+            .vlk-nav-btn {
+                flex: initial;
+                padding: 0.55rem 1.15rem;
+                border-radius: 11px;
+                font-size: 0.86rem;
+            }
+        }
+`;
     viewContainer.appendChild(style);
 
     // SVG Helper Icons (Monochrome)
@@ -799,7 +1263,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 
                 <!-- Alveolar Ridge Touch Target Highlight -->
                 <circle cx="236" cy="100" r="6" fill="#facc15" stroke="#fef08a" stroke-width="1.5"/>
-                <text x="236" y="85" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">上齿龈 (Tandkødsrand)</text>
+                <text x="236" y="85" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">上齿龈 (Tandkødsrand)</text>
 
                 <!-- Upper Incisors (Overfortænder) -->
                 <rect x="250" y="112" width="6" height="15" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
@@ -815,7 +1279,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                 <!-- Nasal Cavity (Næsehulen) -->
                 <path d="M 205 70 C 240 60, 260 70, 285 115" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="3,3"/>
-                <text x="235" y="55" fill="#64748b" font-size="10" text-anchor="middle">鼻腔通路 (Næsehule)</text>
+                <text x="235" y="55" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">鼻腔通路 (Næsehule)</text>
 
                 <!-- Velum / Soft Palate (Ganesejlet) -->
                 <path d="${velumPath}" fill="${isL ? '#38bdf8' : '#f472b6'}" stroke="#f8fafc" stroke-width="1.5"/>
@@ -830,31 +1294,31 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <circle cx="206" cy="143" r="5" fill="#ef4444"/>
                     <line x1="202" y1="139" x2="210" y2="147" stroke="#ffffff" stroke-width="1.8"/>
                     <line x1="210" y1="139" x2="202" y2="147" stroke="#ffffff" stroke-width="1.8"/>
-                    <text x="170" y="148" fill="#f87171" font-size="9" font-weight="bold" text-anchor="end">软腭封闭鼻腔通道!</text>
+                    <text x="170" y="148" fill="#f87171" font-size="10" font-weight="bold" text-anchor="end">软腭封闭鼻腔通道!</text>
 
                     <!-- Blue Oral Airflow Path -->
                     <path d="M 175 250 C 180 200, 195 180, 220 165 C 240 155, 275 165, 305 168" 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowL)"/>
-                    <text x="280" y="195" fill="#38bdf8" font-size="11" font-weight="bold">口腔侧向气流 ➔</text>
-                    <text x="280" y="208" fill="#94a3b8" font-size="9">100% 经口腔两侧流出</text>
+                    <text x="280" y="195" fill="#38bdf8" font-size="12" font-weight="bold">口腔侧向气流 ➔</text>
+                    <text x="280" y="210" fill="#cbd5e1" font-size="10">100% 经口腔两侧流出</text>
                 ` : `
                     <!-- N-AIRFLOW: Mouth is sealed, air diverted through the nose! -->
                     <!-- Oral Closure Barrier -->
                     <path d="M 226 102 C 235 98, 250 98, 256 108" fill="none" stroke="#ef4444" stroke-width="4"/>
-                    <text x="285" y="145" fill="#f87171" font-size="9.5" font-weight="bold" text-anchor="middle">口腔前方封闭 ⛔</text>
+                    <text x="285" y="145" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">口腔前方封闭 ⛔</text>
 
                     <!-- Pink Nasal Airflow Path -->
                     <path d="M 175 250 C 180 190, 185 140, 195 110 C 205 75, 245 70, 290 120" 
                           fill="none" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowN)"/>
-                    <text x="270" y="45" fill="#f472b6" font-size="11" font-weight="bold">鼻腔共鸣气流 ➔</text>
-                    <text x="270" y="58" fill="#94a3b8" font-size="9">全部气流进入鼻腔共鸣</text>
+                    <text x="270" y="45" fill="#f472b6" font-size="12" font-weight="bold">鼻腔共鸣气流 ➔</text>
+                    <text x="270" y="60" fill="#cbd5e1" font-size="10">全部气流进入鼻腔共鸣</text>
                 `}
 
                 <!-- Footnote / Mode Pill in SVG -->
                 <rect x="15" y="15" width="105" height="24" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${primaryColor}" stroke-width="1.2"/>
-                <text x="67" y="31" fill="${primaryColor}" font-size="11" font-weight="900" text-anchor="middle">${isL ? '🌊 边音 [l]' : '🌸 鼻音 [n]'}</text>
+                <text x="67" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isL ? '🌊 边音 [l]' : '🌸 鼻音 [n]'}</text>
             </svg>
         `;
     }
@@ -883,7 +1347,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 <rect width="360" height="300" rx="14" fill="#0b1329" stroke="rgba(148, 163, 184, 0.2)" stroke-width="1.5"/>
 
                 <!-- Perspective Title -->
-                <text x="180" y="24" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle" letter-spacing="0.05em">TANDBUEN OG TUNGEN SET OPPEFRA (俯视牙弓与舌面)</text>
+                <text x="180" y="24" fill="#94a3b8" font-size="10.5" font-weight="bold" text-anchor="middle" letter-spacing="0.05em">TANDBUEN OG TUNGEN SET OPPEFRA (俯视牙弓与舌面)</text>
 
                 <!-- Dental Arch (Overkæbens hesteskoformede tandrække) -->
                 <!-- Front Incisors (Fortænder foroven) -->
@@ -921,7 +1385,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                     <!-- Single Center Contact Point (Kun berøring i midten!) -->
                     <circle cx="180" cy="56" r="6" fill="#facc15" stroke="#ffffff" stroke-width="2"/>
-                    <text x="180" y="44" fill="#facc15" font-size="10" font-weight="900" text-anchor="middle">中央接触点 (舌尖轻触齿龈)</text>
+                    <text x="180" y="44" fill="#facc15" font-size="11" font-weight="900" text-anchor="middle">中央接触点 (舌尖轻触齿龈)</text>
 
                     <!-- Lateral Gap Highlight: Siderne er nede! -->
                     <!-- Left Lateral Channel (Venstre luftkanal) -->
@@ -934,13 +1398,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="6,3" 
                           filter="url(#glowLateral)" marker-end="url(#arrowLat)"/>
 
-                    <text x="80" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="end">左侧通气 ➔</text>
-                    <text x="280" y="115" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="start">➔ 右侧通气</text>
+                    <text x="80" y="115" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="end">左侧通气 ➔</text>
+                    <text x="280" y="115" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="start">➔ 右侧通气</text>
 
                     <!-- Bottom explanation -->
-                    <rect x="25" y="245" width="310" height="42" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
-                    <text x="180" y="262" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">LATERALT LUFTSLIP (边音 / 侧向气流)</text>
-                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">舌头两侧主动下沉，离开大牙。气流顺畅从两侧流出。</text>
+                    <rect x="20" y="244" width="320" height="44" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
+                    <text x="180" y="261" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="middle">LATERALT LUFTSLIP (边音 / 侧向气流)</text>
+                    <text x="180" y="278" fill="#cbd5e1" font-size="10" text-anchor="middle">舌头两侧主动下沉，离开大牙。气流顺畅从两侧流出。</text>
                 ` : `
                     <!-- TONGUE FOR /n/: Wide tongue forming an airtight U-seal along the entire alveolar front! -->
                     <path d="M 125 240 C 130 180, 138 90, 180 56 C 222 90, 230 180, 235 240 Z" 
@@ -954,16 +1418,16 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <circle cx="152" cy="68" r="5" fill="#ef4444"/>
                     <circle cx="208" cy="68" r="5" fill="#ef4444"/>
 
-                    <text x="180" y="38" fill="#f87171" font-size="10" font-weight="900" text-anchor="middle">牙弓马蹄形气密闭锁 ⛔</text>
+                    <text x="180" y="38" fill="#f87171" font-size="11" font-weight="900" text-anchor="middle">牙弓马蹄形气密闭锁 ⛔</text>
 
                     <!-- Red Blocked Signs at sides -->
-                    <text x="80" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="end">完全密封 ⛔</text>
-                    <text x="280" y="115" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="start">⛔ 完全密封</text>
+                    <text x="80" y="115" fill="#f87171" font-size="11.5" font-weight="bold" text-anchor="end">完全密封 ⛔</text>
+                    <text x="280" y="115" fill="#f87171" font-size="11.5" font-weight="bold" text-anchor="start">⛔ 完全密封</text>
 
                     <!-- Bottom explanation -->
-                    <rect x="25" y="245" width="310" height="42" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
-                    <text x="180" y="262" fill="#f472b6" font-size="11" font-weight="bold" text-anchor="middle">KOMPLET MUNDLUKKE (鼻音 / 口腔完全封闭)</text>
-                    <text x="180" y="278" fill="#cbd5e1" font-size="9.5" text-anchor="middle">口腔毫无漏气空间。100% 气流被逼入鼻腔震颤发声。</text>
+                    <rect x="20" y="244" width="320" height="44" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
+                    <text x="180" y="261" fill="#f472b6" font-size="11.5" font-weight="bold" text-anchor="middle">KOMPLET MUNDLUKKE (鼻音 / 口腔完全封闭)</text>
+                    <text x="180" y="278" fill="#cbd5e1" font-size="10" text-anchor="middle">口腔毫无漏气空间。100% 气流被逼入鼻腔震颤发声。</text>
                 `}
             </svg>
         `;
@@ -979,10 +1443,10 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         topBar.className = 'vlk-top-bar';
         topBar.innerHTML = `
             <button type="button" class="vlk-back-btn" id="vlk-back">
-                ← 返回母语对比 (Tilbage til Mit sprog)
+                ← <span class="vlk-back-full">返回母语对比 (Tilbage)</span><span class="vlk-back-short">返回</span>
             </button>
-            <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 700;">
-                🇨🇳 中文语音中心 · 难点发音专项
+            <div class="vlk-top-badge">
+                🇨🇳 <span class="vlk-badge-full">中文语音中心 · 难点发音专项</span><span class="vlk-badge-short">难点发音专项</span>
             </div>
         `;
         topBar.querySelector('#vlk-back').onclick = () => {
@@ -1030,13 +1494,19 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         mainTabs.className = 'vlk-main-tabs';
         mainTabs.innerHTML = `
             <button type="button" class="vlk-tab-btn ${activeTab === 'diagram' ? 'active' : ''}" data-tab="diagram">
-                🔬 1. 发音器官与气流图解 (解剖图)
+                <span class="vlk-tab-icon">🔬</span>
+                <span class="vlk-tab-short">1. 器官图解</span>
+                <span class="vlk-tab-full">1. 发音器官与气流图解</span>
             </button>
             <button type="button" class="vlk-tab-btn ${activeTab === 'listening' ? 'active' : ''}" data-tab="listening">
-                🎧 2. 听音辨析测试 (对立体辨音)
+                <span class="vlk-tab-icon">🎧</span>
+                <span class="vlk-tab-short">2. 听音辨析</span>
+                <span class="vlk-tab-full">2. 听音辨析测试</span>
             </button>
             <button type="button" class="vlk-tab-btn ${activeTab === 'speech' ? 'active' : ''}" data-tab="speech">
-                🎙️ 3. 麦克风口语练习 (三词跟读)
+                <span class="vlk-tab-icon">🎙️</span>
+                <span class="vlk-tab-short">3. 口语跟读</span>
+                <span class="vlk-tab-full">3. 麦克风口语练习</span>
             </button>
         `;
         mainTabs.querySelectorAll('.vlk-tab-btn').forEach(btn => {
@@ -1067,15 +1537,17 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         const controls = document.createElement('div');
         controls.className = 'vlk-diag-controls';
         controls.innerHTML = `
-            <div style="font-weight: 800; font-size: 0.9rem; color: #f8fafc;">
+            <div class="vlk-diag-controls-label">
                 选择要探索的发音：
             </div>
             <div class="vlk-sound-toggle-group">
                 <button type="button" class="vlk-toggle-btn ${activeSoundTarget === 'l' ? 'active-l' : ''}" id="toggle-l">
-                    🌊 边音 L /l/ (侧音 • Lateral)
+                    <span>🌊 边音 L /l/</span>
+                    <span style="font-size:0.72rem; opacity:0.85;">(侧音 Lateral)</span>
                 </button>
                 <button type="button" class="vlk-toggle-btn ${activeSoundTarget === 'n' ? 'active-n' : ''}" id="toggle-n">
-                    🌸 鼻音 N /n/ (鼻音 • Nasal)
+                    <span>🌸 鼻音 N /n/</span>
+                    <span style="font-size:0.72rem; opacity:0.85;">(鼻音 Nasal)</span>
                 </button>
             </div>
         `;
@@ -1346,9 +1818,9 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         else subDesc = '切换发音焦点：感受从侧边气流到鼻音封闭的快速弹舌切换！';
 
         speechCard.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; font-size:0.88rem; color:#94a3b8;">
+            <div class="vlk-speech-meta-bar">
                 <span>第 ${speechExerciseIdx + 1} 题，共 ${SPEECH_EXERCISES.length} 题</span>
-                <span class="vlk-target-word ${isL ? 'word-l' : (isN ? 'word-n' : 'word-l')}" style="font-weight:bold; font-size:0.82rem;">
+                <span class="vlk-target-word ${isL ? 'word-l' : (isN ? 'word-n' : 'word-l')}" style="font-weight:bold; font-size:0.78rem;">
                     ${targetBadge}
                 </span>
             </div>

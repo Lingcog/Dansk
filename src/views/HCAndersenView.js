@@ -514,7 +514,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         mainContent.appendChild(readerWrapper);
     }
 
-    function createSectionTasks(section, index, onCategoryChange, onReadNextSentence) {
+    function createSectionTasks(section, index, onCategoryChange, onGuideToNextSentence) {
         if (!section.tasks) return null;
 
         const categories = [
@@ -676,17 +676,17 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 panel.innerHTML = `
                     <div class="hc-task-sentence-milestone">
                         <div class="milestone-icon">✨</div>
-                        <h4>${isEn ? `Tasks up to sentence ${currentRevealedCount} completed!` : `Opgaver op til sætning ${currentRevealedCount} er løst!`}</h4>
-                        <p>${isEn ? `Read sentence ${currentRevealedCount + 1} above to unlock the next task (${unlocked.length + 1} of ${totalQ}) in this category.` : `Læs næste sætning ovenfor (Sætning ${currentRevealedCount + 1} af ${totalLines}) for at låse op for næste opgave (${unlocked.length + 1} af ${totalQ}) i denne kategori.`}</p>
+                        <h4>${isEn ? `Tasks up to sentence ${currentRevealedCount} completed!` : `Opgaver til sætning ${currentRevealedCount} er løst!`}</h4>
+                        <p>${isEn ? `Confirm that you understand the sentence above to unlock the next task (${unlocked.length + 1} of ${totalQ}) in this category.` : `Gå op til teksten og bekræft, at du forstår sætningen, for at låse op for de næste opgaver i rækken.`}</p>
                         <button type="button" class="hc-task-read-next-btn">
-                            <span>${isEn ? `Read next sentence (Sentence ${currentRevealedCount + 1})` : `Læs næste sætning ovenfor (Sætning ${currentRevealedCount + 1})`}</span>
+                            <span>${isEn ? `Go to sentence above (confirm)` : `Gå op og bekræft sætningen`}</span>
                             <span>➔</span>
                         </button>
                     </div>
                 `;
                 panel.querySelector('.hc-task-read-next-btn').onclick = () => {
-                    if (onReadNextSentence) {
-                        onReadNextSentence();
+                    if (onGuideToNextSentence) {
+                        onGuideToNextSentence();
                     }
                 };
                 panelHolder.appendChild(panel);
@@ -805,10 +805,18 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 const isLastUnlocked = qIdx === unlocked.length - 1;
                 const hasMoreInCat = unlocked.length < totalQ;
 
-                let nextBtnLabel = isEn ? 'Next question ➔' : 'Næste spørgsmål ➔';
+                let nextBtnLabel = isEn ? 'Next question ➔' : 'Næste opgave ➔';
+                let nextPromptNoteHtml = '';
+
                 if (isLastUnlocked) {
                     if (hasMoreInCat) {
-                        nextBtnLabel = isEn ? `Continue to sentence ${currentRevealedCount + 1} ➔` : `Fortsæt til næste sætning ➔`;
+                        nextBtnLabel = isEn ? 'Next (confirm sentence above) ➔' : 'Næste opgave (bekræft sætning ovenfor) ➔';
+                        nextPromptNoteHtml = `
+                            <div class="hc-next-sentence-prompt-note">
+                                <span>↑</span>
+                                <span>${isEn ? 'The next task belongs to the next sentence. Confirm the sentence above to continue.' : 'Næste opgave hører til næste sætning. Bekræft sætningen ovenfor for at få adgang.'}</span>
+                            </div>
+                        `;
                     } else {
                         nextBtnLabel = isEn ? 'See result 🏆' : 'Se resultat 🏆';
                     }
@@ -823,6 +831,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                                 <span>${currentQ.explanation}</span>
                             </div>
                         </div>
+                        ${nextPromptNoteHtml}
                         <button type="button" class="hc-task-next-btn">
                             ${nextBtnLabel}
                         </button>
@@ -830,10 +839,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 `;
                 feedbackWrap.querySelector('.hc-task-next-btn').onclick = () => {
                     currentQuestionIdx[activeCatKey]++;
-                    if (isLastUnlocked && hasMoreInCat && onReadNextSentence) {
-                        onReadNextSentence();
-                    }
                     renderActivePanel();
+                    if (isLastUnlocked && hasMoreInCat) {
+                        if (onGuideToNextSentence) {
+                            onGuideToNextSentence();
+                        }
+                    }
                 };
             }
 
@@ -1296,6 +1307,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         <span>➔</span>
                     `;
                     nextBtn.onclick = () => {
+                        nextBtn.classList.remove('glow-yellow');
+                        const latest = flowContainer.querySelector('.latest-revealed');
+                        if (latest) latest.classList.remove('awaiting-confirm');
                         flowContainer.advanceSentence();
                     };
 
@@ -1337,8 +1351,28 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 renderFlow();
                 setTimeout(() => {
                     const latest = flowContainer.querySelector('.latest-revealed');
-                    if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 60);
+            }
+        };
+
+        flowContainer.guideToSentenceConfirm = () => {
+            const nextBtn = flowContainer.querySelector('.hc-next-sentence-btn');
+            const latest = flowContainer.querySelector('.latest-revealed');
+            const challengeCard = flowContainer.querySelector('.latest-revealed .hc-challenge-card');
+
+            if (nextBtn && !nextBtn.disabled) {
+                nextBtn.classList.remove('glow-yellow');
+                void nextBtn.offsetWidth; // force CSS reflow
+                nextBtn.classList.add('glow-yellow');
+                if (latest) latest.classList.add('awaiting-confirm');
+                nextBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else if (challengeCard) {
+                challengeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                challengeCard.classList.add('highlight-challenge');
+                setTimeout(() => challengeCard.classList.remove('highlight-challenge'), 2000);
+            } else if (latest) {
+                latest.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         };
 
@@ -1461,8 +1495,8 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             tasksEl = createSectionTasks(section, index, (newCatKey) => {
                 setHighlight(newCatKey);
             }, () => {
-                if (flowEl && flowEl.advanceSentence) {
-                    flowEl.advanceSentence();
+                if (flowEl && flowEl.guideToSentenceConfirm) {
+                    flowEl.guideToSentenceConfirm();
                 }
             });
         }
@@ -4449,6 +4483,48 @@ function injectStyles() {
             box-shadow: none;
             cursor: not-allowed;
             transform: none;
+        }
+        .hc-next-sentence-btn.glow-yellow {
+            background: linear-gradient(135deg, #facc15, #eab308) !important;
+            color: #0f172a !important;
+            border: 2px solid #fef08a !important;
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.9), 0 0 50px rgba(234, 179, 8, 0.5) !important;
+            animation: pulseYellowGlow 1.2s infinite alternate ease-in-out !important;
+            transform: scale(1.04);
+        }
+        .hc-next-sentence-btn.glow-yellow:hover:not(:disabled) {
+            background: linear-gradient(135deg, #fde047, #f59e0b) !important;
+            color: #000000 !important;
+            transform: scale(1.06) translateY(-2px);
+        }
+        @keyframes pulseYellowGlow {
+            0% {
+                box-shadow: 0 0 15px rgba(250, 204, 21, 0.65), 0 0 30px rgba(234, 179, 8, 0.35);
+                transform: scale(1.02);
+            }
+            100% {
+                box-shadow: 0 0 35px rgba(250, 204, 21, 1), 0 0 70px rgba(234, 179, 8, 0.7);
+                transform: scale(1.07);
+            }
+        }
+        .hc-dialogue-line.latest-revealed.awaiting-confirm {
+            border: 2px solid #facc15 !important;
+            box-shadow: 0 0 28px rgba(250, 204, 21, 0.35) !important;
+            background: rgba(234, 179, 8, 0.08) !important;
+        }
+        .hc-next-sentence-prompt-note {
+            font-size: 0.85rem;
+            color: #fde047;
+            background: rgba(234, 179, 8, 0.12);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            padding: 0.45rem 0.8rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            line-height: 1.4;
         }
         .hc-next-sentence-hint {
             font-size: 0.86rem;

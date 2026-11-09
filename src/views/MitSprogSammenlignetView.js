@@ -36,6 +36,26 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             background: rgba(51, 65, 85, 0.95);
             border-color: #fde68a;
         }
+        .mss-top-mode-btn {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1.5px solid #f87171;
+            color: #fecaca;
+            padding: 0.45rem 0.85rem;
+            border-radius: 11px;
+            font-weight: 800;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .mss-top-mode-btn:hover {
+            background: rgba(220, 38, 38, 0.28);
+            border-color: #fca5a5;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
         
         /* Notice Banner */
         .mss-notice-banner {
@@ -147,6 +167,47 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             flex-wrap: wrap;
             padding-top: 0.55rem;
             border-top: 1px solid rgba(148, 163, 184, 0.18);
+        }
+        .mss-display-mode-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding-top: 0.55rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.18);
+        }
+        .mss-mode-pill {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1.5px solid rgba(148, 163, 184, 0.3);
+            color: #cbd5e1;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.16s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .mss-mode-pill:hover {
+            border-color: #fca5a5;
+            color: #ffffff;
+        }
+        .mss-mode-pill.active {
+            background: rgba(239, 68, 68, 0.24);
+            border-color: #f87171;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
+        }
+        .mss-da-teacher-note {
+            background: rgba(239, 68, 68, 0.12);
+            border-left: 3px solid #f87171;
+            border-radius: 6px;
+            padding: 0.4rem 0.65rem;
+            font-size: 0.81rem;
+            color: #fecaca;
+            line-height: 1.45;
         }
         .mss-lang-pill {
             background: rgba(30, 41, 59, 0.8);
@@ -441,6 +502,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
     const appLang = getLang();
     let selectedLang = 'zh'; // Default til kinesisk ifm. lancering
+    let displayMode = localStorage.getItem('mss_display_mode') || 'bilingual'; // 'bilingual' | 'target' | 'da'
     let currentProto = 1; // 1 = Byggetrappen, 2 = Sprogspejlet, 3 = Bygge-Pyramiden + Fokus-Scenen
     let activeStepIndex = 6; // Default highlight on 7. Sætningen in Proto 3
     let openSubStepIndex = null; // null = forside, number = underflade for det pågældende trin
@@ -467,7 +529,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `<span class="mss-hl-my">pan</span> — Spansk har 5 faste vokaler (a, e, i, o, u) uden læberundede e/i-lyde (ø/y).`,
                 vi: `<span class="mss-hl-my">bánh mì</span> — Vietnamesisk bruger toner til at skelne ord, hvilket minder om det danske stød.`,
                 fa: `<span class="mss-hl-my">نان (nân)</span> — Persisk har 6 vokaler uden ø/y og uden stød.`,
-                zh: `<span class="mss-hl-my">面包 (miànbāo)</span> — Kinesisk skelner betydning med <strong>toner</strong> (声调) frem for stød, og mangler rundede fortungevokaler som <strong>ø og y</strong>.`
+                zh: `<span class="mss-hl-my">面包 (miànbāo)</span> — 汉语通过<strong>声调</strong>（四声）区别词义，而非喉塞音（stød）；且汉语缺乏如丹麦语 <strong>ø 和 y</strong> 的圆唇前元音。`
+            },
+            myLines_da: {
+                zh: `Kinesisk skelner betydning med <strong>toner</strong> (声调) frem for stød, og mangler rundede fortungevokaler som <strong>ø og y</strong>.`
             },
             detailExplain: `Et <strong>distinktivt træk</strong> er den allermindste byggeklods i udtalen: f.eks. om læberne er runde eller flade (<em>bred</em> → <em>brød</em>), om vokalen er kort eller lang, eller om der er <strong>stød</strong> (<em>hun</em> vs. <em>hundʼ</em>).`,
             detailExplain_zh: `<strong>区别特征（Distinktivt træk）</strong>是语言中能区分词义的最小语音对立。丹麦语最典型的特征是<strong>圆唇元音</strong>（如 <em>ø, y</em>）与<strong>喉塞音（stød）</strong>。例如 <span class="mss-hl-da">brøʼd</span>（圆唇+喉塞音，意为面包）与 <span class="mss-hl-da">bred</span>（展唇无喉塞音，意为宽阔），仅凭极微小的唇形与声门闭合即可区分完全不同的两个词。汉语虽无喉塞音，但有声调（四声）来区分词义。`,
@@ -499,7 +564,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `pare<span class="mss-hl-my">d [ð]</span> — Spansk har faktisk et blødt d i slutningen af ord og mellem vokaler (<em>nada</em>)!`,
                 vi: `bánh mì — Vietnamesisk udtaler ikke åbne konsonanter som dansk blødt d i udlyd.`,
                 fa: `نان — Persisk har altid <span class="mss-hl-my">fast [d]</span>; det bløde danske d findes ikke.`,
-                zh: `面包 (miànbāo) — Kinesisk mangler blødt d [ð], og har en stor udfordring med at skelne <strong>L [l]</strong> og <strong>N [n]</strong> (边音/鼻音).`
+                zh: `<span class="mss-hl-my">面包 (miànbāo)</span> — 汉语完全缺乏丹麦语特有的软 d [ð]，且中国南方方言（如粤语、西南官话）极易混淆 <strong>L [l]</strong>（边音）与 <strong>N [n]</strong>（鼻音）。`
+            },
+            myLines_da: {
+                zh: `Kinesisk mangler blødt d [ð], og har en stor udfordring med at skelne <strong>L [l]</strong> og <strong>N [n]</strong> (边音/鼻音).`
             },
             detailExplain: `En <strong>fon</strong> er selve sproglyden. På dansk ændrer bogstaver som <strong>d, g og r</strong> ofte lyd alt efter, om de står først eller sidst i ordet (f.eks. hårdt <em>d</em> i <strong>d</strong>ag, men blødt <em>d</em> i brø<strong>d</strong>).`,
             detailExplain_zh: `<strong>音素（Fon）</strong>是人类说话时发出的具体物理声音。丹麦语的辅音在词首和词尾发音截然不同：例如字母 <strong>d</strong> 在词首为硬 d（<strong>d</strong>ag [d]），在元音后则变成独特的<strong>软 d</strong>（brø<strong>d</strong> [ð] / ma<strong>d</strong> [ð]），舌尖必须贴在下齿背面。此外，中国南方许多方言（西南官话、粤语、吴语等）常混淆 <strong>/l/（边音）</strong> 与 <strong>/n/（鼻音）</strong>，而在丹麦语中 <em>læse</em>（阅读）与 <em>næse</em>（鼻子）是绝对不同的音位！`,
@@ -532,7 +600,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `<span class="mss-hl-my">co-ci-na</span> — Spansk er stavelsestællende: hver stavelse og vokal høres helt tydeligt.`,
                 vi: `<span class="mss-hl-my">nhà bếp</span> — Hvert ord er én fast stavelse uden tryksvage endelser.`,
                 fa: `<span class="mss-hl-my">آشـپـزخـانـه (âsh-paz-khâ-neh)</span> — Hver stavelse udtales tydeligt med tryk til sidst.`,
-                zh: `<span class="mss-hl-my">厨-房 (chú-fáng)</span> — Hvert kinesisk tegn er én fast stavelse med egen tone; dansk sluger tryksvage endelser til schwa [ə].`
+                zh: `<span class="mss-hl-my">厨-房 (chú-fáng)</span> — 汉字一字一音且声调饱满；而丹麦语重音之后极度弱读吞音，弱读音节弱化为中央元音 schwa [ə]。`
+            },
+            myLines_da: {
+                zh: `Hvert kinesisk tegn er én fast stavelse med egen tone; dansk sluger tryksvage endelser til schwa [ə].`
             },
             detailExplain: `I en dansk <strong>stavelse</strong> ligger al energien på den trykstærke stavelse (oftest den første: <strong>køk</strong>-). De efterfølgende stavelser med <em>-e-</em> svækkes til den slappe [ə]-lyd eller smelter helt sammen med nabokonsonanten.`,
             detailExplain_zh: `丹麦语的<strong>音节（Stavelse）</strong>具有强烈的<strong>重音计时（Stress-timed）</strong>特点：能量集中在重读音节（通常是词根如 <strong>køk-</strong>），随后的弱读音节中的元音 <em>-e-</em> 会被极度弱化为央元音 [ə]，甚至与相邻辅音合并（“吞音”）。汉字是一字一音节且每个字都有完整声调，初学丹麦语时最容易把每个音节读得过满，而自然丹麦语必须学会弱读吞音。`,
@@ -564,7 +635,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `<span class="mss-hl-my">la</span> + cocina — Bestemthed står <em>foran</em> navneordet.`,
                 vi: `<span class="mss-hl-my">nhà bếp (ingen bøjnings-morfemer)</span> — Ord ændrer aldrig form med endelser.`,
                 fa: `آشپزخانه — I talesprog kan <span class="mss-hl-my">-e (-ه)</span> sættes bagpå for bestemthed, men ellers ingen fast artikel.`,
-                zh: `<span class="mss-hl-my">厨房 (ingen bøjnings-morfemer)</span> — Kinesisk tilføjer ikke bøjningsendelser for bestemthed eller flertal bag på ordet.`
+                zh: `<span class="mss-hl-my">厨房（无屈折词缀）</span> — 汉语不使用后缀词缀表示定指（-et）或复数，而是依靠“这/那”或上下文语境。`
+            },
+            myLines_da: {
+                zh: `Kinesisk tilføjer ikke bøjningsendelser for bestemthed eller flertal bag på ordet, men bruger kontekst eller "denne/dette".`
             },
             detailExplain: `En <strong>morf</strong> (morfem) er den mindste del, der bærer en betydning. Dansk er berømt for at sætte bestemthed (<strong>-en / -et / -ne</strong>) bag på substantivet som en hale: <em>et køkken → køkken<strong>et</strong></em>.`,
             detailExplain_zh: `<strong>语素（Morf / Morfem）</strong>是承载语法或词汇意义的最小构件。丹麦语最著名的特点就是<strong>后缀定冠词</strong>：名词表示“特定的那个”时，不使用独立前置词，而是将 <strong>-en / -et / -ne</strong> 像尾巴一样粘在名词词尾（<em>et køkken → køkken<strong>et</strong></em>：厨房 ➔ 这个厨房）。汉语没有屈折后缀，通常用“这/那”或语境来表达定指。`,
@@ -596,7 +670,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `<span class="mss-hl-my">como / comes / come / comemos</span> — Personbøjningen er så tydelig, at "jeg" ofte udelades.`,
                 vi: `tôi / bạn / anh ấy <span class="mss-hl-my">ăn</span> — Verbet ændrer slet ikke form (hverken efter person eller tid!).`,
                 fa: `<span class="mss-hl-my">می‌خورم (-am) / می‌خوری (-i) / می‌خورد (-ad)</span> — Verbet bøjes altid efter personen.`,
-                zh: `我 / 你 / 他 / 我们 <span class="mss-hl-my">吃 (chī)</span> — Ligesom på dansk ændrer kinesiske verber sig aldrig efter personen!`
+                zh: `我 / 你 / 他 / 我们 <span class="mss-hl-my">吃 (chī)</span> — 与丹麦语相同，动词形态绝不随人称发生变化（无需人称变位）！`
+            },
+            myLines_da: {
+                zh: `Ligesom på dansk ændrer kinesiske verber sig aldrig efter personen!`
             },
             detailExplain: `På <strong>ord-niveau</strong> er dansk meget enkelt ved verber: <em>spiser</em> hedder præcis det samme uanset om det er <em>jeg, du, han, hun, vi, I eller de</em>! Til gengæld skal man derfor altid huske pronomenet (<em>jeg/han</em>) foran verbet.`,
             detailExplain_zh: `在<strong>词汇（Ordet）</strong>层面，丹麦语动词有一大显著优势：<strong>动词绝不随人称发生变化</strong>！无论主语是 <em>jeg（我）、du（你）、han（他）</em> 还是 <em>vi（我们）</em>，现在时统统都叫 <em><strong>spiser</strong></em>。但正因如此，丹麦语绝对不能省略人称代词。此外，丹麦语极其擅长将两个词无缝粘合为<strong>复合词（Sammensatte ord）</strong>（如 <em>rug + brød = rugbrød</em> 黑麦面包）。`,
@@ -629,7 +706,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `<span class="mss-hl-my">en la cocina grande</span> — Adjektivet står normalt <em>efter</em> navneordet ("i køkkenet store").`,
                 vi: `<span class="mss-hl-my">trong nhà bếp lớn</span> — Adjektivet <em>lớn</em> (stor) står <em>efter</em> navneordet <em>nhà bếp</em>.`,
                 fa: `<span class="mss-hl-my">در آشپزخانهٔ بزرگ (dar âshpazkhâneh-ye bozorg)</span> — Adjektivet står <em>efter</em> navneordet bundet med -e (ezâfe).`,
-                zh: `<span class="mss-hl-my">在大厨房里</span> — Kinesisk sætter sted- og tidsfraser foran handlingen, og adjektivet foran navneordet.`
+                zh: `<span class="mss-hl-my">在大厨房里</span> — 汉语通常将时间与地点状语置于动词前，形容词直接修饰名词，无需如丹麦语般将定冠词前置变成 det。`
+            },
+            myLines_da: {
+                zh: `Kinesisk sætter sted- og tidsfraser foran handlingen, og adjektivet foran navneordet uden at flytte artiklen.`
             },
             detailExplain: `En <strong>frase</strong> er en lille ordgruppe, der fungerer som én samlet byggeklods i sætningen: f.eks. <em>frisk brød</em>, <em>i køkkenet</em> eller <em>i det store køkken</em>. Bemærk, at på dansk hopper bestemthed frem som <strong>det/den/de</strong>, så snart der kommer et adjektiv ind foran navneordet!`,
             detailExplain_zh: `<strong>短语（Frase）</strong>是在句子中作为一个不可分割整体移动的语块（如 <em>i køkkenet</em> 在厨房里）。丹麦语短语有一项核心规则：名词原本是后缀定指（<em>køkken<strong>et</strong></em>），但只要前方加入形容词，定冠词就会立刻跳到最前面变成独立的 <strong>det / den / de</strong>，且形容词必须加上 -e 结尾：<em><strong>det</strong> stor<strong>e</strong> køkken</em>！`,
@@ -661,7 +741,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `Hoy <span class="mss-hl-my">(yo) como</span> pan en la cocina — Ingen fast V2-inversion efter "Hoy".`,
                 vi: `Hôm nay <span class="mss-hl-my">tôi ăn</span> bánh mì trong nhà bếp — "I dag jeg spiser..." (aldrig inversion).`,
                 fa: `امروز در آشپzخانه نان <span class="mss-hl-my">می‌خورم</span> — Verbet står altid til allersidst i sætningen (SOV).`,
-                zh: `今天我吃面包 (I dag jeg spiser...) — Kinesisk beholder fast SVO-ordstilling, mens dansk kræver <strong>inversion (V2-reglen)</strong>.`
+                zh: `<span class="mss-hl-my">今天我吃面包</span> — 汉语状语置前依然保持主谓宾（SVO）语序；丹麦语只要状语放句首，动词必须强行占据第2位（V2倒装律）。`
+            },
+            myLines_da: {
+                zh: `Kinesisk beholder fast SVO-ordstilling ("I dag jeg spiser..."), mens dansk kræver <strong>inversion (V2-reglen)</strong> når et tids- eller stedsled sættes forrest ("I dag spiser jeg...").`
             },
             detailExplain: `I en dansk <strong>sætning</strong> står der i almindelig ordstilling: <strong>Subjekt + Verbum + Objekt + Sted + Tid</strong> (<em>Jeg spiser brød i køkkenet i dag</em>). Men verbet er låst til <strong>Plads 2 (V2-reglen)</strong>: Hvis du starter med <em>"I dag"</em> eller <em>"I køkkenet"</em> på Plads 1, skal verbet stå lige bagefter: <em>"I dag <strong>spiser jeg</strong>..."</em>.`,
             detailExplain_zh: `丹麦语<strong>陈述句</strong>的基本语序是：<strong>主语 + 动词 + 宾语 + 地点 + 时间</strong>（<em>Jeg spiser brød i køkkenet i dag</em>）。但它受最严格的<strong>动词第二位规则（V2-reglen）</strong>制约：如果你想强调时间或地点，将其放在句首第一位（如 <em>I dag...</em>），<strong>动词必须死守第二位</strong>，主语被迫倒装移至第三位：<em>"I dag <strong>spiser jeg</strong> brød..."</em>！中文依然保持“今天我吃面包”，初学者切勿忘记倒装！`,
@@ -694,7 +777,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `Hv: "<span class="mss-hl-my">¿Qué comes?</span>" • Ja/nej: "<span class="mss-hl-my">¿Comes</span> pan?" • Imp.: "¡<span class="mss-hl-my">Come</span> el pan!"`,
                 vi: `Hv: "Bạn ăn <span class="mss-hl-my">gì?</span>" (til sidst) • Ja/nej: "Bạn ăn bánh mì <span class="mss-hl-my">không?</span>" • Imp.: "<span class="mss-hl-my">Hãy ăn</span> bánh mì đi!"`,
                 fa: `Hv: "<span class="mss-hl-my">چه می‌خوری؟</span>" • Ja/nej: "<span class="mss-hl-my">آیا</span> نان می‌خوری؟" • Imp.: "نان را <span class="mss-hl-my">بخور (bokhor)!</span>"`,
-                zh: `Hv: "你吃<span class="mss-hl-my">什么 (shénme)?</span>" • Ja/nej: "你吃面包<span class="mss-hl-my">吗 (ma)?</span>" • Imp.: "快<span class="mss-hl-my">吃</span>面包!"`
+                zh: `特殊问: "你吃<span class="mss-hl-my">什么 (shénme)?</span>" • 是非问: "你吃面包<span class="mss-hl-my">吗 (ma)?</span>" • 祈使: "快<span class="mss-hl-my">吃</span>面包!"`
+            },
+            myLines_da: {
+                zh: `Hv-spørgsmål beholder spørgeordet på objektets plads ("du spiser hvad?"); ja/nej-spørgsmål bruger spørgepartiklen "ma"; imperativ bruger stammen uden bøjning.`
             },
             detailExplain: `En <strong>ytring</strong> er sætningen brugt som en konkret talehandling i en situation. Her er de <strong>3 vigtigste ytringstyper</strong> på dansk sammenlignet med dit sprog:`,
             detailExplain_zh: `<strong>话语（Ytring）</strong>是指将句子投入具体实际交际时的言语行为。丹麦语的三大核心句式为：<strong>1) 特殊疑问句（Hv-ord）</strong>：疑问词+动词第2位+主语；<strong>2) 一般疑问句（Ja/nej）</strong>：无需疑问助词，直接将动词提至句首第1位；<strong>3) 祈使句（Imperativ）</strong>：直接使用动词原形词根（去掉 -er），无需主语。`,
@@ -717,7 +803,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         es: '"¿<strong>Qué</strong> comes (tú) en la cocina hoy?" — Spørgeord + Verbum (+ evt. subjekt).',
                         vi: '"Hôm nay bạn ăn <strong>gì</strong> trong nhà bếp?" — Spørgeordet <em>gì</em> (hvad) står <em>efter</em> verbet på den plads, hvor svaret hører hjemme!',
                         fa: '"امروز در آشپزخانه <strong>چه</strong> می‌خوری؟" — Spørgeordet står inde i sætningen lige foran verbet til sidst.',
-                        zh: '"今天你在厨房吃<strong>什么</strong>？" — Kinesisk lader spørgeordet stå på objektets plads ("Hvad") i stedet for at rykke det forrest med V2-inversion.'
+                        zh: '"今天你在厨房吃<strong>什么</strong>？" — 汉语特殊疑问词留在宾语原位；丹麦语疑问词必须移至句首，并引发动词占据第2位的 V2 倒装。'
+                    },
+                    myByLang_da: {
+                        zh: 'Kinesisk lader spørgeordet stå på objektets plads ("Hvad") i stedet for at rykke det forrest med V2-inversion.'
                     }
                 },
                 {
@@ -737,7 +826,11 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         de: '"<strong>Isst du</strong> heute Brot in der Küche?" — Bytter plads på verbum og subjekt præcis ligesom dansk.',
                         es: '"¿<strong>Comes</strong> pan en la cocina hoy?" — Afgøres af det stigende tonefald.',
                         vi: '"Hôm nay bạn ăn bánh mì <strong>không</strong>?" — Sætter spørgeordet <em>không</em> allerbagerst i sætningen.',
-                        fa: '"<strong>آیا (Âyâ)</strong> امروز نان می‌خوری؟" — Bruger spørgeordet <em>âyâ</em> forrest eller blot stigende tonefald.'
+                        fa: '"<strong>آیا (Âyâ)</strong> امروز نان می‌خوری؟" — Bruger spørgeordet <em>âyâ</em> forrest eller blot stigende tonefald.',
+                        zh: '"你今天在厨房吃面包<strong>吗</strong>？" — 汉语通过句末添加疑问助词“吗”或疑问语气；丹麦语无需疑问助词，直接颠倒主谓位置（动词直接提至第1位）。'
+                    },
+                    myByLang_da: {
+                        zh: 'Kinesisk bruger spørgepartiklen "ma" til sidst; dansk bytter direkte om på subjekt og verbum, så verbet står på Plads 1.'
                     }
                 },
                 {
@@ -757,7 +850,11 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         de: '"<strong>Iss</strong> das Brot in der Küche!" — Har forskellige former til <em>du (iss!)</em>, <em>ihr (esst!)</em> og <em>Sie (essen Sie!)</em>. Dansk har kun én form!',
                         es: '"¡<strong>Come</strong> el pan en la cocina!" — Skifter form mellem uformel (<em>come</em>), høflig (<em>coma</em>) og flertal.',
                         vi: '"<strong>Hãy ăn</strong> bánh mì trong bếp <strong>đi</strong>!" — Bruger opfordringsord som <em>hãy</em> foran eller <em>đi</em> til sidst.',
-                        fa: '"نان را در آشپزخانه <strong>بخور (bokhor)</strong>!" — Dannes med forstavelsen <em>be-/bo-</em> + nutidsstammen til sidst.'
+                        fa: '"نان را در آشپزخانه <strong>بخور (bokhor)</strong>!" — Dannes med forstavelsen <em>be-/bo-</em> + nutidsstammen til sidst.',
+                        zh: '"在厨房里<strong>吃</strong>面包吧！" — 汉语使用动词原形或加上“吧/快”表达祈使；丹麦语直接使用去掉现在时后缀 -er 的动词词根（spis!），并省略主语“du”。'
+                    },
+                    myByLang_da: {
+                        zh: 'Kinesisk bruger verbets grundform (ofte med "ba" eller "kuai"); dansk bruger verbets stamme uden -er og uden "du".'
                     }
                 }
             ],
@@ -790,7 +887,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `B: "<span class="mss-hl-my">Sí, claro</span>" — Spansk bruger <em>Sí</em> til både positive og negative spørgsmål.`,
                 vi: `B: "<span class="mss-hl-my">Có, tôi có ăn</span>" — Bruger <em>Có</em> til at bekræfte handlingen.`,
                 fa: `B: "<span class="mss-hl-my">چرا (Cherâ), می‌خورm</span>" — Persisk bruger <em>cherâ</em> som dansk <em>Jo!</em> efter et negativt spørgsmål.`,
-                zh: `B: "<span class="mss-hl-my">会啊 / 吃啊</span>" — Kinesisk svarer med bekræftelse af verbet (会/吃), og har ikke en direkte modpart til "Jo".`
+                zh: `B: "<span class="mss-hl-my">吃啊 / 会啊</span>" — 汉语通过重述动词来肯定回答；丹麦语面对否定疑问句必须使用专门的 "Jo" 加上回声动词（det gør jeg）。`
+            },
+            myLines_da: {
+                zh: `Kinesisk svarer med bekræftelse af verbet (会/吃), og har ikke en direkte modpart til "Jo".`
             },
             detailExplain: `Et <strong>turpar</strong> er to replikker, der hænger uløseligt sammen: f.eks. <em>Spørgsmål → Svar</em> eller <em>Tilbud → Tak</em>. På dansk gælder to vigtige vaner i turpar: 1) Hvis spørgsmålet indeholder <em>"ikke"</em>, skal et positivt svar starte med <strong>"Jo"</strong> (ikke "Ja"). 2) Man runder næsten altid svaret af med et lille ekko-svar: <strong>"Ja, det gør jeg"</strong> / <strong>"Nej, det gør jeg ikke"</strong>.`,
             detailExplain_zh: `<strong>相邻对话对（Turpar）</strong>是人际对话中成对出现的紧密轮次（如问与答）。丹麦语在对话中有两大极其重要的文化习惯：1) 面对<strong>否定提问</strong>（含有 <em>ikke</em>），如果你想表示肯定回答，<strong>绝不能用 Ja，必须使用“Jo”</strong>（相当于中文的“不，我吃！”）；2) 丹麦人极少只说一个字，习惯带上“回声动词”：<em><strong>"Ja, det gør jeg"</strong>（是的，我吃）/ <strong>"Nej, det gør jeg ikke"</strong></em>。`,
@@ -822,7 +922,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 es: `"<span class="mss-hl-my">Bueno</span>, tengo hambre, <span class="mss-hl-my">así que</span> como pan en la cocina, <span class="mss-hl-my">¿vale?</span>"`,
                 vi: `"<span class="mss-hl-my">À</span>, tôi đói rồi, <span class="mss-hl-my">nên</span> tôi ăn chút bánh mì trong bếp <span class="mss-hl-my">nhé!</span>"`,
                 fa: `"<span class="mss-hl-my">خب (Khob)</span>، گرسنه‌ام، <span class="mss-hl-my">پس</span> توی آشپزخانه کمی نان می‌خورم، <span class="mss-hl-my">باشه؟</span>"`,
-                zh: `"<span class="mss-hl-my">哎 (Āi)</span>，我饿了，<span class="mss-hl-my">所以</span>去厨房吃点面包，<span class="mss-hl-my">对吧？</span>" — Kinesisk bruger语气词 (partikler som 呢/吧/啊) til kontakt og stemning.`
+                zh: `"<span class="mss-hl-my">哎 (Āi)</span>，我饿了，<span class="mss-hl-my">所以</span>去厨房吃点面包，<span class="mss-hl-my">对吧？</span>" — 汉语使用语气助词（呢/吧/啊）维系交际情感；丹麦语则运用 nå, jo, lige, ikke? 等丰富的小词。`
+            },
+            myLines_da: {
+                zh: `Kinesisk bruger语气词 (partikler som 呢/吧/啊) til kontakt og stemning; dansk bruger nå, jo, lige, ikke?`
             },
             detailExplain: `Øverst i sproget samles ytringer og turpar til en hel <strong>samtale eller tekst</strong>. Her bruger dansk små dialog-ord som <strong>nå, jo, lige, altså, vel, ikke?</strong> til at vise følelse og kontakt — og bindeord som <strong>så, fordi, derfor, når/da</strong> til at kæde sætningerne sammen.`,
             detailExplain_zh: `在语言金字塔的顶峰，句子被组织为生动的<strong>完整对话与语篇（Samtalen / Teksten）</strong>。地道丹麦语的一大精髓是充斥着<strong>语气小词（småord: jo, nok, lige, vel, ikke?）</strong>，它们不改变句义，却能软化语气、拉近距离。同时，通过 <em>fordi（因为）、så（所以）、da/når（当...时）</em> 等连词精确连接主从从句。`,
@@ -841,13 +944,6 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     // Top bar
     const topBar = document.createElement('div');
     topBar.className = 'mss-top-bar';
-
-    const backBtn = document.createElement('button');
-    backBtn.className = 'mss-back-btn';
-    backBtn.innerHTML = `← Tilbage til forsiden`;
-    backBtn.onclick = () => navigateFn('main');
-    topBar.appendChild(backBtn);
-
     viewContainer.appendChild(topBar);
 
     // Notice banner: "Kun på kinesisk. Andre sprog følger senere."
@@ -866,48 +962,156 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     function renderStage() {
         const langObj = LANGUAGES.find(l => l.code === selectedLang) || LANGUAGES[0];
         const isZh = selectedLang === 'zh';
+        const isPureDa = displayMode === 'da';
+        const isPureTarget = displayMode === 'target';
+        const isBilingual = displayMode === 'bilingual';
+        const showDanish = isBilingual || isPureDa;
 
-        noticeBanner.innerHTML = `
-            <span class="mss-notice-flag">🇨🇳</span>
-            <div>
-                <div class="mss-notice-title">Kun på kinesisk. Andre sprog følger senere.</div>
-                <div class="mss-notice-sub">${isZh ? '目前仅提供中文版完整对比与发音专项训练，其他语言即将推出。' : 'Currently only available in Chinese. Other languages coming soon.'}</div>
-            </div>
-        `;
+        // Top bar rendering
+        topBar.innerHTML = '';
+        const backBtn = document.createElement('button');
+        backBtn.className = 'mss-back-btn';
+        backBtn.innerHTML = `← Tilbage til forsiden`;
+        backBtn.onclick = () => navigateFn('main');
+        topBar.appendChild(backBtn);
 
-        hero.innerHTML = `
-            <div class="mss-hero-kicker">${isZh ? '🌍 语言指南 • 从最小发音特征到完整对话' : '🌍 Sprog-kompas • Fra mindste lyd til hel samtale'}</div>
-            <h1>${isZh ? '我的母语与丹麦语对比 (Mit sprog sammenlignet med dansk)' : 'Mit sprog sammenlignet med dansk'}</h1>
-            <p>
-                ${isZh ? 
-                    '从最细微的声音特征到整场对话，十个层级全方位拆解丹麦语与中文的核心差异。主线例句：<em>"Jeg spiser brød i køkkenet i dag"</em>（我今天在厨房吃面包）。' : 
-                    'Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>Dansk</strong> og <strong>dit sprog</strong> ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.'}
-            </p>
-        `;
+        const modeToggleBtn = document.createElement('button');
+        modeToggleBtn.className = 'mss-top-mode-btn';
+        if (isPureTarget) {
+            modeToggleBtn.innerHTML = `🇩🇰 Vis dansk tekst: <strong style="color:#cbd5e1; margin-left:3px;">[FRA]</strong> <span style="font-size:0.75rem; color:#fca5a5; margin-left:4px;">➔ Slå TIL</span>`;
+            modeToggleBtn.title = 'Slået fra: viser rent kursist-kinesisk. Klik her for at slå dansk lærervisning til';
+            modeToggleBtn.onclick = () => {
+                displayMode = 'bilingual';
+                localStorage.setItem('mss_display_mode', 'bilingual');
+                renderStage();
+            };
+        } else if (isBilingual) {
+            modeToggleBtn.innerHTML = `🇩🇰 Vis dansk tekst: <strong style="color:#86efac; margin-left:3px;">[TIL (To-sproget)]</strong>`;
+            modeToggleBtn.title = 'To-sproget lærervisning er aktiv. Klik for kun at vise rent kinesisk til kursisten';
+            modeToggleBtn.onclick = () => {
+                displayMode = 'target';
+                localStorage.setItem('mss_display_mode', 'target');
+                renderStage();
+            };
+        } else {
+            modeToggleBtn.innerHTML = `🇩🇰 Kun dansk visning <span style="font-size:0.75rem; color:#93c5fd; margin-left:4px;">➔ Skift til To-sproget</span>`;
+            modeToggleBtn.title = 'Klik for at skifte til to-sproget visning (dansk + kinesisk)';
+            modeToggleBtn.onclick = () => {
+                displayMode = 'bilingual';
+                localStorage.setItem('mss_display_mode', 'bilingual');
+                renderStage();
+            };
+        }
+        topBar.appendChild(modeToggleBtn);
+
+        // Notice banner
+        if (isPureDa) {
+            noticeBanner.innerHTML = `
+                <span class="mss-notice-flag">🇩🇰</span>
+                <div>
+                    <div class="mss-notice-title">Dansk lærervisning: Kun på kinesisk indtil videre</div>
+                    <div class="mss-notice-sub">Andre sprog følger senere. Du ser nu fladen med fuld dansk lærerstøtte og forklaringer.</div>
+                </div>
+            `;
+        } else if (isBilingual) {
+            noticeBanner.innerHTML = `
+                <span class="mss-notice-flag">🇨🇳</span>
+                <div>
+                    <div class="mss-notice-title">🇩🇰 Kun på kinesisk. Andre sprog følger senere (To-sproget lærervisning)</div>
+                    <div class="mss-notice-sub">目前仅提供中文版完整对比与发音专项训练，其他语言即将推出。<br><span style="color:#fde68a;">💡 Dansk lærervisning er slået TIL: Du kan altid se de præcise danske instruktioner og grammatiske forklaringer ved siden af den kinesiske tekst.</span></div>
+                </div>
+            `;
+        } else {
+            noticeBanner.innerHTML = `
+                <span class="mss-notice-flag">🇨🇳</span>
+                <div>
+                    <div class="mss-notice-title">专为中文母语者设计 (Andre sprog følger senere)</div>
+                    <div class="mss-notice-sub">目前仅提供中文版完整对比与发音专项训练，其他语言即将推出。</div>
+                </div>
+            `;
+        }
+
+        // Hero
+        if (isPureDa) {
+            hero.innerHTML = `
+                <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale</div>
+                <h1>Mit sprog sammenlignet med dansk</h1>
+                <p>
+                    Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>Dansk</strong> og <strong>kinesisk</strong> ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
+                </p>
+            `;
+        } else if (isBilingual) {
+            hero.innerHTML = `
+                <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale • 语言指南</div>
+                <h1>Mit sprog sammenlignet med dansk <span style="font-size:0.72em; opacity:0.85; font-weight:700;">(我的母语与丹麦语对比)</span></h1>
+                <p style="margin-bottom:0.45rem;">
+                    <strong>🇩🇰 Formål (Lærer):</strong> Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>Dansk</strong> og <strong>kinesisk</strong> ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
+                </p>
+                <p style="font-size:0.88rem; color:#bae6fd; opacity:0.95; margin:0; border-top:1px dashed rgba(255,255,255,0.2); padding-top:0.45rem;">
+                    <strong>🇨🇳 Kursisttekst:</strong> 从最细微的声音特征到整场对话，十个层级全方位拆解丹麦语与中文的核心差异。主线例句：<em>"Jeg spiser brød i køkkenet i dag"</em>（我今天在厨房吃面包）。
+                </p>
+            `;
+        } else {
+            hero.innerHTML = `
+                <div class="mss-hero-kicker">🌍 语言指南 • 从最小发音特征到完整对话</div>
+                <h1>我的母语与丹麦语对比 (Mit sprog sammenlignet med dansk)</h1>
+                <p>
+                    从最细微的声音特征到整场对话，十个层级全方位拆解丹麦语与中文的核心差异。主线例句：<em>"Jeg spiser brød i køkkenet i dag"</em>（我今天在厨房吃面包）。
+                </p>
+            `;
+        }
 
         function buildUtteranceCardsHtml(st) {
             if (!st.utteranceCards || !st.utteranceCards.length) return '';
-            const isZh = selectedLang === 'zh';
             return `
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:0.85rem; margin-bottom:1.05rem;">
                     ${st.utteranceCards.map(uc => {
                         const myTxt = uc.myByLang[selectedLang] || uc.myByLang.en;
-                        const badgeText = isZh ? (uc.badge_zh || uc.badge) : uc.badge;
-                        const formulaText = isZh ? (uc.daFormula_zh || uc.daFormula) : uc.daFormula;
-                        const subNoteText = isZh ? (uc.daSubNote_zh || uc.daSubNote) : uc.daSubNote;
+                        const myTeacherTxt = (uc.myByLang_da && uc.myByLang_da[selectedLang]) || null;
+
+                        let badgeText = '';
+                        let formulaText = '';
+                        let subNoteText = '';
+
+                        if (isPureDa) {
+                            badgeText = uc.badge;
+                            formulaText = uc.daFormula;
+                            subNoteText = uc.daSubNote;
+                        } else if (isBilingual) {
+                            badgeText = `${uc.badge} • <span style="color:#93c5fd; font-size:0.9em;">${uc.badge_zh || ''}</span>`;
+                            formulaText = `${uc.daFormula} (${uc.daFormula_zh || ''})`;
+                            subNoteText = `
+                                <div>🇩🇰 ${uc.daSubNote}</div>
+                                <div style="font-size:0.76rem; color:#93c5fd; margin-top:2px;">🇨🇳 ${uc.daSubNote_zh || ''}</div>
+                            `;
+                        } else {
+                            badgeText = uc.badge_zh || uc.badge;
+                            formulaText = uc.daFormula_zh || uc.daFormula;
+                            subNoteText = uc.daSubNote_zh || uc.daSubNote;
+                        }
+
                         return `
                             <div style="background:rgba(15,23,42,0.92); border:1.5px solid ${uc.accent}; border-radius:14px; padding:0.9rem 1rem; display:flex; flex-direction:column; gap:0.5rem;">
                                 <div style="font-size:0.74rem; font-weight:900; color:${uc.accent}; text-transform:uppercase; letter-spacing:0.03em;">
                                     ${badgeText}
                                 </div>
                                 <div style="background:rgba(239,68,68,0.12); border-left:3.5px solid #ef4444; border-radius:8px; padding:0.55rem 0.7rem;">
-                                    <div style="font-size:0.7rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.15rem;">🇩🇰 ${isZh ? '丹麦语结构公式' : 'Dansk'} (${formulaText})</div>
+                                    <div style="font-size:0.7rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.15rem;">
+                                        🇩🇰 ${isPureTarget ? '丹麦语结构公式' : 'Dansk formel'} (${formulaText})
+                                    </div>
                                     <div style="font-size:0.93rem; color:#ffffff; font-weight:800;">${uc.daExample}</div>
                                     <div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.25rem;">${subNoteText}</div>
                                 </div>
                                 <div style="background:rgba(56,189,248,0.1); border-left:3.5px solid #38bdf8; border-radius:8px; padding:0.55rem 0.7rem;">
-                                    <div style="font-size:0.7rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.15rem;">${langObj.flag} ${isZh ? '中文对比解析' : langObj.name}</div>
+                                    <div style="font-size:0.7rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.15rem;">
+                                        ${langObj.flag} ${isPureTarget ? '中文对比解析' : (isBilingual ? 'Kinesisk analyse (kursist)' : langObj.name)}
+                                    </div>
                                     <div style="font-size:0.86rem; color:#e0f2fe; line-height:1.4;">${myTxt}</div>
+                                    ${showDanish && myTeacherTxt ? `
+                                        <div class="mss-da-teacher-note" style="margin-top:0.35rem; font-size:0.79rem;">
+                                            🇩🇰 <strong>Dansk forklaring (Lærer):</strong> ${myTeacherTxt}
+                                        </div>
+                                    ` : ''}
                                 </div>
                             </div>
                         `;
@@ -919,42 +1123,90 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         function buildInlineSubViewHtml(idx) {
             const st = STEPS[idx];
             const myText = st.myLines[selectedLang] || st.myLines.en;
-            const isZh = selectedLang === 'zh';
+            const myTeacherText = (st.myLines_da && st.myLines_da[selectedLang]) || null;
+
+            let subTitle = '';
+            let closeBtnText = '';
+
+            if (isPureDa) {
+                subTitle = `${st.num}. ${st.title} — ${st.subtitle}`;
+                closeBtnText = '✕ Luk underflade';
+            } else if (isBilingual) {
+                subTitle = `${st.num}. ${st.title} (${st.title_zh || ''}) — ${st.subtitle}`;
+                closeBtnText = '✕ Luk underflade / 关闭';
+            } else {
+                subTitle = `${st.num}. ${st.title_zh || st.title} — ${st.subtitle_zh || st.subtitle}`;
+                closeBtnText = '✕ 关闭详情';
+            }
+
             return `
                 <div class="mss-detail-overlay" style="margin-top:0.45rem; margin-bottom:0.65rem; margin-left:1.35rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                         <div>
                             <span style="font-size:0.75rem; font-weight:900; color:${st.color}; text-transform:uppercase;">
-                                ${isZh ? `深度解析 • 第 ${st.num} 级 (Trin ${st.num} af 10)` : `Underflade • Trin ${st.num} af 10`}
+                                ${isPureTarget ? 
+                                    `深度解析 • 第 ${st.num} 级 (Trin ${st.num} af 10)` : 
+                                    (isBilingual ? `Underflade • Trin ${st.num} af 10 (第 ${st.num} 级深度解析)` : `Underflade • Trin ${st.num} af 10`)}
                             </span>
-                            <h2 style="margin:0.15rem 0 0; font-size:1.35rem; font-weight:900; color:#ffffff;">
-                                ${st.num}. ${isZh ? (st.title_zh || st.title) : st.title} — ${isZh ? (st.subtitle_zh || st.subtitle) : st.subtitle}
+                            <h2 style="margin:0.15rem 0 0; font-size:1.32rem; font-weight:900; color:#ffffff;">
+                                ${subTitle}
                             </h2>
+                            ${isBilingual && st.subtitle_zh ? `
+                                <div style="font-size:0.84rem; color:#93c5fd; margin-top:2px;">
+                                    ${st.subtitle_zh}
+                                </div>
+                            ` : ''}
                         </div>
                         <button class="mss-back-btn" data-close-sub="1" style="border-color:#fde68a; color:#fde68a;">
-                            ${isZh ? '✕ 关闭详情' : '✕ Luk underflade'}
+                            ${closeBtnText}
                         </button>
                     </div>
 
                     <div class="mss-two-lines" style="margin-bottom:0.85rem;">
                         <div class="mss-line-da">
-                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语例句' : 'Dansk'}:</span>
+                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isPureTarget ? '丹麦语例句' : 'Dansk'}:</span>
                             <span>${st.daLine}</span>
                         </div>
-                        ${isZh && st.daLine_zh ? `
-                            <div style="font-size:0.82rem; color:#fca5a5; opacity:0.85; padding-left:5.2rem; margin-top:-0.25rem;">
-                                💡 释义: ${st.daLine_zh}
+                        ${!isPureDa && st.daLine_zh ? `
+                            <div style="font-size:0.82rem; color:#fca5a5; opacity:0.88; padding-left:0.6rem; margin-top:-0.15rem;">
+                                💡 ${isBilingual ? 'Kinesisk forklaring: ' : '释义: '}${st.daLine_zh}
                             </div>
                         ` : ''}
                         <div class="mss-line-my">
-                            <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isZh ? '中文对比解析' : 'Mit sprog'}:</span>
+                            <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isPureTarget ? '中文对比解析' : (isBilingual ? 'Kinesisk analyse (kursist)' : langObj.name)}:</span>
                             <span>${myText}</span>
                         </div>
+                        ${showDanish && myTeacherText ? `
+                            <div class="mss-da-teacher-note">
+                                🇩🇰 <strong>Dansk forklaring (Lærer):</strong> ${myTeacherText}
+                            </div>
+                        ` : ''}
                     </div>
 
-                    <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.5; color:#e2e8f0;">
-                        ${isZh ? (st.detailExplain_zh || st.detailExplain) : st.detailExplain}
-                    </div>
+                    ${isBilingual ? `
+                        <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:0.95rem;">
+                            <div class="mss-da-teacher-note" style="padding:0.75rem 0.95rem; font-size:0.9rem; line-height:1.5; border-radius:12px;">
+                                <div style="font-size:0.74rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.25rem;">
+                                    🇩🇰 Dansk forklaring & sproglig instruktion (Lærer):
+                                </div>
+                                ${st.detailExplain}
+                            </div>
+                            <div style="background:rgba(30,41,59,0.75); border-left:3.5px solid #38bdf8; border-radius:12px; padding:0.75rem 0.95rem; font-size:0.9rem; line-height:1.55; color:#e0f2fe;">
+                                <div style="font-size:0.74rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.25rem;">
+                                    🇨🇳 Kursistens kinesiske forklaring:
+                                </div>
+                                ${st.detailExplain_zh || st.detailExplain}
+                            </div>
+                        </div>
+                    ` : (isPureDa ? `
+                        <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.5; color:#e2e8f0;">
+                            ${st.detailExplain}
+                        </div>
+                    ` : `
+                        <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.5; color:#e2e8f0;">
+                            ${st.detailExplain_zh || st.detailExplain}
+                        </div>
+                    `)}
 
                     ${buildUtteranceCardsHtml(st)}
 
@@ -962,19 +1214,24 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         <div style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, rgba(15, 23, 42, 0.92) 100%); border: 2px solid #38bdf8; border-radius: 16px; padding: 1.15rem 1.35rem; margin-bottom: 1.15rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
                             <div style="max-width: 720px;">
                                 <div style="display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.74rem; font-weight: 900; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; background:rgba(56,189,248,0.15); padding:0.2rem 0.6rem; border-radius:6px; margin-bottom:0.35rem;">
-                                    <span>🇨🇳</span> <span>${isZh ? '发音难点专项模块' : 'Fonetisk Specialistmodul'}</span>
+                                    <span>🇨🇳</span> <span>${isPureTarget ? '发音难点专项模块' : 'Fonetisk Specialistmodul (Kinesisk L vs. N)'}</span>
                                 </div>
                                 <div style="font-size: 1.15rem; font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;">
-                                    ${isZh ? '针对中国学习者的难点发音：边音 /l/ 与鼻音 /n/ 对比训练 (L vs. N)' : 'Vanskelige lyde for kinesere: L vs. N (侧音与鼻音对比)'}
+                                    ${isPureDa ? 
+                                        'Vanskelige lyde for kinesere: L vs. N (侧音与鼻音对比)' : 
+                                        (isBilingual ? 'Vanskelige lyde for kinesere: L vs. N (针对中国学习者的难点发音对比训练)' : '针对中国学习者的难点发音：边音 /l/ 与鼻音 /n/ 对比训练 (L vs. N)')}
                                 </div>
                                 <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;">
-                                    ${isZh ? 
-                                        '探索两套发音器官矢量图解（正视/俯视气流通道），体验捏鼻自检法，并通过麦克风进行三词口语挑战。' : 
-                                        'Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.'}
+                                    ${isBilingual ? `
+                                        <div>Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.</div>
+                                        <div style="font-size:0.8rem; color:#93c5fd; margin-top:2px;">探索两套发音器官矢量图解（正视/俯视气流通道），体验捏鼻自检法，并通过麦克风进行三词口语挑战。</div>
+                                    ` : (isPureDa ? 
+                                        'Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.' : 
+                                        '探索两套发音器官矢量图解（正视/俯视气流通道），体验捏鼻自检法，并通过麦克风进行三词口语挑战。')}
                                 </div>
                             </div>
                             <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
-                                ${isZh ? '打开专项训练 ➔' : 'Åbn specialistfladen ➔'}
+                                ${isPureTarget ? '打开专项训练 ➔' : (isBilingual ? 'Åbn specialistfladen ➔ / 打开专项训练' : 'Åbn specialistfladen ➔')}
                             </button>
                         </div>
                     ` : ''}
@@ -983,17 +1240,30 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         ${st.morePairs.map(mp => `
                             <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.22); border-radius:11px; padding:0.75rem 0.9rem;">
                                 <div style="font-weight:900; color:#fde68a; font-size:0.88rem; margin-bottom:0.25rem;">${mp.da}</div>
-                                <div style="font-size:0.82rem; color:#cbd5e1;">${isZh ? (mp.note_zh || mp.note) : mp.note}</div>
+                                ${isBilingual ? `
+                                    <div style="font-size:0.82rem; color:#fecaca; margin-bottom:0.2rem;">🇩🇰 ${mp.note}</div>
+                                    <div style="font-size:0.8rem; color:#93c5fd;">🇨🇳 ${mp.note_zh || mp.note}</div>
+                                ` : (isPureDa ? `
+                                    <div style="font-size:0.82rem; color:#cbd5e1;">${mp.note}</div>
+                                ` : `
+                                    <div style="font-size:0.82rem; color:#cbd5e1;">${mp.note_zh || mp.note}</div>
+                                `)}
                             </div>
                         `).join('')}
                     </div>
 
                     <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.65rem; padding-top:0.8rem; border-top:1px solid rgba(148,163,184,0.2);">
                         <span style="font-size:0.8rem; font-weight:900; color:#86efac; text-transform:uppercase;">
-                            ${isZh ? '在应用中训练此层级 (Træn dette niveau):' : 'Træn dette niveau i appen:'}
+                            ${isPureTarget ? '在应用中训练此层级 (Træn dette niveau):' : (isBilingual ? 'Træn dette niveau i appen / 在应用中训练此层级:' : 'Træn dette niveau i appen:')}
                         </span>
                         <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
-                            ${st.links.map(lk => `<button class="mss-link-chip" data-nav="${lk.route}">${isZh ? (lk.label_zh || lk.label) : lk.label} ➔</button>`).join('')}
+                            ${st.links.map(lk => {
+                                let linkLabel = '';
+                                if (isPureDa) linkLabel = `${lk.label} ➔`;
+                                else if (isBilingual) linkLabel = `${lk.label} (${lk.label_zh || ''}) ➔`;
+                                else linkLabel = `${lk.label_zh || lk.label} ➔`;
+                                return `<button class="mss-link-chip" data-nav="${lk.route}">${linkLabel}</button>`;
+                            }).join('')}
                         </div>
                     </div>
                 </div>
@@ -1002,9 +1272,24 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
         stage.innerHTML = `
             <div class="mss-control-panel">
-                <div class="mss-lang-row" style="border-top:none; padding-top:0;">
+                <div class="mss-display-mode-row" style="border-top:none; padding-top:0;">
+                    <span style="font-size:0.78rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-right:0.25rem; display:inline-flex; align-items:center; gap:0.3rem;">
+                        <span>🇩🇰</span> <span>Visningstilstand:</span>
+                    </span>
+                    <button class="mss-mode-pill ${isBilingual ? 'active' : ''}" data-mode="bilingual" title="Viser både danske instruktioner til læreren og kinesisk tekst til kursisten">
+                        🇩🇰🇨🇳 To-sproget (Lærervisning: Altid dansk tekst synlig)
+                    </button>
+                    <button class="mss-mode-pill ${isPureTarget ? 'active' : ''}" data-mode="target" title="Viser rent kinesisk, som en kinesisk kursist ser det">
+                        🇨🇳 Kun kinesisk (Kursistvisning)
+                    </button>
+                    <button class="mss-mode-pill ${isPureDa ? 'active' : ''}" data-mode="da" title="Viser kun dansk sprog og forklaringer">
+                        🇩🇰 Kun dansk
+                    </button>
+                </div>
+
+                <div class="mss-lang-row">
                     <span style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-right:0.25rem;">
-                        ${isZh ? '选择对比语言 (Vælg sprog):' : 'Vælg dit sprog til sammenligningen:'}
+                        ${isPureTarget ? '选择对比语言:' : 'Vælg sammenligningssprog:'}
                     </span>
                     ${LANGUAGES.map(l => {
                         const isLChinese = l.code === 'zh';
@@ -1021,35 +1306,68 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             <div class="mss-ladder-wrap">
                 ${STEPS.map((st, idx) => {
                     const myText = st.myLines[selectedLang] || st.myLines.en;
+                    const myTeacherText = (st.myLines_da && st.myLines_da[selectedLang]) || null;
                     const isOpen = openSubStepIndex === idx;
+
+                    let stepTitle = '';
+                    let stepSubtitle = '';
+                    let btnText = '';
+
+                    if (isPureDa) {
+                        stepTitle = `Trin ${st.num}. ${st.title}`;
+                        stepSubtitle = st.subtitle;
+                        btnText = isOpen ? 'Luk underflade ▲' : 'Se mere & links ➔';
+                    } else if (isBilingual) {
+                        stepTitle = `Trin ${st.num}. ${st.title} • <span style="color:#93c5fd; font-size:0.95em;">${st.title_zh || ''}</span>`;
+                        stepSubtitle = `
+                            <div>${st.subtitle}</div>
+                            <div style="font-size:0.76rem; color:#93c5fd; margin-top:2px;">${st.subtitle_zh || ''}</div>
+                        `;
+                        btnText = isOpen ? 'Luk underflade / 关闭 ▲' : 'Se detaljer & lærernoter ➔';
+                    } else {
+                        stepTitle = `第 ${st.num} 级: ${st.title_zh || st.title}`;
+                        stepSubtitle = st.subtitle_zh || st.subtitle;
+                        btnText = isOpen ? '收起详情 ▲' : '查看详情与练习 ➔';
+                    }
+
                     return `
                         <div>
                             <div class="mss-step-card" style="--step-color:${st.color}; ${isOpen ? 'border-color:#fde68a;' : ''}" data-open-sub="${idx}">
                                 <div class="mss-step-dot" style="--step-color:${st.color};">${st.num}</div>
                                 <div>
                                     <div style="font-size:0.72rem; font-weight:900; color:${st.color}; text-transform:uppercase;">
-                                        Trin ${st.num} ${isZh ? `(第 ${st.num} 级)` : ''}
+                                        ${isPureTarget ? `第 ${st.num} 级 (Trin ${st.num})` : `Trin ${st.num} af 10`}
                                     </div>
-                                    <div style="font-size:1.08rem; font-weight:900; color:#ffffff; margin:0.1rem 0 0.2rem;">
-                                        ${isZh ? (st.title_zh || st.title) : st.title}
+                                    <div style="font-size:1.06rem; font-weight:900; color:#ffffff; margin:0.1rem 0 0.2rem;">
+                                        ${stepTitle}
                                     </div>
                                     <div style="font-size:0.79rem; color:#cbd5e1; line-height:1.35;">
-                                        ${isZh ? (st.subtitle_zh || st.subtitle) : st.subtitle}
+                                        ${stepSubtitle}
                                     </div>
                                 </div>
                                 <div class="mss-two-lines">
                                     <div class="mss-line-da">
-                                        <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语' : 'Dansk'}:</span>
+                                        <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isPureTarget ? '丹麦语' : 'Dansk'}:</span>
                                         <span>${st.daLine}</span>
                                     </div>
+                                    ${!isPureDa && st.daLine_zh ? `
+                                        <div style="font-size:0.8rem; color:#fca5a5; opacity:0.88; padding-left:0.6rem; margin-top:-0.15rem;">
+                                            💡 ${isBilingual ? 'Kinesisk forklaring: ' : '释义: '}${st.daLine_zh}
+                                        </div>
+                                    ` : ''}
                                     <div class="mss-line-my">
-                                        <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isZh ? '我的母语' : 'Mit sprog'}:</span>
+                                        <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isPureTarget ? '中文对比' : (isBilingual ? 'Kinesisk (kursist)' : langObj.name)}:</span>
                                         <span>${myText}</span>
                                     </div>
+                                    ${showDanish && myTeacherText ? `
+                                        <div class="mss-da-teacher-note">
+                                            🇩🇰 <strong>Dansk forklaring (Lærer):</strong> ${myTeacherText}
+                                        </div>
+                                    ` : ''}
                                 </div>
                                 <div>
                                     <button class="mss-sub-btn" data-open-sub="${idx}">
-                                        ${isOpen ? (isZh ? '收起详情 ▲' : 'Luk underflade ▲') : (isZh ? '查看详情与练习 ➔' : 'Se mere & links ➔')}
+                                        ${btnText}
                                     </button>
                                 </div>
                             </div>
@@ -1073,6 +1391,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     return;
                 }
                 selectedLang = 'zh';
+                renderStage();
+            };
+        });
+
+        stage.querySelectorAll('[data-mode]').forEach(btn => {
+            btn.onclick = () => {
+                displayMode = btn.dataset.mode;
+                localStorage.setItem('mss_display_mode', displayMode);
                 renderStage();
             };
         });

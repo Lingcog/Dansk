@@ -718,5 +718,5 @@ if ('caches' in window) {
   });
 }
 
-// Cache buster Wed Nov 4 15:06:00 CET 2026
-console.log('App version: Wed Nov 4 15:06:00 CET 2026 - Safirblaa Adverbier');
+// Cache buster Mon Nov 9 23:12:00 CET 2026
+console.log('App version: Mon Nov 9 23:12:00 CET 2026 - Læsetræning 18 sprog');

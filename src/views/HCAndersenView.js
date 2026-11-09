@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { hcAndersenStories } from '../data/hc_andersen_stories.js';
+import { renderKlodsHansFinaleActivities } from '../components/KlodsHansFinaleActivities.js';
 import { allNounsRegistry, wordToNounKey, openNounQuickPeekModal } from '../utils/nounQuickPeekModal.js';
 import { byrumVerbsRegistry, openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
 import { openPronounQuickPeekModal } from '../utils/pronounQuickPeekModal.js';
@@ -270,7 +271,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             } else {
                 if (readingMode === 'steps') {
                     // Play current step
-                    speakDanish(story.sections[currentStepIdx].audioText);
+                    if (story.sections[currentStepIdx]) {
+                        speakDanish(story.sections[currentStepIdx].audioText);
+                    } else if (story.id === 'klods_hans') {
+                        speakDanish('Afslutningsaktiviteter til Klods-Hans. Kortlæg karakterernes indre liv eller gæt den hemmelige bejler i speeddating!');
+                    }
                 } else {
                     // Play all chapters
                     const fullText = story.sections.map(s => `${s.chapter}. ${s.audioText}`).join('. ');
@@ -339,6 +344,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         sectionsContainer.className = 'hc-sections-container';
 
         if (readingMode === 'steps') {
+            const hasFinale = story.id === 'klods_hans';
+            const finaleStepIdx = story.sections.length;
+
             // Navigation pills for steps
             const stepNav = document.createElement('div');
             stepNav.className = 'hc-step-nav';
@@ -353,44 +361,49 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 };
                 stepNav.appendChild(stepBtn);
             });
+
+            if (hasFinale) {
+                const finalePill = document.createElement('button');
+                finalePill.className = `hc-step-pill finale-step ${currentStepIdx === finaleStepIdx ? 'active' : ''}`;
+                finalePill.innerHTML = `🎭 ${isEn ? 'Finale Activities' : 'Afslutning: 2 opgaver'}`;
+                finalePill.onclick = () => {
+                    stopSpeech();
+                    currentStepIdx = finaleStepIdx;
+                    renderView();
+                };
+                stepNav.appendChild(finalePill);
+            }
             sectionsContainer.appendChild(stepNav);
 
-            // Active section card
-            const activeSec = story.sections[currentStepIdx];
-            const secCard = createSectionCard(activeSec, currentStepIdx, story);
-            sectionsContainer.appendChild(secCard);
+            if (hasFinale && currentStepIdx === finaleStepIdx) {
+                // Render Finale Activities
+                const finaleCard = document.createElement('div');
+                finaleCard.className = 'hc-finale-wrapper-card';
+                renderKlodsHansFinaleActivities(finaleCard, {
+                    isEn,
+                    speakDanish,
+                    onJumpToQuiz: () => {
+                        const quizEl = readerWrapper.querySelector('.hc-quiz-card');
+                        if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+                sectionsContainer.appendChild(finaleCard);
 
-            // Step Action Buttons
-            const stepActions = document.createElement('div');
-            stepActions.className = 'hc-step-actions';
+                // Step Action Buttons
+                const stepActions = document.createElement('div');
+                stepActions.className = 'hc-step-actions';
 
-            if (currentStepIdx > 0) {
                 const prevBtn = document.createElement('button');
                 prevBtn.className = 'step-action-btn prev';
-                prevBtn.innerHTML = `← ${isEn ? 'Previous section' : 'Forrige afsnit'}`;
+                prevBtn.innerHTML = `← ${isEn ? 'Back to Scene 3' : 'Forrige: Scene 3 (Riddersalen)'}`;
                 prevBtn.onclick = () => {
                     stopSpeech();
-                    currentStepIdx--;
+                    currentStepIdx = finaleStepIdx - 1;
                     renderView();
                     window.scrollTo({ top: 180, behavior: 'smooth' });
                 };
                 stepActions.appendChild(prevBtn);
-            } else {
-                stepActions.appendChild(document.createElement('div'));
-            }
 
-            if (currentStepIdx < story.sections.length - 1) {
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'step-action-btn next';
-                nextBtn.innerHTML = `${isEn ? 'Next section' : 'Næste afsnit'} →`;
-                nextBtn.onclick = () => {
-                    stopSpeech();
-                    currentStepIdx++;
-                    renderView();
-                    window.scrollTo({ top: 180, behavior: 'smooth' });
-                };
-                stepActions.appendChild(nextBtn);
-            } else {
                 const quizJumpBtn = document.createElement('button');
                 quizJumpBtn.className = 'step-action-btn quiz-jump';
                 quizJumpBtn.innerHTML = `${isEn ? 'Take Comprehension Quiz' : 'Tag forståelsesquizzen'} ↓`;
@@ -399,15 +412,88 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
                 };
                 stepActions.appendChild(quizJumpBtn);
-            }
 
-            sectionsContainer.appendChild(stepActions);
+                sectionsContainer.appendChild(stepActions);
+            } else {
+                // Active section card
+                const activeSec = story.sections[currentStepIdx];
+                const secCard = createSectionCard(activeSec, currentStepIdx, story);
+                sectionsContainer.appendChild(secCard);
+
+                // Step Action Buttons
+                const stepActions = document.createElement('div');
+                stepActions.className = 'hc-step-actions';
+
+                if (currentStepIdx > 0) {
+                    const prevBtn = document.createElement('button');
+                    prevBtn.className = 'step-action-btn prev';
+                    prevBtn.innerHTML = `← ${isEn ? 'Previous section' : 'Forrige afsnit'}`;
+                    prevBtn.onclick = () => {
+                        stopSpeech();
+                        currentStepIdx--;
+                        renderView();
+                        window.scrollTo({ top: 180, behavior: 'smooth' });
+                    };
+                    stepActions.appendChild(prevBtn);
+                } else {
+                    stepActions.appendChild(document.createElement('div'));
+                }
+
+                if (currentStepIdx < story.sections.length - 1) {
+                    const nextBtn = document.createElement('button');
+                    nextBtn.className = 'step-action-btn next';
+                    nextBtn.innerHTML = `${isEn ? 'Next section' : 'Næste afsnit'} →`;
+                    nextBtn.onclick = () => {
+                        stopSpeech();
+                        currentStepIdx++;
+                        renderView();
+                        window.scrollTo({ top: 180, behavior: 'smooth' });
+                    };
+                    stepActions.appendChild(nextBtn);
+                } else if (hasFinale) {
+                    const finaleNextBtn = document.createElement('button');
+                    finaleNextBtn.className = 'step-action-btn next finale-next';
+                    finaleNextBtn.innerHTML = `🎭 ${isEn ? 'Go to Finale Activities' : 'Gå til afslutningsopgaverne'} →`;
+                    finaleNextBtn.onclick = () => {
+                        stopSpeech();
+                        currentStepIdx = finaleStepIdx;
+                        renderView();
+                        window.scrollTo({ top: 180, behavior: 'smooth' });
+                    };
+                    stepActions.appendChild(finaleNextBtn);
+                } else {
+                    const quizJumpBtn = document.createElement('button');
+                    quizJumpBtn.className = 'step-action-btn quiz-jump';
+                    quizJumpBtn.innerHTML = `${isEn ? 'Take Comprehension Quiz' : 'Tag forståelsesquizzen'} ↓`;
+                    quizJumpBtn.onclick = () => {
+                        const quizEl = readerWrapper.querySelector('.hc-quiz-card');
+                        if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
+                    };
+                    stepActions.appendChild(quizJumpBtn);
+                }
+
+                sectionsContainer.appendChild(stepActions);
+            }
         } else {
             // Full text mode: display all sections sequentially
             story.sections.forEach((sec, idx) => {
                 const secCard = createSectionCard(sec, idx, story);
                 sectionsContainer.appendChild(secCard);
             });
+
+            if (story.id === 'klods_hans') {
+                const finaleCard = document.createElement('div');
+                finaleCard.className = 'hc-finale-wrapper-card';
+                renderKlodsHansFinaleActivities(finaleCard, {
+                    isEn,
+                    speakDanish,
+                    onJumpToQuiz: () => {
+                        const quizEl = readerWrapper.querySelector('.hc-quiz-card');
+                        if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+                sectionsContainer.appendChild(finaleCard);
+            }
         }
 
         readerWrapper.appendChild(sectionsContainer);
@@ -3356,6 +3442,33 @@ function injectStyles() {
         }
         .step-action-btn.quiz-jump:hover {
             background: #fde047;
+        }
+        .step-action-btn.finale-next {
+            background: linear-gradient(135deg, #9333ea, #7e22ce);
+            border: 1.5px solid #c084fc;
+            box-shadow: 0 4px 14px rgba(147, 51, 234, 0.4);
+            color: #ffffff;
+        }
+        .step-action-btn.finale-next:hover {
+            background: linear-gradient(135deg, #a855f7, #9333ea);
+            box-shadow: 0 6px 18px rgba(168, 85, 247, 0.5);
+            transform: translateY(-2px);
+        }
+        .hc-step-pill.finale-step {
+            border-color: rgba(168, 85, 247, 0.5);
+            color: #d8b4fe;
+            background: rgba(168, 85, 247, 0.15);
+        }
+        .hc-step-pill.finale-step:hover {
+            border-color: #c084fc;
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.25);
+        }
+        .hc-step-pill.finale-step.active {
+            background: linear-gradient(135deg, #a855f7, #7e22ce);
+            color: #ffffff;
+            border-color: #c084fc;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
         }
 
         /* Grammar spot */

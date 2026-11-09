@@ -1,4 +1,4 @@
-import { getLang } from '../utils/i18n.js';
+import { getLang, getTranslation as t } from '../utils/i18n.js';
 
 /**
  * SangGodmorgenLilleLandView.js
@@ -13,7 +13,9 @@ import { getLang } from '../utils/i18n.js';
  * - Fane 6: Samtalespørgsmål ("Hvor har du været i Danmark?", "Hvad er dit yndlingssted?" m.fl.) med klikbare hjælpesætninger og svarbygger.
  */
 export function renderSangGodmorgenLilleLandView(container, navigateFn, extraData = {}) {
-    const isEn = getLang() === 'en';
+    const lang = getLang();
+    const isDa = lang === 'da';
+    const isEn = lang === 'en';
     container.innerHTML = '';
 
     let activeSpeechBtn = null;
@@ -1390,7 +1392,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = isEn ? '← Back to Songs' : '← Tilbage til Danske sange';
+    backBtn.textContent = t('gm_back_btn', '← Tilbage til Danske sange');
     backBtn.onclick = () => navigateFn('sange');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
@@ -1399,9 +1401,9 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const hero = document.createElement('div');
     hero.className = 'hero-song-header';
     hero.innerHTML = `
-        <div class="hero-song-badge">Danske sange & Danmarks geografi</div>
-        <h1>Godmorgen, lille land</h1>
-        <p>Lær nøgleudtrykkene fra sangen og gå på opdagelse i Danmarks geografi, kyster, øer og broer.</p>
+        <div class="hero-song-badge">${t('gm_hero_badge', 'Danske sange & Danmarks geografi')}</div>
+        <h1>${t('gm_hero_title', 'Godmorgen, lille land')}</h1>
+        <p>${t('gm_hero_desc', 'Lær nøgleudtrykkene fra sangen og gå på opdagelse i Danmarks geografi, kyster, øer og broer.')}</p>
     `;
     viewContainer.appendChild(hero);
 
@@ -1410,13 +1412,13 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     hsbBanner.className = 'hsb-reference-banner';
     hsbBanner.innerHTML = `
         <div class="hsb-ref-text">
-            <div class="hsb-ref-title">Tekst: Niels Brunse (1998) · Melodi: Carsten Johs. Mørch (1998)</div>
+            <div class="hsb-ref-title">${t('gm_hsb_title', 'Tekst: Niels Brunse (1998) · Melodi: Carsten Johs. Mørch (1998)')}</div>
             <div class="hsb-ref-sub">
-                Skrevet til indvielsen af Storebæltsbroen den 14. juni 1998 (Højskolesangbogen nr. 24). Her på siden arbejder vi pædagogisk med sangens nøgleudtryk og Danmarks geografi (jf. citatretten).
+                ${t('gm_hsb_sub', 'Skrevet til indvielsen af Storebæltsbroen den 14. juni 1998 (Højskolesangbogen nr. 24). Her på siden arbejder vi pædagogisk med sangens nøgleudtryk og Danmarks geografi (jf. citatretten).')}
             </div>
         </div>
         <a href="https://hojskolesangbogen.dk/sange/g/godmorgen-lille-land" target="_blank" rel="noopener noreferrer" class="hsb-ref-link">
-            Læs hele sangteksten på Højskolesangbogen.dk ↗
+            ${t('gm_hsb_link', 'Læs hele sangteksten på Højskolesangbogen.dk ↗')}
         </a>
     `;
     viewContainer.appendChild(hsbBanner);
@@ -1435,12 +1437,12 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     tabsMenu.className = 'song-tabs-nav';
 
     const tabsData = [
-        { id: 'tab_vrimmel', icon: monoSvgs.map, label: '1. Vrimlebillede & Geografi (17 pegefelter)' },
-        { id: 'tab_sang', icon: monoSvgs.music, label: '2. Nøgleudtryk & Udtalerytme (Geografi i sangen)' },
-        { id: 'tab_detektiv', icon: monoSvgs.search, label: '3. Ord-detektiv (Geografi-jagt på kortet)' },
-        { id: 'tab_saetning', icon: monoSvgs.puzzle, label: '4. Sætningsbygger & Puslespil (Geografi)' },
-        { id: 'tab_udvikling', icon: monoSvgs.compass, label: '5. Danmarks landsdele & Parring' },
-        { id: 'tab_samtale', icon: monoSvgs.chat, label: '6. Samtale & Puslesætninger: Dit Danmark (Byg svar)' }
+        { id: 'tab_vrimmel', icon: monoSvgs.map, label: t('gm_tab_vrimmel', '1. Vrimlebillede & Geografi (17 pegefelter)') },
+        { id: 'tab_sang', icon: monoSvgs.music, label: t('gm_tab_sang', '2. Nøgleudtryk & Udtalerytme (Geografi i sangen)') },
+        { id: 'tab_detektiv', icon: monoSvgs.search, label: t('gm_tab_detektiv', '3. Ord-detektiv (Geografi-jagt på kortet)') },
+        { id: 'tab_saetning', icon: monoSvgs.puzzle, label: t('gm_tab_saetning', '4. Sætningsbygger & Puslespil (Geografi)') },
+        { id: 'tab_udvikling', icon: monoSvgs.compass, label: t('gm_tab_udvikling', '5. Danmarks landsdele & Parring') },
+        { id: 'tab_samtale', icon: monoSvgs.chat, label: t('gm_tab_samtale', '6. Samtale & Puslesætninger: Dit Danmark (Byg svar)') }
     ];
 
     let currentTab = extraData.activeTab || 'tab_vrimmel';
@@ -1752,22 +1754,22 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const filterGroup = document.createElement('div');
     filterGroup.className = 'vrimmel-filter-group';
     filterGroup.innerHTML = `
-        <button class="vrimmel-filter-btn active" data-cat="all">Alle (17)</button>
-        <button class="vrimmel-filter-btn" data-cat="natur_vejr">Natur & Kyst (1. vers) (8)</button>
-        <button class="vrimmel-filter-btn" data-cat="oeer_broer">Øer & Broer (2. vers) (4)</button>
-        <button class="vrimmel-filter-btn" data-cat="nord_syd">Nord til Syd & Mennesker (5)</button>
+        <button class="vrimmel-filter-btn active" data-cat="all">${t('gm_filter_all', 'Alle (17)')}</button>
+        <button class="vrimmel-filter-btn" data-cat="natur_vejr">${t('gm_filter_natur_vejr', 'Natur & Kyst (1. vers) (8)')}</button>
+        <button class="vrimmel-filter-btn" data-cat="oeer_broer">${t('gm_filter_oeer_broer', 'Øer & Broer (2. vers) (4)')}</button>
+        <button class="vrimmel-filter-btn" data-cat="nord_syd">${t('gm_filter_nord_syd', 'Nord til Syd & Mennesker (5)')}</button>
     `;
     controlBar.appendChild(filterGroup);
 
     const pureBtn = document.createElement('button');
     pureBtn.className = 'pure-toggle-btn';
     let pureActive = false;
-    pureBtn.innerHTML = `Vis kun billedet: <strong id="gm-pure-status">FRA</strong>`;
+    pureBtn.innerHTML = `${t('gm_pure_show', 'Vis kun billedet:')} <strong id="gm-pure-status">${t('gm_pure_fra', 'FRA')}</strong>`;
     pureBtn.onclick = () => {
         pureActive = !pureActive;
         stage.classList.toggle('pure-mode', pureActive);
         pureBtn.classList.toggle('active', pureActive);
-        pureBtn.querySelector('#gm-pure-status').textContent = pureActive ? 'TIL' : 'FRA';
+        pureBtn.querySelector('#gm-pure-status').textContent = pureActive ? t('gm_pure_til', 'TIL') : t('gm_pure_fra', 'FRA');
     };
     controlBar.appendChild(pureBtn);
     vrimmelCard.appendChild(controlBar);
@@ -1790,31 +1792,41 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         currentGeoIdx = geografiItems.findIndex(g => g.num === item.num);
         dots.forEach(d => d.classList.toggle('active', Number(d.dataset.num) === item.num));
 
+        const titleTrans = t(`gm_item_${item.id}_title`, item.title);
+        const vocabTrans = t(`gm_item_${item.id}_vocab`, item.vocab);
+        const forklaringTrans = t(`gm_item_${item.id}_forklaring`, item.forklaring);
+        const saetningTrans = t(`gm_item_${item.id}_saetning`, item.saetning);
+        const badgeText = t('gm_hotspot_badge', { num: item.num, total: geografiItems.length }, `Punkt ${item.num} af ${geografiItems.length}`);
+
         detailCard.innerHTML = `
             <div class="detail-info-left">
                 <div class="detail-badges">
-                    <span class="badge-pill badge-dag">Punkt ${item.num} af ${geografiItems.length} · ${item.catLabel}</span>
+                    <span class="badge-pill badge-dag">${badgeText} · ${item.catLabel}</span>
                     <span class="badge-pill badge-quote">${item.vers}: ${item.quote}</span>
                 </div>
                 <div class="detail-title">
                     ${item.title}
+                    ${!isDa && titleTrans !== item.title ? `<div style="font-size: 0.95rem; font-weight: 500; color: #94a3b8; margin-top: 0.15rem;">${titleTrans}</div>` : ''}
                 </div>
                 <div class="detail-forms">
-                    <strong>Nøgleord:</strong> ${item.vocab}
+                    <strong>${t('gm_vocab_label', 'Nøgleord:')}</strong> ${item.vocab}
+                    ${!isDa && vocabTrans !== item.vocab ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.1rem;">${vocabTrans}</div>` : ''}
                 </div>
                 <div class="detail-redskaber">
                     ${item.forklaring}
+                    ${!isDa && forklaringTrans !== item.forklaring ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.15rem;">${forklaringTrans}</div>` : ''}
                 </div>
                 <div class="detail-saetning-box">
                     "${item.saetning}"
+                    ${!isDa && saetningTrans !== item.saetning ? `<div style="font-size: 0.92rem; color: #cbd5e1; margin-top: 0.25rem; font-style: italic;">"${saetningTrans}"</div>` : ''}
                 </div>
             </div>
             <div class="detail-actions-right ah-step-nav-btns">
-                <button class="ah-step-btn" id="btn-gm-prev" type="button">← Forrige</button>
+                <button class="ah-step-btn" id="btn-gm-prev" type="button">← ${t('gm_btn_prev', 'Forrige')}</button>
                 <button class="listen-btn" id="btn-listen-gm-hotspot" type="button">
-                    Lyt til sætning
+                    ${t('gm_btn_listen_sentence', 'Lyt til sætning')}
                 </button>
-                <button class="ah-step-btn" id="btn-gm-next" type="button">Næste →</button>
+                <button class="ah-step-btn" id="btn-gm-next" type="button">${t('gm_btn_next', 'Næste')} →</button>
             </div>
         `;
         detailCard.querySelector('#btn-listen-gm-hotspot').onclick = () => {
@@ -1881,13 +1893,13 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     sangIntroBanner.className = 'hsb-reference-banner';
     sangIntroBanner.innerHTML = `
         <div class="hsb-ref-text">
-            <div class="hsb-ref-title">Nøgleudtryk, udtalerytme & geografi i sangen</div>
+            <div class="hsb-ref-title">${t('gm_t2_banner_title', 'Nøgleudtryk, udtalerytme & geografi i sangen')}</div>
             <div class="hsb-ref-sub">
-                Lær de vigtige geografiord med udtale og tryk. Klik på et nøgleudtryk for at høre udtalen og se udsnittet på Danmarkskortet. Læs hele den samlede originaltekst og lyt til melodien på Højskolesangbogens officielle hjemmeside.
+                ${t('gm_t2_banner_desc', 'Lær de vigtige geografiord med udtale og tryk. Klik på et nøgleudtryk for at høre udtalen og se udsnittet på Danmarkskortet. Læs hele den samlede originaltekst og lyt til melodien på Højskolesangbogens officielle hjemmeside.')}
             </div>
         </div>
         <a href="https://hojskolesangbogen.dk/sange/g/godmorgen-lille-land" target="_blank" rel="noopener noreferrer" class="hsb-ref-link">
-            Åbn sangteksten på Højskolesangbogen.dk ↗
+            ${t('gm_hsb_link', 'Åbn sangteksten på Højskolesangbogen.dk ↗')}
         </a>
     `;
     panelSang.appendChild(sangIntroBanner);
@@ -2062,45 +2074,53 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const seqFlow = document.createElement('div');
     seqFlow.className = 'song-sequence-flow';
 
-    themesData.forEach(t => {
+    themesData.forEach((themeItem, themeIdx) => {
         const card = document.createElement('div');
         card.className = 'verse-card';
 
+        const titleTrans = t(`gm_t2_v${themeIdx + 1}_title`, themeItem.title);
+        const tagTrans = t(`gm_t2_v${themeIdx + 1}_tag`, themeItem.themeTag);
+        const expTrans = t(`gm_t2_v${themeIdx + 1}_forklaring`, themeItem.explanation);
+
         // Chips HTML
-        const chipsHtml = t.terms.map((term, idx) => `
+        const chipsHtml = themeItem.terms.map((term, idx) => `
             <button type="button" class="clickable-song-verb" data-idx="${idx}" title="Klik for at høre udtale og se kortudsnit">
                 ${term.html}
             </button>
         `).join('');
 
-        const firstTerm = t.terms[0];
+        const firstTerm = themeItem.terms[0];
 
         card.innerHTML = `
             <div class="verse-card-header">
-                <div class="verse-day-title">${t.themeNum}: ${t.title}</div>
-                <span class="verse-theme-tag">${t.themeTag}</span>
+                <div class="verse-day-title">
+                    ${themeItem.themeNum}: ${themeItem.title}
+                    ${!isDa && titleTrans !== themeItem.title ? `<div style="font-size: 0.95rem; font-weight: 500; color: #94a3b8; margin-top: 0.15rem;">${titleTrans}</div>` : ''}
+                </div>
+                <span class="verse-theme-tag">${tagTrans}</span>
             </div>
             <div class="key-expr-box">
-                <div class="key-expr-label">Nøgleudtryk med udtalerytme & stavelser (klik for udtale & kort):</div>
+                <div class="key-expr-label">${t('gm_t2_banner_badge', 'Nøgleudtryk med udtalerytme & stavelser (klik for udtale & kort):')}</div>
                 <div class="key-expr-chips">
                     ${chipsHtml}
                 </div>
             </div>
             <div style="font-size: 0.94rem; color: #cbd5e1; line-height: 1.5; background: rgba(15, 23, 42, 0.55); padding: 0.85rem 1.1rem; border-radius: 10px;">
-                <strong style="color: #38bdf8;">Betydning & Geografi:</strong> ${t.explanation}
+                <strong style="color: #38bdf8;">Betydning & Geografi:</strong> ${themeItem.explanation}
+                ${!isDa && expTrans !== themeItem.explanation ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.2rem;">${expTrans}</div>` : ''}
             </div>
             <div class="verse-crop-drawer">
                 <div class="verse-crop-thumb" style="background-size: 380% 380%; background-position: ${firstTerm.cropX}% ${firstTerm.cropY}%;"></div>
                 <div class="verse-crop-info">
-                    <span class="verse-crop-badge">Udsnit fra Danmarkskortet · ${t.themeNum}</span>
+                    <span class="verse-crop-badge">${t('gm_t2_crop_title', 'Udsnit fra Danmarkskortet')} · ${themeItem.themeNum}</span>
                     <div class="verse-crop-title">${firstTerm.cropTitle}</div>
                     <div class="verse-crop-desc">${firstTerm.cropDesc}</div>
-                    <button type="button" class="verse-crop-close">Luk udsnit</button>
+                    <button type="button" class="verse-crop-close">${t('gm_t2_crop_close', 'Luk udsnit')}</button>
                 </div>
             </div>
             <div>
                 <button type="button" class="listen-btn btn-theme-speak" style="padding: 0.55rem 1.1rem; font-size: 0.88rem;">
-                    Lyt til temaets nøgleudtryk (${t.themeNum})
+                    ${t('gm_btn_listen_sentence', 'Lyt til temaets nøgleudtryk')} (${themeItem.themeNum})
                 </button>
             </div>
         `;
@@ -2115,7 +2135,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         termBtns.forEach(btn => {
             btn.onclick = () => {
                 const idx = Number(btn.dataset.idx);
-                const selectedTerm = t.terms[idx];
+                const selectedTerm = themeItem.terms[idx];
                 termBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
@@ -2136,7 +2156,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         }
 
         card.querySelector('.btn-theme-speak').onclick = (e) => {
-            speakDanish(t.spokenKeywords, e.currentTarget, 0.85);
+            speakDanish(themeItem.spokenKeywords, e.currentTarget, 0.85);
         };
 
         seqFlow.appendChild(card);
@@ -2227,11 +2247,15 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     function renderDetQuiz() {
         detCard.innerHTML = '';
         const item = detTasks[detIdx];
+        const taskNum = detIdx + 1;
+        const qTrans = t(`gm_t3_q${taskNum}_text`, item.q);
+        const tipTrans = t(`gm_t3_q${taskNum}_tip`, item.tip);
+        const taskBadgeText = t('gm_t3_score_badge', { num: taskNum, total: detTasks.length }, `Geografi-opgave ${taskNum} / ${detTasks.length}`);
 
         const scoreBar = document.createElement('div');
         scoreBar.className = 'detective-score-bar';
         scoreBar.innerHTML = `
-            <span style="font-weight: 800; color: #fbbf24;">Geografi-opgave ${detIdx + 1} / ${detTasks.length}</span>
+            <span style="font-weight: 800; color: #fbbf24;">${taskBadgeText}</span>
             <span style="font-weight: 800; color: #4ade80;">Point: ${detScore}</span>
         `;
         detCard.appendChild(scoreBar);
@@ -2239,10 +2263,13 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         const clueBox = document.createElement('div');
         clueBox.className = 'detective-clue-box';
         clueBox.innerHTML = `
-            <div class="detective-clue-title">Godmorgen, lille land · Danmarks geografi</div>
-            <div class="detective-clue-text">"${item.q}"</div>
+            <div class="detective-clue-title">${t('gm_t3_clue_label', 'Godmorgen, lille land · Danmarks geografi')}</div>
+            <div class="detective-clue-text">
+                "${item.q}"
+                ${!isDa && qTrans !== item.q ? `<div style="font-size: 0.95rem; color: #94a3b8; font-weight: 500; margin-top: 0.25rem;">"${qTrans}"</div>` : ''}
+            </div>
             <button type="button" class="listen-btn" id="btn-listen-det-q" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-                Lyt til spørgsmål
+                ${t('gm_samtale_listen_q', 'Lyt til spørgsmål')}
             </button>
         `;
         clueBox.querySelector('#btn-listen-det-q').onclick = () => speakDanish(item.q);
@@ -2269,9 +2296,12 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                     scoreBar.querySelector('span:nth-child(2)').textContent = `Point: ${detScore}`;
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-weight: 800; font-size: 1.12rem; margin-bottom: 0.35rem;">
-                            Helt rigtigt! <strong>${opt}</strong>
+                            ${t('gm_t3_correct', 'Helt rigtigt!')} <strong>${opt}</strong>
                         </div>
-                        <div style="color: #cbd5e1; font-size: 0.94rem;">${item.tip}</div>
+                        <div style="color: #cbd5e1; font-size: 0.94rem;">
+                            ${item.tip}
+                            ${!isDa && tipTrans !== item.tip ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.15rem;">${tipTrans}</div>` : ''}
+                        </div>
                     `;
                     speakDanish(opt);
                 } else {
@@ -2281,15 +2311,18 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                     });
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-weight: 800; font-size: 1.12rem; margin-bottom: 0.35rem;">
-                            Det rigtige svar er: <strong>${item.target}</strong>
+                            ${t('gm_t3_wrong', 'Det rigtige svar er:')} <strong>${item.target}</strong>
                         </div>
-                        <div style="color: #cbd5e1; font-size: 0.94rem;">${item.tip}</div>
+                        <div style="color: #cbd5e1; font-size: 0.94rem;">
+                            ${item.tip}
+                            ${!isDa && tipTrans !== item.tip ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.15rem;">${tipTrans}</div>` : ''}
+                        </div>
                     `;
                 }
                 feedbackBox.style.display = 'block';
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'detective-next-btn';
-                nextBtn.textContent = detIdx + 1 < detTasks.length ? 'Næste spørgsmål →' : 'Se dit resultat';
+                nextBtn.textContent = detIdx + 1 < detTasks.length ? `${t('gm_t3_btn_next', 'Næste spørgsmål')} →` : t('gm_quiz_see_result', 'Se dit resultat');
                 nextBtn.onclick = () => {
                     if (detIdx + 1 < detTasks.length) {
                         detIdx++;
@@ -2297,11 +2330,11 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                     } else {
                         detCard.innerHTML = `
                             <div style="text-align: center; padding: 2rem 1rem;">
-                                <h2 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 0.6rem;">Flot klaret!</h2>
+                                <h2 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 0.6rem;">${t('gm_t3_done_title', 'Flot klaret!')}</h2>
                                 <p style="font-size: 1.2rem; color: #f8fafc; margin-bottom: 1.5rem;">
-                                    Du fik <strong>${detScore}</strong> ud af <strong>${detTasks.length}</strong> rigtige i Danmarks geografi!
+                                    ${t('gm_t3_done_desc', { score: detScore, total: detTasks.length }, `Du fik ${detScore} ud af ${detTasks.length} rigtige i Danmarks geografi!`)}
                                 </p>
-                                <button type="button" class="detective-next-btn" id="btn-restart-det">Prøv igen</button>
+                                <button type="button" class="detective-next-btn" id="btn-restart-det">${t('gm_t3_btn_restart', 'Prøv igen')}</button>
                             </div>
                         `;
                         detCard.querySelector('#btn-restart-det').onclick = () => {
@@ -2337,10 +2370,10 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const introBanner = document.createElement('div');
     introBanner.className = 'saetning-intro-banner';
     introBanner.innerHTML = `
-        <span class="saetning-intro-badge">Sætningsbygning & Danmarks geografi</span>
-        <h2 class="saetning-intro-title">Byg sætninger om Danmark med verbet på 2. plads</h2>
+        <span class="saetning-intro-badge">${t('gm_t4_banner_badge', 'Sætningsbygning & Danmarks geografi')}</span>
+        <h2 class="saetning-intro-title">${t('gm_t4_banner_title', 'Byg sætninger om Danmark med verbet på 2. plads')}</h2>
         <p class="saetning-intro-desc">
-            Når sætningen begynder med et sted eller en tid (f.eks. "I Danmark" eller "Mod nord"), står verbet altid på 2. plads.
+            ${t('gm_t4_banner_desc', 'Når sætningen begynder med et sted eller en tid (f.eks. "I Danmark" eller "Mod nord"), står verbet altid på 2. plads.')}
         </p>
     `;
     builderCard.appendChild(introBanner);
@@ -2349,10 +2382,10 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     subTabs.className = 'saetning-sub-tabs';
     subTabs.innerHTML = `
         <button type="button" class="saetning-sub-tab-btn active" data-st="puzzle">
-            1. Pusleopgaver (8 sætninger)
+            ${t('gm_t4_subtab_puzzle', '1. Pusleopgaver (8 sætninger)')}
         </button>
         <button type="button" class="saetning-sub-tab-btn" data-st="step">
-            2. Trin-for-trin sætningsbygger
+            ${t('gm_t4_subtab_step', '2. Trin-for-trin sætningsbygger')}
         </button>
     `;
     builderCard.appendChild(subTabs);
@@ -2441,16 +2474,19 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         wrap.className = 'puzzle-wrapper';
 
         const slotPrompts = [
-            { text: 'Hvor / Hvornår?', grammar: 'Sted / Tid (1)', colorClass: 'slot-tid', tagClass: 'tag-tid' },
-            { text: 'Verbum', grammar: 'Verbum (2)', colorClass: 'slot-verbum', tagClass: 'tag-verbum' },
-            { text: 'Hvem / Hvad?', grammar: 'Subjekt (3)', colorClass: 'slot-subjekt', tagClass: 'tag-subjekt' },
-            { text: 'Resten', grammar: 'Led (4)', colorClass: 'slot-objekt', tagClass: 'tag-objekt' }
+            { text: t('gm_t4_slot_time_place', 'Hvor / Hvornår?'), grammar: 'Sted / Tid (1)', colorClass: 'slot-tid', tagClass: 'tag-tid' },
+            { text: t('gm_t4_slot_verb', 'Verbum'), grammar: 'Verbum (2)', colorClass: 'slot-verbum', tagClass: 'tag-verbum' },
+            { text: t('gm_t4_slot_subject', 'Hvem / Hvad?'), grammar: 'Subjekt (3)', colorClass: 'slot-subjekt', tagClass: 'tag-subjekt' },
+            { text: t('gm_t4_slot_rest', 'Resten'), grammar: 'Led (4)', colorClass: 'slot-objekt', tagClass: 'tag-objekt' }
         ];
 
         function renderTask() {
             wrap.innerHTML = '';
             userSlots = [null, null, null, null];
             const task = tasks[currentIdx];
+            const pzNum = currentIdx + 1;
+            const qTrans = t(`gm_t4_p${pzNum}_prompt`, task.question);
+            const tipTrans = t(`gm_t4_p${pzNum}_ruleTip`, task.ruleTip);
 
             const pillsRow = document.createElement('div');
             pillsRow.className = 'puzzle-pills-row';
@@ -2468,7 +2504,12 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
 
             const qCard = document.createElement('div');
             qCard.className = 'puzzle-question-card';
-            qCard.innerHTML = `<h3 class="puzzle-question-title">${task.question}</h3>`;
+            qCard.innerHTML = `
+                <h3 class="puzzle-question-title">
+                    ${task.question}
+                    ${!isDa && qTrans !== task.question ? `<div style="font-size: 0.95rem; color: #94a3b8; font-weight: 500; margin-top: 0.25rem;">${qTrans}</div>` : ''}
+                </h3>
+            `;
             wrap.appendChild(qCard);
 
             const slotsContainer = document.createElement('div');
@@ -2533,12 +2574,15 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                                     doneSet.add(currentIdx);
                                     feedback.innerHTML = `
                                         <div class="puzzle-msg success">
-                                            <div style="font-size: 1.15rem; font-weight: 800;">Helt rigtigt! "<strong>${sent}</strong>"</div>
-                                            <div style="font-size: 0.9rem; margin-top: 0.25rem;">${task.ruleTip}</div>
+                                            <div style="font-size: 1.15rem; font-weight: 800;">${t('gm_t4_feedback_correct', 'Helt rigtigt!')} "<strong>${sent}</strong>"</div>
+                                            <div style="font-size: 0.9rem; margin-top: 0.25rem;">
+                                                ${task.ruleTip}
+                                                ${!isDa && tipTrans !== task.ruleTip ? `<div style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.15rem;">${tipTrans}</div>` : ''}
+                                            </div>
                                         </div>
                                         <div class="puzzle-action-row">
-                                            <button type="button" class="next-task-btn" id="gm-pz-listen" style="background:#f59e0b; color:#0f172a;">Lyt</button>
-                                            <button type="button" class="next-task-btn" id="gm-pz-next">Næste →</button>
+                                            <button type="button" class="next-task-btn" id="gm-pz-listen" style="background:#f59e0b; color:#0f172a;">${t('gm_btn_listen_sentence', 'Lyt')}</button>
+                                            <button type="button" class="next-task-btn" id="gm-pz-next">${t('gm_btn_next', 'Næste')} →</button>
                                         </div>
                                     `;
                                     feedback.querySelector('#gm-pz-listen').onclick = () => speakDanish(sent);
@@ -2549,9 +2593,9 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                                     speakDanish(sent);
                                 } else {
                                     feedback.innerHTML = `
-                                        <div class="puzzle-msg error">Prøv igen! Husk at verbet skal stå på 2. plads.</div>
+                                        <div class="puzzle-msg error">${t('gm_t4_feedback_wrong', 'Prøv igen! Husk at verbet skal stå på 2. plads.')}</div>
                                         <div class="puzzle-action-row">
-                                            <button type="button" class="retry-task-btn" id="gm-pz-retry">Prøv igen</button>
+                                            <button type="button" class="retry-task-btn" id="gm-pz-retry">${t('gm_t3_btn_restart', 'Prøv igen')}</button>
                                         </div>
                                     `;
                                     feedback.querySelector('#gm-pz-retry').onclick = () => {
@@ -2578,28 +2622,28 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     (function setupGeoStepBuilder(containerEl) {
         const categories = [
             {
-                q: '1. Hvor i Danmark? (1. plads)',
+                q: t('gm_t4_step_cat_time', '1. Hvor i Danmark? (1. plads)'),
                 grammar: 'Sted (1)',
                 rowClass: 'row-tid',
                 selClass: 'sel-tid',
                 options: ['I Jylland', 'På Fyn', 'På Sjælland', 'Ved Vesterhavet', 'Over Storebælt', 'I Skagen']
             },
             {
-                q: '2. Hvad gør man? (Verbum på 2. plads)',
+                q: t('gm_t4_step_cat_verb', '2. Hvad gør man? (Verbum på 2. plads)'),
                 grammar: 'Verbum (2)',
                 rowClass: 'row-verbum',
                 selClass: 'sel-verbum',
                 options: ['kører', 'ser', 'besøger', 'oplever', 'nyder', 'går']
             },
             {
-                q: '3. Hvem? (Subjekt på 3. plads)',
+                q: t('gm_t4_step_cat_sub', '3. Hvem? (Subjekt på 3. plads)'),
                 grammar: 'Subjekt (3)',
                 rowClass: 'row-subjekt',
                 selClass: 'sel-subjekt',
                 options: ['jeg', 'vi', 'familien', 'kursisterne', 'turisterne']
             },
             {
-                q: '4. Hvad eller hvor? (4. plads)',
+                q: t('gm_t4_step_cat_rest', '4. Hvad eller hvor? (4. plads)'),
                 grammar: 'Objekt / Sted (4)',
                 rowClass: 'row-objekt',
                 selClass: 'sel-objekt',
@@ -2617,7 +2661,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
 
         function updateLive() {
             outputBox.innerHTML = `
-                <div class="live-badge-label">Din sætning om Danmarks geografi</div>
+                <div class="live-badge-label">${t('gm_t4_step_live_label', 'Din sætning om Danmarks geografi')}</div>
                 <div class="live-sentence-text">
                     <span class="word-color-tid">${selections[0]}</span>
                     <span class="word-color-verbum">${selections[1]}</span>
@@ -2625,7 +2669,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                     <span class="word-color-objekt">${selections[3]}</span>.
                 </div>
                 <button type="button" class="listen-btn" id="btn-gm-live-listen">
-                    Lyt til sætningen
+                    ${t('gm_t4_step_btn_listen', 'Lyt til sætningen')}
                 </button>
             `;
             outputBox.querySelector('#btn-gm-live-listen').onclick = () => {
@@ -2686,20 +2730,20 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     matchSection.className = 'matching-game-section';
     matchSection.innerHTML = `
         <h3 style="font-size: 1.3rem; font-weight: 800; color: #60a5fa; margin: 0 0 0.35rem; text-align: center;">
-            Parring: Forbind sangens udtryk med Danmarks geografi
+            ${t('gm_t5_banner_badge', 'Parring: Forbind sangens udtryk med Danmarks geografi')}
         </h3>
         <p style="text-align: center; color: #cbd5e1; font-size: 0.92rem; margin: 0 0 1rem;">
-            Klik først på et udtryk fra sangen til venstre og derefter på den geografiske forklaring til højre.
+            ${t('gm_t5_banner_desc', 'Klik først på et udtryk fra sangen til venstre og derefter på den geografiske forklaring til højre.')}
         </p>
     `;
 
     const matchPairs = [
-        { id: 'm1', left: '"Skagens hvide gren"', right: 'Danmarks nordligste spids i Nordjylland' },
-        { id: 'm2', left: '"Gedsers lange odde"', right: 'Danmarks sydligste punkt på Falster' },
-        { id: 'm3', left: '"De slanke, lyse broer"', right: 'Storebæltsbroen og broerne mellem landsdelene' },
-        { id: 'm4', left: '"Bakker skabt af is"', right: 'Det runde morænelandskab fra istiden' },
-        { id: 'm5', left: '"Ø ved ø"', right: 'Det danske ø-rige med Fyn, Sjælland og over 400 øer' },
-        { id: 'm6', left: '"Kyst af sten og sand"', right: 'De mere end 7.000 km danske strande og kyster' }
+        { id: 'm1', left: t('gm_t5_pair_nord', '"Skagens hvide gren"'), right: t('gm_t5_pair_nord_desc', 'Danmarks nordligste spids i Nordjylland') },
+        { id: 'm2', left: t('gm_t5_pair_syd', '"Gedsers lange odde"'), right: t('gm_t5_pair_syd_desc', 'Danmarks sydligste punkt på Falster') },
+        { id: 'm3', left: t('gm_t5_pair_broer', '"De slanke, lyse broer"'), right: t('gm_t5_pair_broer_desc', 'Storebæltsbroen og broerne mellem landsdelene') },
+        { id: 'm4', left: t('gm_t5_pair_bakker', '"Bakker skabt af is"'), right: t('gm_t5_pair_bakker_desc', 'Det runde morænelandskab fra istiden') },
+        { id: 'm5', left: t('gm_item_oe_ved_oe_title', '"Ø ved ø"'), right: t('gm_item_oe_ved_oe_forklaring', 'Det danske ø-rige med Fyn, Sjælland og over 400 øer') },
+        { id: 'm6', left: t('gm_t5_pair_kyst', '"Kyst af sten og sand"'), right: t('gm_t5_pair_kyst_desc', 'De mere end 7.000 km danske strande og kyster') }
     ];
 
     const matchCols = document.createElement('div');
@@ -2760,12 +2804,12 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     // Oversigt over Danmarks hoveddele (med korrekt præposition: "i Jylland" vs. "på Fyn / på Sjælland / på Bornholm")
     const landsdeleHeader = document.createElement('h3');
     landsdeleHeader.style.cssText = 'font-size: 1.3rem; font-weight: 800; color: #fbbf24; margin: 1.5rem 0 0.4rem;';
-    landsdeleHeader.textContent = 'Danmarks landsdele: Husk "i" eller "på"';
+    landsdeleHeader.textContent = t('gm_t5_landsdele_title', 'Danmarks landsdele: Husk "i" eller "på"');
     historyCard.appendChild(landsdeleHeader);
 
     const landsdeleSub = document.createElement('p');
     landsdeleSub.style.cssText = 'color: #cbd5e1; font-size: 0.94rem; margin-bottom: 1rem;';
-    landsdeleSub.textContent = 'På dansk siger vi "i Jylland" (halvø), men "på Fyn", "på Sjælland", "på Lolland-Falster" og "på Bornholm" (øer).';
+    landsdeleSub.textContent = t('gm_t5_prep_rule', 'På dansk siger vi "i Jylland" (halvø), men "på Fyn", "på Sjælland", "på Lolland-Falster" og "på Bornholm" (øer).');
     historyCard.appendChild(landsdeleSub);
 
     const landsdeleGrid = document.createElement('div');
@@ -2774,25 +2818,25 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const landsdeleData = [
         {
             title: 'Jylland (Halvøen)',
-            prep: 'Man bor I Jylland',
+            prep: t('gm_t5_prep_jylland', 'Man bor I Jylland'),
             cities: 'Største byer: Aarhus, Aalborg, Esbjerg, Kolding, Vejle, Randers.',
             sent: 'Jeg har været i Skagen og i Aarhus i Jylland.'
         },
         {
             title: 'Fyn (Øen i midten)',
-            prep: 'Man bor PÅ Fyn',
+            prep: t('gm_t5_prep_fyn', 'Man bor PÅ Fyn'),
             cities: 'Største byer: Odense (H.C. Andersens fødeby), Svendborg, Nyborg, Middelfart.',
             sent: 'Jeg har besøgt Odense på Fyn.'
         },
         {
             title: 'Sjælland (Den største ø)',
-            prep: 'Man bor PÅ Sjælland',
+            prep: t('gm_t5_prep_sjaelland', 'Man bor PÅ Sjælland'),
             cities: 'Største byer: København (hovedstaden), Roskilde, Helsingør, Næstved, Køge.',
             sent: 'Jeg bor på Sjælland tæt på København.'
         },
         {
             title: 'Lolland, Falster & Bornholm',
-            prep: 'Man bor PÅ Lolland, PÅ Falster og PÅ Bornholm',
+            prep: t('gm_t5_prep_oeerne', 'Man bor PÅ Lolland, PÅ Falster og PÅ Bornholm'),
             cities: 'Byer og steder: Nykøbing Falster, Gedser Odde, Maribo, Rønne og Hammershus.',
             sent: 'Gedser Odde ligger på Falster, og Bornholm ligger i Østersøen.'
         }
@@ -2806,7 +2850,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
             <div style="font-size: 0.85rem; font-weight: 800; color: #38bdf8; margin-bottom: 0.45rem;">${ld.prep}</div>
             <div style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.65rem; line-height: 1.45;">${ld.cities}</div>
             <div class="detail-saetning-box" style="font-size: 0.92rem; margin-bottom: 0.6rem;">"${ld.sent}"</div>
-            <button type="button" class="listen-btn" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;">Lyt til sætning</button>
+            <button type="button" class="listen-btn" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;">${t('gm_btn_listen_sentence', 'Lyt til sætning')}</button>
         `;
         box.querySelector('.listen-btn').onclick = () => speakDanish(ld.sent);
         landsdeleGrid.appendChild(box);
@@ -2829,10 +2873,10 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const samtaleIntro = document.createElement('div');
     samtaleIntro.className = 'saetning-intro-banner';
     samtaleIntro.innerHTML = `
-        <span class="saetning-intro-badge">Mundtlig samtale & Puslesætninger</span>
-        <h2 class="saetning-intro-title">Byg dine egne svar: Fortæl om dit Danmark</h2>
+        <span class="saetning-intro-badge">${t('gm_samtale_intro_badge', 'Mundtlig samtale & Puslesætninger')}</span>
+        <h2 class="saetning-intro-title">${t('gm_samtale_intro_title', 'Byg dine egne svar: Fortæl om dit Danmark')}</h2>
         <p class="saetning-intro-desc">
-            Hvert spørgsmål er en puslesætning i stedet for en færdig skabelon. Vælg de brikker og ord i boksene, som passer bedst til dit liv og dine egne oplevelser i Danmark. Klik på brikkerne for at sammensætte dit svar, og lyt til sætningen for at øve udtalen!
+            ${t('gm_samtale_intro_desc', 'Hvert spørgsmål er en puslesætning i stedet for en færdig skabelon. Vælg de brikker og ord i boksene, som passer bedst til dit liv og dine egne oplevelser i Danmark. Klik på brikkerne for at sammensætte dit svar, og lyt til sætningen for at øve udtalen!')}
         </p>
     `;
     samtaleCard.appendChild(samtaleIntro);
@@ -3064,17 +3108,22 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         pzCard.className = 'samtale-puzzle-card';
 
         let currentChoices = [...pz.defaults];
+        const qTrans = t(`gm_sq_${pz.num}`, pz.q);
+        const badgeText = t('gm_samtale_q_badge', { num: pz.num }, `Puslesætning · Spørgsmål ${pz.num}`);
 
         // Header
         const header = document.createElement('div');
         header.className = 'samtale-q-header';
         header.innerHTML = `
             <div>
-                <span class="samtale-q-badge">Puslesætning · Spørgsmål ${pz.num}</span>
-                <h3 class="samtale-q-title">${pz.q}</h3>
+                <span class="samtale-q-badge">${badgeText}</span>
+                <h3 class="samtale-q-title">
+                    ${pz.q}
+                    ${!isDa && qTrans !== pz.q ? `<div style="font-size: 0.95rem; color: #94a3b8; font-weight: 500; margin-top: 0.25rem;">${qTrans}</div>` : ''}
+                </h3>
             </div>
             <button type="button" class="ah-step-btn btn-speak-q" style="font-size: 0.85rem; padding: 0.45rem 0.9rem;">
-                Lyt til spørgsmål
+                ${t('gm_samtale_listen_q', 'Lyt til spørgsmål')}
             </button>
         `;
         header.querySelector('.btn-speak-q').onclick = () => speakDanish(pz.q);
@@ -3086,7 +3135,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
 
         const assembledLabel = document.createElement('div');
         assembledLabel.className = 'samtale-assembled-label';
-        assembledLabel.textContent = 'Dit sammensatte svar (opdateres når du klikker på brikkerne):';
+        assembledLabel.textContent = t('gm_samtale_assembled_label', 'Dit sammensatte svar (opdateres når du klikker på brikkerne):');
         assembledBox.appendChild(assembledLabel);
 
         const assembledText = document.createElement('div');
@@ -3097,10 +3146,10 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         actionsRow.className = 'samtale-assembled-actions';
         actionsRow.innerHTML = `
             <button type="button" class="listen-btn btn-listen-ans" style="padding: 0.55rem 1.15rem; font-size: 0.9rem;">
-                Lyt til dit svar
+                ${t('gm_samtale_listen_ans', 'Lyt til dit svar')}
             </button>
             <button type="button" class="ah-step-btn btn-reset-ans" style="font-size: 0.85rem; padding: 0.5rem 0.9rem;">
-                Nulstil valg
+                ${t('gm_samtale_reset_ans', 'Nulstil valg')}
             </button>
         `;
         assembledBox.appendChild(actionsRow);
@@ -3207,16 +3256,16 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         <div class="saf-header">
             <div class="saf-left">
                 <div class="saf-text">
-                    <div class="saf-title">Lyt til melodien: "Godmorgen, lille land"</div>
-                    <div class="saf-sub">Melodi af Carsten Johs. Mørch (1998) fra Højskolesangbogen</div>
+                    <div class="saf-title">${t('gm_saf_title', 'Lyt til melodien: "Godmorgen, lille land"')}</div>
+                    <div class="saf-sub">${t('gm_saf_sub', 'Melodi af Carsten Johs. Mørch (1998) fra Højskolesangbogen')}</div>
                 </div>
             </div>
             <div class="saf-actions">
-                <a href="https://youtu.be/iSTpaw6Bfv0" target="_blank" rel="noopener noreferrer" class="saf-youtube-btn">
-                    Hør melodi på YouTube
+                <a href="https://youtu.be/OKkRngOcxRQ?si=zgtHxY9Mm8XXiIKF" target="_blank" rel="noopener noreferrer" class="saf-youtube-btn">
+                    ${t('gm_saf_open_yt', 'Hør melodi på YouTube')}
                 </a>
                 <button class="saf-embed-toggle-btn" id="btn-toggle-yt-player-gm">
-                    <span id="yt-toggle-label-gm">Vis afspiller</span>
+                    <span id="yt-toggle-label-gm">${t('gm_saf_show_player', 'Vis afspiller')}</span>
                 </button>
             </div>
         </div>
@@ -3224,7 +3273,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
             <iframe 
                 width="100%" 
                 height="320" 
-                src="https://www.youtube-nocookie.com/embed/iSTpaw6Bfv0" 
+                src="https://www.youtube-nocookie.com/embed/OKkRngOcxRQ" 
                 title="Godmorgen, lille land - Melodi" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -3242,7 +3291,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         ytPlayerOpen = !ytPlayerOpen;
         embedBox.style.display = ytPlayerOpen ? 'block' : 'none';
         toggleBtn.classList.toggle('active', ytPlayerOpen);
-        toggleLabel.textContent = ytPlayerOpen ? 'Skjul afspiller' : 'Vis afspiller';
+        toggleLabel.textContent = ytPlayerOpen ? t('gm_saf_hide_player', 'Skjul afspiller') : t('gm_saf_show_player', 'Vis afspiller');
     };
 
     viewContainer.appendChild(audioFooterCard);

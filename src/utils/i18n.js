@@ -20,6 +20,7 @@ import { ordstillingHubTranslations } from './ordstilling_translations.js';
 import { substantivSaetningsbyggerTranslations } from './substantiv_saetningsbygger_translations.js';
 import { verberSaetningsbyggerTranslations } from './verber_saetningsbygger_translations.js';
 import { andetHusarbejdeTranslations } from './andet_husarbejde_translations.js';
+import { godmorgenTranslations } from './godmorgen_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -94,7 +95,8 @@ const allLangs = new Set([
     ...Object.keys(ordstillingHubTranslations || {}),
     ...Object.keys(substantivSaetningsbyggerTranslations || {}),
     ...Object.keys(verberSaetningsbyggerTranslations || {}),
-    ...Object.keys(andetHusarbejdeTranslations || {})
+    ...Object.keys(andetHusarbejdeTranslations || {}),
+    ...Object.keys(godmorgenTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -120,6 +122,7 @@ allLangs.forEach(lang => {
         ...(substantivSaetningsbyggerTranslations[lang] || {}),
         ...(verberSaetningsbyggerTranslations[lang] || {}),
         ...(andetHusarbejdeTranslations[lang] || {}),
+        ...(godmorgenTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

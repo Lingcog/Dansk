@@ -19,6 +19,7 @@ import { trorSynesMenerTranslations } from './tror_synes_mener_translations.js';
 import { ordstillingHubTranslations } from './ordstilling_translations.js';
 import { substantivSaetningsbyggerTranslations } from './substantiv_saetningsbygger_translations.js';
 import { verberSaetningsbyggerTranslations } from './verber_saetningsbygger_translations.js';
+import { andetHusarbejdeTranslations } from './andet_husarbejde_translations.js';
 
 // Model A: De autoritative danske sprogskole-fagtermer.
 // Gælder på tværs af alle 17 sprog, så kursisten opbygger det nødvendige fagsprog til DU-prøver og tavleundervisning.
@@ -92,7 +93,8 @@ const allLangs = new Set([
     ...Object.keys(trorSynesMenerTranslations || {}),
     ...Object.keys(ordstillingHubTranslations || {}),
     ...Object.keys(substantivSaetningsbyggerTranslations || {}),
-    ...Object.keys(verberSaetningsbyggerTranslations || {})
+    ...Object.keys(verberSaetningsbyggerTranslations || {}),
+    ...Object.keys(andetHusarbejdeTranslations || {})
 ]);
 allLangs.forEach(lang => {
     translations[lang] = {
@@ -117,6 +119,7 @@ allLangs.forEach(lang => {
         ...(ordstillingHubTranslations[lang] || {}),
         ...(substantivSaetningsbyggerTranslations[lang] || {}),
         ...(verberSaetningsbyggerTranslations[lang] || {}),
+        ...(andetHusarbejdeTranslations[lang] || {}),
         ...MODEL_A_GRAMMAR_TERMS
     };
 });

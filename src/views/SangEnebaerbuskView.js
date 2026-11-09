@@ -2173,7 +2173,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         { id: 'tab_detektiv', icon: monoSvgs.search, label: t('sange_tab_detektiv', isEn ? '3. Word Detective (Find Objects)' : '3. Ord-detektiv (Billedjagt)') },
         { id: 'tab_saetning', icon: monoSvgs.puzzle, label: t('sange_tab_saetning', '4. Sætningsbygger & Puslespil') },
         { id: 'tab_udvikling', icon: monoSvgs.home, label: t('sange_tab_udvikling', '5. Ugens husarbejde & Parring') },
-        { id: 'tab_andet_husarbejde', icon: monoSvgs.chores, label: '6. Andet husarbejde' }
+        { id: 'tab_andet_husarbejde', icon: monoSvgs.chores, label: t('sange_tab_andet_husarbejde', '6. Andet husarbejde') }
     ];
 
     let currentTab = extraData.activeTab || 'tab_vrimmel';
@@ -4480,15 +4480,15 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     ahSubNav.innerHTML = `
         <button class="det-submode-btn active" data-ahsub="vrimmel">
             <span class="mono-svg-icon">${monoSvgs.image}</span>
-            <span>1. Vrimlebillede (20 aktiviteter)</span>
+            <span>${t('ah_sub_vrimmel', '1. Vrimlebillede (20 aktiviteter)')}</span>
         </button>
         <button class="det-submode-btn" data-ahsub="forstaaelse">
             <span class="mono-svg-icon">${monoSvgs.chores}</span>
-            <span>2. Forståelsesopgaver (10 spørgsmål)</span>
+            <span>${t('ah_sub_forstaaelse', '2. Forståelsesopgaver (10 spørgsmål)')}</span>
         </button>
         <button class="det-submode-btn" data-ahsub="saetning">
             <span class="mono-svg-icon">${monoSvgs.puzzle}</span>
-            <span>3. Sætningsbygning (Nye termer)</span>
+            <span>${t('ah_sub_saetning', '3. Sætningsbygning (Nye termer)')}</span>
         </button>
     `;
     panelAndet.appendChild(ahSubNav);
@@ -4522,24 +4522,24 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const ahFilterGroup = document.createElement('div');
     ahFilterGroup.className = 'vrimmel-filter-group';
     ahFilterGroup.innerHTML = `
-        <button class="vrimmel-filter-btn active" data-room="all">Alle (20)</button>
-        <button class="vrimmel-filter-btn" data-room="sovevaerelse">Soveværelse (4)</button>
-        <button class="vrimmel-filter-btn" data-room="badevaerelse">Badeværelse (2)</button>
-        <button class="vrimmel-filter-btn" data-room="stue">Stue (4)</button>
-        <button class="vrimmel-filter-btn" data-room="koekken">Køkken (5)</button>
-        <button class="vrimmel-filter-btn" data-room="spisestue_entre">Spisestue & Entré (5)</button>
+        <button class="vrimmel-filter-btn active" data-room="all">${t('ah_room_all', 'Alle (20)')}</button>
+        <button class="vrimmel-filter-btn" data-room="sovevaerelse">${t('ah_room_sovevaerelse', 'Soveværelse (4)')}</button>
+        <button class="vrimmel-filter-btn" data-room="badevaerelse">${t('ah_room_badevaerelse', 'Badeværelse (2)')}</button>
+        <button class="vrimmel-filter-btn" data-room="stue">${t('ah_room_stue', 'Stue (4)')}</button>
+        <button class="vrimmel-filter-btn" data-room="koekken">${t('ah_room_koekken', 'Køkken (5)')}</button>
+        <button class="vrimmel-filter-btn" data-room="spisestue_entre">${t('ah_room_spisestue_entre', 'Spisestue & Entré (5)')}</button>
     `;
     ahControlBar.appendChild(ahFilterGroup);
 
     const ahPureBtn = document.createElement('button');
     ahPureBtn.className = 'pure-toggle-btn';
     let ahPureActive = false;
-    ahPureBtn.innerHTML = `Vis kun billedet: <strong id="ah-pure-status">FRA</strong>`;
+    ahPureBtn.innerHTML = `${t('sange_pure_show', 'Vis kun billedet:')} <strong id="ah-pure-status">${t('sange_pure_fra', 'FRA')}</strong>`;
     ahPureBtn.onclick = () => {
         ahPureActive = !ahPureActive;
         ahStage.classList.toggle('pure-mode', ahPureActive);
         ahPureBtn.classList.toggle('active', ahPureActive);
-        ahPureBtn.querySelector('#ah-pure-status').textContent = ahPureActive ? 'TIL' : 'FRA';
+        ahPureBtn.querySelector('#ah-pure-status').textContent = ahPureActive ? t('sange_pure_til', 'TIL') : t('sange_pure_fra', 'FRA');
     };
     ahControlBar.appendChild(ahPureBtn);
     ahVrimmelCard.appendChild(ahControlBar);
@@ -4562,30 +4562,39 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         currentAndetIdx = andetActivities.findIndex(a => a.num === item.num);
         ahDots.forEach(d => d.classList.toggle('active', Number(d.dataset.num) === item.num));
 
+        const roomTrans = t(`ah_room_${item.room}_name`, item.roomLabel);
+        const handlingTrans = t(`ah_act_${item.id}_handling`, item.handling);
+        const redskaberTrans = t(`ah_act_${item.id}_redskaber`, item.redskaber);
+        const saetningTrans = t(`ah_act_${item.id}_saetning`, item.saetning);
+        const badgeText = t('ah_activity_badge', { num: item.num, total: andetActivities.length }, `Aktivitet ${item.num} af ${andetActivities.length}`);
+
         ahDetailCard.innerHTML = `
             <div class="detail-info-left">
                 <div class="detail-badges">
-                    <span class="badge-pill badge-dag">Aktivitet ${item.num} af ${andetActivities.length} · ${item.roomLabel}</span>
+                    <span class="badge-pill badge-dag">${badgeText} · ${item.roomLabel} ${!isDa && roomTrans !== item.roomLabel ? `(${roomTrans})` : ''}</span>
                 </div>
                 <div class="detail-title">
                     ${item.handling}
+                    ${!isDa && handlingTrans !== item.handling ? `<div style="font-size: 0.95rem; font-weight: 500; color: #94a3b8; margin-top: 0.15rem;">${handlingTrans}</div>` : ''}
                 </div>
                 <div class="detail-forms">
                     ${item.forms}
                 </div>
                 <div class="detail-redskaber">
-                    <strong>Redskaber:</strong> ${item.redskaber}
+                    <strong>${t('sange_tools_label', 'Redskaber')}:</strong> ${item.redskaber}
+                    ${!isDa && redskaberTrans !== item.redskaber ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.1rem;">${redskaberTrans}</div>` : ''}
                 </div>
                 <div class="detail-saetning-box">
                     "${item.saetning}"
+                    ${!isDa && saetningTrans !== item.saetning ? `<div style="font-size: 0.92rem; color: #cbd5e1; margin-top: 0.25rem; font-style: italic;">"${saetningTrans}"</div>` : ''}
                 </div>
             </div>
             <div class="detail-actions-right ah-step-nav-btns">
-                <button class="ah-step-btn" id="btn-ah-prev" type="button">← Forrige</button>
+                <button class="ah-step-btn" id="btn-ah-prev" type="button">← ${t('ah_btn_prev', 'Forrige')}</button>
                 <button class="listen-btn" id="btn-listen-ah-hotspot" type="button">
-                    Lyt til sætning
+                    ${t('sange_listen_sentence', 'Lyt til sætning')}
                 </button>
-                <button class="ah-step-btn" id="btn-ah-next" type="button">Næste →</button>
+                <button class="ah-step-btn" id="btn-ah-next" type="button">${t('ah_btn_next', 'Næste')} →</button>
             </div>
         `;
         ahDetailCard.querySelector('#btn-listen-ah-hotspot').onclick = () => {
@@ -4713,22 +4722,28 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     function renderAhComprehension() {
         ahQuizCard.innerHTML = '';
         const item = ahComprehensionTasks[ahQIdx];
+        const taskNum = ahQIdx + 1;
+        const qTrans = t(`ah_q_${taskNum}_text`, item.q);
+        const tipTrans = t(`ah_q_${taskNum}_tip`, item.tip);
 
         const scoreBar = document.createElement('div');
         scoreBar.className = 'detective-score-bar';
+        const taskCounterText = t('ah_quiz_task_counter', { current: taskNum, total: ahComprehensionTasks.length }, `Forståelsesopgave ${taskNum} / ${ahComprehensionTasks.length}`);
+        const scoreText = t('ah_quiz_score', { score: ahQScore }, `Point: ${ahQScore}`);
         scoreBar.innerHTML = `
-            <span style="font-weight: 800; color: #fbbf24;">Forståelsesopgave ${ahQIdx + 1} / ${ahComprehensionTasks.length}</span>
-            <span style="font-weight: 800; color: #4ade80;">Point: ${ahQScore}</span>
+            <span style="font-weight: 800; color: #fbbf24;">${taskCounterText}</span>
+            <span style="font-weight: 800; color: #4ade80;">${scoreText}</span>
         `;
         ahQuizCard.appendChild(scoreBar);
 
         const clueBox = document.createElement('div');
         clueBox.className = 'detective-clue-box';
         clueBox.innerHTML = `
-            <div class="detective-clue-title">Hvad gør man i hjemmet? (DU1, modul 4)</div>
+            <div class="detective-clue-title">${t('ah_quiz_clue_title', 'Hvad gør man i hjemmet? (DU1, modul 4)')}</div>
             <div class="detective-clue-text">"${item.q}"</div>
+            ${!isDa && qTrans !== item.q ? `<div style="font-size: 0.95rem; color: #94a3b8; margin-top: -0.3rem; margin-bottom: 0.5rem; font-style: italic;">"${qTrans}"</div>` : ''}
             <button class="listen-btn" id="btn-listen-ah-q" style="margin: 0 auto; padding: 0.5rem 1rem; font-size: 0.85rem;">
-                Lyt til spørgsmål
+                ${t('ah_quiz_listen_btn', 'Lyt til spørgsmål')}
             </button>
         `;
         clueBox.querySelector('#btn-listen-ah-q').onclick = () => speakDanish(item.q);
@@ -4755,12 +4770,13 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 if (isCorrect) {
                     btn.classList.add('correct');
                     ahQScore++;
-                    scoreBar.querySelector('span:nth-child(2)').textContent = `Point: ${ahQScore}`;
+                    scoreBar.querySelector('span:nth-child(2)').textContent = t('ah_quiz_score', { score: ahQScore }, `Point: ${ahQScore}`);
                     feedbackBox.innerHTML = `
                         <div style="color: #4ade80; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                            Helt rigtigt! <strong>${opt}</strong>
+                            ${t('ah_quiz_correct', 'Helt rigtigt!')} <strong>${opt}</strong>
                         </div>
                         <div style="color: #cbd5e1; font-size: 0.95rem;">${item.tip}</div>
+                        ${!isDa && tipTrans !== item.tip ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.2rem; font-style: italic;">${tipTrans}</div>` : ''}
                     `;
                     speakDanish(opt);
                 } else {
@@ -4770,9 +4786,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     });
                     feedbackBox.innerHTML = `
                         <div style="color: #f87171; font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem;">
-                            Det rigtige svar er: <strong>${item.target}</strong>
+                            ${t('ah_quiz_wrong', 'Det rigtige svar er:')} <strong>${item.target}</strong>
                         </div>
                         <div style="color: #cbd5e1; font-size: 0.95rem;">${item.tip}</div>
+                        ${!isDa && tipTrans !== item.tip ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.2rem; font-style: italic;">${tipTrans}</div>` : ''}
                     `;
                 }
 
@@ -4781,8 +4798,8 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'detective-next-btn';
                 nextBtn.innerHTML = ahQIdx + 1 < ahComprehensionTasks.length
-                    ? `<span>Næste spørgsmål</span> →`
-                    : `<span>Se dit resultat</span>`;
+                    ? `<span>${t('ah_quiz_next', 'Næste spørgsmål')}</span> →`
+                    : `<span>${t('ah_quiz_see_result', 'Se dit resultat')}</span>`;
                 nextBtn.onclick = () => {
                     if (ahQIdx + 1 < ahComprehensionTasks.length) {
                         ahQIdx++;
@@ -4790,11 +4807,11 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     } else {
                         ahQuizCard.innerHTML = `
                             <div style="text-align: center; padding: 2rem 1rem;">
-                                <h2 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 0.6rem;">Flot klaret!</h2>
+                                <h2 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 0.6rem;">${t('ah_quiz_done_title', 'Flot klaret!')}</h2>
                                 <p style="font-size: 1.2rem; color: #f8fafc; margin-bottom: 1.5rem;">
-                                    Du fik <strong>${ahQScore}</strong> ud af <strong>${ahComprehensionTasks.length}</strong> rigtige!
+                                    ${t('ah_quiz_done_score', { score: ahQScore, total: ahComprehensionTasks.length }, `Du fik ${ahQScore} ud af ${ahComprehensionTasks.length} rigtige!`)}
                                 </p>
-                                <button class="detective-next-btn" id="btn-restart-ah-q">Prøv igen</button>
+                                <button class="detective-next-btn" id="btn-restart-ah-q">${t('ah_quiz_retry', 'Prøv igen')}</button>
                             </div>
                         `;
                         ahQuizCard.querySelector('#btn-restart-ah-q').onclick = () => {
@@ -4825,10 +4842,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     const ahIntroBanner = document.createElement('div');
     ahIntroBanner.className = 'saetning-intro-banner';
     ahIntroBanner.innerHTML = `
-        <span class="saetning-intro-badge">Sætningsbygning (Andet husarbejde)</span>
-        <h2 class="saetning-intro-title">Byg sætninger med de 20 nye aktiviteter</h2>
+        <span class="saetning-intro-badge">${t('ah_builder_intro_badge', 'Sætningsbygning (Andet husarbejde)')}</span>
+        <h2 class="saetning-intro-title">${t('ah_builder_intro_title', 'Byg sætninger med de 20 nye aktiviteter')}</h2>
         <p class="saetning-intro-desc">
-            Træn korte hverdagssætninger med verbet på 2. plads (DU1, modul 4).
+            ${t('ah_builder_intro_desc', 'Træn korte hverdagssætninger med verbet på 2. plads (DU1, modul 4).')}
         </p>
     `;
     ahBuilderCard.appendChild(ahIntroBanner);
@@ -4837,10 +4854,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     ahSubTabs.className = 'saetning-sub-tabs';
     ahSubTabs.innerHTML = `
         <button class="saetning-sub-tab-btn active" data-ahst="puzzle">
-            1. Pusleopgaver (8 sætninger)
+            ${t('ah_builder_subtab_puzzle', '1. Pusleopgaver (8 sætninger)')}
         </button>
         <button class="saetning-sub-tab-btn" data-ahst="step">
-            2. Trin-for-trin sætningsbygger
+            ${t('ah_builder_subtab_step', '2. Trin-for-trin sætningsbygger')}
         </button>
     `;
     ahBuilderCard.appendChild(ahSubTabs);
@@ -4929,16 +4946,19 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         wrap.className = 'puzzle-wrapper';
 
         const slotPrompts = [
-            { text: 'Hvornår / Hvor?', grammar: 'Tid / Sted (1)', colorClass: 'slot-tid', tagClass: 'tag-tid' },
-            { text: 'Hvad gør man?', grammar: 'Verbum (2)', colorClass: 'slot-verbum', tagClass: 'tag-verbum' },
-            { text: 'Hvem?', grammar: 'Subjekt (3)', colorClass: 'slot-subjekt', tagClass: 'tag-subjekt' },
-            { text: 'Hvad?', grammar: 'Objekt (4)', colorClass: 'slot-objekt', tagClass: 'tag-objekt' }
+            { text: t('ah_slot1_text', 'Hvornår / Hvor?'), grammar: t('ah_slot1_grammar', 'Tid / Sted (1)'), colorClass: 'slot-tid', tagClass: 'tag-tid' },
+            { text: t('ah_slot2_text', 'Hvad gør man?'), grammar: t('ah_slot2_grammar', 'Verbum (2)'), colorClass: 'slot-verbum', tagClass: 'tag-verbum' },
+            { text: t('ah_slot3_text', 'Hvem?'), grammar: t('ah_slot3_grammar', 'Subjekt (3)'), colorClass: 'slot-subjekt', tagClass: 'tag-subjekt' },
+            { text: t('ah_slot4_text', 'Hvad?'), grammar: t('ah_slot4_grammar', 'Objekt (4)'), colorClass: 'slot-objekt', tagClass: 'tag-objekt' }
         ];
 
         function renderTask() {
             wrap.innerHTML = '';
             userSlots = [null, null, null, null];
             const task = tasks[currentIdx];
+            const pzNum = currentIdx + 1;
+            const qTrans = t(`ah_pz_${pzNum}_q`, task.question);
+            const tipTrans = t(`ah_pz_${pzNum}_tip`, task.ruleTip);
 
             const header = document.createElement('div');
             header.className = 'puzzle-header';
@@ -4959,7 +4979,10 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
             const qCard = document.createElement('div');
             qCard.className = 'puzzle-question-card';
-            qCard.innerHTML = `<h3 class="puzzle-question-title">${task.question}</h3>`;
+            qCard.innerHTML = `
+                <h3 class="puzzle-question-title">${task.question}</h3>
+                ${!isDa && qTrans !== task.question ? `<div style="font-size: 0.95rem; color: #94a3b8; margin-top: 0.2rem; font-style: italic;">"${qTrans}"</div>` : ''}
+            `;
             header.appendChild(qCard);
 
             wrap.appendChild(header);
@@ -5027,12 +5050,13 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                                     doneSet.add(currentIdx);
                                     feedback.innerHTML = `
                                         <div class="puzzle-msg success">
-                                            <div style="font-size: 1.2rem; font-weight: 800;">Helt rigtigt! "<strong>${sent}</strong>"</div>
+                                            <div style="font-size: 1.2rem; font-weight: 800;">${t('ah_puzzle_success', 'Helt rigtigt!')} "<strong>${sent}</strong>"</div>
                                             <div style="font-size: 0.92rem; margin-top: 0.25rem;">${task.ruleTip}</div>
+                                            ${!isDa && tipTrans !== task.ruleTip ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.2rem; font-style: italic;">${tipTrans}</div>` : ''}
                                         </div>
                                         <div class="puzzle-action-row">
-                                            <button class="next-task-btn" id="ah-pz-listen" style="background:#f59e0b; color:#0f172a;">Lyt</button>
-                                            <button class="next-task-btn" id="ah-pz-next">Næste →</button>
+                                            <button class="next-task-btn" id="ah-pz-listen" style="background:#f59e0b; color:#0f172a;">${t('ah_puzzle_listen', 'Lyt')}</button>
+                                            <button class="next-task-btn" id="ah-pz-next">${t('ah_puzzle_next', 'Næste →')}</button>
                                         </div>
                                     `;
                                     feedback.querySelector('#ah-pz-listen').onclick = () => speakDanish(sent);
@@ -5043,9 +5067,9 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                                     speakDanish(sent);
                                 } else {
                                     feedback.innerHTML = `
-                                        <div class="puzzle-msg error">Prøv igen! Husk at verbet skal stå på 2. plads.</div>
+                                        <div class="puzzle-msg error">${t('ah_puzzle_error', 'Prøv igen! Husk at verbet skal stå på 2. plads.')}</div>
                                         <div class="puzzle-action-row">
-                                            <button class="retry-task-btn" id="ah-pz-retry">Prøv igen</button>
+                                            <button class="retry-task-btn" id="ah-pz-retry">${t('ah_puzzle_retry', 'Prøv igen')}</button>
                                         </div>
                                     `;
                                     feedback.querySelector('#ah-pz-retry').onclick = () => {
@@ -5072,29 +5096,29 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     (function setupAhStepBuilder(container) {
         const categories = [
             {
-                q: '1. Hvornår eller hvor? (1. plads)',
-                grammar: 'Tid / Sted (1)',
+                q: t('ah_step_cat1_q', '1. Hvornår eller hvor? (1. plads)'),
+                grammar: t('ah_slot1_grammar', 'Tid / Sted (1)'),
                 rowClass: 'row-tid',
                 selClass: 'sel-tid',
                 options: ['Hver morgen', 'Om eftermiddagen', 'Efter maden', 'I stuen', 'I køkkenet', 'På badeværelset']
             },
             {
-                q: '2. Hvad gør man? (Verbum på 2. plads)',
-                grammar: 'Verbum (2)',
+                q: t('ah_step_cat2_q', '2. Hvad gør man? (Verbum på 2. plads)'),
+                grammar: t('ah_slot2_grammar', 'Verbum (2)'),
                 rowClass: 'row-verbum',
                 selClass: 'sel-verbum',
                 options: ['støvsuger', 'reder', 'pudser', 'vander', 'vasker', 'tørrer', 'dækker', 'fejer', 'fodrer']
             },
             {
-                q: '3. Hvem? (Subjekt på 3. plads)',
-                grammar: 'Subjekt (3)',
+                q: t('ah_step_cat3_q', '3. Hvem? (Subjekt på 3. plads)'),
+                grammar: t('ah_slot3_grammar', 'Subjekt (3)'),
                 rowClass: 'row-subjekt',
                 selClass: 'sel-subjekt',
                 options: ['jeg', 'vi', 'hun', 'han', 'drengen', 'familien']
             },
             {
-                q: '4. Hvad? (Objekt på 4. plads)',
-                grammar: 'Objekt (4)',
+                q: t('ah_step_cat4_q', '4. Hvad? (Objekt på 4. plads)'),
+                grammar: t('ah_slot4_grammar', 'Objekt (4)'),
                 rowClass: 'row-objekt',
                 selClass: 'sel-objekt',
                 options: ['gulvet', 'sengen', 'vinduerne', 'blomsterne', 'op', 'bordet af', 'bord', 'hunden og katten']
@@ -5111,7 +5135,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
 
         function updateLive() {
             outputBox.innerHTML = `
-                <div class="live-badge-label">Din sætning med nye husarbejde-ord</div>
+                <div class="live-badge-label">${t('ah_step_live_label', 'Din sætning med nye husarbejde-ord')}</div>
                 <div class="live-sentence-text">
                     <span class="word-color-tid">${selections[0]}</span> 
                     <span class="word-color-verbum">${selections[1]}</span> 
@@ -5119,7 +5143,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                     <span class="word-color-objekt">${selections[3]}</span>.
                 </div>
                 <button class="listen-btn" id="btn-ah-live-listen" style="margin-top: 0.5rem; padding: 0.65rem 1.4rem;">
-                    Lyt til sætningen
+                    ${t('ah_step_live_listen', 'Lyt til sætningen')}
                 </button>
             `;
             outputBox.querySelector('#btn-ah-live-listen').onclick = () => {

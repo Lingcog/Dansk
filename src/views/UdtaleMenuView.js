@@ -44,8 +44,8 @@ export function renderUdtaleMenuView(container, navigateFn) {
         {
             icon: '📖',
             svgIcon: dsSvgIcons.bookOpen(22),
-            title: 'Læsetræning (lyd for lyd)',
-            desc: 'Tæl lyde, byg et ord og hør forskel.',
+            title: getTranslation('menu_laesetraening_title', 'Læsetræning (lyd for lyd)'),
+            desc: getTranslation('menu_laesetraening_desc', 'Tæl lyde, byg et ord og hør forskel.'),
             action: () => navigateFn('laesetraening')
         },
         {

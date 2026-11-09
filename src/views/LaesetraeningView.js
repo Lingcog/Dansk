@@ -734,7 +734,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
 
         const backBtn = document.createElement('button');
         backBtn.className = 'laese-back-btn';
-        backBtn.innerHTML = `← Tilbage`;
+        backBtn.innerHTML = getTranslation('laese_back', '← Tilbage');
         backBtn.onclick = () => {
             window.speechSynthesis.cancel();
             if (activeAudio) { activeAudio.pause(); activeAudio = null; }
@@ -803,20 +803,20 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div>
-                <div class="laese-main-title">Lyd for Lyd</div>
-                <div class="laese-main-subtitle">Vælg en øvelse</div>
+                <div class="laese-main-title">${getTranslation('laese_main_title', 'Lyd for Lyd')}</div>
+                <div class="laese-main-subtitle">${getTranslation('laese_main_subtitle', 'Vælg en øvelse')}</div>
             </div>
 
             <button class="laese-mode-btn" id="btn-mode-count" style="color: #FFC107; border-color: rgba(255, 193, 7, 0.4);">
-                Tæl lyde
+                ${getTranslation('laese_mode_count', 'Tæl lyde')}
             </button>
 
             <button class="laese-mode-btn" id="btn-mode-build" style="color: #FF9800; border-color: rgba(255, 152, 0, 0.4);">
-                Byg et ord
+                ${getTranslation('laese_mode_build', 'Byg et ord')}
             </button>
 
             <button class="laese-mode-btn" id="btn-mode-minpair" style="color: #FF5722; border-color: rgba(255, 87, 34, 0.4);">
-                Kan du høre forskel?
+                ${getTranslation('laese_mode_minpair', 'Kan du høre forskel?')}
             </button>
         `;
 
@@ -855,26 +855,28 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
         const wrap = document.createElement('div');
         wrap.className = 'laese-set-menu';
 
-        let modeTitle = "Vælg Sværhedsgrad";
-        if (currentMode === 'count_sounds') modeTitle = "Tæl lyde – Vælg Sæt";
-        if (currentMode === 'build_word') modeTitle = "Byg et ord – Vælg Sæt";
-        if (currentMode === 'minimal_pairs') modeTitle = "Hør forskel – Vælg Sæt";
+        let modeTitle = getTranslation('laese_set_menu_default', 'Vælg Sværhedsgrad');
+        if (currentMode === 'count_sounds') modeTitle = getTranslation('laese_set_menu_count', 'Tæl lyde – Vælg Sæt');
+        if (currentMode === 'build_word') modeTitle = getTranslation('laese_set_menu_build', 'Byg et ord – Vælg Sæt');
+        if (currentMode === 'minimal_pairs') modeTitle = getTranslation('laese_set_menu_minpair', 'Hør forskel – Vælg Sæt');
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 0.8rem;">
                 <h2 style="font-size: 1.5rem; font-weight: 800; color: #f8fafc; margin: 0 0 0.3rem;">${modeTitle}</h2>
-                <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">Vælg et sæt for at starte øvelsen</p>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">${getTranslation('laese_choose_set_desc', 'Vælg et sæt for at starte øvelsen')}</p>
             </div>
         `;
 
         [1, 2, 3, 4].forEach(setId => {
             const s = SETS_DATA[setId];
+            const title = getTranslation(`laese_set${setId}_title`, s.title);
+            const subtitle = getTranslation(`laese_set${setId}_sub`, s.subtitle);
             const btn = document.createElement('button');
             btn.className = 'laese-set-btn';
             btn.style.borderColor = s.color + '66';
             btn.innerHTML = `
-                <div class="laese-set-title" style="color: ${s.color};">${s.title}</div>
-                <div class="laese-set-desc">${s.subtitle}</div>
+                <div class="laese-set-title" style="color: ${s.color};">${title}</div>
+                <div class="laese-set-desc">${subtitle}</div>
             `;
             btn.onclick = () => {
                 currentSetId = setId;
@@ -906,13 +908,13 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="font-size: 1.15rem; color: rgba(255,255,255,0.7); margin-bottom: 1.2rem; text-align: center;">
-                Lyt og læs med: Byg ordet lyd for lyd
+                ${getTranslation('laese_build_instruction', 'Lyt og læs med: Byg ordet lyd for lyd')}
             </div>
 
             <!-- Pyramide Boks -->
             <div class="build-pyramid-box" id="pyramid-box">
                 <div id="pyramid-content" style="display: flex; flex-direction: column; align-items: center; min-height: 120px; justify-content: center;">
-                    <div style="color: rgba(255,255,255,0.4); font-size: 0.95rem;">Tryk på knappen for at starte</div>
+                    <div style="color: rgba(255,255,255,0.4); font-size: 0.95rem;">${getTranslation('laese_build_start_prompt', 'Tryk på knappen for at starte')}</div>
                 </div>
             </div>
 
@@ -922,18 +924,18 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                     🔊
                 </button>
                 <button id="btn-next-step" class="laese-action-btn primary" style="padding: 0.75rem 1.6rem; font-size: 1.1rem;">
-                    Start ➔
+                    ${getTranslation('laese_build_btn_start', 'Start ➔')}
                 </button>
             </div>
 
             <!-- Færdig Boks (Vises når hele ordet er bygget) -->
             <div id="build-done-box" style="display: none; width: 100%; background: #264D3F; border: 2px solid #FF9800; border-radius: 14px; padding: 1.2rem; text-align: center; box-sizing: border-box;">
-                <div style="font-size: 1.15rem; font-weight: 700; color: white; margin-bottom: 0.3rem;">Flot! Nu er ordet bygget.</div>
-                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1rem;">Lyt til hele ordet, eller optag dig selv.</div>
+                <div style="font-size: 1.15rem; font-weight: 700; color: white; margin-bottom: 0.3rem;">${getTranslation('laese_build_done_title', 'Flot! Nu er ordet bygget.')}</div>
+                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1rem;">${getTranslation('laese_build_done_sub', 'Lyt til hele ordet, eller optag dig selv.')}</div>
                 
                 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                     <button id="btn-speak-whole" class="action-btn-primary" style="background: #0284c7; padding: 0.6rem 1rem; font-size: 1rem;">
-                        🔊 Lyt igen
+                        ${getTranslation('laese_build_btn_listen_again', '🔊 Lyt igen')}
                     </button>
                     ${recognition ? `
                         <button id="btn-mic-build" class="laese-btn-mic" style="width: 55px; height: 55px; font-size: 1.5rem;">
@@ -945,9 +947,9 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                 <div id="build-mic-feedback" style="min-height: 1.2rem; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem;"></div>
 
                 <div style="display: flex; justify-content: center; gap: 0.8rem;">
-                    <button id="btn-retry-word" class="laese-action-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Prøv igen</button>
+                    <button id="btn-retry-word" class="laese-action-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">${getTranslation('laese_btn_retry', 'Prøv igen')}</button>
                     <button id="btn-next-word" class="laese-action-btn primary" style="padding: 0.5rem 1.4rem; font-size: 0.95rem;">
-                        ${currentItemIdx < getItemsForCurrentMode().length - 1 ? 'Næste ord ➔' : 'Afslut 🏆'}
+                        ${currentItemIdx < getItemsForCurrentMode().length - 1 ? getTranslation('laese_btn_next_word', 'Næste ord ➔') : getTranslation('laese_btn_finish', 'Afslut 🏆')}
                     </button>
                 </div>
             </div>
@@ -982,7 +984,9 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
             }
 
             if (currentStep < segments.length) {
-                nextStepBtn.textContent = currentStep === 0 ? "Start ➔" : "Afslør næste lyd ➔";
+                nextStepBtn.textContent = currentStep === 0
+                    ? getTranslation('laese_build_btn_start', 'Start ➔')
+                    : getTranslation('laese_build_btn_reveal', 'Afslør næste lyd ➔');
             } else {
                 // All sounds revealed!
                 nextStepBtn.style.display = 'none';
@@ -1019,7 +1023,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
             currentStep = 0;
             doneBox.style.display = 'none';
             nextStepBtn.style.display = 'inline-flex';
-            nextStepBtn.textContent = "Start ➔";
+            nextStepBtn.textContent = getTranslation('laese_build_btn_start', 'Start ➔');
             updatePyramidUI();
             if (micFeedback) micFeedback.textContent = '';
         };
@@ -1038,17 +1042,17 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                 const text = e.results[0][0].transcript.toLowerCase();
                 if (text.includes(targetWord.toLowerCase())) {
                     micFeedback.style.color = '#4CAF50';
-                    micFeedback.textContent = `✓ Fantastisk udtalt! "${targetWord}"`;
+                    micFeedback.textContent = getTranslation('laese_mic_success', { word: targetWord }, `✓ Fantastisk udtalt! "${targetWord}"`);
                 } else {
                     micFeedback.style.color = '#FF9800';
-                    micFeedback.textContent = `Jeg hørte "${text}". Prøv igen!`;
+                    micFeedback.textContent = getTranslation('laese_mic_retry', { text: text }, `Jeg hørte "${text}". Prøv igen!`);
                 }
             };
             recognition.onerror = () => {
                 micBtn.classList.remove('listening');
                 isRecording = false;
                 micFeedback.style.color = '#f44336';
-                micFeedback.textContent = 'Kunne ikke høre mikrofonen. Prøv igen.';
+                micFeedback.textContent = getTranslation('laese_mic_error', 'Kunne ikke høre mikrofonen. Prøv igen.');
             };
             recognition.onend = () => {
                 micBtn.classList.remove('listening');
@@ -1065,7 +1069,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                     isRecording = true;
                     micBtn.classList.add('listening');
                     micFeedback.style.color = 'white';
-                    micFeedback.textContent = 'Lytter... tal nu!';
+                    micFeedback.textContent = getTranslation('laese_mic_listening', 'Lytter... tal nu!');
                 } catch(e) {
                     isRecording = false;
                     micBtn.classList.remove('listening');
@@ -1092,11 +1096,11 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="font-size: 1.25rem; font-weight: 700; color: #f8fafc; margin-bottom: 1.2rem; text-align: center;">
-                Hvilket ord hører du?
+                ${getTranslation('laese_minpair_question', 'Hvilket ord hører du?')}
             </div>
 
             <!-- Big Audio Button -->
-            <button class="minpairs-audio-btn" id="btn-play-pair" title="Afspil ord">
+            <button class="minpairs-audio-btn" id="btn-play-pair" title="${getTranslation('laese_minpair_play_title', 'Afspil ord')}">
                 🔊
             </button>
 
@@ -1111,7 +1115,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
 
             <!-- Next Button -->
             <button id="btn-next-pair" class="laese-action-btn primary" style="display: none; padding: 0.75rem 2rem; font-size: 1.05rem;">
-                ${currentItemIdx < getItemsForCurrentMode().length - 1 ? 'Næste ➔' : 'Se resultat 🏆'}
+                ${currentItemIdx < getItemsForCurrentMode().length - 1 ? getTranslation('laese_btn_next', 'Næste ➔') : getTranslation('laese_btn_see_result', 'Se resultat 🏆')}
             </button>
         `;
 
@@ -1146,12 +1150,12 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                     score++;
                     card.classList.add('correct');
                     feedback.style.color = '#4CAF50';
-                    feedback.innerHTML = `Rigtigt! 🎉 (${pair.correct})`;
+                    feedback.innerHTML = getTranslation('laese_correct_with_word', { word: pair.correct }, `Rigtigt! 🎉 (${pair.correct})`);
                     nextBtn.style.display = 'inline-flex';
                 } else {
                     card.classList.add('wrong');
                     feedback.style.color = '#f44336';
-                    feedback.innerHTML = `Prøv igen 😕`;
+                    feedback.innerHTML = getTranslation('laese_wrong_try_again', 'Prøv igen 😕');
                     setTimeout(() => {
                         card.classList.remove('wrong');
                     }, 1000);
@@ -1186,27 +1190,27 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
             </div>
 
             <button id="btn-count-listen" class="laese-action-btn primary" style="background: #2196F3; font-size: 1.05rem; padding: 0.6rem 1.4rem; border-radius: 20px; margin-bottom: 1.2rem;">
-                🔊 Lyt til ordet
+                ${getTranslation('laese_count_btn_listen', '🔊 Lyt til ordet')}
             </button>
 
             <div id="count-instruction" style="font-size: 1rem; color: #b0c4ba; margin-bottom: 1.2rem; text-align: center;">
-                Hvor mange lyde hører du? Tryk på brikken for at tælle:
+                ${getTranslation('laese_count_instruction', 'Hvor mange lyde hører du? Tryk på brikken for at tælle:')}
             </div>
 
             <div style="display: flex; justify-content: center; margin-bottom: 1.2rem;">
-                <div class="laese-token" id="token-generator" title="Tryk for at tilføje en lyd">Lyd</div>
+                <div class="laese-token" id="token-generator" title="${getTranslation('laese_count_token_tooltip', 'Tryk for at tilføje en lyd')}">${getTranslation('laese_count_token', 'Lyd')}</div>
             </div>
 
             <div class="laese-dropzone" id="count-dropzone">
-                <div class="laese-dropzone-placeholder" id="drop-placeholder">Tryk på den grønne cirkel for at tilføje brikker</div>
+                <div class="laese-dropzone-placeholder" id="drop-placeholder">${getTranslation('laese_count_placeholder', 'Tryk på den grønne cirkel for at tilføje brikker')}</div>
             </div>
 
             <div id="count-feedback" style="min-height: 1.4rem; font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; text-align: center;"></div>
 
             <div style="display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 1rem;">
-                <button id="btn-clear-tokens" class="laese-action-btn">Ryd</button>
-                <button id="btn-check-tokens" class="laese-action-btn green">Tjek svar</button>
-                <button id="btn-next-count" class="laese-action-btn primary" style="display: none;">Næste ord ➔</button>
+                <button id="btn-clear-tokens" class="laese-action-btn">${getTranslation('laese_btn_clear', 'Ryd')}</button>
+                <button id="btn-check-tokens" class="laese-action-btn green">${getTranslation('laese_btn_check', 'Tjek svar')}</button>
+                <button id="btn-next-count" class="laese-action-btn primary" style="display: none;">${getTranslation('laese_btn_next_word', 'Næste ord ➔')}</button>
             </div>
         `;
 
@@ -1234,7 +1238,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
             placeholder.style.display = 'none';
             const tok = document.createElement('div');
             tok.className = 'laese-token';
-            tok.textContent = 'Lyd';
+            tok.textContent = getTranslation('laese_count_token', 'Lyd');
             tok.onclick = () => {
                 tok.remove();
                 if (dropzone.querySelectorAll('.laese-token').length === 0) {
@@ -1259,13 +1263,13 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                 headerText.textContent = wordData.word.toUpperCase();
                 headerText.style.color = '#4CAF50';
                 feedback.style.color = '#4CAF50';
-                feedback.textContent = `✓ Rigtigt! "${wordData.word}" har ${wordData.count} lyde.`;
+                feedback.textContent = getTranslation('laese_count_feedback_correct', { word: wordData.word, count: wordData.count }, `✓ Rigtigt! "${wordData.word}" har ${wordData.count} lyde.`);
                 checkBtn.style.display = 'none';
                 clearBtn.style.display = 'none';
                 nextBtn.style.display = 'inline-flex';
             } else {
                 feedback.style.color = '#FF9800';
-                feedback.textContent = `Ikke helt (${count} brikker). Lyt igen og prøv en gang til!`;
+                feedback.textContent = getTranslation('laese_count_feedback_wrong', { count: count }, `Ikke helt (${count} brikker). Lyt igen og prøv en gang til!`);
             }
         };
 
@@ -1288,15 +1292,18 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
         wrap.style.textAlign = 'center';
         wrap.style.padding = '2rem 1rem';
 
+        const scoreFormatted = `<strong style="color: #FFC107;">${score}</strong>`;
+        const completionDesc = getTranslation('laese_completion_desc', { score: scoreFormatted }, `Du har gennemført sættet med ${scoreFormatted} rigtige svar!`);
+
         wrap.innerHTML = `
             <div style="font-size: 4rem; margin-bottom: 0.5rem;">⭐</div>
-            <h2 style="font-size: 1.8rem; font-weight: 800; color: #4CAF50; margin: 0 0 0.5rem;">Flot klaret!</h2>
+            <h2 style="font-size: 1.8rem; font-weight: 800; color: #4CAF50; margin: 0 0 0.5rem;">${getTranslation('laese_completion_title', 'Flot klaret!')}</h2>
             <p style="font-size: 1.15rem; color: #cbd5e1; margin: 0 0 1.5rem;">
-                Du har gennemført sættet med <strong style="color: #FFC107;">${score}</strong> rigtige svar!
+                ${completionDesc}
             </p>
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
-                <button id="btn-replay-set" class="laese-action-btn">Prøv sættet igen 🔄</button>
-                <button id="btn-other-set" class="laese-action-btn primary">Vælg et andet sæt ➔</button>
+                <button id="btn-replay-set" class="laese-action-btn">${getTranslation('laese_btn_replay_set', 'Prøv sættet igen 🔄')}</button>
+                <button id="btn-other-set" class="laese-action-btn primary">${getTranslation('laese_btn_other_set', 'Vælg et andet sæt ➔')}</button>
             </div>
         `;
 

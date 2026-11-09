@@ -446,15 +446,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     let activeStepIndex = 6; // Default highlight on 7. Sætningen in Proto 3
     let openSubStepIndex = null; // null = forside, number = underflade for det pågældende trin
 
-    // De 10 trin fra mindste element (1. Distinktivt træk) til største (10. Samtalen / Teksten)
+    // De 10 trin fra mindste element (1. Lille lydforskel) til største (10. Den fulde samtale)
     // Gennemgående rød-tråd-sætning: "Jeg spiser brød i køkkenet i dag"
     const STEPS = [
         {
             num: 1,
-            title: 'Distinktivt træk',
-            title_zh: '区别特征 (Distinktivt træk)',
-            subtitle: 'Lille forskel i lyden, der ændrer betydningen (læberunding / stød)',
-            subtitle_zh: '改变词义的微小语音差异（圆唇度 / 喉塞音 stød）',
+            title: 'Lille lydforskel',
+            title_zh: '微小音差与声调 (Lille lydforskel)',
+            subtitle: 'En lille ændring i mundstilling eller stød, der ændrer ordets betydning',
+            subtitle_zh: '改变词义的微小发音差异（圆唇度 / 喉塞音 stød / 声调）',
             daLine_zh: 'brøʼd（圆唇+喉塞音，面包）vs. bred（展唇无喉塞音，宽阔）',
             color: '#38bdf8',
             widthPct: 38,
@@ -473,8 +473,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Kinesisk skelner betydning med <strong>toner</strong> (声调) frem for stød, og mangler rundede fortungevokaler som <strong>ø og y</strong>.`
             },
-            detailExplain: `Et <strong>distinktivt træk</strong> er den allermindste byggeklods i udtalen: f.eks. om læberne er runde eller flade (<em>bred</em> → <em>brød</em>), om vokalen er kort eller lang, eller om der er <strong>stød</strong> (<em>hun</em> vs. <em>hundʼ</em>).`,
-            detailExplain_zh: `<strong>区别特征（Distinktivt træk）</strong>是语言中能区分词义的最小语音对立。丹麦语最典型的特征是<strong>圆唇元音</strong>（如 <em>ø, y</em>）与<strong>喉塞音（stød）</strong>。例如 <span class="mss-hl-da">brøʼd</span>（圆唇+喉塞音，意为面包）与 <span class="mss-hl-da">bred</span>（展唇无喉塞音，意为宽阔），仅凭极微小的唇形与声门闭合即可区分完全不同的两个词。汉语虽无喉塞音，但有声调（四声）来区分词义。`,
+            detailExplain: `<strong>Lille lydforskel:</strong> Den allermindste detalje i udtalen kan ændre hele ordets betydning — f.eks. om læberne er runde eller flade (<em>bred</em> → <em>brød</em>), om vokalen er kort eller lang, eller om der er <strong>stød</strong> (<em>hun</em> vs. <em>hundʼ</em>). (I sprogvidenskab kaldes dette et <em>distinktivt træk</em>).`,
+            detailExplain_zh: `<strong>微小音差与声调（Lille lydforskel / 区别特征）：</strong>是语言中能区分词义的最小语音对立。丹麦语最典型的特征是<strong>圆唇元音</strong>（如 <em>ø, y</em>）与<strong>喉塞音（stød）</strong>。例如 <span class="mss-hl-da">brøʼd</span>（圆唇+喉塞音，意为面包）与 <span class="mss-hl-da">bred</span>（展唇无喉塞音，意为宽阔），仅凭极微小的唇形与声门闭合即可区分完全不同的两个词。汉语虽无喉塞音，但有声调（四声）来区分词义。`,
             morePairs: [
                 { da: 'lys [y] (rundede læber) vs. lis [i] (flade læber)', note: 'Kun læberundingen adskiller de to ord.', note_zh: '仅靠嘴唇是否拢圆即可区分两个词（光 vs. 姓名）。' },
                 { da: 'måler (uden stød) vs. målʼer (med stød)', note: 'Stødet kan skelne mellem ord og bøjningsformer.', note_zh: '喉塞音（stød）是丹麦语区分单复数和词性的秘密武器。' }
@@ -486,10 +486,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 2,
-            title: 'Fon',
-            title_zh: '音素与发音 (Fon)',
-            subtitle: 'Den enkelte sproglyd (f.eks. det bløde d i "brød")',
-            subtitle_zh: '单个语流中的具体发音（如 brød 中的软 d [ð]，以及 l 与 n 的区分）',
+            title: 'Sproglyden',
+            title_zh: '单个发音与音素 (Sproglyden)',
+            subtitle: 'Den enkelte sproglyd (f.eks. det bløde d i "brød" eller L vs. N)',
+            subtitle_zh: '具体的单个发音动作（如 brød 中的软 d [ð]，以及 L 与 N 的区分）',
             daLine_zh: 'brød [ð]（舌尖轻抵下门牙背部的软 d 音）',
             color: '#60a5fa',
             widthPct: 44,
@@ -508,8 +508,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Kinesisk mangler blødt d [ð], og har en stor udfordring med at skelne <strong>L [l]</strong> og <strong>N [n]</strong> (边音/鼻音).`
             },
-            detailExplain: `En <strong>fon</strong> er selve sproglyden. På dansk ændrer bogstaver som <strong>d, g og r</strong> ofte lyd alt efter, om de står først eller sidst i ordet (f.eks. hårdt <em>d</em> i <strong>d</strong>ag, men blødt <em>d</em> i brø<strong>d</strong>).`,
-            detailExplain_zh: `<strong>音素（Fon）</strong>是人类说话时发出的具体物理声音。丹麦语的辅音在词首和词尾发音截然不同：例如字母 <strong>d</strong> 在词首为硬 d（<strong>d</strong>ag [d]），在元音后则变成独特的<strong>软 d</strong>（brø<strong>d</strong> [ð] / ma<strong>d</strong> [ð]），舌尖必须贴在下齿背面。此外，中国南方许多方言（西南官话、粤语、吴语等）常混淆 <strong>/l/（边音）</strong> 与 <strong>/n/（鼻音）</strong>，而在丹麦语中 <em>læse</em>（阅读）与 <em>næse</em>（鼻子）是绝对不同的音位！`,
+            detailExplain: `<strong>Sproglyden:</strong> Selve den fysiske lyd, du laver i munden. På dansk ændrer bogstaver som <strong>d, g og r</strong> ofte lyd alt efter, om de står forrest eller bagest i ordet (f.eks. hårdt <em>d</em> i <strong>d</strong>ag, men blødt <em>d</em> i brø<strong>d</strong>). (Sprogforskere kalder en sproglyd for en <em>fon</em>).`,
+            detailExplain_zh: `<strong>单个发音（Sproglyden / 音素）：</strong>是说话时发出的具体物理声音。丹麦语的辅音在词首和词尾发音截然不同：例如字母 <strong>d</strong> 在词首为硬 d（<strong>d</strong>ag [d]），在元音后则变成独特的<strong>软 d</strong>（brø<strong>d</strong> [ð] / ma<strong>d</strong> [ð]），舌尖必须贴在下齿背面。此外，中国南方许多方言（西南官话、粤语、吴语等）常混淆 <strong>/l/（边音）</strong> 与 <strong>/n/（鼻音）</strong>，而在丹麦语中 <em>læse</em>（阅读）与 <em>næse</em>（鼻子）是绝对不同的音位！`,
             morePairs: [
                 { da: 'dag [d] (hårdt d i starten) ↔ brød / mad [ð] (blødt d til sidst)', note: 'Samme bogstav, to helt forskellige lyde.', note_zh: '同一个字母 d，在丹麦语词首与词尾是完全不同的发音动作。' },
                 { da: 'køkken [k] ↔ kage [g/j]', note: 'Konsonanter svækkes ofte efter vokalen på dansk.', note_zh: '辅音在元音后常被弱化（弱读化）。' }
@@ -522,9 +522,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 3,
-            title: 'Stavelse',
-            title_zh: '音节与节律 (Stavelse)',
-            subtitle: 'Rytme, tryk og "slugte" endelser (schwa)',
+            title: 'Stavelsen & rytmen',
+            title_zh: '音节与节律 (Stavelsen & rytmen)',
+            subtitle: 'Ordets rytme, tryk og "slugte" endelser (schwa)',
             subtitle_zh: '重音、节律与丹麦语典型的“弱读吞音”（schwa [ə]）',
             daLine_zh: 'køkkenet（日常快速口语吞音为 2 个音拍：[ˈkøgnəd]）',
             color: '#818cf8',
@@ -538,14 +538,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 de: `<span class="mss-hl-my">Kü-che</span> — Tysk svækker også -e til [ə], men sluger færre konsonanter end dansk.`,
                 es: `<span class="mss-hl-my">co-ci-na</span> — Spansk er stavelsestællende: hver stavelse og vokal høres helt tydeligt.`,
                 vi: `<span class="mss-hl-my">nhà bếp</span> — Hvert ord er én fast stavelse uden tryksvage endelser.`,
-                fa: `<span class="mss-hl-my">آشـپـزخـانـه (âsh-paz-khâ-neh)</span> — Hver stavelse udtales tydeligt med tryk til sidst.`,
+                fa: `<span class="mss-hl-my">آشـپـzخـانـه (âsh-paz-khâ-neh)</span> — Hver stavelse udtales tydeligt med tryk til sidst.`,
                 zh: `<span class="mss-hl-my">厨-房 (chú-fáng)</span> — 汉字一字一音且声调饱满；而丹麦语重音之后极度弱读吞音，弱读音节弱化为中央元音 schwa [ə]。`
             },
             myLines_da: {
                 zh: `Hvert kinesisk tegn er én fast stavelse med egen tone; dansk sluger tryksvage endelser til schwa [ə].`
             },
-            detailExplain: `I en dansk <strong>stavelse</strong> ligger al energien på den trykstærke stavelse (oftest den første: <strong>køk</strong>-). De efterfølgende stavelser med <em>-e-</em> svækkes til den slappe [ə]-lyd eller smelter helt sammen med nabokonsonanten.`,
-            detailExplain_zh: `丹麦语的<strong>音节（Stavelse）</strong>具有强烈的<strong>重音计时（Stress-timed）</strong>特点：能量集中在重读音节（通常是词根如 <strong>køk-</strong>），随后的弱读音节中的元音 <em>-e-</em> 会被极度弱化为央元音 [ə]，甚至与相邻辅音合并（“吞音”）。汉字是一字一音节且每个字都有完整声调，初学丹麦语时最容易把每个音节读得过满，而自然丹麦语必须学会弱读吞音。`,
+            detailExplain: `<strong>Stavelser & rytme:</strong> Når vi taler, deler vi ord op i taktslag (stavelser). På dansk ligger næsten al energien på den første, trykstærke stavelse (<strong>køk</strong>-). De efterfølgende stavelser med <em>-e-</em> svækkes eller "sluges" næsten helt i hverdagssproget.`,
+            detailExplain_zh: `<strong>音节与节律（Stavelsen & rytmen）：</strong>丹麦语具有强烈的<strong>重音计时（Stress-timed）</strong>特点：能量集中在重读音节（通常是词根如 <strong>køk-</strong>），随后的弱读音节中的元音 <em>-e-</em> 会被极度弱化为央元音 [ə]，甚至与相邻辅音合并（“吞音”）。汉字是一字一音节且每个字都有完整声调，初学丹麦语时最容易把每个音节读得过满，而自然丹麦语必须学会弱读吞音。`,
             morePairs: [
                 { da: 'spi-ser → [ˈsbisɐ] (r smelter sammen med e)', note: '-er til sidst udtales som én kort åben vokal.', note_zh: '书写上是两个音节，实际口语中 -er 读成一个简短开音节。' },
                 { da: 'køk-ke-net → 3 skrevne stavelser, men 2 talte stavelser', note: 'Midterste -e- forsvinder i naturlig tale.', note_zh: '中间的弱读 -e- 在自然语流中几乎被吞掉。' }
@@ -557,10 +557,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 4,
-            title: 'Morf',
-            title_zh: '语素与后缀构词 (Morf)',
-            subtitle: 'Ordets mindste betydnings-byggesten (stamme + endelse)',
-            subtitle_zh: '词义的最小构成部分（词根 + 后缀定冠词 -en/-et）',
+            title: 'Ordets byggesten',
+            title_zh: '单词拼装构件 (Ordets byggesten)',
+            subtitle: 'Stammen og endelsen (f.eks. brød + et = brødet, spise + r = spiser)',
+            subtitle_zh: '单词的拼装构件：词根 + 词尾曲折（如 brød + et = brødet，厨房 ➔ 这个厨房）',
             daLine_zh: 'køkken + -et（名词定冠词 -et 像尾巴一样粘在词后：厨房 ➔ 这个厨房）',
             color: '#a78bfa',
             widthPct: 58,
@@ -572,15 +572,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 uk: `<span class="mss-hl-my">кухні (ingen artikel)</span> — Ukrainsk har slet ikke bestemte artikler (hverken foran eller bagpå).`,
                 de: `<span class="mss-hl-my">der/die/das (in der)</span> + Küche — Bestemthed og køn står <em>foran</em> navneordet.`,
                 es: `<span class="mss-hl-my">la</span> + cocina — Bestemthed står <em>foran</em> navneordet.`,
-                vi: `<span class="mss-hl-my">nhà bếp (ingen bøjnings-morfemer)</span> — Ord ændrer aldrig form med endelser.`,
-                fa: `آشپزخانه — I talesprog kan <span class="mss-hl-my">-e (-ه)</span> sættes bagpå for bestemthed, men ellers ingen fast artikel.`,
+                vi: `<span class="mss-hl-my">nhà bếp (ingen bøjningsendelser)</span> — Ord ændrer aldrig form med endelser.`,
+                fa: `آشپzخانه — I talesprog kan <span class="mss-hl-my">-e (-ه)</span> sættes bagpå for bestemthed, men ellers ingen fast artikel.`,
                 zh: `<span class="mss-hl-my">厨房（无屈折词缀）</span> — 汉语不使用后缀词缀表示定指（-et）或复数，而是依靠“这/那”或上下文语境。`
             },
             myLines_da: {
                 zh: `Kinesisk tilføjer ikke bøjningsendelser for bestemthed eller flertal bag på ordet, men bruger kontekst eller "denne/dette".`
             },
-            detailExplain: `En <strong>morf</strong> (morfem) er den mindste del, der bærer en betydning. Dansk er berømt for at sætte bestemthed (<strong>-en / -et / -ne</strong>) bag på substantivet som en hale: <em>et køkken → køkken<strong>et</strong></em>.`,
-            detailExplain_zh: `<strong>语素（Morf / Morfem）</strong>是承载语法或词汇意义的最小构件。丹麦语最著名的特点就是<strong>后缀定冠词</strong>：名词表示“特定的那个”时，不使用独立前置词，而是将 <strong>-en / -et / -ne</strong> 像尾巴一样粘在名词词尾（<em>et køkken → køkken<strong>et</strong></em>：厨房 ➔ 这个厨房）。汉语没有屈折后缀，通常用“这/那”或语境来表达定指。`,
+            detailExplain: `<strong>Ordets byggesten:</strong> Ord samles af mindre dele: en stamme (ordets kerne) og en bøjningsendelse. Dansk er kendt for at sætte bestemthed (<strong>-en / -et / -ne</strong>) bag på navneordet som en hale: <em>et køkken → køkken<strong>et</strong></em> (køkken + et). (I grammatik kaldes disse byggedele for <em>morfemer</em>).`,
+            detailExplain_zh: `<strong>单词构件（Ordets byggesten / 语素）：</strong>是承载语法或词汇意义的最小构件。丹麦语最著名的特点就是<strong>后缀定冠词</strong>：名词表示“特定的那个”时，不使用独立前置词，而是将 <strong>-en / -et / -ne</strong> 像尾巴一样粘在名词词尾（<em>et køkken → køkken<strong>et</strong></em>：厨房 ➔ 这个厨房）。汉语没有屈折后缀，通常用“这/那”或语境来表达定指。`,
             morePairs: [
                 { da: 'spis (rod) + -er (nutid) / -te (datid)', note: 'Tiden vises med en lille endelse på verbet.', note_zh: '时态直接通过粘附在动词后面的简短后缀来表达。' },
                 { da: 'køkken (rod) + -et (bestemt) / -er (flertal)', note: 'Bestemthed og tal sidder som klodser bag på ordet.', note_zh: '定指与单复数就像积木一样依次粘在名词末尾。' }
@@ -592,10 +592,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 5,
-            title: 'Ordet',
-            title_zh: '词类与变位 (Ordet)',
-            subtitle: 'Ordklasse, sammensætning og bøjning',
-            subtitle_zh: '词性、复合词与丹麦语极简的人称变位',
+            title: 'Hele ordet',
+            title_zh: '完整单词与词性 (Hele ordet)',
+            subtitle: 'Ordklasse, sammensætning og bøjningsformer',
+            subtitle_zh: '词类归属（名词、动词等）、复合词构造与变位形式',
             daLine_zh: 'jeg / du / han / vi spiser（所有人称，动词现在时形态完全一致！）',
             color: '#c084fc',
             widthPct: 65,
@@ -614,8 +614,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Ligesom på dansk ændrer kinesiske verber sig aldrig efter personen!`
             },
-            detailExplain: `På <strong>ord-niveau</strong> er dansk meget enkelt ved verber: <em>spiser</em> hedder præcis det samme uanset om det er <em>jeg, du, han, hun, vi, I eller de</em>! Til gengæld skal man derfor altid huske pronomenet (<em>jeg/han</em>) foran verbet.`,
-            detailExplain_zh: `在<strong>词汇（Ordet）</strong>层面，丹麦语动词有一大显著优势：<strong>动词绝不随人称发生变化</strong>！无论主语是 <em>jeg（我）、du（你）、han（他）</em> 还是 <em>vi（我们）</em>，现在时统统都叫 <em><strong>spiser</strong></em>。但正因如此，丹麦语绝对不能省略人称代词。此外，丹麦语极其擅长将两个词无缝粘合为<strong>复合词（Sammensatte ord）</strong>（如 <em>rug + brød = rugbrød</em> 黑麦面包）。`,
+            detailExplain: `<strong>Hele ordet:</strong> Her kigger vi på det samlede ord og dets ordklasse (navneord, udsagnsord mv.). På dansk er udsagnsord meget enkle: <em>spiser</em> hedder det samme uanset om det er <em>jeg, du, han, hun, vi, I eller de</em>! Til gengæld skal man altid huske stedordet (<em>jeg/han</em>) foran verbet, så man ved, hvem der gør det.`,
+            detailExplain_zh: `在<strong>完整单词（Hele ordet）</strong>层面，丹麦语动词有一大显著优势：<strong>动词绝不随人称发生变化</strong>！无论主语是 <em>jeg（我）、du（你）、han（他）</em> 还是 <em>vi（我们）</em>，现在时统统都叫 <em><strong>spiser</strong></em>。但正因如此，丹麦语绝对不能省略人称代词。此外，丹麦语极其擅长将两个词无缝粘合为<strong>复合词（Sammensatte ord）</strong>（如 <em>rug + brød = rugbrød</em> 黑麦面包）。`,
             morePairs: [
                 { da: 'rug + brød = rugbrød (ét sammensat ord)', note: 'Dansk limer substantiver sammen til ét ord uden mellemrum.', note_zh: '丹麦语复合词必须紧密连写，不可加空格，否则意思大变。' },
                 { da: 'spiser (nutid) ↔ spiste (datid) ↔ har spist (førnutid)', note: 'Kun tiden ændrer verbets form — aldrig personen.', note_zh: '只有时间变化会改变动词后缀，人称绝不改变动词形态。' }
@@ -628,9 +628,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 6,
-            title: 'Frasen',
-            title_zh: '短语与定语结构 (Frasen)',
-            subtitle: 'En gruppe ord, der hører sammen som én blok',
+            title: 'Ordgruppen',
+            title_zh: '功能词组与短语块 (Ordgruppen)',
+            subtitle: 'En gruppe ord, der hører sammen som én samlet byggeblok (f.eks. "i køkkenet", "i dag")',
             subtitle_zh: '作为一个整体语法块的词组（介词短语 / 形容词前置规则）',
             daLine_zh: 'i det store køkken（介词 + 前置定冠词 det + 形容词变尾 -e + 名词）',
             color: '#f472b6',
@@ -650,11 +650,11 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Kinesisk sætter sted- og tidsfraser foran handlingen, og adjektivet foran navneordet uden at flytte artiklen.`
             },
-            detailExplain: `En <strong>frase</strong> er en lille ordgruppe, der fungerer som én samlet byggeklods i sætningen: f.eks. <em>frisk brød</em>, <em>i køkkenet</em> eller <em>i det store køkken</em>. Bemærk, at på dansk hopper bestemthed frem som <strong>det/den/de</strong>, så snart der kommer et adjektiv ind foran navneordet!`,
-            detailExplain_zh: `<strong>短语（Frase）</strong>是在句子中作为一个不可分割整体移动的语块（如 <em>i køkkenet</em> 在厨房里）。丹麦语短语有一项核心规则：名词原本是后缀定指（<em>køkken<strong>et</strong></em>），但只要前方加入形容词，定冠词就会立刻跳到最前面变成独立的 <strong>det / den / de</strong>，且形容词必须加上 -e 结尾：<em><strong>det</strong> stor<strong>e</strong> køkken</em>！`,
+            detailExplain: `<strong>Ordgruppen (byggeblokken):</strong> Flere ord, der hører tæt sammen og flytter sig som én samlet blok i sætningen: f.eks. <em>frisk brød</em>, <em>i køkkenet</em> eller <em>i det store køkken</em>. Bemærk, at på dansk hopper bestemthed frem som <strong>det/den/de</strong>, så snart der kommer et tillægsord foran navneordet! (I grammatik kaldes dette en <em>frase</em>).`,
+            detailExplain_zh: `<strong>功能词组（Ordgruppen / 短语）：</strong>是在句子中作为一个不可分割整体移动的语块（如 <em>i køkkenet</em> 在厨房里）。丹麦语词组有一项核心规则：名词原本是后缀定指（<em>køkken<strong>et</strong></em>），但只要前方加入形容词，定冠词就会立刻跳到最前面变成独立的 <strong>det / den / de</strong>，且形容词必须加上 -e 结尾：<em><strong>det</strong> stor<strong>e</strong> køkken</em>！`,
             morePairs: [
                 { da: 'køkken-et (uden adjektiv) ➔ det store køkken (med adjektiv)', note: 'Endelsen -et flytter frem foran adjektivet som "det".', note_zh: '尾缀 -et 遇到形容词时立刻跃升为前置定冠词 det。' },
-                { da: '[i køkkenet] = én samlet steds-frase', note: 'Hele frasen flytter samlet rundt i sætningen.', note_zh: '整个短语在句子中必须作为一个整体模块共同移动。' }
+                { da: '[i køkkenet] = én samlet steds-ordgruppe', note: 'Hele ordgruppen flytter samlet rundt i sætningen.', note_zh: '整个短语在句子中必须作为一个整体模块共同移动。' }
             ],
             links: [
                 { label: '🎨 Adjektiver & bøjning', label_zh: '🎨 形容词变尾规则 (Adjektiver)', route: 'top100_adjektiver' },
@@ -663,10 +663,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 7,
-            title: 'Sætningen',
-            title_zh: '句子与V2语序核心规则 (Sætningen)',
-            subtitle: 'Ordenes rækkefølge (SVO + V2-reglen ved tid/sted forrest)',
-            subtitle_zh: '词序法则（主谓宾 SVO + 时间/地点置前必倒装的 V2 动词第二位规则）',
+            title: 'Sætningen & ordstillingen',
+            title_zh: '整句结构与语序 (Sætningen & ordstillingen)',
+            subtitle: 'Ordenes rækkefølge (hvem gør hvad: SVO og V2-reglen ved tid/sted forrest)',
+            subtitle_zh: '句子的语序规则（主谓宾 SVO 与动词第二位 V2 倒装律）',
             daLine_zh: '1) Jeg spiser brød i dag（主谓正常语序）• 2) I dag spiser jeg brød（状语置前，V2 动词必居第2位倒装）',
             color: '#fb923c',
             widthPct: 79,
@@ -685,8 +685,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Kinesisk beholder fast SVO-ordstilling ("I dag jeg spiser..."), mens dansk kræver <strong>inversion (V2-reglen)</strong> når et tids- eller stedsled sættes forrest ("I dag spiser jeg...").`
             },
-            detailExplain: `I en dansk <strong>sætning</strong> står der i almindelig ordstilling: <strong>Subjekt + Verbum + Objekt + Sted + Tid</strong> (<em>Jeg spiser brød i køkkenet i dag</em>). Men verbet er låst til <strong>Plads 2 (V2-reglen)</strong>: Hvis du starter med <em>"I dag"</em> eller <em>"I køkkenet"</em> på Plads 1, skal verbet stå lige bagefter: <em>"I dag <strong>spiser jeg</strong>..."</em>.`,
-            detailExplain_zh: `丹麦语<strong>陈述句</strong>的基本语序是：<strong>主语 + 动词 + 宾语 + 地点 + 时间</strong>（<em>Jeg spiser brød i køkkenet i dag</em>）。但它受最严格的<strong>动词第二位规则（V2-reglen）</strong>制约：如果你想强调时间或地点，将其放在句首第一位（如 <em>I dag...</em>），<strong>动词必须死守第二位</strong>，主语被迫倒装移至第三位：<em>"I dag <strong>spiser jeg</strong> brød..."</em>！中文依然保持“今天我吃面包”，初学者切勿忘记倒装！`,
+            detailExplain: `<strong>Sætningen & ordstillingen:</strong> Hvordan ordgrupperne sættes sammen til en hel sætning. I en almindelig sætning er rækkefølgen: <strong>Hvem (Subjekt) + Gør (Verbum) + Hvad (Objekt) + Hvor (Sted) + Hvornår (Tid)</strong>. Men på dansk er udsagnsordet altid låst til <strong>Plads 2 (V2-reglen)</strong>: Hvis du starter med <em>"I dag"</em> eller <em>"I køkkenet"</em>, bytter du om: <em>"I dag <strong>spiser jeg</strong> brød..."</em>.`,
+            detailExplain_zh: `<strong>整句结构与语序（Sætningen & ordstillingen）：</strong>丹麦语陈述句的基本语序是：<strong>主语 + 动词 + 宾语 + 地点 + 时间</strong>（<em>Jeg spiser brød i køkkenet i dag</em>）。但它受最严格的<strong>动词第二位规则（V2-reglen）</strong>制约：如果你想强调时间或地点，将其放在句首第一位（如 <em>I dag...</em>），<strong>动词必须死守第二位</strong>，主语被迫倒装移至第三位：<em>"I dag <strong>spiser jeg</strong> brød..."</em>！中文依然保持“今天我吃面包”，初学者切勿忘记倒装！`,
             morePairs: [
                 { da: 'Normal: [Jeg] [spiser] brød [i køkkenet] [i dag] (Sted før Tid)', note: 'På dansk kommer Sted (i køkkenet) før Tid (i dag) til sidst.', note_zh: '丹麦语句末通常是地点（i køkkenet）先于时间（i dag）。' },
                 { da: 'Inversion: [I dag] [spiser] [jeg] brød i køkkenet', note: 'Verbet skal altid blive på Plads 2 i en hovedsætning.', note_zh: '状语放句首，动词牢牢占据第2位，主语退至第3位。' }
@@ -699,10 +699,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 8,
-            title: 'Ytringen',
-            title_zh: '话语功能与句式 (Ytringen)',
-            subtitle: 'Hv-spørgsmål, Ja/nej-spørgsmål og Imperativ (bydemåde)',
-            subtitle_zh: '特殊疑问句（Hv-）、一般疑问句（Ja/nej）与祈使句（Imperativ）',
+            title: 'Talehandlingen (spørgsmål & opfordring)',
+            title_zh: '交际句式与意图 (Talehandlingen)',
+            subtitle: 'Hvad du vil med sætningen: spørge med hv-ord, ja/nej eller byde/opfordre',
+            subtitle_zh: '特殊疑问句（Hv-）、是非疑问句（Ja/nej）与祈使句（Imperativ）',
             daLine_zh: '特殊问句："Hvad spiser du?" • 是非问句："Spiser du brød?" • 祈使句："Spis brødet!"',
             color: '#facc15',
             widthPct: 86,
@@ -721,8 +721,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Hv-spørgsmål beholder spørgeordet på objektets plads ("du spiser hvad?"); ja/nej-spørgsmål bruger spørgepartiklen "ma"; imperativ bruger stammen uden bøjning.`
             },
-            detailExplain: `En <strong>ytring</strong> er sætningen brugt som en konkret talehandling i en situation. Her er de <strong>3 vigtigste ytringstyper</strong> på dansk sammenlignet med dit sprog:`,
-            detailExplain_zh: `<strong>话语（Ytring）</strong>是指将句子投入具体实际交际时的言语行为。丹麦语的三大核心句式为：<strong>1) 特殊疑问句（Hv-ord）</strong>：疑问词+动词第2位+主语；<strong>2) 一般疑问句（Ja/nej）</strong>：无需疑问助词，直接将动词提至句首第1位；<strong>3) 祈使句（Imperativ）</strong>：直接使用动词原形词根（去掉 -er），无需主语。`,
+            detailExplain: `<strong>Talehandlingen (hvad du vil sige):</strong> En sætning bruges altid til et formål i virkeligheden: at stille et åbent spørgsmål, et ja/nej-spørgsmål eller give en venlig opfordring. Her er de <strong>3 vigtigste måder at forme en sætning på</strong> i hverdagen (spørgsmål med hv-ord, ja/nej-spørgsmål og bydemåde):`,
+            detailExplain_zh: `<strong>交际句式与意图（Talehandlingen / 话语）：</strong>是指将句子投入具体实际交际时的言语行为。丹麦语的三大核心句式为：<strong>1) 特殊疑问句（Hv-ord）</strong>：疑问词+动词第2位+主语；<strong>2) 一般疑问句（Ja/nej）</strong>：无需疑问助词，直接将动词提至句首第1位；<strong>3) 祈使句（Imperativ）</strong>：直接使用动词原形词根（去掉 -er），无需主语。`,
             utteranceCards: [
                 {
                     badge: '1. HV-SPØRGSMÅL (Åbent spørgsmål med spørgeord)',
@@ -809,10 +809,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 9,
-            title: 'Turparet',
-            title_zh: '相邻对话对 (Turparet)',
-            subtitle: 'Spørgsmål og svar mellem to personer (Ja/Jo + "det gør jeg")',
-            subtitle_zh: '问答呼应与丹麦语特有的“Jo”与回声式回答（det gør jeg）',
+            title: 'Spørgsmål & svar (dialogen)',
+            title_zh: '问答应答呼应 (Spørgsmål & svar)',
+            subtitle: 'Når to taler sammen: Spørgsmål, svar og de vigtige vaner som "Ja/Jo" og ekko-svar',
+            subtitle_zh: '问答成对呼应、丹麦语特有的“Jo”与回声动词（det gør jeg）',
             daLine_zh: 'A: "难道你不吃面包吗？" ➔ B: "Jo, det gør jeg!"（否定问句用 Jo 肯定回答，并加回声动词）',
             color: '#4ade80',
             widthPct: 93,
@@ -831,8 +831,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             myLines_da: {
                 zh: `Kinesisk svarer med bekræftelse af verbet (会/吃), og har ikke en direkte modpart til "Jo".`
             },
-            detailExplain: `Et <strong>turpar</strong> er to replikker, der hænger uløseligt sammen: f.eks. <em>Spørgsmål → Svar</em> eller <em>Tilbud → Tak</em>. På dansk gælder to vigtige vaner i turpar: 1) Hvis spørgsmålet indeholder <em>"ikke"</em>, skal et positivt svar starte med <strong>"Jo"</strong> (ikke "Ja"). 2) Man runder næsten altid svaret af med et lille ekko-svar: <strong>"Ja, det gør jeg"</strong> / <strong>"Nej, det gør jeg ikke"</strong>.`,
-            detailExplain_zh: `<strong>相邻对话对（Turpar）</strong>是人际对话中成对出现的紧密轮次（如问与答）。丹麦语在对话中有两大极其重要的文化习惯：1) 面对<strong>否定提问</strong>（含有 <em>ikke</em>），如果你想表示肯定回答，<strong>绝不能用 Ja，必须使用“Jo”</strong>（相当于中文的“不，我吃！”）；2) 丹麦人极少只说一个字，习惯带上“回声动词”：<em><strong>"Ja, det gør jeg"</strong>（是的，我吃）/ <strong>"Nej, det gør jeg ikke"</strong></em>。`,
+            detailExplain: `<strong>Spørgsmål & svar (dialogen):</strong> Når to mennesker taler sammen, hænger replikkerne uløseligt sammen i par (spørgsmål og svar, tilbud og tak). På dansk er der to afgørende vaner: 1) Svarer du bekræftende på et spørgsmål med <em>"ikke"</em>, skal du bruge <strong>"Jo"</strong> (ikke "Ja"). 2) Man tilføjer næsten altid et venligt lille ekko-svar: <strong>"Ja, det gør jeg"</strong> eller <strong>"Nej, det gør jeg ikke"</strong>. (I samtaleanalyse kaldes dette et <em>turpar</em>).`,
+            detailExplain_zh: `<strong>问答应答呼应（Spørgsmål & svar / 对话对）：</strong>是人际交谈中成对出现的紧密轮次（如问与答）。丹麦语在对话中有两大极其重要的文化习惯：1) 面对<strong>否定提问</strong>（含有 <em>ikke</em>），如果你想表示肯定回答，<strong>绝不能用 Ja，必须使用“Jo”</strong>（相当于中文的“不，我吃！”）；2) 丹麦人极少只说一个字，习惯带上“回声动词”：<em><strong>"Ja, det gør jeg"</strong>（是的，我吃）/ <strong>"Nej, det gør jeg ikke"</strong></em>。`,
             morePairs: [
                 { da: 'A: "Spiser du brød?" → B: "Ja, det gør jeg." (Positivt spørgsmål → Ja)', note: '"Det gør jeg" gør svaret venligt og naturligt på dansk.' },
                 { da: 'A: "Er du ikke sulten?" → B: "Jo, det er jeg!" (Negativt spørgsmål → Jo)', note: 'Ved "er/har/kan/vil" gentages hjælpeverbet i stedet for "gør".', note_zh: '对方问“难道你不饿吗？”，肯定回答必须用 Jo，绝不可用 Ja！' }
@@ -844,17 +844,17 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         },
         {
             num: 10,
-            title: 'Samtalen / Teksten',
-            title_zh: '对话语篇与小词润色 (Samtalen / Teksten)',
-            subtitle: 'Flere turpar og sætninger bundet sammen med småord og bindeord',
-            subtitle_zh: '通过连接词与丹麦语“神奇小词”（nå, jo, lige, vel）串联自然对话',
+            title: 'Den fulde samtale',
+            title_zh: '连贯对话与语篇 (Den fulde samtale)',
+            subtitle: 'Når sætninger bindes sammen til levende tale med bindeord og småord ("nå", "lige", "ikke?")',
+            subtitle_zh: '运用连词与丹麦语语气小词（nå, jo, lige, ikke?）串联自然日常交流',
             daLine_zh: '"Nå, jeg er sulten, så jeg spiser lige noget brød, ikke?"（运用 nå, lige, ikke 等语气小词与连词串联自然会话）',
             color: '#2dd4bf',
             widthPct: 100,
             daLine: `"<span class="mss-hl-da">Nå</span>, jeg er sulten, <span class="mss-hl-da">så</span> jeg spiser lige noget brød i køkkenet, <span class="mss-hl-da">ikke?</span>"`,
             myLines: {
                 en: `"<span class="mss-hl-my">Well</span>, I'm hungry, <span class="mss-hl-my">so</span> I'll just eat some bread in the kitchen, <span class="mss-hl-my">okay?</span>"`,
-                ar: `"<span class="mss-hl-my">طيب / يعني (Ya'ni)</span>، أنا جائع، <span class="mss-hl-my">لذلك</span> سآكل..." — Bruger andre samtalemarkører til at binde taleture sammen.`,
+                ar: `"<span class="mss-hl-my">طيب / يعني (Ya'ni)</span>، أنا جائع، <span class="mss-hl-my">لذلك</span> سآكل..." — Bruger andre samtaleord til at binde replikkerne sammen.`,
                 tr: `"<span class="mss-hl-my">Şey / Yani</span>, karnım aç, <span class="mss-hl-my">o yüzden</span> mutfakta biraz ekmek yiyorum, <span class="mss-hl-my">tamam mı?</span>"`,
                 uk: `"<span class="mss-hl-my">Ну</span>, я голодний, <span class="mss-hl-my">тому</span> я просто поїм хліба на кухні, <span class="mss-hl-my">добре?</span>"`,
                 de: `"<span class="mss-hl-my">Na ja</span>, ich bin hungrig, <span class="mss-hl-my">also</span> esse ich mal Brot in der Küche, <span class="mss-hl-my">oder?</span>"`,
@@ -864,10 +864,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `"<span class="mss-hl-my">哎 (Āi)</span>，我饿了，<span class="mss-hl-my">所以</span>去厨房吃点面包，<span class="mss-hl-my">对吧？</span>" — 汉语使用语气助词（呢/吧/啊）维系交际情感；丹麦语则运用 nå, jo, lige, ikke? 等丰富的小词。`
             },
             myLines_da: {
-                zh: `Kinesisk bruger语气词 (partikler som 呢/吧/啊) til kontakt og stemning; dansk bruger nå, jo, lige, ikke?`
+                zh: `Kinesisk bruger 语气词 (partikler som 呢/吧/啊) til kontakt og stemning; dansk bruger nå, jo, lige, ikke?`
             },
-            detailExplain: `Øverst i sproget samles ytringer og turpar til en hel <strong>samtale eller tekst</strong>. Her bruger dansk små dialog-ord som <strong>nå, jo, lige, altså, vel, ikke?</strong> til at vise følelse og kontakt — og bindeord som <strong>så, fordi, derfor, når/da</strong> til at kæde sætningerne sammen.`,
-            detailExplain_zh: `在语言金字塔的顶峰，句子被组织为生动的<strong>完整对话与语篇（Samtalen / Teksten）</strong>。地道丹麦语的一大精髓是充斥着<strong>语气小词（småord: jo, nok, lige, vel, ikke?）</strong>，它们不改变句义，却能软化语气、拉近距离。同时，通过 <em>fordi（因为）、så（所以）、da/når（当...时）</em> 等连词精确连接主从从句。`,
+            detailExplain: `<strong>Den fulde samtale:</strong> Her binder vi flere spørgsmål, svar og sætninger sammen til en flydende, levende samtale eller tekst. Her bruger dansk bindeord (som <em>så, fordi, derfor, når</em>) og de uundværlige småord (som <em>nå, jo, lige, altså, ikke?</em>), der skaber venlig stemning og kontakt mellem dem, der taler.`,
+            detailExplain_zh: `<strong>连贯对话与语篇（Den fulde samtale）：</strong>在语言阶梯的顶端，多个问答与句子被串联为生动自然的日常交流。地道丹麦语的一大精髓是充斥着<strong>语气小词（småord: jo, nok, lige, vel, ikke?）</strong>，它们不改变句义，却能软化语气、拉近距离。同时，通过 <em>fordi（因为）、så（所以）、da/når（当...时）</em> 等连词精确连接主从从句。`,
             morePairs: [
                 { da: 'Jeg spiser brød, FORDI jeg er sulten. (Bisætning) ↔ Jeg er sulten, SÅ jeg spiser brød. (Hovedsætning)', note: 'Bindeordet styrer ordstillingen i næste sætning.', note_zh: '连词的性质（从属/并列）直接决定后续句子的词序（从句有自己的特殊词序）。' },
                 { da: '"Nå!" (Overraskelse/ny info) • "Jeg spiser LIGE..." (Gør handlingen uformel og kort)', note: 'Småordene gør dansk levende i hverdagen.', note_zh: '善用 lige 和 nå，能瞬间让你的丹麦语脱离书本腔，变得生动自然。' }
@@ -943,7 +943,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale</div>
                 <h1>Mit sprog sammenlignet med dansk</h1>
                 <p>
-                    Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>dansk</strong> og andre sprog ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
+                    Se hvordan sprog bygges op trin for trin — fra den mindste lille lydforskel til en hel samtale — med direkte sammenligning af <strong>dansk</strong> og andre sprog ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
                 </p>
             `;
         }

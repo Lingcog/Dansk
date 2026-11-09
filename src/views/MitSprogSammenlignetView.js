@@ -36,26 +36,6 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             background: rgba(51, 65, 85, 0.95);
             border-color: #fde68a;
         }
-        .mss-top-mode-btn {
-            background: rgba(30, 41, 59, 0.85);
-            border: 1.5px solid #f87171;
-            color: #fecaca;
-            padding: 0.45rem 0.85rem;
-            border-radius: 11px;
-            font-weight: 800;
-            font-size: 0.84rem;
-            cursor: pointer;
-            transition: all 0.18s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-        .mss-top-mode-btn:hover {
-            background: rgba(220, 38, 38, 0.28);
-            border-color: #fca5a5;
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
         
         /* Notice Banner */
         .mss-notice-banner {
@@ -167,47 +147,6 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             flex-wrap: wrap;
             padding-top: 0.55rem;
             border-top: 1px solid rgba(148, 163, 184, 0.18);
-        }
-        .mss-display-mode-row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            padding-top: 0.55rem;
-            border-top: 1px solid rgba(148, 163, 184, 0.18);
-        }
-        .mss-mode-pill {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1.5px solid rgba(148, 163, 184, 0.3);
-            color: #cbd5e1;
-            padding: 0.35rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.16s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-        .mss-mode-pill:hover {
-            border-color: #fca5a5;
-            color: #ffffff;
-        }
-        .mss-mode-pill.active {
-            background: rgba(239, 68, 68, 0.24);
-            border-color: #f87171;
-            color: #ffffff;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
-        }
-        .mss-da-teacher-note {
-            background: rgba(239, 68, 68, 0.12);
-            border-left: 3px solid #f87171;
-            border-radius: 6px;
-            padding: 0.4rem 0.65rem;
-            font-size: 0.81rem;
-            color: #fecaca;
-            line-height: 1.45;
         }
         .mss-lang-pill {
             background: rgba(30, 41, 59, 0.8);
@@ -487,8 +426,9 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     `;
     viewContainer.appendChild(style);
 
-    // Languages for comparison (Kinesisk prioriteret som aktiv fuld version)
+    // Languages for comparison (Dansk og Kinesisk fuldt understøttet)
     const LANGUAGES = [
+        { code: 'da', name: 'Dansk', flag: '🇩🇰' },
         { code: 'zh', name: 'Kinesisk (中文)', flag: '🇨🇳' },
         { code: 'en', name: 'Engelsk (English)', flag: '🇬🇧' },
         { code: 'ar', name: 'Arabisk (العربية)', flag: '🇸🇦' },
@@ -501,8 +441,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     ];
 
     const appLang = getLang();
-    let selectedLang = 'zh'; // Default til kinesisk ifm. lancering
-    let displayMode = localStorage.getItem('mss_display_mode') || 'bilingual'; // 'bilingual' | 'target' | 'da'
+    let selectedLang = localStorage.getItem('mss_selected_lang') || 'da';
     let currentProto = 1; // 1 = Byggetrappen, 2 = Sprogspejlet, 3 = Bygge-Pyramiden + Fokus-Scenen
     let activeStepIndex = 6; // Default highlight on 7. Sætningen in Proto 3
     let openSubStepIndex = null; // null = forside, number = underflade for det pågældende trin
@@ -962,10 +901,6 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     function renderStage() {
         const langObj = LANGUAGES.find(l => l.code === selectedLang) || LANGUAGES[0];
         const isZh = selectedLang === 'zh';
-        const isPureDa = displayMode === 'da';
-        const isPureTarget = displayMode === 'target';
-        const isBilingual = displayMode === 'bilingual';
-        const showDanish = isBilingual || isPureDa;
 
         // Top bar rendering
         topBar.innerHTML = '';
@@ -975,88 +910,40 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         backBtn.onclick = () => navigateFn('main');
         topBar.appendChild(backBtn);
 
-        const modeToggleBtn = document.createElement('button');
-        modeToggleBtn.className = 'mss-top-mode-btn';
-        if (isPureTarget) {
-            modeToggleBtn.innerHTML = `🇩🇰 Vis dansk tekst: <strong style="color:#cbd5e1; margin-left:3px;">[FRA]</strong> <span style="font-size:0.75rem; color:#fca5a5; margin-left:4px;">➔ Slå TIL</span>`;
-            modeToggleBtn.title = 'Slået fra: viser rent kursist-kinesisk. Klik her for at slå dansk lærervisning til';
-            modeToggleBtn.onclick = () => {
-                displayMode = 'bilingual';
-                localStorage.setItem('mss_display_mode', 'bilingual');
-                renderStage();
-            };
-        } else if (isBilingual) {
-            modeToggleBtn.innerHTML = `🇩🇰 Vis dansk tekst: <strong style="color:#86efac; margin-left:3px;">[TIL (To-sproget)]</strong>`;
-            modeToggleBtn.title = 'To-sproget lærervisning er aktiv. Klik for kun at vise rent kinesisk til kursisten';
-            modeToggleBtn.onclick = () => {
-                displayMode = 'target';
-                localStorage.setItem('mss_display_mode', 'target');
-                renderStage();
-            };
-        } else {
-            modeToggleBtn.innerHTML = `🇩🇰 Kun dansk visning <span style="font-size:0.75rem; color:#93c5fd; margin-left:4px;">➔ Skift til To-sproget</span>`;
-            modeToggleBtn.title = 'Klik for at skifte til to-sproget visning (dansk + kinesisk)';
-            modeToggleBtn.onclick = () => {
-                displayMode = 'bilingual';
-                localStorage.setItem('mss_display_mode', 'bilingual');
-                renderStage();
-            };
-        }
-        topBar.appendChild(modeToggleBtn);
-
         // Notice banner
-        if (isPureDa) {
+        if (isZh) {
+            noticeBanner.innerHTML = `
+                <span class="mss-notice-flag">🇨🇳</span>
+                <div>
+                    <div class="mss-notice-title">专为中文母语者设计 (Mit sprog sammenlignet med dansk)</div>
+                    <div class="mss-notice-sub">从最微小的语音特征到完整对话，十个层级全方位拆解丹麦语与中文的核心差异。随时可点击下方 🇩🇰 Dansk 查看丹麦语教师解析。</div>
+                </div>
+            `;
+        } else {
             noticeBanner.innerHTML = `
                 <span class="mss-notice-flag">🇩🇰</span>
                 <div>
-                    <div class="mss-notice-title">Dansk lærervisning: Kun på kinesisk indtil videre</div>
-                    <div class="mss-notice-sub">Andre sprog følger senere. Du ser nu fladen med fuld dansk lærerstøtte og forklaringer.</div>
-                </div>
-            `;
-        } else if (isBilingual) {
-            noticeBanner.innerHTML = `
-                <span class="mss-notice-flag">🇨🇳</span>
-                <div>
-                    <div class="mss-notice-title">🇩🇰 Kun på kinesisk. Andre sprog følger senere (To-sproget lærervisning)</div>
-                    <div class="mss-notice-sub">目前仅提供中文版完整对比与发音专项训练，其他语言即将推出。<br><span style="color:#fde68a;">💡 Dansk lærervisning er slået TIL: Du kan altid se de præcise danske instruktioner og grammatiske forklaringer ved siden af den kinesiske tekst.</span></div>
-                </div>
-            `;
-        } else {
-            noticeBanner.innerHTML = `
-                <span class="mss-notice-flag">🇨🇳</span>
-                <div>
-                    <div class="mss-notice-title">专为中文母语者设计 (Andre sprog følger senere)</div>
-                    <div class="mss-notice-sub">目前仅提供中文版完整对比与发音专项训练，其他语言即将推出。</div>
+                    <div class="mss-notice-title">Dansk visning: Fuld sproglig & pædagogisk forklaring</div>
+                    <div class="mss-notice-sub">Du ser alle 10 sproglige niveauer med danske forklaringer og sammenligninger. Vælg 🇨🇳 Kinesisk (中文) for at se kursistens kinesiske visning.</div>
                 </div>
             `;
         }
 
         // Hero
-        if (isPureDa) {
-            hero.innerHTML = `
-                <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale</div>
-                <h1>Mit sprog sammenlignet med dansk</h1>
-                <p>
-                    Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>Dansk</strong> og <strong>kinesisk</strong> ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
-                </p>
-            `;
-        } else if (isBilingual) {
-            hero.innerHTML = `
-                <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale • 语言指南</div>
-                <h1>Mit sprog sammenlignet med dansk <span style="font-size:0.72em; opacity:0.85; font-weight:700;">(我的母语与丹麦语对比)</span></h1>
-                <p style="margin-bottom:0.45rem;">
-                    <strong>🇩🇰 Formål (Lærer):</strong> Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>Dansk</strong> og <strong>kinesisk</strong> ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
-                </p>
-                <p style="font-size:0.88rem; color:#bae6fd; opacity:0.95; margin:0; border-top:1px dashed rgba(255,255,255,0.2); padding-top:0.45rem;">
-                    <strong>🇨🇳 Kursisttekst:</strong> 从最细微的声音特征到整场对话，十个层级全方位拆解丹麦语与中文的核心差异。主线例句：<em>"Jeg spiser brød i køkkenet i dag"</em>（我今天在厨房吃面包）。
-                </p>
-            `;
-        } else {
+        if (isZh) {
             hero.innerHTML = `
                 <div class="mss-hero-kicker">🌍 语言指南 • 从最小发音特征到完整对话</div>
                 <h1>我的母语与丹麦语对比 (Mit sprog sammenlignet med dansk)</h1>
                 <p>
                     从最细微的声音特征到整场对话，十个层级全方位拆解丹麦语与中文的核心差异。主线例句：<em>"Jeg spiser brød i køkkenet i dag"</em>（我今天在厨房吃面包）。
+                </p>
+            `;
+        } else {
+            hero.innerHTML = `
+                <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale</div>
+                <h1>Mit sprog sammenlignet med dansk</h1>
+                <p>
+                    Se hvordan sprog bygges op trin for trin — fra det mindste lydtræk til en hel samtale — med direkte sammenligning af <strong>dansk</strong> og andre sprog ved sætningen: <em>"Jeg spiser brød i køkkenet i dag"</em>.
                 </p>
             `;
         }
@@ -1066,29 +953,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             return `
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:0.85rem; margin-bottom:1.05rem;">
                     ${st.utteranceCards.map(uc => {
-                        const myTxt = uc.myByLang[selectedLang] || uc.myByLang.en;
-                        const myTeacherTxt = (uc.myByLang_da && uc.myByLang_da[selectedLang]) || null;
-
-                        let badgeText = '';
-                        let formulaText = '';
-                        let subNoteText = '';
-
-                        if (isPureDa) {
-                            badgeText = uc.badge;
-                            formulaText = uc.daFormula;
-                            subNoteText = uc.daSubNote;
-                        } else if (isBilingual) {
-                            badgeText = `${uc.badge} • <span style="color:#93c5fd; font-size:0.9em;">${uc.badge_zh || ''}</span>`;
-                            formulaText = `${uc.daFormula} (${uc.daFormula_zh || ''})`;
-                            subNoteText = `
-                                <div>🇩🇰 ${uc.daSubNote}</div>
-                                <div style="font-size:0.76rem; color:#93c5fd; margin-top:2px;">🇨🇳 ${uc.daSubNote_zh || ''}</div>
-                            `;
-                        } else {
-                            badgeText = uc.badge_zh || uc.badge;
-                            formulaText = uc.daFormula_zh || uc.daFormula;
-                            subNoteText = uc.daSubNote_zh || uc.daSubNote;
-                        }
+                        const myTxt = isZh ? uc.myByLang.zh : (uc.myByLang_da?.zh || uc.myByLang.en);
+                        const badgeText = isZh ? (uc.badge_zh || uc.badge) : uc.badge;
+                        const formulaText = isZh ? (uc.daFormula_zh || uc.daFormula) : uc.daFormula;
+                        const subNoteText = isZh ? (uc.daSubNote_zh || uc.daSubNote) : uc.daSubNote;
 
                         return `
                             <div style="background:rgba(15,23,42,0.92); border:1.5px solid ${uc.accent}; border-radius:14px; padding:0.9rem 1rem; display:flex; flex-direction:column; gap:0.5rem;">
@@ -1097,21 +965,16 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 </div>
                                 <div style="background:rgba(239,68,68,0.12); border-left:3.5px solid #ef4444; border-radius:8px; padding:0.55rem 0.7rem;">
                                     <div style="font-size:0.7rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.15rem;">
-                                        🇩🇰 ${isPureTarget ? '丹麦语结构公式' : 'Dansk formel'} (${formulaText})
+                                        🇩🇰 ${isZh ? '丹麦语结构公式' : 'Dansk formel'} (${formulaText})
                                     </div>
                                     <div style="font-size:0.93rem; color:#ffffff; font-weight:800;">${uc.daExample}</div>
                                     <div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.25rem;">${subNoteText}</div>
                                 </div>
                                 <div style="background:rgba(56,189,248,0.1); border-left:3.5px solid #38bdf8; border-radius:8px; padding:0.55rem 0.7rem;">
                                     <div style="font-size:0.7rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.15rem;">
-                                        ${langObj.flag} ${isPureTarget ? '中文对比解析' : (isBilingual ? 'Kinesisk analyse (kursist)' : langObj.name)}
+                                        ${isZh ? '🇨🇳 中文对比解析' : '💡 Pædagogisk forklaring'}
                                     </div>
                                     <div style="font-size:0.86rem; color:#e0f2fe; line-height:1.4;">${myTxt}</div>
-                                    ${showDanish && myTeacherTxt ? `
-                                        <div class="mss-da-teacher-note" style="margin-top:0.35rem; font-size:0.79rem;">
-                                            🇩🇰 <strong>Dansk forklaring (Lærer):</strong> ${myTeacherTxt}
-                                        </div>
-                                    ` : ''}
                                 </div>
                             </div>
                         `;
@@ -1122,40 +985,21 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
         function buildInlineSubViewHtml(idx) {
             const st = STEPS[idx];
-            const myText = st.myLines[selectedLang] || st.myLines.en;
-            const myTeacherText = (st.myLines_da && st.myLines_da[selectedLang]) || null;
-
-            let subTitle = '';
-            let closeBtnText = '';
-
-            if (isPureDa) {
-                subTitle = `${st.num}. ${st.title} — ${st.subtitle}`;
-                closeBtnText = '✕ Luk underflade';
-            } else if (isBilingual) {
-                subTitle = `${st.num}. ${st.title} (${st.title_zh || ''}) — ${st.subtitle}`;
-                closeBtnText = '✕ Luk underflade / 关闭';
-            } else {
-                subTitle = `${st.num}. ${st.title_zh || st.title} — ${st.subtitle_zh || st.subtitle}`;
-                closeBtnText = '✕ 关闭详情';
-            }
+            const subTitle = isZh ? 
+                `${st.num}. ${st.title_zh || st.title} — ${st.subtitle_zh || st.subtitle}` : 
+                `${st.num}. ${st.title} — ${st.subtitle}`;
+            const closeBtnText = isZh ? '✕ 关闭详情' : '✕ Luk underflade';
 
             return `
                 <div class="mss-detail-overlay" style="margin-top:0.45rem; margin-bottom:0.65rem; margin-left:1.35rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                         <div>
                             <span style="font-size:0.75rem; font-weight:900; color:${st.color}; text-transform:uppercase;">
-                                ${isPureTarget ? 
-                                    `深度解析 • 第 ${st.num} 级 (Trin ${st.num} af 10)` : 
-                                    (isBilingual ? `Underflade • Trin ${st.num} af 10 (第 ${st.num} 级深度解析)` : `Underflade • Trin ${st.num} af 10`)}
+                                ${isZh ? `深度解析 • 第 ${st.num} 级 (Trin ${st.num} af 10)` : `Underflade • Trin ${st.num} af 10`}
                             </span>
                             <h2 style="margin:0.15rem 0 0; font-size:1.32rem; font-weight:900; color:#ffffff;">
                                 ${subTitle}
                             </h2>
-                            ${isBilingual && st.subtitle_zh ? `
-                                <div style="font-size:0.84rem; color:#93c5fd; margin-top:2px;">
-                                    ${st.subtitle_zh}
-                                </div>
-                            ` : ''}
                         </div>
                         <button class="mss-back-btn" data-close-sub="1" style="border-color:#fde68a; color:#fde68a;">
                             ${closeBtnText}
@@ -1164,49 +1008,23 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
                     <div class="mss-two-lines" style="margin-bottom:0.85rem;">
                         <div class="mss-line-da">
-                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isPureTarget ? '丹麦语例句' : 'Dansk'}:</span>
+                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语例句' : 'Dansk'}:</span>
                             <span>${st.daLine}</span>
                         </div>
-                        ${!isPureDa && st.daLine_zh ? `
+                        ${isZh && st.daLine_zh ? `
                             <div style="font-size:0.82rem; color:#fca5a5; opacity:0.88; padding-left:0.6rem; margin-top:-0.15rem;">
-                                💡 ${isBilingual ? 'Kinesisk forklaring: ' : '释义: '}${st.daLine_zh}
+                                💡 释义: ${st.daLine_zh}
                             </div>
                         ` : ''}
                         <div class="mss-line-my">
-                            <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isPureTarget ? '中文对比解析' : (isBilingual ? 'Kinesisk analyse (kursist)' : langObj.name)}:</span>
-                            <span>${myText}</span>
+                            <span class="mss-line-tag" style="color:#7dd3fc;">${isZh ? '🇨🇳 中文对比解析' : '💡 Sproglig analyse'}:</span>
+                            <span>${isZh ? st.myLines.zh : ((st.myLines_da && st.myLines_da.zh) || st.myLines.zh)}</span>
                         </div>
-                        ${showDanish && myTeacherText ? `
-                            <div class="mss-da-teacher-note">
-                                🇩🇰 <strong>Dansk forklaring (Lærer):</strong> ${myTeacherText}
-                            </div>
-                        ` : ''}
                     </div>
 
-                    ${isBilingual ? `
-                        <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:0.95rem;">
-                            <div class="mss-da-teacher-note" style="padding:0.75rem 0.95rem; font-size:0.9rem; line-height:1.5; border-radius:12px;">
-                                <div style="font-size:0.74rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.25rem;">
-                                    🇩🇰 Dansk forklaring & sproglig instruktion (Lærer):
-                                </div>
-                                ${st.detailExplain}
-                            </div>
-                            <div style="background:rgba(30,41,59,0.75); border-left:3.5px solid #38bdf8; border-radius:12px; padding:0.75rem 0.95rem; font-size:0.9rem; line-height:1.55; color:#e0f2fe;">
-                                <div style="font-size:0.74rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.25rem;">
-                                    🇨🇳 Kursistens kinesiske forklaring:
-                                </div>
-                                ${st.detailExplain_zh || st.detailExplain}
-                            </div>
-                        </div>
-                    ` : (isPureDa ? `
-                        <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.5; color:#e2e8f0;">
-                            ${st.detailExplain}
-                        </div>
-                    ` : `
-                        <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.5; color:#e2e8f0;">
-                            ${st.detailExplain_zh || st.detailExplain}
-                        </div>
-                    `)}
+                    <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.5; color:#e2e8f0;">
+                        ${isZh ? (st.detailExplain_zh || st.detailExplain) : st.detailExplain}
+                    </div>
 
                     ${buildUtteranceCardsHtml(st)}
 
@@ -1214,24 +1032,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         <div style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, rgba(15, 23, 42, 0.92) 100%); border: 2px solid #38bdf8; border-radius: 16px; padding: 1.15rem 1.35rem; margin-bottom: 1.15rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
                             <div style="max-width: 720px;">
                                 <div style="display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.74rem; font-weight: 900; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; background:rgba(56,189,248,0.15); padding:0.2rem 0.6rem; border-radius:6px; margin-bottom:0.35rem;">
-                                    <span>🇨🇳</span> <span>${isPureTarget ? '发音难点专项模块' : 'Fonetisk Specialistmodul (Kinesisk L vs. N)'}</span>
+                                    <span>🇨🇳</span> <span>${isZh ? '发音难点专项模块' : 'Fonetisk Specialistmodul (Kinesisk L vs. N)'}</span>
                                 </div>
                                 <div style="font-size: 1.15rem; font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;">
-                                    ${isPureDa ? 
-                                        'Vanskelige lyde for kinesere: L vs. N (侧音与鼻音对比)' : 
-                                        (isBilingual ? 'Vanskelige lyde for kinesere: L vs. N (针对中国学习者的难点发音对比训练)' : '针对中国学习者的难点发音：边音 /l/ 与鼻音 /n/ 对比训练 (L vs. N)')}
+                                    ${isZh ? '针对中国学习者的难点发音：边音 /l/ 与鼻音 /n/ 对比训练 (L vs. N)' : 'Vanskelige lyde for kinesere: L vs. N (侧音与鼻音对比)'}
                                 </div>
                                 <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;">
-                                    ${isBilingual ? `
-                                        <div>Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.</div>
-                                        <div style="font-size:0.8rem; color:#93c5fd; margin-top:2px;">探索两套发音器官矢量图解（正视/俯视气流通道），体验捏鼻自检法，并通过麦克风进行三词口语挑战。</div>
-                                    ` : (isPureDa ? 
-                                        'Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.' : 
-                                        '探索两套发音器官矢量图解（正视/俯视气流通道），体验捏鼻自检法，并通过麦克风进行三词口语挑战。')}
+                                    ${isZh ? 
+                                        '探索两套发音器官矢量图解（正视/俯视气流通道），体验捏鼻自检法，并通过麦克风进行三词口语挑战。' : 
+                                        'Udforsk de to interaktive munddiagrammer (profil + set oppefra med laterale luftpile), prøv næseklemmetricket og træn udtalen direkte med mikrofonen.'}
                                 </div>
                             </div>
                             <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
-                                ${isPureTarget ? '打开专项训练 ➔' : (isBilingual ? 'Åbn specialistfladen ➔ / 打开专项训练' : 'Åbn specialistfladen ➔')}
+                                ${isZh ? '打开专项训练 ➔' : 'Åbn specialistfladen ➔'}
                             </button>
                         </div>
                     ` : ''}
@@ -1240,29 +1053,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         ${st.morePairs.map(mp => `
                             <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.22); border-radius:11px; padding:0.75rem 0.9rem;">
                                 <div style="font-weight:900; color:#fde68a; font-size:0.88rem; margin-bottom:0.25rem;">${mp.da}</div>
-                                ${isBilingual ? `
-                                    <div style="font-size:0.82rem; color:#fecaca; margin-bottom:0.2rem;">🇩🇰 ${mp.note}</div>
-                                    <div style="font-size:0.8rem; color:#93c5fd;">🇨🇳 ${mp.note_zh || mp.note}</div>
-                                ` : (isPureDa ? `
-                                    <div style="font-size:0.82rem; color:#cbd5e1;">${mp.note}</div>
-                                ` : `
-                                    <div style="font-size:0.82rem; color:#cbd5e1;">${mp.note_zh || mp.note}</div>
-                                `)}
+                                <div style="font-size:0.82rem; color:#cbd5e1;">${isZh ? (mp.note_zh || mp.note) : mp.note}</div>
                             </div>
                         `).join('')}
                     </div>
 
                     <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.65rem; padding-top:0.8rem; border-top:1px solid rgba(148,163,184,0.2);">
                         <span style="font-size:0.8rem; font-weight:900; color:#86efac; text-transform:uppercase;">
-                            ${isPureTarget ? '在应用中训练此层级 (Træn dette niveau):' : (isBilingual ? 'Træn dette niveau i appen / 在应用中训练此层级:' : 'Træn dette niveau i appen:')}
+                            ${isZh ? '在应用中训练此层级 (Træn dette niveau):' : 'Træn dette niveau i appen:'}
                         </span>
                         <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
                             ${st.links.map(lk => {
-                                let linkLabel = '';
-                                if (isPureDa) linkLabel = `${lk.label} ➔`;
-                                else if (isBilingual) linkLabel = `${lk.label} (${lk.label_zh || ''}) ➔`;
-                                else linkLabel = `${lk.label_zh || lk.label} ➔`;
-                                return `<button class="mss-link-chip" data-nav="${lk.route}">${linkLabel}</button>`;
+                                const linkLabel = isZh ? (lk.label_zh || lk.label) : lk.label;
+                                return `<button class="mss-link-chip" data-nav="${lk.route}">${linkLabel} ➔</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1272,30 +1075,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
         stage.innerHTML = `
             <div class="mss-control-panel">
-                <div class="mss-display-mode-row" style="border-top:none; padding-top:0;">
-                    <span style="font-size:0.78rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-right:0.25rem; display:inline-flex; align-items:center; gap:0.3rem;">
-                        <span>🇩🇰</span> <span>Visningstilstand:</span>
-                    </span>
-                    <button class="mss-mode-pill ${isBilingual ? 'active' : ''}" data-mode="bilingual" title="Viser både danske instruktioner til læreren og kinesisk tekst til kursisten">
-                        🇩🇰🇨🇳 To-sproget (Lærervisning: Altid dansk tekst synlig)
-                    </button>
-                    <button class="mss-mode-pill ${isPureTarget ? 'active' : ''}" data-mode="target" title="Viser rent kinesisk, som en kinesisk kursist ser det">
-                        🇨🇳 Kun kinesisk (Kursistvisning)
-                    </button>
-                    <button class="mss-mode-pill ${isPureDa ? 'active' : ''}" data-mode="da" title="Viser kun dansk sprog og forklaringer">
-                        🇩🇰 Kun dansk
-                    </button>
-                </div>
-
-                <div class="mss-lang-row">
+                <div class="mss-lang-row" style="border-top:none; padding-top:0;">
                     <span style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-right:0.25rem;">
-                        ${isPureTarget ? '选择对比语言:' : 'Vælg sammenligningssprog:'}
+                        ${isZh ? '选择语言:' : 'Vælg sprog:'}
                     </span>
                     ${LANGUAGES.map(l => {
-                        const isLChinese = l.code === 'zh';
+                        const isSupported = l.code === 'da' || l.code === 'zh';
                         return `
-                            <button class="mss-lang-pill ${selectedLang === l.code ? 'active' : ''}" data-lang="${l.code}" style="${!isLChinese ? 'opacity:0.65;' : 'font-weight:900;'}">
-                                ${l.flag} ${l.name} ${!isLChinese ? '<span style="font-size:0.7rem; opacity:0.8;">(Kommer senere)</span>' : ''}
+                            <button class="mss-lang-pill ${selectedLang === l.code ? 'active' : ''}" data-lang="${l.code}" style="${!isSupported ? 'opacity:0.6;' : 'font-weight:900;'}">
+                                ${l.flag} ${l.name} ${!isSupported ? '<span style="font-size:0.7rem; opacity:0.8;">(Kommer senere)</span>' : ''}
                             </button>
                         `;
                     }).join('')}
@@ -1305,30 +1093,16 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
             <div class="mss-ladder-wrap">
                 ${STEPS.map((st, idx) => {
-                    const myText = st.myLines[selectedLang] || st.myLines.en;
-                    const myTeacherText = (st.myLines_da && st.myLines_da[selectedLang]) || null;
                     const isOpen = openSubStepIndex === idx;
-
-                    let stepTitle = '';
-                    let stepSubtitle = '';
-                    let btnText = '';
-
-                    if (isPureDa) {
-                        stepTitle = `Trin ${st.num}. ${st.title}`;
-                        stepSubtitle = st.subtitle;
-                        btnText = isOpen ? 'Luk underflade ▲' : 'Se mere & links ➔';
-                    } else if (isBilingual) {
-                        stepTitle = `Trin ${st.num}. ${st.title} • <span style="color:#93c5fd; font-size:0.95em;">${st.title_zh || ''}</span>`;
-                        stepSubtitle = `
-                            <div>${st.subtitle}</div>
-                            <div style="font-size:0.76rem; color:#93c5fd; margin-top:2px;">${st.subtitle_zh || ''}</div>
-                        `;
-                        btnText = isOpen ? 'Luk underflade / 关闭 ▲' : 'Se detaljer & lærernoter ➔';
-                    } else {
-                        stepTitle = `第 ${st.num} 级: ${st.title_zh || st.title}`;
-                        stepSubtitle = st.subtitle_zh || st.subtitle;
-                        btnText = isOpen ? '收起详情 ▲' : '查看详情与练习 ➔';
-                    }
+                    const stepTitle = isZh ? 
+                        `第 ${st.num} 级: ${st.title_zh || st.title}` : 
+                        `Trin ${st.num}. ${st.title}`;
+                    const stepSubtitle = isZh ? 
+                        (st.subtitle_zh || st.subtitle) : 
+                        st.subtitle;
+                    const btnText = isOpen ? 
+                        (isZh ? '收起详情 ▲' : 'Luk underflade ▲') : 
+                        (isZh ? '查看详情与练习 ➔' : 'Se mere & links ➔');
 
                     return `
                         <div>
@@ -1336,7 +1110,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 <div class="mss-step-dot" style="--step-color:${st.color};">${st.num}</div>
                                 <div>
                                     <div style="font-size:0.72rem; font-weight:900; color:${st.color}; text-transform:uppercase;">
-                                        ${isPureTarget ? `第 ${st.num} 级 (Trin ${st.num})` : `Trin ${st.num} af 10`}
+                                        ${isZh ? `第 ${st.num} 级 (Trin ${st.num})` : `Trin ${st.num} af 10`}
                                     </div>
                                     <div style="font-size:1.06rem; font-weight:900; color:#ffffff; margin:0.1rem 0 0.2rem;">
                                         ${stepTitle}
@@ -1347,23 +1121,18 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 </div>
                                 <div class="mss-two-lines">
                                     <div class="mss-line-da">
-                                        <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isPureTarget ? '丹麦语' : 'Dansk'}:</span>
+                                        <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语' : 'Dansk'}:</span>
                                         <span>${st.daLine}</span>
                                     </div>
-                                    ${!isPureDa && st.daLine_zh ? `
+                                    ${isZh && st.daLine_zh ? `
                                         <div style="font-size:0.8rem; color:#fca5a5; opacity:0.88; padding-left:0.6rem; margin-top:-0.15rem;">
-                                            💡 ${isBilingual ? 'Kinesisk forklaring: ' : '释义: '}${st.daLine_zh}
+                                            💡 释义: ${st.daLine_zh}
                                         </div>
                                     ` : ''}
                                     <div class="mss-line-my">
-                                        <span class="mss-line-tag" style="color:#7dd3fc;">${langObj.flag} ${isPureTarget ? '中文对比' : (isBilingual ? 'Kinesisk (kursist)' : langObj.name)}:</span>
-                                        <span>${myText}</span>
+                                        <span class="mss-line-tag" style="color:#7dd3fc;">${isZh ? '🇨🇳 中文对比' : '💡 Sproglig analyse'}:</span>
+                                        <span>${isZh ? st.myLines.zh : ((st.myLines_da && st.myLines_da.zh) || st.myLines.zh)}</span>
                                     </div>
-                                    ${showDanish && myTeacherText ? `
-                                        <div class="mss-da-teacher-note">
-                                            🇩🇰 <strong>Dansk forklaring (Lærer):</strong> ${myTeacherText}
-                                        </div>
-                                    ` : ''}
                                 </div>
                                 <div>
                                     <button class="mss-sub-btn" data-open-sub="${idx}">
@@ -1382,23 +1151,18 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         stage.querySelectorAll('[data-lang]').forEach(btn => {
             btn.onclick = () => {
                 const targetLang = btn.dataset.lang;
-                if (targetLang !== 'zh') {
+                if (targetLang !== 'zh' && targetLang !== 'da') {
                     if (langNoteEl) {
-                        langNoteEl.textContent = '⚠️ Kun på kinesisk. Andre sprog følger senere (目前仅开放中文版本对比与训练).';
+                        langNoteEl.textContent = isZh ? 
+                            '⚠️ 目前支持丹麦语与中文对比，其他语言即将推出。' : 
+                            '⚠️ Indtil videre er Dansk og Kinesisk fuldt tilgængelige. Andre sprog følger snart.';
                         langNoteEl.style.display = 'block';
                         setTimeout(() => { if (langNoteEl) langNoteEl.style.display = 'none'; }, 3500);
                     }
                     return;
                 }
-                selectedLang = 'zh';
-                renderStage();
-            };
-        });
-
-        stage.querySelectorAll('[data-mode]').forEach(btn => {
-            btn.onclick = () => {
-                displayMode = btn.dataset.mode;
-                localStorage.setItem('mss_display_mode', displayMode);
+                selectedLang = targetLang;
+                localStorage.setItem('mss_selected_lang', targetLang);
                 renderStage();
             };
         });

@@ -395,8 +395,26 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'traen_bogstaver') {
     appState.currentView = 'traen_bogstaver';
     renderUdtaleView(appDiv, navigate, extraData);
-  } else if (viewTarget === 'laesetraening') {
+  } else if (
+    viewTarget === 'laesetraening' ||
+    viewTarget === 'laese' ||
+    viewTarget === 'lyd_for_lyd' ||
+    viewTarget === 'tael_lyde' ||
+    viewTarget === 'tael-lyde' ||
+    viewTarget === 'tæl_lyde' ||
+    viewTarget === 'tæl-lyde' ||
+    viewTarget === 'byg_et_ord' ||
+    viewTarget === 'byg-et-ord' ||
+    viewTarget === 'hoer_forskel' ||
+    viewTarget === 'hoer-forskel' ||
+    viewTarget === 'hør_forskel' ||
+    viewTarget === 'hør-forskel'
+  ) {
     appState.currentView = 'laesetraening';
+    if (viewTarget !== 'laesetraening' && viewTarget !== 'laese') {
+      const modeSlug = viewTarget.replace(/-/g, '_');
+      extraData.subPath = extraData.subPath ? `${modeSlug}/${extraData.subPath}` : modeSlug;
+    }
     renderLaesetraeningView(appDiv, navigate, extraData);
   } else if (viewTarget === 'leg_med_vokaler') {
     appState.currentView = 'leg_med_vokaler';
@@ -648,7 +666,10 @@ function handleRouting() {
   // Segment 1: View Target
   // Segment 2+: Sub-paths
   const lang = segments[0];
-  const viewTarget = segments[1];
+  let viewTarget = segments[1];
+  try {
+    if (viewTarget) viewTarget = decodeURIComponent(viewTarget).toLowerCase().replace(/[\s\-]+/g, '_');
+  } catch (e) {}
   const subPath = segments.slice(2).join('/');
 
   if (lang && translations[lang]) {

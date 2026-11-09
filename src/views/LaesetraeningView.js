@@ -1,4 +1,4 @@
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
 
 /**
@@ -577,11 +577,143 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
         }
     };
 
-    // App Navigation State
-    let currentMode = null; // null (main menu), 'count_sounds', 'build_word', 'minimal_pairs'
-    let currentSetId = null; // null (set selection), 1, 2, 3, 4
+    // App Navigation State & URL Sub-paths
+    const MODE_SLUGS = {
+        'count_sounds': 'tael_lyde',
+        'build_word': 'byg_et_ord',
+        'minimal_pairs': 'hoer_forskel'
+    };
+
+    const SLUG_TO_MODE = {
+        'count_sounds': 'count_sounds',
+        'tael_lyde': 'count_sounds',
+        'tael-lyde': 'count_sounds',
+        'tael': 'count_sounds',
+        'taellyde': 'count_sounds',
+        'tæl_lyde': 'count_sounds',
+        'tæl-lyde': 'count_sounds',
+        'tæl': 'count_sounds',
+
+        'build_word': 'build_word',
+        'byg_et_ord': 'build_word',
+        'byg-et-ord': 'build_word',
+        'byg': 'build_word',
+        'bygord': 'build_word',
+        'bygetord': 'build_word',
+
+        'minimal_pairs': 'minimal_pairs',
+        'hoer_forskel': 'minimal_pairs',
+        'hoer-forskel': 'minimal_pairs',
+        'hør_forskel': 'minimal_pairs',
+        'hør-forskel': 'minimal_pairs',
+        'kan_du_hoere_forskel': 'minimal_pairs',
+        'kan-du-hoere-forskel': 'minimal_pairs',
+        'kan_du_høre_forskel': 'minimal_pairs',
+        'kan-du-høre-forskel': 'minimal_pairs',
+        'minpair': 'minimal_pairs',
+        'minpairs': 'minimal_pairs'
+    };
+
+    const SET_SLUGS = {
+        1: 'saet1',
+        2: 'saet2',
+        3: 'saet3',
+        4: 'modultest'
+    };
+
+    const SLUG_TO_SET = {
+        '1': 1,
+        'saet1': 1,
+        'saet-1': 1,
+        'saet_1': 1,
+        'sæt1': 1,
+        'sæt-1': 1,
+        'sæt_1': 1,
+        'fundamentet': 1,
+
+        '2': 2,
+        'saet2': 2,
+        'saet-2': 2,
+        'saet_2': 2,
+        'sæt2': 2,
+        'sæt-2': 2,
+        'sæt_2': 2,
+        'konsonanter': 2,
+
+        '3': 3,
+        'saet3': 3,
+        'saet-3': 3,
+        'saet_3': 3,
+        'sæt3': 3,
+        'sæt-3': 3,
+        'sæt_3': 3,
+        'vokaler': 3,
+        'hiatus': 3,
+
+        '4': 4,
+        'modultest': 4,
+        'modul-test': 4,
+        'modul_test': 4,
+        'test': 4,
+        'vroevleord': 4,
+        'vrøvleord': 4
+    };
+
+    function parseSubPath(subPath) {
+        if (!subPath) return { mode: null, setId: null };
+        const rawSegments = String(subPath).split('/').filter(Boolean);
+        let parsedMode = null;
+        let parsedSetId = null;
+
+        for (const raw of rawSegments) {
+            let decoded = raw;
+            try { decoded = decodeURIComponent(raw); } catch (e) {}
+            const normalized = decoded.toLowerCase().trim().replace(/[\s\-]+/g, '_');
+
+            if (!parsedMode && SLUG_TO_MODE[normalized]) {
+                parsedMode = SLUG_TO_MODE[normalized];
+            } else if (!parsedSetId && SLUG_TO_SET[normalized]) {
+                parsedSetId = SLUG_TO_SET[normalized];
+            }
+        }
+        if (!parsedMode && parsedSetId) {
+            parsedMode = 'count_sounds';
+        }
+        return { mode: parsedMode, setId: parsedSetId };
+    }
+
+    function updateUrl(replace = false) {
+        const lang = getLang();
+        let hash = `#/${lang}/laesetraening`;
+        if (currentMode && MODE_SLUGS[currentMode]) {
+            hash += `/${MODE_SLUGS[currentMode]}`;
+            if (currentSetId && SET_SLUGS[currentSetId]) {
+                hash += `/${SET_SLUGS[currentSetId]}`;
+            }
+        }
+        if (replace) {
+            history.replaceState(null, '', hash);
+        } else if (window.location.hash !== hash) {
+            history.pushState(null, '', hash);
+        }
+    }
+
+    const initialRoute = parseSubPath(extraData.subPath);
+    let currentMode = initialRoute.mode; // null (main menu), 'count_sounds', 'build_word', 'minimal_pairs'
+    let currentSetId = initialRoute.setId; // null (set selection), 1, 2, 3, 4
     let currentItemIdx = 0;
     let score = 0;
+
+    if (extraData.q || extraData.item) {
+        const qNum = parseInt(extraData.q || extraData.item, 10);
+        if (!isNaN(qNum) && qNum >= 1) {
+            currentItemIdx = qNum - 1;
+        }
+    }
+
+    if (extraData && extraData.subPath) {
+        updateUrl(true);
+    }
 
     // Speech Recognition setup for pronunciation checking
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -612,9 +744,11 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                 currentSetId = null;
                 currentItemIdx = 0;
                 score = 0;
+                updateUrl();
                 render();
             } else if (currentMode !== null) {
                 currentMode = null;
+                updateUrl();
                 render();
             } else {
                 navigateFn('traen_udtale');
@@ -689,16 +823,25 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
         wrap.querySelector('#btn-mode-count').onclick = () => {
             currentMode = 'count_sounds';
             currentSetId = null;
+            currentItemIdx = 0;
+            score = 0;
+            updateUrl();
             render();
         };
         wrap.querySelector('#btn-mode-build').onclick = () => {
             currentMode = 'build_word';
             currentSetId = null;
+            currentItemIdx = 0;
+            score = 0;
+            updateUrl();
             render();
         };
         wrap.querySelector('#btn-mode-minpair').onclick = () => {
             currentMode = 'minimal_pairs';
             currentSetId = null;
+            currentItemIdx = 0;
+            score = 0;
+            updateUrl();
             render();
         };
 
@@ -737,6 +880,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
                 currentSetId = setId;
                 currentItemIdx = 0;
                 score = 0;
+                updateUrl();
                 render();
             };
             wrap.appendChild(btn);
@@ -1166,6 +1310,7 @@ export function renderLaesetraeningView(container, navigateFn, extraData = {}) {
             currentSetId = null;
             currentItemIdx = 0;
             score = 0;
+            updateUrl();
             render();
         };
 

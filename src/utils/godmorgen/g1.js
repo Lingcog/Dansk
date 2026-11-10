@@ -221,7 +221,17 @@ export const g1Translations = {
     "gm_saf_sub": "Melody by Carsten Johs. Mørch (1998) from Højskolesangbogen",
     "gm_saf_open_yt": "Play melody on YouTube",
     "gm_saf_show_player": "Show Player",
-    "gm_saf_hide_player": "Hide Player"
+    "gm_saf_hide_player": "Hide Player",
+    "gm_meaning_label": "Meaning & Geography",
+    "gm_t2_meaning_label": "Meaning & Geography",
+    "gm_t2_banner_badge": "Key expressions with rhythm & syllables (click for pronunciation & map):",
+    "gm_t2_crop_title": "Map Excerpt of Denmark",
+    "gm_t2_crop_close": "Close excerpt",
+    "gm_t2_part_1": "Part 1 of the song",
+    "gm_t2_part_2": "Part 2 of the song",
+    "gm_t2_part_3": "Part 3 of the song",
+    "gm_t2_part_4": "Part 4 of the song",
+    "gm_btn_listen_keywords": "Listen to theme key expressions"
   },
   "de": {
     "gm_back_btn": "← Zurück zu Dänische Lieder",
@@ -445,7 +455,17 @@ export const g1Translations = {
     "gm_saf_sub": "Melodie von Carsten Johs. Mørch (1998) aus dem Højskolesangbogen",
     "gm_saf_open_yt": "Auf YouTube anhören",
     "gm_saf_show_player": "Player anzeigen",
-    "gm_saf_hide_player": "Player ausblenden"
+    "gm_saf_hide_player": "Player ausblenden",
+    "gm_meaning_label": "Bedeutung & Geografie",
+    "gm_t2_meaning_label": "Bedeutung & Geografie",
+    "gm_t2_banner_badge": "Schlüsselausdrücke mit Sprachrhythmus & Silben (Klick für Aussprache & Karte):",
+    "gm_t2_crop_title": "Ausschnitt aus der Dänemarkkarte",
+    "gm_t2_crop_close": "Ausschnitt schließen",
+    "gm_t2_part_1": "1. Teil des Liedes",
+    "gm_t2_part_2": "2. Teil des Liedes",
+    "gm_t2_part_3": "3. Teil des Liedes",
+    "gm_t2_part_4": "4. Teil des Liedes",
+    "gm_btn_listen_keywords": "Schlüsselausdrücke des Themas anhören"
   },
   "es": {
     "gm_back_btn": "← Volver a Canciones danesas",
@@ -669,7 +689,17 @@ export const g1Translations = {
     "gm_saf_sub": "Melodía de Carsten Johs. Mørch (1998) de Højskolesangbogen",
     "gm_saf_open_yt": "Escuchar en YouTube",
     "gm_saf_show_player": "Mostrar reproductor",
-    "gm_saf_hide_player": "Ocultar reproductor"
+    "gm_saf_hide_player": "Ocultar reproductor",
+    "gm_meaning_label": "Significado y Geografía",
+    "gm_t2_meaning_label": "Significado y Geografía",
+    "gm_t2_banner_badge": "Expresiones clave con ritmo y sílabas (clic para pronunciación y mapa):",
+    "gm_t2_crop_title": "Detalle del mapa de Dinamarca",
+    "gm_t2_crop_close": "Cerrar detalle",
+    "gm_t2_part_1": "Parte 1 de la canción",
+    "gm_t2_part_2": "Parte 2 de la canción",
+    "gm_t2_part_3": "Parte 3 de la canción",
+    "gm_t2_part_4": "Parte 4 de la canción",
+    "gm_btn_listen_keywords": "Escuchar expresiones clave del tema"
   },
   "pt": {
     "gm_back_btn": "← Voltar às Canções Dinamarquesas",
@@ -893,7 +923,17 @@ export const g1Translations = {
     "gm_saf_sub": "Melodia de Carsten Johs. Mørch (1998) de Højskolesangbogen",
     "gm_saf_open_yt": "Ouvir no YouTube",
     "gm_saf_show_player": "Mostrar leitor",
-    "gm_saf_hide_player": "Ocultar leitor"
+    "gm_saf_hide_player": "Ocultar leitor",
+    "gm_meaning_label": "Significado e Geografia",
+    "gm_t2_meaning_label": "Significado e Geografia",
+    "gm_t2_banner_badge": "Expressões-chave com ritmo e sílabas (clique para pronúncia e mapa):",
+    "gm_t2_crop_title": "Recorte do mapa da Dinamarca",
+    "gm_t2_crop_close": "Fechar recorte",
+    "gm_t2_part_1": "Parte 1 da canção",
+    "gm_t2_part_2": "Parte 2 da canção",
+    "gm_t2_part_3": "Parte 3 da canção",
+    "gm_t2_part_4": "Parte 4 da canção",
+    "gm_btn_listen_keywords": "Ouvir expressões-chave do tema"
   },
   "tr": {
     "gm_back_btn": "← Danimarka Şarkılarına Dön",
@@ -1117,6 +1157,16 @@ export const g1Translations = {
     "gm_saf_sub": "Højskolesangbogen'den Carsten Johs. Mørch'ün (1998) bestesi",
     "gm_saf_open_yt": "YouTube'da Dinle",
     "gm_saf_show_player": "Oynatıcıyı Göster",
-    "gm_saf_hide_player": "Oynatıcıyı Gizle"
+    "gm_saf_hide_player": "Oynatıcıyı Gizle",
+    "gm_meaning_label": "Anlam ve Coğrafya",
+    "gm_t2_meaning_label": "Anlam ve Coğrafya",
+    "gm_t2_banner_badge": "Ritim ve hecelerle anahtar ifadeler (telaffuz ve harita için tıklayın):",
+    "gm_t2_crop_title": "Danimarka Haritası Kesiti",
+    "gm_t2_crop_close": "Kesiti kapat",
+    "gm_t2_part_1": "Şarkının 1. bölümü",
+    "gm_t2_part_2": "Şarkının 2. bölümü",
+    "gm_t2_part_3": "Şarkının 3. bölümü",
+    "gm_t2_part_4": "Şarkının 4. bölümü",
+    "gm_btn_listen_keywords": "Temanın anahtar ifadelerini dinle"
   }
 };

@@ -221,7 +221,17 @@ export const g3Translations = {
     "gm_saf_sub": "Мелодия Карстена Йоса Мёрка (Carsten Johs. Mørch, 1998) из Højskolesangbogen",
     "gm_saf_open_yt": "Слушать мелодию на YouTube",
     "gm_saf_show_player": "Показать плеер",
-    "gm_saf_hide_player": "Скрыть плеер"
+    "gm_saf_hide_player": "Скрыть плеер",
+    "gm_meaning_label": "Значение и география",
+    "gm_t2_meaning_label": "Значение и география",
+    "gm_t2_banner_badge": "Ключевые выражения с ритмом и слогами (нажмите для произношения и карты):",
+    "gm_t2_crop_title": "Фрагмент карты Дании",
+    "gm_t2_crop_close": "Закрыть фрагмент",
+    "gm_t2_part_1": "1-я часть песни",
+    "gm_t2_part_2": "2-я часть песни",
+    "gm_t2_part_3": "3-я часть песни",
+    "gm_t2_part_4": "4-я часть песни",
+    "gm_btn_listen_keywords": "Слушать ключевые выражения темы"
   },
   "uk": {
     "gm_back_btn": "← Назад до данських пісень",
@@ -445,7 +455,17 @@ export const g3Translations = {
     "gm_saf_sub": "Мелодія Карстена Йоса Мерка (Carsten Johs. Mørch, 1998) із Højskolesangbogen",
     "gm_saf_open_yt": "Слухати мелодію на YouTube",
     "gm_saf_show_player": "Показати плеєр",
-    "gm_saf_hide_player": "Сховати плеєр"
+    "gm_saf_hide_player": "Сховати плеєр",
+    "gm_meaning_label": "Значення та географія",
+    "gm_t2_meaning_label": "Значення та географія",
+    "gm_t2_banner_badge": "Ключові вирази з ритмом та складами (натисніть для вимови та карти):",
+    "gm_t2_crop_title": "Фрагмент карти Данії",
+    "gm_t2_crop_close": "Закрити фрагмент",
+    "gm_t2_part_1": "1-ша частина пісні",
+    "gm_t2_part_2": "2-га частина пісні",
+    "gm_t2_part_3": "3-тя частина пісні",
+    "gm_t2_part_4": "4-та частина пісні",
+    "gm_btn_listen_keywords": "Слухати ключові вирази теми"
   },
   "zh": {
     "gm_back_btn": "← 返回丹麦歌曲",
@@ -669,7 +689,17 @@ export const g3Translations = {
     "gm_saf_sub": "曲：Carsten Johs. Mørch (1998)，选自《民校歌集》（Højskolesangbogen）",
     "gm_saf_open_yt": "在 YouTube 上收听旋律",
     "gm_saf_show_player": "显示播放器",
-    "gm_saf_hide_player": "隐藏播放器"
+    "gm_saf_hide_player": "隐藏播放器",
+    "gm_meaning_label": "含义与地理",
+    "gm_t2_meaning_label": "含义与地理",
+    "gm_t2_banner_badge": "带有发音节奏与音节的核心表达（点击收听发音并查看地图）：",
+    "gm_t2_crop_title": "丹麦地图截选",
+    "gm_t2_crop_close": "关闭截选",
+    "gm_t2_part_1": "歌曲第 1 部分",
+    "gm_t2_part_2": "歌曲第 2 部分",
+    "gm_t2_part_3": "歌曲第 3 部分",
+    "gm_t2_part_4": "歌曲第 4 部分",
+    "gm_btn_listen_keywords": "聆听该主题的核心表达"
   },
   "vi": {
     "gm_back_btn": "← Quay lại Bài hát tiếng Đan Mạch",
@@ -893,7 +923,17 @@ export const g3Translations = {
     "gm_saf_sub": "Giai điệu của Carsten Johs. Mørch (1998) từ Højskolesangbogen",
     "gm_saf_open_yt": "Nghe giai điệu trên YouTube",
     "gm_saf_show_player": "Hiện trình phát",
-    "gm_saf_hide_player": "Ẩn trình phát"
+    "gm_saf_hide_player": "Ẩn trình phát",
+    "gm_meaning_label": "Ý nghĩa & Địa lý",
+    "gm_t2_meaning_label": "Ý nghĩa & Địa lý",
+    "gm_t2_banner_badge": "Biểu đạt chính kèm nhịp điệu phát âm & âm tiết (nhấp để nghe phát âm & xem bản đồ):",
+    "gm_t2_crop_title": "Trích đoạn bản đồ Đan Mạch",
+    "gm_t2_crop_close": "Đóng trích đoạn",
+    "gm_t2_part_1": "Phần 1 của bài hát",
+    "gm_t2_part_2": "Phần 2 của bài hát",
+    "gm_t2_part_3": "Phần 3 của bài hát",
+    "gm_t2_part_4": "Phần 4 của bài hát",
+    "gm_btn_listen_keywords": "Nghe các biểu đạt chính của chủ đề"
   },
   "sq": {
     "gm_back_btn": "← Kthehu te Këngët daneze",
@@ -1117,6 +1157,16 @@ export const g3Translations = {
     "gm_saf_sub": "Melodia nga Carsten Johs. Mørch (1998) nga Højskolesangbogen",
     "gm_saf_open_yt": "Dëgjoni melodinë në YouTube",
     "gm_saf_show_player": "Shfaq luajtësin",
-    "gm_saf_hide_player": "Fshih luajtësin"
+    "gm_saf_hide_player": "Fshih luajtësin",
+    "gm_meaning_label": "Kuptimi dhe Gjeografia",
+    "gm_t2_meaning_label": "Kuptimi dhe Gjeografia",
+    "gm_t2_banner_badge": "Shprehjet kryesore me ritmin e shqiptimit dhe rrokjet (kliko për shqiptim & hartë):",
+    "gm_t2_crop_title": "Pjesë nga harta e Danimarkës",
+    "gm_t2_crop_close": "Mbyll pjesën",
+    "gm_t2_part_1": "Pjesa 1 e këngës",
+    "gm_t2_part_2": "Pjesa 2 e këngës",
+    "gm_t2_part_3": "Pjesa 3 e këngës",
+    "gm_t2_part_4": "Pjesa 4 e këngës",
+    "gm_btn_listen_keywords": "Dëgjoni shprehjet kryesore të temës"
   }
 };

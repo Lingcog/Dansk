@@ -221,7 +221,17 @@ export const g2Translations = {
     "gm_saf_sub": "اللحن لـ Carsten Johs. Mørch (1998) من Højskolesangbogen",
     "gm_saf_open_yt": "استمع إلى اللحن على YouTube",
     "gm_saf_show_player": "عرض المشغّل",
-    "gm_saf_hide_player": "إخفاء المشغّل"
+    "gm_saf_hide_player": "إخفاء المشغّل",
+    "gm_meaning_label": "المعنى والجغرافيا",
+    "gm_t2_meaning_label": "المعنى والجغرافيا",
+    "gm_t2_banner_badge": "التعبيرات الأساسية مع إيقاع النطق والمقاطع (انقر للنطق والخريطة):",
+    "gm_t2_crop_title": "مقتطف من خريطة الدنمارك",
+    "gm_t2_crop_close": "إغلاق المقتطف",
+    "gm_t2_part_1": "الجزء الأول من الأغنية",
+    "gm_t2_part_2": "الجزء الثاني من الأغنية",
+    "gm_t2_part_3": "الجزء الثالث من الأغنية",
+    "gm_t2_part_4": "الجزء الرابع من الأغنية",
+    "gm_btn_listen_keywords": "استمع إلى تعبيرات الموضوع الأساسية"
   },
   "fa": {
     "gm_back_btn": "← بازگشت به ترانه‌های دانمارکی",
@@ -445,7 +455,17 @@ export const g2Translations = {
     "gm_saf_sub": "آهنگ از Carsten Johs. Mørch (1998) از کتاب Højskolesangbogen",
     "gm_saf_open_yt": "شنیدن آهنگ در YouTube",
     "gm_saf_show_player": "نمایش پخش‌کننده",
-    "gm_saf_hide_player": "پنهان کردن پخش‌کننده"
+    "gm_saf_hide_player": "پنهان کردن پخش‌کننده",
+    "gm_meaning_label": "معنی و جغرافیا",
+    "gm_t2_meaning_label": "معنی و جغرافیا",
+    "gm_t2_banner_badge": "عبارت‌های کلیدی همراه با ریتم تلفظ و هجاها (برای تلفظ و نقشه کلیک کنید):",
+    "gm_t2_crop_title": "بخشی از نقشهٔ دانمارک",
+    "gm_t2_crop_close": "بستن بخش",
+    "gm_t2_part_1": "بخش ۱ ترانه",
+    "gm_t2_part_2": "بخش ۲ ترانه",
+    "gm_t2_part_3": "بخش ۳ ترانه",
+    "gm_t2_part_4": "بخش ۴ ترانه",
+    "gm_btn_listen_keywords": "گوش دادن به عبارت‌های کلیدی این بخش"
   },
   "ku": {
     "gm_back_btn": "← Vegere ser Stranên Danîmarkî",
@@ -669,7 +689,17 @@ export const g2Translations = {
     "gm_saf_sub": "Melodî ji Carsten Johs. Mørch (1998) ji Højskolesangbogen",
     "gm_saf_open_yt": "Li ser YouTubeê li melodiyê guhdar bike",
     "gm_saf_show_player": "Lîstikvan nîşan bide",
-    "gm_saf_hide_player": "Lîstikvan veşêre"
+    "gm_saf_hide_player": "Lîstikvan veşêre",
+    "gm_meaning_label": "Wate û Erdnîgarî",
+    "gm_t2_meaning_label": "Wate û Erdnîgarî",
+    "gm_t2_banner_badge": "Îfadeyên sereke bi rîtma bilêvkirinê & kîteyan (ji bo bilêvkirin & nexşeyê bitikîne):",
+    "gm_t2_crop_title": "Perçeyek ji nexşeya Danîmarkayê",
+    "gm_t2_crop_close": "Perçeyê bigire",
+    "gm_t2_part_1": "Beşa 1. a stranê",
+    "gm_t2_part_2": "Beşa 2. a stranê",
+    "gm_t2_part_3": "Beşa 3. a stranê",
+    "gm_t2_part_4": "Beşa 4. a stranê",
+    "gm_btn_listen_keywords": "Guh bide îfadeyên sereke yên babetê"
   },
   "ur": {
     "gm_back_btn": "← واپس ڈینش نغمات کی طرف",
@@ -893,7 +923,17 @@ export const g2Translations = {
     "gm_saf_sub": "کارسٹن جوہس مورچ (1998) کی ترتیب دی گئی دھن (Højskolesangbogen سے)",
     "gm_saf_open_yt": "یوٹیوب پر دھن سنیں",
     "gm_saf_show_player": "پلیئر دکھائیں",
-    "gm_saf_hide_player": "پلیئر چھپائیں"
+    "gm_saf_hide_player": "پلیئر چھپائیں",
+    "gm_meaning_label": "معنی اور جغرافیہ",
+    "gm_t2_meaning_label": "معنی اور جغرافیہ",
+    "gm_t2_banner_badge": "تلفظ کی روانی اور ہجوں کے ساتھ کلیدی الفاظ (تلفظ اور نقشے کے لیے کلک کریں):",
+    "gm_t2_crop_title": "ڈنمارک کے نقشے کا اقتباس",
+    "gm_t2_crop_close": "اقتباس بند کریں",
+    "gm_t2_part_1": "گیت کا پہلا حصہ",
+    "gm_t2_part_2": "گیت کا دوسرا حصہ",
+    "gm_t2_part_3": "گیت کا تیسرا حصہ",
+    "gm_t2_part_4": "گیت کا چوتھا حصہ",
+    "gm_btn_listen_keywords": "موضوع کے کلیدی الفاظ سنیں"
   },
   "ps": {
     "gm_back_btn": "← بېرته ډنمارکي سندرو ته",
@@ -1117,6 +1157,16 @@ export const g2Translations = {
     "gm_saf_sub": "د Carsten Johs. Mørch (۱۹۹۸) له خوا جوړه شوې نغمه (له Højskolesangbogen څخه)",
     "gm_saf_open_yt": "په یوټیوب کې نغمه واورئ",
     "gm_saf_show_player": "پلیر وښایاست",
-    "gm_saf_hide_player": "پلیر پټ کړئ"
+    "gm_saf_hide_player": "پلیر پټ کړئ",
+    "gm_meaning_label": "معنی او جغرافیه",
+    "gm_t2_meaning_label": "معنی او جغرافیه",
+    "gm_t2_banner_badge": "د تلفظ د وزن او څپو سره مهم اصطلاحات (د تلفظ او نقشې لپاره کلیک وکړئ):",
+    "gm_t2_crop_title": "د ډنمارک د نقشې یوه برخه",
+    "gm_t2_crop_close": "برخه وتړئ",
+    "gm_t2_part_1": "د سندرې لومړۍ برخه",
+    "gm_t2_part_2": "د سندرې دویمه برخه",
+    "gm_t2_part_3": "د سندرې درېیمه برخه",
+    "gm_t2_part_4": "د سندرې څلورمه برخه",
+    "gm_btn_listen_keywords": "د موضوع مهم اصطلاحات واورئ"
   }
 };

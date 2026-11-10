@@ -221,7 +221,17 @@ export const g4Translations = {
     "gm_saf_sub": "ทำนองโดย Carsten Johs. Mørch (1998) จาก Højskolesangbogen",
     "gm_saf_open_yt": "ฟังทำนองเพลงบน YouTube",
     "gm_saf_show_player": "แสดงเครื่องเล่นเพลง",
-    "gm_saf_hide_player": "ซ่อนเครื่องเล่นเพลง"
+    "gm_saf_hide_player": "ซ่อนเครื่องเล่นเพลง",
+    "gm_meaning_label": "ความหมายและภูมิศาสตร์",
+    "gm_t2_meaning_label": "ความหมายและภูมิศาสตร์",
+    "gm_t2_banner_badge": "สำนวนสำคัญพร้อมจังหวะการออกเสียงและพยางค์ (คลิกเพื่อฟังเสียงและดูแผนที่):",
+    "gm_t2_crop_title": "ส่วนตัดจากแผนที่เดนมาร์ก",
+    "gm_t2_crop_close": "ปิดส่วนตัด",
+    "gm_t2_part_1": "ส่วนที่ 1 ของบทเพลง",
+    "gm_t2_part_2": "ส่วนที่ 2 ของบทเพลง",
+    "gm_t2_part_3": "ส่วนที่ 3 ของบทเพลง",
+    "gm_t2_part_4": "ส่วนที่ 4 ของบทเพลง",
+    "gm_btn_listen_keywords": "ฟังสำนวนสำคัญประจำหัวข้อ"
   },
   "ne": {
     "gm_back_btn": "← डेनिस गीतहरूमा फर्कनुहोस्",
@@ -445,6 +455,16 @@ export const g4Translations = {
     "gm_saf_sub": "Højskolesangbogen बाट Carsten Johs. Mørch (1998) द्वारा संगीत",
     "gm_saf_open_yt": "YouTube मा धुन सुन्नुहोस्",
     "gm_saf_show_player": "प्लेयर देखाउनुहोस्",
-    "gm_saf_hide_player": "प्लेयर लुकाउनुहोस्"
+    "gm_saf_hide_player": "प्लेयर लुकाउनुहोस्",
+    "gm_meaning_label": "अर्थ र भूगोल",
+    "gm_t2_meaning_label": "अर्थ र भूगोल",
+    "gm_t2_banner_badge": "उच्चारण लय र अक्षरहरू (syllables) सहित मुख्य अभिव्यक्तिहरू (उच्चारण र नक्साका लागि क्लिक गर्नुहोस्):",
+    "gm_t2_crop_title": "डेनमार्कको नक्साको अंश",
+    "gm_t2_crop_close": "अंश बन्द गर्नुहोस्",
+    "gm_t2_part_1": "गीतको भाग १",
+    "gm_t2_part_2": "गीतको भाग २",
+    "gm_t2_part_3": "गीतको भाग ३",
+    "gm_t2_part_4": "गीतको भाग ४",
+    "gm_btn_listen_keywords": "यस शीर्षकका मुख्य अभिव्यक्तिहरू सुन्नुहोस्"
   }
 };

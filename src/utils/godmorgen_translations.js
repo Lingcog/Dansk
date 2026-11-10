@@ -133,6 +133,17 @@ export const godmorgenTranslations = {
     gm_sang_intro_sub: "Lær de vigtige geografiord med udtale og tryk. Klik på et nøgleudtryk for at høre udtalen og se udsnittet på Danmarkskortet. Læs hele den samlede originaltekst og lyt til melodien på Højskolesangbogens officielle hjemmeside.",
     gm_sang_intro_link: "Åbn sangteksten på Højskolesangbogen.dk ↗",
 
+    gm_meaning_label: "Betydning & Geografi",
+    gm_t2_meaning_label: "Betydning & Geografi",
+    gm_t2_banner_badge: "Nøgleudtryk med udtalerytme & stavelser (klik for udtale & kort):",
+    gm_t2_crop_title: "Udsnit fra Danmarkskortet",
+    gm_t2_crop_close: "Luk udsnit",
+    gm_t2_part_1: "1. del af sangen",
+    gm_t2_part_2: "2. del af sangen",
+    gm_t2_part_3: "3. del af sangen",
+    gm_t2_part_4: "4. del af sangen",
+    gm_btn_listen_keywords: "Lyt til temaets nøgleudtryk",
+
     gm_theme_1_title: "Landskab, kyst og spor fra istiden",
     gm_theme_1_tag: "Natur & Landskab",
     gm_theme_1_expl: "Sangen indledes med en hyldest til det danske naturlandskab og vejr: morgendis (den lette tåge over markerne), de tusindvis af kilometer kyst med sand og sten, bølgernes skvulpen og de bløde bakker, som isen formede under den seneste istid.",
@@ -288,3 +299,55 @@ export const godmorgenTranslations = {
   ...g3Translations,
   ...g4Translations
 };
+
+// Ensure alias compatibility across all tabs
+for (const lang of Object.keys(godmorgenTranslations)) {
+  const dict = godmorgenTranslations[lang];
+  if (!dict) continue;
+
+  // Tab 2 aliases
+  dict.gm_meaning_label = dict.gm_meaning_label || dict.gm_t2_meaning_label;
+  dict.gm_t2_meaning_label = dict.gm_t2_meaning_label || dict.gm_meaning_label;
+  dict.gm_t2_banner_title = dict.gm_t2_banner_title || dict.gm_sang_intro_title;
+  dict.gm_t2_banner_desc = dict.gm_t2_banner_desc || dict.gm_sang_intro_sub;
+  for (let i = 1; i <= 4; i++) {
+    dict[`gm_t2_v${i}_title`] = dict[`gm_t2_v${i}_title`] || dict[`gm_theme_${i}_title`];
+    dict[`gm_t2_v${i}_tag`] = dict[`gm_t2_v${i}_tag`] || dict[`gm_theme_${i}_tag`];
+    dict[`gm_t2_v${i}_forklaring`] = dict[`gm_t2_v${i}_forklaring`] || dict[`gm_theme_${i}_expl`];
+  }
+
+  // Tab 3 aliases
+  dict.gm_t3_clue_label = dict.gm_t3_clue_label || dict.gm_det_clue_title;
+  dict.gm_t3_correct = dict.gm_t3_correct || dict.gm_det_correct;
+  dict.gm_t3_wrong = dict.gm_t3_wrong || dict.gm_det_wrong;
+  dict.gm_t3_btn_next = dict.gm_t3_btn_next || dict.gm_det_next;
+  dict.gm_t3_done_title = dict.gm_t3_done_title || dict.gm_det_done_title;
+  dict.gm_t3_btn_restart = dict.gm_t3_btn_restart || dict.gm_det_retry;
+  for (let i = 1; i <= 8; i++) {
+    dict[`gm_t3_q${i}_text`] = dict[`gm_t3_q${i}_text`] || dict[`gm_q_${i}_text`];
+    dict[`gm_t3_q${i}_tip`] = dict[`gm_t3_q${i}_tip`] || dict[`gm_q_${i}_tip`];
+  }
+
+  // Tab 4 aliases
+  dict.gm_t4_banner_badge = dict.gm_t4_banner_badge || dict.gm_builder_intro_badge;
+  dict.gm_t4_banner_title = dict.gm_t4_banner_title || dict.gm_builder_intro_title;
+  dict.gm_t4_banner_desc = dict.gm_t4_banner_desc || dict.gm_builder_intro_desc;
+  dict.gm_t4_subtab_puzzle = dict.gm_t4_subtab_puzzle || dict.gm_builder_subtab_puzzle;
+  dict.gm_t4_subtab_step = dict.gm_t4_subtab_step || dict.gm_builder_subtab_step;
+  dict.gm_t4_feedback_correct = dict.gm_t4_feedback_correct || dict.gm_puzzle_success;
+  dict.gm_t4_feedback_wrong = dict.gm_t4_feedback_wrong || dict.gm_puzzle_error;
+  for (let i = 1; i <= 8; i++) {
+    dict[`gm_t4_p${i}_prompt`] = dict[`gm_t4_p${i}_prompt`] || dict[`gm_pz_${i}_q`];
+    dict[`gm_t4_p${i}_ruleTip`] = dict[`gm_t4_p${i}_ruleTip`] || dict[`gm_pz_${i}_tip`];
+  }
+
+  // Tab 5 aliases
+  dict.gm_t5_banner_badge = dict.gm_t5_banner_badge || dict.gm_match_header;
+  dict.gm_t5_banner_desc = dict.gm_t5_banner_desc || dict.gm_match_desc;
+  dict.gm_t5_landsdele_title = dict.gm_t5_landsdele_title || dict.gm_landsdele_header;
+  dict.gm_t5_prep_rule = dict.gm_t5_prep_rule || dict.gm_landsdele_desc;
+  dict.gm_t5_prep_jylland = dict.gm_t5_prep_jylland || dict.gm_ld_jylland_prep;
+  dict.gm_t5_prep_fyn = dict.gm_t5_prep_fyn || dict.gm_ld_fyn_prep;
+  dict.gm_t5_prep_sjaelland = dict.gm_t5_prep_sjaelland || dict.gm_ld_sjaelland_prep;
+  dict.gm_t5_prep_oeerne = dict.gm_t5_prep_oeerne || dict.gm_ld_oer_prep;
+}

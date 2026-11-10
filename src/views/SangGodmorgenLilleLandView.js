@@ -1893,9 +1893,9 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     sangIntroBanner.className = 'hsb-reference-banner';
     sangIntroBanner.innerHTML = `
         <div class="hsb-ref-text">
-            <div class="hsb-ref-title">${t('gm_t2_banner_title', 'Nøgleudtryk, udtalerytme & geografi i sangen')}</div>
+            <div class="hsb-ref-title">${t('gm_sang_intro_title', t('gm_t2_banner_title', 'Nøgleudtryk, udtalerytme & geografi i sangen'))}</div>
             <div class="hsb-ref-sub">
-                ${t('gm_t2_banner_desc', 'Lær de vigtige geografiord med udtale og tryk. Klik på et nøgleudtryk for at høre udtalen og se udsnittet på Danmarkskortet. Læs hele den samlede originaltekst og lyt til melodien på Højskolesangbogens officielle hjemmeside.')}
+                ${t('gm_sang_intro_sub', t('gm_t2_banner_desc', 'Lær de vigtige geografiord med udtale og tryk. Klik på et nøgleudtryk for at høre udtalen og se udsnittet på Danmarkskortet. Læs hele den samlede originaltekst og lyt til melodien på Højskolesangbogens officielle hjemmeside.'))}
             </div>
         </div>
         <a href="https://hojskolesangbogen.dk/sange/g/godmorgen-lille-land" target="_blank" rel="noopener noreferrer" class="hsb-ref-link">
@@ -2078,9 +2078,11 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         const card = document.createElement('div');
         card.className = 'verse-card';
 
-        const titleTrans = t(`gm_t2_v${themeIdx + 1}_title`, themeItem.title);
-        const tagTrans = t(`gm_t2_v${themeIdx + 1}_tag`, themeItem.themeTag);
-        const expTrans = t(`gm_t2_v${themeIdx + 1}_forklaring`, themeItem.explanation);
+        const titleTrans = t(`gm_theme_${themeIdx + 1}_title`, t(`gm_t2_v${themeIdx + 1}_title`, themeItem.title));
+        const tagTrans = t(`gm_theme_${themeIdx + 1}_tag`, t(`gm_t2_v${themeIdx + 1}_tag`, themeItem.themeTag));
+        const expTrans = t(`gm_theme_${themeIdx + 1}_expl`, t(`gm_t2_v${themeIdx + 1}_forklaring`, themeItem.explanation));
+        const partTrans = t(`gm_t2_part_${themeIdx + 1}`, themeItem.themeNum);
+        const meaningLabelTrans = t('gm_meaning_label', t('gm_t2_meaning_label', 'Betydning & Geografi'));
 
         // Chips HTML
         const chipsHtml = themeItem.terms.map((term, idx) => `
@@ -2095,7 +2097,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
             <div class="verse-card-header">
                 <div class="verse-day-title">
                     ${themeItem.themeNum}: ${themeItem.title}
-                    ${!isDa && titleTrans !== themeItem.title ? `<div style="font-size: 0.95rem; font-weight: 500; color: #94a3b8; margin-top: 0.15rem;">${titleTrans}</div>` : ''}
+                    ${!isDa && (titleTrans !== themeItem.title || partTrans !== themeItem.themeNum) ? `<div style="font-size: 0.95rem; font-weight: 500; color: #94a3b8; margin-top: 0.15rem;">${partTrans}: ${titleTrans}</div>` : ''}
                 </div>
                 <span class="verse-theme-tag">${tagTrans}</span>
             </div>
@@ -2106,13 +2108,16 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                 </div>
             </div>
             <div style="font-size: 0.94rem; color: #cbd5e1; line-height: 1.5; background: rgba(15, 23, 42, 0.55); padding: 0.85rem 1.1rem; border-radius: 10px;">
-                <strong style="color: #38bdf8;">Betydning & Geografi:</strong> ${themeItem.explanation}
-                ${!isDa && expTrans !== themeItem.explanation ? `<div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.2rem;">${expTrans}</div>` : ''}
+                <strong style="color: #38bdf8;">${t('gm_meaning_label', 'Betydning & Geografi')}:</strong> ${themeItem.explanation}
+                ${!isDa && expTrans !== themeItem.explanation ? `
+                    <div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.35rem; line-height: 1.45; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.35rem;">
+                        <strong style="color: #7dd3fc;">${meaningLabelTrans}:</strong> ${expTrans}
+                    </div>` : ''}
             </div>
             <div class="verse-crop-drawer">
                 <div class="verse-crop-thumb" style="background-size: 380% 380%; background-position: ${firstTerm.cropX}% ${firstTerm.cropY}%;"></div>
                 <div class="verse-crop-info">
-                    <span class="verse-crop-badge">${t('gm_t2_crop_title', 'Udsnit fra Danmarkskortet')} · ${themeItem.themeNum}</span>
+                    <span class="verse-crop-badge">${t('gm_t2_crop_title', 'Udsnit fra Danmarkskortet')} · ${partTrans}</span>
                     <div class="verse-crop-title">${firstTerm.cropTitle}</div>
                     <div class="verse-crop-desc">${firstTerm.cropDesc}</div>
                     <button type="button" class="verse-crop-close">${t('gm_t2_crop_close', 'Luk udsnit')}</button>
@@ -2120,7 +2125,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
             </div>
             <div>
                 <button type="button" class="listen-btn btn-theme-speak" style="padding: 0.55rem 1.1rem; font-size: 0.88rem;">
-                    ${t('gm_btn_listen_sentence', 'Lyt til temaets nøgleudtryk')} (${themeItem.themeNum})
+                    ${t('gm_btn_listen_keywords', t('gm_btn_listen_sentence', 'Lyt til temaets nøgleudtryk'))} (${partTrans})
                 </button>
             </div>
         `;

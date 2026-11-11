@@ -75304,6 +75304,14 @@ import{g as e,a as Me,b as Ya,s as qn,c as ia,n as la,k as da,d as ca,e as pa,v 
             min-height: 280px;
         }
 
+        .vlk-svg-wrapper svg,
+        .vlk-diag-svg {
+            width: 100%;
+            height: 280px;
+            max-height: 280px;
+            display: block;
+        }
+
         .vlk-diagram-notes {
             margin-top: 0.85rem;
             font-size: 0.85rem;
@@ -75815,7 +75823,7 @@ import{g as e,a as Me,b as Ya,s as qn,c as ia,n as la,k as da,d as ca,e as pa,v 
                     💡 <em>Pædagogisk råd:</em> Lær at overhøre og overse de stumme bogstaver. Hvis du prøver at udtale hvert eneste bogstav i "manden spiser en kage", forstår en dansker dig næsten ikke!
                 </div>
             `,minimalPairs:[{l:"mand",n:"mande",contextL:"En flink mand",contextN:"Mande sig op",meanL_zh:"男人 (mand [mænˀ] - stumt d)",meanN_zh:"mand dig op (mande)"},{l:"vand",n:"vane",contextL:"Drik koldt vand",contextN:"En god vane",meanL_zh:"水 (vand [vænˀ] - stumt d)",meanN_zh:"习惯 (vane)"},{l:"land",n:"lån",contextL:"Danmark er et dejligt land",contextN:"Optage et lån",meanL_zh:"国家/陆地 (land [lænˀ] - stumt d)",meanN_zh:"贷款 (lån)"},{l:"kage",n:"kat",contextL:"Spise en sød kage",contextN:"En lille kat",meanL_zh:"蛋糕 (kage [kæːɪ] - blødt/vokaliseret g)",meanN_zh:"猫 (kat [kæd])"},{l:"hvad",n:"fad",contextL:"Hvad siger du?",contextN:"Et stort fad mad",meanL_zh:"什么 (hvad [væð] - stumt h)",meanN_zh:"托盘 (fad [fæð])"},{l:"hjem",n:"gem",contextL:"Gå hjem nu",contextN:"Gem dine penge",meanL_zh:"家/回家 (hjem [jɛm] - stumt h)",meanN_zh:"藏起来 (gem [gɛm])"},{l:"godt",n:"god",contextL:"Det smager rigtig godt",contextN:"En god ven",meanL_zh:"好 (godt [gʌd] - stumt d, kun t)",meanN_zh:"好的 (god [goːð] - blødt d)"},{l:"finde",n:"fiske",contextL:"Vi vil finde vejen",contextN:"Fiske i søen",meanL_zh:"寻找/找到 (finde [fenə] - stumt d)",meanN_zh:"钓鱼 (fiske)"}],speechExercises:[{text:"Manden spiser en kage",targetSound:"silent",type:"silent",targetWords:["manden","kage"],hintDa:'Stumt d i "manden" (sig "mannen") og intet hårdt g i "kage" (sig "kæ-ie")!',hintZh:"manden 里的 d 完全不发音（读 mannen）；kage 里的 g 融化成元音（绝无硬 g）！"},{text:"Hvad hedder du egentlig",targetSound:"silent",type:"silent",targetWords:["hvad","egentlig"],hintDa:"Hvad: h er helt stumt, start direkte på v! Egentlig: g er stumt.",hintZh:"“hvad” 的 h 彻底隐形，直接读 vad！“egentlig” 的 g 也是不发音的！"},{text:"Et koldt glas vand",targetSound:"silent",type:"silent",targetWords:["koldt","vand"],hintDa:'Vand: d er helt stumt! Sig "van". I "koldt" smækker du døren på t.',hintZh:"“vand” 里的 d 是哑巴，只念 van！千万别念成 van-de！"},{text:"Hvor er dit hjem",targetSound:"silent",type:"silent",targetWords:["hvor","hjem"],hintDa:'Hvor og hjem — begge ord starter med stumt h: sig "vor" og "jem"!',hintZh:"“hvor” 和 “hjem” 的首字母 h 都是不发音的：直接读 vor 和 jem！"},{text:"Det smager rigtig godt",targetSound:"silent",type:"silent",targetWords:["smager","godt"],hintDa:"Smager: g er blødt og glider. Godt: d er stumt, afsluttes rent på t!",hintZh:"“smager” 的 g 变成滑音；“godt” 里的 d 完全不发音，只发 t 的顿音！"},{text:"Vi skal finde en god plads",targetSound:"silent",type:"silent",targetWords:["finde","plads"],hintDa:'Finde (sig "finne" — d er stumt!) og plads (d er stumt!).',hintZh:"“finde” 读作 finne（d 隐形）；“plads” 的 d 也是不发音的！"},{text:"Børnene leger i haven",targetSound:"silent",type:"silent",targetWords:["leger","haven"],hintDa:'Leger og haven — intet hårdt g i "leger" (sig "le-er") og v er blødt.',hintZh:"“leger” 里的 g 消失融化（读 le-er），绝不是“le-ge”！"},{text:"Manden tager bussen hjem",targetSound:"silent",type:"silent",targetWords:["manden","tager","hjem"],hintDa:'Tre stumme lyde: "manden" (uden d), "tager" (uden g, sig "ta-er"), "hjem" (uden h)!',hintZh:"连环不发音挑战：manden（无 d）+ tager（无 g）+ hjem（无 h）！"}]}};function Y(v){const _=v==="l",l=_?"#38bdf8":"#f472b6";return`
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lAirflowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
@@ -75911,7 +75919,7 @@ import{g as e,a as Me,b as Ya,s as qn,c as ia,n as la,k as da,d as ca,e as pa,v 
                 <text x="80" y="32" fill="${l}" font-size="12" font-weight="900" text-anchor="middle">${_?"🌊 L: Aflang tunge":"🌸 N: Bred kontaktflade"}</text>
             </svg>
         `}function me(v){const _=v==="l",l=_?"#38bdf8":"#f472b6";return`
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="glowFront" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="3" result="blur" />

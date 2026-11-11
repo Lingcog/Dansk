@@ -444,7 +444,29 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     let selectedLang = localStorage.getItem('mss_selected_lang') || 'da';
     let currentProto = 1; // 1 = Byggetrappen, 2 = Sprogspejlet, 3 = Bygge-Pyramiden + Fokus-Scenen
     let activeStepIndex = 6; // Default highlight on 7. Sætningen in Proto 3
-    let openSubStepIndex = null; // null = forside, number = underflade for det pågældende trin
+
+    // Parse step from extraData.subPath or window.location.hash
+    let initialStepIdx = null;
+    const subPathStr = extraData.subPath || '';
+    if (subPathStr) {
+        const num = parseInt(subPathStr.replace(/\D/g, ''), 10);
+        if (num >= 1 && num <= 10) {
+            initialStepIdx = num - 1;
+        }
+    } else {
+        try {
+            const rawHash = window.location.hash.replace(/^#\/?/, '').split('?')[0];
+            const segs = rawHash.split('/');
+            const idx = segs.findIndex(s => s === 'mit_sprog_sammenlignet');
+            if (idx !== -1 && segs[idx + 1]) {
+                const num = parseInt(segs[idx + 1].replace(/\D/g, ''), 10);
+                if (num >= 1 && num <= 10) {
+                    initialStepIdx = num - 1;
+                }
+            }
+        } catch (e) {}
+    }
+    let openSubStepIndex = initialStepIdx; // null = forside, number = underflade for det pågældende trin
 
     // De 10 trin fra mindste element (1. Lille lydforskel) til største (10. Den fulde samtale)
     // Gennemgående rød-tråd-sætning: "Jeg spiser brød i køkkenet i dag"
@@ -898,7 +920,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         topBar.innerHTML = '';
         const backBtn = document.createElement('button');
         backBtn.className = 'mss-back-btn';
-        backBtn.innerHTML = `← Tilbage til forsiden`;
+        backBtn.innerHTML = isZh ? `← Tilbage til forsiden (返回主页)` : `← Tilbage til forsiden`;
         backBtn.onclick = () => navigateFn('main');
         topBar.appendChild(backBtn);
 
@@ -993,9 +1015,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 ${subTitle}
                             </h2>
                         </div>
-                        <button class="mss-back-btn" data-close-sub="1" style="border-color:#fde68a; color:#fde68a;">
-                            ${closeBtnText}
-                        </button>
+                        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+                            <button type="button" class="mss-back-btn" data-copy-step-hw="${st.num}" style="border-color:#38bdf8; color:#7dd3fc; font-weight:800;">
+                                📋 ${isZh ? '复制作业链接' : 'Kopier lektie-link'} (Trin ${st.num})
+                            </button>
+                            <button type="button" class="mss-back-btn" data-close-sub="1" style="border-color:#fde68a; color:#fde68a;">
+                                ${closeBtnText}
+                            </button>
+                        </div>
                     </div>
 
                     <div class="mss-two-lines" style="margin-bottom:0.85rem;">
@@ -1137,6 +1164,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     `;
                 }).join('')}
             </div>
+
+            <div class="mss-bottom-bar" style="margin-top:2.75rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.12); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                <button class="mss-back-btn" data-nav="main" style="font-weight:900;">
+                    ${isZh ? '← Tilbage til forsiden (返回主页)' : '← Tilbage til forsiden'}
+                </button>
+                <button class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.6rem 1.25rem; border-radius:12px;">
+                    ${isZh ? '🇨🇳 华人难点发音专练 (Svære lyde) ➔' : '🇨🇳 Åbn udtaletræning (Svære lyde) ➔'}
+                </button>
+            </div>
         `;
 
         const langNoteEl = stage.querySelector('#mss-lang-note');
@@ -1164,6 +1200,12 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 e.stopPropagation();
                 const idx = Number(el.dataset.openSub);
                 openSubStepIndex = openSubStepIndex === idx ? null : idx;
+                const lang = selectedLang || 'zh';
+                if (openSubStepIndex !== null) {
+                    history.pushState(null, '', `#/${lang}/mit_sprog_sammenlignet/${openSubStepIndex + 1}`);
+                } else {
+                    history.pushState(null, '', `#/${lang}/mit_sprog_sammenlignet`);
+                }
                 renderStage();
             };
         });
@@ -1172,7 +1214,27 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             btn.onclick = (e) => {
                 e.stopPropagation();
                 openSubStepIndex = null;
+                const lang = selectedLang || 'zh';
+                history.pushState(null, '', `#/${lang}/mit_sprog_sammenlignet`);
                 renderStage();
+            };
+        });
+
+        stage.querySelectorAll('[data-copy-step-hw]').forEach(btn => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                const stepNum = btn.dataset.copyStepHw;
+                const lang = selectedLang || 'zh';
+                const url = `${window.location.origin}${window.location.pathname}#/${lang}/mit_sprog_sammenlignet/${stepNum}`;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        alert(`📋 Lektie-link til Trin ${stepNum} er kopieret:\n${url}`);
+                    }).catch(() => {
+                        prompt('Kopier lektie-link her:', url);
+                    });
+                } else {
+                    prompt('Kopier lektie-link her:', url);
+                }
             };
         });
 

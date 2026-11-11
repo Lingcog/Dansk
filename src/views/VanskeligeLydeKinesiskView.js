@@ -11,13 +11,212 @@ import { getLang } from '../utils/i18n.js';
  * 4. Udlyd (Smæk døren i ved konsonanter til sidst)
  */
 
-export function renderVanskeligeLydeKinesiskView(container) {
+export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
 
+    // Navigation handlers
+    function handleBackToMain() {
+        if (typeof navigateFn === 'function') {
+            navigateFn('main');
+        } else {
+            const lang = getLang() || 'zh';
+            window.location.hash = `#/${lang}/main`;
+        }
+    }
+
+    function handleBackToMSS() {
+        if (typeof navigateFn === 'function') {
+            navigateFn('mit_sprog_sammenlignet');
+        } else {
+            const lang = getLang() || 'zh';
+            window.location.hash = `#/${lang}/mit_sprog_sammenlignet`;
+        }
+    }
+
+    // Clipboard & Toast helpers
+    function showCopyToast(msg) {
+        let toast = document.querySelector('#vlk-copy-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'vlk-copy-toast';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 24px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #0284c7, #0369a1);
+                color: #ffffff;
+                padding: 0.75rem 1.4rem;
+                border-radius: 9999px;
+                font-weight: 800;
+                font-size: 0.92rem;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                pointer-events: none;
+                transition: all 0.25s ease;
+            `;
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = msg;
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(12px)';
+        }, 3200);
+    }
+
+    function copyToClipboard(text, label = 'Lektie-link') {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showCopyToast(`📋 ${label} kopieret til udklipsholder!`);
+            }).catch(() => {
+                fallbackCopy(text, label);
+            });
+        } else {
+            fallbackCopy(text, label);
+        }
+    }
+
+    function fallbackCopy(text, label) {
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showCopyToast(`📋 ${label} kopieret!`);
+    }
+
+    function getFullHomeworkUrl(modId, tabId) {
+        const origin = window.location.origin;
+        const pathname = window.location.pathname;
+        const lang = getLang() || 'zh';
+        return `${origin}${pathname}#/${lang}/vanskelige_lyde_kinesisk/${modId}/${tabId}`;
+    }
+
+    // Modal to view and copy ALL homework URLs
+    function openHomeworkOverviewModal() {
+        const existing = document.querySelector('#vlk-hw-modal');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'vlk-hw-modal';
+        overlay.className = 'vlk-modal-overlay';
+
+        const tabNames = {
+            principles: { da: '1. Mundstilling & Princip (Teori)', zh: '1. 口型与发音要诀' },
+            pairs: { da: '2. Minimale Par (Lyttequiz)', zh: '2. 极小对立体辨音' },
+            speech: { da: '3. Mikrofontræning (Udtaleopgave)', zh: '3. 麦克风跟读实战' }
+        };
+
+        overlay.innerHTML = `
+            <div class="vlk-modal-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:0.75rem;">
+                    <div>
+                        <div style="font-size:0.75rem; font-weight:900; color:#38bdf8; text-transform:uppercase;">📚 Lærer-værktøj • Hjemmearbejde URL'er</div>
+                        <h2 style="margin:0.2rem 0 0; font-size:1.3rem; font-weight:900; color:#ffffff;">Direkte links til alle lektier og opgaver</h2>
+                    </div>
+                    <button type="button" class="vlk-back-btn" id="vlk-modal-close" style="padding:0.4rem 0.8rem;">✕ Luk</button>
+                </div>
+                <div style="font-size:0.86rem; color:#cbd5e1; margin-bottom:1.15rem; line-height:1.45;">
+                    Klik på <strong>Kopier link</strong> ud for den ønskede opgave. Kursisten sendes direkte ind på det valgte modul og den specifikke opgavefane.
+                </div>
+                <div style="display:flex; flex-direction:column; gap:1.15rem;">
+                    ${SOUND_MODULES.map(mod => `
+                        <div style="background:rgba(30,41,59,0.7); border:1px solid rgba(148,163,184,0.22); border-radius:12px; padding:0.9rem 1rem;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.4rem;">
+                                <div>
+                                    <span style="font-size:0.7rem; font-weight:800; background:rgba(56,189,248,0.2); color:#7dd3fc; padding:0.15rem 0.5rem; border-radius:9999px;">${mod.badge}</span>
+                                    <strong style="color:#ffffff; font-size:1.02rem; margin-left:0.35rem;">${mod.titleDa}</strong>
+                                    <span style="color:#94a3b8; font-size:0.84rem; margin-left:0.25rem;">(${mod.titleZh})</span>
+                                </div>
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:0.45rem;">
+                                ${['principles', 'pairs', 'speech'].map(tabId => {
+                                    const url = getFullHomeworkUrl(mod.id, tabId);
+                                    const tName = tabNames[tabId];
+                                    return `
+                                        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(15,23,42,0.65); padding:0.45rem 0.75rem; border-radius:8px; gap:0.5rem; flex-wrap:wrap;">
+                                            <div style="font-size:0.82rem; color:#e2e8f0;">
+                                                <strong>${tName.da}</strong> <span style="color:#94a3b8; font-size:0.76rem;">${tName.zh}</span>
+                                            </div>
+                                            <button type="button" class="vlk-copy-btn" data-hw-url="${url}" data-hw-label="${mod.titleDa} - ${tName.da}">
+                                                📋 Kopier link
+                                            </button>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        overlay.querySelector('#vlk-modal-close').onclick = () => overlay.remove();
+        overlay.onclick = (e) => {
+            if (e.target === overlay) overlay.remove();
+        };
+
+        overlay.querySelectorAll('[data-hw-url]').forEach(btn => {
+            btn.onclick = () => {
+                copyToClipboard(btn.dataset.hwUrl, btn.dataset.hwLabel);
+            };
+        });
+
+        document.body.appendChild(overlay);
+    }
+
+    // Parse initial module and tab from extraData.subPath or window.location.hash
+    let initialModuleId = 'l_vs_n';
+    let initialTab = 'principles';
+
+    const subPathStr = extraData.subPath || '';
+    if (subPathStr) {
+        const parts = subPathStr.split('/').filter(Boolean);
+        if (parts[0] && ['l_vs_n', 'bloedt_d', 'dansk_r', 'udlyd', 'stumme_lyde'].includes(parts[0])) {
+            initialModuleId = parts[0];
+        }
+        if (parts[1] && ['principles', 'pairs', 'speech'].includes(parts[1])) {
+            initialTab = parts[1];
+        }
+    } else {
+        try {
+            const rawHash = window.location.hash.replace(/^#\/?/, '').split('?')[0];
+            const segs = rawHash.split('/');
+            const idx = segs.findIndex(s => s === 'vanskelige_lyde_kinesisk' || s === 'kinesiske_lyde');
+            if (idx !== -1) {
+                if (segs[idx + 1] && ['l_vs_n', 'bloedt_d', 'dansk_r', 'udlyd', 'stumme_lyde'].includes(segs[idx + 1])) {
+                    initialModuleId = segs[idx + 1];
+                }
+                if (segs[idx + 2] && ['principles', 'pairs', 'speech'].includes(segs[idx + 2])) {
+                    initialTab = segs[idx + 2];
+                }
+            }
+        } catch (e) {}
+    }
+
     // Active state
-    let activeModuleId = 'l_vs_n';
+    let activeModuleId = initialModuleId;
     let activeTarget = 'l'; // depends on activeModule
-    let activeTab = 'principles'; // 'principles', 'pairs', 'speech'
+    let activeTab = initialTab; // 'principles', 'pairs', 'speech'
+
+    function syncUrl(replace = false) {
+        const lang = getLang() || 'zh';
+        const newHash = `#/${lang}/vanskelige_lyde_kinesisk/${activeModuleId}/${activeTab}`;
+        if (window.location.hash !== newHash) {
+            if (replace) {
+                history.replaceState(null, '', newHash);
+            } else {
+                history.pushState(null, '', newHash);
+            }
+        }
+    }
     
     // Quiz state for Tab 2
     let pairQuizIdx = 0;
@@ -39,9 +238,81 @@ export function renderVanskeligeLydeKinesiskView(container) {
         .vlk-wrapper {
             max-width: 1040px;
             margin: 0 auto;
-            padding: 1.5rem 1rem 3rem 1rem;
+            padding: 1.25rem 1rem 3.5rem 1rem;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #f8fafc;
+        }
+
+        /* Top & Bottom Bar Navigation */
+        .vlk-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.35rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vlk-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            color: #f8fafc;
+            padding: 0.55rem 1.05rem;
+            border-radius: 11px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.16s ease;
+            text-decoration: none;
+            backdrop-filter: blur(8px);
+        }
+
+        .vlk-back-btn:hover {
+            background: rgba(51, 65, 85, 0.95);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            transform: translateY(-1px);
+        }
+
+        .vlk-back-btn-primary {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(30, 41, 59, 0.85));
+            border-color: #38bdf8;
+            color: #7dd3fc;
+        }
+
+        .vlk-back-btn-primary:hover {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #38bdf8;
+        }
+
+        .vlk-badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #cbd5e1;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            padding: 0.35rem 0.8rem;
+        }
+
+        .vlk-bottom-bar {
+            margin-top: 2.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         /* Top Module Tabs */
@@ -1747,8 +2018,36 @@ export function renderVanskeligeLydeKinesiskView(container) {
         viewContainer.innerHTML = '';
         viewContainer.appendChild(styleEl);
 
+        // Keep browser URL synchronized with selected sound module and tab
+        syncUrl(true);
+
         const currentMod = SOUND_MODULES.find(m => m.id === activeModuleId) || SOUND_MODULES[0];
         const modData = MODULE_DATA[activeModuleId];
+        const currentUrl = getFullHomeworkUrl(activeModuleId, activeTab);
+
+        // 0. Top Bar (Tilbage til forsiden, Mit sprog sammenlignet & Lektie-links)
+        const topBar = document.createElement('div');
+        topBar.className = 'vlk-top-bar';
+        topBar.innerHTML = `
+            <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
+                <button type="button" class="vlk-back-btn vlk-back-btn-primary" id="vlk-btn-back-main">
+                    ← Tilbage til forsiden (返回主页)
+                </button>
+                <button type="button" class="vlk-back-btn" id="vlk-btn-back-mss">
+                    🌍 Mit sprog sammenlignet (母语对比)
+                </button>
+                <button type="button" class="vlk-back-btn" id="vlk-btn-all-hw" style="border-color:#fde68a; color:#fde68a;">
+                    📚 Vis alle lektie-links (全套作业链接)
+                </button>
+            </div>
+            <div class="vlk-badge-top">
+                <span>🇨🇳</span> <span>专为中文母语者定制 • 难点发音突破</span>
+            </div>
+        `;
+        topBar.querySelector('#vlk-btn-back-main').onclick = handleBackToMain;
+        topBar.querySelector('#vlk-btn-back-mss').onclick = handleBackToMSS;
+        topBar.querySelector('#vlk-btn-all-hw').onclick = openHomeworkOverviewModal;
+        viewContainer.appendChild(topBar);
 
         // 1. Navigation Cards (Top Grid)
         const navGrid = document.createElement('div');
@@ -1768,6 +2067,7 @@ export function renderVanskeligeLydeKinesiskView(container) {
                     pairQuizIdx = 0;
                     pairScore = 0;
                     speechExerciseIdx = 0;
+                    syncUrl();
                     renderView();
                 }
             };
@@ -1787,6 +2087,17 @@ export function renderVanskeligeLydeKinesiskView(container) {
                 <strong>Dansk pædagogisk fokus:</strong> ${currentMod.descDa}
             </div>
 
+            <!-- Direct Homework URL strip -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; background:rgba(15,23,42,0.85); border:1px solid rgba(56,189,248,0.35); border-radius:11px; padding:0.55rem 0.85rem; margin-bottom:1.15rem;">
+                <div style="display:flex; align-items:center; gap:0.45rem; font-size:0.8rem; color:#cbd5e1; max-width:85%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    <span style="color:#38bdf8; font-weight:900;">🔗 Direkte lektie-URL:</span>
+                    <span style="color:#fde68a; font-family:monospace; font-size:0.8rem;">${currentUrl}</span>
+                </div>
+                <button type="button" class="vlk-copy-btn" id="vlk-copy-hero-url">
+                    📋 Kopier lektie-link
+                </button>
+            </div>
+
             <!-- Tabs Nav -->
             <div class="vlk-tabs-nav">
                 <button type="button" class="vlk-tab-btn ${activeTab === 'principles' ? 'active' : ''}" id="tab-btn-principles">
@@ -1804,9 +2115,13 @@ export function renderVanskeligeLydeKinesiskView(container) {
             </div>
         `;
 
-        hero.querySelector('#tab-btn-principles').onclick = () => { activeTab = 'principles'; renderView(); };
-        hero.querySelector('#tab-btn-pairs').onclick = () => { activeTab = 'pairs'; renderView(); };
-        hero.querySelector('#tab-btn-speech').onclick = () => { activeTab = 'speech'; renderView(); };
+        hero.querySelector('#vlk-copy-hero-url').onclick = () => {
+            copyToClipboard(currentUrl, `${currentMod.titleDa} (${activeTab})`);
+        };
+
+        hero.querySelector('#tab-btn-principles').onclick = () => { activeTab = 'principles'; syncUrl(); renderView(); };
+        hero.querySelector('#tab-btn-pairs').onclick = () => { activeTab = 'pairs'; syncUrl(); renderView(); };
+        hero.querySelector('#tab-btn-speech').onclick = () => { activeTab = 'speech'; syncUrl(); renderView(); };
 
         viewContainer.appendChild(hero);
 
@@ -1822,6 +2137,29 @@ export function renderVanskeligeLydeKinesiskView(container) {
         }
 
         viewContainer.appendChild(contentWrap);
+
+        // 4. Bottom Bar (Tilbage navigation nederst på siden & Lektie-link)
+        const bottomBar = document.createElement('div');
+        bottomBar.className = 'vlk-bottom-bar';
+        bottomBar.innerHTML = `
+            <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
+                <button type="button" class="vlk-back-btn vlk-back-btn-primary" id="vlk-btn-bottom-main">
+                    ← Tilbage til forsiden (返回主页)
+                </button>
+                <button type="button" class="vlk-back-btn" id="vlk-btn-bottom-mss">
+                    🌍 Tilbage til Mit sprog sammenlignet (返回母语对比) ➔
+                </button>
+            </div>
+            <button type="button" class="vlk-copy-btn" id="vlk-btn-bottom-copy" style="font-size:0.86rem; padding:0.55rem 1rem;">
+                📋 Kopier dette lektie-link
+            </button>
+        `;
+        bottomBar.querySelector('#vlk-btn-bottom-main').onclick = handleBackToMain;
+        bottomBar.querySelector('#vlk-btn-bottom-mss').onclick = handleBackToMSS;
+        bottomBar.querySelector('#vlk-btn-bottom-copy').onclick = () => {
+            copyToClipboard(currentUrl, `${currentMod.titleDa} (${activeTab})`);
+        };
+        viewContainer.appendChild(bottomBar);
     }
 
     // Render Tab 1: Principles

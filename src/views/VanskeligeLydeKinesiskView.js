@@ -672,14 +672,14 @@ export function renderVanskeligeLydeKinesiskView(container) {
         },
         {
             id: 'bloedt_d',
-            titleDa: 'Blødt d (Gem tungen bag undertænderne)',
-            titleZh: '软 d（舌尖贴紧下门牙背）',
+            titleDa: 'Blødt d (Som at ånde på brillerne)',
+            titleZh: '软 d（擦眼镜哈气法）',
             badge: '核心难点',
             status: 'active',
-            descDa: 'Lad tungespidsen hvile fladt mod bagsiden af undertænderne – rør aldrig ganen! Det bløde d findes i "mad", "brød" og "hvid". Løfter du tungen op, lyder det som et L (så "brød" forveksles med "brøl").',
-            descZh: '黄金口诀：舌尖放平贴紧下门牙背面，千万不要碰上牙！让气流如轻风平滑滑出。若舌头往上碰，就会错把 brød（面包）念成 brøl（狮子吼叫）！',
-            heroTitleZh: '中国学习者核心难点：丹麦语软 d 专项突破',
-            heroSubZh: '舌尖放平在下牙背面，让气流如微风滑过，绝不是 L，更不是硬 D！'
+            descDa: 'Gør præcis som når du ånder på dine briller, men lad tungespidsen hvile fladt mod bagsiden af undertænderne og sæt stemme på: "ma... d", "brø... d". Mærk hvordan den lune luft bare glider dovent ud over tungen uden modstand!',
+            descZh: '擦眼镜哈气口诀：“就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”',
+            heroTitleZh: '中国学习者核心难点：丹麦语软 d（擦眼镜哈气法）',
+            heroSubZh: '像擦眼镜哈气一样：舌尖放平紧贴下牙背，让温暖气流懒洋洋滑出 (ma...d, brø...d)'
         },
         {
             id: 'dansk_r',
@@ -811,7 +811,7 @@ export function renderVanskeligeLydeKinesiskView(container) {
             subControls: {
                 labelZh: '选择要探索的发音角度：',
                 options: [
-                    { id: 'soft_d', label: '🍃 软 d 正确发音', sub: '(舌尖平贴下牙背)', activeClass: 'active-primary' },
+                    { id: 'soft_d', label: '🍃 软 d 正确发音：擦眼镜哈气法', sub: '(舌尖平贴下牙背)', activeClass: 'active-primary' },
                     { id: 'hard_d_vs_l', label: '⚡ 错误发音警示', sub: '(千万不要碰上牙！)', activeClass: 'active-secondary' }
                 ]
             },
@@ -823,7 +823,7 @@ export function renderVanskeligeLydeKinesiskView(container) {
                     tagStyle: isSoftD ? 'background:rgba(34,197,94,0.2); color:#4ade80;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateSagittalSoftDSvg(target),
                     notes: isSoftD
-                        ? '<strong>Det bløde d:</strong><br><strong>Lad tungespidsen hvile fladt mod bagsiden af undertænderne – rør aldrig ganen!</strong> Tungen ligger helt roligt i bunden af munden, og luften glider blidt og glat ud over tungen som en mild brise.'
+                        ? '<strong>Det bløde d (擦眼镜哈气法):</strong><br>“就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙的背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”'
                         : '<strong>Typisk fejl:</strong><br>Løfter du tungen op mod de øverste tænder eller ganen, forvandles ordet til et hårdt d eller et L. Så bliver <em>brød</em> til <em>brøl</em>, og <em>mad</em> bliver til <em>mal</em>! Hold tungen nede!'
                 };
             },
@@ -835,29 +835,32 @@ export function renderVanskeligeLydeKinesiskView(container) {
                     tagStyle: isSoftD ? 'background:rgba(34,197,94,0.2); color:#4ade80;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateFrontalSoftDSvg(target),
                     notes: isSoftD
-                        ? '<strong>Luften glider frit:</strong><br>Tænderne er en lille smule åbne, og tungen gemmer sig bag de nederste fortænder.'
+                        ? '<strong>Luften glider frit:</strong><br>Tænderne er en lille smule åbne, og tungen gemmer sig bag de nederste fortænder som en doven tunge i en sofa.'
                         : '<strong>Blokeret udgang:</strong><br>Hvis tungen presses op mod overmunden, lukker du for luften og skaber en hård bump-lyd.'
                 };
             },
             pinchCardHtml: `
                 <div class="vlk-pinch-title">
-                    <span>🪞</span>
-                    <span>实用自检绝招：下门牙背面固定舌尖法（一秒纠正舌位）</span>
+                    <span>👓</span>
+                    <span>实用自检绝招：擦眼镜哈气法（一秒掌握软 d 发音感觉）</span>
                 </div>
-                <div class="vlk-pinch-body">
-                    Lad tungespidsen hvile fladt mod bagsiden af undertænderne – rør aldrig ganen!
+                <div class="vlk-pinch-body" style="font-size: 0.98rem; line-height: 1.7; background: rgba(15, 23, 42, 0.6); padding: 0.9rem 1.1rem; border-radius: 12px; border-left: 4px solid #4ade80; margin-bottom: 0.85rem;">
+                    <div style="font-weight: 800; color: #4ade80; margin-bottom: 0.35rem; font-size: 1.05rem;">
+                        💡 核心发音指导口诀：
+                    </div>
+                    “就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙的背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”
                 </div>
                 <div class="vlk-pinch-grid">
                     <div class="vlk-pinch-item">
-                        <div style="font-weight: 800; color: #4ade80; margin-bottom: 0.25rem;">正确发音体验：</div>
+                        <div style="font-weight: 800; color: #4ade80; margin-bottom: 0.25rem;">正确哈气体验：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            先发 "ma..."，有意识地<strong>把舌尖紧贴住下门牙背面</strong>，不要动！继续让气流滑出："mad..."。舌头完全不向上弹跳。
+                            像对着眼镜镜片轻轻哈气一样，舌尖平平地放平在下牙背。不要用力，发出懒洋洋的暖气流："mad..."。舌头完全不向上弹跳。
                         </div>
                     </div>
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #f87171; margin-bottom: 0.25rem;">错误警示体验：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            如果你感觉舌头向上跳了一下碰到了上牙，你读出来的肯定是 "mal"（涂漆）或者硬 "mat"！请立刻把舌头压到下门牙后面。
+                            如果你感觉舌头向上跳了一下碰到了上牙，你读出来的肯定是 "mal"（涂漆）或者硬 "mat"！请立刻重置舌头向下放平。
                         </div>
                     </div>
                 </div>
@@ -865,11 +868,12 @@ export function renderVanskeligeLydeKinesiskView(container) {
             bilingualGuideHtml: `
                 <div class="vlk-bilingual-title">中文发音核心要诀 (Foretrukne råd)</div>
                 <div class="vlk-zh-block">
-                    <strong>软 d 的核心秘密：</strong>Lad tungespidsen hvile fladt mod bagsiden af undertænderne – rør aldrig ganen! Det er hverken engelsk "th" eller hårdt d. Lad luften glide blødt ud over tungen.<br>
-                    <strong>Undgå L-fejlen:</strong> Pas på ikke at sige "brøl" (løvens brøl) når du mener "brød" (rugbrød)! Hold tungen nede i bunden.
+                    <strong>软 d 的生活化发音绝招（擦眼镜哈气法）：</strong><br>
+                    “就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙的背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”<br><br>
+                    <strong>切勿变成 L 或硬 D：</strong>读 "brød"（面包）时如果舌头往上碰，丹麦人听起来就是 "brøl"（狮子吼叫）！舌尖必须像地毯一样平平地铺在下牙后。
                 </div>
                 <div class="vlk-da-block">
-                    💡 <em>Pædagogisk råd:</em> Lad tungespidsen hvile fladt mod bagsiden af undertænderne – rør aldrig ganen! Sig "ma..." og lad luften glide ud uden at løfte tungen mod overmunden.
+                    💡 <em>Dansk instruks:</em> Gør præcis som når du ånder på dine briller, men lad tungespidsen hvile fladt mod bagsiden af undertænderne og sæt stemme på: 'ma... d', 'brø... d'. Mærk hvordan den lune luft bare glider dovent ud over tungen uden modstand!
                 </div>
             `,
             minimalPairs: [

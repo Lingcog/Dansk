@@ -722,25 +722,25 @@ export function renderVanskeligeLydeKinesiskView(container) {
             diagCard1: (target) => {
                 const isL = target === 'l';
                 return {
-                    title: '视角 1: 侧面看口型（看清舌头在哪）',
-                    tag: isL ? '鼻子通道关闭 • 气流全在嘴里' : '嘴巴前面堵死 • 气流全走鼻子',
+                    title: 'Billede 1: Set fra siden (Profil) / 侧面剖面图',
+                    tag: isL ? 'Slank aflang tunge • Lille kontaktpunkt' : 'Bred kontaktflade • Munden forseglet',
                     tagStyle: isL ? 'background:rgba(56,189,248,0.2); color:#38bdf8;' : 'background:rgba(244,114,182,0.2); color:#f472b6;',
-                    svg: generateSagittalLVsnSvg(target),
+                    svg: generateSagittalProfileSvg(target),
                     notes: isL 
-                        ? '<strong>L-音的秘密（两颊吹风）：</strong><br>Tungespidsen er oppe bag de øverste fortænder, men <strong>tungen hænger helt afslappet ned i siderne</strong>. Luften suser frit ud af begge mundvige ved kinderne. Næsen er helt lukket af!'
-                        : '<strong>N-音的秘密（鼻子震动）：</strong><br>Munden er helt lukket foran, og <strong>al luften presses ud igennem næsen</strong>. Tungen lukker som en tæt dør bag fortænderne – hold på næsen for at mærke den kraftige snurren!'
+                        ? '<strong>L-lyd: Aflang tunge og lille berøringspunkt:</strong><br>Tungen strækker sig og bliver <strong>slank og aflang</strong>. Kun den yderste tungespids berører et lille punkt lige bag de øverste fortænder (gul prik). Tungen er sænket i siderne, næsen er lukket af, og luften strømmer frit ud af munden.'
+                        : '<strong>N-lyd: Stor bred kontaktflade og lukket mund:</strong><br>I modsætning til L presses en <strong>langt større del af tungen fladt op mod ganen</strong> og danner en tæt rød prop. Munden er spærret foran! Ganesejlet hænger ned, og 100% af luften presses ud gennem næsen.'
                 };
             },
             diagCard2: (target) => {
                 const isL = target === 'l';
                 return {
-                    title: '视角 2: 俯视看舌头与牙齿（出风通道）',
-                    tag: isL ? '两颊敞开 • 左右自由漏风' : '前沿全部封死 • 零漏风',
+                    title: 'Billede 2: Set forfra i spejlet / 镜子正面口型',
+                    tag: isL ? 'Begge mundvige er helt åbne ➔' : 'Munden lukket • Luften ud af næsen ⬆️',
                     tagStyle: isL ? 'background:rgba(56,189,248,0.2); color:#38bdf8;' : 'background:rgba(244,114,182,0.2); color:#f472b6;',
-                    svg: generateTopDownLVsnSvg(target),
+                    svg: generateFrontalMirrorSvg(target),
                     notes: isL
-                        ? '<strong>Tungespidsen rammer lige bag fortænderne:</strong><br>Men siderne af tungen rører ikke kindtænderne! Luften strømmer frit ud i siderne som to små floder.'
-                        : '<strong>Tæt forsegling foran:</strong><br>Tungen danner en tæt bue bag hele overmunden, så intet luft kan slippe ud ad munden. Alt presses op gennem næsen!'
+                        ? '<strong>Kig i spejlet på dine mundvige:</strong><br>Tungespidsen er oppe bag fortænderne i midten, men <strong>siderne af tungen hænger helt afslappet ned</strong>. Der er to store åbne passager ved kinderne, så luften blæser frit ud af begge mundvige. Klemmer du for næsen, lyder L 100% uændret!'
+                        : '<strong>Spejlbilledet for N:</strong><br>Tungen dækker hele overkæben foran. Munden er hermetisk forseglet – der slipper ikke en dråbe luft ud af mundvigene. Al luft presses op i næsen. Klemmer du for næsen, stopper lyden øjeblikkeligt med et ryk!'
                 };
             },
             pinchCardHtml: `
@@ -1156,120 +1156,227 @@ export function renderVanskeligeLydeKinesiskView(container) {
 
     // --- VECTOR SVG GENERATORS ---
 
-    // Module 1: L vs N Set from side
-    function generateSagittalLVsnSvg(sound) {
+    // Module 1: Sagittal Profile (Restored from 84e70ad with slender elongated tongue vs broad seal)
+    function generateSagittalProfileSvg(sound) {
         const isL = sound === 'l';
         const primaryColor = isL ? '#38bdf8' : '#f472b6';
+
+        // Exact tongue shape from 84e70ad:
+        // /l/: Slender elongated tongue with single small contact dot at alveolar ridge
+        // /n/: Broad tongue with wide closure barrier
         const tonguePath = isL 
-            ? 'M 195 240 Q 215 220 225 150 Q 230 110 236 90 Q 233 115 222 170 Q 210 230 195 240 Z' 
-            : 'M 195 240 Q 210 210 226 140 Q 232 100 238 85 Q 234 110 220 170 Q 210 230 195 240 Z';
+            ? 'M 140 240 C 150 185, 175 160, 215 135 C 225 125, 230 110, 235 102 C 220 115, 195 130, 165 170 C 145 195, 135 220, 130 250 Z'
+            : 'M 140 240 C 155 180, 185 145, 222 108 C 235 96, 248 94, 255 96 C 240 118, 205 138, 170 178 C 145 205, 135 225, 130 250 Z';
+
+        const velumPath = isL
+            ? 'M 175 110 C 190 125, 198 138, 208 145 C 205 148, 195 135, 170 118 Z' // Closed
+            : 'M 175 110 C 182 135, 186 160, 188 175 C 182 173, 178 150, 170 118 Z'; // Lowered/Open
 
         return `
-            <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
-                <!-- Head contour -->
-                <path d="M 120 40 Q 190 20 270 45 Q 310 65 315 110 Q 320 145 305 165 Q 295 175 300 205 Q 305 225 290 240 Q 260 255 240 255 Q 210 270 190 290" 
-                      fill="none" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-                
-                <!-- Nasal Cavity -->
-                <path d="M 230 50 Q 275 45 285 85 Q 260 90 220 85 Z" fill="#1e293b" opacity="0.6"/>
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="lAirflowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.95"/>
+                    </linearGradient>
+                    <linearGradient id="nAirflowGrad" x1="0%" y1="100%" x2="50%" y2="0%">
+                        <stop offset="0%" stop-color="#f472b6" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#f472b6" stop-opacity="0.95"/>
+                    </linearGradient>
+                    <filter id="glowAir" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                    <marker id="arrowL" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0 0, 6 3, 0 6" fill="#38bdf8"/>
+                    </marker>
+                    <marker id="arrowN" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0 0, 6 3, 0 6" fill="#f472b6"/>
+                    </marker>
+                </defs>
+
+                <!-- Background Frame -->
+                <rect width="360" height="300" rx="14" fill="#0b1329" stroke="rgba(148, 163, 184, 0.2)" stroke-width="1.5"/>
+
+                <!-- Anatomical Contours -->
+                <!-- Forehead, Nose & Upper Lip (Facing RIGHT) -->
+                <path d="M 330 30 C 310 30, 295 50, 290 85 C 285 105, 305 115, 295 130 C 288 138, 275 142, 270 148 C 265 154, 270 162, 268 170" 
+                      fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Hard Palate & Alveolar Ridge -->
+                <path d="M 264 165 C 255 125, 235 98, 175 110" 
+                      fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+
+                <!-- Upper Incisors (Overfortænder) -->
+                <rect x="250" y="112" width="6" height="15" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+
+                <!-- Lower Lip & Chin -->
+                <path d="M 260 215 C 275 225, 270 245, 255 260 C 240 275, 220 280, 200 280" 
+                      fill="none" stroke="#475569" stroke-width="2.5"/>
+                <!-- Lower Incisors -->
+                <rect x="245" y="195" width="6" height="14" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+
+                <!-- Pharyngeal Back Wall (Svælgets bagvæg) -->
+                <path d="M 205 110 L 205 270" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+
+                <!-- Nasal Cavity (Næsehulen) -->
+                <path d="M 205 70 C 240 60, 260 70, 285 115" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="3,3"/>
                 <text x="235" y="55" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">Næsehule (鼻腔)</text>
 
-                <!-- Hard palate & Upper Teeth -->
-                <path d="M 170 130 Q 190 85 235 85 L 238 100" fill="none" stroke="#e2e8f0" stroke-width="3"/>
-                <!-- Upper Incisor -->
-                <rect x="236" y="85" width="6" height="15" fill="#f8fafc" rx="1.5"/>
-                <text x="236" y="80" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">Lige bag overmunden</text>
+                <!-- Velum / Soft Palate (Ganesejlet) -->
+                <path d="${velumPath}" fill="${isL ? '#38bdf8' : '#f472b6'}" stroke="#f8fafc" stroke-width="1.5"/>
 
-                <!-- Lower jaw & teeth -->
-                <path d="M 180 250 Q 220 245 245 210 L 243 195" fill="none" stroke="#64748b" stroke-width="2.5"/>
-                <rect x="240" y="195" width="5" height="13" fill="#cbd5e1" rx="1.5"/>
+                <!-- Tongue (Tungen) -->
+                <path d="${tonguePath}" fill="url(#${isL ? 'lAirflowGrad' : 'nAirflowGrad'})" stroke="${primaryColor}" stroke-width="2.5"/>
 
-                <!-- Velum (Soft palate) -->
                 ${isL ? `
-                    <!-- Closed velum: Up against pharyngeal wall -->
-                    <path d="M 170 130 Q 155 140 150 160" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round"/>
+                    <!-- L: Slank aflang tunge, rører KUN i ét punkt bag fortænderne -->
+                    <circle cx="236" cy="100" r="6" fill="#facc15" stroke="#fef08a" stroke-width="2"/>
+                    <text x="236" y="85" fill="#facc15" font-size="11" font-weight="900" text-anchor="middle">Lille berøringspunkt (kun spidsen)</text>
+                    <text x="236" y="118" fill="#93c5fd" font-size="9" text-anchor="middle">Aflang slank tunge</text>
+
+                    <!-- Velum closure cross (Næsen lukket) -->
+                    <circle cx="206" cy="143" r="5" fill="#ef4444"/>
+                    <line x1="202" y1="139" x2="210" y2="147" stroke="#ffffff" stroke-width="1.8"/>
+                    <line x1="210" y1="139" x2="202" y2="147" stroke="#ffffff" stroke-width="1.8"/>
                     <text x="170" y="148" fill="#f87171" font-size="10" font-weight="bold" text-anchor="end">Lukket for næsen!</text>
-                ` : `
-                    <!-- Open velum: Lowered for nasal airflow -->
-                    <path d="M 170 130 Q 165 155 160 175" fill="none" stroke="#4ade80" stroke-width="5" stroke-linecap="round"/>
-                    <text x="170" y="148" fill="#4ade80" font-size="10" font-weight="bold" text-anchor="end">Åben til næsen!</text>
-                `}
 
-                <!-- Tongue body -->
-                <path d="${tonguePath}" fill="${primaryColor}" opacity="0.85"/>
-                <path d="${tonguePath}" fill="none" stroke="${primaryColor}" stroke-width="2.5"/>
-
-                <!-- Airflow arrows -->
-                ${isL ? `
-                    <!-- Lateral airflow spilling past mouth corners -->
-                    <path d="M 180 210 Q 210 185 240 190 Q 270 195 295 195" fill="none" stroke="#38bdf8" stroke-width="3.5" stroke-dasharray="5 3" marker-end="url(#arrow-blue)"/>
-                    <text x="280" y="195" fill="#38bdf8" font-size="12" font-weight="bold">Ud af mundvigene ➔</text>
-                    <text x="280" y="210" fill="#cbd5e1" font-size="10">Luften suser ud i siderne</text>
+                    <!-- Blue Oral Airflow Path -->
+                    <path d="M 175 250 C 180 200, 195 180, 220 165 C 240 155, 275 165, 305 168" 
+                          fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
+                          filter="url(#glowAir)" marker-end="url(#arrowL)"/>
+                    <text x="280" y="195" fill="#38bdf8" font-size="12" font-weight="bold">Luften ud af munden ➔</text>
+                    <text x="280" y="210" fill="#cbd5e1" font-size="10">Suser ud i mundvigene</text>
                 ` : `
-                    <!-- Nasal airflow up through nose cavity -->
-                    <path d="M 180 210 Q 170 150 200 90 Q 230 50 280 50" fill="none" stroke="#f472b6" stroke-width="3.5" stroke-dasharray="5 3"/>
-                    <text x="285" y="145" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">Munden er lukket ⛔</text>
+                    <!-- N: Bred kontaktflade der spærrer hele munden -->
+                    <path d="M 222 104 C 235 96, 250 96, 258 108" fill="none" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+                    <text x="236" y="85" fill="#f87171" font-size="11" font-weight="900" text-anchor="middle">Stor bred kontaktflade ⛔</text>
+                    <text x="285" y="145" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">Munden er spærret foran ⛔</text>
+
+                    <!-- Open velum indicator -->
+                    <text x="170" y="148" fill="#4ade80" font-size="10" font-weight="bold" text-anchor="end">Åben til næsen ➔</text>
+
+                    <!-- Pink Nasal Airflow Path -->
+                    <path d="M 175 250 C 180 190, 185 140, 195 110 C 205 75, 245 70, 290 120" 
+                          fill="none" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
+                          filter="url(#glowAir)" marker-end="url(#arrowN)"/>
                     <text x="270" y="45" fill="#f472b6" font-size="12" font-weight="bold">Op gennem næsen ➔</text>
                     <text x="270" y="60" fill="#cbd5e1" font-size="10">Mærk snurren i næsen</text>
                 `}
 
-                <!-- Badge overlay -->
-                <rect x="15" y="15" width="105" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="67" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isL ? '🌊 L-lyd (Mund)' : '🌸 N-lyd (Næse)'}</text>
+                <!-- Mode Pill in SVG -->
+                <rect x="15" y="15" width="130" height="26" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${primaryColor}" stroke-width="1.5"/>
+                <text x="80" y="32" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isL ? '🌊 L: Aflang tunge' : '🌸 N: Bred kontaktflade'}</text>
             </svg>
         `;
     }
 
-    // Module 1: Top-Down Dental view
-    function generateTopDownLVsnSvg(sound) {
+    // Module 1: Frontal Mirror View (Krystalklar forfra-visning: Mundvige vs Næse)
+    function generateFrontalMirrorSvg(sound) {
         const isL = sound === 'l';
         const primaryColor = isL ? '#38bdf8' : '#f472b6';
 
         return `
-            <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
-                <!-- Dental arch background -->
-                <ellipse cx="180" cy="150" rx="140" ry="110" fill="#0f172a" stroke="#334155" stroke-width="2"/>
-                <path d="M 70 160 C 80 80, 280 80, 290 160" fill="none" stroke="#64748b" stroke-width="4" stroke-dasharray="4 4"/>
-                <text x="180" y="70" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">Overmunden (Tænderne foran)</text>
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="glowFront" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                    <marker id="arrowLFront" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0 0, 6 3, 0 6" fill="#38bdf8"/>
+                    </marker>
+                    <marker id="arrowNFront" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0 0, 6 3, 0 6" fill="#f472b6"/>
+                    </marker>
+                </defs>
 
-                <!-- Upper teeth arch -->
-                <g fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5">
-                    <rect x="168" y="78" width="10" height="14" rx="2"/>
-                    <rect x="182" y="78" width="10" height="14" rx="2"/>
-                    <rect x="153" y="82" width="10" height="13" rx="2"/>
-                    <rect x="197" y="82" width="10" height="13" rx="2"/>
-                    <rect x="138" y="90" width="11" height="12" rx="2"/>
-                    <rect x="211" y="90" width="11" height="12" rx="2"/>
-                    <!-- Molars -->
-                    <rect x="90" y="140" width="15" height="16" rx="3"/>
-                    <rect x="255" y="140" width="15" height="16" rx="3"/>
+                <!-- Background Frame -->
+                <rect width="360" height="300" rx="14" fill="#0b1329" stroke="rgba(148, 163, 184, 0.2)" stroke-width="1.5"/>
+
+                <!-- Perspective Title -->
+                <text x="180" y="26" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.05em">
+                    MUNDEN SET FORFRA I SPEJLET (镜子正面视角)
+                </text>
+
+                <!-- Nose outline at the top -->
+                <path d="M 160 50 C 160 65, 170 70, 180 70 C 190 70, 200 65, 200 50" fill="none" stroke="#475569" stroke-width="2"/>
+                <!-- Nostrils -->
+                <ellipse cx="170" cy="62" rx="4" ry="2.5" fill="#1e293b" stroke="#64748b"/>
+                <ellipse cx="190" cy="62" rx="4" ry="2.5" fill="#1e293b" stroke="#64748b"/>
+
+                <!-- Lips outer contour -->
+                <path d="M 80 150 C 120 115, 160 115, 180 120 C 200 115, 240 115, 280 150 C 240 190, 200 195, 180 195 C 160 195, 120 190, 80 150 Z" 
+                      fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+
+                <!-- Mouth inner cavity -->
+                <ellipse cx="180" cy="155" rx="85" ry="30" fill="#0f172a"/>
+
+                <!-- Upper Teeth Row -->
+                <g fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2">
+                    <rect x="168" y="125" width="11" height="15" rx="2"/>
+                    <rect x="181" y="125" width="11" height="15" rx="2"/>
+                    <rect x="155" y="127" width="11" height="14" rx="2"/>
+                    <rect x="194" y="127" width="11" height="14" rx="2"/>
+                    <rect x="142" y="130" width="11" height="12" rx="2"/>
+                    <rect x="207" y="130" width="11" height="12" rx="2"/>
+                    <rect x="130" y="135" width="10" height="10" rx="2"/>
+                    <rect x="220" y="135" width="10" height="10" rx="2"/>
                 </g>
 
                 ${isL ? `
-                    <!-- L-Sound: Center contact only, sides open -->
-                    <ellipse cx="180" cy="180" rx="65" ry="55" fill="#38bdf8" opacity="0.35"/>
-                    <!-- Tip touching center -->
-                    <path d="M 172 92 L 188 92 L 185 108 L 175 108 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
-                    <text x="180" y="100" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">Tungespidsen rører kun midt for</text>
-                    
-                    <!-- Left & Right airflow arrows passing free -->
-                    <path d="M 125 190 Q 95 160 80 130" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="6 3"/>
-                    <path d="M 235 190 Q 265 160 280 130" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="6 3"/>
-                    <text x="75" y="150" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="end">Fri luft ud her ➔</text>
-                    <text x="285" y="150" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="start">➔ Fri luft ud her</text>
-                    <text x="180" y="240" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">Tungens sider hænger frit (luften suser ud i mundvigene)</text>
+                    <!-- L-SOUND: Slender center tongue, BOTH CORNERS WIDE OPEN -->
+                    <!-- Slender tongue reaching up in the middle -->
+                    <path d="M 160 185 C 165 155, 172 136, 180 136 C 188 136, 195 155, 200 185 Z" 
+                          fill="#38bdf8" opacity="0.9" stroke="#60a5fa" stroke-width="2"/>
+                    <circle cx="180" cy="136" r="4.5" fill="#facc15"/>
+                    <text x="180" y="112" fill="#facc15" font-size="10.5" font-weight="bold" text-anchor="middle">Kun spidsen i midten!</text>
+
+                    <!-- Big Open Gaps at the sides with Airflow -->
+                    <!-- Left Corner Airflow -->
+                    <path d="M 140 160 C 115 160, 85 165, 55 170" 
+                          fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-dasharray="6,3" 
+                          filter="url(#glowFront)" marker-end="url(#arrowLFront)"/>
+                    <text x="45" y="152" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="end">Luft ud her ➔</text>
+                    <text x="45" y="165" fill="#94a3b8" font-size="9" text-anchor="end">(Venstre mundvig)</text>
+
+                    <!-- Right Corner Airflow -->
+                    <path d="M 220 160 C 245 160, 275 165, 305 170" 
+                          fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-dasharray="6,3" 
+                          filter="url(#glowFront)" marker-end="url(#arrowLFront)"/>
+                    <text x="315" y="152" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="start">➔ Luft ud her</text>
+                    <text x="315" y="165" fill="#94a3b8" font-size="9" text-anchor="start">(Højre mundvig)</text>
+
+                    <!-- Bottom Explanation Box -->
+                    <rect x="25" y="225" width="310" height="55" rx="10" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
+                    <text x="180" y="246" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">BEGGE MUNDVIGE ER HELT ÅBNE</text>
+                    <text x="180" y="264" fill="#cbd5e1" font-size="10.5" text-anchor="middle">Tungens sider hænger frit. Luften suser frit ud i begge sider.</text>
                 ` : `
-                    <!-- N-Sound: Complete horseshoe rim contact -->
-                    <path d="M 85 145 C 95 90, 265 90, 275 145 C 255 120, 105 120, 85 145 Z" 
-                          fill="#f472b6" opacity="0.75" stroke="#ec4899" stroke-width="2"/>
-                    <ellipse cx="180" cy="185" rx="65" ry="50" fill="#f472b6" opacity="0.25"/>
-                    <text x="180" y="155" fill="#fca5a5" font-size="12" font-weight="bold" text-anchor="middle">⛔ Lukket tæt som en dør</text>
-                    <text x="180" y="175" fill="#cbd5e1" font-size="10" text-anchor="middle">Tungen lukker helt foran, intet slipper ud i munden</text>
-                    <text x="180" y="240" fill="#f472b6" font-size="12" font-weight="bold" text-anchor="middle">Al lyd presses op i næsen</text>
+                    <!-- N-SOUND: Broad tongue sealing the entire mouth arch, Airflow goes up through nose -->
+                    <!-- Solid tongue seal covering all teeth -->
+                    <path d="M 120 170 C 120 132, 140 126, 180 126 C 220 126, 240 132, 240 170 Z" 
+                          fill="#f472b6" opacity="0.9" stroke="#ec4899" stroke-width="2"/>
+                    <path d="M 125 132 C 145 125, 215 125, 235 132" fill="none" stroke="#ef4444" stroke-width="4"/>
+                    <text x="180" y="155" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">⛔ MUNDEN ER HELT LUKKET ⛔</text>
+
+                    <!-- Airflow blasting UP through nostrils -->
+                    <path d="M 170 58 C 165 40, 150 30, 130 22" 
+                          fill="none" stroke="#f472b6" stroke-width="4.5" stroke-dasharray="6,3" 
+                          filter="url(#glowFront)" marker-end="url(#arrowNFront)"/>
+                    <path d="M 190 58 C 195 40, 210 30, 230 22" 
+                          fill="none" stroke="#f472b6" stroke-width="4.5" stroke-dasharray="6,3" 
+                          filter="url(#glowFront)" marker-end="url(#arrowNFront)"/>
+                    <text x="180" y="42" fill="#f472b6" font-size="11.5" font-weight="bold" text-anchor="middle">⬆️ Al luft presses ud af næsen! ⬆️</text>
+
+                    <!-- Bottom Explanation Box -->
+                    <rect x="25" y="225" width="310" height="55" rx="10" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
+                    <text x="180" y="246" fill="#f472b6" font-size="12" font-weight="bold" text-anchor="middle">KOMPLET FORSEGLING I MUNDEN</text>
+                    <text x="180" y="264" fill="#cbd5e1" font-size="10.5" text-anchor="middle">Tungen lukker tæt fortil. Klem om næsen, så stopper lyden!</text>
                 `}
 
-                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isL ? '🌊 Luften ud i siderne' : '🌸 Lukket dør foran'}</text>
+                <!-- Mode Pill in SVG -->
+                <rect x="15" y="15" width="125" height="24" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${primaryColor}" stroke-width="1.2"/>
+                <text x="77" y="31" fill="${primaryColor}" font-size="11" font-weight="900" text-anchor="middle">${isL ? '🌊 L: Åbne mundvige' : '🌸 N: Næseluft'}</text>
             </svg>
         `;
     }

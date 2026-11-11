@@ -281,6 +281,14 @@ export function renderVanskeligeLydeKinesiskView(container) {
             min-height: 280px;
         }
 
+        .vlk-svg-wrapper svg,
+        .vlk-diag-svg {
+            width: 100%;
+            height: 280px;
+            max-height: 280px;
+            display: block;
+        }
+
         .vlk-diagram-notes {
             margin-top: 0.85rem;
             font-size: 0.85rem;
@@ -1173,7 +1181,7 @@ export function renderVanskeligeLydeKinesiskView(container) {
             : 'M 175 110 C 182 135, 186 160, 188 175 C 182 173, 178 150, 170 118 Z'; // Lowered/Open
 
         return `
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lAirflowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
@@ -1277,7 +1285,7 @@ export function renderVanskeligeLydeKinesiskView(container) {
         const primaryColor = isL ? '#38bdf8' : '#f472b6';
 
         return `
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="glowFront" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="3" result="blur" />

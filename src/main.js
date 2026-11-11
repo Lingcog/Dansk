@@ -121,6 +121,7 @@ import { renderVerberKraftHvileView } from './views/VerberKraftHvileView.js';
 import { renderVerberLiggerLaeserView } from './views/VerberLiggerLaeserView.js';
 import { renderMitSprogSammenlignetView } from './views/MitSprogSammenlignetView.js';
 import { renderVanskeligeLydeKinesiskView } from './views/VanskeligeLydeKinesiskView.js';
+import { renderVanskeligeLydeArabiskView } from './views/VanskeligeLydeArabiskView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
@@ -560,6 +561,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'vanskelige_lyde_kinesisk' || viewTarget === 'kinesiske_lyde') {
     appState.currentView = 'vanskelige_lyde_kinesisk';
     renderVanskeligeLydeKinesiskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_arabisk' || viewTarget === 'arabiske_lyde') {
+    appState.currentView = 'vanskelige_lyde_arabisk';
+    renderVanskeligeLydeArabiskView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

@@ -1067,10 +1067,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                     </div>
                                 </div>
                                 <div style="display:flex; flex-direction:column; gap:0.5rem;">
-                                    <button type="button" class="mss-link-chip" data-nav="traen_bogstaver" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
+                                    <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_arabisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
+                                        🇸🇦 فتح تدريب الأصوات الصعبة للناطقين بالعربية ➔
+                                    </button>
+                                    <button type="button" class="mss-link-chip" data-nav="traen_bogstaver" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.5rem 1.1rem; white-space:nowrap; border-radius:12px;">
                                         🔤 تدريب الحروف والأصوات ➔
                                     </button>
-                                    <button type="button" class="mss-link-chip" data-nav="leg_med_udtale" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.5rem 1.1rem; white-space:nowrap; border-radius:12px;">
+                                    <button type="button" class="mss-link-chip" data-nav="leg_med_udtale" style="background:rgba(56,189,248,0.12); border-color:rgba(56,189,248,0.4); color:#ffffff; font-weight:800; font-size:0.84rem; padding:0.45rem 1rem; white-space:nowrap; border-radius:12px;">
                                         🎙️ ألعاب وتحديات النطق ➔
                                     </button>
                                 </div>
@@ -1095,18 +1098,21 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                         <span>💡</span> <span>Udtaletræning & svære sproglyde</span>
                                     </div>
                                     <div style="font-size: 1.15rem; font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;">
-                                        Fokuslyde: Det bløde d (ånde på brillerne), P vs. B lufttryk og det dybe danske r
+                                        Målrettede særflader: Arabisk (5 fokuslyde) & Kinesisk (L vs. N, blødt d)
                                     </div>
                                     <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;">
-                                        Træn udtalen direkte med kursisterne, udforsk kontrastive fonetiske øvelser, eller åbn den kinesiske særflade for L vs. N og blødt d.
+                                        Vælg en målgruppe for at åbne interaktive pædagogiske instruktioner, SVG-diagrammer, lyttequizzer med minimale par og mikrofontræning.
                                     </div>
                                 </div>
                                 <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
-                                    <button type="button" class="mss-link-chip" data-nav="traen_bogstaver" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
-                                        🔤 Træn bogstaver ➔
+                                    <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_arabisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.88rem; padding:0.6rem 1.15rem; border-radius:12px;">
+                                        🇸🇦 Arabisk udtale (5 fokuslyde) ➔
                                     </button>
-                                    <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
+                                    <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.88rem; padding:0.6rem 1.15rem; border-radius:12px;">
                                         🇨🇳 Kinesisk udtale (L vs. N) ➔
+                                    </button>
+                                    <button type="button" class="mss-link-chip" data-nav="traen_bogstaver" style="background:rgba(148,163,184,0.18); border-color:rgba(148,163,184,0.4); color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.6rem 1.1rem; border-radius:12px;">
+                                        🔤 Træn bogstaver ➔
                                     </button>
                                 </div>
                             `)}
@@ -1240,17 +1246,20 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                             🇨🇳 华人难点发音专练 (Svære lyde) ➔
                         </button>
                     ` : (isAr ? `
-                        <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.6rem 1.25rem; border-radius:12px;">
-                            🇸🇦 تدريب الحروف والأصوات (Træn bogstaver) ➔
+                        <button class="mss-link-chip" data-nav="vanskelige_lyde_arabisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.6rem 1.25rem; border-radius:12px;">
+                            🇸🇦 تدريب الأصوات الصعبة للناطقين بالعربية ➔
                         </button>
-                        <button class="mss-link-chip" data-nav="leg_med_udtale" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
-                            🎙️ ألعاب وتحديات النطق (Leg med udtale) ➔
+                        <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
+                            🔤 تدريب الحروف والأصوات (Træn bogstaver) ➔
                         </button>
                     ` : `
+                        <button class="mss-link-chip" data-nav="vanskelige_lyde_arabisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
+                            🇸🇦 Arabisk udtale (5 lyde) ➔
+                        </button>
                         <button class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
                             🇨🇳 Kinesisk udtale (L vs. N) ➔
                         </button>
-                        <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.6rem 1.25rem; border-radius:12px;">
+                        <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:rgba(148,163,184,0.18); border-color:rgba(148,163,184,0.4); color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
                             🔤 Træn bogstaver & udtale ➔
                         </button>
                     `)}

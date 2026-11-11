@@ -694,6 +694,17 @@ export function renderVanskeligeLydeKinesiskView(container) {
             descZh: '词尾遇到连着的辅音（如 -lt, -st, -kt 如 koldt, fast），必须像关门一样立刻刹车断音！绝不能拖泥带水多念一口气变成“koldt-e”或“fast-e”。',
             heroTitleZh: '中国学习者结构难点：词尾辅音收尾，像关门一样立刻刹车！',
             heroSubZh: '干净利落断音收尾，既不漏掉尾音，也绝不多带多余的“-e”尾巴'
+        },
+        {
+            id: 'stumme_lyde',
+            titleDa: 'Fraværet af lyde (mand, kage, hvad)',
+            titleZh: '声音的隐形：不发音的字母',
+            badge: '隐形发音',
+            status: 'active',
+            descDa: 'Mange bogstaver på dansk er tavse passagerer: d i "mand" og "finde", g i "kage" og "søge", samt h i "hvad" og "hjem". Forsøg aldrig at udtale alt, hvad du ser skrevet!',
+            descZh: '中国学生最大的心理陷阱：习惯了汉语拼音“见字必须读音”。但在丹麦语中，大量写在纸上的字母完全不发音！mand 读作 man（没有 d）、kage 里的 g 融化成元音（没有硬 g 哥）、hvad 里的 h 隐形（直接从 v 开始）。绝不能见字必读！',
+            heroTitleZh: '中国学习者最大陷阱：声音的隐形与“不发音”的字母',
+            heroSubZh: '字母只是沉睡的乘客！突破 mand（无 d）、kage（无硬 g）、hvad（无 h）'
         }
     ];
 
@@ -1048,6 +1059,97 @@ export function renderVanskeligeLydeKinesiskView(container) {
                 { text: 'Kom lidt salt på ægget', targetSound: 'cluster', type: 'cluster', targetWords: ['salt', 'ægget'], hintDa: 'Kom lidt salt på ægget — "salt" lukkes brat med tungen mod fortænderne.', hintZh: '“salt”：在门牙后形成短暂停顿切断。' },
                 { text: 'En rigtig god fest i aften', targetSound: 'cluster', type: 'cluster', targetWords: ['rigtig', 'fest', 'aften'], hintDa: 'Fest i aften — smæk døren i ved "-st" i fest.', hintZh: '“fest”：牙关紧闭，气流骤停。' },
                 { text: 'Læs en kort tekst højt', targetSound: 'cluster', type: 'cluster', targetWords: ['kort', 'tekst', 'højt'], hintDa: 'Kort tekst højt — to hårde afslutninger i træk (-rt og -kst): stands luften med det samme!', hintZh: '高难度复合词尾：“kort” (-rt) 与 “tekst” (-kst)！' }
+            ]
+        },
+
+        stumme_lyde: {
+            defaultTarget: 'silent_d',
+            subControls: {
+                labelZh: '选择要探索的隐形字母类型：',
+                options: [
+                    { id: 'silent_d', label: '👻 Stumt d (mand, vand, finde)', sub: '(Bogstavet d er helt tavst)', activeClass: 'active-primary' },
+                    { id: 'silent_g_h', label: '🌫️ Blødt/Stumt g & h (kage, hvad)', sub: '(Smelter til vokal eller forsvinder)', activeClass: 'active-secondary' }
+                ]
+            },
+            diagCard1: (target) => {
+                const isSilentD = target === 'silent_d';
+                return {
+                    title: isSilentD ? '视角 1: Stumt d (Tungen stopper ved N)' : '视角 1: Stumt h (Start direkte på V)',
+                    tag: isSilentD ? 'd er usynligt • Stop ved N' : 'h er helt tavst • Start på V',
+                    tagStyle: 'background:rgba(168,85,247,0.2); color:#c084fc;',
+                    svg: generateSagittalSilentDSvg(target),
+                    notes: isSilentD
+                        ? '<strong>Bogstavet d er en tavs passager:</strong><br>I ordet <em>"mand"</em> [mænˀ] udtaler du kun m-a-n (med et lille stop i stemmen). Tungen stopper ved n-lyden bag fortænderne. <strong>Lav ALDRIG en ekstra d-lyd til sidst!</strong> Hvis du siger "mand-de", lyder det som to ord.'
+                        : '<strong>H foran v og j er 100% stumt:</strong><br>Når du ser ord som <em>"hvad"</em>, <em>"hvem"</em>, <em>"hvor"</em> eller <em>"hjem"</em>, skal du lade som om, bogstavet "h" slet ikke findes! Start direkte på v-lyden: [væð], [vɛm], [vɒː] eller j-lyden [jɛm].'
+                };
+            },
+            diagCard2: (target) => {
+                const isSilentD = target === 'silent_d';
+                return {
+                    title: isSilentD ? '视角 2: Kontrast: Hvad du ser vs. Hvad du siger' : '视角 2: Kage (G smelter til en blød vokal)',
+                    tag: isSilentD ? 'Skrift: mand ➔ Tale: [mænˀ]' : 'Intet hårdt "ge" • Glid som [kæːɪ]',
+                    tagStyle: 'background:rgba(168,85,247,0.2); color:#c084fc;',
+                    svg: generateVisualSilentTextSvg(target),
+                    notes: isSilentD
+                        ? '<strong>Pinyin-vanen skal aflæres:</strong><br>I kinesisk Pinyin svarer hvert bogstav til en lyd. På dansk har vi 500 års stavehistorie: Bogstaverne står der på skrift, men er faldet i søvn i talesproget. Se igennem dem!'
+                        : '<strong>G-lyden efter en vokal:</strong><br>I ord som <em>"kage"</em>, <em>"tage"</em> og <em>"søge"</em> må du ALDRIG lave en hård g-lyd fra halsen som i kinesisk 哥 (gē). G smelter sammen med vokalen og bliver til en blød glidelyd som et "i" eller "j" ([kæːɪ]).'
+                };
+            },
+            pinchCardHtml: `
+                <div class="vlk-pinch-title">
+                    <span>👆</span>
+                    <span>实用自检绝招：手指遮字法（强迫眼睛跳过不发音字母）</span>
+                </div>
+                <div class="vlk-pinch-body">
+                    Læg pegefingeren fysisk hen over det stumme bogstav, når du læser:
+                </div>
+                <div class="vlk-pinch-grid">
+                    <div class="vlk-pinch-item">
+                        <div style="font-weight: 800; color: #c084fc; margin-bottom: 0.25rem;">Stumt d: man[d], van[d], fin[d]e</div>
+                        <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
+                            Dæk d'et med fingeren og læs højt: "man", "van", "finne". Hvis din hjerne råber "hov, der står et d!", så husk: <strong>Bogstavet er bare en tavs passager</strong>.
+                        </div>
+                    </div>
+                    <div class="vlk-pinch-item">
+                        <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">Stumt h: [h]vad, [h]vem, [h]vor</div>
+                        <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
+                            Dæk h'et med fingeren: Læs ordene direkte som "vad", "vem", "vor" og "jem". Der er absolut ingen h-lyd!
+                        </div>
+                    </div>
+                </div>
+            `,
+            bilingualGuideHtml: `
+                <div class="vlk-bilingual-title">中文发音核心要诀 (Fraværet af lyd)</div>
+                <div class="vlk-zh-block">
+                    <strong>为什么这是中国人最大的障碍：</strong>汉语普通话的拼音是极其严谨的一对一拼读系统（见 b 读 b，见 d 读 d）。但丹麦语是历史悠久的拼写，经历了几个世纪的“懒人音变”：很多辅音在嘴里慢慢退化、融化甚至彻底消失了！<br>
+                    <strong>三大必须装作看不见的字母：</strong><br>
+                    1. <strong>词尾 nd 中的 d：</strong>mand 读 man，vand 读 van，land 读 lan。千万别加“-de”！<br>
+                    2. <strong>元音后的 g：</strong>kage 读 kæ-i，tage 读 ta，sige 读 si。绝不要发出拼音“哥 gē”的声音！<br>
+                    3. <strong>hv- 和 hj- 里的 h：</strong>hvad 读 væð，hvor 读 vo，hjem 读 jæm。h 完全不发音！
+                </div>
+                <div class="vlk-da-block">
+                    💡 <em>Pædagogisk råd:</em> Lær at overhøre og overse de stumme bogstaver. Hvis du prøver at udtale hvert eneste bogstav i "manden spiser en kage", forstår en dansker dig næsten ikke!
+                </div>
+            `,
+            minimalPairs: [
+                { l: 'mand', n: 'mande', contextL: 'En flink mand', contextN: 'Mande sig op', meanL_zh: '男人 (mand [mænˀ] - stumt d)', meanN_zh: 'mand dig op (mande)' },
+                { l: 'vand', n: 'vane', contextL: 'Drik koldt vand', contextN: 'En god vane', meanL_zh: '水 (vand [vænˀ] - stumt d)', meanN_zh: '习惯 (vane)' },
+                { l: 'land', n: 'lån', contextL: 'Danmark er et dejligt land', contextN: 'Optage et lån', meanL_zh: '国家/陆地 (land [lænˀ] - stumt d)', meanN_zh: '贷款 (lån)' },
+                { l: 'kage', n: 'kat', contextL: 'Spise en sød kage', contextN: 'En lille kat', meanL_zh: '蛋糕 (kage [kæːɪ] - blødt/vokaliseret g)', meanN_zh: '猫 (kat [kæd])' },
+                { l: 'hvad', n: 'fad', contextL: 'Hvad siger du?', contextN: 'Et stort fad mad', meanL_zh: '什么 (hvad [væð] - stumt h)', meanN_zh: '托盘 (fad [fæð])' },
+                { l: 'hjem', n: 'gem', contextL: 'Gå hjem nu', contextN: 'Gem dine penge', meanL_zh: '家/回家 (hjem [jɛm] - stumt h)', meanN_zh: '藏起来 (gem [gɛm])' },
+                { l: 'godt', n: 'god', contextL: 'Det smager rigtig godt', contextN: 'En god ven', meanL_zh: '好 (godt [gʌd] - stumt d, kun t)', meanN_zh: '好的 (god [goːð] - blødt d)' },
+                { l: 'finde', n: 'fiske', contextL: 'Vi vil finde vejen', contextN: 'Fiske i søen', meanL_zh: '寻找/找到 (finde [fenə] - stumt d)', meanN_zh: '钓鱼 (fiske)' }
+            ],
+            speechExercises: [
+                { text: 'Manden spiser en kage', targetSound: 'silent', type: 'silent', targetWords: ['manden', 'kage'], hintDa: 'Stumt d i "manden" (sig "mannen") og intet hårdt g i "kage" (sig "kæ-ie")!', hintZh: 'manden 里的 d 完全不发音（读 mannen）；kage 里的 g 融化成元音（绝无硬 g）！' },
+                { text: 'Hvad hedder du egentlig', targetSound: 'silent', type: 'silent', targetWords: ['hvad', 'egentlig'], hintDa: 'Hvad: h er helt stumt, start direkte på v! Egentlig: g er stumt.', hintZh: '“hvad” 的 h 彻底隐形，直接读 vad！“egentlig” 的 g 也是不发音的！' },
+                { text: 'Et koldt glas vand', targetSound: 'silent', type: 'silent', targetWords: ['koldt', 'vand'], hintDa: 'Vand: d er helt stumt! Sig "van". I "koldt" smækker du døren på t.', hintZh: '“vand” 里的 d 是哑巴，只念 van！千万别念成 van-de！' },
+                { text: 'Hvor er dit hjem', targetSound: 'silent', type: 'silent', targetWords: ['hvor', 'hjem'], hintDa: 'Hvor og hjem — begge ord starter med stumt h: sig "vor" og "jem"!', hintZh: '“hvor” 和 “hjem” 的首字母 h 都是不发音的：直接读 vor 和 jem！' },
+                { text: 'Det smager rigtig godt', targetSound: 'silent', type: 'silent', targetWords: ['smager', 'godt'], hintDa: 'Smager: g er blødt og glider. Godt: d er stumt, afsluttes rent på t!', hintZh: '“smager” 的 g 变成滑音；“godt” 里的 d 完全不发音，只发 t 的顿音！' },
+                { text: 'Vi skal finde en god plads', targetSound: 'silent', type: 'silent', targetWords: ['finde', 'plads'], hintDa: 'Finde (sig "finne" — d er stumt!) og plads (d er stumt!).', hintZh: '“finde” 读作 finne（d 隐形）；“plads” 的 d 也是不发音的！' },
+                { text: 'Børnene leger i haven', targetSound: 'silent', type: 'silent', targetWords: ['leger', 'haven'], hintDa: 'Leger og haven — intet hårdt g i "leger" (sig "le-er") og v er blødt.', hintZh: '“leger” 里的 g 消失融化（读 le-er），绝不是“le-ge”！' },
+                { text: 'Manden tager bussen hjem', targetSound: 'silent', type: 'silent', targetWords: ['manden', 'tager', 'hjem'], hintDa: 'Tre stumme lyde: "manden" (uden d), "tager" (uden g, sig "ta-er"), "hjem" (uden h)!', hintZh: '连环不发音挑战：manden（无 d）+ tager（无 g）+ hjem（无 h）！' }
             ]
         }
     };
@@ -1414,6 +1516,109 @@ export function renderVanskeligeLydeKinesiskView(container) {
 
                 <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
                 <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isClean ? '🧱 Rent stop' : '⛔ Slæbende hale'}</text>
+            </svg>
+        `;
+    }
+
+    // Module 5: Stumt d Sagittal
+    function generateSagittalSilentDSvg(target) {
+        const isSilentD = target === 'silent_d';
+
+        return `
+            <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+                <!-- Head contour -->
+                <path d="M 120 40 Q 190 20 270 45 Q 310 65 315 110 Q 320 145 305 165 Q 295 175 300 205 Q 305 225 290 240 Q 260 255 240 255 Q 210 270 190 290" 
+                      fill="none" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
+                
+                <!-- Hard palate & Upper Teeth -->
+                <path d="M 170 130 Q 190 85 235 85 L 238 100" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+                <rect x="236" y="85" width="6" height="15" fill="#f8fafc" rx="1.5"/>
+
+                <!-- Lower jaw & teeth -->
+                <path d="M 180 250 Q 220 245 245 210 L 243 195" fill="none" stroke="#64748b" stroke-width="2.5"/>
+                <rect x="240" y="195" width="5" height="13" fill="#cbd5e1" rx="1.5"/>
+
+                ${isSilentD ? `
+                    <!-- Tongue resting against alveolar ridge on N - and staying there! -->
+                    <path d="M 195 240 Q 210 210 226 140 Q 232 100 238 85 Q 234 110 220 170 Q 210 230 195 240 Z" fill="#c084fc" opacity="0.85"/>
+                    <path d="M 195 240 Q 210 210 226 140 Q 232 100 238 85" fill="none" stroke="#a855f7" stroke-width="2.5"/>
+
+                    <text x="236" y="70" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">Tungen stopper ved N! ⏹️</text>
+                    <text x="270" y="180" fill="#f87171" font-size="12" font-weight="bold">🚫 Intet d her!</text>
+                    <text x="270" y="198" fill="#cbd5e1" font-size="10">Sig kun "man" [mænˀ]</text>
+                    <text x="180" y="240" fill="#a855f7" font-size="12" font-weight="bold" text-anchor="middle">Bogstavet d er en tavs passager (tyst som en mus)</text>
+                ` : `
+                    <!-- Stumt h: Starts directly on V / J without throat friction -->
+                    <path d="M 190 240 Q 215 220 240 200 L 235 225 Q 210 245 190 240 Z" fill="#38bdf8" opacity="0.85"/>
+                    <text x="270" y="165" fill="#38bdf8" font-size="12" font-weight="bold">Start direkte på V ➔</text>
+                    <text x="270" y="182" fill="#cbd5e1" font-size="10">Ingen "h"-lyd overhovedet</text>
+                    <text x="180" y="240" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">"hvad" udtales [væð] — glem h'et fuldstændigt!</text>
+                `}
+
+                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="82" y="31" fill="#c084fc" font-size="12" font-weight="900" text-anchor="middle">${isSilentD ? '👻 Stumt d (mand)' : '🌫️ Stumt h (hvad)'}</text>
+            </svg>
+        `;
+    }
+
+    // Module 5: Visual Silent Text Card
+    function generateVisualSilentTextSvg(target) {
+        const isSilentD = target === 'silent_d';
+
+        return `
+            <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+                ${isSilentD ? `
+                    <text x="180" y="45" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">👀 Hvad øjnene ser på skrift:</text>
+                    
+                    <!-- Written word: m a n d -->
+                    <g font-size="24" font-weight="900" text-anchor="middle">
+                        <rect x="55" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+                        <text x="77" y="97" fill="#38bdf8">m</text>
+                        <rect x="110" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+                        <text x="132" y="97" fill="#38bdf8">a</text>
+                        <rect x="165" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+                        <text x="187" y="97" fill="#38bdf8">n</text>
+                        
+                        <!-- Silent d crossed out -->
+                        <rect x="220" y="65" width="45" height="45" rx="8" fill="#0f172a" stroke="#64748b" stroke-dasharray="3 3"/>
+                        <text x="242" y="97" fill="#64748b" opacity="0.6">d</text>
+                        <line x1="225" y1="70" x2="260" y2="105" stroke="#ef4444" stroke-width="3"/>
+                        <line x1="225" y1="105" x2="260" y2="70" stroke="#ef4444" stroke-width="3"/>
+                    </g>
+                    <text x="242" y="125" fill="#f87171" font-size="10" font-weight="bold" text-anchor="middle">👻 Stum!</text>
+
+                    <text x="180" y="165" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">🗣️ Hvad munden rent faktisk siger:</text>
+                    <rect x="75" y="180" width="210" height="45" rx="10" fill="rgba(34,197,94,0.15)" stroke="#4ade80" stroke-width="2"/>
+                    <text x="180" y="210" fill="#4ade80" font-size="22" font-weight="900" text-anchor="middle">[ m æ n ˀ ]</text>
+
+                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">✅ Stop ved N! Sig ALDRIG "mand-de" eller "man-duh"</text>
+                ` : `
+                    <text x="180" y="45" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">👀 Hvad øjnene ser på skrift: k-a-g-e</text>
+                    
+                    <g font-size="22" font-weight="900" text-anchor="middle">
+                        <rect x="50" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+                        <text x="72" y="97" fill="#38bdf8">k</text>
+                        <rect x="105" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+                        <text x="127" y="97" fill="#38bdf8">a</text>
+                        
+                        <!-- Soft G melting -->
+                        <rect x="160" y="65" width="45" height="45" rx="8" fill="rgba(168,85,247,0.2)" stroke="#c084fc"/>
+                        <text x="182" y="97" fill="#c084fc">g</text>
+                        
+                        <rect x="215" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+                        <text x="237" y="97" fill="#38bdf8">e</text>
+                    </g>
+                    <text x="182" y="125" fill="#c084fc" font-size="10" font-weight="bold" text-anchor="middle">Smelter til [i]!</text>
+
+                    <text x="180" y="165" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">🗣️ Hvad munden rent faktisk siger:</text>
+                    <rect x="75" y="180" width="210" height="45" rx="10" fill="rgba(34,197,94,0.15)" stroke="#4ade80" stroke-width="2"/>
+                    <text x="180" y="210" fill="#4ade80" font-size="22" font-weight="900" text-anchor="middle">[ k æ ː ɪ ]</text>
+
+                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">✅ G bliver til en blød vokal – ingen hård 哥 (ge) fra halsen!</text>
+                `}
+
+                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="82" y="31" fill="#c084fc" font-size="12" font-weight="900" text-anchor="middle">${isSilentD ? '👻 Lyd-kontrast' : '🌫️ G smelter til vokal'}</text>
             </svg>
         `;
     }

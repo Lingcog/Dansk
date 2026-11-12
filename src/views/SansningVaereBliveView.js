@@ -6,8 +6,8 @@ import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystem
  * SansningVaereBliveView - Station 1: Væren & Tilblivelse
  * Diktomisk Split-Stage Vrimlebillede (som i adjektiver_kvalitet/tab_kontrast):
  * 
- *  🔵 VENSTRE SIDE: VÆREN (At være / Er) — Verden i Ro (Yin)
- *  🟠 HØJRE SIDE: TILBLIVELSE (At blive / Bliver) — Verden i Forvandling (Yang)
+ *  🔵 VENSTRE SIDE: VÆREN (At være / Er) — Verden i Stilstand & Ro
+ *  🟠 HØJRE SIDE: TILBLIVELSE (At blive / Bliver) — Verden i Forvandling & Bevægelse
  */
 export function renderSansningVaereBliveView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';

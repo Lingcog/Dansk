@@ -67,7 +67,7 @@ export function renderDagensOpgaveView(container, navigateFn) {
             titleKey: 'grammatikSansningTitle',
             descKey: 'grammatikSansningDesc',
             fallbackTitle: 'Grammatik og min sansning af verden',
-            fallbackDesc: 'Oplev hvordan sproget former virkeligheden: Ro (Yin) vs. Bevægelse (Yang) med interaktive vrimlebilleder.',
+            fallbackDesc: 'Oplev hvordan sproget former virkeligheden: Væren & Stilstand vs. Tilblivelse & Forvandling med interaktive vrimlebilleder.',
             comingSoon: true,
             comingSoonLabel: 'Under udvikling',
             action: () => navigateFn('grammatik_sansning')

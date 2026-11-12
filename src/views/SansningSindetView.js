@@ -8,8 +8,8 @@ import { renderTrorSynesMenerView } from './TrorSynesMenerView.js';
  * Vrimlebillede: DIKTOMISK SPLIT-STAGE
  * 
  * Didaktisk grundlag:
- *  🔵 VENSTRE: KROPPENS SANSER (Yin / Indre Sanse-Sandhed) -> SYNES (Tungen, huden, sanserne her og nu)
- *  🟠 HØJRE: HOVEDETS TANKER (Yang / Ydre Refleksion) -> TROR / MENER / VED (Gæt, debat og fakta)
+ *  🔵 VENSTRE: KROPPENS SANSER (Væren / Indre Sanse-Sandhed) -> SYNES (Tungen, huden, sanserne her og nu)
+ *  🟠 HØJRE: HOVEDETS TANKER (Forvandling / Ydre Refleksion) -> TROR / MENER / VED (Gæt, debat og fakta)
  * 
  * Integrerer nedenunder:
  *  - Fuld adgang til det eksisterende TrorSynesMenerView (100% bevaret i Fane 3)
@@ -812,19 +812,19 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
-                <!-- VENSTRE HALVDEL: KROPPENS SANSE-SANDHED (Yin / Synes) -->
+                <!-- VENSTRE HALVDEL: KROPPENS SANSE-SANDHED (Væren / Synes) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Yin: Kroppens sanse-sandhed (Synes)
+                        🔵 Væren: Kroppens sanse-sandhed (Synes)
                     </div>
                     <img src="assets/sansning_sindet_venstre.jpg" alt="Kroppens sansning - Synes" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
-                <!-- HØJRE HALVDEL: HOVEDETS TANKER & VURDERING (Yang / Tror & Mener) -->
+                <!-- HØJRE HALVDEL: HOVEDETS TANKER & VURDERING (Forvandling / Tror & Mener) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Yang: Hovedets tanker & debat (Tror / Mener / Ved)
+                        🟠 Forvandling: Hovedets tanker & debat (Tror / Mener / Ved)
                     </div>
                     <img src="assets/sansning_sindet_hoejre.jpg" alt="Hovedets tanker - Tror, mener, ved" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -1049,7 +1049,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         const currentData = activeSide === 'left' ? pair.left : pair.right;
         const otherSide = activeSide === 'left' ? 'right' : 'left';
         const otherData = activeSide === 'left' ? pair.right : pair.left;
-        const otherLabel = activeSide === 'left' ? `Byt til: ${pair.right.word} (Yang / Hovedet)` : `Byt til: ${pair.left.word} (Yin / Kroppen)`;
+        const otherLabel = activeSide === 'left' ? `Byt til: ${pair.right.word} (Forvandling / Hovedet)` : `Byt til: ${pair.left.word} (Væren / Kroppen)`;
 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
@@ -1066,7 +1066,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${activeSide === 'left' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🔵 Yin: Kroppens sanse-sandhed (Synes)</span>
+                    <span class="adj-box-badge">🔵 Væren: Kroppens sanse-sandhed (Synes)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.left.sent.replace(pair.left.word, `<span class="adj-highlight">${pair.left.word}</span>`)}"
@@ -1077,7 +1077,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                 </div>
 
                 <div class="adj-box right ${activeSide === 'right' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🟠 Yang: Hovedets tanker (Tror / Mener / Ved)</span>
+                    <span class="adj-box-badge">🟠 Forvandling: Hovedets tanker (Tror / Mener / Ved)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.right.sent.replace(pair.right.word, `<span class="adj-highlight">${pair.right.word}</span>`)}"

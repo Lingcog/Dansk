@@ -8,8 +8,8 @@ import { renderVerberGrammatikHubView } from './VerberGrammatikHubView.js';
  * SansningVerberTiderView - Station 2: Tidens Sansning & Verbernes Tider
  * Diktomisk Split-Stage Vrimlebillede (som i adjektiver_kvalitet/tab_kontrast):
  * 
- *  🔵 VENSTRE SIDE: HAVDE VÆRET (Stabil tilstand i fortid / Yin)
- *  🟠 HØJRE SIDE: VAR BLEVET (Selve omslaget og forvandlingen / Yang)
+ *  🔵 VENSTRE SIDE: HAVDE VÆRET (Stabil tilstand i fortid / Stilstand)
+ *  🟠 HØJRE SIDE: VAR BLEVET (Selve omslaget og forvandlingen / Tilblivelse)
  * 
  * Bevarer 100% af de oprindelige moduler (VerberTider4 & VerberGrammatikHub) i Fane 3.
  */

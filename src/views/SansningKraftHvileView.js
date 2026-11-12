@@ -8,8 +8,8 @@ import { renderVerberLiggerLaeserView } from './VerberLiggerLaeserView.js';
  * SansningKraftHvileView - Station 4: Kroppens Kraft vs. Tingens Hvile
  * Diktomisk Split-Stage Vrimlebillede (som i adjektiver_kvalitet/tab_kontrast):
  * 
- *  🟠 VENSTRE SIDE: KROPPENS KRAFT (Lægge, sætte, stille / Yang)
- *  🔵 HØJRE SIDE: TINGENS HVILE (Ligge, sidde, stå / Yin)
+ *  🟠 VENSTRE SIDE: KROPPENS KRAFT (Lægge, sætte, stille / Forvandling)
+ *  🔵 HØJRE SIDE: TINGENS HVILE (Ligge, sidde, stå / Stilstand)
  * 
  * Bevarer 100% af de originale moduler i Fane 3.
  */

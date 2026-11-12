@@ -7,8 +7,8 @@ import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystem
  * Vrimlebillede: DIKTOMISK SPLIT-STAGE
  * 
  * Didaktisk grundlag:
- *  🔵 VENSTRE: RO I RUMMET (Yin / Tilstand) -> Ender på -e: hjemme, inde, ude, oppe, nede
- *  🟠 HØJRE: KRYDSER TÆRSKLEN (Yang / Bevægelse) -> Uden -e: hjem, ind, ud, op, ned
+ *  🔵 VENSTRE: RO I RUMMET (Stilstand / Væren) -> Ender på -e: hjemme, inde, ude, oppe, nede
+ *  🟠 HØJRE: KRYDSER TÆRSKLEN (Forvandling / Bevægelse) -> Uden -e: hjem, ind, ud, op, ned
  */
 export function renderSansningRummetTaersklenView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
@@ -830,19 +830,19 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
-                <!-- VENSTRE HALVDEL: RO I RUMMET (Yin / -e) -->
+                <!-- VENSTRE HALVDEL: RO I RUMMET (Stilstand / -e) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Yin: Ro i rummet (hjemme, inde, ude, oppe, nede)
+                        🔵 Stilstand: Ro i rummet (hjemme, inde, ude, oppe, nede)
                     </div>
                     <img src="assets/sansning_rummet_venstre.jpg" alt="Ro i rummet - Hjemme, inde, ude, oppe, nede" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
-                <!-- HØJRE HALVDEL: KRYDSER TÆRSKLEN (Yang / Uden -e) -->
+                <!-- HØJRE HALVDEL: KRYDSER TÆRSKLEN (Forvandling / Uden -e) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Yang: Krydser tærsklen (hjem, ind, ud, op, ned)
+                        🟠 Forvandling: Krydser tærsklen (hjem, ind, ud, op, ned)
                     </div>
                     <img src="assets/sansning_rummet_hoejre.jpg" alt="Krydser tærsklen - Hjem, ind, ud, op, ned" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -1107,7 +1107,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
         const currentData = activeSide === 'left' ? pair.left : pair.right;
         const otherSide = activeSide === 'left' ? 'right' : 'left';
         const otherData = activeSide === 'left' ? pair.right : pair.left;
-        const otherLabel = activeSide === 'left' ? `Byt til: ${pair.right.word} (Yang / Retning)` : `Byt til: ${pair.left.word} (Yin / Ro)`;
+        const otherLabel = activeSide === 'left' ? `Byt til: ${pair.right.word} (Forvandling / Retning)` : `Byt til: ${pair.left.word} (Stilstand / Ro)`;
 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
@@ -1124,7 +1124,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${activeSide === 'left' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🔵 Yin: Ro i rummet (-e)</span>
+                    <span class="adj-box-badge">🔵 Stilstand: Ro i rummet (-e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.left.sent.replace(pair.left.word, `<span class="adj-highlight">${pair.left.word}</span>`)}"
@@ -1135,7 +1135,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 </div>
 
                 <div class="adj-box right ${activeSide === 'right' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🟠 Yang: Krydser tærsklen (uden -e)</span>
+                    <span class="adj-box-badge">🟠 Forvandling: Krydser tærsklen (uden -e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.right.sent.replace(pair.right.word, `<span class="adj-highlight">${pair.right.word}</span>`)}"

@@ -7,8 +7,8 @@ import { renderVerberHarErView } from './VerberHarErView.js';
  * SansningHarErView - Station 3: Aktivitet vs. Tilstandsskift (Har vs. Er i førnutid)
  * Diktomisk Split-Stage Vrimlebillede (som i adjektiver_kvalitet/tab_kontrast):
  * 
- *  🟠 VENSTRE SIDE: MOTOREN (Har) — Aktiviteten i gang (Yang)
- *  🔵 HØJRE SIDE: DØREN / SKIFTET (Er) — Ny tilstand og flyttet grænse (Yin)
+ *  🟠 VENSTRE SIDE: MOTOREN (Har) — Aktiviteten i gang (Forvandling / Arbejde)
+ *  🔵 HØJRE SIDE: DØREN / SKIFTET (Er) — Ny tilstand og flyttet grænse (Stilstand / Resultat)
  * 
  * Bevarer 100% af det oprindelige VerberHarErView i Fane 3.
  */

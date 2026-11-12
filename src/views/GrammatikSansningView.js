@@ -4,10 +4,10 @@ import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystem
 
 /**
  * GrammatikSansningView - "Grammatik og min sansning af verdenen"
- * En fænomenologisk og taoistisk overflade, der samler dansk grammatik under
+ * En fænomenologisk overflade, der samler dansk grammatik under
  * den fundamentale sanselige dikotomi:
- *  🔵 TILSTAND (Stilstand / Ro / Yin / Væren)
- *  🟠 FORVANDLING (Bevægelse / Kraft / Yang / Tilblivelse)
+ *  🔵 VÆREN & STILSTAND (Tilstand i Ro)
+ *  🟠 TILBLIVELSE & FORVANDLING (Bevægelse & Kraft)
  */
 export function renderGrammatikSansningView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
@@ -460,8 +460,8 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             font-weight: 700;
             font-size: 0.78rem;
         }
-        .gs-contrast-label.yin { color: #38bdf8; }
-        .gs-contrast-label.yang { color: #fb923c; }
+        .gs-contrast-label.tilstand { color: #38bdf8; }
+        .gs-contrast-label.forvandling { color: #fb923c; }
         .gs-contrast-sent {
             font-weight: 700;
             color: #f8fafc;
@@ -573,7 +573,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     const hero = document.createElement('div');
     hero.className = 'gs-hero';
     hero.innerHTML = `
-        <div class="gs-hero-badge">☯️ Taoistisk & Fænomenologisk Grammatik</div>
+        <div class="gs-hero-badge">🧭 Fænomenologisk & Sanselig Grammatik</div>
         <h1>Grammatik og min sansning af verdenen</h1>
         <p>
             På dansk afslører dine verber og ord, <strong>hvordan du oplever virkeligheden</strong>.
@@ -592,7 +592,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                 <span class="gs-realm-badge">🔵 Det Blå Rige</span>
                 <span class="gs-realm-symbol">🌊</span>
             </div>
-            <h2 class="gs-realm-title">Tilstand & Stilstand (Yin / Væren)</h2>
+            <h2 class="gs-realm-title">Væren & Stilstand (Tilstand i Ro)</h2>
             <p class="gs-realm-desc">
                 Når verden hviler. Tingen befinder sig et sted, tilstanden er uforandret, kroppen sanser smagen indefra, og handlingen er stabil.
             </p>
@@ -625,7 +625,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                 <span class="gs-realm-badge">🟠 Det Gyldne Rige</span>
                 <span class="gs-realm-symbol">🔥</span>
             </div>
-            <h2 class="gs-realm-title">Forvandling & Kraft (Yang / Tilblivelse)</h2>
+            <h2 class="gs-realm-title">Tilblivelse & Forvandling (Bevægelse & Kraft)</h2>
             <p class="gs-realm-desc">
                 Når verden er i bevægelse. Der sker et omslag, en overgang, en kraft anbringer en genstand, tærsklen krydses, eller tanken gætter fremad.
             </p>
@@ -655,7 +655,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     `;
     viewContainer.appendChild(compass);
 
-    // 4. Interactive Live Simulator: Flick between Yin and Yang
+    // 4. Interactive Live Simulator: Skift mellem Væren/Stilstand og Tilblivelse/Forvandling
     const simulator = document.createElement('div');
     simulator.className = 'gs-simulator-box';
 
@@ -706,10 +706,10 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                 <span class="gs-sim-title">⚡ Sanse-Simulatoren: Oplev forvandlingen i 1 klik</span>
                 <div class="gs-sim-toggle-group">
                     <button class="gs-sim-toggle-btn tilstand ${simState.activeMode === 'tilstand' ? 'active' : ''}" id="btn-sim-tilstand">
-                        🔵 Tilstand (Ro / Yin)
+                        🔵 Væren & Stilstand
                     </button>
                     <button class="gs-sim-toggle-btn forvandling ${simState.activeMode === 'forvandling' ? 'active' : ''}" id="btn-sim-forvandling">
-                        🟠 Forvandling (Kraft / Yang)
+                        🟠 Tilblivelse & Forvandling
                     </button>
                 </div>
             </div>
@@ -848,8 +848,8 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
         </div>
         <div class="gs-filter-pills">
             <button class="gs-filter-pill active" data-filter="all">Vis alle (6)</button>
-            <button class="gs-filter-pill" data-filter="tilstand">🔵 Kun Tilstand (Yin)</button>
-            <button class="gs-filter-pill" data-filter="forvandling">🟠 Kun Forvandling (Yang)</button>
+            <button class="gs-filter-pill" data-filter="tilstand">🔵 Kun Væren & Stilstand</button>
+            <button class="gs-filter-pill" data-filter="forvandling">🟠 Kun Tilblivelse & Forvandling</button>
         </div>
     `;
     viewContainer.appendChild(filterBar);
@@ -876,11 +876,11 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                     
                     <div class="gs-station-contrast-box">
                         <div class="gs-contrast-row" style="display: ${filter === 'forvandling' ? 'none' : 'flex'}">
-                            <span class="gs-contrast-label yin">🔵 ${st.yinLabel}:</span>
+                            <span class="gs-contrast-label tilstand">🔵 ${st.yinLabel}:</span>
                             <span class="gs-contrast-sent">${st.yinSent}</span>
                         </div>
                         <div class="gs-contrast-row" style="display: ${filter === 'tilstand' ? 'none' : 'flex'}">
-                            <span class="gs-contrast-label yang">🟠 ${st.yangLabel}:</span>
+                            <span class="gs-contrast-label forvandling">🟠 ${st.yangLabel}:</span>
                             <span class="gs-contrast-sent">${st.yangSent}</span>
                         </div>
                     </div>

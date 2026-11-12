@@ -347,6 +347,7 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -362,6 +363,7 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #7dd3fc;
@@ -374,10 +376,13 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
             background: rgba(180, 83, 9, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -714,92 +719,14 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
                 <!-- VENSTRE HALVDEL: HAVDE VÆRET (STILSTAND I FORTID) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header cool">🔵 HAVDE VÆRET (Uforandret Fortid i Ro)</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="nightCool" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#050814"/>
-                                <stop offset="100%" stop-color="#0f172a"/>
-                            </linearGradient>
-                            <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="rgba(254, 240, 138, 0.7)"/>
-                                <stop offset="100%" stop-color="rgba(254, 240, 138, 0)"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#nightCool)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#cbd5e1"/>
-
-                        <!-- Måne på klar himmel -->
-                        <circle cx="420" cy="60" r="24" fill="#fef08a" opacity="0.9"/>
-                        <circle cx="412" cy="55" r="20" fill="#050814"/>
-
-                        <!-- Vinterhus med tyk sne på taget (HAVDE LIGGET I EN UGE) -->
-                        <g transform="translate(240, 120)">
-                            <rect x="20" y="80" width="220" height="120" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <polygon points="0,80 130,10 260,80" fill="#451a03"/>
-                            <path d="M-5,76 Q130,0 265,76 Q230,90 200,80 Q130,15 -5,76 Z" fill="#ffffff"/>
-                            <rect x="50" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <rect x="130" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <!-- Kold te på bordet indenfor -->
-                            <ellipse cx="75" cy="135" rx="8" ry="4" fill="#94a3b8"/>
-                        </g>
-
-                        <!-- Bilen med lygter der havde lyst i timevis (HAVDE LYST) -->
-                        <g transform="translate(50, 270)">
-                            <polygon points="180,60 360,20 360,100" fill="url(#beamGrad)"/>
-                            <rect x="20" y="45" width="160" height="40" rx="8" fill="#b91c1c"/>
-                            <path d="M50,45 L85,15 L145,15 L170,45 Z" fill="#991b1b"/>
-                            <circle cx="60" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="150" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="180" cy="65" r="6" fill="#fef08a"/>
-                            <!-- Mads bag rattet -->
-                            <circle cx="100" cy="30" r="9" fill="#fed7aa"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_verber_tider_venstre.jpg" alt="Vinterhuset og bilen i stabil kulde (havde været)" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: VAR BLEVET (FORVANDLINGEN DER INDTRÆFFER) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header warm">🟠 VAR BLEVET (Selve Forvandlingen/Omslaget)</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="nightStorm" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#451a03"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#nightStorm)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#94a3b8"/>
-                        <!-- Snefygning / vindstreger -->
-                        <line x1="50" y1="50" x2="120" y2="70" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
-                        <line x1="200" y1="80" x2="300" y2="110" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
-                        <line x1="100" y1="160" x2="220" y2="190" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
-
-                        <!-- Vinterhus hvor sneen netop skovles (VAR BLEVET RYDDET) -->
-                        <g transform="translate(240, 120)">
-                            <rect x="20" y="80" width="220" height="120" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <polygon points="0,80 130,10 260,80" fill="#451a03"/>
-                            <path d="M-5,76 Q130,0 265,76 Q230,90 200,80 Q130,15 -5,76 Z" fill="#ffffff"/>
-                            <rect x="50" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <rect x="130" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <!-- Åben dør hvor kold luft strømmer ind (teen VAR BLEVET kold) -->
-                            <rect x="90" y="130" width="25" height="70" fill="#0f172a"/>
-                        </g>
-
-                        <!-- Bilen der kørte ind idet vejret var blevet koldt (VAR BLEVET KOLDT) -->
-                        <g transform="translate(50, 270)">
-                            <rect x="20" y="45" width="160" height="40" rx="8" fill="#b91c1c"/>
-                            <path d="M50,45 L85,15 L145,15 L170,45 Z" fill="#991b1b"/>
-                            <!-- Tændte lygter (VAR BLEVET TÆNDT) -->
-                            <circle cx="180" cy="65" r="7" fill="#fde68a"/>
-                            <polygon points="180,65 370,10 370,120" fill="url(#beamGrad)"/>
-                            <!-- Mads er træt (VAR BLEVET TRÆT) -->
-                            <circle cx="100" cy="30" r="9" fill="#fed7aa"/>
-                            <ellipse cx="100" cy="33" rx="2" ry="4" fill="#0f172a"/> <!-- gaber -->
-                            <circle cx="60" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="150" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_verber_tider_hoejre.jpg" alt="Vejret skifter og kulden sætter ind da bilen ankommer (var blevet)" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
             </div>

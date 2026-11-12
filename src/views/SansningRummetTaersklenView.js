@@ -357,6 +357,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -372,6 +373,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #7dd3fc;
@@ -384,10 +386,13 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
             background: rgba(154, 52, 18, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -830,71 +835,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                     <div class="stage-half-header cool">
                         🔵 Yin: Ro i rummet (hjemme, inde, ude, oppe, nede)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#1e293b"/>
-                            </linearGradient>
-                            <linearGradient id="coolHouse" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#1e3a8a"/>
-                                <stop offset="100%" stop-color="#172554"/>
-                            </linearGradient>
-                            <linearGradient id="coolWarmRoom" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#fef08a" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="#eab308" stop-opacity="0.3"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Himmel / Baggrund -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#coolSky)"/>
-                        
-                        <!-- Måne & Stjerner (Ro) -->
-                        <circle cx="80" cy="50" r="18" fill="#fef08a" opacity="0.8"/>
-                        <circle cx="140" cy="40" r="2" fill="#ffffff" opacity="0.7"/>
-                        <circle cx="210" cy="65" r="1.5" fill="#ffffff" opacity="0.6"/>
-
-                        <!-- Græsplæne & Terrasse i ro -->
-                        <path d="M0,320 Q250,310 500,320 L500,450 L0,450 Z" fill="#064e3b" opacity="0.7"/>
-                        <!-- Terrasse (ude) -->
-                        <polygon points="10,325 150,325 180,410 10,410" fill="#334155"/>
-                        <!-- Havestol med person der slapper af ude -->
-                        <rect x="50" y="340" width="40" height="30" rx="4" fill="#3b82f6"/>
-                        <circle cx="70" cy="325" r="9" fill="#fed7aa"/>
-                        <text x="60" y="430" fill="#7dd3fc" font-size="11" font-weight="bold">Ude på terrassen</text>
-
-                        <!-- Huset (Tværsnit) -->
-                        <polygon points="180,140 340,60 500,140 500,420 180,420" fill="url(#coolHouse)" stroke="#38bdf8" stroke-width="2"/>
-
-                        <!-- 1. Sal (Oppe) -->
-                        <line x1="180" y1="210" x2="500" y2="210" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="2"/>
-                        <rect x="260" y="100" width="120" height="95" rx="6" fill="url(#coolWarmRoom)"/>
-                        <!-- Seng oppe -->
-                        <rect x="280" y="160" width="70" height="25" rx="3" fill="#64748b"/>
-                        <rect x="285" y="152" width="25" height="10" rx="3" fill="#ffffff"/>
-                        <text x="285" y="130" fill="#0f172a" font-size="11" font-weight="900">Oppe (seng)</text>
-
-                        <!-- Stueetage (Hjemme & Inde) -->
-                        <rect x="220" y="225" width="260" height="110" rx="8" fill="url(#coolWarmRoom)"/>
-                        <!-- Sofa (hjemme i ro) -->
-                        <rect x="240" y="280" width="85" height="35" rx="6" fill="#3b82f6"/>
-                        <circle cx="270" cy="265" r="9" fill="#fed7aa"/>
-                        <text x="250" y="250" fill="#0f172a" font-size="11" font-weight="900">Hjemme i sofaen</text>
-                        <!-- Bord med børn der leger inde -->
-                        <rect x="360" y="285" width="60" height="25" rx="3" fill="#92400e"/>
-                        <circle cx="390" cy="270" r="8" fill="#fca5a5"/>
-                        <text x="365" y="260" fill="#0f172a" font-size="10" font-weight="bold">Inde i stuen</text>
-
-                        <!-- Kælder (Nede) -->
-                        <line x1="180" y1="345" x2="500" y2="345" stroke="#38bdf8" stroke-width="2"/>
-                        <rect x="220" y="355" width="260" height="60" fill="#1e293b"/>
-                        <!-- Vaskemaskine i ro nede -->
-                        <rect x="380" y="365" width="38" height="42" rx="4" fill="#e2e8f0"/>
-                        <circle cx="399" cy="386" r="12" fill="#38bdf8" opacity="0.6"/>
-                        <text x="260" y="390" fill="#94a3b8" font-size="11" font-weight="bold">Nede i kælderen</text>
-                    </svg>
-
+                    <img src="assets/sansning_rummet_venstre.jpg" alt="Ro i rummet - Hjemme, inde, ude, oppe, nede" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
@@ -903,75 +844,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                     <div class="stage-half-header warm">
                         🟠 Yang: Krydser tærsklen (hjem, ind, ud, op, ned)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#451a03"/>
-                                <stop offset="100%" stop-color="#78350f"/>
-                            </linearGradient>
-                            <linearGradient id="warmHouse" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#9a3412"/>
-                                <stop offset="100%" stop-color="#c2410c"/>
-                            </linearGradient>
-                            <linearGradient id="arrowGlow" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#fbbf24"/>
-                                <stop offset="100%" stop-color="#ea580c"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Himmel / Dynamisk aften -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#warmSky)"/>
-
-                        <!-- Jord / Indkørsel -->
-                        <path d="M0,320 Q250,310 500,320 L500,450 L0,450 Z" fill="#713f12" opacity="0.8"/>
-                        
-                        <!-- Cyklist på vej hjem -->
-                        <g transform="translate(40, 340)">
-                            <circle cx="15" cy="25" r="10" stroke="#f97316" stroke-width="2" fill="none"/>
-                            <circle cx="50" cy="25" r="10" stroke="#f97316" stroke-width="2" fill="none"/>
-                            <line x1="15" y1="25" x2="32" y2="15" stroke="#fdba74" stroke-width="2"/>
-                            <line x1="50" y1="25" x2="38" y2="10" stroke="#fdba74" stroke-width="2"/>
-                            <circle cx="32" cy="0" r="7" fill="#fed7aa"/>
-                            <!-- Bevægelsespil mod huset -->
-                            <path d="M68,20 L95,20 L85,14 M95,20 L85,26" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
-                            <text x="10" y="55" fill="#fde68a" font-size="11" font-weight="900">Cykler hjem</text>
-                        </g>
-
-                        <!-- Huset med åbne tærskler -->
-                        <polygon points="180,140 340,60 500,140 500,420 180,420" fill="url(#warmHouse)" stroke="#ea580c" stroke-width="2"/>
-
-                        <!-- Terrassedør: Går ud med kande -->
-                        <g transform="translate(140, 310)">
-                            <line x1="20" y1="20" x2="-20" y2="35" stroke="#f97316" stroke-width="4" stroke-linecap="round"/>
-                            <path d="M10,40 L-15,45 L-5,38 M-15,45 L-5,52" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
-                            <text x="-40" y="70" fill="#fed7aa" font-size="10" font-weight="bold">Træder ud</text>
-                        </g>
-
-                        <!-- Indgangsdør: Træder ind over dørtrin -->
-                        <rect x="200" y="240" width="36" height="85" fill="#1e293b"/>
-                        <line x1="190" y1="325" x2="245" y2="325" stroke="#fbbf24" stroke-width="4"/>
-                        <!-- Fod over tærsklen -->
-                        <path d="M185,315 L225,315 L215,308 M225,315 L215,322" stroke="#34d399" stroke-width="3"/>
-                        <text x="195" y="230" fill="#a7f3d0" font-size="11" font-weight="bold">Løber ind</text>
-
-                        <!-- Trappe mod 1. sal: Går op -->
-                        <g transform="translate(320, 150)">
-                            <path d="M0,80 L20,60 L40,40 L60,20 L80,0" stroke="#fbbf24" stroke-width="4" fill="none"/>
-                            <!-- Pil opad -->
-                            <path d="M70,30 L85,5 L60,10" stroke="#fde68a" stroke-width="3" fill="none"/>
-                            <text x="10" y="25" fill="#fed7aa" font-size="11" font-weight="900">Går op ad trappen</text>
-                        </g>
-
-                        <!-- Kældertrappe: Bærer kurv ned -->
-                        <g transform="translate(360, 330)">
-                            <path d="M0,0 L20,20 L40,40 L60,60" stroke="#fbbf24" stroke-width="4" fill="none"/>
-                            <!-- Pil nedad -->
-                            <path d="M40,55 L65,70 L60,45" stroke="#fde68a" stroke-width="3" fill="none"/>
-                            <text x="-15" y="45" fill="#fdba74" font-size="11" font-weight="bold">Går ned</text>
-                        </g>
-                    </svg>
-
+                    <img src="assets/sansning_rummet_hoejre.jpg" alt="Krydser tærsklen - Hjem, ind, ud, op, ned" class="stage-half-img" />
                     <div id="hotspots-right"></div>
                 </div>
             </div>

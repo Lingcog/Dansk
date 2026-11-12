@@ -440,6 +440,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -455,6 +456,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #7dd3fc;
@@ -467,10 +469,12 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             background: rgba(154, 52, 18, 0.85);
         }
 
-        .stage-half svg {
+        .stage-half img,
+        .stage-half-img {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         /* Hotspots */
@@ -918,60 +922,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
                 <!-- VENSTRE HALVDEL: VÆREN (ER / RO) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header cool">🔵 VÆREN (At være / Er) — Verden i Ro</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolWall" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#0c4a6e"/>
-                            </linearGradient>
-                            <linearGradient id="coolSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0284c7"/>
-                                <stop offset="100%" stop-color="#38bdf8"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#coolWall)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#141a29"/>
-
-                        <!-- Vindue kl. 12 med middagssol (ER LYS) -->
-                        <rect x="320" y="40" width="150" height="180" rx="8" fill="url(#coolSky)" stroke="#475569" stroke-width="4"/>
-                        <circle cx="395" cy="110" r="30" fill="#fef08a"/>
-                        <line x1="395" y1="40" x2="395" y2="220" stroke="#334155" stroke-width="3"/>
-                        <line x1="320" y1="130" x2="470" y2="130" stroke="#334155" stroke-width="3"/>
-
-                        <!-- Bilen i indkørslen (ER REN) -->
-                        <g transform="translate(30, 110)">
-                            <rect x="0" y="30" width="130" height="40" rx="6" fill="#3b82f6"/>
-                            <path d="M20,30 L45,5 L90,5 L110,30 Z" fill="#1d4ed8"/>
-                            <circle cx="35" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="95" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <text x="125" y="20" fill="#38bdf8" font-size="14">✨</text>
-                        </g>
-
-                        <!-- Dørkarm med Emil 125 cm (ER 125 CM) -->
-                        <rect x="280" y="90" width="20" height="230" fill="#334155"/>
-                        <line x1="280" y1="180" x2="300" y2="180" stroke="#fde68a" stroke-width="3"/>
-                        <text x="250" y="184" fill="#fde68a" font-size="10" font-weight="900">125</text>
-
-                        <!-- Mads sover tungt i lænestol (ER TRÆT) -->
-                        <g transform="translate(210, 200)">
-                            <rect x="15" y="30" width="60" height="80" rx="10" fill="#831843"/>
-                            <circle cx="45" cy="35" r="14" fill="#fed7aa"/>
-                            <text x="62" y="25" fill="#38bdf8" font-size="12" font-weight="900">Zzz</text>
-                        </g>
-
-                        <!-- Bord med kold kaffekop (ER KOLD - ingen damp) -->
-                        <g transform="translate(80, 280)">
-                            <ellipse cx="60" cy="50" rx="55" ry="24" fill="#334155" stroke="#475569" stroke-width="3"/>
-                            <rect x="52" y="30" width="18" height="14" rx="2" fill="#ffffff"/>
-                            <ellipse cx="61" cy="44" rx="14" ry="6" fill="#cbd5e1"/>
-                        </g>
-
-                        <!-- Komfur med varm suppe (ER VARM) -->
-                        <g transform="translate(130, 180)">
-                            <rect x="0" y="20" width="70" height="60" fill="#1e293b" rx="4"/>
-                            <rect x="15" y="5" width="40" height="20" rx="3" fill="#cbd5e1"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_vaere_venstre.jpg" alt="Væren og ro i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Venstre -->
                     <div id="left-hotspots-container"></div>
@@ -980,70 +931,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
                 <!-- HØJRE HALVDEL: TILBLIVELSE (BLIVER / FORVANDLING) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header warm">🟠 TILBLIVELSE (At blive / Bliver) — Forvandling</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmWall" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#7c2d12"/>
-                            </linearGradient>
-                            <linearGradient id="dawnSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#312e81"/>
-                                <stop offset="70%" stop-color="#f97316"/>
-                                <stop offset="100%" stop-color="#fef08a"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#warmWall)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#24140e"/>
-
-                        <!-- Vindue kl. 06 med morgengry (BLIVER LYS) -->
-                        <rect x="320" y="40" width="150" height="180" rx="8" fill="url(#dawnSky)" stroke="#78350f" stroke-width="4"/>
-                        <circle cx="395" cy="180" r="30" fill="#ea580c"/> <!-- Solen stiger netop op -->
-                        <line x1="395" y1="40" x2="395" y2="220" stroke="#78350f" stroke-width="3"/>
-                        <line x1="320" y1="130" x2="470" y2="130" stroke="#78350f" stroke-width="3"/>
-
-                        <!-- Bilen under vask (BLIVER REN) -->
-                        <g transform="translate(30, 110)">
-                            <rect x="0" y="30" width="130" height="40" rx="6" fill="#3b82f6"/>
-                            <path d="M20,30 L45,5 L90,5 L110,30 Z" fill="#1d4ed8"/>
-                            <circle cx="35" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="95" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <!-- Vandstråler og hvidt skum -->
-                            <circle cx="70" cy="20" r="10" fill="#ffffff" opacity="0.8"/>
-                            <circle cx="90" cy="35" r="8" fill="#ffffff" opacity="0.8"/>
-                            <circle cx="45" cy="40" r="7" fill="#ffffff" opacity="0.8"/>
-                        </g>
-
-                        <!-- Dørkarm med Emil der vokser (BLIVER HØJ) -->
-                        <rect x="280" y="90" width="20" height="230" fill="#78350f"/>
-                        <line x1="280" y1="150" x2="300" y2="150" stroke="#fb923c" stroke-width="3" stroke-dasharray="3 3"/>
-                        <text x="235" y="154" fill="#fb923c" font-size="10" font-weight="900">↑ vokser</text>
-
-                        <!-- Mads gaber og kæmper mod søvnen (BLIVER TRÆT) -->
-                        <g transform="translate(210, 200)">
-                            <rect x="15" y="30" width="60" height="80" rx="10" fill="#9a3412"/>
-                            <circle cx="45" cy="35" r="14" fill="#fed7aa"/>
-                            <!-- Åben mund (gaber) -->
-                            <ellipse cx="45" cy="40" rx="4" ry="6" fill="#451a03"/>
-                        </g>
-
-                        <!-- Bord med kaffekop der damper af i kulden (BLIVER KOLD) -->
-                        <g transform="translate(80, 280)">
-                            <ellipse cx="60" cy="50" rx="55" ry="24" fill="#451a03" stroke="#78350f" stroke-width="3"/>
-                            <rect x="52" y="30" width="18" height="14" rx="2" fill="#ffffff"/>
-                            <ellipse cx="61" cy="44" rx="14" ry="6" fill="#cbd5e1"/>
-                            <!-- Bølgende damp der forsvinder -->
-                            <path d="M56,26 Q59,16 64,24" stroke="#e2e8f0" stroke-width="2" fill="none" opacity="0.75"/>
-                            <path d="M62,24 Q65,14 70,22" stroke="#e2e8f0" stroke-width="2" fill="none" opacity="0.75"/>
-                        </g>
-
-                        <!-- Komfur med tændt blus under gryden (BLIVER VARM) -->
-                        <g transform="translate(130, 180)">
-                            <rect x="0" y="20" width="70" height="60" fill="#1e293b" rx="4"/>
-                            <!-- Rødt glødende blus -->
-                            <line x1="10" y1="23" x2="60" y2="23" stroke="#ef4444" stroke-width="4"/>
-                            <rect x="15" y="5" width="40" height="20" rx="3" fill="#cbd5e1"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_blive_hoejre.jpg" alt="Tilblivelse og forvandling i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Højre -->
                     <div id="right-hotspots-container"></div>

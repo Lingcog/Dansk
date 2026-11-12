@@ -347,6 +347,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -362,6 +363,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.warm {
             color: #fbcfe8;
@@ -374,10 +376,13 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             background: rgba(12, 74, 110, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -709,110 +714,14 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
                 <!-- VENSTRE HALVDEL: KROPPENS KRAFT (LÆGGE, SÆTTE, STILLE) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header warm">🟠 KROPPENS KRAFT — Hånden flytter tingen</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmKraft" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#500724"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#warmKraft)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#24141d"/>
-
-                        <!-- Hånden stiller koppen op på hylden (STILLER) -->
-                        <g transform="translate(340, 80)">
-                            <rect x="0" y="0" width="140" height="180" fill="#451a03" stroke="#2e1002" stroke-width="4"/>
-                            <line x1="0" y1="70" x2="140" y2="70" stroke="#78350f" stroke-width="6"/>
-                            <!-- Hånd der løfter koppen opad -->
-                            <line x1="60" y1="90" x2="60" y2="50" stroke="#fed7aa" stroke-width="6" stroke-linecap="round"/>
-                            <rect x="48" y="35" width="22" height="18" rx="3" fill="#ffffff"/>
-                        </g>
-
-                        <!-- Katten skubber og vælter vasen (VÆLTER) -->
-                        <g transform="translate(370, 260)">
-                            <ellipse cx="20" cy="50" rx="18" ry="12" fill="#d97706"/>
-                            <path d="M35,45 Q50,25 60,40" stroke="#d97706" stroke-width="4" fill="none"/>
-                            <!-- Vase der vipper i luften -->
-                            <rect x="65" y="25" width="18" height="35" rx="3" fill="#38bdf8" transform="rotate(35 65 25)"/>
-                        </g>
-
-                        <!-- Pigen sætter bamsen til rette i sofaen (SÆTTER) -->
-                        <g transform="translate(200, 180)">
-                            <rect x="15" y="30" width="120" height="70" rx="12" fill="#334155"/>
-                            <!-- Pige der anbringer bamse -->
-                            <circle cx="50" cy="20" r="12" fill="#fed7aa"/>
-                            <circle cx="85" cy="45" r="14" fill="#b45309"/>
-                            <line x1="55" y1="30" x2="75" y2="45" stroke="#fed7aa" stroke-width="4"/>
-                        </g>
-
-                        <!-- Hånden lægger bogen på sofabordet (LÆGGER) -->
-                        <g transform="translate(60, 260)">
-                            <ellipse cx="70" cy="60" rx="60" ry="25" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <!-- Hånd og bog i bevægelse -->
-                            <line x1="50" y1="20" x2="65" y2="48" stroke="#fed7aa" stroke-width="5" stroke-linecap="round"/>
-                            <polygon points="50,42 75,38 90,52 65,56" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-                        </g>
-
-                        <!-- Manden sætter sig i stolen (SÆTTER SIG) -->
-                        <g transform="translate(30, 150)">
-                            <rect x="20" y="20" width="60" height="90" rx="10" fill="#831843"/>
-                            <!-- Person på vej ned i stolen -->
-                            <circle cx="50" cy="0" r="14" fill="#fed7aa"/>
-                            <line x1="50" y1="14" x2="50" y2="40" stroke="#f472b6" stroke-width="6" stroke-linecap="round"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_kraft_hvile_venstre.jpg" alt="Kroppens kraft - Lægger, sætter, stiller" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: TINGENS HVILE (LIGGE, SIDDE, STÅ) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header cool">🔵 TINGENS HVILE — Tingen hviler i ro</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolHvile" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#0c4a6e"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#coolHvile)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#141e2b"/>
-
-                        <!-- Koppen står på hylden i ro (STÅR) -->
-                        <g transform="translate(340, 80)">
-                            <rect x="0" y="0" width="140" height="180" fill="#451a03" stroke="#2e1002" stroke-width="4"/>
-                            <line x1="0" y1="70" x2="140" y2="70" stroke="#78350f" stroke-width="6"/>
-                            <!-- Koppen står solidt -->
-                            <rect x="55" y="48" width="22" height="20" rx="3" fill="#ffffff"/>
-                        </g>
-
-                        <!-- Vasen ligger væltet på gulvet (LIGGER VÆLTET) -->
-                        <g transform="translate(370, 260)">
-                            <ellipse cx="65" cy="55" rx="18" ry="8" fill="#38bdf8"/>
-                            <text x="65" y="45" fill="#fde68a" font-size="10">💧</text>
-                        </g>
-
-                        <!-- Bamsen sidder i sofaen i ro (SIDDER) -->
-                        <g transform="translate(200, 180)">
-                            <rect x="15" y="30" width="120" height="70" rx="12" fill="#334155"/>
-                            <circle cx="75" cy="45" r="14" fill="#b45309"/>
-                            <circle cx="68" cy="35" r="5" fill="#b45309"/>
-                            <circle cx="82" cy="35" r="5" fill="#b45309"/>
-                        </g>
-
-                        <!-- Bogen ligger fladt på sofabordet (LIGGER) -->
-                        <g transform="translate(60, 260)">
-                            <ellipse cx="70" cy="60" rx="60" ry="25" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <polygon points="40,55 70,52 100,55 95,65 70,62 45,65" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-                        </g>
-
-                        <!-- Manden sidder og læser avisen (SIDDER OG LÆSER) -->
-                        <g transform="translate(30, 150)">
-                            <rect x="20" y="20" width="60" height="90" rx="10" fill="#831843"/>
-                            <circle cx="50" cy="15" r="14" fill="#fed7aa"/>
-                            <!-- Avis i hænderne -->
-                            <rect x="35" y="40" width="30" height="20" fill="#ffffff"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_kraft_hvile_hoejre.jpg" alt="Tingens hvile - Ligger, sidder, står" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
             </div>

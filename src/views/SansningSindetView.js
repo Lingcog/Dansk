@@ -361,6 +361,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -376,6 +377,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #67e8f9;
@@ -388,10 +390,13 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
             background: rgba(154, 52, 18, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -812,71 +817,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                     <div class="stage-half-header cool">
                         🔵 Yin: Kroppens sanse-sandhed (Synes)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="bodyBg" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#083344"/>
-                                <stop offset="100%" stop-color="#0e7490"/>
-                            </linearGradient>
-                            <radialGradient id="senseWarmth" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#fef08a" stop-opacity="0.9"/>
-                                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.2"/>
-                            </radialGradient>
-                        </defs>
-
-                        <!-- Stue / Café baggrund -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#bodyBg)"/>
-
-                        <!-- Spisebord og gulv -->
-                        <rect x="0" y="320" width="500" height="130" fill="#042f2e"/>
-                        <ellipse cx="250" cy="310" rx="230" ry="60" fill="#134e4a" stroke="#2dd4bf" stroke-width="2"/>
-
-                        <!-- 1. Dampende suppeskål & mund (Suppe & smag) -->
-                        <g transform="translate(140, 240)">
-                            <ellipse cx="40" cy="30" rx="36" ry="18" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
-                            <ellipse cx="40" cy="27" rx="30" ry="12" fill="#f97316"/>
-                            <!-- Dampbølger der rammer næsen -->
-                            <path d="M30,15 Q35,5 30,-5 M45,15 Q50,5 45,-5 M40,20 Q35,10 40,0" stroke="#fef08a" stroke-width="2" fill="none" opacity="0.8"/>
-                            <!-- Ske mod munden -->
-                            <line x1="55" y1="20" x2="80" y2="-10" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="85" cy="-15" r="16" fill="#fed7aa"/>
-                            <!-- Tunge mærker smagen -->
-                            <circle cx="85" cy="-8" r="5" fill="#f43f5e"/>
-                            <text x="5" y="60" fill="#67e8f9" font-size="11" font-weight="900">Smager: "Jeg synes!"</text>
-                        </g>
-
-                        <!-- 2. Kaffekop med bitter smag -->
-                        <g transform="translate(60, 180)">
-                            <rect x="20" y="20" width="30" height="25" rx="3" fill="#ffffff"/>
-                            <path d="M50,25 C58,25 58,35 50,38" stroke="#ffffff" stroke-width="2.5" fill="none"/>
-                            <text x="-5" y="65" fill="#a5f3fc" font-size="10" font-weight="bold">Kaffe er bitter</text>
-                        </g>
-
-                        <!-- 3. Vindue med kuldetræk (Kroppen mærker kulden) -->
-                        <g transform="translate(340, 100)">
-                            <rect x="0" y="0" width="110" height="110" rx="8" fill="#082f49" stroke="#38bdf8" stroke-width="2"/>
-                            <!-- Kuldelinjer mod person -->
-                            <path d="M20,50 Q-10,70 -30,80" stroke="#67e8f9" stroke-width="2" stroke-dasharray="3,3" fill="none"/>
-                            <circle cx="28" cy="140" r="14" fill="#fed7aa"/>
-                            <rect x="15" y="154" width="26" height="40" rx="4" fill="#0369a1"/>
-                            <text x="-40" y="210" fill="#a5f3fc" font-size="10" font-weight="bold">Mærker kulden på huden</text>
-                        </g>
-
-                        <!-- 4. Person i stol (kroppen mærker sædet) -->
-                        <g transform="translate(230, 220)">
-                            <rect x="10" y="30" width="35" height="40" rx="4" fill="#1e293b"/>
-                            <circle cx="27" cy="15" r="12" fill="#fed7aa"/>
-                            <text x="-10" y="85" fill="#a5f3fc" font-size="10" font-weight="bold">Ryggen i stolen</text>
-                        </g>
-
-                        <!-- 5. Uret og ventetiden -->
-                        <g transform="translate(390, 260)">
-                            <circle cx="20" cy="20" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                            <text x="-5" y="52" fill="#67e8f9" font-size="10" font-weight="bold">Træt af ventetid</text>
-                        </g>
-                    </svg>
-
+                    <img src="assets/sansning_sindet_venstre.jpg" alt="Kroppens sansning - Synes" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
@@ -885,71 +826,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                     <div class="stage-half-header warm">
                         🟠 Yang: Hovedets tanker & debat (Tror / Mener / Ved)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="mindBg" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#431407"/>
-                                <stop offset="100%" stop-color="#7c2d12"/>
-                            </linearGradient>
-                            <linearGradient id="thoughtGlow" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#f59e0b"/>
-                                <stop offset="100%" stop-color="#ea580c"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Baggrund -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#mindBg)"/>
-
-                        <!-- Gulv / Mødebord -->
-                        <rect x="0" y="320" width="500" height="130" fill="#271007"/>
-                        <ellipse cx="250" cy="310" rx="230" ry="60" fill="#451a03" stroke="#ea580c" stroke-width="2"/>
-
-                        <!-- 1. Uvis ingrediens (Tror der er chili) -->
-                        <g transform="translate(140, 240)">
-                            <!-- Lukket gryde med låg -->
-                            <rect x="15" y="15" width="50" height="30" rx="4" fill="#64748b"/>
-                            <line x1="10" y1="15" x2="70" y2="15" stroke="#94a3b8" stroke-width="3"/>
-                            <!-- Tankebobel med spørgsmålstegn -->
-                            <circle cx="85" cy="-10" r="14" fill="#ffffff" stroke="#f97316" stroke-width="2"/>
-                            <text x="80" y="-4" fill="#c2410c" font-size="15" font-weight="900">?</text>
-                            <text x="5" y="60" fill="#fed7aa" font-size="11" font-weight="900">Gætter: "Jeg tror!"</text>
-                        </g>
-
-                        <!-- 2. Kaffens oprindelse (Tror Colombia) -->
-                        <g transform="translate(60, 180)">
-                            <rect x="15" y="10" width="40" height="45" rx="4" fill="#78350f" stroke="#fbbf24" stroke-width="2"/>
-                            <text x="25" y="35" fill="#fef08a" font-size="9" font-weight="bold">ØKO</text>
-                            <text x="-5" y="68" fill="#fdba74" font-size="10" font-weight="bold">Gætter oprindelse</text>
-                        </g>
-
-                        <!-- 3. Vindue med mørke skyer i fremtiden (Tror det regner snart) -->
-                        <g transform="translate(340, 100)">
-                            <rect x="0" y="0" width="110" height="110" rx="8" fill="#18181b" stroke="#f97316" stroke-width="2"/>
-                            <!-- Mørke skyer og fremtidspil -->
-                            <path d="M20,40 Q35,25 50,40 Q65,25 80,40 Q90,55 75,65 L25,65 Z" fill="#71717a"/>
-                            <text x="-35" y="130" fill="#fed7aa" font-size="10" font-weight="bold">Spår om regn (Tror)</text>
-                        </g>
-
-                        <!-- 4. Avisen & Debatten (Mener vi bør...) -->
-                        <g transform="translate(230, 210)">
-                            <!-- Avis opslået -->
-                            <rect x="0" y="20" width="60" height="40" rx="2" fill="#f8fafc"/>
-                            <line x1="30" y1="20" x2="30" y2="60" stroke="#cbd5e1" stroke-width="2"/>
-                            <circle cx="30" cy="5" r="12" fill="#fed7aa"/>
-                            <!-- Gestikulerende hånd -->
-                            <line x1="45" y1="15" x2="65" y2="0" stroke="#fed7aa" stroke-width="3" stroke-linecap="round"/>
-                            <text x="-15" y="85" fill="#fed7aa" font-size="11" font-weight="900">Debat: "Jeg mener!"</text>
-                        </g>
-
-                        <!-- 5. Køreplanen og fakta (Ved kl. 20:15) -->
-                        <g transform="translate(390, 260)">
-                            <rect x="5" y="5" width="40" height="30" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
-                            <text x="10" y="24" fill="#4ade80" font-size="10" font-weight="900">20:15</text>
-                            <text x="-10" y="52" fill="#86efac" font-size="10" font-weight="bold">Fakta: "Jeg ved!"</text>
-                        </g>
-                    </svg>
-
+                    <img src="assets/sansning_sindet_hoejre.jpg" alt="Hovedets tanker - Tror, mener, ved" class="stage-half-img" />
                     <div id="hotspots-right"></div>
                 </div>
             </div>

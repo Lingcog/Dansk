@@ -346,6 +346,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -361,6 +362,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.warm {
             color: #fed7aa;
@@ -373,10 +375,13 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
             background: rgba(12, 74, 110, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -701,111 +706,14 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
                 <!-- VENSTRE HALVDEL: HAR (MOTOREN / AKTIVITET) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header warm">🟠 MOTOREN (Har) — Aktiviteten i Arbejde</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmHar" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#431407"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#warmHar)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#292524"/>
-
-                        <!-- Malerne arbejder på stilladset (HAR MALET) -->
-                        <g transform="translate(320, 60)">
-                            <rect x="0" y="20" width="160" height="200" fill="#f8fafc" stroke="#475569" stroke-width="3"/>
-                            <line x1="-10" y1="40" x2="-10" y2="220" stroke="#94a3b8" stroke-width="4"/>
-                            <line x1="80" y1="40" x2="80" y2="220" stroke="#94a3b8" stroke-width="4"/>
-                            <line x1="-15" y1="120" x2="85" y2="120" stroke="#cbd5e1" stroke-width="5"/>
-                            <circle cx="35" cy="95" r="12" fill="#fed7aa"/>
-                            <rect x="25" y="107" width="20" height="30" fill="#ffffff"/>
-                        </g>
-
-                        <!-- Bageren arbejder i bageriet (HAR BAGT) -->
-                        <g transform="translate(40, 90)">
-                            <rect x="0" y="30" width="120" height="120" fill="#78350f" rx="4"/>
-                            <rect x="15" y="60" width="90" height="60" fill="#ea580c"/>
-                            <ellipse cx="60" cy="100" rx="15" ry="8" fill="#d97706"/>
-                        </g>
-
-                        <!-- Toget kører stærkt i landskabet (HAR KØRT) -->
-                        <g transform="translate(180, 180)">
-                            <rect x="0" y="0" width="120" height="30" rx="4" fill="#dc2626"/>
-                            <line x1="125" y1="10" x2="160" y2="10" stroke="#fde68a" stroke-width="2"/>
-                            <line x1="125" y1="20" x2="150" y2="20" stroke="#fde68a" stroke-width="2"/>
-                        </g>
-
-                        <!-- Cyklisten træner i skoven (HAR CYKLET) -->
-                        <g transform="translate(120, 310)">
-                            <circle cx="30" cy="40" r="16" fill="none" stroke="#ffffff" stroke-width="3"/>
-                            <circle cx="85" cy="40" r="16" fill="none" stroke="#ffffff" stroke-width="3"/>
-                            <path d="M30,40 L55,40 L75,15 L48,15 Z" fill="none" stroke="#ef4444" stroke-width="3.5"/>
-                            <circle cx="60" cy="-2" r="9" fill="#fed7aa"/>
-                        </g>
-
-                        <!-- Gartneren vander blomster (HAR VANDET) -->
-                        <g transform="translate(390, 270)">
-                            <rect x="10" y="30" width="30" height="40" fill="#b45309"/>
-                            <circle cx="25" cy="20" r="10" fill="#ec4899"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_har_er_venstre.jpg" alt="Har - Motoren og aktiviteten i gang" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: ER (DØREN / RESULTATET) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header cool">🔵 DØREN / SKIFTET (Er) — Ny Tilstand / Sted</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolEr" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#0c4a6e"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#coolEr)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#132338"/>
-
-                        <!-- Huset står nymalet og skinnende (ER MALET) -->
-                        <g transform="translate(320, 60)">
-                            <rect x="0" y="20" width="160" height="200" fill="#38bdf8" stroke="#0284c7" stroke-width="3"/>
-                            <rect x="20" y="50" width="40" height="50" fill="#0f172a" rx="3"/>
-                            <rect x="90" y="50" width="40" height="50" fill="#0f172a" rx="3"/>
-                            <text x="140" y="15" fill="#fde68a" font-size="14">✨</text>
-                        </g>
-
-                        <!-- Kagen er bagt og serveret på fad (ER BAGT) -->
-                        <g transform="translate(40, 90)">
-                            <rect x="0" y="30" width="120" height="120" fill="#1e293b" rx="4"/>
-                            <ellipse cx="60" cy="110" rx="35" ry="12" fill="#ffffff"/>
-                            <rect x="40" y="85" width="40" height="25" rx="3" fill="#d97706"/>
-                            <circle cx="60" cy="83" r="5" fill="#ef4444"/>
-                        </g>
-
-                        <!-- Toget er kørt — perronen er tom! (ER KØRT) -->
-                        <g transform="translate(180, 180)">
-                            <rect x="0" y="0" width="140" height="20" fill="#475569" rx="2"/>
-                            <text x="70" y="14" fill="#94a3b8" font-size="8" font-weight="bold" text-anchor="middle">TOM PERRON</text>
-                            <line x1="0" y1="28" x2="140" y2="28" stroke="#64748b" stroke-width="3"/>
-                        </g>
-
-                        <!-- Cyklisten er ankommet på arbejde foran kontoret (ER CYKLET) -->
-                        <g transform="translate(120, 310)">
-                            <rect x="40" y="-30" width="80" height="70" fill="#334155" rx="4"/>
-                            <text x="80" y="-15" fill="#f8fafc" font-size="7" font-weight="900" text-anchor="middle">KONTOR</text>
-                            <!-- Parkered cykel i ro -->
-                            <circle cx="30" cy="40" r="16" fill="none" stroke="#94a3b8" stroke-width="2"/>
-                            <circle cx="85" cy="40" r="16" fill="none" stroke="#94a3b8" stroke-width="2"/>
-                            <!-- Person går ind ad døren -->
-                            <circle cx="95" cy="5" r="8" fill="#fed7aa"/>
-                        </g>
-
-                        <!-- Blomsterne er sprunget ud i fuldt flor (ER SPRUNGET UD) -->
-                        <g transform="translate(390, 270)">
-                            <rect x="10" y="30" width="30" height="40" fill="#b45309"/>
-                            <circle cx="20" cy="20" r="12" fill="#ec4899"/>
-                            <circle cx="35" cy="15" r="14" fill="#a855f7"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_har_er_hoejre.jpg" alt="Er - Resultatet og det nye sted" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
             </div>

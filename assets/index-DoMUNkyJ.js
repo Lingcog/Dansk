@@ -3856,7 +3856,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     Skift til kinesisk (切换到中文) ➔
                 </button>
             </div>
-        `,k.appendChild(j),document.body.appendChild(k),k.onclick=G=>{G.target===k&&k.remove()},j.querySelector("#crm-cancel-btn").onclick=()=>k.remove(),j.querySelector("#crm-switch-btn").onclick=()=>{k.remove(),qn("zh"),window.location.hash="#/zh/mit_sprog_sammenlignet"}}const F=document.createElement("footer");F.innerHTML='© 2026 Træning i dansk. Udviklet af <a href="https://dk.linkedin.com/in/mikael-fabrin-2805b28b" target="_blank">Mikael Fabrin</a>.',r.appendChild(t),r.appendChild(g),r.appendChild(w),r.appendChild(F),p.appendChild(r)}function cs(p,b){const r=document.createElement("div");r.className="view-container";const t=document.createElement("div");t.className="top-bar";const g=document.createElement("button");g.className="back-btn",g.textContent="← "+e("back"),g.onclick=()=>b("main"),t.appendChild(g);const d=document.createElement("h1");d.textContent=e("notes");const o=document.createElement("p");o.className="subtitle",o.textContent=e("notesDesc");const w=[{icon:"📓",titleKey:"du1mod3",descKey:"",action:()=>b("du1_modul3")},{icon:"📖",titleKey:"du2mod1",descKey:"",action:()=>b("du2_modul1")},{icon:"📂",titleKey:"du2mod5",descKey:"",action:()=>b("du2_modul5")},{icon:"📚",titleKey:"du3mod4",descKey:"",action:()=>alert("Mock: Åbner DU3, modul 4")}],A=document.createElement("div");A.className="grid",w.forEach(N=>{const k=document.createElement("div");k.className="card",k.onclick=N.action;const j=document.createElement("div");j.className="card-icon",j.textContent=N.icon;const G=document.createElement("div");if(G.className="card-title",G.textContent=e(N.titleKey),k.appendChild(j),k.appendChild(G),N.descKey){const te=document.createElement("div");te.className="card-desc",te.textContent=e(N.descKey),k.appendChild(te)}A.appendChild(k)});const F=document.createElement("footer");F.innerHTML='© 2026 Træning i dansk. Udviklet af <a href="https://dk.linkedin.com/in/mikael-fabrin-2805b28b" target="_blank">Mikael Fabrin</a>.',r.appendChild(t),r.appendChild(d),r.appendChild(o),r.appendChild(A),r.appendChild(F),p.appendChild(r)}function gs(p,b){const r=document.createElement("div");r.className="view-container dagens-opgave-view";const t=document.createElement("div");t.className="top-bar";const g=document.createElement("button");g.className="back-btn",g.textContent="← "+e("back"),g.onclick=()=>b("main"),t.appendChild(g);const d=document.createElement("h1");d.textContent=e("dagensOpgave");const o=document.createElement("p");o.className="subtitle",o.textContent=e("dagensOpgaveDesc");const w=[{icon:"🏗️",svgIcon:It.layers(22),titleKey:"howToBuildSentence",descKey:"howToBuildSentenceDesc",action:()=>b("grounding")},{icon:"⏰",svgIcon:It.clock(22),titleKey:"traenTidsudtryk",descKey:"traenTidsudtrykDesc",action:()=>b("traen_tidsudtryk")},{icon:"📖",svgIcon:It.bookOpen(22),titleKey:"traenGrammatik",descKey:"grammatikDesc",action:()=>b("traen_grammatik")},{icon:"🧩",svgIcon:It.puzzle(22),titleKey:"ordstilling",descKey:"ordstillingDesc",action:()=>b("ordstilling")},{icon:"🤔",svgIcon:It.thought(22),titleKey:"trorSynesMenerTitle",descKey:"trorSynesMenerDesc",fallbackTitle:"Tror / synes / mener / ved?",fallbackDesc:"Lær forskellen på personlig smag, formodning, holdning og fakta.",action:()=>b("tror_synes_mener")},{icon:"🧭",svgIcon:It.activity(22),titleKey:"grammatikSansningTitle",descKey:"grammatikSansningDesc",fallbackTitle:"Grammatik og min sansning af verden",fallbackDesc:"Oplev hvordan sproget former virkeligheden: Ro (Yin) vs. Bevægelse (Yang) med interaktive vrimlebilleder.",comingSoon:!0,comingSoonLabel:"Under udvikling",action:()=>b("grammatik_sansning")},{icon:"⚡",svgIcon:It.activity(22),titleKey:"verberGrammatikTitle",descKey:"verberGrammatikDesc",fallbackTitle:"Verbernes tider",fallbackDesc:"Lær på en interaktiv måde forskellen på for eksempel datid og nutid.",comingSoon:!0,comingSoonLabel:"Kommer senere",action:()=>b("verber_grammatik")},{icon:"🌉",svgIcon:It.bridge(22),titleKey:"verberTider",descKey:"punktetOgBroenDesc",fallbackTitle:"Datid vs. Førnutid (punktet & broen)",fallbackDesc:"Lær hvornår handlingen er lukket i fortiden, og hvornår den rækker ind i nutiden.",action:()=>b("punktet_og_broen")},{icon:"🫂",svgIcon:It.users(22),titleKey:"hvilketOrd",descKey:"hvilketOrdDesc",action:()=>b("pronomen")}],A=typeof window<"u"&&(window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1"||window.location.hostname==="0.0.0.0"||window.location.hostname.endsWith(".local")),F=document.createElement("div");F.className="grid",w.forEach(G=>{const te=document.createElement("div");te.className="card",!!G.comingSoon&&!A?(te.style.opacity="0.6",te.style.cursor="not-allowed",te.onclick=P=>{P.preventDefault()}):te.onclick=G.action;const K=document.createElement("div");K.className="card-icon",K.innerHTML=`
+        `,k.appendChild(j),document.body.appendChild(k),k.onclick=G=>{G.target===k&&k.remove()},j.querySelector("#crm-cancel-btn").onclick=()=>k.remove(),j.querySelector("#crm-switch-btn").onclick=()=>{k.remove(),qn("zh"),window.location.hash="#/zh/mit_sprog_sammenlignet"}}const F=document.createElement("footer");F.innerHTML='© 2026 Træning i dansk. Udviklet af <a href="https://dk.linkedin.com/in/mikael-fabrin-2805b28b" target="_blank">Mikael Fabrin</a>.',r.appendChild(t),r.appendChild(g),r.appendChild(w),r.appendChild(F),p.appendChild(r)}function cs(p,b){const r=document.createElement("div");r.className="view-container";const t=document.createElement("div");t.className="top-bar";const g=document.createElement("button");g.className="back-btn",g.textContent="← "+e("back"),g.onclick=()=>b("main"),t.appendChild(g);const d=document.createElement("h1");d.textContent=e("notes");const o=document.createElement("p");o.className="subtitle",o.textContent=e("notesDesc");const w=[{icon:"📓",titleKey:"du1mod3",descKey:"",action:()=>b("du1_modul3")},{icon:"📖",titleKey:"du2mod1",descKey:"",action:()=>b("du2_modul1")},{icon:"📂",titleKey:"du2mod5",descKey:"",action:()=>b("du2_modul5")},{icon:"📚",titleKey:"du3mod4",descKey:"",action:()=>alert("Mock: Åbner DU3, modul 4")}],A=document.createElement("div");A.className="grid",w.forEach(N=>{const k=document.createElement("div");k.className="card",k.onclick=N.action;const j=document.createElement("div");j.className="card-icon",j.textContent=N.icon;const G=document.createElement("div");if(G.className="card-title",G.textContent=e(N.titleKey),k.appendChild(j),k.appendChild(G),N.descKey){const te=document.createElement("div");te.className="card-desc",te.textContent=e(N.descKey),k.appendChild(te)}A.appendChild(k)});const F=document.createElement("footer");F.innerHTML='© 2026 Træning i dansk. Udviklet af <a href="https://dk.linkedin.com/in/mikael-fabrin-2805b28b" target="_blank">Mikael Fabrin</a>.',r.appendChild(t),r.appendChild(d),r.appendChild(o),r.appendChild(A),r.appendChild(F),p.appendChild(r)}function gs(p,b){const r=document.createElement("div");r.className="view-container dagens-opgave-view";const t=document.createElement("div");t.className="top-bar";const g=document.createElement("button");g.className="back-btn",g.textContent="← "+e("back"),g.onclick=()=>b("main"),t.appendChild(g);const d=document.createElement("h1");d.textContent=e("dagensOpgave");const o=document.createElement("p");o.className="subtitle",o.textContent=e("dagensOpgaveDesc");const w=[{icon:"🏗️",svgIcon:It.layers(22),titleKey:"howToBuildSentence",descKey:"howToBuildSentenceDesc",action:()=>b("grounding")},{icon:"⏰",svgIcon:It.clock(22),titleKey:"traenTidsudtryk",descKey:"traenTidsudtrykDesc",action:()=>b("traen_tidsudtryk")},{icon:"📖",svgIcon:It.bookOpen(22),titleKey:"traenGrammatik",descKey:"grammatikDesc",action:()=>b("traen_grammatik")},{icon:"🧩",svgIcon:It.puzzle(22),titleKey:"ordstilling",descKey:"ordstillingDesc",action:()=>b("ordstilling")},{icon:"🤔",svgIcon:It.thought(22),titleKey:"trorSynesMenerTitle",descKey:"trorSynesMenerDesc",fallbackTitle:"Tror / synes / mener / ved?",fallbackDesc:"Lær forskellen på personlig smag, formodning, holdning og fakta.",action:()=>b("tror_synes_mener")},{icon:"🧭",svgIcon:It.activity(22),titleKey:"grammatikSansningTitle",descKey:"grammatikSansningDesc",fallbackTitle:"Grammatik og min sansning af verden",fallbackDesc:"Oplev hvordan sproget former virkeligheden: Væren & Stilstand vs. Tilblivelse & Forvandling med interaktive vrimlebilleder.",comingSoon:!0,comingSoonLabel:"Under udvikling",action:()=>b("grammatik_sansning")},{icon:"⚡",svgIcon:It.activity(22),titleKey:"verberGrammatikTitle",descKey:"verberGrammatikDesc",fallbackTitle:"Verbernes tider",fallbackDesc:"Lær på en interaktiv måde forskellen på for eksempel datid og nutid.",comingSoon:!0,comingSoonLabel:"Kommer senere",action:()=>b("verber_grammatik")},{icon:"🌉",svgIcon:It.bridge(22),titleKey:"verberTider",descKey:"punktetOgBroenDesc",fallbackTitle:"Datid vs. Førnutid (punktet & broen)",fallbackDesc:"Lær hvornår handlingen er lukket i fortiden, og hvornår den rækker ind i nutiden.",action:()=>b("punktet_og_broen")},{icon:"🫂",svgIcon:It.users(22),titleKey:"hvilketOrd",descKey:"hvilketOrdDesc",action:()=>b("pronomen")}],A=typeof window<"u"&&(window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1"||window.location.hostname==="0.0.0.0"||window.location.hostname.endsWith(".local")),F=document.createElement("div");F.className="grid",w.forEach(G=>{const te=document.createElement("div");te.className="card",!!G.comingSoon&&!A?(te.style.opacity="0.6",te.style.cursor="not-allowed",te.onclick=P=>{P.preventDefault()}):te.onclick=G.action;const K=document.createElement("div");K.className="card-icon",K.innerHTML=`
             <span class="card-icon-emoji">${G.icon}</span>
             <span class="card-icon-svg" aria-hidden="true">${G.svgIcon}</span>
         `;const W=document.createElement("div");W.className="card-title";const X=e(G.titleKey);if(W.textContent=X&&X!==G.titleKey?X:G.fallbackTitle||X,G.comingSoon){const P=document.createElement("span");P.style.display="inline-block",P.style.fontSize="0.75rem",P.style.fontWeight="700",P.style.padding="0.18rem 0.55rem",P.style.borderRadius="8px",P.style.marginLeft="0.5rem",P.style.verticalAlign="middle",A?(P.style.background="rgba(56, 189, 248, 0.16)",P.style.border="1px solid rgba(56, 189, 248, 0.45)",P.style.color="#38bdf8",P.textContent=`🛠️ ${G.comingSoonLabel||"Under udvikling"} (Lokal)`):(P.style.background="rgba(255, 255, 255, 0.14)",P.style.border="1px solid rgba(255, 255, 255, 0.25)",P.style.color="#cbd5e1",P.textContent=`🔒 ${G.comingSoonLabel||"Kommer senere"}`),W.appendChild(P)}if(te.appendChild(K),te.appendChild(W),G.descKey||G.fallbackDesc){const P=document.createElement("div");P.className="card-desc";const L=e(G.descKey);P.textContent=L&&L!==G.descKey?L:G.fallbackDesc||L||"",te.appendChild(P)}F.appendChild(te)}),r.appendChild(t),r.appendChild(d),r.appendChild(o),r.appendChild(F);const N=document.createElement("div");N.className="support-links",N.style.display="flex",N.style.justifyContent="center",N.style.flexWrap="wrap",N.style.gap="1rem",N.style.marginTop="3rem",N.style.paddingBottom="2rem";const k=document.createElement("a");k.href="https://ko-fi.com/dansktraening",k.target="_blank",k.className="gemini-btn support-btn support-kofi",k.style.textDecoration="none",k.innerHTML=`${ge("coffee","☕",{size:16})} Buy me a coffee`;const j=document.createElement("a");j.href="https://qr.mobilepay.dk/box/0cfe35a7-fccc-4cb9-85e7-b246d3bfa48a/pay-in",j.target="_blank",j.className="gemini-btn support-btn support-mp",j.style.textDecoration="none",j.innerHTML=`${ge("smartphone","📱",{size:16})} Støt med MobilePay`,N.appendChild(k),N.appendChild(j),r.appendChild(N),p.appendChild(r)}function ps(p,b){let r="selection";function t(){p.innerHTML="";const N=document.createElement("div");N.className="view-container word-learning-container";const k=document.createElement("div");k.className="top-bar";const j=document.createElement("button");j.className="back-btn",j.textContent="← "+e("back"),j.onclick=()=>{r.startsWith("exercise")?(r="selection",t()):b("main")},k.appendChild(j),N.appendChild(k);const G=document.createElement("style");G.textContent=`
@@ -74897,8 +74897,8 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             font-weight: 700;
             font-size: 0.78rem;
         }
-        .gs-contrast-label.yin { color: #38bdf8; }
-        .gs-contrast-label.yang { color: #fb923c; }
+        .gs-contrast-label.tilstand { color: #38bdf8; }
+        .gs-contrast-label.forvandling { color: #fb923c; }
         .gs-contrast-sent {
             font-weight: 700;
             color: #f8fafc;
@@ -74987,7 +74987,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             gap: 0.45rem;
         }
     `,t.appendChild(d);const o=document.createElement("div");o.className="gs-top-bar";const w=document.createElement("button");w.className="gs-back-btn",w.innerHTML=`← ${e("back")||"Tilbage til forsiden"}`,w.onclick=()=>b("dagens_opgave"),o.appendChild(w);const A=document.createElement("span");A.className="gs-hero-badge",A.innerHTML="🧭 Sanse-Grammatik • DU1 & DU2",o.appendChild(A),t.appendChild(o);const F=document.createElement("div");F.className="gs-hero",F.innerHTML=`
-        <div class="gs-hero-badge">☯️ Taoistisk & Fænomenologisk Grammatik</div>
+        <div class="gs-hero-badge">🧭 Fænomenologisk & Sanselig Grammatik</div>
         <h1>Grammatik og min sansning af verdenen</h1>
         <p>
             På dansk afslører dine verber og ord, <strong>hvordan du oplever virkeligheden</strong>.
@@ -75000,7 +75000,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <span class="gs-realm-badge">🔵 Det Blå Rige</span>
                 <span class="gs-realm-symbol">🌊</span>
             </div>
-            <h2 class="gs-realm-title">Tilstand & Stilstand (Yin / Væren)</h2>
+            <h2 class="gs-realm-title">Væren & Stilstand (Tilstand i Ro)</h2>
             <p class="gs-realm-desc">
                 Når verden hviler. Tingen befinder sig et sted, tilstanden er uforandret, kroppen sanser smagen indefra, og handlingen er stabil.
             </p>
@@ -75033,7 +75033,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <span class="gs-realm-badge">🟠 Det Gyldne Rige</span>
                 <span class="gs-realm-symbol">🔥</span>
             </div>
-            <h2 class="gs-realm-title">Forvandling & Kraft (Yang / Tilblivelse)</h2>
+            <h2 class="gs-realm-title">Tilblivelse & Forvandling (Bevægelse & Kraft)</h2>
             <p class="gs-realm-desc">
                 Når verden er i bevægelse. Der sker et omslag, en overgang, en kraft anbringer en genstand, tærsklen krydses, eller tanken gætter fremad.
             </p>
@@ -75065,10 +75065,10 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <span class="gs-sim-title">⚡ Sanse-Simulatoren: Oplev forvandlingen i 1 klik</span>
                 <div class="gs-sim-toggle-group">
                     <button class="gs-sim-toggle-btn tilstand ${j.activeMode==="tilstand"?"active":""}" id="btn-sim-tilstand">
-                        🔵 Tilstand (Ro / Yin)
+                        🔵 Væren & Stilstand
                     </button>
                     <button class="gs-sim-toggle-btn forvandling ${j.activeMode==="forvandling"?"active":""}" id="btn-sim-forvandling">
-                        🟠 Forvandling (Kraft / Yang)
+                        🟠 Tilblivelse & Forvandling
                     </button>
                 </div>
             </div>
@@ -75091,8 +75091,8 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         </div>
         <div class="gs-filter-pills">
             <button class="gs-filter-pill active" data-filter="all">Vis alle (6)</button>
-            <button class="gs-filter-pill" data-filter="tilstand">🔵 Kun Tilstand (Yin)</button>
-            <button class="gs-filter-pill" data-filter="forvandling">🟠 Kun Forvandling (Yang)</button>
+            <button class="gs-filter-pill" data-filter="tilstand">🔵 Kun Væren & Stilstand</button>
+            <button class="gs-filter-pill" data-filter="forvandling">🟠 Kun Tilblivelse & Forvandling</button>
         </div>
     `,t.appendChild(K);const W=document.createElement("div");W.className="gs-stations-grid";function X(L="all"){W.innerHTML="",le.forEach(_=>{const x=document.createElement("div");x.className="gs-station-card",x.style.setProperty("--station-accent",_.accent),x.innerHTML=`
                 <div>
@@ -75105,11 +75105,11 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     
                     <div class="gs-station-contrast-box">
                         <div class="gs-contrast-row" style="display: ${L==="forvandling"?"none":"flex"}">
-                            <span class="gs-contrast-label yin">🔵 ${_.yinLabel}:</span>
+                            <span class="gs-contrast-label tilstand">🔵 ${_.yinLabel}:</span>
                             <span class="gs-contrast-sent">${_.yinSent}</span>
                         </div>
                         <div class="gs-contrast-row" style="display: ${L==="tilstand"?"none":"flex"}">
-                            <span class="gs-contrast-label yang">🟠 ${_.yangLabel}:</span>
+                            <span class="gs-contrast-label forvandling">🟠 ${_.yangLabel}:</span>
                             <span class="gs-contrast-sent">${_.yangSent}</span>
                         </div>
                     </div>
@@ -78399,19 +78399,19 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
-                <!-- VENSTRE HALVDEL: RO I RUMMET (Yin / -e) -->
+                <!-- VENSTRE HALVDEL: RO I RUMMET (Stilstand / -e) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Yin: Ro i rummet (hjemme, inde, ude, oppe, nede)
+                        🔵 Stilstand: Ro i rummet (hjemme, inde, ude, oppe, nede)
                     </div>
                     <img src="assets/sansning_rummet_venstre.jpg" alt="Ro i rummet - Hjemme, inde, ude, oppe, nede" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
-                <!-- HØJRE HALVDEL: KRYDSER TÆRSKLEN (Yang / Uden -e) -->
+                <!-- HØJRE HALVDEL: KRYDSER TÆRSKLEN (Forvandling / Uden -e) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Yang: Krydser tærsklen (hjem, ind, ud, op, ned)
+                        🟠 Forvandling: Krydser tærsklen (hjem, ind, ud, op, ned)
                     </div>
                     <img src="assets/sansning_rummet_hoejre.jpg" alt="Krydser tærsklen - Hjem, ind, ud, op, ned" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -78522,7 +78522,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
             </div>
         </div>
-    `,K.appendChild(x),t.appendChild(K);const S=W.querySelector("#split-stage"),m=W.querySelector("#hotspots-left"),l=W.querySelector("#hotspots-right"),z=W.querySelector("#hotspots-strip"),v=W.querySelector("#detail-card"),C=W.querySelector("#pure-toggle-btn");C.onclick=()=>{w=!w,w?(S.classList.add("pure-mode"),C.classList.add("active"),C.innerHTML="👁️ Vis hotspots"):(S.classList.remove("pure-mode"),C.classList.remove("active"),C.innerHTML="👁️ Vis rent billede")};function T(){m.innerHTML="",l.innerHTML="",A.forEach((i,u)=>{const y=u===d,$=document.createElement("button");$.className="ss-hotspot",y&&o==="left"&&$.classList.add("active"),y&&o==="right"&&$.classList.add("partner-active"),$.style.left=`${i.left.x}%`,$.style.top=`${i.left.y}%`,$.innerHTML=i.icon,$.title=`${i.left.word} (${i.title})`,$.onclick=J=>{J.stopPropagation(),d=u,o="left",T()},m.appendChild($);const I=document.createElement("button");I.className="ss-hotspot",y&&o==="right"&&I.classList.add("active"),y&&o==="left"&&I.classList.add("partner-active"),I.style.left=`${i.right.x}%`,I.style.top=`${i.right.y}%`,I.innerHTML=i.icon,I.title=`${i.right.word} (${i.title})`,I.onclick=J=>{J.stopPropagation(),d=u,o="right",T()},l.appendChild(I)}),z.innerHTML="",A.forEach((i,u)=>{const y=document.createElement("button");y.className=`ss-strip-btn ${u===d?"active":""}`,y.innerHTML=`${i.icon} ${i.left.word} / ${i.right.word}`,y.onclick=()=>{d=u,T()},z.appendChild(y)});const s=A[d],n=o==="left"?s.left:s.right,c=o==="left"?"right":"left";o==="left"?s.right:s.left;const a=o==="left"?`Byt til: ${s.right.word} (Yang / Retning)`:`Byt til: ${s.left.word} (Yin / Ro)`;v.innerHTML=`
+    `,K.appendChild(x),t.appendChild(K);const S=W.querySelector("#split-stage"),m=W.querySelector("#hotspots-left"),l=W.querySelector("#hotspots-right"),z=W.querySelector("#hotspots-strip"),v=W.querySelector("#detail-card"),C=W.querySelector("#pure-toggle-btn");C.onclick=()=>{w=!w,w?(S.classList.add("pure-mode"),C.classList.add("active"),C.innerHTML="👁️ Vis hotspots"):(S.classList.remove("pure-mode"),C.classList.remove("active"),C.innerHTML="👁️ Vis rent billede")};function T(){m.innerHTML="",l.innerHTML="",A.forEach((i,u)=>{const y=u===d,$=document.createElement("button");$.className="ss-hotspot",y&&o==="left"&&$.classList.add("active"),y&&o==="right"&&$.classList.add("partner-active"),$.style.left=`${i.left.x}%`,$.style.top=`${i.left.y}%`,$.innerHTML=i.icon,$.title=`${i.left.word} (${i.title})`,$.onclick=J=>{J.stopPropagation(),d=u,o="left",T()},m.appendChild($);const I=document.createElement("button");I.className="ss-hotspot",y&&o==="right"&&I.classList.add("active"),y&&o==="left"&&I.classList.add("partner-active"),I.style.left=`${i.right.x}%`,I.style.top=`${i.right.y}%`,I.innerHTML=i.icon,I.title=`${i.right.word} (${i.title})`,I.onclick=J=>{J.stopPropagation(),d=u,o="right",T()},l.appendChild(I)}),z.innerHTML="",A.forEach((i,u)=>{const y=document.createElement("button");y.className=`ss-strip-btn ${u===d?"active":""}`,y.innerHTML=`${i.icon} ${i.left.word} / ${i.right.word}`,y.onclick=()=>{d=u,T()},z.appendChild(y)});const s=A[d],n=o==="left"?s.left:s.right,c=o==="left"?"right":"left";o==="left"?s.right:s.left;const a=o==="left"?`Byt til: ${s.right.word} (Forvandling / Retning)`:`Byt til: ${s.left.word} (Stilstand / Ro)`;v.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
                     <span style="font-size: 1.8rem;">${s.icon}</span>
@@ -78537,7 +78537,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${o==="left"?"active-side":""}">
-                    <span class="adj-box-badge">🔵 Yin: Ro i rummet (-e)</span>
+                    <span class="adj-box-badge">🔵 Stilstand: Ro i rummet (-e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${s.left.sent.replace(s.left.word,`<span class="adj-highlight">${s.left.word}</span>`)}"
@@ -78548,7 +78548,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="adj-box right ${o==="right"?"active-side":""}">
-                    <span class="adj-box-badge">🟠 Yang: Krydser tærsklen (uden -e)</span>
+                    <span class="adj-box-badge">🟠 Forvandling: Krydser tærsklen (uden -e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${s.right.sent.replace(s.right.word,`<span class="adj-highlight">${s.right.word}</span>`)}"
@@ -79157,19 +79157,19 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
-                <!-- VENSTRE HALVDEL: KROPPENS SANSE-SANDHED (Yin / Synes) -->
+                <!-- VENSTRE HALVDEL: KROPPENS SANSE-SANDHED (Væren / Synes) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Yin: Kroppens sanse-sandhed (Synes)
+                        🔵 Væren: Kroppens sanse-sandhed (Synes)
                     </div>
                     <img src="assets/sansning_sindet_venstre.jpg" alt="Kroppens sansning - Synes" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
-                <!-- HØJRE HALVDEL: HOVEDETS TANKER & VURDERING (Yang / Tror & Mener) -->
+                <!-- HØJRE HALVDEL: HOVEDETS TANKER & VURDERING (Forvandling / Tror & Mener) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Yang: Hovedets tanker & debat (Tror / Mener / Ved)
+                        🟠 Forvandling: Hovedets tanker & debat (Tror / Mener / Ved)
                     </div>
                     <img src="assets/sansning_sindet_hoejre.jpg" alt="Hovedets tanker - Tror, mener, ved" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -79236,7 +79236,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
             <div id="embedded-trorsynes-mount"></div>
         </div>
-    `;const S=x.querySelector("#embedded-trorsynes-mount");ko(S,b,{}),K.appendChild(x),t.appendChild(K);const m=W.querySelector("#split-stage"),l=W.querySelector("#hotspots-left"),z=W.querySelector("#hotspots-right"),v=W.querySelector("#hotspots-strip"),C=W.querySelector("#detail-card"),T=W.querySelector("#pure-toggle-btn");T.onclick=()=>{w=!w,w?(m.classList.add("pure-mode"),T.classList.add("active"),T.innerHTML="👁️ Vis hotspots"):(m.classList.remove("pure-mode"),T.classList.remove("active"),T.innerHTML="👁️ Vis rent billede")};function s(){l.innerHTML="",z.innerHTML="",A.forEach((u,y)=>{const $=y===d,I=document.createElement("button");I.className="ss-hotspot",$&&o==="left"&&I.classList.add("active"),$&&o==="right"&&I.classList.add("partner-active"),I.style.left=`${u.left.x}%`,I.style.top=`${u.left.y}%`,I.innerHTML=u.icon,I.title=`${u.left.word} (${u.title})`,I.onclick=be=>{be.stopPropagation(),d=y,o="left",s()},l.appendChild(I);const J=document.createElement("button");J.className="ss-hotspot",$&&o==="right"&&J.classList.add("active"),$&&o==="left"&&J.classList.add("partner-active"),J.style.left=`${u.right.x}%`,J.style.top=`${u.right.y}%`,J.innerHTML=u.icon,J.title=`${u.right.word} (${u.title})`,J.onclick=be=>{be.stopPropagation(),d=y,o="right",s()},z.appendChild(J)}),v.innerHTML="",A.forEach((u,y)=>{const $=document.createElement("button");$.className=`ss-strip-btn ${y===d?"active":""}`,$.innerHTML=`${u.icon} ${u.left.word} / ${u.right.word}`,$.onclick=()=>{d=y,s()},v.appendChild($)});const n=A[d],c=o==="left"?n.left:n.right,a=o==="left"?"right":"left";o==="left"?n.right:n.left;const i=o==="left"?`Byt til: ${n.right.word} (Yang / Hovedet)`:`Byt til: ${n.left.word} (Yin / Kroppen)`;C.innerHTML=`
+    `;const S=x.querySelector("#embedded-trorsynes-mount");ko(S,b,{}),K.appendChild(x),t.appendChild(K);const m=W.querySelector("#split-stage"),l=W.querySelector("#hotspots-left"),z=W.querySelector("#hotspots-right"),v=W.querySelector("#hotspots-strip"),C=W.querySelector("#detail-card"),T=W.querySelector("#pure-toggle-btn");T.onclick=()=>{w=!w,w?(m.classList.add("pure-mode"),T.classList.add("active"),T.innerHTML="👁️ Vis hotspots"):(m.classList.remove("pure-mode"),T.classList.remove("active"),T.innerHTML="👁️ Vis rent billede")};function s(){l.innerHTML="",z.innerHTML="",A.forEach((u,y)=>{const $=y===d,I=document.createElement("button");I.className="ss-hotspot",$&&o==="left"&&I.classList.add("active"),$&&o==="right"&&I.classList.add("partner-active"),I.style.left=`${u.left.x}%`,I.style.top=`${u.left.y}%`,I.innerHTML=u.icon,I.title=`${u.left.word} (${u.title})`,I.onclick=be=>{be.stopPropagation(),d=y,o="left",s()},l.appendChild(I);const J=document.createElement("button");J.className="ss-hotspot",$&&o==="right"&&J.classList.add("active"),$&&o==="left"&&J.classList.add("partner-active"),J.style.left=`${u.right.x}%`,J.style.top=`${u.right.y}%`,J.innerHTML=u.icon,J.title=`${u.right.word} (${u.title})`,J.onclick=be=>{be.stopPropagation(),d=y,o="right",s()},z.appendChild(J)}),v.innerHTML="",A.forEach((u,y)=>{const $=document.createElement("button");$.className=`ss-strip-btn ${y===d?"active":""}`,$.innerHTML=`${u.icon} ${u.left.word} / ${u.right.word}`,$.onclick=()=>{d=y,s()},v.appendChild($)});const n=A[d],c=o==="left"?n.left:n.right,a=o==="left"?"right":"left";o==="left"?n.right:n.left;const i=o==="left"?`Byt til: ${n.right.word} (Forvandling / Hovedet)`:`Byt til: ${n.left.word} (Væren / Kroppen)`;C.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
                     <span style="font-size: 1.8rem;">${n.icon}</span>
@@ -79251,7 +79251,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${o==="left"?"active-side":""}">
-                    <span class="adj-box-badge">🔵 Yin: Kroppens sanse-sandhed (Synes)</span>
+                    <span class="adj-box-badge">🔵 Væren: Kroppens sanse-sandhed (Synes)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${n.left.sent.replace(n.left.word,`<span class="adj-highlight">${n.left.word}</span>`)}"
@@ -79262,7 +79262,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="adj-box right ${o==="right"?"active-side":""}">
-                    <span class="adj-box-badge">🟠 Yang: Hovedets tanker (Tror / Mener / Ved)</span>
+                    <span class="adj-box-badge">🟠 Forvandling: Hovedets tanker (Tror / Mener / Ved)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${n.right.sent.replace(n.right.word,`<span class="adj-highlight">${n.right.word}</span>`)}"

@@ -66,8 +66,10 @@ export function renderDagensOpgaveView(container, navigateFn) {
             svgIcon: dsSvgIcons.activity(22),
             titleKey: 'grammatikSansningTitle',
             descKey: 'grammatikSansningDesc',
-            fallbackTitle: 'Grammatik & min sansning af verdenen',
+            fallbackTitle: 'Grammatik og min sansning af verden',
             fallbackDesc: 'Oplev hvordan sproget former virkeligheden: Ro (Yin) vs. Bevægelse (Yang) med interaktive vrimlebilleder.',
+            comingSoon: true,
+            comingSoonLabel: 'Under udvikling',
             action: () => navigateFn('grammatik_sansning')
         },
         {
@@ -75,9 +77,11 @@ export function renderDagensOpgaveView(container, navigateFn) {
             svgIcon: dsSvgIcons.activity(22),
             titleKey: 'verberGrammatikTitle',
             descKey: 'verberGrammatikDesc',
-            fallbackTitle: 'Tidens Sansning: Verbernes tider',
-            fallbackDesc: 'Vrimlebillede for "hadde været" vs. "var blevet" samt det komplette 4-tiders tidslinje-værksted.',
-            action: () => navigateFn('sansning_verber_tider')
+            fallbackTitle: 'Verbernes tider',
+            fallbackDesc: 'Lær på en interaktiv måde forskellen på for eksempel datid og nutid.',
+            comingSoon: true,
+            comingSoonLabel: 'Kommer senere',
+            action: () => navigateFn('verber_grammatik')
         },
         {
             icon: '🌉',
@@ -99,7 +103,9 @@ export function renderDagensOpgaveView(container, navigateFn) {
 
     const isLocalhost = typeof window !== 'undefined' && (
         window.location.hostname === 'localhost' ||
-        window.location.hostname === '127.0.0.1'
+        window.location.hostname === '127.0.0.1' ||
+        window.location.hostname === '0.0.0.0' ||
+        window.location.hostname.endsWith('.local')
     );
 
     const grid = document.createElement('div');
@@ -113,6 +119,9 @@ export function renderDagensOpgaveView(container, navigateFn) {
         if (isLocked) {
             card.style.opacity = '0.6';
             card.style.cursor = 'not-allowed';
+            card.onclick = (e) => {
+                e.preventDefault();
+            };
         } else {
             card.onclick = data.action;
         }
@@ -134,13 +143,21 @@ export function renderDagensOpgaveView(container, navigateFn) {
             badge.style.display = 'inline-block';
             badge.style.fontSize = '0.75rem';
             badge.style.fontWeight = '700';
-            badge.style.background = 'rgba(255, 255, 255, 0.14)';
-            badge.style.border = '1px solid rgba(255, 255, 255, 0.25)';
             badge.style.padding = '0.18rem 0.55rem';
             badge.style.borderRadius = '8px';
             badge.style.marginLeft = '0.5rem';
             badge.style.verticalAlign = 'middle';
-            badge.textContent = `🔒 ${data.comingSoonLabel || 'Kommer senere'}`;
+            if (isLocalhost) {
+                badge.style.background = 'rgba(56, 189, 248, 0.16)';
+                badge.style.border = '1px solid rgba(56, 189, 248, 0.45)';
+                badge.style.color = '#38bdf8';
+                badge.textContent = `🛠️ ${data.comingSoonLabel || 'Under udvikling'} (Lokal)`;
+            } else {
+                badge.style.background = 'rgba(255, 255, 255, 0.14)';
+                badge.style.border = '1px solid rgba(255, 255, 255, 0.25)';
+                badge.style.color = '#cbd5e1';
+                badge.textContent = `🔒 ${data.comingSoonLabel || 'Kommer senere'}`;
+            }
             cardTitle.appendChild(badge);
         }
 

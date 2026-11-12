@@ -546,6 +546,16 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     viewTarget === 'sansning' ||
     viewTarget === 'tilstand_forvandling'
   ) {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'grammatik_sansning';
     const sub = extraData && extraData.subPath ? extraData.subPath.toLowerCase() : '';
     if (sub === 'vaere_blive' || sub === 'station1') {
@@ -564,21 +574,81 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       renderGrammatikSansningView(appDiv, navigate, extraData);
     }
   } else if (viewTarget === 'sansning_vaere_blive' || viewTarget === 'vaere_blive') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'sansning_vaere_blive';
     renderSansningVaereBliveView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_verber_tider' || viewTarget === 'sansning_tider') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'sansning_verber_tider';
     renderSansningVerberTiderView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_har_er') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'sansning_har_er';
     renderSansningHarErView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_kraft_hvile') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'sansning_kraft_hvile';
     renderSansningKraftHvileView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_rummet_taersklen' || viewTarget === 'rummet_taersklen') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'sansning_rummet_taersklen';
     renderSansningRummetTaersklenView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_sindet' || viewTarget === 'sindets_sansning') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = 'sansning_sindet';
     renderSansningSindetView(appDiv, navigate, extraData);
   } else if (
@@ -588,6 +658,16 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     viewTarget === 'verber_kraft_hvile' ||
     viewTarget === 'verber_ligger_og_laeser'
   ) {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
     appState.currentView = viewTarget;
     if (viewTarget === 'verber_grammatik') renderVerberGrammatikHubView(appDiv, navigate, extraData);
     else if (viewTarget === 'verber_tider_4') renderVerberTider4View(appDiv, navigate, extraData);
